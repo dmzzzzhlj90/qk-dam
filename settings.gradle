@@ -25,9 +25,6 @@ buildFiles.each { File buildFile ->
     String projectPath = ':' + projectName;
     include projectPath
     def project = findProject("${projectPath}")
-    println(buildFile.parentFile)
-    println(buildFile.name)
-    println(projectPath)
     project.name = projectName
     project.projectDir = buildFile.parentFile
     project.buildFileName = buildFile.name
