@@ -1,0 +1,51 @@
+buildscript {
+    dependencies {
+        classpath 'io.spring.gradle:spring-build-conventions:0.0.37'
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath 'io.spring.nohttp:nohttp-gradle:0.0.5.RELEASE'
+    }
+    repositories {
+        maven {url 'https://maven.aliyun.com/repository/central'}
+        maven {url 'https://maven.aliyun.com/repository/public/'}
+        maven {url 'https://maven.aliyun.com/repository/google/'}
+        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
+        gradlePluginPortal()
+        maven { url 'https://plugins.gradle.org/m2/' }
+        mavenCentral()
+        maven {url 'https://repo.spring.io/plugins-release'}
+    }
+}
+apply plugin: 'io.spring.nohttp'
+apply plugin: 'locks'
+apply plugin: 'io.spring.convention.root'
+
+group 'org.qk.dm'
+version '1.0-SNAPSHOT'
+description = 'qike data middle'
+ext.snapshotBuild = version.contains("SNAPSHOT")
+
+repositories {
+    maven {url 'https://maven.aliyun.com/repository/central'}
+    maven {url 'https://maven.aliyun.com/repository/public/'}
+    maven {url 'https://maven.aliyun.com/repository/google/'}
+    maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
+    mavenCentral()
+    gradlePluginPortal()
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven {url 'https://repo.spring.io/plugins-release'}
+}
+
+dependencyManagementExport.projects = subprojects.findAll { !it.name.contains('-boot') }
+
+subprojects {
+    plugins.withType(JavaPlugin) {
+        project.sourceCompatibility = "11"
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}
+
+nohttp {
+    allowlistFile = project.file("etc/nohttp/allowlist.lines")
+}
