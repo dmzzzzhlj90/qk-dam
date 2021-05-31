@@ -7,8 +7,8 @@ buildscript {
         maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
         gradlePluginPortal()
         maven { url 'https://plugins.gradle.org/m2/' }
-        mavenCentral()
         maven {url 'https://repo.spring.io/plugins-release'}
+        mavenCentral()
     }
 }
 apply plugin: 'java'
@@ -22,19 +22,30 @@ ext.snapshotBuild = version.contains("SNAPSHOT")
 
 allprojects {
     repositories {
+        mavenLocal()
         maven {url 'https://maven.aliyun.com/repository/central'}
         maven {url 'https://maven.aliyun.com/repository/public/'}
         maven {url 'https://maven.aliyun.com/repository/google/'}
         maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
-        mavenCentral()
         gradlePluginPortal()
         maven { url 'https://plugins.gradle.org/m2/' }
         maven {url 'https://repo.spring.io/plugins-release'}
+        mavenCentral()
     }
 }
 
 subprojects {
-
+    repositories {
+        mavenLocal()
+        maven {url 'https://maven.aliyun.com/repository/central'}
+        maven {url 'https://maven.aliyun.com/repository/public/'}
+        maven {url 'https://maven.aliyun.com/repository/google/'}
+        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
+        gradlePluginPortal()
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven {url 'https://repo.spring.io/plugins-release'}
+        mavenCentral()
+    }
     plugins.withType(JavaPlugin) {
         project.sourceCompatibility = "11"
     }
