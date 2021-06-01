@@ -1,0 +1,39 @@
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+}
+group 'com.qk'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    maven {url 'https://maven.aliyun.com/repository/central'}
+    maven {url 'https://maven.aliyun.com/repository/public/'}
+    maven {url 'https://maven.aliyun.com/repository/google/'}
+    maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
+    gradlePluginPortal()
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven {url 'https://repo.spring.io/plugins-release'}
+    mavenCentral()
+}
+
+javaPlatform {
+    allowDependencies()
+}
+
+dependencies {
+    //在constraints块中定义依赖版本约束
+    constraints{
+        api group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    }
+}
+
+publishing{
+    publications{
+        //以下maven并非关键字，可自定义
+        maven(MavenPublication) {
+            //通过java-platform生成BOM
+            from components.javaPlatform
+        }
+    }
+}

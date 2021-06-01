@@ -1,0 +1,34 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id "com.github.shalousun.smart-doc" version "2.1.9"
+    id 'java'
+}
+
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation project(":commons-core")
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+smartdoc {
+    configFile = file("src/main/resources/smart-doc.json")
+}
+
+test {
+    useJUnitPlatform()
+}

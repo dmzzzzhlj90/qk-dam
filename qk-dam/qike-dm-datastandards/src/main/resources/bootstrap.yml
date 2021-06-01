@@ -1,0 +1,14 @@
+server:
+  port: 8780
+spring:
+  application:
+    name: dm-datastandards
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.31.0.44:8847
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        group: DM-GROUP
+      config:
+        server-addr: 172.31.0.44:8847
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
