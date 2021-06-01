@@ -4,9 +4,13 @@ plugins {
 }
 
 dependencies {
-    compile 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compile "org.slf4j:slf4j-api"
+    compile group: 'javax.validation', name: 'validation-api'
+    implementation group: 'javax.servlet', name: 'javax.servlet-api'
     implementation "org.springframework:spring-web"
+    implementation "org.springframework:spring-context"
+    compile project(":commons-core")
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 dependencyManagement {

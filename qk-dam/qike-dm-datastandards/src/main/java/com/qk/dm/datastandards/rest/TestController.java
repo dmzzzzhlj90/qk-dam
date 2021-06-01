@@ -1,5 +1,6 @@
 package com.qk.dm.datastandards.rest;
 
+import com.qk.commons.exception.BizException;
 import com.qk.commons.http.result.DefaultCommonResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +20,8 @@ public class TestController {
      * @return  DefaultCommonResult<Map<String,Object>>
      */
     @GetMapping("test")
-    public DefaultCommonResult<Map<String,Object>> test(){
+    public DefaultCommonResult<Map<String,Object>> test() throws Exception {
         Map<String,Object> ssss = Map.of("Ssss", "22222");
-        return DefaultCommonResult.success(ssss);
+        throw new BizException("失败的测试");
     }
 }

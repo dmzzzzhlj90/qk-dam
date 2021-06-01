@@ -3,7 +3,6 @@ package com.qk.commons.enums;
 import org.springframework.http.HttpStatus;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
 
 /**
  * @author daomingzhu
@@ -127,7 +126,7 @@ public enum ResultCodeEnum {
     /**
      * 文件上传异常错误
      */
-    MAX_UPLOAD_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "DM-400-B0300", "文件大小超出【{0}】限制, 请压缩或降低文件质量!！"),
+    MAX_UPLOAD_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "DM-400-B0300", "文件大小超出限制, 请压缩或降低文件质量!！"),
     MAX_UPLOAD_TYPE_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0301", "文件上传类型错误！【{0}】"),
 
     /**
@@ -144,28 +143,28 @@ public enum ResultCodeEnum {
     MESSAGE_SEND_ERROR(HttpStatus.BAD_REQUEST, "DM-400-C0120", "消息发送失败"),
     ;
 
-    private final String errorMessage;
-    private final String errorCode;
+    private final String message;
+    private final String code;
     private final HttpStatus httpStatus;
 
-    ResultCodeEnum(HttpStatus httpStatus, String errorCode, String errorMessage) {
-        this.errorMessage = errorMessage;
-        this.errorCode = errorCode;
+    ResultCodeEnum(HttpStatus httpStatus, String code, String message) {
+        this.message = message;
+        this.code = code;
         this.httpStatus = httpStatus;
     }
 
     public String getFormattedErrorMessage(String... params) {
-        MessageFormat mf = new MessageFormat(errorMessage);
+        MessageFormat mf = new MessageFormat(message);
         String result = mf.format(params);
         return result;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public String getErrorCode() {
-        return errorCode;
+    public String getCode() {
+        return code;
     }
 
     public HttpStatus getHttpStatus() {

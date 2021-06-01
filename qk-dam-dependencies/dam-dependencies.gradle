@@ -7,13 +7,13 @@ version '1.0.0-SNAPSHOT'
 
 repositories {
     mavenLocal()
-    maven {url 'https://maven.aliyun.com/repository/central'}
-    maven {url 'https://maven.aliyun.com/repository/public/'}
-    maven {url 'https://maven.aliyun.com/repository/google/'}
-    maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven { url 'https://maven.aliyun.com/repository/public/' }
+    maven { url 'https://maven.aliyun.com/repository/google/' }
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     gradlePluginPortal()
     maven { url 'https://plugins.gradle.org/m2/' }
-    maven {url 'https://repo.spring.io/plugins-release'}
+    maven { url 'https://repo.spring.io/plugins-release' }
     mavenCentral()
 }
 
@@ -22,14 +22,15 @@ javaPlatform {
 }
 
 dependencies {
-    //在constraints块中定义依赖版本约束
-    constraints{
+    constraints {
         api group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+        api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springCloudAlibabaVersion}"
+        api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springCloudAlibabaVersion}"
     }
 }
 
-publishing{
-    publications{
+publishing {
+    publications {
         //以下maven并非关键字，可自定义
         maven(MavenPublication) {
             //通过java-platform生成BOM

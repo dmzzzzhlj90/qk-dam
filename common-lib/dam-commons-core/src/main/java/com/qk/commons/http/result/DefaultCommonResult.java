@@ -1,8 +1,6 @@
 package com.qk.commons.http.result;
 
 import com.qk.commons.enums.ResultCodeEnum;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 默认返回结果封装
@@ -12,11 +10,11 @@ public class DefaultCommonResult<T> extends  BaseResult<T> {
 
     public DefaultCommonResult(){}
     public DefaultCommonResult(ResultCodeEnum code){
-        setRetCode(code.getHttpStatus().value());
+        setRetCode(code.getCode());
         setRetMsg(code.getFormattedErrorMessage());
     }
     public DefaultCommonResult(ResultCodeEnum code , T data){
-        setRetCode(code.getHttpStatus().value());
+        setRetCode(code.getCode());
         setRetMsg(code.getFormattedErrorMessage());
         setData(data);
     }
@@ -27,7 +25,7 @@ public class DefaultCommonResult<T> extends  BaseResult<T> {
     public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, T data) {
         return new DefaultCommonResult<>(codeEnum, data);
     }
-    public static <T> DefaultCommonResult<T> success(T data,int retCode, String retMsg) {
+    public static <T> DefaultCommonResult<T> success(T data,String retCode, String retMsg) {
         DefaultCommonResult<T> baseResult = new DefaultCommonResult<>();
         baseResult.setRetCode(retCode);
         baseResult.setRetMsg(retMsg);
@@ -41,16 +39,16 @@ public class DefaultCommonResult<T> extends  BaseResult<T> {
 
 
     public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum) {
-        return error(codeEnum,null);
+        return error(codeEnum,codeEnum.getFormattedErrorMessage());
     }
 
     public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum, T data) {
         return new DefaultCommonResult<>(codeEnum, data);
     }
 
-    public static <T> DefaultCommonResult<T> error(String traceId, int retCode, String retMsg) {
+    public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum, String retMsg) {
         DefaultCommonResult<T> baseResult = new DefaultCommonResult<>();
-        baseResult.setRetCode(retCode);
+        baseResult.setRetCode(codeEnum.getCode());
         baseResult.setRetMsg(retMsg);
         return baseResult;
     }

@@ -4,9 +4,7 @@ plugins {
 }
 
 dependencies {
-    compile 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    implementation "org.springframework:spring-web"
+    implementation "ch.qos.logback:logback-core"
 }
 
 dependencyManagement {

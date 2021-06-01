@@ -14,7 +14,7 @@ public abstract class BaseResult<T> {
     /**
      * 返回码
      */
-    private int retCode;
+    private String retCode;
     /**
      * 返回说明
      */

@@ -13,13 +13,17 @@ configurations {
 }
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation project(":commons-core")
+    implementation project(":commons-exception")
+    implementation project(":commons-log")
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 dependencyManagement {
+    imports {
+        mavenBom "com.qk:dam-dependencies:${damDependenciesVersion}"
+    }
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }

@@ -15,8 +15,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
-group 'org.qk.dm'
-version '1.0-SNAPSHOT'
+group 'com.qk'
 description = 'qike data middle'
 ext.snapshotBuild = version.contains("SNAPSHOT")
 
