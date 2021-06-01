@@ -1,0 +1,16 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java'
+}
+
+dependencies {
+    implementation group: 'mysql', name: 'mysql-connector-java'
+    implementation "org.springframework:spring-context"
+    compile 'com.zaxxer:HikariCP'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
