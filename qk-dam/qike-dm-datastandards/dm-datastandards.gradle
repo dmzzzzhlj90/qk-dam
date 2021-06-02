@@ -12,15 +12,15 @@ configurations {
     }
 }
 dependencies {
+    compile project(":commons-core")
     compile project(":qk-querydsl")
+    compile project(":qk-data-redis")
+    compile project(":commons-log")
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation project(":commons-exception")
-    implementation project(":commons-log")
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    compile 'javax.annotation:javax.annotation-api'
     annotationProcessor("javax.annotation:javax.annotation-api","com.querydsl:querydsl-apt:4.4.0:jpa","org.projectlombok:lombok")
 }
 dependencyManagement {

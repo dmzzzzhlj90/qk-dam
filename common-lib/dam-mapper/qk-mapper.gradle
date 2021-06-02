@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-    compile project(":qk-datasource")
 }
 
 dependencyManagement {

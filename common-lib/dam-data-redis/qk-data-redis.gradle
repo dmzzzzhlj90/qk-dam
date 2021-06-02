@@ -1,0 +1,25 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java'
+}
+
+dependencies {
+    compile 'org.springframework.data:spring-data-redis'
+    implementation 'io.lettuce:lettuce-core'
+    implementation group: 'org.apache.commons', name: 'commons-pool2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.springframework.cloud:spring-cloud-context"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.qk:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
