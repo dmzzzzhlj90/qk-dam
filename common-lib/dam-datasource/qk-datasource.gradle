@@ -5,12 +5,17 @@ plugins {
 
 dependencies {
     implementation group: 'mysql', name: 'mysql-connector-java'
-    implementation "org.springframework:spring-context"
+    implementation "jakarta.annotation:jakarta.annotation-api"
+    implementation "org.springframework.boot:spring-boot"
+    implementation "org.springframework.cloud:spring-cloud-context"
     compile 'com.zaxxer:HikariCP'
 }
 
 dependencyManagement {
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }

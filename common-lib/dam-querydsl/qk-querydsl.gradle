@@ -4,15 +4,20 @@ plugins {
 }
 
 dependencies {
-    implementation 'org.springframework.data:spring-data-jpa'
-    implementation "com.querydsl:querydsl-jpa"
+    compile 'org.springframework.data:spring-data-jpa'
+    compile group: 'org.hibernate', name: 'hibernate-core'
+    compile "com.querydsl:querydsl-jpa"
     compile project(":qk-datasource")
+    implementation "org.springframework.cloud:spring-cloud-context"
     annotationProcessor("com.querydsl:querydsl-apt:4.4.0:jpa","org.projectlombok:lombok")
 }
 
 dependencyManagement {
     imports {
         mavenBom "com.qk:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
