@@ -2,6 +2,7 @@ package com.qk.redis.config;
 
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -19,6 +20,7 @@ import static io.lettuce.core.ReadFrom.REPLICA_PREFERRED;
 class RedisConnFactoryConfig {
 
     @Bean
+    @Primary
     public RedisConnectionFactory standaloneConfig(RedisProperties redisProperties) {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
         redisStandaloneConfiguration.setPassword(redisProperties.getPassword());
@@ -28,7 +30,8 @@ class RedisConnFactoryConfig {
     /**
      * Lettuce 哨兵
      */
-    @Deprecated
+    @Bean
+    @ConditionalOnMissingBean(RedisConnectionFactory.class)
     public RedisConnectionFactory lettuceConnectionFactory(RedisProperties redisProperties, LettuceClientConfiguration lettuceClientConfiguration) {
         RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration();
         sentinelConfig.setMaster(redisProperties.getSentinel().getMaster());
@@ -50,7 +53,7 @@ class RedisConnFactoryConfig {
      * @return RedisConnectionFactory
      */
     @Bean
-    @Primary
+    @ConditionalOnMissingBean(RedisConnectionFactory.class)
     public RedisConnectionFactory cluster(RedisProperties redisProperties,
                                           LettuceClientConfiguration lettuceClientConfiguration){
 
@@ -68,6 +71,7 @@ class RedisConnFactoryConfig {
      * @return RedisConnectionFactory
      */
     @Bean
+    @ConditionalOnMissingBean(RedisConnectionFactory.class)
     public RedisConnectionFactory writeToMasterReadFromReplica(RedisProperties redisProperties,
                                                                GenericObjectPoolConfig<Object> poolConfig) {
         LettuceClientConfiguration clientConfig = LettucePoolingClientConfiguration.builder()
