@@ -6,7 +6,6 @@ plugins {
 dependencies {
     compile project(":qk-datasource")
     implementation group: 'org.mybatis', name: 'mybatis'
-    implementation "org.perf4j:perf4j"
     implementation 'commons-io:commons-io'
     implementation 'org.apache.curator:curator-recipes'
 

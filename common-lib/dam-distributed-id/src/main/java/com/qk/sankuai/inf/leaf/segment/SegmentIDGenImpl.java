@@ -7,8 +7,6 @@ import com.qk.sankuai.inf.leaf.segment.model.LeafAlloc;
 import com.qk.sankuai.inf.leaf.segment.model.Segment;
 import com.qk.sankuai.inf.leaf.segment.model.SegmentBuffer;
 import com.qk.sankuai.inf.leaf.segment.dao.IDAllocDao;
-import org.perf4j.StopWatch;
-import org.perf4j.slf4j.Slf4JStopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,8 +85,6 @@ public class SegmentIDGenImpl implements IDGen {
     }
 
     private void updateCacheFromDb() {
-        logger.info("update cache from db");
-        StopWatch sw = new Slf4JStopWatch();
         try {
             List<String> dbTags = dao.getAllTags();
             if (dbTags == null || dbTags.isEmpty()) {
@@ -127,8 +123,6 @@ public class SegmentIDGenImpl implements IDGen {
             }
         } catch (Exception e) {
             logger.warn("update cache from db exception", e);
-        } finally {
-            sw.stop("updateCacheFromDb");
         }
     }
 
@@ -158,7 +152,6 @@ public class SegmentIDGenImpl implements IDGen {
     }
 
     public void updateSegmentFromDb(String key, Segment segment) {
-        StopWatch sw = new Slf4JStopWatch();
         SegmentBuffer buffer = segment.getBuffer();
         LeafAlloc leafAlloc;
         if (!buffer.isInitOk()) {
@@ -198,7 +191,6 @@ public class SegmentIDGenImpl implements IDGen {
         segment.getValue().set(value);
         segment.setMax(leafAlloc.getMaxId());
         segment.setStep(buffer.getStep());
-        sw.stop("updateSegmentFromDb", key + " " + segment);
     }
 
     public Result getIdFromSegmentBuffer(final SegmentBuffer buffer) {

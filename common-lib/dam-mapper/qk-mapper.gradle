@@ -4,10 +4,23 @@ plugins {
 }
 
 dependencies {
+    implementation project(":qk-datasource")
+    compile "com.baomidou:mybatis-plus"
+    implementation "org.springframework.boot:spring-boot"
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.springframework.cloud:spring-cloud-context"
+    compile 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 dependencyManagement {
     imports {
+        mavenBom "com.qk:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
