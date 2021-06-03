@@ -101,7 +101,6 @@ public enum ResultCodeEnum {
     /**
      * 系统运行时异常
      */
-    SYS_RUNTIME_ERROR(HttpStatus.REQUEST_TIMEOUT, "DM-400-B0002", "系统运行时异常,请联系管理员!"),
     DATA_OPT_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0003", "数据操作异常！{0}"),
     TARGET_OBJ_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0004", "目标对象错误！{0}"),
 
