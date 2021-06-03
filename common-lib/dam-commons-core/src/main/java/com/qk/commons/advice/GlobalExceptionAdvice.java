@@ -55,7 +55,7 @@ public class GlobalExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public <T> BaseResult<T> sendErrorResponse(RuntimeException exception){
         log.error("系统运行时异常: {}", getStackTrace(exception));
-        return DefaultCommonResult.error(ResultCodeEnum.SYS_RUNTIME_ERROR);
+        return DefaultCommonResult.error(ResultCodeEnum.BAD_REQUEST);
     }
 
     /**
@@ -67,7 +67,7 @@ public class GlobalExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public <T> BaseResult<T> sendErrorResponse(BizException exception){
         log.error("系统运行时异常: {}", getStackTrace(exception));
-        return DefaultCommonResult.error(ResultCodeEnum.SYS_RUNTIME_ERROR);
+        return DefaultCommonResult.error(ResultCodeEnum.BAD_REQUEST,exception.getLocalizedMessage());
     }
 
     /**

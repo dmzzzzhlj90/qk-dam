@@ -13,6 +13,11 @@ public class DefaultCommonResult<T> extends  BaseResult<T> {
         setRetCode(code.getCode());
         setRetMsg(code.getFormattedErrorMessage());
     }
+    public DefaultCommonResult(ResultCodeEnum code,String tips){
+        setRetCode(code.getCode());
+        setRetMsg(code.getFormattedErrorMessage());
+        setTips(tips);
+    }
     public DefaultCommonResult(ResultCodeEnum code , T data){
         setRetCode(code.getCode());
         setRetMsg(code.getFormattedErrorMessage());
@@ -46,10 +51,11 @@ public class DefaultCommonResult<T> extends  BaseResult<T> {
         return new DefaultCommonResult<>(codeEnum, data);
     }
 
-    public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum, String retMsg) {
+    public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum, String tips) {
         DefaultCommonResult<T> baseResult = new DefaultCommonResult<>();
         baseResult.setRetCode(codeEnum.getCode());
-        baseResult.setRetMsg(retMsg);
+        baseResult.setRetMsg(codeEnum.getFormattedErrorMessage());
+        baseResult.setTips(tips);
         return baseResult;
     }
 }
