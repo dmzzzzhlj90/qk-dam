@@ -29,7 +29,6 @@ public class DataStandardServiceImpl implements DataStandardService {
 
     @Override
     public List<DataStandardTreeResp> getTree() {
-        //查询条件
         Predicate predicate = QDsdDir.dsdDir.delFlag.eq(0);
         List<DsdDir> dsdDirList = (List<DsdDir>) dsdDirRepository.findAll(predicate);
         List<DataStandardTreeResp> respList = new ArrayList<>();
@@ -45,7 +44,7 @@ public class DataStandardServiceImpl implements DataStandardService {
         Optional<DsdDir> dsdDirIsExist = dsdDirRepository.findOne(predicate);
         if (dsdDirIsExist.isPresent()) {
             throw new BizException("当前要新增的数据分类ID为：" + dsdDirIsExist.get().getDirDsdid()
-                    + "数据标准分类名称为:" + dsdDirIsExist.get().getDirDsdName() + "，已存在！！！");
+                    + "数据标准分类名称为:" + dsdDirIsExist.get().getDirDsdName() + " 的数据，已存在！！！");
         }
         dsdDirRepository.save(dsdDir);
     }
@@ -58,13 +57,22 @@ public class DataStandardServiceImpl implements DataStandardService {
 
     @Override
     public void deleteDsdDir(Integer id) {
-        dsdDirRepository.deleteById(id);
+        Predicate predicate = QDsdDir.dsdDir.id.eq(id);
+        Optional<DsdDir> dirOptional = dsdDirRepository.findById(id);
+
+        Predicate predicate2 = QDsdDir.dsdDir.parentId.eq(dirOptional.get().getDirDsdid());
+        long count = dsdDirRepository.count(predicate2);
+        if (count > 0) {
+            throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
+        } else {
+            dsdDirRepository.deleteById(id);
+        }
     }
 
 
     /**
-     * @param [respList]
-     * @return java.util.List<com.qk.dm.datastandards.vo.DataStandardTreeResp>
+     * @Param: respList
+     * @return: java.util.List<com.qk.dm.datastandards.vo.DataStandardTreeResp>
      * 使用递归方法建树
      **/
     public static List<DataStandardTreeResp> buildByRecursive(List<DataStandardTreeResp> respList) {
@@ -78,8 +86,8 @@ public class DataStandardServiceImpl implements DataStandardService {
     }
 
     /**
-     * @param [treeNode, respList]
-     * @return com.qk.dm.datastandards.vo.DataStandardTreeResp
+     * @Param: treeNode, respList
+     * @return: com.qk.dm.datastandards.vo.DataStandardTreeResp
      * 递归查找子节点
      **/
     public static DataStandardTreeResp findChildren(DataStandardTreeResp treeNode, List<DataStandardTreeResp> respList) {
