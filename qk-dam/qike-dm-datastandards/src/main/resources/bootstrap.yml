@@ -19,3 +19,5 @@ spring:
             refresh: true
           - dataId: test44-redis-dev.yml
             refresh: true
+          - dataId: test44-leaf-dev.yml
+            refresh: true

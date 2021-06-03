@@ -1,0 +1,31 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java'
+}
+
+dependencies {
+    compile project(":qk-datasource")
+    implementation group: 'org.mybatis', name: 'mybatis'
+    implementation "org.perf4j:perf4j"
+    implementation 'commons-io:commons-io'
+    implementation 'org.apache.curator:curator-recipes'
+
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "org.slf4j:slf4j-api"
+
+    implementation 'org.projectlombok:lombok'
+    implementation "org.springframework.boot:spring-boot"
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.qk:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}

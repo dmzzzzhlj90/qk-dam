@@ -26,6 +26,10 @@ dependencies {
         api group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
         api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springCloudAlibabaVersion}"
         api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springCloudAlibabaVersion}"
+        api group: 'org.mybatis', name: 'mybatis', version: "3.5.7"
+        api "org.perf4j:perf4j:0.9.16"
+        api 'commons-io:commons-io:2.9.0'
+        api 'org.apache.curator:curator-recipes:5.1.0'
     }
 }
 
