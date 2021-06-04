@@ -3,9 +3,10 @@ package com.qk.dm.datastandards.service.impl;
 import com.qk.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.entity.QDsdDir;
+import com.qk.dm.datastandards.mapstruct.mapper.DsdDirTreeMapper;
 import com.qk.dm.datastandards.repositories.DsdDirRepository;
 import com.qk.dm.datastandards.service.DataStandardDirService;
-import com.qk.dm.datastandards.vo.DataStandardTreeRespVO;
+import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ import java.util.Optional;
 /**
  * @author wjq
  * @date 20210603
- * 数据标准__目录接口实现类
  * @since 1.0.0
+ * 数据标准__目录接口实现类
  */
 @Service
 public class DataStandardDirServiceImpl implements DataStandardDirService {
@@ -28,22 +29,23 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     }
 
     @Override
-    public List<DataStandardTreeRespVO> getTree() {
+    public List<DataStandardTreeVO> getTree() {
         Predicate predicate = QDsdDir.dsdDir.delFlag.eq(0);
         List<DsdDir> dsdDirList = (List<DsdDir>) dsdDirRepository.findAll(predicate);
-        List<DataStandardTreeRespVO> respList = new ArrayList<>();
+        List<DataStandardTreeVO> respList = new ArrayList<>();
         for (DsdDir dsdDir : dsdDirList) {
-            respList.add(getDataStandardTreeResp(dsdDir));
+            DataStandardTreeVO dirTreeVO = DsdDirTreeMapper.INSTANCE.useDirTreeVO(dsdDir);
+            respList.add(dirTreeVO);
         }
         return buildByRecursive(respList);
     }
 
     @Override
     public void addDsdDir(DsdDir dsdDir) {
-        Predicate predicate = QDsdDir.dsdDir.dirDsdid.eq(dsdDir.getDirDsdid());
+        Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
         Optional<DsdDir> dsdDirIsExist = dsdDirRepository.findOne(predicate);
         if (dsdDirIsExist.isPresent()) {
-            throw new BizException("当前要新增的数据分类ID为：" + dsdDirIsExist.get().getDirDsdid()
+            throw new BizException("当前要新增的数据分类ID为：" + dsdDirIsExist.get().getDirDsdId()
                     + "数据标准分类名称为:" + dsdDirIsExist.get().getDirDsdName() + " 的数据，已存在！！！");
         }
         dsdDirRepository.save(dsdDir);
@@ -62,7 +64,7 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
             throw new BizException("参数有误,当前要删除的节点不存在！！！");
         }
 
-        Predicate predicate = QDsdDir.dsdDir.parentId.eq(dirOptional.get().getDirDsdid());
+        Predicate predicate = QDsdDir.dsdDir.parentId.eq(dirOptional.get().getDirDsdId());
         long count = dsdDirRepository.count(predicate);
         if (count > 0) {
             throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
@@ -77,9 +79,9 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
      * @return: java.util.List<com.qk.dm.datastandards.vo.DataStandardTreeResp>
      * 使用递归方法建树
      **/
-    public static List<DataStandardTreeRespVO> buildByRecursive(List<DataStandardTreeRespVO> respList) {
-        List<DataStandardTreeRespVO> trees = new ArrayList<DataStandardTreeRespVO>();
-        for (DataStandardTreeRespVO treeNode : respList) {
+    public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
+        List<DataStandardTreeVO> trees = new ArrayList<DataStandardTreeVO>();
+        for (DataStandardTreeVO treeNode : respList) {
             if (null == treeNode.getParentId() || 0 > treeNode.getParentId()) {
                 trees.add(findChildren(treeNode, respList));
             }
@@ -92,26 +94,17 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
      * @return: com.qk.dm.datastandards.vo.DataStandardTreeResp
      * 递归查找子节点
      **/
-    public static DataStandardTreeRespVO findChildren(DataStandardTreeRespVO treeNode, List<DataStandardTreeRespVO> respList) {
-        treeNode.setChildren(new ArrayList<DataStandardTreeRespVO>());
-        for (DataStandardTreeRespVO it : respList) {
-            if (treeNode.getDirDsdid().equals(it.getParentId())) {
+    public static DataStandardTreeVO findChildren(DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
+        treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
+        for (DataStandardTreeVO it : respList) {
+            if (treeNode.getDirDsdId().equals(it.getParentId())) {
                 if (treeNode.getChildren() == null) {
-                    treeNode.setChildren(new ArrayList<DataStandardTreeRespVO>());
+                    treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
                 }
                 treeNode.getChildren().add(findChildren(it, respList));
             }
         }
         return treeNode;
-    }
-
-    private DataStandardTreeRespVO getDataStandardTreeResp(DsdDir dsdDir) {
-        return DataStandardTreeRespVO.builder()
-                .id(dsdDir.getId())
-                .dirDsdid(dsdDir.getDirDsdid())
-                .dirDsdName(dsdDir.getDirDsdName())
-                .parentId(dsdDir.getParentId())
-                .build();
     }
 
     @Override
@@ -132,11 +125,11 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     /**
      * @Param: ids, delId
      * @return: void
-     *  获取删除叶子节点ID
+     * 获取删除叶子节点ID
      **/
     private void getIds(ArrayList<Integer> ids, Integer delId) {
         Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(delId));
-        Iterable<DsdDir> sonDirList = dsdDirRepository.findAll(QDsdDir.dsdDir.parentId.eq(parentDir.get().getDirDsdid()));
+        Iterable<DsdDir> sonDirList = dsdDirRepository.findAll(QDsdDir.dsdDir.parentId.eq(parentDir.get().getDirDsdId()));
         for (DsdDir dsdDir : sonDirList) {
             ids.add(dsdDir.getId());
             this.getIds(ids, dsdDir.getId());

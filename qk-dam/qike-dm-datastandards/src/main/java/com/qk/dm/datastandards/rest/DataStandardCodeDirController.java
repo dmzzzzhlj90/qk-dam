@@ -2,8 +2,10 @@ package com.qk.dm.datastandards.rest;
 
 import com.qk.commons.enums.ResultCodeEnum;
 import com.qk.commons.http.result.DefaultCommonResult;
+import com.qk.dm.datastandards.entity.DsdCodeDir;
 import com.qk.dm.datastandards.entity.DsdDir;
-import com.qk.dm.datastandards.service.DataStandardDirService;
+import com.qk.dm.datastandards.service.DataStandardCodeDirService;
+import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +15,29 @@ import java.util.List;
 
 /**
  * @author wjq
- * @date 20210603
+ * @date 20210604
  * @since 1.0.0
- * 数据标准__目录接口入口
+ * 数据标准__码表目录接口入口
  */
 @Slf4j
 @RestController
-@RequestMapping("/dsd/dir")
-public class DataStandardDirController {
-    private final DataStandardDirService dataStandardDirService;
+@RequestMapping("/dsd/code/dir")
+public class DataStandardCodeDirController {
+    private final DataStandardCodeDirService dataStandardCodeDirService;
 
     @Autowired
-    public DataStandardDirController(DataStandardDirService dataStandardDirService) {
-        this.dataStandardDirService = dataStandardDirService;
+    public DataStandardCodeDirController(DataStandardCodeDirService dataStandardCodeDirService) {
+        this.dataStandardCodeDirService = dataStandardCodeDirService;
 
     }
 
     /**
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     * 获取数据标准分类目录树
+     * 获取数据标准__码表分类目录树
      **/
     @GetMapping("/tree")
-    public DefaultCommonResult<List<DataStandardTreeVO>> getDsdDirTree() {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardDirService.getTree());
+    public DefaultCommonResult<List<DataStandardCodeTreeVO>> getDsdDirTree() {
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeDirService.getTree());
     }
 
     /**
@@ -44,8 +46,8 @@ public class DataStandardDirController {
      *
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdDir(@RequestBody DsdDir dsdDir)  {
-        dataStandardDirService.addDsdDir(dsdDir);
+    public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDir dsdCodeDir)  {
+        dataStandardCodeDirService.addDsdDir(dsdCodeDir);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -55,8 +57,8 @@ public class DataStandardDirController {
      *
      **/
     @PostMapping("/update")
-    public DefaultCommonResult updateDsdDir(@RequestBody DsdDir dsdDir) {
-        dataStandardDirService.updateDsdDir(dsdDir);
+    public DefaultCommonResult updateDsdDir(@RequestBody DsdCodeDir dsdCodeDir) {
+        dataStandardCodeDirService.updateDsdDir(dsdCodeDir);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -67,7 +69,7 @@ public class DataStandardDirController {
      **/
     @DeleteMapping("/delete")
     public DefaultCommonResult deleteDsdDir(@RequestParam("id") Integer id) {
-        dataStandardDirService.deleteDsdDir(id);
+        dataStandardCodeDirService.deleteDsdDir(id);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -78,7 +80,7 @@ public class DataStandardDirController {
      **/
     @DeleteMapping("/delete/root")
     public DefaultCommonResult deleteDsdDirRoot(@RequestParam("id") Integer id) {
-        dataStandardDirService.deleteDsdDirRoot(id);
+        dataStandardCodeDirService.deleteDsdDirRoot(id);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 }

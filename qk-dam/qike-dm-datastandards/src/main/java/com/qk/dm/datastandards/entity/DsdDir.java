@@ -1,7 +1,6 @@
 package com.qk.dm.datastandards.entity;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +8,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@Accessors(chain = true)
 @Table(name = "qk_dsd_dir")
 public class DsdDir implements Serializable {
 
@@ -24,10 +22,10 @@ public class DsdDir implements Serializable {
     private Integer id;
 
     /**
-     * 数据标准分类
+     * 数据标准分类ID
      */
-    @Column(name = "dir_dsd__id", nullable = false)
-    private Integer dirDsdid;
+    @Column(name = "dir_dsd_id", nullable = false)
+    private Integer dirDsdId;
 
     /**
      * 数据标准分类名称
