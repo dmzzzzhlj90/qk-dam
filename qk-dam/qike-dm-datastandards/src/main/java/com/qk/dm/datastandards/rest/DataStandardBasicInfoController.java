@@ -11,10 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 数据标准__标准信息接口入口
  * @author wjq
  * @date 20210604
  * @since 1.0.0
- * 数据标准__标准信息接口入口
  */
 @Slf4j
 @RestController

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * 数据标准__码表目录接口入口
  * @author wjq
  * @date 20210604
  * @since 1.0.0
- * 数据标准__码表目录接口入口
  */
 @Slf4j
 @RestController

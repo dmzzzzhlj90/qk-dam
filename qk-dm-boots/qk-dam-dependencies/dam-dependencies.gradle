@@ -2,21 +2,25 @@ plugins {
     id 'java-platform'
     id 'maven-publish'
 }
-version "${damDependenciesVersion}"
+version '1.0.0-SNAPSHOT'
 group "com.qk.dam"
 
 javaPlatform {
     allowDependencies()
 }
-
 dependencies {
     constraints {
+        api "com.qk.dam.commons:commons-core:${damDependenciesVersion}"
+        api "com.qk.dam.jpa:qk-data-jpa:${damDependenciesVersion}"
+        api "com.qk.dam.redis:qk-data-redis:${damDependenciesVersion}"
         api group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
         api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springCloudAlibabaVersion}"
         api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springCloudAlibabaVersion}"
+
         api group: 'org.mybatis', name: 'mybatis', version: "3.5.7"
         api group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
         api group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final'
+
         api 'com.baomidou:mybatis-plus:3.4.3'
         api 'com.querydsl:querydsl-apt:4.4.0'
         api group: 'com.alibaba', name: 'easyexcel', version: '2.2.10'

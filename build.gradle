@@ -38,7 +38,6 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
-    println(project.name)
     if (!project.name.contains("dam-dependencies")){
         apply plugin: 'java'
         publishing {
@@ -61,27 +60,18 @@ subprojects {
                 }
             }
         }
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    def releasesRepoUrl = "http://172.31.0.18:8081/repository/dm-releases/"
-                    def snapshotsRepoUrl = "http://172.31.0.18:8081/repository/dm-snapshot/"
-                    def url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-                    repository(url: url) {
-                        authentication(userName: "admin", password: "zhudao123")
-                    }
+    }
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                def releasesRepoUrl = "http://172.31.0.18:8081/repository/dm-releases/"
+                def snapshotsRepoUrl = "http://172.31.0.18:8081/repository/dm-snapshot/"
+                def url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                repository(url: url) {
+                    authentication(userName: "admin", password: "zhudao123")
                 }
             }
         }
     }
 
-
-}
-
-project.afterEvaluate {
-    getSubprojects().forEach() { project ->
-//        def uploadTask = project.tasks.getByName('uploadArchives')
-//        println(project.tasks.getByName('uploadArchives'))
-    }
-    println "project配置成功"
 }

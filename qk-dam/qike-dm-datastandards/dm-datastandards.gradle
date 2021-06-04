@@ -25,9 +25,10 @@ compileJava {
 }
 
 dependencies {
-    compile project(":commons-core")
-    compile project(":qk-data-jpa")
-    compile project(":qk-data-redis")
+    implementation "com.qk.dam.commons:commons-core:${damDependenciesVersion}"
+    implementation "com.qk.dam.jpa:qk-data-jpa:${damDependenciesVersion}"
+    implementation "com.qk.dam.redis:qk-data-redis:${damDependenciesVersion}"
+
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
@@ -48,6 +49,9 @@ dependencyManagement {
     }
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
     }
 }
 
