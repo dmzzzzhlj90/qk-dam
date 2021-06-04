@@ -1,7 +1,8 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
 }
+version "${commonLibVersion}"
+group "com.qk.dam.commons"
 
 dependencies {
     compile "org.slf4j:slf4j-api"
@@ -16,7 +17,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "com.qk:dam-dependencies:${damDependenciesVersion}"
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
     }
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"

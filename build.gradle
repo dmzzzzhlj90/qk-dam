@@ -10,44 +10,18 @@ buildscript {
         }
     }
 }
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'maven'
 
 group 'com.qk'
-description = 'qike data middle'
+version "${version}"
+description = '数据中台'
 ext.snapshotBuild = version.contains("SNAPSHOT")
 
-allprojects {
-    repositories {
-        mavenLocal()
-        maven {
-            url = 'http://172.31.0.18:8081/repository/alibaba'
-            credentials {
-                username = 'qk-dm-dev'
-                password = 'qk-dm-dev123'
-            }
-        }
-    }
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                repository(url: 'http://172.31.0.18:8081/repository/alibaba') {
-                    authentication(userName: "qk-dm-dev", password: "qk-dm-dev123")
-                }
-
-                pom.whenConfigured { pom ->
-                    pom.dependencies.forEach { dep ->
-                        if (dep.getVersion() == "unspecified") {
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+
     repositories {
         mavenLocal()
         maven {
@@ -64,11 +38,50 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
+    println(project.name)
+    if (!project.name.contains("dam-dependencies")){
+        apply plugin: 'java'
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    versionMapping {
+                        usage('java-api') {
+                            fromResolutionOf('runtimeClasspath')
+                        }
+                        usage('java-runtime') {
+                            fromResolutionResult()
+                        }
+                    }
+                    from components.java
+                    afterEvaluate {
+                        group = project.group
+                        artifactId = project.name
+                        version = project.version
+                    }
+                }
+            }
+        }
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    def releasesRepoUrl = "http://172.31.0.18:8081/repository/dm-releases/"
+                    def snapshotsRepoUrl = "http://172.31.0.18:8081/repository/dm-snapshot/"
+                    def url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                    repository(url: url) {
+                        authentication(userName: "admin", password: "zhudao123")
+                    }
+                }
+            }
+        }
+    }
+
+
 }
 
 project.afterEvaluate {
     getSubprojects().forEach() { project ->
 //        def uploadTask = project.tasks.getByName('uploadArchives')
-        println(project.tasks.getByName('uploadArchives'))
+//        println(project.tasks.getByName('uploadArchives'))
     }
+    println "project配置成功"
 }

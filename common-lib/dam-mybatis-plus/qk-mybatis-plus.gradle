@@ -1,8 +1,8 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
 }
-
+version "${commonLibVersion}"
+group "com.qk.dam.mybatisplus"
 dependencies {
     implementation project(":qk-datasource")
     compile "com.baomidou:mybatis-plus"
@@ -15,7 +15,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "com.qk:dam-dependencies:${damDependenciesVersion}"
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
     }
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"

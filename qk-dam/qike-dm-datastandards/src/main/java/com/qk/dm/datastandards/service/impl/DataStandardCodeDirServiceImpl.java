@@ -1,7 +1,7 @@
 package com.qk.dm.datastandards.service.impl;
 
 
-import com.qk.commons.exception.BizException;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.DsdCodeDir;
 import com.qk.dm.datastandards.entity.QDsdCodeDir;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTreeMapper;

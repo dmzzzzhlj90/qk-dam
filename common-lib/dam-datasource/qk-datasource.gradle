@@ -1,8 +1,8 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
 }
-
+version "${commonLibVersion}"
+group "com.qk.dam.datasource"
 dependencies {
     implementation group: 'mysql', name: 'mysql-connector-java'
     implementation "jakarta.annotation:jakarta.annotation-api"

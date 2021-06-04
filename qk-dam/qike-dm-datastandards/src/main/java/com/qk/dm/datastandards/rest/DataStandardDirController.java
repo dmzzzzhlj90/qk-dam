@@ -1,7 +1,7 @@
 package com.qk.dm.datastandards.rest;
 
-import com.qk.commons.enums.ResultCodeEnum;
-import com.qk.commons.http.result.DefaultCommonResult;
+import com.qk.dam.commons.enums.ResultCodeEnum;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;

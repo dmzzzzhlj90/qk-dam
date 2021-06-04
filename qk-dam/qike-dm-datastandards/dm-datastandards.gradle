@@ -4,7 +4,8 @@ plugins {
     id "com.github.shalousun.smart-doc" version "${smartDoc}"
     id 'java'
 }
-
+version "${dmDatastandardsVersion}"
+group "com.qk.dm.datastandards"
 configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
@@ -43,7 +44,7 @@ dependencies {
 }
 dependencyManagement {
     imports {
-        mavenBom "com.qk:dam-dependencies:${damDependenciesVersion}"
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
     }
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"

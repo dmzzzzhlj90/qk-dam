@@ -23,7 +23,7 @@
 package $package;
 
 #end
-import com.qk.jpa.base.BaseRepository
+import com.qk.dam.jpa.base.BaseRepository
 #foreach($importClass in $importClassList)
 import $importClass;
 #end

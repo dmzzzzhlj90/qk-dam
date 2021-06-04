@@ -1,12 +1,10 @@
 package com.qk.dm.datastandards.rest;
 
-import com.qk.commons.enums.ResultCodeEnum;
-import com.qk.commons.http.result.DefaultCommonResult;
+import com.qk.dam.commons.enums.ResultCodeEnum;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.entity.DsdCodeDir;
-import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
-import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,9 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
 }
-
+version "${dmMicroServices}"
+group "com.qk.dm.dmgateway"
 configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
