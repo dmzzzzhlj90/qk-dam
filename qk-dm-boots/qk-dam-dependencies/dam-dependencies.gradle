@@ -27,7 +27,10 @@ dependencies {
         api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springCloudAlibabaVersion}"
         api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springCloudAlibabaVersion}"
         api group: 'org.mybatis', name: 'mybatis', version: "3.5.7"
+        api group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
+        api group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final'
         api 'com.baomidou:mybatis-plus:3.4.3'
+        api 'com.querydsl:querydsl-apt:4.4.0'
         api group: 'com.alibaba', name: 'easyexcel', version: '2.2.10'
         api 'commons-io:commons-io:2.9.0'
         api 'org.apache.curator:curator-recipes:5.1.0'

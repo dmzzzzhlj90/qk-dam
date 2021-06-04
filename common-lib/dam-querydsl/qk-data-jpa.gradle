@@ -9,7 +9,6 @@ dependencies {
     compile "com.querydsl:querydsl-jpa"
     compile project(":qk-datasource")
     implementation "org.springframework.cloud:spring-cloud-context"
-    annotationProcessor("com.querydsl:querydsl-apt:4.4.0:jpa","org.projectlombok:lombok")
 }
 
 dependencyManagement {
