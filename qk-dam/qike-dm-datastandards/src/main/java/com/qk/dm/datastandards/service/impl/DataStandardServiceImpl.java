@@ -57,7 +57,6 @@ public class DataStandardServiceImpl implements DataStandardService {
 
     @Override
     public void deleteDsdDir(Integer id) {
-        Predicate predicate = QDsdDir.dsdDir.id.eq(id);
         Optional<DsdDir> dirOptional = dsdDirRepository.findById(id);
 
         Predicate predicate2 = QDsdDir.dsdDir.parentId.eq(dirOptional.get().getDirDsdid());
@@ -110,6 +109,31 @@ public class DataStandardServiceImpl implements DataStandardService {
                 .dirDsdName(dsdDir.getDirDsdName())
                 .parentId(dsdDir.getParentId())
                 .build();
+    }
+
+    @Override
+    public void deleteDsdDirRoot(Integer delId) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        //删除父级ID
+        ids.add(delId);
+        getIds(ids, delId);
+        //批量删除
+        Iterable<DsdDir> delDirList = dsdDirRepository.findAll(QDsdDir.dsdDir.id.in(ids));
+        dsdDirRepository.deleteAll(delDirList);
+    }
+
+    /**
+     * @Param: ids, delId
+     * @return: void
+     *  获取删除叶子节点ID
+     **/
+    private void getIds(ArrayList<Integer> ids, Integer delId) {
+        Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(delId));
+        Iterable<DsdDir> sonDirList = dsdDirRepository.findAll(QDsdDir.dsdDir.parentId.eq(parentDir.get().getDirDsdid()));
+        for (DsdDir dsdDir : sonDirList) {
+            ids.add(dsdDir.getId());
+            this.getIds(ids, dsdDir.getId());
+        }
     }
 
 }
