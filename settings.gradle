@@ -1,12 +1,13 @@
 pluginManagement {
     repositories {
-        maven {url 'https://maven.aliyun.com/repository/central'}
-        maven {url 'https://maven.aliyun.com/repository/public/'}
-        maven {url 'https://maven.aliyun.com/repository/google/'}
-        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
-        gradlePluginPortal()
-        mavenCentral()
-        maven {url 'https://repo.spring.io/plugins-release'}
+        mavenLocal()
+        maven {
+            url = 'http://172.31.0.18:8081/repository/alibaba'
+            credentials {
+                username = 'qk-dm-dev'
+                password = 'qk-dm-dev123'
+            }
+        }
     }
 }
 plugins {

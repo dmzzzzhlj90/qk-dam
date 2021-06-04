@@ -1,20 +1,18 @@
 buildscript {
     repositories {
         mavenLocal()
-        maven {url 'https://maven.aliyun.com/repository/central'}
-        maven {url 'https://maven.aliyun.com/repository/public/'}
-        maven {url 'https://maven.aliyun.com/repository/google/'}
-        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
-        gradlePluginPortal()
-        maven { url 'https://plugins.gradle.org/m2/' }
-        maven {url 'https://repo.spring.io/plugins-release'}
-        mavenCentral()
+        maven {
+            url = 'http://172.31.0.18:8081/repository/alibaba'
+            credentials {
+                username = 'qk-dm-dev'
+                password = 'qk-dm-dev123'
+            }
+        }
     }
 }
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven'
-apply plugin: 'maven-publish'
 
 group 'com.qk'
 description = 'qike data middle'
@@ -23,33 +21,54 @@ ext.snapshotBuild = version.contains("SNAPSHOT")
 allprojects {
     repositories {
         mavenLocal()
-        maven {url 'https://maven.aliyun.com/repository/central'}
-        maven {url 'https://maven.aliyun.com/repository/public/'}
-        maven {url 'https://maven.aliyun.com/repository/google/'}
-        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
-        gradlePluginPortal()
-        maven { url 'https://plugins.gradle.org/m2/' }
-        maven {url 'https://repo.spring.io/plugins-release'}
-        mavenCentral()
+        maven {
+            url = 'http://172.31.0.18:8081/repository/alibaba'
+            credentials {
+                username = 'qk-dm-dev'
+                password = 'qk-dm-dev123'
+            }
+        }
+    }
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: 'http://172.31.0.18:8081/repository/alibaba') {
+                    authentication(userName: "qk-dm-dev", password: "qk-dm-dev123")
+                }
+
+                pom.whenConfigured { pom ->
+                    pom.dependencies.forEach { dep ->
+                        if (dep.getVersion() == "unspecified") {
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 subprojects {
     repositories {
         mavenLocal()
-        maven {url 'https://maven.aliyun.com/repository/central'}
-        maven {url 'https://maven.aliyun.com/repository/public/'}
-        maven {url 'https://maven.aliyun.com/repository/google/'}
-        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
-        gradlePluginPortal()
-        maven { url 'https://plugins.gradle.org/m2/' }
-        maven {url 'https://repo.spring.io/plugins-release'}
-        mavenCentral()
+        maven {
+            url = 'http://172.31.0.18:8081/repository/alibaba'
+            credentials {
+                username = 'qk-dm-dev'
+                password = 'qk-dm-dev123'
+            }
+        }
     }
     plugins.withType(JavaPlugin) {
         project.sourceCompatibility = "11"
     }
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
+    }
+}
+
+project.afterEvaluate {
+    getSubprojects().forEach() { project ->
+//        def uploadTask = project.tasks.getByName('uploadArchives')
+        println(project.tasks.getByName('uploadArchives'))
     }
 }
