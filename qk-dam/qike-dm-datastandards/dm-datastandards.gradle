@@ -13,8 +13,7 @@ configurations {
 }
 dependencies {
     compile project(":commons-core")
-    compile project(":qk-querydsl")
-    compile project(":qk-mapper")
+    compile project(":qk-data-jpa")
     compile project(":qk-data-redis")
     compile project(":commons-log")
     compile project(":leaf-core")
