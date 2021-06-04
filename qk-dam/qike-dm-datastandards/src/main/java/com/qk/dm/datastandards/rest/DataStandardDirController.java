@@ -4,7 +4,7 @@ import com.qk.commons.enums.ResultCodeEnum;
 import com.qk.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.service.DataStandardDirService;
-import com.qk.dm.datastandards.vo.DataStandardTreeRespVO;
+import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * @author wjq
  * @date 20210603
- * 数据标准__目录接口入口
  * @since 1.0.0
+ * 数据标准__目录接口入口
  */
 @Slf4j
 @RestController
@@ -34,7 +34,7 @@ public class DataStandardDirController {
      * 获取数据标准分类目录树
      **/
     @GetMapping("/tree")
-    public DefaultCommonResult<List<DataStandardTreeRespVO>> getDsdDirTree() {
+    public DefaultCommonResult<List<DataStandardTreeVO>> getDsdDirTree() {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardDirService.getTree());
     }
 

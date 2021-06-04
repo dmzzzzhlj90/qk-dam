@@ -5,7 +5,7 @@ import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.entity.QDsdDir;
 import com.qk.dm.datastandards.repositories.DsdDirRepository;
 import com.qk.dm.datastandards.service.DataStandardDirService;
-import com.qk.dm.datastandards.vo.DataStandardTreeRespVO;
+import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +16,8 @@ import java.util.Optional;
 /**
  * @author wjq
  * @date 20210603
- * 数据标准__目录接口实现类
  * @since 1.0.0
+ * 数据标准__目录接口实现类
  */
 @Service
 public class DataStandardDirServiceImpl implements DataStandardDirService {
@@ -28,10 +28,10 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     }
 
     @Override
-    public List<DataStandardTreeRespVO> getTree() {
+    public List<DataStandardTreeVO> getTree() {
         Predicate predicate = QDsdDir.dsdDir.delFlag.eq(0);
         List<DsdDir> dsdDirList = (List<DsdDir>) dsdDirRepository.findAll(predicate);
-        List<DataStandardTreeRespVO> respList = new ArrayList<>();
+        List<DataStandardTreeVO> respList = new ArrayList<>();
         for (DsdDir dsdDir : dsdDirList) {
             respList.add(getDataStandardTreeResp(dsdDir));
         }
@@ -77,9 +77,9 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
      * @return: java.util.List<com.qk.dm.datastandards.vo.DataStandardTreeResp>
      * 使用递归方法建树
      **/
-    public static List<DataStandardTreeRespVO> buildByRecursive(List<DataStandardTreeRespVO> respList) {
-        List<DataStandardTreeRespVO> trees = new ArrayList<DataStandardTreeRespVO>();
-        for (DataStandardTreeRespVO treeNode : respList) {
+    public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
+        List<DataStandardTreeVO> trees = new ArrayList<DataStandardTreeVO>();
+        for (DataStandardTreeVO treeNode : respList) {
             if (null == treeNode.getParentId() || 0 > treeNode.getParentId()) {
                 trees.add(findChildren(treeNode, respList));
             }
@@ -92,12 +92,12 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
      * @return: com.qk.dm.datastandards.vo.DataStandardTreeResp
      * 递归查找子节点
      **/
-    public static DataStandardTreeRespVO findChildren(DataStandardTreeRespVO treeNode, List<DataStandardTreeRespVO> respList) {
-        treeNode.setChildren(new ArrayList<DataStandardTreeRespVO>());
-        for (DataStandardTreeRespVO it : respList) {
+    public static DataStandardTreeVO findChildren(DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
+        treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
+        for (DataStandardTreeVO it : respList) {
             if (treeNode.getDirDsdid().equals(it.getParentId())) {
                 if (treeNode.getChildren() == null) {
-                    treeNode.setChildren(new ArrayList<DataStandardTreeRespVO>());
+                    treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
                 }
                 treeNode.getChildren().add(findChildren(it, respList));
             }
@@ -105,8 +105,8 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
         return treeNode;
     }
 
-    private DataStandardTreeRespVO getDataStandardTreeResp(DsdDir dsdDir) {
-        return DataStandardTreeRespVO.builder()
+    private DataStandardTreeVO getDataStandardTreeResp(DsdDir dsdDir) {
+        return DataStandardTreeVO.builder()
                 .id(dsdDir.getId())
                 .dirDsdid(dsdDir.getDirDsdid())
                 .dirDsdName(dsdDir.getDirDsdName())

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author wjq
  * @date 20210604
- * 数据标准__业务术语接口入口
  * @since 1.0.0
+ * 数据标准__业务术语接口入口
  */
 @Slf4j
 @RestController
