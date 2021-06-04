@@ -8,6 +8,7 @@ dependencies {
     implementation "jakarta.annotation:jakarta.annotation-api"
     implementation "org.springframework.boot:spring-boot"
     implementation "org.springframework.cloud:spring-cloud-context"
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
     compile 'com.zaxxer:HikariCP'
 }
 
