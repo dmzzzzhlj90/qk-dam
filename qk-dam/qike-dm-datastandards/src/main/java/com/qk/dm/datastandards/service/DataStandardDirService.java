@@ -1,28 +1,28 @@
 package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.entity.DsdDir;
-import com.qk.dm.datastandards.vo.DataStandardTreeResp;
+import com.qk.dm.datastandards.vo.DataStandardTreeRespVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author wjq
- * @date 20210603
- * 数据标准接口
+ * @date 2021060
+ * 数据标准__目录接口
  * @since 1.0.0
  */
 @Service
-public interface DataStandardService {
+public interface DataStandardDirService {
 
-    List<DataStandardTreeResp> getTree();
+    List<DataStandardTreeRespVO> getTree();
 
     void addDsdDir(DsdDir dsdDir);
 
     void updateDsdDir(DsdDir dsdDir);
 
-    void deleteDsdDir(Integer id);
+    void deleteDsdDir(Integer delId);
 
-    void deleteDsdDirRoot(Integer id);
+    void deleteDsdDirRoot(Integer delId);
 
 }

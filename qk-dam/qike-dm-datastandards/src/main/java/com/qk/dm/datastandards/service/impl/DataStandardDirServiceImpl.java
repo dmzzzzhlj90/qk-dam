@@ -4,8 +4,8 @@ import com.qk.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.entity.QDsdDir;
 import com.qk.dm.datastandards.repositories.DsdDirRepository;
-import com.qk.dm.datastandards.service.DataStandardService;
-import com.qk.dm.datastandards.vo.DataStandardTreeResp;
+import com.qk.dm.datastandards.service.DataStandardDirService;
+import com.qk.dm.datastandards.vo.DataStandardTreeRespVO;
 import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 
@@ -16,22 +16,22 @@ import java.util.Optional;
 /**
  * @author wjq
  * @date 20210603
- * 数据标准接口实现类
+ * 数据标准__目录接口实现类
  * @since 1.0.0
  */
 @Service
-public class DataStandardServiceImpl implements DataStandardService {
+public class DataStandardDirServiceImpl implements DataStandardDirService {
     private final DsdDirRepository dsdDirRepository;
 
-    public DataStandardServiceImpl(DsdDirRepository dsdDirRepository) {
+    public DataStandardDirServiceImpl(DsdDirRepository dsdDirRepository) {
         this.dsdDirRepository = dsdDirRepository;
     }
 
     @Override
-    public List<DataStandardTreeResp> getTree() {
+    public List<DataStandardTreeRespVO> getTree() {
         Predicate predicate = QDsdDir.dsdDir.delFlag.eq(0);
         List<DsdDir> dsdDirList = (List<DsdDir>) dsdDirRepository.findAll(predicate);
-        List<DataStandardTreeResp> respList = new ArrayList<>();
+        List<DataStandardTreeRespVO> respList = new ArrayList<>();
         for (DsdDir dsdDir : dsdDirList) {
             respList.add(getDataStandardTreeResp(dsdDir));
         }
@@ -56,15 +56,18 @@ public class DataStandardServiceImpl implements DataStandardService {
     }
 
     @Override
-    public void deleteDsdDir(Integer id) {
-        Optional<DsdDir> dirOptional = dsdDirRepository.findById(id);
+    public void deleteDsdDir(Integer delId) {
+        Optional<DsdDir> dirOptional = dsdDirRepository.findById(delId);
+        if (!dirOptional.isPresent()) {
+            throw new BizException("参数有误,当前要删除的节点不存在！！！");
+        }
 
-        Predicate predicate2 = QDsdDir.dsdDir.parentId.eq(dirOptional.get().getDirDsdid());
-        long count = dsdDirRepository.count(predicate2);
+        Predicate predicate = QDsdDir.dsdDir.parentId.eq(dirOptional.get().getDirDsdid());
+        long count = dsdDirRepository.count(predicate);
         if (count > 0) {
             throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
         } else {
-            dsdDirRepository.deleteById(id);
+            dsdDirRepository.deleteById(delId);
         }
     }
 
@@ -74,9 +77,9 @@ public class DataStandardServiceImpl implements DataStandardService {
      * @return: java.util.List<com.qk.dm.datastandards.vo.DataStandardTreeResp>
      * 使用递归方法建树
      **/
-    public static List<DataStandardTreeResp> buildByRecursive(List<DataStandardTreeResp> respList) {
-        List<DataStandardTreeResp> trees = new ArrayList<DataStandardTreeResp>();
-        for (DataStandardTreeResp treeNode : respList) {
+    public static List<DataStandardTreeRespVO> buildByRecursive(List<DataStandardTreeRespVO> respList) {
+        List<DataStandardTreeRespVO> trees = new ArrayList<DataStandardTreeRespVO>();
+        for (DataStandardTreeRespVO treeNode : respList) {
             if (null == treeNode.getParentId() || 0 > treeNode.getParentId()) {
                 trees.add(findChildren(treeNode, respList));
             }
@@ -89,12 +92,12 @@ public class DataStandardServiceImpl implements DataStandardService {
      * @return: com.qk.dm.datastandards.vo.DataStandardTreeResp
      * 递归查找子节点
      **/
-    public static DataStandardTreeResp findChildren(DataStandardTreeResp treeNode, List<DataStandardTreeResp> respList) {
-        treeNode.setChildren(new ArrayList<DataStandardTreeResp>());
-        for (DataStandardTreeResp it : respList) {
+    public static DataStandardTreeRespVO findChildren(DataStandardTreeRespVO treeNode, List<DataStandardTreeRespVO> respList) {
+        treeNode.setChildren(new ArrayList<DataStandardTreeRespVO>());
+        for (DataStandardTreeRespVO it : respList) {
             if (treeNode.getDirDsdid().equals(it.getParentId())) {
                 if (treeNode.getChildren() == null) {
-                    treeNode.setChildren(new ArrayList<DataStandardTreeResp>());
+                    treeNode.setChildren(new ArrayList<DataStandardTreeRespVO>());
                 }
                 treeNode.getChildren().add(findChildren(it, respList));
             }
@@ -102,8 +105,8 @@ public class DataStandardServiceImpl implements DataStandardService {
         return treeNode;
     }
 
-    private DataStandardTreeResp getDataStandardTreeResp(DsdDir dsdDir) {
-        return DataStandardTreeResp.builder()
+    private DataStandardTreeRespVO getDataStandardTreeResp(DsdDir dsdDir) {
+        return DataStandardTreeRespVO.builder()
                 .id(dsdDir.getId())
                 .dirDsdid(dsdDir.getDirDsdid())
                 .dirDsdName(dsdDir.getDirDsdName())
@@ -115,6 +118,10 @@ public class DataStandardServiceImpl implements DataStandardService {
     public void deleteDsdDirRoot(Integer delId) {
         ArrayList<Integer> ids = new ArrayList<>();
         //删除父级ID
+        Optional<DsdDir> dsdDirIsExist = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(delId));
+        if (!dsdDirIsExist.isPresent()) {
+            throw new BizException("参数有误,当前要删除的节点不存在！！！");
+        }
         ids.add(delId);
         getIds(ids, delId);
         //批量删除

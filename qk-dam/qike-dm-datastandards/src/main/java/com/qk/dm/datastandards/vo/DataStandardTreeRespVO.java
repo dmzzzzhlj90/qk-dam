@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DataStandardTreeResp implements Serializable {
+public class DataStandardTreeRespVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
@@ -29,6 +29,6 @@ public class DataStandardTreeResp implements Serializable {
 
     private Integer parentId;
 
-    private List<DataStandardTreeResp> children;
+    private List<DataStandardTreeRespVO> children;
 
 }
