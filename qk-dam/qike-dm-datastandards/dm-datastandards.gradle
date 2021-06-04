@@ -27,7 +27,6 @@ dependencies {
     compile project(":commons-core")
     compile project(":qk-data-jpa")
     compile project(":qk-data-redis")
-    compile project(":leaf-core")
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"

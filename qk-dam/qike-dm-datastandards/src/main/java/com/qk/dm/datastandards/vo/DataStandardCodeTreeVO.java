@@ -9,24 +9,24 @@ import java.util.List;
 
 /**
  * @author wjq
- * @date 20210603
+ * @date 20210604
  * @since 1.0.0
- * 数据标准__目录VO
+ * 数据标准__码表目录VO
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DataStandardTreeVO {
+public class DataStandardCodeTreeVO {
 
     private Integer id;
 
-    private Integer dirDsdId;
+    private Integer codeDirId;
 
-    private String dirDsdName;
+    private String codeDirName;
 
     private Integer parentId;
 
-    private List<DataStandardTreeVO> children;
+    private List<DataStandardCodeTreeVO> children;
 
 }
