@@ -63,7 +63,7 @@ public class DataStandardController {
     /**
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     *
+     * 单叶子节点删除方式
      **/
     @DeleteMapping("/delete/dir")
     public DefaultCommonResult deleteDsdDir(@RequestParam("id") Integer id) {
@@ -71,5 +71,15 @@ public class DataStandardController {
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
+    /**
+     * @Param: id
+     * @return: com.qk.commons.http.result.DefaultCommonResult
+     *  支持根节点删除关联删除叶子节点方式
+     **/
+    @DeleteMapping("/delete/dir/root")
+    public DefaultCommonResult deleteDsdDirRoot(@RequestParam("id") Integer id) {
+        dataStandardService.deleteDsdDirRoot(id);
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
 }
 

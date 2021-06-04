@@ -23,4 +23,6 @@ public interface DataStandardService {
 
     void deleteDsdDir(Integer id);
 
+    void deleteDsdDirRoot(Integer id);
+
 }
