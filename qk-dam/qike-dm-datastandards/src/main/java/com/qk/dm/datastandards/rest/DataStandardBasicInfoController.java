@@ -30,7 +30,6 @@ public class DataStandardBasicInfoController {
 
     /**
      * 查询标准信息
-     *
      * @Param: page, size
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
