@@ -11,7 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 数据标准__标准信息接口入口
+ * 数据标准标准信息接口入口
+ *
  * @author wjq
  * @date 20210604
  * @since 1.0.0
@@ -28,8 +29,10 @@ public class DataStandardBasicInfoController {
     }
 
     /**
-     * @Param: dsdTerm
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * 查询标准信息
+     *
+     * @Param: page, size
+     * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
     @PostMapping("/query")
     public DefaultCommonResult<Page<DsdTerm>> getDsdBasicInfo(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
@@ -37,7 +40,9 @@ public class DataStandardBasicInfoController {
     }
 
     /**
-     * @Param: dsdTerm
+     * 新增标准信息
+     *
+     * @Param: dsdBasicinfo
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PostMapping("/add")
@@ -47,7 +52,9 @@ public class DataStandardBasicInfoController {
     }
 
     /**
-     * @Param: dsdTerm
+     * 编辑标准信息
+     *
+     * @Param: dsdBasicinfo
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PostMapping("/update")
@@ -57,6 +64,8 @@ public class DataStandardBasicInfoController {
     }
 
     /**
+     * 删除标准信息
+     *
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/

@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 数据标准__码表目录接口入口
+ * 数据标准码表目录接口入口
+ *
  * @author wjq
  * @date 20210604
  * @since 1.0.0
@@ -30,8 +31,9 @@ public class DataStandardCodeDirController {
     }
 
     /**
+     * 获取数据标准码表分类目录树
+     *
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     * 获取数据标准__码表分类目录树
      **/
     @GetMapping("/tree")
     public DefaultCommonResult<List<DataStandardCodeTreeVO>> getDsdDirTree() {
@@ -39,20 +41,22 @@ public class DataStandardCodeDirController {
     }
 
     /**
+     * 新增码表分类目录
+     *
      * @Param: dsdDir
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     *
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDir dsdCodeDir)  {
+    public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDir dsdCodeDir) {
         dataStandardCodeDirService.addDsdDir(dsdCodeDir);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
     /**
+     * 编辑码表分类目录
+     *
      * @Param: dsdDir
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     *
      **/
     @PostMapping("/update")
     public DefaultCommonResult updateDsdDir(@RequestBody DsdCodeDir dsdCodeDir) {
@@ -61,9 +65,10 @@ public class DataStandardCodeDirController {
     }
 
     /**
+     * 码表目录单叶子节点删除方式
+     *
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     * 单叶子节点删除方式
      **/
     @DeleteMapping("/delete")
     public DefaultCommonResult deleteDsdDir(@RequestParam("id") Integer id) {
@@ -72,9 +77,10 @@ public class DataStandardCodeDirController {
     }
 
     /**
+     * 码表目录支持根节点删除关联删除叶子节点方式
+     *
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     *  支持根节点删除关联删除叶子节点方式
      **/
     @DeleteMapping("/delete/root")
     public DefaultCommonResult deleteDsdDirRoot(@RequestParam("id") Integer id) {

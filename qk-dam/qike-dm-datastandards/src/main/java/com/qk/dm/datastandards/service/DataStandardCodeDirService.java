@@ -10,7 +10,7 @@ import java.util.List;
  * @author wjq
  * @date 20210604
  * @since 1.0.0
- * 数据标准__码表目录接口
+ * 数据标准码表目录接口
  */
 @Service
 public interface DataStandardCodeDirService {

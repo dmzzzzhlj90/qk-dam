@@ -11,10 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 数据标准标准代码术语接口入口
+ *
  * @author wjq
  * @date 20210604
  * @since 1.0.0
- * 数据标准__标准代码术语接口入口
  */
 @Slf4j
 @RestController
@@ -29,8 +30,10 @@ public class DataStandardCodeTermController {
 
 
     /**
-     * @Param: dsdTerm
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * 查询业务术语信息
+     *
+     * @Param: page, size
+     * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
     @PostMapping("/query")
     public DefaultCommonResult<Page<DsdTerm>> getDsdCodeTerm(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
@@ -38,6 +41,8 @@ public class DataStandardCodeTermController {
     }
 
     /**
+     * 新增业务术语信息
+     *
      * @Param: dsdTerm
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
@@ -48,6 +53,8 @@ public class DataStandardCodeTermController {
     }
 
     /**
+     * 编辑业务术语信息
+     *
      * @Param: dsdTerm
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
@@ -58,6 +65,8 @@ public class DataStandardCodeTermController {
     }
 
     /**
+     * 删除业务术语信息
+     *
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/

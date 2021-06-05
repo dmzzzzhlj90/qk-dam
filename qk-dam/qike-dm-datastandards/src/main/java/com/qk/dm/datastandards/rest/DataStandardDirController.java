@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * 数据标准目录接口入口
+ *
  * @author wjq
  * @date 20210603
  * @since 1.0.0
- * 数据标准__目录接口入口
  */
 @Slf4j
 @RestController
@@ -30,8 +31,9 @@ public class DataStandardDirController {
     }
 
     /**
-     * @return: com.qk.commons.http.result.DefaultCommonResult
      * 获取数据标准分类目录树
+     *
+     * @return: com.qk.dam.commons.http.result.DefaultCommonResult<java.util.List < com.qk.dm.datastandards.vo.DataStandardTreeVO>>
      **/
     @GetMapping("/tree")
     public DefaultCommonResult<List<DataStandardTreeVO>> getDsdDirTree() {
@@ -39,20 +41,22 @@ public class DataStandardDirController {
     }
 
     /**
+     * 新增数据标准分类目录
+     *
      * @Param: dsdDir
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     *
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdDir(@RequestBody DsdDir dsdDir)  {
+    public DefaultCommonResult addDsdDir(@RequestBody DsdDir dsdDir) {
         dataStandardDirService.addDsdDir(dsdDir);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
     /**
+     * 编辑数据标准分类目录
+     *
      * @Param: dsdDir
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     *
      **/
     @PostMapping("/update")
     public DefaultCommonResult updateDsdDir(@RequestBody DsdDir dsdDir) {
@@ -61,9 +65,10 @@ public class DataStandardDirController {
     }
 
     /**
+     * 标准目录单子节点删除方式
+     *
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     * 单叶子节点删除方式
      **/
     @DeleteMapping("/delete")
     public DefaultCommonResult deleteDsdDir(@RequestParam("id") Integer id) {
@@ -72,9 +77,10 @@ public class DataStandardDirController {
     }
 
     /**
+     * 标准目录支持根节点关联删除子节点方式
+     *
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
-     *  支持根节点删除关联删除叶子节点方式
      **/
     @DeleteMapping("/delete/root")
     public DefaultCommonResult deleteDsdDirRoot(@RequestParam("id") Integer id) {

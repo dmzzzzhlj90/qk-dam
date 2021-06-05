@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author wjq
  * @date 20210604
  * @since 1.0.0
- * 数据标准__标准信息接口实现类
+ * 数据标准标准信息接口实现类
  */
 @Service
 public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoService {

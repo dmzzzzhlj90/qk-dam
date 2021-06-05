@@ -15,7 +15,7 @@ import java.util.List;
  * @author wjq
  * @date 20210604
  * @since 1.0.0
- * 数据标准__业务术语接口实现类
+ * 数据标准业务术语接口实现类
  */
 @Service
 public class DataStandardTermServiceImpl implements DataStandardTermService {

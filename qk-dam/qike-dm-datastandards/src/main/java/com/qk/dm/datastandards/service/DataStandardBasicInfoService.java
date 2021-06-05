@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * @author wjq
  * @date 20210604
  * @since 1.0.0
- * 数据标准__标准信息接口
+ * 数据标准标准信息接口
  */
 @Service
 public interface DataStandardBasicInfoService {

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author wjq
  * @date 20210604
  * @since 1.0.0
- * 数据标准__标准代码术语接口实现类
+ * 数据标准标准代码术语接口实现类
  */
 @Service
 public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermService {
