@@ -25,10 +25,10 @@ compileJava {
 }
 
 dependencies {
-    implementation "com.qk.dam.commons:commons-core:${damDependenciesVersion}"
     implementation "com.qk.dam.jpa:qk-data-jpa:${damDependenciesVersion}"
     implementation "com.qk.dam.redis:qk-data-redis:${damDependenciesVersion}"
-
+    compile project(":dam-mvc-validation")
+    compile project(":commons-core")
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
@@ -42,6 +42,7 @@ dependencies {
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
+    testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
     imports {

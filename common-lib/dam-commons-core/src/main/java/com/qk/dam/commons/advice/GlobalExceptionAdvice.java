@@ -6,6 +6,7 @@ import com.qk.dam.commons.http.result.BaseResult;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -21,7 +22,10 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import javax.validation.ConstraintViolationException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 
 /**
@@ -101,7 +105,7 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public <T> BaseResult<T> handleException(Exception e) {
-        var errorMsg = new StringBuilder();
+        var errorMsg = new StringBuilder(64);
         if (e instanceof MethodArgumentNotValidException) {
             MethodArgumentNotValidException validException = (MethodArgumentNotValidException) e;
             var result = validException.getBindingResult();
@@ -115,13 +119,24 @@ public class GlobalExceptionAdvice {
         } else if (e instanceof BindException) {
             var bindException = (BindException)e;
             if (bindException.hasErrors()) {
-                log.error("请求参数错误: {}", bindException.getAllErrors());
-                errorMsg.append(bindException.getAllErrors());
+                bindException.getAllErrors().forEach(objectError -> {
+                    if (objectError.getCodes()!=null){
+                        List<String> codeMsg = Arrays.stream(objectError.getCodes())
+                                .findFirst()
+                                .map(code -> code.replace("." + objectError.getCode(), "")+":"+objectError.getDefaultMessage())
+                                .stream()
+                                .sorted()
+                                .collect(Collectors.toList());
+                        errorMsg.append(codeMsg);
+                    }
+
+                });
+
             }
         }
         log.error("参数校验异常: {}", getStackTrace(e));
         log.error("异常详情: {}", errorMsg);
-        return DefaultCommonResult.error(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR);
+        return DefaultCommonResult.error(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR,String.valueOf(errorMsg));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

@@ -88,7 +88,7 @@ public enum ResultCodeEnum {
     /**
      * 一切皆ok
      */
-    OK_MSG(HttpStatus.OK, "DM-200-00000", "{0}"),
+    OK_MSG(HttpStatus.OK, "DM-200-00000", "数据返回正常"),
     /**
      * 请求发生未知错误
      */
@@ -97,36 +97,36 @@ public enum ResultCodeEnum {
     /**
      * 服务器内部错误
      */
-    INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DM-500-B0001", "后台服务异常，请联系管理员!{0}"),
+    INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DM-500-B0001", "后台服务异常，请联系管理员!"),
     /**
      * 系统运行时异常
      */
-    DATA_OPT_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0003", "数据操作异常！{0}"),
-    TARGET_OBJ_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0004", "目标对象错误！{0}"),
+    DATA_OPT_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0003", "数据操作异常！"),
+    TARGET_OBJ_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0004", "目标对象错误！"),
 
     /**
      * 网关超时
      */
-    GATEWAY_TIMEOUT(HttpStatus.GATEWAY_TIMEOUT, "DM-504-B0100", "网关超时【{0}】"),
+    GATEWAY_TIMEOUT(HttpStatus.GATEWAY_TIMEOUT, "DM-504-B0100", "网关超时】"),
     /**
      * 系统执行超时
      */
-    REQUEST_TIMEOUT(HttpStatus.REQUEST_TIMEOUT, "DM-408-B0101", "系统请求超时【{0}】"),
+    REQUEST_TIMEOUT(HttpStatus.REQUEST_TIMEOUT, "DM-408-B0101", "系统请求超时"),
 
     /**
      * 参数异常错误
      */
-    PARAM_IS_INVALID(HttpStatus.BAD_REQUEST, "DM-400-B0200", "请求参数异常错误！【{0}】"),
-    CONSTRAINT_VIOLATION_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0201", "未绑定对象！【{0}】"),
-    SERVLET_REQUEST_BINDING_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0202", "缺失必要参数！【{0}】"),
-    HTTP_METHOD_NOT_ALLOW_ERROR(HttpStatus.METHOD_NOT_ALLOWED, "DM-405-B0203", "HTTP请求方法不被允许【{0}】"),
+    PARAM_IS_INVALID(HttpStatus.BAD_REQUEST, "DM-400-B0200", "请求参数异常错误！"),
+    CONSTRAINT_VIOLATION_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0201", "未绑定对象！"),
+    SERVLET_REQUEST_BINDING_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0202", "缺失必要参数！"),
+    HTTP_METHOD_NOT_ALLOW_ERROR(HttpStatus.METHOD_NOT_ALLOWED, "DM-405-B0203", "HTTP请求方法不被允许"),
     HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "DM-415-B0203", "不支持的媒体类型"),
 
     /**
      * 文件上传异常错误
      */
     MAX_UPLOAD_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "DM-400-B0300", "文件大小超出限制, 请压缩或降低文件质量!！"),
-    MAX_UPLOAD_TYPE_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0301", "文件上传类型错误！【{0}】"),
+    MAX_UPLOAD_TYPE_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0301", "文件上传类型错误！"),
 
     /**
      * 调用第三方服务出错
