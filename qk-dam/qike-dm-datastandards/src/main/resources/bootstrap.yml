@@ -1,6 +1,10 @@
 server:
   port: 8780
 spring:
+  logging:
+    level: info
+    appender:
+      ref: CONSOLE
   messages:
     basename: i18n/messages
   mvc:
