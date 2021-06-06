@@ -3,9 +3,7 @@ package com.qk.dm.datastandards.vo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.AssertFalse;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +15,7 @@ public class TestVO {
     @Pattern(regexp="^[0-9]{1,2}$",message="年龄不正确")
     private String age;
 
-    @AssertFalse(message = "必须为false")
+    @AssertTrue(message = "必须为false")
     private Boolean isFalse;
     /**
      * 如果是空，则不校验，如果不为空，则校验

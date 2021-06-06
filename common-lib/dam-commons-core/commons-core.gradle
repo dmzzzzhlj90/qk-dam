@@ -10,8 +10,7 @@ dependencies {
     compile 'org.projectlombok:lombok'
     compile 'com.alibaba:easyexcel'
     implementation 'javax.servlet:javax.servlet-api'
-    implementation "org.springframework:spring-web"
-    implementation "org.springframework:spring-context"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     annotationProcessor 'org.projectlombok:lombok'
 }
 

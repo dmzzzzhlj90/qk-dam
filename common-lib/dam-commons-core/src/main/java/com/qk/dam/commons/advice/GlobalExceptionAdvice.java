@@ -134,8 +134,8 @@ public class GlobalExceptionAdvice {
 
             }
         }
-        log.error("参数校验异常: {}", getStackTrace(e));
-        log.error("异常详情: {}", errorMsg);
+        log.error("参数校验异常: {}",errorMsg);
+        log.error("异常详情: {}",  getStackTrace(e));
         return DefaultCommonResult.error(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR,String.valueOf(errorMsg));
     }
 
