@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 数据标准码表目录接口入口
+ * 数据标准码表目录接口
  *
  * @author wjq
  * @date 20210604

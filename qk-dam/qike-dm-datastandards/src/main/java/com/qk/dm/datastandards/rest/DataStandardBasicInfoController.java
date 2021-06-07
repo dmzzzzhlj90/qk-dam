@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 数据标准标准信息接口入口
+ * 数据标准标准信息接口
  *
  * @author wjq
  * @date 20210604

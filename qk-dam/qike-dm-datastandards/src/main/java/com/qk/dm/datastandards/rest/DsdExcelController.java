@@ -21,7 +21,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 /**
- * 数据标准excel导入导出
+ * 数据标准excel导入导出功能接口
  *
  * @author wjq
  * @date 20210605
@@ -57,7 +57,7 @@ public class DsdExcelController {
     }
 
     /**
-     * 业务术语excel 导入
+     * 业务术语excel导入
      *
      * @Param: file
      * @return: java.lang.String
@@ -100,7 +100,7 @@ public class DsdExcelController {
     }
 
     /**
-     * 数据标准码表信息excel导出
+     * 码表信息excel导出
      *
      * @Param: response
      * @return: void
@@ -117,7 +117,7 @@ public class DsdExcelController {
     }
 
     /**
-     * 数据标准码表信息excel 导入
+     * 码表信息excel导入
      *
      * @Param: file
      * @return: java.lang.String
