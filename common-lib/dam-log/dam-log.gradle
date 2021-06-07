@@ -5,7 +5,6 @@ version "${commonLibVersion}"
 group "com.qk.dam.log"
 
 dependencies {
-    compile "org.slf4j:slf4j-api"
     compile 'net.logstash.logback:logstash-logback-encoder'
 }
 

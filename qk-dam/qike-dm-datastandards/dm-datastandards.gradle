@@ -25,11 +25,11 @@ compileJava {
 }
 
 dependencies {
-    implementation "com.qk.dam.jpa:qk-data-jpa:${damDependenciesVersion}"
-    implementation "com.qk.dam.redis:qk-data-redis:${damDependenciesVersion}"
-    compile project(":dam-mvc-validation")
-    compile project(":commons-core")
-    compile project(":dam-log")
+    implementation project(":qk-data-jpa")
+    implementation project(":qk-data-redis")
+    implementation project(":dam-mvc-validation")
+    implementation project(":commons-core")
+    implementation project(":dam-log")
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
