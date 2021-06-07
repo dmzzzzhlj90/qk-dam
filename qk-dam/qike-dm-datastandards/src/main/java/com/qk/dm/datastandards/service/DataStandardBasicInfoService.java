@@ -2,6 +2,7 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.DsdTerm;
+import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,9 @@ public interface DataStandardBasicInfoService {
 
     Page<DsdBasicinfo> getDsdBasicInfo(Integer page, Integer size);
 
-    void addDsdBasicinfo(DsdBasicinfo dsdBasicinfo);
+    void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 
-    void updateDsdBasicinfo(DsdBasicinfo dsdBasicinfo);
+    void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 
     void deleteDsdBasicinfo(Integer id);
 

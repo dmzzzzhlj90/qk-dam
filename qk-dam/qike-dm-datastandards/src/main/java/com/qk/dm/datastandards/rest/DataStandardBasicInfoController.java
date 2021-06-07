@@ -2,9 +2,9 @@ package com.qk.dm.datastandards.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
+import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,35 +30,37 @@ public class DataStandardBasicInfoController {
 
     /**
      * 查询标准信息
+     *
      * @Param: page, size
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
-    @PostMapping("/query")
-    public DefaultCommonResult<Page<DsdTerm>> getDsdBasicInfo(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    @GetMapping("/query/{page}/{size}")
+    public DefaultCommonResult<Page<DsdTerm>> getDsdBasicInfo(@PathVariable("page") Integer page,
+                                                              @PathVariable("size") Integer size) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(page, size));
     }
 
     /**
      * 新增标准信息
      *
-     * @Param: dsdBasicinfo
+     * @Param: dsdBasicinfoVO
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdBasicinfo(@RequestBody DsdBasicinfo dsdBasicinfo) {
-        dataStandardBasicInfoService.addDsdBasicinfo(dsdBasicinfo);
+    public DefaultCommonResult addDsdBasicinfo(@RequestBody DsdBasicinfoVO dsdBasicinfoVO) {
+        dataStandardBasicInfoService.addDsdBasicinfo(dsdBasicinfoVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
     /**
      * 编辑标准信息
      *
-     * @Param: dsdBasicinfo
+     * @Param: dsdBasicinfoVO
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
-    @PostMapping("/update")
-    public DefaultCommonResult updateDsdTerm(@RequestBody DsdBasicinfo dsdBasicinfo) {
-        dataStandardBasicInfoService.updateDsdBasicinfo(dsdBasicinfo);
+    @PutMapping("/update")
+    public DefaultCommonResult updateDsdTerm(@RequestBody DsdBasicinfoVO dsdBasicinfoVO) {
+        dataStandardBasicInfoService.updateDsdBasicinfo(dsdBasicinfoVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -68,8 +70,8 @@ public class DataStandardBasicInfoController {
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
-    @DeleteMapping("/delete")
-    public DefaultCommonResult deleteDsdTerm(@RequestParam("id") Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public DefaultCommonResult deleteDsdTerm(@PathVariable("id") Integer id) {
         dataStandardBasicInfoService.deleteDsdBasicinfo(id);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }

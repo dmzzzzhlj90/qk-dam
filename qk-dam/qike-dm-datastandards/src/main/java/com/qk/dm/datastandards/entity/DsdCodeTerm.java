@@ -20,7 +20,6 @@ public class DsdCodeTerm implements Serializable {
      */
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**

@@ -7,7 +7,10 @@ import com.qk.dm.datastandards.mapstruct.mapper.DsdDirTreeMapper;
 import com.qk.dm.datastandards.repositories.DsdDirRepository;
 import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
+import com.qk.dm.datastandards.vo.DsdDirVO;
+import com.querydsl.core.QueryFactory;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,20 +44,29 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     }
 
     @Override
-    public void addDsdDir(DsdDir dsdDir) {
+    public void addDsdDir(DsdDirVO dsdDirVO) {
+        DsdDir dsdDir = DsdDirTreeMapper.INSTANCE.useDsdDir(dsdDirVO);
         Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
-        Optional<DsdDir> dsdDirIsExist = dsdDirRepository.findOne(predicate);
-        if (dsdDirIsExist.isPresent()) {
-            throw new BizException("当前要新增的数据分类ID为：" + dsdDirIsExist.get().getDirDsdId()
-                    + "数据标准分类名称为:" + dsdDirIsExist.get().getDirDsdName() + " 的数据，已存在！！！");
+        boolean exists = dsdDirRepository.exists(predicate);
+        if (exists) {
+            throw new BizException("当前要新增的数据分类ID为：" + dsdDir.getDirDsdId()
+                    + "数据标准分类名称为:" + dsdDir.getDirDsdName() + " 的数据，已存在！！！");
         }
         dsdDirRepository.save(dsdDir);
     }
 
 
     @Override
-    public void updateDsdDir(DsdDir dsdDir) {
-        dsdDirRepository.saveAndFlush(dsdDir);
+    public void updateDsdDir(DsdDirVO dsdDirVO) {
+        DsdDir dsdDir = DsdDirTreeMapper.INSTANCE.useDsdDir(dsdDirVO);
+        Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
+        boolean exists = dsdDirRepository.exists(predicate);
+        if (exists) {
+            dsdDirRepository.saveAndFlush(dsdDir);
+        } else {
+            throw new BizException("当前要编辑的数据分类ID为：" + dsdDir.getDirDsdId()
+                    + "数据标准分类名称为:" + dsdDir.getDirDsdName() + " 的数据，不已存在！！！");
+        }
     }
 
     @Override

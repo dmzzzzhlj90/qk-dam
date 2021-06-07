@@ -1,15 +1,18 @@
 package com.qk.dm.datastandards.service.impl;
 
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.DsdTerm;
+import com.qk.dm.datastandards.entity.QDsdTerm;
+import com.qk.dm.datastandards.mapstruct.mapper.DsdTermMapper;
 import com.qk.dm.datastandards.repositories.DsdTermRepository;
 import com.qk.dm.datastandards.service.DataStandardTermService;
+import com.qk.dm.datastandards.vo.DsdTermVO;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author wjq
@@ -28,25 +31,42 @@ public class DataStandardTermServiceImpl implements DataStandardTermService {
 
 
     @Override
-    public Page<DsdTerm> getDsdTerm(Integer page,Integer size) {
+    public Page<DsdTerm> getDsdTerm(Integer page, Integer size) {
         Sort sort = Sort.by(Sort.Direction.ASC, ID);
-        Pageable pageable = PageRequest.of(page,size,sort);
+        Pageable pageable = PageRequest.of(page-1, size, sort);
         return dsdTermRepository.findAll(pageable);
     }
 
     @Override
-    public void addDsdTerm(DsdTerm dsdTerm) {
+    public void addDsdTerm(DsdTermVO dsdTermVO) {
+        DsdTerm dsdTerm = DsdTermMapper.INSTANCE.useDsdTerm(dsdTermVO);
+        Predicate predicate = QDsdTerm.dsdTerm.id.eq(dsdTerm.getId());
+        boolean exists = dsdTermRepository.exists(predicate);
+        if (exists) {
+            throw new BizException("当前要新增的术语中文简称为：" + dsdTerm.getChineseName()
+                    + ",英文简称为:" + dsdTerm.getEnglishName() + " 的数据，已存在！！！");
+        }
         dsdTermRepository.save(dsdTerm);
     }
 
     @Override
-    public void updateDsdTerm(DsdTerm dsdTerm) {
-        dsdTermRepository.save(dsdTerm);
+    public void updateDsdTerm(DsdTermVO dsdTermVO) {
+        DsdTerm dsdTerm = DsdTermMapper.INSTANCE.useDsdTerm(dsdTermVO);
+        Predicate predicate = QDsdTerm.dsdTerm.id.eq(dsdTerm.getId());
+        boolean exists = dsdTermRepository.exists(predicate);
+        if (exists) {
+            dsdTermRepository.saveAndFlush(dsdTerm);
+        } else {
+            throw new BizException("当前要新增的术语中文简称为：" + dsdTerm.getChineseName()
+                    + ",英文简称为:" + dsdTerm.getEnglishName() + " 的数据，不存在！！！");
+        }
     }
 
     @Override
     public void deleteDsdTerm(Integer delId) {
-        dsdTermRepository.deleteById(delId);
+        boolean exists = dsdTermRepository.exists(QDsdTerm.dsdTerm.id.eq(delId));
+        if (exists) {
+            dsdTermRepository.deleteById(delId);
+        }
     }
-    
 }

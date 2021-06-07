@@ -2,6 +2,7 @@ package com.qk.dm.datastandards.mapstruct.mapper;
 
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
+import com.qk.dm.datastandards.vo.DsdDirVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -18,4 +19,5 @@ public interface DsdDirTreeMapper {
 
     DataStandardTreeVO useDirTreeVO(DsdDir dsdDir);
 
+    DsdDir useDsdDir(DsdDirVO dsdDirVO);
 }

@@ -1,9 +1,13 @@
 package com.qk.dm.datastandards.service.impl;
 
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
-import com.qk.dm.datastandards.entity.DsdTerm;
+import com.qk.dm.datastandards.entity.QDsdBasicinfo;
+import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
+import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,23 +32,41 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     @Override
     public Page<DsdBasicinfo> getDsdBasicInfo(Integer page, Integer size) {
         Sort sort = Sort.by(Sort.Direction.ASC, ID);
-        Pageable pageable = PageRequest.of(page,size,sort);
+        Pageable pageable = PageRequest.of(page-1, size, sort);
         return dsdBasicinfoRepository.findAll(pageable);
     }
 
     @Override
-    public void addDsdBasicinfo(DsdBasicinfo dsdBasicinfo) {
+    public void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO) {
+        DsdBasicinfo dsdBasicinfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicinfoVO);
+        Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdId.eq(dsdBasicinfo.getDsdId());
+        boolean exists = dsdBasicinfoRepository.exists(predicate);
+        if (exists) {
+            throw new BizException("当前要新增的标准代码ID为：" + dsdBasicinfo.getDsdId()
+                    + "标准名称为:" + dsdBasicinfo.getDsdName() + " 的数据，已存在！！！");
+        }
         dsdBasicinfoRepository.save(dsdBasicinfo);
     }
 
     @Override
-    public void updateDsdBasicinfo(DsdBasicinfo dsdBasicinfo) {
-        dsdBasicinfoRepository.save(dsdBasicinfo);
+    public void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO) {
+        DsdBasicinfo dsdBasicinfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicinfoVO);
+        Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdId.eq(dsdBasicinfo.getDsdId());
+        boolean exists = dsdBasicinfoRepository.exists(predicate);
+        if (exists) {
+            dsdBasicinfoRepository.saveAndFlush(dsdBasicinfo);
+        } else {
+            throw new BizException("当前要更新的标准代码ID为：" + dsdBasicinfo.getDsdId()
+                    + "标准名称为:" + dsdBasicinfo.getDsdName() + " 的数据，不存在！！！");
+        }
     }
 
     @Override
     public void deleteDsdBasicinfo(Integer delId) {
-        dsdBasicinfoRepository.deleteById(delId);
+        boolean exists = dsdBasicinfoRepository.exists(QDsdBasicinfo.dsdBasicinfo.id.eq(delId));
+        if (exists) {
+            dsdBasicinfoRepository.deleteById(delId);
+        }
     }
-    
+
 }

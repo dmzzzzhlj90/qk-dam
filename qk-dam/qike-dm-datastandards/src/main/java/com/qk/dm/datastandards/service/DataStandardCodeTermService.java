@@ -1,7 +1,7 @@
 package com.qk.dm.datastandards.service;
 
-import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.DsdCodeTerm;
+import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,9 @@ public interface DataStandardCodeTermService {
 
     Page<DsdCodeTerm> getDsdCodeTerm(Integer page, Integer size);
 
-    void addDsdCodeTerm(DsdCodeTerm dsdCodeTerm);
+    void addDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
 
-    void updateDsdCodeTerm(DsdCodeTerm dsdCodeTerm);
+    void updateDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
 
     void deleteDsdCodeTerm(Integer id);
 

@@ -1,6 +1,7 @@
 package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.entity.DsdTerm;
+import com.qk.dm.datastandards.vo.DsdTermVO;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ public interface DataStandardTermService {
 
     Page<DsdTerm> getDsdTerm(Integer page,Integer size);
 
-    void addDsdTerm(DsdTerm dsdTerm);
+    void addDsdTerm(DsdTermVO dsdTermVO);
 
-    void updateDsdTerm(DsdTerm dsdTerm);
+    void updateDsdTerm(DsdTermVO dsdTermVO);
 
     void deleteDsdTerm(Integer id);
 

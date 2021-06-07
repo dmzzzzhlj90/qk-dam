@@ -2,6 +2,7 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
+import com.qk.dm.datastandards.vo.DsdDirVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +18,9 @@ public interface DataStandardDirService {
 
     List<DataStandardTreeVO> getTree();
 
-    void addDsdDir(DsdDir dsdDir);
+    void addDsdDir(DsdDirVO dsdDirVO);
 
-    void updateDsdDir(DsdDir dsdDir);
+    void updateDsdDir(DsdDirVO dsdDirVO);
 
     void deleteDsdDir(Integer delId);
 

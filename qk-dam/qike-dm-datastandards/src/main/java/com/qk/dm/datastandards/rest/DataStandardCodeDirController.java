@@ -5,6 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.entity.DsdCodeDir;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
+import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,24 +44,24 @@ public class DataStandardCodeDirController {
     /**
      * 新增码表分类目录
      *
-     * @Param: dsdDir
+     * @Param: dsdCodeDirVO
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDir dsdCodeDir) {
-        dataStandardCodeDirService.addDsdDir(dsdCodeDir);
+    public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
+        dataStandardCodeDirService.addDsdDir(dsdCodeDirVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
     /**
      * 编辑码表分类目录
      *
-     * @Param: dsdDir
+     * @Param: dsdCodeDirVO
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
-    @PostMapping("/update")
-    public DefaultCommonResult updateDsdDir(@RequestBody DsdCodeDir dsdCodeDir) {
-        dataStandardCodeDirService.updateDsdDir(dsdCodeDir);
+    @PutMapping("/update")
+    public DefaultCommonResult updateDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
+        dataStandardCodeDirService.updateDsdDir(dsdCodeDirVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -70,8 +71,8 @@ public class DataStandardCodeDirController {
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
-    @DeleteMapping("/delete")
-    public DefaultCommonResult deleteDsdDir(@RequestParam("id") Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public DefaultCommonResult deleteDsdDir(@PathVariable("id") Integer id) {
         dataStandardCodeDirService.deleteDsdDir(id);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
@@ -82,8 +83,8 @@ public class DataStandardCodeDirController {
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
-    @DeleteMapping("/delete/root")
-    public DefaultCommonResult deleteDsdDirRoot(@RequestParam("id") Integer id) {
+    @DeleteMapping("/delete/root/{id}")
+    public DefaultCommonResult deleteDsdDirRoot(@PathVariable("id") Integer id) {
         dataStandardCodeDirService.deleteDsdDirRoot(id);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }

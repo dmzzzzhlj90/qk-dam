@@ -4,6 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.service.DataStandardTermService;
+import com.qk.dm.datastandards.vo.DsdTermVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,32 +34,32 @@ public class DataStandardTermController {
      * @Param: page, size
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
-    @PostMapping("/query")
-    public DefaultCommonResult<Page<DsdTerm>> getDsdTerm(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+    @GetMapping("/query/{page}/{size}")
+    public DefaultCommonResult<Page<DsdTerm>> getDsdTerm(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardTermService.getDsdTerm(page, size));
     }
 
     /**
      * 新增业务术语信息
      *
-     * @Param: dsdTerm
+     * @Param: dsdTermVO
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdTerm(@RequestBody DsdTerm dsdTerm) {
-        dataStandardTermService.addDsdTerm(dsdTerm);
+    public DefaultCommonResult addDsdTerm(@RequestBody DsdTermVO dsdTermVO) {
+        dataStandardTermService.addDsdTerm(dsdTermVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
     /**
      * 编辑业务术语信息
      *
-     * @Param: dsdTerm
+     * @Param: dsdTermVO
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
-    @PostMapping("/update")
-    public DefaultCommonResult updateDsdTerm(@RequestBody DsdTerm dsdTerm) {
-        dataStandardTermService.updateDsdTerm(dsdTerm);
+    @PutMapping("/update")
+    public DefaultCommonResult updateDsdTerm(@RequestBody DsdTermVO dsdTermVO) {
+        dataStandardTermService.updateDsdTerm(dsdTermVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -68,8 +69,8 @@ public class DataStandardTermController {
      * @Param: id
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
-    @DeleteMapping("/delete")
-    public DefaultCommonResult deleteDsdTerm(@RequestParam("id") Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public DefaultCommonResult deleteDsdTerm(@PathVariable("id") Integer id) {
         dataStandardTermService.deleteDsdTerm(id);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
