@@ -7,6 +7,7 @@ import com.qk.dm.datastandards.mapstruct.mapper.DsdTermMapper;
 import com.qk.dm.datastandards.repositories.DsdTermRepository;
 import com.qk.dm.datastandards.service.DataStandardTermService;
 import com.qk.dm.datastandards.vo.DsdTermVO;
+import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author wjq
@@ -32,8 +37,15 @@ public class DataStandardTermServiceImpl implements DataStandardTermService {
 
 
     @Override
-    public Page<DsdTerm> getDsdTerm(Pagination pagination) {
-        return dsdTermRepository.findAll(pagination.getPageable());
+    public PageResultVO<DsdTermVO> getDsdTerm(Pagination pagination) {
+        List<DsdTermVO> dsdTermVOList = new ArrayList<DsdTermVO>();
+
+        Page<DsdTerm> dsdTermPage = dsdTermRepository.findAll(pagination.getPageable());
+        dsdTermPage.getContent().forEach(dsdTerm -> {
+            DsdTermVO dsdTermVO = DsdTermMapper.INSTANCE.useDsdTermVO(dsdTerm);
+            dsdTermVOList.add(dsdTermVO);
+        });
+        return new PageResultVO<>(dsdTermPage.getTotalElements(), dsdTermPage.getNumber(), dsdTermPage.getSize(), dsdTermVOList);
     }
 
     @Override

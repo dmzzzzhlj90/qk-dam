@@ -2,13 +2,13 @@ package com.qk.dm.datastandards.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.service.DataStandardTermService;
 import com.qk.dm.datastandards.vo.DsdTermVO;
+import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -36,7 +36,7 @@ public class DataStandardTermController {
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
     @GetMapping("/query")
-    public DefaultCommonResult<Page<DsdTerm>> getDsdTerm(@RequestBody Pagination pagination) {
+    public DefaultCommonResult<PageResultVO<DsdTermVO>> getDsdTerm(@RequestBody Pagination pagination) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardTermService.getDsdTerm(pagination));
     }
 
@@ -47,7 +47,7 @@ public class DataStandardTermController {
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdTerm(@RequestBody DsdTermVO dsdTermVO) {
+    public DefaultCommonResult addDsdTerm(@RequestBody @Validated DsdTermVO dsdTermVO) {
         dataStandardTermService.addDsdTerm(dsdTermVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
@@ -59,7 +59,7 @@ public class DataStandardTermController {
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PutMapping("/update")
-    public DefaultCommonResult updateDsdTerm(@RequestBody DsdTermVO dsdTermVO) {
+    public DefaultCommonResult updateDsdTerm(@RequestBody @Validated DsdTermVO dsdTermVO) {
         dataStandardTermService.updateDsdTerm(dsdTermVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }

@@ -2,14 +2,13 @@ package com.qk.dm.datastandards.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datastandards.entity.DsdCodeTerm;
-import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.service.DataStandardCodeTermService;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
+import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -38,7 +37,7 @@ public class DataStandardCodeTermController {
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
     @GetMapping("/query")
-    public DefaultCommonResult<Page<DsdTerm>> getDsdCodeTerm(@RequestBody Pagination pagination) {
+    public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTerm(@RequestBody Pagination pagination) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(pagination));
     }
 
@@ -49,7 +48,7 @@ public class DataStandardCodeTermController {
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdCodeTerm(@RequestBody DsdCodeTermVO dsdCodeTermVO) {
+    public DefaultCommonResult addDsdCodeTerm(@RequestBody @Validated DsdCodeTermVO dsdCodeTermVO) {
         dataStandardCodeTermService.addDsdCodeTerm(dsdCodeTermVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
@@ -61,7 +60,7 @@ public class DataStandardCodeTermController {
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PutMapping("/update")
-    public DefaultCommonResult updateDsdCodeTerm(@RequestBody DsdCodeTermVO dsdCodeTermVO) {
+    public DefaultCommonResult updateDsdCodeTerm(@RequestBody @Validated DsdCodeTermVO dsdCodeTermVO) {
         dataStandardCodeTermService.updateDsdCodeTerm(dsdCodeTermVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }

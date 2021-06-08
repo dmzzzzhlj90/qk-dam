@@ -5,11 +5,12 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -37,7 +38,7 @@ public class DataStandardBasicInfoController {
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
     @GetMapping("/query")
-    public DefaultCommonResult<Page<DsdTerm>> getDsdBasicInfo(@RequestBody Pagination pagination) {
+    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfo(@RequestBody Pagination pagination) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination));
     }
 
@@ -48,7 +49,7 @@ public class DataStandardBasicInfoController {
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PostMapping("/add")
-    public DefaultCommonResult addDsdBasicinfo(@RequestBody DsdBasicinfoVO dsdBasicinfoVO) {
+    public DefaultCommonResult addDsdBasicinfo(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
         dataStandardBasicInfoService.addDsdBasicinfo(dsdBasicinfoVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
@@ -60,7 +61,7 @@ public class DataStandardBasicInfoController {
      * @return: com.qk.commons.http.result.DefaultCommonResult
      **/
     @PutMapping("/update")
-    public DefaultCommonResult updateDsdTerm(@RequestBody DsdBasicinfoVO dsdBasicinfoVO) {
+    public DefaultCommonResult updateDsdTerm(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
         dataStandardBasicInfoService.updateDsdBasicinfo(dsdBasicinfoVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }

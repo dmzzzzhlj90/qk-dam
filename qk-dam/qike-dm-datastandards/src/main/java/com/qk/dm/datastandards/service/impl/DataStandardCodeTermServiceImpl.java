@@ -1,25 +1,20 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.DsdCodeTerm;
-import com.qk.dm.datastandards.entity.QDsdBasicinfo;
 import com.qk.dm.datastandards.entity.QDsdCodeTerm;
-import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTermMapper;
-import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
-import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.service.DataStandardCodeTermService;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
+import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wjq
@@ -37,14 +32,21 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     }
 
     @Override
-    public Page<DsdCodeTerm> getDsdCodeTerm(Pagination pagination) {
-        return dsdCodeTermRepository.findAll(pagination.getPageable());
+    public PageResultVO<DsdCodeTermVO> getDsdCodeTerm(Pagination pagination) {
+        List<DsdCodeTermVO> dsdCodeTermVOList = new ArrayList<DsdCodeTermVO>();
+
+        Page<DsdCodeTerm> codeTermPage = dsdCodeTermRepository.findAll(pagination.getPageable());
+        codeTermPage.getContent().forEach(dsdCodeTerm -> {
+            DsdCodeTermVO dsdCodeTermVO = DsdCodeTermMapper.INSTANCE.usDsdCodeTermVO(dsdCodeTerm);
+            dsdCodeTermVOList.add(dsdCodeTermVO);
+        });
+        return new PageResultVO<>(codeTermPage.getTotalElements(), codeTermPage.getNumber(), codeTermPage.getSize(), dsdCodeTermVOList);
     }
 
     @Override
     public void addDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO) {
         DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
-        Predicate predicate  = QDsdCodeTerm.dsdCodeTerm.codeId.eq(dsdCodeTerm.getCodeId());
+        Predicate predicate = QDsdCodeTerm.dsdCodeTerm.codeId.eq(dsdCodeTerm.getCodeId());
         boolean exists = dsdCodeTermRepository.exists(predicate);
         if (exists) {
             throw new BizException("当前要新增的码表编码ID为：" + dsdCodeTerm.getCodeId()
@@ -56,7 +58,7 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     @Override
     public void updateDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO) {
         DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
-        Predicate predicate  = QDsdCodeTerm.dsdCodeTerm.codeId.eq(dsdCodeTerm.getCodeId());
+        Predicate predicate = QDsdCodeTerm.dsdCodeTerm.codeId.eq(dsdCodeTerm.getCodeId());
         boolean exists = dsdCodeTermRepository.exists(predicate);
         if (exists) {
             dsdCodeTermRepository.saveAndFlush(dsdCodeTerm);
