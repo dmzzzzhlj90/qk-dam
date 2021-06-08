@@ -28,6 +28,10 @@ dependencies {
         api group: 'com.alibaba', name: 'easyexcel', version: '2.2.10'
         api 'commons-io:commons-io:2.9.0'
         api 'org.apache.curator:curator-recipes:5.1.0'
+
+        api group: 'org.antlr', name: 'antlr4', version: '4.8'
+        api group: 'org.antlr', name: 'antlr4-runtime', version: '4.8'
+        api group: 'org.antlr', name: 'antlr4-runtime-testsuite', version: '4.8'
     }
 }
 
