@@ -31,6 +31,7 @@ dependencies {
 
         api group: 'cn.hutool', name: 'hutool-db', version: '5.6.6'
         api group: 'cn.hutool', name: 'hutool-http', version: '5.6.6'
+        api group: 'org.apache.commons', name: 'commons-compress', version: '1.20'
 
 
         api group: 'org.antlr', name: 'antlr4', version: '4.8'
