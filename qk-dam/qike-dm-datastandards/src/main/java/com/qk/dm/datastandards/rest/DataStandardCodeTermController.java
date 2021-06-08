@@ -6,6 +6,7 @@ import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.service.DataStandardCodeTermService;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
+import com.qk.dm.datastandards.vo.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,10 +37,9 @@ public class DataStandardCodeTermController {
      * @Param: page, size
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
-    @GetMapping("/query/{page}/{size}")
-    public DefaultCommonResult<Page<DsdTerm>> getDsdCodeTerm(@PathVariable("page") Integer page,
-                                                             @PathVariable("size") Integer size) {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(page, size));
+    @GetMapping("/query")
+    public DefaultCommonResult<Page<DsdTerm>> getDsdCodeTerm(@RequestBody Pagination pagination) {
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(pagination));
     }
 
     /**

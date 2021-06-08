@@ -7,6 +7,7 @@ import com.qk.dm.datastandards.mapstruct.mapper.DsdTermMapper;
 import com.qk.dm.datastandards.repositories.DsdTermRepository;
 import com.qk.dm.datastandards.service.DataStandardTermService;
 import com.qk.dm.datastandards.vo.DsdTermVO;
+import com.qk.dm.datastandards.vo.Pagination;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,10 +32,8 @@ public class DataStandardTermServiceImpl implements DataStandardTermService {
 
 
     @Override
-    public Page<DsdTerm> getDsdTerm(Integer page, Integer size) {
-        Sort sort = Sort.by(Sort.Direction.ASC, ID);
-        Pageable pageable = PageRequest.of(page-1, size, sort);
-        return dsdTermRepository.findAll(pageable);
+    public Page<DsdTerm> getDsdTerm(Pagination pagination) {
+        return dsdTermRepository.findAll(pagination.getPageable());
     }
 
     @Override

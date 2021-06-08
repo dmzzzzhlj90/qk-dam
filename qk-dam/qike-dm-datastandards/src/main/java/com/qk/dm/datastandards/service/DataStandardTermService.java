@@ -2,6 +2,7 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.vo.DsdTermVO;
+import com.qk.dm.datastandards.vo.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataStandardTermService {
 
-    Page<DsdTerm> getDsdTerm(Integer page,Integer size);
+    Page<DsdTerm> getDsdTerm(Pagination pagination);
 
     void addDsdTerm(DsdTermVO dsdTermVO);
 

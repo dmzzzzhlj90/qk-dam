@@ -2,6 +2,7 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
+import com.qk.dm.datastandards.vo.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataStandardCodeTermService {
 
-    Page<DsdCodeTerm> getDsdCodeTerm(Integer page, Integer size);
+    Page<DsdCodeTerm> getDsdCodeTerm(Pagination pagination);
 
     void addDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
 

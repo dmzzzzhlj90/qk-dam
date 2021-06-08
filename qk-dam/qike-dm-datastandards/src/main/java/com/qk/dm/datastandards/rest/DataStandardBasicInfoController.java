@@ -5,9 +5,11 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,10 +36,9 @@ public class DataStandardBasicInfoController {
      * @Param: page, size
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
      **/
-    @GetMapping("/query/{page}/{size}")
-    public DefaultCommonResult<Page<DsdTerm>> getDsdBasicInfo(@PathVariable("page") Integer page,
-                                                              @PathVariable("size") Integer size) {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(page, size));
+    @GetMapping("/query")
+    public DefaultCommonResult<Page<DsdTerm>> getDsdBasicInfo(@RequestBody Pagination pagination) {
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination));
     }
 
     /**

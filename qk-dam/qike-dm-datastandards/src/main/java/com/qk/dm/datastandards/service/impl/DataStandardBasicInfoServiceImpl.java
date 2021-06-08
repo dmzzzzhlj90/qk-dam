@@ -7,6 +7,7 @@ import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.Pagination;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,10 +31,8 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     }
 
     @Override
-    public Page<DsdBasicinfo> getDsdBasicInfo(Integer page, Integer size) {
-        Sort sort = Sort.by(Sort.Direction.ASC, ID);
-        Pageable pageable = PageRequest.of(page-1, size, sort);
-        return dsdBasicinfoRepository.findAll(pageable);
+    public Page<DsdBasicinfo> getDsdBasicInfo(Pagination pagination) {
+        return dsdBasicinfoRepository.findAll(pagination.getPageable());
     }
 
     @Override
