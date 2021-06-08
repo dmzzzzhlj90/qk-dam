@@ -12,6 +12,7 @@ import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.service.DataStandardCodeTermService;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
+import com.qk.dm.datastandards.vo.Pagination;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
@@ -36,10 +37,8 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     }
 
     @Override
-    public Page<DsdCodeTerm> getDsdCodeTerm(Integer page, Integer size) {
-        Sort sort = Sort.by(Sort.Direction.ASC, ID);
-        Pageable pageable = PageRequest.of(page-1,size,sort);
-        return dsdCodeTermRepository.findAll(pageable);
+    public Page<DsdCodeTerm> getDsdCodeTerm(Pagination pagination) {
+        return dsdCodeTermRepository.findAll(pagination.getPageable());
     }
 
     @Override

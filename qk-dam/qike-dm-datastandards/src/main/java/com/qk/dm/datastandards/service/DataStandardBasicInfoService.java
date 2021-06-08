@@ -3,6 +3,7 @@ package com.qk.dm.datastandards.service;
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataStandardBasicInfoService {
 
-    Page<DsdBasicinfo> getDsdBasicInfo(Integer page, Integer size);
+    Page<DsdBasicinfo> getDsdBasicInfo(Pagination pagination);
 
     void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 
