@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Data
@@ -26,16 +27,19 @@ public class DsdDirVO {
     /**
      * 数据标准分类ID
      */
+    @NotBlank(message = "数据标准分类ID不能为空！")
     private Integer dirDsdId;
 
     /**
      * 数据标准分类名称
      */
+    @NotBlank(message = "数据标准分类名称不能为空！")
     private String dirDsdName;
 
     /**
      * 父级id
      */
+    @NotBlank(message = "目录父级id不能为空！")
     private Integer parentId;
 
     /**

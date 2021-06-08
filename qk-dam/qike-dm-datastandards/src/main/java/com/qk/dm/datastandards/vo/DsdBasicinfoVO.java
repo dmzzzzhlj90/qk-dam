@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,12 +24,14 @@ public class DsdBasicinfoVO {
     /**
      * 标准代码
      */
+    @NotBlank(message = "标准代码不能为空！")
     @ExcelProperty("标准代码")
     private String dsdId;
 
     /**
      * 标准名称
      */
+    @NotBlank(message = "标准名称不能为空！")
     @ExcelProperty("标准名称")
     private String dsdName;
 
@@ -40,12 +44,14 @@ public class DsdBasicinfoVO {
     /**
      * 引用码表
      */
+    @NotBlank(message = "标准代码不能为空！")
     @ExcelProperty("引用码表")
     private String useCodeId;
 
     /**
      * 码表字段
      */
+    @NotBlank(message = "码表字段不能为空！")
     @ExcelProperty("码表字段")
     private String codeCol;
 
