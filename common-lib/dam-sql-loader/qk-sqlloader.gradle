@@ -4,6 +4,7 @@ plugins {
 version "${commonLibVersion}"
 group "com.qk.dam.sqlloader"
 dependencies {
+    compile 'com.zaxxer:HikariCP:3.4.5'
     compile project(":qk-sqlparser")
     implementation group: 'mysql', name: 'mysql-connector-java',version:'8.0.25'
     implementation group: 'commons-io', name: 'commons-io', version: '2.9.0'

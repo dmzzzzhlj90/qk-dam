@@ -86,10 +86,16 @@ public class TargzUtils {
         return rt;
     }
 
-    public static Map<String,String> readTarbgzContent(File gzFile) throws Exception {
+    public static Map<String,String> readTarbgzContent(File gzFile) {
         Map<String,String> rt = new HashMap<>();
-        BZip2CompressorInputStream bZip2CompressorInputStream = new BZip2CompressorInputStream((new FileInputStream(gzFile)));
-        extracted(rt, bZip2CompressorInputStream);
+        BZip2CompressorInputStream bZip2CompressorInputStream = null;
+        try {
+            bZip2CompressorInputStream = new BZip2CompressorInputStream((new FileInputStream(gzFile)));
+            extracted(rt, bZip2CompressorInputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return rt;
     }
 
