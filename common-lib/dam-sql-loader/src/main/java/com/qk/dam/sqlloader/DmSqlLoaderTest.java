@@ -22,7 +22,7 @@ public class DmSqlLoaderTest {
     private static final Log LOG = LogFactory.get("文件下载");
 
     public static void main(String[] args) throws Exception {
-        List<PiciTaskVO> piciTasks = DmSqlLoader.getPiciTask();
+        List<PiciTaskVO> piciTasks = DmSqlLoader.getPiciTaskNoLocalFile();
 
         List<FutureTask<Integer>> futureTasks = batchTask(piciTasks, (piciTaskVO) -> {
             //执行下载任务
