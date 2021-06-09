@@ -34,13 +34,16 @@ public class DmSqlLoader {
                             !pcr.contains(piciTaskVO.getPici() + "_" + piciTaskVO.getTableName()))
                     .collect(Collectors.toList());
         }
+
+        return piciTasks;
+    }
+    public static List<PiciTaskVO> getPiciTaskNoLocalFile(List<PiciTaskVO> piciTasks) {
         List<String> fileNames = listLocalFileNames();
         if (fileNames != null) {
             piciTasks = piciTasks.stream()
                     .filter(piciTaskVO -> !fileNames.contains(getFileNameByOss(piciTaskVO.getOssPath())))
                     .collect(Collectors.toList());
         }
-
         return piciTasks;
     }
 
