@@ -1,6 +1,7 @@
 package com.qk.dam.sqlloader.vo;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class PiciTaskLogVO {
     private long id;
@@ -33,6 +34,19 @@ public class PiciTaskLogVO {
                 ", is_es_updated=" + is_es_updated +
                 ", updated=" + updated +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PiciTaskLogVO)) return false;
+        PiciTaskLogVO that = (PiciTaskLogVO) o;
+        return getPici() == that.getPici() && getTableName().equals(that.getTableName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPici(), getTableName());
     }
 
     public long getId() {

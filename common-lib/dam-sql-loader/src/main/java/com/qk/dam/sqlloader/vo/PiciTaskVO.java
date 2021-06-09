@@ -1,5 +1,7 @@
 package com.qk.dam.sqlloader.vo;
 
+import java.util.Objects;
+
 public class PiciTaskVO {
     private int pici;
     private String tableName;
@@ -9,6 +11,19 @@ public class PiciTaskVO {
         this.pici = pici;
         this.tableName = tableName;
         this.ossPath = ossPath;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PiciTaskVO)) return false;
+        PiciTaskVO that = (PiciTaskVO) o;
+        return getPici() == that.getPici() && getTableName().equals(that.getTableName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPici(), getTableName());
     }
 
     public int getPici() {

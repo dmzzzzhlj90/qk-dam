@@ -5,7 +5,6 @@ import cn.hutool.db.Entity;
 import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +30,26 @@ public class PiciTaskLogAgg {
         return 0;
     }
 
+    public static List<PiciTaskLogVO> qkLogPiciAll() {
+        Db use = Db.use("qk_etl");
+        try {
+            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log ORDER BY tablename,pici");
+
+            List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
+                    new PiciTaskLogVO(
+                            entity.getInt("pici"),
+                            entity.getStr("tablename"),
+                            entity.getInt("is_down"),
+                            entity.getDate("updated")
+                    )).
+                    collect(Collectors.toList());
+            return piciTaskLogs;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     public static List<PiciTaskLogVO> qkLogPici(int pici) {
         Db use = Db.use("qk_etl");
         try {
@@ -50,6 +69,7 @@ public class PiciTaskLogAgg {
         }
         return null;
     }
+
     public static List<PiciTaskLogVO> qkLogPici(int pici,String tablename) {
         Db use = Db.use("qk_etl");
         try {
