@@ -96,4 +96,10 @@ public class DownloadFile {
         });
         return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
     }
+
+    public static byte[] downFileByteArray(String fileUrl) {
+        //带进度显示的文件下载
+        byte[] bytes = HttpUtil.downloadBytes(fileUrl);
+        return bytes;
+    }
 }
