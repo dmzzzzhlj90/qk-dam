@@ -37,7 +37,8 @@ public class DmSqlLoader {
 
         return piciTasks;
     }
-    public static List<PiciTaskVO> getPiciTaskNoLocalFile(List<PiciTaskVO> piciTasks) {
+    public static List<PiciTaskVO> getPiciTaskNoLocalFile() {
+        List<PiciTaskVO> piciTasks = getPiciTask();
         List<String> fileNames = listLocalFileNames();
         if (fileNames != null) {
             piciTasks = piciTasks.stream()
