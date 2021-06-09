@@ -1,18 +1,25 @@
 ## db.setting文件
-
+[qkdam]
 url = jdbc:mysql://172.31.0.44:3306/qkdam?useUnicode=true&characterEncoding=utf-8&useSSL=false
 user = root
 pass = zhudao123
 
+[longgov]
+url = jdbc:mysql://longgov.rwlb.rds.aliyuncs.com:3306/longgov?useUnicode=true&characterEncoding=utf-8&useSSL=false
+username = youshang_qike
+password = Wsbuyao%^&567
+
+
+
 ## 可选配置
 # 是否在日志中显示执行的SQL
-showSql = true
+showSql = false
 # 是否格式化显示的SQL
 formatSql = false
 # 是否显示SQL参数
 showParams = true
 # 打印SQL的日志等级，默认debug，可以是info、warn、error
-sqlLevel = debug
+sqlLevel = info
 
 
 # 自动提交
