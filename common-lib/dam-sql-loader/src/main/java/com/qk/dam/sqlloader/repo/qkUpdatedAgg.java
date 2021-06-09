@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class qkUpdatedAgg {
     public static void qkUpdatedBatchSql(String sqlValue){
-        Db use = Db.use("qkdam");
+        Db use = Db.use("qk_es_updated");
         String[] values = sqlValue.split("\n");
         List<String> sqls = Arrays.stream(values).
                 filter(v -> v.startsWith("LOCK")||v.startsWith("INSERT")||v.startsWith("UNLOCK"))

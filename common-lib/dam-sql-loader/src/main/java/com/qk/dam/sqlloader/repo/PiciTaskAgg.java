@@ -41,7 +41,6 @@ public class PiciTaskAgg {
                     entity.getStr("tablename"),
                     entity.getStr("osspath"))).
                     collect(Collectors.toList());
-            System.out.println(piciTask);
             return piciTask;
         } catch (SQLException throwables) {
             throwables.printStackTrace();

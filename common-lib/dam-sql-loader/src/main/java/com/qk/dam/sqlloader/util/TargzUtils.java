@@ -75,10 +75,14 @@ public class TargzUtils {
         dearchive(new File(descDir), tarArchiveInputStream);
     }
 
-    public static Map<String,String> readTarbgzContent(InputStream inputStream) throws Exception {
+    public static Map<String,String> readTarbgzContent(InputStream inputStream) {
         Map<String,String> rt = new HashMap<>();
-        BZip2CompressorInputStream bZip2CompressorInputStream = new BZip2CompressorInputStream(inputStream);
-        extracted(rt, bZip2CompressorInputStream);
+        try {
+            BZip2CompressorInputStream bZip2CompressorInputStream = new BZip2CompressorInputStream(inputStream);
+            extracted(rt, bZip2CompressorInputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return rt;
     }
 
