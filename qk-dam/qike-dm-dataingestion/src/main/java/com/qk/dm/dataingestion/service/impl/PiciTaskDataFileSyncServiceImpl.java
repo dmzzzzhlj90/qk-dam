@@ -41,7 +41,7 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
     private static final Log LOG = LogFactory.get("批次数据文件同步");
 
     @Override
-    public void syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
+    public int syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
         String dataDay = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now());
         //获取cloud.tencent连接Client
         COSClient cosClient = TxCOSClient.cosClient;
@@ -59,7 +59,7 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
         }
 
         LOG.info("查询需要同步的批次数量为:【{}】个;", piciTasks.size());
-        piciTasks.forEach(piciTaskVO -> {
+        for (PiciTaskVO piciTaskVO : piciTasks) {
             try {
                 //获取原始数据文件
                 LOG.info("准备下载,表名称:【{}】,批次:【{}】的阿里云文件", piciTaskVO.getTableName(), piciTaskVO.getPici());
@@ -76,9 +76,12 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
                 PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
                 LOG.info("成功更新,表名称:【{}】,批次:【{}】的批次日志表状态信息!", piciTaskVO.getTableName(), piciTaskVO.getPici());
             } catch (Exception e) {
+                LOG.info("同步失败,表名称:【{}】,批次:【{}】;", piciTaskVO.getTableName(), piciTaskVO.getPici());
                 e.printStackTrace();
+                return 0;
             }
-        });
+        }
+        ;
         //批量执行数据同步
 //        List<FutureTask<Integer>> futureTasks = batchTask(piciTasks, (piciTaskVO) -> {
 //            //获取原始数据文件
@@ -90,7 +93,7 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
 //            return 1;
 //        });
 //        doneFureTasks(futureTasks);
-
+        return 1;
     }
 
 //    /**

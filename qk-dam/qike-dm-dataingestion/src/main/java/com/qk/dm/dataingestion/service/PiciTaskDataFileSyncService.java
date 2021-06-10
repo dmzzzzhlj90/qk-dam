@@ -13,6 +13,6 @@ import java.util.concurrent.ExecutionException;
  */
 @Service
 public interface PiciTaskDataFileSyncService {
-    void syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException;
+    int syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException;
 
 }
