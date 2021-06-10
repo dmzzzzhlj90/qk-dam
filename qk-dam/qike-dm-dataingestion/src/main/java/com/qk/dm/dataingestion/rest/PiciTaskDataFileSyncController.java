@@ -2,7 +2,7 @@ package com.qk.dm.dataingestion.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.dataingestion.service.RiZhiDataFileSyncService;
+import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +21,12 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 @RestController
 @RequestMapping("/sync/rizhi")
-public class RiZhiDataFileSyncController {
-    private final RiZhiDataFileSyncService riZhiDataFileSyncService;
+public class PiciTaskDataFileSyncController {
+    private final PiciTaskDataFileSyncService piciTaskDataFileSyncService;
 
     @Autowired
-    public RiZhiDataFileSyncController(RiZhiDataFileSyncService riZhiDataFileSyncService) {
-        this.riZhiDataFileSyncService = riZhiDataFileSyncService;
+    public PiciTaskDataFileSyncController(PiciTaskDataFileSyncService piciTaskDataFileSyncService) {
+        this.piciTaskDataFileSyncService = piciTaskDataFileSyncService;
     }
 
     /**
@@ -36,7 +36,7 @@ public class RiZhiDataFileSyncController {
      **/
     @GetMapping("/files/data")
     public DefaultCommonResult syncRiZhiFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
-        riZhiDataFileSyncService.syncRiZhiFilesData(frontTabNamePatter, batchNum, bucketName);
+        piciTaskDataFileSyncService.syncPiciTaskFilesData(frontTabNamePatter, batchNum, bucketName);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

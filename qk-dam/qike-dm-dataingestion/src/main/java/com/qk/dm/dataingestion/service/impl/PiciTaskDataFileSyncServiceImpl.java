@@ -16,7 +16,7 @@ import com.qk.dam.sqlloader.repo.PiciTaskAgg;
 import com.qk.dam.sqlloader.repo.PiciTaskLogAgg;
 import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
 import com.qk.dam.sqlloader.vo.PiciTaskVO;
-import com.qk.dm.dataingestion.service.RiZhiDataFileSyncService;
+import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 import static com.qk.dam.sqlloader.DmSqlLoader.getPiciTask;
 import static com.qk.dam.sqlloader.util.DownloadFile.downFileByteArray;
@@ -43,11 +42,11 @@ import static com.qk.dam.sqlloader.util.DownloadFile.downFileByteArray;
  */
 @Slf4j
 @Service
-public class RiZhiDataFileSyncServiceImpl implements RiZhiDataFileSyncService {
+public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncService {
     private static final Log LOG = LogFactory.get("文件下载");
 
     @Override
-    public void syncRiZhiFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
+    public void syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
         String dataDay = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now());
 
         //获取cloud.tencent连接Client
