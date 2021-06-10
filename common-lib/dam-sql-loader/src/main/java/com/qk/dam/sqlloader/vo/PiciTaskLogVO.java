@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Objects;
 
 public class PiciTaskLogVO {
-    private long id;
     private int pici;
     private String tableName;
     /**
@@ -26,7 +25,6 @@ public class PiciTaskLogVO {
     @Override
     public String toString() {
         return "PiciTaskLogVO{" +
-                "id=" + id +
                 ", pici=" + pici +
                 ", tableName='" + tableName + '\'' +
                 ", is_down=" + is_down +
@@ -49,13 +47,6 @@ public class PiciTaskLogVO {
         return Objects.hash(getPici(), getTableName());
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public int getPici() {
         return pici;

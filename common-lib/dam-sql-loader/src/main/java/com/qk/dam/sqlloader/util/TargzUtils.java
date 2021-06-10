@@ -6,6 +6,7 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,22 +102,31 @@ public class TargzUtils {
 
     private static void extracted(Map<String, String> rt, BZip2CompressorInputStream bZip2CompressorInputStream) throws IOException {
         TarArchiveInputStream tarArchiveInputStream = new TarArchiveInputStream(bZip2CompressorInputStream);
+        InputStreamReader inputStreamReader = new InputStreamReader(tarArchiveInputStream);
+        BufferedReader input = new BufferedReader(inputStreamReader);
+
         while (true){
             var tarEmtry = tarArchiveInputStream.getNextTarEntry();
             if (tarEmtry==null){
                 break;
             }
             String fileName = tarEmtry.getName();
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            int count;
-            byte[] data = new byte[1024];
-            while ((count = tarArchiveInputStream.read(data, 0, 1024)) != -1) {
-                baos.write(data, 0, count);
+            String line;
+            StringBuilder appendstr = new StringBuilder();
+            while ((line = input.readLine()) != null) {
+                appendstr.append(line).append("\n");
             }
-            rt.put(fileName, baos.toString(UTF_8));
-            baos.close();
+            rt.put(fileName, appendstr.toString());
+
+//            byte[] data = new byte[2048];
+//            while ((count = tarArchiveInputStream.read(data, 0, 2048)) != -1) {
+//                ByteBuffer wrap = ByteBuffer.wrap(data, 0, count);
+//                baos.write(data, 0, count);
+//            }
+//            rt.put(fileName, baos.toString(UTF_8));
+//            baos.close();
         }
+        input.close();
         tarArchiveInputStream.close();
         bZip2CompressorInputStream.close();
     }

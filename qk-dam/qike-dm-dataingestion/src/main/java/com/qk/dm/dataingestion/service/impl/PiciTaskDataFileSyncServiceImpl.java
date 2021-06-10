@@ -18,7 +18,7 @@ import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
 import com.qk.dam.sqlloader.vo.PiciTaskVO;
 import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;
 import lombok.extern.slf4j.Slf4j;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;

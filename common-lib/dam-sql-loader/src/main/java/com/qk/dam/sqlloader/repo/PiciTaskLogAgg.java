@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PiciTaskLogAgg {
+    private final static Db use = Db.use("qk_etl");
     public static Integer saveQkLogPici(PiciTaskLogVO pici) {
-        Db use = Db.use("qk_etl");
         try {
             Entity uniqWhere = Entity.create("t_qk_datain_log")
                     .set("pici", pici.getPici())
@@ -31,9 +31,45 @@ public class PiciTaskLogAgg {
     }
 
     public static List<PiciTaskLogVO> qkLogPiciAll() {
-        Db use = Db.use("qk_etl");
         try {
-            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log ORDER BY tablename,pici");
+            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log ORDER BY pici,tablename");
+
+            List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
+                    new PiciTaskLogVO(
+                            entity.getInt("pici"),
+                            entity.getStr("tablename"),
+                            entity.getInt("is_down"),
+                            entity.getDate("updated")
+                    )).
+                    collect(Collectors.toList());
+            return piciTaskLogs;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<PiciTaskLogVO> qkLogPiciUpdated(String updateTime) {
+        try {
+            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE date_format(updated, '%Y-%m-%d') = ? and is_down=0 ORDER BY pici,tablename",updateTime);
+
+            List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
+                    new PiciTaskLogVO(
+                            entity.getInt("pici"),
+                            entity.getStr("tablename"),
+                            entity.getInt("is_down"),
+                            entity.getDate("updated")
+                    )).
+                    collect(Collectors.toList());
+            return piciTaskLogs;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+    public static List<PiciTaskLogVO> qkLogPiciUpdated(int pici,String updateTime) {
+        try {
+            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE pici=? and date_format(updated, '%Y-%m-%d') = ? ORDER BY pici,tablename", pici,updateTime);
 
             List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
                     new PiciTaskLogVO(
@@ -51,9 +87,8 @@ public class PiciTaskLogAgg {
     }
 
     public static List<PiciTaskLogVO> qkLogPici(int pici) {
-        Db use = Db.use("qk_etl");
         try {
-            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE pici=? ORDER BY tablename,pici", pici);
+            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE pici=? ORDER BY pici,tablename", pici);
 
             List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
                     new PiciTaskLogVO(
@@ -71,9 +106,8 @@ public class PiciTaskLogAgg {
     }
 
     public static List<PiciTaskLogVO> qkLogPici(int pici,String tablename) {
-        Db use = Db.use("qk_etl");
         try {
-            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE pici=? and tablename=? ORDER BY tablename,pici", pici,tablename);
+            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE pici=? and tablename=? ORDER BY pici,tablename", pici,tablename);
 
             List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
                     new PiciTaskLogVO(
@@ -90,9 +124,8 @@ public class PiciTaskLogAgg {
         return null;
     }
     public static List<PiciTaskLogVO> qkLogPici(int pici,String tablename,int isDown) {
-        Db use = Db.use("qk_etl");
         try {
-            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE pici=? and tablename=? and is_down=? ORDER BY tablename,pici", pici,tablename,isDown);
+            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE pici=? and tablename=? and is_down=? ORDER BY pici,tablename", pici,tablename,isDown);
 
             List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
                     new PiciTaskLogVO(

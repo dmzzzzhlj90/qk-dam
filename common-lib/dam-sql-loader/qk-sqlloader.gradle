@@ -3,16 +3,21 @@ plugins {
 }
 version "${commonLibVersion}"
 group "com.qk.dam.sqlloader"
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-api'
+    exclude group: 'log4j', module: 'log4j'
+}
 dependencies {
     compile 'com.zaxxer:HikariCP:3.4.5'
-    compile project(":qk-sqlparser")
+    compile group: 'com.qcloud', name: 'cos_api'
+    compile "com.qcloud:cos_api"
     implementation group: 'mysql', name: 'mysql-connector-java',version:'8.0.25'
     implementation group: 'commons-io', name: 'commons-io', version: '2.9.0'
     implementation group: 'org.apache.commons', name: 'commons-compress'
-    implementation group: 'cn.hutool', name: 'hutool-log', version: '5.6.6'
-    implementation group: 'cn.hutool', name: 'hutool-db'
-    implementation group: 'cn.hutool', name: 'hutool-http'
+    compile group: 'cn.hutool', name: 'hutool-db'
+    compile group: 'cn.hutool', name: 'hutool-http'
 }
+
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
