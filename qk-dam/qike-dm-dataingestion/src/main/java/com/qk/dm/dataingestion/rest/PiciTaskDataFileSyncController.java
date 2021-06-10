@@ -2,11 +2,13 @@ package com.qk.dm.dataingestion.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.ExecutionException;
@@ -35,8 +37,9 @@ public class PiciTaskDataFileSyncController {
      * @return: com.qk.dam.commons.http.result.DefaultCommonResult
      **/
     @GetMapping("/files/data")
-    public DefaultCommonResult syncRiZhiFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
-        piciTaskDataFileSyncService.syncPiciTaskFilesData(frontTabNamePatter, batchNum, bucketName);
+    public DefaultCommonResult syncRiZhiFilesData(@RequestParam(required = false) String frontTabNamePatter,
+                                                  @RequestParam(required = false) String batchNum) throws ExecutionException, InterruptedException {
+        piciTaskDataFileSyncService.syncPiciTaskFilesData(frontTabNamePatter, batchNum, LongGovConstant.BUCKETNAME);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

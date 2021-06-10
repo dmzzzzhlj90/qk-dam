@@ -3,15 +3,10 @@ package com.qk.dm.dataingestion.service.impl;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.qcloud.cos.COSClient;
-import com.qcloud.cos.ClientConfig;
-import com.qcloud.cos.auth.BasicCOSCredentials;
-import com.qcloud.cos.auth.COSCredentials;
-import com.qcloud.cos.exception.CosClientException;
-import com.qcloud.cos.exception.CosServiceException;
-import com.qcloud.cos.http.HttpProtocol;
-import com.qcloud.cos.model.*;
-import com.qcloud.cos.region.Region;
+import com.qcloud.cos.model.ObjectMetadata;
+import com.qcloud.cos.model.PutObjectResult;
 import com.qk.dam.sqlloader.constant.LongGovConstant;
+import com.qk.dam.sqlloader.cos.TxCOSClient;
 import com.qk.dam.sqlloader.repo.PiciTaskAgg;
 import com.qk.dam.sqlloader.repo.PiciTaskLogAgg;
 import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
@@ -43,16 +38,17 @@ import static com.qk.dam.sqlloader.util.DownloadFile.downFileByteArray;
 @Slf4j
 @Service
 public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncService {
-    private static final Log LOG = LogFactory.get("文件下载");
+    private static final Log LOG = LogFactory.get("批次数据文件同步");
 
     @Override
     public void syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
         String dataDay = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now());
-
         //获取cloud.tencent连接Client
-        COSClient cosClient = getCosClient();
+        COSClient cosClient = TxCOSClient.cosClient;
+        LOG.info("获取腾讯云COS客户端连接成功!");
 //        String bucketName = createBucket(cosClient);
         createFileDir(cosClient, bucketName, dataDay);
+        LOG.info("创建腾讯云COS文件夹成功!使用桶名称为:【{}】,创建的文件夹名称为:【{}】;", dataDay, bucketName);
 
         //获取文件信息
         List<PiciTaskVO> piciTasks;
@@ -62,7 +58,27 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
             piciTasks = PiciTaskAgg.longgovFrontTaskrizhi(frontTabNamePatter + "%", Integer.parseInt(batchNum));
         }
 
+        LOG.info("查询需要同步的批次数量为:【{}】", piciTasks.size());
+        piciTasks.forEach(piciTaskVO -> {
+            try {
+                //获取原始数据文件
+                LOG.info("准备下载,表名称【{}】,批次【{}】的阿里云文件", piciTaskVO.getTableName(), piciTaskVO.getPici());
+                byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
+                LOG.info("成功下载,表名称【{}】,批次【{}】的阿里云文件", piciTaskVO.getTableName(), piciTaskVO.getPici());
 
+                //同步数据文件到COS
+                LOG.info("准备上传文件到腾讯云COS!");
+                uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
+                LOG.info("成功上传文件到腾讯云COS!");
+
+                //更新日志表状态信息
+                LOG.info("准备更新,批次日志表状态信息!");
+                PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
+                LOG.info("成功更新,批次日志表状态信息!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         //批量执行数据同步
 //        List<FutureTask<Integer>> futureTasks = batchTask(piciTasks, (piciTaskVO) -> {
 //            //获取原始数据文件
@@ -75,56 +91,27 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
 //        });
 //        doneFureTasks(futureTasks);
 
-        piciTasks.forEach(piciTaskVO -> {
-            //获取原始数据文件
-            byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
-            //同步数据文件到COS
-            uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
-            //更新日志表状态信息
-            PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
-        });
-
     }
 
-    /**
-     * 创建COSClient
-     *
-     * @return: com.qcloud.cos.COSClient
-     **/
-    public COSClient getCosClient() {
-        //1.初始化用户身份信息（secretId, secretKey）
-        String secretId = LongGovConstant.COS_SECRET_ID;
-        String secretKey = LongGovConstant.COS_SECRET_KEY;
-        COSCredentials cred = new BasicCOSCredentials(secretId, secretKey);
-        //2.设置bucket的地域
-        Region region = new Region(LongGovConstant.COS_REGION);
-        ClientConfig clientConfig = new ClientConfig(region);
-        clientConfig.setHttpProtocol(HttpProtocol.https);
-        //3.生成COS客户端
-        return new COSClient(cred, clientConfig);
-    }
-
-    /**
-     * 创建Bucket
-     *
-     * @Param: cosClient
-     * @return: java.lang.String
-     **/
-    public String createBucket(COSClient cosClient) {
-        //存储桶名称，格式：BucketName-APPID
-        String bucketName = "data-center-files-1306026405";
-        CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName);
-        //设置 bucket 的权限为 Private(私有读写)、其他可选有 PublicRead（公有读私有写）、PublicReadWrite（公有读写）
-        createBucketRequest.setCannedAcl(CannedAccessControlList.Private);
-        try {
-            Bucket bucketResult = cosClient.createBucket(createBucketRequest);
-        } catch (CosServiceException serverException) {
-            serverException.printStackTrace();
-        } catch (CosClientException clientException) {
-            clientException.printStackTrace();
-        }
-        return bucketName;
-    }
+//    /**
+//     * 创建Bucket
+//     *
+//     * @Param: cosClient
+//     * @return: java.lang.String
+//     **/
+//    public String createBucket(COSClient cosClient, String bucketName) {
+//        CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName);
+//        //设置 bucket 的权限为 Private(私有读写)、其他可选有 PublicRead（公有读私有写）、PublicReadWrite（公有读写）
+//        createBucketRequest.setCannedAcl(CannedAccessControlList.Private);
+//        try {
+//            Bucket bucketResult = cosClient.createBucket(createBucketRequest);
+//        } catch (CosServiceException serverException) {
+//            serverException.printStackTrace();
+//        } catch (CosClientException clientException) {
+//            clientException.printStackTrace();
+//        }
+//        return bucketName;
+//    }
 
     /**
      * 创建文件目录
