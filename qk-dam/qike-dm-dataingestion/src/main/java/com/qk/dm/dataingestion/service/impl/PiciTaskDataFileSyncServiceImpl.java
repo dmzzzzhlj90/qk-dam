@@ -45,7 +45,7 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
         String dataDay = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now());
         //获取cloud.tencent连接Client
         COSClient cosClient = TxCOSClient.cosClient;
-        LOG.info("获取腾讯云COS客户端连接成功!");
+        LOG.info("成功连接到桶名称为:【{}】的腾讯云COS客户端!");
 //        String bucketName = createBucket(cosClient);
         createFileDir(cosClient, bucketName, dataDay);
         LOG.info("创建腾讯云COS文件夹成功!使用桶名称为:【{}】,创建的文件夹名称为:【{}】;", dataDay, bucketName);
@@ -58,23 +58,23 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
             piciTasks = PiciTaskAgg.longgovFrontTaskrizhi(frontTabNamePatter + "%", Integer.parseInt(batchNum));
         }
 
-        LOG.info("查询需要同步的批次数量为:【{}】", piciTasks.size());
+        LOG.info("查询需要同步的批次数量为:【{}】个;", piciTasks.size());
         piciTasks.forEach(piciTaskVO -> {
             try {
                 //获取原始数据文件
-                LOG.info("准备下载,表名称【{}】,批次【{}】的阿里云文件", piciTaskVO.getTableName(), piciTaskVO.getPici());
+                LOG.info("准备下载,表名称:【{}】,批次:【{}】的阿里云文件", piciTaskVO.getTableName(), piciTaskVO.getPici());
                 byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
                 LOG.info("成功下载,表名称【{}】,批次【{}】的阿里云文件", piciTaskVO.getTableName(), piciTaskVO.getPici());
 
                 //同步数据文件到COS
-                LOG.info("准备上传文件到腾讯云COS!");
+                LOG.info("准备上传,表名称:【{}】,批次:【{}】的文件到腾讯云COS!", piciTaskVO.getTableName(), piciTaskVO.getPici());
                 uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
-                LOG.info("成功上传文件到腾讯云COS!");
+                LOG.info("成功上传,表名称:【{}】,批次:【{}】的文件到腾讯云COS!", piciTaskVO.getTableName(), piciTaskVO.getPici());
 
                 //更新日志表状态信息
-                LOG.info("准备更新,批次日志表状态信息!");
+                LOG.info("准备更新,表名称:【{}】,批次:【{}】的批次日志表状态信息!", piciTaskVO.getTableName(), piciTaskVO.getPici());
                 PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
-                LOG.info("成功更新,批次日志表状态信息!");
+                LOG.info("成功更新,表名称:【{}】,批次:【{}】的批次日志表状态信息!", piciTaskVO.getTableName(), piciTaskVO.getPici());
             } catch (Exception e) {
                 e.printStackTrace();
             }
