@@ -21,12 +21,9 @@ import java.util.stream.Collectors;
 import static com.qk.dam.sqlloader.cos.TxCOSClient.cosClient;
 import static com.qk.dam.sqlloader.repo.PiciTaskAgg.longgovTaskAll;
 import static com.qk.dam.sqlloader.repo.PiciTaskLogAgg.qkLogPiciUpdated;
-import static com.qk.dam.sqlloader.repo.QkUpdatedAgg.qkUpdatedBatchSql;
 import static com.qk.dam.sqlloader.util.DownloadFile.listLocalFileNames;
 
 public class DmSqlLoader {
-    private static final Log LOG = LogFactory.get("sql载入程序");
-
     public static COSObjectInputStream getCosObjectStream(String objKey) {
         COSObject object = cosClient.getObject(
                 new GetObjectRequest(LongGovConstant.BUCKETNAME, objKey));
@@ -115,19 +112,4 @@ public class DmSqlLoader {
         return split[split.length - 1];
     }
 
-    public static void qkUpdatedBatch(String fileName) {
-        String filePath = LongGovConstant.LOCAL_FILES_PATH + fileName;
-        LOG.info("载入tar.gz包！");
-        Map<String, String> sqlMap = TargzUtils.readTarbgzContent(new File(filePath));
-        Objects.requireNonNull(sqlMap);
-        LOG.info("载入成功！");
-        sqlMap.forEach((key, sqlValue) -> {
-            LOG.info("获取执行的sql文件【{}】！", key);
-            try {
-                qkUpdatedBatchSql(sqlValue);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
-    }
 }
