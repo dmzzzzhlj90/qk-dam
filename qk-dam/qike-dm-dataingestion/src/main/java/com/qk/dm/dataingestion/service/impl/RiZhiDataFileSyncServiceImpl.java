@@ -32,7 +32,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import static com.qk.dam.sqlloader.DmSqlLoader.getPiciTask;
-import static com.qk.dam.sqlloader.util.BatchTask.batchTask;
 import static com.qk.dam.sqlloader.util.DownloadFile.downFileByteArray;
 
 /**
@@ -65,35 +64,27 @@ public class RiZhiDataFileSyncServiceImpl implements RiZhiDataFileSyncService {
         }
 
 
-        //执行数据同步
-        List<FutureTask<Integer>> futureTasks = batchTask(piciTasks, (piciTaskVO) -> {
+        //批量执行数据同步
+//        List<FutureTask<Integer>> futureTasks = batchTask(piciTasks, (piciTaskVO) -> {
+//            //获取原始数据文件
+//            byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
+//            //同步数据文件到COS
+//            uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
+//            //更新日志表状态信息
+//            PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
+//            return 1;
+//        });
+//        doneFureTasks(futureTasks);
+
+        piciTasks.forEach(piciTaskVO -> {
             //获取原始数据文件
             byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
             //同步数据文件到COS
             uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
             //更新日志表状态信息
             PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
-            return 1;
         });
-        doneFureTasks(futureTasks);
-    }
 
-    private void doneFureTasks(List<FutureTask<Integer>> futureTasks) throws InterruptedException, ExecutionException {
-        int sum = futureTasks.stream().mapToInt(t -> {
-            try {
-                return t.get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return 0;
-        }).sum();
-
-        if (sum == futureTasks.size()) {
-            LOG.info("批次【{}】所有上传COS完毕", sum);
-        }
-        for (FutureTask<Integer> futureTask : futureTasks) {
-            Integer state = futureTask.get();
-        }
     }
 
     /**
@@ -181,5 +172,23 @@ public class RiZhiDataFileSyncServiceImpl implements RiZhiDataFileSyncService {
             e.printStackTrace();
         }
     }
+
+    //    private void doneFureTasks(List<FutureTask<Integer>> futureTasks) throws InterruptedException, ExecutionException {
+//        int sum = futureTasks.stream().mapToInt(t -> {
+//            try {
+//                return t.get();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return 0;
+//        }).sum();
+//
+//        if (sum == futureTasks.size()) {
+//            LOG.info("批次【{}】所有上传COS完毕", sum);
+//        }
+//        for (FutureTask<Integer> futureTask : futureTasks) {
+//            Integer state = futureTask.get();
+//        }
+//    }
 
 }
