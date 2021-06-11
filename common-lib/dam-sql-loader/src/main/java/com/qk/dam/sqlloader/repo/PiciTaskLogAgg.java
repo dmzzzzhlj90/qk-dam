@@ -49,9 +49,9 @@ public class PiciTaskLogAgg {
         return null;
     }
 
-    public static List<PiciTaskLogVO> qkLogPiciUpdated(String updateTime) {
+    public static List<PiciTaskLogVO> qkLogPiciUpdated() {
         try {
-            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE date_format(updated, '%Y-%m-%d') = ? and is_down=0 ORDER BY pici,tablename",updateTime);
+            List<Entity> query = use.query("SELECT * FROM t_qk_datain_log WHERE is_down=0 ORDER BY pici,tablename");
 
             List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
                     new PiciTaskLogVO(

@@ -31,7 +31,7 @@ public class DmSqlLoader {
     }
 
     public static List<PiciTaskVO> getCosPiciTask(String updated) {
-        List<PiciTaskLogVO> piciTaskLogVOS = qkLogPiciUpdated(updated);
+        List<PiciTaskLogVO> piciTaskLogVOS = qkLogPiciUpdated();
         List<PiciTaskVO> piciTaskVOS = longgovTaskAll();
         if (piciTaskLogVOS != null) {
             List<String> pcr = piciTaskLogVOS.stream()
@@ -65,17 +65,6 @@ public class DmSqlLoader {
                     .collect(Collectors.toList());
         }
 
-        return piciTasks;
-    }
-
-    public static List<PiciTaskVO> getPiciTaskNoLocalFile() {
-        List<PiciTaskVO> piciTasks = getPiciTask();
-        List<String> fileNames = listLocalFileNames();
-        if (fileNames != null) {
-            piciTasks = piciTasks.stream()
-                    .filter(piciTaskVO -> !fileNames.contains(getFileNameByOss(piciTaskVO.getOssPath())))
-                    .collect(Collectors.toList());
-        }
         return piciTasks;
     }
 

@@ -7,6 +7,7 @@ import com.qcloud.cos.exception.CosServiceException;
 import com.qcloud.cos.model.*;
 import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dam.sqlloader.repo.PiciTaskLogAgg;
+import com.qk.dam.sqlloader.repo.QkUpdated1Agg;
 import com.qk.dam.sqlloader.repo.QkUpdatedAgg;
 import com.qk.dam.sqlloader.util.TargzUtils;
 import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
@@ -32,12 +33,12 @@ public class SqlLoaderMain {
         LOG.info("桶中有【{}】个任务",executePiciTask.size());
 
         for (PiciTaskVO piciTaskVO : executePiciTask) {
-            LOG.info("执行sql文件成功,批次【{}】表名【{}】",piciTaskVO.getPici(),piciTaskVO.getTableName());
             COSObjectInputStream cosObjectStream = getCosObjectStream(  objKeyDate + "/" + getFileNameByOss(piciTaskVO.getOssPath()));
             try {
                 TargzUtils.writeRtFile(cosObjectStream,LOCAL_FILES_PATH+piciTaskVO.getTableName()+"-"+piciTaskVO.getPici()+".sql");
+                LOG.info("sql文件下载成功,批次【{}】表名【{}】",piciTaskVO.getPici(),piciTaskVO.getTableName());
             } catch (Exception e) {
-                LOG.info("执行sql文件失败,批次【{}】表名【{}】",piciTaskVO.getPici(),piciTaskVO.getTableName());
+                LOG.info("sql文件下载失败,批次【{}】表名【{}】",piciTaskVO.getPici(),piciTaskVO.getTableName());
                 e.printStackTrace();
             }
         }
@@ -59,6 +60,7 @@ public class SqlLoaderMain {
                 QkUpdatedAgg.qkUpdatedBatchSql(sqls);
                 PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 1, new Date()));
                 LOG.info("执行sql文件成功,批次【{}】表名【{}】",piciTaskVO.getPici(),piciTaskVO.getTableName());
+                QkUpdated1Agg.qkUpdatedBatchSql();
             } catch (SQLException throwables) {
                 LOG.info("执行sql文件失败,批次【{}】表名【{}】",piciTaskVO.getPici(),piciTaskVO.getTableName());
                 throwables.printStackTrace();
