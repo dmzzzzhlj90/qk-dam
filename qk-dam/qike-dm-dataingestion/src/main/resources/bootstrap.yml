@@ -25,3 +25,5 @@ spring:
         extension-configs:
           - dataId: laliyuncs_longgov.yml
             refresh: true
+          - dataId: dm-dataingestion.yml
+            refresh: true
