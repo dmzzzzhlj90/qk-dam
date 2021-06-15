@@ -78,7 +78,7 @@ fabric.properties
 .idea
 *.iml
 out
-gen
+distro
 ### Gradle template
 .gradle
 **/build/

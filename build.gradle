@@ -62,7 +62,15 @@ subprojects {
                 }
             }
         }
+
+        task makeReleaseJar(type: Copy) {
+            from('build/libs')
+            into("${project.rootDir}/distro/")
+//            rename { String fileName -> //在复制时重命名文件
+//            }
+        }
     }
+
     uploadArchives {
         repositories {
             mavenDeployer {
