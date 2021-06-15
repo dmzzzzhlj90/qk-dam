@@ -15,11 +15,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/sqlloader")
 public class SqlLoaderController {
-    @GetMapping("/exec/{date}")
-    public DefaultCommonResult syncRiZhiFilesData(@PathVariable String date) {
-        SqlLoaderMain.executeTarSqlTask(date);
-        SqlLoaderMain.qkUpdatedBatchSql();
-        return new DefaultCommonResult(ResultCodeEnum.OK);
+    @GetMapping("/exec/{update}")
+    public DefaultCommonResult syncRiZhiFilesData(@PathVariable String update) {
+        int state = SqlLoaderMain.executeTarSqlUpdate(update);
+        return new DefaultCommonResult(ResultCodeEnum.OK,state);
+    }
+
+    @GetMapping("/exec/pici/{pici}")
+    public DefaultCommonResult executeTarSqlPici(@PathVariable int pici) {
+        int state = SqlLoaderMain.executeTarSqlPici(pici);
+        return new DefaultCommonResult(ResultCodeEnum.OK,state);
+    }
+
+    @GetMapping("/exec/tablename/{tableName}")
+    public DefaultCommonResult executeTarSqlTableName(@PathVariable String tableName) {
+        int state = SqlLoaderMain.executeTarSqlTableName(tableName);
+        return new DefaultCommonResult(ResultCodeEnum.OK,state);
+    }
+
+    @GetMapping("/exec/tablename/pici/{tableName}/{pici}")
+    public DefaultCommonResult executeTarSqlTableName(@PathVariable String tableName,@PathVariable int pici) {
+        int state = SqlLoaderMain.executeTarSqlTableName(tableName,pici);
+        return new DefaultCommonResult(ResultCodeEnum.OK,state);
     }
 
     @GetMapping("/exec/writeDest/{date}")

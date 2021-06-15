@@ -118,7 +118,7 @@ public class TargzUtils {
                 if (!(line.startsWith("/*")||line.startsWith("LOCK")||line.startsWith("UNLOCK"))){
                     // 读取SQL
                     if (!"".equals(line)){
-                        consumer.accept(line);
+                        consumer.accept(line.replace(";",""));
                     }
                 }
             }

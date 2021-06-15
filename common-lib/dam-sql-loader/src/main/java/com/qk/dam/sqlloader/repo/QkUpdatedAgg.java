@@ -6,9 +6,8 @@ import java.util.List;
 
 public class QkUpdatedAgg {
     public final static Db use = Db.use("qk_es_updated");
-    public final static Db use1 = Db.use("qk_es_updated_1");
-    public static void qkUpdatedBatchSql(List<String> sqls) throws SQLException {
-        use.executeBatch(sqls);
+    public static int[] qkUpdatedBatchSql(List<String> sqls) throws SQLException {
+        return use.executeBatch(sqls);
     }
 
 }
