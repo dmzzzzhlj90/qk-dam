@@ -1,8 +1,8 @@
 stages:
   - dev
 variables:
-  CI_DEBUG_TRACE: true
-  SONAR_HOST_URL: http://172.31.0.44:9000/
+  CI_DEBUG_TRACE: "true"
+  SONAR_HOST_URL: "http://172.31.0.44:9000/"
 sonarqube_analysis:
   stage: dev
   only:
