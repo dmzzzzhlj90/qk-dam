@@ -1,6 +1,8 @@
 package com.qk.dm.datastandards.vo;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +11,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,12 +19,16 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ContentRowHeight(20)
+@HeadRowHeight(20)
+@ColumnWidth(25)
 public class DsdTermVO {
 
     /**
      * ID编号
      */
     @ExcelProperty("ID编号")
+    @ExcelIgnore
     private Integer id;
 
     /**
@@ -56,6 +63,7 @@ public class DsdTermVO {
      * 状态
      */
     @ExcelProperty("状态")
+    @ExcelIgnore
     private Integer state;
 
 
