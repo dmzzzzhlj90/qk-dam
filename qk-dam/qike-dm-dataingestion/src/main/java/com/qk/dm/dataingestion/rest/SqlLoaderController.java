@@ -3,20 +3,22 @@ package com.qk.dm.dataingestion.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.sqlloader.SqlLoaderMain;
-import com.qk.dam.sqlloader.repo.QkUpdated1Agg;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
+/**
+ * @author daomingzhu
+ * @date 2021/06/09
+ */
 @RestController
 @RequestMapping("/sqlloader")
 public class SqlLoaderController {
     @GetMapping("/exec/{date}")
     public DefaultCommonResult syncRiZhiFilesData(@PathVariable String date) {
-        SqlLoaderMain.executeTask(date);
+        SqlLoaderMain.executeTarSqlTask(date);
+        SqlLoaderMain.qkUpdatedBatchSql();
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -27,7 +29,7 @@ public class SqlLoaderController {
     }
     @GetMapping("/exec/updateToUpdate1")
     public DefaultCommonResult syncRiZhiFilesData() {
-        QkUpdated1Agg.qkUpdatedBatchSql();
+//        QkUpdated1Agg.qkUpdatedBatchSql();
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
