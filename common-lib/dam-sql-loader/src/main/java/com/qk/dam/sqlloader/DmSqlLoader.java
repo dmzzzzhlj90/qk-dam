@@ -23,6 +23,10 @@ public class DmSqlLoader {
     static {
         cosObjKeys = getAllCosTarFile();
     }
+    public static void refreshCosKeys(){
+        cosObjKeys.clear();
+        cosObjKeys.addAll(getAllCosTarFile());
+    }
     /**
      * 获取cos文件流
      * @param fileName 对象key
@@ -85,9 +89,12 @@ public class DmSqlLoader {
         List<String> cosObjKeys = getCosObjKeys(updated);
         Objects.requireNonNull(cosObjKeys);
         Objects.requireNonNull(piciTask);
+        final List<String> cks= cosObjKeys.stream()
+                .map(cosObjKey->cosObjKey.replace(updated+"/",""))
+                .collect(Collectors.toList());
         piciTask = piciTask
                 .stream()
-                .filter(piciTaskVO -> cosObjKeys.contains(getFileNameByOss(piciTaskVO.getOssPath())))
+                .filter(piciTaskVO -> cks.contains(getFileNameByOss(piciTaskVO.getOssPath())))
                 .collect(Collectors.toList());
         return piciTask;
     }
@@ -223,10 +230,6 @@ public class DmSqlLoader {
                     .collect(Collectors.toList());
         }
         return null;
-    }
-    public static void main(String[] args) {
-        List<PiciTaskVO> aggre_addr = getCosTableTask("aggre_addr");
-        System.out.println(aggre_addr);
     }
 
 }

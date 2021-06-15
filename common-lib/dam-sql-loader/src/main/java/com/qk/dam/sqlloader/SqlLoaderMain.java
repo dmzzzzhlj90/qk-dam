@@ -75,7 +75,7 @@ public class SqlLoaderMain {
             LOG.info("批次【{}】表名【{}】", piciTaskVO.getPici(), piciTaskVO.getTableName());
             COSObjectInputStream cosObjectStream = getCosObjectStream(getFileNameByOss(piciTaskVO.getOssPath()));
 
-            return executeSqlTask(piciTaskVO, cosObjectStream);
+            executeSqlTask(piciTaskVO, cosObjectStream);
         }
         LOG.info("cos桶中【{}/】的tar均已执行完毕，", bt);
         return 1;

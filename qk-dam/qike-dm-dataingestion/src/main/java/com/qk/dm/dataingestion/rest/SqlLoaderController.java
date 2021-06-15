@@ -2,6 +2,7 @@ package com.qk.dm.dataingestion.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.sqlloader.DmSqlLoader;
 import com.qk.dam.sqlloader.SqlLoaderMain;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,9 +45,9 @@ public class SqlLoaderController {
         SqlLoaderMain.writeDestTask(date);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
-    @GetMapping("/exec/updateToUpdate1")
+    @GetMapping("/refreshCosKeys")
     public DefaultCommonResult syncRiZhiFilesData() {
-//        QkUpdated1Agg.qkUpdatedBatchSql();
+        DmSqlLoader.refreshCosKeys();
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
