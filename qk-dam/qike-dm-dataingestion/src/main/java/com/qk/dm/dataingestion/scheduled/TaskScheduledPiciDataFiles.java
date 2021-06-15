@@ -2,6 +2,7 @@ package com.qk.dm.dataingestion.scheduled;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import com.qk.dam.sqlloader.SqlLoaderMain;
 import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 定时同步数据文件
@@ -48,7 +52,12 @@ public class TaskScheduledPiciDataFiles {
         LOG.info("定时同步开始!");
         LOG.info("定时器时间cron为:【{}】!", timerParam);
         try {
-            piciTaskDataFileSyncService.syncPiciTaskFilesData("", "", LongGovConstant.BUCKETNAME);
+            int rtState = piciTaskDataFileSyncService.syncPiciTaskFilesData("", "", LongGovConstant.BUCKETNAME);
+            if (rtState==2){
+                String dataDay = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now());
+                SqlLoaderMain.executeTarSqlUpdate(dataDay);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             LOG.info("定时同步出错!" + e.getMessage());

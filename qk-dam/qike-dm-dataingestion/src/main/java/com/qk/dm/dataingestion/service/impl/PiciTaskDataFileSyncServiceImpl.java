@@ -42,6 +42,7 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
 
     @Override
     public int syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
+        int rtState = 1;
         String dataDay = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now());
         //获取cloud.tencent连接Client
         COSClient cosClient = TxCOSClient.cosClient;
@@ -75,10 +76,12 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
                 LOG.info("准备更新,表名称:【{}】,批次:【{}】的批次日志表状态信息!", piciTaskVO.getTableName(), piciTaskVO.getPici());
                 PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
                 LOG.info("成功更新,表名称:【{}】,批次:【{}】的批次日志表状态信息!", piciTaskVO.getTableName(), piciTaskVO.getPici());
+                rtState =  2;
             } catch (Exception e) {
                 LOG.info("同步失败,表名称:【{}】,批次:【{}】;", piciTaskVO.getTableName(), piciTaskVO.getPici());
                 e.printStackTrace();
-                return 0;
+                rtState = 0;
+                return rtState;
             }
         }
         ;
@@ -93,7 +96,7 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
 //            return 1;
 //        });
 //        doneFureTasks(futureTasks);
-        return 1;
+        return rtState;
     }
 
 //    /**
