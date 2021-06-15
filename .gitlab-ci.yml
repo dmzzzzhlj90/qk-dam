@@ -1,14 +1,11 @@
-
 stages:
-  - build_push
-
-# 执行 SonarQube 分析，并将检测结果推送至 SonarQube
+  - dev
 sonarqube_analysis:
-  stage: build_push
+  stage: dev
   only:
     - dev
     - test
   script:
-    - /home/zdm/sonar-scanner-4.6.2.2472/bin/sonar-scanner -Dsonar.host.url=http://172.31.0.44:9000  -Dsonar.projectKey=qk-dam -Dsonar.sources=qk-dam -Dsonar.java.binaries=.   -Dsonar.login=admin  -Dsonar.password=admin
+    - /home/zdm/sonar-scanner-4.6.2.2472/bin/sonar-scanner -Dsonar.host.url=http://172.31.0.44:9000  -Dsonar.projectKey=$CI_PROJECT_NAME -Dsonar.sources=.  -Dsonar.java.binaries=. -Dsonar.analysis.CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME -Dsonar.analysis.GITLAB_USER_EMAIL=$GITLAB_USER_EMAIL -Dsonar.analysis.GITLAB_USER_NAME=$GITLAB_USER_NAME -Dsonar.analysis.CI_PROJECT_PATH=$CI_PROJECT_PATH   -Dsonar.login=admin  -Dsonar.password=admin
   tags:
     - sonarqube
