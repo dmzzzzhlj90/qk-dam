@@ -21,4 +21,21 @@ public class LongGovConstant {
      * 腾讯COS 地域信息
      **/
     public static final String COS_REGION = "ap-beijing";
+    public static final String COS_META_CONTENTTYPE = "application/octet-stream"; //COS操作元对象类型
+    public static final String COS_META_HEADER_TABLE = "x-cos-meta-table"; //COS元对象Header存储,key为表名称
+    public static final String COS_META_HEADER_PICI = "x-cos-meta-pici"; //COS元对象Header存储,key为数据批次
+
+    /**
+     * 日期格式
+     **/
+    public static final String DATE_TIME_PATTERN = "yyyyMMdd";
+
+    /**
+     * 接口调度状态信息
+     **/
+    public static final int RESULT_ERROR = 0; //执行失败
+    public static final int RESULT_SUCCESS_EMPTY = 1; //执行成功,数据为空
+    public static final int RESULT_SUCCESS_EXIST = 2; //执行成功,有可执行数据
+
+
 }

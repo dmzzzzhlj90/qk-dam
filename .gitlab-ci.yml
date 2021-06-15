@@ -9,6 +9,6 @@ sonarqube_analysis:
     - dev
     - test
   script:
-    - /home/zdm/sonar-scanner-4.6.2.2472/bin/sonar-scanner/sonar-scanner -Dsonar.host.url=http://172.31.0.44:9000  -Dsonar.projectKey=qk-dam -Dsonar.sources=qk-dam -Dsonar.java.binaries=.   -Dsonar.login=admin  -Dsonar.password=admin
+    - /home/zdm/sonar-scanner-4.6.2.2472/bin/sonar-scanner -Dsonar.host.url=http://172.31.0.44:9000  -Dsonar.projectKey=qk-dam -Dsonar.sources=qk-dam -Dsonar.java.binaries=.   -Dsonar.login=admin  -Dsonar.password=admin
   tags:
     - sonarqube

@@ -51,13 +51,12 @@ public class TaskScheduledPiciDataFiles {
     public void syncRiZhiFilesData() {
         LOG.info("定时同步开始!");
         LOG.info("定时器时间cron为:【{}】!", timerParam);
+        String dataDay = DateTimeFormatter.ofPattern(LongGovConstant.DATE_TIME_PATTERN).format(LocalDateTime.now());
         try {
-            int rtState = piciTaskDataFileSyncService.syncPiciTaskFilesData("", "", LongGovConstant.BUCKETNAME);
-            if (rtState==2){
-                String dataDay = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now());
+            int rtState = piciTaskDataFileSyncService.syncPiciTaskFilesData(dataDay, "", "", LongGovConstant.BUCKETNAME);
+            if (rtState == LongGovConstant.RESULT_SUCCESS_EXIST) {
                 SqlLoaderMain.executeTarSqlUpdate(dataDay);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             LOG.info("定时同步出错!" + e.getMessage());

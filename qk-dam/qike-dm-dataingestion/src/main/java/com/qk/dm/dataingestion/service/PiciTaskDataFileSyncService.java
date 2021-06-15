@@ -2,8 +2,6 @@ package com.qk.dm.dataingestion.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ExecutionException;
-
 /**
  * 原始层数据同步
  *
@@ -13,6 +11,6 @@ import java.util.concurrent.ExecutionException;
  */
 @Service
 public interface PiciTaskDataFileSyncService {
-    int syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException;
+    int syncPiciTaskFilesData(String dataDay, String frontTabNamePatter, String batchNum, String bucketName);
 
 }
