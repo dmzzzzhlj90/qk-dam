@@ -12,17 +12,17 @@ password = Wsbuyao%^&567
 [qk_es_updated]
 url = jdbc:mysql://172.31.0.16:3306/qk_es_updated?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 username = zhudaoming
-password = zhudaoming001
+password = zhudaoming112
 
 [qk_es_updated_1]
 url = jdbc:mysql://172.31.0.16:3306/qk_es_updated_1?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 username = zhudaoming
-password = zhudaoming001
+password = zhudaoming112
 
 [qk_etl]
 url = jdbc:mysql://172.31.0.16:3306/qk_etl?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 username = zhudaoming
-password = zhudaoming001
+password = zhudaoming112
 
 # 自动提交
 autoCommit = true
