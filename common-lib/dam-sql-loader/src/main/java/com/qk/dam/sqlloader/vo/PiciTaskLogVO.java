@@ -12,6 +12,7 @@ public class PiciTaskLogVO {
     private int is_down;
     private int is_mysql_updated;
     private int is_es_updated;
+    private Date down_time;
     private Date updated;
 
 
@@ -19,6 +20,14 @@ public class PiciTaskLogVO {
         this.pici = pici;
         this.tableName = tableName;
         this.is_down = is_down;
+        this.updated = updated;
+    }
+
+    public PiciTaskLogVO(int pici, String tableName, int is_down, Date down_time, Date updated) {
+        this.pici = pici;
+        this.tableName = tableName;
+        this.is_down = is_down;
+        this.down_time = down_time;
         this.updated = updated;
     }
 
@@ -86,6 +95,14 @@ public class PiciTaskLogVO {
 
     public void setIs_es_updated(int is_es_updated) {
         this.is_es_updated = is_es_updated;
+    }
+
+    public Date getDown_time() {
+        return down_time;
+    }
+
+    public void setDown_time(Date down_time) {
+        this.down_time = down_time;
     }
 
     public Date getUpdated() {

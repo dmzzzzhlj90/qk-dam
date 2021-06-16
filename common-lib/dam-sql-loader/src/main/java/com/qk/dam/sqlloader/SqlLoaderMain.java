@@ -11,7 +11,6 @@ import com.qk.dam.sqlloader.repo.QkUpdatedAgg;
 import com.qk.dam.sqlloader.util.TargzUtils;
 import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
 import com.qk.dam.sqlloader.vo.PiciTaskVO;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,7 +24,6 @@ import java.util.stream.IntStream;
 
 import static com.qk.dam.sqlloader.DmSqlLoader.*;
 import static com.qk.dam.sqlloader.constant.LongGovConstant.LOCAL_FILES_PATH;
-import static com.qk.dam.sqlloader.constant.LongGovConstant.SQL_INSERT;
 
 public class SqlLoaderMain {
     private static final Log LOG = LogFactory.get("SqlLoaderMain");
@@ -161,44 +159,6 @@ public class SqlLoaderMain {
 //        } else if (StringUtils.equalsIgnoreCase(SQL_INSERT, sql)) {
 //            replaceSqls.add(sql);
 //        }
-    }
-
-    public static void qkUpdatedBatchSql() {
-        Db use = QkUpdated1Agg.use1;
-        //68129428 68129428
-        LOG.info("开始执行从update->update1的数据同步ETL");
-        List<PiciTaskLogVO> piciTaskLogVOS = PiciTaskLogAgg.qkLogPiciAll();
-        if (piciTaskLogVOS != null) {
-            piciTaskLogVOS = piciTaskLogVOS.stream()
-                    .filter(piciTaskLogVO -> piciTaskLogVO.getIs_down() == 1).collect(Collectors.toList());
-            LOG.info("需要同步的任务有【{}】个", piciTaskLogVOS.size());
-            for (PiciTaskLogVO piciTaskLogVO : piciTaskLogVOS) {
-                final List<String> sqls = new ArrayList<>();
-                int pici = piciTaskLogVO.getPici();
-                String tableName = piciTaskLogVO.getTableName();
-                String sql = "insert ignore into qk_es_updated_1." + tableName + "  select a.*," + pici + ",0 from qk_es_updated." + tableName + "  a ;";
-                LOG.info("SQL:{}", sql);
-                sqls.add(sql);
-                try {
-                    use.executeBatch(sqls);
-                    PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskLogVO.getPici(), piciTaskLogVO.getTableName(), 2, new Date()));
-                    LOG.info("数据同步update1完成,批次【{}】表名【{}】", piciTaskLogVO.getPici(), piciTaskLogVO.getTableName());
-
-                    // 清空update 表
-                    String truncate = "truncate table qk_es_updated." + tableName + ";";
-                    LOG.info("SQL:{}", truncate);
-                    use.execute(truncate, new Object[]{});
-                    LOG.info("清空update完成,批次【{}】表名【{}】", piciTaskLogVO.getPici(), piciTaskLogVO.getTableName());
-
-
-                } catch (SQLException throwables) {
-                    LOG.info("数据同步失败,批次【{}】表名【{}】", piciTaskLogVO.getPici(), piciTaskLogVO.getTableName());
-                    throwables.printStackTrace();
-                }
-            }
-        } else {
-            LOG.info("没有可以同步的任务日志");
-        }
     }
 
 }

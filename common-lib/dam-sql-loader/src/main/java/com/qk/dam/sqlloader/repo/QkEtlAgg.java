@@ -17,7 +17,7 @@ public class QkEtlAgg {
         try {
             boolean state = SqlExecutor.call(QK_ETL.getConnection(), "{call proc_es_update_to_updated_1(?,?)}", new Object[]{pici, tbName});
             LOG.info("proc_es_update_to_updated_1执行成功,批次【{}】表名【{}】", pici, tbName);
-            PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(pici, tbName, 2, new Date()));
+            PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(pici, tbName, 2, new Date(), new Date()));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             LOG.info("执行存储过程proc_es_update_to_updated_1失败,批次【{}】表名【{}】", pici, tbName);
