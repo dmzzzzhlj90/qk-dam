@@ -15,12 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 import java.util.zip.GZIPInputStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class TargzUtils {
-    private final static Db use = Db.use("qk_es_updated");
     /**
      * 解压.tar文件
      */
@@ -81,35 +81,29 @@ public class TargzUtils {
         dearchive(new File(descDir), tarArchiveInputStream);
     }
 
-    public static List<String> readTarbgzContent(InputStream inputStream) {
-        try {
+    public static void readTarbgzSqls(InputStream inputStream, Consumer<String> consumer) throws IOException {
             BZip2CompressorInputStream bZip2CompressorInputStream = new BZip2CompressorInputStream(inputStream);
-            return extracted( bZip2CompressorInputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+            extracted( bZip2CompressorInputStream,consumer);
     }
 
-    public static List<String> readTarbgzContent(File gzFile) {
-        Map<String,String> rt = new HashMap<>();
-        BZip2CompressorInputStream bZip2CompressorInputStream = null;
-        try {
-            bZip2CompressorInputStream = new BZip2CompressorInputStream((new FileInputStream(gzFile)));
-            return extracted( bZip2CompressorInputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//    public static List<String> readTarbgzContent(File gzFile) {
+//        Map<String,String> rt = new HashMap<>();
+//        BZip2CompressorInputStream bZip2CompressorInputStream = null;
+//        try {
+//            bZip2CompressorInputStream = new BZip2CompressorInputStream((new FileInputStream(gzFile)));
+//            return extracted( bZip2CompressorInputStream);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return new ArrayList<>();
+//    }
 
-        return new ArrayList<>();
-    }
-
-    private static List<String> extracted(BZip2CompressorInputStream bZip2CompressorInputStream) throws IOException {
+    private static void extracted(BZip2CompressorInputStream bZip2CompressorInputStream, Consumer<String> consumer) throws IOException {
         TarArchiveInputStream tarArchiveInputStream = new TarArchiveInputStream(bZip2CompressorInputStream);
         InputStreamReader inputStreamReader = new InputStreamReader(tarArchiveInputStream);
         BufferedReader input = new BufferedReader(inputStreamReader);
 
-        final List<String> sqls = new ArrayList<>(10000);
 
         while (true){
             var tarEmtry = tarArchiveInputStream.getNextTarEntry();
@@ -124,33 +118,14 @@ public class TargzUtils {
                 if (!(line.startsWith("/*")||line.startsWith("LOCK")||line.startsWith("UNLOCK"))){
                     // 读取SQL
                     if (!"".equals(line)){
-                        sqls.add(line);
+                        consumer.accept(line.replace(";",""));
                     }
-//                    if (sqls.size()==100000){
-//                        try {
-//                            use.executeBatch(sqls);
-//                            sqls.clear();
-//                        } catch (SQLException throwables) {
-//                            sqls.clear();
-//                            throwables.printStackTrace();
-//                            break;
-//                        }
-//                    }
                 }
-//                appendstr.append(line).append("\n");
             }
-//            byte[] data = new byte[2048];
-//            while ((count = tarArchiveInputStream.read(data, 0, 2048)) != -1) {
-//                ByteBuffer wrap = ByteBuffer.wrap(data, 0, count);
-//                baos.write(data, 0, count);
-//            }
-//            rt.put(fileName, baos.toString(UTF_8));
-//            baos.close();
         }
         input.close();
         tarArchiveInputStream.close();
         bZip2CompressorInputStream.close();
-        return sqls;
     }
 
     public static void writeRtFile(InputStream inputStream, String destDir) throws Exception {

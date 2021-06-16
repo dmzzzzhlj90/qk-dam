@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ExecutionException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 原始层数据同步
@@ -38,8 +39,9 @@ public class PiciTaskDataFileSyncController {
      **/
     @GetMapping("/files/data")
     public DefaultCommonResult syncRiZhiFilesData(@RequestParam(required = false) String frontTabNamePatter,
-                                                  @RequestParam(required = false) String batchNum) throws ExecutionException, InterruptedException {
-        piciTaskDataFileSyncService.syncPiciTaskFilesData(frontTabNamePatter, batchNum, LongGovConstant.BUCKETNAME);
+                                                  @RequestParam(required = false) String batchNum) {
+        String dataDay = DateTimeFormatter.ofPattern(LongGovConstant.DATE_TIME_PATTERN).format(LocalDateTime.now())+"02";
+        piciTaskDataFileSyncService.syncPiciTaskFilesData(dataDay, frontTabNamePatter, batchNum, LongGovConstant.BUCKETNAME);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

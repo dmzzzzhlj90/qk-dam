@@ -1,26 +1,26 @@
 ## db.setting文件
 [qkdam]
-url = jdbc:mysql://172.31.0.44:3306/qkdam?useUnicode=true&characterEncoding=utf-8&useSSL=false
+url = jdbc:mysql://172.31.0.44:3306/qkdam?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 user = root
 pass = zhudao123
 
 [longgov]
-url = jdbc:mysql://longgov.rwlb.rds.aliyuncs.com:3306/longgov?useUnicode=true&characterEncoding=utf-8&useSSL=false
+url = jdbc:mysql://longgov.rwlb.rds.aliyuncs.com:3306/longgov?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 username = youshang_qike
 password = Wsbuyao%^&567
 
 [qk_es_updated]
-url = jdbc:mysql://172.31.0.16:3306/qk_es_updated?useUnicode=true&characterEncoding=utf-8&useSSL=false
+url = jdbc:mysql://172.31.0.16:3306/qk_es_updated?useUnicode=true&noAccessToProcedureBodies=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 username = zhudaoming
 password = zhudaoming112
 
 [qk_es_updated_1]
-url = jdbc:mysql://172.31.0.16:3306/qk_es_updated_1?useUnicode=true&characterEncoding=utf-8&useSSL=false
+url = jdbc:mysql://172.31.0.16:3306/qk_es_updated_1?useUnicode=true&noAccessToProcedureBodies=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 username = zhudaoming
 password = zhudaoming112
 
 [qk_etl]
-url = jdbc:mysql://172.31.0.16:3306/qk_etl?useUnicode=true&characterEncoding=utf-8&useSSL=false
+url = jdbc:mysql://172.31.0.16:3306/qk_etl?useUnicode=true&noAccessToProcedureBodies=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 username = zhudaoming
 password = zhudaoming112
 

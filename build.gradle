@@ -1,13 +1,13 @@
 buildscript {
     repositories {
         mavenLocal()
-        maven {url 'https://maven.aliyun.com/repository/central'}
-        maven {url 'https://maven.aliyun.com/repository/public/'}
-        maven {url 'https://maven.aliyun.com/repository/google/'}
-        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         gradlePluginPortal()
         maven { url 'https://plugins.gradle.org/m2/' }
-        maven {url 'https://repo.spring.io/plugins-release'}
+        maven { url 'https://repo.spring.io/plugins-release' }
         mavenCentral()
     }
 }
@@ -25,13 +25,13 @@ subprojects {
 
     repositories {
         mavenLocal()
-        maven {url 'https://maven.aliyun.com/repository/central'}
-        maven {url 'https://maven.aliyun.com/repository/public/'}
-        maven {url 'https://maven.aliyun.com/repository/google/'}
-        maven {url 'https://maven.aliyun.com/repository/gradle-plugin'}
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         gradlePluginPortal()
         maven { url 'https://plugins.gradle.org/m2/' }
-        maven {url 'https://repo.spring.io/plugins-release'}
+        maven { url 'https://repo.spring.io/plugins-release' }
         mavenCentral()
     }
     plugins.withType(JavaPlugin) {
@@ -40,7 +40,7 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
-    if (!project.name.contains("dam-dependencies")){
+    if (!project.name.contains("dam-dependencies")) {
         apply plugin: 'java'
         publishing {
             publications {
@@ -62,7 +62,23 @@ subprojects {
                 }
             }
         }
+        if (project.name.startsWith("dm-")) {
+            task makeReleaseJar(type: Copy) {
+                def distroPath = "${project.rootDir}/distro/target"
+                file(distroPath).list().each {
+                    f ->
+                        if (f.endsWith(".jar")&&f.startsWith(project.name)) {
+                            println("${distroPath}/${f}")
+                            delete "${distroPath}/${f}"
+                        }
+                }
+                println("编译打包项目:${project.name}")
+                from('build/libs')
+                into(distroPath)
+            }
+        }
     }
+
     uploadArchives {
         repositories {
             mavenDeployer {

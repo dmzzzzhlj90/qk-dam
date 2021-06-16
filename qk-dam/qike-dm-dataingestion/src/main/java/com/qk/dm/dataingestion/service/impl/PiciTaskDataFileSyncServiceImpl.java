@@ -19,11 +19,8 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static com.qk.dam.sqlloader.DmSqlLoader.getPiciTask;
 import static com.qk.dam.sqlloader.util.DownloadFile.downFileByteArray;
@@ -41,8 +38,8 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
     private static final Log LOG = LogFactory.get("批次数据文件同步");
 
     @Override
-    public int syncPiciTaskFilesData(String frontTabNamePatter, String batchNum, String bucketName) throws ExecutionException, InterruptedException {
-        String dataDay = DateTimeFormatter.ofPattern("yyyyMMdd").format(LocalDateTime.now());
+    public int syncPiciTaskFilesData(String dataDay, String frontTabNamePatter, String batchNum, String bucketName) {
+        int rtState = LongGovConstant.RESULT_SUCCESS_EMPTY;
         //获取cloud.tencent连接Client
         COSClient cosClient = TxCOSClient.cosClient;
         LOG.info("成功连接到桶名称为:【{}】的腾讯云COS客户端!");
@@ -75,46 +72,16 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
                 LOG.info("准备更新,表名称:【{}】,批次:【{}】的批次日志表状态信息!", piciTaskVO.getTableName(), piciTaskVO.getPici());
                 PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
                 LOG.info("成功更新,表名称:【{}】,批次:【{}】的批次日志表状态信息!", piciTaskVO.getTableName(), piciTaskVO.getPici());
+                rtState = LongGovConstant.RESULT_SUCCESS_EXIST;
             } catch (Exception e) {
                 LOG.info("同步失败,表名称:【{}】,批次:【{}】;", piciTaskVO.getTableName(), piciTaskVO.getPici());
                 e.printStackTrace();
-                return 0;
+                rtState = LongGovConstant.RESULT_ERROR;
+                return rtState;
             }
         }
-        ;
-        //批量执行数据同步
-//        List<FutureTask<Integer>> futureTasks = batchTask(piciTasks, (piciTaskVO) -> {
-//            //获取原始数据文件
-//            byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
-//            //同步数据文件到COS
-//            uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
-//            //更新日志表状态信息
-//            PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
-//            return 1;
-//        });
-//        doneFureTasks(futureTasks);
-        return 1;
+        return rtState;
     }
-
-//    /**
-//     * 创建Bucket
-//     *
-//     * @Param: cosClient
-//     * @return: java.lang.String
-//     **/
-//    public String createBucket(COSClient cosClient, String bucketName) {
-//        CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName);
-//        //设置 bucket 的权限为 Private(私有读写)、其他可选有 PublicRead（公有读私有写）、PublicReadWrite（公有读写）
-//        createBucketRequest.setCannedAcl(CannedAccessControlList.Private);
-//        try {
-//            Bucket bucketResult = cosClient.createBucket(createBucketRequest);
-//        } catch (CosServiceException serverException) {
-//            serverException.printStackTrace();
-//        } catch (CosClientException clientException) {
-//            clientException.printStackTrace();
-//        }
-//        return bucketName;
-//    }
 
     /**
      * 创建文件目录
@@ -138,7 +105,6 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
         }
     }
 
-
     /**
      * 上传文件
      *
@@ -153,7 +119,10 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
             InputStream inputStream = new ByteArrayInputStream(bytes);
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(bytes.length);
-            objectMetadata.setContentType("application/octet-stream");
+            objectMetadata.setContentType(LongGovConstant.COS_META_CONTENTTYPE);
+            objectMetadata.setHeader(LongGovConstant.COS_META_HEADER_TABLE, piciTaskVO.getTableName());
+            objectMetadata.setHeader(LongGovConstant.COS_META_HEADER_PICI, piciTaskVO.getPici());
+
             PutObjectResult putObjectResult = cosClient.putObject(bucketName, key, inputStream, objectMetadata);
             // 关闭输入流...
             inputStream.close();
@@ -161,6 +130,37 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
             e.printStackTrace();
         }
     }
+
+    //    /**
+//     * 创建Bucket
+//     *
+//     * @Param: cosClient
+//     * @return: java.lang.String
+//     **/
+//    public String createBucket(COSClient cosClient, String bucketName) {
+//        CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName);
+//        //设置 bucket 的权限为 Private(私有读写)、其他可选有 PublicRead（公有读私有写）、PublicReadWrite（公有读写）
+//        createBucketRequest.setCannedAcl(CannedAccessControlList.Private);
+//        try {
+//            Bucket bucketResult = cosClient.createBucket(createBucketRequest);
+//        } catch (CosServiceException serverException) {
+//            serverException.printStackTrace();
+//        } catch (CosClientException clientException) {
+//            clientException.printStackTrace();
+//        }
+//        return bucketName;
+//        批量执行数据同步
+//        List<FutureTask<Integer>> futureTasks = batchTask(piciTasks, (piciTaskVO) -> {
+//            //获取原始数据文件
+//            byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
+//            //同步数据文件到COS
+//            uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
+//            //更新日志表状态信息
+//            PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 0, new Date()));
+//            return 1;
+//        });
+//        doneFureTasks(futureTasks);
+//    }
 
     //    private void doneFureTasks(List<FutureTask<Integer>> futureTasks) throws InterruptedException, ExecutionException {
 //        int sum = futureTasks.stream().mapToInt(t -> {

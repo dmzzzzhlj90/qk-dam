@@ -4,6 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.vo.TestVO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +12,9 @@ import javax.validation.Valid;
 
 @RestController
 public class TestController {
+    @Value("${spring.datasource.active}")
+    private String aa;
+
     final DsdBasicinfoRepository dsdBasicinfoRepository;
 
     public TestController(DsdBasicinfoRepository dsdBasicinfoRepository) {
@@ -18,8 +22,13 @@ public class TestController {
     }
 
     @GetMapping("/test")
-    public <T> DefaultCommonResult<T> test(@Valid TestVO testVO){
-        return new DefaultCommonResult(ResultCodeEnum.OK,dsdBasicinfoRepository.findAll());
+    public <T> DefaultCommonResult<T> test(@Valid TestVO testVO) {
+        System.out.println(aa);
+        return new DefaultCommonResult(ResultCodeEnum.OK, dsdBasicinfoRepository.findAll());
     }
 
+    @GetMapping("/test2")
+    public void test() {
+        System.out.println(aa);
+    }
 }
