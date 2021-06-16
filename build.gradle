@@ -64,9 +64,17 @@ subprojects {
         }
         if (project.name.startsWith("dm-")) {
             task makeReleaseJar(type: Copy) {
-                println("编译打包项目文件！${project.name}")
+                def distroPath = "${project.rootDir}/distro/target"
+                file(distroPath).list().each {
+                    f ->
+                        if (f.endsWith(".jar")&&f.startsWith(project.name)) {
+                            println("${distroPath}/${f}")
+                            delete "${distroPath}/${f}"
+                        }
+                }
+                println("编译打包项目:${project.name}")
                 from('build/libs')
-                into("${project.rootDir}/distro/")
+                into(distroPath)
             }
         }
     }
