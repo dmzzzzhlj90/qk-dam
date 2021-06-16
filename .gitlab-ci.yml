@@ -1,12 +1,14 @@
-image:
-  name: sonarsource/sonar-scanner-cli:4.5
-  entrypoint: [""]
-variables:
-  SONAR_TOKEN: "679e0d1cc1c5775ff2615bc960c1dd18447f5eb2"
-  SONAR_HOST_URL: "http://172.31.0.44:9000"
-sonarqube-check:
+
+stages:
+  - test
+
+# 执行 SonarQube 分析，并将检测结果推送至 SonarQube
+sonarqube_analysis:
   stage: test
-  script:
-    - sonar-scanner -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.projectKey=$CI_PROJECT_NAME -Dsonar.sources=.  -Dsonar.java.binaries=. -Dsonar.java.source=11 -Dsonar.analysis.CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME -Dsonar.analysis.GITLAB_USER_EMAIL=$GITLAB_USER_EMAIL -Dsonar.analysis.GITLAB_USER_NAME=$GITLAB_USER_NAME -Dsonar.analysis.CI_PROJECT_PATH=$CI_PROJECT_PATH
   only:
     - dev
+    - test
+  script:
+    - /data/sonar-scanner-4.6.2.2472/bin/sonar-scanner -Dsonar.host.url=http://172.31.0.44:9000  -Dsonar.projectKey=qk-dam -Dsonar.sources=qk-dam -Dsonar.java.binaries=.   -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.analysis.CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME -Dsonar.analysis.GITLAB_USER_EMAIL=$GITLAB_USER_EMAIL -Dsonar.analysis.GITLAB_USER_NAME=$GITLAB_USER_NAME -Dsonar.analysis.CI_PROJECT_PATH=$CI_PROJECT_PATH
+  tags:
+    - sonarqube
