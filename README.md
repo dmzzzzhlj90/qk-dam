@@ -5,3 +5,4 @@
  ./gradlew build -x test|./gradlew makeReleaseJar
 ```
 打包成功后在项目根目录distro下会有相应的jar文件
+测
