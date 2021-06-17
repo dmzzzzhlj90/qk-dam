@@ -42,9 +42,8 @@ public class TaskScheduledPiciDataFiles {
     }
 
     /**
-     * 同步阿里云数据到腾讯云
-     *
-     * @return: com.qk.dam.commons.http.result.DefaultCommonResult
+     * 定时同步阿里云数据到腾讯云,执行数据脚本;
+     * @return:
      **/
     @Scheduled(cron = "${read.timer.param}")
     @GetMapping("/files/data")
@@ -55,7 +54,9 @@ public class TaskScheduledPiciDataFiles {
         try {
             int rtState = piciTaskDataFileSyncService.syncPiciTaskFilesData(dataDay, "", "", LongGovConstant.BUCKETNAME);
             if (rtState == LongGovConstant.RESULT_SUCCESS_EXIST) {
+                LOG.info("开始执行脚本文件");
                 SqlLoaderMain.executeTarSqlUpdate(dataDay);
+                LOG.info("结束执行脚本文件");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,18 +64,5 @@ public class TaskScheduledPiciDataFiles {
         }
         LOG.info("定时同步结束!");
     }
-
-//    /**
-//     * 同步阿里云数据到腾讯云
-//     *
-//     * @return: com.qk.dam.commons.http.result.DefaultCommonResult
-//     **/
-//    @GetMapping("/files/data")
-//    public DefaultCommonResult syncRiZhiFilesData(@RequestParam(required = false) String frontTabNamePatter,
-//                                                  @RequestParam(required = false) String batchNum) throws ExecutionException, InterruptedException {
-//        return new DefaultCommonResult(ResultCodeEnum.OK,
-//                piciTaskDataFileSyncService.syncPiciTaskFilesData(frontTabNamePatter, batchNum, LongGovConstant.BUCKETNAME));
-//    }
-
 }
 

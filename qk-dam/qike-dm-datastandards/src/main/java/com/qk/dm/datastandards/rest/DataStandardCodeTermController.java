@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 数据标准标准代码术语接口
+ * 数据标准码表术语接口
  *
  * @author wjq
  * @date 20210604
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/dsd/code/term")
+@RequestMapping("/code/term")
 public class DataStandardCodeTermController {
     private final DataStandardCodeTermService dataStandardCodeTermService;
 
@@ -31,10 +31,10 @@ public class DataStandardCodeTermController {
 
 
     /**
-     * 查询业务术语信息
+     * 查询数据标准码表术语信息
      *
-     * @Param: page, size
-     * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
+     * @param: pagination分页查询参数对象: page,size,sortStr
+     * @return: 返回数据标准码表术语列表信息
      **/
     @GetMapping("/query")
     public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTerm(@RequestBody Pagination pagination) {
@@ -42,10 +42,10 @@ public class DataStandardCodeTermController {
     }
 
     /**
-     * 新增业务术语信息
+     * 新增数据标准码表术语信息
      *
-     * @Param: dsdTerm
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: dsdCodeTermVO 数据标准码表术语VO
+     * @return: DefaultCommonResult
      **/
     @PostMapping("/add")
     public DefaultCommonResult addDsdCodeTerm(@RequestBody @Validated DsdCodeTermVO dsdCodeTermVO) {
@@ -54,10 +54,10 @@ public class DataStandardCodeTermController {
     }
 
     /**
-     * 编辑业务术语信息
+     * 编辑数据标准码表术语信息
      *
-     * @Param: dsdTerm
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: dsdCodeTermVO 数据标准码表术语VO
+     * @return: DefaultCommonResult
      **/
     @PutMapping("/update")
     public DefaultCommonResult updateDsdCodeTerm(@RequestBody @Validated DsdCodeTermVO dsdCodeTermVO) {
@@ -66,10 +66,10 @@ public class DataStandardCodeTermController {
     }
 
     /**
-     * 删除业务术语信息
+     * 删除数据标准码表术语信息
      *
-     * @Param: id
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: id
+     * @return: DefaultCommonResult
      **/
     @DeleteMapping("/delete/{id}")
     public DefaultCommonResult deleteDsdCodeTerm(@PathVariable("id") Integer id) {

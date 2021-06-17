@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/dsd/code/dir")
+@RequestMapping("/code/dir")
 public class DataStandardCodeDirController {
     private final DataStandardCodeDirService dataStandardCodeDirService;
 
@@ -34,7 +34,7 @@ public class DataStandardCodeDirController {
     /**
      * 获取数据标准码表分类目录树
      *
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @return: 返回数据标准码表分类目录树
      **/
     @GetMapping("/tree")
     public DefaultCommonResult<List<DataStandardCodeTreeVO>> getDsdDirTree() {
@@ -44,8 +44,8 @@ public class DataStandardCodeDirController {
     /**
      * 新增码表分类目录
      *
-     * @Param: dsdCodeDirVO
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: dsdCodeDirVO 数据标准码表分类目录VO
+     * @return: DefaultCommonResult
      **/
     @PostMapping("/add")
     public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
@@ -56,8 +56,8 @@ public class DataStandardCodeDirController {
     /**
      * 编辑码表分类目录
      *
-     * @Param: dsdCodeDirVO
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: dsdCodeDirVO 数据标准码表分类目录VO
+     * @return: DefaultCommonResult
      **/
     @PutMapping("/update")
     public DefaultCommonResult updateDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
@@ -68,8 +68,8 @@ public class DataStandardCodeDirController {
     /**
      * 码表目录单叶子节点删除方式
      *
-     * @Param: id
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: id
+     * @return: DefaultCommonResult
      **/
     @DeleteMapping("/delete/{id}")
     public DefaultCommonResult deleteDsdDir(@PathVariable("id") Integer id) {
@@ -80,8 +80,8 @@ public class DataStandardCodeDirController {
     /**
      * 码表目录支持根节点删除关联删除叶子节点方式
      *
-     * @Param: id
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: id
+     * @return: DefaultCommonResult
      **/
     @DeleteMapping("/delete/root/{id}")
     public DefaultCommonResult deleteDsdDirRoot(@PathVariable("id") Integer id) {

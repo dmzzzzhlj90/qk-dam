@@ -90,8 +90,8 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
 
 
     /**
-     * @Param: respList
-     * @return: java.util.List<com.qk.dm.datastandards.vo.DataStandardTreeResp>
+     * @param: respList
+     * @return:
      * 使用递归方法建树
      **/
     public static List<DataStandardCodeTreeVO> buildByRecursive(List<DataStandardCodeTreeVO> respList) {
@@ -105,8 +105,8 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     }
 
     /**
-     * @Param: treeNode, respList
-     * @return: com.qk.dm.datastandards.vo.DataStandardTreeResp
+     * @param: treeNode, respList
+     * @return:
      * 递归查找子节点
      **/
     public static DataStandardCodeTreeVO findChildren(DataStandardCodeTreeVO treeNode, List<DataStandardCodeTreeVO> respList) {
@@ -139,8 +139,8 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     }
 
     /**
-     * @Param: ids, delId
-     * @return: void
+     * @param: ids, delId
+     * @return:
      * 获取删除叶子节点ID
      **/
     private void getIds(ArrayList<Integer> ids, Integer delId) {

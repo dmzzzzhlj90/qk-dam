@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/dsd/dir")
+@RequestMapping("/dir")
 public class DataStandardDirController {
     private final DataStandardDirService dataStandardDirService;
 
@@ -34,7 +34,7 @@ public class DataStandardDirController {
     /**
      * 获取数据标准分类目录树
      *
-     * @return: com.qk.dam.commons.http.result.DefaultCommonResult<java.util.List < com.qk.dm.datastandards.vo.DataStandardTreeVO>>
+     * @return: 返回数据标准分类目录树
      **/
     @GetMapping("/tree")
     public DefaultCommonResult<List<DataStandardTreeVO>> getDsdDirTree() {
@@ -44,8 +44,8 @@ public class DataStandardDirController {
     /**
      * 新增数据标准分类目录
      *
-     * @Param: dsdDirVO
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: dsdDirVO 数据标准分类目录VO
+     * @return: DefaultCommonResult
      **/
     @PostMapping("/add")
     public DefaultCommonResult addDsdDir(@RequestBody DsdDirVO dsdDirVO) {
@@ -56,8 +56,8 @@ public class DataStandardDirController {
     /**
      * 编辑数据标准分类目录
      *
-     * @Param: dsdDirVO
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: dsdDirVO 数据标准分类目录VO
+     * @return: DefaultCommonResult
      **/
     @PutMapping("/update")
     public DefaultCommonResult updateDsdDir(@RequestBody DsdDirVO dsdDirVO) {
@@ -68,8 +68,8 @@ public class DataStandardDirController {
     /**
      * 标准目录单子节点删除方式
      *
-     * @Param: id
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: id
+     * @return: DefaultCommonResult
      **/
     @DeleteMapping("/delete/{id}")
     public DefaultCommonResult deleteDsdDir(@PathVariable("id") Integer id) {
@@ -80,8 +80,8 @@ public class DataStandardDirController {
     /**
      * 标准目录支持根节点关联删除子节点方式
      *
-     * @Param: id
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: id
+     * @return: DefaultCommonResult
      **/
     @DeleteMapping("/delete/root/{id}")
     public DefaultCommonResult deleteDsdDirRoot(@PathVariable("id") Integer id) {
