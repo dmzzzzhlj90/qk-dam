@@ -27,8 +27,8 @@ public class DsdTermVO {
     /**
      * ID编号
      */
-    @ExcelProperty("ID编号")
     @ExcelIgnore
+    @ExcelProperty("ID编号")
     private Integer id;
 
     /**

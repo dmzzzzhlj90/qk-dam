@@ -1,6 +1,7 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.entity.QDsdCodeTerm;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTermMapper;
@@ -34,6 +35,12 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     @Override
     public PageResultVO<DsdCodeTermVO> getDsdCodeTerm(Pagination pagination) {
         List<DsdCodeTermVO> dsdCodeTermVOList = new ArrayList<DsdCodeTermVO>();
+        if (pagination == null) {
+            pagination = Pagination.builder()
+                    .page(DsdConstant.PAGE_DEFAULT_NUM)
+                    .size(DsdConstant.PAGE_DEFAULT_SIZE)
+                    .sortStr(DsdConstant.PAGE_DEFAULT_SORT).build();
+        }
 
         Page<DsdCodeTerm> codeTermPage = dsdCodeTermRepository.findAll(pagination.getPageable());
         codeTermPage.getContent().forEach(dsdCodeTerm -> {

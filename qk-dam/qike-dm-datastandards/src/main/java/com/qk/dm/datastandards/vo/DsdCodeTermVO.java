@@ -1,5 +1,6 @@
 package com.qk.dm.datastandards.vo;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
@@ -23,6 +24,7 @@ public class DsdCodeTermVO {
     /**
      * ID编号
      */
+//    @ExcelIgnore
     @ExcelProperty("ID编号")
     private Integer id;
 

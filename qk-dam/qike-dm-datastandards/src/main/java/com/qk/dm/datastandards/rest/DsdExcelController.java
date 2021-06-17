@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/dsd/excel")
+@RequestMapping("/excel")
 public class DsdExcelController {
     private final DsdExcelService dsdExcelService;
 

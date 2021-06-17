@@ -2,6 +2,7 @@ package com.qk.dm.datastandards.service.impl;
 
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeDir;
 import com.qk.dm.datastandards.entity.QDsdCodeDir;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTreeMapper;
@@ -97,7 +98,7 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     public static List<DataStandardCodeTreeVO> buildByRecursive(List<DataStandardCodeTreeVO> respList) {
         List<DataStandardCodeTreeVO> trees = new ArrayList<DataStandardCodeTreeVO>();
         for (DataStandardCodeTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId() || 0 > treeNode.getParentId()) {
+            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID == treeNode.getParentId()) {
                 trees.add(findChildren(treeNode, respList));
             }
         }

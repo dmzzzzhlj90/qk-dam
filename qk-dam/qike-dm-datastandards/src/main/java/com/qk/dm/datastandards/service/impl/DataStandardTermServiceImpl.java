@@ -1,6 +1,7 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.entity.QDsdTerm;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdTermMapper;
@@ -39,6 +40,12 @@ public class DataStandardTermServiceImpl implements DataStandardTermService {
     @Override
     public PageResultVO<DsdTermVO> getDsdTerm(Pagination pagination) {
         List<DsdTermVO> dsdTermVOList = new ArrayList<DsdTermVO>();
+        if (pagination == null) {
+            pagination = Pagination.builder()
+                    .page(DsdConstant.PAGE_DEFAULT_NUM)
+                    .size(DsdConstant.PAGE_DEFAULT_SIZE)
+                    .sortStr(DsdConstant.PAGE_DEFAULT_SORT).build();
+        }
 
         Page<DsdTerm> dsdTermPage = dsdTermRepository.findAll(pagination.getPageable());
         dsdTermPage.getContent().forEach(dsdTerm -> {

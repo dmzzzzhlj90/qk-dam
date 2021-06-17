@@ -1,6 +1,7 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.QDsdBasicinfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
@@ -35,6 +36,12 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     public PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination) {
         List<DsdBasicinfoVO> dsdBasicinfoVOList = new ArrayList<DsdBasicinfoVO>();
 
+        if (pagination == null) {
+            pagination = Pagination.builder()
+                    .page(DsdConstant.PAGE_DEFAULT_NUM)
+                    .size(DsdConstant.PAGE_DEFAULT_SIZE)
+                    .sortStr(DsdConstant.PAGE_DEFAULT_SORT).build();
+        }
         Page<DsdBasicinfo> basicinfoPage = dsdBasicinfoRepository.findAll(pagination.getPageable());
         basicinfoPage.getContent().forEach(dsdBasicinfo -> {
             DsdBasicinfoVO dsdBasicinfoVO = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsdBasicinfo);
@@ -48,10 +55,10 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     @Override
     public void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO) {
         DsdBasicinfo dsdBasicinfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicinfoVO);
-        Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdId.eq(dsdBasicinfo.getDsdId());
+        Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdCode.eq(dsdBasicinfo.getDsdCode());
         boolean exists = dsdBasicinfoRepository.exists(predicate);
         if (exists) {
-            throw new BizException("当前要新增的标准代码ID为：" + dsdBasicinfo.getDsdId()
+            throw new BizException("当前要新增的标准代码ID为：" + dsdBasicinfo.getDsdCode()
                     + "标准名称为:" + dsdBasicinfo.getDsdName() + " 的数据，已存在！！！");
         }
         dsdBasicinfoRepository.save(dsdBasicinfo);
@@ -60,12 +67,12 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     @Override
     public void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO) {
         DsdBasicinfo dsdBasicinfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicinfoVO);
-        Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdId.eq(dsdBasicinfo.getDsdId());
+        Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdCode.eq(dsdBasicinfo.getDsdCode());
         boolean exists = dsdBasicinfoRepository.exists(predicate);
         if (exists) {
             dsdBasicinfoRepository.saveAndFlush(dsdBasicinfo);
         } else {
-            throw new BizException("当前要更新的标准代码ID为：" + dsdBasicinfo.getDsdId()
+            throw new BizException("当前要更新的标准代码ID为：" + dsdBasicinfo.getDsdCode()
                     + "标准名称为:" + dsdBasicinfo.getDsdName() + " 的数据，不存在！！！");
         }
     }

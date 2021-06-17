@@ -2,14 +2,12 @@ package com.qk.dm.datastandards.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +36,7 @@ public class DataStandardBasicInfoController {
      * @return: 返回标准列表信息
      **/
     @GetMapping("/query")
-    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfo(@RequestBody Pagination pagination) {
+    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfo(@RequestBody(required = false) Pagination pagination) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination));
     }
 

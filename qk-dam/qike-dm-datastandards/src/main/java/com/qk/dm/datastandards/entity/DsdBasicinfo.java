@@ -1,7 +1,6 @@
 package com.qk.dm.datastandards.entity;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +8,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@Accessors(chain = true)
 @Table(name = "qk_dsd_basicinfo")
 public class DsdBasicinfo implements Serializable {
 
@@ -20,20 +18,32 @@ public class DsdBasicinfo implements Serializable {
      */
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    /**
-     * 标准代码
-     */
-    @Column(name = "dsd_id", nullable = false)
-    private String dsdId;
 
     /**
      * 标准名称
      */
     @Column(name = "dsd_name", nullable = false)
     private String dsdName;
+
+    /**
+     * 标准编码
+     */
+    @Column(name = "dsd_code", nullable = false)
+    private String dsdCode;
+
+    /**
+     * 字段名称
+     */
+    @Column(name = "col_name", nullable = false)
+    private String colName;
+
+    /**
+     * 数据类型
+     */
+    @Column(name = "data_type", nullable = false)
+    private String dataType;
 
     /**
      * 数据容量
@@ -50,8 +60,14 @@ public class DsdBasicinfo implements Serializable {
     /**
      * 码表字段
      */
-    @Column(name = "code_col", nullable = false)
+    @Column(name = "code_col")
     private String codeCol;
+
+    /**
+     * 标准层级
+     */
+    @Column(name = "dsd_level", nullable = false)
+    private String dsdLevel;
 
     /**
      * 描述
@@ -75,6 +91,6 @@ public class DsdBasicinfo implements Serializable {
      * 是否删除；0逻辑删除，1物理删除；
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag=0;
+    private Integer delFlag = 0;
 
 }

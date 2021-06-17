@@ -9,6 +9,7 @@ import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 数据标准基础信息excel 监听器
@@ -70,6 +71,18 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
             DsdBasicinfo dsdBasicInfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicInfoVO);
             dsdBasicInfoList.add(dsdBasicInfo);
         });
-        dsdBasicInfoRepository.saveAll(dsdBasicInfoList);
+        //更新
+        List<DsdBasicinfo> dsdBasicInfoAll = dsdBasicInfoRepository.findAll();
+        List<Integer> allIds = dsdBasicInfoAll.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
+        List<DsdBasicinfo> existDataList = dsdBasicInfoList.stream().filter(dsdBasicInfo -> allIds.contains(dsdBasicInfo.getId())).collect(Collectors.toList());
+
+        existDataList.forEach(dsdBasicinfo -> dsdBasicInfoRepository.saveAndFlush(dsdBasicinfo));
+        //新增
+        List<DsdBasicinfo> addList = new ArrayList<>();
+        if (dsdBasicInfoList.size() != existDataList.size()) {
+            List<Integer> existIds = existDataList.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
+            addList = dsdBasicInfoList.stream().filter(dsdBasicInfo -> !existIds.contains(dsdBasicInfo.getId())).collect(Collectors.toList());
+        }
+        dsdBasicInfoRepository.saveAll(addList);
     }
 }

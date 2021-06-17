@@ -94,7 +94,7 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
         List<DataStandardTreeVO> trees = new ArrayList<DataStandardTreeVO>();
         for (DataStandardTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID <= treeNode.getParentId()) {
+            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID == treeNode.getParentId()) {
                 trees.add(findChildren(treeNode, respList));
             }
         }

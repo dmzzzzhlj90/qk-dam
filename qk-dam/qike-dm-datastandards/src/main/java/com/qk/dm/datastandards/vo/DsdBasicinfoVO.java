@@ -1,5 +1,6 @@
 package com.qk.dm.datastandards.vo;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
@@ -28,13 +29,6 @@ public class DsdBasicinfoVO {
     private Integer id;
 
     /**
-     * 标准代码
-     */
-    @NotBlank(message = "标准代码不能为空！")
-    @ExcelProperty("标准代码")
-    private String dsdId;
-
-    /**
      * 标准名称
      */
     @NotBlank(message = "标准名称不能为空！")
@@ -42,8 +36,29 @@ public class DsdBasicinfoVO {
     private String dsdName;
 
     /**
+     * 标准代码
+     */
+    @NotBlank(message = "标准代码不能为空！")
+    @ExcelProperty("标准代码")
+    private String dsdCode;
+
+    /**
+     * 字段名称
+     */
+    @NotBlank(message = "字段名称不能为空！")
+    @ExcelProperty("字段名称")
+    private String colName;
+    /**
+     * 数据类型
+     */
+    @NotBlank(message = "数据类型不能为空！")
+    @ExcelProperty("数据类型")
+    private String dataType;
+
+    /**
      * 数据容量
      */
+    @NotBlank(message = "数据容量不能为空！")
     @ExcelProperty("数据容量")
     private String dataCapacity;
 
@@ -57,14 +72,24 @@ public class DsdBasicinfoVO {
     /**
      * 码表字段
      */
-    @NotBlank(message = "码表字段不能为空！")
+//    @NotBlank(message = "码表字段不能为空！")
     @ExcelProperty("码表字段")
+    @ExcelIgnore
     private String codeCol;
+
+    /**
+     * 标准层级
+     */
+    @NotBlank(message = "标准层级字段不能为空！")
+    @ExcelProperty("标准层级")
+    private String dsdLevel;
+
 
     /**
      * 描述
      */
     @ExcelProperty("描述")
     private String description;
+
 
 }
