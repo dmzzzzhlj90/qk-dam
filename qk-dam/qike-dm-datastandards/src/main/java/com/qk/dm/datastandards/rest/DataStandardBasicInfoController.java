@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/dsd/basic/info")
+@RequestMapping("/basic/info")
 public class DataStandardBasicInfoController {
     private final DataStandardBasicInfoService dataStandardBasicInfoService;
 
@@ -34,8 +34,8 @@ public class DataStandardBasicInfoController {
     /**
      * 查询标准信息
      *
-     * @Param: page, size
-     * @return: com.qk.dam.commons.http.result.DefaultCommonResult<org.springframework.data.domain.Page < com.qk.dm.datastandards.entity.DsdTerm>>
+     * @param: pagination分页查询参数对象: page,size,sortStr
+     * @return: 返回标准列表信息
      **/
     @GetMapping("/query")
     public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfo(@RequestBody Pagination pagination) {
@@ -45,8 +45,8 @@ public class DataStandardBasicInfoController {
     /**
      * 新增标准信息
      *
-     * @Param: dsdBasicinfoVO
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: dsdBasicinfoVO 数据标准信息VO
+     * @return: DefaultCommonResult
      **/
     @PostMapping("/add")
     public DefaultCommonResult addDsdBasicinfo(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
@@ -57,8 +57,8 @@ public class DataStandardBasicInfoController {
     /**
      * 编辑标准信息
      *
-     * @Param: dsdBasicinfoVO
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: dsdBasicinfoVO 数据标准信息VO
+     * @return: DefaultCommonResult
      **/
     @PutMapping("/update")
     public DefaultCommonResult updateDsdTerm(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
@@ -69,8 +69,8 @@ public class DataStandardBasicInfoController {
     /**
      * 删除标准信息
      *
-     * @Param: id
-     * @return: com.qk.commons.http.result.DefaultCommonResult
+     * @param: id
+     * @return: DefaultCommonResult
      **/
     @DeleteMapping("/delete/{id}")
     public DefaultCommonResult deleteDsdTerm(@PathVariable("id") Integer id) {

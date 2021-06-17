@@ -42,7 +42,7 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
         int rtState = LongGovConstant.RESULT_SUCCESS_EMPTY;
         //获取cloud.tencent连接Client
         COSClient cosClient = TxCOSClient.cosClient;
-        LOG.info("成功连接到桶名称为:【{}】的腾讯云COS客户端!");
+//        LOG.info("成功连接到桶名称为:【{}】的腾讯云COS客户端!");
 //        String bucketName = createBucket(cosClient);
         createFileDir(cosClient, bucketName, dataDay);
         LOG.info("创建腾讯云COS文件夹成功!使用桶名称为:【{}】,创建的文件夹名称为:【{}】;", dataDay, bucketName);

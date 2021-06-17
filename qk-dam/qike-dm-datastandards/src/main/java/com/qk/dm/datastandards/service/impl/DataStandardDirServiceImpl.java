@@ -1,6 +1,7 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.entity.QDsdDir;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdDirTreeMapper;
@@ -8,14 +9,13 @@ import com.qk.dm.datastandards.repositories.DsdDirRepository;
 import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdDirVO;
-import com.querydsl.core.QueryFactory;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 /**
  * @author wjq
@@ -87,14 +87,14 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
 
     /**
-     * @Param: respList
-     * @return: java.util.List<com.qk.dm.datastandards.vo.DataStandardTreeResp>
+     * @param: respList
+     * @return:
      * 使用递归方法建树
      **/
     public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
         List<DataStandardTreeVO> trees = new ArrayList<DataStandardTreeVO>();
         for (DataStandardTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId() || 0 > treeNode.getParentId()) {
+            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID <= treeNode.getParentId()) {
                 trees.add(findChildren(treeNode, respList));
             }
         }
@@ -102,8 +102,8 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     }
 
     /**
-     * @Param: treeNode, respList
-     * @return: com.qk.dm.datastandards.vo.DataStandardTreeResp
+     * @param: treeNode, respList
+     * @return:
      * 递归查找子节点
      **/
     public static DataStandardTreeVO findChildren(DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
@@ -135,8 +135,8 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     }
 
     /**
-     * @Param: ids, delId
-     * @return: void
+     * @param: ids, delId
+     * @return:
      * 获取删除叶子节点ID
      **/
     private void getIds(ArrayList<Integer> ids, Integer delId) {
