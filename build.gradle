@@ -16,7 +16,6 @@ version "${version}"
 description = '数据中台'
 ext.snapshotBuild = version.contains("SNAPSHOT")
 
-
 subprojects {
     apply plugin: 'idea'
     apply plugin: 'maven'
