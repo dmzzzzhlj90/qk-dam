@@ -88,13 +88,12 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
     /**
      * @param: respList
-     * @return:
-     * 使用递归方法建树
+     * @return: 使用递归方法建树
      **/
     public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
         List<DataStandardTreeVO> trees = new ArrayList<DataStandardTreeVO>();
         for (DataStandardTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID == treeNode.getParentId()) {
+            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
                 trees.add(findChildren(treeNode, respList));
             }
         }
@@ -103,8 +102,7 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
     /**
      * @param: treeNode, respList
-     * @return:
-     * 递归查找子节点
+     * @return: 递归查找子节点
      **/
     public static DataStandardTreeVO findChildren(DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
         treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
@@ -136,8 +134,7 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
     /**
      * @param: ids, delId
-     * @return:
-     * 获取删除叶子节点ID
+     * @return: 获取删除叶子节点ID
      **/
     private void getIds(ArrayList<Integer> ids, Integer delId) {
         Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(delId));

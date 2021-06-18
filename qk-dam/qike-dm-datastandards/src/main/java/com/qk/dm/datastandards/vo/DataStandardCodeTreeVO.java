@@ -21,11 +21,11 @@ public class DataStandardCodeTreeVO {
 
     private Integer id;
 
-    private Integer codeDirId;
+    private String codeDirId;
 
     private String codeDirName;
 
-    private Integer parentId;
+    private String parentId;
 
     private List<DataStandardCodeTreeVO> children;
 

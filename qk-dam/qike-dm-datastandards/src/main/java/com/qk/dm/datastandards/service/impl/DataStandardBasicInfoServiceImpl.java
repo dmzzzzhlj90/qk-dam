@@ -1,7 +1,6 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.QDsdBasicinfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
@@ -36,12 +35,6 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     public PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination) {
         List<DsdBasicinfoVO> dsdBasicinfoVOList = new ArrayList<DsdBasicinfoVO>();
 
-        if (pagination == null) {
-            pagination = Pagination.builder()
-                    .page(DsdConstant.PAGE_DEFAULT_NUM)
-                    .size(DsdConstant.PAGE_DEFAULT_SIZE)
-                    .sortStr(DsdConstant.PAGE_DEFAULT_SORT).build();
-        }
         Page<DsdBasicinfo> basicinfoPage = dsdBasicinfoRepository.findAll(pagination.getPageable());
         basicinfoPage.getContent().forEach(dsdBasicinfo -> {
             DsdBasicinfoVO dsdBasicinfoVO = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsdBasicinfo);

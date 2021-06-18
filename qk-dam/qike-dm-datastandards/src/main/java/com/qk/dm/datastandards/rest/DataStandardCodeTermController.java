@@ -36,9 +36,10 @@ public class DataStandardCodeTermController {
      * @param: pagination分页查询参数对象: page,size,sortStr
      * @return: 返回数据标准码表术语列表信息
      **/
-    @GetMapping("/query")
-    public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTerm(@RequestBody Pagination pagination) {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(pagination));
+    @GetMapping(value = {"/query/{codeDirId}","/query"})
+    public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTerm(Pagination pagination,
+                                                                           @PathVariable(value = "codeDirId",required = false) String codeDirId) {
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(pagination, codeDirId));
     }
 
     /**

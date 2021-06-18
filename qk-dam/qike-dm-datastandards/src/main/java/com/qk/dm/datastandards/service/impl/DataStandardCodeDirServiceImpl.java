@@ -92,13 +92,12 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
 
     /**
      * @param: respList
-     * @return:
-     * 使用递归方法建树
+     * @return: 使用递归方法建树
      **/
     public static List<DataStandardCodeTreeVO> buildByRecursive(List<DataStandardCodeTreeVO> respList) {
         List<DataStandardCodeTreeVO> trees = new ArrayList<DataStandardCodeTreeVO>();
         for (DataStandardCodeTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID == treeNode.getParentId()) {
+            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
                 trees.add(findChildren(treeNode, respList));
             }
         }
@@ -107,8 +106,7 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
 
     /**
      * @param: treeNode, respList
-     * @return:
-     * 递归查找子节点
+     * @return: 递归查找子节点
      **/
     public static DataStandardCodeTreeVO findChildren(DataStandardCodeTreeVO treeNode, List<DataStandardCodeTreeVO> respList) {
         treeNode.setChildren(new ArrayList<DataStandardCodeTreeVO>());
@@ -141,8 +139,7 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
 
     /**
      * @param: ids, delId
-     * @return:
-     * 获取删除叶子节点ID
+     * @return: 获取删除叶子节点ID
      **/
     private void getIds(ArrayList<Integer> ids, Integer delId) {
         Optional<DsdCodeDir> parentDir = dsdCodeDirRepository.findOne(dsdCodeDir.id.eq(delId));

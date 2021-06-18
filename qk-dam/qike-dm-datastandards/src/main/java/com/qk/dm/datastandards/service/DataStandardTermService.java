@@ -1,10 +1,8 @@
 package com.qk.dm.datastandards.service;
 
-import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.vo.DsdTermVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**

@@ -9,6 +9,7 @@ import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 数据标准码表信息excel 监听器
@@ -64,12 +65,26 @@ public class DsdCodeTermUploadDataListener extends AnalysisEventListener<DsdCode
      * 加上存储数据库
      */
     private void saveData() {
-        //VO转换
         List<DsdCodeTerm> codeTermList = new ArrayList<DsdCodeTerm>();
         list.forEach(dsdCodeTermVO -> {
             DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
             codeTermList.add(dsdCodeTerm);
         });
-        dsdCodeTermRepository.saveAll(codeTermList);
+        //更新
+        List<DsdCodeTerm> dsdCodeTermAll = dsdCodeTermRepository.findAll();
+        List<Integer> allIds = dsdCodeTermAll.stream().map(dsdCodeTerm -> dsdCodeTerm.getId()).collect(Collectors.toList());
+        List<DsdCodeTerm> existDataList = codeTermList.stream().filter(dsdCodeTerm -> allIds.contains(dsdCodeTerm.getId())).collect(Collectors.toList());
+
+        existDataList.forEach(dsdCodeTermRepository::saveAndFlush);
+        //新增
+        List<DsdCodeTerm> addList = new ArrayList<>();
+        if (codeTermList.size() != existDataList.size()) {
+            List<Integer> existIds = existDataList.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
+            addList = codeTermList.stream().filter(dsdCodeTerm -> !existIds.contains(dsdCodeTerm.getId())).collect(Collectors.toList());
+        }
+        if (addList.size() != 0) {
+            dsdCodeTermRepository.saveAll(addList);
+        }
+
     }
 }

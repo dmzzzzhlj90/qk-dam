@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -26,7 +23,7 @@ public class DsdCodeDirVO {
      * 码表标准分类ID
      */
     @NotBlank(message = "码表标准分类ID不能为空！")
-    private Integer codeDirId;
+    private String codeDirId;
 
     /**
      * 码表标准分类名称
@@ -38,7 +35,7 @@ public class DsdCodeDirVO {
      * 父级ID
      */
     @NotBlank(message = "目录父级ID不能为空！")
-    private Integer parentId;
+    private String parentId;
 
     /**
      * 描述

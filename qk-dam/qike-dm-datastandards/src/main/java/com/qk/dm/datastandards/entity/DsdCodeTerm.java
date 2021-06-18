@@ -1,7 +1,6 @@
 package com.qk.dm.datastandards.entity;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +8,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@Accessors(chain = true)
 @Table(name = "qk_dsd_code_term")
 public class DsdCodeTerm implements Serializable {
 
@@ -20,14 +18,14 @@ public class DsdCodeTerm implements Serializable {
      */
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
      * 码表分类id
      */
     @Column(name = "code_dir_id", nullable = false)
-    private Integer codeDirId;
+    private String codeDirId;
 
     /**
      * 码表编码
@@ -44,7 +42,7 @@ public class DsdCodeTerm implements Serializable {
     /**
      * 数据类型id
      */
-    @Column(name = "term_id", nullable = false)
+    @Column(name = "term_id")
     private Integer termId;
 
     /**

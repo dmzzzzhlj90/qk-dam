@@ -76,13 +76,15 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
         List<Integer> allIds = dsdBasicInfoAll.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
         List<DsdBasicinfo> existDataList = dsdBasicInfoList.stream().filter(dsdBasicInfo -> allIds.contains(dsdBasicInfo.getId())).collect(Collectors.toList());
 
-        existDataList.forEach(dsdBasicinfo -> dsdBasicInfoRepository.saveAndFlush(dsdBasicinfo));
+        existDataList.forEach(dsdBasicInfoRepository::saveAndFlush);
         //新增
         List<DsdBasicinfo> addList = new ArrayList<>();
         if (dsdBasicInfoList.size() != existDataList.size()) {
             List<Integer> existIds = existDataList.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
             addList = dsdBasicInfoList.stream().filter(dsdBasicInfo -> !existIds.contains(dsdBasicInfo.getId())).collect(Collectors.toList());
         }
-        dsdBasicInfoRepository.saveAll(addList);
+        if (addList.size() != 0) {
+            dsdBasicInfoRepository.saveAll(addList);
+        }
     }
 }

@@ -33,7 +33,7 @@ public class DsdCodeTermVO {
      */
     @NotBlank(message = "码表分类编码不能为空！")
     @ExcelProperty("码表分类编码")
-    private Integer codeDirId;
+    private String codeDirId;
 
     /**
      * 码表编码

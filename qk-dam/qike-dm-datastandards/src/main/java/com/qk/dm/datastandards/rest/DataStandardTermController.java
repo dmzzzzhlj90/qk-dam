@@ -36,7 +36,7 @@ public class DataStandardTermController {
      * @return: 返回业务术语列表信息
      **/
     @GetMapping("/query")
-    public DefaultCommonResult<PageResultVO<DsdTermVO>> getDsdTerm(@RequestBody Pagination pagination) {
+    public DefaultCommonResult<PageResultVO<DsdTermVO>> getDsdTerm(@RequestBody(required = false) Pagination pagination) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardTermService.getDsdTerm(pagination));
     }
 

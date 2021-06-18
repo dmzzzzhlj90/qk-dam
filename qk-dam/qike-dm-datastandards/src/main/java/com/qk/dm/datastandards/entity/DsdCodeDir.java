@@ -18,14 +18,14 @@ public class DsdCodeDir implements Serializable {
      */
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
      * 码表标准分类ID
      */
     @Column(name = "code_dir_id", nullable = false)
-    private Integer codeDirId;
+    private String codeDirId;
 
     /**
      * 码表标准分类名称
@@ -37,7 +37,7 @@ public class DsdCodeDir implements Serializable {
      * 父级ID
      */
     @Column(name = "parent_id")
-    private Integer parentId;
+    private String parentId;
 
     /**
      * 描述

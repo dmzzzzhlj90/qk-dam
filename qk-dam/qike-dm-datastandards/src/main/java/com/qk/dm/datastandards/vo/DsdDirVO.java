@@ -28,7 +28,7 @@ public class DsdDirVO {
      * 数据标准分类ID
      */
     @NotBlank(message = "数据标准分类ID不能为空！")
-    private Integer dirDsdId;
+    private String dirDsdId;
 
     /**
      * 数据标准分类名称
@@ -40,7 +40,7 @@ public class DsdDirVO {
      * 父级id
      */
     @NotBlank(message = "目录父级id不能为空！")
-    private Integer parentId;
+    private String parentId;
 
     /**
      * 描述

@@ -1,7 +1,6 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.entity.QDsdCodeTerm;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTermMapper;
@@ -11,6 +10,8 @@ import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import com.querydsl.core.types.Predicate;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -33,16 +34,19 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     }
 
     @Override
-    public PageResultVO<DsdCodeTermVO> getDsdCodeTerm(Pagination pagination) {
+    public PageResultVO<DsdCodeTermVO> getDsdCodeTerm(Pagination pagination, String codeDirId) {
+        Page<DsdCodeTerm> codeTermPage = null;
         List<DsdCodeTermVO> dsdCodeTermVOList = new ArrayList<DsdCodeTermVO>();
-        if (pagination == null) {
-            pagination = Pagination.builder()
-                    .page(DsdConstant.PAGE_DEFAULT_NUM)
-                    .size(DsdConstant.PAGE_DEFAULT_SIZE)
-                    .sortStr(DsdConstant.PAGE_DEFAULT_SORT).build();
+
+        if (StringUtils.isEmpty(codeDirId)) {
+            codeTermPage = dsdCodeTermRepository.findAll(pagination.getPageable());
+        } else {
+            DsdCodeTerm dsdCodeTerm = new DsdCodeTerm();
+            dsdCodeTerm.setCodeDirId(codeDirId);
+            Example<DsdCodeTerm> example = Example.of(dsdCodeTerm);
+            codeTermPage = dsdCodeTermRepository.findAll(example, pagination.getPageable());
         }
 
-        Page<DsdCodeTerm> codeTermPage = dsdCodeTermRepository.findAll(pagination.getPageable());
         codeTermPage.getContent().forEach(dsdCodeTerm -> {
             DsdCodeTermVO dsdCodeTermVO = DsdCodeTermMapper.INSTANCE.usDsdCodeTermVO(dsdCodeTerm);
             dsdCodeTermVOList.add(dsdCodeTermVO);

@@ -1,7 +1,6 @@
 package com.qk.dm.datastandards.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,14 +18,14 @@ public class DsdDir implements Serializable {
      */
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
      * 数据标准分类ID
      */
     @Column(name = "dir_dsd_id", nullable = false)
-    private Integer dirDsdId;
+    private String dirDsdId;
 
     /**
      * 数据标准分类名称
@@ -38,7 +37,7 @@ public class DsdDir implements Serializable {
      * 父级id
      */
     @Column(name = "parent_id", nullable = false)
-    private Integer parentId;
+    private String parentId;
 
     /**
      * 描述
