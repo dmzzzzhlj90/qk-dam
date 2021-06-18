@@ -84,6 +84,12 @@ public class DsdBasicinfoVO {
     @ExcelProperty("标准层级")
     private String dsdLevel;
 
+    /**
+     * 标准层级ID
+     */
+    @ExcelProperty("标准层级")
+    @ExcelIgnore
+    private String dsdLevelId;
 
     /**
      * 描述

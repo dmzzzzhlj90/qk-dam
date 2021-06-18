@@ -25,9 +25,9 @@ public class DsdDirVO {
     private Integer id;
 
     /**
-     * 数据标准分类ID
+     * 数据标准分类编号
      */
-    @NotBlank(message = "数据标准分类ID不能为空！")
+//    @NotBlank(message = "数据标准分类ID不能为空！")
     private String dirDsdId;
 
     /**

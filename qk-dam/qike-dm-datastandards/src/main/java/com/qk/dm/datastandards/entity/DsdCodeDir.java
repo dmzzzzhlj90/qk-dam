@@ -50,13 +50,13 @@ public class DsdCodeDir implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create")
-    private LocalDateTime gmtCreate = LocalDateTime.now();
+    private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
-    private LocalDateTime gmtModified = LocalDateTime.now();
+    private Date gmtModified;
 
     /**
      * 是否删除；0逻辑删除，1物理删除；

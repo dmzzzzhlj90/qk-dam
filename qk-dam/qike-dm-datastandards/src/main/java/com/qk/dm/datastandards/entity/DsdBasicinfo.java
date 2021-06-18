@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -71,6 +70,12 @@ public class DsdBasicinfo implements Serializable {
     private String dsdLevel;
 
     /**
+     * 标准层级ID
+     */
+    @Column(name = "dsd_level_id", nullable = false)
+    private String dsdLevelId;
+
+    /**
      * 描述
      */
     @Column(name = "description")
@@ -80,13 +85,13 @@ public class DsdBasicinfo implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create")
-    private LocalDateTime gmtCreate = LocalDateTime.now();
+    private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
-    private LocalDateTime gmtModified = LocalDateTime.now();
+    private Date gmtModified;
 
     /**
      * 是否删除；0逻辑删除，1物理删除；

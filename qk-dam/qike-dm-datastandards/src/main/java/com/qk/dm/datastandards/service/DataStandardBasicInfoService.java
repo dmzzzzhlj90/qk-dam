@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataStandardBasicInfoService {
 
-    PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination, String dirDsdId);
+    PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination, String dsdLevelId);
 
     void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 

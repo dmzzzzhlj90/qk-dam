@@ -1,12 +1,12 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.qk.dm.datastandards.entity.DsdBasicinfo;
-import com.qk.dm.datastandards.entity.DsdCodeTerm;
-import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.easyexcel.listener.DsdBasicInfoUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdCodeTermUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdTermUploadDataListener;
+import com.qk.dm.datastandards.entity.DsdBasicinfo;
+import com.qk.dm.datastandards.entity.DsdCodeTerm;
+import com.qk.dm.datastandards.entity.DsdTerm;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTermMapper;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdTermMapper;
@@ -17,6 +17,7 @@ import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,10 +64,14 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public List<DsdBasicinfoVO> queryAllBasicInfo() {
+    public List<DsdBasicinfoVO> queryAllBasicInfo(String dsdLevelId) {
         List<DsdBasicinfoVO> dsdBasicInfoVOList = new ArrayList<DsdBasicinfoVO>();
 
-        List<DsdBasicinfo> dsdTermList = dsdBasicinfoRepository.findAll();
+        DsdBasicinfo dsdBasicinfo = new DsdBasicinfo();
+        dsdBasicinfo.setDsdLevelId(dsdLevelId);
+        Example<DsdBasicinfo> example = Example.of(dsdBasicinfo);
+        List<DsdBasicinfo> dsdTermList = dsdBasicinfoRepository.findAll(example);
+
         dsdTermList.forEach(dsdBasicInfo -> {
             DsdBasicinfoVO dsdBasicinfoVO = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsdBasicInfo);
             dsdBasicInfoVOList.add(dsdBasicinfoVO);
@@ -75,8 +80,8 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public void basicInfoUpload(MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), DsdBasicinfoVO.class, new DsdBasicInfoUploadDataListener(dsdBasicinfoRepository)).sheet().doRead();
+    public void basicInfoUpload(MultipartFile file, String dsdLevelId) throws IOException {
+        EasyExcel.read(file.getInputStream(), DsdBasicinfoVO.class, new DsdBasicInfoUploadDataListener(dsdBasicinfoRepository, dsdLevelId)).sheet().doRead();
     }
 
     @Override

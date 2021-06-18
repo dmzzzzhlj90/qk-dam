@@ -12,9 +12,7 @@ import com.qk.dm.datastandards.vo.DsdDirVO;
 import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 /**
@@ -45,7 +43,9 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
     @Override
     public void addDsdDir(DsdDirVO dsdDirVO) {
+        dsdDirVO.setDirDsdId(UUID.randomUUID().toString().replaceAll("-", ""));
         DsdDir dsdDir = DsdDirTreeMapper.INSTANCE.useDsdDir(dsdDirVO);
+        dsdDir.setGmtCreate(new Date());
         Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
         boolean exists = dsdDirRepository.exists(predicate);
         if (exists) {
@@ -59,6 +59,7 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     @Override
     public void updateDsdDir(DsdDirVO dsdDirVO) {
         DsdDir dsdDir = DsdDirTreeMapper.INSTANCE.useDsdDir(dsdDirVO);
+        dsdDir.setGmtModified(new Date());
         Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
         boolean exists = dsdDirRepository.exists(predicate);
         if (exists) {

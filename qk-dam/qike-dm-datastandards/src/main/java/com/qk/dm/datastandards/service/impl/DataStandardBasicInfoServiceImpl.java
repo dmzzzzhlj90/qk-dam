@@ -34,15 +34,15 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     }
 
     @Override
-    public PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination, String dirDsdId) {
+    public PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination, String dsdLevelId) {
         Page<DsdBasicinfo> basicinfoPage = null;
         List<DsdBasicinfoVO> dsdBasicinfoVOList = new ArrayList<DsdBasicinfoVO>();
 
-        if (StringUtils.isEmpty(dirDsdId)) {
+        if (StringUtils.isEmpty(dsdLevelId)) {
             basicinfoPage = dsdBasicinfoRepository.findAll(pagination.getPageable());
         } else {
             DsdBasicinfo dsdBasicinfo = new DsdBasicinfo();
-            dsdBasicinfo.setDsdLevel(dirDsdId);
+            dsdBasicinfo.setDsdLevelId(dsdLevelId);
             Example<DsdBasicinfo> example = Example.of(dsdBasicinfo);
             basicinfoPage = dsdBasicinfoRepository.findAll(example, pagination.getPageable());
         }

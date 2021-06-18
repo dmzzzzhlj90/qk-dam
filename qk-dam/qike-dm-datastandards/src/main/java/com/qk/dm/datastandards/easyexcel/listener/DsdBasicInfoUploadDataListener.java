@@ -6,6 +6,7 @@ import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import org.springframework.data.domain.Example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  */
 public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBasicinfoVO> {
     private final DsdBasicinfoRepository dsdBasicInfoRepository;
+    private final String dsdLevelId;
 
 
     /**
@@ -28,8 +30,9 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
     private static final int BATCH_COUNT = 1000;
     List<DsdBasicinfoVO> list = new ArrayList<DsdBasicinfoVO>();
 
-    public DsdBasicInfoUploadDataListener(DsdBasicinfoRepository dsdBasicInfoRepository) {
+    public DsdBasicInfoUploadDataListener(DsdBasicinfoRepository dsdBasicInfoRepository, String dsdLevelId) {
         this.dsdBasicInfoRepository = dsdBasicInfoRepository;
+        this.dsdLevelId = dsdLevelId;
     }
 
 
@@ -69,14 +72,21 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
         List<DsdBasicinfo> dsdBasicInfoList = new ArrayList<>();
         list.forEach(dsdBasicInfoVO -> {
             DsdBasicinfo dsdBasicInfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicInfoVO);
+            dsdBasicInfo.setDsdLevelId(dsdLevelId);
             dsdBasicInfoList.add(dsdBasicInfo);
         });
         //更新
-        List<DsdBasicinfo> dsdBasicInfoAll = dsdBasicInfoRepository.findAll();
+        DsdBasicinfo dsdBasicinfo = new DsdBasicinfo();
+        dsdBasicinfo.setDsdLevelId(dsdLevelId);
+        Example<DsdBasicinfo> example = Example.of(dsdBasicinfo);
+        List<DsdBasicinfo> dsdBasicInfoAll = dsdBasicInfoRepository.findAll(example);
+
         List<Integer> allIds = dsdBasicInfoAll.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
         List<DsdBasicinfo> existDataList = dsdBasicInfoList.stream().filter(dsdBasicInfo -> allIds.contains(dsdBasicInfo.getId())).collect(Collectors.toList());
 
-        existDataList.forEach(dsdBasicInfoRepository::saveAndFlush);
+        if (existDataList.size() > 0) {
+            existDataList.forEach(dsdBasicInfoRepository::saveAndFlush);
+        }
         //新增
         List<DsdBasicinfo> addList = new ArrayList<>();
         if (dsdBasicInfoList.size() != existDataList.size()) {
@@ -86,5 +96,6 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
         if (addList.size() != 0) {
             dsdBasicInfoRepository.saveAll(addList);
         }
+
     }
 }
