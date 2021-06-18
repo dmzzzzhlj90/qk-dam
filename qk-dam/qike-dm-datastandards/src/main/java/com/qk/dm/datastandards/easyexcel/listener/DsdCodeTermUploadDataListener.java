@@ -6,6 +6,8 @@ import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTermMapper;
 import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
  */
 public class DsdCodeTermUploadDataListener extends AnalysisEventListener<DsdCodeTermVO> {
     private final DsdCodeTermRepository dsdCodeTermRepository;
+    private final String codeDirId;
 
 
     /**
@@ -28,8 +31,9 @@ public class DsdCodeTermUploadDataListener extends AnalysisEventListener<DsdCode
     private static final int BATCH_COUNT = 1000;
     List<DsdCodeTermVO> list = new ArrayList<DsdCodeTermVO>();
 
-    public DsdCodeTermUploadDataListener(DsdCodeTermRepository dsdCodeTermRepository) {
+    public DsdCodeTermUploadDataListener(DsdCodeTermRepository dsdCodeTermRepository, String codeDirId) {
         this.dsdCodeTermRepository = dsdCodeTermRepository;
+        this.codeDirId = codeDirId;
     }
 
 
@@ -65,17 +69,29 @@ public class DsdCodeTermUploadDataListener extends AnalysisEventListener<DsdCode
      * 加上存储数据库
      */
     private void saveData() {
+        List<DsdCodeTerm> dsdCodeTermAll;
         List<DsdCodeTerm> codeTermList = new ArrayList<DsdCodeTerm>();
         list.forEach(dsdCodeTermVO -> {
             DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
             codeTermList.add(dsdCodeTerm);
         });
+
+        if (StringUtils.isEmpty(codeDirId)) {
+            dsdCodeTermAll = dsdCodeTermRepository.findAll();
+        } else {
+            DsdCodeTerm dct = new DsdCodeTerm();
+            dct.setCodeDirId(codeDirId);
+            Example<DsdCodeTerm> example = Example.of(dct);
+            dsdCodeTermAll = dsdCodeTermRepository.findAll(example);
+        }
+
         //更新
-        List<DsdCodeTerm> dsdCodeTermAll = dsdCodeTermRepository.findAll();
         List<Integer> allIds = dsdCodeTermAll.stream().map(dsdCodeTerm -> dsdCodeTerm.getId()).collect(Collectors.toList());
         List<DsdCodeTerm> existDataList = codeTermList.stream().filter(dsdCodeTerm -> allIds.contains(dsdCodeTerm.getId())).collect(Collectors.toList());
 
-        existDataList.forEach(dsdCodeTermRepository::saveAndFlush);
+        if (existDataList.size() > 0) {
+            existDataList.forEach(dsdCodeTermRepository::saveAndFlush);
+        }
         //新增
         List<DsdCodeTerm> addList = new ArrayList<>();
         if (codeTermList.size() != existDataList.size()) {

@@ -73,7 +73,7 @@ public class DsdExcelController {
      * @return: void
      **/
     @PostMapping("/basic/info/download")
-    public void basicInfoDownload(HttpServletResponse response,@RequestParam String dsdLevelId) throws IOException {
+    public void basicInfoDownload(HttpServletResponse response,@RequestParam(required = false) String dsdLevelId) throws IOException {
         List<DsdBasicinfoVO> dsdBasicinfoVOList = dsdExcelService.queryAllBasicInfo(dsdLevelId);
 
         response.setContentType("application/vnd.ms-excel");
@@ -91,7 +91,7 @@ public class DsdExcelController {
      **/
     @PostMapping("/basic/info/upload")
     @ResponseBody
-    public DefaultCommonResult basicInfoUpload(MultipartFile file, @RequestParam String dsdLevelId) throws IOException {
+    public DefaultCommonResult basicInfoUpload(MultipartFile file, @RequestParam(required = false) String dsdLevelId) throws IOException {
         dsdExcelService.basicInfoUpload(file, dsdLevelId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
@@ -103,8 +103,8 @@ public class DsdExcelController {
      * @return: void
      **/
     @PostMapping("/code/term/download")
-    public void codeTermDownload(HttpServletResponse response) throws IOException {
-        List<DsdCodeTermVO> codeTermVOList = dsdExcelService.queryAllCodeTerm();
+    public void codeTermDownload(HttpServletResponse response,@RequestParam(required = false) String codeDirId) throws IOException {
+        List<DsdCodeTermVO> codeTermVOList = dsdExcelService.queryAllCodeTerm(codeDirId);
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -121,8 +121,8 @@ public class DsdExcelController {
      **/
     @PostMapping("/code/term/upload")
     @ResponseBody
-    public DefaultCommonResult codeTermUpload(MultipartFile file) throws IOException {
-        dsdExcelService.codeTermUpload(file);
+    public DefaultCommonResult codeTermUpload(MultipartFile file,@RequestParam(required = false) String codeDirId) throws IOException {
+        dsdExcelService.codeTermUpload(file, codeDirId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

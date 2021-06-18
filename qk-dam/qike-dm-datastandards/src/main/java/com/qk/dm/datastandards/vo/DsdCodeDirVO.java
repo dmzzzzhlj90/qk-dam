@@ -22,7 +22,7 @@ public class DsdCodeDirVO {
     /**
      * 码表标准分类ID
      */
-    @NotBlank(message = "码表标准分类ID不能为空！")
+//    @NotBlank(message = "码表标准分类ID不能为空！")
     private String codeDirId;
 
     /**

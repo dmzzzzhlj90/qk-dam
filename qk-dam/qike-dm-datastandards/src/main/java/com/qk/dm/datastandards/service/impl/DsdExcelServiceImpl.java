@@ -17,6 +17,7 @@ import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -85,10 +86,19 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public List<DsdCodeTermVO> queryAllCodeTerm() {
+    public List<DsdCodeTermVO> queryAllCodeTerm(String codeDirId) {
+        List<DsdCodeTerm> dsdTermList;
         List<DsdCodeTermVO> codeTermVOList = new ArrayList<DsdCodeTermVO>();
 
-        List<DsdCodeTerm> dsdTermList = dsdCodeTermRepository.findAll();
+        if (StringUtils.isEmpty(codeDirId)) {
+            dsdTermList = dsdCodeTermRepository.findAll();
+        } else {
+            DsdCodeTerm dct = new DsdCodeTerm();
+            dct.setCodeDirId(codeDirId);
+            Example<DsdCodeTerm> example = Example.of(dct);
+            dsdTermList = dsdCodeTermRepository.findAll(example);
+        }
+
         dsdTermList.forEach(dsdCodeTerm -> {
             DsdCodeTermVO dsdCodeTermVO = DsdCodeTermMapper.INSTANCE.usDsdCodeTermVO(dsdCodeTerm);
             codeTermVOList.add(dsdCodeTermVO);
@@ -97,7 +107,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public void codeTermUpload(MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), DsdCodeTermVO.class, new DsdCodeTermUploadDataListener(dsdCodeTermRepository)).sheet().doRead();
+    public void codeTermUpload(MultipartFile file, String codeDirId) throws IOException {
+        EasyExcel.read(file.getInputStream(), DsdCodeTermVO.class, new DsdCodeTermUploadDataListener(dsdCodeTermRepository, codeDirId)).sheet().doRead();
     }
 }

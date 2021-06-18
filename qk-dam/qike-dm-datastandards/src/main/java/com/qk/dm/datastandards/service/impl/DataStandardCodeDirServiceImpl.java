@@ -12,11 +12,10 @@ import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import com.querydsl.core.types.Predicate;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.qk.dm.datastandards.entity.QDsdCodeDir.dsdCodeDir;
 
@@ -50,6 +49,10 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     @Override
     public void addDsdDir(DsdCodeDirVO dsdCodeDirVO) {
         DsdCodeDir dsdCodeDir = DsdDirCodeDirTreeMapper.INSTANCE.useDsdCodeDir(dsdCodeDirVO);
+        dsdCodeDir.setGmtCreate(new Date());
+        if (StringUtils.isEmpty(dsdCodeDir.getCodeDirId())) {
+            dsdCodeDir.setCodeDirId(UUID.randomUUID().toString().replaceAll("-", ""));
+        }
         Predicate predicate = QDsdCodeDir.dsdCodeDir.codeDirId.eq(dsdCodeDir.getCodeDirId());
         boolean exists = dsdCodeDirRepository.exists(predicate);
         if (exists) {
@@ -62,6 +65,7 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     @Override
     public void updateDsdDir(DsdCodeDirVO dsdCodeDirVO) {
         DsdCodeDir dsdCodeDir = DsdDirCodeDirTreeMapper.INSTANCE.useDsdCodeDir(dsdCodeDirVO);
+        dsdCodeDir.setGmtModified(new Date());
         Predicate predicate = QDsdCodeDir.dsdCodeDir.codeDirId.eq(dsdCodeDir.getCodeDirId());
         boolean exists = dsdCodeDirRepository.exists(predicate);
         if (exists) {
