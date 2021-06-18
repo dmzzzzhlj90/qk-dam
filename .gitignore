@@ -79,6 +79,7 @@ fabric.properties
 *.iml
 out
 distro/*jar
+common-lib/dam-sqlparser
 ### Gradle template
 .gradle
 **/build/
