@@ -10,6 +10,8 @@ import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import com.querydsl.core.types.Predicate;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +34,19 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     }
 
     @Override
-    public PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination) {
+    public PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination, String dirDsdId) {
+        Page<DsdBasicinfo> basicinfoPage = null;
         List<DsdBasicinfoVO> dsdBasicinfoVOList = new ArrayList<DsdBasicinfoVO>();
 
-        Page<DsdBasicinfo> basicinfoPage = dsdBasicinfoRepository.findAll(pagination.getPageable());
+        if (StringUtils.isEmpty(dirDsdId)) {
+            basicinfoPage = dsdBasicinfoRepository.findAll(pagination.getPageable());
+        } else {
+            DsdBasicinfo dsdBasicinfo = new DsdBasicinfo();
+            dsdBasicinfo.setDsdLevel(dirDsdId);
+            Example<DsdBasicinfo> example = Example.of(dsdBasicinfo);
+            basicinfoPage = dsdBasicinfoRepository.findAll(example, pagination.getPageable());
+        }
+
         basicinfoPage.getContent().forEach(dsdBasicinfo -> {
             DsdBasicinfoVO dsdBasicinfoVO = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsdBasicinfo);
             dsdBasicinfoVOList.add(dsdBasicinfoVO);

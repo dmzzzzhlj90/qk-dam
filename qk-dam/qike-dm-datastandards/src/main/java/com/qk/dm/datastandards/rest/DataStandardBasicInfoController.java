@@ -35,9 +35,10 @@ public class DataStandardBasicInfoController {
      * @param: pagination分页查询参数对象: page,size,sortStr
      * @return: 返回标准列表信息
      **/
-    @GetMapping("/query")
-    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfo(@RequestBody(required = false) Pagination pagination) {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination));
+    @GetMapping(value = {"/query/{dirDsdId}", "/query"})
+    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfo(Pagination pagination,
+                                                                             @PathVariable(value = "dirDsdId", required = false) String dirDsdId) {
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination, dirDsdId));
     }
 
     /**

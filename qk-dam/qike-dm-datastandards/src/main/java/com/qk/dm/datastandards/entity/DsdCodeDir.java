@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -46,21 +47,20 @@ public class DsdCodeDir implements Serializable {
     private String description;
 
     /**
-     * 修改时间
-     */
-    @Column(name = "gmt_create")
-    private Date gmtCreate;
-
-    /**
      * 创建时间
      */
+    @Column(name = "gmt_create")
+    private LocalDateTime gmtCreate = LocalDateTime.now();
+
+    /**
+     * 修改时间
+     */
     @Column(name = "gmt_modified")
-    private Date gmtModified;
+    private LocalDateTime gmtModified = LocalDateTime.now();
 
     /**
      * 是否删除；0逻辑删除，1物理删除；
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag = 0;
-
 }

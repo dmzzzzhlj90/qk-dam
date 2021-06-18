@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -55,13 +56,13 @@ public class DsdCodeTerm implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create")
-    private Date gmtCreate;
+    private LocalDateTime gmtCreate = LocalDateTime.now();
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
-    private Date gmtModified;
+    private LocalDateTime gmtModified = LocalDateTime.now();
 
     /**
      * 是否删除；0逻辑删除，1物理删除；
