@@ -8,9 +8,9 @@ dependencies {
     compile "org.slf4j:slf4j-api"
     compile group: 'javax.validation', name: 'validation-api'
     compile 'org.projectlombok:lombok'
-    compile 'com.alibaba:easyexcel'
-    implementation 'javax.servlet:javax.servlet-api'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile 'javax.servlet:javax.servlet-api'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
     annotationProcessor 'org.projectlombok:lombok'
 }
 

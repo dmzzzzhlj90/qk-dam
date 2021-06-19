@@ -6,6 +6,7 @@ group "com.qk.mvc.validation"
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.google.code.gson:gson'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 dependencyManagement {

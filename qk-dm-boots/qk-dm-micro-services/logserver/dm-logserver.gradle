@@ -4,24 +4,22 @@ plugins {
     id "smart-doc"
     id 'java'
 }
-version "${dmDataingestionVersion}"
-group "com.qk.dm.dataingestion"
+version "${dmMicroServices}"
+group "com.qk.dm.logserver"
 configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
         it.outgoing.artifact(bootJar)
     }
 }
-
 dependencies {
     implementation project(":commons-core")
-    implementation project(":qk-sqlloader")
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
-
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation project(":dam-log")
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 dependencyManagement {
@@ -31,10 +29,6 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
-}
-
-smartdoc {
-    configFile = file("src/main/resources/smart-doc.json")
 }
 
 test {

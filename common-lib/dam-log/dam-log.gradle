@@ -5,6 +5,7 @@ version "${commonLibVersion}"
 group "com.qk.dam.log"
 
 dependencies {
+    compile 'com.google.code.gson:gson'
     compile 'net.logstash.logback:logstash-logback-encoder'
 }
 

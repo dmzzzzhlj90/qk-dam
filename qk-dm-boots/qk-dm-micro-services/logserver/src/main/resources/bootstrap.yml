@@ -1,9 +1,9 @@
 server:
-  port: 8780
+  port: 8766
 spring:
   logging:
     level: info
-    path: logs/dm-datastandards.log
+    path: logs/dm-logserver.log
     appender:
       ref: CONSOLE
   messages:
@@ -13,7 +13,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: dm-datastandards
+    name: dm-logserver
   cloud:
     nacos:
       discovery:
@@ -24,9 +24,5 @@ spring:
         server-addr: http://172.31.0.44/
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         extension-configs:
-          - dataId: test44-mysql-dev.yml
-            refresh: true
           - dataId: test44-redis-dev.yml
-            refresh: true
-          - dataId: test44-leaf-dev.yml
             refresh: true
