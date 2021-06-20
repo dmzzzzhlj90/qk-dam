@@ -9,7 +9,10 @@ import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -73,8 +76,8 @@ public class DsdExcelController {
      * @return: void
      **/
     @PostMapping("/basic/info/download")
-    public void basicInfoDownload(HttpServletResponse response,@RequestParam(required = false) String dsdLevelId) throws IOException {
-        List<DsdBasicinfoVO> dsdBasicinfoVOList = dsdExcelService.queryAllBasicInfo(dsdLevelId);
+    public void basicInfoDownload(HttpServletResponse response) throws IOException {
+        List<DsdBasicinfoVO> dsdBasicinfoVOList = dsdExcelService.queryAllBasicInfo();
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -91,8 +94,8 @@ public class DsdExcelController {
      **/
     @PostMapping("/basic/info/upload")
     @ResponseBody
-    public DefaultCommonResult basicInfoUpload(MultipartFile file, @RequestParam(required = false) String dsdLevelId) throws IOException {
-        dsdExcelService.basicInfoUpload(file, dsdLevelId);
+    public DefaultCommonResult basicInfoUpload(MultipartFile file) throws IOException {
+        dsdExcelService.basicInfoUpload(file);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

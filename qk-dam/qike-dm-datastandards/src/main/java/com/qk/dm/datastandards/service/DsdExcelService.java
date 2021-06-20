@@ -23,9 +23,9 @@ public interface DsdExcelService {
 
     void termUpload(MultipartFile file) throws IOException;
 
-    List<DsdBasicinfoVO> queryAllBasicInfo(String dsdLevelId);
+    List<DsdBasicinfoVO> queryAllBasicInfo();
 
-    void basicInfoUpload(MultipartFile file, String dsdLevelId) throws IOException;
+    void basicInfoUpload(MultipartFile file) throws IOException;
 
     List<DsdCodeTermVO> queryAllCodeTerm();
 

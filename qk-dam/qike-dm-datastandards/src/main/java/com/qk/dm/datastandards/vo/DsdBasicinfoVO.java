@@ -26,6 +26,7 @@ public class DsdBasicinfoVO {
      * ID编号
      */
     @ExcelProperty("ID编号")
+    @ExcelIgnore
     private Integer id;
 
     /**

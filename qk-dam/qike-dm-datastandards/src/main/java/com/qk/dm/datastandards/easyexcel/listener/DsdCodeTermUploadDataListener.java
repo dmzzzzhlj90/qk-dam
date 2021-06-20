@@ -75,7 +75,7 @@ public class DsdCodeTermUploadDataListener extends AnalysisEventListener<DsdCode
             codeTermList.add(dsdCodeTerm);
         });
         //批量新增
-        dsdExcelBatchService.addBatch(codeTermList, codeSet, dirSet);
+        dsdExcelBatchService.addDsdCodeTermBatch(codeTermList, codeSet, dirSet);
     }
 
 

@@ -4,13 +4,13 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
-import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
+import com.qk.dm.datastandards.service.impl.DsdExcelBatchService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
-import org.springframework.data.domain.Example;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 /**
  * 数据标准基础信息excel 监听器
@@ -20,9 +20,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBasicinfoVO> {
-    private final DsdBasicinfoRepository dsdBasicInfoRepository;
-    private final String dsdLevelId;
-
+    private final DsdExcelBatchService dsdExcelBatchService;
 
     /**
      * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
@@ -30,9 +28,8 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
     private static final int BATCH_COUNT = 1000;
     List<DsdBasicinfoVO> list = new ArrayList<DsdBasicinfoVO>();
 
-    public DsdBasicInfoUploadDataListener(DsdBasicinfoRepository dsdBasicInfoRepository, String dsdLevelId) {
-        this.dsdBasicInfoRepository = dsdBasicInfoRepository;
-        this.dsdLevelId = dsdLevelId;
+    public DsdBasicInfoUploadDataListener(DsdExcelBatchService dsdExcelBatchService) {
+        this.dsdExcelBatchService = dsdExcelBatchService;
     }
 
 
@@ -68,34 +65,17 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
      * 加上存储数据库
      */
     private void saveData() {
-        //VO转换
+        Set<String> codeSet = new HashSet<>();
+        Set<String> nameSet = new HashSet<>();
+
         List<DsdBasicinfo> dsdBasicInfoList = new ArrayList<>();
         list.forEach(dsdBasicInfoVO -> {
             DsdBasicinfo dsdBasicInfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicInfoVO);
-            dsdBasicInfo.setDsdLevelId(dsdLevelId);
+            codeSet.add(dsdBasicInfo.getDsdCode());
+            nameSet.add(dsdBasicInfo.getColName());
             dsdBasicInfoList.add(dsdBasicInfo);
         });
-        //更新
-        DsdBasicinfo dsdBasicinfo = new DsdBasicinfo();
-        dsdBasicinfo.setDsdLevelId(dsdLevelId);
-        Example<DsdBasicinfo> example = Example.of(dsdBasicinfo);
-        List<DsdBasicinfo> dsdBasicInfoAll = dsdBasicInfoRepository.findAll(example);
-
-        List<Integer> allIds = dsdBasicInfoAll.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
-        List<DsdBasicinfo> existDataList = dsdBasicInfoList.stream().filter(dsdBasicInfo -> allIds.contains(dsdBasicInfo.getId())).collect(Collectors.toList());
-
-        if (existDataList.size() > 0) {
-            existDataList.forEach(dsdBasicInfoRepository::saveAndFlush);
-        }
-        //新增
-        List<DsdBasicinfo> addList = new ArrayList<>();
-        if (dsdBasicInfoList.size() != existDataList.size()) {
-            List<Integer> existIds = existDataList.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
-            addList = dsdBasicInfoList.stream().filter(dsdBasicInfo -> !existIds.contains(dsdBasicInfo.getId())).collect(Collectors.toList());
-        }
-        if (addList.size() != 0) {
-            dsdBasicInfoRepository.saveAll(addList);
-        }
-
+        //批量新增
+        dsdExcelBatchService.addDsdBasicInfoBatch(dsdBasicInfoList, codeSet, nameSet);
     }
 }

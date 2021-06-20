@@ -17,7 +17,6 @@ import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,13 +73,9 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public List<DsdBasicinfoVO> queryAllBasicInfo(String dsdLevelId) {
+    public List<DsdBasicinfoVO> queryAllBasicInfo() {
         List<DsdBasicinfoVO> dsdBasicInfoVOList = new ArrayList<DsdBasicinfoVO>();
-
-        DsdBasicinfo dsdBasicinfo = new DsdBasicinfo();
-        dsdBasicinfo.setDsdLevelId(dsdLevelId);
-        Example<DsdBasicinfo> example = Example.of(dsdBasicinfo);
-        List<DsdBasicinfo> dsdTermList = dsdBasicinfoRepository.findAll(example);
+        List<DsdBasicinfo> dsdTermList = dsdBasicinfoRepository.findAll();
 
         dsdTermList.forEach(dsdBasicInfo -> {
             DsdBasicinfoVO dsdBasicinfoVO = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsdBasicInfo);
@@ -90,16 +85,15 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public void basicInfoUpload(MultipartFile file, String dsdLevelId) throws IOException {
-        EasyExcel.read(file.getInputStream(), DsdBasicinfoVO.class, new DsdBasicInfoUploadDataListener(dsdBasicinfoRepository, dsdLevelId)).sheet().doRead();
+    public void basicInfoUpload(MultipartFile file) throws IOException {
+        EasyExcel.read(file.getInputStream(), DsdBasicinfoVO.class, new DsdBasicInfoUploadDataListener(dsdExcelBatchService)).sheet().doRead();
     }
 
     @Override
     public List<DsdCodeTermVO> queryAllCodeTerm() {
-        List<DsdCodeTerm> dsdTermList;
         List<DsdCodeTermVO> codeTermVOList = new ArrayList<DsdCodeTermVO>();
 
-        dsdTermList = dsdCodeTermRepository.findAll();
+        List<DsdCodeTerm> dsdTermList = dsdCodeTermRepository.findAll();
         dsdTermList.forEach(dsdCodeTerm -> {
             DsdCodeTermVO dsdCodeTermVO = DsdCodeTermMapper.INSTANCE.usDsdCodeTermVO(dsdCodeTerm);
             codeTermVOList.add(dsdCodeTermVO);
