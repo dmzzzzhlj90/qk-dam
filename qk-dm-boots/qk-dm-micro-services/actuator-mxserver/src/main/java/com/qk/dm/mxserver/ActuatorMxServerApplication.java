@@ -1,4 +1,4 @@
-package com.qk.dm.logserver;
+package com.qk.dm.mxserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,8 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @ComponentScan(basePackages = "com.qk")
-public class LogServerApplication {
+public class ActuatorMxServerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(LogServerApplication.class, args);
+        SpringApplication.run(ActuatorMxServerApplication.class, args);
     }
 }

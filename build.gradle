@@ -33,6 +33,10 @@ subprojects {
     }
     configurations.all {
         exclude group: 'log4j', module: 'log4j'
+//        exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
+//        exclude group: 'com.fasterxml.jackson.datatype', module: 'jackson-datatype-jdk8'
+//        exclude group: 'com.fasterxml.jackson.datatype', module: 'jackson-datatype-jsr310'
+//        exclude group: 'com.fasterxml.jackson.module', module: 'jackson-module-parameter-names'
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
     plugins.withType(JavaPlugin) {

@@ -14,7 +14,7 @@ public class MyHttpMessageConvertersConfiguration {
     public HttpMessageConverters customConverters() {
         HttpMessageConverter<?> gsonHttpMessageConverter = new GsonHttpMessageConverter();
         HttpMessageConverter<?> jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        return new HttpMessageConverters(gsonHttpMessageConverter, jackson2HttpMessageConverter);
+        return new HttpMessageConverters(jackson2HttpMessageConverter);
     }
 
 }
