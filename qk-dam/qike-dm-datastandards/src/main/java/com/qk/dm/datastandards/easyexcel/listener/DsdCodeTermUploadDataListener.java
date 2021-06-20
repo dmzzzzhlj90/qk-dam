@@ -4,14 +4,13 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTermMapper;
-import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
+import com.qk.dm.datastandards.service.impl.DsdExcelBatchService;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Example;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 /**
  * 数据标准码表信息excel 监听器
@@ -21,9 +20,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 public class DsdCodeTermUploadDataListener extends AnalysisEventListener<DsdCodeTermVO> {
-    private final DsdCodeTermRepository dsdCodeTermRepository;
-    private final String codeDirId;
-
+    private final DsdExcelBatchService dsdExcelBatchService;
 
     /**
      * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
@@ -31,11 +28,9 @@ public class DsdCodeTermUploadDataListener extends AnalysisEventListener<DsdCode
     private static final int BATCH_COUNT = 1000;
     List<DsdCodeTermVO> list = new ArrayList<DsdCodeTermVO>();
 
-    public DsdCodeTermUploadDataListener(DsdCodeTermRepository dsdCodeTermRepository, String codeDirId) {
-        this.dsdCodeTermRepository = dsdCodeTermRepository;
-        this.codeDirId = codeDirId;
+    public DsdCodeTermUploadDataListener(DsdExcelBatchService dsdExcelBatchService) {
+        this.dsdExcelBatchService = dsdExcelBatchService;
     }
-
 
     /**
      * 这个每一条数据解析都会来调用
@@ -68,39 +63,20 @@ public class DsdCodeTermUploadDataListener extends AnalysisEventListener<DsdCode
     /**
      * 加上存储数据库
      */
-    private void saveData() {
-        List<DsdCodeTerm> dsdCodeTermAll;
+    public void saveData() {
+        Set<String> codeSet = new HashSet<>();
+        Set<String> dirSet = new HashSet<>();
+
         List<DsdCodeTerm> codeTermList = new ArrayList<DsdCodeTerm>();
         list.forEach(dsdCodeTermVO -> {
             DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
+            codeSet.add(dsdCodeTerm.getCodeId());
+            dirSet.add(dsdCodeTerm.getCodeDirId());
             codeTermList.add(dsdCodeTerm);
         });
-
-        if (StringUtils.isEmpty(codeDirId)) {
-            dsdCodeTermAll = dsdCodeTermRepository.findAll();
-        } else {
-            DsdCodeTerm dct = new DsdCodeTerm();
-            dct.setCodeDirId(codeDirId);
-            Example<DsdCodeTerm> example = Example.of(dct);
-            dsdCodeTermAll = dsdCodeTermRepository.findAll(example);
-        }
-
-        //更新
-        List<Integer> allIds = dsdCodeTermAll.stream().map(dsdCodeTerm -> dsdCodeTerm.getId()).collect(Collectors.toList());
-        List<DsdCodeTerm> existDataList = codeTermList.stream().filter(dsdCodeTerm -> allIds.contains(dsdCodeTerm.getId())).collect(Collectors.toList());
-
-        if (existDataList.size() > 0) {
-            existDataList.forEach(dsdCodeTermRepository::saveAndFlush);
-        }
-        //新增
-        List<DsdCodeTerm> addList = new ArrayList<>();
-        if (codeTermList.size() != existDataList.size()) {
-            List<Integer> existIds = existDataList.stream().map(dsdBasicInfo -> dsdBasicInfo.getId()).collect(Collectors.toList());
-            addList = codeTermList.stream().filter(dsdCodeTerm -> !existIds.contains(dsdCodeTerm.getId())).collect(Collectors.toList());
-        }
-        if (addList.size() != 0) {
-            dsdCodeTermRepository.saveAll(addList);
-        }
-
+        //批量新增
+        dsdExcelBatchService.addBatch(codeTermList, codeSet, dirSet);
     }
+
+
 }

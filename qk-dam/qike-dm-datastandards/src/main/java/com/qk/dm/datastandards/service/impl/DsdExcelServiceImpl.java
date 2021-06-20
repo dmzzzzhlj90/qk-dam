@@ -17,11 +17,12 @@ import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +36,24 @@ import java.util.List;
  */
 @Service
 public class DsdExcelServiceImpl implements DsdExcelService {
+    @PersistenceContext
+    private EntityManager entityManager;
+
     private final DsdTermRepository dsdTermRepository;
     private final DsdBasicinfoRepository dsdBasicinfoRepository;
     private final DsdCodeTermRepository dsdCodeTermRepository;
+    private final DsdExcelBatchService dsdExcelBatchService;
 
     public DsdExcelServiceImpl(DsdTermRepository dsdTermRepository,
                                DsdBasicinfoRepository dsdBasicinfoRepository,
-                               DsdCodeTermRepository dsdCodeTermRepository) {
+                               DsdCodeTermRepository dsdCodeTermRepository,
+                               EntityManager entityManager,
+                               DsdExcelBatchService dsdExcelBatchService) {
         this.dsdTermRepository = dsdTermRepository;
         this.dsdBasicinfoRepository = dsdBasicinfoRepository;
         this.dsdCodeTermRepository = dsdCodeTermRepository;
+        this.entityManager = entityManager;
+        this.dsdExcelBatchService = dsdExcelBatchService;
     }
 
     @Override
@@ -86,19 +95,11 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public List<DsdCodeTermVO> queryAllCodeTerm(String codeDirId) {
+    public List<DsdCodeTermVO> queryAllCodeTerm() {
         List<DsdCodeTerm> dsdTermList;
         List<DsdCodeTermVO> codeTermVOList = new ArrayList<DsdCodeTermVO>();
 
-        if (StringUtils.isEmpty(codeDirId)) {
-            dsdTermList = dsdCodeTermRepository.findAll();
-        } else {
-            DsdCodeTerm dct = new DsdCodeTerm();
-            dct.setCodeDirId(codeDirId);
-            Example<DsdCodeTerm> example = Example.of(dct);
-            dsdTermList = dsdCodeTermRepository.findAll(example);
-        }
-
+        dsdTermList = dsdCodeTermRepository.findAll();
         dsdTermList.forEach(dsdCodeTerm -> {
             DsdCodeTermVO dsdCodeTermVO = DsdCodeTermMapper.INSTANCE.usDsdCodeTermVO(dsdCodeTerm);
             codeTermVOList.add(dsdCodeTermVO);
@@ -107,7 +108,9 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public void codeTermUpload(MultipartFile file, String codeDirId) throws IOException {
-        EasyExcel.read(file.getInputStream(), DsdCodeTermVO.class, new DsdCodeTermUploadDataListener(dsdCodeTermRepository, codeDirId)).sheet().doRead();
+    public void codeTermUpload(MultipartFile file) throws IOException {
+        EasyExcel.read(file.getInputStream(), DsdCodeTermVO.class, new DsdCodeTermUploadDataListener(dsdExcelBatchService)).sheet().doRead();
     }
+
+
 }

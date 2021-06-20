@@ -24,7 +24,7 @@ public class DsdCodeTermVO {
     /**
      * ID编号
      */
-//    @ExcelIgnore
+    @ExcelIgnore
     @ExcelProperty("ID编号")
     private Integer id;
 
@@ -52,7 +52,7 @@ public class DsdCodeTermVO {
     /**
      * 数据类型编码
      */
-    @NotBlank(message = "数据类型编码不能为空！")
+//    @NotBlank(message = "数据类型编码不能为空！")
     @ExcelProperty("数据类型编码")
     private Integer termId;
 

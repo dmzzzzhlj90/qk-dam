@@ -103,8 +103,8 @@ public class DsdExcelController {
      * @return: void
      **/
     @PostMapping("/code/term/download")
-    public void codeTermDownload(HttpServletResponse response,@RequestParam(required = false) String codeDirId) throws IOException {
-        List<DsdCodeTermVO> codeTermVOList = dsdExcelService.queryAllCodeTerm(codeDirId);
+    public void codeTermDownload(HttpServletResponse response) throws IOException {
+        List<DsdCodeTermVO> codeTermVOList = dsdExcelService.queryAllCodeTerm();
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -121,8 +121,8 @@ public class DsdExcelController {
      **/
     @PostMapping("/code/term/upload")
     @ResponseBody
-    public DefaultCommonResult codeTermUpload(MultipartFile file,@RequestParam(required = false) String codeDirId) throws IOException {
-        dsdExcelService.codeTermUpload(file, codeDirId);
+    public DefaultCommonResult codeTermUpload(MultipartFile file) throws IOException {
+        dsdExcelService.codeTermUpload(file);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
