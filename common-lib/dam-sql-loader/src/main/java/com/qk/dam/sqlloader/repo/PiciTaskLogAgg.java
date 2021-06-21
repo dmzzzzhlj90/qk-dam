@@ -2,12 +2,23 @@ package com.qk.dam.sqlloader.repo;
 
 import cn.hutool.db.Entity;
 import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
+import com.qk.dam.sqlloader.vo.PiciTaskVO;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PiciTaskLogAgg {
+
+    public static Boolean taskTableExecuting(String tablename) {
+        try {
+            List<Entity> query = QkEtlAgg.QK_ETL.query("SELECT * FROM t_qk_datain_log WHERE is_down=1 and tablename=?",tablename);
+            return query.size()>0;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
     
     public static Integer saveQkLogPici(PiciTaskLogVO pici) {
         try {

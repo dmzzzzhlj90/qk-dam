@@ -7,7 +7,7 @@ pass = zhudao123
 [longgov]
 url = jdbc:mysql://longgov.rwlb.rds.aliyuncs.com:3306/longgov?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
 username = youshang_qike
-password = Wsbuyao%^&567
+password = Doublefly123
 
 [qk_es_updated]
 url = jdbc:mysql://172.31.0.16:3306/qk_es_updated?useUnicode=true&noAccessToProcedureBodies=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false

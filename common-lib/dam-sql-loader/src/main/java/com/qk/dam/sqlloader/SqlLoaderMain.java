@@ -45,6 +45,7 @@ public class SqlLoaderMain {
 
     public static int executeTarSqlUpdate(final String updated) {
         LOG.info("开始获取桶中任务数据【{}】", updated);
+        DmSqlLoader.refreshCosKeys();
         List<PiciTaskVO> executePiciTask = getCosPiciTask(updated);
         return executeTarSql(updated, executePiciTask);
     }
@@ -71,9 +72,15 @@ public class SqlLoaderMain {
         LOG.info("桶中有【{}】个任务", executePiciTask.size());
         for (PiciTaskVO piciTaskVO : executePiciTask) {
             LOG.info("批次【{}】表名【{}】", piciTaskVO.getPici(), piciTaskVO.getTableName());
-            COSObjectInputStream cosObjectStream = getCosObjectStream(getFileNameByOss(piciTaskVO.getOssPath()));
+            Boolean aBoolean = PiciTaskLogAgg.taskTableExecuting(piciTaskVO.getTableName());
+            if (!aBoolean) {
+                COSObjectInputStream cosObjectStream = getCosObjectStream(getFileNameByOss(piciTaskVO.getOssPath()));
 
-            executeSqlTask(piciTaskVO, cosObjectStream);
+                executeSqlTask(piciTaskVO, cosObjectStream);
+            }else {
+                LOG.info("表名【{}】有批次正在执行中...", piciTaskVO.getTableName());
+            }
+
         }
         LOG.info("cos桶中【{}/】的tar均已执行完毕，", bt);
         return 1;
@@ -139,7 +146,7 @@ public class SqlLoaderMain {
         }
         // sql执行成功 日志状态改为1
         LOG.info("执行sql文件成功,批次【{}】表名【{}】", piciTaskVO.getPici(), piciTaskVO.getTableName());
-        PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 1, new Date()));
+        PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(), piciTaskVO.getTableName(), 1, new Date(), new Date()));
         QkEtlAgg.procEsUpdateToUpdated1(piciTaskVO.getPici(), piciTaskVO.getTableName());
         return 1;
     }
