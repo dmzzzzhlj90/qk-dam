@@ -1,12 +1,10 @@
 package com.qk.dam.sqlloader;
 
-import cn.hutool.db.Db;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.qcloud.cos.model.*;
 import com.qk.dam.sqlloader.repo.PiciTaskLogAgg;
 import com.qk.dam.sqlloader.repo.QkEtlAgg;
-import com.qk.dam.sqlloader.repo.QkUpdated1Agg;
 import com.qk.dam.sqlloader.repo.QkUpdatedAgg;
 import com.qk.dam.sqlloader.util.TargzUtils;
 import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
@@ -17,9 +15,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.qk.dam.sqlloader.DmSqlLoader.*;
@@ -28,6 +27,7 @@ import static com.qk.dam.sqlloader.constant.LongGovConstant.LOCAL_FILES_PATH;
 public class SqlLoaderMain {
     private static final Log LOG = LogFactory.get("SqlLoaderMain");
     private static final int BATCH_SQL_SUBMIT = 20;
+    private static final BlockingQueue<PiciTaskVO> FAIL_TASK = new LinkedBlockingQueue<>(100);
     public static int writeDestTaskAll() {
         List<PiciTaskVO> executePiciTask = getCosPiciTask();
         LOG.info("桶中有【{}】个任务", executePiciTask.size());
@@ -44,6 +44,14 @@ public class SqlLoaderMain {
     }
 
     public static int executeTarSqlUpdate(final String updated) {
+        if (FAIL_TASK.size()!=0){
+            LOG.info("发现有失败的批次需重新执行！失败个数【{}】",FAIL_TASK.size());
+            while (!FAIL_TASK.isEmpty()){
+                PiciTaskVO piciTaskVO = FAIL_TASK.poll();
+                executeTarSqlTableName(piciTaskVO.getTableName(),piciTaskVO.getPici());
+            }
+        }
+
         LOG.info("开始获取桶中任务数据【{}】", updated);
         DmSqlLoader.refreshCosKeys();
         List<PiciTaskVO> executePiciTask = getCosPiciTask(updated);
@@ -141,6 +149,7 @@ public class SqlLoaderMain {
 
         if (state.get() == 0) {
             // 异常状态程序终止
+            FAIL_TASK.offer(piciTaskVO);
             LOG.info("执行sql文件失败,批次【{}】表名【{}】", piciTaskVO.getPici(), piciTaskVO.getTableName());
             return 0;
         }
