@@ -29,6 +29,7 @@ public class LongGovConstant {
      * 日期格式
      **/
     public static final String DATE_TIME_PATTERN = "yyyyMMdd";
+    public static final String DATE_TIME_SECOND_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 接口调度状态信息

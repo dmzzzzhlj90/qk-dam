@@ -169,4 +169,25 @@ public class PiciTaskLogAgg {
         }
         return null;
     }
+
+    public static List<PiciTaskLogVO> qkLogPiciAlarms() {
+        try {
+            List<Entity> query = QkEtlAgg.QK_ETL.query(" SELECT * FROM t_qk_datain_log_copy1 t " +
+                    "LEFT JOIN ( SELECT max( a.pici ) AS max_pici, a.tablename FROM t_qk_datain_log_copy1 a GROUP BY a.tablename ) B ON t.tablename = b.tablename \n" +
+                    "WHERE t.pici < b.max_pici AND t.is_down != 2 ");
+
+            List<PiciTaskLogVO> piciTaskLogs = query.stream().map(entity ->
+                    new PiciTaskLogVO(
+                            entity.getInt("pici"),
+                            entity.getStr("tablename"),
+                            entity.getInt("is_down"),
+                            entity.getDate("updated")
+                    )).
+                    collect(Collectors.toList());
+            return piciTaskLogs;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
 }
