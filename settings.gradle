@@ -1,6 +1,11 @@
 pluginManagement {
     buildscript {
         repositories {
+            maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
+            mavenCentral()
             flatDir {
                 dirs './plugin-folder/'
             }
@@ -14,15 +19,12 @@ pluginManagement {
             }
         }
         dependencies {
-            classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.1.15'
-            classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.1.15'
+            classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.2.1'
+            classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.2.1'
         }
 
     }
     repositories {
-        flatDir {
-            dirs './plugin-folder/'
-        }
         mavenLocal()
         maven {
             url = 'http://172.31.0.18:8081/repository/alibaba'
