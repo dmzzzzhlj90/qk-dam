@@ -17,16 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/metrics")
 public class MxTaskPiCiDataController {
-    private final MxTaskPiCiDataService mxTaskPiCiDataService;
+  private final MxTaskPiCiDataService mxTaskPiCiDataService;
 
+  public MxTaskPiCiDataController(MxTaskPiCiDataService mxTaskPiCiDataService) {
+    this.mxTaskPiCiDataService = mxTaskPiCiDataService;
+  }
 
-    public MxTaskPiCiDataController(MxTaskPiCiDataService mxTaskPiCiDataService) {
-        this.mxTaskPiCiDataService = mxTaskPiCiDataService;
-    }
-
-    @GetMapping("/task/pici")
-    public DefaultCommonResult sendTaskPiCiMetrics() {
-        mxTaskPiCiDataService.sendTaskPiCiMetrics();
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
+  @GetMapping("/task/pici")
+  public DefaultCommonResult sendTaskPiCiMetrics() {
+    mxTaskPiCiDataService.sendTaskPiCiMetrics();
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 }

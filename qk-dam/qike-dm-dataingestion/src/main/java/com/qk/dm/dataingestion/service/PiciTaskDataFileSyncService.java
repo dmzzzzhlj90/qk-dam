@@ -11,6 +11,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface PiciTaskDataFileSyncService {
-    int syncPiciTaskFilesData(String dataDay, String frontTabNamePatter, String batchNum, String bucketName);
-
+  int syncPiciTaskFilesData(
+      String dataDay, String frontTabNamePatter, String batchNum, String bucketName);
 }

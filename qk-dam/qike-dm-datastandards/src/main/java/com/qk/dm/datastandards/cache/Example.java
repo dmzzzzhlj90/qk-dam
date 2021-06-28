@@ -1,18 +1,18 @@
-//package com.qk.dm.datastandards.cache;
+// package com.qk.dm.datastandards.cache;
 //
-//import com.qk.sankuai.inf.IDGen;
-//import com.qk.sankuai.inf.leaf.common.Result;
-//import com.qk.sankuai.inf.leaf.segment.SegmentIDGenImpl;
-//import com.qk.sankuai.service.SegmentService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.redis.core.RedisTemplate;
-//import org.springframework.stereotype.Service;
+// import com.qk.sankuai.inf.IDGen;
+// import com.qk.sankuai.inf.leaf.common.Result;
+// import com.qk.sankuai.inf.leaf.segment.SegmentIDGenImpl;
+// import com.qk.sankuai.service.SegmentService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.data.redis.core.RedisTemplate;
+// import org.springframework.stereotype.Service;
 //
-//import javax.annotation.PostConstruct;
-//import java.util.Map;
+// import javax.annotation.PostConstruct;
+// import java.util.Map;
 //
-//@Service
-//public class Example {
+// @Service
+// public class Example {
 //    private final RedisTemplate redisTemplate;
 //
 //    public Example(RedisTemplate redisTemplate) {
@@ -37,4 +37,4 @@
 ////            System.out.println("tettttt:"+r);
 ////        }
 //    }
-//}
+// }

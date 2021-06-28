@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 统一接入网关
+ *
  * @author daomingzhu
  */
 @SpringBootApplication
@@ -16,8 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "com.qk")
 public class DmGatewayApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(DmGatewayApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(DmGatewayApplication.class, args);
+  }
 }

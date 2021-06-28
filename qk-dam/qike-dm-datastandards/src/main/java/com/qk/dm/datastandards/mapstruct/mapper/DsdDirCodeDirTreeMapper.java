@@ -1,7 +1,6 @@
 package com.qk.dm.datastandards.mapstruct.mapper;
 
 import com.qk.dm.datastandards.entity.DsdCodeDir;
-import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -15,9 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DsdDirCodeDirTreeMapper {
-    DsdDirCodeDirTreeMapper INSTANCE = Mappers.getMapper(DsdDirCodeDirTreeMapper.class);
+  DsdDirCodeDirTreeMapper INSTANCE = Mappers.getMapper(DsdDirCodeDirTreeMapper.class);
 
-    DsdCodeDirVO useDsdCodeDirVO(DsdCodeDir dsdCodeDir);
+  DsdCodeDirVO useDsdCodeDirVO(DsdCodeDir dsdCodeDir);
 
-    DsdCodeDir useDsdCodeDir(DsdCodeDirVO dsdDirVO);
+  DsdCodeDir useDsdCodeDir(DsdCodeDirVO dsdDirVO);
 }

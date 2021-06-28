@@ -10,11 +10,11 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 @Configuration(proxyBeanMethods = false)
 public class MyHttpMessageConvertersConfiguration {
 
-    @Bean
-    public HttpMessageConverters customConverters() {
-        HttpMessageConverter<?> gsonHttpMessageConverter = new GsonHttpMessageConverter();
-        HttpMessageConverter<?> jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        return new HttpMessageConverters(jackson2HttpMessageConverter);
-    }
-
+  @Bean
+  public HttpMessageConverters customConverters() {
+    HttpMessageConverter<?> gsonHttpMessageConverter = new GsonHttpMessageConverter();
+    HttpMessageConverter<?> jackson2HttpMessageConverter =
+        new MappingJackson2HttpMessageConverter();
+    return new HttpMessageConverters(jackson2HttpMessageConverter);
+  }
 }

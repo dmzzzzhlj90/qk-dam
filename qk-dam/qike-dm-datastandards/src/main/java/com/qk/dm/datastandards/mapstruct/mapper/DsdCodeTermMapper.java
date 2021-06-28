@@ -14,9 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DsdCodeTermMapper {
-    DsdCodeTermMapper INSTANCE = Mappers.getMapper(DsdCodeTermMapper.class);
+  DsdCodeTermMapper INSTANCE = Mappers.getMapper(DsdCodeTermMapper.class);
 
-    DsdCodeTermVO usDsdCodeTermVO(DsdCodeTerm dsdCodeTerm);
+  DsdCodeTermVO usDsdCodeTermVO(DsdCodeTerm dsdCodeTerm);
 
-    DsdCodeTerm useDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
+  DsdCodeTerm useDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
 }

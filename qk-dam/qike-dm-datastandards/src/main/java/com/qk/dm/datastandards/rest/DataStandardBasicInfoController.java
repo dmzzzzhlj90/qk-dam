@@ -22,71 +22,74 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/basic/info")
 public class DataStandardBasicInfoController {
-    private final DataStandardBasicInfoService dataStandardBasicInfoService;
+  private final DataStandardBasicInfoService dataStandardBasicInfoService;
 
-    @Autowired
-    public DataStandardBasicInfoController(DataStandardBasicInfoService dataStandardBasicInfoService) {
-        this.dataStandardBasicInfoService = dataStandardBasicInfoService;
-    }
+  @Autowired
+  public DataStandardBasicInfoController(
+      DataStandardBasicInfoService dataStandardBasicInfoService) {
+    this.dataStandardBasicInfoService = dataStandardBasicInfoService;
+  }
 
-    /**
-     * 查询所有标准信息
-     *
-     * @param: pagination分页查询参数对象: page,size,sortStr
-     * @return: 返回标准列表信息
-     **/
-    @GetMapping("/queryAll")
-    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoAll(Pagination pagination) {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination, null));
-    }
+  /**
+   * 查询所有标准信息
+   *
+   * @param: pagination分页查询参数对象: page,size,sortStr
+   * @return: 返回标准列表信息
+   */
+  @GetMapping("/queryAll")
+  public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoAll(
+      Pagination pagination) {
+    return new DefaultCommonResult(
+        ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination, null));
+  }
 
-    /**
-     * 根据标准分类id查询标准信息
-     *
-     * @param: pagination分页查询参数对象: page,size,sortStr
-     * @return: 返回标准列表信息
-     **/
-    @GetMapping(value = "/query/{dsdLevelId}")
-    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(Pagination pagination,
-                                                                             @PathVariable(value = "dsdLevelId") String dsdLevelId) {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination, dsdLevelId));
-    }
+  /**
+   * 根据标准分类id查询标准信息
+   *
+   * @param: pagination分页查询参数对象: page,size,sortStr
+   * @return: 返回标准列表信息
+   */
+  @GetMapping(value = "/query/{dsdLevelId}")
+  public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(
+      Pagination pagination, @PathVariable(value = "dsdLevelId") String dsdLevelId) {
+    return new DefaultCommonResult(
+        ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination, dsdLevelId));
+  }
 
-    /**
-     * 新增标准信息
-     *
-     * @param: dsdBasicinfoVO 数据标准信息VO
-     * @return: DefaultCommonResult
-     **/
-    @PostMapping("/add")
-    public DefaultCommonResult addDsdBasicinfo(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
-        dataStandardBasicInfoService.addDsdBasicinfo(dsdBasicinfoVO);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
+  /**
+   * 新增标准信息
+   *
+   * @param: dsdBasicinfoVO 数据标准信息VO
+   * @return: DefaultCommonResult
+   */
+  @PostMapping("/add")
+  public DefaultCommonResult addDsdBasicinfo(
+      @RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
+    dataStandardBasicInfoService.addDsdBasicinfo(dsdBasicinfoVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 
-    /**
-     * 编辑标准信息
-     *
-     * @param: dsdBasicinfoVO 数据标准信息VO
-     * @return: DefaultCommonResult
-     **/
-    @PutMapping("/update")
-    public DefaultCommonResult updateDsdTerm(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
-        dataStandardBasicInfoService.updateDsdBasicinfo(dsdBasicinfoVO);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
+  /**
+   * 编辑标准信息
+   *
+   * @param: dsdBasicinfoVO 数据标准信息VO
+   * @return: DefaultCommonResult
+   */
+  @PutMapping("/update")
+  public DefaultCommonResult updateDsdTerm(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
+    dataStandardBasicInfoService.updateDsdBasicinfo(dsdBasicinfoVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 
-    /**
-     * 删除标准信息
-     *
-     * @param: id
-     * @return: DefaultCommonResult
-     **/
-    @DeleteMapping("/delete/{id}")
-    public DefaultCommonResult deleteDsdTerm(@PathVariable("id") Integer id) {
-        dataStandardBasicInfoService.deleteDsdBasicinfo(id);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
-
+  /**
+   * 删除标准信息
+   *
+   * @param: id
+   * @return: DefaultCommonResult
+   */
+  @DeleteMapping("/delete/{id}")
+  public DefaultCommonResult deleteDsdTerm(@PathVariable("id") Integer id) {
+    dataStandardBasicInfoService.deleteDsdBasicinfo(id);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 }
-

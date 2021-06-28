@@ -14,9 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DsdBasicInfoMapper {
-    DsdBasicInfoMapper INSTANCE = Mappers.getMapper(DsdBasicInfoMapper.class);
+  DsdBasicInfoMapper INSTANCE = Mappers.getMapper(DsdBasicInfoMapper.class);
 
-    DsdBasicinfoVO useDsdBasicInfoVO(DsdBasicinfo dsdBasicinfo);
+  DsdBasicinfoVO useDsdBasicInfoVO(DsdBasicinfo dsdBasicinfo);
 
-    DsdBasicinfo useDsdBasicInfo(DsdBasicinfoVO dsdBasicinfoVO);
+  DsdBasicinfo useDsdBasicInfo(DsdBasicinfoVO dsdBasicinfoVO);
 }

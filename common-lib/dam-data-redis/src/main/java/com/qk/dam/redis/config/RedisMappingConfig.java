@@ -9,13 +9,11 @@ import org.springframework.data.redis.core.mapping.RedisMappingContext;
 
 @Configuration
 public class RedisMappingConfig {
-    @Bean
-    public RedisMappingContext keyValueMappingContext() {
-        return new RedisMappingContext(
-                new MappingConfiguration(new IndexConfiguration(), new MyKeyspaceConfiguration()));
-    }
+  @Bean
+  public RedisMappingContext keyValueMappingContext() {
+    return new RedisMappingContext(
+        new MappingConfiguration(new IndexConfiguration(), new MyKeyspaceConfiguration()));
+  }
 
-    public static class MyKeyspaceConfiguration extends KeyspaceConfiguration {
-
-    }
+  public static class MyKeyspaceConfiguration extends KeyspaceConfiguration {}
 }

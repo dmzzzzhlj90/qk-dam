@@ -8,19 +8,16 @@ import org.springframework.stereotype.Service;
 /**
  * @author wjq
  * @date 20210604
- * @since 1.0.0
- * 数据标准标准信息接口
+ * @since 1.0.0 数据标准标准信息接口
  */
 @Service
 public interface DataStandardBasicInfoService {
 
-    PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination, String dsdLevelId);
+  PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination, String dsdLevelId);
 
-    void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
+  void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 
-    void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
+  void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 
-    void deleteDsdBasicinfo(Integer id);
-
-
+  void deleteDsdBasicinfo(Integer id);
 }

@@ -14,8 +14,7 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DsdCodeTreeMapper {
-    DsdCodeTreeMapper INSTANCE = Mappers.getMapper(DsdCodeTreeMapper.class);
+  DsdCodeTreeMapper INSTANCE = Mappers.getMapper(DsdCodeTreeMapper.class);
 
-    DataStandardCodeTreeVO useCodeTreeVO(DsdCodeDir dsdCodeDir);
-
+  DataStandardCodeTreeVO useCodeTreeVO(DsdCodeDir dsdCodeDir);
 }

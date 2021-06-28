@@ -15,9 +15,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DsdDirTreeMapper {
-    DsdDirTreeMapper INSTANCE = Mappers.getMapper(DsdDirTreeMapper.class);
+  DsdDirTreeMapper INSTANCE = Mappers.getMapper(DsdDirTreeMapper.class);
 
-    DataStandardTreeVO useDirTreeVO(DsdDir dsdDir);
+  DataStandardTreeVO useDirTreeVO(DsdDir dsdDir);
 
-    DsdDir useDsdDir(DsdDirVO dsdDirVO);
+  DsdDir useDsdDir(DsdDirVO dsdDirVO);
 }
