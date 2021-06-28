@@ -34,7 +34,7 @@ management:
   endpoints:
     enabled-by-default: true
     web:
-      base-path: /manage
+      base-path: /actuator
       exposure:
         include: "*"
   endpoint:
@@ -45,9 +45,11 @@ management:
   metrics:
     export:
       prometheus:
-#        pushgateway:
-#          enabled: true
-#          base-url: http://localhost:9090
-#          job: dm-spring-mx
+        pushgateway:
+          enabled: true
+          base-url: http:192.168.56.100:9090
+          job: dm-spring-mx
         enabled: true
         descriptions: true
+    tags:
+      application: ${spring.application.name}
