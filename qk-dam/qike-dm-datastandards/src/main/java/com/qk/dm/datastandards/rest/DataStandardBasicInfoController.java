@@ -30,14 +30,25 @@ public class DataStandardBasicInfoController {
     }
 
     /**
-     * 查询标准信息
+     * 查询所有标准信息
      *
      * @param: pagination分页查询参数对象: page,size,sortStr
      * @return: 返回标准列表信息
      **/
-    @GetMapping(value = {"/query/{dsdLevelId}", "/query"})
-    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfo(Pagination pagination,
-                                                                             @PathVariable(value = "dsdLevelId", required = false) String dsdLevelId) {
+    @GetMapping("/queryAll")
+    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoAll(Pagination pagination) {
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination, null));
+    }
+
+    /**
+     * 根据标准分类id查询标准信息
+     *
+     * @param: pagination分页查询参数对象: page,size,sortStr
+     * @return: 返回标准列表信息
+     **/
+    @GetMapping(value = "/query/{dsdLevelId}")
+    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(Pagination pagination,
+                                                                             @PathVariable(value = "dsdLevelId") String dsdLevelId) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(pagination, dsdLevelId));
     }
 

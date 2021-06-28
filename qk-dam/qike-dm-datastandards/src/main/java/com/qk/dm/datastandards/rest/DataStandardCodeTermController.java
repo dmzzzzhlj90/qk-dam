@@ -29,16 +29,26 @@ public class DataStandardCodeTermController {
         this.dataStandardCodeTermService = dataStandardCodeTermService;
     }
 
-
     /**
-     * 查询数据标准码表术语信息
+     * 查询所有的数据标准码表术语信息
      *
      * @param: pagination分页查询参数对象: page,size,sortStr
      * @return: 返回数据标准码表术语列表信息
      **/
-    @GetMapping(value = {"/query/{codeDirId}","/query"})
+    @GetMapping(value = "/queryAll")
+    public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTermAll(Pagination pagination) {
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(pagination, null));
+    }
+
+    /**
+     * 根据码表分类id查询码表术语信息
+     *
+     * @param: pagination分页查询参数对象: page,size,sortStr
+     * @return: 返回数据标准码表术语列表信息
+     **/
+    @GetMapping(value = "/query/{codeDirId}")
     public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTerm(Pagination pagination,
-                                                                           @PathVariable(value = "codeDirId",required = false) String codeDirId) {
+                                                                           @PathVariable(value = "codeDirId") String codeDirId) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(pagination, codeDirId));
     }
 
