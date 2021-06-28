@@ -1,9 +1,10 @@
-package com.qk.dm.mxserver;
+package com.qk.dm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 日志服务
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableScheduling
 @ComponentScan(basePackages = "com.qk")
 public class ActuatorMxServerApplication {
   public static void main(String[] args) {

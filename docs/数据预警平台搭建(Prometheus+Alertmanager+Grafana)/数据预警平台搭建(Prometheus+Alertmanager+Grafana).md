@@ -87,6 +87,7 @@ url: http://192.168.56.101:9090/
 
 ```shell
 ####grafana-8.0.3-1.x86_64.rpm
+sudo yum localinstall grafana-8.0.3-1.x86_64.rpm
 cd /usr/local/grafana
 sudo service grafana-server start
 ```
@@ -200,7 +201,8 @@ cd /usr/local/prometheus/alertmanager-0.22.2.linux-amd64
 ./alertmanager --config.file=alertmanager.yml
 #nohup方式启动
 nohup ./alertmanager --config.file=alertmanager.yml > /usr/local/prometheus/logs/alertmanager.log 2>&1 &
-
+#查看状态
+ps -ef|grep alertmanager |grep -v grep
 ```
 
 url地址:http://192.168.56.101:9093/
@@ -287,7 +289,7 @@ mv /usr/bin/node /usr/bin/node_bakv6.17.1
 ln -s /usr/local/prometheus/node-v12.16.1-linux-x64/bin/node /usr/bin/node
 ```
 
-#### 3.进行编译安装
+#### 4.3 进行编译安装
 
 ```shell
 ##make出错没关系，这里执行了两次会出现prometheus-webhook-dingtalk启动执行文件
@@ -295,7 +297,7 @@ cd prometheus-webhook-dingtalk.git
 make build
 ```
 
-#### 4.配置 & 启动
+#### 4.4 配置 & 启动
 
 config.yml
 
@@ -354,10 +356,10 @@ targets:
 ##启动
 cd /usr/local/prometheus/prometheus-webhook-dingtalk/prometheus-webhook-dingtalk
 ./prometheus-webhook-dingtalk --config.file=config.yml
-##查看
-ps -ef|grep prometheus-webhook-dingtalk |grep -v grep
 ##nohup启动方式
 nohup ./prometheus-webhook-dingtalk --config.file=config.yml > /usr/local/prometheus/logs/prometheus-webhook-dingtalk.log 2>&1 &
+##查看
+ps -ef|grep prometheus-webhook-dingtalk |grep -v grep
 ```
 
 效果:
@@ -365,6 +367,112 @@ nohup ./prometheus-webhook-dingtalk --config.file=config.yml > /usr/local/promet
 通过Prometheus(Alerts)进行预警 -----输送------>Alertmanager------send----->prometheus-webhook-dingtalk
 
 ![1624689792495](数据预警平台搭建(Prometheus+Alertmanager+Grafana).assets/1624689792495.png)
+
+
+
+#### 4.5 自定义模板配置
+
+​	新增custom.tmpl模板放入到/usr/local/prometheus/prometheus-webhook-dingtalk/prometheus-webhook-dingtalk/template/ 下面
+
+```yml
+{{ define "__subject" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }} {{ if gt (len .CommonLabels) (len .GroupLabels) }}({{ with .CommonLabels.Remove .GroupLabels.Names }}{{ .Values | join " " }}{{ end }}){{ end }}{{ end }}
+{{ define "__alertmanagerURL" }}{{ .ExternalURL }}/#/alerts?receiver={{ .Receiver }}{{ end }}
+####修改显示的地方
+{{ define "__text_alert_list" }}{{ range . }}
+{{ range .Annotations.SortedPairs }}> - {{ .Name }}: {{ .Value | markdown | html }}
+{{ end }}
+{{ end }}{{ end }}
+
+{{ define "default.__text_alert_list" }}{{ range . }}
+#### \[{{ .Labels.severity | upper }}\] {{ .Annotations.summary }}
+
+**Description:** {{ .Annotations.description }}
+
+**Graph:** [馃搱]({{ .GeneratorURL }})
+
+**Details:**
+{{ range .Labels.SortedPairs }}{{ if and (ne (.Name) "severity") (ne (.Name) "summary") }}> - {{ .Name }}: {{ .Value | markdown | html }}
+{{ end }}{{ end }}
+{{ end }}{{ end }}
+
+{{/* Default */}}
+{{ define "default.title" }}{{ template "__subject" . }}{{ end }}
+{{ define "default.content" }}#### \[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}\] **[{{ index .GroupLabels "alertname" }}]({{ template "__alertmanagerURL" . }})**
+{{ if gt (len .Alerts.Firing) 0 -}}
+**Alerts Firing**
+{{ template "default.__text_alert_list" .Alerts.Firing }}
+{{- end }}
+{{ if gt (len .Alerts.Resolved) 0 -}}
+**Alerts Resolved**
+{{ template "default.__text_alert_list" .Alerts.Resolved }}
+{{- end }}
+{{- end }}
+
+{{/* Legacy */}}
+{{ define "legacy.title" }}{{ template "__subject" . }}{{ end }}
+{{ define "legacy.content" }}#### \[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}\] **[{{ index .GroupLabels "alertname" }}]({{ template "__alertmanagerURL" . }})**
+{{ template "__text_alert_list" .Alerts.Firing }}
+{{- end }}
+
+{{/* Following names for compatibility */}}
+{{ define "ding.link.title" }}{{ template "default.title" . }}{{ end }}
+{{ define "ding.link.content" }}{{ template "default.content" . }}{{ end }}
+
+```
+
+修改config.yml配置文件,放开自定义模板设置:
+
+```yml
+## Request timeout
+# timeout: 5s
+
+## Uncomment following line in order to write template from scratch (be careful!)
+#no_builtin_template: true
+
+## Customizable templates path
+##设置为自定义模板路径
+templates:
+  - /home/monitor/prometheus/prometheus-webhook-dingtalk/prometheus-webhook-dingtalk/template/custom.tmpl
+
+## You can also override default template using `default_message`
+## The following example to use the 'legacy' template from v0.3.0
+#default_message:
+#  title: '{{ template "legacy.title" . }}'
+#  text: '{{ template "legacy.content" . }}'
+
+## Targets, previously was known as "profiles"
+targets:
+  webhook1:
+    url: https://oapi.dingtalk.com/robot/send?access_token=af8903856888567d4cb486dfb8cbc0e48f33e6ac28b8f3a36f9b948e4ae4954e
+    # secret for signature
+    secret: SEC000000000000000000000
+  webhook2:
+    url: https://oapi.dingtalk.com/robot/send?access_token=2159e318c7e78eaf3cd1338050810febc63a52f58a5fc97b816f61a2116020a7
+    message:
+      # Use legacy template
+      title: '{"content": "数据预警平台"}'
+      text: '{{ template "legacy.content" . }}'
+  webhook_legacy:
+    url: https://oapi.dingtalk.com/robot/send?access_token=af8903856888567d4cb486dfb8cbc0e48f33e6ac28b8f3a36f9b948e4ae4954e
+    # Customize template content
+    message:
+      # Use legacy template
+      title: '{{ template "legacy.title" . }}'
+      text: '{{ template "legacy.content" . }}'
+  webhook_mention_all:
+    url: https://oapi.dingtalk.com/robot/send?access_token=af8903856888567d4cb486dfb8cbc0e48f33e6ac28b8f3a36f9b948e4ae4954e
+    mention:
+      all: true
+  webhook_mention_users:
+    url: https://oapi.dingtalk.com/robot/send?access_token=af8903856888567d4cb486dfb8cbc0e48f33e6ac28b8f3a36f9b948e4ae4954e
+    mention:
+      mobiles: ['156xxxx8827', '189xxxx8325']
+
+```
+
+效果展示:
+
+![1624867399944](数据预警平台搭建(Prometheus+Alertmanager+Grafana).assets/1624867399944.png)
 
 ### 5. Spring Boot集成
 
