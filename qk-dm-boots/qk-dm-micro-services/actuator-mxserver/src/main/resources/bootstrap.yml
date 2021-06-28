@@ -49,7 +49,7 @@ management:
       prometheus:
         pushgateway:
           enabled: true
-          base-url: http:192.168.56.101:9090
+          base-url: http://172.31.0.96:9090
           job: dm-spring-mx
         enabled: true
         descriptions: true
