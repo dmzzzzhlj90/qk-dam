@@ -23,8 +23,8 @@ dependencies {
     implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.7.0'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
