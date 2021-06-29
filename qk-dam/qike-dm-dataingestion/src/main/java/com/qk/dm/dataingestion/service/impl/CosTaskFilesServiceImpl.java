@@ -1,5 +1,7 @@
 package com.qk.dm.dataingestion.service.impl;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.exception.CosClientException;
 import com.qcloud.cos.exception.CosServiceException;
@@ -24,14 +26,16 @@ import java.util.Map;
  */
 @Service
 public class CosTaskFilesServiceImpl implements CosTaskFilesService {
-
+    private static final Log LOG = LogFactory.get("同步获取COS客户端文件信息");
 
     @Override
     public List<CosTaskFileInfoVO> getCosTaskFilesInfo(String dataDay) {
+        LOG.info("开始获取COS客户端文件,日期为:【{}】", dataDay);
+
         List<CosTaskFileInfoVO> result = new ArrayList<>(16);
         try {
             COSClient cosClient = TxCOSClient.cosClient;
-
+            LOG.info("成功连接到COS客户端!");
             ListObjectsRequest listObjectsRequest = new ListObjectsRequest();
             listObjectsRequest.setBucketName(LongGovConstant.BUCKETNAME);
             listObjectsRequest.setPrefix(dataDay + "/");
@@ -39,6 +43,7 @@ public class CosTaskFilesServiceImpl implements CosTaskFilesService {
 
             ObjectListing objectListing = cosClient.listObjects(listObjectsRequest);
             List<COSObjectSummary> cosObjectSummaryList = objectListing.getObjectSummaries();
+            LOG.info("获取到COS客户端所有文件信息!");
             for (COSObjectSummary cosObjectSummary : cosObjectSummaryList) {
                 ObjectMetadata objectMetadata = cosClient.getObjectMetadata(LongGovConstant.BUCKETNAME, cosObjectSummary.getKey());
                 Map<String, String> userMetadata = objectMetadata.getUserMetadata();
@@ -57,8 +62,7 @@ public class CosTaskFilesServiceImpl implements CosTaskFilesService {
         } catch (CosClientException e) {
             e.printStackTrace();
         }
-
-
+        LOG.info("成功获取到COS客户端文件,文件个数为:【{}】", result.size());
         return result;
     }
 

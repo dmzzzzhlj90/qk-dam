@@ -1,5 +1,7 @@
 package com.qk.dm.dataingestion.rest;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.sqlloader.constant.LongGovConstant;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  * 同步获取COS客户端文件信息
@@ -26,6 +27,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/cos/task")
 public class CosTaskFilesController {
+    private static final Log LOG = LogFactory.get("同步获取COS客户端文件信息");
+
     private final CosTaskFilesService cosTaskFilesService;
 
     @Autowired
