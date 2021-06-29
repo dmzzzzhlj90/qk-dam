@@ -3,6 +3,7 @@ server:
 spring:
   logging:
     level: info
+    path: logs/dm-datastandards.log
     appender:
       ref: CONSOLE
   messages:

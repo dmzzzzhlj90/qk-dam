@@ -3,9 +3,6 @@ plugins {
 }
 version "${commonLibVersion}"
 group "com.qk.dam.sqlloader"
-configurations.all {
-    exclude group: 'log4j', module: 'log4j'
-}
 dependencies {
     implementation "org.slf4j:slf4j-api"
     compile 'com.zaxxer:HikariCP:3.4.5'

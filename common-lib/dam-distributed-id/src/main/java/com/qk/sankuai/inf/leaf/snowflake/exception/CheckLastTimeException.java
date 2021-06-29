@@ -1,7 +1,7 @@
 package com.qk.sankuai.inf.leaf.snowflake.exception;
 
 public class CheckLastTimeException extends RuntimeException {
-    public CheckLastTimeException(String msg){
-        super(msg);
-    }
+  public CheckLastTimeException(String msg) {
+    super(msg);
+  }
 }

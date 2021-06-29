@@ -14,10 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DsdTermMapper {
-    DsdTermMapper INSTANCE = Mappers.getMapper(DsdTermMapper.class);
+  DsdTermMapper INSTANCE = Mappers.getMapper(DsdTermMapper.class);
 
-    DsdTermVO useDsdTermVO(DsdTerm dsdTerm);
+  DsdTermVO useDsdTermVO(DsdTerm dsdTerm);
 
-
-    DsdTerm useDsdTerm(DsdTermVO dsdTermVO);
+  DsdTerm useDsdTerm(DsdTermVO dsdTermVO);
 }

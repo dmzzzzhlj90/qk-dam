@@ -1,38 +1,38 @@
 package com.qk.dm.datastandards.mapstruct.mapper;
 
 public class CarDto {
- 
-    private String make;
-    private int seatCount;
-    private String type;
 
-    public String getMake() {
-        return make;
-    }
+  private String make;
+  private int seatCount;
+  private String type;
 
-    public void setMake(String make) {
-        this.make = make;
-    }
+  public String getMake() {
+    return make;
+  }
 
-    public int getSeatCount() {
-        return seatCount;
-    }
+  public void setMake(String make) {
+    this.make = make;
+  }
 
-    public void setSeatCount(int seatCount) {
-        this.seatCount = seatCount;
-    }
+  public int getSeatCount() {
+    return seatCount;
+  }
 
-    public String getType() {
-        return type;
-    }
+  public void setSeatCount(int seatCount) {
+    this.seatCount = seatCount;
+  }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+  public String getType() {
+    return type;
+  }
 
-    public CarDto(String make, int seatCount, String type) {
-        this.make = make;
-        this.seatCount = seatCount;
-        this.type = type;
-    }
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public CarDto(String make, int seatCount, String type) {
+    this.make = make;
+    this.seatCount = seatCount;
+    this.type = type;
+  }
 }

@@ -35,15 +35,17 @@ public class PiciTaskDataFileSyncController {
     /**
      * 同步阿里云数据到腾讯云
      *
-     * @return: com.qk.dam.commons.http.result.DefaultCommonResult
-     **/
+     * @param: frontTabNamePatter, batchNum
+     * @return: DefaultCommonResult
+     */
     @GetMapping("/files/data")
-    public DefaultCommonResult syncRiZhiFilesData(@RequestParam(required = false) String frontTabNamePatter,
-                                                  @RequestParam(required = false) String batchNum) {
-        String dataDay = DateTimeFormatter.ofPattern(LongGovConstant.DATE_TIME_PATTERN).format(LocalDateTime.now())+"02";
-        piciTaskDataFileSyncService.syncPiciTaskFilesData(dataDay, frontTabNamePatter, batchNum, LongGovConstant.BUCKETNAME);
+    public DefaultCommonResult syncRiZhiFilesData(
+            @RequestParam(required = false) String frontTabNamePatter,
+            @RequestParam(required = false) String batchNum) {
+        String dataDay =
+                DateTimeFormatter.ofPattern(LongGovConstant.DATE_TIME_PATTERN).format(LocalDateTime.now());
+        piciTaskDataFileSyncService.syncPiciTaskFilesData(
+                dataDay, frontTabNamePatter, batchNum, LongGovConstant.BUCKETNAME);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
-
 }
-
