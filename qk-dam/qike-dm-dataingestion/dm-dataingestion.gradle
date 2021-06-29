@@ -24,6 +24,14 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.mapstruct:mapstruct'
+    annotationProcessor(
+            "javax.annotation:javax.annotation-api",
+            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
+            "org.projectlombok:lombok",
+            'org.mapstruct:mapstruct-processor')
+    testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
     imports {

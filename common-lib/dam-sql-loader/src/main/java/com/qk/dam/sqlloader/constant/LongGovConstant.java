@@ -22,6 +22,9 @@ public class LongGovConstant {
   public static final String COS_META_HEADER_TABLE = "x-cos-meta-table"; // COS元对象Header存储,key为表名称
   public static final String COS_META_HEADER_PICI = "x-cos-meta-pici"; // COS元对象Header存储,key为数据批次
 
+  public static final String GET_COS_META_HEADER_TABLE = "table"; // COS元对象Header存储,key为表名称
+  public static final String GET_COS_META_HEADER_PICI = "pici"; // COS元对象Header存储,key为数据批次
+
   /** 日期格式 */
   public static final String DATE_TIME_PATTERN = "yyyyMMdd";
 
