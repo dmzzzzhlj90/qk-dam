@@ -2,9 +2,7 @@ package com.qk.dm.dataingestion.vo;
 
 import lombok.*;
 
-/**
- * @author wjq
- */
+/** @author wjq */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,19 +10,12 @@ import lombok.*;
 @ToString
 public class CosTaskFileInfoVO {
 
-    /**
-     * 表名称
-     */
-    private String tableName;
+  /** 表名称 */
+  private String tableName;
 
-    /**
-     * 批次
-     */
-    private String pici;
+  /** 批次 */
+  private String pici;
 
-    /**
-     * 文件下载路径地址
-     */
-    private String filePath;
-
+  /** 文件下载路径地址 */
+  private String filePath;
 }

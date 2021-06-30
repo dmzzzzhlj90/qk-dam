@@ -52,4 +52,9 @@ public class SqlLoaderController {
     DmSqlLoader.refreshCosKeys();
     return new DefaultCommonResult(ResultCodeEnum.OK);
   }
+
+  @GetMapping("/procUpdateToUpdated1")
+  public void procUpdateToUpdated1() {
+    SqlLoaderMain.procUpdateToUpdated1();
+  }
 }

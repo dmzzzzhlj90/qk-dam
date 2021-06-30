@@ -29,6 +29,8 @@ public class TxCOSClient {
     Region region = new Region(LongGovConstant.COS_REGION);
     ClientConfig clientConfig = new ClientConfig(region);
     clientConfig.setHttpProtocol(HttpProtocol.https);
+    clientConfig.setConnectionTimeout(LongGovConstant.COS_CONNECTION_TIMEOUT);
+    clientConfig.setSocketTimeout(LongGovConstant.COS_SOCKET_TIMEOUT);
     // 3.生成COS客户端
     return new COSClient(cred, clientConfig);
   }

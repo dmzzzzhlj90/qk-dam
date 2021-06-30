@@ -18,6 +18,9 @@ public class LongGovConstant {
   /** 腾讯COS 地域信息 */
   public static final String COS_REGION = "ap-beijing";
 
+  public static final int COS_CONNECTION_TIMEOUT = 1000 * 60 * 5;
+  public static final int COS_SOCKET_TIMEOUT = 1000 * 60 * 5;
+
   public static final String COS_META_CONTENTTYPE = "application/octet-stream"; // COS操作元对象类型
   public static final String COS_META_HEADER_TABLE = "x-cos-meta-table"; // COS元对象Header存储,key为表名称
   public static final String COS_META_HEADER_PICI = "x-cos-meta-pici"; // COS元对象Header存储,key为数据批次

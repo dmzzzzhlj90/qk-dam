@@ -2,6 +2,7 @@ package com.qk.dam.sqlloader;
 
 import static com.qk.dam.sqlloader.DmSqlLoader.*;
 import static com.qk.dam.sqlloader.constant.LongGovConstant.LOCAL_FILES_PATH;
+import static com.qk.dam.sqlloader.repo.PiciTaskLogAgg.qkLogPiciExecuting;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -148,7 +149,7 @@ public class SqlLoaderMain {
       e.printStackTrace();
     }
     // 提交剩余未执行的SQL
-    if (insertSqls.size() > 0) {
+    if (!insertSqls.isEmpty()) {
       try {
         batchExecuteSql(piciTaskVO, insertSqls, atomicLongCount);
       } catch (SQLException throwables) {
@@ -171,6 +172,16 @@ public class SqlLoaderMain {
             piciTaskVO.getPici(), piciTaskVO.getTableName(), 1, new Date(), new Date()));
     QkEtlAgg.procEsUpdateToUpdated1(piciTaskVO.getPici(), piciTaskVO.getTableName());
     return 1;
+  }
+
+  public static void procUpdateToUpdated1() {
+    List<PiciTaskLogVO> piciTaskLogVOS = qkLogPiciExecuting();
+    if (piciTaskLogVOS != null) {
+      piciTaskLogVOS.forEach(
+          piciTaskLogVO ->
+              QkEtlAgg.procEsUpdateToUpdated1(
+                  piciTaskLogVO.getPici(), piciTaskLogVO.getTableName()));
+    }
   }
 
   private static void batchExecuteSql(
