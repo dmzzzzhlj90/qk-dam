@@ -93,9 +93,7 @@ public class TargzUtils {
       if (tarEmtry == null) {
         break;
       }
-      String fileName = tarEmtry.getName();
       String line;
-      StringBuilder appendstr = new StringBuilder();
 
       while ((line = input.readLine()) != null) {
         if (!(line.startsWith("/*") || line.startsWith("LOCK") || line.startsWith("UNLOCK"))) {

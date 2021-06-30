@@ -22,24 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/metrics")
 public class MxTaskPiCiDataController {
-    private static final Log LOG = LogFactory.get("定时监控数据同步");
+  private static final Log LOG = LogFactory.get("定时监控数据同步");
 
-    @Value("${prometheus.timer.param}")
-    private String timerParam;
+  @Value("${prometheus.timer.param}")
+  private String timerParam;
 
-    private final MxTaskPiCiDataService mxTaskPiCiDataService;
+  private final MxTaskPiCiDataService mxTaskPiCiDataService;
 
-    @Autowired
-    public MxTaskPiCiDataController(MxTaskPiCiDataService mxTaskPiCiDataService) {
-        this.mxTaskPiCiDataService = mxTaskPiCiDataService;
-    }
+  @Autowired
+  public MxTaskPiCiDataController(MxTaskPiCiDataService mxTaskPiCiDataService) {
+    this.mxTaskPiCiDataService = mxTaskPiCiDataService;
+  }
 
-    @Scheduled(cron = "${prometheus.timer.param}")
-    @GetMapping("/task/pici")
-    public DefaultCommonResult sendTaskPiCiMetrics() {
-        LOG.info("定时监控开始!");
-        LOG.info("定时器时间cron为:【{}】!", timerParam);
-        mxTaskPiCiDataService.sendTaskPiCiMetrics();
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
+  @Scheduled(cron = "${prometheus.timer.param}")
+  @GetMapping("/task/pici")
+  public DefaultCommonResult sendTaskPiCiMetrics() {
+    LOG.info("定时监控开始!");
+    LOG.info("定时器时间cron为:【{}】!", timerParam);
+    mxTaskPiCiDataService.sendTaskPiCiMetrics();
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 }
