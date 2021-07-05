@@ -3,8 +3,9 @@ server:
 spring:
   logging:
     level: info
+    path: logs/dm-dataingestion.log
     appender:
-      ref: CONSOLE
+      ref: FILE
   messages:
     basename: i18n/messages
   mvc:
