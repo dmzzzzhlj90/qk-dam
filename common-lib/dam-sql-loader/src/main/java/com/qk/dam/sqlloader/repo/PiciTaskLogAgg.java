@@ -256,4 +256,20 @@ public class PiciTaskLogAgg {
     }
     return null;
   }
+
+    public static int qkLogPiciModifyIsHive(String tableName, String pici) {
+        try {
+            Entity uniqWhere =
+                    Entity.create("t_qk_datain_log")
+                            .set("pici", pici)
+                            .set("tablename", tableName);
+            long count = QkEtlAgg.QK_ETL.count(uniqWhere);
+            Entity entity = Entity.create().set("is_hive_updated", 1);
+            QkEtlAgg.QK_ETL.update(entity, uniqWhere);
+            return (int) count;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
 }
