@@ -162,9 +162,12 @@ public class SqlLoaderMain {
 
     if (state.get() == 0) {
       // 异常状态程序终止
-      List<String> piTbName = FAIL_TASK.stream().map(ft -> ft.getPici() + "-" + ft.getTableName()).collect(Collectors.toList());
+      List<String> piTbName =
+          FAIL_TASK.stream()
+              .map(ft -> ft.getPici() + "-" + ft.getTableName())
+              .collect(Collectors.toList());
       if (!piTbName.isEmpty()
-              && !piTbName.contains(piciTaskVO.getPici() + "-" + piciTaskVO.getTableName())){
+          && !piTbName.contains(piciTaskVO.getPici() + "-" + piciTaskVO.getTableName())) {
         boolean offer = FAIL_TASK.offer(piciTaskVO);
       }
 
