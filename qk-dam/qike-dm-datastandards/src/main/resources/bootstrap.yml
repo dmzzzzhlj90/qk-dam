@@ -1,15 +1,19 @@
 server:
   port: 8780
 spring:
+  web:
+    locale: zh_CN
   logging:
     level: info
     path: logs/dm-datastandards.log
     appender:
-      ref: CONSOLE
+      ref: FILE
   messages:
     basename: i18n/messages
   mvc:
     message-codes-resolver-format: postfix_error_code
+    servlet:
+      path: /dsd
   main:
     allow-bean-definition-overriding: true
   application:

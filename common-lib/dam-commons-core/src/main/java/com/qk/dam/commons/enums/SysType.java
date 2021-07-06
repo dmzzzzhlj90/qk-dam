@@ -7,6 +7,8 @@ package com.qk.dam.commons.enums;
 public enum SysType {
   /** 数据中台 */
   DM,
+  /** 数据引入 */
+  DDG,
   /** 元数据 */
   MTD,
   /** 数据标准 */
