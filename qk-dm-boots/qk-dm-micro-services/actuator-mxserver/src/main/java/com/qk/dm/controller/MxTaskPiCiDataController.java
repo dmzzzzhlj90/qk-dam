@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class MxTaskPiCiDataController {
   private static final Log LOG = LogFactory.get("定时监控数据同步");
 
-  @Value("${prometheus.timer.param}")
-  private String timerParam;
+//  @Value("${prometheus.timer.param}")
+//  private String timerParam;
 
   private final MxTaskPiCiDataService mxTaskPiCiDataService;
 
@@ -34,11 +35,11 @@ public class MxTaskPiCiDataController {
     this.mxTaskPiCiDataService = mxTaskPiCiDataService;
   }
 
-  @Scheduled(cron = "${prometheus.timer.param}")
-  @GetMapping("/task/pici")
+//  @Scheduled(cron = "${prometheus.timer.param}")
+  @PostMapping("/task/pici")
   public DefaultCommonResult sendTaskPiCiMetrics() {
     LOG.info("定时监控开始!");
-    LOG.info("定时器时间cron为:【{}】!", timerParam);
+//    LOG.info("定时器时间cron为:【{}】!", timerParam);
     mxTaskPiCiDataService.sendTaskPiCiMetrics();
     return new DefaultCommonResult(ResultCodeEnum.OK);
   }

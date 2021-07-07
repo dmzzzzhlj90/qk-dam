@@ -272,4 +272,26 @@ public class PiciTaskLogAgg {
         }
         return 0;
     }
+
+  public static List<PiciTaskLogVO> qkLogPiciIsHiveAll() {
+    try {
+      List<Entity> query =
+              QkEtlAgg.QK_ETL.query(" SELECT * FROM t_qk_datain_log t where t.is_hive_updated =0 ORDER BY pici,tablename ");
+
+      List<PiciTaskLogVO> piciTaskLogs =
+              query.stream()
+                      .map(
+                              entity ->
+                                      new PiciTaskLogVO(
+                                              entity.getInt("pici"),
+                                              entity.getStr("tablename"),
+                                              entity.getInt("is_down"),
+                                              entity.getInt("is_hive_updated")))
+                      .collect(Collectors.toList());
+      return piciTaskLogs;
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }
+    return null;
+  }
 }

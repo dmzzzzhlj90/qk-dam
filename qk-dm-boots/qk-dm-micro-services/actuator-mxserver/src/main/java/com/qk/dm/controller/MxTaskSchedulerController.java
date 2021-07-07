@@ -7,8 +7,8 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.service.MxTaskSchedulerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class MxTaskSchedulerController {
     private static final Log LOG = LogFactory.get("监控调度任务实例状态情况");
 
-    @Value("${scheduler.timer.param}")
-    private String timerParam;
+//    @Value("${scheduler.timer.param}")
+//    private String timerParam;
 
     private final MxTaskSchedulerService mxTaskSchedulerService;
 
@@ -35,11 +35,11 @@ public class MxTaskSchedulerController {
         this.mxTaskSchedulerService = mxTaskSchedulerService;
     }
 
-
-    @GetMapping("/process/instance/state")
+//    @Scheduled(cron = "${scheduler.timer.param}")
+    @PostMapping("/process/instance/state")
     public DefaultCommonResult sendProcessInstanceState() {
         LOG.info("定时监控开始!");
-        LOG.info("定时器时间cron为:【{}】!", timerParam);
+//        LOG.info("定时器时间cron为:【{}】!", timerParam);
         mxTaskSchedulerService.sendProcessInstanceState();
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
