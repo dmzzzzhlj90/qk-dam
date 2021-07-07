@@ -27,7 +27,7 @@ public class DolphinSchedulerAgg {
                             "\tLEFT JOIN t_ds_user c ON b.user_id = c.id \n" +
                             "WHERE a.update_time BETWEEN ? \n" +
                             "\tAND ? \n" +
-                            "\tAND c.user_name IN ( ? ) \n" +
+                            "\tAND FIND_IN_SET(c.user_name,?) \n" +
                             "ORDER BY c.user_name,a.update_time,a.state ", prevHourDate, nowDate, schedulerUserName);
             List<DolphinProcessInstanceVO> dolphinProcessInstanceList =
                     query.stream()
