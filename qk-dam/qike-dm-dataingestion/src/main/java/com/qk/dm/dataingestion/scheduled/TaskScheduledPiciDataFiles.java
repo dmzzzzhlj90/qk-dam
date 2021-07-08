@@ -45,22 +45,20 @@ public class TaskScheduledPiciDataFiles {
    *
    * @return:
    */
-  @Scheduled(cron = "${read.timer.param}")
   @GetMapping("/files/data")
   public void syncRiZhiFilesData() {
     LOG.info("定时同步开始!");
-    LOG.info("定时器时间cron为:【{}】!", timerParam);
     String dataDay =
         DateTimeFormatter.ofPattern(LongGovConstant.DATE_TIME_PATTERN).format(LocalDateTime.now());
     try {
       int rtState =
           piciTaskDataFileSyncService.syncPiciTaskFilesData(
               dataDay, "", "", LongGovConstant.BUCKETNAME);
-      if (rtState == LongGovConstant.RESULT_SUCCESS_EXIST) {
-        LOG.info("开始执行脚本文件");
-        SqlLoaderMain.executeTarSqlUpdate(dataDay);
-        LOG.info("结束执行脚本文件");
-      }
+//      if (rtState == LongGovConstant.RESULT_SUCCESS_EXIST) {
+//        LOG.info("开始执行脚本文件");
+//        SqlLoaderMain.executeTarSqlUpdate(dataDay);
+//        LOG.info("结束执行脚本文件");
+//      }
     } catch (Exception e) {
       e.printStackTrace();
       LOG.info("定时同步出错!" + e.getMessage());

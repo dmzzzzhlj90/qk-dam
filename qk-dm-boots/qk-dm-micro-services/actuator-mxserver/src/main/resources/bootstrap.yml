@@ -47,10 +47,6 @@ management:
   metrics:
     export:
       prometheus:
-        pushgateway:
-          enabled: true
-          base-url: http:172.31.0.96:9090
-          job: dm-spring-mx
         enabled: true
         descriptions: true
     tags:

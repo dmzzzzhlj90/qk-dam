@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PiciTaskLogServiceImpl implements PiciTaskLogService {
 
-    @Override
-    public Integer modifyIsHiveByTableNameAndPici(String tableName, String pici) {
-        return PiciTaskLogAgg.qkLogPiciModifyIsHive(tableName, pici);
-    }
+  @Override
+  public Integer modifyIsHiveByTableNameAndPici(String tableName, String pici) {
+    return PiciTaskLogAgg.qkLogPiciModifyIsHive(tableName, pici);
+  }
 }

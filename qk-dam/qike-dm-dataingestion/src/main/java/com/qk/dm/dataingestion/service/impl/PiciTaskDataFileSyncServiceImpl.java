@@ -3,6 +3,7 @@ package com.qk.dm.dataingestion.service.impl;
 import static com.qk.dam.sqlloader.DmSqlLoader.getPiciTask;
 import static com.qk.dam.sqlloader.util.DownloadFile.downFileByteArray;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.qcloud.cos.COSClient;
@@ -12,10 +13,12 @@ import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dam.sqlloader.cos.TxCOSClient;
 import com.qk.dam.sqlloader.repo.PiciTaskAgg;
 import com.qk.dam.sqlloader.repo.PiciTaskLogAgg;
+import com.qk.dam.sqlloader.util.DownloadFile;
 import com.qk.dam.sqlloader.vo.PiciTaskLogVO;
 import com.qk.dam.sqlloader.vo.PiciTaskVO;
 import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -61,13 +64,14 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
       try {
         // 获取原始数据文件
         LOG.info("准备下载,表名称:【{}】,批次:【{}】的阿里云文件", piciTaskVO.getTableName(), piciTaskVO.getPici());
-        byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
+        downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS + piciTaskVO.getOssPath());
         LOG.info("成功下载,表名称【{}】,批次【{}】的阿里云文件", piciTaskVO.getTableName(), piciTaskVO.getPici());
 
         // 同步数据文件到COS
         LOG.info(
             "准备上传,表名称:【{}】,批次:【{}】的文件到腾讯云COS!", piciTaskVO.getTableName(), piciTaskVO.getPici());
-        uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
+        uploadFileToCloudTencent(
+            piciTaskVO, piciTaskVO.getOssPath(), cosClient, bucketName, dataDay);
         LOG.info(
             "成功上传,表名称:【{}】,批次:【{}】的文件到腾讯云COS!", piciTaskVO.getTableName(), piciTaskVO.getPici());
 
@@ -117,77 +121,28 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
    * @return: void
    */
   public void uploadFileToCloudTencent(
-      PiciTaskVO piciTaskVO, byte[] bytes, COSClient cosClient, String bucketName, String dataDay) {
-    try {
-      String[] split = piciTaskVO.getOssPath().split("/");
-      String key = dataDay + "/" + split[split.length - 1];
+      PiciTaskVO piciTaskVO,
+      String ossPath,
+      COSClient cosClient,
+      String bucketName,
+      String dataDay) {
+    String[] split = piciTaskVO.getOssPath().split("/");
+    String key = dataDay + "/" + split[split.length - 1];
 
-      InputStream inputStream = new ByteArrayInputStream(bytes);
-      ObjectMetadata objectMetadata = new ObjectMetadata();
-      objectMetadata.setContentLength(bytes.length);
-      objectMetadata.setContentType(LongGovConstant.COS_META_CONTENTTYPE);
-      objectMetadata.setHeader(LongGovConstant.COS_META_HEADER_TABLE, piciTaskVO.getTableName());
-      objectMetadata.setHeader(LongGovConstant.COS_META_HEADER_PICI, piciTaskVO.getPici());
-
-      PutObjectResult putObjectResult =
-          cosClient.putObject(bucketName, key, inputStream, objectMetadata);
-      // 关闭输入流...
-      inputStream.close();
-    } catch (IOException e) {
-      e.printStackTrace();
+    List<File> files = FileUtil.loopFiles(DownloadFile.TMP_FILE);
+    ObjectMetadata objectMetadata = new ObjectMetadata();
+    objectMetadata.setContentType(LongGovConstant.COS_META_CONTENTTYPE);
+    objectMetadata.setHeader(LongGovConstant.COS_META_HEADER_TABLE, piciTaskVO.getTableName());
+    objectMetadata.setHeader(LongGovConstant.COS_META_HEADER_PICI, piciTaskVO.getPici());
+    for (File file : files) {
+      try {
+        cosClient.putObject(bucketName, key, file).setMetadata(objectMetadata);
+      } catch (RuntimeException cce) {
+        cce.printStackTrace();
+      } finally {
+        FileUtil.del(file);
+      }
     }
   }
-
-  //    /**
-  //     * 创建Bucket
-  //     *
-  //     * @Param: cosClient
-  //     * @return: java.lang.String
-  //     **/
-  //    public String createBucket(COSClient cosClient, String bucketName) {
-  //        CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName);
-  //        //设置 bucket 的权限为 Private(私有读写)、其他可选有 PublicRead（公有读私有写）、PublicReadWrite（公有读写）
-  //        createBucketRequest.setCannedAcl(CannedAccessControlList.Private);
-  //        try {
-  //            Bucket bucketResult = cosClient.createBucket(createBucketRequest);
-  //        } catch (CosServiceException serverException) {
-  //            serverException.printStackTrace();
-  //        } catch (CosClientException clientException) {
-  //            clientException.printStackTrace();
-  //        }
-  //        return bucketName;
-  //        批量执行数据同步
-  //        List<FutureTask<Integer>> futureTasks = batchTask(piciTasks, (piciTaskVO) -> {
-  //            //获取原始数据文件
-  //            byte[] bytes = downFileByteArray(LongGovConstant.HOST_ALIYUN_OSS +
-  // piciTaskVO.getOssPath());
-  //            //同步数据文件到COS
-  //            uploadFileToCloudTencent(piciTaskVO, bytes, cosClient, bucketName, dataDay);
-  //            //更新日志表状态信息
-  //            PiciTaskLogAgg.saveQkLogPici(new PiciTaskLogVO(piciTaskVO.getPici(),
-  // piciTaskVO.getTableName(), 0, new Date()));
-  //            return 1;
-  //        });
-  //        doneFureTasks(futureTasks);
-  //    }
-
-  //    private void doneFureTasks(List<FutureTask<Integer>> futureTasks) throws
-  // InterruptedException, ExecutionException {
-  //        int sum = futureTasks.stream().mapToInt(t -> {
-  //            try {
-  //                return t.get();
-  //            } catch (Exception e) {
-  //                e.printStackTrace();
-  //            }
-  //            return 0;
-  //        }).sum();
-  //
-  //        if (sum == futureTasks.size()) {
-  //            LOG.info("批次【{}】所有上传COS完毕", sum);
-  //        }
-  //        for (FutureTask<Integer> futureTask : futureTasks) {
-  //            Integer state = futureTask.get();
-  //        }
-  //    }
 
 }

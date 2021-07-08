@@ -1,9 +1,6 @@
 package com.qk.dm.dataingestion.service;
 
-import com.qk.dm.dataingestion.vo.CosTaskFileInfoVO;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 操作数据引入日志表
@@ -16,5 +13,4 @@ import java.util.List;
 public interface PiciTaskLogService {
 
   Integer modifyIsHiveByTableNameAndPici(String tableName, String pici);
-
 }
