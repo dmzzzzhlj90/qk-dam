@@ -1,5 +1,6 @@
 package com.qk.dm.dataingestion.service;
 
+import com.qk.dam.commons.exception.BizException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +13,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface PiciTaskLogService {
 
-  Integer modifyIsHiveByTableNameAndPici(String tableName, String pici);
+  Integer modifyIsHiveByTableNameAndPici(String tableName, String pici) throws BizException;
 }
