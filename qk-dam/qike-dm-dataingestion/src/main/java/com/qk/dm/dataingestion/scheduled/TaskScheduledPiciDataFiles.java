@@ -2,7 +2,6 @@ package com.qk.dm.dataingestion.scheduled;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.qk.dam.sqlloader.SqlLoaderMain;
 import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;
 import java.time.LocalDateTime;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,11 +52,11 @@ public class TaskScheduledPiciDataFiles {
       int rtState =
           piciTaskDataFileSyncService.syncPiciTaskFilesData(
               dataDay, "", "", LongGovConstant.BUCKETNAME);
-//      if (rtState == LongGovConstant.RESULT_SUCCESS_EXIST) {
-//        LOG.info("开始执行脚本文件");
-//        SqlLoaderMain.executeTarSqlUpdate(dataDay);
-//        LOG.info("结束执行脚本文件");
-//      }
+      //      if (rtState == LongGovConstant.RESULT_SUCCESS_EXIST) {
+      //        LOG.info("开始执行脚本文件");
+      //        SqlLoaderMain.executeTarSqlUpdate(dataDay);
+      //        LOG.info("结束执行脚本文件");
+      //      }
     } catch (Exception e) {
       e.printStackTrace();
       LOG.info("定时同步出错!" + e.getMessage());

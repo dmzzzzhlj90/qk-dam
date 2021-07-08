@@ -144,5 +144,4 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
       }
     }
   }
-
 }
