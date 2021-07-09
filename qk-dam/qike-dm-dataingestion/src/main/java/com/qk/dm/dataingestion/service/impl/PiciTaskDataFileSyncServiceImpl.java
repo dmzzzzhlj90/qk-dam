@@ -8,6 +8,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.model.ObjectMetadata;
+import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dam.sqlloader.cos.TxCOSClient;
@@ -136,7 +137,8 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
     objectMetadata.setHeader(LongGovConstant.COS_META_HEADER_PICI, piciTaskVO.getPici());
     for (File file : files) {
       try {
-        cosClient.putObject(bucketName, key, file).setMetadata(objectMetadata);
+        cosClient.putObject(
+                new PutObjectRequest(bucketName, key, file).withMetadata(objectMetadata));
       } catch (RuntimeException cce) {
         cce.printStackTrace();
       } finally {

@@ -127,4 +127,22 @@ public class PiciTaskAgg {
     }
     return null;
   }
+
+  public static List<PiciTaskVO> longgovTaskAllPath() {
+    try {
+      List<Entity> query =
+              use.query(" SELECT pici,tablename,substring_index(osspath,\"/\",-1) as 'osspath' FROM task_qk_rizhi ORDER BY pici,tablename ");
+      List<PiciTaskVO> piciTask =
+              query.stream()
+                      .map(entity -> new PiciTaskVO(
+                                              entity.getInt("pici"),
+                                              entity.getStr("tablename"),
+                                              entity.getStr("osspath")))
+                      .collect(Collectors.toList());
+      return piciTask;
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }
+    return null;
+  }
 }
