@@ -6,7 +6,7 @@ password = zhudao123
 driver = com.mysql.cj.jdbc.Driver
 
 [longgov]
-url = jdbc:mysql://longgov.rwlb.rds.aliyuncs.com:3306/longgov?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+url = jdbc:mysql://longgov-slave.rwlb.rds.aliyuncs.com:3306/longgov?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
 username = youshang_qike
 password = Doublefly123
 driver = com.mysql.cj.jdbc.Driver
