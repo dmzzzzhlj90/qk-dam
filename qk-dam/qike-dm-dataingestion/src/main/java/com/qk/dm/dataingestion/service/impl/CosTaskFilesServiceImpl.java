@@ -72,8 +72,8 @@ public class CosTaskFilesServiceImpl implements CosTaskFilesService {
                                 .map(ptlv -> ptlv.getTableName() + "_" + ptlv.getPici())
                                 .collect(Collectors.toList());
                 result = result.stream()
-                                .filter(ctfiv -> tableNamePiciList.contains(ctfiv.getTableName() + "_" + ctfiv.getPici()))
-                                .collect(Collectors.toList());
+                        .filter(ctfiv -> tableNamePiciList.contains(ctfiv.getTableName() + "_" + ctfiv.getPici()))
+                        .collect(Collectors.toList());
             }
         } catch (CosServiceException e) {
             e.printStackTrace();
@@ -111,6 +111,7 @@ public class CosTaskFilesServiceImpl implements CosTaskFilesService {
                 objectMetadata.setHeader(LongGovConstant.COS_META_HEADER_PICI, piciTaskVO.getPici());
 
                 cosClient.updateObjectMetaData(LongGovConstant.BUCKETNAME, key, objectMetadata);
+                LOG.info("成功设置tableName:【{}】,pici:【{}】的COS任务文件_objectMetadata_Header信息!", piciTaskVO.getTableName(), piciTaskVO.getPici());
             }
             index++;
         }
