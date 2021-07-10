@@ -1,19 +1,42 @@
 server:
   port: 8780
 spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          spring:
+            issuer-uri: http://auth-server:9901
+        registration:
+          messaging-client-oidc:
+            provider: spring
+            client-id: messaging-client
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8780/login/oauth2/code/messaging-client-oidc"
+            scope: openid
+            client-name: messaging-client-oidc
+          messaging-client-authorization-code:
+            provider: spring
+            client-id: messaging-client
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8780/authorized"
+            scope: message.read,message.write
+            client-name: messaging-client-authorization-code
   web:
     locale: zh_CN
   logging:
     level: info
     path: logs/dm-datastandards.log
     appender:
-      ref: FILE
+      ref: CONSOLE
   messages:
     basename: i18n/messages
   mvc:
     message-codes-resolver-format: postfix_error_code
     servlet:
-      path: /dsd
+      path: /
   main:
     allow-bean-definition-overriding: true
   application:

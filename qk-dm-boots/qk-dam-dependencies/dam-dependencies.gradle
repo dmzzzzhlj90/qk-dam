@@ -2,7 +2,7 @@ plugins {
     id 'java-platform'
     id 'maven-publish'
 }
-version '1.0.0'
+version '1.0.1'
 group "com.qk.dam"
 
 javaPlatform {
@@ -35,6 +35,11 @@ dependencies {
         api group: 'org.apache.commons', name: 'commons-compress', version: '1.20'
 
         api group: 'com.qcloud', name: 'cos_api', version: '5.6.38'
+        api 'org.springframework.security.experimental:spring-security-oauth2-authorization-server:0.1.2-SNAPSHOT'
+
+        api group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.7.0'
+        api group: 'io.prometheus', name: 'simpleclient_pushgateway', version: '0.11.0'
+        api group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 
         api group: 'org.antlr', name: 'antlr4', version: '4.8'
         api group: 'org.antlr', name: 'antlr4-runtime', version: '4.8'

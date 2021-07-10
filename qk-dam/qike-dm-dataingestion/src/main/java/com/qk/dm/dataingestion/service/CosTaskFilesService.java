@@ -1,9 +1,8 @@
 package com.qk.dm.dataingestion.service;
 
 import com.qk.dm.dataingestion.vo.CosTaskFileInfoVO;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * 同步获取COS客户端文件信息
@@ -15,8 +14,7 @@ import java.util.List;
 @Service
 public interface CosTaskFilesService {
 
-    List<CosTaskFileInfoVO> getCosTaskFilesInfo(String dataDay);
+  List<CosTaskFileInfoVO> getCosTaskFilesInfo(String dataDay);
 
-    void setFiLesMetaDataHearderInfo(String dataDay);
-
+  void setFiLesMetaDataHearderInfo(String dataDay);
 }

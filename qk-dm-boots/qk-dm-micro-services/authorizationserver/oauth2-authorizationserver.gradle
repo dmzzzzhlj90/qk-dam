@@ -1,11 +1,10 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id "smart-doc"
     id 'java'
 }
 version "${dmMicroServices}"
-group "com.qk.dm.logserver"
+group "com.qk.dm.authserver"
 configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
@@ -15,17 +14,21 @@ configurations {
 dependencies {
     implementation project(":commons-core")
     implementation project(":dam-log")
-    implementation project(":qk-data-jpa")
-    implementation project(":qk-sqlloader")
-    implementation project(":dam-mvc-validation")
-    implementation 'org.springframework.boot:spring-boot-starter-web'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc'
+    compile 'org.springframework.security.experimental:spring-security-oauth2-authorization-server'
+    runtimeOnly 'com.h2database:h2'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'net.sourceforge.htmlunit:htmlunit'
 }
 dependencyManagement {
     imports {

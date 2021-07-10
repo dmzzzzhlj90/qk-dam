@@ -138,7 +138,7 @@ public class PiciTaskDataFileSyncServiceImpl implements PiciTaskDataFileSyncServ
     for (File file : files) {
       try {
         cosClient.putObject(
-                new PutObjectRequest(bucketName, key, file).withMetadata(objectMetadata));
+            new PutObjectRequest(bucketName, key, file).withMetadata(objectMetadata));
       } catch (RuntimeException cce) {
         cce.printStackTrace();
       } finally {
