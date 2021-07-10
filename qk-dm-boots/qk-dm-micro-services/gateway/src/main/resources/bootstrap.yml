@@ -1,0 +1,19 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: dm-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.31.0.44:8847
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        group: DM-GROUP
+      config:
+        server-addr: 172.31.0.44:8847
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        extension-configs:
+          - dataId: dm-gateway.yml
+            refresh: true
+          - dataId: test44-mysql-dev.yml
+            refresh: true
