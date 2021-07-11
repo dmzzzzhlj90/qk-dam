@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
@@ -19,6 +20,7 @@ import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
@@ -51,23 +53,25 @@ public class AuthorizationServerConfig {
   }
 
   @Bean
-  public RegisteredClientRepository registeredClientRepository() {
-    RegisteredClient registeredClient =
-        RegisteredClient.withId(UUID.randomUUID().toString())
-            .clientId("messaging-client")
-            .clientSecret("{noop}secret")
-            .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
-            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-            .redirectUri("http://127.0.0.1:8780/login/oauth2/code/messaging-client-oidc")
-            .redirectUri("http://127.0.0.1:8780/authorized")
-            .scope(OidcScopes.OPENID)
-            .scope("message.read")
-            .scope("message.write")
-            .clientSettings(clientSettings -> clientSettings.requireUserConsent(true))
-            .build();
-    return new InMemoryRegisteredClientRepository(registeredClient);
+  public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
+//    RegisteredClient registeredClient =
+//        RegisteredClient.withId(UUID.randomUUID().toString())
+//            .clientId("messaging-client")
+//            .clientSecret("{noop}secret")
+//            .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
+//            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+//            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+//            .redirectUri("http://127.0.0.1:8780/login/oauth2/code/messaging-client-oidc")
+//            .redirectUri("http://127.0.0.1:8780/authorized")
+//            .scope(OidcScopes.OPENID)
+//            .scope("message.read")
+//            .scope("message.write")
+//            .clientSettings(clientSettings -> clientSettings.requireUserConsent(true))
+//            .build();
+    JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
+
+    return registeredClientRepository;
   }
   // @formatter:on
 

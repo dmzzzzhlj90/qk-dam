@@ -16,7 +16,6 @@ dependencies {
     implementation project(":dam-log")
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-security'

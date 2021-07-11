@@ -15,5 +15,3 @@ spring:
         extension-configs:
           - dataId: dm-gateway.yml
             refresh: true
-          - dataId: test44-mysql-dev.yml
-            refresh: true
