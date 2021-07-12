@@ -5,7 +5,7 @@ spring:
     level: info
     path: logs/dm-dataservice.log
     appender:
-      ref: FILE
+      ref: CONSOLE
   messages:
     basename: i18n/messages
   mvc:
