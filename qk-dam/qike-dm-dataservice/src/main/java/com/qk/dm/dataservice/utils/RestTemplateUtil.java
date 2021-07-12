@@ -34,7 +34,7 @@ public class RestTemplateUtil {
             ResponseEntity<String> exchange = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
             LOG.info("通用接口get返回结果{}", exchange.getBody());
             if(exchange.getStatusCode() != HttpStatus.OK) {
-                throw new RuntimeException("远程post调用接口失败！");
+                throw new RuntimeException("远程get调用接口失败！");
             }
             return exchange.getBody();
         } catch (Exception e) {

@@ -15,13 +15,19 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: dm-dataingestion
+    name: dm-dataservice
   cloud:
     nacos:
       discovery:
         server-addr: http://172.31.0.44/
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         group: DM-GROUP
+      config:
+        server-addr: http://172.31.0.44/
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        extension-configs:
+          - dataId: dm-dataservice.yml
+            refresh: true
 management:
   endpoints:
     enabled-by-default: true
@@ -41,3 +47,4 @@ management:
         descriptions: true
     tags:
       application: ${spring.application.name}
+
