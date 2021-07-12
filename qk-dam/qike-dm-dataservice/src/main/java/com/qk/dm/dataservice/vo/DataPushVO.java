@@ -19,7 +19,7 @@ public class DataPushVO {
     /**
      * 查询条件Id
      */
-    @NotBlank(message = "查询条件id不能为空！")
+    @NotBlank(message = "查询条件ID不能为空！")
     private String id;
 
     /**
@@ -30,7 +30,7 @@ public class DataPushVO {
     /**
      * 查询条件参数
      */
-    @NotBlank(message = "查询条件参数不能为空！")
+    @NotBlank(message = "查询条件不能为空！")
     private String parameter;
 
     /**
