@@ -1,0 +1,60 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id "smart-doc"
+    id 'java'
+}
+version "${dmDatastandardsVersion}"
+group "com.qk.dm.dataservice"
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+
+compileJava {
+    doFirst {
+        options.compilerArgs = [
+                //添加mapStruct的一些配置
+                '-Amapstruct.unmappedTargetPolicy=IGNORE',//未映射字段默认报错
+                '-Amapstruct.suppressGeneratorTimestamp=false',//未映射字段默认报错
+                '-Aspatial=false'//未映射字段默认报错
+        ]
+    }
+}
+
+dependencies {
+    implementation project(":dam-mvc-validation")
+    implementation project(":commons-core")
+    implementation project(":dam-log")
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.mapstruct:mapstruct'
+    annotationProcessor(
+            "javax.annotation:javax.annotation-api",
+            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
+            "org.projectlombok:lombok",
+            'org.mapstruct:mapstruct-processor')
+    testAnnotationProcessor('org.mapstruct:mapstruct-processor')
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+smartdoc {
+    configFile = file("src/main/resources/smart-doc.json")
+}
+
+test {
+    useJUnitPlatform()
+}

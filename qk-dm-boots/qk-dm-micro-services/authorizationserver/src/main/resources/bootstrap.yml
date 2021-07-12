@@ -1,5 +1,11 @@
 server:
   port: 9901
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
@@ -34,3 +40,9 @@ spring:
         server-addr: http://172.31.0.44/
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         group: DM-GROUP
+      config:
+        server-addr: http://172.31.0.44/
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        extension-configs:
+          - dataId: oauth2-client.yml
+            refresh: true

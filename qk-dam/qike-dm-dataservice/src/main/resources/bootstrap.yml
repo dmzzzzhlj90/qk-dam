@@ -1,0 +1,43 @@
+server:
+  port: 8799
+spring:
+  logging:
+    level: info
+    path: logs/dm-dataservice.log
+    appender:
+      ref: FILE
+  messages:
+    basename: i18n/messages
+  mvc:
+    message-codes-resolver-format: postfix_error_code
+    servlet:
+      path: /dataservice
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: dm-dataingestion
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.31.0.44/
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        group: DM-GROUP
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        descriptions: true
+    tags:
+      application: ${spring.application.name}
