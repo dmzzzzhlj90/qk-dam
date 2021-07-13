@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class RestTemplateUtil {
 
-    private static final Log LOG = LogFactory.get("远程调用");
+    private static final Log LOG = LogFactory.get("restTemplate远程调用");
 
     @Autowired
     RestTemplate restTemplate;
