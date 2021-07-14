@@ -1,0 +1,56 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: dm-gateway
+  web:
+    locale: zh_CN
+  logging:
+    level: info
+    path: logs/dm-datastandards.log
+    appender:
+      ref: CONSOLE
+  messages:
+    basename: i18n/messages
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        provider:
+          spring:
+            issuer-uri: http://auth-server:9901
+        registration:
+          qk-dam-client-oidc:
+            provider: spring
+            client-id: qk-dam-client
+            client-secret: qk-dam-client-zzr
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://auth-client:8765/login/oauth2/code/{registrationId}"
+            scope: openid
+            client-name: qk-dam-client-oidc
+      resourceserver:
+        jwt:
+          issuer-uri: http://auth-server:9901
+  cloud:
+    gateway:
+      routes:
+        - id: wings-authentication-route
+          uri: lb://wings-authentication-dev
+          predicates:
+            - Path=/wings-authentication-dev/**
+        - id: wings-config-server-route
+          uri: lb://wings-config-server
+          predicates:
+            - Path=/wings-config-server/**
+    nacos:
+      discovery:
+        server-addr: 172.31.0.44:8847
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        group: DM-GROUP
+      config:
+        server-addr: 172.31.0.44:8847
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        extension-configs:
+          - dataId: dm-gateway.yml
+            refresh: true

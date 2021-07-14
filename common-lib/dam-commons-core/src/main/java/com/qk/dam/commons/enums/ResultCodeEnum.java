@@ -49,9 +49,11 @@ public enum ResultCodeEnum {
   /** 系统运行时异常 */
   DATA_OPT_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0003", "数据操作异常！"),
   TARGET_OBJ_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0004", "目标对象错误！"),
+  /** 系统运行时异常 */
+  UN_AUTHORIZED(HttpStatus.UNAUTHORIZED, "DM-401-B0003", "权限认证失败！"),
 
   /** 网关超时 */
-  GATEWAY_TIMEOUT(HttpStatus.GATEWAY_TIMEOUT, "DM-504-B0100", "网关超时】"),
+  GATEWAY_TIMEOUT(HttpStatus.GATEWAY_TIMEOUT, "DM-504-B0100", "网关超时"),
   /** 系统执行超时 */
   REQUEST_TIMEOUT(HttpStatus.REQUEST_TIMEOUT, "DM-408-B0101", "系统请求超时"),
 

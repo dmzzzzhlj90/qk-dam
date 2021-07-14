@@ -5,9 +5,13 @@ version "${commonLibVersion}"
 group "com.qk.mvc.validation"
 
 dependencies {
+    compile project(":commons-core")
+    compile group: 'javax.validation', name: 'validation-api'
     compile 'org.springframework.boot:spring-boot-starter-validation'
+    compile 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.code.gson:gson'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 dependencyManagement {
     imports {

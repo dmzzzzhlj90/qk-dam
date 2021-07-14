@@ -5,11 +5,11 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.qk.dm.auth.jose.Jwks;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -34,31 +34,54 @@ import org.springframework.security.web.SecurityFilterChain;
 public class AuthorizationServerConfig {
   @Bean
   @Order(Ordered.HIGHEST_PRECEDENCE)
-  public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http)
+      throws Exception {
     OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
     return http.formLogin(Customizer.withDefaults()).build();
   }
 
+  /**
+   * 注册客户端存储
+   *
+   * @param jdbcTemplate jdbc
+   * @param registeredClients 读取的nacos 配置
+   * @return RegisteredClientRepository
+   */
   @Bean
-  public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,RegisteredClients registeredClients) {
+  public RegisteredClientRepository registeredClientRepository(
+      JdbcTemplate jdbcTemplate, RegisteredClients registeredClients) {
     List<InnerRegisteredClient> clients = registeredClients.getClients();
-    List<RegisteredClient> registeredClientList = clients.stream().map(innerRegisteredClient -> {
-      var builder = RegisteredClient.withId(UUID.randomUUID().toString())
-              .clientId(innerRegisteredClient.getClientId())
-//              .clientSecret(passwordEncoder.encode(innerRegisteredClient.getClientSecret()))
-              .clientSecret(innerRegisteredClient.getClientSecret())
-              .clientName(innerRegisteredClient.getClientName())
-              .clientSettings(clientSettings -> clientSettings.requireUserConsent(true));
-      innerRegisteredClient.getAuthorizationGrantTypes().forEach(builder::authorizationGrantType);
-      innerRegisteredClient.getClientAuthenticationMethods().forEach(builder::clientAuthenticationMethod);
-      innerRegisteredClient.getScopes().forEach(builder::scope);
-      innerRegisteredClient.getRedirectUris().forEach(builder::redirectUri);
-      return builder.build();
-    }).collect(Collectors.toList());
+    List<RegisteredClient> registeredClientList =
+        clients.stream()
+            .map(
+                innerRegisteredClient -> {
+                  var builder =
+                      RegisteredClient.withId(UUID.randomUUID().toString())
+                          .clientId(innerRegisteredClient.getClientId())
+                          //
+                          // .clientSecret(passwordEncoder.encode(innerRegisteredClient.getClientSecret()))
+                          .clientSecret(innerRegisteredClient.getClientSecret())
+                          .clientName(innerRegisteredClient.getClientName())
+                          .clientSettings(
+                              clientSettings -> clientSettings.requireUserConsent(true));
+
+                  innerRegisteredClient
+                      .getAuthorizationGrantTypes()
+                      .forEach(builder::authorizationGrantType);
+                  innerRegisteredClient
+                      .getClientAuthenticationMethods()
+                      .forEach(builder::clientAuthenticationMethod);
+                  innerRegisteredClient.getScopes().forEach(builder::scope);
+                  // todo redirectUriTemplate {baseUrl}/login/oauth2/code/{registrationId}
+                  innerRegisteredClient.getRedirectUris().forEach(builder::redirectUri);
+                  return builder.build();
+                })
+            .collect(Collectors.toList());
     var jdbcRegisteredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
     for (RegisteredClient registeredClient : registeredClientList) {
-      RegisteredClient byId = jdbcRegisteredClientRepository.findByClientId(registeredClient.getClientId());
-      if (byId==null){
+      RegisteredClient byId =
+          jdbcRegisteredClientRepository.findByClientId(registeredClient.getClientId());
+      if (byId == null) {
         jdbcRegisteredClientRepository.save(registeredClient);
       }
     }
@@ -67,12 +90,14 @@ public class AuthorizationServerConfig {
   }
 
   @Bean
-  public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
+  public OAuth2AuthorizationService authorizationService(
+      JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
     return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
   }
 
   @Bean
-  public OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
+  public OAuth2AuthorizationConsentService authorizationConsentService(
+      JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
     return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
   }
 
@@ -88,10 +113,8 @@ public class AuthorizationServerConfig {
     return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
   }
 
-
   @Bean
   public ProviderSettings providerSettings() {
     return new ProviderSettings().issuer("http://auth-server:9901");
   }
-
 }

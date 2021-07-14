@@ -1,27 +1,6 @@
 server:
   port: 8780
-logging:
-  level:
-    root: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
 spring:
-  security:
-    oauth2:
-      client:
-        provider:
-          spring:
-            issuer-uri: http://auth-server:9901
-        registration:
-          messaging-client-oidc:
-            provider: spring
-            client-id: test-client
-            client-secret: secret
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://127.0.0.1:8780/login/oauth2/code/{registrationId}"
-            scope: openid
-            client-name: messaging-client-oidc
   web:
     locale: zh_CN
   logging:

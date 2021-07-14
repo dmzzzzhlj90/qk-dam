@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ClientsConfig {
-    @Bean
-    @ConfigurationProperties(prefix = "spring.register", ignoreInvalidFields = true)
-    public RegisteredClients registeredClients() {
-        return new RegisteredClients();
-    }
+  @Bean
+  @ConfigurationProperties(prefix = "spring.register", ignoreInvalidFields = true)
+  public RegisteredClients registeredClients() {
+    return new RegisteredClients();
+  }
 }

@@ -6,11 +6,9 @@ group "com.qk.dam.commons"
 
 dependencies {
     compile "org.slf4j:slf4j-api"
-    compile group: 'javax.validation', name: 'validation-api'
     compile 'org.projectlombok:lombok'
     compile 'javax.servlet:javax.servlet-api'
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework:spring-web'
     annotationProcessor 'org.projectlombok:lombok'
 }
 

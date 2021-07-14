@@ -6,10 +6,14 @@ group "com.qk.dam.log"
 
 dependencies {
     compile 'net.logstash.logback:logstash-logback-encoder'
+    implementation 'javax.servlet:javax.servlet-api'
 }
 
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     }
 }
