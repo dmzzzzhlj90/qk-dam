@@ -1,7 +1,5 @@
 package com.qk.dm.datastandards.service.impl;
 
-import static com.qk.dm.datastandards.entity.QDsdCodeDir.dsdCodeDir;
-
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeDir;
@@ -13,9 +11,13 @@ import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import com.querydsl.core.types.Predicate;
-import java.util.*;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+
+import static com.qk.dm.datastandards.entity.QDsdCodeDir.dsdCodeDir;
 
 /**
  * @author wjq
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0 数据标准目录接口实现类
  */
 @Service
+@Transactional
 public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirService {
   private final DsdCodeDirRepository dsdCodeDirRepository;
 

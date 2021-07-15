@@ -10,8 +10,10 @@ import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdDirVO;
 import com.querydsl.core.types.Predicate;
-import java.util.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 /**
  * @author wjq
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0 数据标准目录接口实现类
  */
 @Service
+@Transactional
 public class DataStandardDirServiceImpl implements DataStandardDirService {
   private final DsdDirRepository dsdDirRepository;
 

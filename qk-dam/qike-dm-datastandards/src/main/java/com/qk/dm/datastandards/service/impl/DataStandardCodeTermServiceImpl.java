@@ -10,12 +10,14 @@ import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
 import com.querydsl.core.types.Predicate;
-import java.util.ArrayList;
-import java.util.List;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wjq
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0 数据标准标准代码术语接口实现类
  */
 @Service
+@Transactional
 public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermService {
   public static final String ID = "id";
   private final DsdCodeTermRepository dsdCodeTermRepository;
