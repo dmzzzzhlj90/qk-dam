@@ -2,8 +2,10 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
-import com.qk.dm.datastandards.vo.Pagination;
+import com.qk.dm.datastandards.vo.params.DsdBasicinfoParamsVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author wjq
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataStandardBasicInfoService {
 
-  PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(Pagination pagination, String dsdLevelId);
+    PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(DsdBasicinfoParamsVO dsdBasicinfoParamsVO);
 
-  void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
+    void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 
-  void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
+    void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 
-  void deleteDsdBasicinfo(Integer id);
+    void deleteDsdBasicinfo(Integer id);
+
+    List<String> getDataCapacityByDataType(String dataType);
 }
