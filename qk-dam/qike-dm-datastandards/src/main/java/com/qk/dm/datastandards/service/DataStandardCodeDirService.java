@@ -2,8 +2,9 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author wjq
@@ -22,4 +23,6 @@ public interface DataStandardCodeDirService {
   void deleteDsdDir(Integer delId);
 
   void deleteDsdDirRoot(Integer delId);
+
+    Boolean deleteJudgeDsdDir(Integer id);
 }

@@ -5,10 +5,11 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 数据标准码表目录接口
@@ -85,4 +86,16 @@ public class DataStandardCodeDirController {
     dataStandardCodeDirService.deleteDsdDirRoot(id);
     return new DefaultCommonResult(ResultCodeEnum.OK);
   }
+
+  /**
+   * 码表目录删除-判断目录中是否存在数据
+   * @param id
+   * @return
+   */
+  @DeleteMapping("/delete/judge/{id}")
+  public DefaultCommonResult deleteJudgeDsdDir(@PathVariable("id") Integer id) {
+    Boolean resut  = dataStandardCodeDirService.deleteJudgeDsdDir(id);
+    return new DefaultCommonResult(ResultCodeEnum.OK,resut);
+  }
+
 }

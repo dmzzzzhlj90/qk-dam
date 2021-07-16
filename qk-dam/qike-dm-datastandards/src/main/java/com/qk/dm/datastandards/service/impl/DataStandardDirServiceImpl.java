@@ -31,7 +31,7 @@ import java.util.*;
 public class DataStandardDirServiceImpl implements DataStandardDirService {
   private final DsdDirRepository dsdDirRepository;
   @Autowired
-  DsdBasicinfoRepository dsdBasicinfoRepository;
+  private DsdBasicinfoRepository dsdBasicinfoRepository;
 
   public DataStandardDirServiceImpl(DsdDirRepository dsdDirRepository) {
     this.dsdDirRepository = dsdDirRepository;
@@ -197,7 +197,6 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
    * @param id
    */
   private void getDsdId(List<String> dirDsdIdList, Integer id) {
-    {
       Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(id));
       Iterable<DsdDir> sonDirList =
               dsdDirRepository.findAll(QDsdDir.dsdDir.parentId.eq(parentDir.get().getDirDsdId()));
@@ -205,7 +204,6 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
         dirDsdIdList.add(dsdDir.getDirDsdId());
         this.getDsdId(dirDsdIdList, dsdDir.getId());
       }
-    }
   }
 
   /**

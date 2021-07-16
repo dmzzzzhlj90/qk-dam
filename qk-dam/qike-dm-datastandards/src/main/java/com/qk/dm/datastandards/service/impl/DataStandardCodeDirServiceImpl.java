@@ -3,17 +3,22 @@ package com.qk.dm.datastandards.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeDir;
+import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.entity.QDsdCodeDir;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTreeMapper;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdDirCodeDirTreeMapper;
 import com.qk.dm.datastandards.repositories.DsdCodeDirRepository;
+import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import com.querydsl.core.types.Predicate;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -27,6 +32,8 @@ import static com.qk.dm.datastandards.entity.QDsdCodeDir.dsdCodeDir;
 @Service
 @Transactional
 public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirService {
+  @Autowired
+  private DsdCodeTermRepository dsdCodeTermRepository;
   private final DsdCodeDirRepository dsdCodeDirRepository;
 
   public DataStandardCodeDirServiceImpl(DsdCodeDirRepository dsdCodeDirRepository) {
@@ -146,6 +153,58 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     // 批量删除
     Iterable<DsdCodeDir> delDirList = dsdCodeDirRepository.findAll(dsdCodeDir.id.in(ids));
     dsdCodeDirRepository.deleteAll(delDirList);
+  }
+
+  @Override
+  /**
+   * 根据传入的码表id判断码表目录中是否存在数据
+   */
+  public Boolean deleteJudgeDsdDir(Integer id) {
+    Boolean resut = true;
+    Optional<DsdCodeDir> dirOptional = dsdCodeDirRepository.findById(id);
+    if (!dirOptional.isPresent()) {
+      throw new BizException("参数有误,当前要删除的节点不存在！！！");
+    }
+    //获取目录节点id并且查询目录下是否存在有数据
+    String codeDirId = dirOptional.get().getCodeDirId();
+    if (StringUtils.isEmpty(codeDirId)){
+      throw new BizException("当前要删除目录的节点不存在！！！");
+    }
+    //获取传入id目录下所有的节点
+    List<String> codeDirIdList = new ArrayList<>();
+    codeDirIdList.add(codeDirId);
+    getCodeDirID(codeDirIdList,id);
+    if (!CollectionUtils.isEmpty(codeDirIdList)){
+      for (int i = 0;i<codeDirIdList.size();i++){
+        String codeDirid = codeDirIdList.get(i);
+        if (StringUtils.isNotBlank(codeDirid)){
+          DsdCodeTerm dsdCodeTerm = new DsdCodeTerm();
+          dsdCodeTerm.setCodeDirId(codeDirid);
+          Example<DsdCodeTerm> example = Example.of(dsdCodeTerm);
+          List<DsdCodeTerm> dsdCodeTermList = dsdCodeTermRepository.findAll(example);
+          if (!CollectionUtils.isEmpty(dsdCodeTermList)){
+            resut =false;
+            break;
+          }
+        }
+      }
+    }
+    return resut;
+  }
+
+  /**
+   * 获取码表目录下所有目录的节点
+   * @param codeDirIdList
+   * @param id
+   */
+  private void getCodeDirID(List<String> codeDirIdList, Integer id) {
+    Optional<DsdCodeDir> parentDir = dsdCodeDirRepository.findOne(dsdCodeDir.id.eq(id));
+    Iterable<DsdCodeDir> sonDirList =
+            dsdCodeDirRepository.findAll(dsdCodeDir.parentId.eq(parentDir.get().getCodeDirId()));
+    for (DsdCodeDir dsdCodeDir : sonDirList) {
+      codeDirIdList.add(dsdCodeDir.getCodeDirId());
+      this.getCodeDirID(codeDirIdList, dsdCodeDir.getId());
+    }
   }
 
   /**

@@ -89,6 +89,8 @@ public class DataStandardDirController {
 
   /**
    * 标准目录删除-判断目录中是否存在数据
+   * @param id
+   * @return
    */
   @DeleteMapping("/delete/judge/{id}")
   public DefaultCommonResult deleteJudgeDsdDir(@PathVariable("id") Integer id) {
