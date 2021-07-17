@@ -5,6 +5,7 @@ import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.entity.QDsdCodeTerm;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTermMapper;
 import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
+import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.service.DataStandardCodeTermService;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
@@ -15,6 +16,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -30,11 +32,14 @@ import java.util.*;
 @Service
 public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermService {
     private final DsdCodeTermRepository dsdCodeTermRepository;
+    private final DataStandardCodeDirService dataStandardCodeDirService;
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
 
-    public DataStandardCodeTermServiceImpl(DsdCodeTermRepository dsdCodeTermRepository, EntityManager entityManager) {
+    @Autowired
+    public DataStandardCodeTermServiceImpl(DsdCodeTermRepository dsdCodeTermRepository, DataStandardCodeDirService dataStandardCodeDirService, EntityManager entityManager) {
         this.dsdCodeTermRepository = dsdCodeTermRepository;
+        this.dataStandardCodeDirService = dataStandardCodeDirService;
         this.entityManager = entityManager;
     }
 
@@ -137,7 +142,9 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
 
     public void checkCondition(BooleanBuilder booleanBuilder, QDsdCodeTerm qDsdCodeTerm, DsdCodeTermParamsVO dsdCodeTermParamsVO) {
         if (!StringUtils.isEmpty(dsdCodeTermParamsVO.getCodeDirId())) {
-            booleanBuilder.and(qDsdCodeTerm.codeDirId.contains(dsdCodeTermParamsVO.getCodeDirId()));
+            Set<String> codeDirSet = new HashSet<>();
+            dataStandardCodeDirService.getCodeDirId(codeDirSet, dsdCodeTermParamsVO.getCodeDirId());
+            booleanBuilder.and(qDsdCodeTerm.codeDirId.in(codeDirSet));
         }
         if (!StringUtils.isEmpty(dsdCodeTermParamsVO.getCodeName())) {
             booleanBuilder.and(qDsdCodeTerm.codeName.contains(dsdCodeTermParamsVO.getCodeName()));

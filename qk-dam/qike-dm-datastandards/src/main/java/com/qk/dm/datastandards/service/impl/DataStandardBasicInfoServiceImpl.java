@@ -7,6 +7,7 @@ import com.qk.dm.datastandards.entity.QDsdBasicinfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
+import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.params.DsdBasicinfoParamsVO;
@@ -22,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -33,11 +33,13 @@ import java.util.*;
 @Service
 public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoService {
     private final DsdBasicinfoRepository dsdBasicinfoRepository;
+    private final DataStandardDirService dataStandardDirService;
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
 
-    public DataStandardBasicInfoServiceImpl(DsdBasicinfoRepository dsdBasicinfoRepository, EntityManager entityManager) {
+    public DataStandardBasicInfoServiceImpl(DsdBasicinfoRepository dsdBasicinfoRepository, DataStandardDirService dataStandardDirService, EntityManager entityManager) {
         this.dsdBasicinfoRepository = dsdBasicinfoRepository;
+        this.dataStandardDirService = dataStandardDirService;
         this.entityManager = entityManager;
     }
 
@@ -179,7 +181,9 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
 
     public void checkCondition(BooleanBuilder booleanBuilder, QDsdBasicinfo qDsdBasicinfo, DsdBasicinfoParamsVO dsdBasicinfoParamsVO) {
         if (!StringUtils.isEmpty(dsdBasicinfoParamsVO.getDsdLevelId())) {
-            booleanBuilder.and(qDsdBasicinfo.dsdLevelId.contains(dsdBasicinfoParamsVO.getDsdLevelId()));
+            Set<String> dsdLevelIdSet = new HashSet<>();
+            dataStandardDirService.getDsdId(dsdLevelIdSet, dsdBasicinfoParamsVO.getDsdLevelId());
+            booleanBuilder.and(qDsdBasicinfo.dsdLevelId.in(dsdLevelIdSet));
         }
         if (!StringUtils.isEmpty(dsdBasicinfoParamsVO.getDsdName())) {
             booleanBuilder.and(qDsdBasicinfo.dsdName.contains(dsdBasicinfoParamsVO.getDsdName()));

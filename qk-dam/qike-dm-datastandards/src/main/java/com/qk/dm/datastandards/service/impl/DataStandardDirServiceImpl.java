@@ -164,59 +164,23 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
 
     /**
-     * 根据id判断需要删除的目录中是否存在数据
-     *
-     * @param id
-     * @return
-     */
-    @Override
-    public Boolean deleteJudgeDsdDir(Integer id) {
-        Boolean resut = true;
-        //获取传入id目录层标准层级id
-        Optional<DsdDir> dsdDirIsExist = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(id));
-        if (!dsdDirIsExist.isPresent()) {
-            throw new BizException("参数有误,当前要删除的节点不存在！！！");
-        }
-        //获取目录节点id并且查询目录下是否存在有数据
-        String dirDsdId = dsdDirIsExist.get().getDirDsdId();
-        if (StringUtils.isEmpty(dirDsdId)) {
-            throw new BizException("当前要删除目录的节点不存在！！！");
-        }
-        //获取传入id目录下所有的节点
-        List<String> dirDsdIdList = new ArrayList<>();
-        dirDsdIdList.add(dirDsdId);
-        getDsdId(dirDsdIdList, id);
-        if (!CollectionUtils.isEmpty(dirDsdIdList)) {
-            for (int i = 0; i < dirDsdIdList.size(); i++) {
-                String dsdLevelId = dirDsdIdList.get(i);
-                if (!StringUtils.isEmpty(dsdLevelId)) {
-                    DsdBasicinfo dsdBasicinfo = new DsdBasicinfo();
-                    dsdBasicinfo.setDsdLevelId(dsdLevelId);
-                    Example<DsdBasicinfo> example = Example.of(dsdBasicinfo);
-                    List<DsdBasicinfo> dsdBasicinfoList = dsdBasicinfoRepository.findAll(example);
-                    if (!CollectionUtils.isEmpty(dsdBasicinfoList)) {
-                        resut = false;
-                        break;
-                    }
-                }
-            }
-        }
-        return resut;
-    }
-
-    /**
      * 根据目录id获取目录下的所有节点id
      *
-     * @param dirDsdIdList
-     * @param id
+     * @param dirDsdIdSet
+     * @param dirDsdId
      */
-    private void getDsdId(List<String> dirDsdIdList, Integer id) {
-        Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(id));
-        Iterable<DsdDir> sonDirList =
-                dsdDirRepository.findAll(QDsdDir.dsdDir.parentId.eq(parentDir.get().getDirDsdId()));
-        for (DsdDir dsdDir : sonDirList) {
-            dirDsdIdList.add(dsdDir.getDirDsdId());
-            this.getDsdId(dirDsdIdList, dsdDir.getId());
+    @Override
+    public void getDsdId(Set<String> dirDsdIdSet, String dirDsdId) {
+        Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.dirDsdId.eq(dirDsdId));
+        if (parentDir.isPresent()) {
+            dirDsdIdSet.add(parentDir.get().getDirDsdId());
+            Iterable<DsdDir> sonDirList =
+                    dsdDirRepository.findAll(QDsdDir.dsdDir.parentId.eq(parentDir.get().getDirDsdId()));
+            for (DsdDir dsdDir : sonDirList) {
+                dirDsdIdSet.add(dsdDir.getDirDsdId());
+                this.getDsdId(dirDsdIdSet, dsdDir.getDirDsdId());
+            }
         }
     }
+
 }

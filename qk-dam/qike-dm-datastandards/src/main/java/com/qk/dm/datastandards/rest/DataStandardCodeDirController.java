@@ -87,16 +87,4 @@ public class DataStandardCodeDirController {
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
-
-    /**
-     * 码表目录删除-判断目录中是否存在数据
-     *
-     * @param id
-     * @return
-     */
-    @DeleteMapping("/delete/judge/{id}")
-    public DefaultCommonResult deleteJudeDsdDir(@PathVariable("id") Integer id) {
-        Boolean result = dataStandardCodeDirService.deleteJudgeDsdDir(id);
-        return new DefaultCommonResult(ResultCodeEnum.OK, result);
-    }
 }

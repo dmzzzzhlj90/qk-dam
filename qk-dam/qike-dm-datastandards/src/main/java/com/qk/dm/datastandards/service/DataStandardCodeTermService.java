@@ -2,7 +2,6 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
-import com.qk.dm.datastandards.vo.Pagination;
 import com.qk.dm.datastandards.vo.params.DsdCodeTermParamsVO;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +13,14 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataStandardCodeTermService {
 
-  PageResultVO<DsdCodeTermVO> getDsdCodeTerm(DsdCodeTermParamsVO dsdCodeTermParamsVO);
+    PageResultVO<DsdCodeTermVO> getDsdCodeTerm(DsdCodeTermParamsVO dsdCodeTermParamsVO);
 
-  void addDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
+    void addDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
 
-  void updateDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
+    void updateDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO);
 
-  void deleteDsdCodeTerm(Integer id);
+    void deleteDsdCodeTerm(Integer id);
 
-  void bulkDeleteDsdTerm(String ids);
+    void bulkDeleteDsdTerm(String ids);
 
 }
