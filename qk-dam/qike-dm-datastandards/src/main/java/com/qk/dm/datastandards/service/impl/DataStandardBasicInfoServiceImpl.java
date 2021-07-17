@@ -17,6 +17,7 @@ import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -31,10 +32,8 @@ import java.util.*;
  */
 @Service
 public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoService {
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final DsdBasicinfoRepository dsdBasicinfoRepository;
     private final EntityManager entityManager;
-
     private JPAQueryFactory jpaQueryFactory;
 
     public DataStandardBasicInfoServiceImpl(DsdBasicinfoRepository dsdBasicinfoRepository, EntityManager entityManager) {
@@ -53,7 +52,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
         List<DsdBasicinfoVO> dsdBasicinfoVOList = new ArrayList<DsdBasicinfoVO>();
         Map<String, Object> map = null;
         try {
-            map = queryClientByRequire(dsdBasicinfoParamsVO);
+            map = queryDsdBasicinfoByParams(dsdBasicinfoParamsVO);
         } catch (ParseException e) {
             e.printStackTrace();
             throw new BizException("查询失败!!!");
@@ -131,6 +130,16 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
         }
     }
 
+    @Transactional
+    @Override
+    public void bulkDeleteDsdBasicInfo(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Integer> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Integer.parseInt(id)));
+        dsdBasicinfoRepository.bulkDeleteDsdBasicInfo(idSet);
+
+    }
+
     @Override
     public List getDataCapacityByDataType(String dataType) {
         if (DsdConstant.DATA_TYPE_CAPACITY_STRING.equalsIgnoreCase(dataType))
@@ -149,26 +158,26 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     }
 
 
-    public Map<String, Object> queryClientByRequire(DsdBasicinfoParamsVO dsdBasicinfoParamsVO) throws ParseException {
+    public Map<String, Object> queryDsdBasicinfoByParams(DsdBasicinfoParamsVO dsdBasicinfoParamsVO) throws ParseException {
         QDsdBasicinfo qDsdBasicinfo = QDsdBasicinfo.dsdBasicinfo;
-        HashMap<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, qDsdBasicinfo, dsdBasicinfoParamsVO);
         long count = jpaQueryFactory.select(qDsdBasicinfo.count()).from(qDsdBasicinfo).
                 where(booleanBuilder).fetchOne();
-        List<DsdBasicinfo> clientList = jpaQueryFactory.select(qDsdBasicinfo).
+        List<DsdBasicinfo> dsdBasicInfoList = jpaQueryFactory.select(qDsdBasicinfo).
                 from(qDsdBasicinfo).
                 where(booleanBuilder).
                 orderBy(qDsdBasicinfo.dsdCode.asc()).
                 offset((dsdBasicinfoParamsVO.getPagination().getPage() - 1) * dsdBasicinfoParamsVO.getPagination().getSize()).
                 limit(dsdBasicinfoParamsVO.getPagination().getSize()).
                 fetch();
-        result.put("list", clientList);
+        result.put("list", dsdBasicInfoList);
         result.put("total", count);
         return result;
     }
 
-    public void checkCondition(BooleanBuilder booleanBuilder, QDsdBasicinfo qDsdBasicinfo, DsdBasicinfoParamsVO dsdBasicinfoParamsVO) throws ParseException {
+    public void checkCondition(BooleanBuilder booleanBuilder, QDsdBasicinfo qDsdBasicinfo, DsdBasicinfoParamsVO dsdBasicinfoParamsVO) {
         if (!StringUtils.isEmpty(dsdBasicinfoParamsVO.getDsdLevelId())) {
             booleanBuilder.and(qDsdBasicinfo.dsdLevelId.contains(dsdBasicinfoParamsVO.getDsdLevelId()));
         }

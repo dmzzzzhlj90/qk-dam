@@ -63,7 +63,7 @@ public class DataStandardBasicInfoController {
      * @return: DefaultCommonResult
      */
     @PutMapping("/update")
-    public DefaultCommonResult updateDsdTerm(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
+    public DefaultCommonResult updateDsdBasicinfo(@RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
         dataStandardBasicInfoService.updateDsdBasicinfo(dsdBasicinfoVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
@@ -75,8 +75,20 @@ public class DataStandardBasicInfoController {
      * @return: DefaultCommonResult
      */
     @DeleteMapping("/delete/{id}")
-    public DefaultCommonResult deleteDsdTerm(@PathVariable("id") Integer id) {
+    public DefaultCommonResult deleteDsdBasicinfo(@PathVariable("id") Integer id) {
         dataStandardBasicInfoService.deleteDsdBasicinfo(id);
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
+
+    /**
+     * 批量删除标准信息
+     *
+     * @param: id
+     * @return: DefaultCommonResult
+     */
+    @DeleteMapping("/bulk/delete/{ids}")
+    public DefaultCommonResult bulkDeleteDsdBasicInfo(@PathVariable("ids") String ids) {
+        dataStandardBasicInfoService.bulkDeleteDsdBasicInfo(ids);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

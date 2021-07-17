@@ -6,6 +6,7 @@ import com.qk.dm.datastandards.service.DataStandardCodeTermService;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.Pagination;
+import com.qk.dm.datastandards.vo.params.DsdCodeTermParamsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,28 +31,14 @@ public class DataStandardCodeTermController {
   }
 
   /**
-   * 查询所有的数据标准码表术语信息
+   * 统一查询标准信息入口
    *
    * @param: pagination分页查询参数对象: page,size,sortStr
    * @return: 返回数据标准码表术语列表信息
    */
-  @GetMapping(value = "/queryAll")
-  public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTermAll(Pagination pagination) {
-    return new DefaultCommonResult(
-        ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(pagination, null));
-  }
-
-  /**
-   * 根据码表分类id查询码表术语信息
-   *
-   * @param: pagination分页查询参数对象: page,size,sortStr
-   * @return: 返回数据标准码表术语列表信息
-   */
-  @GetMapping(value = "/query/{codeDirId}")
-  public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTerm(
-      Pagination pagination, @PathVariable(value = "codeDirId") String codeDirId) {
-    return new DefaultCommonResult(
-        ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(pagination, codeDirId));
+  @PostMapping(value = "/query")
+  public DefaultCommonResult<PageResultVO<DsdCodeTermVO>> getDsdCodeTerm(@RequestBody DsdCodeTermParamsVO dsdCodeTermParamsVO) {
+    return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTerm(dsdCodeTermParamsVO));
   }
 
   /**
@@ -79,6 +66,7 @@ public class DataStandardCodeTermController {
     return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
+
   /**
    * 删除数据标准码表术语信息
    *
@@ -88,6 +76,18 @@ public class DataStandardCodeTermController {
   @DeleteMapping("/delete/{id}")
   public DefaultCommonResult deleteDsdCodeTerm(@PathVariable("id") Integer id) {
     dataStandardCodeTermService.deleteDsdCodeTerm(id);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
+
+  /**
+   * 批量删除标准信息
+   *
+   * @param: id
+   * @return: DefaultCommonResult
+   */
+  @DeleteMapping("/bulk/delete/{ids}")
+  public DefaultCommonResult bulkDeleteDsdTerm(@PathVariable("ids") String ids) {
+    dataStandardCodeTermService.bulkDeleteDsdTerm(ids);
     return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 }
