@@ -38,10 +38,9 @@ public class DataStandardBasicInfoController {
      * @param: dsdBasicinfoParamsVO:查询对象
      * @return: 返回标准列表信息
      */
-    @GetMapping(value = "/query")
-    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(@RequestBody DsdBasicinfoParamsVO dsdBasicinfoParamsVO) {
-        return new DefaultCommonResult(
-                ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(dsdBasicinfoParamsVO));
+    @PostMapping(value = "/query")
+    public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(@RequestBody DsdBasicinfoParamsVO basicinfoParamsVO) {
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(basicinfoParamsVO));
     }
 
     /**

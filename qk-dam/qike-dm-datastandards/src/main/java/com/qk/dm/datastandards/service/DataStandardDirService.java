@@ -22,4 +22,7 @@ public interface DataStandardDirService {
   void deleteDsdDir(Integer delId);
 
   void deleteDsdDirRoot(Integer delId);
+
+  Boolean deleteJudgeDsdDir(Integer id);
+
 }

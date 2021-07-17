@@ -85,4 +85,13 @@ public class DataStandardDirController {
     dataStandardDirService.deleteDsdDirRoot(id);
     return new DefaultCommonResult(ResultCodeEnum.OK);
   }
+
+  /**
+   * 标准目录删除-判断目录中是否存在数据
+   */
+  @DeleteMapping("/delete/judge/{id}")
+  public DefaultCommonResult deleteJudgeDsdDir(@PathVariable("id") Integer id) {
+    Boolean result  =  dataStandardDirService.deleteJudgeDsdDir(id);
+    return new DefaultCommonResult(ResultCodeEnum.OK,result);
+  }
 }
