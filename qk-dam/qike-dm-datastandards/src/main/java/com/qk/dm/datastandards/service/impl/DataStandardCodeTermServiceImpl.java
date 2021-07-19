@@ -23,6 +23,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wjq
@@ -71,6 +72,36 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     }
 
     @Override
+    public void bulkAddDsdCodeTerm(List<DsdCodeTermVO> dsdCodeTermVOList) {
+        Set<String> codeIds = dsdCodeTermVOList.stream().map(dsdCodeTermVO -> dsdCodeTermVO.getCodeId()).collect(Collectors.toSet());
+        List<DsdCodeTerm> searchResult = (List<DsdCodeTerm>) dsdCodeTermRepository.findAll(QDsdCodeTerm.dsdCodeTerm.codeId.in(codeIds));
+
+        if (searchResult.size() > 0) {
+            throw new BizException("当前要新增的码表编码ID为：" + searchResult.get(0).getCodeId()
+                    + "码表名称名称为:" + searchResult.get(0).getCodeName() + " 的数据，已存在！！！");
+        }
+
+        List<DsdCodeTerm> dsdCodeTermList = new ArrayList<>();
+        dsdCodeTermVOList.forEach(dsdCodeTermVO -> {
+            DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
+            dsdCodeTerm.setGmtCreate(new Date());
+            dsdCodeTerm.setGmtModified(new Date());
+            dsdCodeTermList.add(dsdCodeTerm);
+        });
+        dsdCodeTermRepository.saveAll(dsdCodeTermList);
+    }
+
+    @Override
+    public DsdCodeTermVO getDsdCodeTermById(Integer id) {
+        DsdCodeTermVO dsdCodeTermVO = null;
+        Optional<DsdCodeTerm> dsdCodeTerm = dsdCodeTermRepository.findById(id);
+        if (dsdCodeTerm.isPresent()) {
+            dsdCodeTermVO = DsdCodeTermMapper.INSTANCE.usDsdCodeTermVO(dsdCodeTerm.get());
+        }
+        return dsdCodeTermVO;
+    }
+
+    @Override
     public void addDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO) {
         DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
         dsdCodeTerm.setGmtCreate(new Date());
@@ -78,12 +109,8 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
         Predicate predicate = QDsdCodeTerm.dsdCodeTerm.codeId.eq(dsdCodeTerm.getCodeId());
         boolean exists = dsdCodeTermRepository.exists(predicate);
         if (exists) {
-            throw new BizException(
-                    "当前要新增的码表编码ID为："
-                            + dsdCodeTerm.getCodeId()
-                            + "码表名称名称为:"
-                            + dsdCodeTerm.getCodeName()
-                            + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的码表编码ID为：" + dsdCodeTerm.getCodeId() +
+                    "码表名称名称为:" + dsdCodeTerm.getCodeName() + " 的数据，已存在！！！");
         }
         dsdCodeTermRepository.save(dsdCodeTerm);
     }
@@ -97,12 +124,8 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
         if (exists) {
             dsdCodeTermRepository.saveAndFlush(dsdCodeTerm);
         } else {
-            throw new BizException(
-                    "当前要新增的码表编码ID为："
-                            + dsdCodeTerm.getCodeId()
-                            + "码表名称名称为:"
-                            + dsdCodeTerm.getCodeName()
-                            + " 的数据，不存在！！！");
+            throw new BizException("当前要新增的码表编码ID为：" + dsdCodeTerm.getCodeId() +
+                    "码表名称名称为:" + dsdCodeTerm.getCodeName() + " 的数据，不存在！！！");
         }
     }
 

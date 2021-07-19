@@ -5,10 +5,6 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
-
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -27,39 +25,67 @@ import java.util.Date;
 @ColumnWidth(25)
 public class DsdCodeTermVO {
 
-  /** ID编号 */
-  @ExcelIgnore
-  @ExcelProperty("ID编号")
-  private Integer id;
+    /**
+     * ID编号
+     */
+    @ExcelIgnore
+    @ExcelProperty("ID编号")
+    private Integer id;
 
-  /** 码表分类编码 */
-  @NotBlank(message = "码表分类编码不能为空！")
-  @ExcelProperty("码表分类编码")
-  private String codeDirId;
+    /**
+     * 码表分类编码
+     */
+    @NotBlank(message = "码表分类编码不能为空！")
+    @ExcelProperty("码表分类编码")
+    private String codeDirId;
 
-  /** 码表编码 */
-  @NotBlank(message = "码表编码不能为空！")
-  @ExcelProperty("码表编码")
-  private String codeId;
+    /**
+     * 表编码
+     */
+    @NotNull(message = "表编码不能为空！")
+    @ExcelProperty("表编码")
+    private Integer codeTableId;
 
-  /** 码表名称 */
-  @NotBlank(message = "码表名称不能为空！")
-  @ExcelProperty("码表名称")
-  private String codeName;
+    /**
+     * 表名称
+     */
+    @NotBlank(message = "表名称不能为空！")
+    @ExcelProperty("表名称")
+    private String codeTableName;
 
-  /** 数据类型编码 */
-  //    @NotBlank(message = "数据类型编码不能为空！")
-  @ExcelProperty("数据类型编码")
-  private Integer termId;
+    /**
+     * 码表编码
+     */
+    @NotBlank(message = "码表编码不能为空！")
+    @ExcelProperty("码表编码")
+    private String codeId;
 
-  /** 描述 */
-  @ExcelProperty("描述")
-  private String description;
+    /**
+     * 码表名称
+     */
+    @NotBlank(message = "码表名称不能为空！")
+    @ExcelProperty("码表名称")
+    private String codeName;
 
-  /** 修改时间 */
-  @ExcelIgnore
-  @ExcelProperty("修改时间")
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date gmtModified;
+    /**
+     * 数据类型编码
+     */
+    //    @NotNull(message = "数据类型编码不能为空！")
+    @ExcelProperty("数据类型编码")
+    private Integer termId;
+
+    /**
+     * 描述
+     */
+    @ExcelProperty("描述")
+    private String description;
+
+    /**
+     * 修改时间
+     */
+    @ExcelIgnore
+    @ExcelProperty("修改时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date gmtModified;
 }

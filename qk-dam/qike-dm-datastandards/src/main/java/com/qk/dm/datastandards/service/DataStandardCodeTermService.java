@@ -5,6 +5,8 @@ import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.params.DsdCodeTermParamsVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author wjq
  * @date 20210604
@@ -22,5 +24,9 @@ public interface DataStandardCodeTermService {
     void deleteDsdCodeTerm(Integer id);
 
     void bulkDeleteDsdTerm(String ids);
+
+    void bulkAddDsdCodeTerm(List<DsdCodeTermVO> dsdCodeTermVOList);
+
+    DsdCodeTermVO getDsdCodeTermById(Integer id);
 
 }

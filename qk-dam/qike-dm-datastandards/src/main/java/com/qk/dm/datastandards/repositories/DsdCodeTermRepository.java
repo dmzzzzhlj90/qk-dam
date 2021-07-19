@@ -18,5 +18,4 @@ public interface DsdCodeTermRepository extends BaseRepository<DsdCodeTerm, Integ
     @Modifying
     @Query("DELETE FROM DsdCodeTerm t WHERE t.id in (:idSet)")
     void bulkDeleteDsdTerm(@Param("idSet") Set<Integer> idSet);
-
 }
