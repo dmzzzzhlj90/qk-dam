@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 数据标准标准信息接口
+ * 数据标准__标准基本信息接口
  *
  * @author wjq
  * @date 20210604

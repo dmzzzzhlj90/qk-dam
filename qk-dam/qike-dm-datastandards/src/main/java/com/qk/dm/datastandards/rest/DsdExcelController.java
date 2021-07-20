@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 /**
- * 数据标准excel导入导出功能接口
+ * 数据标准__excel导入导出功能接口
  *
  * @author wjq
  * @date 20210605
@@ -84,15 +84,29 @@ public class DsdExcelController {
     }
 
     /**
-     * 数据标准基本信息excel 导入
+     * 根据标准分类目录Id,数据标准基本信息excel 导入
      *
      * @Param: file
      * @return: java.lang.String
      */
     @PostMapping("/basic/info/upload/dirDsdId/{dirDsdId}")
     @ResponseBody
-    public DefaultCommonResult basicInfoUpload(MultipartFile file, @PathVariable("dirDsdId") String dirDsdId) throws IOException {
+    public DefaultCommonResult basicInfoUploadBydirDsdId(MultipartFile file, @PathVariable("dirDsdId") String dirDsdId) throws IOException {
         dsdExcelService.basicInfoUpload(file, dirDsdId);
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
+
+
+    /**
+     * 数据标准基本信息excel 导入 (默认根据Excel中选择的层级进行导入)
+     *
+     * @Param: file
+     * @return: java.lang.String
+     */
+    @PostMapping("/basic/info/upload")
+    @ResponseBody
+    public DefaultCommonResult basicInfoUploadBydirDsdId(MultipartFile file) throws IOException {
+        dsdExcelService.basicInfoUpload(file, null);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

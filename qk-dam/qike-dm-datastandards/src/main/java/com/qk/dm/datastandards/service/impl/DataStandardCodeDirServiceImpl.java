@@ -106,12 +106,10 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
      * @param: respList
      * @return: 使用递归方法建树
      */
-    public static List<DataStandardCodeTreeVO> buildByRecursive(
-            List<DataStandardCodeTreeVO> respList) {
+    public static List<DataStandardCodeTreeVO> buildByRecursive(List<DataStandardCodeTreeVO> respList) {
         List<DataStandardCodeTreeVO> trees = new ArrayList<DataStandardCodeTreeVO>();
         for (DataStandardCodeTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId()
-                    || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
+            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
                 trees.add(findChildren(treeNode, respList));
             }
         }
@@ -176,6 +174,7 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     public void getCodeDirId(Set<String> codeDirIdSet, String codeDirId) {
         Optional<DsdCodeDir> parentDir = dsdCodeDirRepository.findOne(QDsdCodeDir.dsdCodeDir.codeDirId.eq(codeDirId));
         if (parentDir.isPresent()) {
+            codeDirIdSet.add(parentDir.get().getCodeDirId());
             Iterable<DsdCodeDir> sonDirList = dsdCodeDirRepository.findAll(QDsdCodeDir.dsdCodeDir.parentId.eq(parentDir.get().getCodeDirId()));
             for (DsdCodeDir dsdCodeDir : sonDirList) {
                 codeDirIdSet.add(dsdCodeDir.getCodeDirId());

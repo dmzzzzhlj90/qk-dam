@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 数据标准业务术语接口
+ * 数据标准__业务术语接口
  *
  * @author wjq
  * @date 20210604

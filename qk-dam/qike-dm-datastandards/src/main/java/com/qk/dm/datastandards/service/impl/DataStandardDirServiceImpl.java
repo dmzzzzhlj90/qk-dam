@@ -102,13 +102,10 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
      * @return: 使用递归方法建树
      */
     public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
-        List<DataStandardTreeVO> trees = new ArrayList<DataStandardTreeVO>();
-        for (DataStandardTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
-                treeNode.setDsdDirLevel("/" + treeNode.getDirDsdName());
-                trees.add(findChildren(treeNode, respList));
-            }
-        }
+        DataStandardTreeVO topParent = DataStandardTreeVO.builder().dirDsdId("-1").dirDsdName("全部标准").build();
+        List<DataStandardTreeVO> trees = new ArrayList<>();
+        trees.add(findChildren(topParent, respList));
+
         return trees;
     }
 
@@ -117,13 +114,15 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
      * @return: 递归查找子节点
      */
     public static DataStandardTreeVO findChildren(DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
-        treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
+        treeNode.setChildren(new ArrayList<>());
         for (DataStandardTreeVO DSDTV : respList) {
             if (treeNode.getDirDsdId().equals(DSDTV.getParentId())) {
                 if (treeNode.getChildren() == null) {
-                    treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
+                    treeNode.setChildren(new ArrayList<>());
                 }
-                DSDTV.setDsdDirLevel(treeNode.getDsdDirLevel() + "/" + DSDTV.getDirDsdName());
+                if (!DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getDirDsdId())) {
+                    DSDTV.setDsdDirLevel(treeNode.getDsdDirLevel() + "/" + DSDTV.getDirDsdName());
+                }
                 treeNode.getChildren().add(findChildren(DSDTV, respList));
             }
         }
