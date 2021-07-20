@@ -4,13 +4,13 @@
 [stripes=even]
 |====================
 |Version |  Update Time  | Status | Author |  Description
-|v2021-06-25 13:37:35|2021-06-25 13:37:35|auto|@daomingzhu|Created by smart-doc
+|v2021-07-15 15:17:10|2021-07-15 15:17:10|auto|@daomingzhu|Created by smart-doc
 |====================
 
 
 == 数据标准excel导入导出功能接口
-=== 业务术语excel导出
-*URL:* http://172.31.0.44/excel/term/download
+=== 业务术语excel导出 @Param: response
+*URL:* http://172.31.0.80/excel/term/download
 
 *Type:* POST
 
@@ -24,7 +24,7 @@
 
 *Request-example:*
 ----
-curl -X POST -i http://172.31.0.44/excel/term/download
+curl -X POST -i http://172.31.0.80/excel/term/download
 ----
 
 *Response-example:*
@@ -32,8 +32,8 @@ curl -X POST -i http://172.31.0.44/excel/term/download
 Doesn't return a value.
 ----
 
-=== 业务术语excel导入
-*URL:* http://172.31.0.44/excel/term/upload
+=== 业务术语excel导入 @Param: file
+*URL:* http://172.31.0.80/excel/term/upload
 
 *Type:* POST
 
@@ -55,7 +55,7 @@ Doesn't return a value.
 
 *Request-example:*
 ----
-curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/term/upload
+curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.80/excel/term/upload
 ----
 
 *Response-example:*
@@ -65,8 +65,8 @@ curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/
 }
 ----
 
-=== 数据标准基本信息excel导出
-*URL:* http://172.31.0.44/excel/basic/info/download
+=== 数据标准基本信息excel导出 @Param: response
+*URL:* http://172.31.0.80/excel/basic/info/download
 
 *Type:* POST
 
@@ -80,7 +80,7 @@ curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/
 
 *Request-example:*
 ----
-curl -X POST -i http://172.31.0.44/excel/basic/info/download
+curl -X POST -i http://172.31.0.80/excel/basic/info/download
 ----
 
 *Response-example:*
@@ -88,8 +88,8 @@ curl -X POST -i http://172.31.0.44/excel/basic/info/download
 Doesn't return a value.
 ----
 
-=== 数据标准基本信息excel 导入
-*URL:* http://172.31.0.44/excel/basic/info/upload
+=== 数据标准基本信息excel 导入 @Param: file
+*URL:* http://172.31.0.80/excel/basic/info/upload
 
 *Type:* POST
 
@@ -111,7 +111,7 @@ Doesn't return a value.
 
 *Request-example:*
 ----
-curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/basic/info/upload
+curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.80/excel/basic/info/upload
 ----
 
 *Response-example:*
@@ -121,8 +121,8 @@ curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/
 }
 ----
 
-=== 码表信息excel导出
-*URL:* http://172.31.0.44/excel/code/term/download
+=== 码表信息excel导出 @Param: response
+*URL:* http://172.31.0.80/excel/code/term/download
 
 *Type:* POST
 
@@ -136,7 +136,7 @@ curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/
 
 *Request-example:*
 ----
-curl -X POST -i http://172.31.0.44/excel/code/term/download
+curl -X POST -i http://172.31.0.80/excel/code/term/download
 ----
 
 *Response-example:*
@@ -144,8 +144,8 @@ curl -X POST -i http://172.31.0.44/excel/code/term/download
 Doesn't return a value.
 ----
 
-=== 码表信息excel导入
-*URL:* http://172.31.0.44/excel/code/term/upload
+=== 码表信息excel导入 @Param: file
+*URL:* http://172.31.0.80/excel/code/term/upload
 
 *Type:* POST
 
@@ -167,7 +167,7 @@ Doesn't return a value.
 
 *Request-example:*
 ----
-curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/code/term/upload
+curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.80/excel/code/term/upload
 ----
 
 *Response-example:*
@@ -179,7 +179,7 @@ curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/
 
 == 数据标准业务术语接口
 === 查询业务术语信息
-*URL:* http://172.31.0.44/term/query
+*URL:* http://172.31.0.80/term/query
 
 *Type:* GET
 
@@ -203,10 +203,10 @@ curl -X POST -H 'Content-Type: multipart/form-data' -i http://172.31.0.44/excel/
 
 *Request-example:*
 ----
-curl -X GET -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/term/query --data '{
+curl -X GET -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/term/query --data '{
 	"page": 1,
 	"size": 10,
-	"sortStr": "ponw6c"
+	"sortStr": "ofcflo"
 }'
 ----
 
@@ -218,7 +218,7 @@ curl -X GET -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 ----
 
 === 新增业务术语信息
-*URL:* http://172.31.0.44/term/add
+*URL:* http://172.31.0.80/term/add
 
 *Type:* POST
 
@@ -245,13 +245,13 @@ curl -X GET -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 
 *Request-example:*
 ----
-curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/term/add --data '{
-	"id": 862,
-	"chineseName": "明杰.陆",
-	"englishName": "明杰.陆",
-	"shortEnglishName": "明杰.陆",
-	"rootName": "明杰.陆",
-	"state": 1
+curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/term/add --data '{
+	"id": 664,
+	"chineseName": "擎宇.曾",
+	"englishName": "擎宇.曾",
+	"shortEnglishName": "擎宇.曾",
+	"rootName": "擎宇.曾",
+	"state": 5
 }'
 ----
 
@@ -263,7 +263,7 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 ----
 
 === 编辑业务术语信息
-*URL:* http://172.31.0.44/term/update
+*URL:* http://172.31.0.80/term/update
 
 *Type:* PUT
 
@@ -290,13 +290,13 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 
 *Request-example:*
 ----
-curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/term/update --data '{
-	"id": 112,
-	"chineseName": "明杰.陆",
-	"englishName": "明杰.陆",
-	"shortEnglishName": "明杰.陆",
-	"rootName": "明杰.陆",
-	"state": 1
+curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/term/update --data '{
+	"id": 983,
+	"chineseName": "擎宇.曾",
+	"englishName": "擎宇.曾",
+	"shortEnglishName": "擎宇.曾",
+	"rootName": "擎宇.曾",
+	"state": 5
 }'
 ----
 
@@ -308,7 +308,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 ----
 
 === 删除业务术语信息
-*URL:* http://172.31.0.44/term/delete/{id}
+*URL:* http://172.31.0.80/term/delete/{id}
 
 *Type:* DELETE
 
@@ -330,7 +330,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 
 *Request-example:*
 ----
-curl -X DELETE -i http://172.31.0.44/term/delete/429
+curl -X DELETE -i http://172.31.0.80/term/delete/970
 ----
 
 *Response-example:*
@@ -341,8 +341,43 @@ curl -X DELETE -i http://172.31.0.44/term/delete/429
 ----
 
 == 数据标准标准信息接口
-=== 查询标准信息
-*URL:* http://172.31.0.44/basic/info/query/{dsdLevelId};	http:/172.31.0.44/basic/info/query
+=== 查询所有标准信息
+*URL:* http://172.31.0.80/basic/info/queryAll
+
+*Type:* GET
+
+*Author:* wjq
+
+*Content-Type:* application/x-www-form-urlencoded;charset=utf-8
+
+
+
+*Query-parameters:*
+
+[width="100%",options="header"]
+[stripes=even]
+|====================
+|Parameter | Type|Description|Required|Since
+|page|int32|No comments found.|false|-
+|size|int32|No comments found.|false|-
+|sortStr|string|No comments found.|false|-
+|====================
+
+
+*Request-example:*
+----
+curl -X GET -i http://172.31.0.80/basic/info/queryAll?page=1&sortStr=zqklpv&size=10
+----
+
+*Response-example:*
+----
+{
+	
+}
+----
+
+=== 根据标准分类id查询标准信息
+*URL:* http://172.31.0.80/basic/info/query/{dsdLevelId}
 
 *Type:* GET
 
@@ -357,7 +392,7 @@ curl -X DELETE -i http://172.31.0.44/term/delete/429
 [stripes=even]
 |====================
 |Parameter | Type|Description|Required|Since
-|dsdLevelId|string|No comments found.|false|-
+|dsdLevelId|string|No comments found.|true|-
 |====================
 
 *Query-parameters:*
@@ -374,7 +409,7 @@ curl -X DELETE -i http://172.31.0.44/term/delete/429
 
 *Request-example:*
 ----
-curl -X GET -i http://172.31.0.44/basic/info/query/144?page=1&sortStr=k3o5kq&size=10
+curl -X GET -i http://172.31.0.80/basic/info/query/19?size=10&sortStr=2apwib&page=1
 ----
 
 *Response-example:*
@@ -385,7 +420,7 @@ curl -X GET -i http://172.31.0.44/basic/info/query/144?page=1&sortStr=k3o5kq&siz
 ----
 
 === 新增标准信息
-*URL:* http://172.31.0.44/basic/info/add
+*URL:* http://172.31.0.80/basic/info/add
 
 *Type:* POST
 
@@ -417,18 +452,18 @@ curl -X GET -i http://172.31.0.44/basic/info/query/144?page=1&sortStr=k3o5kq&siz
 
 *Request-example:*
 ----
-curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/basic/info/add --data '{
-	"id": 130,
-	"dsdName": "明杰.陆",
-	"dsdCode": "63908",
-	"colName": "明杰.陆",
-	"dataType": "qfvipw",
-	"dataCapacity": "udfs16",
-	"useCodeId": "144",
-	"codeCol": "2qdhui",
-	"dsdLevel": "c1twvh",
-	"dsdLevelId": "144",
-	"description": "8eyahr"
+curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/basic/info/add --data '{
+	"id": 753,
+	"dsdName": "擎宇.曾",
+	"dsdCode": "68111",
+	"colName": "擎宇.曾",
+	"dataType": "7rx59n",
+	"dataCapacity": "7s2vyz",
+	"useCodeId": "19",
+	"codeCol": "hp60l3",
+	"dsdLevel": "eix6ue",
+	"dsdLevelId": "19",
+	"description": "wgt6xm"
 }'
 ----
 
@@ -440,7 +475,7 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 ----
 
 === 编辑标准信息
-*URL:* http://172.31.0.44/basic/info/update
+*URL:* http://172.31.0.80/basic/info/update
 
 *Type:* PUT
 
@@ -472,18 +507,18 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 
 *Request-example:*
 ----
-curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/basic/info/update --data '{
-	"id": 251,
-	"dsdName": "明杰.陆",
-	"dsdCode": "63908",
-	"colName": "明杰.陆",
-	"dataType": "opbsv3",
-	"dataCapacity": "6n0dgo",
-	"useCodeId": "144",
-	"codeCol": "j9xiax",
-	"dsdLevel": "j96wwj",
-	"dsdLevelId": "144",
-	"description": "gwvps3"
+curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/basic/info/update --data '{
+	"id": 546,
+	"dsdName": "擎宇.曾",
+	"dsdCode": "68111",
+	"colName": "擎宇.曾",
+	"dataType": "fnrcqi",
+	"dataCapacity": "cgkm5z",
+	"useCodeId": "19",
+	"codeCol": "w3kxfw",
+	"dsdLevel": "19m107",
+	"dsdLevelId": "19",
+	"description": "fe1u0n"
 }'
 ----
 
@@ -495,7 +530,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 ----
 
 === 删除标准信息
-*URL:* http://172.31.0.44/basic/info/delete/{id}
+*URL:* http://172.31.0.80/basic/info/delete/{id}
 
 *Type:* DELETE
 
@@ -517,7 +552,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 
 *Request-example:*
 ----
-curl -X DELETE -i http://172.31.0.44/basic/info/delete/250
+curl -X DELETE -i http://172.31.0.80/basic/info/delete/28
 ----
 
 *Response-example:*
@@ -529,7 +564,7 @@ curl -X DELETE -i http://172.31.0.44/basic/info/delete/250
 
 == 数据标准目录接口
 === 获取数据标准分类目录树
-*URL:* http://172.31.0.44/dir/tree
+*URL:* http://172.31.0.80/dir/tree
 
 *Type:* GET
 
@@ -543,7 +578,7 @@ curl -X DELETE -i http://172.31.0.44/basic/info/delete/250
 
 *Request-example:*
 ----
-curl -X GET -i http://172.31.0.44/dir/tree
+curl -X GET -i http://172.31.0.80/dir/tree
 ----
 
 *Response-example:*
@@ -554,7 +589,7 @@ curl -X GET -i http://172.31.0.44/dir/tree
 ----
 
 === 新增数据标准分类目录
-*URL:* http://172.31.0.44/dir/add
+*URL:* http://172.31.0.80/dir/add
 
 *Type:* POST
 
@@ -580,12 +615,12 @@ curl -X GET -i http://172.31.0.44/dir/tree
 
 *Request-example:*
 ----
-curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/dir/add --data '{
-	"id": 738,
-	"dirDsdId": "144",
-	"dirDsdName": "明杰.陆",
-	"parentId": "144",
-	"description": "4p0mhm"
+curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/dir/add --data '{
+	"id": 512,
+	"dirDsdId": "19",
+	"dirDsdName": "擎宇.曾",
+	"parentId": "19",
+	"description": "8x8gc4"
 }'
 ----
 
@@ -597,7 +632,7 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 ----
 
 === 编辑数据标准分类目录
-*URL:* http://172.31.0.44/dir/update
+*URL:* http://172.31.0.80/dir/update
 
 *Type:* PUT
 
@@ -623,12 +658,12 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 
 *Request-example:*
 ----
-curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/dir/update --data '{
-	"id": 197,
-	"dirDsdId": "144",
-	"dirDsdName": "明杰.陆",
-	"parentId": "144",
-	"description": "21nti0"
+curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/dir/update --data '{
+	"id": 141,
+	"dirDsdId": "19",
+	"dirDsdName": "擎宇.曾",
+	"parentId": "19",
+	"description": "xzdqii"
 }'
 ----
 
@@ -640,7 +675,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 ----
 
 === 标准目录单子节点删除方式
-*URL:* http://172.31.0.44/dir/delete/{id}
+*URL:* http://172.31.0.80/dir/delete/{id}
 
 *Type:* DELETE
 
@@ -662,7 +697,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 
 *Request-example:*
 ----
-curl -X DELETE -i http://172.31.0.44/dir/delete/550
+curl -X DELETE -i http://172.31.0.80/dir/delete/682
 ----
 
 *Response-example:*
@@ -673,7 +708,7 @@ curl -X DELETE -i http://172.31.0.44/dir/delete/550
 ----
 
 === 标准目录支持根节点关联删除子节点方式
-*URL:* http://172.31.0.44/dir/delete/root/{id}
+*URL:* http://172.31.0.80/dir/delete/root/{id}
 
 *Type:* DELETE
 
@@ -695,7 +730,7 @@ curl -X DELETE -i http://172.31.0.44/dir/delete/550
 
 *Request-example:*
 ----
-curl -X DELETE -i http://172.31.0.44/dir/delete/root/746
+curl -X DELETE -i http://172.31.0.80/dir/delete/root/26
 ----
 
 *Response-example:*
@@ -706,8 +741,43 @@ curl -X DELETE -i http://172.31.0.44/dir/delete/root/746
 ----
 
 == 数据标准码表术语接口
-=== 查询数据标准码表术语信息
-*URL:* http://172.31.0.44/code/term/query/{codeDirId};	http:/172.31.0.44/code/term/query
+=== 查询所有的数据标准码表术语信息
+*URL:* http://172.31.0.80/code/term/queryAll
+
+*Type:* GET
+
+*Author:* wjq
+
+*Content-Type:* application/x-www-form-urlencoded;charset=utf-8
+
+
+
+*Query-parameters:*
+
+[width="100%",options="header"]
+[stripes=even]
+|====================
+|Parameter | Type|Description|Required|Since
+|page|int32|No comments found.|false|-
+|size|int32|No comments found.|false|-
+|sortStr|string|No comments found.|false|-
+|====================
+
+
+*Request-example:*
+----
+curl -X GET -i http://172.31.0.80/code/term/queryAll?page=1&size=10&sortStr=bjmu8a
+----
+
+*Response-example:*
+----
+{
+	
+}
+----
+
+=== 根据码表分类id查询码表术语信息
+*URL:* http://172.31.0.80/code/term/query/{codeDirId}
 
 *Type:* GET
 
@@ -722,7 +792,7 @@ curl -X DELETE -i http://172.31.0.44/dir/delete/root/746
 [stripes=even]
 |====================
 |Parameter | Type|Description|Required|Since
-|codeDirId|string|No comments found.|false|-
+|codeDirId|string|No comments found.|true|-
 |====================
 
 *Query-parameters:*
@@ -739,7 +809,7 @@ curl -X DELETE -i http://172.31.0.44/dir/delete/root/746
 
 *Request-example:*
 ----
-curl -X GET -i http://172.31.0.44/code/term/query/144?sortStr=nj5dju&size=10&page=1
+curl -X GET -i http://172.31.0.80/code/term/query/19?sortStr=fbt5ov&size=10&page=1
 ----
 
 *Response-example:*
@@ -750,7 +820,7 @@ curl -X GET -i http://172.31.0.44/code/term/query/144?sortStr=nj5dju&size=10&pag
 ----
 
 === 新增数据标准码表术语信息
-*URL:* http://172.31.0.44/code/term/add
+*URL:* http://172.31.0.80/code/term/add
 
 *Type:* POST
 
@@ -777,13 +847,13 @@ curl -X GET -i http://172.31.0.44/code/term/query/144?sortStr=nj5dju&size=10&pag
 
 *Request-example:*
 ----
-curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/code/term/add --data '{
-	"id": 530,
-	"codeDirId": "144",
-	"codeId": "144",
-	"codeName": "明杰.陆",
-	"termId": 922,
-	"description": "yh1am3"
+curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/code/term/add --data '{
+	"id": 133,
+	"codeDirId": "19",
+	"codeId": "19",
+	"codeName": "擎宇.曾",
+	"termId": 911,
+	"description": "1pmm0f"
 }'
 ----
 
@@ -795,7 +865,7 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 ----
 
 === 编辑数据标准码表术语信息
-*URL:* http://172.31.0.44/code/term/update
+*URL:* http://172.31.0.80/code/term/update
 
 *Type:* PUT
 
@@ -822,13 +892,13 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 
 *Request-example:*
 ----
-curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/code/term/update --data '{
-	"id": 826,
-	"codeDirId": "144",
-	"codeId": "144",
-	"codeName": "明杰.陆",
-	"termId": 520,
-	"description": "1dwcji"
+curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/code/term/update --data '{
+	"id": 302,
+	"codeDirId": "19",
+	"codeId": "19",
+	"codeName": "擎宇.曾",
+	"termId": 112,
+	"description": "nqxlcp"
 }'
 ----
 
@@ -840,7 +910,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 ----
 
 === 删除数据标准码表术语信息
-*URL:* http://172.31.0.44/code/term/delete/{id}
+*URL:* http://172.31.0.80/code/term/delete/{id}
 
 *Type:* DELETE
 
@@ -862,7 +932,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 
 *Request-example:*
 ----
-curl -X DELETE -i http://172.31.0.44/code/term/delete/579
+curl -X DELETE -i http://172.31.0.80/code/term/delete/371
 ----
 
 *Response-example:*
@@ -874,7 +944,7 @@ curl -X DELETE -i http://172.31.0.44/code/term/delete/579
 
 == 数据标准码表目录接口
 === 获取数据标准码表分类目录树
-*URL:* http://172.31.0.44/code/dir/tree
+*URL:* http://172.31.0.80/code/dir/tree
 
 *Type:* GET
 
@@ -888,7 +958,7 @@ curl -X DELETE -i http://172.31.0.44/code/term/delete/579
 
 *Request-example:*
 ----
-curl -X GET -i http://172.31.0.44/code/dir/tree
+curl -X GET -i http://172.31.0.80/code/dir/tree
 ----
 
 *Response-example:*
@@ -899,7 +969,7 @@ curl -X GET -i http://172.31.0.44/code/dir/tree
 ----
 
 === 新增码表分类目录
-*URL:* http://172.31.0.44/code/dir/add
+*URL:* http://172.31.0.80/code/dir/add
 
 *Type:* POST
 
@@ -925,12 +995,12 @@ curl -X GET -i http://172.31.0.44/code/dir/tree
 
 *Request-example:*
 ----
-curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/code/dir/add --data '{
-	"id": 292,
-	"codeDirId": "144",
-	"codeDirName": "明杰.陆",
-	"parentId": "144",
-	"description": "86o2tj"
+curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/code/dir/add --data '{
+	"id": 858,
+	"codeDirId": "19",
+	"codeDirName": "擎宇.曾",
+	"parentId": "19",
+	"description": "0h9jta"
 }'
 ----
 
@@ -942,7 +1012,7 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 ----
 
 === 编辑码表分类目录
-*URL:* http://172.31.0.44/code/dir/update
+*URL:* http://172.31.0.80/code/dir/update
 
 *Type:* PUT
 
@@ -968,12 +1038,12 @@ curl -X POST -H 'Content-Type: application/json; charset=utf-8' -i http://172.31
 
 *Request-example:*
 ----
-curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.44/code/dir/update --data '{
-	"id": 855,
-	"codeDirId": "144",
-	"codeDirName": "明杰.陆",
-	"parentId": "144",
-	"description": "noj79p"
+curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.0.80/code/dir/update --data '{
+	"id": 35,
+	"codeDirId": "19",
+	"codeDirName": "擎宇.曾",
+	"parentId": "19",
+	"description": "tte8nc"
 }'
 ----
 
@@ -985,7 +1055,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 ----
 
 === 码表目录单叶子节点删除方式
-*URL:* http://172.31.0.44/code/dir/delete/{id}
+*URL:* http://172.31.0.80/code/dir/delete/{id}
 
 *Type:* DELETE
 
@@ -1007,7 +1077,7 @@ curl -X PUT -H 'Content-Type: application/json; charset=utf-8' -i http://172.31.
 
 *Request-example:*
 ----
-curl -X DELETE -i http://172.31.0.44/code/dir/delete/902
+curl -X DELETE -i http://172.31.0.80/code/dir/delete/353
 ----
 
 *Response-example:*
@@ -1018,7 +1088,7 @@ curl -X DELETE -i http://172.31.0.44/code/dir/delete/902
 ----
 
 === 码表目录支持根节点删除关联删除叶子节点方式
-*URL:* http://172.31.0.44/code/dir/delete/root/{id}
+*URL:* http://172.31.0.80/code/dir/delete/root/{id}
 
 *Type:* DELETE
 
@@ -1040,7 +1110,7 @@ curl -X DELETE -i http://172.31.0.44/code/dir/delete/902
 
 *Request-example:*
 ----
-curl -X DELETE -i http://172.31.0.44/code/dir/delete/root/185
+curl -X DELETE -i http://172.31.0.80/code/dir/delete/root/888
 ----
 
 *Response-example:*

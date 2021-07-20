@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class OAuth2ClientController {
 
-
   @GetMapping("/oauth2/accessToken")
+  @ResponseBody
   public String accessToken(
-          String fontUri,
-      @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-    return "redirect:"+fontUri+"?token="+authorizedClient.getAccessToken().getTokenValue();
+      String fontUri, @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+    return authorizedClient.getAccessToken().getTokenValue();
   }
 
   @GetMapping("/oauth2/idToken")

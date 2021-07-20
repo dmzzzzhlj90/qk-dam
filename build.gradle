@@ -26,7 +26,6 @@ subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'com.github.sherter.google-java-format'
 
-
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         mavenLocal()
@@ -40,10 +39,6 @@ subprojects {
     }
     configurations.all {
         exclude group: 'log4j', module: 'log4j'
-//        exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
-//        exclude group: 'com.fasterxml.jackson.datatype', module: 'jackson-datatype-jdk8'
-//        exclude group: 'com.fasterxml.jackson.datatype', module: 'jackson-datatype-jsr310'
-//        exclude group: 'com.fasterxml.jackson.module', module: 'jackson-module-parameter-names'
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
     plugins.withType(JavaPlugin) {
@@ -54,6 +49,11 @@ subprojects {
     }
     if (!project.name.contains("dam-dependencies")) {
         apply plugin: 'java'
+        apply plugin: "smart-doc"
+        task sourcesJar(type: Jar) {
+            from sourceSets.main.allJava
+            archiveClassifier = 'sources'
+        }
         publishing {
             publications {
                 mavenJava(MavenPublication) {
@@ -66,6 +66,7 @@ subprojects {
                         }
                     }
                     from components.java
+                    artifact sourcesJar
                     afterEvaluate {
                         group = project.group
                         artifactId = project.name
@@ -89,12 +90,15 @@ subprojects {
                 into(distroPath)
             }
         }
+        smartdoc {
+            configFile = file("src/main/resources/smart-doc.json")
+        }
     }
 
     uploadArchives {
         repositories {
             mavenDeployer {
-                def releasesRepoUrl = "http://172.31.0.18:8081/repository/dm-releases/"
+                def releasesRepoUrl = "http://172.31.0.18:8081/repository/dm-release/"
                 def snapshotsRepoUrl = "http://172.31.0.18:8081/repository/dm-snapshot/"
                 def url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
                 repository(url: url) {

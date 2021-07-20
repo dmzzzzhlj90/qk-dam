@@ -13,7 +13,7 @@ spring:
   mvc:
     message-codes-resolver-format: postfix_error_code
     servlet:
-      path: /
+      path: /dsd
   main:
     allow-bean-definition-overriding: true
   application:

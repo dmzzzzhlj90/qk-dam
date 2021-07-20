@@ -3,7 +3,6 @@ plugins {
 }
 version "${commonLibVersion}"
 group "com.qk.dam.commons"
-
 dependencies {
     compile "org.slf4j:slf4j-api"
     compile 'org.projectlombok:lombok'

@@ -33,16 +33,6 @@ spring:
         jwt:
           issuer-uri: http://auth-server:9901
   cloud:
-    gateway:
-      routes:
-        - id: wings-authentication-route
-          uri: lb://wings-authentication-dev
-          predicates:
-            - Path=/wings-authentication-dev/**
-        - id: wings-config-server-route
-          uri: lb://wings-config-server
-          predicates:
-            - Path=/wings-config-server/**
     nacos:
       discovery:
         server-addr: 172.31.0.44:8847
