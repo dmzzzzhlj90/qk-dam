@@ -2,7 +2,6 @@ package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.constant.DsdConstant;
-import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.entity.QDsdDir;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdDirTreeMapper;
@@ -12,13 +11,11 @@ import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdDirVO;
 import com.querydsl.core.types.Predicate;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wjq
@@ -107,8 +104,8 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
         List<DataStandardTreeVO> trees = new ArrayList<DataStandardTreeVO>();
         for (DataStandardTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId()
-                    || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
+            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
+                treeNode.setDsdDirLevel("/" + treeNode.getDirDsdName());
                 trees.add(findChildren(treeNode, respList));
             }
         }
@@ -119,15 +116,15 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
      * @param: treeNode, respList
      * @return: 递归查找子节点
      */
-    public static DataStandardTreeVO findChildren(
-            DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
+    public static DataStandardTreeVO findChildren(DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
         treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
-        for (DataStandardTreeVO it : respList) {
-            if (treeNode.getDirDsdId().equals(it.getParentId())) {
+        for (DataStandardTreeVO DSDTV : respList) {
+            if (treeNode.getDirDsdId().equals(DSDTV.getParentId())) {
                 if (treeNode.getChildren() == null) {
                     treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
                 }
-                treeNode.getChildren().add(findChildren(it, respList));
+                DSDTV.setDsdDirLevel(treeNode.getDsdDirLevel() + "/" + DSDTV.getDirDsdName());
+                treeNode.getChildren().add(findChildren(DSDTV, respList));
             }
         }
         return treeNode;
@@ -181,6 +178,11 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
                 this.getDsdId(dirDsdIdSet, dsdDir.getDirDsdId());
             }
         }
+    }
+
+    @Override
+    public List<String> findAllDsdDirLevel() {
+        return dsdDirRepository.findAll().stream().map(dsdDir -> dsdDir.getDsdDirLevel()).collect(Collectors.toList());
     }
 
 }

@@ -27,6 +27,10 @@ public class DsdDirVO {
   @NotBlank(message = "目录父级id不能为空！")
   private String parentId;
 
+  /** 目录节点层级 */
+  @NotBlank(message = "目录节点层级不能为空！")
+  private String dsdDirLevel;
+
   /** 描述 */
   private String description;
 }

@@ -3,16 +3,14 @@ package com.qk.dm.datastandards.rest;
 import com.alibaba.excel.EasyExcel;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dm.datastandards.easyexcel.handler.CustomSheetWriteHandler;
 import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -82,9 +80,7 @@ public class DsdExcelController {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class)
-                .sheet("模板")
-                .doWrite(dsdBasicinfoVOList);
+        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).sheet("模板").registerWriteHandler(new CustomSheetWriteHandler(dsdExcelService)).doWrite(dsdBasicinfoVOList);
     }
 
     /**
@@ -93,10 +89,10 @@ public class DsdExcelController {
      * @Param: file
      * @return: java.lang.String
      */
-    @PostMapping("/basic/info/upload")
+    @PostMapping("/basic/info/upload/dirDsdId/{dirDsdId}")
     @ResponseBody
-    public DefaultCommonResult basicInfoUpload(MultipartFile file) throws IOException {
-        dsdExcelService.basicInfoUpload(file);
+    public DefaultCommonResult basicInfoUpload(MultipartFile file, @PathVariable("dirDsdId") String dirDsdId) throws IOException {
+        dsdExcelService.basicInfoUpload(file, dirDsdId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -114,9 +110,7 @@ public class DsdExcelController {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准码表信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class)
-                .sheet("模板")
-                .doWrite(codeTermVOList);
+        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class).sheet("模板").doWrite(codeTermVOList);
     }
 
     /**
@@ -145,7 +139,7 @@ public class DsdExcelController {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).sheet("数据标准信息导入模板").doWrite(null);
+        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).registerWriteHandler(new CustomSheetWriteHandler(dsdExcelService)).sheet("数据标准信息导入模板").doWrite(null);
     }
 
 

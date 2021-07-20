@@ -18,6 +18,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -137,6 +138,7 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
         }
     }
 
+    @Transactional
     @Override
     public void bulkDeleteDsdTerm(String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
