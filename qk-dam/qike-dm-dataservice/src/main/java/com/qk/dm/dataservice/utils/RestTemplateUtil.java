@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class RestTemplateUtil {
 
-    private static final Log LOG = LogFactory.get("远程调用");
+    private static final Log LOG = LogFactory.get("restTemplate远程调用");
 
     @Autowired
     RestTemplate restTemplate;
@@ -30,11 +30,11 @@ public class RestTemplateUtil {
      */
     public String getJsonArrayByRest(String url) {
         try {
-            LOG.info("通用get接口URL{}", url);
+            LOG.info("通用get接口URL->{}", url);
             ResponseEntity<String> exchange = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
-            LOG.info("通用接口get返回结果{}", exchange.getBody());
+            LOG.info("通用接口get返回结果->{}", exchange.getBody());
             if(exchange.getStatusCode() != HttpStatus.OK) {
-                throw new RuntimeException("远程post调用接口失败！");
+                throw new RuntimeException("远程get调用接口失败！");
             }
             return exchange.getBody();
         } catch (Exception e) {
@@ -51,20 +51,20 @@ public class RestTemplateUtil {
      * @return
      */
     public String postByRestTemplate(String url, JSONObject hashMapList) {
-        LOG.info("通用post接口URL{}", url);
+        LOG.info("通用post接口URL->{}", url);
         try {
             HttpHeaders headers = new HttpHeaders();
             MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
             headers.setContentType(type);
             HttpEntity<JSONObject> httpEntity = new HttpEntity<>(hashMapList, headers);
-            LOG.info("通用post接口发送内容{}", httpEntity.toString());
+            LOG.info("通用post接口发送内容->{}", httpEntity.toString());
             ResponseEntity<String> exchange = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
                     httpEntity,
                     String.class
             );
-            LOG.info("通用post接口返回结果{}", exchange.getBody());
+            LOG.info("通用post接口返回结果->{}", exchange.getBody());
             if(exchange.getStatusCode() != HttpStatus.OK) {
                 throw new RuntimeException("远程post调用接口失败！");
             }

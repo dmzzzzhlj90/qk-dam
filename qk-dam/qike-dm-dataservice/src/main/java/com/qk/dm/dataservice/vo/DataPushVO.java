@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
@@ -36,7 +34,7 @@ public class DataPushVO {
     /**
      * 父级id
      */
-    @Valid
-    @NotEmpty(message = "查询结果集合不能为空！")
+//    @Valid
+//    @NotEmpty(message = "查询结果集合不能为空！")
     private List<DataPushDetailListVO> dataPushDetailList;
 }
