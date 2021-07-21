@@ -84,7 +84,7 @@ public class DsdExcelBatchService {
     private void saveDsdBasicInfoByDirId(List<DsdBasicinfo> dsdBasicInfoList, Map<String, String> codeDirLevelMap, String dirDsdId) {
         Optional<DsdDir> dsdDir = dsdDirRepository.findOne(QDsdDir.dsdDir.dirDsdId.eq(dirDsdId));
         if (dsdDir.isPresent()) {
-            Predicate existDataPredicate = QDsdBasicinfo.dsdBasicinfo.dsdCode.eq(dirDsdId)
+            Predicate existDataPredicate = QDsdBasicinfo.dsdBasicinfo.dsdLevelId.eq(dirDsdId)
                     .and(QDsdBasicinfo.dsdBasicinfo.dsdCode.in(codeDirLevelMap.keySet()));
             Iterable<DsdBasicinfo> existList = dsdBasicinfoRepository.findAll(existDataPredicate);
             dsdBasicinfoRepository.deleteInBatch(existList);

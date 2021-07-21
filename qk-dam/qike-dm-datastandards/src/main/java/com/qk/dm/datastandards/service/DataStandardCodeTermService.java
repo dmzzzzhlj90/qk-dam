@@ -29,4 +29,5 @@ public interface DataStandardCodeTermService {
 
     DsdCodeTermVO getDsdCodeTermById(Integer id);
 
+    void bulkUpdateDsdCodeTerm(List<DsdCodeTermVO> dsdCodeTermVOList);
 }

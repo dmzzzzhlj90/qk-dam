@@ -1,6 +1,7 @@
 package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.entity.QDsdCodeTerm;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTermMapper;
@@ -103,11 +104,16 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     }
 
     @Override
+    public void bulkUpdateDsdCodeTerm(List<DsdCodeTermVO> dsdCodeTermVOList) {
+        dsdCodeTermVOList.forEach(dsdCodeTermVO -> updateDsdCodeTerm(dsdCodeTermVO));
+    }
+
+    @Override
     public void addDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO) {
         DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
         dsdCodeTerm.setGmtCreate(new Date());
         dsdCodeTerm.setGmtModified(new Date());
-        Predicate predicate = QDsdCodeTerm.dsdCodeTerm.codeId.eq(dsdCodeTerm.getCodeId());
+        Predicate predicate = QDsdCodeTerm.dsdCodeTerm.id.eq(dsdCodeTerm.getId());
         boolean exists = dsdCodeTermRepository.exists(predicate);
         if (exists) {
             throw new BizException("当前要新增的码表编码ID为：" + dsdCodeTerm.getCodeId() +
@@ -120,7 +126,7 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     public void updateDsdCodeTerm(DsdCodeTermVO dsdCodeTermVO) {
         DsdCodeTerm dsdCodeTerm = DsdCodeTermMapper.INSTANCE.useDsdCodeTerm(dsdCodeTermVO);
         dsdCodeTerm.setGmtModified(new Date());
-        Predicate predicate = QDsdCodeTerm.dsdCodeTerm.codeId.eq(dsdCodeTerm.getCodeId());
+        Predicate predicate = QDsdCodeTerm.dsdCodeTerm.id.eq(dsdCodeTerm.getId());
         boolean exists = dsdCodeTermRepository.exists(predicate);
         if (exists) {
             dsdCodeTermRepository.saveAndFlush(dsdCodeTerm);
@@ -167,7 +173,7 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
     }
 
     public void checkCondition(BooleanBuilder booleanBuilder, QDsdCodeTerm qDsdCodeTerm, DsdCodeTermParamsVO dsdCodeTermParamsVO) {
-        if (!StringUtils.isEmpty(dsdCodeTermParamsVO.getCodeDirId())) {
+        if (!StringUtils.isEmpty(dsdCodeTermParamsVO.getCodeDirId()) && !DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(dsdCodeTermParamsVO.getCodeDirId())) {
             Set<String> codeDirSet = new HashSet<>();
             dataStandardCodeDirService.getCodeDirId(codeDirSet, dsdCodeTermParamsVO.getCodeDirId());
             booleanBuilder.and(qDsdCodeTerm.codeDirId.in(codeDirSet));

@@ -78,17 +78,18 @@ public class DataStandardCodeTermController {
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
-//  /**
-//   * 批量编辑数据标准码表术语信息
-//   * TODO 批量更新考虑效率问题
-//   * @param: dsdCodeTermVO 数据标准码表术语VO
-//   * @return: DefaultCommonResult
-//   */
-//  @PutMapping("/bulk/update")
-//  public DefaultCommonResult bulkUpdateDsdCodeTerm(@RequestBody @Validated DsdCodeTermVO dsdCodeTermVO) {
-//    dataStandardCodeTermService.updateDsdCodeTerm(dsdCodeTermVO);
-//    return new DefaultCommonResult(ResultCodeEnum.OK);
-//  }
+    /**
+     * 批量编辑数据标准码表术语信息
+     * TODO 批量更新考虑效率问题
+     *
+     * @param: dsdCodeTermVO 数据标准码表术语VO
+     * @return: DefaultCommonResult
+     */
+    @PutMapping("/bulk/update")
+    public DefaultCommonResult bulkUpdateDsdCodeTerm(@RequestBody @Validated List<DsdCodeTermVO> dsdCodeTermVOList) {
+        dataStandardCodeTermService.bulkUpdateDsdCodeTerm(dsdCodeTermVOList);
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
 
 
     /**
@@ -123,6 +124,6 @@ public class DataStandardCodeTermController {
      */
     @GetMapping("/get/by/{id}")
     public DefaultCommonResult<DsdCodeTermVO> getDsdCodeTermById(@PathVariable("id") Integer id) {
-      return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTermById(id));
+        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeTermService.getDsdCodeTermById(id));
     }
 }

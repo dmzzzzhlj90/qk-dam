@@ -38,7 +38,7 @@ public class DsdExcelController {
     }
 
     /**
-     * 业务术语excel导出
+     * 业务术语excel__全部导出数据
      *
      * @Param: response
      * @return: void
@@ -55,7 +55,7 @@ public class DsdExcelController {
     }
 
     /**
-     * 业务术语excel导入
+     * 业务术语__excel导入数据
      *
      * @Param: file
      * @return: java.lang.String
@@ -68,14 +68,14 @@ public class DsdExcelController {
     }
 
     /**
-     * 数据标准基本信息excel导出
+     * 标准基本信息excel__全部导出数据
      *
      * @Param: response
      * @return: void
      */
     @PostMapping("/basic/info/download")
     public void basicInfoDownload(HttpServletResponse response) throws IOException {
-        List<DsdBasicinfoVO> dsdBasicinfoVOList = dsdExcelService.queryAllBasicInfo();
+        List<DsdBasicinfoVO> dsdBasicinfoVOList = dsdExcelService.queryBasicInfos(null);
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -85,7 +85,24 @@ public class DsdExcelController {
     }
 
     /**
-     * 数据标准基本信息excel 导入 (默认根据Excel中选择的层级进行导入)
+     * 标准基本信息excel__导出数据 (根据标准分类目录Id)
+     *
+     * @Param: response
+     * @return: void
+     */
+    @PostMapping("/basic/info/download/dirDsdId/{dirDsdId}")
+    public void basicInfoDownloadByDirDsdId(@PathVariable("dirDsdId") String dirDsdId, HttpServletResponse response) throws IOException {
+        List<DsdBasicinfoVO> dsdBasicinfoVOList = dsdExcelService.queryBasicInfos(dirDsdId);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).sheet("模板").registerWriteHandler(new DsdBasicInfoCustomSheetWriteHandler(dsdExcelService)).doWrite(dsdBasicinfoVOList);
+    }
+
+    /**
+     * 标准基本信息excel__导入数据(默认根据Excel中选择的层级进行导入)
      *
      * @Param: file
      * @return: java.lang.String
@@ -98,28 +115,28 @@ public class DsdExcelController {
     }
 
     /**
-     * 根据标准分类目录Id,数据标准基本信息excel 导入
+     * 标准基本信息excel__导入数据 (根据标准分类目录Id)
      *
      * @Param: file
      * @return: java.lang.String
      */
     @PostMapping("/basic/info/upload/dirDsdId/{dirDsdId}")
     @ResponseBody
-    public DefaultCommonResult basicInfoUploadBydirDsdId(MultipartFile file, @PathVariable("dirDsdId") String dirDsdId) throws IOException {
+    public DefaultCommonResult basicInfoUploadByDirDsdId(MultipartFile file, @PathVariable("dirDsdId") String dirDsdId) throws IOException {
         dsdExcelService.basicInfoUpload(file, dirDsdId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
 
     /**
-     * 数据标准码表信息 excel导出
+     * 码表信息excel__全部导出数据
      *
      * @Param: response
      * @return: void
      */
     @PostMapping("/code/term/download")
     public void codeTermDownload(HttpServletResponse response) throws IOException {
-        List<DsdCodeTermVO> codeTermVOList = dsdExcelService.queryAllCodeTerm();
+        List<DsdCodeTermVO> codeTermVOList = dsdExcelService.queryCodeTerms(null);
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -129,21 +146,38 @@ public class DsdExcelController {
     }
 
     /**
-     * 根据标准分类目录Id,数据标准基本信息excel 导入
+     * 码表信息excel__导出数据 (根据码表分类目录Id)
+     *
+     * @Param: response
+     * @return: void
+     */
+    @PostMapping("/code/term/download//codeDirId/{codeDirId}")
+    public void codeTermDownloadByCodeDir(HttpServletResponse response,@PathVariable("codeDirId") String codeDirId) throws IOException {
+        List<DsdCodeTermVO> codeTermVOList = dsdExcelService.queryCodeTerms(codeDirId);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("数据标准码表信息", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class).registerWriteHandler(new DsdCodeTermCustomSheetWriteHandler(dsdExcelService)).sheet("模板").doWrite(codeTermVOList);
+    }
+
+    /**
+     * 码表信息excel_导入数据(根据码表分类目录Id)
      *
      * @Param: file
      * @return: java.lang.String
      */
     @PostMapping("/code/term/upload/codeDirId/{codeDirId}")
     @ResponseBody
-    public DefaultCommonResult codeTermUpload(MultipartFile file, @PathVariable("codeDirId") String codeDirId) throws IOException {
+    public DefaultCommonResult codeTermUploadByCodeDir(MultipartFile file, @PathVariable("codeDirId") String codeDirId) throws IOException {
         dsdExcelService.codeTermUpload(file, codeDirId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
 
     /**
-     * 数据标准码表信excel 导入 (默认根据Excel中选择的码表层级进行导入)
+     * 码表信息excel__导入数据(默认根据Excel中选择的码表层级进行导入)
      *
      * @Param: file
      * @return: java.lang.String
@@ -157,35 +191,42 @@ public class DsdExcelController {
 
 
     /**
-     * 数据标准基本信息导入excel模板下载
+     * 标准基本信息excel__模板下载
      *
      * @param response
      * @throws IOException
      */
     @PostMapping("/basic/info/upload/template")
     public void basicInfoDownloadTemplate(HttpServletResponse response) throws IOException {
+        List<DsdBasicinfoVO> dsdBasicInfoSampleDataList = dsdExcelService.dsdBasicInfoSampleData();
+
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).registerWriteHandler(new DsdBasicInfoCustomSheetWriteHandler(dsdExcelService)).sheet("数据标准信息导入模板").doWrite(null);
+        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class)
+                .registerWriteHandler(new DsdBasicInfoCustomSheetWriteHandler(dsdExcelService))
+                .sheet("数据标准信息导入模板").doWrite(dsdBasicInfoSampleDataList);
     }
 
 
     /**
-     * 码表信息导入excel模板下载
+     * 码表信息excel__模板下载
      *
      * @Param: response
      * @return: void
      */
     @PostMapping("/code/term/download/template")
     public void codeTermDownloadTemplate(HttpServletResponse response) throws IOException {
+        List<DsdCodeTermVO> codeTermSampleDataList = dsdExcelService.dsdCodeTermSampleData();
+
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准码表信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class).registerWriteHandler(new DsdCodeTermCustomSheetWriteHandler(dsdExcelService)).sheet("模板").doWrite(null);
+        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class)
+                .registerWriteHandler(new DsdCodeTermCustomSheetWriteHandler(dsdExcelService))
+                .sheet("模板").doWrite(codeTermSampleDataList);
     }
-
 
 }
