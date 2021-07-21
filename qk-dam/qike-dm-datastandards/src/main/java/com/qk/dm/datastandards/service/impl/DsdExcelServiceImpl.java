@@ -13,9 +13,9 @@ import com.qk.dm.datastandards.mapstruct.mapper.DsdTermMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
 import com.qk.dm.datastandards.repositories.DsdTermRepository;
+import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.service.DsdExcelService;
-import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
@@ -28,7 +28,6 @@ import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 数据标准excel导入导出
@@ -47,6 +46,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     private final DsdCodeTermRepository dsdCodeTermRepository;
     private final DsdExcelBatchService dsdExcelBatchService;
     private final DataStandardDirService dataStandardDirService;
+    private final DataStandardCodeDirService dataStandardCodeDirService;
 
     @Autowired
     public DsdExcelServiceImpl(
@@ -54,13 +54,14 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             DsdBasicinfoRepository dsdBasicinfoRepository,
             DsdCodeTermRepository dsdCodeTermRepository,
             EntityManager entityManager,
-            DsdExcelBatchService dsdExcelBatchService, DataStandardDirService dataStandardDirService) {
+            DsdExcelBatchService dsdExcelBatchService, DataStandardDirService dataStandardDirService, DataStandardCodeDirService dataStandardCodeDirService) {
         this.dsdTermRepository = dsdTermRepository;
         this.dsdBasicinfoRepository = dsdBasicinfoRepository;
         this.dsdCodeTermRepository = dsdCodeTermRepository;
         this.entityManager = entityManager;
         this.dsdExcelBatchService = dsdExcelBatchService;
         this.dataStandardDirService = dataStandardDirService;
+        this.dataStandardCodeDirService = dataStandardCodeDirService;
     }
 
 
@@ -103,7 +104,8 @@ public class DsdExcelServiceImpl implements DsdExcelService {
 
     @Override
     public void basicInfoUpload(MultipartFile file, String dirDsdId) throws IOException {
-        EasyExcel.read(file.getInputStream(), DsdBasicinfoVO.class, new DsdBasicInfoUploadDataListener(dsdExcelBatchService,dirDsdId)).sheet().doRead();
+        EasyExcel.read(file.getInputStream(), DsdBasicinfoVO.class,
+                new DsdBasicInfoUploadDataListener(dsdExcelBatchService, dirDsdId)).sheet().doRead();
     }
 
     @Override
@@ -120,18 +122,19 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public void codeTermUpload(MultipartFile file) throws IOException {
-        EasyExcel.read(
-                file.getInputStream(),
-                DsdCodeTermVO.class,
-                new DsdCodeTermUploadDataListener(dsdExcelBatchService))
-                .sheet()
-                .doRead();
+    public void codeTermUpload(MultipartFile file, String codeDirId) throws IOException {
+        EasyExcel.read(file.getInputStream(), DsdCodeTermVO.class,
+                new DsdCodeTermUploadDataListener(dsdExcelBatchService, codeDirId)).sheet().doRead();
     }
 
     @Override
     public List<String> findAllDsdDirLevel() {
         return dataStandardDirService.findAllDsdDirLevel();
+    }
+
+    @Override
+    public List<String> findAllDsdCodeDirLevel() {
+        return dataStandardCodeDirService.findAllDsdCodeDirLevel();
     }
 
 }

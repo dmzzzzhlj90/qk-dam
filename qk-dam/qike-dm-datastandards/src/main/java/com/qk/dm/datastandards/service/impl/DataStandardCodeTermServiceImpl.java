@@ -144,7 +144,8 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
         List<String> idList = Arrays.asList(ids.split(","));
         Set<Integer> idSet = new HashSet<>();
         idList.forEach(id -> idSet.add(Integer.parseInt(id)));
-        dsdCodeTermRepository.bulkDeleteDsdTerm(idSet);
+        Iterable<DsdCodeTerm> dsdCodeTerms = dsdCodeTermRepository.findAll(QDsdCodeTerm.dsdCodeTerm.id.in(idSet));
+        dsdCodeTermRepository.deleteInBatch(dsdCodeTerms);
     }
 
     public Map<String, Object> queryDsdCodeTermByParams(DsdCodeTermParamsVO dsdCodeTermParamsVO) throws ParseException {

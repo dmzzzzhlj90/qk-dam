@@ -47,7 +47,7 @@ public class DataStandardCodeDirController {
      */
     @PostMapping("/add")
     public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
-        dataStandardCodeDirService.addDsdDir(dsdCodeDirVO);
+         dataStandardCodeDirService.addDsdDir(dsdCodeDirVO);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

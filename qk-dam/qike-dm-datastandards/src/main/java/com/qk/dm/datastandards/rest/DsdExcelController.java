@@ -3,7 +3,8 @@ package com.qk.dm.datastandards.rest;
 import com.alibaba.excel.EasyExcel;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datastandards.easyexcel.handler.CustomSheetWriteHandler;
+import com.qk.dm.datastandards.easyexcel.handler.DsdBasicInfoCustomSheetWriteHandler;
+import com.qk.dm.datastandards.easyexcel.handler.DsdCodeTermCustomSheetWriteHandler;
 import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeTermVO;
@@ -80,7 +81,20 @@ public class DsdExcelController {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).sheet("模板").registerWriteHandler(new CustomSheetWriteHandler(dsdExcelService)).doWrite(dsdBasicinfoVOList);
+        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).sheet("模板").registerWriteHandler(new DsdBasicInfoCustomSheetWriteHandler(dsdExcelService)).doWrite(dsdBasicinfoVOList);
+    }
+
+    /**
+     * 数据标准基本信息excel 导入 (默认根据Excel中选择的层级进行导入)
+     *
+     * @Param: file
+     * @return: java.lang.String
+     */
+    @PostMapping("/basic/info/upload")
+    @ResponseBody
+    public DefaultCommonResult basicInfoUploadBydirDsdId(MultipartFile file) throws IOException {
+        dsdExcelService.basicInfoUpload(file, null);
+        return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
     /**
@@ -98,20 +112,7 @@ public class DsdExcelController {
 
 
     /**
-     * 数据标准基本信息excel 导入 (默认根据Excel中选择的层级进行导入)
-     *
-     * @Param: file
-     * @return: java.lang.String
-     */
-    @PostMapping("/basic/info/upload")
-    @ResponseBody
-    public DefaultCommonResult basicInfoUploadBydirDsdId(MultipartFile file) throws IOException {
-        dsdExcelService.basicInfoUpload(file, null);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
-
-    /**
-     * 码表信息excel导出
+     * 数据标准码表信息 excel导出
      *
      * @Param: response
      * @return: void
@@ -124,11 +125,25 @@ public class DsdExcelController {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准码表信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class).sheet("模板").doWrite(codeTermVOList);
+        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class).registerWriteHandler(new DsdCodeTermCustomSheetWriteHandler(dsdExcelService)).sheet("模板").doWrite(codeTermVOList);
     }
 
     /**
-     * 码表信息excel导入
+     * 根据标准分类目录Id,数据标准基本信息excel 导入
+     *
+     * @Param: file
+     * @return: java.lang.String
+     */
+    @PostMapping("/code/term/upload/codeDirId/{codeDirId}")
+    @ResponseBody
+    public DefaultCommonResult codeTermUpload(MultipartFile file, @PathVariable("codeDirId") String codeDirId) throws IOException {
+        dsdExcelService.codeTermUpload(file, codeDirId);
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
+
+
+    /**
+     * 数据标准码表信excel 导入 (默认根据Excel中选择的码表层级进行导入)
      *
      * @Param: file
      * @return: java.lang.String
@@ -136,7 +151,7 @@ public class DsdExcelController {
     @PostMapping("/code/term/upload")
     @ResponseBody
     public DefaultCommonResult codeTermUpload(MultipartFile file) throws IOException {
-        dsdExcelService.codeTermUpload(file);
+        dsdExcelService.codeTermUpload(file, null);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
@@ -153,7 +168,7 @@ public class DsdExcelController {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).registerWriteHandler(new CustomSheetWriteHandler(dsdExcelService)).sheet("数据标准信息导入模板").doWrite(null);
+        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class).registerWriteHandler(new DsdBasicInfoCustomSheetWriteHandler(dsdExcelService)).sheet("数据标准信息导入模板").doWrite(null);
     }
 
 
@@ -169,7 +184,7 @@ public class DsdExcelController {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准码表信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class).sheet("模板").doWrite(null);
+        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class).registerWriteHandler(new DsdCodeTermCustomSheetWriteHandler(dsdExcelService)).sheet("模板").doWrite(null);
     }
 
 

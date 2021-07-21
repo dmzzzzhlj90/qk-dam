@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -23,7 +24,7 @@ import java.util.Date;
 @ContentRowHeight(20)
 @HeadRowHeight(20)
 @ColumnWidth(25)
-public class DsdCodeTermVO {
+public class  DsdCodeTermVO {
 
     /**
      * ID编号
@@ -33,25 +34,18 @@ public class DsdCodeTermVO {
     private Integer id;
 
     /**
-     * 码表分类编码
+     * 中文表名称
      */
-    @NotBlank(message = "码表分类编码不能为空！")
-    @ExcelProperty("码表分类编码")
-    private String codeDirId;
+    @NotBlank(message = "中文表名称不能为空！")
+    @ExcelProperty("中文表名称")
+    private String codeTableChnName;
 
     /**
-     * 表编码
+     * 英文表名称
      */
-    @NotNull(message = "表编码不能为空！")
-    @ExcelProperty("表编码")
-    private Integer codeTableId;
-
-    /**
-     * 表名称
-     */
-    @NotBlank(message = "表名称不能为空！")
-    @ExcelProperty("表名称")
-    private String codeTableName;
+    @NotNull(message = "英文表名称不能为空！")
+    @ExcelProperty("英文表名称")
+    private String codeTableEnName;
 
     /**
      * 码表编码
@@ -66,6 +60,21 @@ public class DsdCodeTermVO {
     @NotBlank(message = "码表名称不能为空！")
     @ExcelProperty("码表名称")
     private String codeName;
+
+    /**
+     * 码表分类编码
+     */
+    @ExcelIgnore
+    @NotBlank(message = "码表分类编码不能为空！")
+    @ExcelProperty("码表分类编码")
+    private String codeDirId;
+
+    /**
+     * 码表层级
+     */
+    @NotBlank(message = "码表层级不能为空！")
+    @ExcelProperty("码表层级")
+    private String codeDirLevel;
 
     /**
      * 数据类型编码

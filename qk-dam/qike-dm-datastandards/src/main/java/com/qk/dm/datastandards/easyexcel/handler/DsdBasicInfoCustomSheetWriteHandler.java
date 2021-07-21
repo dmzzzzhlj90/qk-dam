@@ -14,16 +14,15 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * 自定义拦截器.对第一列第一行和第二行的数据新增下拉框，显示 测试1 测试2
- *
+ * 数据标准基本信息 自定义拦截器 设置excel属性值
  * @author wjq
  */
-public class CustomSheetWriteHandler implements SheetWriteHandler {
+public class DsdBasicInfoCustomSheetWriteHandler implements SheetWriteHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomSheetWriteHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DsdBasicInfoCustomSheetWriteHandler.class);
     private final DsdExcelService dsdExcelService;
 
-    public CustomSheetWriteHandler(DsdExcelService dsdExcelService) {
+    public DsdBasicInfoCustomSheetWriteHandler(DsdExcelService dsdExcelService) {
         this.dsdExcelService = dsdExcelService;
     }
 

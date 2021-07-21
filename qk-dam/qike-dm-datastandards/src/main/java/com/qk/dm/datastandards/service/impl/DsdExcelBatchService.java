@@ -3,9 +3,9 @@ package com.qk.dm.datastandards.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.*;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
+import com.qk.dm.datastandards.repositories.DsdCodeDirRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
 import com.qk.dm.datastandards.repositories.DsdDirRepository;
-import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.querydsl.core.types.Predicate;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,28 +35,15 @@ public class DsdExcelBatchService {
     private final DsdCodeTermRepository dsdCodeTermRepository;
     private final DsdBasicinfoRepository dsdBasicinfoRepository;
     private final DsdDirRepository dsdDirRepository;
-    private final DataStandardDirService dataStandardDirService;
+    private final DsdCodeDirRepository dsdCodeDirRepository;
 
     @Autowired
-    public DsdExcelBatchService(
-            DsdCodeTermRepository dsdCodeTermRepository, DsdBasicinfoRepository dsdBasicinfoRepository, DsdDirRepository dsdDirRepository, DataStandardDirService dataStandardDirService) {
+    public DsdExcelBatchService(DsdCodeTermRepository dsdCodeTermRepository, DsdBasicinfoRepository dsdBasicinfoRepository,
+                                DsdDirRepository dsdDirRepository, DsdCodeDirRepository dsdCodeDirRepository) {
         this.dsdCodeTermRepository = dsdCodeTermRepository;
         this.dsdBasicinfoRepository = dsdBasicinfoRepository;
         this.dsdDirRepository = dsdDirRepository;
-        this.dataStandardDirService = dataStandardDirService;
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public void addDsdCodeTermBatch(
-            List<DsdCodeTerm> codeTermList, Set<String> codeSet, Set<String> dirSet) {
-        List<DsdCodeTerm> dsdCodeTermAll = dsdCodeTermRepository.findAllByDirAndCodeId(codeSet, dirSet);
-        dsdCodeTermRepository.deleteInBatch(dsdCodeTermAll);
-
-        for (DsdCodeTerm dsdCodeTerm : codeTermList) {
-            entityManager.persist(dsdCodeTerm); // insert插入操作
-        }
-        entityManager.flush();
-        entityManager.clear();
+        this.dsdCodeDirRepository = dsdCodeDirRepository;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -106,6 +93,60 @@ public class DsdExcelBatchService {
                 dsdBasicinfo.setDsdLevelId(dsdDir.get().getDirDsdId());
                 dsdBasicinfo.setDsdLevel(dsdDir.get().getDsdDirLevel());
                 entityManager.persist(dsdBasicinfo); // insert插入操作
+            }
+        } else {
+            throw new BizException("码表目录,参数有误!!!");
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void addDsdCodeTermBatch(List<DsdCodeTerm> codeTermList, Set<String> dsdCodeDirLevelSet,
+                                    Map<String, String> dsdCodeDirLevelMap, String codeDirId) {
+        if (!StringUtils.isEmpty(codeDirId)) {
+            saveDsdCodeTermByCodeDirId(codeTermList, dsdCodeDirLevelMap, codeDirId);
+        } else {
+            saveDsdCodeTerm(codeTermList, dsdCodeDirLevelSet, dsdCodeDirLevelMap);
+        }
+        entityManager.flush();
+        entityManager.clear();
+    }
+
+    private void saveDsdCodeTerm(List<DsdCodeTerm> codeTermList, Set<String> dsdCodeDirLevelSet, Map<String, String> dsdCodeDirLevelMap) {
+        List<DsdCodeDir> dsdCodeDirAllList = dsdCodeDirRepository.findAll();
+        List<String> dsdCodeDirLevels = dsdCodeDirAllList.stream().map(dsdCodeDir -> dsdCodeDir.getCodeDirLevel()).collect(Collectors.toList());
+
+        dsdCodeDirLevelSet.forEach(codeDirLevel -> {
+            if (!dsdCodeDirLevels.contains(codeDirLevel)) {
+                throw new BizException("Excel中输入的码表目录层级:" + codeDirLevel + ",参数有误!!!");
+            }
+        });
+
+        Map<String, List<DsdCodeDir>> dsdDirLevelMap = dsdCodeDirAllList.stream().collect(Collectors.groupingBy(DsdCodeDir::getCodeDirLevel));
+        Predicate existDataPredicate = QDsdCodeTerm.dsdCodeTerm.codeDirLevel.in(dsdCodeDirLevelSet)
+                .and(QDsdCodeTerm.dsdCodeTerm.codeId.in(dsdCodeDirLevelMap.keySet()));
+        Iterable<DsdCodeTerm> existList = dsdCodeTermRepository.findAll(existDataPredicate);
+        dsdCodeTermRepository.deleteInBatch(existList);
+
+        for (DsdCodeTerm dsdCodeTerm : codeTermList) {
+            List<DsdCodeDir> dsdCodeDirList = dsdDirLevelMap.get(dsdCodeTerm.getCodeDirLevel());
+            dsdCodeTerm.setCodeDirId(dsdCodeDirList.get(0).getCodeDirId());
+            dsdCodeTerm.setCodeDirLevel(dsdCodeDirList.get(0).getCodeDirLevel());
+            entityManager.persist(dsdCodeTerm); // insert插入操作
+        }
+    }
+
+    private void saveDsdCodeTermByCodeDirId(List<DsdCodeTerm> codeTermList, Map<String, String> dsdCodeDirLevelMap, String codeDirId) {
+        Optional<DsdCodeDir> dsdCodeDir = dsdCodeDirRepository.findOne(QDsdCodeDir.dsdCodeDir.codeDirId.eq(codeDirId));
+        if (dsdCodeDir.isPresent()) {
+            Predicate existDataPredicate = QDsdCodeTerm.dsdCodeTerm.codeDirId.eq(codeDirId)
+                    .and(QDsdCodeTerm.dsdCodeTerm.codeId.in(dsdCodeDirLevelMap.keySet()));
+            Iterable<DsdCodeTerm> existList = dsdCodeTermRepository.findAll(existDataPredicate);
+            dsdCodeTermRepository.deleteInBatch(existList);
+
+            for (DsdCodeTerm dsdCodeTerm : codeTermList) {
+                dsdCodeTerm.setCodeDirId(dsdCodeDir.get().getCodeDirId());
+                dsdCodeTerm.setCodeDirLevel(dsdCodeDir.get().getCodeDirLevel());
+                entityManager.persist(dsdCodeTerm); // insert插入操作
             }
         } else {
             throw new BizException("数据标准目录,参数有误!!!");

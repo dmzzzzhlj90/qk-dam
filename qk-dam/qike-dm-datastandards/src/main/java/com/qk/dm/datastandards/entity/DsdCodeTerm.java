@@ -22,22 +22,16 @@ public class DsdCodeTerm implements Serializable {
     private Integer id;
 
     /**
-     * 码表分类id
+     * 中文表名称
      */
-    @Column(name = "code_dir_id", nullable = false)
-    private String codeDirId;
+    @Column(name = "code_table_chn_name", nullable = false)
+    private String codeTableChnName;
 
     /**
-     * 对应表编码
+     * 英文表名称
      */
-    @Column(name = "code_table_id", nullable = false)
-    private Integer codeTableId;
-
-    /**
-     * 对应表名称
-     */
-    @Column(name = "code_table_name", nullable = false)
-    private String codeTableName;
+    @Column(name = "code_table_en_name", nullable = false)
+    private String codeTableEnName;
 
     /**
      * 码表编码
@@ -50,6 +44,18 @@ public class DsdCodeTerm implements Serializable {
      */
     @Column(name = "code_name", nullable = false)
     private String codeName;
+
+    /**
+     * 码表分类id
+     */
+    @Column(name = "code_dir_id", nullable = false)
+    private String codeDirId;
+
+    /**
+     * 码表层级
+     */
+    @Column(name = "code_dir_level", nullable = false)
+    private String codeDirLevel;
 
     /**
      * 数据类型id

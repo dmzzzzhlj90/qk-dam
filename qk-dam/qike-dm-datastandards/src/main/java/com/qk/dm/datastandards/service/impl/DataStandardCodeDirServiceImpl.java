@@ -10,6 +10,7 @@ import com.qk.dm.datastandards.repositories.DsdCodeDirRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
+import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import com.querydsl.core.types.Predicate;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.qk.dm.datastandards.entity.QDsdCodeDir.dsdCodeDir;
 
@@ -107,12 +109,9 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
      * @return: 使用递归方法建树
      */
     public static List<DataStandardCodeTreeVO> buildByRecursive(List<DataStandardCodeTreeVO> respList) {
-        List<DataStandardCodeTreeVO> trees = new ArrayList<DataStandardCodeTreeVO>();
-        for (DataStandardCodeTreeVO treeNode : respList) {
-            if (null == treeNode.getParentId() || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
-                trees.add(findChildren(treeNode, respList));
-            }
-        }
+        DataStandardCodeTreeVO topParent = DataStandardCodeTreeVO.builder().codeDirId("-1").codeDirName("全部码表").build();
+        List<DataStandardCodeTreeVO> trees = new ArrayList<>();
+        trees.add(findChildren(topParent, respList));
         return trees;
     }
 
@@ -120,15 +119,17 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
      * @param: treeNode, respList
      * @return: 递归查找子节点
      */
-    public static DataStandardCodeTreeVO findChildren(
-            DataStandardCodeTreeVO treeNode, List<DataStandardCodeTreeVO> respList) {
-        treeNode.setChildren(new ArrayList<DataStandardCodeTreeVO>());
-        for (DataStandardCodeTreeVO it : respList) {
-            if (treeNode.getCodeDirId().equals(it.getParentId())) {
+    public static DataStandardCodeTreeVO findChildren(DataStandardCodeTreeVO treeNode, List<DataStandardCodeTreeVO> respList) {
+        treeNode.setChildren(new ArrayList<>());
+        for (DataStandardCodeTreeVO DSCTV : respList) {
+            if (treeNode.getCodeDirId().equals(DSCTV.getParentId())) {
                 if (treeNode.getChildren() == null) {
-                    treeNode.setChildren(new ArrayList<DataStandardCodeTreeVO>());
+                    treeNode.setChildren(new ArrayList<>());
                 }
-                treeNode.getChildren().add(findChildren(it, respList));
+                if (!DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getCodeDirId())) {
+                    DSCTV.setCodeDirLevel(treeNode.getCodeDirLevel() + "/" + DSCTV.getCodeDirName());
+                }
+                treeNode.getChildren().add(findChildren(DSCTV, respList));
             }
         }
         return treeNode;
@@ -181,5 +182,10 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
                 this.getCodeDirId(codeDirIdSet, dsdCodeDir.getCodeDirId());
             }
         }
+    }
+
+    @Override
+    public List<String> findAllDsdCodeDirLevel() {
+        return dsdCodeDirRepository.findAll().stream().map(dsdCodeDir -> dsdCodeDir.getCodeDirLevel()).collect(Collectors.toList());
     }
 }
