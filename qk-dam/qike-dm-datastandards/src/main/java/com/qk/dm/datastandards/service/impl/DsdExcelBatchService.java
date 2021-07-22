@@ -14,10 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -77,6 +74,8 @@ public class DsdExcelBatchService {
             List<DsdDir> dsdDirList = dsdDirLevelMap.get(dsdBasicinfo.getDsdLevel());
             dsdBasicinfo.setDsdLevelId(dsdDirList.get(0).getDirDsdId());
             dsdBasicinfo.setDsdLevel(dsdDirList.get(0).getDsdDirLevel());
+            dsdBasicinfo.setGmtCreate(new Date());
+            dsdBasicinfo.setGmtModified(new Date());
             entityManager.persist(dsdBasicinfo); // insert插入操作
         }
     }
@@ -92,6 +91,8 @@ public class DsdExcelBatchService {
             for (DsdBasicinfo dsdBasicinfo : dsdBasicInfoList) {
                 dsdBasicinfo.setDsdLevelId(dsdDir.get().getDirDsdId());
                 dsdBasicinfo.setDsdLevel(dsdDir.get().getDsdDirLevel());
+                dsdBasicinfo.setGmtCreate(new Date());
+                dsdBasicinfo.setGmtModified(new Date());
                 entityManager.persist(dsdBasicinfo); // insert插入操作
             }
         } else {
@@ -131,6 +132,8 @@ public class DsdExcelBatchService {
             List<DsdCodeDir> dsdCodeDirList = dsdDirLevelMap.get(dsdCodeTerm.getCodeDirLevel());
             dsdCodeTerm.setCodeDirId(dsdCodeDirList.get(0).getCodeDirId());
             dsdCodeTerm.setCodeDirLevel(dsdCodeDirList.get(0).getCodeDirLevel());
+            dsdCodeTerm.setGmtCreate(new Date());
+            dsdCodeTerm.setGmtModified(new Date());
             entityManager.persist(dsdCodeTerm); // insert插入操作
         }
     }
@@ -146,6 +149,8 @@ public class DsdExcelBatchService {
             for (DsdCodeTerm dsdCodeTerm : codeTermList) {
                 dsdCodeTerm.setCodeDirId(dsdCodeDir.get().getCodeDirId());
                 dsdCodeTerm.setCodeDirLevel(dsdCodeDir.get().getCodeDirLevel());
+                dsdCodeTerm.setGmtCreate(new Date());
+                dsdCodeTerm.setGmtModified(new Date());
                 entityManager.persist(dsdCodeTerm); // insert插入操作
             }
         } else {

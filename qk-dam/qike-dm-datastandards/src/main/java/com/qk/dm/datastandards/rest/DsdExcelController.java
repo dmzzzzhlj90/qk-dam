@@ -90,8 +90,8 @@ public class DsdExcelController {
      * @Param: response
      * @return: void
      */
-    @PostMapping("/basic/info/download/dirDsdId/{dirDsdId}")
-    public void basicInfoDownloadByDirDsdId(@PathVariable("dirDsdId") String dirDsdId, HttpServletResponse response) throws IOException {
+    @PostMapping("/basic/info/download/dirDsdId")
+    public void basicInfoDownloadByDirDsdId(@RequestParam("dirDsdId") String dirDsdId, HttpServletResponse response) throws IOException {
         List<DsdBasicinfoVO> dsdBasicinfoVOList = dsdExcelService.queryBasicInfos(dirDsdId);
 
         response.setContentType("application/vnd.ms-excel");
@@ -120,9 +120,9 @@ public class DsdExcelController {
      * @Param: file
      * @return: java.lang.String
      */
-    @PostMapping("/basic/info/upload/dirDsdId/{dirDsdId}")
+    @PostMapping("/basic/info/upload/dirDsdId")
     @ResponseBody
-    public DefaultCommonResult basicInfoUploadByDirDsdId(MultipartFile file, @PathVariable("dirDsdId") String dirDsdId) throws IOException {
+    public DefaultCommonResult basicInfoUploadByDirDsdId(MultipartFile file, @RequestParam("dirDsdId") String dirDsdId) throws IOException {
         dsdExcelService.basicInfoUpload(file, dirDsdId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
@@ -151,8 +151,8 @@ public class DsdExcelController {
      * @Param: response
      * @return: void
      */
-    @PostMapping("/code/term/download//codeDirId/{codeDirId}")
-    public void codeTermDownloadByCodeDir(HttpServletResponse response,@PathVariable("codeDirId") String codeDirId) throws IOException {
+    @PostMapping("/code/term/download/codeDirId")
+    public void codeTermDownloadByCodeDir(HttpServletResponse response,@RequestParam("codeDirId") String codeDirId) throws IOException {
         List<DsdCodeTermVO> codeTermVOList = dsdExcelService.queryCodeTerms(codeDirId);
 
         response.setContentType("application/vnd.ms-excel");
@@ -168,9 +168,9 @@ public class DsdExcelController {
      * @Param: file
      * @return: java.lang.String
      */
-    @PostMapping("/code/term/upload/codeDirId/{codeDirId}")
+    @PostMapping("/code/term/upload/codeDirId")
     @ResponseBody
-    public DefaultCommonResult codeTermUploadByCodeDir(MultipartFile file, @PathVariable("codeDirId") String codeDirId) throws IOException {
+    public DefaultCommonResult codeTermUploadByCodeDir(MultipartFile file, @RequestParam("codeDirId") String codeDirId) throws IOException {
         dsdExcelService.codeTermUpload(file, codeDirId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
