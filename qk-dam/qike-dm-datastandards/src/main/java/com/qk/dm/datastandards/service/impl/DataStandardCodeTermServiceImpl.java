@@ -67,6 +67,8 @@ public class DataStandardCodeTermServiceImpl implements DataStandardCodeTermServ
 
         list.forEach(dsdCodeTerm -> {
             DsdCodeTermVO dsdCodeTermVO = DsdCodeTermMapper.INSTANCE.usDsdCodeTermVO(dsdCodeTerm);
+            String codeDirLevel = dsdCodeTermVO.getCodeDirLevel();
+            dsdCodeTermVO.setCodeDirLevelName(codeDirLevel.split("/")[codeDirLevel.split("/").length-1]);
             dsdCodeTermVOList.add(dsdCodeTermVO);
         });
         return new PageResultVO<>(total, dsdCodeTermParamsVO.getPagination().getPage(),

@@ -27,7 +27,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 数据标准excel导入导出
@@ -93,7 +95,9 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     public List<DsdCodeTermVO> queryCodeTerms(String codeDirId) {
         List<DsdCodeTermVO> codeTermVOList = new ArrayList<>();
         if (!StringUtils.isEmpty(codeDirId)) {
-            Predicate predicate = QDsdCodeTerm.dsdCodeTerm.codeDirId.eq(codeDirId);
+            Set<String> codeDirSet = new HashSet<>();
+            dataStandardCodeDirService.getCodeDirId(codeDirSet, codeDirId);
+            Predicate predicate = QDsdCodeTerm.dsdCodeTerm.codeDirId.in(codeDirSet);
             Iterable<DsdCodeTerm> dsdTermList = dsdCodeTermRepository.findAll(predicate);
 
             dsdTermList.forEach(
@@ -116,7 +120,9 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     public List<DsdBasicinfoVO> queryBasicInfos(String dirDsdId) {
         List<DsdBasicinfoVO> dsdBasicInfoVOList = new ArrayList<>();
         if (!StringUtils.isEmpty(dirDsdId)) {
-            Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdLevelId.eq(dirDsdId);
+            Set<String> dsdDirSet = new HashSet<>();
+            dataStandardDirService.getDsdId(dsdDirSet, dirDsdId);
+            Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdLevelId.in(dsdDirSet);
             Iterable<DsdBasicinfo> dsdTermList = dsdBasicinfoRepository.findAll(predicate);
             dsdTermList.forEach(
                     dsdBasicInfo -> {
@@ -169,7 +175,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
                     .colName("column" + i)
                     .dataType("varchar")
                     .dataCapacity("50")
-                    .useCodeId("/code_table" + i)
+                    .useCodeLevel("/code_table" + i)
                     .dsdLevel("/全部标准")
                     .description("数据标准基本信息,excel模板样例数据!")
                     .build();

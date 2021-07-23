@@ -10,10 +10,8 @@ import com.qk.dm.datastandards.repositories.DsdCodeDirRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeTermRepository;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
-import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import com.querydsl.core.types.Predicate;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,18 +52,13 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     public void addDsdDir(DsdCodeDirVO dsdCodeDirVO) {
         DsdCodeDir dsdCodeDir = DsdDirCodeDirTreeMapper.INSTANCE.useDsdCodeDir(dsdCodeDirVO);
         dsdCodeDir.setGmtCreate(new Date());
-        if (StringUtils.isEmpty(dsdCodeDir.getCodeDirId())) {
-            dsdCodeDir.setCodeDirId(UUID.randomUUID().toString().replaceAll("-", ""));
-        }
-        Predicate predicate = QDsdCodeDir.dsdCodeDir.codeDirId.eq(dsdCodeDir.getCodeDirId());
+        dsdCodeDir.setCodeDirId(UUID.randomUUID().toString().replaceAll("-", ""));
+
+        Predicate predicate = QDsdCodeDir.dsdCodeDir.codeDirLevel.eq(dsdCodeDir.getCodeDirLevel());
         boolean exists = dsdCodeDirRepository.exists(predicate);
         if (exists) {
-            throw new BizException(
-                    "当前要新增的码表目录ID为："
-                            + dsdCodeDir.getCodeDirId()
-                            + "码表名称为:"
-                            + dsdCodeDir.getCodeDirName()
-                            + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的码表目录名称为:" + dsdCodeDir.getCodeDirName() + " 所属的节点层级目录为:"
+                    + dsdCodeDir.getCodeDirLevel() + " 的数据，已存在！！！");
         }
         dsdCodeDirRepository.save(dsdCodeDir);
     }
@@ -77,14 +70,17 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
         Predicate predicate = QDsdCodeDir.dsdCodeDir.codeDirId.eq(dsdCodeDir.getCodeDirId());
         boolean exists = dsdCodeDirRepository.exists(predicate);
         if (exists) {
+            Predicate dirLevelPredicate = QDsdCodeDir.dsdCodeDir.codeDirLevel.eq(dsdCodeDir.getCodeDirLevel());
+            boolean isExistDirLevel = dsdCodeDirRepository.exists(dirLevelPredicate);
+            if (isExistDirLevel) {
+                throw new BizException("当前要编辑的数据标准分类名称为:" + dsdCodeDir.getCodeDirName() + " 所属的节点层级目录为:"
+                        + dsdCodeDir.getCodeDirLevel() + ", 的数据，已存在！！！");
+            }
+
             dsdCodeDirRepository.saveAndFlush(dsdCodeDir);
         } else {
-            throw new BizException(
-                    "当前要编辑的数据分类ID为："
-                            + dsdCodeDir.getCodeDirId()
-                            + "数据标准分类名称为:"
-                            + dsdCodeDir.getCodeDirName()
-                            + " 的数据，不已存在！！！");
+            throw new BizException("当前要编辑的数据标准分类名称为:"
+                    + dsdCodeDir.getCodeDirName() + " 的数据，不存在！！！");
         }
     }
 

@@ -56,30 +56,29 @@ public class DsdBasicinfoVO {
     /**
      * 数据类型
      */
-    @NotBlank(message = "数据类型不能为空！")
+//    @NotBlank(message = "数据类型不能为空！")
     @ExcelProperty("数据类型")
     private String dataType;
 
     /**
      * 数据容量
      */
-    @NotBlank(message = "数据容量不能为空！")
+//    @NotBlank(message = "数据容量不能为空！")
     @ExcelProperty("数据容量")
     private String dataCapacity;
 
     /**
      * 引用码表
      */
-    @NotBlank(message = "标准代码不能为空！")
+//    @NotBlank(message = "引用码表不能为空！")
     @ExcelProperty("引用码表")
-    private String useCodeId;
+    private String useCodeLevel;
 
     /**
      * 码表字段
      */
     //    @NotBlank(message = "码表字段不能为空！")
     @ExcelProperty("码表字段")
-    @ExcelIgnore
     private String codeCol;
 
     /**
@@ -92,10 +91,18 @@ public class DsdBasicinfoVO {
     /**
      * 标准层级ID
      */
-    @ExcelProperty("标准层级")
-    @NotBlank(message = "标准层级ID不能为空！")
+    @ExcelProperty("标准层级目录id")
+    @NotBlank(message = "标准层级目录ID不能为空！")
     @ExcelIgnore
     private String dsdLevelId;
+
+    /**
+     * 标准层级目录名称
+     */
+//    @NotBlank(message = "标准层级名称不能为空！")
+    @ExcelProperty("标准层级目录名称")
+    @ExcelIgnore
+    private String dsdLevelName;
 
     /**
      * 描述

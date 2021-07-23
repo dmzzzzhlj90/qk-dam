@@ -56,8 +56,8 @@ public class DsdBasicinfo implements Serializable {
     /**
      * 引用码表
      */
-    @Column(name = "use_code_id")
-    private String useCodeId;
+    @Column(name = "use_code_level")
+    private String useCodeLevel;
 
     /**
      * 码表字段
@@ -104,4 +104,5 @@ public class DsdBasicinfo implements Serializable {
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag = 0;
+
 }

@@ -62,19 +62,27 @@ public class  DsdCodeTermVO {
     private String codeName;
 
     /**
-     * 码表分类编码
-     */
-    @ExcelIgnore
-    @NotBlank(message = "码表分类编码不能为空！")
-    @ExcelProperty("码表分类编码")
-    private String codeDirId;
-
-    /**
      * 码表层级
      */
     @NotBlank(message = "码表层级不能为空！")
     @ExcelProperty("码表层级")
     private String codeDirLevel;
+
+    /**
+     * 码表目录Id
+     */
+    @ExcelIgnore
+    @NotBlank(message = "码表目录Id不能为空！")
+    @ExcelProperty("码表目录Id")
+    private String codeDirId;
+
+    /**
+     * 码表层级目录名称
+     */
+//    @NotBlank(message = "码表层级目录名称不能为空！")
+    @ExcelProperty("码表层级目录名称")
+    @ExcelIgnore
+    private String codeDirLevelName;
 
     /**
      * 数据类型编码

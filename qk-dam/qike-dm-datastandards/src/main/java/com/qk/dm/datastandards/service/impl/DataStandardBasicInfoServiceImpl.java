@@ -64,6 +64,8 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
 
         list.forEach(dsd -> {
             DsdBasicinfoVO dsdBasicinfoVO = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsd);
+            String dsdLevel = dsdBasicinfoVO.getDsdLevel();
+            dsdBasicinfoVO.setDsdLevelName(dsdLevel.split("/")[dsdLevel.split("/").length - 1]);
             dsdBasicinfoVOList.add(dsdBasicinfoVO);
         });
         return new PageResultVO<>(total, dsdBasicinfoParamsVO.getPagination().getPage(),
@@ -115,12 +117,8 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
         if (exists) {
             dsdBasicinfoRepository.saveAndFlush(dsdBasicinfo);
         } else {
-            throw new BizException(
-                    "当前要更新的标准代码ID为："
-                            + dsdBasicinfo.getDsdCode()
-                            + "标准名称为:"
-                            + dsdBasicinfo.getDsdName()
-                            + " 的数据，不存在！！！");
+            throw new BizException("当前要更新的标准代码ID为：" + dsdBasicinfo.getDsdCode()
+                    + "标准名称为:" + dsdBasicinfo.getDsdName() + " 的数据，不存在！！！");
         }
     }
 
@@ -138,7 +136,8 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
         List<String> idList = Arrays.asList(ids.split(","));
         Set<Integer> idSet = new HashSet<>();
         idList.forEach(id -> idSet.add(Integer.parseInt(id)));
-        dsdBasicinfoRepository.bulkDeleteDsdBasicInfo(idSet);
+        List<DsdBasicinfo> basicInfoList = dsdBasicinfoRepository.findAllById(idSet);
+        dsdBasicinfoRepository.deleteInBatch(basicInfoList);
 
     }
 

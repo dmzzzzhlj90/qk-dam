@@ -47,19 +47,17 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
     @Override
     public void addDsdDir(DsdDirVO dsdDirVO) {
-        dsdDirVO.setDirDsdId(UUID.randomUUID().toString().replaceAll("-", ""));
         DsdDir dsdDir = DsdDirTreeMapper.INSTANCE.useDsdDir(dsdDirVO);
         dsdDir.setGmtCreate(new Date());
-        Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
+        dsdDir.setDirDsdId(UUID.randomUUID().toString().replaceAll("-", ""));
+
+        Predicate predicate = QDsdDir.dsdDir.dsdDirLevel.eq(dsdDirVO.getDsdDirLevel());
         boolean exists = dsdDirRepository.exists(predicate);
         if (exists) {
-            throw new BizException(
-                    "当前要新增的数据分类ID为："
-                            + dsdDir.getDirDsdId()
-                            + "数据标准分类名称为:"
-                            + dsdDir.getDirDsdName()
-                            + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的数据标准分类名称为:" + dsdDir.getDirDsdName() + " 所属的节点层级目录为:"
+                    + dsdDirVO.getDsdDirLevel() + " 的数据，已存在！！！");
         }
+
         dsdDirRepository.save(dsdDir);
     }
 
@@ -70,14 +68,15 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
         Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
         boolean exists = dsdDirRepository.exists(predicate);
         if (exists) {
+            Predicate dirLevelPredicate = QDsdDir.dsdDir.dsdDirLevel.eq(dsdDir.getDsdDirLevel());
+            boolean isExistDirLevel = dsdDirRepository.exists(dirLevelPredicate);
+            if (isExistDirLevel) {
+                throw new BizException("当前要编辑的数据标准分类名称为:" + dsdDir.getDirDsdName() + " 所属的节点层级目录为:"
+                        + dsdDirVO.getDsdDirLevel() + ", 的数据，已存在！！！");
+            }
             dsdDirRepository.saveAndFlush(dsdDir);
         } else {
-            throw new BizException(
-                    "当前要编辑的数据分类ID为："
-                            + dsdDir.getDirDsdId()
-                            + "数据标准分类名称为:"
-                            + dsdDir.getDirDsdName()
-                            + " 的数据，不已存在！！！");
+            throw new BizException("当前要编辑的数据标准分类名称为:" + dsdDir.getDirDsdName() + " 的数据，不存在！！！");
         }
     }
 
