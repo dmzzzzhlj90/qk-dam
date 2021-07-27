@@ -2,44 +2,40 @@ package com.qk.dm.dataservice.config;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import java.util.List;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.List;
-
-/**
- * @author shenpengjie
- */
-//@RestControllerAdvice
-//@Order(-1)
-//@ResponseBody
+/** @author shenpengjie */
+// @RestControllerAdvice
+// @Order(-1)
+// @ResponseBody
 public class GlobalExceptionConfig {
 
-    @ExceptionHandler(value = BindException.class)
-    public DefaultCommonResult bindExceptionErrorHandler(BindException e) {
-        BindingResult result = e.getBindingResult();
-        StringBuffer errorString = new StringBuffer();
-        if (result.hasErrors()) {
-            List<FieldError> fieldErrors = result.getFieldErrors();
-            int i = 1;
-            fieldErrors.forEach(error -> {
-                errorString.append(error.getDefaultMessage());
-                if (i < fieldErrors.size()) {
-                    errorString.append(",");
-                }
-            });
-        }
-        return new DefaultCommonResult(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR);
+  @ExceptionHandler(value = BindException.class)
+  public DefaultCommonResult bindExceptionErrorHandler(BindException e) {
+    BindingResult result = e.getBindingResult();
+    StringBuffer errorString = new StringBuffer();
+    if (result.hasErrors()) {
+      List<FieldError> fieldErrors = result.getFieldErrors();
+      int i = 1;
+      fieldErrors.forEach(
+          error -> {
+            errorString.append(error.getDefaultMessage());
+            if (i < fieldErrors.size()) {
+              errorString.append(",");
+            }
+          });
     }
+    return new DefaultCommonResult(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR);
+  }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public DefaultCommonResult missingServletRequestParameterException(MissingServletRequestParameterException e) {
-        return new DefaultCommonResult(ResultCodeEnum.PARAM_IS_INVALID);
-    }
-
-
+  @ExceptionHandler(MissingServletRequestParameterException.class)
+  public DefaultCommonResult missingServletRequestParameterException(
+      MissingServletRequestParameterException e) {
+    return new DefaultCommonResult(ResultCodeEnum.PARAM_IS_INVALID);
+  }
 }
-

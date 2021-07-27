@@ -39,5 +39,7 @@ public class LongGovConstant {
   public static final int RESULT_SUCCESS_EXIST = 2; // 执行成功,有可执行数据
 
   /** 忽略表对应的任务 */
-  public static final String[] IGNORE_TASK_TABLENAMES = {"task_qk_company","task_qk_company_class"};
+  public static final String[] IGNORE_TASK_TABLENAMES = {
+    "task_qk_company", "task_qk_company_class"
+  };
 }

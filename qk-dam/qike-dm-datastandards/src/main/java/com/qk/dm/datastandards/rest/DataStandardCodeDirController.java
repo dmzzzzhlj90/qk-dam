@@ -5,11 +5,10 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 数据标准__码表目录接口
@@ -22,69 +21,68 @@ import java.util.List;
 @RestController
 @RequestMapping("/code/dir")
 public class DataStandardCodeDirController {
-    private final DataStandardCodeDirService dataStandardCodeDirService;
+  private final DataStandardCodeDirService dataStandardCodeDirService;
 
-    @Autowired
-    public DataStandardCodeDirController(DataStandardCodeDirService dataStandardCodeDirService) {
-        this.dataStandardCodeDirService = dataStandardCodeDirService;
-    }
+  @Autowired
+  public DataStandardCodeDirController(DataStandardCodeDirService dataStandardCodeDirService) {
+    this.dataStandardCodeDirService = dataStandardCodeDirService;
+  }
 
-    /**
-     * 获取数据标准码表分类目录树
-     *
-     * @return: 返回数据标准码表分类目录树
-     */
-    @GetMapping("/tree")
-    public DefaultCommonResult<List<DataStandardCodeTreeVO>> getDsdDirTree() {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeDirService.getTree());
-    }
+  /**
+   * 获取数据标准码表分类目录树
+   *
+   * @return: 返回数据标准码表分类目录树
+   */
+  @GetMapping("/tree")
+  public DefaultCommonResult<List<DataStandardCodeTreeVO>> getDsdDirTree() {
+    return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeDirService.getTree());
+  }
 
-    /**
-     * 新增码表分类目录
-     *
-     * @param: dsdCodeDirVO 数据标准码表分类目录VO
-     * @return: DefaultCommonResult
-     */
-    @PostMapping("/add")
-    public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
-         dataStandardCodeDirService.addDsdDir(dsdCodeDirVO);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
+  /**
+   * 新增码表分类目录
+   *
+   * @param: dsdCodeDirVO 数据标准码表分类目录VO
+   * @return: DefaultCommonResult
+   */
+  @PostMapping("/add")
+  public DefaultCommonResult addDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
+    dataStandardCodeDirService.addDsdDir(dsdCodeDirVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 
-    /**
-     * 编辑码表分类目录
-     *
-     * @param: dsdCodeDirVO 数据标准码表分类目录VO
-     * @return: DefaultCommonResult
-     */
-    @PutMapping("/update")
-    public DefaultCommonResult updateDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
-        dataStandardCodeDirService.updateDsdDir(dsdCodeDirVO);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
+  /**
+   * 编辑码表分类目录
+   *
+   * @param: dsdCodeDirVO 数据标准码表分类目录VO
+   * @return: DefaultCommonResult
+   */
+  @PutMapping("/update")
+  public DefaultCommonResult updateDsdDir(@RequestBody DsdCodeDirVO dsdCodeDirVO) {
+    dataStandardCodeDirService.updateDsdDir(dsdCodeDirVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 
-    /**
-     * 码表目录单叶子节点删除方式
-     *
-     * @param: id
-     * @return: DefaultCommonResult
-     */
-    @DeleteMapping("/delete/{id}")
-    public DefaultCommonResult deleteDsdDir(@PathVariable("id") Integer id) {
-        dataStandardCodeDirService.deleteDsdDir(id);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
+  /**
+   * 码表目录单叶子节点删除方式
+   *
+   * @param: id
+   * @return: DefaultCommonResult
+   */
+  @DeleteMapping("/delete/{id}")
+  public DefaultCommonResult deleteDsdDir(@PathVariable("id") Integer id) {
+    dataStandardCodeDirService.deleteDsdDir(id);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 
-    /**
-     * 码表目录支持根节点删除关联删除叶子节点方式
-     *
-     * @param: id
-     * @return: DefaultCommonResult
-     */
-    @DeleteMapping("/delete/root/{id}")
-    public DefaultCommonResult deleteDsdDirRoot(@PathVariable("id") Integer id) {
-        dataStandardCodeDirService.deleteDsdDirRoot(id);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
-
+  /**
+   * 码表目录支持根节点删除关联删除叶子节点方式
+   *
+   * @param: id
+   * @return: DefaultCommonResult
+   */
+  @DeleteMapping("/delete/root/{id}")
+  public DefaultCommonResult deleteDsdDirRoot(@PathVariable("id") Integer id) {
+    dataStandardCodeDirService.deleteDsdDirRoot(id);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 }

@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @ComponentScan(basePackages = "com.qk")
-public class DatasourceApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(DatasourceApplication.class, args);
-    }
+public class DmDatasourceApplication {
+  public static void main(String[] args) {
+    SpringApplication.run(DmDatasourceApplication.class, args);
+  }
 }

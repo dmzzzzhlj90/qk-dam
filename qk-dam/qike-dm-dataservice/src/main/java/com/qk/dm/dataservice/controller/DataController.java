@@ -4,10 +4,9 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DataService;
 import com.qk.dm.dataservice.vo.DataPushVO;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * @author shen
@@ -19,11 +18,10 @@ import javax.validation.Valid;
 @RequestMapping("/data")
 public class DataController {
 
-    @Autowired
-    DataService dataService;
+  @Autowired DataService dataService;
 
-    @PostMapping("/push")
-    public DefaultCommonResult dataPush(@RequestBody @Valid DataPushVO dataPushVO) {
-        return new DefaultCommonResult(ResultCodeEnum.OK, dataService.dataPush(dataPushVO));
-    }
+  @PostMapping("/push")
+  public DefaultCommonResult dataPush(@RequestBody @Valid DataPushVO dataPushVO) {
+    return new DefaultCommonResult(ResultCodeEnum.OK, dataService.dataPush(dataPushVO));
+  }
 }

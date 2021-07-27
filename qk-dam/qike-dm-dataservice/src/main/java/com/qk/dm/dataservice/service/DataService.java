@@ -9,10 +9,11 @@ import com.qk.dm.dataservice.vo.DataPushVO;
  * @date 2021-07-12 13:56
  */
 public interface DataService {
-    /**
-     * 处理数据
-     * @param dataPushVO
-     * @return
-     */
-    String dataPush(DataPushVO dataPushVO);
+  /**
+   * 处理数据
+   *
+   * @param dataPushVO
+   * @return
+   */
+  String dataPush(DataPushVO dataPushVO);
 }

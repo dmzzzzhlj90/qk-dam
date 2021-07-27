@@ -4,6 +4,12 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.http.result.BaseResult;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -17,13 +23,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
-
-import javax.validation.ConstraintViolationException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author daomingzhu

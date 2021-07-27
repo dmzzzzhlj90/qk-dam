@@ -4,7 +4,6 @@ import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,5 +26,5 @@ public interface DataStandardCodeDirService {
 
   void getCodeDirId(Set<String> codeDirIdSet, String codeDirId);
 
-    List<String> findAllDsdCodeDirLevel();
+  List<String> findAllDsdCodeDirLevel();
 }

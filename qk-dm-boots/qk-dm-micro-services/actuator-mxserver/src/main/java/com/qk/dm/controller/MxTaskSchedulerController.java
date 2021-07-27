@@ -22,19 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/task/scheduler")
 public class MxTaskSchedulerController {
-    private static final Log LOG = LogFactory.get("监控调度任务实例状态情况");
+  private static final Log LOG = LogFactory.get("监控调度任务实例状态情况");
 
-    private final MxTaskSchedulerService mxTaskSchedulerService;
+  private final MxTaskSchedulerService mxTaskSchedulerService;
 
-    @Autowired
-    public MxTaskSchedulerController(MxTaskSchedulerService mxTaskSchedulerService) {
-        this.mxTaskSchedulerService = mxTaskSchedulerService;
-    }
+  @Autowired
+  public MxTaskSchedulerController(MxTaskSchedulerService mxTaskSchedulerService) {
+    this.mxTaskSchedulerService = mxTaskSchedulerService;
+  }
 
-    @PostMapping("/process/instance/state")
-    public DefaultCommonResult sendProcessInstanceState() {
-        LOG.info("定时监控开始!");
-        mxTaskSchedulerService.sendProcessInstanceState();
-        return new DefaultCommonResult(ResultCodeEnum.OK);
-    }
+  @PostMapping("/process/instance/state")
+  public DefaultCommonResult sendProcessInstanceState() {
+    LOG.info("定时监控开始!");
+    mxTaskSchedulerService.sendProcessInstanceState();
+    return new DefaultCommonResult(ResultCodeEnum.OK);
+  }
 }

@@ -21,16 +21,15 @@ import org.springframework.stereotype.Service;
 @RefreshScope
 public class DataServiceImp implements DataService {
 
-    @Autowired
-    RestTemplateUtil restTemplateUtil;
+  @Autowired RestTemplateUtil restTemplateUtil;
 
-    @Value("${spring.push.url}")
-    private String url;
+  @Value("${spring.push.url}")
+  private String url;
 
-    private static final Log LOG = LogFactory.get("数据转换");
+  private static final Log LOG = LogFactory.get("数据转换");
 
-    @Override
-    public String dataPush(DataPushVO dataPushVO) {
-        return restTemplateUtil.postByRestTemplate(url, JSONUtil.parseObj(dataPushVO));
-    }
+  @Override
+  public String dataPush(DataPushVO dataPushVO) {
+    return restTemplateUtil.postByRestTemplate(url, JSONUtil.parseObj(dataPushVO));
+  }
 }
