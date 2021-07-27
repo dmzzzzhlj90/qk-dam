@@ -1,0 +1,44 @@
+server:
+  port: 8781
+spring:
+  logging:
+    level: info
+    path: logs/dm-datasource.log
+    appender:
+      ref: CONSOLE
+  messages:
+    basename: i18n/messages
+  mvc:
+    message-codes-resolver-format: postfix_error_code
+    servlet:
+      path: /datasource
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: dm-datasource
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.31.0.44/
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        group: DM-GROUP
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        descriptions: true
+    tags:
+      application: ${spring.application.name}
+

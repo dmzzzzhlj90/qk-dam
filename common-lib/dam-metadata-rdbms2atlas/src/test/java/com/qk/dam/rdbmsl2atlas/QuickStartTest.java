@@ -5,17 +5,15 @@ import com.qk.dam.rdbmsl2atlas.adapter.MysqlMetadata;
 import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlColumnType;
 import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlDbType;
 import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlTableType;
+import org.apache.atlas.ApplicationProperties;
+import org.apache.atlas.kafka.KafkaNotification;
 import org.apache.atlas.model.discovery.AtlasQuickSearchResult;
-import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.QuickSearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
-import org.apache.atlas.model.instance.AtlasEntityHeader;
+import org.apache.commons.configuration.Configuration;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 class QuickStartTest {
@@ -68,9 +66,15 @@ class QuickStartTest {
     }
     @Test
     void runDeleteEntity() throws Exception {
+        Configuration applicationProperties = ApplicationProperties.get();
+        KafkaNotification kafkaNotification     = new KafkaNotification(applicationProperties);
+        try {
+            kafkaNotification.start();
+            Thread.sleep(2000);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         QuickStart quick = new QuickStart();
-        quick.atlasClientV2.deleteEntityByGuid("d95cba3f-383b-4c8c-9f11-6b4d89fcb43b");
-        quick.atlasClientV2.purgeEntitiesByGuids(Set.of("d95cba3f-383b-4c8c-9f11-6b4d89fcb43b"));
 
 //        Map<String, String> c1 = Map.of("qualifiedName", "dba.accc@primary");
 //        quick.atlasClientV2.deleteEntityByAttribute("mysql_db", c1);

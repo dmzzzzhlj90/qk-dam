@@ -13,19 +13,40 @@ import java.util.stream.Collectors;
 public class MysqlTypeAgg {
     private static final Db use = Db.use("qk_es_updated_1");
 
-    public MysqlDbType searchMedataByDb(String database) throws SQLException {
+    public MysqlDbType searchMedataByDb(String database,
+                                        String applicationName,
+                                        String serverInfo,
+                                        String owner,
+                                        String description,
+                                        String displayName) throws SQLException {
+        List<Entity> entityList = use.query("select * from TABLES im where im.table_schema=?", database);
+        return getMysqlDbType(database, applicationName, serverInfo, owner, description, displayName, entityList);
+
+    }
+
+    public MysqlDbType searchMedataByDb(String database,
+                                        String patternTableStr,
+                                        String applicationName,
+                                        String serverInfo,
+                                        String owner,
+                                        String description,
+                                        String displayName) throws SQLException {
+        List<Entity> entityList = use.query("select * from TABLES im where im.table_schema=? and im.table_name=?", database,patternTableStr);
+        return getMysqlDbType(database, applicationName, serverInfo, owner, description, displayName, entityList);
+
+    }
+
+    private MysqlDbType getMysqlDbType(String database, String applicationName, String serverInfo, String owner, String description, String displayName, List<Entity> entityList) {
         // TODO 数据库信息从数据应用系统名录获得
 
         MysqlDbType mysqlDbType = MysqlDbType.builder()
-                .applicationName("qk_es_updated")
-                .serverInfo("172.31.0.16")
+                .applicationName(applicationName)
+                .serverInfo(serverInfo)
                 .name(database)
-                .owner("taohuanxi")
-                .description("上游数据接入MYSQL")
-                .displayName("贴源层数据")
-                .qualifiedName(database + "@172.31.0.16").build();
-
-        List<Entity> entityList = use.query("select * from TABLES im where im.table_schema=?", database);
+                .owner(owner)
+                .description(description)
+                .displayName(displayName)
+                .qualifiedName(database + "@" + serverInfo).build();
 
         List<MysqlTableType> mysqlTableTypes = entityList.stream().map(entity -> {
             MysqlTableType mysqlTableType = MysqlTableType.builder()
@@ -38,7 +59,7 @@ public class MysqlTypeAgg {
                     .tableCollation(entity.getStr("table_collation"))
                     .tableRows(entity.getStr("table_rows"))
                     .comment(entity.getStr("table_comment"))
-                    .owner("zhudaoming")
+                    .owner(owner)
                     .description(entity.getStr("table_comment"))
                     .displayName(entity.getStr("table_comment"))
                     .qualifiedName(database + "." + entity.getStr("table_name") + "@172.31.0.16")
@@ -56,7 +77,7 @@ public class MysqlTypeAgg {
                         .default_value(colEntity.getStr("column_default"))
                         .displayName(colEntity.getStr("column_comment"))
                         .description(colEntity.getStr("column_comment"))
-                        .owner("zhudaoming")
+                        .owner(owner)
                         .qualifiedName(database + "." + mysqlTableType.getName() + "." + colEntity.getStr("column_name") + "@172.31.0.16")
                         .build()).collect(Collectors.toList());
                 mysqlTableType.setMysqlColumnTypes(columnTypeList);
@@ -70,4 +91,5 @@ public class MysqlTypeAgg {
         mysqlDbType.setMysqlTableTypes(mysqlTableTypes);
         return mysqlDbType;
     }
+
 }

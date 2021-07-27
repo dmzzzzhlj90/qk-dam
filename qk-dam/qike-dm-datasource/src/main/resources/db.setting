@@ -1,0 +1,23 @@
+## db.setting文件
+[qkdam]
+url = jdbc:mysql://172.31.0.44:3306/qkdam?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
+username = root
+password = zhudao123
+driver = com.mysql.cj.jdbc.Driver
+
+# 自动提交
+autoCommit = true
+# 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒
+connectionTimeout = 300000
+# 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟
+idleTimeout = 8000000
+# 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';）
+maxLifetime = 36000000
+# 获取连接前的测试SQL
+connectionTestQuery = SELECT 1
+# 最小闲置连接数
+minimumIdle = 10
+# 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+maximumPoolSize = 15
+# 连接只读数据库时配置为true， 保证安全
+readOnly = false

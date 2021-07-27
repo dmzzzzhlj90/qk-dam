@@ -47,6 +47,7 @@ dependencies {
         api group: 'org.antlr', name: 'antlr4-runtime-testsuite', version: '4.8'
 
         api 'org.apache.atlas:atlas-client-v2:3.0.0-SNAPSHOT'
+        api 'org.apache.atlas:atlas-notification:3.0.0-SNAPSHOT'
         api 'org.apache.atlas:atlas-common:3.0.0-SNAPSHOT'
 
     }
