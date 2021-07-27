@@ -22,7 +22,11 @@ public class KafkaThTest {
     private KafkaNotification     kafkaNotification     = null;
     private NotificationInterface notificationInterface = null;
 
-
+    @Test
+    public void ttt() throws AtlasException {
+        Configuration atlasConf        = ApplicationProperties.get();
+        System.out.println(atlasConf);
+    }
     @Test
     public void setup() throws Exception {
         startNotificationServicesWithRetry();

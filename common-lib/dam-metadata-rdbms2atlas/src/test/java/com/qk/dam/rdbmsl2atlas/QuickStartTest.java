@@ -7,6 +7,7 @@ import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlDbType;
 import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlTableType;
 import org.apache.atlas.ApplicationProperties;
 import org.apache.atlas.kafka.KafkaNotification;
+import org.apache.atlas.model.audit.EntityAuditEventV2;
 import org.apache.atlas.model.discovery.AtlasQuickSearchResult;
 import org.apache.atlas.model.discovery.QuickSearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
@@ -59,10 +60,12 @@ class QuickStartTest {
         quick.setLimit(5);
         quick.setOffset(0);
         AtlasQuickSearchResult atlasQuickSearchResult = q.atlasClientV2.quickSearch(quick);
-        atlasQuickSearchResult
-                .getSearchResults()
-                .getEntities()
-                .forEach(result -> System.out.println(new Gson().toJson(result)));
+
+        List<EntityAuditEventV2> auditEvents = q.atlasClientV2.getAuditEvents("d35e008e-387c-4819-bea3-5775dd75d3d2",
+                null,
+                null,
+                (short) 20);
+        System.out.println(auditEvents);
     }
     @Test
     void runDeleteEntity() throws Exception {
