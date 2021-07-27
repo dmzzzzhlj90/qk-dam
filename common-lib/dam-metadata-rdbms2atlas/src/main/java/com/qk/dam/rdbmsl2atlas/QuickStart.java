@@ -11,8 +11,7 @@ import org.apache.atlas.model.instance.AtlasEntity;
  */
 public class QuickStart extends BaseClientConf {
 
-  public QuickStart() throws AtlasException {
-  }
+  public QuickStart() throws AtlasException {}
 
   public static void main(String[] args) throws Exception {
     new QuickStart().runQuickstart();
@@ -31,8 +30,7 @@ public class QuickStart extends BaseClientConf {
   }
 
   public void createEntities(AtlasEntity.AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo)
-          throws Exception {
+      throws Exception {
     atlasClientV2.createEntities(atlasEntitiesWithExtInfo);
   }
-
 }

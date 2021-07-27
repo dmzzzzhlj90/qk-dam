@@ -21,7 +21,5 @@ public class MysqlColumnType {
   private boolean isPrimaryKey;
   private String owner;
   private String qualifiedName;
-  @JsonIgnore
-  private AtlasEntity columnEntity;
-
+  @JsonIgnore private AtlasEntity columnEntity;
 }

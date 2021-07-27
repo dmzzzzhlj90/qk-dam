@@ -1,8 +1,7 @@
 package com.qk.dam.rdbmsl2atlas.pojo.mysql;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
@@ -26,11 +25,7 @@ public class MysqlTableType {
   private Long indexLength;
   private String tableCollation;
   private String qualifiedName;
-  @JsonIgnore
-  private List<MysqlColumnType> mysqlColumnTypes;
-  @JsonIgnore
-  private AtlasEntity tableEntity;
-  @JsonIgnore
-  private List<AtlasEntity> columnEntity;
-
+  @JsonIgnore private List<MysqlColumnType> mysqlColumnTypes;
+  @JsonIgnore private AtlasEntity tableEntity;
+  @JsonIgnore private List<AtlasEntity> columnEntity;
 }
