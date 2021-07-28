@@ -1,0 +1,83 @@
+package com.qk.dm.datastandards.utils;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.Map;
+
+public final class GsonUtil {
+    //    private static final Gson gson = GsonFactory.geInstance().create();
+    private static final Gson gson = new Gson();
+
+    private GsonUtil() {
+        throw new AssertionError();
+    }
+
+    public static String toJsonString(Object object) {
+        return gson.toJson(object);
+    }
+
+    public static String toJsonString(Object object, Type typeOfT) {
+        return gson.toJson(object, typeOfT);
+    }
+
+    public static Object fromJsonString(String json) {
+        return gson.fromJson(json, Object.class);
+    }
+
+    public static <T> T fromJsonString(String json, Type typeOfT) {
+        return gson.fromJson(json, typeOfT);
+    }
+
+    public static <T> T fromMap(Map<String, Object> map, Class<T> type) {
+        return gson.fromJson(gson.toJson(map), type);
+    }
+
+    public static Map<String, Object> toMap(Object object) {
+        return (Map)gson.fromJson(gson.toJson(object), Map.class);
+    }
+
+    public static JsonObject toJsonObject(String jsonStringObject) {
+        return JsonParser.parseString(jsonStringObject).getAsJsonObject();
+    }
+
+    public static JsonArray toJsonArray(String jsonStringArray) {
+        return JsonParser.parseString(jsonStringArray).getAsJsonArray();
+    }
+
+    public static JsonElement toJsonElement(String jsonStringElement) {
+        return JsonParser.parseString(jsonStringElement);
+    }
+
+    public static JsonElement jsonElementFrom(String jsonString) {
+        return JsonParser.parseString(jsonString);
+    }
+
+    public static boolean isJsonObject(String jsonStringObject) {
+        try {
+            return toJsonObject(jsonStringObject).isJsonObject();
+        } catch (IllegalStateException var2) {
+            return false;
+        }
+    }
+
+    public static boolean isJsonArray(String jsonStringArray) {
+        try {
+            return toJsonArray(jsonStringArray).isJsonArray();
+        } catch (IllegalStateException var2) {
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        String token = "eyJwcmluY2lwYWwiOiJ0ZXN0MDAyIiwiYXV0aG9yaXRpZXMiOiJhdXRob3JpdGllcyJ9";
+        byte[] decode = Base64.getDecoder().decode(token);
+        JsonElement jsonElement = toJsonElement(new String(decode, StandardCharsets.UTF_8));
+        jsonElement.getAsJsonObject().get("principal");
+    }
+}
