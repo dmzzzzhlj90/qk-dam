@@ -2,8 +2,6 @@ package com.qk.dm.datastandards.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datastandards.entity.DsdCodeInfo;
-import com.qk.dm.datastandards.entity.DsdCodeInfoExt;
 import com.qk.dm.datastandards.service.DataStandardCodeInfoService;
 import com.qk.dm.datastandards.vo.DsdCodeInfoExtVO;
 import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
@@ -15,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * 数据标准__码表管理接口
@@ -103,7 +101,7 @@ public class DataStandardCodeInfoController {
      * @return: 返回数据标码表列表信息
      */
     @PostMapping(value = "/ext/query")
-    public DefaultCommonResult<PageResultVO<DsdCodeInfoExtVO>> getDsdCodeInfoExt(@RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
+    public DefaultCommonResult<Map<String, Object>> getDsdCodeInfoExt(@RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
         return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoExt(dsdCodeInfoExtParamsVO));
     }
 

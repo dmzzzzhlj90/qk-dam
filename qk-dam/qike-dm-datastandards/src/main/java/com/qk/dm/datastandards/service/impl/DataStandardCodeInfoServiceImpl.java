@@ -188,9 +188,9 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
      * @param dsdCodeInfoExtParamsVO
      */
     @Override
-    public PageResultVO<DsdCodeInfoExtVO> getDsdCodeInfoExt(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
+    public Map<String, Object> getDsdCodeInfoExt(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
+        Map<String, Object> result = new HashMap<>();
         List<DsdCodeInfoExtVO> dsdCodeInfoExtVOList = new ArrayList<>();
-
         Map<String, Object> map = null;
         try {
             map = queryDsdCodeInfoVOExtByParams(dsdCodeInfoExtParamsVO);
@@ -206,10 +206,16 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
             setCodeTableValues(dsdCodeInfoExt, dsdCodeInfoExtVO);
             dsdCodeInfoExtVOList.add(dsdCodeInfoExtVO);
         });
-        return new PageResultVO<>(total, dsdCodeInfoExtParamsVO.getPagination().getPage(),
+        PageResultVO<DsdCodeInfoExtVO> pageResultVO = new PageResultVO<>(total, dsdCodeInfoExtParamsVO.getPagination().getPage(),
                 dsdCodeInfoExtParamsVO.getPagination().getSize(), dsdCodeInfoExtVOList);
-    }
 
+        Optional<DsdCodeInfo> dsdCodeInfo = dsdCodeInfoRepository.findById(Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId()).longValue());
+        String tableConfFieldsStr = dsdCodeInfo.get().getTableConfFields();
+        List<CodeTableFieldsVO> codeTableFieldsVOList = GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {}.getType());
+        result.put("headList", codeTableFieldsVOList);
+        result.put("dataList", pageResultVO);
+        return result;
+    }
 
     public Map<String, Object> queryDsdCodeInfoVOExtByParams(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
         HashMap<String, Object> result = new HashMap<>();

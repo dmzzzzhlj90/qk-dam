@@ -127,7 +127,7 @@ public class DsdExcelController {
 
 
     /**
-     * 码表信息数值__导出excel数据
+     * 码表信息数值__导出excel数据(根据dsdCodeInfoId表级数据)
      *
      * @Param: response
      * @return: void
@@ -137,32 +137,18 @@ public class DsdExcelController {
         dsdExcelService.codeValuesDownloadByCodeInfoId(response, Long.valueOf(dsdCodeInfoId).longValue());
     }
 
-//    /**
-//     * 码表信息excel_导入数据(根据码表分类目录Id)
-//     *
-//     * @Param: file
-//     * @return: java.lang.String
-//     */
-//    @PostMapping("/code/term/upload/codeDirId")
-//    @ResponseBody
-//    public DefaultCommonResult codeTermUploadByCodeDir(MultipartFile file, @RequestParam("codeDirId") String codeDirId) throws IOException {
-//        dsdExcelService.codeTermUpload(file, codeDirId);
-//        return new DefaultCommonResult(ResultCodeEnum.OK);
-//    }
-//
-//
-//    /**
-//     * 码表信息excel__导入数据(默认根据Excel中选择的码表层级进行导入)
-//     *
-//     * @Param: file
-//     * @return: java.lang.String
-//     */
-//    @PostMapping("/code/term/upload")
-//    @ResponseBody
-//    public DefaultCommonResult codeTermUpload(MultipartFile file) throws IOException {
-//        dsdExcelService.codeTermUpload(file, null);
-//        return new DefaultCommonResult(ResultCodeEnum.OK);
-//    }
+    /**
+     * 码表信息数值__导入excel数据(根据dsdCodeInfoId表级数据)
+     *
+     * @Param: file
+     * @return: java.lang.String
+     */
+    @PostMapping("/code/term/upload/codeDirId")
+    @ResponseBody
+    public DefaultCommonResult codeValuesUploadByCodeInfoId(MultipartFile file, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
+        dsdExcelService.codeValuesUploadByCodeInfoId(file, Long.valueOf(dsdCodeInfoId).longValue());
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
 
 
     /**

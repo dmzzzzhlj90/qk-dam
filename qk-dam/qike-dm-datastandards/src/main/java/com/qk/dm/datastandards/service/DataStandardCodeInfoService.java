@@ -7,6 +7,8 @@ import com.qk.dm.datastandards.vo.params.DsdCodeInfoExtParamsVO;
 import com.qk.dm.datastandards.vo.params.DsdCodeInfoParamsVO;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * @author wjq
  * @date 20210726
@@ -32,7 +34,7 @@ public interface DataStandardCodeInfoService {
      * 码表扩展信息_码表数值
      *
      * @param dsdCodeInfoExtParamsVO*/
-    PageResultVO<DsdCodeInfoExtVO> getDsdCodeInfoExt(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO);
+    Map<String, Object> getDsdCodeInfoExt(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO);
 
     void addDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO);
 
