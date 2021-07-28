@@ -4,7 +4,7 @@ public class MetadataJobYamlVO {
   private String name;
   private String dataConnectType;
   private MysqlDataConnectYamlVO dataConnect;
-  private ServerinfoYamlVO serverinfoYamlVO;
+  private ServerinfoYamlVO serverinfo;
 
   public String getName() {
     return name;
@@ -30,12 +30,12 @@ public class MetadataJobYamlVO {
     this.dataConnect = dataConnect;
   }
 
-  public ServerinfoYamlVO getServerinfoYamlVO() {
-    return serverinfoYamlVO;
+  public ServerinfoYamlVO getServerinfo() {
+    return serverinfo;
   }
 
-  public void setServerinfoYamlVO(ServerinfoYamlVO serverinfoYamlVO) {
-    this.serverinfoYamlVO = serverinfoYamlVO;
+  public void setServerinfo(ServerinfoYamlVO serverinfo) {
+    this.serverinfo = serverinfo;
   }
 
   @Override
@@ -50,7 +50,7 @@ public class MetadataJobYamlVO {
         + ", dataConnect="
         + dataConnect
         + ", serverinfoYamlVO="
-        + serverinfoYamlVO
+        + serverinfo
         + '}';
   }
 }

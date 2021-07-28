@@ -1,5 +1,6 @@
 package com.qk.dam.rdbmsl2atlas.repo;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
 import cn.hutool.db.ds.simple.SimpleDataSource;
@@ -10,6 +11,7 @@ import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlDbType;
 import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlTableType;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,21 +54,39 @@ public class MysqlTypeAgg {
               .set("table_name", "in" + "(" + inTbs + ")");
 
       entityList = use.find(tables);
+      Assert.notEmpty(entityList,"未查询到符合条件的db实体，请检查yml配置，错误信息db【{}】table【{}】serverinfo【{}】",db,table,serverinfoYamlVO);
     } catch (SQLException e) {
       e.printStackTrace();
     }
+
     return getMysqlDbType(db, serverinfoYamlVO, entityList);
   }
 
-  public MysqlDbType searchMedataByDb(
-      String database, String patternTableStr, ServerinfoYamlVO serverinfoYamlVO)
-      throws SQLException {
-    List<Entity> entityList =
-        use.query(
-            "select * from TABLES im where im.table_schema=? and im.table_name=?",
-            database,
-            patternTableStr);
-    return getMysqlDbType(database, serverinfoYamlVO, entityList);
+  public MysqlDbType searchPatternTMedataByDb(ServerinfoYamlVO serverinfoYamlVO) {
+    List<Entity> entityList = null;
+    if (table.equals("all")){
+      try {
+        entityList = use.query("select * from TABLES im where im.table_schema=?",db);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+
+    if (table.startsWith("%")||table.endsWith("%")){
+      try {
+        Entity tables =
+                Entity.create("TABLES")
+                        .set("table_schema", db)
+                        .set("table_name", "like "+table);
+
+        entityList = use.find(tables);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+
+    Assert.notEmpty(entityList,"未查询到符合条件的db实体，请检查yml配置，错误信息db【{}】table【{}】serverinfo【{}】",db,table,serverinfoYamlVO);
+    return getMysqlDbType(db, serverinfoYamlVO, entityList);
   }
 
   private MysqlDbType getMysqlDbType(

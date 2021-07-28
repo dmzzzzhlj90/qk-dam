@@ -15,7 +15,9 @@ import org.apache.atlas.model.instance.AtlasEntity;
  * @author daomingzhu
  */
 public class MysqlMetaDataExtractor {
-  private MysqlMetaDataExtractor() {throw new IllegalStateException("Utility class");}
+  private MysqlMetaDataExtractor() {
+    throw new IllegalStateException("Utility class");
+  }
 
   public static AtlasEntity.AtlasEntitiesWithExtInfo extractorAtlasEntitiesWith(String jobName) {
     MysqlMetadata mysqlMetadata = new MysqlMetadata();
@@ -25,7 +27,11 @@ public class MysqlMetaDataExtractor {
   private static MysqlDbType mysqlDbType(String jobName) {
     MetadataJobYamlVO job2 = MetadataJobConf.getMetadataJobYamlVO(jobName);
     MysqlDataConnectYamlVO dataConnect = job2.getDataConnect();
+    String table = dataConnect.getTable();
+    if (table.equals("all")||table.startsWith("%")||table.endsWith("%")){
+      return new MysqlTypeAgg(dataConnect).searchPatternTMedataByDb(job2.getServerinfo());
+    }
 
-    return new MysqlTypeAgg(dataConnect).searchMedataByDb(job2.getServerinfoYamlVO());
+    return new MysqlTypeAgg(dataConnect).searchMedataByDb(job2.getServerinfo());
   }
 }
