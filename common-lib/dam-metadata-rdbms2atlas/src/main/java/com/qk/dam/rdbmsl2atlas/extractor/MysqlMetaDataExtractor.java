@@ -28,7 +28,7 @@ public class MysqlMetaDataExtractor {
     MetadataJobYamlVO job2 = MetadataJobConf.getMetadataJobYamlVO(jobName);
     MysqlDataConnectYamlVO dataConnect = job2.getDataConnect();
     String table = dataConnect.getTable();
-    if (table.equals("all")||table.startsWith("%")||table.endsWith("%")){
+    if (table.equals("all") || table.startsWith("%") || table.endsWith("%")) {
       return new MysqlTypeAgg(dataConnect).searchPatternTMedataByDb(job2.getServerinfo());
     }
 
