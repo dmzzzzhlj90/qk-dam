@@ -17,8 +17,7 @@ public class MysqlMetadata {
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final TypeFactory TYPE_FACTORY = OBJECT_MAPPER.getTypeFactory();
 
-  public AtlasEntity.AtlasEntitiesWithExtInfo syncMysqlMetadata(List<MysqlDbType> mysqlDbTypes)
-      throws Exception {
+  public AtlasEntity.AtlasEntitiesWithExtInfo syncMysqlMetadata(List<MysqlDbType> mysqlDbTypes) {
     var entitiesWithExtInfo = new AtlasEntity.AtlasEntitiesWithExtInfo();
     mysqlDbTypes.stream()
         .map(this::convertAtlasEntity)

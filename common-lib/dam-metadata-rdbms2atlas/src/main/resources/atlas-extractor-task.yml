@@ -1,0 +1,29 @@
+metadata:
+  - name: job1
+    dataConnectType: mysql
+    serverinfo:
+      applicationName: 测试
+      owner: zhudaoming
+      description: 描述想
+      displayName: 暗示啊
+    dataConnect:
+      db: ALL
+      table: ALL # 多个table使用“，”逗号分隔
+      host: 172.31.0.44
+      port: 3306
+      username: root
+      password: zhudao123
+  - name: job2
+    dataConnectType: mysql
+    serverinfo:
+      applicationName: 测试
+      owner: zhudaoming
+      description: 描述想
+      displayName: 暗示啊
+    dataConnect:
+      db: ALL
+      table: ALL # 多个table使用“，”逗号分隔
+      host: longgov-slave.rwlb.rds.aliyuncs.com
+      port: 3306
+      username: youshang_qike
+      password: Doublefly123

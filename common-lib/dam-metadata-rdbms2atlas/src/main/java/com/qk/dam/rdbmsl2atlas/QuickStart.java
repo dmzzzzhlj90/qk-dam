@@ -1,6 +1,7 @@
 package com.qk.dam.rdbmsl2atlas;
 
 import com.qk.dam.rdbmsl2atlas.base.BaseClientConf;
+import com.qk.dam.rdbmsl2atlas.extractor.MysqlMetaDataExtractor;
 import org.apache.atlas.AtlasException;
 import org.apache.atlas.model.instance.AtlasEntity;
 
@@ -14,7 +15,7 @@ public class QuickStart extends BaseClientConf {
   public QuickStart() throws AtlasException {}
 
   public static void main(String[] args) throws Exception {
-    new QuickStart().runQuickstart();
+    new QuickStart().runQuickstart(args);
   }
 
   /**
@@ -22,8 +23,13 @@ public class QuickStart extends BaseClientConf {
    *
    * @throws Exception
    */
-  void runQuickstart() throws Exception {
+  void runQuickstart(String[] args) throws Exception {
     try {
+      for (String jobName : args) {
+        AtlasEntity.AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo =
+            MysqlMetaDataExtractor.extractorAtlasEntitiesWith(jobName);
+        this.createEntities(atlasEntitiesWithExtInfo);
+      }
     } finally {
       this.closeConnection();
     }

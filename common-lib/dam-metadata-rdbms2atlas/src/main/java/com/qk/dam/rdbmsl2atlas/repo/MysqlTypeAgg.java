@@ -2,67 +2,86 @@ package com.qk.dam.rdbmsl2atlas.repo;
 
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
+import cn.hutool.db.ds.simple.SimpleDataSource;
+import com.qk.dam.rdbmsl2atlas.pojo.MysqlDataConnectYamlVO;
+import com.qk.dam.rdbmsl2atlas.pojo.ServerinfoYamlVO;
 import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlColumnType;
 import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlDbType;
 import com.qk.dam.rdbmsl2atlas.pojo.mysql.MysqlTableType;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+/**
+ * 元数据管理-MySQL类型数据聚合
+ *
+ * @author daomingzhu
+ */
 public class MysqlTypeAgg {
-  private static final Db use = Db.use("qk_es_updated_1");
+  private final Db use;
+  private final String host;
+  private final String db;
+  private final String table;
 
-  public MysqlDbType searchMedataByDb(
-      String database,
-      String applicationName,
-      String serverInfo,
-      String owner,
-      String description,
-      String displayName)
-      throws SQLException {
-    List<Entity> entityList =
-        use.query("select * from TABLES im where im.table_schema=?", database);
-    return getMysqlDbType(
-        database, applicationName, serverInfo, owner, description, displayName, entityList);
+  public MysqlTypeAgg(MysqlDataConnectYamlVO mysqlDataConnectYamlVO) {
+    this.use =
+        Db.use(
+            new SimpleDataSource(
+                "jdbc:mysql://"
+                    + mysqlDataConnectYamlVO.getHost()
+                    + ":"
+                    + mysqlDataConnectYamlVO.getPort()
+                    + "/information_schema",
+                mysqlDataConnectYamlVO.getUsername(),
+                mysqlDataConnectYamlVO.getPassword()));
+    host = mysqlDataConnectYamlVO.getHost();
+    db = mysqlDataConnectYamlVO.getDb();
+    table = mysqlDataConnectYamlVO.getTable();
+  }
+
+  public MysqlDbType searchMedataByDb(ServerinfoYamlVO serverinfoYamlVO) {
+    List<Entity> entityList = null;
+    String inTbs =
+        Stream.of(table.split(",")).map(t -> "'" + t + "'").collect(Collectors.joining(","));
+
+    try {
+      Entity tables =
+          Entity.create("TABLES")
+              .set("table_schema", db)
+              .set("table_name", "in" + "(" + inTbs + ")");
+
+      entityList = use.find(tables);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return getMysqlDbType(db, serverinfoYamlVO, entityList);
   }
 
   public MysqlDbType searchMedataByDb(
-      String database,
-      String patternTableStr,
-      String applicationName,
-      String serverInfo,
-      String owner,
-      String description,
-      String displayName)
+      String database, String patternTableStr, ServerinfoYamlVO serverinfoYamlVO)
       throws SQLException {
     List<Entity> entityList =
         use.query(
             "select * from TABLES im where im.table_schema=? and im.table_name=?",
             database,
             patternTableStr);
-    return getMysqlDbType(
-        database, applicationName, serverInfo, owner, description, displayName, entityList);
+    return getMysqlDbType(database, serverinfoYamlVO, entityList);
   }
 
   private MysqlDbType getMysqlDbType(
-      String database,
-      String applicationName,
-      String serverInfo,
-      String owner,
-      String description,
-      String displayName,
-      List<Entity> entityList) {
+      String database, ServerinfoYamlVO serverinfoYamlVO, List<Entity> entityList) {
     // TODO 数据库信息从数据应用系统名录获得
 
     MysqlDbType mysqlDbType =
         MysqlDbType.builder()
-            .applicationName(applicationName)
-            .serverInfo(serverInfo)
+            .applicationName(serverinfoYamlVO.getApplicationName())
+            .serverInfo(host)
             .name(database)
-            .owner(owner)
-            .description(description)
-            .displayName(displayName)
-            .qualifiedName(database + "@" + serverInfo)
+            .owner(serverinfoYamlVO.getOwner())
+            .description(serverinfoYamlVO.getDescription())
+            .displayName(serverinfoYamlVO.getDisplayName())
+            .qualifiedName(database + "@" + host)
             .build();
 
     List<MysqlTableType> mysqlTableTypes =
@@ -80,11 +99,10 @@ public class MysqlTypeAgg {
                           .tableCollation(entity.getStr("table_collation"))
                           .tableRows(entity.getStr("table_rows"))
                           .comment(entity.getStr("table_comment"))
-                          .owner(owner)
+                          .owner(serverinfoYamlVO.getOwner())
                           .description(entity.getStr("table_comment"))
                           .displayName(entity.getStr("table_comment"))
-                          .qualifiedName(
-                              database + "." + entity.getStr("table_name") + "@172.31.0.16")
+                          .qualifiedName(database + "." + entity.getStr("table_name") + "@" + host)
                           .build();
                   try {
                     List<Entity> column =
@@ -109,14 +127,15 @@ public class MysqlTypeAgg {
                                         .default_value(colEntity.getStr("column_default"))
                                         .displayName(colEntity.getStr("column_comment"))
                                         .description(colEntity.getStr("column_comment"))
-                                        .owner(owner)
+                                        .owner(serverinfoYamlVO.getOwner())
                                         .qualifiedName(
                                             database
                                                 + "."
                                                 + mysqlTableType.getName()
                                                 + "."
                                                 + colEntity.getStr("column_name")
-                                                + "@172.31.0.16")
+                                                + "@"
+                                                + host)
                                         .build())
                             .collect(Collectors.toList());
                     mysqlTableType.setMysqlColumnTypes(columnTypeList);

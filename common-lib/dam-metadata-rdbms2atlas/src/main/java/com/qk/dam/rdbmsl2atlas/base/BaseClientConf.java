@@ -6,15 +6,27 @@ import org.apache.atlas.AtlasException;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.ArrayUtils;
 
+/**
+ * atlas rest client 配置
+ *
+ * @author daomingzhu
+ */
 public abstract class BaseClientConf {
   protected static final String ATLAS_REST_ADDRESS = "atlas.rest.address";
   protected static final String ATLAS_REST_AUTH = "atlas.rest.basic.auth";
-  public AtlasClientV2 atlasClientV2;
-  private static String[] basicAuthUsernamePassword = null;
+  public final AtlasClientV2 atlasClientV2;
+  private static String[] basicAuthUsernamePassword;
+
+  static {
+    try {
+      basicAuthUsernamePassword = getBasicAuthenticationInput();
+    } catch (AtlasException e) {
+      e.printStackTrace();
+    }
+  }
 
   protected BaseClientConf() throws AtlasException {
     String[] urls = getServerUrl();
-    basicAuthUsernamePassword = getBasicAuthenticationInput();
     atlasClientV2 = new AtlasClientV2(urls, basicAuthUsernamePassword);
   }
 
@@ -32,9 +44,7 @@ public abstract class BaseClientConf {
 
   protected static String[] getBasicAuthenticationInput() throws AtlasException {
     Configuration configuration = ApplicationProperties.get();
-    String[] basicAuthUsernamePassword = configuration.getStringArray(ATLAS_REST_AUTH);
-
-    return basicAuthUsernamePassword;
+    return configuration.getStringArray(ATLAS_REST_AUTH);
   }
 
   protected void closeConnection() {
