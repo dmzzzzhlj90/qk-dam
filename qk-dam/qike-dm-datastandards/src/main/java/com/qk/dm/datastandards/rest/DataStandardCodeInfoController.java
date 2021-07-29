@@ -96,6 +96,18 @@ public class DataStandardCodeInfoController {
     }
 
     /**
+     * 批量删除码表信息
+     *
+     * @param: ids
+     * @return: DefaultCommonResult
+     */
+    @DeleteMapping("/basic/delete/bulk/{ids}")
+    public DefaultCommonResult deleteBulkDsdCodeInfo(@PathVariable("ids") String ids) {
+        dataStandardCodeInfoService.deleteBulkDsdCodeInfo(ids);
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
+
+    /**
      * 数据类型下拉列表
      *
      * @return: DefaultCommonResult
@@ -162,6 +174,18 @@ public class DataStandardCodeInfoController {
     @DeleteMapping("/ext/delete/{id}")
     public DefaultCommonResult deleteDsdCodeInfoExt(@PathVariable("id") Integer id) {
         dataStandardCodeInfoService.deleteDsdCodeInfoExt(Long.valueOf(id).longValue());
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
+
+    /**
+     * 批量删除码表数值信息
+     *
+     * @param: ids
+     * @return: DefaultCommonResult
+     */
+    @DeleteMapping("/ext/bulk/delete/{ids}")
+    public DefaultCommonResult deleteBulkDsdCodeInfoExt(@PathVariable("ids") String ids) {
+        dataStandardCodeInfoService.deleteBulkDsdCodeInfoExt(ids);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 }

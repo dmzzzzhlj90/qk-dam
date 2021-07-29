@@ -31,6 +31,8 @@ public interface DataStandardCodeInfoService {
 
     void deleteDsdCodeInfo(long id);
 
+    void deleteBulkDsdCodeInfo(String ids);
+
     List<Map<String, String>> getDataTypes();
 
     /**
@@ -47,5 +49,7 @@ public interface DataStandardCodeInfoService {
     void modifyDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO);
 
     void deleteDsdCodeInfoExt(long id);
+
+    void deleteBulkDsdCodeInfoExt(String ids);
 
 }

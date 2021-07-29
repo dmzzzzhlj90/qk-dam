@@ -19,12 +19,6 @@ public class DsdCodeInfo implements Serializable {
     private Long id;
 
     /**
-     * 所属目录
-     */
-    @Column(name = "dir_name", nullable = false)
-    private String dirName;
-
-    /**
      * 基础配置-表名
      */
     @Column(name = "table_name", nullable = false)
@@ -41,6 +35,18 @@ public class DsdCodeInfo implements Serializable {
      */
     @Column(name = "table_desc")
     private String tableDesc;
+
+    /**
+     * 所属目录id
+     */
+    @Column(name = "code_dir_id", nullable = false)
+    private String codeDirId;
+
+    /**
+     * 所属目录层级
+     */
+    @Column(name = "code_dir_level", nullable = false)
+    private String codeDirLevel;
 
     /**
      * 创建时间

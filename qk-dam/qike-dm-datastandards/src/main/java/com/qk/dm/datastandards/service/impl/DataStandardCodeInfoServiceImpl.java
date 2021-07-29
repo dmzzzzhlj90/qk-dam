@@ -104,8 +104,8 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     }
 
     public void basicCheckCondition(BooleanBuilder booleanBuilder, QDsdCodeInfo qDsdCodeInfo, DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
-        if (!StringUtils.isEmpty(dsdCodeInfoParamsVO.getDirName())) {
-            booleanBuilder.and(qDsdCodeInfo.dirName.eq(dsdCodeInfoParamsVO.getDirName()));
+        if (!StringUtils.isEmpty(dsdCodeInfoParamsVO.getCodeDirId())) {
+            booleanBuilder.and(qDsdCodeInfo.codeDirId.eq(dsdCodeInfoParamsVO.getCodeDirId()));
         }
         if (!StringUtils.isEmpty(dsdCodeInfoParamsVO.getTableName())) {
             booleanBuilder.and(qDsdCodeInfo.tableName.contains(dsdCodeInfoParamsVO.getTableName()));
@@ -125,12 +125,16 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
         setCodeTableFieldsStr(dsdCodeInfo, dsdCodeInfoVO);
         dsdCodeInfo.setGmtCreate(new Date());
         dsdCodeInfo.setGmtModified(new Date());
-        Predicate predicate = qDsdCodeInfo.dirName.eq(dsdCodeInfo.getDirName())
+        Predicate predicate = qDsdCodeInfo.codeDirId.eq(dsdCodeInfo.getCodeDirId())
                 .and(qDsdCodeInfo.tableCode.eq(dsdCodeInfo.getTableCode()));
         boolean exists = dsdCodeInfoRepository.exists(predicate);
         if (exists) {
-            throw new BizException("当前要新增的码表信息,目录为：" + dsdCodeInfo.getDirName() + "表名为:" + dsdCodeInfo.getTableName() + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的码表信息,目录为：" + dsdCodeInfo.getCodeDirLevel() + "表名为:" + dsdCodeInfo.getTableName() + " 的数据，已存在！！！");
         }
+        if (dsdCodeInfoVO.getCodeTableFieldsList().size() == 0 && dsdCodeInfo.getTableConfFields() == null) {
+            dsdCodeInfo.setTableConfFields(DsdConstant.defaultTableConfFields());
+        }
+
         dsdCodeInfoRepository.save(dsdCodeInfo);
     }
 
@@ -145,24 +149,35 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
     @Override
     public void modifyDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO) {
+        if (StringUtils.isEmpty(String.valueOf(dsdCodeInfoVO.getId()))) {
+            throw new BizException("编辑失败!数据id为空!!!");
+        }
         DsdCodeInfo dsdCodeInfo = DsdCodeInfoMapper.INSTANCE.useDsdCodeInfo(dsdCodeInfoVO);
         setCodeTableFieldsStr(dsdCodeInfo, dsdCodeInfoVO);
         dsdCodeInfo.setGmtCreate(new Date());
         dsdCodeInfo.setGmtModified(new Date());
 
-        Predicate predicate = qDsdCodeInfo.dirName.eq(dsdCodeInfo.getDirName())
-                .and(qDsdCodeInfo.tableCode.eq(dsdCodeInfo.getTableCode()));
+        Predicate predicate = qDsdCodeInfo.id.eq(dsdCodeInfoVO.getId());
         boolean exists = dsdCodeInfoRepository.exists(predicate);
         if (exists) {
             dsdCodeInfoRepository.saveAndFlush(dsdCodeInfo);
         } else {
-            throw new BizException("当前要新增的码表信息,目录为：" + dsdCodeInfo.getDirName() + "表名为:" + dsdCodeInfo.getTableName() + " 的数据，不存在！！！");
+            throw new BizException("当前要新增的码表信息,目录为：" + dsdCodeInfo.getCodeDirLevel() + "表名为:" + dsdCodeInfo.getTableName() + " 的数据，不存在！！！");
         }
     }
 
     @Override
     public void deleteDsdCodeInfo(long id) {
         dsdCodeInfoRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteBulkDsdCodeInfo(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id).longValue()));
+        Iterable<DsdCodeInfo> codeInfos = dsdCodeInfoRepository.findAll(qDsdCodeInfo.id.in(idSet));
+        dsdCodeInfoRepository.deleteInBatch(codeInfos);
     }
 
     @Override
@@ -186,6 +201,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
             dsdCodeInfoVO.setCodeTableFieldsList(new ArrayList<>());
         }
     }
+
 
     /**
      * 码表扩展信息_码表数值
@@ -282,12 +298,15 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
     @Override
     public void modifyDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO) {
+        if (StringUtils.isEmpty(String.valueOf(dsdCodeInfoExtVO.getId()))) {
+            throw new BizException("编辑失败!数据id为空!!!");
+        }
+
         DsdCodeInfoExt dsdCodeInfoExt = DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
         setTableConfValuesStr(dsdCodeInfoExt, dsdCodeInfoExtVO);
         dsdCodeInfoExt.setGmtModified(new Date());
 
-        Predicate predicate = qDsdCodeInfoExt.dsdCodeInfoId.eq(dsdCodeInfoExt.getDsdCodeInfoId())
-                .and(qDsdCodeInfoExt.tableConfCode.eq(dsdCodeInfoExt.getTableConfCode()));
+        Predicate predicate = qDsdCodeInfoExt.id.eq(dsdCodeInfoExtVO.getId());
         boolean exists = dsdCodeInfoExtRepository.exists(predicate);
         if (exists) {
             dsdCodeInfoExtRepository.saveAndFlush(dsdCodeInfoExt);
@@ -299,6 +318,15 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     @Override
     public void deleteDsdCodeInfoExt(long id) {
         dsdCodeInfoExtRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteBulkDsdCodeInfoExt(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id).longValue()));
+        Iterable<DsdCodeInfoExt> codeInfoExtIter = dsdCodeInfoExtRepository.findAll(qDsdCodeInfoExt.id.in(idSet));
+        dsdCodeInfoExtRepository.deleteInBatch(codeInfoExtIter);
     }
 
     private void setTableConfValuesStr(DsdCodeInfoExt dsdCodeInfoExt, DsdCodeInfoExtVO dsdCodeInfoExtVO) {

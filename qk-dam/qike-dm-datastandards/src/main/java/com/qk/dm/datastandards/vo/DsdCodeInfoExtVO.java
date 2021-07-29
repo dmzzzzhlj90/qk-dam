@@ -28,7 +28,7 @@ public class DsdCodeInfoExtVO {
      * 关键码表信息表
      */
     @NotBlank(message = "码表Id不能为空！")
-    private Long dsdCodeInfoId;
+    private String dsdCodeInfoId;
 
     /**
      * 建表配置编码

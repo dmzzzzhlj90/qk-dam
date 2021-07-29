@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +24,16 @@ public class DsdCodeInfoVO {
     private Long id;
 
     /**
-     * 所属目录
+     * 所属目录id
      */
-    @NotBlank(message = "所属目录不能为空！")
-    private String dirName;
+    @NotNull(message = "所属目录id不能为空！")
+    private String codeDirId;
+
+    /**
+     * 所属目录层级
+     */
+    @NotBlank(message = "所属目录层级不能为空！")
+    private String codeDirLevel;
 
     /**
      * 基础配置-表名
@@ -55,7 +62,6 @@ public class DsdCodeInfoVO {
     /**
      * 建表配置字段
      */
-    @NotBlank(message = "建表配置不能为空！")
     private List<CodeTableFieldsVO> codeTableFieldsList;
 
 }
