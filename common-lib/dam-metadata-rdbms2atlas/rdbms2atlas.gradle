@@ -9,7 +9,6 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ch.qos.logback:logback-core:1.2.3'
     implementation 'org.apache.atlas:atlas-client-v2:3.0.0-SNAPSHOT'
-    implementation 'org.apache.atlas:atlas-notification:3.0.0-SNAPSHOT'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
