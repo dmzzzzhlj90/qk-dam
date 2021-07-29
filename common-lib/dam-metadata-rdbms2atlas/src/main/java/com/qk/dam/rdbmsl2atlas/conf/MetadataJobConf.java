@@ -8,11 +8,15 @@ import org.yaml.snakeyaml.Yaml;
 
 /** @author daomingzhu */
 public class MetadataJobConf {
-  private static MetadataYamlVO metadataConf;
-
   static {
     metadataConf =
         new Yaml().loadAs(ResourceUtil.getStream("atlas-extractor-task.yml"), MetadataYamlVO.class);
+  }
+
+  static final MetadataYamlVO metadataConf;
+
+  private MetadataJobConf() {
+    throw new IllegalStateException("Utility class");
   }
 
   public static MetadataJobYamlVO getMetadataJobYamlVO(String jobName) {

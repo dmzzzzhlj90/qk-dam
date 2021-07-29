@@ -5,6 +5,7 @@ import com.google.common.base.Joiner;
 import com.qk.dam.rdbmsl2atlas.base.BaseClientConf;
 import com.qk.dam.rdbmsl2atlas.extractor.MysqlMetaDataExtractor;
 import org.apache.atlas.AtlasException;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,9 @@ import org.slf4j.LoggerFactory;
 public class QuickStart extends BaseClientConf {
   private static final Logger LOG = LoggerFactory.getLogger(QuickStart.class);
 
-  public QuickStart() throws AtlasException {}
+  public QuickStart() throws AtlasException {
+    super();
+  }
 
   public static void main(String[] args) throws Exception {
     new QuickStart().runQuickstart(args);
@@ -26,11 +29,12 @@ public class QuickStart extends BaseClientConf {
   /**
    * 执行
    *
-   * @throws Exception
+   * @throws AtlasServiceException
    */
-  void runQuickstart(String[] args) throws Exception {
+  void runQuickstart(String[] args) throws AtlasServiceException {
     Assert.notEmpty(args, "任务参数不能为空！");
-    LOG.info("快速开始任务，任务参数【{}】", Joiner.on(",").join(args));
+    String str = String.format("快速开始任务，任务参数【%s】", Joiner.on(",").join(args));
+    LOG.info(str);
     try {
       for (String jobName : args) {
         AtlasEntity.AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo =
@@ -44,7 +48,7 @@ public class QuickStart extends BaseClientConf {
   }
 
   public void createEntities(AtlasEntity.AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo)
-      throws Exception {
+      throws AtlasServiceException {
     atlasClientV2.createEntities(atlasEntitiesWithExtInfo);
   }
 }
