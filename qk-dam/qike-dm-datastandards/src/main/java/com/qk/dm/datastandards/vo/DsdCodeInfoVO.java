@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -24,27 +25,25 @@ public class DsdCodeInfoVO {
     /**
      * 所属目录
      */
+    @NotBlank(message = "所属目录不能为空！")
     private String dirName;
 
     /**
      * 基础配置-表名
      */
+    @NotBlank(message = "表名不能为空！")
     private String tableName;
 
     /**
      * 基础配置-表编码
      */
+    @NotBlank(message = "表名不能为空！")
     private String tableCode;
 
     /**
      * 基础配置-描述
      */
     private String tableDesc;
-
-    /**
-     * 建表配置数据类型;String,Number,Double...
-     */
-    private String tableConfValueType;
 
     /**
      * 修改时间
@@ -54,8 +53,9 @@ public class DsdCodeInfoVO {
     private Date gmtModified;
 
     /**
-     * 建表配置扩展字段
+     * 建表配置字段
      */
+    @NotBlank(message = "建表配置不能为空！")
     private List<CodeTableFieldsVO> codeTableFieldsList;
 
 }

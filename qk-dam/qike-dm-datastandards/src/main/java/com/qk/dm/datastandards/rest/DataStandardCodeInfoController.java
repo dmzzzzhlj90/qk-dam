@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -92,6 +93,16 @@ public class DataStandardCodeInfoController {
     public DefaultCommonResult deleteDsdCodeInfo(@PathVariable("id") Integer id) {
         dataStandardCodeInfoService.deleteDsdCodeInfo(Long.valueOf(id).longValue());
         return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
+
+    /**
+     * 数据类型下拉列表
+     *
+     * @return: DefaultCommonResult
+     */
+    @GetMapping("/data/types")
+    public DefaultCommonResult<List<Map<String, String>>> getDataTypes() {
+        return new DefaultCommonResult(ResultCodeEnum.OK,dataStandardCodeInfoService.getDataTypes());
     }
 
     /**

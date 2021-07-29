@@ -36,4 +36,6 @@ public interface DsdExcelService {
     void codeValuesDownloadByCodeInfoId(HttpServletResponse response, Long dsdCodeInfoId);
 
     void codeValuesUploadByCodeInfoId(MultipartFile file, long dsdCodeInfoId);
+
+    void codeValuesDownloadTemplate(HttpServletResponse response, long dsdCodeInfoId);
 }

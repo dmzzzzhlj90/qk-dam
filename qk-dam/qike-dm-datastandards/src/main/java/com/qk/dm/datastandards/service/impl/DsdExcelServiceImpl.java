@@ -234,6 +234,18 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         }
     }
 
+    @Override
+    public void codeValuesDownloadTemplate(HttpServletResponse response, long dsdCodeInfoId) {
+        try {
+            List<List<String>> excelHead = getCodeExcelHeadList(dsdCodeInfoId);
+            List<List<Object>> excelRows = getCodeTemplateSampleData(excelHead);
+            DynamicEasyExcelExportUtils.exportWebExcelFile(response, excelHead, excelRows, "数据标准码表信息_模板下载");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BizException("导出文件失败!");
+        }
+    }
+
     private void getCodeValues(long dsdCodeInfoId, List<Map<Integer, String>> dataList, Map<String, String> fieldMap, Map<Integer, String> excelHeadIdxNameMap, List<DsdCodeInfoExt> saveDataList, List<String> codeList) {
         for (Map<Integer, String> dataRow : dataList) {
             DsdCodeInfoExt dsdCodeInfoExt = new DsdCodeInfoExt();
@@ -276,4 +288,17 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         return headList;
     }
 
+    public List<List<Object>> getCodeTemplateSampleData(List<List<String>> excelHead) {
+        List<List<Object>> list = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            List rowData = new ArrayList();
+            for (List<String> headDatas : excelHead) {
+                for (String head : headDatas) {
+                    rowData.add(head+(i+1));
+                }
+            }
+            list.add(rowData);
+        }
+        return list;
+    }
 }

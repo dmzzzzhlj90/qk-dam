@@ -2,6 +2,7 @@ package com.qk.dm.datastandards.service.impl;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeInfo;
 import com.qk.dm.datastandards.entity.DsdCodeInfoExt;
 import com.qk.dm.datastandards.entity.QDsdCodeInfo;
@@ -159,10 +160,14 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
         }
     }
 
-
     @Override
     public void deleteDsdCodeInfo(long id) {
         dsdCodeInfoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Map<String, String>> getDataTypes() {
+        return DsdConstant.getDataTypes();
     }
 
     private void setCodeTableFieldsStr(DsdCodeInfo dsdCodeInfo, DsdCodeInfoVO dsdCodeInfoVO) {
@@ -211,7 +216,8 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
         Optional<DsdCodeInfo> dsdCodeInfo = dsdCodeInfoRepository.findById(Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId()).longValue());
         String tableConfFieldsStr = dsdCodeInfo.get().getTableConfFields();
-        List<CodeTableFieldsVO> codeTableFieldsVOList = GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {}.getType());
+        List<CodeTableFieldsVO> codeTableFieldsVOList = GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {
+        }.getType());
         result.put("headList", codeTableFieldsVOList);
         result.put("dataList", pageResultVO);
         return result;
@@ -305,7 +311,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     private void setCodeTableValues(DsdCodeInfoExt dsdCodeInfoExt, DsdCodeInfoExtVO dsdCodeInfoExtVO) {
         if (!StringUtils.isEmpty(dsdCodeInfoExt.getTableConfExtValues())) {
             dsdCodeInfoExtVO.setCodeTableFieldExtValues(GsonUtil.fromJsonString(dsdCodeInfoExt.getTableConfExtValues(),
-                    new TypeToken<Map<String, String>>() {
+                    new TypeToken<LinkedHashMap<String, String>>() {
                     }.getType()));
         }
     }

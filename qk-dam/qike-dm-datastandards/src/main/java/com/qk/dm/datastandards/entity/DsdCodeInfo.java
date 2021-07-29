@@ -43,12 +43,6 @@ public class DsdCodeInfo implements Serializable {
     private String tableDesc;
 
     /**
-     * 建表配置数据类型;String,Number,Double...
-     */
-    @Column(name = "table_conf_value_type", nullable = false)
-    private String tableConfValueType;
-
-    /**
      * 创建时间
      */
     @Column(name = "gmt_create")

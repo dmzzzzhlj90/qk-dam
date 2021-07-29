@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,16 +27,19 @@ public class DsdCodeInfoExtVO {
     /**
      * 关键码表信息表
      */
+    @NotBlank(message = "码表Id不能为空！")
     private Long dsdCodeInfoId;
 
     /**
      * 建表配置编码
      */
+    @NotBlank(message = "编码不能为空！")
     private String tableConfCode;
 
     /**
      * 建表配置值
      */
+    @NotBlank(message = "码值不能为空！")
     private String tableConfValue;
 
     /**
@@ -47,6 +52,6 @@ public class DsdCodeInfoExtVO {
     /**
      * 建表配合扩展字段数值
      */
-    private Map<String, String> codeTableFieldExtValues;
+    private LinkedHashMap<String, String> codeTableFieldExtValues;
 
 }

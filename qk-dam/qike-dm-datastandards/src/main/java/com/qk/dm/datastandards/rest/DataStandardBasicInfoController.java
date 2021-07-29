@@ -94,16 +94,4 @@ public class DataStandardBasicInfoController {
     return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
-  /**
-   * 根据数据类型返回对应数据容量列表
-   *
-   * @param: dsdBasicinfoParamsVO:查询对象
-   * @return: 返回标准列表信息
-   */
-  @GetMapping(value = "/query/dataCapacity/by/dataType/{dataType}")
-  public DefaultCommonResult<List<String>> getDataCapacityByDataType(
-      @PathVariable(value = "dataType") String dataType) {
-    return new DefaultCommonResult(
-        ResultCodeEnum.OK, dataStandardBasicInfoService.getDataCapacityByDataType(dataType));
-  }
 }

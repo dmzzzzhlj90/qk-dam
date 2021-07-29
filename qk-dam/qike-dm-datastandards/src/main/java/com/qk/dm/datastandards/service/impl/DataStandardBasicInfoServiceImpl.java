@@ -149,23 +149,6 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     dsdBasicinfoRepository.deleteInBatch(basicInfoList);
   }
 
-  @Override
-  public List getDataCapacityByDataType(String dataType) {
-    if (DsdConstant.DATA_TYPE_CAPACITY_STRING.equalsIgnoreCase(dataType))
-      return DsdConstant.getListString();
-    if (DsdConstant.DATA_TYPE_CAPACITY_DOUBLE.equalsIgnoreCase(dataType))
-      return DsdConstant.getListDouble();
-    if (DsdConstant.DATA_TYPE_CAPACITY_BOOLEAN.equalsIgnoreCase(dataType))
-      return DsdConstant.getListBoolean();
-    if (DsdConstant.DATA_TYPE_CAPACITY_DECIMAL.equalsIgnoreCase(dataType))
-      return DsdConstant.getListDecimal();
-    if (DsdConstant.DATA_TYPE_CAPACITY_DATE.equalsIgnoreCase(dataType))
-      return DsdConstant.getListDate();
-    if (DsdConstant.DATA_TYPE_CAPACITY_TIMESTAMP.equalsIgnoreCase(dataType))
-      return DsdConstant.getListTimeStamp();
-    return null;
-  }
-
   public Map<String, Object> queryDsdBasicinfoByParams(DsdBasicinfoParamsVO dsdBasicinfoParamsVO)
       throws ParseException {
     QDsdBasicinfo qDsdBasicinfo = QDsdBasicinfo.dsdBasicinfo;

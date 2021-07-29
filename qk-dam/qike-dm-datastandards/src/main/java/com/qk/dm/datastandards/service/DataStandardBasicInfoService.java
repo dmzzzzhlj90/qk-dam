@@ -22,7 +22,5 @@ public interface DataStandardBasicInfoService {
 
   void deleteDsdBasicinfo(Integer id);
 
-  List<String> getDataCapacityByDataType(String dataType);
-
   void bulkDeleteDsdBasicInfo(String ids);
 }

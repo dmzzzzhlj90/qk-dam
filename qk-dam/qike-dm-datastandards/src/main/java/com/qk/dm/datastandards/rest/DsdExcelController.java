@@ -171,23 +171,15 @@ public class DsdExcelController {
     }
 
 
-//    /**
-//     * 码表信息excel__模板下载
-//     *
-//     * @Param: response
-//     * @return: void
-//     */
-//    @PostMapping("/code/term/download/template")
-//    public void codeTermDownloadTemplate(HttpServletResponse response) throws IOException {
-//        List<DsdCodeTermVO> codeTermSampleDataList = dsdExcelService.dsdCodeTermSampleData();
-//
-//        response.setContentType("application/vnd.ms-excel");
-//        response.setCharacterEncoding("utf-8");
-//        String fileName = URLEncoder.encode("数据标准码表信息", "UTF-8").replaceAll("\\+", "%20");
-//        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-//        EasyExcel.write(response.getOutputStream(), DsdCodeTermVO.class)
-//                .registerWriteHandler(new DsdCodeTermCustomSheetWriteHandler(dsdExcelService))
-//                .sheet("模板").doWrite(codeTermSampleDataList);
-//    }
+    /**
+     * 码表信息excel__模板下载
+     *
+     * @Param: response
+     * @return: void
+     */
+    @PostMapping("/code/values/download/template")
+    public void codeValuesDownloadTemplate(HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
+        dsdExcelService.codeValuesDownloadTemplate(response, Long.valueOf(dsdCodeInfoId).longValue());
+    }
 
 }
