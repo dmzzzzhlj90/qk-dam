@@ -38,8 +38,7 @@ public class DataStandardBasicInfoController {
    * @return: 返回标准列表信息
    */
   @PostMapping(value = "/query")
-  public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(
-      @RequestBody DsdBasicinfoParamsVO basicinfoParamsVO) {
+  public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(@RequestBody DsdBasicinfoParamsVO basicinfoParamsVO) {
     return new DefaultCommonResult(
         ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(basicinfoParamsVO));
   }

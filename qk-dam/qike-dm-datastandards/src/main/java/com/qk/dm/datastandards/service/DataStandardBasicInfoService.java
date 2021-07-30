@@ -3,7 +3,6 @@ package com.qk.dm.datastandards.service;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.params.DsdBasicinfoParamsVO;
-import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,4 +22,5 @@ public interface DataStandardBasicInfoService {
   void deleteDsdBasicinfo(Integer id);
 
   void bulkDeleteDsdBasicInfo(String ids);
+
 }
