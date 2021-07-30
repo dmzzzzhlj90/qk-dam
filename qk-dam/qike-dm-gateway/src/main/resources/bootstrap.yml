@@ -1,5 +1,11 @@
 server:
-  port: 8765
+  port: 8780
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
 spring:
   application:
     name: dm-gateway
@@ -26,7 +32,7 @@ spring:
             client-id: qk-dam-client
             client-secret: qk-dam-client-zzr
             authorization-grant-type: authorization_code
-            redirect-uri: "http://auth-client:8765/login/oauth2/code/{registrationId}"
+            redirect-uri: "http://auth-client:8780/login/oauth2/code/{registrationId}"
             scope: openid
             client-name: qk-dam-client-oidc
       resourceserver:

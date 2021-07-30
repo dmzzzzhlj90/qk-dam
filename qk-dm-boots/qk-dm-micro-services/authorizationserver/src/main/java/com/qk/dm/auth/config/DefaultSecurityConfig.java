@@ -1,5 +1,7 @@
 package com.qk.dm.auth.config;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,23 +23,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class DefaultSecurityConfig {
   @Bean
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeRequests()
-        .antMatchers("/web/**")
-        .permitAll() // 允许/web路径下的url，这里可以自己根据需求定制
-        .anyRequest()
-        .authenticated() // 操作必须是已登录状态
-        .and()
-        .formLogin()
-        .loginPage("/authserver/login") // 跳转自己定制的登录界面
-        .permitAll() // 自定义登录页面权限放开
-        .and()
-        .csrf()
-        .disable() // 跨站请求伪造防护功能，这个先不用管，直接禁用了
-        .httpBasic();
-    //    http.headers().frameOptions().disable().xssProtection().disable();
-    //    http.csrf().disable();
-    //    http.httpBasic().disable();
-    //    http.formLogin().disable();
+    http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+        .formLogin(withDefaults());
+
+//    http.headers().frameOptions().disable().xssProtection().disable();
+//    http.csrf().disable();
+//    http.httpBasic().disable();
+//    http.formLogin().disable();
     return http.build();
   }
 
