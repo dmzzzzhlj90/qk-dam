@@ -45,6 +45,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     @Override
     public void insert(MtdLabelsVO mtdLabelsVO) {
         MtdLabels mtdLabels = MtdLabelsMapper.INSTANCE.useMtdLabels(mtdLabelsVO);
+        mtdLabels.setGmtCreate(new Date());
+        mtdLabels.setGmtModified(new Date());
         Predicate predicate = qMtdLabels.name.eq(mtdLabels.getName());
         boolean exists = mtdLabelsRepository.exists(predicate);
         if (exists) {
@@ -74,8 +76,7 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     @Transactional
     public void delete(String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
-        Set<Integer> idSet = new HashSet<>();
-        idList.forEach(id -> idSet.add(Integer.parseInt(id)));
+        Iterable<Long> idSet = idList.stream().map(i -> Long.valueOf(i)).collect(Collectors.toList());
         List<MtdLabels> basicInfoList = mtdLabelsRepository.findAllById(idSet);
         mtdLabelsRepository.deleteInBatch(basicInfoList);
     }

@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/metadata/labels")
+@RequestMapping("/labels")
 public class MtdLabelsController {
 
     @Autowired

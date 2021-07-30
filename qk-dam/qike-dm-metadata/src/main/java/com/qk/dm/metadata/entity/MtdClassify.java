@@ -27,8 +27,8 @@ public class MtdClassify implements Serializable {
     /**
      * 描述
      */
-    @Column(name = "describe")
-    private String describe;
+    @Column(name = "description")
+    private String description;
 
     /**
      * 创建时间
@@ -46,6 +46,6 @@ public class MtdClassify implements Serializable {
      * 是否删除；0逻辑删除，1物理删除；
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag;
+    private Integer delFlag = 0;
 
 }

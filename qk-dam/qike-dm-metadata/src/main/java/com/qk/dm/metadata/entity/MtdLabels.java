@@ -1,9 +1,8 @@
 package com.qk.dm.metadata.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,9 +11,6 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_mtd_labels")
-@EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
 public class MtdLabels implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,21 +29,21 @@ public class MtdLabels implements Serializable {
     /**
      * 描述
      */
-    @Column(name = "describe")
-    private String describe;
+    @Column(name = "description")
+    private String description;
 
     /**
      * 创建时间
      */
     @Column(name = "gmt_create")
-//    @CreationTimestamp
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
-//    @UpdateTimestamp
+    @UpdateTimestamp
     private Date gmtModified;
 
     /**
