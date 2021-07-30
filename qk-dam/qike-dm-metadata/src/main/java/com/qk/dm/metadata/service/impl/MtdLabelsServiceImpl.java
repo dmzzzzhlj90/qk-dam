@@ -7,6 +7,7 @@ import com.qk.dm.metadata.entity.QMtdLabels;
 import com.qk.dm.metadata.mapstruct.mapper.MtdLabelsMapper;
 import com.qk.dm.metadata.repositories.MtdLabelsRepository;
 import com.qk.dm.metadata.service.MtdLabelsService;
+import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
@@ -16,12 +17,16 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,8 +50,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     @Override
     public void insert(MtdLabelsVO mtdLabelsVO) {
         MtdLabels mtdLabels = MtdLabelsMapper.INSTANCE.useMtdLabels(mtdLabelsVO);
-        mtdLabels.setGmtCreate(new Date());
-        mtdLabels.setGmtModified(new Date());
+//        mtdLabels.setGmtCreate(new Date());
+//        mtdLabels.setGmtModified(new Date());
         Predicate predicate = qMtdLabels.name.eq(mtdLabels.getName());
         boolean exists = mtdLabelsRepository.exists(predicate);
         if (exists) {
@@ -59,16 +64,18 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     }
 
     @Override
-    public void update(MtdLabelsVO mtdLabelsVO) {
-        MtdLabels mtdLabels = MtdLabelsMapper.INSTANCE.useMtdLabels(mtdLabelsVO);
-        Predicate predicate = qMtdLabels.name.eq(mtdLabels.getName());
+    public void update(Long id, MtdLabelsVO mtdLabelsVO) {
+        Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName())
+                .and(qMtdLabels.id.ne(id));
         boolean exists = mtdLabelsRepository.exists(predicate);
         if (exists) {
             throw new BizException(
                     "当前要修改的标签名为："
-                            + mtdLabels.getName()
+                            + mtdLabelsVO.getName()
                             + " 的数据，已存在！！！");
         }
+        MtdLabels mtdLabels = MtdLabelsMapper.INSTANCE.useMtdLabels(mtdLabelsVO);
+        mtdLabels.setId(id);
         mtdLabelsRepository.saveAndFlush(mtdLabels);
     }
 
@@ -82,7 +89,7 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     }
 
     @Override
-    public PageResultVO<MtdLabelsVO> listByPage(MtdLabelsListVO mtdLabelsListVO) {
+    public PageResultVO<MtdLabelsInfoVO> listByPage(MtdLabelsListVO mtdLabelsListVO) {
         Map<String, Object> map;
         try {
             map = queryMtdLabelsByParams(mtdLabelsListVO);
@@ -93,8 +100,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
         List<MtdLabels> list = (List<MtdLabels>) map.get("list");
         long total = (long) map.get("total");
 
-        List<MtdLabelsVO> mtdLabelsVOList =
-                list.stream().map(mtd -> MtdLabelsMapper.INSTANCE.useMtdLabelsVO(mtd)).collect(Collectors.toList());
+        List<MtdLabelsInfoVO> mtdLabelsVOList =
+                list.stream().map(mtd -> MtdLabelsMapper.INSTANCE.useMtdLabelsInfoVO(mtd)).collect(Collectors.toList());
 
         return new PageResultVO<>(
                 total,
@@ -105,16 +112,11 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     }
 
     @Override
-    public List<MtdLabelsVO> listByAll(MtdLabelsListVO mtdLabelsListVO) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        checkCondition(booleanBuilder, mtdLabelsListVO);
-        List<MtdLabels> mtdLabelsList = jpaQueryFactory
-                .select(qMtdLabels)
-                .from(qMtdLabels)
-                .where(booleanBuilder)
-                .orderBy(qMtdLabels.id.asc())
-                .fetch();
-        return mtdLabelsList.stream().map(mtd -> MtdLabelsMapper.INSTANCE.useMtdLabelsVO(mtd))
+    public List<MtdLabelsInfoVO> listByAll(MtdLabelsVO mtdLabelsVO) {
+        Predicate predicate = qMtdLabels.name.contains(mtdLabelsVO.getName());
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        List<MtdLabels> mtdLabelsList = (List<MtdLabels>) mtdLabelsRepository.findAll(predicate, sort);
+        return mtdLabelsList.stream().map(mtd -> MtdLabelsMapper.INSTANCE.useMtdLabelsInfoVO(mtd))
                 .collect(Collectors.toList());
     }
 

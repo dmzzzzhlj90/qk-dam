@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.service;
 
+import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
@@ -10,11 +11,11 @@ public interface MtdLabelsService {
 
     void insert(MtdLabelsVO mtdLabelsVO);
 
-    void update(MtdLabelsVO mtdLabelsVO);
+    void update(Long id, MtdLabelsVO mtdLabelsVO);
 
     void delete(String ids);
 
-    PageResultVO<MtdLabelsVO> listByPage(MtdLabelsListVO mtdLabelsListVO);
+    PageResultVO<MtdLabelsInfoVO> listByPage(MtdLabelsListVO mtdLabelsListVO);
 
-    List<MtdLabelsVO> listByAll(MtdLabelsListVO mtdLabelsListVO);
+    List<MtdLabelsInfoVO> listByAll(MtdLabelsVO mtdLabelsVO);
 }

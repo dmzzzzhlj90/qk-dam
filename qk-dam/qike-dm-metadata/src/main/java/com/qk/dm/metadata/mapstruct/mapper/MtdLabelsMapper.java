@@ -1,6 +1,7 @@
 package com.qk.dm.metadata.mapstruct.mapper;
 
 import com.qk.dm.metadata.entity.MtdLabels;
+import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -11,5 +12,5 @@ public interface MtdLabelsMapper {
 
     MtdLabels useMtdLabels(MtdLabelsVO mtdLabelsVO);
 
-    MtdLabelsVO useMtdLabelsVO(MtdLabels mtdLabels);
+    MtdLabelsInfoVO useMtdLabelsInfoVO(MtdLabels mtdLabels);
 }
