@@ -2,41 +2,34 @@ package com.qk.dm.datastandards.easyexcel.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
-import com.qk.dm.datastandards.vo.DsdCodeTermVO;
+import com.qk.dm.datastandards.entity.DsdCodeInfo;
+import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeInfoMapper;
+import com.qk.dm.datastandards.service.impl.DsdExcelBatchService;
+import com.qk.dm.datastandards.utils.GsonUtil;
+import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
- * 码表信息excel 监听器
+ * 码表基本信息excel 监听器
  *
  * @author wjq
- * @date 20210728
+ * @date 20210730
  * @since 1.0.0
  */
-public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<Map<Integer, String>> {
-    /**
-     * 表头数据（存储所有的表头数据）
-     */
-    private List<Map<Integer, String>> headList = new ArrayList<>();
+public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCodeInfoVO> {
+    private final DsdExcelBatchService dsdExcelBatchService;
 
     /**
-     * 数据体
+     * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
      */
-    private List<Map<Integer, String>> dataList = new ArrayList<>();
+    private static final int BATCH_COUNT = 1000;
 
-    /**
-     * 这里会一行行的返回头
-     *
-     * @param headMap
-     * @param context
-     */
-    @Override
-    public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
-//        LOGGER.info("解析到一条头数据:{}", JSON.toJSONString(headMap));
-        //存储全部表头数据
-        headList.add(headMap);
+    List<DsdCodeInfoVO> list = new ArrayList<>();
+
+    public DsdCodeInfoUploadDataListener(DsdExcelBatchService dsdExcelBatchService) {
+        this.dsdExcelBatchService = dsdExcelBatchService;
     }
 
     /**
@@ -46,9 +39,14 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<Map<Int
      * @param context
      */
     @Override
-    public void invoke(Map<Integer, String> data, AnalysisContext context) {
-//        LOGGER.info("解析到一条数据:{}", JSON.toJSONString(data));
-        dataList.add(data);
+    public void invoke(DsdCodeInfoVO data, AnalysisContext context) {
+        list.add(data);
+        // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM
+        if (list.size() >= BATCH_COUNT) {
+            saveData();
+            // 存储完成清理 list
+            list.clear();
+        }
     }
 
     /**
@@ -59,15 +57,40 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<Map<Int
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         // 这里也要保存数据，确保最后遗留的数据也存储到数据库
-//        LOGGER.info("所有数据解析完成！");
+        saveData();
     }
 
-    public List<Map<Integer, String>> getHeadList() {
-        return headList;
-    }
+    /**
+     * 加上存储数据库
+     */
+    private void saveData() {
+        if (list != null && list.size() > 0) {
+            Set<String> tableCodeSet = new HashSet<>();
+            Set<String> codeDirLevelSet = new HashSet<>();
 
-    public List<Map<Integer, String>> getDataList() {
-        return dataList;
-    }
+            List<DsdCodeInfo> dataList = new ArrayList<>();
+            Map<String, List<DsdCodeInfoVO>> tableCodeMap = list.stream().collect(Collectors.groupingBy(DsdCodeInfoVO::getTableCode));
+            for (String tableCode : tableCodeMap.keySet()) {
+                List<DsdCodeInfoVO> dsdCodeInfoVOList = tableCodeMap.get(tableCode);
+                DsdCodeInfoVO dsdCodeInfoVO = dsdCodeInfoVOList.get(0);
+                DsdCodeInfo dsdCodeInfo = DsdCodeInfoMapper.INSTANCE.useDsdCodeInfo(dsdCodeInfoVO);
 
+                List<Map<String, String>> configFields = new ArrayList();
+                for (DsdCodeInfoVO codeInfoVO : dsdCodeInfoVOList) {
+                    Map<String, String> configFieldMap = new LinkedHashMap<>();
+                    configFieldMap.put("code_table_id", codeInfoVO.getCodeTableId());
+                    configFieldMap.put("name_ch", codeInfoVO.getNameCh());
+                    configFieldMap.put("name_en", codeInfoVO.getNameEn());
+                    configFieldMap.put("data_type", codeInfoVO.getDataType());
+                    configFields.add(configFieldMap);
+                }
+                dsdCodeInfo.setTableConfFields(GsonUtil.toJsonString(configFields));
+                dataList.add(dsdCodeInfo);
+                tableCodeSet.add(dsdCodeInfoVO.getTableCode());
+                codeDirLevelSet.add(dsdCodeInfoVO.getCodeDirLevel());
+            }
+            dsdExcelBatchService.saveCodeInfos(dataList, tableCodeSet, codeDirLevelSet);
+        }
+    }
 }
+

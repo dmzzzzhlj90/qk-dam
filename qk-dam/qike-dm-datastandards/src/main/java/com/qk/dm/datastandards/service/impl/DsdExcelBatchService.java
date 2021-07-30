@@ -2,9 +2,7 @@ package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.*;
-import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
-import com.qk.dm.datastandards.repositories.DsdCodeInfoExtRepository;
-import com.qk.dm.datastandards.repositories.DsdDirRepository;
+import com.qk.dm.datastandards.repositories.*;
 import com.querydsl.core.types.Predicate;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +29,16 @@ public class DsdExcelBatchService {
     private final DsdBasicinfoRepository dsdBasicinfoRepository;
     private final DsdDirRepository dsdDirRepository;
     private final DsdCodeInfoExtRepository dsdCodeInfoExtRepository;
-
+    private final DsdCodeInfoRepository dsdCodeInfoRepository;
+    private final DsdCodeDirRepository dsdCodeDirRepository;
 
     @Autowired
-    public DsdExcelBatchService(DsdBasicinfoRepository dsdBasicinfoRepository, DsdDirRepository dsdDirRepository, DsdCodeInfoExtRepository dsdCodeInfoExtRepository) {
+    public DsdExcelBatchService(DsdBasicinfoRepository dsdBasicinfoRepository, DsdDirRepository dsdDirRepository, DsdCodeInfoExtRepository dsdCodeInfoExtRepository, DsdCodeInfoRepository dsdCodeInfoRepository, DsdCodeDirRepository dsdCodeDirRepository) {
         this.dsdBasicinfoRepository = dsdBasicinfoRepository;
         this.dsdDirRepository = dsdDirRepository;
         this.dsdCodeInfoExtRepository = dsdCodeInfoExtRepository;
+        this.dsdCodeInfoRepository = dsdCodeInfoRepository;
+        this.dsdCodeDirRepository = dsdCodeDirRepository;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -123,6 +124,41 @@ public class DsdExcelBatchService {
         dsdCodeInfoExtRepository.deleteInBatch(existDataList);
         dsdCodeInfoExtRepository.saveAll(saveDataList);
 
+        entityManager.flush();
+        entityManager.clear();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void saveCodeInfos(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, Set<String> codeDirLevelSet) {
+        List<DsdCodeDir> codeDirAllList = dsdCodeDirRepository.findAll();
+
+        List<String> codeDirLevels =
+                codeDirAllList.stream().map(dsdCodeDir -> dsdCodeDir.getCodeDirLevel()).collect(Collectors.toList());
+
+        codeDirLevelSet.forEach(
+                codeDirLevel -> {
+                    if (!codeDirLevels.contains(codeDirLevel))
+                        throw new BizException("Excel中输入的码表目录层级:" + codeDirLevel + ",参数有误!!!");
+                });
+
+        Map<String, List<DsdCodeDir>> codeDirLevelMap =
+                codeDirAllList.stream().collect(Collectors.groupingBy(DsdCodeDir::getCodeDirLevel));
+        Predicate existDataPredicate =
+                QDsdCodeInfo.dsdCodeInfo
+                        .codeDirLevel
+                        .in(codeDirLevelSet)
+                        .and(QDsdCodeInfo.dsdCodeInfo.tableCode.in(tableCodeSet));
+        Iterable<DsdCodeInfo> existList = dsdCodeInfoRepository.findAll(existDataPredicate);
+        dsdCodeInfoRepository.deleteInBatch(existList);
+
+        for (DsdCodeInfo dsdCodeInfo : dataList) {
+            List<DsdCodeDir> codeDirList = codeDirLevelMap.get(dsdCodeInfo.getCodeDirLevel());
+            dsdCodeInfo.setCodeDirId(codeDirList.get(0).getCodeDirId());
+            dsdCodeInfo.setCodeDirLevel(codeDirList.get(0).getCodeDirLevel());
+            dsdCodeInfo.setGmtCreate(new Date());
+            dsdCodeInfo.setGmtModified(new Date());
+            entityManager.persist(dsdCodeInfo); // insert插入操作
+        }
         entityManager.flush();
         entityManager.clear();
     }

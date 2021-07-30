@@ -13,17 +13,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 数据标准码表信息 自定义拦截器 设置excel属性值
+ * 数据标准码表基本信息 自定义拦截器 设置excel属性值
  *
  * @author wjq
  */
-public class DsdCodeTermCustomSheetWriteHandler implements SheetWriteHandler {
+public class DsdCodeInfoCustomSheetWriteHandler implements SheetWriteHandler {
 
   private static final Logger LOGGER =
-      LoggerFactory.getLogger(DsdCodeTermCustomSheetWriteHandler.class);
+      LoggerFactory.getLogger(DsdCodeInfoCustomSheetWriteHandler.class);
   private final DsdExcelService dsdExcelService;
 
-  public DsdCodeTermCustomSheetWriteHandler(DsdExcelService dsdExcelService) {
+  public DsdCodeInfoCustomSheetWriteHandler(DsdExcelService dsdExcelService) {
     this.dsdExcelService = dsdExcelService;
   }
 
@@ -40,11 +40,10 @@ public class DsdCodeTermCustomSheetWriteHandler implements SheetWriteHandler {
     List<String> dsdCodeDirLevelList = dsdExcelService.findAllDsdCodeDirLevel();
 
     // 区间设置 第一列第一行和第二行的数据。由于第一行是头，所以第一、二行的数据实际上是第二三行
-    CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(1, 10000, 4, 4);
+    CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(1, 100000, 0, 0);
     DataValidationHelper helper = writeSheetHolder.getSheet().getDataValidationHelper();
     DataValidationConstraint constraint =
-        helper.createExplicitListConstraint(
-            dsdCodeDirLevelList.toArray(new String[dsdCodeDirLevelList.size()]));
+        helper.createExplicitListConstraint(dsdCodeDirLevelList.toArray(new String[dsdCodeDirLevelList.size()]));
     DataValidation dataValidation = helper.createValidation(constraint, cellRangeAddressList);
     writeSheetHolder.getSheet().addValidationData(dataValidation);
   }

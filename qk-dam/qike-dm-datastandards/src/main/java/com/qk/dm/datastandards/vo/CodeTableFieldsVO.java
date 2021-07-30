@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,18 +17,18 @@ public class CodeTableFieldsVO {
     private String code_table_id;
 
     /**
-     * 中文名称
+     * 字段中文名称
      */
     private String name_ch;
 
     /**
-     * 英文名称
+     * 字段英文名称
      */
     private String name_en;
 
 
     /**
-     * 数据类型
+     * 字段数据类型
      */
     private String data_type;
 

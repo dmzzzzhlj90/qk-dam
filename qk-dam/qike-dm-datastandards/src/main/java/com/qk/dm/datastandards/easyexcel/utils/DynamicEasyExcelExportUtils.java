@@ -130,7 +130,7 @@ public class DynamicEasyExcelExportUtils {
                 String fileName = URLEncoder.encode(excelName, "UTF-8").replaceAll("\\+", "%20");
                 response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
                 EasyExcel.write(response.getOutputStream()).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-                        .head(excelHead).sheet(DEFAULT_SHEET_NAME).doWrite(excelRows);
+                        .head(excelHead).sheet(excelName).doWrite(excelRows);
             }
         } catch (Exception e) {
             e.getMessage();

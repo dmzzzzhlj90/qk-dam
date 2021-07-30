@@ -4,8 +4,10 @@ import com.alibaba.excel.EasyExcel;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.easyexcel.handler.DsdBasicInfoCustomSheetWriteHandler;
+import com.qk.dm.datastandards.easyexcel.handler.DsdCodeInfoCustomSheetWriteHandler;
 import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -125,25 +128,56 @@ public class DsdExcelController {
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
-
     /**
-     * 码表信息数值__导出excel数据(根据dsdCodeInfoId表级数据)
+     * 码表基本信息列表__导出excel数据(全量)
      *
      * @Param: response
      * @return: void
      */
-    @PostMapping("/code/values/download")
+    @PostMapping("/code/info/all/download")
+    public void codeInfoAllDownload(HttpServletResponse response) throws IOException {
+        List<DsdCodeInfoVO> dsdCodeInfoVOList = dsdExcelService.codeInfoAllDownload();
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("码表基本信息", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), DsdCodeInfoVO.class).sheet("码表基本信息")
+                .registerWriteHandler(new DsdCodeInfoCustomSheetWriteHandler(dsdExcelService)).doWrite(dsdCodeInfoVOList);
+    }
+
+
+    /**
+     * 码表基本信息列表__导入excel数据(全量)
+     *
+     * @Param: file
+     * @return: java.lang.String
+     */
+    @PostMapping("/code/info/all/upload")
+    @ResponseBody
+    public DefaultCommonResult codeInfoAllUpload(MultipartFile file) {
+        dsdExcelService.codeInfoAllUpload(file);
+        return new DefaultCommonResult(ResultCodeEnum.OK);
+    }
+
+    /**
+     * 码表数值信息列表__导出excel数据(根据dsdCodeInfoId表级数据)
+     *
+     * @Param: response
+     * @return: void
+     */
+    @PostMapping("/code/values/dsdCodeInfoId/download")
     public void codeValuesDownloadByCodeInfoId(HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
         dsdExcelService.codeValuesDownloadByCodeInfoId(response, Long.valueOf(dsdCodeInfoId).longValue());
     }
 
     /**
-     * 码表信息数值__导入excel数据(根据dsdCodeInfoId表级数据)
+     * 码表数值信息列表__导入excel数据(根据dsdCodeInfoId表级数据)
      *
      * @Param: file
      * @return: java.lang.String
      */
-    @PostMapping("/code/term/upload/codeDirId")
+    @PostMapping("/code/values/dsdCodeInfoId/upload")
     @ResponseBody
     public DefaultCommonResult codeValuesUploadByCodeInfoId(MultipartFile file, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
         dsdExcelService.codeValuesUploadByCodeInfoId(file, Long.valueOf(dsdCodeInfoId).longValue());
@@ -172,7 +206,25 @@ public class DsdExcelController {
 
 
     /**
-     * 码表信息excel__模板下载
+     * 码表基本信息excel__模板下载
+     *
+     * @param response
+     * @throws IOException
+     */
+    @PostMapping("/code/info/upload/template")
+    public void ccodeInfoDownloadTemplate(HttpServletResponse response) throws IOException {
+//        List<DsdBasicinfoVO> dsdBasicInfoSampleDataList = dsdExcelService.dsdBasicInfoSampleData();
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("码表基本信息导入模板", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), DsdCodeInfoVO.class)
+                .registerWriteHandler(new DsdCodeInfoCustomSheetWriteHandler(dsdExcelService)).sheet("码表基本信息导入模板").doWrite(new ArrayList());
+    }
+
+    /**
+     * 码表数值信息excel__模板下载
      *
      * @Param: response
      * @return: void

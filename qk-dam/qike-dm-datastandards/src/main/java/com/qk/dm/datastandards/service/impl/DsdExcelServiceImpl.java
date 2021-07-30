@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.easyexcel.listener.DsdBasicInfoUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdCodeInfoUploadDataListener;
+import com.qk.dm.datastandards.easyexcel.listener.DsdCodeValuesUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdTermUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.utils.DynamicEasyExcelExportUtils;
 import com.qk.dm.datastandards.entity.*;
@@ -23,6 +24,7 @@ import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.utils.GsonUtil;
 import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
 import com.qk.dm.datastandards.vo.DsdTermVO;
 import com.querydsl.core.types.Predicate;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
@@ -161,7 +163,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         try {
             List<List<String>> excelHead = getCodeExcelHeadList(dsdCodeInfoId);
             List<List<Object>> excelRows = getCodeExcelValues(dsdCodeInfoId);
-            DynamicEasyExcelExportUtils.exportWebExcelFile(response, excelHead, excelRows, "数据标准码表信息");
+            DynamicEasyExcelExportUtils.exportWebExcelFile(response, excelHead, excelRows, "码表数值信息");
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException("导出文件失败!");
@@ -210,7 +212,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         try {
             InputStream inputStream = file.getInputStream();
             byte[] stream = IoUtils.toByteArray(inputStream);
-            DsdCodeInfoUploadDataListener readListener = new DsdCodeInfoUploadDataListener();
+            DsdCodeValuesUploadDataListener readListener = new DsdCodeValuesUploadDataListener();
             EasyExcelFactory.read(new ByteArrayInputStream(stream)).registerReadListener(readListener).headRowNumber(1).sheet(0).doRead();
 
             Optional<DsdCodeInfo> dsdCodeInfo = dsdCodeInfoRepository.findById(dsdCodeInfoId);
@@ -246,6 +248,42 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         }
     }
 
+    @Override
+    public List<DsdCodeInfoVO> codeInfoAllDownload() {
+        List<DsdCodeInfoVO> dsdBasicInfoVOList = new ArrayList<>();
+        List<DsdCodeInfo> dsdCodeInfoList = dsdCodeInfoRepository.findAll();
+
+        for (DsdCodeInfo dsdCodeInfo : dsdCodeInfoList) {
+            String tableConfFieldsStr = dsdCodeInfo.getTableConfFields();
+            List<CodeTableFieldsVO> codeTableFieldsVOList = GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {
+            }.getType());
+            for (CodeTableFieldsVO codeTableFieldsVO : codeTableFieldsVOList) {
+                DsdCodeInfoVO dsdCodeInfoVO = DsdCodeInfoVO.builder().codeDirId(dsdCodeInfo.getCodeDirId())
+                        .codeDirLevel(dsdCodeInfo.getCodeDirLevel())
+                        .tableName(dsdCodeInfo.getTableName())
+                        .tableCode(dsdCodeInfo.getTableCode())
+                        .tableDesc(dsdCodeInfo.getTableDesc())
+                        .codeTableId(codeTableFieldsVO.getCode_table_id())
+                        .nameCh(codeTableFieldsVO.getName_ch())
+                        .nameEn(codeTableFieldsVO.getName_en())
+                        .dataType(codeTableFieldsVO.getData_type()).build();
+                dsdBasicInfoVOList.add(dsdCodeInfoVO);
+            }
+        }
+        return dsdBasicInfoVOList;
+    }
+
+    @Override
+    public void codeInfoAllUpload(MultipartFile file) {
+        try {
+            EasyExcel.read(file.getInputStream(), DsdCodeInfoVO.class,
+                    new DsdCodeInfoUploadDataListener(dsdExcelBatchService)).sheet().doRead();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BizException("导入失败!");
+        }
+    }
+
     private void getCodeValues(long dsdCodeInfoId, List<Map<Integer, String>> dataList, Map<String, String> fieldMap, Map<Integer, String> excelHeadIdxNameMap, List<DsdCodeInfoExt> saveDataList, List<String> codeList) {
         for (Map<Integer, String> dataRow : dataList) {
             DsdCodeInfoExt dsdCodeInfoExt = new DsdCodeInfoExt();
@@ -269,7 +307,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         }
     }
 
-    private List<Map<Integer, String>> checkCodeInfoDataList(DsdCodeInfoUploadDataListener readListener) {
+    private List<Map<Integer, String>> checkCodeInfoDataList(DsdCodeValuesUploadDataListener readListener) {
         List<Map<Integer, String>> dataList = readListener.getDataList();
         if (CollectionUtils.isEmpty(dataList)) {
             throw new BizException("Excel导入数据为空!!!");
@@ -277,7 +315,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         return dataList;
     }
 
-    private List<Map<Integer, String>> checkCodeInfoHeadList(DsdCodeInfoUploadDataListener readListener, List<CodeTableFieldsVO> codeTableFieldsVOList) {
+    private List<Map<Integer, String>> checkCodeInfoHeadList(DsdCodeValuesUploadDataListener readListener, List<CodeTableFieldsVO> codeTableFieldsVOList) {
         List<Map<Integer, String>> headList = readListener.getHeadList();
         if (CollectionUtils.isEmpty(headList)) {
             throw new BizException("Excel未包含表头!");
@@ -294,7 +332,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             List rowData = new ArrayList();
             for (List<String> headDatas : excelHead) {
                 for (String head : headDatas) {
-                    rowData.add(head+(i+1));
+                    rowData.add(head + (i + 1));
                 }
             }
             list.add(rowData);
