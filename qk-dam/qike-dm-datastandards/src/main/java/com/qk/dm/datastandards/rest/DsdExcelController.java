@@ -8,7 +8,6 @@ import com.qk.dm.datastandards.easyexcel.handler.DsdCodeInfoCustomSheetWriteHand
 import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
-import com.qk.dm.datastandards.vo.DsdTermVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,36 +35,6 @@ public class DsdExcelController {
     @Autowired
     public DsdExcelController(DsdExcelService dsdExcelService) {
         this.dsdExcelService = dsdExcelService;
-    }
-
-    /**
-     * 业务术语excel__全部导出数据
-     *
-     * @Param: response
-     * @return: void
-     */
-    @PostMapping("/term/download")
-    public void termDownload(HttpServletResponse response) throws IOException {
-        List<DsdTermVO> dsdTermVOList = dsdExcelService.queryAllTerm();
-
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("数据标准业务术语", "UTF-8").replaceAll("\\+", "%20");
-        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdTermVO.class).sheet("模板").doWrite(dsdTermVOList);
-    }
-
-    /**
-     * 业务术语__excel导入数据
-     *
-     * @Param: file
-     * @return: java.lang.String
-     */
-    @PostMapping("/term/upload")
-    @ResponseBody
-    public DefaultCommonResult termUpload(MultipartFile file) throws IOException {
-        dsdExcelService.termUpload(file);
-        return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 
     /**

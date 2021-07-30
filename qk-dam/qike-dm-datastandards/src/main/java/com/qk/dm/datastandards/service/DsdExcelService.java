@@ -2,7 +2,6 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
-import com.qk.dm.datastandards.vo.DsdTermVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,10 +18,6 @@ import java.util.List;
  */
 @Service
 public interface DsdExcelService {
-
-    List<DsdTermVO> queryAllTerm();
-
-    void termUpload(MultipartFile file) throws IOException;
 
     List<DsdBasicinfoVO> queryBasicInfos(String dirDsdId);
 

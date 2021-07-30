@@ -9,15 +9,12 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.easyexcel.listener.DsdBasicInfoUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdCodeInfoUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdCodeValuesUploadDataListener;
-import com.qk.dm.datastandards.easyexcel.listener.DsdTermUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.utils.DynamicEasyExcelExportUtils;
 import com.qk.dm.datastandards.entity.*;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
-import com.qk.dm.datastandards.mapstruct.mapper.DsdTermMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeInfoExtRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeInfoRepository;
-import com.qk.dm.datastandards.repositories.DsdTermRepository;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.service.DsdExcelService;
@@ -25,7 +22,6 @@ import com.qk.dm.datastandards.utils.GsonUtil;
 import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
-import com.qk.dm.datastandards.vo.DsdTermVO;
 import com.querydsl.core.types.Predicate;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.apache.commons.collections4.CollectionUtils;
@@ -49,7 +45,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DsdExcelServiceImpl implements DsdExcelService {
-    private final DsdTermRepository dsdTermRepository;
     private final DsdBasicinfoRepository dsdBasicinfoRepository;
 
     private final DsdCodeInfoRepository dsdCodeInfoRepository;
@@ -62,40 +57,15 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     private final QDsdCodeInfoExt qDsdCodeInfoExt = QDsdCodeInfoExt.dsdCodeInfoExt;
 
     @Autowired
-    public DsdExcelServiceImpl(DsdTermRepository dsdTermRepository, DsdBasicinfoRepository dsdBasicinfoRepository, DsdCodeInfoRepository dsdCodeInfoRepository,
+    public DsdExcelServiceImpl(DsdBasicinfoRepository dsdBasicinfoRepository, DsdCodeInfoRepository dsdCodeInfoRepository,
                                DsdCodeInfoExtRepository dsdCodeInfoExtRepository, DsdExcelBatchService dsdExcelBatchService, DataStandardDirService dataStandardDirService,
                                DataStandardCodeDirService dataStandardCodeDirService) {
-        this.dsdTermRepository = dsdTermRepository;
         this.dsdBasicinfoRepository = dsdBasicinfoRepository;
         this.dsdCodeInfoRepository = dsdCodeInfoRepository;
         this.dsdCodeInfoExtRepository = dsdCodeInfoExtRepository;
         this.dsdExcelBatchService = dsdExcelBatchService;
         this.dataStandardDirService = dataStandardDirService;
         this.dataStandardCodeDirService = dataStandardCodeDirService;
-    }
-
-
-    @Override
-    public List<DsdTermVO> queryAllTerm() {
-        List<DsdTermVO> dsdTermVOList = new ArrayList<>();
-
-        List<DsdTerm> dsdTermList = dsdTermRepository.findAll();
-        dsdTermList.forEach(
-                dsdTerm -> {
-                    DsdTermVO dsdTermVO = DsdTermMapper.INSTANCE.useDsdTermVO(dsdTerm);
-                    dsdTermVOList.add(dsdTermVO);
-                });
-        return dsdTermVOList;
-    }
-
-    @Override
-    public void termUpload(MultipartFile file) throws IOException {
-        EasyExcel.read(
-                file.getInputStream(),
-                DsdTermVO.class,
-                new DsdTermUploadDataListener(dsdTermRepository))
-                .sheet()
-                .doRead();
     }
 
     @Override
