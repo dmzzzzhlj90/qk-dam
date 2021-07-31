@@ -3,9 +3,7 @@ package com.qk.dm.metadata.rest;
 import com.qk.dm.metadata.respose.ResponseWrapper;
 import com.qk.dm.metadata.service.MtdLabelsService;
 import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
-import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
-import com.qk.dm.metadata.vo.PageResultVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,11 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/labels")
-public class MtdLabelsController {
+public class MtdLabelsAtlasController {
 
     private final MtdLabelsService mtdLabelsService;
 
-    public MtdLabelsController(MtdLabelsService mtdLabelsService) {
+    public MtdLabelsAtlasController(MtdLabelsService mtdLabelsService) {
         this.mtdLabelsService = mtdLabelsService;
     }
 
@@ -43,30 +41,6 @@ public class MtdLabelsController {
     @ResponseWrapper
     public void update(@PathVariable("id") Long id, @RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
         mtdLabelsService.update(id, mtdLabelsVO);
-    }
-
-    /**
-     * 删除元数据标签
-     *
-     * @param: ids id字符串
-     * @return: DefaultCommonResult
-     */
-    @DeleteMapping("/{ids}")
-    @ResponseWrapper
-    public void delete(@PathVariable("ids") String ids) {
-        mtdLabelsService.delete(ids);
-    }
-
-    /**
-     * 分页查询元数据标签
-     *
-     * @param: pagination分页查询参数对象: page,size,sortStr
-     * @return: 返回标签列表信息
-     */
-    @GetMapping("/page")
-    @ResponseWrapper
-    public PageResultVO<MtdLabelsInfoVO> listByPage(MtdLabelsListVO mtdLabelsListVO) {
-        return mtdLabelsService.listByPage(mtdLabelsListVO);
     }
 
     /**
