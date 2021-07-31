@@ -33,7 +33,7 @@ public class DsdCodeInfoExt implements Serializable {
     /**
      * 建表配置值
      */
-    @Column(name = "table_conf_value", nullable = false)
+    @Column(name = "table_conf_value")
     private String tableConfValue;
 
     /**

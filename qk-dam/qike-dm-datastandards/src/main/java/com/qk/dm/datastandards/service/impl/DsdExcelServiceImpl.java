@@ -196,10 +196,9 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             Map<String, String> fieldMap = codeTableFieldsVOList.stream().collect(Collectors.toMap(CodeTableFieldsVO::getName_ch, CodeTableFieldsVO::getCode_table_id));
             Map<Integer, String> excelHeadIdxNameMap = headList.get(headList.size() - 1);
             List<DsdCodeInfoExt> saveDataList = Lists.newArrayList();
-            List<String> codeList = Lists.newArrayList();
-            getCodeValues(dsdCodeInfoId, dataList, fieldMap, excelHeadIdxNameMap, saveDataList, codeList);
+            getCodeValues(dsdCodeInfoId, dataList, fieldMap, excelHeadIdxNameMap, saveDataList);
 
-            dsdExcelBatchService.addDsdCodeValuesBatch(saveDataList, dsdCodeInfoId, codeList);
+            dsdExcelBatchService.addDsdCodeValuesBatch(saveDataList, dsdCodeInfoId);
         } catch (IOException e) {
             e.printStackTrace();
             throw new BizException("导入异常!");
@@ -254,7 +253,8 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         }
     }
 
-    private void getCodeValues(long dsdCodeInfoId, List<Map<Integer, String>> dataList, Map<String, String> fieldMap, Map<Integer, String> excelHeadIdxNameMap, List<DsdCodeInfoExt> saveDataList, List<String> codeList) {
+    private void getCodeValues(long dsdCodeInfoId, List<Map<Integer, String>> dataList, Map<String, String> fieldMap,
+                               Map<Integer, String> excelHeadIdxNameMap, List<DsdCodeInfoExt> saveDataList) {
         for (Map<Integer, String> dataRow : dataList) {
             DsdCodeInfoExt dsdCodeInfoExt = new DsdCodeInfoExt();
             dsdCodeInfoExt.setDsdCodeInfoId(dsdCodeInfoId);
@@ -265,7 +265,6 @@ public class DsdExcelServiceImpl implements DsdExcelService {
                 final String value = dataRow.get(columnHead.getKey());
                 if (columnHead.getValue().equals("编码")) {
                     dsdCodeInfoExt.setTableConfCode(value);
-                    codeList.add(value);
                 } else if (columnHead.getValue().equals("值")) {
                     dsdCodeInfoExt.setTableConfValue(value);
                 } else {
@@ -302,7 +301,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             List rowData = new ArrayList();
             for (List<String> headDatas : excelHead) {
                 for (String head : headDatas) {
-                    rowData.add(head + (i + 1));
+                    rowData.add("   "+head + (i + 1)+"   ");
                 }
             }
             list.add(rowData);

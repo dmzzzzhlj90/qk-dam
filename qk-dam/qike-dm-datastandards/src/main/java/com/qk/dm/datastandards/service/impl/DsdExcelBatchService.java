@@ -116,16 +116,15 @@ public class DsdExcelBatchService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void addDsdCodeValuesBatch(List<DsdCodeInfoExt> saveDataList, long dsdCodeInfoId, List<String> codeList) {
-        Predicate predicate = QDsdCodeInfoExt.dsdCodeInfoExt.dsdCodeInfoId.eq(dsdCodeInfoId)
-                .and(QDsdCodeInfoExt.dsdCodeInfoExt.tableConfCode.in(codeList));
-        Iterable<DsdCodeInfoExt> existDataList = dsdCodeInfoExtRepository.findAll(predicate);
-
-        dsdCodeInfoExtRepository.deleteInBatch(existDataList);
-        dsdCodeInfoExtRepository.saveAll(saveDataList);
-
+    public void addDsdCodeValuesBatch(List<DsdCodeInfoExt> saveDataList, long dsdCodeInfoId) {
+        dsdCodeInfoExtRepository.deleteByDsdCodeInfoId(dsdCodeInfoId);
+        for (int i = 0; i < saveDataList.size(); i++) {
+            entityManager.persist(saveDataList.get(i));
+        }
         entityManager.flush();
         entityManager.clear();
+
+
     }
 
     @Transactional(rollbackFor = Exception.class)

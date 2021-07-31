@@ -39,7 +39,7 @@ public class DsdCodeInfoExtVO {
     /**
      * 建表配置值
      */
-    @NotBlank(message = "码值不能为空！")
+//    @NotBlank(message = "码值不能为空！")
     private String tableConfValue;
 
     /**

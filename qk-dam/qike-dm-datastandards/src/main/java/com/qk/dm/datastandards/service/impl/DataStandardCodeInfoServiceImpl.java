@@ -11,6 +11,7 @@ import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeInfoExtMapper;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeInfoMapper;
 import com.qk.dm.datastandards.repositories.DsdCodeInfoExtRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeInfoRepository;
+import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.service.DataStandardCodeInfoService;
 import com.qk.dm.datastandards.utils.GsonUtil;
 import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
@@ -45,13 +46,16 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     private final DsdCodeInfoRepository dsdCodeInfoRepository;
     private final DsdCodeInfoExtRepository dsdCodeInfoExtRepository;
 
+    private final DataStandardCodeDirService dataStandardCodeDirService;
+
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
 
     @Autowired
-    public DataStandardCodeInfoServiceImpl(DsdCodeInfoRepository dsdCodeInfoRepository, DsdCodeInfoExtRepository dsdCodeInfoExtRepository, EntityManager entityManager) {
+    public DataStandardCodeInfoServiceImpl(DsdCodeInfoRepository dsdCodeInfoRepository, DsdCodeInfoExtRepository dsdCodeInfoExtRepository, DataStandardCodeDirService dataStandardCodeDirService, EntityManager entityManager) {
         this.dsdCodeInfoRepository = dsdCodeInfoRepository;
         this.dsdCodeInfoExtRepository = dsdCodeInfoExtRepository;
+        this.dataStandardCodeDirService = dataStandardCodeDirService;
         this.entityManager = entityManager;
     }
 
@@ -105,7 +109,9 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
     public void basicCheckCondition(BooleanBuilder booleanBuilder, QDsdCodeInfo qDsdCodeInfo, DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
         if (!StringUtils.isEmpty(dsdCodeInfoParamsVO.getCodeDirId())) {
-            booleanBuilder.and(qDsdCodeInfo.codeDirId.eq(dsdCodeInfoParamsVO.getCodeDirId()));
+            Set<String> codeDirIdSet = new HashSet<>();
+            dataStandardCodeDirService.getCodeDirId(codeDirIdSet, dsdCodeInfoParamsVO.getCodeDirId());
+            booleanBuilder.and(qDsdCodeInfo.codeDirId.in(codeDirIdSet));
         }
         if (!StringUtils.isEmpty(dsdCodeInfoParamsVO.getTableName())) {
             booleanBuilder.and(qDsdCodeInfo.tableName.contains(dsdCodeInfoParamsVO.getTableName()));
