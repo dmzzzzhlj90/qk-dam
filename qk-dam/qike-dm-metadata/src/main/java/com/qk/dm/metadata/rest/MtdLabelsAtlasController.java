@@ -1,23 +1,22 @@
 package com.qk.dm.metadata.rest;
 
 import com.qk.dm.metadata.respose.ResponseWrapper;
-import com.qk.dm.metadata.service.MtdLabelsService;
-import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
-import com.qk.dm.metadata.vo.MtdLabelsVO;
+import com.qk.dm.metadata.service.MtdLabelsAtlasService;
+import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
-@RequestMapping("/labels")
+@RequestMapping("/labels/atlas")
 public class MtdLabelsAtlasController {
 
-    private final MtdLabelsService mtdLabelsService;
+    private final MtdLabelsAtlasService mtdLabelsAtlasService;
 
-    public MtdLabelsAtlasController(MtdLabelsService mtdLabelsService) {
-        this.mtdLabelsService = mtdLabelsService;
+    public MtdLabelsAtlasController(MtdLabelsAtlasService mtdLabelsAtlasService) {
+        this.mtdLabelsAtlasService = mtdLabelsAtlasService;
     }
+
 
     /**
      * 新增元数据标签
@@ -27,8 +26,8 @@ public class MtdLabelsAtlasController {
      */
     @PostMapping("")
     @ResponseWrapper
-    public void insert(@RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
-        mtdLabelsService.insert(mtdLabelsVO);
+    public void insert(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
+        mtdLabelsAtlasService.insert(mtdLabelsVO);
     }
 
     /**
@@ -37,10 +36,10 @@ public class MtdLabelsAtlasController {
      * @param: mtdLabelsVO 元数据标签VO
      * @return: DefaultCommonResult
      */
-    @PutMapping("/{id}")
+    @PutMapping("/")
     @ResponseWrapper
-    public void update(@PathVariable("id") Long id, @RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
-        mtdLabelsService.update(id, mtdLabelsVO);
+    public void update(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
+        mtdLabelsAtlasService.update(mtdLabelsVO);
     }
 
     /**
@@ -49,9 +48,9 @@ public class MtdLabelsAtlasController {
      * @param: mtdLabelsVO 元数据标签VO
      * @return: 返回标签列表信息
      */
-    @GetMapping("")
+    @GetMapping("/{guid}")
     @ResponseWrapper
-    public List<MtdLabelsInfoVO> listByAll(MtdLabelsVO mtdLabelsVO) {
-        return mtdLabelsService.listByAll(mtdLabelsVO);
+    public MtdLabelsAtlasVO getByGuid(@PathVariable("guid") String guid) {
+        return mtdLabelsAtlasService.getByGuid(guid);
     }
 }
