@@ -39,6 +39,10 @@ spring:
         jwt:
           issuer-uri: http://auth-server:9901
   cloud:
+    gateway:
+      default-filters:
+        - TokenRelay=
+        - RemoveRequestHeader=Cookie
     nacos:
       discovery:
         server-addr: 172.31.0.44:8847
@@ -49,4 +53,6 @@ spring:
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         extension-configs:
           - dataId: dm-gateway.yml
+            refresh: true
+          - dataId: test44-redis-dev.yml
             refresh: true

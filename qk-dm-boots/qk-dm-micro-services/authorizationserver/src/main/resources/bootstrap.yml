@@ -1,5 +1,9 @@
 server:
   port: 9901
+  servlet:
+    session:
+      cookie:
+        name: SESSION
 logging:
   level:
     root: INFO
@@ -45,4 +49,4 @@ spring:
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         extension-configs:
           - dataId: oauth2-client.yml
-            refresh: true
+          - dataId: test44-redis-dev.yml

@@ -13,6 +13,24 @@ public class InnerRegisteredClient {
   private Set<String> scopes;
   private Set<AuthorizationGrantType> authorizationGrantTypes;
   private Set<ClientAuthenticationMethod> clientAuthenticationMethods;
+  private String privateEncoded;
+  private String publicEncoded;
+
+  public String getPrivateEncoded() {
+    return privateEncoded;
+  }
+
+  public void setPrivateEncoded(String privateEncoded) {
+    this.privateEncoded = privateEncoded;
+  }
+
+  public String getPublicEncoded() {
+    return publicEncoded;
+  }
+
+  public void setPublicEncoded(String publicEncoded) {
+    this.publicEncoded = publicEncoded;
+  }
 
   public String getId() {
     return id;

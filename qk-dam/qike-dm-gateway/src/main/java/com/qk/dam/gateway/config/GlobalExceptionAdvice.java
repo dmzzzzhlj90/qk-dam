@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.jwt.BadJwtException;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.function.server.EntityResponse;
 import reactor.core.publisher.Mono;
@@ -28,6 +29,7 @@ public class GlobalExceptionAdvice {
    * @return 返回的信息
    */
   @ExceptionHandler(JwtException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Mono<EntityResponse<DefaultCommonResult<Object>>> jwtException(JwtException e) {
     log.error("jwt校验异常: {}", getStackTrace(e));
     return EntityResponse.fromObject(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED))
@@ -36,6 +38,7 @@ public class GlobalExceptionAdvice {
   }
 
   @ExceptionHandler(RuntimeException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Mono<EntityResponse<DefaultCommonResult<Object>>> runtimeException(RuntimeException e) {
     log.error("jwt校验异常: {}", getStackTrace(e));
     return EntityResponse.fromObject(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED))
@@ -44,6 +47,7 @@ public class GlobalExceptionAdvice {
   }
 
   @ExceptionHandler(BadJwtException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Mono<EntityResponse<DefaultCommonResult<Object>>> badJwtException(BadJwtException e) {
     log.error("jwt校验异常: {}", getStackTrace(e));
     return EntityResponse.fromObject(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED))

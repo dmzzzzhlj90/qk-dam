@@ -27,8 +27,6 @@ subprojects {
     apply plugin: 'com.github.sherter.google-java-format'
 
     repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        mavenLocal()
         maven {
             url = 'http://172.31.0.18:8081/repository/alibaba'
             credentials {
@@ -36,6 +34,9 @@ subprojects {
                 password = 'qk-dm-dev123'
             }
         }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        mavenLocal()
+
     }
     configurations.all {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'

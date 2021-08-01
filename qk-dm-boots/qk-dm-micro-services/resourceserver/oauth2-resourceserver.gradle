@@ -1,10 +1,9 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
 }
 version "${dmMicroServices}"
-group "com.qk.dm.authserver"
+group "com.qk.dam.resourceserver"
 configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
@@ -13,22 +12,18 @@ configurations {
 }
 dependencies {
     implementation project(":dam-mvc-validation")
+    implementation project(":commons-core")
     implementation project(":dam-log")
-    implementation project(":qk-data-redis")
 
-    implementation group: 'mysql', name: 'mysql-connector-java'
-    implementation 'com.zaxxer:HikariCP'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
-    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
-    implementation group: 'org.tsugi', name: 'tsugi-util', version: '21.0.0'
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
 
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-security'
-    compile 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.session:spring-session-data-redis'
-    compile 'org.springframework.security.experimental:spring-security-oauth2-authorization-server'
+    compile 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
 }
+
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
@@ -37,7 +32,6 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
-
 test {
     useJUnitPlatform()
 }

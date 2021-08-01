@@ -1,15 +1,16 @@
 package com.qk.dm.auth.config;
 
+import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.qk.dm.auth.jose.ClientKeyService;
 import com.qk.dm.auth.jose.Jwks;
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -62,6 +63,11 @@ public class AuthorizationServerConfig {
                           // .clientSecret(passwordEncoder.encode(innerRegisteredClient.getClientSecret()))
                           .clientSecret(innerRegisteredClient.getClientSecret())
                           .clientName(innerRegisteredClient.getClientName())
+                          .tokenSettings(
+                              (tokenSettings ->
+                                  tokenSettings
+                                      .accessTokenTimeToLive(Duration.ofHours(3))
+                                      .refreshTokenTimeToLive(Duration.ofHours(6))))
                           .clientSettings(
                               clientSettings -> clientSettings.requireUserConsent(true));
 
@@ -102,10 +108,47 @@ public class AuthorizationServerConfig {
   }
 
   @Bean
-  public JWKSource<SecurityContext> jwkSource() {
-    RSAKey rsaKey = Jwks.generateRsa();
-    JWKSet jwkSet = new JWKSet(rsaKey);
+  public JWKSource<SecurityContext> jwkSource(
+      RegisteredClients registeredClients, ClientKeyService clientKeyService) {
+
+    List<JWK> rsaKeyList =
+        registeredClients.getClients().stream()
+            .map(client -> getRsaKey(clientKeyService, client))
+            .collect(Collectors.toList());
+    JWKSet jwkSet = new JWKSet(rsaKeyList);
+
     return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
+  }
+
+  /**
+   * 获取rsa key
+   *
+   * @param clientKeyService
+   * @param client
+   * @return
+   */
+  private RSAKey getRsaKey(ClientKeyService clientKeyService, InnerRegisteredClient client) {
+    InnerRegisteredClient findClient = clientKeyService.innerRegisteredClient(client.getClientId());
+    if (findClient != null) {
+      String privateEncoded = findClient.getPrivateEncoded();
+      String publicEncoded = findClient.getPublicEncoded();
+
+      return new RSAKey.Builder(Jwks.getPublicKey(publicEncoded))
+          .privateKey(Jwks.getPrivateKey(privateEncoded))
+          .keyID(client.getClientId())
+          .build();
+    }
+    RSAKey rsaKey = Jwks.generateRsa(client.getClientId());
+    try {
+      String privateEncoded = Jwks.getPrivateEncoded(rsaKey);
+      String publicEncoded = Jwks.getPublicEncoded(rsaKey);
+      client.setPrivateEncoded(privateEncoded);
+      client.setPublicEncoded(publicEncoded);
+      clientKeyService.insertClientKey(client);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return rsaKey;
   }
 
   @Bean
@@ -114,7 +157,7 @@ public class AuthorizationServerConfig {
   }
 
   @Bean
-  public ProviderSettings providerSettings() {
-    return new ProviderSettings().issuer("http://auth-server:9901");
+  public ProviderSettings providerSettings(RegisteredClients registeredClients) {
+    return new ProviderSettings().issuer(registeredClients.getIssuer());
   }
 }

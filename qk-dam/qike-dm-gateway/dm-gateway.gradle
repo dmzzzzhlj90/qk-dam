@@ -11,8 +11,9 @@ configurations {
     }
 }
 dependencies {
-    implementation project(":dam-log")
+    implementation project(":qk-data-redis")
     implementation project(":commons-core")
+    implementation project(":dam-log")
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
@@ -22,7 +23,6 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
     implementation 'org.springframework.session:spring-session-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     annotationProcessor 'org.projectlombok:lombok'
 }
