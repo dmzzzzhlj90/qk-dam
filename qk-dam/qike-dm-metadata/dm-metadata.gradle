@@ -28,7 +28,9 @@ dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":commons-core")
     implementation project(":dam-log")
+    implementation project(":rdbms2atlas")
 
+    implementation 'org.apache.atlas:atlas-client-v2:3.0.0-SNAPSHOT'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
