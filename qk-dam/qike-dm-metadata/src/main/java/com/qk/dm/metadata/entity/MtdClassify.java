@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.entity;
 
+import com.qk.dam.jpa.base.BaseRepository;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_mtd_classify")
-public class MtdClassify implements Serializable {
+public class MtdClassify implements Serializable, BaseRepository<Long, Long> {
 
     private static final long serialVersionUID = 1L;
 
