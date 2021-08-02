@@ -104,8 +104,8 @@ public class DsdExcelController {
      * @return: void
      */
     @PostMapping("/code/info/all/download")
-    public void codeInfoAllDownload(HttpServletResponse response) throws IOException {
-        List<DsdCodeInfoVO> dsdCodeInfoVOList = dsdExcelService.codeInfoAllDownload();
+    public void codeInfoAllDownload(@RequestParam("codeDirId") String codeDirId, HttpServletResponse response) throws IOException {
+        List<DsdCodeInfoVO> dsdCodeInfoVOList = dsdExcelService.codeInfoAllDownload(codeDirId);
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -124,8 +124,8 @@ public class DsdExcelController {
      */
     @PostMapping("/code/info/all/upload")
     @ResponseBody
-    public DefaultCommonResult codeInfoAllUpload(MultipartFile file) {
-        dsdExcelService.codeInfoAllUpload(file);
+    public DefaultCommonResult codeInfoAllUpload(MultipartFile file,@RequestParam("codeDirId") String codeDirId) {
+        dsdExcelService.codeInfoAllUpload(file,codeDirId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
 

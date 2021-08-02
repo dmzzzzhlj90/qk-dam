@@ -1,5 +1,6 @@
 package com.qk.dm.datastandards.easyexcel.listener;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.qk.dm.datastandards.entity.DsdCodeInfo;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  */
 public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCodeInfoVO> {
     private final DsdExcelBatchService dsdExcelBatchService;
+    private final String codeDirId;
 
     /**
      * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
@@ -28,8 +30,9 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCode
 
     List<DsdCodeInfoVO> list = new ArrayList<>();
 
-    public DsdCodeInfoUploadDataListener(DsdExcelBatchService dsdExcelBatchService) {
+    public DsdCodeInfoUploadDataListener(DsdExcelBatchService dsdExcelBatchService, String codeDirId) {
         this.dsdExcelBatchService = dsdExcelBatchService;
+        this.codeDirId = codeDirId;
     }
 
     /**
@@ -89,7 +92,7 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCode
                 tableCodeSet.add(dsdCodeInfoVO.getTableCode());
                 codeDirLevelSet.add(dsdCodeInfoVO.getCodeDirLevel());
             }
-            dsdExcelBatchService.saveCodeInfos(dataList, tableCodeSet, codeDirLevelSet);
+            dsdExcelBatchService.saveCodeInfos(dataList, tableCodeSet, codeDirLevelSet,codeDirId);
         }
     }
 }

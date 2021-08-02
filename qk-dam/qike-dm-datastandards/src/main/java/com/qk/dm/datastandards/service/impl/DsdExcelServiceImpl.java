@@ -218,10 +218,20 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public List<DsdCodeInfoVO> codeInfoAllDownload() {
+    public List<DsdCodeInfoVO> codeInfoAllDownload(String codeDirId) {
         List<DsdCodeInfoVO> dsdBasicInfoVOList = new ArrayList<>();
-        List<DsdCodeInfo> dsdCodeInfoList = dsdCodeInfoRepository.findAll();
 
+        if (StringUtils.isEmpty(codeDirId)) {
+            getCcodeInfoAllDownloadValues(dsdBasicInfoVOList);
+        } else {
+            getCcodeInfoDownloadValuesByCodeDirId(codeDirId, dsdBasicInfoVOList);
+        }
+        return dsdBasicInfoVOList;
+    }
+
+    private void getCcodeInfoDownloadValuesByCodeDirId(String codeDirId, List<DsdCodeInfoVO> dsdBasicInfoVOList) {
+        Predicate predicate = QDsdCodeInfo.dsdCodeInfo.codeDirId.eq(codeDirId);
+        Iterable<DsdCodeInfo> dsdCodeInfoList = dsdCodeInfoRepository.findAll(predicate);
         for (DsdCodeInfo dsdCodeInfo : dsdCodeInfoList) {
             String tableConfFieldsStr = dsdCodeInfo.getTableConfFields();
             List<CodeTableFieldsVO> codeTableFieldsVOList = GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {
@@ -239,14 +249,34 @@ public class DsdExcelServiceImpl implements DsdExcelService {
                 dsdBasicInfoVOList.add(dsdCodeInfoVO);
             }
         }
-        return dsdBasicInfoVOList;
+    }
+
+    private void getCcodeInfoAllDownloadValues(List<DsdCodeInfoVO> dsdBasicInfoVOList) {
+        List<DsdCodeInfo> dsdCodeInfoList = dsdCodeInfoRepository.findAll();
+        for (DsdCodeInfo dsdCodeInfo : dsdCodeInfoList) {
+            String tableConfFieldsStr = dsdCodeInfo.getTableConfFields();
+            List<CodeTableFieldsVO> codeTableFieldsVOList = GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {
+            }.getType());
+            for (CodeTableFieldsVO codeTableFieldsVO : codeTableFieldsVOList) {
+                DsdCodeInfoVO dsdCodeInfoVO = DsdCodeInfoVO.builder().codeDirId(dsdCodeInfo.getCodeDirId())
+                        .codeDirLevel(dsdCodeInfo.getCodeDirLevel())
+                        .tableName(dsdCodeInfo.getTableName())
+                        .tableCode(dsdCodeInfo.getTableCode())
+                        .tableDesc(dsdCodeInfo.getTableDesc())
+                        .codeTableId(codeTableFieldsVO.getCode_table_id())
+                        .nameCh(codeTableFieldsVO.getName_ch())
+                        .nameEn(codeTableFieldsVO.getName_en())
+                        .dataType(codeTableFieldsVO.getData_type()).build();
+                dsdBasicInfoVOList.add(dsdCodeInfoVO);
+            }
+        }
     }
 
     @Override
-    public void codeInfoAllUpload(MultipartFile file) {
+    public void codeInfoAllUpload(MultipartFile file, String codeDirId) {
         try {
             EasyExcel.read(file.getInputStream(), DsdCodeInfoVO.class,
-                    new DsdCodeInfoUploadDataListener(dsdExcelBatchService)).sheet().doRead();
+                    new DsdCodeInfoUploadDataListener(dsdExcelBatchService,codeDirId)).sheet().doRead();
         } catch (IOException e) {
             e.printStackTrace();
             throw new BizException("导入失败!");
@@ -301,7 +331,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             List rowData = new ArrayList();
             for (List<String> headDatas : excelHead) {
                 for (String head : headDatas) {
-                    rowData.add("   "+head + (i + 1)+"   ");
+                    rowData.add("   " + head + (i + 1) + "   ");
                 }
             }
             list.add(rowData);

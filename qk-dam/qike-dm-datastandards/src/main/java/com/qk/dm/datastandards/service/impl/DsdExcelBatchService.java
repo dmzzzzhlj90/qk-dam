@@ -1,5 +1,6 @@
 package com.qk.dm.datastandards.service.impl;
 
+import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.*;
 import com.qk.dm.datastandards.repositories.*;
@@ -128,9 +129,42 @@ public class DsdExcelBatchService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void saveCodeInfos(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, Set<String> codeDirLevelSet) {
-        List<DsdCodeDir> codeDirAllList = dsdCodeDirRepository.findAll();
+    public void saveCodeInfos(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, Set<String> codeDirLevelSet, String codeDirId) {
+        if (!StringUtils.isEmpty(codeDirId)) {
+            saveCCodeInfoDatasByCodeDirId(dataList, tableCodeSet, codeDirId);
+        } else {
+            saveCCodeInfoDatasAll(dataList, tableCodeSet, codeDirLevelSet);
+        }
+        entityManager.flush();
+        entityManager.clear();
+    }
 
+    private void saveCCodeInfoDatasByCodeDirId(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, String codeDirId) {
+        Predicate existDataPredicate =
+                QDsdCodeInfo.dsdCodeInfo.codeDirId.eq(codeDirId)
+                        .and(QDsdCodeInfo.dsdCodeInfo.tableCode.in(tableCodeSet));
+        Iterable<DsdCodeInfo> existList = dsdCodeInfoRepository.findAll(existDataPredicate);
+        HashMap<String, Long> primaryIDMap = Maps.newHashMap();
+        for (DsdCodeInfo dsdCodeInfo : existList) {
+            primaryIDMap.put(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode(), dsdCodeInfo.getId());
+        }
+        Set<String> primaryIDKeySet = primaryIDMap.keySet();
+        for (DsdCodeInfo dsdCodeInfo : dataList) {
+            dsdCodeInfo.setCodeDirId(codeDirId);
+            dsdCodeInfo.setCodeDirLevel(dsdCodeInfo.getCodeDirLevel());
+            dsdCodeInfo.setGmtCreate(new Date());
+            dsdCodeInfo.setGmtModified(new Date());
+            if (primaryIDKeySet.contains(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode())) {
+                dsdCodeInfo.setId(primaryIDMap.get(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode()));
+                entityManager.merge(dsdCodeInfo); // update 更新操作
+            } else {
+                entityManager.persist(dsdCodeInfo); // insert 更新操作
+            }
+        }
+    }
+
+    private void saveCCodeInfoDatasAll(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, Set<String> codeDirLevelSet) {
+        List<DsdCodeDir> codeDirAllList = dsdCodeDirRepository.findAll();
         List<String> codeDirLevels =
                 codeDirAllList.stream().map(dsdCodeDir -> dsdCodeDir.getCodeDirLevel()).collect(Collectors.toList());
 
@@ -143,12 +177,14 @@ public class DsdExcelBatchService {
         Map<String, List<DsdCodeDir>> codeDirLevelMap =
                 codeDirAllList.stream().collect(Collectors.groupingBy(DsdCodeDir::getCodeDirLevel));
         Predicate existDataPredicate =
-                QDsdCodeInfo.dsdCodeInfo
-                        .codeDirLevel
-                        .in(codeDirLevelSet)
+                QDsdCodeInfo.dsdCodeInfo.codeDirLevel.in(codeDirLevelSet)
                         .and(QDsdCodeInfo.dsdCodeInfo.tableCode.in(tableCodeSet));
         Iterable<DsdCodeInfo> existList = dsdCodeInfoRepository.findAll(existDataPredicate);
-        dsdCodeInfoRepository.deleteInBatch(existList);
+        HashMap<String, Long> primaryIDMap = Maps.newHashMap();
+        for (DsdCodeInfo dsdCodeInfo : existList) {
+            primaryIDMap.put(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode(), dsdCodeInfo.getId());
+        }
+        Set<String> primaryIDKeySet = primaryIDMap.keySet();
 
         for (DsdCodeInfo dsdCodeInfo : dataList) {
             List<DsdCodeDir> codeDirList = codeDirLevelMap.get(dsdCodeInfo.getCodeDirLevel());
@@ -156,10 +192,13 @@ public class DsdExcelBatchService {
             dsdCodeInfo.setCodeDirLevel(codeDirList.get(0).getCodeDirLevel());
             dsdCodeInfo.setGmtCreate(new Date());
             dsdCodeInfo.setGmtModified(new Date());
-            entityManager.persist(dsdCodeInfo); // insert插入操作
+            if (primaryIDKeySet.contains(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode())) {
+                dsdCodeInfo.setId(primaryIDMap.get(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode()));
+                entityManager.merge(dsdCodeInfo); // update 更新操作
+            } else {
+                entityManager.persist(dsdCodeInfo); // insert 更新操作
+            }
         }
-        entityManager.flush();
-        entityManager.clear();
     }
 
 
