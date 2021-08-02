@@ -59,17 +59,15 @@ public class AuthorizationServerConfig {
                   var builder =
                       RegisteredClient.withId(UUID.randomUUID().toString())
                           .clientId(innerRegisteredClient.getClientId())
-                          //
-                          // .clientSecret(passwordEncoder.encode(innerRegisteredClient.getClientSecret()))
                           .clientSecret(innerRegisteredClient.getClientSecret())
                           .clientName(innerRegisteredClient.getClientName())
                           .tokenSettings(
                               (tokenSettings ->
                                   tokenSettings
-                                      .accessTokenTimeToLive(Duration.ofHours(3))
-                                      .refreshTokenTimeToLive(Duration.ofHours(6))))
+                                      .accessTokenTimeToLive(Duration.ofMinutes(innerRegisteredClient.getAccessTokenTimeToLive()))
+                                      .refreshTokenTimeToLive(Duration.ofMinutes(innerRegisteredClient.getRefreshTokenTimeToLive()))))
                           .clientSettings(
-                              clientSettings -> clientSettings.requireUserConsent(true));
+                              clientSettings -> clientSettings.requireUserConsent(false));
 
                   innerRegisteredClient
                       .getAuthorizationGrantTypes()

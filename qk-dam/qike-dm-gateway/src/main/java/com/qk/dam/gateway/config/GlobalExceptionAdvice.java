@@ -30,29 +30,20 @@ public class GlobalExceptionAdvice {
    */
   @ExceptionHandler(JwtException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Mono<EntityResponse<DefaultCommonResult<Object>>> jwtException(JwtException e) {
-    log.error("jwt校验异常: {}", getStackTrace(e));
-    return EntityResponse.fromObject(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED))
-        .status(HttpStatus.UNAUTHORIZED)
-        .build();
+  public Mono<DefaultCommonResult<Object>> jwtException(JwtException e) {
+    return Mono.justOrEmpty(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED));
   }
 
   @ExceptionHandler(RuntimeException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Mono<EntityResponse<DefaultCommonResult<Object>>> runtimeException(RuntimeException e) {
-    log.error("jwt校验异常: {}", getStackTrace(e));
-    return EntityResponse.fromObject(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED))
-        .status(HttpStatus.UNAUTHORIZED)
-        .build();
+  public Mono<DefaultCommonResult<Object>>  runtimeException(RuntimeException e) {
+    return Mono.justOrEmpty(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED));
   }
 
   @ExceptionHandler(BadJwtException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Mono<EntityResponse<DefaultCommonResult<Object>>> badJwtException(BadJwtException e) {
-    log.error("jwt校验异常: {}", getStackTrace(e));
-    return EntityResponse.fromObject(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED))
-        .status(HttpStatus.NOT_FOUND)
-        .build();
+  public Mono<DefaultCommonResult<Object>> badJwtException(BadJwtException e) {
+    return Mono.justOrEmpty(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED));
   }
 
   private static String getStackTrace(Throwable throwable) {

@@ -9,6 +9,8 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
  */
 public class DefaultCommonResult<T> extends BaseResult<T> {
 
+  private static final long serialVersionUID = 4717403718355790656L;
+
   public DefaultCommonResult() {}
 
   public DefaultCommonResult(ResultCodeEnum code) {

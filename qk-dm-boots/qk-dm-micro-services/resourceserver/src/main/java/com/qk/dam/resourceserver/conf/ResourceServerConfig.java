@@ -19,14 +19,12 @@ public class ResourceServerConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.mvcMatcher("/messages/**")
+			.mvcMatcher("/**")
 				.authorizeRequests()
-					.mvcMatchers("/messages/**").access("hasAuthority('SCOPE_openid')")
+					.mvcMatchers("/**").access("hasAuthority('SCOPE_openid')")
 					.and()
 			.oauth2ResourceServer()
 				.jwt();
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).disable();
-		http.csrf().disable();
 		return http.build();
 	}
 	// @formatter:on

@@ -1,23 +1,14 @@
 package com.qk.dam.gateway.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-import static org.springframework.security.web.server.header.ClearSiteDataServerHttpHeadersWriter.Directive.COOKIES;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.stream.Collectors;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authorization.AuthenticatedReactiveAuthorizationManager;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
 import org.springframework.security.web.server.authentication.logout.HeaderWriterServerLogoutHandler;
@@ -32,12 +23,16 @@ public class ClientServerConfig {
   SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http,
                                                    ReactiveClientRegistrationRepository clientRegistrationRepository) throws Exception {
 
-
     http.authorizeExchange(
-        exchanges ->
-            exchanges
-                .anyExchange()
-                .access(AuthenticatedReactiveAuthorizationManager.authenticated()));
+            exchanges ->
+                    exchanges
+                            .pathMatchers("/access/**","/current/**")
+                            .hasAuthority("SCOPE_openid")
+                            .anyExchange()
+                            .access(AuthenticatedReactiveAuthorizationManager.authenticated()))
+            .oauth2ResourceServer()
+            .jwt();
+
 
     // oauth 登录 客户端配置
     http.oauth2Login(withDefaults()).oauth2Client(withDefaults());
@@ -54,19 +49,5 @@ public class ClientServerConfig {
             .logoutHandler(logoutHandler));
     http.csrf().disable();
     return http.build();
-  }
-
-  static class GrantedAuthoritiesExtractor implements Converter<Jwt, Collection<GrantedAuthority>> {
-
-    @Override
-    public Collection<GrantedAuthority> convert(Jwt jwt) {
-      Collection<?> authorities =
-          (Collection<?>) jwt.getClaims().getOrDefault("mycustomclaim", Collections.emptyList());
-
-      return authorities.stream()
-          .map(Object::toString)
-          .map(SimpleGrantedAuthority::new)
-          .collect(Collectors.toList());
-    }
   }
 }

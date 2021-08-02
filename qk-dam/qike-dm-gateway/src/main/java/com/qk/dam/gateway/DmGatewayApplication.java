@@ -20,8 +20,6 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableRedisHttpSession
-@EnableRedisWebSession
 @ComponentScan(basePackages = "com.qk")
 public class DmGatewayApplication {
 

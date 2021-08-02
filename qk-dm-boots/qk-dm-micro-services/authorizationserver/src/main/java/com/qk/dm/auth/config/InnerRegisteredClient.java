@@ -15,6 +15,24 @@ public class InnerRegisteredClient {
   private Set<ClientAuthenticationMethod> clientAuthenticationMethods;
   private String privateEncoded;
   private String publicEncoded;
+  private Long accessTokenTimeToLive;
+  private Long refreshTokenTimeToLive;
+
+  public Long getAccessTokenTimeToLive() {
+    return accessTokenTimeToLive;
+  }
+
+  public void setAccessTokenTimeToLive(Long accessTokenTimeToLive) {
+    this.accessTokenTimeToLive = accessTokenTimeToLive;
+  }
+
+  public Long getRefreshTokenTimeToLive() {
+    return refreshTokenTimeToLive;
+  }
+
+  public void setRefreshTokenTimeToLive(Long refreshTokenTimeToLive) {
+    this.refreshTokenTimeToLive = refreshTokenTimeToLive;
+  }
 
   public String getPrivateEncoded() {
     return privateEncoded;
