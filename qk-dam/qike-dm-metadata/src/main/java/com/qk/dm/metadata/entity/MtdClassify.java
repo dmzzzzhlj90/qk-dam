@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_mtd_classify")
-public class MtdClassify implements Serializable, BaseRepository<Long, Long> {
+public class MtdClassify implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
