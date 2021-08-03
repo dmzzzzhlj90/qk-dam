@@ -1,4 +1,4 @@
-package com.qk.dm.auth.config;
+package com.qk.dm.auth.pojo;
 
 import java.util.List;
 

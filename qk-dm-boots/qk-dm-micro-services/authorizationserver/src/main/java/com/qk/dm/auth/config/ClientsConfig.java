@@ -1,5 +1,6 @@
 package com.qk.dm.auth.config;
 
+import com.qk.dm.auth.pojo.RegisteredClients;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

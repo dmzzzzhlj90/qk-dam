@@ -11,6 +11,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import com.qk.dm.auth.pojo.InnerRegisteredClient;
+import com.qk.dm.auth.pojo.RegisteredClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -113,7 +116,8 @@ public class AuthorizationServerConfig {
         registeredClients.getClients().stream()
             .map(client -> getRsaKey(clientKeyService, client))
             .collect(Collectors.toList());
-    JWKSet jwkSet = new JWKSet(rsaKeyList);
+    //TODO 多个jwks不支持 需要解决
+    JWKSet jwkSet = new JWKSet(rsaKeyList.get(0));
 
     return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
   }

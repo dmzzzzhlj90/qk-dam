@@ -38,6 +38,14 @@ spring:
             redirect-uri: "http://auth-client:8780/login/oauth2/code/{registrationId}"
             scope: openid
             client-name: qk-dam-client-oidc
+          qk-dam-front-oidc:
+            provider: spring
+            client-id: qk-dam-front
+            client-secret: qk-dam-front-zzr
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://auth-client:8780/login/oauth2/code/{registrationId}"
+            scope: openid
+            client-name: qk-dam-front-oidc
       resourceserver:
         jwt:
           issuer-uri: http://auth-server:9901

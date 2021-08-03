@@ -1,6 +1,6 @@
 package com.qk.dm.auth.jose;
 
-import com.qk.dm.auth.config.InnerRegisteredClient;
+import com.qk.dm.auth.pojo.InnerRegisteredClient;
 import java.sql.Types;
 import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.Service;
