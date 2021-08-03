@@ -21,7 +21,7 @@ public interface DsdExcelService {
 
     List<DsdBasicinfoVO> queryBasicInfos(String dirDsdId);
 
-    void basicInfoUpload(MultipartFile file, String dirDsdId) throws IOException;
+    void basicInfoUpload(MultipartFile file, String dirDsdId);
 
     List<String> findAllDsdDirLevel();
 

@@ -30,14 +30,12 @@ public class DsdCodeInfoVO {
      * 主键ID
      */
     @ExcelIgnore
-    @ExcelProperty("ID编号")
     private Long id;
 
     /**
      * 所属目录ID
      */
     @ExcelIgnore
-    @ExcelProperty("所属目录ID")
     @NotNull(message = "所属目录ID不能为空！")
     private String codeDirId;
 
@@ -80,8 +78,6 @@ public class DsdCodeInfoVO {
     /**
      * 建表配置字段集合
      */
-    @ExcelIgnore
-    @ExcelProperty("建表配置字段集合")
     private List<CodeTableFieldsVO> codeTableFieldsList;
 
     /**

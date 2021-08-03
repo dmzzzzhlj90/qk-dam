@@ -68,9 +68,7 @@ public class DsdBasicinfoVO {
   private String dsdLevel;
 
   /** 标准层级ID */
-  @ExcelProperty("标准层级目录id")
   @NotBlank(message = "标准层级目录ID不能为空！")
-  @ExcelIgnore
   private String dsdLevelId;
 
   /** 标准层级目录名称 */

@@ -3,6 +3,7 @@ package com.qk.dm.datastandards.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
+import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.params.DsdBasicinfoParamsVO;
@@ -93,4 +94,14 @@ public class DataStandardBasicInfoController {
     return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
+  /**
+   * 引用码表字段
+   *
+   * @param: codeDirId
+   * @return: DefaultCommonResult
+   */
+  @GetMapping("/search/code/field/by/codeDirId/{codeDirId}")
+  public DefaultCommonResult<List<CodeTableFieldsVO>> getCodeFieldByCodeDirId(@PathVariable("codeDirId") String codeDirId) {
+    return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getCodeFieldByCodeDirId(codeDirId));
+  }
 }

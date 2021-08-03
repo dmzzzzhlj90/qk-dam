@@ -2,10 +2,12 @@ package com.qk.dm.datastandards.easyexcel.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.service.impl.DsdExcelBatchService;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -41,7 +43,17 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
      */
     @Override
     public void invoke(DsdBasicinfoVO data, AnalysisContext context) {
-        list.add(data);
+        String errMsg;
+        try {
+            errMsg = EasyExcelValidateHelper.validateEntity(data);
+        } catch (NoSuchFieldException e) {
+            errMsg = "解析数据出错";
+        }
+        if (StringUtils.isEmpty(errMsg)) {
+            list.add(data);
+        } else {
+            throw new BizException(errMsg);
+        }
         // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM
         if (list.size() >= BATCH_COUNT) {
             saveData();
@@ -67,17 +79,38 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
     private void saveData() {
         Map<String, String> codeDirLevelMap = new HashMap<>();
         Set<String> dsdDirLevelSet = new HashSet<>();
-
         List<DsdBasicinfo> dsdBasicInfoList = new ArrayList<>();
-        list.forEach(
-                dsdBasicInfoVO -> {
-                    DsdBasicinfo dsdBasicInfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicInfoVO);
-                    dsdDirLevelSet.add(dsdBasicInfo.getDsdLevel());
-                    codeDirLevelMap.put(dsdBasicInfo.getDsdCode(), dsdBasicInfo.getDsdLevel());
-                    dsdBasicInfoList.add(dsdBasicInfo);
-                });
-        // 批量新增
-        dsdExcelBatchService.addDsdBasicInfoBatch(
-                dsdBasicInfoList, dsdDirLevelSet, codeDirLevelMap, dirDsdId);
+
+        if (!StringUtils.isEmpty(dirDsdId)) {
+            getBasicInfoDataAllBydsdDirId(codeDirLevelMap, dsdBasicInfoList);
+            dsdExcelBatchService.saveDsdBasicInfoByDirId(dsdBasicInfoList, codeDirLevelMap, dirDsdId);
+        } else {
+            getBasicInfoDataAll(codeDirLevelMap, dsdDirLevelSet, dsdBasicInfoList);
+            dsdExcelBatchService.saveDsdBasicInfo(dsdBasicInfoList, dsdDirLevelSet, codeDirLevelMap);
+        }
+
+    }
+
+    private void getBasicInfoDataAllBydsdDirId(Map<String, String> codeDirLevelMap, List<DsdBasicinfo> dsdBasicInfoList) {
+        if (list != null && list.size() > 0) {
+            list.forEach(
+                    dsdBasicInfoVO -> {
+                        DsdBasicinfo dsdBasicInfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicInfoVO);
+                        codeDirLevelMap.put(dsdBasicInfo.getDsdCode(), dsdBasicInfo.getDsdLevel());
+                        dsdBasicInfoList.add(dsdBasicInfo);
+                    });
+        }
+    }
+
+    private void getBasicInfoDataAll(Map<String, String> codeDirLevelMap, Set<String> dsdDirLevelSet, List<DsdBasicinfo> dsdBasicInfoList) {
+        if (list != null && list.size() > 0) {
+            list.forEach(
+                    dsdBasicInfoVO -> {
+                        DsdBasicinfo dsdBasicInfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicInfoVO);
+                        dsdDirLevelSet.add(dsdBasicInfo.getDsdLevel());
+                        codeDirLevelMap.put(dsdBasicInfo.getDsdCode(), dsdBasicInfo.getDsdLevel());
+                        dsdBasicInfoList.add(dsdBasicInfo);
+                    });
+        }
     }
 }

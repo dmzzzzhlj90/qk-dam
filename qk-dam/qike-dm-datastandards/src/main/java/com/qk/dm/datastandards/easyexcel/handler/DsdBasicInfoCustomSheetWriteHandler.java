@@ -40,7 +40,7 @@ public class DsdBasicInfoCustomSheetWriteHandler implements SheetWriteHandler {
     List<String> dsdDirLevelList = dsdExcelService.findAllDsdDirLevel();
 
     // 区间设置 第一列第一行和第二行的数据。由于第一行是头，所以第一、二行的数据实际上是第二三行
-    CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(1, 10000, 6, 6);
+    CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(1, 10000, 7, 7);
     DataValidationHelper helper = writeSheetHolder.getSheet().getDataValidationHelper();
     DataValidationConstraint constraint =
         helper.createExplicitListConstraint(

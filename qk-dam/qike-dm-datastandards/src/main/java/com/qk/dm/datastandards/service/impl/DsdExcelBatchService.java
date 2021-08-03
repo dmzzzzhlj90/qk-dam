@@ -5,7 +5,6 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.*;
 import com.qk.dm.datastandards.repositories.*;
 import com.querydsl.core.types.Predicate;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,24 +42,7 @@ public class DsdExcelBatchService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void addDsdBasicInfoBatch(
-            List<DsdBasicinfo> dsdBasicInfoList,
-            Set<String> dsdDirLevelSet,
-            Map<String, String> codeDirLevelMap,
-            String dirDsdId) {
-        if (!StringUtils.isEmpty(dirDsdId)) {
-            saveDsdBasicInfoByDirId(dsdBasicInfoList, codeDirLevelMap, dirDsdId);
-        } else {
-            saveDsdBasicInfo(dsdBasicInfoList, dsdDirLevelSet, codeDirLevelMap);
-        }
-        entityManager.flush();
-        entityManager.clear();
-    }
-
-    private void saveDsdBasicInfo(
-            List<DsdBasicinfo> dsdBasicInfoList,
-            Set<String> dsdDirLevelSet,
-            Map<String, String> codeDirLevelMap) {
+    public void saveDsdBasicInfo(List<DsdBasicinfo> dsdBasicInfoList, Set<String> dsdDirLevelSet, Map<String, String> codeDirLevelMap) {
         List<DsdDir> dsdDirAllList = dsdDirRepository.findAll();
         List<String> dsdDirLevels =
                 dsdDirAllList.stream().map(dsdDir -> dsdDir.getDsdDirLevel()).collect(Collectors.toList());
@@ -90,10 +72,12 @@ public class DsdExcelBatchService {
             dsdBasicinfo.setGmtModified(new Date());
             entityManager.persist(dsdBasicinfo); // insert插入操作
         }
+        entityManager.flush();
+        entityManager.clear();
     }
 
-    private void saveDsdBasicInfoByDirId(
-            List<DsdBasicinfo> dsdBasicInfoList, Map<String, String> codeDirLevelMap, String dirDsdId) {
+    @Transactional(rollbackFor = Exception.class)
+    public void saveDsdBasicInfoByDirId(List<DsdBasicinfo> dsdBasicInfoList, Map<String, String> codeDirLevelMap, String dirDsdId) {
         Optional<DsdDir> dsdDir = dsdDirRepository.findOne(QDsdDir.dsdDir.dirDsdId.eq(dirDsdId));
         if (dsdDir.isPresent()) {
             Predicate existDataPredicate =
@@ -114,6 +98,8 @@ public class DsdExcelBatchService {
         } else {
             throw new BizException("码表目录,参数有误!!!");
         }
+        entityManager.flush();
+        entityManager.clear();
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -129,19 +115,9 @@ public class DsdExcelBatchService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void saveCodeInfos(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, Set<String> codeDirLevelSet, String codeDirId) {
-        if (!StringUtils.isEmpty(codeDirId)) {
-            saveCCodeInfoDatasByCodeDirId(dataList, tableCodeSet, codeDirId);
-        } else {
-            saveCCodeInfoDatasAll(dataList, tableCodeSet, codeDirLevelSet);
-        }
-        entityManager.flush();
-        entityManager.clear();
-    }
-
-    private void saveCCodeInfoDatasByCodeDirId(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, String codeDirId) {
+    public void saveCodeInfosByCodeDirId(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, DsdCodeDir dsdCodeDir) {
         Predicate existDataPredicate =
-                QDsdCodeInfo.dsdCodeInfo.codeDirId.eq(codeDirId)
+                QDsdCodeInfo.dsdCodeInfo.codeDirId.eq(dsdCodeDir.getCodeDirId())
                         .and(QDsdCodeInfo.dsdCodeInfo.tableCode.in(tableCodeSet));
         Iterable<DsdCodeInfo> existList = dsdCodeInfoRepository.findAll(existDataPredicate);
         HashMap<String, Long> primaryIDMap = Maps.newHashMap();
@@ -150,8 +126,8 @@ public class DsdExcelBatchService {
         }
         Set<String> primaryIDKeySet = primaryIDMap.keySet();
         for (DsdCodeInfo dsdCodeInfo : dataList) {
-            dsdCodeInfo.setCodeDirId(codeDirId);
-            dsdCodeInfo.setCodeDirLevel(dsdCodeInfo.getCodeDirLevel());
+            dsdCodeInfo.setCodeDirId(dsdCodeDir.getCodeDirId());
+            dsdCodeInfo.setCodeDirLevel(dsdCodeDir.getCodeDirLevel());
             dsdCodeInfo.setGmtCreate(new Date());
             dsdCodeInfo.setGmtModified(new Date());
             if (primaryIDKeySet.contains(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode())) {
@@ -161,9 +137,12 @@ public class DsdExcelBatchService {
                 entityManager.persist(dsdCodeInfo); // insert 更新操作
             }
         }
+        entityManager.flush();
+        entityManager.clear();
     }
 
-    private void saveCCodeInfoDatasAll(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, Set<String> codeDirLevelSet) {
+    @Transactional(rollbackFor = Exception.class)
+    public void saveCodeInfosAll(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, Set<String> codeDirLevelSet) {
         List<DsdCodeDir> codeDirAllList = dsdCodeDirRepository.findAll();
         List<String> codeDirLevels =
                 codeDirAllList.stream().map(dsdCodeDir -> dsdCodeDir.getCodeDirLevel()).collect(Collectors.toList());
@@ -199,8 +178,17 @@ public class DsdExcelBatchService {
                 entityManager.persist(dsdCodeInfo); // insert 更新操作
             }
         }
+        entityManager.flush();
+        entityManager.clear();
     }
 
+    public DsdCodeDir getCodeDir(String codeDirId) {
+        Optional<DsdCodeDir> dsdCodeDirOptional = dsdCodeDirRepository.findOne(QDsdCodeDir.dsdCodeDir.codeDirId.eq(codeDirId));
+        if (!dsdCodeDirOptional.isPresent()) {
+            throw new BizException("码表层级目录不存在!!!");
+        }
+        return dsdCodeDirOptional.get();
+    }
 
     //    @Transactional(rollbackFor = Exception.class)
     //    public void updateBatch(List<DsdCodeTerm> codeTermList, Set<String> codeSet, Set<String>

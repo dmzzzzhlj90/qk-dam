@@ -1,9 +1,12 @@
 package com.qk.dm.datastandards.service;
 
+import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.params.DsdBasicinfoParamsVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author wjq
@@ -23,4 +26,5 @@ public interface DataStandardBasicInfoService {
 
   void bulkDeleteDsdBasicInfo(String ids);
 
+  List<CodeTableFieldsVO> getCodeFieldByCodeDirId(String codeDirId);
 }

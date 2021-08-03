@@ -6,9 +6,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Set;
+
 public interface DsdCodeInfoExtRepository extends BaseRepository<DsdCodeInfoExt, Long> {
 
     @Modifying
     @Query(" DELETE FROM DsdCodeInfoExt WHERE dsdCodeInfoId  = :dsdCodeInfoId ")
     void deleteByDsdCodeInfoId(@Param("dsdCodeInfoId") long dsdCodeInfoId);
+
+    @Modifying
+    @Query(" DELETE FROM DsdCodeInfoExt WHERE dsdCodeInfoId  in (:idSet) ")
+    void deleteByDsdCodeInfoIdBatch(@Param("idSet") Set<Long> idSet);
 }

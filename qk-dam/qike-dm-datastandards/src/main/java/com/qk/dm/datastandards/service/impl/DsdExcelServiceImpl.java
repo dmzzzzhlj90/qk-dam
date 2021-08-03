@@ -94,9 +94,13 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     @Override
-    public void basicInfoUpload(MultipartFile file, String dirDsdId) throws IOException {
-        EasyExcel.read(file.getInputStream(), DsdBasicinfoVO.class,
-                new DsdBasicInfoUploadDataListener(dsdExcelBatchService, dirDsdId)).sheet().doRead();
+    public void basicInfoUpload(MultipartFile file, String dirDsdId) {
+        try {
+            EasyExcel.read(file.getInputStream(), DsdBasicinfoVO.class,
+                    new DsdBasicInfoUploadDataListener(dsdExcelBatchService, dirDsdId)).sheet().doRead();
+        } catch (Exception e) {
+            throw new BizException("导入失败: " + e.getMessage());
+        }
     }
 
     @Override
@@ -199,9 +203,9 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             getCodeValues(dsdCodeInfoId, dataList, fieldMap, excelHeadIdxNameMap, saveDataList);
 
             dsdExcelBatchService.addDsdCodeValuesBatch(saveDataList, dsdCodeInfoId);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new BizException("导入异常!");
+            throw new BizException("导入异常: "+e.getMessage());
         }
     }
 
@@ -221,15 +225,20 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     public List<DsdCodeInfoVO> codeInfoAllDownload(String codeDirId) {
         List<DsdCodeInfoVO> dsdBasicInfoVOList = new ArrayList<>();
 
-        if (StringUtils.isEmpty(codeDirId)) {
-            getCcodeInfoAllDownloadValues(dsdBasicInfoVOList);
-        } else {
-            getCcodeInfoDownloadValuesByCodeDirId(codeDirId, dsdBasicInfoVOList);
+        try {
+            if (StringUtils.isEmpty(codeDirId)) {
+                getCcodeInfoAllDownloadValues(dsdBasicInfoVOList);
+            } else {
+                getCodeInfoDownloadValuesByCodeDirId(codeDirId, dsdBasicInfoVOList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BizException("导出失败 : "+e.getMessage());
         }
         return dsdBasicInfoVOList;
     }
 
-    private void getCcodeInfoDownloadValuesByCodeDirId(String codeDirId, List<DsdCodeInfoVO> dsdBasicInfoVOList) {
+    private void getCodeInfoDownloadValuesByCodeDirId(String codeDirId, List<DsdCodeInfoVO> dsdBasicInfoVOList) {
         Predicate predicate = QDsdCodeInfo.dsdCodeInfo.codeDirId.eq(codeDirId);
         Iterable<DsdCodeInfo> dsdCodeInfoList = dsdCodeInfoRepository.findAll(predicate);
         for (DsdCodeInfo dsdCodeInfo : dsdCodeInfoList) {
@@ -276,10 +285,10 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     public void codeInfoAllUpload(MultipartFile file, String codeDirId) {
         try {
             EasyExcel.read(file.getInputStream(), DsdCodeInfoVO.class,
-                    new DsdCodeInfoUploadDataListener(dsdExcelBatchService,codeDirId)).sheet().doRead();
-        } catch (IOException e) {
+                    new DsdCodeInfoUploadDataListener(dsdExcelBatchService, codeDirId)).sheet().doRead();
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new BizException("导入失败!");
+            throw new BizException("导入失败: "+e.getMessage());
         }
     }
 
@@ -308,9 +317,9 @@ public class DsdExcelServiceImpl implements DsdExcelService {
 
     private List<Map<Integer, String>> checkCodeInfoDataList(DsdCodeValuesUploadDataListener readListener) {
         List<Map<Integer, String>> dataList = readListener.getDataList();
-        if (CollectionUtils.isEmpty(dataList)) {
-            throw new BizException("Excel导入数据为空!!!");
-        }
+//        if (CollectionUtils.isEmpty(dataList)) {
+//            throw new BizException("Excel导入数据为空!!!");
+//        }
         return dataList;
     }
 

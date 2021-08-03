@@ -2,6 +2,7 @@ package com.qk.dm.datastandards.rest;
 
 import com.alibaba.excel.EasyExcel;
 import com.qk.dam.commons.enums.ResultCodeEnum;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.easyexcel.handler.DsdBasicInfoCustomSheetWriteHandler;
 import com.qk.dm.datastandards.easyexcel.handler.DsdCodeInfoCustomSheetWriteHandler;
@@ -79,7 +80,7 @@ public class DsdExcelController {
      */
     @PostMapping("/basic/info/upload")
     @ResponseBody
-    public DefaultCommonResult basicInfoUploadBydirDsdId(MultipartFile file) throws IOException {
+    public DefaultCommonResult basicInfoUploadBydirDsdId(MultipartFile file){
         dsdExcelService.basicInfoUpload(file, null);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }
@@ -92,7 +93,7 @@ public class DsdExcelController {
      */
     @PostMapping("/basic/info/upload/dirDsdId")
     @ResponseBody
-    public DefaultCommonResult basicInfoUploadByDirDsdId(MultipartFile file, @RequestParam("dirDsdId") String dirDsdId) throws IOException {
+    public DefaultCommonResult basicInfoUploadByDirDsdId(MultipartFile file, @RequestParam("dirDsdId") String dirDsdId) {
         dsdExcelService.basicInfoUpload(file, dirDsdId);
         return new DefaultCommonResult(ResultCodeEnum.OK);
     }

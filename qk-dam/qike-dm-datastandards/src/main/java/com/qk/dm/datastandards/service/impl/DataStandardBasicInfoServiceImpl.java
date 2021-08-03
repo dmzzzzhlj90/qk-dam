@@ -1,12 +1,18 @@
 package com.qk.dm.datastandards.service.impl;
 
+import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
+import com.qk.dm.datastandards.entity.DsdCodeInfo;
 import com.qk.dm.datastandards.entity.QDsdBasicinfo;
+import com.qk.dm.datastandards.entity.QDsdCodeInfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
+import com.qk.dm.datastandards.repositories.DsdCodeInfoRepository;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.service.DataStandardDirService;
+import com.qk.dm.datastandards.utils.GsonUtil;
+import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
 import com.qk.dm.datastandards.vo.params.DsdBasicinfoParamsVO;
@@ -24,6 +30,8 @@ import javax.persistence.EntityManager;
 import java.text.ParseException;
 import java.util.*;
 
+import static com.qk.dm.datastandards.entity.QDsdCodeInfo.*;
+
 /**
  * @author wjq
  * @date 20210604
@@ -33,15 +41,18 @@ import java.util.*;
 public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoService {
     private final DsdBasicinfoRepository dsdBasicinfoRepository;
     private final DataStandardDirService dataStandardDirService;
+    private final DsdCodeInfoRepository dsdCodeInfoRepository;
+
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
 
     public DataStandardBasicInfoServiceImpl(
             DsdBasicinfoRepository dsdBasicinfoRepository,
             DataStandardDirService dataStandardDirService,
-            EntityManager entityManager) {
+            DsdCodeInfoRepository dsdCodeInfoRepository, EntityManager entityManager) {
         this.dsdBasicinfoRepository = dsdBasicinfoRepository;
         this.dataStandardDirService = dataStandardDirService;
+        this.dsdCodeInfoRepository = dsdCodeInfoRepository;
         this.entityManager = entityManager;
     }
 
@@ -130,6 +141,18 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
         idList.forEach(id -> idSet.add(Integer.parseInt(id)));
         List<DsdBasicinfo> basicInfoList = dsdBasicinfoRepository.findAllById(idSet);
         dsdBasicinfoRepository.deleteInBatch(basicInfoList);
+    }
+
+    @Override
+    public List<CodeTableFieldsVO> getCodeFieldByCodeDirId(String codeDirId) {
+        final Optional<DsdCodeInfo> dsdCodeInfoOptional = dsdCodeInfoRepository.findOne(dsdCodeInfo.codeDirId.eq(codeDirId));
+        if (dsdCodeInfoOptional.isPresent()) {
+            String tableConfFieldsStr = dsdCodeInfoOptional.get().getTableConfFields();
+            List<CodeTableFieldsVO> codeTableFieldsVOList = GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {
+            }.getType());
+            return codeTableFieldsVOList;
+        }
+        return new ArrayList<>();
     }
 
     public Map<String, Object> queryDsdBasicinfoByParams(DsdBasicinfoParamsVO dsdBasicinfoParamsVO)
