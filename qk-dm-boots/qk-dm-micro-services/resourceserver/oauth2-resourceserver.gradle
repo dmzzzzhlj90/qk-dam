@@ -17,7 +17,7 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
-
+    implementation group: 'org.tsugi', name: 'tsugi-util', version: '21.0.0'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'

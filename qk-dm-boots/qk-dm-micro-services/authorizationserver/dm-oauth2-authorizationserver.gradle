@@ -23,11 +23,11 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation group: 'org.tsugi', name: 'tsugi-util', version: '21.0.0'
 
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-security'
-    compile 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.session:spring-session-data-redis'
-    compile 'org.springframework.security.experimental:spring-security-oauth2-authorization-server'
+    implementation 'org.springframework.security.experimental:spring-security-oauth2-authorization-server'
 }
 dependencyManagement {
     imports {
