@@ -30,8 +30,7 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
     public void insert(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
         MtdLabelsAtlas mtdLabelsAtlas = MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlas(mtdLabelsAtlasVO);
         Predicate predicate = qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid());
-        boolean exists = mtdLabelsAtlasRepository.exists(predicate);
-        if (exists) {
+        if (mtdLabelsAtlasRepository.exists(predicate)) {
             throw new BizException(
                     "当前要绑定标签的元数据为："
                             + mtdLabelsAtlasVO.getGuid()
@@ -44,7 +43,7 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
     public void update(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
         Predicate predicate = qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid());
         Optional<MtdLabelsAtlas> one = mtdLabelsAtlasRepository.findOne(predicate);
-        if (!one.isPresent()) {
+        if (one.isEmpty()) {
             throw new BizException(
                     "当前要绑定标签的元数据为："
                             + mtdLabelsAtlasVO.getGuid()
@@ -62,9 +61,6 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
     public MtdLabelsAtlasVO getByGuid(String guid) {
         Predicate predicate = qMtdLabelsAtlas.guid.eq(guid);
         Optional<MtdLabelsAtlas> one = mtdLabelsAtlasRepository.findOne(predicate);
-        if (one.isPresent()) {
-            return MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlasVO(one.get());
-        }
-        return null;
+        return one.map(MtdLabelsAtlasMapper.INSTANCE::useMtdLabelsAtlasVO).orElse(null);
     }
 }

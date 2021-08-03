@@ -50,11 +50,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     @Override
     public void insert(MtdLabelsVO mtdLabelsVO) {
         MtdLabels mtdLabels = MtdLabelsMapper.INSTANCE.useMtdLabels(mtdLabelsVO);
-//        mtdLabels.setGmtCreate(new Date());
-//        mtdLabels.setGmtModified(new Date());
         Predicate predicate = qMtdLabels.name.eq(mtdLabels.getName());
-        boolean exists = mtdLabelsRepository.exists(predicate);
-        if (exists) {
+        if (mtdLabelsRepository.exists(predicate)) {
             throw new BizException(
                     "当前要新增的标签名为："
                             + mtdLabels.getName()
@@ -65,10 +62,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
 
     @Override
     public void update(Long id, MtdLabelsVO mtdLabelsVO) {
-        Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName())
-                .and(qMtdLabels.id.ne(id));
-        boolean exists = mtdLabelsRepository.exists(predicate);
-        if (exists) {
+        Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName()).and(qMtdLabels.id.ne(id));
+        if (mtdLabelsRepository.exists(predicate)) {
             throw new BizException(
                     "当前要修改的标签名为："
                             + mtdLabelsVO.getName()
@@ -83,7 +78,7 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     @Transactional
     public void delete(String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
-        Iterable<Long> idSet = idList.stream().map(i -> Long.valueOf(i)).collect(Collectors.toList());
+        Iterable<Long> idSet = idList.stream().map(Long::valueOf).collect(Collectors.toList());
         List<MtdLabels> basicInfoList = mtdLabelsRepository.findAllById(idSet);
         mtdLabelsRepository.deleteInBatch(basicInfoList);
     }
@@ -98,17 +93,15 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
             throw new BizException("查询失败!!!");
         }
         List<MtdLabels> list = (List<MtdLabels>) map.get("list");
-        long total = (long) map.get("total");
-
         List<MtdLabelsInfoVO> mtdLabelsVOList =
-                list.stream().map(mtd -> MtdLabelsMapper.INSTANCE.useMtdLabelsInfoVO(mtd)).collect(Collectors.toList());
-
+                list.stream()
+                        .map(MtdLabelsMapper.INSTANCE::useMtdLabelsInfoVO)
+                        .collect(Collectors.toList());
         return new PageResultVO<>(
-                total,
+                (long) map.get("total"),
                 mtdLabelsListVO.getPagination().getPage(),
                 mtdLabelsListVO.getPagination().getSize(),
                 mtdLabelsVOList);
-
     }
 
     @Override
@@ -116,7 +109,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
         Predicate predicate = qMtdLabels.name.contains(mtdLabelsVO.getName());
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         List<MtdLabels> mtdLabelsList = (List<MtdLabels>) mtdLabelsRepository.findAll(predicate, sort);
-        return mtdLabelsList.stream().map(mtd -> MtdLabelsMapper.INSTANCE.useMtdLabelsInfoVO(mtd))
+        return mtdLabelsList.stream()
+                .map(MtdLabelsMapper.INSTANCE::useMtdLabelsInfoVO)
                 .collect(Collectors.toList());
     }
 
@@ -134,7 +128,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
                 .from(qMtdLabels)
                 .where(booleanBuilder)
                 .orderBy(qMtdLabels.id.asc())
-                .offset((mtdLabelsListVO.getPagination().getPage() - 1) * mtdLabelsListVO.getPagination().getSize())
+                .offset((long) (mtdLabelsListVO.getPagination().getPage() - 1) *
+                        mtdLabelsListVO.getPagination().getSize())
                 .limit(mtdLabelsListVO.getPagination().getSize())
                 .fetch();
         result.put("list", mtdLabelsList);
