@@ -3,12 +3,10 @@ package com.qk.dm.metadata.rest;
 import com.qk.dm.metadata.respose.ResponseWrapper;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
-import com.qk.dm.metadata.vo.PageResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author wangzp
@@ -39,7 +37,7 @@ public class MtdClassifyAtlasController {
     }
 
     /**
-     * 修改元数据标签
+     * 修改元数据分类
      *
      * @param: mtdClassifyAtlasVO 元数据分类VO
      * @return: DefaultCommonResult
@@ -51,35 +49,15 @@ public class MtdClassifyAtlasController {
     }
 
     /**
-     * 删除元数据标签
+     * 查询元数据分类
      *
-     * @param: mtdClassifyAtlasVO 元数据分类VO
-     * @return: DefaultCommonResult
+     * @param: guid 元数据guid
+     * @return: 返回标签列表信息
      */
-    @DeleteMapping("/{ids}")
-    public void delete(@PathVariable("ids") String ids) {
-        mtdClassifyAtlasService.delete(ids);
+    @GetMapping("/{guid}")
+    @ResponseWrapper
+    public MtdClassifyAtlasVO getByGuid(@PathVariable("guid") String guid) {
+        return mtdClassifyAtlasService.getByGuid(guid);
     }
 
-    /**
-     * 查询元数据标签
-     *
-     * @param: pagination分页查询参数对象: page,size,sortStr
-     * @return: 返回分类列表信息
-     */
-    @GetMapping("/page")
-    public PageResultVO<MtdClassifyAtlasVO> listByPage(MtdClassifyAtlasVO mtdClassifyAtlasVO) {
-        return mtdClassifyAtlasService.listByPage(mtdClassifyAtlasVO);
-    }
-
-    /**
-     * 查询元数据标签
-     *
-     * @param: pagination分页查询参数对象: page,size,sortStr
-     * @return: 返回分类列表信息
-     */
-    @GetMapping("")
-    public List<MtdClassifyAtlasVO> listByAll(MtdClassifyAtlasVO mtdClassifyAtlasVO) {
-        return mtdClassifyAtlasService.listByAll(mtdClassifyAtlasVO);
-    }
 }

@@ -48,5 +48,10 @@ public class MtdLabelsAtlas implements Serializable {
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag = 0;
+    /**
+     * 同步状态 -1删除；0未同步；1已同步
+     */
+    @Column(name = "synch_status", nullable = false)
+    private Integer synchStatus = 0;
 
 }

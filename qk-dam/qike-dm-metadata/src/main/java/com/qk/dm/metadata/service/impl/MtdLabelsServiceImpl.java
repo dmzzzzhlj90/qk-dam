@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -49,14 +48,14 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
 
     @Override
     public void insert(MtdLabelsVO mtdLabelsVO) {
-        MtdLabels mtdLabels = MtdLabelsMapper.INSTANCE.useMtdLabels(mtdLabelsVO);
-        Predicate predicate = qMtdLabels.name.eq(mtdLabels.getName());
+        Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName());
         if (mtdLabelsRepository.exists(predicate)) {
             throw new BizException(
                     "当前要新增的标签名为："
-                            + mtdLabels.getName()
+                            + mtdLabelsVO.getName()
                             + " 的数据，已存在！！！");
         }
+        MtdLabels mtdLabels = MtdLabelsMapper.INSTANCE.useMtdLabels(mtdLabelsVO);
         mtdLabelsRepository.save(mtdLabels);
     }
 
@@ -75,11 +74,11 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     }
 
     @Override
-    @Transactional
     public void delete(String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
         Iterable<Long> idSet = idList.stream().map(Long::valueOf).collect(Collectors.toList());
         List<MtdLabels> basicInfoList = mtdLabelsRepository.findAllById(idSet);
+        //todo 查询是否存在绑定关系
         mtdLabelsRepository.deleteInBatch(basicInfoList);
     }
 

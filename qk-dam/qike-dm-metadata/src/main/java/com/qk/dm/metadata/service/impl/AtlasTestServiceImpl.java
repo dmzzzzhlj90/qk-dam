@@ -70,14 +70,14 @@ public class AtlasTestServiceImpl {
      * @throws AtlasServiceException
      */
     public void dsl() throws AtlasServiceException {
-        AtlasSearchResult hive_db = AtlasConfig.getAtlasClientV2().dslSearch("mysql_db");
+        AtlasSearchResult hive_db = AtlasConfig.getAtlasClientV2().dslSearch("test1212");
         LOG.info("dsl 调取远程接口[{}]", new Gson().toJson(hive_db));
 
-        AtlasSearchResult hive_db1 = AtlasConfig.getAtlasClientV2().dslSearchWithParams(
-                "hive_table",
-                5,
-                0);
-        LOG.info("dsl WithParams 调取远程接口[{}]", new Gson().toJson(hive_db1));
+//        AtlasSearchResult hive_db1 = AtlasConfig.getAtlasClientV2().dslSearchWithParams(
+//                "hive_table",
+//                5,
+//                0);
+//        LOG.info("dsl WithParams 调取远程接口[{}]", new Gson().toJson(hive_db1));
     }
 
     /**
@@ -140,6 +140,10 @@ public class AtlasTestServiceImpl {
         LOG.info("entityGuid 调取远程接口[{}]", new Gson().toJson(entityByGuid));
     }
 
+
+
+
+
     /**
      * 根据其 GUID 获取实体标头
      *
@@ -171,6 +175,9 @@ public class AtlasTestServiceImpl {
         //删除给定实体的给定标签
         AtlasConfig.getAtlasClientV2().removeLabels("3202e270-eeaf-48a3-9d29-9ee7b4529ff1", labels);
     }
+
+
+
 
     /**
      * 树形返回
@@ -232,6 +239,10 @@ public class AtlasTestServiceImpl {
         typesDef.setClassificationDefs(Stream.of(atlasClassificationDef).collect(Collectors.toList()));
         AtlasConfig.getAtlasClientV2().deleteAtlasTypeDefs(typesDef);
     }
+
+
+
+
 
     /**
      * 获取由 guid 表示的给定实体的分类列表
@@ -315,12 +326,12 @@ public class AtlasTestServiceImpl {
 //        //对满足搜索参数的实体进行基于属性的搜索
 //        atlasTestService.basic();
 //        //dsl
-//        atlasTestService.dsl();
+        atlasTestService.dsl();
 //        //检索指定全文查询的数据
 //        atlasTestService.fulltext();
 //        //关系搜索以搜索满足搜索参数的相关实体
 //        atlasTestService.relationship();
-        //获取由 guid 表示的给定实体的分类列表
+        //获取给定 GUID 的实体的完整定义
 //        atlasTestService.entityGuid();
 
         //标签
@@ -334,8 +345,7 @@ public class AtlasTestServiceImpl {
 //        atlasTestService.guidHeader();
 
         //分类
-        //用于检索 Atlas 中所有类型定义的批量检索 API
-//        atlasTestService.typedefs();
+
         //所有类型定义的批量检索 API 作为最小信息标头列表返回
 //        atlasTestService.typedefsHeaders();
         //为所有 atlas 类型定义批量创建 API，只会创建新定义
@@ -346,6 +356,9 @@ public class AtlasTestServiceImpl {
 //        atlasTestService.deleteTypeByName();
         //适用于所有类型的批量删除 API
 //        atlasTestService.deleteAtlasTypeDefs();
+        //用于检索 Atlas 中所有类型定义的批量检索 API
+//        atlasTestService.typedefs();
+
 
         //分类与实体
         //添加分类
@@ -362,6 +375,7 @@ public class AtlasTestServiceImpl {
 //        atlasTestService.classifications();
         //获取由 guid 表示的给定实体的分类列表
 //        atlasTestService.guidClass();
+
     }
 
 }

@@ -17,7 +17,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -33,20 +36,19 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
     private final MtdClassifyRepository mtdClassifyRepository;
 
     @Autowired
-    public MtdClassifyServiceImpl(EntityManager entityManager,MtdClassifyRepository mtdClassifyRepository){
+    public MtdClassifyServiceImpl(EntityManager entityManager, MtdClassifyRepository mtdClassifyRepository) {
         this.entityManager = entityManager;
         this.mtdClassifyRepository = mtdClassifyRepository;
     }
+
     @PostConstruct
     public void initFactory() {
         jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
+
     @Override
     public void insert(MtdClassifyVO mtdClassifyVO) {
-        MtdClassify mtdClassify = MtdClassifyMapper.INSTANCE.useMtdClassify(mtdClassifyVO);
-        mtdClassify.setGmtCreate(new Date());
-        mtdClassify.setGmtModified(new Date());
-        Predicate predicate = qMtdClassify.name.eq(mtdClassify.getName());
+        Predicate predicate = qMtdClassify.name.eq(mtdClassifyVO.getName());
         boolean exists = mtdClassifyRepository.exists(predicate);
         if (exists) {
             throw new BizException(
@@ -54,29 +56,36 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
                             + mtdClassifyVO.getName()
                             + " 的数据，已存在！！！");
         }
+        MtdClassify mtdClassify = MtdClassifyMapper.INSTANCE.useMtdClassify(mtdClassifyVO);
+        mtdClassify.setSynchStatus(2);
         mtdClassifyRepository.save(mtdClassify);
     }
 
     @Override
-    public void update(MtdClassifyVO mtdClassifyVO) {
-        MtdClassify mtdClassify = MtdClassifyMapper.INSTANCE.useMtdClassify(mtdClassifyVO);
-        Predicate predicate = qMtdClassify.name.eq(mtdClassify.getName());
+    public void update(Long id, MtdClassifyVO mtdClassifyVO) {
+        Predicate predicate = qMtdClassify.name.eq(mtdClassifyVO.getName()).and(qMtdClassify.id.ne(id));
         boolean exists = mtdClassifyRepository.exists(predicate);
         if (exists) {
             throw new BizException(
                     "当前要修改的分类为："
-                            + mtdClassify.getName()
+                            + mtdClassifyVO.getName()
                             + " 的数据，已存在！！！");
         }
+        MtdClassify mtdClassify = MtdClassifyMapper.INSTANCE.useMtdClassify(mtdClassifyVO);
+        mtdClassify.setId(id);
+        mtdClassify.setSynchStatus(0);
         mtdClassifyRepository.saveAndFlush(mtdClassify);
     }
 
     @Override
     public void delete(String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
-        Iterable<Long> idSet = idList.stream().map(i -> Long.valueOf(i)).collect(Collectors.toList());
+        Iterable<Long> idSet = idList.stream().map(Long::valueOf).collect(Collectors.toList());
         List<MtdClassify> mtdClassifyList = mtdClassifyRepository.findAllById(idSet);
-        mtdClassifyRepository.deleteInBatch(mtdClassifyList);
+        //todo 查询是否存在绑定关系
+        mtdClassifyList.forEach(item->item.setSynchStatus(-1));
+        mtdClassifyRepository.saveAll(mtdClassifyList);
+//        mtdClassifyRepository.deleteInBatch(mtdClassifyList);
     }
 
     @Override
@@ -92,7 +101,7 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
         long total = (long) map.get("total");
 
         List<MtdClassifyVO> mtdLabelsVOList =
-                list.stream().map(mtd -> MtdClassifyMapper.INSTANCE.useMtdClassifyVO(mtd)).collect(Collectors.toList());
+                list.stream().map(MtdClassifyMapper.INSTANCE::useMtdClassifyVO).collect(Collectors.toList());
 
         return new PageResultVO<>(
                 total,
@@ -111,7 +120,7 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
                 .where(booleanBuilder)
                 .orderBy(qMtdClassify.id.asc())
                 .fetch();
-        return mtdLabelsList.stream().map(mtd -> MtdClassifyMapper.INSTANCE.useMtdClassifyVO(mtd))
+        return mtdLabelsList.stream().map(MtdClassifyMapper.INSTANCE::useMtdClassifyVO)
                 .collect(Collectors.toList());
     }
 
@@ -119,7 +128,7 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
     private Map<String, Object> queryMtdClassifyByParams(MtdClassifyVO mtdClassifyVO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, mtdClassifyVO);
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>(2);
         long count = jpaQueryFactory
                 .select(qMtdClassify.count())
                 .from(qMtdClassify)
@@ -139,11 +148,11 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
     }
 
 
-    public void checkCondition(BooleanBuilder booleanBuilder,MtdClassifyVO mtdClassifyVO) {
+    public void checkCondition(BooleanBuilder booleanBuilder, MtdClassifyVO mtdClassifyVO) {
         if (!StringUtils.isEmpty(mtdClassifyVO.getName())) {
             booleanBuilder.and(qMtdClassify.name.contains(mtdClassifyVO.getName()));
         }
-
+        booleanBuilder.and(qMtdClassify.synchStatus.ne(-1));
     }
 
 }

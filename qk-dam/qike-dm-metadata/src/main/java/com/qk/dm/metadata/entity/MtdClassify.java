@@ -1,6 +1,5 @@
 package com.qk.dm.metadata.entity;
 
-import com.qk.dam.jpa.base.BaseRepository;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,7 +9,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_mtd_classify")
-public class MtdClassify implements Serializable{
+public class MtdClassify implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,5 +47,11 @@ public class MtdClassify implements Serializable{
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag = 0;
+
+    /**
+     * 同步状态 -1删除；0修改；1已同步；2新增；
+     */
+    @Column(name = "synch_status", nullable = false)
+    private Integer synchStatus;
 
 }
