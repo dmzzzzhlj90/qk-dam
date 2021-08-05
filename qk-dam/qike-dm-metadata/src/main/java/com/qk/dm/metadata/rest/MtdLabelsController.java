@@ -1,14 +1,16 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dm.metadata.respose.ResponseWrapper;
+import com.qk.dam.commons.enums.ResultCodeEnum;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsService;
 import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
-import java.util.List;
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/labels")
@@ -27,9 +29,9 @@ public class MtdLabelsController {
    * @return: DefaultCommonResult
    */
   @PostMapping("")
-  @ResponseWrapper
-  public void insert(@RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
+  public DefaultCommonResult insert(@RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.insert(mtdLabelsVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
   /**
@@ -39,9 +41,9 @@ public class MtdLabelsController {
    * @return: DefaultCommonResult
    */
   @PutMapping("/{id}")
-  @ResponseWrapper
-  public void update(@PathVariable("id") Long id, @RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
+  public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.update(id, mtdLabelsVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
   /**
@@ -51,9 +53,9 @@ public class MtdLabelsController {
    * @return: DefaultCommonResult
    */
   @DeleteMapping("/{ids}")
-  @ResponseWrapper
-  public void delete(@PathVariable("ids") String ids) {
+  public DefaultCommonResult delete(@PathVariable("ids") String ids) {
     mtdLabelsService.delete(ids);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
   /**
@@ -63,9 +65,8 @@ public class MtdLabelsController {
    * @return: 返回标签列表信息
    */
   @GetMapping("/page")
-  @ResponseWrapper
-  public PageResultVO<MtdLabelsInfoVO> listByPage(MtdLabelsListVO mtdLabelsListVO) {
-    return mtdLabelsService.listByPage(mtdLabelsListVO);
+  public DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>> listByPage(MtdLabelsListVO mtdLabelsListVO) {
+    return new DefaultCommonResult(ResultCodeEnum.OK,mtdLabelsService.listByPage(mtdLabelsListVO));
   }
 
   /**
@@ -75,8 +76,7 @@ public class MtdLabelsController {
    * @return: 返回标签列表信息
    */
   @GetMapping("")
-  @ResponseWrapper
-  public List<MtdLabelsInfoVO> listByAll(MtdLabelsVO mtdLabelsVO) {
-    return mtdLabelsService.listByAll(mtdLabelsVO);
+  public DefaultCommonResult<List<MtdLabelsInfoVO>> listByAll(MtdLabelsVO mtdLabelsVO) {
+    return new DefaultCommonResult(ResultCodeEnum.OK,mtdLabelsService.listByAll(mtdLabelsVO));
   }
 }

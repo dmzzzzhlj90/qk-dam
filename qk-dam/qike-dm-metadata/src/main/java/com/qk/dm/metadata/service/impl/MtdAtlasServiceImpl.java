@@ -1,15 +1,16 @@
 package com.qk.dm.metadata.service.impl;
 
-import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.service.MtdAtlasService;
-import java.util.*;
-import java.util.stream.Collectors;
+import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasClassification;
 import org.apache.atlas.model.typedef.AtlasClassificationDef;
 import org.apache.atlas.model.typedef.AtlasTypesDef;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author spj
@@ -18,67 +19,54 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MtdAtlasServiceImpl implements MtdAtlasService {
+    private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
-  @Override
-  public void setLabels(String guid, String labels) {
-    try {
-      Set<String> labelSet = Arrays.stream(labels.split(",")).collect(Collectors.toSet());
-      AtlasConfig.getAtlasClientV2().setLabels(guid, labelSet);
-    } catch (AtlasServiceException atlasServiceException) {
-      throw new BizException("当前atlas：" + guid + "，绑定标签：" + labels + " 的操作失败！！！");
+    @Override
+    public void setLabels(String guid, String labels) throws AtlasServiceException {
+        atlasClientV2.setLabels(guid, getLabelSet(labels));
     }
-  }
 
-  @Override
-  public void removeLabels(String guid, String labels) {
-    try {
-      Set<String> labelSet = Arrays.stream(labels.split(",")).collect(Collectors.toSet());
-      AtlasConfig.getAtlasClientV2().removeLabels(guid, labelSet);
-    } catch (AtlasServiceException atlasServiceException) {
-      throw new BizException("当前atlas：" + guid + "，解除绑定标签：" + labels + " 的操作失败！！！");
+    @Override
+    public void removeLabels(String guid, String labels) throws AtlasServiceException {
+        atlasClientV2.removeLabels(guid, getLabelSet(labels));
     }
-  }
 
-  @Override
-  public void typedefsByPost(Map<String, String> map) {
-    try {
-      List<AtlasClassificationDef> classificationDefs = new ArrayList<>();
-      for (Map.Entry<String, String> typeMap : map.entrySet()) {
-        classificationDefs.add(new AtlasClassificationDef(typeMap.getKey(), typeMap.getValue()));
-      }
-      AtlasTypesDef typesDef = new AtlasTypesDef();
-      typesDef.setClassificationDefs(classificationDefs);
-      AtlasConfig.getAtlasClientV2().createAtlasTypeDefs(typesDef);
-    } catch (AtlasServiceException atlasServiceException) {
-      throw new BizException("为所有 atlas 类型，批量创建失败！！！" + map.keySet());
+    @Override
+    public void postTypedefs(Map<String, String> map) throws AtlasServiceException {
+        atlasClientV2.createAtlasTypeDefs(getTypesDef(map));
     }
-  }
 
-  @Override
-  public void typedefsByDelete(Map<String, String> map) {
-    try {
-      List<AtlasClassificationDef> classificationDefs = new ArrayList<>();
-      for (Map.Entry<String, String> typeMap : map.entrySet()) {
-        classificationDefs.add(new AtlasClassificationDef(typeMap.getKey(), typeMap.getValue()));
-      }
-      AtlasTypesDef typesDef = new AtlasTypesDef();
-      typesDef.setClassificationDefs(classificationDefs);
-      AtlasConfig.getAtlasClientV2().deleteAtlasTypeDefs(typesDef);
-    } catch (AtlasServiceException atlasServiceException) {
-      throw new BizException("为所有 atlas 类型，批量删除失败！！！" + map.keySet());
+    @Override
+    public void deleteTypedefs(Map<String, String> map) throws AtlasServiceException {
+        atlasClientV2.deleteAtlasTypeDefs(getTypesDef(map));
     }
-  }
 
-  @Override
-  public void addClassifications(String guid, String classifiy) {
-    try {
-      List<AtlasClassification> classificationList =
-          Arrays.stream(classifiy.split(","))
-              .map(AtlasClassification::new)
-              .collect(Collectors.toList());
-      AtlasConfig.getAtlasClientV2().addClassifications(guid, classificationList);
-    } catch (AtlasServiceException atlasServiceException) {
-      throw new BizException("当前分类:" + classifiy + ",元数据：" + guid + " 的绑定操作失败！！！");
+    @Override
+    public void addClassifications(String guid, String classifiy) throws AtlasServiceException {
+        List<AtlasClassification> classificationList = getAtlasClassification(classifiy);
+        atlasClientV2.addClassifications(guid, classificationList);
     }
-  }
+
+    public Set<String> getLabelSet(String labels) {
+        return Arrays.stream(labels.split(",")).collect(Collectors.toSet());
+    }
+
+    public AtlasTypesDef getTypesDef(Map<String, String> map) {
+        AtlasTypesDef typesDef = new AtlasTypesDef();
+        typesDef.setClassificationDefs(getAtlasClassificationDef(map));
+        return typesDef;
+    }
+
+    public List<AtlasClassificationDef> getAtlasClassificationDef(Map<String, String> map) {
+        List<AtlasClassificationDef> classificationDefs = new ArrayList<>();
+        for (Map.Entry<String, String> typeMap : map.entrySet()) {
+            classificationDefs.add(new AtlasClassificationDef(typeMap.getKey(), typeMap.getValue()));
+        }
+        return classificationDefs;
+    }
+
+    public List<AtlasClassification> getAtlasClassification(String classifiy) {
+        return Arrays.stream(classifiy.split(","))
+                .map(AtlasClassification::new).collect(Collectors.toList());
+    }
 }

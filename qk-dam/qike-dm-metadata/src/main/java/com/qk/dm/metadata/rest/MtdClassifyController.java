@@ -1,13 +1,15 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dm.metadata.respose.ResponseWrapper;
+import com.qk.dam.commons.enums.ResultCodeEnum;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyService;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 import com.qk.dm.metadata.vo.PageResultVO;
-import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author wangzp
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/classify")
-@ResponseWrapper
 public class MtdClassifyController {
   private final MtdClassifyService mtdClassifyService;
 
@@ -32,8 +33,9 @@ public class MtdClassifyController {
    * @return: DefaultCommonResult
    */
   @PostMapping("")
-  public void insert(@RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
+  public DefaultCommonResult insert(@RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.insert(mtdClassifyVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
   /**
@@ -43,8 +45,9 @@ public class MtdClassifyController {
    * @return: DefaultCommonResult
    */
   @PutMapping("/{id}")
-  public void update(@PathVariable("id") Long id, @RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
+  public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.update(id, mtdClassifyVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
   /**
@@ -54,8 +57,9 @@ public class MtdClassifyController {
    * @return: DefaultCommonResult
    */
   @DeleteMapping("/{ids}")
-  public void delete(@PathVariable("ids") String ids) {
+  public DefaultCommonResult delete(@PathVariable("ids") String ids) {
     mtdClassifyService.delete(ids);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
   /**
@@ -65,8 +69,8 @@ public class MtdClassifyController {
    * @return: 返回分类列表信息
    */
   @GetMapping("/page")
-  public PageResultVO<MtdClassifyVO> listByPage(MtdClassifyVO mtdClassifyVO) {
-    return mtdClassifyService.listByPage(mtdClassifyVO);
+  public DefaultCommonResult<PageResultVO<MtdClassifyVO>> listByPage(MtdClassifyVO mtdClassifyVO) {
+    return new DefaultCommonResult(ResultCodeEnum.OK,mtdClassifyService.listByPage(mtdClassifyVO));
   }
 
   /**
@@ -76,7 +80,7 @@ public class MtdClassifyController {
    * @return: 返回分类列表信息
    */
   @GetMapping("")
-  public List<MtdClassifyVO> listByAll(MtdClassifyVO mtdClassifyVO) {
-    return mtdClassifyService.listByAll(mtdClassifyVO);
+  public DefaultCommonResult<List<MtdClassifyVO>> listByAll(MtdClassifyVO mtdClassifyVO) {
+    return new DefaultCommonResult(ResultCodeEnum.OK,mtdClassifyService.listByAll(mtdClassifyVO));
   }
 }

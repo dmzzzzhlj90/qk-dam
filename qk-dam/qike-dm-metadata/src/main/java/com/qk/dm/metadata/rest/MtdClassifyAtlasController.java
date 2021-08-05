@@ -1,11 +1,14 @@
 package com.qk.dm.metadata.rest;
 
+import com.qk.dam.commons.enums.ResultCodeEnum;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.respose.ResponseWrapper;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author wangzp
@@ -30,8 +33,9 @@ public class MtdClassifyAtlasController {
    * @return: DefaultCommonResult
    */
   @PostMapping("")
-  public void insert(@RequestBody @Valid MtdClassifyAtlasVO mtdClassifyAtlasVO) {
+  public DefaultCommonResult insert(@RequestBody @Valid MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasService.insert(mtdClassifyAtlasVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
   /**
@@ -41,10 +45,11 @@ public class MtdClassifyAtlasController {
    * @return: DefaultCommonResult
    */
   @PutMapping("/{id}")
-  public void update(
+  public DefaultCommonResult update(
       @PathVariable("id") Long id, @RequestBody @Valid MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasVO.setId(id);
     mtdClassifyAtlasService.update(mtdClassifyAtlasVO);
+    return new DefaultCommonResult(ResultCodeEnum.OK);
   }
 
   /**
@@ -55,7 +60,7 @@ public class MtdClassifyAtlasController {
    */
   @GetMapping("/{guid}")
   @ResponseWrapper
-  public MtdClassifyAtlasVO getByGuid(@PathVariable("guid") String guid) {
-    return mtdClassifyAtlasService.getByGuid(guid);
+  public DefaultCommonResult<MtdClassifyAtlasVO> getByGuid(@PathVariable("guid") String guid) {
+    return new DefaultCommonResult(ResultCodeEnum.OK,mtdClassifyAtlasService.getByGuid(guid));
   }
 }
