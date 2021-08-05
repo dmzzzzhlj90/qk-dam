@@ -26,8 +26,8 @@ public class AtlasClassificationUtil {
      * @param classificationName 标签名称
      * @throws AtlasServiceException
      */
-    public void delEntitiesTags(String classificationName) throws AtlasServiceException {
-        List<AtlasEntityHeader> atlasEntityHeaders = getEntitiesByTags(classificationName);
+    public static void delEntitiesClassis(String classificationName) throws AtlasServiceException {
+        List<AtlasEntityHeader> atlasEntityHeaders = getEntitiesByClassis(classificationName);
         for (AtlasEntityHeader atlasEntityHeader : atlasEntityHeaders) {
             atlasClientV2.deleteClassification(atlasEntityHeader.getGuid(), classificationName);
         }
@@ -39,20 +39,20 @@ public class AtlasClassificationUtil {
      * @param classificationName 标签名称
      * @throws AtlasServiceException
      */
-    public void delTag(String classificationName) throws AtlasServiceException {
+    public static void delClassi(String classificationName) throws AtlasServiceException {
         AtlasTypesDef typesDef = new AtlasTypesDef();
-        typesDef.setClassificationDefs(getTags(classificationName));
+        typesDef.setClassificationDefs(getClassis(classificationName));
         atlasClientV2.deleteAtlasTypeDefs(typesDef);
     }
 
-    public static List<AtlasClassificationDef> getTags() throws AtlasServiceException {
+    public static List<AtlasClassificationDef> getClassis() throws AtlasServiceException {
         SearchFilter searchFilter = new SearchFilter();
         searchFilter.setParam("type", CLASSIFICATION);
         AtlasTypesDef allTypeDefs = atlasClientV2.getAllTypeDefs(searchFilter);
         return allTypeDefs.getClassificationDefs();
     }
 
-    public static List<AtlasClassificationDef> getTags(String name) throws AtlasServiceException {
+    public static List<AtlasClassificationDef> getClassis(String name) throws AtlasServiceException {
         SearchFilter searchFilter = new SearchFilter();
         searchFilter.setParam("type", CLASSIFICATION);
         searchFilter.setParam("name", name);
@@ -60,15 +60,15 @@ public class AtlasClassificationUtil {
         return allTypeDefs.getClassificationDefs();
     }
 
-    public static List<AtlasEntityHeader> getEntitiesByTags() throws AtlasServiceException {
-        return getEntitiesByTags(getTags());
+    public static List<AtlasEntityHeader> getEntitiesByClassis() throws AtlasServiceException {
+        return getEntitiesByClassis(getClassis());
     }
-    public static List<AtlasEntityHeader> getEntitiesByTags(String classificationName) throws AtlasServiceException {
-        List<AtlasClassificationDef> tags = getTags(classificationName);
-        return getEntitiesByTags(tags);
+    public static List<AtlasEntityHeader> getEntitiesByClassis(String classificationName) throws AtlasServiceException {
+        List<AtlasClassificationDef> tags = getClassis(classificationName);
+        return getEntitiesByClassis(tags);
     }
 
-    private static List<AtlasEntityHeader> getEntitiesByTags(List<AtlasClassificationDef> tags) {
+    private static List<AtlasEntityHeader> getEntitiesByClassis(List<AtlasClassificationDef> tags) {
         return tags.stream()
                 .map(atlasClassificationDef -> {
                     try {
