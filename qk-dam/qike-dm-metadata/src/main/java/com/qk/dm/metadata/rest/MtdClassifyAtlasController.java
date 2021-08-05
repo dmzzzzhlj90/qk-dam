@@ -35,7 +35,7 @@ public class MtdClassifyAtlasController {
   @PostMapping("")
   public DefaultCommonResult insert(@RequestBody @Valid MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasService.insert(mtdClassifyAtlasVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -49,7 +49,7 @@ public class MtdClassifyAtlasController {
       @PathVariable("id") Long id, @RequestBody @Valid MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasVO.setId(id);
     mtdClassifyAtlasService.update(mtdClassifyAtlasVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -61,6 +61,6 @@ public class MtdClassifyAtlasController {
   @GetMapping("/{guid}")
   @ResponseWrapper
   public DefaultCommonResult<MtdClassifyAtlasVO> getByGuid(@PathVariable("guid") String guid) {
-    return new DefaultCommonResult(ResultCodeEnum.OK,mtdClassifyAtlasService.getByGuid(guid));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyAtlasService.getByGuid(guid));
   }
 }

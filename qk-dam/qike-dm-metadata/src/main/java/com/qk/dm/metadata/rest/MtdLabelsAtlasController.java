@@ -27,7 +27,7 @@ public class MtdLabelsAtlasController {
   @PostMapping("")
   public DefaultCommonResult insert(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
     mtdLabelsAtlasService.insert(mtdLabelsVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -39,7 +39,7 @@ public class MtdLabelsAtlasController {
   @PutMapping("")
   public DefaultCommonResult update(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
     mtdLabelsAtlasService.update(mtdLabelsVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -50,6 +50,6 @@ public class MtdLabelsAtlasController {
    */
   @GetMapping("/{guid}")
   public DefaultCommonResult<MtdLabelsAtlasVO> getByGuid(@PathVariable("guid") String guid) {
-    return new DefaultCommonResult(ResultCodeEnum.OK,mtdLabelsAtlasService.getByGuid(guid));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdLabelsAtlasService.getByGuid(guid));
   }
 }

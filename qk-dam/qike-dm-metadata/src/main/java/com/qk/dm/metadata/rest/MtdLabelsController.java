@@ -31,7 +31,7 @@ public class MtdLabelsController {
   @PostMapping("")
   public DefaultCommonResult insert(@RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.insert(mtdLabelsVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -43,7 +43,7 @@ public class MtdLabelsController {
   @PutMapping("/{id}")
   public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.update(id, mtdLabelsVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -55,7 +55,7 @@ public class MtdLabelsController {
   @DeleteMapping("/{ids}")
   public DefaultCommonResult delete(@PathVariable("ids") String ids) {
     mtdLabelsService.delete(ids);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -66,7 +66,7 @@ public class MtdLabelsController {
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>> listByPage(MtdLabelsListVO mtdLabelsListVO) {
-    return new DefaultCommonResult(ResultCodeEnum.OK,mtdLabelsService.listByPage(mtdLabelsListVO));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdLabelsService.listByPage(mtdLabelsListVO));
   }
 
   /**
@@ -77,6 +77,6 @@ public class MtdLabelsController {
    */
   @GetMapping("")
   public DefaultCommonResult<List<MtdLabelsInfoVO>> listByAll(MtdLabelsVO mtdLabelsVO) {
-    return new DefaultCommonResult(ResultCodeEnum.OK,mtdLabelsService.listByAll(mtdLabelsVO));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdLabelsService.listByAll(mtdLabelsVO));
   }
 }
