@@ -51,9 +51,4 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
         }
         return atlasBaseMainDataDetailVO;
     }
-    public static void main(String[] args) {
-//        List<AtlasBaseMainDataVO> aa = new AtlasMetaDataServiceImpl().searchList(null, "mysql_table", false, 5, 0);
-//        System.out.println(JsonUtil.to(aa));
-        new AtlasMetaDataServiceImpl().getEntityByGuid("bf9a1d43-4a78-4e48-b5fe-f7c415c8919c");
-    }
 }
