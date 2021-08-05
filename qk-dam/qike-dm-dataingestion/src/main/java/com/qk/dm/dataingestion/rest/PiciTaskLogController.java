@@ -40,7 +40,7 @@ public class PiciTaskLogController {
       @PathVariable(value = "tableName") String tableName,
       @PathVariable(value = "pici") String pici)
       throws BizException {
-    return new DefaultCommonResult(
+    return DefaultCommonResult.success(
         ResultCodeEnum.OK, piciTaskLogService.modifyIsHiveByTableNameAndPici(tableName, pici));
   }
 }

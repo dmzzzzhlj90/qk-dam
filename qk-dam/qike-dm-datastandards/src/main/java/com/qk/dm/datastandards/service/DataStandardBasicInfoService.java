@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataStandardBasicInfoService {
 
-  PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(DsdBasicinfoParamsVO dsdBasicinfoParamsVO);
+  PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(DsdBasicinfoParamsVO basicInfoParamsVO);
 
   void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
 

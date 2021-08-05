@@ -32,11 +32,11 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
     setData(data);
   }
 
-  public static <T> DefaultCommonResult<T> success(T data) {
-    return success(ResultCodeEnum.OK, data);
+  public static DefaultCommonResult<Object> success() {
+    return new DefaultCommonResult<>(ResultCodeEnum.OK);
   }
 
-  public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, String tips) {
+  public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, T data, String tips) {
     return new DefaultCommonResult<>(codeEnum, tips);
   }
 
@@ -60,7 +60,7 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
     return fail(codeEnum, codeEnum.getFormattedErrorMessage());
   }
 
-  public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, T data) {
+  public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, T data, String tips) {
     return new DefaultCommonResult<>(codeEnum, data);
   }
 

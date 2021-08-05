@@ -21,7 +21,8 @@ public class DataController {
   @Autowired DataService dataService;
 
   @PostMapping("/push")
-  public DefaultCommonResult dataPush(@RequestBody @Valid DataPushVO dataPushVO) {
-    return new DefaultCommonResult(ResultCodeEnum.OK, dataService.dataPush(dataPushVO));
+  public DefaultCommonResult<String> dataPush(@RequestBody @Valid DataPushVO dataPushVO) {
+    String dataStr = dataService.dataPush(dataPushVO);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataStr);
   }
 }

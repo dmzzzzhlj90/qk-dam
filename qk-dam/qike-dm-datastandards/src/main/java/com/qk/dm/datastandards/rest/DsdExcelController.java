@@ -37,9 +37,9 @@ public class DsdExcelController {
   }
 
   /**
-   * 标准基本信息excel__全部导出数据 @Param: response
+   * 标准基本信息excel__全部导出数据
    *
-   * @return: void
+   * @param response
    */
   @PostMapping("/basic/info/download")
   public void basicInfoDownload(HttpServletResponse response) throws IOException {
@@ -56,9 +56,9 @@ public class DsdExcelController {
   }
 
   /**
-   * 标准基本信息excel__导出数据 (根据标准分类目录Id) @Param: response
+   * 标准基本信息excel__导出数据 (根据标准分类目录Id)
    *
-   * @return: void
+   * @param response
    */
   @PostMapping("/basic/info/download/dirDsdId")
   public void basicInfoDownloadByDirDsdId(
@@ -76,34 +76,36 @@ public class DsdExcelController {
   }
 
   /**
-   * 标准基本信息excel__导入数据(默认根据Excel中选择的层级进行导入) @Param: file
+   * 标准基本信息excel__导入数据(默认根据Excel中选择的层级进行导入)
    *
-   * @return: java.lang.String
+   * @param file
+   * @return DefaultCommonResult
    */
   @PostMapping("/basic/info/upload")
   @ResponseBody
   public DefaultCommonResult basicInfoUploadBydirDsdId(MultipartFile file) {
     dsdExcelService.basicInfoUpload(file, null);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
-   * 标准基本信息excel__导入数据 (根据标准分类目录Id) @Param: file
+   * 标准基本信息excel__导入数据 (根据标准分类目录Id)
    *
-   * @return: java.lang.String
+   * @param file
+   * @return DefaultCommonResult
    */
   @PostMapping("/basic/info/upload/dirDsdId")
   @ResponseBody
   public DefaultCommonResult basicInfoUploadByDirDsdId(
       MultipartFile file, @RequestParam("dirDsdId") String dirDsdId) {
     dsdExcelService.basicInfoUpload(file, dirDsdId);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
-   * 码表基本信息列表__导出excel数据(全量) @Param: response
+   * 码表基本信息列表__导出excel数据(全量)
    *
-   * @return: void
+   * @param response
    */
   @PostMapping("/code/info/all/download")
   public void codeInfoAllDownload(
@@ -122,22 +124,23 @@ public class DsdExcelController {
   }
 
   /**
-   * 码表基本信息列表__导入excel数据(全量) @Param: file
+   * 码表基本信息列表__导入excel数据(全量)
    *
-   * @return: java.lang.String
+   * @param file
+   * @return DefaultCommonResult
    */
   @PostMapping("/code/info/all/upload")
   @ResponseBody
   public DefaultCommonResult codeInfoAllUpload(
       MultipartFile file, @RequestParam("codeDirId") String codeDirId) {
     dsdExcelService.codeInfoAllUpload(file, codeDirId);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
-   * 码表数值信息列表__导出excel数据(根据dsdCodeInfoId表级数据) @Param: response
+   * 码表数值信息列表__导出excel数据(根据dsdCodeInfoId表级数据)
    *
-   * @return: void
+   * @param response
    */
   @PostMapping("/code/values/dsdCodeInfoId/download")
   public void codeValuesDownloadByCodeInfoId(
@@ -147,23 +150,23 @@ public class DsdExcelController {
   }
 
   /**
-   * 码表数值信息列表__导入excel数据(根据dsdCodeInfoId表级数据) @Param: file
+   * 码表数值信息列表__导入excel数据(根据dsdCodeInfoId表级数据)
    *
-   * @return: java.lang.String
+   * @param file
+   * @return DefaultCommonResult
    */
   @PostMapping("/code/values/dsdCodeInfoId/upload")
   @ResponseBody
   public DefaultCommonResult codeValuesUploadByCodeInfoId(
       MultipartFile file, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
     dsdExcelService.codeValuesUploadByCodeInfoId(file, Long.valueOf(dsdCodeInfoId).longValue());
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
    * 标准基本信息excel__模板下载
    *
    * @param response
-   * @throws IOException
    */
   @PostMapping("/basic/info/upload/template")
   public void basicInfoDownloadTemplate(HttpServletResponse response) throws IOException {
@@ -183,7 +186,6 @@ public class DsdExcelController {
    * 码表基本信息excel__模板下载
    *
    * @param response
-   * @throws IOException
    */
   @PostMapping("/code/info/upload/template")
   public void ccodeInfoDownloadTemplate(HttpServletResponse response) throws IOException {
@@ -201,9 +203,9 @@ public class DsdExcelController {
   }
 
   /**
-   * 码表数值信息excel__模板下载 @Param: response
+   * 码表数值信息excel__模板下载
    *
-   * @return: void
+   * @param response
    */
   @PostMapping("/code/values/download/template")
   public void codeValuesDownloadTemplate(

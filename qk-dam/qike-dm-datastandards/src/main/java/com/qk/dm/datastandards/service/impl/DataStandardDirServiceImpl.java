@@ -107,10 +107,6 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     }
   }
 
-  /**
-   * @param: respList
-   * @return: 使用递归方法建树
-   */
   public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
     DataStandardTreeVO topParent =
         DataStandardTreeVO.builder().dirDsdId("-1").dirDsdName("全部标准").build();
@@ -121,8 +117,10 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
   }
 
   /**
-   * @param: treeNode, respList
-   * @return: 递归查找子节点
+   * 递归查找子节点
+   *
+   * @param treeNode,respList
+   * @return DataStandardTreeVO
    */
   public static DataStandardTreeVO findChildren(
       DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
@@ -157,8 +155,9 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
   }
 
   /**
-   * @param: ids, delId
-   * @return: 获取删除叶子节点ID
+   * 获取删除叶子节点ID
+   *
+   * @param ids,delId
    */
   private void getIds(ArrayList<Integer> ids, Integer delId) {
     Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(delId));

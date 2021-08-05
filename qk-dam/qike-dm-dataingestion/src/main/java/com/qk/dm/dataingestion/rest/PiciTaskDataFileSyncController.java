@@ -45,6 +45,6 @@ public class PiciTaskDataFileSyncController {
         DateTimeFormatter.ofPattern(LongGovConstant.DATE_TIME_PATTERN).format(LocalDateTime.now());
     piciTaskDataFileSyncService.syncPiciTaskFilesData(
         dataDay, frontTabNamePatter, batchNum, LongGovConstant.BUCKETNAME);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 }

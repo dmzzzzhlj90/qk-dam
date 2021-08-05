@@ -17,40 +17,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sqlloader")
 public class SqlLoaderController {
   @GetMapping("/exec/{update}")
-  public DefaultCommonResult syncRiZhiFilesData(@PathVariable String update) {
+  public DefaultCommonResult<Integer> syncRiZhiFilesData(@PathVariable String update) {
     int state = SqlLoaderMain.executeTarSqlUpdate(update);
-    return new DefaultCommonResult(ResultCodeEnum.OK, state);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, state);
   }
 
   @GetMapping("/exec/pici/{pici}")
-  public DefaultCommonResult executeTarSqlPici(@PathVariable int pici) {
+  public DefaultCommonResult<Integer> executeTarSqlPici(@PathVariable int pici) {
     int state = SqlLoaderMain.executeTarSqlPici(pici);
-    return new DefaultCommonResult(ResultCodeEnum.OK, state);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, state);
   }
 
   @GetMapping("/exec/tablename/{tableName}")
-  public DefaultCommonResult executeTarSqlTableName(@PathVariable String tableName) {
+  public DefaultCommonResult<Integer> executeTarSqlTableName(@PathVariable String tableName) {
     int state = SqlLoaderMain.executeTarSqlTableName(tableName);
-    return new DefaultCommonResult(ResultCodeEnum.OK, state);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, state);
   }
 
   @GetMapping("/exec/tablename/pici/{tableName}/{pici}")
-  public DefaultCommonResult executeTarSqlTableName(
+  public DefaultCommonResult<Integer> executeTarSqlTableName(
       @PathVariable String tableName, @PathVariable int pici) {
     int state = SqlLoaderMain.executeTarSqlTableName(tableName, pici);
-    return new DefaultCommonResult(ResultCodeEnum.OK, state);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, state);
   }
 
   @GetMapping("/exec/writeDest/{date}")
-  public DefaultCommonResult writeDestTask(@PathVariable String date) {
+  public DefaultCommonResult<Object> writeDestTask(@PathVariable String date) {
     SqlLoaderMain.writeDestTask(date);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   @GetMapping("/refreshCosKeys")
-  public DefaultCommonResult syncRiZhiFilesData() {
+  public DefaultCommonResult<Object> syncRiZhiFilesData() {
     DmSqlLoader.refreshCosKeys();
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   @GetMapping("/procUpdateToUpdated1")
