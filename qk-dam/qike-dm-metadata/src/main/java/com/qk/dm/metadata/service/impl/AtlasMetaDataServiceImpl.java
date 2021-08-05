@@ -48,6 +48,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
           AtlasConfig.getAtlasClientV2().getEntityByGuid(guid, true, false);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
       atlasBaseMainDataDetailVO = GsonUtil.fromMap(attributes, AtlasBaseMainDataDetailVO.class);
+      atlasBaseMainDataDetailVO.setTypeName(detail.getEntity().getTypeName());
       Map<String, AtlasEntity> map = detail.getReferredEntities();
       List<AtlasEntity> atlasEntityList = new ArrayList<>(map.values());
       List<Map<String, Object>> collect =
@@ -59,10 +60,30 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                     return attr;
                   })
               .collect(Collectors.toList());
-      atlasBaseMainDataDetailVO.setColumnList(collect);
+      atlasBaseMainDataDetailVO.setReferredEntities(collect);
+      atlasBaseMainDataDetailVO.setRelationshipAttributes(detail.getEntity().getRelationshipAttributes());
     } catch (Exception e) {
       e.printStackTrace();
     }
     return atlasBaseMainDataDetailVO;
+  }
+
+  public AtlasBaseMainDataDetailVO getDbEntityByGuid(String guid) {
+    AtlasBaseMainDataDetailVO atlasBaseMainDataDetailVO = null;
+    try {
+      AtlasEntity.AtlasEntityWithExtInfo detail = AtlasConfig.getAtlasClientV2().getEntityByGuid(guid,true,false);
+      // System.out.println(GsonUtil.toJsonString(detail));
+      //detail.getReferredEntities();
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+    return atlasBaseMainDataDetailVO;
+  }
+
+  public static void main(String[] args) {
+//        List<AtlasBaseMainDataVO> aa = new AtlasMetaDataServiceImpl().searchList(null, "mysql_table", false, 5, 0);
+//        System.out.println(JsonUtil.to(aa));
+     AtlasBaseMainDataDetailVO atlasBaseMainDataDetailVO = new AtlasMetaDataServiceImpl().getEntityByGuid("040a9291-5914-43b8-9ee8-6177b40684f7");
+     System.out.println(GsonUtil.toJsonString(atlasBaseMainDataDetailVO));
   }
 }
