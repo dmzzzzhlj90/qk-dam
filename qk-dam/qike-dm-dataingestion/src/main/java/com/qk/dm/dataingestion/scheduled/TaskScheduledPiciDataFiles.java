@@ -40,8 +40,6 @@ public class TaskScheduledPiciDataFiles {
 
   /**
    * 定时同步阿里云数据到腾讯云,执行数据脚本;
-   *
-   * @return:
    */
   @GetMapping("/files/data")
   public void syncRiZhiFilesData() {

@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class MxTaskPiCiDataController {
   private static final Log LOG = LogFactory.get("定时监控数据同步");
 
-  //  @Value("${prometheus.timer.param}")
-  //  private String timerParam;
-
   private final MxTaskPiCiDataService mxTaskPiCiDataService;
 
   @Autowired
@@ -32,12 +29,11 @@ public class MxTaskPiCiDataController {
     this.mxTaskPiCiDataService = mxTaskPiCiDataService;
   }
 
-  //  @Scheduled(cron = "${prometheus.timer.param}")
   @PostMapping("/task/pici")
   public DefaultCommonResult sendTaskPiCiMetrics() {
     LOG.info("定时监控开始!");
-    //    LOG.info("定时器时间cron为:【{}】!", timerParam);
     mxTaskPiCiDataService.sendTaskPiCiMetrics();
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
+
 }

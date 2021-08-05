@@ -34,8 +34,8 @@ public class PiciTaskDataFileSyncController {
   /**
    * 同步阿里云数据到腾讯云
    *
-   * @param: frontTabNamePatter, batchNum
-   * @return: DefaultCommonResult
+   * @param frontTabNamePatter,batchNum
+   * @return DefaultCommonResult
    */
   @GetMapping("/files/data")
   public DefaultCommonResult syncRiZhiFilesData(

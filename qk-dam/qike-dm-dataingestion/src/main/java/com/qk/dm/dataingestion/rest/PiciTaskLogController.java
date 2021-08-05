@@ -32,8 +32,8 @@ public class PiciTaskLogController {
   /**
    * 更新日志表is_hive_updated状态
    *
-   * @param: frontTabNamePatter, batchNum
-   * @return: DefaultCommonResult
+   * @param tableName,pici
+   * @return DefaultCommonResult
    */
   @PutMapping("/modify/is_hive/by/{tableName}/{pici}")
   public DefaultCommonResult<Integer> modifyIsHiveByTableNameAndPici(

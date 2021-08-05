@@ -105,7 +105,7 @@ public class DataStandardCodeInfoController {
     /**
      * 数据类型下拉列表
      *
-     * @return DefaultCommonResult
+     * @return0 DefaultCommonResult
      */
     @GetMapping("/data/types")
     public DefaultCommonResult<List<Map<String, String>>> getDataTypes() {

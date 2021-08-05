@@ -35,12 +35,11 @@ public class CosTaskFilesController {
   /**
    * 获取COS任务文件信息
    *
-   * @param: frontTabNamePatter, batchNum
-   * @return: DefaultCommonResult
+   * @param dataDay
+   * @return DefaultCommonResult
    */
   @GetMapping("/files/info/{dataDay}")
-  public DefaultCommonResult<List<CosTaskFileInfoVO>> getCosTaskFilesInfo(
-      @PathVariable("dataDay") String dataDay) {
+  public DefaultCommonResult<List<CosTaskFileInfoVO>> getCosTaskFilesInfo(@PathVariable("dataDay") String dataDay) {
     List<CosTaskFileInfoVO> cosTaskFilesInfo = cosTaskFilesService.getCosTaskFilesInfo(dataDay);
     return DefaultCommonResult.success(ResultCodeEnum.OK, cosTaskFilesInfo);
   }
@@ -48,12 +47,11 @@ public class CosTaskFilesController {
   /**
    * 设置COS任务文件_objectMetadata_Header信息
    *
-   * @param: frontTabNamePatter, batchNum
-   * @return: DefaultCommonResult
+   * @param dataDay
+   * @return DefaultCommonResult
    */
   @PutMapping("/files/metadata/header/info/{dataDay}")
-  public DefaultCommonResult<Object> setFiLesMetaDataHearderInfo(
-      @PathVariable("dataDay") String dataDay) {
+  public DefaultCommonResult<Object> setFiLesMetaDataHearderInfo(@PathVariable("dataDay") String dataDay) {
     cosTaskFilesService.setFiLesMetaDataHearderInfo(dataDay);
     return DefaultCommonResult.success();
   }

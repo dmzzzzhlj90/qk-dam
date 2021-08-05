@@ -35,6 +35,7 @@ public class MxTaskSchedulerController {
   public DefaultCommonResult sendProcessInstanceState() {
     LOG.info("定时监控开始!");
     mxTaskSchedulerService.sendProcessInstanceState();
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
+
 }
