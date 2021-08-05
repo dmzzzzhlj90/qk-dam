@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginCusController {
-    @GetMapping("/login")
-    public String loginPage(){
-        return "redirect:/login.html";
-    }
+  @GetMapping("/login")
+  public String loginPage() {
+    return "redirect:/login.html";
+  }
 }

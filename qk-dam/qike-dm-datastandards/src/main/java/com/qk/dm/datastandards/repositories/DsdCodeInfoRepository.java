@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface DsdCodeInfoRepository extends BaseRepository<DsdCodeInfo, Long> {
 
-    @Modifying
-    @Query(" UPDATE DsdCodeInfo set codeDirLevel = :codeDirLevel where codeDirId = :codeDirId ")
-    void updateCodeDirLevelByCodeDirId(@Param("codeDirLevel") String codeDirLevel, @Param("codeDirId") String codeDirId);
-
+  @Modifying
+  @Query(" UPDATE DsdCodeInfo set codeDirLevel = :codeDirLevel where codeDirId = :codeDirId ")
+  void updateCodeDirLevelByCodeDirId(
+      @Param("codeDirLevel") String codeDirLevel, @Param("codeDirId") String codeDirId);
 }

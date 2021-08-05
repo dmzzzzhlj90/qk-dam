@@ -8,9 +8,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface MtdLabelsMapper {
-    MtdLabelsMapper INSTANCE = Mappers.getMapper(MtdLabelsMapper.class);
+  MtdLabelsMapper INSTANCE = Mappers.getMapper(MtdLabelsMapper.class);
 
-    MtdLabels useMtdLabels(MtdLabelsVO mtdLabelsVO);
+  MtdLabels useMtdLabels(MtdLabelsVO mtdLabelsVO);
 
-    MtdLabelsInfoVO useMtdLabelsInfoVO(MtdLabels mtdLabels);
+  MtdLabelsInfoVO useMtdLabelsInfoVO(MtdLabels mtdLabels);
 }

@@ -4,9 +4,9 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
+import com.qk.dm.datastandards.vo.DsdBasicinfoParamsVO;
 import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
 import com.qk.dm.datastandards.vo.PageResultVO;
-import com.qk.dm.datastandards.vo.params.DsdBasicinfoParamsVO;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,8 @@ public class DataStandardBasicInfoController {
    * @return: 返回标准列表信息
    */
   @PostMapping(value = "/query")
-  public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(@RequestBody DsdBasicinfoParamsVO basicinfoParamsVO) {
+  public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(
+      @RequestBody DsdBasicinfoParamsVO basicinfoParamsVO) {
     return new DefaultCommonResult(
         ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(basicinfoParamsVO));
   }
@@ -101,7 +102,9 @@ public class DataStandardBasicInfoController {
    * @return: DefaultCommonResult
    */
   @GetMapping("/search/code/field/by/codeDirId/{codeDirId}")
-  public DefaultCommonResult<List<CodeTableFieldsVO>> getCodeFieldByCodeDirId(@PathVariable("codeDirId") String codeDirId) {
-    return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardBasicInfoService.getCodeFieldByCodeDirId(codeDirId));
+  public DefaultCommonResult<List<CodeTableFieldsVO>> getCodeFieldByCodeDirId(
+      @PathVariable("codeDirId") String codeDirId) {
+    return new DefaultCommonResult(
+        ResultCodeEnum.OK, dataStandardBasicInfoService.getCodeFieldByCodeDirId(codeDirId));
   }
 }

@@ -6,6 +6,7 @@ group "com.qk.dam.commons"
 dependencies {
     compile "org.slf4j:slf4j-api"
     compile 'org.projectlombok:lombok'
+    compile group: 'com.google.code.gson', name: 'gson'
     compile 'javax.servlet:javax.servlet-api'
     implementation 'org.springframework:spring-web'
     annotationProcessor 'org.projectlombok:lombok'

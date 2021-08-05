@@ -23,16 +23,18 @@ public class UserInfoController {
         .map(SecurityContext::getAuthentication)
         .map(Authentication::getPrincipal);
   }
+
   @GetMapping("/current/credentials")
   public Mono<Object> accessToken() {
     return ReactiveSecurityContextHolder.getContext()
-            .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
-            .map(SecurityContext::getAuthentication);
+        .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
+        .map(SecurityContext::getAuthentication);
   }
 
   @GetMapping("/access/token")
-  public OAuth2AccessToken index(@RegisteredOAuth2AuthorizedClient("qk-dam-client-oidc")
-                                OAuth2AuthorizedClient authorizedClient) {
+  public OAuth2AccessToken index(
+      @RegisteredOAuth2AuthorizedClient("qk-dam-client-oidc")
+          OAuth2AuthorizedClient authorizedClient) {
     return authorizedClient.getAccessToken();
   }
 }

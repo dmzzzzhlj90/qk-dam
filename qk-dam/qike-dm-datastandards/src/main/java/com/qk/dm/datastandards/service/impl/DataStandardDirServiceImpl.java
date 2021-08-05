@@ -7,17 +7,15 @@ import com.qk.dm.datastandards.entity.QDsdDir;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdDirTreeMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.repositories.DsdDirRepository;
-import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdDirVO;
 import com.querydsl.core.types.Predicate;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author wjq
@@ -31,7 +29,7 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
   @Autowired
   public DataStandardDirServiceImpl(
-          DsdDirRepository dsdDirRepository, DsdBasicinfoRepository dsdBasicinfoRepository) {
+      DsdDirRepository dsdDirRepository, DsdBasicinfoRepository dsdBasicinfoRepository) {
     this.dsdDirRepository = dsdDirRepository;
     this.dsdBasicinfoRepository = dsdBasicinfoRepository;
   }
@@ -58,12 +56,15 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     Predicate predicate = QDsdDir.dsdDir.dsdDirLevel.eq(dsdDirVO.getDsdDirLevel());
     boolean exists = dsdDirRepository.exists(predicate);
     if (exists) {
-      throw new BizException("当前要新增的数据标准分类名称为:" + dsdDir.getDirDsdName() + " 所属的节点层级目录为:"
-              + dsdDirVO.getDsdDirLevel() + " 的数据，已存在！！！");
+      throw new BizException(
+          "当前要新增的数据标准分类名称为:"
+              + dsdDir.getDirDsdName()
+              + " 所属的节点层级目录为:"
+              + dsdDirVO.getDsdDirLevel()
+              + " 的数据，已存在！！！");
     }
     dsdDirRepository.save(dsdDir);
   }
-
 
   @Transactional
   @Override
@@ -75,11 +76,16 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     if (dsdDirOptional.isPresent()) {
       String dsdDirLevel = dsdDirOptional.get().getDsdDirLevel();
       if (dsdDirLevel.equals(dsdDirVO.getDsdDirLevel())) {
-        throw new BizException("当前要编辑的数据标准分类名称为:" + dsdDir.getDirDsdName() + " 所属的节点层级目录为:"
-                + dsdDirVO.getDsdDirLevel() + ", 的数据，已存在！！！");
+        throw new BizException(
+            "当前要编辑的数据标准分类名称为:"
+                + dsdDir.getDirDsdName()
+                + " 所属的节点层级目录为:"
+                + dsdDirVO.getDsdDirLevel()
+                + ", 的数据，已存在！！！");
       }
       dsdDirRepository.saveAndFlush(dsdDir);
-      dsdBasicinfoRepository.updateDirLevelByDirId(dsdDirVO.getDsdDirLevel(),dsdDirVO.getDirDsdId());
+      dsdBasicinfoRepository.updateDirLevelByDirId(
+          dsdDirVO.getDsdDirLevel(), dsdDirVO.getDirDsdId());
     } else {
       throw new BizException("当前要编辑的数据标准分类名称为:" + dsdDir.getDirDsdName() + " 的数据，不存在！！！");
     }

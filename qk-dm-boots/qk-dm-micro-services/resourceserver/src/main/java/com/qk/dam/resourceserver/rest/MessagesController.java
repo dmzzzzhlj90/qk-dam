@@ -33,28 +33,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MessagesController {
 
-	@Autowired
-	private JwtDecoder jwtDecoder;
+  @Autowired private JwtDecoder jwtDecoder;
 
-	@GetMapping("/messages")
-	public String[] getMessages() {
-		return new String[] {"Message 1", "Message 2", "Message 3"};
-	}
+  @GetMapping("/messages")
+  public String[] getMessages() {
+    return new String[] {"Message 1", "Message 2", "Message 3"};
+  }
 
-	@GetMapping("/jwtDecoder")
-	public String ssss() {
-		Jwt decode = jwtDecoder.decode("eyJraWQiOiJxay1kYW0tY2xpZW50IiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbiIsImF1ZCI6InFrLWRhbS1jbGllbnQiLCJhenAiOiJxay1kYW0tY2xpZW50IiwiaXNzIjoiaHR0cDpcL1wvYXV0aC1zZXJ2ZXI6OTkwMSIsImV4cCI6MTYyNzczODIxNCwiaWF0IjoxNjI3NzM2NDE0LCJub25jZSI6IkdxVzUyTnA1Qlh5cnlBa1Q2dWxYUmJrLWxrZHp0UzBSU3gxOUlVTnlaaW8iLCJqdGkiOiI5NmQ0YjE1My1hOGIyLTRlNjEtODZjYi1hOGRlYjA4ODQ2NDIifQ.c4O-126arm6V0dQDBuG-wp5RXrXm5uLG1PxvZXJMuYZv1aXY_SbagaWzFFZzkNtDNBxQg2EGGI9niKkNsCAZLKB9ssr3tRi9V0xspLK__EwUJVuDAj_I7y3U-Nn8jb4tI7oV7qSDK77ka8IUYYQrGewEyWtWb37SzrpUdWRK9qkL2YtPXRWZBpV46P4ABEDrdsbsenlCRSkvD1ZvqNeYsiiy-9c2m5dJQRrjxCOagOrfz-QUY1askLvxE97V3fdY_vIB2b4vgToS6Q-rLzLoXEAZF8xggYbmzXTs2YbSO_HQnixF23sNhnz3ftHV5ni0OvDhTHnMXY_fv2BkjRLyNw");
+  @GetMapping("/jwtDecoder")
+  public String ssss() {
+    Jwt decode =
+        jwtDecoder.decode(
+            "eyJraWQiOiJxay1kYW0tY2xpZW50IiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbiIsImF1ZCI6InFrLWRhbS1jbGllbnQiLCJhenAiOiJxay1kYW0tY2xpZW50IiwiaXNzIjoiaHR0cDpcL1wvYXV0aC1zZXJ2ZXI6OTkwMSIsImV4cCI6MTYyNzczODIxNCwiaWF0IjoxNjI3NzM2NDE0LCJub25jZSI6IkdxVzUyTnA1Qlh5cnlBa1Q2dWxYUmJrLWxrZHp0UzBSU3gxOUlVTnlaaW8iLCJqdGkiOiI5NmQ0YjE1My1hOGIyLTRlNjEtODZjYi1hOGRlYjA4ODQ2NDIifQ.c4O-126arm6V0dQDBuG-wp5RXrXm5uLG1PxvZXJMuYZv1aXY_SbagaWzFFZzkNtDNBxQg2EGGI9niKkNsCAZLKB9ssr3tRi9V0xspLK__EwUJVuDAj_I7y3U-Nn8jb4tI7oV7qSDK77ka8IUYYQrGewEyWtWb37SzrpUdWRK9qkL2YtPXRWZBpV46P4ABEDrdsbsenlCRSkvD1ZvqNeYsiiy-9c2m5dJQRrjxCOagOrfz-QUY1askLvxE97V3fdY_vIB2b4vgToS6Q-rLzLoXEAZF8xggYbmzXTs2YbSO_HQnixF23sNhnz3ftHV5ni0OvDhTHnMXY_fv2BkjRLyNw");
 
-		System.out.println(decode);
+    System.out.println(decode);
 
+    return "s";
+  }
 
-		return "s";
-	}
-
-	@GetMapping("/oauth2/idToken")
-	@ResponseBody
-	public DefaultOidcUser idToken(
-			Authentication authentication, @AuthenticationPrincipal OAuth2User oauth2User) {
-		return (DefaultOidcUser) authentication.getPrincipal();
-	}
+  @GetMapping("/oauth2/idToken")
+  @ResponseBody
+  public DefaultOidcUser idToken(
+      Authentication authentication, @AuthenticationPrincipal OAuth2User oauth2User) {
+    return (DefaultOidcUser) authentication.getPrincipal();
+  }
 }

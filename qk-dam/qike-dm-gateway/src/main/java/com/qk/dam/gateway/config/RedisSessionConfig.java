@@ -15,13 +15,12 @@ import org.springframework.session.data.redis.config.annotation.web.server.Enabl
 @Configuration
 public class RedisSessionConfig {
 
-	@Bean
-	@Primary
-	public RedisConnectionFactory standaloneConfig(RedisProperties redisProperties) {
-		RedisStandaloneConfiguration redisStandaloneConfiguration =
-				new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
-		redisStandaloneConfiguration.setPassword(redisProperties.getPassword());
-		return new LettuceConnectionFactory(redisStandaloneConfiguration);
-	}
-
+  @Bean
+  @Primary
+  public RedisConnectionFactory standaloneConfig(RedisProperties redisProperties) {
+    RedisStandaloneConfiguration redisStandaloneConfiguration =
+        new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
+    redisStandaloneConfiguration.setPassword(redisProperties.getPassword());
+    return new LettuceConnectionFactory(redisStandaloneConfiguration);
+  }
 }

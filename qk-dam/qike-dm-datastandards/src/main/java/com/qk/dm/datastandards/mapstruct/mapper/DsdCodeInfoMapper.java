@@ -14,10 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DsdCodeInfoMapper {
-    DsdCodeInfoMapper INSTANCE = Mappers.getMapper(DsdCodeInfoMapper.class);
+  DsdCodeInfoMapper INSTANCE = Mappers.getMapper(DsdCodeInfoMapper.class);
 
-    DsdCodeInfoVO useDsdCodeInfoVO(DsdCodeInfo dsdCodeInfo);
+  DsdCodeInfoVO useDsdCodeInfoVO(DsdCodeInfo dsdCodeInfo);
 
-    DsdCodeInfo useDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO);
-
+  DsdCodeInfo useDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO);
 }

@@ -1,9 +1,8 @@
 package com.qk.dm.metadata.vo;
 
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
 
 /**
  * 分页结果集VO

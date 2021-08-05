@@ -39,13 +39,11 @@ dependencies {
 
     implementation 'com.alibaba:easyexcel'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
             "javax.annotation:javax.annotation-api",
-            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
-            "org.projectlombok:lombok",
-            'org.mapstruct:mapstruct-processor')
+            "com.querydsl:querydsl-apt:4.4.0:jpa",
+            "org.projectlombok:lombok")
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {

@@ -1,11 +1,10 @@
 package com.qk.dm.metadata.vo;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 /**
  * @author wangzp
@@ -16,25 +15,18 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MtdClassifyAtlasVO{
+public class MtdClassifyAtlasVO {
 
-    private Pagination pagination;
+  private Pagination pagination;
 
-    private Long id;
+  private Long id;
 
-    /**
-     * 元数据标识
-     */
-    private String guid;
+  /** 元数据标识 */
+  private String guid;
 
-    /**
-     * 分类
-     */
-    private String classify;
+  /** 分类 */
+  private String classify;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
-
+  /** 创建时间 */
+  private Date gmtCreate;
 }

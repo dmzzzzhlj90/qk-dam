@@ -7,8 +7,8 @@ import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 
 @Configuration
 public class SecurityConfiguration {
-    @Bean
-    RedisIndexedSessionRepository redisIndexedSessionRepository(final RedisTemplate redisTemplate){
-       return  new RedisIndexedSessionRepository(redisTemplate);
-    }
+  @Bean
+  RedisIndexedSessionRepository redisIndexedSessionRepository(final RedisTemplate redisTemplate) {
+    return new RedisIndexedSessionRepository(redisTemplate);
+  }
 }

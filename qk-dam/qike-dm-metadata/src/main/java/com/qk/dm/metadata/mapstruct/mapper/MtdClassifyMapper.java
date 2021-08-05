@@ -12,9 +12,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface MtdClassifyMapper {
-    MtdClassifyMapper INSTANCE = Mappers.getMapper(MtdClassifyMapper.class);
+  MtdClassifyMapper INSTANCE = Mappers.getMapper(MtdClassifyMapper.class);
 
-    MtdClassify useMtdClassify(MtdClassifyVO mtdClassifyVO);
+  MtdClassify useMtdClassify(MtdClassifyVO mtdClassifyVO);
 
-    MtdClassifyVO useMtdClassifyVO(MtdClassify mtdClassify);
+  MtdClassifyVO useMtdClassifyVO(MtdClassify mtdClassify);
 }

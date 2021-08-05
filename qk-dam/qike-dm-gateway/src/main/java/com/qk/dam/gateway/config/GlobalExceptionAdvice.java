@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.reactive.function.server.EntityResponse;
 import reactor.core.publisher.Mono;
 
 /**
@@ -36,7 +35,7 @@ public class GlobalExceptionAdvice {
 
   @ExceptionHandler(RuntimeException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public Mono<DefaultCommonResult<Object>>  runtimeException(RuntimeException e) {
+  public Mono<DefaultCommonResult<Object>> runtimeException(RuntimeException e) {
     return Mono.justOrEmpty(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED));
   }
 

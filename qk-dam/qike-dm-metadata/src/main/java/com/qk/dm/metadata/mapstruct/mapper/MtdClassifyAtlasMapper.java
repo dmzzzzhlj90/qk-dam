@@ -1,6 +1,5 @@
 package com.qk.dm.metadata.mapstruct.mapper;
 
-
 import com.qk.dm.metadata.entity.MtdClassifyAtlas;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
 import org.mapstruct.Mapper;
@@ -13,9 +12,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface MtdClassifyAtlasMapper {
-    MtdClassifyAtlasMapper INSTANCE = Mappers.getMapper(MtdClassifyAtlasMapper.class);
+  MtdClassifyAtlasMapper INSTANCE = Mappers.getMapper(MtdClassifyAtlasMapper.class);
 
-    MtdClassifyAtlas useMtdClassifyAtlas(MtdClassifyAtlasVO mtdClassifyAtlasVO);
+  MtdClassifyAtlas useMtdClassifyAtlas(MtdClassifyAtlasVO mtdClassifyAtlasVO);
 
-    MtdClassifyAtlasVO useMtdClassifyAtlasVO(MtdClassifyAtlas mtdClassifyAtlas);
+  MtdClassifyAtlasVO useMtdClassifyAtlasVO(MtdClassifyAtlas mtdClassifyAtlas);
 }

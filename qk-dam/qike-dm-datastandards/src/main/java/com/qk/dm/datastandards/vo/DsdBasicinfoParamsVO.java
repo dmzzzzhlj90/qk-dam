@@ -1,6 +1,6 @@
-package com.qk.dm.datastandards.vo.params;
+package com.qk.dm.datastandards.vo;
 
-import com.qk.dm.datastandards.vo.Pagination;
+import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

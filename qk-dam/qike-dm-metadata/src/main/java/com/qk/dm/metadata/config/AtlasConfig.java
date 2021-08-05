@@ -10,21 +10,21 @@ import org.apache.atlas.AtlasException;
  * @since 1.0.0
  */
 public class AtlasConfig extends BaseClientConf {
-    protected AtlasConfig() throws AtlasException {
-        super();
-    }
+  protected AtlasConfig() throws AtlasException {
+    super();
+  }
 
-    private static AtlasConfig instance;
+  private static AtlasConfig instance;
 
-    static {
-        try {
-            instance = new AtlasConfig();
-        } catch (AtlasException e) {
-            e.printStackTrace();
-        }
+  static {
+    try {
+      instance = new AtlasConfig();
+    } catch (AtlasException e) {
+      e.printStackTrace();
     }
+  }
 
-    public static AtlasClientV2 getAtlasClientV2(){
-        return instance.atlasClientV2;
-    }
+  public static AtlasClientV2 getAtlasClientV2() {
+    return instance.atlasClientV2;
+  }
 }

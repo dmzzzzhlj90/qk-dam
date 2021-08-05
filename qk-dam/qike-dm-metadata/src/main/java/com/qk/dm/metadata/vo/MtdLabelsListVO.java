@@ -11,20 +11,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MtdLabelsListVO {
 
-    private Pagination pagination;
+  private Pagination pagination;
 
-    /**
-     * 开始时间
-     */
-    private String beginDay;
+  /** 开始时间 */
+  private String beginDay;
 
-    /**
-     * 结束时间
-     */
-    private String endDay;
+  /** 结束时间 */
+  private String endDay;
 
-    /**
-     * 名称
-     */
-    private String name;
+  /** 名称 */
+  private String name;
 }

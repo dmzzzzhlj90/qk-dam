@@ -15,7 +15,8 @@ public class OAuth2ClientController {
 
   @GetMapping("/oauth2/accessToken")
   @ResponseBody
-  public String accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+  public String accessToken(
+      @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
     return authorizedClient.getAccessToken().getTokenValue();
   }
 

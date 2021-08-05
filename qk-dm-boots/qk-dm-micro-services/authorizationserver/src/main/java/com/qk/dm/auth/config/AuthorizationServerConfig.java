@@ -7,13 +7,12 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.qk.dm.auth.jose.ClientKeyService;
 import com.qk.dm.auth.jose.Jwks;
+import com.qk.dm.auth.pojo.InnerRegisteredClient;
+import com.qk.dm.auth.pojo.RegisteredClients;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import com.qk.dm.auth.pojo.InnerRegisteredClient;
-import com.qk.dm.auth.pojo.RegisteredClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -67,8 +66,12 @@ public class AuthorizationServerConfig {
                           .tokenSettings(
                               (tokenSettings ->
                                   tokenSettings
-                                      .accessTokenTimeToLive(Duration.ofMinutes(innerRegisteredClient.getAccessTokenTimeToLive()))
-                                      .refreshTokenTimeToLive(Duration.ofMinutes(innerRegisteredClient.getRefreshTokenTimeToLive()))))
+                                      .accessTokenTimeToLive(
+                                          Duration.ofMinutes(
+                                              innerRegisteredClient.getAccessTokenTimeToLive()))
+                                      .refreshTokenTimeToLive(
+                                          Duration.ofMinutes(
+                                              innerRegisteredClient.getRefreshTokenTimeToLive()))))
                           .clientSettings(
                               clientSettings -> clientSettings.requireUserConsent(false));
 
@@ -116,7 +119,7 @@ public class AuthorizationServerConfig {
         registeredClients.getClients().stream()
             .map(client -> getRsaKey(clientKeyService, client))
             .collect(Collectors.toList());
-    //TODO 多个jwks不支持 需要解决
+    // TODO 多个jwks不支持 需要解决
     JWKSet jwkSet = new JWKSet(rsaKeyList.get(0));
 
     return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);

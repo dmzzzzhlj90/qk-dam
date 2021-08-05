@@ -43,7 +43,8 @@ public class DsdCodeInfoCustomSheetWriteHandler implements SheetWriteHandler {
     CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(1, 100000, 0, 0);
     DataValidationHelper helper = writeSheetHolder.getSheet().getDataValidationHelper();
     DataValidationConstraint constraint =
-        helper.createExplicitListConstraint(dsdCodeDirLevelList.toArray(new String[dsdCodeDirLevelList.size()]));
+        helper.createExplicitListConstraint(
+            dsdCodeDirLevelList.toArray(new String[dsdCodeDirLevelList.size()]));
     DataValidation dataValidation = helper.createValidation(constraint, cellRangeAddressList);
     writeSheetHolder.getSheet().addValidationData(dataValidation);
   }

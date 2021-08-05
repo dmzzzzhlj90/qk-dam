@@ -1,8 +1,7 @@
 package com.qk.dam.commons.http.result;
 
-import lombok.Data;
-
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * @author daomingzhu
