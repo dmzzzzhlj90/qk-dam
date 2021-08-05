@@ -11,20 +11,22 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
 
   private static final long serialVersionUID = 4717403718355790656L;
 
-  public DefaultCommonResult() {}
+  public DefaultCommonResult() {
+    throw new IllegalStateException("Utility class");
+  }
 
-  public DefaultCommonResult(ResultCodeEnum code) {
+  DefaultCommonResult(ResultCodeEnum code) {
     setRetCode(code.getCode());
     setRetMsg(code.getFormattedErrorMessage());
   }
 
-  public DefaultCommonResult(ResultCodeEnum code, String tips) {
+  DefaultCommonResult(ResultCodeEnum code, String tips) {
     setRetCode(code.getCode());
     setRetMsg(code.getFormattedErrorMessage());
     setTips(tips);
   }
 
-  public DefaultCommonResult(ResultCodeEnum code, T data) {
+  DefaultCommonResult(ResultCodeEnum code, T data) {
     setRetCode(code.getCode());
     setRetMsg(code.getFormattedErrorMessage());
     setData(data);
@@ -32,6 +34,10 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
 
   public static <T> DefaultCommonResult<T> success(T data) {
     return success(ResultCodeEnum.OK, data);
+  }
+
+  public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, String tips) {
+    return new DefaultCommonResult<>(codeEnum, tips);
   }
 
   public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, T data) {
@@ -46,19 +52,19 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
     return baseResult;
   }
 
-  public static <T> DefaultCommonResult<T> error() {
+  public static <T> DefaultCommonResult<T> fail() {
     return new DefaultCommonResult<>(ResultCodeEnum.BAD_REQUEST);
   }
 
-  public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum) {
-    return error(codeEnum, codeEnum.getFormattedErrorMessage());
+  public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum) {
+    return fail(codeEnum, codeEnum.getFormattedErrorMessage());
   }
 
-  public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum, T data) {
+  public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, T data) {
     return new DefaultCommonResult<>(codeEnum, data);
   }
 
-  public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum, String tips) {
+  public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, String tips) {
     DefaultCommonResult<T> baseResult = new DefaultCommonResult<>();
     baseResult.setRetCode(codeEnum.getCode());
     baseResult.setRetMsg(codeEnum.getFormattedErrorMessage());

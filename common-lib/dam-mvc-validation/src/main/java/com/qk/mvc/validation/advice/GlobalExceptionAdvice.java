@@ -43,7 +43,7 @@ public class GlobalExceptionAdvice {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public <T> BaseResult<T> sendErrorResponse(Exception exception) {
     log.error("后台服务异常: {}", getStackTrace(exception));
-    return DefaultCommonResult.error(ResultCodeEnum.BAD_REQUEST);
+    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST);
   }
 
   /**
@@ -56,7 +56,7 @@ public class GlobalExceptionAdvice {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public <T> BaseResult<T> sendErrorResponse(RuntimeException exception) {
     log.error("系统运行时异常: {}", getStackTrace(exception));
-    return DefaultCommonResult.error(ResultCodeEnum.BAD_REQUEST);
+    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST);
   }
 
   /**
@@ -69,7 +69,7 @@ public class GlobalExceptionAdvice {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public <T> BaseResult<T> sendErrorResponse(BizException exception) {
     log.error("系统运行时异常: {}", getStackTrace(exception));
-    return DefaultCommonResult.error(ResultCodeEnum.BAD_REQUEST, exception.getLocalizedMessage());
+    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST, exception.getLocalizedMessage());
   }
 
   /**
@@ -82,7 +82,7 @@ public class GlobalExceptionAdvice {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public <T> BaseResult<T> otherValidException(ConstraintViolationException e) {
     log.error("参数校验异常: {}", getStackTrace(e));
-    return DefaultCommonResult.error(ResultCodeEnum.CONSTRAINT_VIOLATION_ERROR);
+    return DefaultCommonResult.fail(ResultCodeEnum.CONSTRAINT_VIOLATION_ERROR);
   }
   /**
    * 必填参数缺失
@@ -94,7 +94,7 @@ public class GlobalExceptionAdvice {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public <T> BaseResult<T> servletRequestBinding(ServletRequestBindingException e) {
     log.error("参数校验异常: {}", getStackTrace(e));
-    return DefaultCommonResult.error(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR);
+    return DefaultCommonResult.fail(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR);
   }
 
   /**
@@ -144,7 +144,7 @@ public class GlobalExceptionAdvice {
     }
     log.error("参数校验异常: {}", errorMsg);
     log.error("异常详情: {}", getStackTrace(e));
-    return DefaultCommonResult.error(
+    return DefaultCommonResult.fail(
         ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR, String.valueOf(errorMsg));
   }
 
@@ -152,19 +152,19 @@ public class GlobalExceptionAdvice {
   @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
   public <T> BaseResult<T> sendErrorResponse(HttpRequestMethodNotSupportedException exception) {
     log.error("http方法不允许: {}", getStackTrace(exception));
-    return DefaultCommonResult.error(ResultCodeEnum.HTTP_METHOD_NOT_ALLOW_ERROR);
+    return DefaultCommonResult.fail(ResultCodeEnum.HTTP_METHOD_NOT_ALLOW_ERROR);
   }
 
   @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
   @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
   public <T> BaseResult<T> sendErrorResponse(HttpMediaTypeNotSupportedException exception) {
-    return DefaultCommonResult.error(ResultCodeEnum.HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR);
+    return DefaultCommonResult.fail(ResultCodeEnum.HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR);
   }
 
   @ExceptionHandler(MaxUploadSizeExceededException.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public <T> BaseResult<T> sendErrorResponse(MaxUploadSizeExceededException exception) {
-    return DefaultCommonResult.error(ResultCodeEnum.MAX_UPLOAD_SIZE_EXCEEDED);
+    return DefaultCommonResult.fail(ResultCodeEnum.MAX_UPLOAD_SIZE_EXCEEDED);
   }
 
   private static String getStackTrace(Throwable throwable) {

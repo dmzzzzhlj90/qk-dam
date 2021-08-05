@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 数据管理—数据源连接
@@ -30,12 +31,14 @@ public class DsDataSourceController {
     /**
      * 数据源连接——统一查询接口
      *
-     * @param:
-     * @return: DefaultCommonResult
+     * @param
+     * @return DefaultCommonResult
      */
     @PostMapping("/query")
     public DefaultCommonResult<PageResultVO<DsDatasourceVO>> getDsDataSource(@RequestBody DsDataSourceParamsVO dsDataSourceParamsVO){
-        return new DefaultCommonResult(ResultCodeEnum.OK,dsDataSourceService.getDsDataSource(dsDataSourceParamsVO));
+        PageResultVO<DsDatasourceVO> dsDataSource = dsDataSourceService.getDsDataSource(dsDataSourceParamsVO);
+
+        return new DefaultCommonResult<>(ResultCodeEnum.OK,dsDataSource);
     }
 
     /**
@@ -44,9 +47,9 @@ public class DsDataSourceController {
      * @return
      */
     @PostMapping("/add")
-    public DefaultCommonResult addDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO){
+    public DefaultCommonResult<?> addDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO){
         dsDataSourceService.addDsDataSource(dsDatasourceVO);
-        return  new DefaultCommonResult(ResultCodeEnum.OK);
+        return  new DefaultCommonResult<>(ResultCodeEnum.OK);
     }
 
     /**
