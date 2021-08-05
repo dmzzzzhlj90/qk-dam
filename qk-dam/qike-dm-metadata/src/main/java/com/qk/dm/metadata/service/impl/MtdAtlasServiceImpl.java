@@ -1,7 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.metadata.config.AtlasConfig;
+import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.service.MtdAtlasService;
 import java.util.*;
 import java.util.stream.Collectors;

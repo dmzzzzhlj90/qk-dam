@@ -1,7 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dm.metadata.config.AtlasConfig;
+import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.AtlasBaseMainDataDetailVO;
 import com.qk.dm.metadata.vo.AtlasBaseMainDataVO;

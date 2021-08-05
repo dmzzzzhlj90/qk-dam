@@ -1,7 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.google.gson.Gson;
-import com.qk.dm.metadata.config.AtlasConfig;
+import com.qk.dam.metedata.config.AtlasConfig;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
