@@ -35,8 +35,8 @@ public class DynamicEasyExcelExportUtils {
   /**
    * 动态生成导出模版(单表头)
    *
-   * @param headColumns 列名称
-   * @return excel文件流
+   * @param headColumns
+   * @return byte[]
    */
   public static byte[] exportTemplateExcelFile(List<String> headColumns) {
     List<List<String>> excelHead = Lists.newArrayList();
@@ -51,8 +51,8 @@ public class DynamicEasyExcelExportUtils {
   /**
    * 动态生成模版(复杂表头)
    *
-   * @param excelHead 列名称
-   * @return
+   * @param excelHead
+   * @return byte[]
    */
   public static byte[] exportTemplateExcelFileCustomHead(List<List<String>> excelHead) {
     byte[] stream = createExcelFile(excelHead, new ArrayList<>());
@@ -62,9 +62,8 @@ public class DynamicEasyExcelExportUtils {
   /**
    * 动态导出文件
    *
-   * @param headColumnMap 有序列头部
-   * @param dataList 数据体
-   * @return
+   * @param headColumnMap,dataList
+   * @return byte[]
    */
   public static byte[] exportExcelFile(
       LinkedHashMap<String, String> headColumnMap, List<Map<String, Object>> dataList) {
@@ -102,9 +101,8 @@ public class DynamicEasyExcelExportUtils {
   /**
    * 生成文件
    *
-   * @param excelHead
-   * @param excelRows
-   * @return
+   * @param excelHead,excelRows
+   * @return byte[]
    */
   private static byte[] createExcelFile(
       List<List<String>> excelHead, List<List<Object>> excelRows) {
@@ -127,9 +125,7 @@ public class DynamicEasyExcelExportUtils {
   /**
    * 生成web文件
    *
-   * @param excelHead
-   * @param excelRows
-   * @return
+   * @param excelHead,excelRows
    */
   public static void exportWebExcelFile(
       HttpServletResponse response,
@@ -158,7 +154,6 @@ public class DynamicEasyExcelExportUtils {
    * 导出文件测试
    *
    * @param args
-   * @throws IOException
    */
   public static void main(String[] args) throws IOException {
     // 导出包含数据内容的文件
