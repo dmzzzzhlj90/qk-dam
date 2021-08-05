@@ -30,19 +30,19 @@ public class GlobalExceptionAdvice {
   @ExceptionHandler(JwtException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Mono<DefaultCommonResult<Object>> jwtException(JwtException e) {
-    return Mono.justOrEmpty(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED));
+    return Mono.justOrEmpty(DefaultCommonResult.fail(ResultCodeEnum.UN_AUTHORIZED));
   }
 
   @ExceptionHandler(RuntimeException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Mono<DefaultCommonResult<Object>> runtimeException(RuntimeException e) {
-    return Mono.justOrEmpty(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED));
+    return Mono.justOrEmpty(DefaultCommonResult.fail(ResultCodeEnum.UN_AUTHORIZED));
   }
 
   @ExceptionHandler(BadJwtException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public Mono<DefaultCommonResult<Object>> badJwtException(BadJwtException e) {
-    return Mono.justOrEmpty(DefaultCommonResult.error(ResultCodeEnum.UN_AUTHORIZED));
+    return Mono.justOrEmpty(DefaultCommonResult.fail(ResultCodeEnum.UN_AUTHORIZED));
   }
 
   private static String getStackTrace(Throwable throwable) {
