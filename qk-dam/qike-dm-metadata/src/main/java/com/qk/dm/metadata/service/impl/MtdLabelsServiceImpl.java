@@ -15,16 +15,16 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 @Service
 public class MtdLabelsServiceImpl implements MtdLabelsService {
@@ -34,8 +34,7 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
   private final QMtdLabels qMtdLabels = QMtdLabels.mtdLabels;
   private final MtdLabelsRepository mtdLabelsRepository;
 
-  public MtdLabelsServiceImpl(
-      EntityManager entityManager, MtdLabelsRepository mtdLabelsRepository) {
+  public MtdLabelsServiceImpl(EntityManager entityManager, MtdLabelsRepository mtdLabelsRepository) {
     this.entityManager = entityManager;
     this.mtdLabelsRepository = mtdLabelsRepository;
   }
@@ -47,7 +46,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
 
   @Override
   public void insert(MtdLabelsVO mtdLabelsVO) {
-    Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName());
+    Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName())
+            .and(qMtdLabels.synchStatus.eq(1));
     if (mtdLabelsRepository.exists(predicate)) {
       throw new BizException("当前要新增的标签名为：" + mtdLabelsVO.getName() + " 的数据，已存在！！！");
     }
@@ -57,7 +57,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
 
   @Override
   public void update(Long id, MtdLabelsVO mtdLabelsVO) {
-    Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName()).and(qMtdLabels.id.ne(id));
+    Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName())
+            .and(qMtdLabels.synchStatus.eq(1)).and(qMtdLabels.id.ne(id));
     if (mtdLabelsRepository.exists(predicate)) {
       throw new BizException("当前要修改的标签名为：" + mtdLabelsVO.getName() + " 的数据，已存在！！！");
     }
@@ -71,9 +72,10 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     List<String> idList = Arrays.asList(ids.split(","));
     Iterable<Long> idSet = idList.stream().map(Long::valueOf).collect(Collectors.toList());
     List<MtdLabels> basicInfoList = mtdLabelsRepository.findAllById(idSet);
-    // todo 查询是否存在绑定关系
-    mtdLabelsRepository.deleteInBatch(basicInfoList);
+    basicInfoList.forEach(item -> item.setDelFlag(1));
+    mtdLabelsRepository.saveAll(basicInfoList);
   }
+
 
   @Override
   public PageResultVO<MtdLabelsInfoVO> listByPage(MtdLabelsListVO mtdLabelsListVO) {
@@ -86,45 +88,47 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     }
     List<MtdLabels> list = (List<MtdLabels>) map.get("list");
     List<MtdLabelsInfoVO> mtdLabelsVOList =
-        list.stream()
-            .map(MtdLabelsMapper.INSTANCE::useMtdLabelsInfoVO)
-            .collect(Collectors.toList());
+            list.stream()
+                    .map(MtdLabelsMapper.INSTANCE::useMtdLabelsInfoVO)
+                    .collect(Collectors.toList());
     return new PageResultVO<>(
-        (long) map.get("total"),
-        mtdLabelsListVO.getPagination().getPage(),
-        mtdLabelsListVO.getPagination().getSize(),
-        mtdLabelsVOList);
+            (long) map.get("total"),
+            mtdLabelsListVO.getPagination().getPage(),
+            mtdLabelsListVO.getPagination().getSize(),
+            mtdLabelsVOList);
   }
 
   @Override
   public List<MtdLabelsInfoVO> listByAll(MtdLabelsVO mtdLabelsVO) {
-    Predicate predicate = qMtdLabels.name.contains(mtdLabelsVO.getName());
-    Sort sort = Sort.by(Sort.Direction.DESC, "id");
-    List<MtdLabels> mtdLabelsList = (List<MtdLabels>) mtdLabelsRepository.findAll(predicate, sort);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    checkCondition(booleanBuilder, MtdLabelsMapper.INSTANCE.useMtdLabelsListVO(mtdLabelsVO));
+    List<MtdLabels> mtdLabelsList = jpaQueryFactory
+            .select(qMtdLabels)
+            .from(qMtdLabels)
+            .where(booleanBuilder)
+            .orderBy(qMtdLabels.id.asc())
+            .fetch();
     return mtdLabelsList.stream()
-        .map(MtdLabelsMapper.INSTANCE::useMtdLabelsInfoVO)
-        .collect(Collectors.toList());
+            .map(MtdLabelsMapper.INSTANCE::useMtdLabelsInfoVO)
+            .collect(Collectors.toList());
   }
 
   private Map<String, Object> queryMtdLabelsByParams(MtdLabelsListVO mtdLabelsListVO) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     checkCondition(booleanBuilder, mtdLabelsListVO);
     Map<String, Object> result = new HashMap<>();
-    long count =
-        jpaQueryFactory
+    long count = jpaQueryFactory
             .select(qMtdLabels.count())
             .from(qMtdLabels)
             .where(booleanBuilder)
             .fetchOne();
-    List<MtdLabels> mtdLabelsList =
-        jpaQueryFactory
+    List<MtdLabels> mtdLabelsList = jpaQueryFactory
             .select(qMtdLabels)
             .from(qMtdLabels)
             .where(booleanBuilder)
             .orderBy(qMtdLabels.id.asc())
-            .offset(
-                (long) (mtdLabelsListVO.getPagination().getPage() - 1)
-                    * mtdLabelsListVO.getPagination().getSize())
+            .offset((long) (mtdLabelsListVO.getPagination().getPage() - 1) *
+                    mtdLabelsListVO.getPagination().getSize())
             .limit(mtdLabelsListVO.getPagination().getSize())
             .fetch();
     result.put("list", mtdLabelsList);
@@ -132,16 +136,15 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
     return result;
   }
 
+
   public void checkCondition(BooleanBuilder booleanBuilder, MtdLabelsListVO mtdLabelsListVO) {
     if (!StringUtils.isEmpty(mtdLabelsListVO.getName())) {
       booleanBuilder.and(qMtdLabels.name.contains(mtdLabelsListVO.getName()));
     }
-    if (!StringUtils.isEmpty(mtdLabelsListVO.getBeginDay())
-        && !StringUtils.isEmpty(mtdLabelsListVO.getEndDay())) {
-      StringTemplate dateExpr =
-          Expressions.stringTemplate("DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qMtdLabels.gmtCreate);
-      booleanBuilder.and(
-          dateExpr.between(mtdLabelsListVO.getBeginDay(), mtdLabelsListVO.getEndDay()));
+    if (!StringUtils.isEmpty(mtdLabelsListVO.getBeginDay()) && !StringUtils.isEmpty(mtdLabelsListVO.getEndDay())) {
+      StringTemplate dateExpr = Expressions.stringTemplate("DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qMtdLabels.gmtCreate);
+      booleanBuilder.and(dateExpr.between(mtdLabelsListVO.getBeginDay(), mtdLabelsListVO.getEndDay()));
     }
+    booleanBuilder.and(qMtdLabels.synchStatus.eq(1));
   }
 }
