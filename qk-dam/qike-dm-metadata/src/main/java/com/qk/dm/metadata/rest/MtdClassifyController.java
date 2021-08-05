@@ -25,6 +25,7 @@ public class MtdClassifyController {
     public MtdClassifyController(MtdClassifyService mtdClassifyService) {
         this.mtdClassifyService = mtdClassifyService;
     }
+
     /**
      * 新增元数据分类
      *
@@ -44,8 +45,7 @@ public class MtdClassifyController {
      */
     @PutMapping("/{id}")
     public void update(@PathVariable("id") Long id, @RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
-        mtdClassifyVO.setId(id);
-        mtdClassifyService.update(mtdClassifyVO);
+        mtdClassifyService.update(id, mtdClassifyVO);
     }
 
     /**

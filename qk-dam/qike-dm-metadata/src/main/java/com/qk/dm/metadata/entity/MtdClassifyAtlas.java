@@ -1,6 +1,8 @@
 package com.qk.dm.metadata.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,12 +36,14 @@ public class MtdClassifyAtlas implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
     /**
@@ -47,5 +51,10 @@ public class MtdClassifyAtlas implements Serializable {
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag = 0;
+    /**
+     * 同步状态 -1删除；0未同步；1已同步
+     */
+    @Column(name = "synch_status", nullable = false)
+    private Integer synchStatus = 0;
 
 }
