@@ -32,8 +32,8 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
     setData(data);
   }
 
-  public static <T> DefaultCommonResult<T> success(T data) {
-    return success(ResultCodeEnum.OK, data);
+  public static DefaultCommonResult<Object> success() {
+    return new DefaultCommonResult<>(ResultCodeEnum.OK);
   }
 
   public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, T data, String tips) {
