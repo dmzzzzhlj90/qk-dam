@@ -2,14 +2,19 @@ package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
+import com.qk.dam.metedata.util.AtlasClassificationUtil;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.AtlasBaseMainDataDetailVO;
 import com.qk.dm.metadata.vo.AtlasBaseMainDataVO;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import org.apache.atlas.AtlasServiceException;
+import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasQuickSearchResult;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
+import org.apache.atlas.model.instance.EntityMutationResponse;
 
 public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
@@ -68,22 +73,5 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     return atlasBaseMainDataDetailVO;
   }
 
-  public AtlasBaseMainDataDetailVO getDbEntityByGuid(String guid) {
-    AtlasBaseMainDataDetailVO atlasBaseMainDataDetailVO = null;
-    try {
-      AtlasEntity.AtlasEntityWithExtInfo detail = AtlasConfig.getAtlasClientV2().getEntityByGuid(guid,true,false);
-      // System.out.println(GsonUtil.toJsonString(detail));
-      //detail.getReferredEntities();
-    }catch (Exception e){
-      e.printStackTrace();
-    }
-    return atlasBaseMainDataDetailVO;
-  }
 
-  public static void main(String[] args) {
-//        List<AtlasBaseMainDataVO> aa = new AtlasMetaDataServiceImpl().searchList(null, "mysql_table", false, 5, 0);
-//        System.out.println(JsonUtil.to(aa));
-     AtlasBaseMainDataDetailVO atlasBaseMainDataDetailVO = new AtlasMetaDataServiceImpl().getEntityByGuid("040a9291-5914-43b8-9ee8-6177b40684f7");
-     System.out.println(GsonUtil.toJsonString(atlasBaseMainDataDetailVO));
-  }
 }

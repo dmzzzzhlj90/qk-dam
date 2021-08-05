@@ -2,12 +2,6 @@ package com.qk.dm.metadata.service.impl;
 
 import com.google.gson.Gson;
 import com.qk.dam.metedata.config.AtlasConfig;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasQuickSearchResult;
@@ -19,6 +13,13 @@ import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.atlas.model.typedef.AtlasTypesDef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author spj
@@ -327,7 +328,6 @@ public class AtlasTestServiceImpl {
     //        atlasTestService.guidHeader();
 
     // 分类
-
     // 所有类型定义的批量检索 API 作为最小信息标头列表返回
     //        atlasTestService.typedefsHeaders();
     // 为所有 atlas 类型定义批量创建 API，只会创建新定义

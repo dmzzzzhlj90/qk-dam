@@ -1,10 +1,12 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dm.metadata.respose.ResponseWrapper;
+import com.qk.dam.commons.enums.ResultCodeEnum;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/labels/atlas")
@@ -23,9 +25,9 @@ public class MtdLabelsAtlasController {
    * @return: DefaultCommonResult
    */
   @PostMapping("")
-  @ResponseWrapper
-  public void insert(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
+  public DefaultCommonResult insert(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
     mtdLabelsAtlasService.insert(mtdLabelsVO);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -34,10 +36,10 @@ public class MtdLabelsAtlasController {
    * @param: mtdLabelsVO 元数据标签VO
    * @return: DefaultCommonResult
    */
-  @PutMapping("/")
-  @ResponseWrapper
-  public void update(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
+  @PutMapping("")
+  public DefaultCommonResult update(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
     mtdLabelsAtlasService.update(mtdLabelsVO);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -47,8 +49,7 @@ public class MtdLabelsAtlasController {
    * @return: 返回标签列表信息
    */
   @GetMapping("/{guid}")
-  @ResponseWrapper
-  public MtdLabelsAtlasVO getByGuid(@PathVariable("guid") String guid) {
-    return mtdLabelsAtlasService.getByGuid(guid);
+  public DefaultCommonResult<MtdLabelsAtlasVO> getByGuid(@PathVariable("guid") String guid) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdLabelsAtlasService.getByGuid(guid));
   }
 }

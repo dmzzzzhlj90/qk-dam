@@ -5,6 +5,8 @@ import com.qk.dm.metadata.entity.MtdLabelsAtlas;
 import com.qk.dm.metadata.repositories.MtdLabelsAtlasRepository;
 import com.qk.dm.metadata.repositories.MtdLabelsRepository;
 import com.qk.dm.metadata.service.MtdAtlasService;
+import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
+import org.apache.atlas.AtlasServiceException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,89 +23,124 @@ import java.util.stream.Stream;
 public class SynchAtalsServiceImpl {
 
 
-  private final MtdLabelsAtlasRepository mtdLabelsAtlasRepository;
-  private final MtdLabelsRepository mtdLabelsRepository;
-  private final MtdAtlasService mtdAtlasService;
+    private final MtdLabelsAtlasRepository mtdLabelsAtlasRepository;
+    private final MtdLabelsRepository mtdLabelsRepository;
+    private final MtdAtlasService mtdAtlasService;
 
 
-  public SynchAtalsServiceImpl(MtdLabelsAtlasRepository mtdLabelsAtlasRepository, MtdLabelsRepository mtdLabelsRepository, MtdAtlasService mtdAtlasService) {
-    this.mtdLabelsAtlasRepository = mtdLabelsAtlasRepository;
-    this.mtdLabelsRepository = mtdLabelsRepository;
-    this.mtdAtlasService = mtdAtlasService;
-  }
-
-  public void synchLabels() {
-    List<MtdLabels> labelsBySynchStatus = mtdLabelsRepository.findAllBySynchStatus(-1);
-    if (!labelsBySynchStatus.isEmpty()) {
-      //todo 可考虑优化 提前放到缓存中，维护缓存
-      List<MtdLabelsAtlas> labelsAtlases = mtdLabelsAtlasRepository
-              .findAllBySynchStatusIsNot(-1);
-      List<MtdLabelsAtlas> deleteList = new ArrayList<>();
-      List<MtdLabelsAtlas> updateList = new ArrayList<>();
-      labelsBySynchStatus.forEach(label -> {
-        //查询哪些元数据绑定的标签
-        List<MtdLabelsAtlas> mtdLabelsAtlasList = labelsAtlases.stream().filter(i ->
-                        Stream.of(i.getLabels()).collect(Collectors.toList()).contains(label.getName()))
-                .collect(Collectors.toList());
-        //处理数据
-        mtdLabelsAtlasList.forEach(labelsAtlas -> {
-          String labels = Stream.of(labelsAtlas.getLabels())
-                  .filter(i -> !i.equals(label.getName()))
-                  .collect(Collectors.joining(","));
-          //修改atlas中元数据绑定
-//                    mtdAtlasService.setLabels(labelsAtlas.getGuid(), labels);
-          //删除给定实体的给定标签
-          mtdAtlasService.removeLabels(labelsAtlas.getGuid(), label.getName());
-          if (labels.isEmpty()) {
-            deleteList.add(labelsAtlas);
-          } else {
-            labelsAtlas.setLabels(labels);
-            updateList.add(labelsAtlas);
-          }
-        });
-      });
-      if (!deleteList.isEmpty()) {
-        //批量更新本地
-        mtdLabelsAtlasRepository.deleteAll(deleteList);
-      }
-      if (!updateList.isEmpty()) {
-        //批量更新本地
-        mtdLabelsAtlasRepository.saveAll(updateList);
-      }
-      //批量删除
-      mtdLabelsRepository.deleteAll(labelsBySynchStatus);
+    public SynchAtalsServiceImpl(MtdLabelsAtlasRepository mtdLabelsAtlasRepository, MtdLabelsRepository mtdLabelsRepository, MtdAtlasService mtdAtlasService) {
+        this.mtdLabelsAtlasRepository = mtdLabelsAtlasRepository;
+        this.mtdLabelsRepository = mtdLabelsRepository;
+        this.mtdAtlasService = mtdAtlasService;
     }
-  }
 
-
-  public void synchLabelsAtlas() {
-    List<MtdLabelsAtlas> labelAllList = mtdLabelsAtlasRepository
-            .findAllBySynchStatusInOrderByGmtCreateAsc(Stream.of(-1, 0).collect(Collectors.toList()));
-    if (!labelAllList.isEmpty()) {
-      List<MtdLabelsAtlas> deleteList = new ArrayList<>();
-      List<MtdLabelsAtlas> updateList = new ArrayList<>();
-      labelAllList.forEach(mtdLabelsAtlas -> {
-
-        switch (mtdLabelsAtlas.getSynchStatus()) {
-          case -1:
-            mtdAtlasService.removeLabels(mtdLabelsAtlas.getGuid(), mtdLabelsAtlas.getLabels());
-            deleteList.add(mtdLabelsAtlas);
-            break;
-          case 0:
-            mtdAtlasService.setLabels(mtdLabelsAtlas.getGuid(), mtdLabelsAtlas.getLabels());
-            mtdLabelsAtlas.setSynchStatus(1);
-            updateList.add(mtdLabelsAtlas);
-            break;
-          default:
-            break;
+    public void synchLabels() {
+        List<MtdLabels> labelAllList = mtdLabelsRepository.findAllBySynchStatus(-1);
+        if (!labelAllList.isEmpty()) {
+            //todo 可考虑优化 提前放到缓存中，维护缓存
+            List<MtdLabelsAtlas> labelsAtlases = mtdLabelsAtlasRepository.findAllBySynchStatusIsNot(-1);
+            List<MtdLabelsAtlas> deleteList = new ArrayList<>();
+            List<MtdLabelsAtlas> updateList = new ArrayList<>();
+            List<MtdLabelsAtlasVO> deleteAtlasList = new ArrayList<>();
+            labelAllList.forEach(label -> {
+                List<MtdLabelsAtlas> mtdLabelsAtlasList = getMtdLabelsAtlases(labelsAtlases, label.getName());
+                extractedData(mtdLabelsAtlasList, deleteList, updateList, deleteAtlasList, label.getName());
+            });
+            disposeData(labelAllList, deleteList, updateList, deleteAtlasList);
         }
-      });
-      if (!deleteList.isEmpty()) {
-        mtdLabelsAtlasRepository.deleteAll(deleteList);
-      }
-      if (!updateList.isEmpty()) {
-        mtdLabelsAtlasRepository.saveAll(updateList);
-      }
     }
-  }
+
+    public void synchLabelsAtlas() {
+        List<MtdLabelsAtlas> labelAllList = mtdLabelsAtlasRepository
+                .findAllBySynchStatusInOrderByGmtCreateAsc(Stream.of(-1, 0).collect(Collectors.toList()));
+        if (!labelAllList.isEmpty()) {
+            List<MtdLabelsAtlas> deleteList = new ArrayList<>();
+            List<MtdLabelsAtlas> updateList = new ArrayList<>();
+            extracteData(labelAllList,deleteList,updateList);
+            disposeData(deleteList, updateList);
+        }
+    }
+
+    public void extractedData(List<MtdLabelsAtlas> mtdLabelsAtlasList,
+                              List<MtdLabelsAtlas> deleteList,
+                              List<MtdLabelsAtlas> updateList,
+                              List<MtdLabelsAtlasVO> deleteAtlasList,
+                              String labelName) {
+        mtdLabelsAtlasList.forEach(labelsAtlas -> {
+            deleteAtlasList.add(new MtdLabelsAtlasVO(labelsAtlas.getGuid(), labelName));
+            String labels = getLabels(labelName, labelsAtlas);
+            if (labels.isEmpty()) {
+                deleteList.add(labelsAtlas);
+            } else {
+                labelsAtlas.setLabels(labels);
+                updateList.add(labelsAtlas);
+            }
+        });
+    }
+
+    private void extracteData(List<MtdLabelsAtlas> mtdLabelsAtlasList,
+                              List<MtdLabelsAtlas> deleteList,
+                              List<MtdLabelsAtlas> updateList) {
+        deleteList.addAll(mtdLabelsAtlasList.stream()
+                .filter(i -> i.getSynchStatus() == -1).collect(Collectors.toList()));
+        updateList.addAll(mtdLabelsAtlasList.stream()
+                .filter(i -> i.getSynchStatus() == 0).collect(Collectors.toList()));
+    }
+
+    private void disposeData(List<MtdLabels> labelsBySynchStatus, List<MtdLabelsAtlas> deleteList, List<MtdLabelsAtlas> updateList, List<MtdLabelsAtlasVO> deleteAtlasList) {
+        deleteAtlasList.forEach(mtdLabelsAtlas -> {
+            try {
+                mtdAtlasService.removeLabels(mtdLabelsAtlas.getGuid(), mtdLabelsAtlas.getLabels());
+            } catch (AtlasServiceException e) {
+                //降级处理
+                e.printStackTrace();
+            }
+        });
+        if (!deleteList.isEmpty()) {
+            //批量更新本地
+            mtdLabelsAtlasRepository.deleteAll(deleteList);
+        }
+        if (!updateList.isEmpty()) {
+            //批量更新本地
+            mtdLabelsAtlasRepository.saveAll(updateList);
+        }
+        //批量删除
+        mtdLabelsRepository.deleteAll(labelsBySynchStatus);
+    }
+
+    private void disposeData(List<MtdLabelsAtlas> deleteList, List<MtdLabelsAtlas> updateList) {
+        if (!deleteList.isEmpty()) {
+            deleteList.forEach(mtdLabelsAtlas -> {
+                try {
+                    mtdAtlasService.removeLabels(mtdLabelsAtlas.getGuid(), mtdLabelsAtlas.getLabels());
+                } catch (AtlasServiceException e) {
+                    //降级处理
+                    e.printStackTrace();
+                }
+            });
+            mtdLabelsAtlasRepository.deleteAll(deleteList);
+        }
+        if (!updateList.isEmpty()) {
+            updateList.forEach(mtdLabelsAtlas -> {
+                try {
+                    mtdAtlasService.setLabels(mtdLabelsAtlas.getGuid(), mtdLabelsAtlas.getLabels());
+                } catch (AtlasServiceException e) {
+                    //降级处理
+                    e.printStackTrace();
+                }
+            });
+            mtdLabelsAtlasRepository.saveAll(updateList);
+        }
+    }
+
+    private List<MtdLabelsAtlas> getMtdLabelsAtlases(List<MtdLabelsAtlas> labelsAtlases, String labelName) {
+        return labelsAtlases.stream().filter(i ->
+                        Stream.of(i.getLabels()).collect(Collectors.toList()).contains(labelName))
+                .collect(Collectors.toList());
+    }
+
+    private String getLabels(String labelName, MtdLabelsAtlas labelsAtlas) {
+        return Stream.of(labelsAtlas.getLabels())
+                .filter(i -> !i.equals(labelName)).collect(Collectors.joining(","));
+    }
 }
