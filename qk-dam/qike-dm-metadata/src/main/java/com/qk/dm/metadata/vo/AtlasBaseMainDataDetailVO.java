@@ -11,8 +11,8 @@ public class AtlasBaseMainDataDetailVO {
 
   /** 负责人 */
   private String owner;
-  /** 数据库名称 */
-  private String dbName;
+  /** 类型名称 */
+  private String typeName;
   /** 表行数 */
   private String tableRows;
   /** 数据长度 */
@@ -29,6 +29,8 @@ public class AtlasBaseMainDataDetailVO {
   private String labels;
   /** 分类 */
   private String classification;
-  /** 列信息 */
-  private List<Map<String, Object>> columnList;
+  /** 关联属性*/
+  private Map<String,Object> relationshipAttributes;
+  /** 参考实体 */
+  private List<Map<String, Object>> referredEntities;
 }
