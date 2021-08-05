@@ -8,8 +8,9 @@ import com.qk.dm.metadata.repositories.MtdLabelsAtlasRepository;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
 import com.querydsl.core.types.Predicate;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @author spj
@@ -28,19 +29,19 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
   @Override
   public void insert(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
     Predicate predicate =
-        qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
+            qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
     if (mtdLabelsAtlasRepository.exists(predicate)) {
       throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据，已存在！！！");
     }
     MtdLabelsAtlas mtdLabelsAtlas =
-        MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlas(mtdLabelsAtlasVO);
+            MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlas(mtdLabelsAtlasVO);
     mtdLabelsAtlasRepository.save(mtdLabelsAtlas);
   }
 
   @Override
   public void update(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
     Predicate predicate =
-        qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
+            qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
     Optional<MtdLabelsAtlas> one = mtdLabelsAtlasRepository.findOne(predicate);
     if (one.isEmpty()) {
       throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据不存在！！！");
