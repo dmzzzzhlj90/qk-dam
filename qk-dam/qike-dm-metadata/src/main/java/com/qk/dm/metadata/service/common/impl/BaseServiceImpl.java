@@ -1,10 +1,10 @@
 package com.qk.dm.metadata.service.common.impl;
 
 import com.qk.dam.jpa.base.BaseRepository;
+import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.metadata.service.common.BaseService;
 import com.qk.dm.metadata.service.common.query.Criteria;
 import com.qk.dm.metadata.vo.PageResultVO;
-import com.qk.dm.metadata.vo.Pagination;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;

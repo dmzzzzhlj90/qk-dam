@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.vo;
 
+import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

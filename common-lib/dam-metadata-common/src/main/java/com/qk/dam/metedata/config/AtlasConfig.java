@@ -1,6 +1,6 @@
-package com.qk.dm.metadata.config;
+package com.qk.dam.metedata.config;
 
-import com.qk.dam.rdbmsl2atlas.base.BaseClientConf;
+import com.qk.dam.metedata.base.BaseClientConf;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasException;
 

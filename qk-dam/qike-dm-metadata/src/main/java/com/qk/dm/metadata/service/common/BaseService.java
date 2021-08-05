@@ -1,8 +1,8 @@
 package com.qk.dm.metadata.service.common;
 
+import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.metadata.service.common.query.Criteria;
 import com.qk.dm.metadata.vo.PageResultVO;
-import com.qk.dm.metadata.vo.Pagination;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 
