@@ -42,8 +42,8 @@ dependencies {
     annotationProcessor(
             "javax.annotation:javax.annotation-api",
             "com.querydsl:querydsl-apt:4.4.0:jpa",
-            'org.mapstruct:mapstruct-processor',
-            "org.projectlombok:lombok")
+            "org.projectlombok:lombok",
+            'org.mapstruct:mapstruct-processor')
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
