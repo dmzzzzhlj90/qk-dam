@@ -39,7 +39,14 @@ public class SynchAtalsServiceImpl {
         if (!labelAllList.isEmpty()) {
             //todo 可考虑优化 提前放到缓存中，维护缓存
             List<MtdLabelsAtlas> labelsAtlases = mtdLabelsAtlasRepository.findAllBySynchStatusIsNot(-1);
-            doLabels(labelAllList, labelsAtlases);
+            List<MtdLabelsAtlas> deleteList = new ArrayList<>();
+            List<MtdLabelsAtlas> updateList = new ArrayList<>();
+            List<MtdLabelsAtlasVO> deleteAtlasList = new ArrayList<>();
+            labelAllList.forEach(label -> {
+                List<MtdLabelsAtlas> mtdLabelsAtlasList = getMtdLabelsAtlases(labelsAtlases, label.getName());
+                extractedData(mtdLabelsAtlasList, deleteList, updateList, deleteAtlasList, label.getName());
+            });
+            disposeData(labelAllList, deleteList, updateList, deleteAtlasList);
         }
     }
 
@@ -47,27 +54,11 @@ public class SynchAtalsServiceImpl {
         List<MtdLabelsAtlas> labelAllList = mtdLabelsAtlasRepository
                 .findAllBySynchStatusInOrderByGmtCreateAsc(Stream.of(-1, 0).collect(Collectors.toList()));
         if (!labelAllList.isEmpty()) {
-            doLabels(labelAllList);
+            List<MtdLabelsAtlas> deleteList = new ArrayList<>();
+            List<MtdLabelsAtlas> updateList = new ArrayList<>();
+            extracteData(labelAllList,deleteList,updateList);
+            disposeData(deleteList, updateList);
         }
-    }
-
-
-    private void doLabels(List<MtdLabels> labelsBySynchStatus, List<MtdLabelsAtlas> labelsAtlases) {
-        List<MtdLabelsAtlas> deleteList = new ArrayList<>();
-        List<MtdLabelsAtlas> updateList = new ArrayList<>();
-        List<MtdLabelsAtlasVO> deleteAtlasList = new ArrayList<>();
-        labelsBySynchStatus.forEach(label -> {
-            List<MtdLabelsAtlas> mtdLabelsAtlasList = getMtdLabelsAtlases(labelsAtlases, label.getName());
-            extractedData(mtdLabelsAtlasList, deleteList, updateList, deleteAtlasList, label.getName());
-        });
-        disposeData(labelsBySynchStatus, deleteList, updateList, deleteAtlasList);
-    }
-
-    private void doLabels(List<MtdLabelsAtlas> labelAllList) {
-        List<MtdLabelsAtlas> deleteList = new ArrayList<>();
-        List<MtdLabelsAtlas> updateList = new ArrayList<>();
-        extracteData(labelAllList,deleteList,updateList);
-        disposeData(deleteList, updateList);
     }
 
     public void extractedData(List<MtdLabelsAtlas> mtdLabelsAtlasList,

@@ -35,7 +35,7 @@ public class MtdClassifyController {
   @PostMapping("")
   public DefaultCommonResult insert(@RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.insert(mtdClassifyVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -47,7 +47,7 @@ public class MtdClassifyController {
   @PutMapping("/{id}")
   public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.update(id, mtdClassifyVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -59,28 +59,28 @@ public class MtdClassifyController {
   @DeleteMapping("/{ids}")
   public DefaultCommonResult delete(@PathVariable("ids") String ids) {
     mtdClassifyService.delete(ids);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
    * 查询元数据标签
    *
    * @param: pagination分页查询参数对象: page,size,sortStr
-   * @return: 返回分类列表信息
+   * @return: DefaultCommonResult
    */
   @GetMapping("/page")
-  public DefaultCommonResult<PageResultVO<MtdClassifyVO>> listByPage(MtdClassifyVO mtdClassifyVO) {
-    return new DefaultCommonResult(ResultCodeEnum.OK,mtdClassifyService.listByPage(mtdClassifyVO));
+  public DefaultCommonResult<PageResultVO<MtdClassifyVO>> classifyByPage(MtdClassifyVO mtdClassifyVO) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByPage(mtdClassifyVO));
   }
 
   /**
    * 查询元数据标签
    *
    * @param: pagination分页查询参数对象: page,size,sortStr
-   * @return: 返回分类列表信息
+   * @return: DefaultCommonResult
    */
   @GetMapping("")
-  public DefaultCommonResult<List<MtdClassifyVO>> listByAll(MtdClassifyVO mtdClassifyVO) {
-    return new DefaultCommonResult(ResultCodeEnum.OK,mtdClassifyService.listByAll(mtdClassifyVO));
+  public DefaultCommonResult<List<MtdClassifyVO>> classifyByAll(MtdClassifyVO mtdClassifyVO) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByAll(mtdClassifyVO));
   }
 }
