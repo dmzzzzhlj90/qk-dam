@@ -51,6 +51,7 @@ public class SynchAtalsServiceImpl {
         }
     }
 
+
     private void doLabels(List<MtdLabels> labelsBySynchStatus, List<MtdLabelsAtlas> labelsAtlases) {
         List<MtdLabelsAtlas> deleteList = new ArrayList<>();
         List<MtdLabelsAtlas> updateList = new ArrayList<>();
