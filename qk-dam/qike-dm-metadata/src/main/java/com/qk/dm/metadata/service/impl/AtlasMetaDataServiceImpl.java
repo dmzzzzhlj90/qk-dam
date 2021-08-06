@@ -1,37 +1,39 @@
 package com.qk.dm.metadata.service.impl;
 
+import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
-import com.qk.dam.metedata.util.AtlasClassificationUtil;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
-import com.qk.dm.metadata.vo.AtlasBaseMainDataDetailVO;
-import com.qk.dm.metadata.vo.AtlasBaseMainDataVO;
+import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
+import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.apache.atlas.AtlasServiceException;
+import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
+import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.model.SearchFilter;
-import org.apache.atlas.model.discovery.AtlasQuickSearchResult;
+import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
-import org.apache.atlas.model.instance.EntityMutationResponse;
+import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
+  private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
   @Override
-  public List<AtlasBaseMainDataVO> searchList(
-      String query, String typeName, boolean excludeDeletedEntities, int limit, int offse) {
-    List<AtlasBaseMainDataVO> atlasBaseMainDataVOList = new ArrayList<>();
+  public List<MtdAtlasBaseVO> searchList(
+      String query, String typeName, String classification, int limit, int offse) {
+    List<MtdAtlasBaseVO> atlasBaseMainDataVOList = new ArrayList<>();
     try {
-      AtlasQuickSearchResult atlasQuickSearchResult =
-          AtlasConfig.getAtlasClientV2()
-              .quickSearch(query, typeName, excludeDeletedEntities, limit, offse);
-      List<AtlasEntityHeader> entities = atlasQuickSearchResult.getSearchResults().getEntities();
-
+      AtlasSearchResult atlasSearchResult =
+          atlasClientV2.basicSearch(typeName, classification, query, false, 5, 0);
+      List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
       entities.forEach(
           e -> {
             atlasBaseMainDataVOList.add(
-                AtlasBaseMainDataVO.builder()
+                MtdAtlasBaseVO.builder()
                     .guid(e.getGuid())
                     .typeName(e.getTypeName())
                     .displayName(e.getDisplayText())
@@ -46,13 +48,12 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   }
 
   @Override
-  public AtlasBaseMainDataDetailVO getEntityByGuid(String guid) {
-    AtlasBaseMainDataDetailVO atlasBaseMainDataDetailVO = null;
+  public MtdAtlasBaseDetailVO getEntityByGuid(String guid) {
+    MtdAtlasBaseDetailVO atlasBaseMainDataDetailVO = null;
     try {
-      AtlasEntity.AtlasEntityWithExtInfo detail =
-          AtlasConfig.getAtlasClientV2().getEntityByGuid(guid, true, false);
+      AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
-      atlasBaseMainDataDetailVO = GsonUtil.fromMap(attributes, AtlasBaseMainDataDetailVO.class);
+      atlasBaseMainDataDetailVO = GsonUtil.fromMap(attributes, MtdAtlasBaseDetailVO.class);
       atlasBaseMainDataDetailVO.setTypeName(detail.getEntity().getTypeName());
       Map<String, AtlasEntity> map = detail.getReferredEntities();
       List<AtlasEntity> atlasEntityList = new ArrayList<>(map.values());
@@ -66,12 +67,28 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                   })
               .collect(Collectors.toList());
       atlasBaseMainDataDetailVO.setReferredEntities(collect);
-      atlasBaseMainDataDetailVO.setRelationshipAttributes(detail.getEntity().getRelationshipAttributes());
+      atlasBaseMainDataDetailVO.setRelationshipAttributes(
+          detail.getEntity().getRelationshipAttributes());
     } catch (Exception e) {
       e.printStackTrace();
     }
     return atlasBaseMainDataDetailVO;
   }
 
-
+  @Override
+  public List<MtdAtlasEntityTypeVO> getAllEntityType() {
+    List<MtdAtlasEntityTypeVO> mtdAtlasEntityTypeVOList = new ArrayList<>();
+    try {
+      SearchFilter searchFilter = new SearchFilter();
+      searchFilter.setParam("type", "entity");
+      List<AtlasTypeDefHeader> allTypeDefHeaders = atlasClientV2.getAllTypeDefHeaders(searchFilter);
+      mtdAtlasEntityTypeVOList =
+          GsonUtil.fromJsonString(
+              GsonUtil.toJsonString(allTypeDefHeaders),
+              new TypeToken<List<MtdAtlasEntityTypeVO>>() {}.getType());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return mtdAtlasEntityTypeVOList;
+  }
 }
