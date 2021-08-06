@@ -20,6 +20,8 @@ import java.util.stream.Stream;
  * @author daomingzhu
  */
 public class MysqlTypeAgg {
+  public static final String TABLE_COMMENT = "table_comment";
+  private static final String TABLE_NAME ="table_name";
   private final Db use;
   private final String host;
   private final String db;
@@ -50,7 +52,7 @@ public class MysqlTypeAgg {
       Entity tables =
           Entity.create("TABLES")
               .set("table_schema", db)
-              .set("table_name", "in" + "(" + inTbs + ")");
+              .set(TABLE_NAME, "in" + "(" + inTbs + ")");
 
       entityList = use.find(tables);
       Assert.notEmpty(
@@ -79,7 +81,7 @@ public class MysqlTypeAgg {
     if (table.startsWith("%") || table.endsWith("%")) {
       try {
         Entity tables =
-            Entity.create("TABLES").set("table_schema", db).set("table_name", "like " + table);
+            Entity.create("TABLES").set("table_schema", db).set(TABLE_NAME, "like " + table);
 
         entityList = use.find(tables);
       } catch (SQLException e) {
@@ -117,7 +119,7 @@ public class MysqlTypeAgg {
                 entity -> {
                   MysqlTableType mysqlTableType =
                       MysqlTableType.builder()
-                          .name(entity.getStr("table_name"))
+                          .name(entity.getStr(TABLE_NAME))
                           .type(entity.getStr("table_type"))
                           .dataLength(entity.getLong("data_length"))
                           .indexLength(entity.getLong("index_length"))
@@ -125,11 +127,11 @@ public class MysqlTypeAgg {
                           .updateTime(entity.getLong("update_time"))
                           .tableCollation(entity.getStr("table_collation"))
                           .tableRows(entity.getStr("table_rows"))
-                          .comment(entity.getStr("table_comment"))
+                          .comment(entity.getStr(TABLE_COMMENT))
                           .owner(serverinfoYamlVO.getOwner())
-                          .description(entity.getStr("table_comment"))
-                          .displayName(entity.getStr("table_comment"))
-                          .qualifiedName(database + "." + entity.getStr("table_name") + "@" + host)
+                          .description(entity.getStr(TABLE_COMMENT))
+                          .displayName(entity.getStr(TABLE_COMMENT))
+                          .qualifiedName(database + "." + entity.getStr(TABLE_NAME) + "@" + host)
                           .build();
                   try {
                     List<Entity> column =

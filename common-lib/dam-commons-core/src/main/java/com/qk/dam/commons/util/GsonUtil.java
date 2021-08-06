@@ -32,7 +32,7 @@ public final class GsonUtil {
   }
 
   public static Map<String, Object> toMap(Object object) {
-    return (Map) gson.fromJson(gson.toJson(object), Map.class);
+    return gson.fromJson(gson.toJson(object), Map.class);
   }
 
   public static JsonObject toJsonObject(String jsonStringObject) {

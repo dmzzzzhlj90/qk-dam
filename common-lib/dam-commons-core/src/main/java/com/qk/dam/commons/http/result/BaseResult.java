@@ -1,6 +1,5 @@
 package com.qk.dam.commons.http.result;
 
-import java.io.Serializable;
 import lombok.Data;
 
 /**
@@ -9,9 +8,7 @@ import lombok.Data;
  * @date 20210601 基础返回结果封装
  */
 @Data
-public abstract class BaseResult<T> implements Serializable {
-
-  private static final long serialVersionUID = 7551352577404865782L;
+public abstract class BaseResult<T>{
   /** 返回码 */
   private String retCode;
   /** 返回说明 */

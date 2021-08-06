@@ -1,6 +1,6 @@
 package com.qk.sankuai.inf;
 
-public class Constants {
+public interface Constants {
   public static final String LEAF_SEGMENT_ENABLE = "leaf.segment.enable";
 
   public static final String LEAF_SNOWFLAKE_ENABLE = "leaf.snowflake.enable";

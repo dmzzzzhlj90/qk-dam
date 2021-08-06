@@ -8,7 +8,8 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
  * @author daomingzhu
  */
 public class BizException extends RuntimeException {
-  private final ResultCodeEnum resultCode;
+  private static final long serialVersionUID = 5927389721071729782L;
+  final ResultCodeEnum resultCode;
 
   public BizException() {
     this(ResultCodeEnum.BAD_REQUEST);
