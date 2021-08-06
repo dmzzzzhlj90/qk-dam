@@ -63,4 +63,11 @@ public class DsdConstant {
   public static String defaultTableConfFields() {
     return "[{\"code_table_id\":\"code\",\"name_ch\":\"编码\",\"name_en\":\"code\",\"data_type\":\"STRING\"},{\"code_table_id\":\"value\",\"name_ch\":\"值\",\"name_en\":\"value\",\"data_type\":\"STRING\"}]";
   }
+
+  //码表元数据字段key
+  public static final String CODE_INFO_TABLE_ID = "code_table_id";
+  public static final String CODE_INFO_NAME_CH = "name_ch";
+  public static final String CODE_INFO_NAME_EN = "name_en";
+  public static final String CODE_INFO_DATA_TYPE = "data_type";
+
 }

@@ -44,6 +44,9 @@ dependencies {
             "com.querydsl:querydsl-apt:4.4.0:jpa",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
+    implementation 'com.zaxxer:HikariCP:3.4.5'
+    implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
