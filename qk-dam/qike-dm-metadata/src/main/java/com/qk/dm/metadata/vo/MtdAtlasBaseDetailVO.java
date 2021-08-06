@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AtlasBaseMainDataDetailVO {
+public class MtdAtlasBaseDetailVO {
 
   /** 负责人 */
   private String owner;

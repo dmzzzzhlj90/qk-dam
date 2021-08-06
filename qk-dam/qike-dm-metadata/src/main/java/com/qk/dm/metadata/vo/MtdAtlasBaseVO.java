@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 /** atlas 基础元数据，用于列表展示 */
 @Data
 @Builder
-public class AtlasBaseMainDataVO {
+public class MtdAtlasBaseVO {
 
   /** 数据唯一标识 */
   private String guid;

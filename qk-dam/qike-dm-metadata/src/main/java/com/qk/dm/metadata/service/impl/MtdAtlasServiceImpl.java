@@ -5,12 +5,14 @@ import com.qk.dm.metadata.service.MtdAtlasService;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasClassification;
+import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasClassificationDef;
 import org.apache.atlas.model.typedef.AtlasTypesDef;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author spj
@@ -32,6 +34,33 @@ public class MtdAtlasServiceImpl implements MtdAtlasService {
     }
 
     @Override
+    public void removeLabels(String guid) throws AtlasServiceException {
+        AtlasEntityHeader entityHeaderByGuid = atlasClientV2.getEntityHeaderByGuid(guid);
+        atlasClientV2.removeLabels(guid, entityHeaderByGuid.getLabels());
+    }
+
+    @Override
+    public void delEntitiesClassis(String guid) throws AtlasServiceException {
+        List<AtlasClassification> classifications = getAtlasClassifications(guid);
+        for (AtlasClassification classification : classifications) {
+            atlasClientV2.deleteClassification(guid, classification.getTypeName());
+        }
+    }
+
+    private List<AtlasClassification> getAtlasClassifications(String guid) throws AtlasServiceException {
+        AtlasEntityHeader entityHeaderByGuid = atlasClientV2.getEntityHeaderByGuid(guid);
+        return entityHeaderByGuid.getClassifications();
+    }
+
+
+
+
+
+    public void postTypedefs(String name,String description) throws AtlasServiceException {
+        atlasClientV2.createAtlasTypeDefs(getTypesDef(name,description));
+    }
+
+    @Override
     public void postTypedefs(Map<String, String> map) throws AtlasServiceException {
         atlasClientV2.createAtlasTypeDefs(getTypesDef(map));
     }
@@ -41,20 +70,33 @@ public class MtdAtlasServiceImpl implements MtdAtlasService {
         atlasClientV2.deleteAtlasTypeDefs(getTypesDef(map));
     }
 
+
+
     @Override
     public void addClassifications(String guid, String classifiy) throws AtlasServiceException {
         List<AtlasClassification> classificationList = getAtlasClassification(classifiy);
         atlasClientV2.addClassifications(guid, classificationList);
     }
 
+
     public Set<String> getLabelSet(String labels) {
         return Arrays.stream(labels.split(",")).collect(Collectors.toSet());
+    }
+
+    public AtlasTypesDef getTypesDef(String name, String description) {
+        AtlasTypesDef typesDef = new AtlasTypesDef();
+        typesDef.setClassificationDefs(getAtlasClassificationDef(name,description));
+        return typesDef;
     }
 
     public AtlasTypesDef getTypesDef(Map<String, String> map) {
         AtlasTypesDef typesDef = new AtlasTypesDef();
         typesDef.setClassificationDefs(getAtlasClassificationDef(map));
         return typesDef;
+    }
+
+    public List<AtlasClassificationDef> getAtlasClassificationDef(String name, String description) {
+        return Stream.of(new AtlasClassificationDef(name, description)).collect(Collectors.toList());
     }
 
     public List<AtlasClassificationDef> getAtlasClassificationDef(Map<String, String> map) {

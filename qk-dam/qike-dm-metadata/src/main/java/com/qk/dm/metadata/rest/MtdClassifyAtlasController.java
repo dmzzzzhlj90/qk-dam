@@ -2,7 +2,6 @@ package com.qk.dm.metadata.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.metadata.respose.ResponseWrapper;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/classifyAtlas")
-@ResponseWrapper
 public class MtdClassifyAtlasController {
 
   private final MtdClassifyAtlasService mtdClassifyAtlasService;
@@ -59,7 +57,6 @@ public class MtdClassifyAtlasController {
    * @return: 返回标签列表信息
    */
   @GetMapping("/{guid}")
-  @ResponseWrapper
   public DefaultCommonResult<MtdClassifyAtlasVO> getByGuid(@PathVariable("guid") String guid) {
     return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyAtlasService.getByGuid(guid));
   }

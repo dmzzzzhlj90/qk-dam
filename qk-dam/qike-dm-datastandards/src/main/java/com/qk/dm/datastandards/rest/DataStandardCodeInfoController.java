@@ -34,7 +34,7 @@ public class DataStandardCodeInfoController {
      * 高级筛选_查询码表基础信息列表
      *
      * @param dsdCodeInfoParamsVO
-     * @return DefaultCommonResult<PageResultVO<DsdCodeInfoVO>>
+     * @return DefaultCommonResult<PageResultVO < DsdCodeInfoVO>>
      */
     @PostMapping(value = "/basic/query")
     public DefaultCommonResult<PageResultVO<DsdCodeInfoVO>> getDsdCodeInfo(@RequestBody DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
@@ -116,7 +116,7 @@ public class DataStandardCodeInfoController {
      * 高级筛选_查询码表数值以及扩展信息列表
      *
      * @param dsdCodeInfoExtParamsVO
-     * @return DefaultCommonResult<Map<String, Object>>
+     * @return DefaultCommonResult<Map < String, Object>>
      */
     @PostMapping(value = "/ext/query")
     public DefaultCommonResult<Map<String, Object>> getDsdCodeInfoExt(@RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
@@ -182,6 +182,18 @@ public class DataStandardCodeInfoController {
     @DeleteMapping("/ext/bulk/delete/{ids}")
     public DefaultCommonResult deleteBulkDsdCodeInfoExt(@PathVariable("ids") String ids) {
         dataStandardCodeInfoService.deleteBulkDsdCodeInfoExt(ids);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 码表数据逆向数据库功能
+     *
+     * @param dsdCodeInfoReverseDBVO
+     * @return DefaultCommonResult
+     **/
+    @PostMapping("/reverse/db")
+    public DefaultCommonResult dsdCodeInfoReverseDB(@RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
+        dataStandardCodeInfoService.dsdCodeInfoReverseDB(dsdCodeInfoReverseDBVO);
         return DefaultCommonResult.success();
     }
 }
