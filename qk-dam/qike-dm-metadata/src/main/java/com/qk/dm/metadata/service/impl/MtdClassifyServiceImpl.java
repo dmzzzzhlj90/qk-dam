@@ -11,16 +11,17 @@ import com.qk.dm.metadata.vo.PageResultVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @author wangzp
@@ -79,7 +80,6 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
     // todo 查询是否存在绑定关系
     mtdClassifyList.forEach(item -> item.setSynchStatus(-1));
     mtdClassifyRepository.saveAll(mtdClassifyList);
-    //        mtdClassifyRepository.deleteInBatch(mtdClassifyList);
   }
 
   @Override

@@ -1,11 +1,12 @@
 package com.qk.dm.metadata.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Entity
@@ -40,6 +41,7 @@ public class MtdClassifyAtlas implements Serializable {
   /** 是否删除；0逻辑删除，1物理删除； */
   @Column(name = "del_flag", nullable = false)
   private Integer delFlag = 0;
+
   /** 同步状态 -1删除；0未同步；1已同步 */
   @Column(name = "synch_status", nullable = false)
   private Integer synchStatus = 0;
