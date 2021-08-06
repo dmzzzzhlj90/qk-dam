@@ -1,6 +1,5 @@
 package com.qk.dm.datasource.service;
 
-import com.qk.dm.datasource.entity.DsDir;
 import com.qk.dm.datasource.vo.DsDirVO;
 import org.springframework.stereotype.Service;
 
@@ -9,17 +8,18 @@ import java.util.Set;
 
 /**
  * 数据连接目录接口
+ *
  * @author zys
  * @date 20210729
  * @since 1.0.0
  */
 @Service
 public interface DsDirService {
-    void addDsDir(DsDirVO dsDirVO);
+  void addDsDir(DsDirVO dsDirVO);
 
-    void deleteDsDir(Integer id);
+  void deleteDsDir(Integer id);
 
-    List<DsDir> getDsDir();
+  List<DsDirVO> getDsDir();
 
-    void getDsdId(Set<String> dsDicIdSet, String dicId);
+  void getDsdId(Set<String> dsDicIdSet, String dicId);
 }

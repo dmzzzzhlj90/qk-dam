@@ -1,7 +1,7 @@
 package com.qk.dm.datasource.service;
 
+import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.datasource.vo.DsDirectoryVO;
-import com.qk.dm.datasource.vo.Pagination;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +13,9 @@ import java.util.List;
  */
 @Service
 public interface DsDirectoryService {
-    List<DsDirectoryVO> getSysDirectory(Pagination pagination);
+  List<DsDirectoryVO> getSysDirectory(Pagination pagination);
 
-    void addSysDirectory(DsDirectoryVO dsDirectoryVO);
+  void addSysDirectory(DsDirectoryVO dsDirectoryVO);
 
-    void deleteDsDirectory(Integer id);
+  void deleteDsDirectory(Integer id);
 }
