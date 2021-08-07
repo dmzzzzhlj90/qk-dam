@@ -13,6 +13,7 @@ sonarqube_analysis:
     #CI_DEBUG_TRACE: "true"
     message : $CI_COMMIT_MESSAGE
   script:
+    - echo "$message"
     - /data/sonar-scanner-4.6.2.2472/bin/sonar-scanner -Dsonar.host.url=http://172.31.0.44:9000  -Dsonar.projectKey=qk-dam -Dsonar.sources=qk-dam -Dsonar.java.binaries=.   -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.analysis.CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME -Dsonar.analysis.GITLAB_USER_EMAIL=$GITLAB_USER_EMAIL -Dsonar.analysis.GITLAB_USER_NAME=$GITLAB_USER_NAME -Dsonar.analysis.CI_PROJECT_PATH=$CI_PROJECT_PATH -Dsonar.analysis.CI_COMMIT_MESSAGE="$message"
   tags:
     - sonarqube
