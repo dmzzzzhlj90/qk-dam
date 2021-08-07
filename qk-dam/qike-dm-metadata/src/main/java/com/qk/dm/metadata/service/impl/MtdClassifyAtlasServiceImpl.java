@@ -8,12 +8,10 @@ import com.qk.dm.metadata.repositories.MtdClassifyAtlasRepository;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.Optional;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @author wangzp
@@ -22,21 +20,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MtdClassifyAtlasServiceImpl implements MtdClassifyAtlasService {
-  private JPAQueryFactory jpaQueryFactory;
-  private final EntityManager entityManager;
   private final QMtdClassifyAtlas qMtdClassifyAtlas = QMtdClassifyAtlas.mtdClassifyAtlas;
   private final MtdClassifyAtlasRepository mtdClassifyAtlasRepository;
 
   @Autowired
-  public MtdClassifyAtlasServiceImpl(
-      EntityManager entityManager, MtdClassifyAtlasRepository mtdClassifyAtlasRepository) {
-    this.entityManager = entityManager;
+  public MtdClassifyAtlasServiceImpl(MtdClassifyAtlasRepository mtdClassifyAtlasRepository) {
     this.mtdClassifyAtlasRepository = mtdClassifyAtlasRepository;
-  }
-
-  @PostConstruct
-  public void initFactory() {
-    jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
 
   @Override

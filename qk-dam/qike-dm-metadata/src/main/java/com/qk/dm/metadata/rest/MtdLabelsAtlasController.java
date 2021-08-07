@@ -19,7 +19,7 @@ public class MtdLabelsAtlasController {
   }
 
   /**
-   * 新增元数据标签
+   * 新增元数据标签绑定关系
    *
    * @param: mtdLabelsVO 元数据标签VO
    * @return: DefaultCommonResult
@@ -31,25 +31,26 @@ public class MtdLabelsAtlasController {
   }
 
   /**
-   * 修改元数据标签
+   * 修改元数据标签绑定关系
    *
    * @param: mtdLabelsVO 元数据标签VO
    * @return: DefaultCommonResult
    */
-  @PutMapping("")
-  public DefaultCommonResult update(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
-    mtdLabelsAtlasService.update(mtdLabelsVO);
+  @PutMapping("/{id}")
+  public DefaultCommonResult update(
+      @PathVariable("id") Long id, @RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
+    mtdLabelsAtlasService.update(id, mtdLabelsVO);
     return DefaultCommonResult.success();
   }
 
   /**
-   * 查询元数据标签
+   * 查询元数据标签绑定关系
    *
    * @param: mtdLabelsVO 元数据标签VO
    * @return: 返回标签列表信息
    */
   @GetMapping("/{guid}")
   public DefaultCommonResult<MtdLabelsAtlasVO> getByGuid(@PathVariable("guid") String guid) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdLabelsAtlasService.getByGuid(guid));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, mtdLabelsAtlasService.getByGuid(guid));
   }
 }

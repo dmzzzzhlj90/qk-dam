@@ -39,7 +39,7 @@ public class MtdClassifyController {
   }
 
   /**
-   * 修改元数据标签
+   * 修改元数据分类
    *
    * @param: mtdClassifyAtlasVO 元数据分类VO
    * @return: DefaultCommonResult
@@ -51,7 +51,7 @@ public class MtdClassifyController {
   }
 
   /**
-   * 删除元数据标签
+   * 删除元数据分类
    *
    * @param: mtdClassifyAtlasVO 元数据分类VO
    * @return: DefaultCommonResult
@@ -63,7 +63,7 @@ public class MtdClassifyController {
   }
 
   /**
-   * 查询元数据标签
+   * 分页查询元数据分类
    *
    * @param: pagination分页查询参数对象: page,size,sortStr
    * @return: DefaultCommonResult
@@ -74,7 +74,7 @@ public class MtdClassifyController {
   }
 
   /**
-   * 查询元数据标签
+   * 查询元数据分类
    *
    * @param: pagination分页查询参数对象: page,size,sortStr
    * @return: DefaultCommonResult
