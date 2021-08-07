@@ -13,5 +13,4 @@ public class DataSourceJobVO {
   private String name;
   private String dataConnectType;
   private MysqlDataConnectVO mysqlDataConnect;
-
 }

@@ -119,7 +119,8 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     return trees;
   }
 
-  public static DataStandardCodeTreeVO findChildren(DataStandardCodeTreeVO treeNode, List<DataStandardCodeTreeVO> respList) {
+  public static DataStandardCodeTreeVO findChildren(
+      DataStandardCodeTreeVO treeNode, List<DataStandardCodeTreeVO> respList) {
     treeNode.setChildren(new ArrayList<>());
     for (DataStandardCodeTreeVO DSCTV : respList) {
       if (treeNode.getCodeDirId().equals(DSCTV.getParentId())) {
@@ -150,9 +151,7 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     dsdCodeDirRepository.deleteAll(delDirList);
   }
 
-  /**
-   * @param ids,delId
-   */
+  /** @param ids,delId */
   private void getIds(ArrayList<Integer> ids, Integer delId) {
     Optional<DsdCodeDir> parentDir = dsdCodeDirRepository.findOne(dsdCodeDir.id.eq(delId));
     Iterable<DsdCodeDir> sonDirList =

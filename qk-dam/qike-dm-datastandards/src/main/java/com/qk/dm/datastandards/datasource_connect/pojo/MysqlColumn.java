@@ -8,8 +8,8 @@ import lombok.ToString;
 @Builder
 @ToString
 public class MysqlColumn {
-    private String tableName;
-    private String colName;
-    private String displayName;
-    private String data_type;
+  private String tableName;
+  private String colName;
+  private String displayName;
+  private String data_type;
 }
