@@ -10,6 +10,7 @@ sonarqube_analysis:
     - test
     - sonar_test
   variables:
+    CI_DEBUG_TRACE: "true"
     message : $CI_COMMIT_MESSAGE
   script:
     - echo $message
