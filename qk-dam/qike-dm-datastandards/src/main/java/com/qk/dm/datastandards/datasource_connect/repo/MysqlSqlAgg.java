@@ -4,6 +4,8 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
 import cn.hutool.db.ds.simple.SimpleDataSource;
+import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.datasource_connect.pojo.MysqlColumn;
 import com.qk.dm.datastandards.datasource_connect.pojo.MysqlDb;
 import com.qk.dm.datastandards.datasource_connect.pojo.MysqlTable;
@@ -11,8 +13,7 @@ import com.qk.dm.datastandards.entity.DsdCodeInfoExt;
 import com.qk.dm.datastandards.vo.MysqlDataConnectVO;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,7 +30,7 @@ public class MysqlSqlAgg {
     private final String db;
     private final String table;
 
-    public MysqlSqlAgg(MysqlDataConnectVO mysqlDataConnectYamlVO) {
+    public MysqlSqlAgg(MysqlDataConnectVO mysqlDataConnectYamlVO, String schema) {
         this.use =
                 Db.use(
                         new SimpleDataSource(
@@ -37,13 +38,14 @@ public class MysqlSqlAgg {
                                         + mysqlDataConnectYamlVO.getHost()
                                         + ":"
                                         + mysqlDataConnectYamlVO.getPort()
-                                        + "/information_schema",
+                                        + "/" + schema,
                                 mysqlDataConnectYamlVO.getUsername(),
                                 mysqlDataConnectYamlVO.getPassword()));
         host = mysqlDataConnectYamlVO.getHost();
         db = mysqlDataConnectYamlVO.getDb();
         table = mysqlDataConnectYamlVO.getTable();
     }
+
 
     public MysqlDb searchMedataByDb() {
         List<Entity> entityTableList = null;
@@ -55,7 +57,7 @@ public class MysqlSqlAgg {
                     "where table_schema = ? and table_name in ( ? )", db, inTbs);
             Assert.notEmpty(
                     entityTableList,
-                    "未查询到符合条件的db_table实体，请检查参数，错误信息db【{}】table【{}】",
+                    "未查询到符合条件的db_table元数据信息，请检查参数，错误信息db【{}】table【{}】",
                     db,
                     table);
 
@@ -99,12 +101,12 @@ public class MysqlSqlAgg {
         }
         Assert.notEmpty(
                 entityTableList,
-                "未查询到符合条件的db_table实体，请检查参数，错误信息db【{}】table【{}】",
+                "未查询到符合条件的db_table的元数据信息，请检查参数，错误信息db【{}】table【{}】",
                 db,
                 table);
         Assert.notEmpty(
                 entityColumnList,
-                "未查询到符合条件的db_table_column实体，请检查参数，错误信息db【{}】table【{}】",
+                "未查询到符合条件的db_table_column元数据信息，请检查参数，错误信息db【{}】table【{}】",
                 db,
                 table);
         return getMysqlDbType(db, entityTableList, entityColumnList);
@@ -136,7 +138,7 @@ public class MysqlSqlAgg {
         return mysqlDb;
     }
 
-    public List<DsdCodeInfoExt> searchCodeInfoExtValues(MysqlTable mysqlTable) {
+    public List<DsdCodeInfoExt> searchCodeInfoExtValues(MysqlTable mysqlTable, Long codeInfoId) {
         /**
          * TODO
          *  1.根据具体表进行数据查询
@@ -144,6 +146,54 @@ public class MysqlSqlAgg {
          *  3.转换&装配数据至实体对象
          *
          **/
-        return null;
+        List<Entity> entityList = null;
+        try {
+            entityList = use.query(" select * from  " + mysqlTable.getName() + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return getCodeValues(entityList, mysqlTable, codeInfoId);
+    }
+
+    private List<DsdCodeInfoExt> getCodeValues(List<Entity> entityList, MysqlTable mysqlTable, Long codeInfoId) {
+        if (entityList != null && entityList.size() > 0) {
+            List<MysqlColumn> mysqlColumnList = mysqlTable.getMysqlColumns();
+            List<String> colKeyList = mysqlColumnList.stream().map(MysqlColumn::getColName).collect(Collectors.toList());
+
+            List<DsdCodeInfoExt> dsdCodeInfoExtList = entityList.stream().map(entity -> {
+                DsdCodeInfoExt dsdCodeInfoExt = new DsdCodeInfoExt();
+                dsdCodeInfoExt.setDsdCodeInfoId(codeInfoId);
+                dsdCodeInfoExt.setTableConfCode(entity.getStr(DsdConstant.CODE_INFO_CODE_EN_NAME));
+                dsdCodeInfoExt.setTableConfValue("");
+                dsdCodeInfoExt.setTableConfExtValues(getTableConfExtValuesByMetaData(entity, colKeyList));
+                dsdCodeInfoExt.setGmtCreate(new Date());
+                dsdCodeInfoExt.setGmtCreate(new Date());
+                return dsdCodeInfoExt;
+            }).collect(Collectors.toList());
+            return dsdCodeInfoExtList;
+        }
+        return new ArrayList<>();
+    }
+
+    private String getTableConfExtValuesByMetaData(Entity entity, List<String> colKeyList) {
+        Map<String, Object> confExtValues = new HashMap<>();
+        for (String colKey : colKeyList) {
+            if (filterFields(colKey)) {
+                confExtValues.put(colKey, entity.getStr(colKey));
+            }
+        }
+        return GsonUtil.toJsonString(confExtValues);
+    }
+
+    private boolean filterFields(String colKey) {
+        boolean flag = true;
+        if (DsdConstant.CODE_INFO_FILTER_ID.equalsIgnoreCase(colKey))
+            flag = false;
+        if (DsdConstant.CODE_INFO_CODE_EN_NAME.equalsIgnoreCase(colKey))
+            flag = false;
+        if (DsdConstant.CODE_INFO_VALUE_EN_NAME.equalsIgnoreCase(colKey))
+            flag = false;
+        return flag;
     }
 }

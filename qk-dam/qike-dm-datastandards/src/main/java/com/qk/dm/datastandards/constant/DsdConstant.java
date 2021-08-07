@@ -70,4 +70,17 @@ public class DsdConstant {
   public static final String CODE_INFO_NAME_EN = "name_en";
   public static final String CODE_INFO_DATA_TYPE = "data_type";
 
+  //码表元数据字段默认值__code
+  public static final String CODE_INFO_CODE_EN_NAME = "code";
+  public static final String CODE_INFO_CODE_CH_NAME = "编码";
+  public static final String CODE_INFO_CODE_TYPE = "STRING";
+  //码表元数据字段默认值__过滤掉ID字段
+  public static final String CODE_INFO_FILTER_ID = "id";
+  //码表元数据字段默认值__value
+  public static final String CODE_INFO_VALUE_EN_NAME = "value";
+  public static final String CODE_INFO_VALUE_CH_NAME = "值";
+  public static final String CODE_INFO_VALUE_TYPE = "STRING";
+
+
+
 }

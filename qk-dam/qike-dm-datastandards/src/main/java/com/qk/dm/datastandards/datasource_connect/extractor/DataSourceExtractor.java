@@ -18,6 +18,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public class DataSourceExtractor {
+    public static final String informationSchema = "information_schema";
     private DataSourceExtractor() {
         throw new IllegalStateException("Utility class");
     }
@@ -27,12 +28,13 @@ public class DataSourceExtractor {
         MysqlDataConnectVO dataConnect = dataSourceJobVO.getMysqlDataConnect();
         String table = dataConnect.getTable();
         if (table.equals("all") || table.startsWith("%") || table.endsWith("%")) {
-            return new MysqlSqlAgg(dataConnect).searchPatternMedataByDb();
+            return new MysqlSqlAgg(dataConnect,informationSchema).searchPatternMedataByDb();
         }
-        return new MysqlSqlAgg(dataConnect).searchMedataByDb();
+        return new MysqlSqlAgg(dataConnect,informationSchema).searchMedataByDb();
     }
 
-    public static List<DsdCodeInfoExt> searchCodeInfoExtValues(DataSourceJobVO dataSourceJobVO, MysqlTable mysqlTable) {
-        return new MysqlSqlAgg(dataSourceJobVO.getMysqlDataConnect()).searchCodeInfoExtValues(mysqlTable);
+    public static List<DsdCodeInfoExt> searchCodeInfoExtValues(DataSourceJobVO dataSourceJobVO, MysqlTable mysqlTable, Long codeInfoId) {
+        return new MysqlSqlAgg(dataSourceJobVO.getMysqlDataConnect(),dataSourceJobVO.getMysqlDataConnect().getDb())
+                .searchCodeInfoExtValues(mysqlTable, codeInfoId);
     }
 }

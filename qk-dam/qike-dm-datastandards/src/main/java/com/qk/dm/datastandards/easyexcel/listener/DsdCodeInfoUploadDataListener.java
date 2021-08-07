@@ -148,8 +148,8 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCode
     private void setCodeInfoConfigs(
             List<DsdCodeInfoVO> dsdCodeInfoVOList, List<Map<String, String>> configFields) {
         for (DsdCodeInfoVO codeInfoVO : dsdCodeInfoVOList) {
-            if (!codeInfoVO.getCodeTableId().equalsIgnoreCase("code")
-                    && !codeInfoVO.getCodeTableId().equalsIgnoreCase("value")) {
+            if (!codeInfoVO.getCodeTableId().equalsIgnoreCase(DsdConstant.CODE_INFO_CODE_EN_NAME)
+                    && !codeInfoVO.getCodeTableId().equalsIgnoreCase(DsdConstant.CODE_INFO_VALUE_EN_NAME)) {
                 Map<String, String> configFieldMap = new LinkedHashMap<>();
                 configFieldMap.put(DsdConstant.CODE_INFO_TABLE_ID, codeInfoVO.getCodeTableId());
                 configFieldMap.put(DsdConstant.CODE_INFO_NAME_CH, codeInfoVO.getNameCh());
@@ -162,17 +162,17 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCode
 
     private void setDefaultConfigCodeAndValue(List<Map<String, String>> configFields) {
         Map<String, String> configFieldCodedMap = new LinkedHashMap<>();
-        configFieldCodedMap.put(DsdConstant.CODE_INFO_TABLE_ID, "code");
-        configFieldCodedMap.put(DsdConstant.CODE_INFO_NAME_CH, "编码");
-        configFieldCodedMap.put(DsdConstant.CODE_INFO_NAME_EN, "code");
-        configFieldCodedMap.put(DsdConstant.CODE_INFO_DATA_TYPE, "STRING");
+        configFieldCodedMap.put(DsdConstant.CODE_INFO_TABLE_ID, DsdConstant.CODE_INFO_CODE_EN_NAME);
+        configFieldCodedMap.put(DsdConstant.CODE_INFO_NAME_CH, DsdConstant.CODE_INFO_CODE_CH_NAME);
+        configFieldCodedMap.put(DsdConstant.CODE_INFO_NAME_EN, DsdConstant.CODE_INFO_CODE_EN_NAME);
+        configFieldCodedMap.put(DsdConstant.CODE_INFO_DATA_TYPE, DsdConstant.CODE_INFO_CODE_TYPE);
         configFields.add(configFieldCodedMap);
 
         Map<String, String> configFieldValueMap = new LinkedHashMap<>();
-        configFieldValueMap.put(DsdConstant.CODE_INFO_TABLE_ID, "value");
-        configFieldValueMap.put(DsdConstant.CODE_INFO_NAME_CH, "值");
-        configFieldValueMap.put(DsdConstant.CODE_INFO_NAME_EN, "value");
-        configFieldValueMap.put(DsdConstant.CODE_INFO_DATA_TYPE, "STRING");
+        configFieldValueMap.put(DsdConstant.CODE_INFO_TABLE_ID, DsdConstant.CODE_INFO_VALUE_EN_NAME);
+        configFieldValueMap.put(DsdConstant.CODE_INFO_NAME_CH, DsdConstant.CODE_INFO_VALUE_CH_NAME);
+        configFieldValueMap.put(DsdConstant.CODE_INFO_NAME_EN, DsdConstant.CODE_INFO_VALUE_EN_NAME);
+        configFieldValueMap.put(DsdConstant.CODE_INFO_DATA_TYPE, DsdConstant.CODE_INFO_VALUE_TYPE);
         configFields.add(configFieldValueMap);
     }
 }

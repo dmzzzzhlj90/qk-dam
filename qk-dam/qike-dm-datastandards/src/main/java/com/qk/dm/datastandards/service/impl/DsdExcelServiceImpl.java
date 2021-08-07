@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.easyexcel.listener.DsdBasicInfoUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdCodeInfoUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdCodeValuesUploadDataListener;
@@ -347,9 +348,9 @@ public class DsdExcelServiceImpl implements DsdExcelService {
           .forEach(
               columnHead -> {
                 final String value = dataRow.get(columnHead.getKey());
-                if (columnHead.getValue().equals("编码")) {
+                if (columnHead.getValue().equals(DsdConstant.CODE_INFO_CODE_CH_NAME)) {
                   dsdCodeInfoExt.setTableConfCode(value);
-                } else if (columnHead.getValue().equals("值")) {
+                } else if (columnHead.getValue().equals(DsdConstant.CODE_INFO_VALUE_CH_NAME)) {
                   dsdCodeInfoExt.setTableConfValue(value);
                 } else {
                   rowExtData.put(fieldMap.get(columnHead.getValue()), value);

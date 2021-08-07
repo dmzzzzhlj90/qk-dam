@@ -46,8 +46,8 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
     private final DsdCodeInfoRepository dsdCodeInfoRepository;
     private final DsdCodeInfoExtRepository dsdCodeInfoExtRepository;
-
     private final DataStandardCodeDirService dataStandardCodeDirService;
+    private final DsdCodeInfoReverseBatchService dsdCodeInfoReverseBatchService;
 
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
@@ -57,10 +57,11 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
             DsdCodeInfoRepository dsdCodeInfoRepository,
             DsdCodeInfoExtRepository dsdCodeInfoExtRepository,
             DataStandardCodeDirService dataStandardCodeDirService,
-            EntityManager entityManager) {
+            DsdCodeInfoReverseBatchService dsdCodeInfoReverseBatchService, EntityManager entityManager) {
         this.dsdCodeInfoRepository = dsdCodeInfoRepository;
         this.dsdCodeInfoExtRepository = dsdCodeInfoExtRepository;
         this.dataStandardCodeDirService = dataStandardCodeDirService;
+        this.dsdCodeInfoReverseBatchService = dsdCodeInfoReverseBatchService;
         this.entityManager = entityManager;
     }
 
@@ -431,49 +432,11 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
         //1.数据源====>DB级别元数据信息
         MysqlDb mysqlDb = DataSourceExtractor.mysqlMetaData(dsdCodeInfoReverseDBVO.getDataSourceJobVO());
         //2.元数据====>生成码表基本信息
-        reverseCreateCodeInfo(dsdCodeInfoReverseDBVO, mysqlDb);
+        dsdCodeInfoReverseBatchService.reverseCreateCodeInfo(dsdCodeInfoReverseDBVO, mysqlDb);
         //3.字典数据====>获取并存储码表码值信息
-        reverseCreateCodeValues(dsdCodeInfoReverseDBVO, mysqlDb);
+        dsdCodeInfoReverseBatchService.reverseCreateCodeValues(dsdCodeInfoReverseDBVO, mysqlDb);
     }
 
-    private void reverseCreateCodeInfo(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO, MysqlDb mysqlDb) {
-        List<MysqlTable> mysqlTables = mysqlDb.getMysqlTables();
-        List<DsdCodeInfo> codeInfoList = mysqlTables.stream().map(mysqlTable -> {
-            DsdCodeInfo dsdCodeInfo = new DsdCodeInfo();
-            dsdCodeInfo.setCodeDirId(dsdCodeInfoReverseDBVO.getCodeDirId());
-            dsdCodeInfo.setCodeDirLevel(dsdCodeInfoReverseDBVO.getCodeDirLevel());
-            dsdCodeInfo.setTableCode(mysqlTable.getName());
-            dsdCodeInfo.setTableName(mysqlTable.getComment());
-            dsdCodeInfo.setTableDesc("逆向生成!表名称:" + mysqlTable.getName() + "_" + mysqlTable.getComment());
-            dsdCodeInfo.setTableConfFields(setCodeTableFieldsByMetaData(mysqlTable));
-            dsdCodeInfo.setGmtModified(new Date());
-            dsdCodeInfo.setGmtCreate(new Date());
-            return dsdCodeInfo;
-        }).collect(Collectors.toList());
-        dsdCodeInfoRepository.saveAll(codeInfoList);
-    }
-
-    private void reverseCreateCodeValues(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO, MysqlDb mysqlDb) {
-        List<DsdCodeInfoExt> dsdCodeInfoExtList = new ArrayList<>();
-        for (MysqlTable mysqlTable : mysqlDb.getMysqlTables()) {
-            List<DsdCodeInfoExt> codeInfoExtValues = DataSourceExtractor.searchCodeInfoExtValues(dsdCodeInfoReverseDBVO.getDataSourceJobVO(), mysqlTable);
-            dsdCodeInfoExtList.addAll(codeInfoExtValues);
-        }
-        dsdCodeInfoExtRepository.saveAll(dsdCodeInfoExtList);
-    }
-
-    private String setCodeTableFieldsByMetaData(MysqlTable mysqlTable) {
-        List fieldList = new ArrayList();
-        for (MysqlColumn mysqlColumn : mysqlTable.getMysqlColumns()) {
-            Map<String, String> fieldMap = new HashMap<>();
-            fieldMap.put(DsdConstant.CODE_INFO_TABLE_ID, mysqlColumn.getColName());
-            fieldMap.put(DsdConstant.CODE_INFO_NAME_CH, mysqlColumn.getDisplayName());
-            fieldMap.put(DsdConstant.CODE_INFO_NAME_EN, mysqlColumn.getColName());
-            fieldMap.put(DsdConstant.CODE_INFO_DATA_TYPE, mysqlColumn.getData_type());
-            fieldList.add(fieldMap);
-        }
-        return GsonUtil.toJsonString(fieldList);
-    }
 
     private void setTableConfValuesStr(
             DsdCodeInfoExt dsdCodeInfoExt, DsdCodeInfoExtVO dsdCodeInfoExtVO) {
