@@ -6,9 +6,7 @@ version "${commonLibVersion}"
 group "com.qk.dam.metedata.common"
 dependencies {
     compile group: 'org.projectlombok', name: 'lombok'
-    compile ('org.apache.atlas:atlas-client-v2'){
-        exclude module: 'slf4j-log4j12'
-    }
+    compile 'org.apache.atlas:atlas-client-v2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
