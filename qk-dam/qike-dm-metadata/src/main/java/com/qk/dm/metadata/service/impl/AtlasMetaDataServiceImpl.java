@@ -58,7 +58,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                   .typeName(e.getTypeName())
                   .displayName(e.getDisplayText())
                   .qualifiedName(e.getAttributes().get("qualifiedName").toString())
-                  .createTime(new Date((Long) e.getAttributes().get("createTime")))
+                  .createTime(Objects.isNull(e.getAttributes().get("createTime"))?null:new Date((Long) e.getAttributes().get("createTime")))
                   .build());
         });
     return atlasBaseMainDataVOList;
