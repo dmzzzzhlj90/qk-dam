@@ -1,7 +1,5 @@
 package com.qk.dm.metadata.vo;
 
-import java.util.Date;
-
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +26,4 @@ public class MtdClassifyAtlasVO {
 
   /** 分类 */
   private String classify;
-
-  /** 创建时间 */
-  private Date gmtCreate;
 }

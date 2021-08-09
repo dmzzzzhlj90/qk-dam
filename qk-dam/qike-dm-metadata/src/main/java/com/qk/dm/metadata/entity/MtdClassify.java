@@ -1,9 +1,12 @@
 package com.qk.dm.metadata.entity;
 
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
-import lombok.Data;
 
 @Data
 @Entity
@@ -27,10 +30,12 @@ public class MtdClassify implements Serializable {
 
   /** 创建时间 */
   @Column(name = "gmt_create")
+  @CreationTimestamp
   private Date gmtCreate;
 
   /** 修改时间 */
   @Column(name = "gmt_modified")
+  @UpdateTimestamp
   private Date gmtModified;
 
   /** 是否删除；0逻辑删除，1物理删除； */

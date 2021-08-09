@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface MtdClassifyAtlasRepository extends BaseRepository<MtdClassifyAtlas, Long> {
     List<MtdClassifyAtlas>  findAllBySynchStatusInOrderByGmtCreateAsc(List<Integer> synchStatus);
+
+    List<MtdClassifyAtlas> findAllBySynchStatusNot(Integer status);
 }

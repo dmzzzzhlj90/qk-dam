@@ -11,6 +11,7 @@ import org.apache.atlas.model.typedef.AtlasTypesDef;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author spj
@@ -26,6 +27,7 @@ public class AtlasLabelsUtil {
 
   /**
    * 查询实体上标签
+   *
    * @param guid
    * @return
    * @throws AtlasServiceException
@@ -62,7 +64,8 @@ public class AtlasLabelsUtil {
   public static void main(String[] args) throws AtlasServiceException {
     AtlasLabelsUtil.setLabels("483c95fc-f134-4f25-aff0-45d6ebbe82bd", "test1-1");
     AtlasLabelsUtil.removeLabels("483c95fc-f134-4f25-aff0-45d6ebbe82bd");
-    System.out.println(AtlasLabelsUtil.getLabels("483c95fc-f134-4f25-aff0-45d6ebbe82bd").toArray().toString());
+    System.out.println(
+        AtlasLabelsUtil.getLabels("483c95fc-f134-4f25-aff0-45d6ebbe82bd").toArray().toString());
   }
 
   /**
@@ -103,10 +106,28 @@ public class AtlasLabelsUtil {
    * @throws AtlasServiceException
    */
   public static void upEntitiesClassis(String guid, String classify) throws AtlasServiceException {
-    List<String> classifyList = getClassifyList(classify, getAtlasClassifications(guid));
+    List<AtlasClassification> atlasClassifications = getAtlasClassifications(guid);
+    List<String> classifyList = getDeleteClassifyList(classify, atlasClassifications);
     for (String className : classifyList) {
       atlasClientV2.deleteClassification(guid, className);
     }
+    List<String> addClassifyList = getAddClassifyList(classify, atlasClassifications);
+    if (!addClassifyList.isEmpty()) {
+      addEntitiesClassis(guid, addClassifyList);
+    }
+  }
+
+  /**
+   * 添加实体类上具体分类
+   *
+   * @param guid
+   * @param classify
+   * @throws AtlasServiceException
+   */
+  public static void addEntitiesClassis(String guid, List<String> classify)
+      throws AtlasServiceException {
+    List<AtlasClassification> classificationList = getAtlasClassificationList(classify);
+    AtlasConfig.getAtlasClientV2().addClassifications(guid, classificationList);
   }
 
   /**
@@ -149,11 +170,26 @@ public class AtlasLabelsUtil {
     return entityHeaderByGuid.getClassifications();
   }
 
-  private static List<String> getClassifyList(
+  private static List<String> getDeleteClassifyList(
       String classify, List<AtlasClassification> classifications) {
     return classifications.stream()
         .map(AtlasStruct::getTypeName)
         .filter(cfy -> !Arrays.asList(classify.split(",")).contains(cfy))
         .collect(Collectors.toList());
+  }
+
+  private static List<String> getAddClassifyList(
+      String classify, List<AtlasClassification> classifications) {
+    List<String> list =
+        classifications.stream().map(AtlasStruct::getTypeName).collect(Collectors.toList());
+    return Stream.of(classify.split(","))
+        .filter(cfy -> !list.contains(cfy))
+        .collect(Collectors.toList());
+  }
+
+  private static List<AtlasClassification> getAtlasClassificationList(List<String> classify) {
+    List<AtlasClassification> classificationList = new ArrayList<>();
+    classify.forEach(atlas -> classificationList.add(new AtlasClassification(atlas)));
+    return classificationList;
   }
 }

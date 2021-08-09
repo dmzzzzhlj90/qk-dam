@@ -243,13 +243,12 @@ public class AtlasTestServiceImpl {
 
   public void updateClassifications() throws AtlasServiceException {
     AtlasClassification atlasClassification = new AtlasClassification("test123");
-
     // 向由 guid 表示的现有实体添加分类
     List<AtlasClassification> classificationList =
         Stream.of(atlasClassification).collect(Collectors.toList());
     // 将分类更新为由 guid 表示的现有实体
     AtlasConfig.getAtlasClientV2()
-        .updateClassifications("a16f051d-4756-42c8-acc6-d6925f0a3900", classificationList);
+        .updateClassifications("483c95fc-f134-4f25-aff0-45d6ebbe82bd", classificationList);
   }
 
   public void deleteClassification() throws AtlasServiceException {
@@ -307,7 +306,7 @@ public class AtlasTestServiceImpl {
     //        //对满足搜索参数的实体进行基于属性的搜索
     //        atlasTestService.basic();
     //        //dsl
-    atlasTestService.dsl();
+//    atlasTestService.dsl();
     //        //检索指定全文查询的数据
     //        atlasTestService.fulltext();
     //        //关系搜索以搜索满足搜索参数的相关实体
@@ -343,7 +342,7 @@ public class AtlasTestServiceImpl {
     // 添加分类
     //        atlasTestService.addClassifications();
     // 修改
-    //        atlasTestService.updateClassifications();
+            atlasTestService.updateClassifications();
     // 删除给定分类关系
     //        atlasTestService.deleteClassification();
     // 删除给定分类及关联实体分类
@@ -353,7 +352,7 @@ public class AtlasTestServiceImpl {
     // 批量设置分类标签
     //        atlasTestService.classifications();
     // 获取由 guid 表示的给定实体的分类列表
-    //        atlasTestService.guidClass();
+            atlasTestService.guidClass();
 
   }
 }

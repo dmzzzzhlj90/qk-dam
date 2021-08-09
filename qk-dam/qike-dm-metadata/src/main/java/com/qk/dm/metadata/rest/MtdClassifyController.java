@@ -3,6 +3,8 @@ package com.qk.dm.metadata.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyService;
+import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
+import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 import com.qk.dm.metadata.vo.PageResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +71,8 @@ public class MtdClassifyController {
    * @return: DefaultCommonResult
    */
   @GetMapping("/page")
-  public DefaultCommonResult<PageResultVO<MtdClassifyVO>> classifyByPage(MtdClassifyVO mtdClassifyVO) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByPage(mtdClassifyVO));
+  public DefaultCommonResult<PageResultVO<MtdClassifyInfoVO>> classifyByPage(MtdClassifyListVO mtdClassifyListVO) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByPage(mtdClassifyListVO));
   }
 
   /**
@@ -80,7 +82,7 @@ public class MtdClassifyController {
    * @return: DefaultCommonResult
    */
   @GetMapping("")
-  public DefaultCommonResult<List<MtdClassifyVO>> classifyByAll(MtdClassifyVO mtdClassifyVO) {
+  public DefaultCommonResult<List<MtdClassifyInfoVO>> classifyByAll(MtdClassifyVO mtdClassifyVO) {
     return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByAll(mtdClassifyVO));
   }
 }
