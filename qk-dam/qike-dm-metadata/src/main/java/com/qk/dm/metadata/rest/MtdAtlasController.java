@@ -9,6 +9,7 @@ import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import com.qk.dm.metadata.vo.MtdAtlasParamsVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class MtdAtlasController {
      * @return DefaultCommonResult<List<MtdAtlasBaseVO>>
      */
     @PostMapping("/searchList")
-    public DefaultCommonResult<List<MtdAtlasBaseVO>> searchList(@RequestBody MtdAtlasParamsVO mtdAtlasParamsVO){
+    public DefaultCommonResult<List<MtdAtlasBaseVO>> searchList(@RequestBody @Validated MtdAtlasParamsVO mtdAtlasParamsVO){
         List<MtdAtlasBaseVO> atlasBaseMainDataVOList = atlasMetaDataService.searchList(mtdAtlasParamsVO.getQuery(), mtdAtlasParamsVO.getTypeName(), mtdAtlasParamsVO.getClassification(), mtdAtlasParamsVO.getLimit(), mtdAtlasParamsVO.getOffse());
         return DefaultCommonResult.success(ResultCodeEnum.OK,atlasBaseMainDataVOList);
     }
