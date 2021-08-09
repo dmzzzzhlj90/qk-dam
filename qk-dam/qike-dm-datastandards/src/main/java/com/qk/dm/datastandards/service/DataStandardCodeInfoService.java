@@ -1,10 +1,9 @@
 package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.vo.*;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Service;
 
 /**
  * @author wjq
@@ -14,40 +13,34 @@ import java.util.Map;
 @Service
 public interface DataStandardCodeInfoService {
 
-    /**
-     * 码表基本信息_表
-     */
-    PageResultVO<DsdCodeInfoVO> getDsdCodeInfo(DsdCodeInfoParamsVO dsdCodeInfoParamsVO);
+  /** 码表基本信息_表 */
+  PageResultVO<DsdCodeInfoVO> getDsdCodeInfo(DsdCodeInfoParamsVO dsdCodeInfoParamsVO);
 
-    void addDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO);
+  void addDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO);
 
-    DsdCodeInfoVO getDsdCodeInfoById(long id);
+  DsdCodeInfoVO getDsdCodeInfoById(long id);
 
-    void modifyDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO);
+  void modifyDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO);
 
-    void deleteDsdCodeInfo(long id);
+  void deleteDsdCodeInfo(long id);
 
-    void deleteBulkDsdCodeInfo(String ids);
+  void deleteBulkDsdCodeInfo(String ids);
 
-    List<Map<String, String>> getDataTypes();
+  List<Map<String, String>> getDataTypes();
 
-    /**
-     * 码表扩展信息_码表数值
-     */
-    Map<String, Object> getDsdCodeInfoExt(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO);
+  /** 码表扩展信息_码表数值 */
+  Map<String, Object> getDsdCodeInfoExt(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO);
 
-    void addDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO);
+  void addDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO);
 
-    DsdCodeInfoExtVO getBasicDsdCodeInfoExtById(long id);
+  DsdCodeInfoExtVO getBasicDsdCodeInfoExtById(long id);
 
-    void modifyDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO);
+  void modifyDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO);
 
-    void deleteDsdCodeInfoExt(long id);
+  void deleteDsdCodeInfoExt(long id);
 
-    void deleteBulkDsdCodeInfoExt(String ids);
+  void deleteBulkDsdCodeInfoExt(String ids);
 
-    /**
-     * 码表信息逆向数据库操作
-     */
-    void dsdCodeInfoReverseDB(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO);
+  /** 码表信息逆向数据库操作 */
+  void dsdCodeInfoReverseDB(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO);
 }

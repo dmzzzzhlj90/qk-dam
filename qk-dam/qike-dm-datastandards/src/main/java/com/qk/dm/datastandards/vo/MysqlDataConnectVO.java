@@ -16,5 +16,4 @@ public class MysqlDataConnectVO {
   private String port;
   private String username;
   private String password;
-
 }

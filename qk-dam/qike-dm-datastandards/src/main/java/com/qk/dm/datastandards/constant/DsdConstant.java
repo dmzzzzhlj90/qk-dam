@@ -64,10 +64,28 @@ public class DsdConstant {
     return "[{\"code_table_id\":\"code\",\"name_ch\":\"编码\",\"name_en\":\"code\",\"data_type\":\"STRING\"},{\"code_table_id\":\"value\",\"name_ch\":\"值\",\"name_en\":\"value\",\"data_type\":\"STRING\"}]";
   }
 
-  //码表元数据字段key
+  // 码表元数据字段key
   public static final String CODE_INFO_TABLE_ID = "code_table_id";
   public static final String CODE_INFO_NAME_CH = "name_ch";
   public static final String CODE_INFO_NAME_EN = "name_en";
   public static final String CODE_INFO_DATA_TYPE = "data_type";
 
+  // 码表元数据字段默认值__code
+  public static final String CODE_INFO_CODE_EN_NAME = "code";
+  public static final String CODE_INFO_CODE_CH_NAME = "编码";
+  public static final String CODE_INFO_CODE_TYPE = "STRING";
+  // 码表元数据字段默认值__过滤掉ID字段
+  public static final String CODE_INFO_FILTER_ID = "id";
+  // 码表元数据字段默认值__value
+  public static final String CODE_INFO_VALUE_EN_NAME = "value";
+  public static final String CODE_INFO_VALUE_CH_NAME = "值";
+  public static final String CODE_INFO_VALUE_TYPE = "STRING";
+
+  // 码表信息同步策略 更新已有表: 0 :不更新, 1: 更新
+  public static final Integer CODE_INFO_INSERT = 0;
+  public static final Integer CODE_INFO_UPDATE = 1;
+
+  // 码表码值同步策略 逆向表数据: 0 :不逆向, 1: 覆盖
+  public static final Integer CODE_INFO_VALUES_INSERT = 0;
+  public static final Integer CODE_INFO_VALUES_UPDATE = 1;
 }
