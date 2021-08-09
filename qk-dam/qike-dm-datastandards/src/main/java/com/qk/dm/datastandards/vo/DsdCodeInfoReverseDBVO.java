@@ -1,6 +1,5 @@
 package com.qk.dm.datastandards.vo;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,10 +18,10 @@ public class DsdCodeInfoReverseDBVO {
   private String codeDirLevel;
 
   /** 数据源连接id */
-//  private String connId;
+  //  private String connId;
 
   /** 数据表 */
-//  private List<String> tableNames;
+  //  private List<String> tableNames;
 
   /** 更新已有表: 0 :不更新, 1: 更新 */
   private String isUpdate;
