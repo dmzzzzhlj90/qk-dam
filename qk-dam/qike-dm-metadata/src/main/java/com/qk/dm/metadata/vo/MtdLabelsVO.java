@@ -1,11 +1,10 @@
 package com.qk.dm.metadata.vo;
 
-import java.io.Serializable;
+import lombok.*;
+
 import javax.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
@@ -13,10 +12,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MtdLabelsVO implements Serializable {
 
-  /** 名称 */
+  /** 名称 label should contain alphanumeric characters, _ or - */
   @NotBlank(message = "名称不能为空！")
+  @Pattern(
+      regexp = "^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[_-])[a-zA-Z0-9_-]+$",
+      message = "label should contain alphanumeric characters, _ or -")
   private String name;
 
   /** 描述 */
-  private String describe;
+  private String description;
 }

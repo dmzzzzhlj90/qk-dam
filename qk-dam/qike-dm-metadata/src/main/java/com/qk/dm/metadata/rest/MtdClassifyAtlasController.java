@@ -25,7 +25,7 @@ public class MtdClassifyAtlasController {
     this.mtdClassifyAtlasService = mtdClassifyAtlasService;
   }
   /**
-   * 新增元数据分类
+   * 新增元数据分类绑定关系
    *
    * @param: mtdClassifyAtlasVO 元数据分类VO
    * @return: DefaultCommonResult
@@ -37,7 +37,7 @@ public class MtdClassifyAtlasController {
   }
 
   /**
-   * 修改元数据分类
+   * 修改元数据分类绑定关系
    *
    * @param: mtdClassifyAtlasVO 元数据分类VO
    * @return: DefaultCommonResult
@@ -51,7 +51,7 @@ public class MtdClassifyAtlasController {
   }
 
   /**
-   * 查询元数据分类
+   * 查询元数据分类绑定关系
    *
    * @param: guid 元数据guid
    * @return: 返回标签列表信息

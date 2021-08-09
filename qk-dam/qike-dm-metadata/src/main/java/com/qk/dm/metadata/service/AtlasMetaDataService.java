@@ -5,7 +5,11 @@ import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 
 import java.util.List;
-
+/**
+ * @author wangzp
+ * @date 2021/8/03 10:05
+ * @since 1.0.0
+ */
 public interface AtlasMetaDataService {
   /**
    * 查找元数据信息
