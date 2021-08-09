@@ -143,7 +143,6 @@ public class DsdCodeInfoReverseBatchService {
     if (Integer.parseInt(isReverseData) == DsdConstant.CODE_INFO_VALUES_UPDATE) {
       List<DsdCodeInfoExt> dsdCodeInfoExtList = new ArrayList<>();
       Set<Long> codeInfoIds = new HashSet<>();
-
       for (MysqlTable mysqlTable : mysqlDb.getMysqlTables()) {
         Predicate predicate =
             qDsdCodeInfo
@@ -183,7 +182,7 @@ public class DsdCodeInfoReverseBatchService {
 
   private String setCodeTableFieldsByMetaData(MysqlTable mysqlTable) {
     List<Map<String, String>> fieldList = new ArrayList();
-    setDefaultConfigCodeAndValue(fieldList);
+//    setDefaultConfigCodeAndValue(fieldList);
     for (MysqlColumn mysqlColumn : mysqlTable.getMysqlColumns()) {
       if (filterField(mysqlColumn)) {
         Map<String, String> fieldMap = new HashMap<>();
@@ -200,9 +199,8 @@ public class DsdCodeInfoReverseBatchService {
   private boolean filterField(MysqlColumn mysqlColumn) {
     boolean flag = true;
     if (DsdConstant.CODE_INFO_FILTER_ID.equalsIgnoreCase(mysqlColumn.getColName())) flag = false;
-    if (DsdConstant.CODE_INFO_CODE_EN_NAME.equalsIgnoreCase(mysqlColumn.getColName())) flag = false;
-    if (DsdConstant.CODE_INFO_VALUE_EN_NAME.equalsIgnoreCase(mysqlColumn.getColName()))
-      flag = false;
+//    if (DsdConstant.CODE_INFO_CODE_EN_NAME.equalsIgnoreCase(mysqlColumn.getColName())) flag = false;
+//    if (DsdConstant.CODE_INFO_VALUE_EN_NAME.equalsIgnoreCase(mysqlColumn.getColName())) flag = false;
     return flag;
   }
 

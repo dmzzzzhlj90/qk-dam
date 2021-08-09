@@ -22,7 +22,7 @@ public class DsdCodeInfoExt implements Serializable {
   private Long dsdCodeInfoId;
 
   /** 建表配置编码 */
-  @Column(name = "table_conf_code", nullable = false)
+  @Column(name = "table_conf_code")
   private String tableConfCode;
 
   /** 建表配置值 */
