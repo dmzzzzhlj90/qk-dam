@@ -40,6 +40,7 @@ subprojects {
     }
     configurations.all {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
     plugins.withType(JavaPlugin) {
         project.sourceCompatibility = "11"

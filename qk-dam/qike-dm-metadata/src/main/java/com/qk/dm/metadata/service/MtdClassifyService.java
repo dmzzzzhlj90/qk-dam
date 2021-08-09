@@ -1,7 +1,10 @@
 package com.qk.dm.metadata.service;
 
+import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
+import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 import com.qk.dm.metadata.vo.PageResultVO;
+
 import java.util.List;
 
 /** @author shenpengjie */
@@ -31,10 +34,10 @@ public interface MtdClassifyService {
   /**
    * 分页查询
    *
-   * @param mtdClassifyVO
+   * @param mtdClassifyListVO
    * @return
    */
-  PageResultVO<MtdClassifyVO> listByPage(MtdClassifyVO mtdClassifyVO);
+  PageResultVO<MtdClassifyInfoVO> listByPage(MtdClassifyListVO mtdClassifyListVO);
 
   /**
    * 列表查询
@@ -42,5 +45,5 @@ public interface MtdClassifyService {
    * @param mtdClassifyVO
    * @return
    */
-  List<MtdClassifyVO> listByAll(MtdClassifyVO mtdClassifyVO);
+  List<MtdClassifyInfoVO> listByAll(MtdClassifyVO mtdClassifyVO);
 }

@@ -43,7 +43,8 @@ public class MtdLabelsController {
    * @return: DefaultCommonResult
    */
   @PutMapping("/{id}")
-  public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
+  public DefaultCommonResult update(
+      @PathVariable("id") Long id, @RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.update(id, mtdLabelsVO);
     return DefaultCommonResult.success();
   }
@@ -63,12 +64,14 @@ public class MtdLabelsController {
   /**
    * 分页查询元数据标签
    *
-   * @param: pagination分页查询参数对象: page,size,sortStr
+   * @param: mtdLabelsListVO 入参
    * @return: 返回标签列表信息
    */
   @GetMapping("/page")
-  public DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>> listByPage(MtdLabelsListVO mtdLabelsListVO) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdLabelsService.listByPage(mtdLabelsListVO));
+  public DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>> listByPage(
+      MtdLabelsListVO mtdLabelsListVO) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, mtdLabelsService.listByPage(mtdLabelsListVO));
   }
 
   /**
@@ -79,12 +82,10 @@ public class MtdLabelsController {
    */
   @GetMapping("")
   public DefaultCommonResult<List<MtdLabelsInfoVO>> listByAll(MtdLabelsVO mtdLabelsVO) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdLabelsService.listByAll(mtdLabelsVO));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, mtdLabelsService.listByAll(mtdLabelsVO));
   }
 
-
-  @Autowired
-  SynchAtalsServiceImpl synchAtalsService;
+  @Autowired SynchAtalsServiceImpl synchAtalsService;
 
   @GetMapping("/synchLabelsAtlas")
   public DefaultCommonResult synchLabelsAtlas() {

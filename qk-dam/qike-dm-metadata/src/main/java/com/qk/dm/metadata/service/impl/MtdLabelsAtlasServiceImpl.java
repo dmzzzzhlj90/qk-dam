@@ -29,24 +29,27 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
   @Override
   public void insert(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
     Predicate predicate =
-            qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
+        qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
     if (mtdLabelsAtlasRepository.exists(predicate)) {
       throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据，已存在！！！");
     }
     MtdLabelsAtlas mtdLabelsAtlas =
-            MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlas(mtdLabelsAtlasVO);
+        MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlas(mtdLabelsAtlasVO);
     mtdLabelsAtlasRepository.save(mtdLabelsAtlas);
   }
 
   @Override
-  public void update(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
+  public void update(Long id, MtdLabelsAtlasVO mtdLabelsAtlasVO) {
     Predicate predicate =
-            qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
-    Optional<MtdLabelsAtlas> one = mtdLabelsAtlasRepository.findOne(predicate);
-    if (one.isEmpty()) {
+        qMtdLabelsAtlas
+            .id
+            .eq(id)
+            .and(qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()))
+            .and(qMtdLabelsAtlas.synchStatus.ne(-1));
+    MtdLabelsAtlas mtdLabelsAtlas = mtdLabelsAtlasRepository.findOne(predicate).orElse(null);
+    if (mtdLabelsAtlas == null) {
       throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据不存在！！！");
     }
-    MtdLabelsAtlas mtdLabelsAtlas = one.get();
     if (mtdLabelsAtlasVO.getLabels().isEmpty()) {
       mtdLabelsAtlas.setSynchStatus(-1);
     } else {

@@ -7,15 +7,11 @@ import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.easyexcel.listener.DsdBasicInfoUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdCodeInfoUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.listener.DsdCodeValuesUploadDataListener;
 import com.qk.dm.datastandards.easyexcel.utils.DynamicEasyExcelExportUtils;
 import com.qk.dm.datastandards.entity.*;
-import com.qk.dm.datastandards.entity.QDsdBasicinfo;
-import com.qk.dm.datastandards.entity.QDsdCodeInfo;
-import com.qk.dm.datastandards.entity.QDsdCodeInfoExt;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.repositories.DsdBasicinfoRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeInfoExtRepository;
@@ -148,47 +144,57 @@ public class DsdExcelServiceImpl implements DsdExcelService {
   @Override
   public void codeValuesDownloadByCodeInfoId(HttpServletResponse response, Long dsdCodeInfoId) {
     try {
-      List<List<String>> excelHead = getCodeExcelHeadList(dsdCodeInfoId);
-      List<List<Object>> excelRows = getCodeExcelValues(dsdCodeInfoId);
-      DynamicEasyExcelExportUtils.exportWebExcelFile(response, excelHead, excelRows, "码表数值信息");
+      Map<String, Object> headInfoMap = getCodeExcelHeadList(dsdCodeInfoId);
+      List<List<Object>> excelRows =
+          getCodeExcelValues(dsdCodeInfoId, (LinkedList<String>) headInfoMap.get("headKeyList"));
+      DynamicEasyExcelExportUtils.exportWebExcelFile(
+          response, (List<List<String>>) headInfoMap.get("excelHead"), excelRows, "码表数值信息");
     } catch (Exception e) {
       e.printStackTrace();
       throw new BizException("导出文件失败!");
     }
   }
 
-  private List<List<String>> getCodeExcelHeadList(Long dsdCodeInfoId) {
+  private Map<String, Object> getCodeExcelHeadList(Long dsdCodeInfoId) {
+    Map<String, Object> headInfoMap = new HashMap<>();
+    List<List<String>> excelHead = new ArrayList<>();
+    LinkedList<String> headKeyList = new LinkedList<>();
+
     Optional<DsdCodeInfo> dsdCodeInfo = dsdCodeInfoRepository.findById(dsdCodeInfoId);
     String tableConfFields = dsdCodeInfo.get().getTableConfFields();
     List<CodeTableFieldsVO> codeTableFieldsVOList =
         GsonUtil.fromJsonString(
             tableConfFields, new TypeToken<List<CodeTableFieldsVO>>() {}.getType());
-    List<List<String>> excelHead = new ArrayList<>();
+
     codeTableFieldsVOList.forEach(
         codeTableFieldsVO -> {
           excelHead.add(Lists.newArrayList(codeTableFieldsVO.getName_ch().split(",")));
+          headKeyList.add(codeTableFieldsVO.getCode_table_id());
         });
-    return excelHead;
+    headInfoMap.put("excelHead", excelHead);
+    headInfoMap.put("headKeyList", headKeyList);
+    return headInfoMap;
   }
 
-  private List<List<Object>> getCodeExcelValues(Long dsdCodeInfoId) {
+  private List<List<Object>> getCodeExcelValues(
+      Long dsdCodeInfoId, LinkedList<String> headKeyList) {
     List<List<Object>> excelRows = new ArrayList<>();
     Predicate predicate = qDsdCodeInfoExt.dsdCodeInfoId.eq(dsdCodeInfoId);
     Iterable<DsdCodeInfoExt> dsdCodeInfoExtIter = dsdCodeInfoExtRepository.findAll(predicate);
 
     for (DsdCodeInfoExt dsdCodeInfoExt : dsdCodeInfoExtIter) {
       List<Object> rows = new ArrayList<>();
-      String code = dsdCodeInfoExt.getTableConfCode();
-      String value = dsdCodeInfoExt.getTableConfValue();
-      rows.add(code);
-      rows.add(value);
+      //      String code = dsdCodeInfoExt.getTableConfCode();
+      //      String value = dsdCodeInfoExt.getTableConfValue();
+      //      rows.add(code);
+      //      rows.add(value);
       String extValuesStr = dsdCodeInfoExt.getTableConfExtValues();
       if (!StringUtils.isEmpty(extValuesStr)) {
         LinkedHashMap<String, String> extDataMap =
             GsonUtil.fromJsonString(
                 extValuesStr, new TypeToken<LinkedHashMap<String, String>>() {}.getType());
-        for (String key : extDataMap.keySet()) {
-          rows.add(extDataMap.get(key));
+        for (String headKey : headKeyList) {
+          rows.add(extDataMap.get(headKey));
         }
       }
       excelRows.add(rows);
@@ -237,10 +243,11 @@ public class DsdExcelServiceImpl implements DsdExcelService {
   @Override
   public void codeValuesDownloadTemplate(HttpServletResponse response, long dsdCodeInfoId) {
     try {
-      List<List<String>> excelHead = getCodeExcelHeadList(dsdCodeInfoId);
-      List<List<Object>> excelRows = getCodeTemplateSampleData(excelHead);
+      final Map<String, Object> headInfoMap = getCodeExcelHeadList(dsdCodeInfoId);
+      List<List<Object>> excelRows =
+          getCodeTemplateSampleData((List<List<String>>) headInfoMap.get("excelHead"));
       DynamicEasyExcelExportUtils.exportWebExcelFile(
-          response, excelHead, excelRows, "数据标准码表信息_模板下载");
+          response, (List<List<String>>) headInfoMap.get("excelHead"), excelRows, "数据标准码表信息_模板下载");
     } catch (Exception e) {
       e.printStackTrace();
       throw new BizException("导出文件失败!");
@@ -347,14 +354,21 @@ public class DsdExcelServiceImpl implements DsdExcelService {
           .entrySet()
           .forEach(
               columnHead -> {
-                final String value = dataRow.get(columnHead.getKey());
-                if (columnHead.getValue().equals(DsdConstant.CODE_INFO_CODE_CH_NAME)) {
-                  dsdCodeInfoExt.setTableConfCode(value);
-                } else if (columnHead.getValue().equals(DsdConstant.CODE_INFO_VALUE_CH_NAME)) {
-                  dsdCodeInfoExt.setTableConfValue(value);
-                } else {
-                  rowExtData.put(fieldMap.get(columnHead.getValue()), value);
-                }
+                String value = dataRow.get(columnHead.getKey());
+                // TODO 20210809,为了作为检索的参数,暂时注释掉,前端不然显示有bug;
+                //                if
+                // (columnHead.getValue().equals(DsdConstant.CODE_INFO_CODE_CH_NAME)
+                //
+                // ||columnHead.getValue().equalsIgnoreCase(DsdConstant.CODE_INFO_CODE_EN_NAME)) {
+                //                  dsdCodeInfoExt.setTableConfCode(value);
+                //                } else if
+                // (columnHead.getValue().equals(DsdConstant.CODE_INFO_NAME_CH_NAME)
+                //
+                // ||columnHead.getValue().equalsIgnoreCase(DsdConstant.CODE_INFO_NAME_EN_NAME)) {
+                //                  dsdCodeInfoExt.setTableConfValue(value);
+                //                } else {
+                rowExtData.put(fieldMap.get(columnHead.getValue()), value);
+                //                }
               });
       dsdCodeInfoExt.setTableConfExtValues(GsonUtil.toJsonString(rowExtData));
       saveDataList.add(dsdCodeInfoExt);

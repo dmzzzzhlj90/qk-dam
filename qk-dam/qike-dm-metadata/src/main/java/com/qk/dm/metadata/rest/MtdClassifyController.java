@@ -3,6 +3,8 @@ package com.qk.dm.metadata.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyService;
+import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
+import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 import com.qk.dm.metadata.vo.PageResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class MtdClassifyController {
   }
 
   /**
-   * 修改元数据标签
+   * 修改元数据分类
    *
    * @param: mtdClassifyAtlasVO 元数据分类VO
    * @return: DefaultCommonResult
@@ -51,7 +53,7 @@ public class MtdClassifyController {
   }
 
   /**
-   * 删除元数据标签
+   * 删除元数据分类
    *
    * @param: mtdClassifyAtlasVO 元数据分类VO
    * @return: DefaultCommonResult
@@ -63,24 +65,24 @@ public class MtdClassifyController {
   }
 
   /**
-   * 查询元数据标签
+   * 分页查询元数据分类
    *
    * @param: pagination分页查询参数对象: page,size,sortStr
    * @return: DefaultCommonResult
    */
   @GetMapping("/page")
-  public DefaultCommonResult<PageResultVO<MtdClassifyVO>> classifyByPage(MtdClassifyVO mtdClassifyVO) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByPage(mtdClassifyVO));
+  public DefaultCommonResult<PageResultVO<MtdClassifyInfoVO>> classifyByPage(MtdClassifyListVO mtdClassifyListVO) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByPage(mtdClassifyListVO));
   }
 
   /**
-   * 查询元数据标签
+   * 查询元数据分类
    *
    * @param: pagination分页查询参数对象: page,size,sortStr
    * @return: DefaultCommonResult
    */
   @GetMapping("")
-  public DefaultCommonResult<List<MtdClassifyVO>> classifyByAll(MtdClassifyVO mtdClassifyVO) {
+  public DefaultCommonResult<List<MtdClassifyInfoVO>> classifyByAll(MtdClassifyVO mtdClassifyVO) {
     return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByAll(mtdClassifyVO));
   }
 }

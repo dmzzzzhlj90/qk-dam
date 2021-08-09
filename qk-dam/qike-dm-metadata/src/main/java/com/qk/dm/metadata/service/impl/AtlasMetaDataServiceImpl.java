@@ -18,6 +18,11 @@ import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author wangzp
+ * @date 2021/8/03 10:06
+ * @since 1.0.0
+ */
 @Service
 public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
@@ -25,25 +30,37 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   @Override
   public List<MtdAtlasBaseVO> searchList(
       String query, String typeName, String classification, int limit, int offse) {
-    List<MtdAtlasBaseVO> atlasBaseMainDataVOList = new ArrayList<>();
+    List<MtdAtlasBaseVO> atlasBaseMainDataVOList = null;
     try {
       AtlasSearchResult atlasSearchResult =
           atlasClientV2.basicSearch(typeName, classification, query, false, 5, 0);
       List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
-      entities.forEach(
-          e -> {
-            atlasBaseMainDataVOList.add(
-                MtdAtlasBaseVO.builder()
-                    .guid(e.getGuid())
-                    .typeName(e.getTypeName())
-                    .displayName(e.getDisplayText())
-                    .qualifiedName(e.getAttributes().get("qualifiedName").toString())
-                    .createTime(new Date((Long) e.getAttributes().get("createTime")))
-                    .build());
-          });
+      atlasBaseMainDataVOList = buildMataDataList(entities);
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return atlasBaseMainDataVOList;
+  }
+
+  /**
+   * 组装元数据列表
+   *
+   * @param entities
+   * @return
+   */
+  private List<MtdAtlasBaseVO> buildMataDataList(List<AtlasEntityHeader> entities) {
+    List<MtdAtlasBaseVO> atlasBaseMainDataVOList = new ArrayList<>();
+    entities.forEach(
+        e -> {
+          atlasBaseMainDataVOList.add(
+              MtdAtlasBaseVO.builder()
+                  .guid(e.getGuid())
+                  .typeName(e.getTypeName())
+                  .displayName(e.getDisplayText())
+                  .qualifiedName(e.getAttributes().get("qualifiedName").toString())
+                  .createTime(Objects.isNull(e.getAttributes().get("createTime"))?null:new Date((Long) e.getAttributes().get("createTime")))
+                  .build());
+        });
     return atlasBaseMainDataVOList;
   }
 
@@ -55,24 +72,31 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       Map<String, Object> attributes = detail.getEntity().getAttributes();
       atlasBaseMainDataDetailVO = GsonUtil.fromMap(attributes, MtdAtlasBaseDetailVO.class);
       atlasBaseMainDataDetailVO.setTypeName(detail.getEntity().getTypeName());
-      Map<String, AtlasEntity> map = detail.getReferredEntities();
-      List<AtlasEntity> atlasEntityList = new ArrayList<>(map.values());
-      List<Map<String, Object>> collect =
-          atlasEntityList.stream()
-              .map(
-                  e -> {
-                    Map<String, Object> attr = e.getAttributes();
-                    attr.put("guid", e.getGuid());
-                    return attr;
-                  })
-              .collect(Collectors.toList());
-      atlasBaseMainDataDetailVO.setReferredEntities(collect);
+      atlasBaseMainDataDetailVO.setReferredEntities(buildReferredEntities(detail));
       atlasBaseMainDataDetailVO.setRelationshipAttributes(
           detail.getEntity().getRelationshipAttributes());
     } catch (Exception e) {
       e.printStackTrace();
     }
     return atlasBaseMainDataDetailVO;
+  }
+
+  /**
+   * 组装参考实体
+   * @param detail
+   * @return
+   */
+  private List<Map<String, Object>> buildReferredEntities(
+      AtlasEntity.AtlasEntityWithExtInfo detail) {
+    List<AtlasEntity> atlasEntityList = new ArrayList<>(detail.getReferredEntities().values());
+    return atlasEntityList.stream()
+        .map(
+            e -> {
+              Map<String, Object> attr = e.getAttributes();
+              attr.put("guid", e.getGuid());
+              return attr;
+            })
+        .collect(Collectors.toList());
   }
 
   @Override

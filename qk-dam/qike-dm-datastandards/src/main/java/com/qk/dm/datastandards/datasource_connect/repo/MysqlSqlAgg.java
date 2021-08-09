@@ -165,6 +165,11 @@ public class MysqlSqlAgg {
                   entity -> {
                     DsdCodeInfoExt dsdCodeInfoExt = new DsdCodeInfoExt();
                     dsdCodeInfoExt.setDsdCodeInfoId(codeInfoId);
+                    // TODO 20210809,为了作为检索的参数,暂时注释掉,前端不然显示有bug;
+                    //
+                    // dsdCodeInfoExt.setTableConfCode(entity.getStr(DsdConstant.CODE_INFO_CODE_EN_NAME));
+                    //
+                    // dsdCodeInfoExt.setTableConfValue(entity.getStr(DsdConstant.CODE_INFO_NAME_EN_NAME));
                     dsdCodeInfoExt.setTableConfExtValues(
                         getTableConfExtValuesByMetaData(entity, colKeyList));
                     dsdCodeInfoExt.setGmtCreate(new Date());
@@ -190,8 +195,8 @@ public class MysqlSqlAgg {
   private boolean filterFields(String colKey) {
     boolean flag = true;
     if (DsdConstant.CODE_INFO_FILTER_ID.equalsIgnoreCase(colKey)) flag = false;
-//    if (DsdConstant.CODE_INFO_CODE_EN_NAME.equalsIgnoreCase(colKey)) flag = false;
-//    if (DsdConstant.CODE_INFO_VALUE_EN_NAME.equalsIgnoreCase(colKey)) flag = false;
+    //    if (DsdConstant.CODE_INFO_CODE_EN_NAME.equalsIgnoreCase(colKey)) flag = false;
+    //    if (DsdConstant.CODE_INFO_VALUE_EN_NAME.equalsIgnoreCase(colKey)) flag = false;
     return flag;
   }
 }
