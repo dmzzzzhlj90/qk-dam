@@ -165,9 +165,6 @@ public class MysqlSqlAgg {
                   entity -> {
                     DsdCodeInfoExt dsdCodeInfoExt = new DsdCodeInfoExt();
                     dsdCodeInfoExt.setDsdCodeInfoId(codeInfoId);
-                    dsdCodeInfoExt.setTableConfCode(
-                        entity.getStr(DsdConstant.CODE_INFO_CODE_EN_NAME));
-                    dsdCodeInfoExt.setTableConfValue("");
                     dsdCodeInfoExt.setTableConfExtValues(
                         getTableConfExtValuesByMetaData(entity, colKeyList));
                     dsdCodeInfoExt.setGmtCreate(new Date());
@@ -193,8 +190,8 @@ public class MysqlSqlAgg {
   private boolean filterFields(String colKey) {
     boolean flag = true;
     if (DsdConstant.CODE_INFO_FILTER_ID.equalsIgnoreCase(colKey)) flag = false;
-    if (DsdConstant.CODE_INFO_CODE_EN_NAME.equalsIgnoreCase(colKey)) flag = false;
-    if (DsdConstant.CODE_INFO_VALUE_EN_NAME.equalsIgnoreCase(colKey)) flag = false;
+//    if (DsdConstant.CODE_INFO_CODE_EN_NAME.equalsIgnoreCase(colKey)) flag = false;
+//    if (DsdConstant.CODE_INFO_VALUE_EN_NAME.equalsIgnoreCase(colKey)) flag = false;
     return flag;
   }
 }
