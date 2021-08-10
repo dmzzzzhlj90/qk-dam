@@ -1,17 +1,19 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.metedata.util.AtlasClassificationUtil;
-import com.qk.dm.metadata.AtlasLabelsUtil;
+import com.qk.dam.metedata.util.AtlasLabelsUtil;
 import com.qk.dm.metadata.entity.MtdClassify;
 import com.qk.dm.metadata.entity.MtdClassifyAtlas;
 import com.qk.dm.metadata.entity.MtdLabelsAtlas;
 import com.qk.dm.metadata.repositories.MtdClassifyAtlasRepository;
 import com.qk.dm.metadata.repositories.MtdClassifyRepository;
 import com.qk.dm.metadata.repositories.MtdLabelsAtlasRepository;
+import com.qk.dm.metadata.service.SynchAtalsService;
 import org.apache.atlas.AtlasServiceException;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
-public class SynchAtalsServiceImpl {
+public class SynchAtalsServiceImpl implements SynchAtalsService {
 
   private final MtdLabelsAtlasRepository mtdLabelsAtlasRepository;
   private final MtdClassifyRepository mtdClassifyRepository;
@@ -47,7 +49,7 @@ public class SynchAtalsServiceImpl {
       this.putAtlasLabels(updateList);
       List<MtdLabelsAtlas> deleteList =
           labelAllList.stream().filter(i -> i.getSynchStatus() == -1).collect(Collectors.toList());
-      this.deleteAtlasLabels(deleteList);
+      this.delAtlasLabels(deleteList);
     }
   }
 
@@ -59,12 +61,12 @@ public class SynchAtalsServiceImpl {
           mtdClassifyList.stream()
               .filter(i -> i.getSynchStatus() == 2)
               .collect(Collectors.toList());
-      this.addAlassify(addClassList);
+      this.addClassify(addClassList);
       List<MtdClassify> deleteClassList =
           mtdClassifyList.stream()
               .filter(i -> i.getSynchStatus() == -1)
               .collect(Collectors.toList());
-      this.deleteAlassify(deleteClassList);
+      this.delClassify(deleteClassList);
     }
   }
 
@@ -82,7 +84,7 @@ public class SynchAtalsServiceImpl {
           classifyAtlasList.stream()
               .filter(i -> i.getSynchStatus() == -1)
               .collect(Collectors.toList());
-      this.deleteAtlasClassify(deleteClassList);
+      this.delAtlasClassify(deleteClassList);
     }
   }
 
@@ -102,55 +104,53 @@ public class SynchAtalsServiceImpl {
     }
   }
 
-  private void deleteAtlasLabels(List<MtdLabelsAtlas> deleteList) {
+  private void delAtlasLabels(List<MtdLabelsAtlas> deleteList) {
     if (!deleteList.isEmpty()) {
-      deleteList.forEach(
-          mtdLabelsAtlas -> {
-            try {
-              AtlasLabelsUtil.removeLabels(mtdLabelsAtlas.getGuid());
-            } catch (AtlasServiceException e) {
-              // 降级处理
-              e.printStackTrace();
-            }
-          });
+      Iterator<MtdLabelsAtlas> itr = deleteList.iterator();
+      while (itr.hasNext()) {
+        try {
+          AtlasLabelsUtil.removeLabels(itr.next().getGuid());
+        } catch (AtlasServiceException e) {
+          e.printStackTrace();
+          // todo 降级处理
+          itr.remove();
+        }
+      }
       mtdLabelsAtlasRepository.deleteAll(deleteList);
     }
   }
 
-  private void addAlassify(List<MtdClassify> addClassList) {
+  private void addClassify(List<MtdClassify> addClassList) {
     if (!addClassList.isEmpty()) {
-      Map<String, String> addClassMap =
-          addClassList.stream()
-              .collect(Collectors.toMap(MtdClassify::getName, MtdClassify::getDescription));
       try {
-        AtlasLabelsUtil.postTypedefs(addClassMap);
+        Map<String, String> addClassMap =
+            addClassList.stream()
+                .collect(Collectors.toMap(MtdClassify::getName, MtdClassify::getDescription));
+        AtlasLabelsUtil.addTypedefs(addClassMap);
+        mtdClassifyRepository.saveAll(
+            addClassList.stream().peek(i -> i.setSynchStatus(1)).collect(Collectors.toList()));
       } catch (AtlasServiceException e) {
         // 降级处理
         e.printStackTrace();
       }
-      mtdClassifyRepository.saveAll(
-          addClassList.stream().peek(i -> i.setSynchStatus(1)).collect(Collectors.toList()));
     }
   }
 
-  private void deleteAlassify(List<MtdClassify> deleteClassList) {
-    if (!deleteClassList.isEmpty()) {
-      deleteClassList.forEach(
-          classify -> {
-            try {
-              AtlasClassificationUtil.delEntitiesClassis(classify.getName());
-            } catch (AtlasServiceException e) {
-              // 降级处理
-              e.printStackTrace();
-            }
-            try {
-              AtlasClassificationUtil.delClassi(classify.getName());
-            } catch (AtlasServiceException e) {
-              // 降级处理
-              e.printStackTrace();
-            }
-          });
-      mtdClassifyRepository.deleteAll(deleteClassList);
+  private void delClassify(List<MtdClassify> deleteList) {
+    if (!deleteList.isEmpty()) {
+      Iterator<MtdClassify> itr = deleteList.iterator();
+      while (itr.hasNext()) {
+        String name = itr.next().getName();
+        try {
+          AtlasClassificationUtil.delEntitiesClassis(name);
+          AtlasClassificationUtil.delClassi(name);
+        } catch (AtlasServiceException e) {
+          e.printStackTrace();
+          // todo 降级处理
+          itr.remove();
+        }
+      }
+      mtdClassifyRepository.deleteAll(deleteList);
     }
   }
 
@@ -171,18 +171,19 @@ public class SynchAtalsServiceImpl {
     }
   }
 
-  private void deleteAtlasClassify(List<MtdClassifyAtlas> deleteClassList) {
-    if (!deleteClassList.isEmpty()) {
-      deleteClassList.forEach(
-          mtdClassifyAtlas -> {
-            try {
-              AtlasLabelsUtil.delEntitiesClassis(mtdClassifyAtlas.getGuid());
-            } catch (AtlasServiceException e) {
-              // 降级处理
-              e.printStackTrace();
-            }
-          });
-      mtdClassifyAtlasRepository.deleteAll(deleteClassList);
+  private void delAtlasClassify(List<MtdClassifyAtlas> deleteList) {
+    if (!deleteList.isEmpty()) {
+      Iterator<MtdClassifyAtlas> itr = deleteList.iterator();
+      while (itr.hasNext()) {
+        try {
+          AtlasLabelsUtil.delEntitiesClassis(itr.next().getGuid());
+        } catch (AtlasServiceException e) {
+          e.printStackTrace();
+          // todo 降级处理
+          itr.remove();
+        }
+      }
+      mtdClassifyAtlasRepository.deleteAll(deleteList);
     }
   }
 }
