@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author wangzp
  * @date 2021/7/31 11:34
@@ -22,6 +24,7 @@ public class MtdClassifyAtlasVO {
   private Long id;
 
   /** 元数据标识 */
+  @NotBlank(message = "元数据标识不能为空！")
   private String guid;
 
   /** 分类 */
