@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
+ * 元数据分类相关基础接口
  * @author wangzp
  * @date 2021/7/31 14:21
  * @since 1.0.0
