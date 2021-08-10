@@ -30,6 +30,12 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
     setData(data);
   }
 
+  DefaultCommonResult(T data, String retCode, String retMsg) {
+    setRetCode(retCode);
+    setRetMsg(retMsg);
+    setData(data);
+  }
+
   public static DefaultCommonResult<Object> success() {
     return new DefaultCommonResult<>(ResultCodeEnum.OK);
   }
@@ -43,11 +49,7 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
   }
 
   public static <T> DefaultCommonResult<T> success(T data, String retCode, String retMsg) {
-    DefaultCommonResult<T> baseResult = new DefaultCommonResult<>();
-    baseResult.setRetCode(retCode);
-    baseResult.setRetMsg(retMsg);
-    baseResult.setData(data);
-    return baseResult;
+    return new DefaultCommonResult(data, retCode, retMsg);
   }
 
   public static <T> DefaultCommonResult<T> fail() {
@@ -63,10 +65,6 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
   }
 
   public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, String tips) {
-    DefaultCommonResult<T> baseResult = new DefaultCommonResult<>();
-    baseResult.setRetCode(codeEnum.getCode());
-    baseResult.setRetMsg(codeEnum.getFormattedErrorMessage());
-    baseResult.setTips(tips);
-    return baseResult;
+    return new DefaultCommonResult(codeEnum, tips);
   }
 }
