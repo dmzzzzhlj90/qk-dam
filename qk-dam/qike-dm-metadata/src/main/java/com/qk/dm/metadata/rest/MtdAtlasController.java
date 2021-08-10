@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * 元数据查询相关接口（元数据列表查询、元数据详情、元数据类型等接口）
  * @author wangzp
  * @date 2021/8/06 15:05
  * @since 1.0.0

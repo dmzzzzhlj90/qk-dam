@@ -1,4 +1,4 @@
-package com.qk.dm.metadata;
+package com.qk.dam.metedata.util;
 
 import com.qk.dam.metedata.config.AtlasConfig;
 import org.apache.atlas.AtlasClientV2;
@@ -11,9 +11,9 @@ import org.apache.atlas.model.typedef.AtlasTypesDef;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
+ * 标签与Atlas绑定工具类
  * @author spj
  * @date 2021/8/5 4:36 下午
  * @since 1.0.0
@@ -61,13 +61,6 @@ public class AtlasLabelsUtil {
     }
   }
 
-  public static void main(String[] args) throws AtlasServiceException {
-    AtlasLabelsUtil.setLabels("483c95fc-f134-4f25-aff0-45d6ebbe82bd", "test1-1");
-    AtlasLabelsUtil.removeLabels("483c95fc-f134-4f25-aff0-45d6ebbe82bd");
-    System.out.println(
-        AtlasLabelsUtil.getLabels("483c95fc-f134-4f25-aff0-45d6ebbe82bd").toArray().toString());
-  }
-
   /**
    * 删除实体上指定标签
    *
@@ -99,7 +92,7 @@ public class AtlasLabelsUtil {
   }
 
   /**
-   * 删除实体类上具体分类
+   * 修改实体类上具体分类
    *
    * @param guid
    * @param classify
@@ -107,14 +100,30 @@ public class AtlasLabelsUtil {
    */
   public static void upEntitiesClassis(String guid, String classify) throws AtlasServiceException {
     List<AtlasClassification> atlasClassifications = getAtlasClassifications(guid);
-    List<String> classifyList = getDeleteClassifyList(classify, atlasClassifications);
-    for (String className : classifyList) {
-      atlasClientV2.deleteClassification(guid, className);
+    List<String> classify1 = Arrays.asList(classify.split(","));
+    List<String> classify2 =
+        atlasClassifications.stream().map(AtlasStruct::getTypeName).collect(Collectors.toList());
+    List<String> classifyList = getClassifyList(classify2, classify1);
+    if (!classifyList.isEmpty()) {
+      delEntitiesClassis(guid, classifyList);
     }
-    List<String> addClassifyList = getAddClassifyList(classify, atlasClassifications);
+    List<String> addClassifyList = getClassifyList(classify1, classify2);
     if (!addClassifyList.isEmpty()) {
       addEntitiesClassis(guid, addClassifyList);
     }
+  }
+
+  /**
+   * 删除实体类上具体分类
+   *
+   * @param guid
+   * @param classify
+   * @throws AtlasServiceException
+   */
+  public static void delEntitiesClassis(String guid, List<String> classify)
+      throws AtlasServiceException {
+    List<AtlasClassification> classificationList = getAtlasClassificationList(classify);
+    atlasClientV2.deleteClassifications(guid, classificationList);
   }
 
   /**
@@ -127,7 +136,7 @@ public class AtlasLabelsUtil {
   public static void addEntitiesClassis(String guid, List<String> classify)
       throws AtlasServiceException {
     List<AtlasClassification> classificationList = getAtlasClassificationList(classify);
-    AtlasConfig.getAtlasClientV2().addClassifications(guid, classificationList);
+    atlasClientV2.addClassifications(guid, classificationList);
   }
 
   /**
@@ -136,8 +145,18 @@ public class AtlasLabelsUtil {
    * @param map
    * @throws AtlasServiceException
    */
-  public static void postTypedefs(Map<String, String> map) throws AtlasServiceException {
+  public static void addTypedefs(Map<String, String> map) throws AtlasServiceException {
     atlasClientV2.createAtlasTypeDefs(getTypesDef(map));
+  }
+
+  /**
+   * 单个新增分类
+   * @param name
+   * @param description
+   * @throws AtlasServiceException
+   */
+  public static void addTypedefs(String name, String description) throws AtlasServiceException {
+    atlasClientV2.createAtlasTypeDefs(getTypesDef(new HashMap<>() {{put(name, description);}}));
   }
 
   /**
@@ -146,7 +165,7 @@ public class AtlasLabelsUtil {
    * @param map
    * @throws AtlasServiceException
    */
-  public static void deleteTypedefs(Map<String, String> map) throws AtlasServiceException {
+  public static void delTypedefs(Map<String, String> map) throws AtlasServiceException {
     atlasClientV2.deleteAtlasTypeDefs(getTypesDef(map));
   }
 
@@ -170,21 +189,8 @@ public class AtlasLabelsUtil {
     return entityHeaderByGuid.getClassifications();
   }
 
-  private static List<String> getDeleteClassifyList(
-      String classify, List<AtlasClassification> classifications) {
-    return classifications.stream()
-        .map(AtlasStruct::getTypeName)
-        .filter(cfy -> !Arrays.asList(classify.split(",")).contains(cfy))
-        .collect(Collectors.toList());
-  }
-
-  private static List<String> getAddClassifyList(
-      String classify, List<AtlasClassification> classifications) {
-    List<String> list =
-        classifications.stream().map(AtlasStruct::getTypeName).collect(Collectors.toList());
-    return Stream.of(classify.split(","))
-        .filter(cfy -> !list.contains(cfy))
-        .collect(Collectors.toList());
+  private static List<String> getClassifyList(List<String> classify1, List<String> classify2) {
+    return classify1.stream().filter(cfy -> !classify2.contains(cfy)).collect(Collectors.toList());
   }
 
   private static List<AtlasClassification> getAtlasClassificationList(List<String> classify) {

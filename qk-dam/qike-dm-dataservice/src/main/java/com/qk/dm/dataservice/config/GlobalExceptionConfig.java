@@ -2,12 +2,13 @@ package com.qk.dm.dataservice.config;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import java.util.List;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.List;
 
 /** @author shenpengjie */
 // @RestControllerAdvice
@@ -30,12 +31,12 @@ public class GlobalExceptionConfig {
             }
           });
     }
-    return new DefaultCommonResult(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR);
+    return DefaultCommonResult.fail(ResultCodeEnum.SERVLET_REQUEST_BINDING_ERROR);
   }
 
   @ExceptionHandler(MissingServletRequestParameterException.class)
   public DefaultCommonResult missingServletRequestParameterException(
       MissingServletRequestParameterException e) {
-    return new DefaultCommonResult(ResultCodeEnum.PARAM_IS_INVALID);
+    return DefaultCommonResult.fail(ResultCodeEnum.PARAM_IS_INVALID);
   }
 }

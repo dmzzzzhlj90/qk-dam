@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * 元数据标签绑定功能
+ * @author spj
+ * @date 2021/8/5 4:36 下午
+ * @since 1.0.0
+ */
 @RestController
 @RequestMapping("/labels/atlas")
 public class MtdLabelsAtlasController {

@@ -117,7 +117,7 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
                       .filter(y -> !nameList.contains(y))
                       .collect(Collectors.joining(","));
               mla.setClassify(classify.isEmpty() ? mla.getClassify() : classify);
-              mla.setSynchStatus(classify.isEmpty() ? -1 : 0);
+              mla.setSynchStatus(classify.isEmpty() ? -1 : mla.getSynchStatus());
             })
         .collect(Collectors.toList());
   }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
+ * 元数据分类绑定相关接口
  * @author wangzp
  * @date 2021/7/31 12:21
  * @since 1.0.0
