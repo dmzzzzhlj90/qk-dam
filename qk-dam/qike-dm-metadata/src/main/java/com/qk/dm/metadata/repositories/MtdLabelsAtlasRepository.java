@@ -8,8 +8,7 @@ public interface MtdLabelsAtlasRepository extends BaseRepository<MtdLabelsAtlas,
 
   List<MtdLabelsAtlas> findAllBySynchStatusInOrderByGmtCreateAsc(List<Integer> synchStatus);
 
-  List<MtdLabelsAtlas> findAllByLabelsIsLikeAndSynchStatusIsNot(String labels,Integer synchStatus);
+  List<MtdLabelsAtlas> findAllByLabelsIsLikeAndSynchStatusIsNot(String labels, Integer synchStatus);
 
   List<MtdLabelsAtlas> findAllBySynchStatusIsNot(Integer synchStatus);
-
 }

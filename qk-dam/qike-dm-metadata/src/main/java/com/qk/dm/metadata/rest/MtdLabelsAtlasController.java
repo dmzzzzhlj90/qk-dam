@@ -4,12 +4,12 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
-import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 元数据标签绑定功能
+ *
  * @author spj
  * @date 2021/8/5 4:36 下午
  * @since 1.0.0

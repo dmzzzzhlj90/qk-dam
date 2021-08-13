@@ -8,14 +8,14 @@ import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
+import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
-
 /**
  * 元数据标签功能
+ *
  * @author spj
  * @date 2021/8/5 4:36 下午
  * @since 1.0.0
@@ -93,18 +93,30 @@ public class MtdLabelsController {
 
   @Autowired SynchAtalsServiceImpl synchAtalsService;
 
+  /**
+   * 刷新标签绑定
+   * @return success
+   */
   @GetMapping("/synchLabelsAtlas")
   public DefaultCommonResult synchLabelsAtlas() {
     synchAtalsService.synchLabelsAtlas();
     return DefaultCommonResult.success();
   }
 
+  /**
+   * 刷新分类
+   * @return success
+   */
   @GetMapping("/synchClassify")
   public DefaultCommonResult synchClassify() {
     synchAtalsService.synchClassify();
     return DefaultCommonResult.success();
   }
 
+  /**
+   * 刷新分类绑定
+   * @return success
+   */
   @GetMapping("/synchClassifyAtlas")
   public DefaultCommonResult synchClassifyAtlas() {
     synchAtalsService.synchClassifyAtlas();

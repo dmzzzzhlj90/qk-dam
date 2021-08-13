@@ -9,14 +9,13 @@ import com.qk.dm.metadata.repositories.MtdClassifyAtlasRepository;
 import com.qk.dm.metadata.repositories.MtdClassifyRepository;
 import com.qk.dm.metadata.repositories.MtdLabelsAtlasRepository;
 import com.qk.dm.metadata.service.SynchAtalsService;
-import org.apache.atlas.AtlasServiceException;
-import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.apache.atlas.AtlasServiceException;
+import org.springframework.stereotype.Service;
 
 /**
  * @author spj
