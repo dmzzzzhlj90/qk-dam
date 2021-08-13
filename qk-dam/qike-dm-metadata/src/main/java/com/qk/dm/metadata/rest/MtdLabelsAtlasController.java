@@ -15,7 +15,7 @@ import javax.validation.Valid;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/labels/atlas")
+@RequestMapping("/labels/bind")
 public class MtdLabelsAtlasController {
 
   private final MtdLabelsAtlasService mtdLabelsAtlasService;
