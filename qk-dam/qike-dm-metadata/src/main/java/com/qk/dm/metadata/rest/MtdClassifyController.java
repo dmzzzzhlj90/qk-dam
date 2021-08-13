@@ -7,14 +7,14 @@ import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
 import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 import com.qk.dm.metadata.vo.PageResultVO;
+import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
-
 /**
  * 元数据分类相关基础接口
+ *
  * @author wangzp
  * @date 2021/7/31 14:21
  * @since 1.0.0
@@ -48,7 +48,8 @@ public class MtdClassifyController {
    * @return: DefaultCommonResult
    */
   @PutMapping("/{id}")
-  public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
+  public DefaultCommonResult update(
+      @PathVariable("id") Long id, @RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.update(id, mtdClassifyVO);
     return DefaultCommonResult.success();
   }
@@ -72,8 +73,10 @@ public class MtdClassifyController {
    * @return: DefaultCommonResult
    */
   @GetMapping("/page")
-  public DefaultCommonResult<PageResultVO<MtdClassifyInfoVO>> classifyByPage(MtdClassifyListVO mtdClassifyListVO) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByPage(mtdClassifyListVO));
+  public DefaultCommonResult<PageResultVO<MtdClassifyInfoVO>> classifyByPage(
+      MtdClassifyListVO mtdClassifyListVO) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, mtdClassifyService.listByPage(mtdClassifyListVO));
   }
 
   /**
@@ -84,6 +87,7 @@ public class MtdClassifyController {
    */
   @GetMapping("")
   public DefaultCommonResult<List<MtdClassifyInfoVO>> classifyByAll(MtdClassifyVO mtdClassifyVO) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyService.listByAll(mtdClassifyVO));
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, mtdClassifyService.listByAll(mtdClassifyVO));
   }
 }

@@ -4,13 +4,13 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 /**
  * 元数据分类绑定相关接口
+ *
  * @author wangzp
  * @date 2021/7/31 12:21
  * @since 1.0.0
@@ -59,6 +59,6 @@ public class MtdClassifyAtlasController {
    */
   @GetMapping("/{guid}")
   public DefaultCommonResult<MtdClassifyAtlasVO> getByGuid(@PathVariable("guid") String guid) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdClassifyAtlasService.getByGuid(guid));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, mtdClassifyAtlasService.getByGuid(guid));
   }
 }

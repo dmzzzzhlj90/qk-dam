@@ -6,10 +6,9 @@ import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
+import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
@@ -58,7 +57,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                   .typeName(e.getTypeName())
                   .displayName(e.getDisplayText())
                   .qualifiedName(e.getAttributes().get("qualifiedName").toString())
-                  .createTime(Objects.isNull(e.getAttributes().get("createTime"))?null:new Date((Long) e.getAttributes().get("createTime")))
+                  .createTime(
+                      Objects.isNull(e.getAttributes().get("createTime"))
+                          ? null
+                          : new Date((Long) e.getAttributes().get("createTime")))
                   .build());
         });
     return atlasBaseMainDataVOList;
@@ -83,6 +85,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
   /**
    * 组装参考实体
+   *
    * @param detail
    * @return
    */

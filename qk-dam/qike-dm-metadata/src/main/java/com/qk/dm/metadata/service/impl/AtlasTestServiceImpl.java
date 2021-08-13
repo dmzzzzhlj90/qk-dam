@@ -1,6 +1,12 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.metedata.config.AtlasConfig;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasQuickSearchResult;
@@ -10,13 +16,6 @@ import org.apache.atlas.model.instance.*;
 import org.apache.atlas.model.typedef.AtlasClassificationDef;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.atlas.model.typedef.AtlasTypesDef;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author spj
@@ -306,7 +305,7 @@ public class AtlasTestServiceImpl {
     //        //对满足搜索参数的实体进行基于属性的搜索
     //        atlasTestService.basic();
     //        //dsl
-//    atlasTestService.dsl();
+    //    atlasTestService.dsl();
     //        //检索指定全文查询的数据
     //        atlasTestService.fulltext();
     //        //关系搜索以搜索满足搜索参数的相关实体
@@ -342,7 +341,7 @@ public class AtlasTestServiceImpl {
     // 添加分类
     //        atlasTestService.addClassifications();
     // 修改
-            atlasTestService.updateClassifications();
+    atlasTestService.updateClassifications();
     // 删除给定分类关系
     //        atlasTestService.deleteClassification();
     // 删除给定分类及关联实体分类
@@ -352,7 +351,6 @@ public class AtlasTestServiceImpl {
     // 批量设置分类标签
     //        atlasTestService.classifications();
     // 获取由 guid 表示的给定实体的分类列表
-            atlasTestService.guidClass();
-
+    atlasTestService.guidClass();
   }
 }

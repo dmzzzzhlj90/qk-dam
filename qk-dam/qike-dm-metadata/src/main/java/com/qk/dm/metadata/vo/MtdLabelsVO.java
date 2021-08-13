@@ -1,10 +1,9 @@
 package com.qk.dm.metadata.vo;
 
-import lombok.*;
-
+import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.io.Serializable;
+import lombok.*;
 
 @Data
 @NoArgsConstructor

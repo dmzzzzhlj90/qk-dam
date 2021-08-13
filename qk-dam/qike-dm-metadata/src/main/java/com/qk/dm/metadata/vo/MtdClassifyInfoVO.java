@@ -1,9 +1,8 @@
 package com.qk.dm.metadata.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author spj
@@ -39,6 +38,4 @@ public class MtdClassifyInfoVO extends MtdClassifyVO {
   public void setGmtCreate(Date gmtCreate) {
     this.gmtCreate = gmtCreate;
   }
-
-
 }
