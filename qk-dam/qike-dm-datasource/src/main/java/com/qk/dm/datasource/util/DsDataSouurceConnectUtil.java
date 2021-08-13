@@ -1,13 +1,14 @@
 package com.qk.dm.datasource.util;
 
 import com.qk.dm.datasource.vo.DsDatasourceVO;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 数据库测试连接
@@ -21,6 +22,7 @@ public class DsDataSouurceConnectUtil {
   public static final String DATA_SOURCE_MYSQL = "MySQL";
   public static final String DATA_SOURCE_ORACLE = "Oracle";
   public static final String DATA_SOURCE_HIVE = "Hive";
+  public static final String DATA_SOURCE_POSTGRESQL = "PostgreSQL";
   /**
    * 判定传入的数据源连接是否测试连接成功
    *
@@ -38,9 +40,51 @@ public class DsDataSouurceConnectUtil {
         connect = connectOracle(dsDatasourceVO);
       } else if (linkType.equals(DATA_SOURCE_HIVE)) {
         connect = connectHive(dsDatasourceVO);
+      } else if (linkType.equals(DATA_SOURCE_POSTGRESQL)) {
+        connect = connectPostSql(dsDatasourceVO);
       }
     } else {
       logger.error("数据源连接类型为空");
+    }
+    return connect;
+  }
+
+  /**
+   * postgetsql做数据库连接测试
+   *
+   * @param dsDatasourceVO
+   * @return
+   */
+  private static Boolean connectPostSql(DsDatasourceVO dsDatasourceVO) {
+    Boolean connect = false;
+    Connection connection = null;
+    LinkedHashMap<String, String> res = dsDatasourceVO.getDataSourceValuesMap();
+    String driver = (String) res.get("service"); // 获取postgetsql数据驱动类
+    String url =
+        "jdbc:postgresql://"
+            + (String) res.get("server")
+            + ":"
+            + res.get("port")
+            + "/"
+            + res.get("dataBaseName"); // 127.0.0.1是本机地址，XE是精简版Oracle的默认数据库名
+    String user = (String) res.get("username");
+    String password = (String) res.get("password");
+    try {
+      Class.forName(driver);
+      connection = DriverManager.getConnection(url, user, password); // 获取连接
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    } finally {
+      if (connection != null) {
+        connect = true;
+        try {
+          connection.close();
+        } catch (SQLException throwables) {
+          throwables.printStackTrace();
+        }
+      }
     }
     return connect;
   }
