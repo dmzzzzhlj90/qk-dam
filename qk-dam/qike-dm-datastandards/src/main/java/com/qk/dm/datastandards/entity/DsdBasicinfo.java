@@ -40,7 +40,11 @@ public class DsdBasicinfo implements Serializable {
   @Column(name = "data_capacity", nullable = false)
   private String dataCapacity;
 
-  /** 引用码表 */
+  /** 码表标准分类ID */
+  @Column(name = "code_dir_id")
+  private String codeDirId;
+
+  /** 引用码表层级 */
   @Column(name = "use_code_level")
   private String useCodeLevel;
 
