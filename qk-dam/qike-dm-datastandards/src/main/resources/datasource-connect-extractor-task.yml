@@ -1,0 +1,10 @@
+#metadata:
+#  - name: job1
+#    dataConnectType: mysql
+#    dataConnect:
+#      db: hd_company
+#      table: "company%"
+#      host: 172.31.0.16
+#      port: 3306
+#      username: zhudaoming
+#      password: zhudaoming001
