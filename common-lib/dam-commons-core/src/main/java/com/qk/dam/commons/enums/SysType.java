@@ -32,7 +32,7 @@ public enum SysType {
   /** 数据查询 */
   DQY,
   /** 数据服务 */
-  DAAS,
+  DAS,
   /** 数据指标计算 */
   DIC,
   /** 系统管理 */
