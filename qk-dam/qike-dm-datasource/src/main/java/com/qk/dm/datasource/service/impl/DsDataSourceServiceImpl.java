@@ -1,5 +1,6 @@
 package com.qk.dm.datasource.service.impl;
 
+import com.alibaba.nacos.common.utils.StringUtils;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -19,15 +20,13 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.*;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import java.util.*;
 
 /**
  * 数据源连接实现接口
@@ -38,7 +37,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DsDataSourceServiceImpl implements DsDataSourceService {
-  private static final Logger logger = LoggerFactory.getLogger(DsDataSourceServiceImpl.class);
   private final DsDirService dsDirService;
   private final QDsDatasource qDsDatasource = QDsDatasource.dsDatasource;
   private final EntityManager entityManager;
@@ -188,7 +186,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     if (dsDatasourceVO != null) {
       connect = DsDataSouurceConnectUtil.getDataSourceConnect(dsDatasourceVO);
     } else {
-      logger.error("数据链连接测试接口参数为空，请检测");
+      throw new BizException("数据链连接测试接口参数为空，请检测");
     }
     return connect;
   }

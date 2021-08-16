@@ -1,10 +1,7 @@
 package com.qk.dm.datasource.util;
 
+import com.alibaba.nacos.common.utils.StringUtils;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,7 +15,6 @@ import java.util.LinkedHashMap;
  * @since 1.0.0
  */
 public class DsDataSouurceConnectUtil {
-  private static final Logger logger = LoggerFactory.getLogger(DsDataSouurceConnectUtil.class);
   public static final String DATA_SOURCE_MYSQL = "MySQL";
   public static final String DATA_SOURCE_ORACLE = "Oracle";
   public static final String DATA_SOURCE_HIVE = "Hive";
@@ -44,7 +40,7 @@ public class DsDataSouurceConnectUtil {
         connect = connectPostSql(dsDatasourceVO);
       }
     } else {
-      logger.error("数据源连接类型为空");
+      // logger.error("数据源连接类型为空");
     }
     return connect;
   }
