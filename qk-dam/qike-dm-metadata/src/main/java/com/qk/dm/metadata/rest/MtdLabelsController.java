@@ -3,12 +3,10 @@ package com.qk.dm.metadata.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsService;
-import com.qk.dm.metadata.service.impl.SynchAtalsServiceImpl;
 import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -89,25 +87,5 @@ public class MtdLabelsController {
   @GetMapping("")
   public DefaultCommonResult<List<MtdLabelsInfoVO>> listByAll(MtdLabelsVO mtdLabelsVO) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdLabelsService.listByAll(mtdLabelsVO));
-  }
-
-  @Autowired SynchAtalsServiceImpl synchAtalsService;
-
-  @GetMapping("/synchLabelsAtlas")
-  public DefaultCommonResult synchLabelsAtlas() {
-    synchAtalsService.synchLabelsAtlas();
-    return DefaultCommonResult.success();
-  }
-
-  @GetMapping("/synchClassify")
-  public DefaultCommonResult synchClassify() {
-    synchAtalsService.synchClassify();
-    return DefaultCommonResult.success();
-  }
-
-  @GetMapping("/synchClassifyAtlas")
-  public DefaultCommonResult synchClassifyAtlas() {
-    synchAtalsService.synchClassifyAtlas();
-    return DefaultCommonResult.success();
   }
 }

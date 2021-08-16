@@ -16,7 +16,7 @@ import javax.validation.Valid;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/classifyAtlas")
+@RequestMapping("/classify/bind")
 public class MtdClassifyAtlasController {
 
   private final MtdClassifyAtlasService mtdClassifyAtlasService;
