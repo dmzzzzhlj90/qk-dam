@@ -1,6 +1,6 @@
 package com.qk.dm.metadata.service;
 
-public interface SynchAtalsService {
+public interface SynchAtlasService {
 
     void synchLabelsAtlas();
 
