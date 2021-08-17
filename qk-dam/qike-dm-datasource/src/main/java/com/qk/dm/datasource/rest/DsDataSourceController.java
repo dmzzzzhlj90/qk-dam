@@ -84,7 +84,7 @@ public class DsDataSourceController {
    *
    * @return
    */
-  @PostMapping("atlas/getdatatype")
+  @GetMapping("/getdatatype")
   public DefaultCommonResult<List<String>> getDataType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsDataSourceService.getDataType());
   }

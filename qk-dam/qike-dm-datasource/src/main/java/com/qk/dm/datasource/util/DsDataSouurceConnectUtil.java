@@ -1,6 +1,7 @@
 package com.qk.dm.datasource.util;
 
 import com.alibaba.nacos.common.utils.StringUtils;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,7 +41,7 @@ public class DsDataSouurceConnectUtil {
         connect = connectPostSql(dsDatasourceVO);
       }
     } else {
-      // logger.error("数据源连接类型为空");
+      throw new BizException("数据源连接类型为空");
     }
     return connect;
   }

@@ -245,6 +245,9 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
       booleanBuilder.and(
           qDsDatasource.homeSystem.contains(dsDataSourceParamsVO.getDataSourceName()));
     }
+    if (!StringUtils.isEmpty(dsDataSourceParamsVO.getLinkType())) {
+      booleanBuilder.and(qDsDatasource.linkType.contains(dsDataSourceParamsVO.getLinkType()));
+    }
     if (!StringUtils.isEmpty(dsDataSourceParamsVO.getBeginDay())
         && !StringUtils.isEmpty(dsDataSourceParamsVO.getEndDay())) {
       StringTemplate dateExpr =
