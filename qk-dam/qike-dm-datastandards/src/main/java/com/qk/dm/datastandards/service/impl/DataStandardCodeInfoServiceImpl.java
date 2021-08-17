@@ -3,6 +3,7 @@ package com.qk.dm.datastandards.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.datasource_connect.extractor.DataSourceExtractor;
 import com.qk.dm.datastandards.datasource_connect.pojo.MysqlDb;
@@ -351,11 +352,21 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
   @Override
   public void addDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO) {
+    LinkedHashMap<String, String> codeTableFieldExtValues =
+        dsdCodeInfoExtVO.getCodeTableFieldExtValues();
+    String code = codeTableFieldExtValues.get(DsdConstant.CODE_INFO_CODE_EN_NAME);
+    String value = codeTableFieldExtValues.get(DsdConstant.CODE_INFO_VALUE_EN_NAME);
+    if (code == null && code.length() == 0) {
+      throw new BizException("编码不能为空！");
+    }
+
     DsdCodeInfoExt dsdCodeInfoExt =
         DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
     setTableConfValuesStr(dsdCodeInfoExt, dsdCodeInfoExtVO);
     dsdCodeInfoExt.setGmtCreate(new Date());
     dsdCodeInfoExt.setGmtModified(new Date());
+    dsdCodeInfoExt.setTableConfCode(code);
+    dsdCodeInfoExt.setTableConfValue(value);
     Predicate predicate =
         qDsdCodeInfoExt
             .dsdCodeInfoId
@@ -387,6 +398,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     DsdCodeInfoExt dsdCodeInfoExt =
         DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
     setTableConfValuesStr(dsdCodeInfoExt, dsdCodeInfoExtVO);
+    dsdCodeInfoExt.setGmtCreate(new Date());
     dsdCodeInfoExt.setGmtModified(new Date());
 
     Predicate predicate = qDsdCodeInfoExt.id.eq(dsdCodeInfoExtVO.getId());
