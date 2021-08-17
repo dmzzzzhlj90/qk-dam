@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 public class AtlasLabelsUtil {
-  public AtlasLabelsUtil() {
+  private AtlasLabelsUtil() {
     throw new IllegalStateException("Utility labels");
   }
 
@@ -100,8 +100,8 @@ public class AtlasLabelsUtil {
    */
   public static void upEntitiesClassis(String guid, String classify) throws AtlasServiceException {
     List<AtlasClassification> atlasClassifications = getAtlasClassifications(guid);
-    List<String> classify1 = Arrays.asList(classify.split(","));
-    List<String> classify2 =
+    List<String> classify2 = Arrays.asList(classify.split(","));
+    List<String> classify1 =
         atlasClassifications.stream().map(AtlasStruct::getTypeName).collect(Collectors.toList());
     List<String> classifyList = getClassifyList(classify2, classify1);
     if (!classifyList.isEmpty()) {
@@ -156,7 +156,7 @@ public class AtlasLabelsUtil {
    * @throws AtlasServiceException
    */
   public static void addTypedefs(String name, String description) throws AtlasServiceException {
-    atlasClientV2.createAtlasTypeDefs(getTypesDef(new HashMap<>() {{put(name, description);}}));
+    atlasClientV2.createAtlasTypeDefs(getTypesDef(Map.of(name, description)));
   }
 
   /**
@@ -189,8 +189,8 @@ public class AtlasLabelsUtil {
     return entityHeaderByGuid.getClassifications();
   }
 
-  private static List<String> getClassifyList(List<String> classify1, List<String> classify2) {
-    return classify1.stream().filter(cfy -> !classify2.contains(cfy)).collect(Collectors.toList());
+  private static List<String> getClassifyList(List<String> a, List<String> b) {
+    return a.stream().filter(cfy -> !b.contains(cfy)).collect(Collectors.toList());
   }
 
   private static List<AtlasClassification> getAtlasClassificationList(List<String> classify) {
