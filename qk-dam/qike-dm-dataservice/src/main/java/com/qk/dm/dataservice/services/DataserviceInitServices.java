@@ -1,4 +1,4 @@
-package com.qk.dm.dataservice.config;
+package com.qk.dm.dataservice.services;
 
 import com.qk.dm.dataservice.manager.PluginManager;
 import org.springframework.boot.actuate.health.Health;
@@ -6,7 +6,9 @@ import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DataserviceInitServices  implements HealthIndicator {
     private final PluginManager pluginManager;
 

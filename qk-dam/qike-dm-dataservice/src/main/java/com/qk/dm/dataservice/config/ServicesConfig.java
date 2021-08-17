@@ -12,7 +12,7 @@ public class ServicesConfig {
         return new ApiGatewayManager();
     }
     @Bean
-    public DataserviceInitServices dataserviceInitServices(final ApiGatewayManager apiGatewayManager){
-        return new DataserviceInitServices(new PluginManager(apiGatewayManager));
+    public PluginManager pluginManager(final ApiGatewayManager apiGatewayManager){
+        return new PluginManager(apiGatewayManager);
     }
 }
