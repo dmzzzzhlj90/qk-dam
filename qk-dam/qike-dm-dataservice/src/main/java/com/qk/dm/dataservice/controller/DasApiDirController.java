@@ -2,7 +2,7 @@ package com.qk.dm.dataservice.controller;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.dataservice.service.DataServiceApiDirService;
+import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.vo.DasApiDirTreeVO;
 import com.qk.dm.dataservice.vo.DasApiDirVO;
 import java.util.List;
@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/api/dir")
-public class DataServiceApiDirController {
-  private final DataServiceApiDirService dataServiceApiDirService;
+public class DasApiDirController {
+  private final DasApiDirService dasApiDirService;
 
   @Autowired
-  public DataServiceApiDirController(DataServiceApiDirService dataServiceApiDirService) {
-    this.dataServiceApiDirService = dataServiceApiDirService;
+  public DasApiDirController(DasApiDirService dasApiDirService) {
+    this.dasApiDirService = dasApiDirService;
   }
 
   /**
@@ -35,7 +35,7 @@ public class DataServiceApiDirController {
    */
   @GetMapping("/tree")
   public DefaultCommonResult<List<DasApiDirTreeVO>> getDasApiDirTree() {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dataServiceApiDirService.getTree());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiDirService.getTree());
   }
 
   /**
@@ -46,7 +46,7 @@ public class DataServiceApiDirController {
    */
   @PostMapping("/add")
   public DefaultCommonResult addDasApiDir(@RequestBody DasApiDirVO daasApiDirVO) {
-    dataServiceApiDirService.addDasApiDir(daasApiDirVO);
+    dasApiDirService.addDasApiDir(daasApiDirVO);
     return DefaultCommonResult.success();
   }
 
@@ -58,7 +58,7 @@ public class DataServiceApiDirController {
    */
   @PutMapping("/update")
   public DefaultCommonResult updateDasApiDir(@RequestBody DasApiDirVO daasApiDirVO) {
-    dataServiceApiDirService.updateDasApiDir(daasApiDirVO);
+    dasApiDirService.updateDasApiDir(daasApiDirVO);
     return DefaultCommonResult.success();
   }
 
@@ -70,7 +70,7 @@ public class DataServiceApiDirController {
    */
   @DeleteMapping("/delete/{id}")
   public DefaultCommonResult deleteDasApiDir(@PathVariable("id") String id) {
-    dataServiceApiDirService.deleteDasApiDir(Long.valueOf(id));
+    dasApiDirService.deleteDasApiDir(Long.valueOf(id));
     return DefaultCommonResult.success();
   }
 
@@ -82,7 +82,7 @@ public class DataServiceApiDirController {
    */
   @DeleteMapping("/delete/root/{id}")
   public DefaultCommonResult deleteDasApiDirRoot(@PathVariable("id") String id) {
-    dataServiceApiDirService.deleteDasApiDirRoot(Long.valueOf(id));
+    dasApiDirService.deleteDasApiDirRoot(Long.valueOf(id));
     return DefaultCommonResult.success();
   }
 }

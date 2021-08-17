@@ -6,7 +6,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
-public class DasApiBasicinfoVO {
+public class DasApiBasicInfoVO {
 
   /** 主键ID */
   private Integer id;

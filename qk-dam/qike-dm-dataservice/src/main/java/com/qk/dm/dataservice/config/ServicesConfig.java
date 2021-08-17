@@ -7,12 +7,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ServicesConfig {
-    @Bean
-    public ApiGatewayManager connectorManager() {
-        return new ApiGatewayManager();
-    }
-    @Bean
-    public PluginManager pluginManager(final ApiGatewayManager apiGatewayManager){
-        return new PluginManager(apiGatewayManager);
-    }
+  @Bean
+  public ApiGatewayManager connectorManager() {
+    return new ApiGatewayManager();
+  }
+
+  @Bean
+  public PluginManager pluginManager(final ApiGatewayManager apiGatewayManager) {
+    return new PluginManager(apiGatewayManager);
+  }
 }

@@ -19,8 +19,8 @@ public class DasApiDatasourceConfig implements Serializable {
   private Long id;
 
   /** API基础信息ID */
-  @Column(name = "das_api_id", nullable = false)
-  private String dasApiId;
+  @Column(name = "api_id", nullable = false)
+  private String apiId;
 
   /** 取数据方式 */
   @Column(name = "access_method", nullable = false)

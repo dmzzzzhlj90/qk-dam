@@ -1,7 +1,7 @@
 package com.qk.dm.dataservice.mapstruct.mapper;
 
-import com.qk.dm.dataservice.entity.DasApiBasicinfo;
-import com.qk.dm.dataservice.vo.DasApiBasicinfoVO;
+import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -16,7 +16,7 @@ import org.mapstruct.factory.Mappers;
 public interface DasApiBasicInfoMapper {
   DasApiBasicInfoMapper INSTANCE = Mappers.getMapper(DasApiBasicInfoMapper.class);
 
-  DasApiBasicinfoVO useDasApiBasicInfoVO(DasApiBasicinfo dasApiBasicinfo);
+  DasApiBasicInfoVO useDasApiBasicInfoVO(DasApiBasicInfo dasApiBasicinfo);
 
-  DasApiBasicinfo useDasApiBasicInfo(DasApiBasicinfoVO dasApiBasicinfoVO);
+  DasApiBasicInfo useDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicinfoVO);
 }
