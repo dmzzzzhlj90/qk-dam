@@ -1,10 +1,7 @@
 package com.qk.dm.datastandards.service;
 
-import com.qk.dm.datastandards.vo.DsdCodeInfoExtParamsVO;
-import com.qk.dm.datastandards.vo.DsdCodeInfoExtVO;
-import com.qk.dm.datastandards.vo.DsdCodeInfoParamsVO;
-import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
-import com.qk.dm.datastandards.vo.PageResultVO;
+import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.datastandards.vo.*;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -32,11 +29,7 @@ public interface DataStandardCodeInfoService {
 
   List<Map<String, String>> getDataTypes();
 
-  /**
-   * 码表扩展信息_码表数值
-   *
-   * @param dsdCodeInfoExtParamsVO
-   */
+  /** 码表扩展信息_码表数值 */
   Map<String, Object> getDsdCodeInfoExt(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO);
 
   void addDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO);
@@ -48,4 +41,7 @@ public interface DataStandardCodeInfoService {
   void deleteDsdCodeInfoExt(long id);
 
   void deleteBulkDsdCodeInfoExt(String ids);
+
+  /** 码表信息逆向数据库操作 */
+  void dsdCodeInfoReverseDB(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO);
 }

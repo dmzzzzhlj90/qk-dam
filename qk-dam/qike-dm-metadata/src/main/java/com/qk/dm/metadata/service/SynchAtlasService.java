@@ -2,9 +2,9 @@ package com.qk.dm.metadata.service;
 
 public interface SynchAtlasService {
 
-    void synchLabelsAtlas();
+  void synchLabelsAtlas();
 
-    void synchClassify();
+  void synchClassify();
 
-    void synchClassifyAtlas();
+  void synchClassifyAtlas();
 }

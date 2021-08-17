@@ -1,6 +1,5 @@
 package com.qk.dm.metadata.rest;
 
-
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
@@ -8,14 +7,14 @@ import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import com.qk.dm.metadata.vo.MtdAtlasParamsVO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * 元数据查询相关接口（元数据列表查询、元数据详情、元数据类型等接口）
+ *
  * @author wangzp
  * @date 2021/8/06 15:05
  * @since 1.0.0
@@ -24,10 +23,9 @@ import java.util.List;
 @RequestMapping("/metadata")
 public class MtdAtlasController {
 
-    private final AtlasMetaDataService atlasMetaDataService;
+  private final AtlasMetaDataService atlasMetaDataService;
 
-    @Autowired
-    public MtdAtlasController(AtlasMetaDataService atlasMetaDataService){
+    public MtdAtlasController(AtlasMetaDataService atlasMetaDataService) {
         this.atlasMetaDataService = atlasMetaDataService;
     }
 

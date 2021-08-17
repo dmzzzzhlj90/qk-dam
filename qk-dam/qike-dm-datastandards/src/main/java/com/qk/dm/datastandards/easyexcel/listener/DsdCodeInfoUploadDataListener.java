@@ -4,6 +4,7 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeDir;
 import com.qk.dm.datastandards.entity.DsdCodeInfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeInfoMapper;
@@ -142,13 +143,13 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCode
   private void setCodeInfoConfigs(
       List<DsdCodeInfoVO> dsdCodeInfoVOList, List<Map<String, String>> configFields) {
     for (DsdCodeInfoVO codeInfoVO : dsdCodeInfoVOList) {
-      if (!codeInfoVO.getCodeTableId().equalsIgnoreCase("code")
-          && !codeInfoVO.getCodeTableId().equalsIgnoreCase("value")) {
+      if (!codeInfoVO.getCodeTableId().equalsIgnoreCase(DsdConstant.CODE_INFO_CODE_EN_NAME)
+          && !codeInfoVO.getCodeTableId().equalsIgnoreCase(DsdConstant.CODE_INFO_VALUE_EN_NAME)) {
         Map<String, String> configFieldMap = new LinkedHashMap<>();
-        configFieldMap.put("code_table_id", codeInfoVO.getCodeTableId());
-        configFieldMap.put("name_ch", codeInfoVO.getNameCh());
-        configFieldMap.put("name_en", codeInfoVO.getNameEn());
-        configFieldMap.put("data_type", codeInfoVO.getDataType());
+        configFieldMap.put(DsdConstant.CODE_INFO_TABLE_ID, codeInfoVO.getCodeTableId());
+        configFieldMap.put(DsdConstant.CODE_INFO_NAME_CH, codeInfoVO.getNameCh());
+        configFieldMap.put(DsdConstant.CODE_INFO_NAME_EN, codeInfoVO.getNameEn());
+        configFieldMap.put(DsdConstant.CODE_INFO_DATA_TYPE, codeInfoVO.getDataType());
         configFields.add(configFieldMap);
       }
     }
@@ -156,17 +157,17 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCode
 
   private void setDefaultConfigCodeAndValue(List<Map<String, String>> configFields) {
     Map<String, String> configFieldCodedMap = new LinkedHashMap<>();
-    configFieldCodedMap.put("code_table_id", "code");
-    configFieldCodedMap.put("name_ch", "编码");
-    configFieldCodedMap.put("name_en", "code");
-    configFieldCodedMap.put("data_type", "STRING");
+    configFieldCodedMap.put(DsdConstant.CODE_INFO_TABLE_ID, DsdConstant.CODE_INFO_CODE_EN_NAME);
+    configFieldCodedMap.put(DsdConstant.CODE_INFO_NAME_CH, DsdConstant.CODE_INFO_CODE_CH_NAME);
+    configFieldCodedMap.put(DsdConstant.CODE_INFO_NAME_EN, DsdConstant.CODE_INFO_CODE_EN_NAME);
+    configFieldCodedMap.put(DsdConstant.CODE_INFO_DATA_TYPE, DsdConstant.CODE_INFO_CODE_TYPE);
     configFields.add(configFieldCodedMap);
 
     Map<String, String> configFieldValueMap = new LinkedHashMap<>();
-    configFieldValueMap.put("code_table_id", "value");
-    configFieldValueMap.put("name_ch", "值");
-    configFieldValueMap.put("name_en", "value");
-    configFieldValueMap.put("data_type", "STRING");
+    configFieldValueMap.put(DsdConstant.CODE_INFO_TABLE_ID, DsdConstant.CODE_INFO_VALUE_EN_NAME);
+    configFieldValueMap.put(DsdConstant.CODE_INFO_NAME_CH, DsdConstant.CODE_INFO_VALUE_CH_NAME);
+    configFieldValueMap.put(DsdConstant.CODE_INFO_NAME_EN, DsdConstant.CODE_INFO_VALUE_EN_NAME);
+    configFieldValueMap.put(DsdConstant.CODE_INFO_DATA_TYPE, DsdConstant.CODE_INFO_VALUE_TYPE);
     configFields.add(configFieldValueMap);
   }
 }

@@ -18,8 +18,6 @@ public interface MtdLabelsMapper {
 
   MtdLabelsListVO useMtdLabelsListVO(MtdLabelsVO mtdLabelsVO);
 
-  /**
-   * 将MtdLabelsVO对象中非null的属性更新到MtdLabels的对象
-   */
+  /** 将MtdLabelsVO对象中非null的属性更新到MtdLabels的对象 */
   void updateMtdLabelsVO(MtdLabelsVO mtdLabelsVO, @MappingTarget MtdLabels mtdLabels);
 }

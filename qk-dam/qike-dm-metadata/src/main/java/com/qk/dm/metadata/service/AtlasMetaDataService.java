@@ -3,8 +3,8 @@ package com.qk.dm.metadata.service;
 import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
-
 import java.util.List;
+
 /**
  * @author wangzp
  * @date 2021/8/03 10:05
@@ -34,6 +34,7 @@ public interface AtlasMetaDataService {
 
   /**
    * 获取所有的基础类型
+   *
    * @return
    */
   List<MtdAtlasEntityTypeVO> getAllEntityType();

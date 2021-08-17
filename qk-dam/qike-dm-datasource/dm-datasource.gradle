@@ -35,6 +35,7 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation 'com.alibaba:easyexcel'
+    implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '3.1.2'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

@@ -52,6 +52,9 @@ public class DsdBasicinfoVO {
   @ExcelProperty("数据容量")
   private String dataCapacity;
 
+  /** 码表标准分类ID */
+  private String codeDirId;
+
   /** 引用码表 */
   //    @NotBlank(message = "引用码表不能为空！")
   @ExcelProperty("引用码表")

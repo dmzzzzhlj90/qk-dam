@@ -24,7 +24,7 @@ public class DsdCodeInfoExtVO {
   private String dsdCodeInfoId;
 
   /** 建表配置编码 */
-  @NotBlank(message = "编码不能为空！")
+  //  @NotBlank(message = "编码不能为空！")
   private String tableConfCode;
 
   /** 建表配置值 */

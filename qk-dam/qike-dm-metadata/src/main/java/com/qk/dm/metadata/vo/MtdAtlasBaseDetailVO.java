@@ -29,8 +29,8 @@ public class MtdAtlasBaseDetailVO {
   private String labels;
   /** 分类 */
   private String classification;
-  /** 关联属性*/
-  private Map<String,Object> relationshipAttributes;
+  /** 关联属性 */
+  private Map<String, Object> relationshipAttributes;
   /** 参考实体 */
   private List<Map<String, Object>> referredEntities;
 }

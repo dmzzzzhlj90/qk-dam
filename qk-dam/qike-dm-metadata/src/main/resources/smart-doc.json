@@ -2,7 +2,7 @@
   "serverUrl": "http://localhost:8782", //服务器地址,非必须。导出postman建议设置成http://{{server}}方便直接在postman直接设置环境变量
   "isStrict": false, //是否开启严格模式
   "allInOne": true,  //是否将文档合并到一个文件中，一般推荐为true
-  "outPath": "../../docs/元数据", //指定文档的输出路径
+  "outPath": "../../docs/元数据服务", //指定文档的输出路径
   "coverOld": true,  //是否覆盖旧的文件，主要用于mardown文件覆盖
   "createDebugPage": true,//@since 2.0.0 smart-doc支持创建可以测试的html页面，仅在AllInOne模式中起作用。
   "packageFilters": "",//controller包过滤，多个包用英文逗号隔开
@@ -21,7 +21,7 @@
   "responseExample":"true",//是否将响应示例展示在文档中，默认为true，@since 1.9.0
   "displayActualType":false,//配置true会在注释栏自动显示泛型的真实类型短类名，@since 1.9.6
   "appKey": "20210625858001430273851392",// torna平台对接appKey,, @since 2.0.9
-  "appToken": "260d4932f10e46febc0f0b6d9f1be5e7", //torna平台appToken,@since 2.0.9
+  "appToken": "043e0416ce1a42e18f2c90ec30d05215", //torna平台appToken,@since 2.0.9
   "secret": "63OQzuZjEgvkK0tSwCA3gNxs#5tA2@gG",//torna平台secret，@since 2.0.9
   "openUrl": "http://172.31.0.80:7700/api",//torna平台地址，填写自己的私有化部署地址@since 2.0.9
   "debugEnvName":"测试环境", //torna环境名称

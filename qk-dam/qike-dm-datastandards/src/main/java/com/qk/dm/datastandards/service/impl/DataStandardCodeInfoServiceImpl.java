@@ -3,7 +3,10 @@ package com.qk.dm.datastandards.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datastandards.constant.DsdConstant;
+import com.qk.dm.datastandards.datasource_connect.extractor.DataSourceExtractor;
+import com.qk.dm.datastandards.datasource_connect.pojo.MysqlDb;
 import com.qk.dm.datastandards.entity.DsdCodeInfo;
 import com.qk.dm.datastandards.entity.DsdCodeInfoExt;
 import com.qk.dm.datastandards.entity.QDsdCodeInfo;
@@ -14,12 +17,7 @@ import com.qk.dm.datastandards.repositories.DsdCodeInfoExtRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeInfoRepository;
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.service.DataStandardCodeInfoService;
-import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
-import com.qk.dm.datastandards.vo.DsdCodeInfoExtParamsVO;
-import com.qk.dm.datastandards.vo.DsdCodeInfoExtVO;
-import com.qk.dm.datastandards.vo.DsdCodeInfoParamsVO;
-import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
-import com.qk.dm.datastandards.vo.PageResultVO;
+import com.qk.dm.datastandards.vo.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
@@ -45,8 +43,8 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
   private final DsdCodeInfoRepository dsdCodeInfoRepository;
   private final DsdCodeInfoExtRepository dsdCodeInfoExtRepository;
-
   private final DataStandardCodeDirService dataStandardCodeDirService;
+  private final DsdCodeInfoReverseBatchService dsdCodeInfoReverseBatchService;
 
   private final EntityManager entityManager;
   private JPAQueryFactory jpaQueryFactory;
@@ -56,10 +54,12 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
       DsdCodeInfoRepository dsdCodeInfoRepository,
       DsdCodeInfoExtRepository dsdCodeInfoExtRepository,
       DataStandardCodeDirService dataStandardCodeDirService,
+      DsdCodeInfoReverseBatchService dsdCodeInfoReverseBatchService,
       EntityManager entityManager) {
     this.dsdCodeInfoRepository = dsdCodeInfoRepository;
     this.dsdCodeInfoExtRepository = dsdCodeInfoExtRepository;
     this.dataStandardCodeDirService = dataStandardCodeDirService;
+    this.dsdCodeInfoReverseBatchService = dsdCodeInfoReverseBatchService;
     this.entityManager = entityManager;
   }
 
@@ -178,9 +178,12 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
   @Override
   public DsdCodeInfoVO getDsdCodeInfoById(long id) {
     Optional<DsdCodeInfo> dsdCodeInfo = dsdCodeInfoRepository.findById(id);
-    DsdCodeInfoVO dsdCodeInfoVO = DsdCodeInfoMapper.INSTANCE.useDsdCodeInfoVO(dsdCodeInfo.get());
-    setCodeTableFields(dsdCodeInfo.get(), dsdCodeInfoVO);
-    return dsdCodeInfoVO;
+    if (dsdCodeInfo.isPresent()) {
+      DsdCodeInfoVO dsdCodeInfoVO = DsdCodeInfoMapper.INSTANCE.useDsdCodeInfoVO(dsdCodeInfo.get());
+      setCodeTableFields(dsdCodeInfo.get(), dsdCodeInfoVO);
+      return dsdCodeInfoVO;
+    }
+    return null;
   }
 
   @Override
@@ -219,7 +222,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
   public void deleteBulkDsdCodeInfo(String ids) {
     List<String> idList = Arrays.asList(ids.split(","));
     Set<Long> idSet = new HashSet<>();
-    idList.forEach(id -> idSet.add(Long.valueOf(id).longValue()));
+    idList.forEach(id -> idSet.add(Long.parseLong(id)));
     Iterable<DsdCodeInfo> codeInfos = dsdCodeInfoRepository.findAll(qDsdCodeInfo.id.in(idSet));
     dsdCodeInfoRepository.deleteInBatch(codeInfos);
     dsdCodeInfoExtRepository.deleteByDsdCodeInfoIdBatch(idSet);
@@ -282,8 +285,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
             dsdCodeInfoExtVOList);
 
     Optional<DsdCodeInfo> dsdCodeInfo =
-        dsdCodeInfoRepository.findById(
-            Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId()).longValue());
+        dsdCodeInfoRepository.findById(Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId()));
     String tableConfFieldsStr = dsdCodeInfo.get().getTableConfFields();
     List<CodeTableFieldsVO> codeTableFieldsVOList =
         GsonUtil.fromJsonString(
@@ -350,11 +352,21 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
   @Override
   public void addDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO) {
+    LinkedHashMap<String, String> codeTableFieldExtValues =
+        dsdCodeInfoExtVO.getCodeTableFieldExtValues();
+    String code = codeTableFieldExtValues.get(DsdConstant.CODE_INFO_CODE_EN_NAME);
+    String value = codeTableFieldExtValues.get(DsdConstant.CODE_INFO_VALUE_EN_NAME);
+    if (code == null && code.length() == 0) {
+      throw new BizException("编码不能为空！");
+    }
+
     DsdCodeInfoExt dsdCodeInfoExt =
         DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
     setTableConfValuesStr(dsdCodeInfoExt, dsdCodeInfoExtVO);
     dsdCodeInfoExt.setGmtCreate(new Date());
     dsdCodeInfoExt.setGmtModified(new Date());
+    dsdCodeInfoExt.setTableConfCode(code);
+    dsdCodeInfoExt.setTableConfValue(value);
     Predicate predicate =
         qDsdCodeInfoExt
             .dsdCodeInfoId
@@ -386,6 +398,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     DsdCodeInfoExt dsdCodeInfoExt =
         DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
     setTableConfValuesStr(dsdCodeInfoExt, dsdCodeInfoExtVO);
+    dsdCodeInfoExt.setGmtCreate(new Date());
     dsdCodeInfoExt.setGmtModified(new Date());
 
     Predicate predicate = qDsdCodeInfoExt.id.eq(dsdCodeInfoExtVO.getId());
@@ -411,6 +424,17 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     Iterable<DsdCodeInfoExt> codeInfoExtIter =
         dsdCodeInfoExtRepository.findAll(qDsdCodeInfoExt.id.in(idSet));
     dsdCodeInfoExtRepository.deleteInBatch(codeInfoExtIter);
+  }
+
+  @Override
+  public void dsdCodeInfoReverseDB(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
+    // 1.数据源====>DB级别元数据信息
+    MysqlDb mysqlDb =
+        DataSourceExtractor.mysqlMetaData(dsdCodeInfoReverseDBVO.getDataSourceJobVO());
+    // 2.元数据====>生成码表基本信息
+    dsdCodeInfoReverseBatchService.reverseCreateCodeInfo(dsdCodeInfoReverseDBVO, mysqlDb);
+    // 3.字典数据====>获取并存储码表码值信息
+    dsdCodeInfoReverseBatchService.reverseCreateCodeValues(dsdCodeInfoReverseDBVO, mysqlDb);
   }
 
   private void setTableConfValuesStr(
