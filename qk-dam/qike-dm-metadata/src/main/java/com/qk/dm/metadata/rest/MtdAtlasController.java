@@ -20,7 +20,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/metadata")
+@RequestMapping("/atlas")
 public class MtdAtlasController {
 
   private final AtlasMetaDataService atlasMetaDataService;
@@ -44,7 +44,7 @@ public class MtdAtlasController {
      * @param mtdAtlasParamsVO
      * @return DefaultCommonResult<List<MtdAtlasBaseVO>>
      */
-    @PostMapping("/List")
+    @PostMapping("/list")
     public DefaultCommonResult<List<MtdAtlasBaseVO>> searchList(@RequestBody @Validated MtdAtlasParamsVO mtdAtlasParamsVO){
         List<MtdAtlasBaseVO> atlasBaseMainDataVOList = atlasMetaDataService.searchList(mtdAtlasParamsVO.getQuery(), mtdAtlasParamsVO.getTypeName(), mtdAtlasParamsVO.getClassification(), mtdAtlasParamsVO.getLimit(), mtdAtlasParamsVO.getOffse());
         return DefaultCommonResult.success(ResultCodeEnum.OK,atlasBaseMainDataVOList);
