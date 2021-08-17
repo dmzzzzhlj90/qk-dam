@@ -4,8 +4,9 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
-import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * 元数据标签绑定功能
@@ -27,8 +28,8 @@ public class MtdLabelsAtlasController {
   /**
    * 新增元数据标签绑定关系
    *
-   * @param: mtdLabelsVO 元数据标签VO
-   * @return: DefaultCommonResult
+   * @param mtdLabelsVO 元数据标签VO
+   * @return DefaultCommonResult
    */
   @PostMapping("")
   public DefaultCommonResult insert(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
@@ -39,8 +40,8 @@ public class MtdLabelsAtlasController {
   /**
    * 修改元数据标签绑定关系
    *
-   * @param: mtdLabelsVO 元数据标签VO
-   * @return: DefaultCommonResult
+   * @param mtdLabelsVO 元数据标签VO
+   * @return DefaultCommonResult
    */
   @PutMapping("/{id}")
   public DefaultCommonResult update(
@@ -52,8 +53,8 @@ public class MtdLabelsAtlasController {
   /**
    * 查询元数据标签绑定关系
    *
-   * @param: mtdLabelsVO 元数据标签VO
-   * @return: 返回标签列表信息
+   * @param guid 元数据唯一标识
+   * @return DefaultCommonResult<MtdLabelsAtlasVO>
    */
   @GetMapping("/{guid}")
   public DefaultCommonResult<MtdLabelsAtlasVO> getByGuid(@PathVariable("guid") String guid) {

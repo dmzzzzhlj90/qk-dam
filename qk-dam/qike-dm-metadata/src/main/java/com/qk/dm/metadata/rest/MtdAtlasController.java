@@ -7,10 +7,10 @@ import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import com.qk.dm.metadata.vo.MtdAtlasParamsVO;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 元数据查询相关接口（元数据列表查询、元数据详情、元数据类型等接口）
@@ -64,7 +64,7 @@ public class MtdAtlasController {
     /**
      * 根据guid删除元数据,多个guid 使用英文逗号分割
      * @param guids
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/entity/{guids}")
     public DefaultCommonResult deleteEntitiesByGuids(@PathVariable("guids") String guids){

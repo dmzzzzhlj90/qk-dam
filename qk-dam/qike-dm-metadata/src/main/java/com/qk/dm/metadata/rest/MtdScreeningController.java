@@ -25,6 +25,12 @@ public class MtdScreeningController {
     this.mtdScreeningService = mtdScreeningService;
   }
 
+  /**
+   * 查询筛选条件列表
+   *
+   * @param
+   * @return DefaultCommonResult
+   */
   @GetMapping("/list")
   public DefaultCommonResult<Map<String, List<String>>> screeningList() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdScreeningService.screeningList());

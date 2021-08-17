@@ -7,10 +7,10 @@ import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
-import java.util.List;
-import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 元数据标签功能
@@ -69,8 +69,8 @@ public class MtdLabelsController {
   /**
    * 分页查询元数据标签
    *
-   * @param mtdLabelsListVO 入参
-   * @return 返回标签列表信息
+   * @param mtdLabelsListVO 分页元数据标签VO
+   * @return DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>>
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>> listByPage(
@@ -83,7 +83,7 @@ public class MtdLabelsController {
    * 查询元数据标签
    *
    * @param mtdLabelsVO 元数据标签VO
-   * @return 返回标签列表信息
+   * @return DefaultCommonResult<List<MtdLabelsInfoVO>>
    */
   @GetMapping("")
   public DefaultCommonResult<List<MtdLabelsInfoVO>> listByAll(MtdLabelsVO mtdLabelsVO) {
