@@ -5,9 +5,9 @@ import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.entity.DasApiDir;
 import com.qk.dm.dataservice.entity.QDasApiDir;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiDirTreeMapper;
-import com.qk.dm.dataservice.repositories.DasApiBasicinfoRepository;
+import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiDirRepository;
-import com.qk.dm.dataservice.service.DataServiceApiDirService;
+import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.vo.DasApiDirTreeVO;
 import com.qk.dm.dataservice.vo.DasApiDirVO;
 import com.querydsl.core.types.Predicate;
@@ -22,18 +22,18 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 1.0.0
  */
 @Service
-public class DataServiceApiDirServiceImpl implements DataServiceApiDirService {
+public class DasApiDirServiceImpl implements DasApiDirService {
   private static final QDasApiDir qDasApiDir = QDasApiDir.dasApiDir;
 
   private final DasApiDirRepository dasApiDirRepository;
-  private final DasApiBasicinfoRepository dasApiBasicinfoRepository;
+  private final DasApiBasicInfoRepository dasApiBasicInfoRepository;
 
   @Autowired
-  public DataServiceApiDirServiceImpl(
+  public DasApiDirServiceImpl(
       DasApiDirRepository dasApiDirRepository,
-      DasApiBasicinfoRepository dasApiBasicinfoRepository) {
+      DasApiBasicInfoRepository dasApiBasicInfoRepository) {
     this.dasApiDirRepository = dasApiDirRepository;
-    this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
+    this.dasApiBasicInfoRepository = dasApiBasicInfoRepository;
   }
 
   @Override

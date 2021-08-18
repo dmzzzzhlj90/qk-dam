@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0
  */
 @Service
-public interface DataServiceApiDirService {
+public interface DasApiDirService {
 
   List<DasApiDirTreeVO> getTree();
 

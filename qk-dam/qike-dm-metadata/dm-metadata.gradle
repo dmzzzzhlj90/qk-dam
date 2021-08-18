@@ -26,7 +26,6 @@ compileJava {
 dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
-    implementation project(":commons-core")
     implementation project(":dam-log")
     implementation project(":metadata-common-core")
 

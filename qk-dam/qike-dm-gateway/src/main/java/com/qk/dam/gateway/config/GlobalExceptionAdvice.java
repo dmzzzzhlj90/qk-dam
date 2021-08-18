@@ -45,10 +45,4 @@ public class GlobalExceptionAdvice {
     return Mono.justOrEmpty(DefaultCommonResult.fail(ResultCodeEnum.UN_AUTHORIZED));
   }
 
-  private static String getStackTrace(Throwable throwable) {
-    var sw = new StringWriter();
-    var pw = new PrintWriter(sw, true);
-    throwable.printStackTrace(pw);
-    return sw.getBuffer().toString();
-  }
 }

@@ -2,14 +2,17 @@ package com.qk.dm.dataservice.service.imp;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataservice.entity.DasApiBasicinfo;
-import com.qk.dm.dataservice.entity.QDasApiBasicinfo;
+import com.qk.dm.dataservice.constant.DasConstant;
+import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
-import com.qk.dm.dataservice.repositories.DasApiBasicinfoRepository;
-import com.qk.dm.dataservice.service.DataServiceApiBasicInfoService;
-import com.qk.dm.dataservice.service.DataServiceApiDirService;
+import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
+import com.qk.dm.dataservice.repositories.DasApiDatasourceConfigRepository;
+import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
+import com.qk.dm.dataservice.service.DasApiBasicInfoService;
+import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
-import com.qk.dm.dataservice.vo.DasApiBasicinfoVO;
+import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
@@ -29,21 +32,28 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 1.0.0
  */
 @Service
-public class DataServiceApiBasicInfoServiceImpl implements DataServiceApiBasicInfoService {
-  private static final QDasApiBasicinfo qDasApiBasicinfo = QDasApiBasicinfo.dasApiBasicinfo;
+public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
+  private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
 
-  private final DataServiceApiDirService dataServiceApiDirService;
-  private final DasApiBasicinfoRepository dasApiBasicinfoRepository;
+  private final DasApiDirService dasApiDirService;
+  private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
+  private final DasApiRegisterRepository dasApiRegisterRepository;
+  private final DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository;
+
   private final EntityManager entityManager;
   private JPAQueryFactory jpaQueryFactory;
 
   @Autowired
-  public DataServiceApiBasicInfoServiceImpl(
-      DataServiceApiDirService dataServiceApiDirService,
-      DasApiBasicinfoRepository dasApiBasicinfoRepository,
+  public DasApiBasicInfoServiceImpl(
+      DasApiDirService dasApiDirService,
+      DasApiBasicInfoRepository dasApiBasicinfoRepository,
+      DasApiRegisterRepository dasApiRegisterRepository,
+      DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository,
       EntityManager entityManager) {
-    this.dataServiceApiDirService = dataServiceApiDirService;
+    this.dasApiDirService = dasApiDirService;
     this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
+    this.dasApiRegisterRepository = dasApiRegisterRepository;
+    this.dasApiDatasourceConfigRepository = dasApiDatasourceConfigRepository;
     this.entityManager = entityManager;
   }
 
@@ -53,9 +63,9 @@ public class DataServiceApiBasicInfoServiceImpl implements DataServiceApiBasicIn
   }
 
   @Override
-  public PageResultVO<DasApiBasicinfoVO> getDasApiBasicInfo(
+  public PageResultVO<DasApiBasicInfoVO> getDasApiBasicInfo(
       DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
-    List<DasApiBasicinfoVO> dasApiBasicInfoVOList = new ArrayList<>();
+    List<DasApiBasicInfoVO> dasApiBasicInfoVOList = new ArrayList<>();
     Map<String, Object> map = null;
     try {
       map = queryDasApiBasicInfoByParams(dasApiBasicInfoParamsVO);
@@ -63,12 +73,12 @@ public class DataServiceApiBasicInfoServiceImpl implements DataServiceApiBasicIn
       e.printStackTrace();
       throw new BizException("查询失败!!!");
     }
-    List<DasApiBasicinfo> list = (List<DasApiBasicinfo>) map.get("list");
+    List<DasApiBasicInfo> list = (List<DasApiBasicInfo>) map.get("list");
     long total = (long) map.get("total");
 
     list.forEach(
         dasApiBasicInfo -> {
-          DasApiBasicinfoVO dasApiBasicinfoVO =
+          DasApiBasicInfoVO dasApiBasicinfoVO =
               DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
           dasApiBasicInfoVOList.add(dasApiBasicinfoVO);
         });
@@ -80,38 +90,49 @@ public class DataServiceApiBasicInfoServiceImpl implements DataServiceApiBasicIn
   }
 
   @Override
-  public void addDasApiBasicInfo(DasApiBasicinfoVO dasApiBasicInfoVO) {
-    DasApiBasicinfo dasApiBasicinfo =
-        DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfo(dasApiBasicInfoVO);
-    dasApiBasicinfo.setGmtCreate(new Date());
-    dasApiBasicinfo.setGmtModified(new Date());
+  public void addDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+    DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
+    dasApiBasicInfo.setGmtCreate(new Date());
+    dasApiBasicInfo.setGmtModified(new Date());
 
-    Predicate predicate = qDasApiBasicinfo.apiName.eq(dasApiBasicinfo.getApiName());
+    Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfo.getApiId());
     boolean exists = dasApiBasicinfoRepository.exists(predicate);
     if (exists) {
-      throw new BizException("当前要新增的API标准名称为:" + dasApiBasicinfo.getApiName() + " 的数据，已存在！！！");
+      throw new BizException("当前要新增的API标准名称为:" + dasApiBasicInfo.getApiName() + " 的数据，已存在！！！");
     }
-    dasApiBasicinfoRepository.save(dasApiBasicinfo);
+    dasApiBasicinfoRepository.save(dasApiBasicInfo);
   }
 
   @Override
-  public void updateDasApiBasicInfo(DasApiBasicinfoVO dasApiBasicInfoVO) {
-    DasApiBasicinfo dasApiBasicinfo =
-        DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfo(dasApiBasicInfoVO);
-    dasApiBasicinfo.setGmtModified(new Date());
-    Predicate predicate = qDasApiBasicinfo.apiName.eq(dasApiBasicinfo.getApiName());
+  public void updateDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+    DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
+    dasApiBasicInfo.setGmtModified(new Date());
+    Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfo.getApiId());
     boolean exists = dasApiBasicinfoRepository.exists(predicate);
     if (exists) {
-      dasApiBasicinfoRepository.saveAndFlush(dasApiBasicinfo);
+      dasApiBasicinfoRepository.saveAndFlush(dasApiBasicInfo);
     } else {
-      throw new BizException("当前要新增的API标准名称为:" + dasApiBasicinfo.getApiName() + " 的数据，不存在！！！");
+      throw new BizException("当前要新增的API标准名称为:" + dasApiBasicInfo.getApiName() + " 的数据，不存在！！！");
     }
   }
 
+  @Transactional
   @Override
   public void deleteDasApiBasicInfo(Long delId) {
-    boolean exists = dasApiBasicinfoRepository.exists(qDasApiBasicinfo.id.eq(delId));
-    if (exists) {
+    Optional<DasApiBasicInfo> onDasApiBasicInfo =
+        dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.id.eq(delId));
+    if (onDasApiBasicInfo.isPresent()) {
+      // 根据API类型,对应清除配置信息
+      DasApiBasicInfo dasApiBasicInfo = onDasApiBasicInfo.get();
+      String apiType = dasApiBasicInfo.getApiType();
+      String apiId = dasApiBasicInfo.getApiId();
+      if (DasConstant.REGISTER_API_CODE.equalsIgnoreCase(apiType)) {
+        dasApiRegisterRepository.deleteByApiId(apiId);
+      }
+      if (DasConstant.DM_SOURCE_API_CODE.equalsIgnoreCase(apiType)) {
+        dasApiDatasourceConfigRepository.deleteByApiId(apiId);
+      }
+      // 删除AIP基本信息
       dasApiBasicinfoRepository.deleteById(delId);
     }
   }
@@ -122,27 +143,41 @@ public class DataServiceApiBasicInfoServiceImpl implements DataServiceApiBasicIn
     List<String> idList = Arrays.asList(ids.split(","));
     Set<Long> idSet = new HashSet<>();
     idList.forEach(id -> idSet.add(Long.valueOf(id)));
-    List<DasApiBasicinfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(idSet);
+    List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(idSet);
     dasApiBasicinfoRepository.deleteInBatch(apiBasicInfoList);
+  }
+
+  @Override
+  public List<Map<String, String>> getApiType() {
+    return DasConstant.getApiType();
+  }
+
+  @Override
+  public List<Map<String, String>> getDMSourceType() {
+    return DasConstant.getDMSourceType();
+  }
+
+  private DasApiBasicInfo transformToEntity(DasApiBasicInfoVO dasApiBasicInfoVO) {
+    return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfo(dasApiBasicInfoVO);
   }
 
   public Map<String, Object> queryDasApiBasicInfoByParams(
       DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
     Map<String, Object> result = new HashMap<>();
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    checkCondition(booleanBuilder, qDasApiBasicinfo, dasApiBasicInfoParamsVO);
+    checkCondition(booleanBuilder, qDasApiBasicInfo, dasApiBasicInfoParamsVO);
     long count =
         jpaQueryFactory
-            .select(qDasApiBasicinfo.count())
-            .from(qDasApiBasicinfo)
+            .select(qDasApiBasicInfo.count())
+            .from(qDasApiBasicInfo)
             .where(booleanBuilder)
             .fetchOne();
-    List<DasApiBasicinfo> dasApiBasicInfoList =
+    List<DasApiBasicInfo> dasApiBasicInfoList =
         jpaQueryFactory
-            .select(qDasApiBasicinfo)
-            .from(qDasApiBasicinfo)
+            .select(qDasApiBasicInfo)
+            .from(qDasApiBasicInfo)
             .where(booleanBuilder)
-            .orderBy(qDasApiBasicinfo.apiName.asc())
+            .orderBy(qDasApiBasicInfo.apiName.asc())
             .offset(
                 (dasApiBasicInfoParamsVO.getPagination().getPage() - 1)
                     * dasApiBasicInfoParamsVO.getPagination().getSize())
@@ -155,11 +190,11 @@ public class DataServiceApiBasicInfoServiceImpl implements DataServiceApiBasicIn
 
   public void checkCondition(
       BooleanBuilder booleanBuilder,
-      QDasApiBasicinfo qDasApiBasicinfo,
+      QDasApiBasicInfo qDasApiBasicinfo,
       DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
     if (!StringUtils.isEmpty(dasApiBasicInfoParamsVO.getApiDirId())) {
       Set<String> apiDirIdSet = new HashSet<>();
-      dataServiceApiDirService.getApiDirId(apiDirIdSet, dasApiBasicInfoParamsVO.getApiDirId());
+      dasApiDirService.getApiDirId(apiDirIdSet, dasApiBasicInfoParamsVO.getApiDirId());
       booleanBuilder.and(qDasApiBasicinfo.apiId.in(apiDirIdSet));
     }
     if (!StringUtils.isEmpty(dasApiBasicInfoParamsVO.getApiName())) {

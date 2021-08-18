@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "qk_das_api_basicinfo")
-public class DasApiBasicinfo implements Serializable {
+@Table(name = "qk_das_api_basic_info")
+public class DasApiBasicInfo implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
