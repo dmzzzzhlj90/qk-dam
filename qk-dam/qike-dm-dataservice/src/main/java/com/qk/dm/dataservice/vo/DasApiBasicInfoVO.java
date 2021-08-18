@@ -15,7 +15,7 @@ public class DasApiBasicInfoVO {
   private String apiId;
 
   /** API目录ID */
-  private Integer dasDirId;
+  private String dasDirId;
 
   /** API目录层级 */
   private String apiDirLevel;
