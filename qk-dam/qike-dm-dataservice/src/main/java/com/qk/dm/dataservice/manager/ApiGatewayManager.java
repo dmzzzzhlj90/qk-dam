@@ -31,6 +31,7 @@ public class ApiGatewayManager {
     if (gatewayPlugin != null) {
       RouteFactory routeFactory = gatewayPlugin.routeFactory(routeContext);
       this.routesService = routeFactory.getRoutesService();
+      routesService.initRouteInfo();
       log.info("路由服务初始化完成！");
     }
   }

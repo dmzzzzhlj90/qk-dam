@@ -16,7 +16,7 @@ public class ApiSixGatewayPlugin implements GatewayPlugin {
 
   @Override
   public RouteFactory routeFactory(RouteContext routeContext) {
-    return null;
+    return new ApiSixRouteFactory(routeContext);
   }
 
   @Override
