@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 元数据列表筛选条件功能
  * @author shenpj
  * @date 2021/8/17 11:21 上午
  * @since 1.0.0
