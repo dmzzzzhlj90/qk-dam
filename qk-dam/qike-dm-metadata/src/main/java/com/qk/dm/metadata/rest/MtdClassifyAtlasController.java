@@ -4,10 +4,9 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * 元数据分类绑定相关接口

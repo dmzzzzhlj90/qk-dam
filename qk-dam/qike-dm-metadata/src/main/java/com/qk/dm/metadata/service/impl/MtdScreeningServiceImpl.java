@@ -6,14 +6,13 @@ import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
-import net.minidev.json.JSONObject;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import net.minidev.json.JSONObject;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 /**
  * @author shenpj

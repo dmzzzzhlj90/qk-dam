@@ -6,11 +6,10 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataingestion.service.CosTaskFilesService;
 import com.qk.dm.dataingestion.vo.CosTaskFileInfoVO;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 同步获取COS客户端文件信息
@@ -39,7 +38,8 @@ public class CosTaskFilesController {
    * @return DefaultCommonResult
    */
   @GetMapping("/files/info/{dataDay}")
-  public DefaultCommonResult<List<CosTaskFileInfoVO>> getCosTaskFilesInfo(@PathVariable("dataDay") String dataDay) {
+  public DefaultCommonResult<List<CosTaskFileInfoVO>> getCosTaskFilesInfo(
+      @PathVariable("dataDay") String dataDay) {
     List<CosTaskFileInfoVO> cosTaskFilesInfo = cosTaskFilesService.getCosTaskFilesInfo(dataDay);
     return DefaultCommonResult.success(ResultCodeEnum.OK, cosTaskFilesInfo);
   }
@@ -51,7 +51,8 @@ public class CosTaskFilesController {
    * @return DefaultCommonResult
    */
   @PutMapping("/files/metadata/header/info/{dataDay}")
-  public DefaultCommonResult<Object> setFiLesMetaDataHearderInfo(@PathVariable("dataDay") String dataDay) {
+  public DefaultCommonResult<Object> setFiLesMetaDataHearderInfo(
+      @PathVariable("dataDay") String dataDay) {
     cosTaskFilesService.setFiLesMetaDataHearderInfo(dataDay);
     return DefaultCommonResult.success();
   }

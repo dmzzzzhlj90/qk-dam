@@ -1,6 +1,5 @@
 package com.qk.dm.dataingestion.rest;
 
-import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;

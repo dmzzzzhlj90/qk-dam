@@ -1,14 +1,13 @@
 package com.qk.dm.datasource.util;
 
 import com.qk.dm.datasource.vo.DsDatasourceVO;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 数据库测试连接

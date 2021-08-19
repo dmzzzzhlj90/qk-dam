@@ -21,7 +21,7 @@ import java.util.stream.Stream;
  */
 public class MysqlTypeAgg {
   public static final String TABLE_COMMENT = "table_comment";
-  private static final String TABLE_NAME ="table_name";
+  private static final String TABLE_NAME = "table_name";
   private final Db use;
   private final String host;
   private final String db;
@@ -50,9 +50,7 @@ public class MysqlTypeAgg {
 
     try {
       Entity tables =
-          Entity.create("TABLES")
-              .set("table_schema", db)
-              .set(TABLE_NAME, "in" + "(" + inTbs + ")");
+          Entity.create("TABLES").set("table_schema", db).set(TABLE_NAME, "in" + "(" + inTbs + ")");
 
       entityList = use.find(tables);
       Assert.notEmpty(

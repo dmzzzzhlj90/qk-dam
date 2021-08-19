@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 public class AtalsSchedule {
 
-    private final SynchAtlasService synchAtalsService;
+  private final SynchAtlasService synchAtalsService;
 
-    public AtalsSchedule(SynchAtlasService synchAtalsService) {
-        this.synchAtalsService = synchAtalsService;
-    }
+  public AtalsSchedule(SynchAtlasService synchAtalsService) {
+    this.synchAtalsService = synchAtalsService;
+  }
 
-    @Scheduled(fixedDelay = 60000)
-    public void synchLabelsAtlas(){
-        synchAtalsService.synchLabelsAtlas();
-    }
+  @Scheduled(fixedDelay = 60000)
+  public void synchLabelsAtlas() {
+    synchAtalsService.synchLabelsAtlas();
+  }
 
-    @Scheduled(fixedDelay = 60000)
-    public void synchClassify(){
-        synchAtalsService.synchClassify();
-        synchAtalsService.synchClassifyAtlas();
-    }
+  @Scheduled(fixedDelay = 60000)
+  public void synchClassify() {
+    synchAtalsService.synchClassify();
+    synchAtalsService.synchClassifyAtlas();
+  }
 }

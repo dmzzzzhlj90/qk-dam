@@ -55,10 +55,10 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
   }
 
   public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, String tips) {
-    return fail(codeEnum, null,tips);
+    return fail(codeEnum, null, tips);
   }
 
   public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, T data, String tips) {
-    return new DefaultCommonResult<>(codeEnum, data,tips);
+    return new DefaultCommonResult<>(codeEnum, data, tips);
   }
 }

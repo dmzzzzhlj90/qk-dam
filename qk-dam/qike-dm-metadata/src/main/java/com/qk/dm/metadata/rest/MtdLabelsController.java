@@ -7,10 +7,9 @@ import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
+import javax.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 元数据标签功能

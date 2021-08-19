@@ -2,7 +2,6 @@ package com.qk.dm.controller;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.service.MxTaskSchedulerService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,5 +36,4 @@ public class MxTaskSchedulerController {
     mxTaskSchedulerService.sendProcessInstanceState();
     return DefaultCommonResult.success();
   }
-
 }

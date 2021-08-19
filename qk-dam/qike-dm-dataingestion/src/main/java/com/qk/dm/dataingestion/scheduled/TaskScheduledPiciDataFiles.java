@@ -38,9 +38,7 @@ public class TaskScheduledPiciDataFiles {
     this.piciTaskDataFileSyncService = piciTaskDataFileSyncService;
   }
 
-  /**
-   * 定时同步阿里云数据到腾讯云,执行数据脚本;
-   */
+  /** 定时同步阿里云数据到腾讯云,执行数据脚本; */
   @GetMapping("/files/data")
   public void syncRiZhiFilesData() {
     LOG.info("定时同步开始!");

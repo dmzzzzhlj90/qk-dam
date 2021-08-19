@@ -2,8 +2,6 @@ package com.qk.dam.gateway.config;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.jwt.BadJwtException;
@@ -44,5 +42,4 @@ public class GlobalExceptionAdvice {
   public Mono<DefaultCommonResult<Object>> badJwtException(BadJwtException e) {
     return Mono.justOrEmpty(DefaultCommonResult.fail(ResultCodeEnum.UN_AUTHORIZED));
   }
-
 }

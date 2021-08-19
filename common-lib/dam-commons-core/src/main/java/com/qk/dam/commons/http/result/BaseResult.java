@@ -8,7 +8,7 @@ import lombok.Data;
  * @date 20210601 基础返回结果封装
  */
 @Data
-public abstract class BaseResult<T>{
+public abstract class BaseResult<T> {
   /** 返回码 */
   private String retCode;
   /** 返回说明 */
