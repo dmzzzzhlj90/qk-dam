@@ -26,4 +26,14 @@ public class DasApplicationManagementParamsVO {
 
     /** 结束时间 */
     private String endDay;
+    //用于授权
+    /**
+     * 应用id
+     */
+    private Long id;
+
+    /**
+     * 关联api的id
+     */
+    private String apiIds;
 }

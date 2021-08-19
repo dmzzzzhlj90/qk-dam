@@ -10,6 +10,7 @@ import com.qk.dm.dataservice.service.DataServiceApiManagementService;
 import com.qk.dm.dataservice.vo.DasApplicationManagementParamsVO;
 import com.qk.dm.dataservice.vo.DasApplicationManagementVO;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
@@ -115,6 +116,20 @@ public class DataServiceApiManagementServiceImpl implements DataServiceApiManage
 
   }
 
+  @Override
+  public void manageMentAuthorization(DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
+    Long id = dasApplicationManagementParamsVO.getId();
+    Predicate predicate = qDasApplicationManagement.id.eq(id);
+    DasApplicationManagement dasApplicationManagement = dasApplicationManagementRepository.findOne(predicate).orElse(null);
+    if (dasApplicationManagement != null){
+      dasApplicationManagement.setApiId(dasApplicationManagementParamsVO.getApiIds());
+      dasApplicationManagementRepository.saveAndFlush(dasApplicationManagement);
+    }else {
+      throw new BizException("id为"+id+"的数据不存在");
+    }
+
+
+  }
 
   private Map<String, Object> queryDasManagementParams(DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
 

@@ -86,4 +86,14 @@ public class DataServiceApiManagementController {
     return DefaultCommonResult.success();
   }
 
+  /**
+   * 授权应用管理信息
+   * @param dasApplicationManagementParamsVO
+   * @return
+   */
+  @PostMapping("/authorization")
+  public DefaultCommonResult manageMentAuthorization(@RequestBody DasApplicationManagementParamsVO dasApplicationManagementParamsVO){
+    dataServiceApiManagementService.manageMentAuthorization(dasApplicationManagementParamsVO);
+    return DefaultCommonResult.success();
+  }
 }
