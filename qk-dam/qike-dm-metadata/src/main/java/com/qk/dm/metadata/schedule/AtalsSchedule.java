@@ -1,6 +1,6 @@
 package com.qk.dm.metadata.schedule;
 
-import com.qk.dm.metadata.service.SynchAtalsService;
+import com.qk.dm.metadata.service.SynchAtlasService;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
@@ -8,20 +8,20 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 public class AtalsSchedule {
 
-  private final SynchAtalsService synchAtalsService;
+    private final SynchAtlasService synchAtalsService;
 
-  public AtalsSchedule(SynchAtalsService synchAtalsService) {
-    this.synchAtalsService = synchAtalsService;
-  }
+    public AtalsSchedule(SynchAtlasService synchAtalsService) {
+        this.synchAtalsService = synchAtalsService;
+    }
 
-  //    @Scheduled(fixedDelay = 60000)
-  public void synchLabelsAtlas() {
-    synchAtalsService.synchLabelsAtlas();
-  }
+//    @Scheduled(fixedDelay = 60000)
+    public void synchLabelsAtlas(){
+        synchAtalsService.synchLabelsAtlas();
+    }
 
-  //    @Scheduled(fixedDelay = 60000)
-  public void synchClassify() {
-    synchAtalsService.synchClassify();
-    synchAtalsService.synchClassifyAtlas();
-  }
+//    @Scheduled(fixedDelay = 60000)
+    public void synchClassify(){
+        synchAtalsService.synchClassify();
+        synchAtalsService.synchClassifyAtlas();
+    }
 }

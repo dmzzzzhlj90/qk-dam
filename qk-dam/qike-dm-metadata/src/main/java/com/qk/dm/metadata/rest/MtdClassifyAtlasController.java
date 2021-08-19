@@ -4,9 +4,10 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * 元数据分类绑定相关接口
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/classifyAtlas")
+@RequestMapping("/classify/bind")
 public class MtdClassifyAtlasController {
 
   private final MtdClassifyAtlasService mtdClassifyAtlasService;
@@ -28,8 +29,8 @@ public class MtdClassifyAtlasController {
   /**
    * 新增元数据分类绑定关系
    *
-   * @param: mtdClassifyAtlasVO 元数据分类VO
-   * @return: DefaultCommonResult
+   * @param mtdClassifyAtlasVO 元数据分类VO
+   * @return DefaultCommonResult
    */
   @PostMapping("")
   public DefaultCommonResult insert(@RequestBody @Valid MtdClassifyAtlasVO mtdClassifyAtlasVO) {
@@ -40,8 +41,8 @@ public class MtdClassifyAtlasController {
   /**
    * 修改元数据分类绑定关系
    *
-   * @param: mtdClassifyAtlasVO 元数据分类VO
-   * @return: DefaultCommonResult
+   * @param mtdClassifyAtlasVO 元数据分类VO
+   * @return DefaultCommonResult
    */
   @PutMapping("/{id}")
   public DefaultCommonResult update(
@@ -54,8 +55,8 @@ public class MtdClassifyAtlasController {
   /**
    * 查询元数据分类绑定关系
    *
-   * @param: guid 元数据guid
-   * @return: 返回标签列表信息
+   * @param guid 元数据guid
+   * @return DefaultCommonResult<MtdClassifyAtlasVO>
    */
   @GetMapping("/{guid}")
   public DefaultCommonResult<MtdClassifyAtlasVO> getByGuid(@PathVariable("guid") String guid) {

@@ -7,10 +7,11 @@ import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
 import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 import com.qk.dm.metadata.vo.PageResultVO;
-import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 元数据分类相关基础接口
@@ -32,8 +33,8 @@ public class MtdClassifyController {
   /**
    * 新增元数据分类
    *
-   * @param: mtdClassifyAtlasVO 元数据分类VO
-   * @return: DefaultCommonResult
+   * @param mtdClassifyVO 元数据分类VO
+   * @return DefaultCommonResult
    */
   @PostMapping("")
   public DefaultCommonResult insert(@RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
@@ -44,8 +45,8 @@ public class MtdClassifyController {
   /**
    * 修改元数据分类
    *
-   * @param: mtdClassifyAtlasVO 元数据分类VO
-   * @return: DefaultCommonResult
+   * @param mtdClassifyVO 元数据分类VO
+   * @return DefaultCommonResult
    */
   @PutMapping("/{id}")
   public DefaultCommonResult update(
@@ -57,8 +58,8 @@ public class MtdClassifyController {
   /**
    * 删除元数据分类
    *
-   * @param: mtdClassifyAtlasVO 元数据分类VO
-   * @return: DefaultCommonResult
+   * @param ids id集合，String类型
+   * @return DefaultCommonResult
    */
   @DeleteMapping("/{ids}")
   public DefaultCommonResult delete(@PathVariable("ids") String ids) {
@@ -69,8 +70,8 @@ public class MtdClassifyController {
   /**
    * 分页查询元数据分类
    *
-   * @param: pagination分页查询参数对象: page,size,sortStr
-   * @return: DefaultCommonResult
+   * @param mtdClassifyListVO
+   * @return DefaultCommonResult<PageResultVO<MtdClassifyInfoVO>>
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<MtdClassifyInfoVO>> classifyByPage(
@@ -82,8 +83,8 @@ public class MtdClassifyController {
   /**
    * 查询元数据分类
    *
-   * @param: pagination分页查询参数对象: page,size,sortStr
-   * @return: DefaultCommonResult
+   * @param mtdClassifyVO
+   * @return DefaultCommonResult<List<MtdClassifyInfoVO>>
    */
   @GetMapping("")
   public DefaultCommonResult<List<MtdClassifyInfoVO>> classifyByAll(MtdClassifyVO mtdClassifyVO) {

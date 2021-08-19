@@ -3,15 +3,14 @@ package com.qk.dm.metadata.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsService;
-import com.qk.dm.metadata.service.impl.SynchAtalsServiceImpl;
 import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
-import java.util.List;
-import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 元数据标签功能
@@ -70,8 +69,8 @@ public class MtdLabelsController {
   /**
    * 分页查询元数据标签
    *
-   * @param mtdLabelsListVO 入参
-   * @return 返回标签列表信息
+   * @param mtdLabelsListVO 分页元数据标签VO
+   * @return DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>>
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>> listByPage(
@@ -84,42 +83,10 @@ public class MtdLabelsController {
    * 查询元数据标签
    *
    * @param mtdLabelsVO 元数据标签VO
-   * @return 返回标签列表信息
+   * @return DefaultCommonResult<List<MtdLabelsInfoVO>>
    */
   @GetMapping("")
   public DefaultCommonResult<List<MtdLabelsInfoVO>> listByAll(MtdLabelsVO mtdLabelsVO) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdLabelsService.listByAll(mtdLabelsVO));
-  }
-
-  @Autowired SynchAtalsServiceImpl synchAtalsService;
-
-  /**
-   * 刷新标签绑定
-   * @return success
-   */
-  @GetMapping("/synchLabelsAtlas")
-  public DefaultCommonResult synchLabelsAtlas() {
-    synchAtalsService.synchLabelsAtlas();
-    return DefaultCommonResult.success();
-  }
-
-  /**
-   * 刷新分类
-   * @return success
-   */
-  @GetMapping("/synchClassify")
-  public DefaultCommonResult synchClassify() {
-    synchAtalsService.synchClassify();
-    return DefaultCommonResult.success();
-  }
-
-  /**
-   * 刷新分类绑定
-   * @return success
-   */
-  @GetMapping("/synchClassifyAtlas")
-  public DefaultCommonResult synchClassifyAtlas() {
-    synchAtalsService.synchClassifyAtlas();
-    return DefaultCommonResult.success();
   }
 }

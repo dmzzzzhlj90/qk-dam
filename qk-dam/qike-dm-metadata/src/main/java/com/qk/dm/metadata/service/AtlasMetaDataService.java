@@ -38,4 +38,10 @@ public interface AtlasMetaDataService {
    * @return
    */
   List<MtdAtlasEntityTypeVO> getAllEntityType();
+
+  /**
+   * 根据guid删除元数据信息
+   * @param guids
+   */
+  void deleteEntitiesByGuids(String guids);
 }
