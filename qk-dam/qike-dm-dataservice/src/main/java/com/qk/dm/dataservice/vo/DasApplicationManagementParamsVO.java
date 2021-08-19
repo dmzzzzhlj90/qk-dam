@@ -16,24 +16,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DasApplicationManagementParamsVO {
-    private Pagination pagination;
-    /** 应用名称 */
-    private String appName;
-    /** 应用类型 */
-    private String appType;
-    /** 开始时间 */
-    private String beginDay;
+  private Pagination pagination;
+  /** 应用名称 */
+  private String appName;
+  /** 应用类型 */
+  private String appType;
+  /** 开始时间 */
+  private String beginDay;
 
-    /** 结束时间 */
-    private String endDay;
-    //用于授权
-    /**
-     * 应用id
-     */
-    private Long id;
+  /** 结束时间 */
+  private String endDay;
+  // 用于授权
+  /** 应用id */
+  private Long id;
 
-    /**
-     * 关联api的id
-     */
-    private String apiIds;
+  /** 关联api的id */
+  private String apiIds;
 }

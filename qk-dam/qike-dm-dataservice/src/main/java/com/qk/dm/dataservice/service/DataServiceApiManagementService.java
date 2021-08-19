@@ -20,7 +20,8 @@ public interface DataServiceApiManagementService {
 
   void bulkDeleteDasApiManagement(String ids);
 
-  PageResultVO<DasApplicationManagementVO> getDasApiDasAiManagement(DasApplicationManagementParamsVO dasApplicationManagementParamsVO);
+  PageResultVO<DasApplicationManagementVO> getDasApiDasAiManagement(
+      DasApplicationManagementParamsVO dasApplicationManagementParamsVO);
 
   void manageMentAuthorization(DasApplicationManagementParamsVO dasApplicationManagementParamsVO);
 }

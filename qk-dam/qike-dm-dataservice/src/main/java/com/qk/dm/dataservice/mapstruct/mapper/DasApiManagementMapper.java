@@ -14,7 +14,11 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DasApiManagementMapper {
-    DasApiManagementMapper INSTANCE = Mappers.getMapper(DasApiManagementMapper.class);
-    DasApplicationManagementVO useDasApiManagementVO(DasApplicationManagement dasApplicationManagement);
-    DasApplicationManagement useDasApiManagement(DasApplicationManagementVO DasApplicationManagementVO);
+  DasApiManagementMapper INSTANCE = Mappers.getMapper(DasApiManagementMapper.class);
+
+  DasApplicationManagementVO useDasApiManagementVO(
+      DasApplicationManagement dasApplicationManagement);
+
+  DasApplicationManagement useDasApiManagement(
+      DasApplicationManagementVO DasApplicationManagementVO);
 }

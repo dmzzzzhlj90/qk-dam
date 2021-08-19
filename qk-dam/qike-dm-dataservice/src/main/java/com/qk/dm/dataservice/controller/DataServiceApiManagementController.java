@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 应用管理
+ *
  * @author zys
  * @date 2021/8/17 14:49
  * @since 1.0.0
@@ -31,6 +32,7 @@ public class DataServiceApiManagementController {
 
   /**
    * 新增应用管理信息
+   *
    * @param dasApplicationManagementVO
    * @return
    */
@@ -43,29 +45,34 @@ public class DataServiceApiManagementController {
 
   /**
    * 统一查询应用管理系统
+   *
    * @param dasApplicationManagementParamsVO
    * @return
    */
   @PostMapping(value = "/query")
   public DefaultCommonResult<PageResultVO<DasApplicationManagementVO>> getDasApiDasAiManagement(
-          @RequestBody DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,dataServiceApiManagementService.getDasApiDasAiManagement(dasApplicationManagementParamsVO));
+      @RequestBody DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK,
+        dataServiceApiManagementService.getDasApiDasAiManagement(dasApplicationManagementParamsVO));
   }
 
   /**
    * 修改应用管理信息
+   *
    * @param dasApplicationManagementVO
    * @return
    */
   @PostMapping("/update")
   public DefaultCommonResult updateDasApiManagement(
-          @RequestBody @Validated DasApplicationManagementVO dasApplicationManagementVO) {
+      @RequestBody @Validated DasApplicationManagementVO dasApplicationManagementVO) {
     dataServiceApiManagementService.updateDasManagement(dasApplicationManagementVO);
     return DefaultCommonResult.success();
   }
 
   /**
    * 删除应用管理信息
+   *
    * @param id
    * @return
    */
@@ -77,6 +84,7 @@ public class DataServiceApiManagementController {
 
   /**
    * 批量删除引用管理信息
+   *
    * @param ids
    * @return
    */
@@ -88,11 +96,13 @@ public class DataServiceApiManagementController {
 
   /**
    * 授权应用管理信息
+   *
    * @param dasApplicationManagementParamsVO
    * @return
    */
   @PostMapping("/authorization")
-  public DefaultCommonResult manageMentAuthorization(@RequestBody DasApplicationManagementParamsVO dasApplicationManagementParamsVO){
+  public DefaultCommonResult manageMentAuthorization(
+      @RequestBody DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
     dataServiceApiManagementService.manageMentAuthorization(dasApplicationManagementParamsVO);
     return DefaultCommonResult.success();
   }

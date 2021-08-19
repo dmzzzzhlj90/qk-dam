@@ -14,7 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DasFlowStrategyMapper {
-    DasFlowStrategyMapper INSTANCE = Mappers.getMapper(DasFlowStrategyMapper.class);
-    DasFlowStrategyVO useDasFlowStrategyVO(DasFlowStrategy dasFlowStrategy);
-    DasFlowStrategy useDasFlowStrategy(DasFlowStrategyVO dasFlowStrategyVO);
+  DasFlowStrategyMapper INSTANCE = Mappers.getMapper(DasFlowStrategyMapper.class);
+
+  DasFlowStrategyVO useDasFlowStrategyVO(DasFlowStrategy dasFlowStrategy);
+
+  DasFlowStrategy useDasFlowStrategy(DasFlowStrategyVO dasFlowStrategyVO);
 }

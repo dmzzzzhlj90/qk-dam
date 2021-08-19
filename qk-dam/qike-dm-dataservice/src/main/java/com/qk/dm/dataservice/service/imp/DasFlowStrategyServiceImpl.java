@@ -29,129 +29,144 @@ import java.util.*;
  */
 @Service
 public class DasFlowStrategyServiceImpl implements DasFlowStrategyService {
-    private static final QDasFlowStrategy qDasFlowStrategy =QDasFlowStrategy.dasFlowStrategy;
-    private final DasFlowStrategyRepository dasFlowStrategyRepository;
-    private final EntityManager entityManager;
-    private JPAQueryFactory jpaQueryFactory;
-    @Autowired
-    public DasFlowStrategyServiceImpl(DasFlowStrategyRepository dasFlowStrategyRepository, EntityManager entityManager) {
-        this.dasFlowStrategyRepository = dasFlowStrategyRepository;
-        this.entityManager = entityManager;
-    }
-    @PostConstruct
-    public void initFactory() {
-        jpaQueryFactory = new JPAQueryFactory(entityManager);
-    }
-    @Override
-    public void addDasFlowStrategy(DasFlowStrategyVO dasFlowStrategyVO) {
-        DasFlowStrategy dasFlowStrategy = DasFlowStrategyMapper.INSTANCE.useDasFlowStrategy(dasFlowStrategyVO);
-        dasFlowStrategy.setGmtCreate(new Date());
-        dasFlowStrategy.setGmtModified(new Date());
-        BooleanExpression predicate = qDasFlowStrategy.strategyName.eq(dasFlowStrategy.getStrategyName());
-        boolean exists = dasFlowStrategyRepository.exists(predicate);
-        if (exists){
-            throw  new BizException("当前新增服务流控名称为"+dasFlowStrategy.getStrategyName()+"的数据已经存在");
-        }else {
-            dasFlowStrategyRepository.save(dasFlowStrategy);
-        }
-    }
+  private static final QDasFlowStrategy qDasFlowStrategy = QDasFlowStrategy.dasFlowStrategy;
+  private final DasFlowStrategyRepository dasFlowStrategyRepository;
+  private final EntityManager entityManager;
+  private JPAQueryFactory jpaQueryFactory;
 
-    @Override
-    public void updateDasFlowStrategy(DasFlowStrategyVO dasFlowStrategyVO) {
-        DasFlowStrategy dasFlowStrategy = DasFlowStrategyMapper.INSTANCE.useDasFlowStrategy(dasFlowStrategyVO);
-        dasFlowStrategy.setGmtCreate(new Date());
-        dasFlowStrategy.setGmtModified(new Date());
-        BooleanExpression predicate = qDasFlowStrategy.strategyName.eq(dasFlowStrategy.getStrategyName());
-        boolean exists = dasFlowStrategyRepository.exists(predicate);
-        if (exists){
-            dasFlowStrategyRepository.saveAndFlush(dasFlowStrategy);
-        }else {
-            throw  new BizException("当前修改服务流控名称为"+dasFlowStrategy.getStrategyName()+"的数据不存在");
-        }
+  @Autowired
+  public DasFlowStrategyServiceImpl(
+      DasFlowStrategyRepository dasFlowStrategyRepository, EntityManager entityManager) {
+    this.dasFlowStrategyRepository = dasFlowStrategyRepository;
+    this.entityManager = entityManager;
+  }
+
+  @PostConstruct
+  public void initFactory() {
+    jpaQueryFactory = new JPAQueryFactory(entityManager);
+  }
+
+  @Override
+  public void addDasFlowStrategy(DasFlowStrategyVO dasFlowStrategyVO) {
+    DasFlowStrategy dasFlowStrategy =
+        DasFlowStrategyMapper.INSTANCE.useDasFlowStrategy(dasFlowStrategyVO);
+    dasFlowStrategy.setGmtCreate(new Date());
+    dasFlowStrategy.setGmtModified(new Date());
+    BooleanExpression predicate =
+        qDasFlowStrategy.strategyName.eq(dasFlowStrategy.getStrategyName());
+    boolean exists = dasFlowStrategyRepository.exists(predicate);
+    if (exists) {
+      throw new BizException("当前新增服务流控名称为" + dasFlowStrategy.getStrategyName() + "的数据已经存在");
+    } else {
+      dasFlowStrategyRepository.save(dasFlowStrategy);
     }
+  }
 
-    @Override
-    public void deleteDasFlowStrategy(Long id) {
-        boolean exists = dasFlowStrategyRepository.exists(qDasFlowStrategy.id.eq(id));
-        if (exists) {
-            dasFlowStrategyRepository.deleteById(id);
-        }else {
-            throw new BizException("当前要删除id为"+id+"的服务流控数据不存在");
-        }
+  @Override
+  public void updateDasFlowStrategy(DasFlowStrategyVO dasFlowStrategyVO) {
+    DasFlowStrategy dasFlowStrategy =
+        DasFlowStrategyMapper.INSTANCE.useDasFlowStrategy(dasFlowStrategyVO);
+    dasFlowStrategy.setGmtCreate(new Date());
+    dasFlowStrategy.setGmtModified(new Date());
+    BooleanExpression predicate =
+        qDasFlowStrategy.strategyName.eq(dasFlowStrategy.getStrategyName());
+    boolean exists = dasFlowStrategyRepository.exists(predicate);
+    if (exists) {
+      dasFlowStrategyRepository.saveAndFlush(dasFlowStrategy);
+    } else {
+      throw new BizException("当前修改服务流控名称为" + dasFlowStrategy.getStrategyName() + "的数据不存在");
     }
+  }
 
-    @Override
-    public void bulkDeleteDasFlowStrategy(String ids) {
-        List<String> idList = Arrays.asList(ids.split(","));
-        Set<Long> idSet = new HashSet<>();
-        idList.forEach(id -> idSet.add(Long.valueOf(id)));
-        List<DasFlowStrategy> apiDasFlowStrategyList = dasFlowStrategyRepository.findAllById(idSet);
-        dasFlowStrategyRepository.deleteInBatch(apiDasFlowStrategyList);
+  @Override
+  public void deleteDasFlowStrategy(Long id) {
+    boolean exists = dasFlowStrategyRepository.exists(qDasFlowStrategy.id.eq(id));
+    if (exists) {
+      dasFlowStrategyRepository.deleteById(id);
+    } else {
+      throw new BizException("当前要删除id为" + id + "的服务流控数据不存在");
     }
+  }
 
-    @Override
-    public PageResultVO<DasFlowStrategyVO> getDasFlowStrategy(DasFlowStrategyParamsVO dasFlowStrategyParamsVO) {
-        List<DasFlowStrategyVO> dasFlowStrategyVOList = new ArrayList<>();
-        Map<String, Object> map = null;
-        try {
-            map = queryDasFlowStrategyParams(dasFlowStrategyParamsVO);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BizException("查询失败!!!");
-        }
-        List<DasFlowStrategy> list = (List<DasFlowStrategy>) map.get("list");
-        long total = (long) map.get("total");
-        list.forEach(
-                dasFlowStrategy -> {
-                    DasFlowStrategyVO dasFlowStrategyVO = DasFlowStrategyMapper.INSTANCE.useDasFlowStrategyVO(dasFlowStrategy);
-                    dasFlowStrategyVOList.add(dasFlowStrategyVO);
-                });
-        return new PageResultVO<>(
-                total,
-                dasFlowStrategyParamsVO.getPagination().getPage(),
-                dasFlowStrategyParamsVO.getPagination().getSize(),
-                dasFlowStrategyVOList);
+  @Override
+  public void bulkDeleteDasFlowStrategy(String ids) {
+    List<String> idList = Arrays.asList(ids.split(","));
+    Set<Long> idSet = new HashSet<>();
+    idList.forEach(id -> idSet.add(Long.valueOf(id)));
+    List<DasFlowStrategy> apiDasFlowStrategyList = dasFlowStrategyRepository.findAllById(idSet);
+    dasFlowStrategyRepository.deleteInBatch(apiDasFlowStrategyList);
+  }
+
+  @Override
+  public PageResultVO<DasFlowStrategyVO> getDasFlowStrategy(
+      DasFlowStrategyParamsVO dasFlowStrategyParamsVO) {
+    List<DasFlowStrategyVO> dasFlowStrategyVOList = new ArrayList<>();
+    Map<String, Object> map = null;
+    try {
+      map = queryDasFlowStrategyParams(dasFlowStrategyParamsVO);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new BizException("查询失败!!!");
     }
+    List<DasFlowStrategy> list = (List<DasFlowStrategy>) map.get("list");
+    long total = (long) map.get("total");
+    list.forEach(
+        dasFlowStrategy -> {
+          DasFlowStrategyVO dasFlowStrategyVO =
+              DasFlowStrategyMapper.INSTANCE.useDasFlowStrategyVO(dasFlowStrategy);
+          dasFlowStrategyVOList.add(dasFlowStrategyVO);
+        });
+    return new PageResultVO<>(
+        total,
+        dasFlowStrategyParamsVO.getPagination().getPage(),
+        dasFlowStrategyParamsVO.getPagination().getSize(),
+        dasFlowStrategyVOList);
+  }
 
-    private Map<String, Object> queryDasFlowStrategyParams(DasFlowStrategyParamsVO dasFlowStrategyParamsVO) {
-        Map<String, Object> result = new HashMap<>();
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        checkCondition(booleanBuilder, qDasFlowStrategy, dasFlowStrategyParamsVO);
-        long count =
-                jpaQueryFactory
-                        .select(qDasFlowStrategy.count())
-                        .from(qDasFlowStrategy)
-                        .where(booleanBuilder)
-                        .fetchOne();
+  private Map<String, Object> queryDasFlowStrategyParams(
+      DasFlowStrategyParamsVO dasFlowStrategyParamsVO) {
+    Map<String, Object> result = new HashMap<>();
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    checkCondition(booleanBuilder, qDasFlowStrategy, dasFlowStrategyParamsVO);
+    long count =
+        jpaQueryFactory
+            .select(qDasFlowStrategy.count())
+            .from(qDasFlowStrategy)
+            .where(booleanBuilder)
+            .fetchOne();
 
-        List<DasFlowStrategy> dasFlowStrategyList = jpaQueryFactory
-                .select(qDasFlowStrategy)
-                .from(qDasFlowStrategy)
-                .where(booleanBuilder)
-                .orderBy(qDasFlowStrategy.strategyName.asc())
-                .offset(
-                        (dasFlowStrategyParamsVO.getPagination().getPage() - 1)
-                                * dasFlowStrategyParamsVO.getPagination().getSize())
-                .limit(dasFlowStrategyParamsVO.getPagination().getSize())
-                .fetch();
-        result.put("list", dasFlowStrategyList);
-        result.put("total", count);
-        return result;
+    List<DasFlowStrategy> dasFlowStrategyList =
+        jpaQueryFactory
+            .select(qDasFlowStrategy)
+            .from(qDasFlowStrategy)
+            .where(booleanBuilder)
+            .orderBy(qDasFlowStrategy.strategyName.asc())
+            .offset(
+                (dasFlowStrategyParamsVO.getPagination().getPage() - 1)
+                    * dasFlowStrategyParamsVO.getPagination().getSize())
+            .limit(dasFlowStrategyParamsVO.getPagination().getSize())
+            .fetch();
+    result.put("list", dasFlowStrategyList);
+    result.put("total", count);
+    return result;
+  }
+
+  private void checkCondition(
+      BooleanBuilder booleanBuilder,
+      QDasFlowStrategy qDasFlowStrategy,
+      DasFlowStrategyParamsVO dasFlowStrategyParamsVO) {
+    if (!StringUtils.isEmpty(dasFlowStrategyParamsVO.getStrategyName())) {
+      booleanBuilder.and(
+          qDasFlowStrategy.strategyName.contains(dasFlowStrategyParamsVO.getStrategyName()));
     }
-
-    private void checkCondition(BooleanBuilder booleanBuilder, QDasFlowStrategy qDasFlowStrategy, DasFlowStrategyParamsVO dasFlowStrategyParamsVO) {
-        if (!StringUtils.isEmpty(dasFlowStrategyParamsVO.getStrategyName())) {
-            booleanBuilder.and(qDasFlowStrategy.strategyName.contains(dasFlowStrategyParamsVO.getStrategyName()));
-        }
-        if (!StringUtils.isEmpty(dasFlowStrategyParamsVO.getBeginDay())
-                && !StringUtils.isEmpty(dasFlowStrategyParamsVO.getEndDay())) {
-            StringTemplate dateExpr =
-                    Expressions.stringTemplate(
-                            "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDasFlowStrategy.gmtModified);
-            booleanBuilder.and(
-                    dateExpr.between(
-                            dasFlowStrategyParamsVO.getBeginDay(), dasFlowStrategyParamsVO.getEndDay()));
-        }
+    if (!StringUtils.isEmpty(dasFlowStrategyParamsVO.getBeginDay())
+        && !StringUtils.isEmpty(dasFlowStrategyParamsVO.getEndDay())) {
+      StringTemplate dateExpr =
+          Expressions.stringTemplate(
+              "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDasFlowStrategy.gmtModified);
+      booleanBuilder.and(
+          dateExpr.between(
+              dasFlowStrategyParamsVO.getBeginDay(), dasFlowStrategyParamsVO.getEndDay()));
     }
-
+  }
 }

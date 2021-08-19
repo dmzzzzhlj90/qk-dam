@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DasFlowStrategyParamsVO {
-    private Pagination pagination;
-    /** 开始时间 */
-    private String beginDay;
+  private Pagination pagination;
+  /** 开始时间 */
+  private String beginDay;
 
-    /** 结束时间 */
-    private String endDay;
-    /** 策略名称 */
-    private String strategyName;
+  /** 结束时间 */
+  private String endDay;
+  /** 策略名称 */
+  private String strategyName;
 }

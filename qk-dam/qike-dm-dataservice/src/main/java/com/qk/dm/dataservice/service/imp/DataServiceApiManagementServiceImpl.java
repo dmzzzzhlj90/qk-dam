@@ -30,16 +30,20 @@ import java.util.*;
  */
 @Service
 public class DataServiceApiManagementServiceImpl implements DataServiceApiManagementService {
-  private static final QDasApplicationManagement qDasApplicationManagement= QDasApplicationManagement.dasApplicationManagement;
+  private static final QDasApplicationManagement qDasApplicationManagement =
+      QDasApplicationManagement.dasApplicationManagement;
   private final DasApplicationManagementRepository dasApplicationManagementRepository;
   private final EntityManager entityManager;
   private JPAQueryFactory jpaQueryFactory;
+
   @Autowired
-  public DataServiceApiManagementServiceImpl(DasApplicationManagementRepository dasApplicationManagementRepository, EntityManager entityManager) {
+  public DataServiceApiManagementServiceImpl(
+      DasApplicationManagementRepository dasApplicationManagementRepository,
+      EntityManager entityManager) {
     this.dasApplicationManagementRepository = dasApplicationManagementRepository;
     this.entityManager = entityManager;
   }
-  
+
   @PostConstruct
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
@@ -47,13 +51,16 @@ public class DataServiceApiManagementServiceImpl implements DataServiceApiManage
 
   @Override
   public void addDasManagement(DasApplicationManagementVO dasApplicationManagementVO) {
-    DasApplicationManagement dasApplicationManagement = DasApiManagementMapper.INSTANCE.useDasApiManagement(dasApplicationManagementVO);
+    DasApplicationManagement dasApplicationManagement =
+        DasApiManagementMapper.INSTANCE.useDasApiManagement(dasApplicationManagementVO);
     dasApplicationManagement.setGmtCreate(new Date());
     dasApplicationManagement.setGmtModified(new Date());
-    BooleanExpression predicate = qDasApplicationManagement.appId.eq(dasApplicationManagement.getAppId());
+    BooleanExpression predicate =
+        qDasApplicationManagement.appId.eq(dasApplicationManagement.getAppId());
     boolean exists = dasApplicationManagementRepository.exists(predicate);
     if (exists) {
-      throw new BizException("当前要新增的应用名称为:" + dasApplicationManagement.getAppName() + " 的数据，已存在！！！");
+      throw new BizException(
+          "当前要新增的应用名称为:" + dasApplicationManagement.getAppName() + " 的数据，已存在！！！");
     } else {
       dasApplicationManagementRepository.save(dasApplicationManagement);
     }
@@ -61,14 +68,17 @@ public class DataServiceApiManagementServiceImpl implements DataServiceApiManage
 
   @Override
   public void updateDasManagement(DasApplicationManagementVO dasApplicationManagementVO) {
-    DasApplicationManagement dasApplicationManagement = DasApiManagementMapper.INSTANCE.useDasApiManagement(dasApplicationManagementVO);
+    DasApplicationManagement dasApplicationManagement =
+        DasApiManagementMapper.INSTANCE.useDasApiManagement(dasApplicationManagementVO);
     dasApplicationManagement.setGmtModified(new Date());
-    BooleanExpression predicate = qDasApplicationManagement.appId.eq(dasApplicationManagement.getAppId());
+    BooleanExpression predicate =
+        qDasApplicationManagement.appId.eq(dasApplicationManagement.getAppId());
     boolean exists = dasApplicationManagementRepository.exists(predicate);
-    if (exists){
+    if (exists) {
       dasApplicationManagementRepository.saveAndFlush(dasApplicationManagement);
-    }else {
-      throw new BizException("当前要新增的API标准名称为:" + dasApplicationManagement.getAppName() + " 的数据，不存在！！！");
+    } else {
+      throw new BizException(
+          "当前要新增的API标准名称为:" + dasApplicationManagement.getAppName() + " 的数据，不存在！！！");
     }
   }
 
@@ -77,8 +87,8 @@ public class DataServiceApiManagementServiceImpl implements DataServiceApiManage
     boolean exists = dasApplicationManagementRepository.exists(qDasApplicationManagement.id.eq(id));
     if (exists) {
       dasApplicationManagementRepository.deleteById(id);
-    }else {
-      throw new BizException("当前要删除id为"+id+"的数据不存在");
+    } else {
+      throw new BizException("当前要删除id为" + id + "的数据不存在");
     }
   }
 
@@ -87,12 +97,14 @@ public class DataServiceApiManagementServiceImpl implements DataServiceApiManage
     List<String> idList = Arrays.asList(ids.split(","));
     Set<Long> idSet = new HashSet<>();
     idList.forEach(id -> idSet.add(Long.valueOf(id)));
-    List<DasApplicationManagement> apiBasManagementList = dasApplicationManagementRepository.findAllById(idSet);
+    List<DasApplicationManagement> apiBasManagementList =
+        dasApplicationManagementRepository.findAllById(idSet);
     dasApplicationManagementRepository.deleteInBatch(apiBasManagementList);
   }
 
   @Override
-  public PageResultVO<DasApplicationManagementVO> getDasApiDasAiManagement(DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
+  public PageResultVO<DasApplicationManagementVO> getDasApiDasAiManagement(
+      DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
     List<DasApplicationManagementVO> dasApplicationManagementList = new ArrayList<>();
     Map<String, Object> map = null;
     try {
@@ -104,55 +116,56 @@ public class DataServiceApiManagementServiceImpl implements DataServiceApiManage
     List<DasApplicationManagement> list = (List<DasApplicationManagement>) map.get("list");
     long total = (long) map.get("total");
     list.forEach(
-            dsaApplicationManagement -> {
-              DasApplicationManagementVO dasApplicationManagementVO = DasApiManagementMapper.INSTANCE.useDasApiManagementVO(dsaApplicationManagement);
-              dasApplicationManagementList.add(dasApplicationManagementVO);
-            });
+        dsaApplicationManagement -> {
+          DasApplicationManagementVO dasApplicationManagementVO =
+              DasApiManagementMapper.INSTANCE.useDasApiManagementVO(dsaApplicationManagement);
+          dasApplicationManagementList.add(dasApplicationManagementVO);
+        });
     return new PageResultVO<>(
-            total,
-            dasApplicationManagementParamsVO.getPagination().getPage(),
-            dasApplicationManagementParamsVO.getPagination().getSize(),
-            dasApplicationManagementList);
-
+        total,
+        dasApplicationManagementParamsVO.getPagination().getPage(),
+        dasApplicationManagementParamsVO.getPagination().getSize(),
+        dasApplicationManagementList);
   }
 
   @Override
-  public void manageMentAuthorization(DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
+  public void manageMentAuthorization(
+      DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
     Long id = dasApplicationManagementParamsVO.getId();
     Predicate predicate = qDasApplicationManagement.id.eq(id);
-    DasApplicationManagement dasApplicationManagement = dasApplicationManagementRepository.findOne(predicate).orElse(null);
-    if (dasApplicationManagement != null){
+    DasApplicationManagement dasApplicationManagement =
+        dasApplicationManagementRepository.findOne(predicate).orElse(null);
+    if (dasApplicationManagement != null) {
       dasApplicationManagement.setApiId(dasApplicationManagementParamsVO.getApiIds());
       dasApplicationManagementRepository.saveAndFlush(dasApplicationManagement);
-    }else {
-      throw new BizException("id为"+id+"的数据不存在");
+    } else {
+      throw new BizException("id为" + id + "的数据不存在");
     }
-
-
   }
 
-  private Map<String, Object> queryDasManagementParams(DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
+  private Map<String, Object> queryDasManagementParams(
+      DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
 
     Map<String, Object> result = new HashMap<>();
     BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-
     checkCondition(booleanBuilder, qDasApplicationManagement, dasApplicationManagementParamsVO);
     long count =
-            jpaQueryFactory
-                    .select(qDasApplicationManagement.count())
-                    .from(qDasApplicationManagement)
-                    .where(booleanBuilder)
-                    .fetchOne();
+        jpaQueryFactory
+            .select(qDasApplicationManagement.count())
+            .from(qDasApplicationManagement)
+            .where(booleanBuilder)
+            .fetchOne();
 
-    List<DasApplicationManagement> dasApplicationManagementList = jpaQueryFactory
+    List<DasApplicationManagement> dasApplicationManagementList =
+        jpaQueryFactory
             .select(qDasApplicationManagement)
             .from(qDasApplicationManagement)
             .where(booleanBuilder)
             .orderBy(qDasApplicationManagement.appId.asc())
             .offset(
-                    (dasApplicationManagementParamsVO.getPagination().getPage() - 1)
-                            * dasApplicationManagementParamsVO.getPagination().getSize())
+                (dasApplicationManagementParamsVO.getPagination().getPage() - 1)
+                    * dasApplicationManagementParamsVO.getPagination().getSize())
             .limit(dasApplicationManagementParamsVO.getPagination().getSize())
             .fetch();
     result.put("list", dasApplicationManagementList);
@@ -160,22 +173,30 @@ public class DataServiceApiManagementServiceImpl implements DataServiceApiManage
     return result;
   }
 
-  private void checkCondition(BooleanBuilder booleanBuilder, QDasApplicationManagement qDasApplicationManagement, DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
+  private void checkCondition(
+      BooleanBuilder booleanBuilder,
+      QDasApplicationManagement qDasApplicationManagement,
+      DasApplicationManagementParamsVO dasApplicationManagementParamsVO) {
 
     if (!StringUtils.isEmpty(dasApplicationManagementParamsVO.getAppName())) {
-      booleanBuilder.and(qDasApplicationManagement.appName.contains(dasApplicationManagementParamsVO.getAppName()));
+      booleanBuilder.and(
+          qDasApplicationManagement.appName.contains(
+              dasApplicationManagementParamsVO.getAppName()));
     }
-    if (!StringUtils.isEmpty(dasApplicationManagementParamsVO.getAppType())){
-      booleanBuilder.and(qDasApplicationManagement.appType.contains(dasApplicationManagementParamsVO.getAppType()));
+    if (!StringUtils.isEmpty(dasApplicationManagementParamsVO.getAppType())) {
+      booleanBuilder.and(
+          qDasApplicationManagement.appType.contains(
+              dasApplicationManagementParamsVO.getAppType()));
     }
     if (!StringUtils.isEmpty(dasApplicationManagementParamsVO.getBeginDay())
-            && !StringUtils.isEmpty(dasApplicationManagementParamsVO.getEndDay())) {
+        && !StringUtils.isEmpty(dasApplicationManagementParamsVO.getEndDay())) {
       StringTemplate dateExpr =
-              Expressions.stringTemplate(
-                      "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDasApplicationManagement.gmtModified);
+          Expressions.stringTemplate(
+              "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDasApplicationManagement.gmtModified);
       booleanBuilder.and(
-              dateExpr.between(
-                      dasApplicationManagementParamsVO.getBeginDay(), dasApplicationManagementParamsVO.getEndDay()));
+          dateExpr.between(
+              dasApplicationManagementParamsVO.getBeginDay(),
+              dasApplicationManagementParamsVO.getEndDay()));
     }
   }
 }
