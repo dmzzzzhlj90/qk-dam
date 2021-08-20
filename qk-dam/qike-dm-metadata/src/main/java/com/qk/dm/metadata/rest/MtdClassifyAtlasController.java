@@ -5,9 +5,8 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * 元数据分类绑定相关接口
@@ -33,7 +32,7 @@ public class MtdClassifyAtlasController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  public DefaultCommonResult insert(@RequestBody @Valid MtdClassifyAtlasVO mtdClassifyAtlasVO) {
+  public DefaultCommonResult insert(@RequestBody @Validated MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasService.insert(mtdClassifyAtlasVO);
     return DefaultCommonResult.success();
   }
@@ -46,7 +45,7 @@ public class MtdClassifyAtlasController {
    */
   @PutMapping("/{id}")
   public DefaultCommonResult update(
-      @PathVariable("id") Long id, @RequestBody @Valid MtdClassifyAtlasVO mtdClassifyAtlasVO) {
+      @PathVariable("id") Long id, @RequestBody @Validated MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasVO.setId(id);
     mtdClassifyAtlasService.update(mtdClassifyAtlasVO);
     return DefaultCommonResult.success();

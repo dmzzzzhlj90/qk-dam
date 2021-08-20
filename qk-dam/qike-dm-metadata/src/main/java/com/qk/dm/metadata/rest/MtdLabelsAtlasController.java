@@ -4,9 +4,8 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * 元数据标签绑定功能
@@ -32,7 +31,7 @@ public class MtdLabelsAtlasController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  public DefaultCommonResult insert(@RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
+  public DefaultCommonResult insert(@RequestBody @Validated MtdLabelsAtlasVO mtdLabelsVO) {
     mtdLabelsAtlasService.insert(mtdLabelsVO);
     return DefaultCommonResult.success();
   }
@@ -45,7 +44,7 @@ public class MtdLabelsAtlasController {
    */
   @PutMapping("/{id}")
   public DefaultCommonResult update(
-      @PathVariable("id") Long id, @RequestBody @Valid MtdLabelsAtlasVO mtdLabelsVO) {
+      @PathVariable("id") Long id, @RequestBody @Validated MtdLabelsAtlasVO mtdLabelsVO) {
     mtdLabelsAtlasService.update(id, mtdLabelsVO);
     return DefaultCommonResult.success();
   }
