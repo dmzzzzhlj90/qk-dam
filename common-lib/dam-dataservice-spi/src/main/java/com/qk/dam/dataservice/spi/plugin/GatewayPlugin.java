@@ -6,7 +6,9 @@ import com.qk.dam.dataservice.spi.upstream.UpstreamContext;
 import com.qk.dam.dataservice.spi.upstream.UpstreamFactory;
 
 public interface GatewayPlugin {
-    String getType();
-    RouteFactory routeFactory(RouteContext routeContext);
-    UpstreamFactory upstreamFactory(UpstreamContext routeContext);
+  String getType();
+
+  RouteFactory routeFactory(RouteContext routeContext);
+
+  UpstreamFactory upstreamFactory(UpstreamContext routeContext);
 }

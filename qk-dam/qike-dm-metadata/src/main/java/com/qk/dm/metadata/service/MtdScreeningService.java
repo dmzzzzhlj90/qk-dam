@@ -4,5 +4,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface MtdScreeningService {
-    Map<String, List<String>> screeningList();
+  Map<String, List<String>> screeningList();
 }

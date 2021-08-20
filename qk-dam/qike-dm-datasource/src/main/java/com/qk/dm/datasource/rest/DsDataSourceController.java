@@ -6,11 +6,10 @@ import com.qk.dm.datasource.service.DsDataSourceService;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.PageResultVO;
 import com.qk.dm.datasource.vo.params.DsDataSourceParamsVO;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 数据管理—数据源连接
@@ -84,7 +83,7 @@ public class DsDataSourceController {
    *
    * @return
    */
-  @PostMapping("atlas/getdatatype")
+  @GetMapping("/getdatatype")
   public DefaultCommonResult<List<String>> getDataType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsDataSourceService.getDataType());
   }

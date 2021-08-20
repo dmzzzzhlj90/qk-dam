@@ -21,6 +21,9 @@ public class DsDataSourceParamsVO {
   /** 数据连接名称 */
   private String dataSourceName;
 
+  /** 数据源连接类型 */
+  private String linkType;
+
   /** 数据源连接目录层级ID */
   private String dicId;
 

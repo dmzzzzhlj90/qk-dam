@@ -1,8 +1,6 @@
 package com.qk.dm.datasource.util;
 
 import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import java.security.KeyFactory;
@@ -10,6 +8,10 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import javax.crypto.Cipher;
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 数据源连接用户名密码加密解密操作
@@ -19,7 +21,6 @@ import java.security.spec.X509EncodedKeySpec;
  * @since 1.0.0
  */
 public class DsDataSourceUtil {
-  private static final Logger logger = LoggerFactory.getLogger(DsDataSourceUtil.class);
   public static final String KEY_ALGORITHM = "RSA";
 
   // 公钥

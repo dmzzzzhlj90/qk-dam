@@ -10,8 +10,6 @@ spring:
     basename: i18n/messages
   mvc:
     message-codes-resolver-format: postfix_error_code
-    servlet:
-      path: /metadata
   main:
     allow-bean-definition-overriding: true
   application:

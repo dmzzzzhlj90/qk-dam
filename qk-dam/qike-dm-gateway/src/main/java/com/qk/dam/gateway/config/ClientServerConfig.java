@@ -4,7 +4,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authorization.AuthenticatedReactiveAuthorizationManager;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,7 +22,8 @@ public class ClientServerConfig {
 
   @Bean
   SecurityWebFilterChain springSecurityFilterChain(
-      ServerHttpSecurity http, ReactiveClientRegistrationRepository clientRegistrationRepository) throws URISyntaxException {
+      ServerHttpSecurity http, ReactiveClientRegistrationRepository clientRegistrationRepository)
+      throws URISyntaxException {
 
     http.authorizeExchange(
             exchanges ->

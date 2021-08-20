@@ -25,18 +25,21 @@ compileJava {
 
 dependencies {
     implementation project(":qk-data-jpa")
-    implementation project(":qk-data-redis")
+   //implementation project(":qk-data-redis")
     implementation project(":dam-mvc-validation")
     implementation project(":commons-core")
-    implementation project(":dam-log")
+    //implementation project(":dam-log")
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation 'com.alibaba:easyexcel'
-    implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '3.1.2'
 
+    compile('org.apache.hive:hive-jdbc:3.1.2'){
+       exclude group: '*'
+    }
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.mapstruct:mapstruct'

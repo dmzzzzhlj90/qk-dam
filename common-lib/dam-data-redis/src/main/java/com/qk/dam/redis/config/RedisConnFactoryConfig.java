@@ -38,8 +38,7 @@ class RedisConnFactoryConfig {
     sentinelConfig.setMaster(redisProperties.getSentinel().getMaster());
     sentinelConfig.setSentinels(
         redisProperties.getSentinel().getNodes().stream()
-            .map(
-                s -> new RedisNode(s.split(":")[0], Integer.parseInt(s.split(":")[1])))
+            .map(s -> new RedisNode(s.split(":")[0], Integer.parseInt(s.split(":")[1])))
             .collect(Collectors.toList()));
     sentinelConfig.setPassword(redisProperties.getPassword());
     return new LettuceConnectionFactory(sentinelConfig, lettuceClientConfiguration);

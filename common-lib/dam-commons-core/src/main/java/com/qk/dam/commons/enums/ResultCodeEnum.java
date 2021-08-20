@@ -89,7 +89,7 @@ public enum ResultCodeEnum {
 
   public String getFormattedErrorMessage(String... params) {
     MessageFormat mf = new MessageFormat(message);
-    return  mf.format(params);
+    return mf.format(params);
   }
 
   public String getMessage() {

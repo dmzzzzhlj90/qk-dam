@@ -12,75 +12,70 @@ import java.util.List;
  */
 public class PageResultVO<T> {
 
-    /**
-     * 数据总量
-     */
-    private long total;
+  /** 数据总量 */
+  private long total;
 
-    /**
-     * 当前页
-     */
-    private int pageNum;
+  /** 当前页 */
+  private int pageNum;
 
-    /**
-     * 每页大小
-     */
-    private int pageSize;
+  /** 每页大小 */
+  private int pageSize;
 
-    /**
-     * 返回数据data
-     */
-    private List<T> list = new ArrayList();
+  /** 返回数据data */
+  private List<T> list = new ArrayList();
 
-    public PageResultVO() {
-    }
+  public PageResultVO() {}
 
-    public PageResultVO(long total, int pageNum, int pageSize, List<T> list) {
-        this.total = total;
-        this.pageNum = pageNum;
-        this.pageSize = pageSize;
-        this.list = list;
-    }
+  public PageResultVO(long total, int pageNum, int pageSize, List<T> list) {
+    this.total = total;
+    this.pageNum = pageNum;
+    this.pageSize = pageSize;
+    this.list = list;
+  }
 
-    public long getTotal() {
-        return total;
-    }
+  public long getTotal() {
+    return total;
+  }
 
-    public void setTotal(long total) {
-        this.total = total;
-    }
+  public void setTotal(long total) {
+    this.total = total;
+  }
 
-    public int getPageNum() {
-        return pageNum;
-    }
+  public int getPageNum() {
+    return pageNum;
+  }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
+  public void setPageNum(int pageNum) {
+    this.pageNum = pageNum;
+  }
 
-    public int getPageSize() {
-        return pageSize;
-    }
+  public int getPageSize() {
+    return pageSize;
+  }
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
+  public void setPageSize(int pageSize) {
+    this.pageSize = pageSize;
+  }
 
-    public List<T> getList() {
-        return list;
-    }
+  public List<T> getList() {
+    return list;
+  }
 
-    public void setList(List<T> list) {
-        this.list = list;
-    }
+  public void setList(List<T> list) {
+    this.list = list;
+  }
 
-    @Override
-    public String toString() {
-        return "PageResultVO{" +
-                "total=" + total +
-                ", pageNum=" + pageNum +
-                ", pageSize=" + pageSize +
-                ", list=" + list +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "PageResultVO{"
+        + "total="
+        + total
+        + ", pageNum="
+        + pageNum
+        + ", pageSize="
+        + pageSize
+        + ", list="
+        + list
+        + '}';
+  }
 }

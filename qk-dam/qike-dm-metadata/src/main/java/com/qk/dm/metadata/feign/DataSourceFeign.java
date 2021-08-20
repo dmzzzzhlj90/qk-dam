@@ -10,6 +10,7 @@ public interface DataSourceFeign {
 
   /**
    * 获取连接数据库信息
+   *
    * @return
    */
   @GetMapping("/datasource/getdatatype")

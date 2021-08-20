@@ -1,6 +1,8 @@
 package com.qk.dam.metedata.util;
 
 import com.qk.dam.metedata.config.AtlasConfig;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasClassification;
@@ -9,11 +11,9 @@ import org.apache.atlas.model.instance.AtlasStruct;
 import org.apache.atlas.model.typedef.AtlasClassificationDef;
 import org.apache.atlas.model.typedef.AtlasTypesDef;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 /**
  * 标签与Atlas绑定工具类
+ *
  * @author spj
  * @date 2021/8/5 4:36 下午
  * @since 1.0.0
@@ -151,6 +151,7 @@ public class AtlasLabelsUtil {
 
   /**
    * 单个新增分类
+   *
    * @param name
    * @param description
    * @throws AtlasServiceException

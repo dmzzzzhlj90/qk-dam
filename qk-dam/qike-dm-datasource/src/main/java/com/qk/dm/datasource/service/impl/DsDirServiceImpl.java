@@ -8,12 +8,12 @@ import com.qk.dm.datasource.repositories.DsDirRepository;
 import com.qk.dm.datasource.service.DsDirService;
 import com.qk.dm.datasource.vo.DsDirVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
-import java.util.*;
 
 /**
  * 数据连接目录接口实现
@@ -24,7 +24,6 @@ import java.util.*;
  */
 @Service
 public class DsDirServiceImpl implements DsDirService {
-  private static final Logger logger = LoggerFactory.getLogger(DsDirServiceImpl.class);
   private final QDsDir qDsDir = QDsDir.dsDir;
   private final DsDirRepository dsDirRepository;
 
@@ -76,7 +75,7 @@ public class DsDirServiceImpl implements DsDirService {
             dsDirVOList.add(dsDirVO);
           });
     } else {
-      logger.info("获取目录为空");
+      throw new BizException("获取目录为空");
     }
     return dsDirVOList;
   }
