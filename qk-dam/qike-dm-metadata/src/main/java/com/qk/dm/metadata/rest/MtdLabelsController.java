@@ -7,9 +7,9 @@ import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
 import com.qk.dm.metadata.vo.PageResultVO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -36,7 +36,7 @@ public class MtdLabelsController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  public DefaultCommonResult insert(@RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
+  public DefaultCommonResult insert(@RequestBody @Validated MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.insert(mtdLabelsVO);
     return DefaultCommonResult.success();
   }
@@ -49,7 +49,7 @@ public class MtdLabelsController {
    */
   @PutMapping("/{id}")
   public DefaultCommonResult update(
-      @PathVariable("id") Long id, @RequestBody @Valid MtdLabelsVO mtdLabelsVO) {
+      @PathVariable("id") Long id, @RequestBody @Validated MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.update(id, mtdLabelsVO);
     return DefaultCommonResult.success();
   }

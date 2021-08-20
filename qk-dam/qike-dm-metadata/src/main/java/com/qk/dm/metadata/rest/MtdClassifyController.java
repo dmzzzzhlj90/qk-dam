@@ -8,9 +8,9 @@ import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 import com.qk.dm.metadata.vo.PageResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -37,7 +37,7 @@ public class MtdClassifyController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  public DefaultCommonResult insert(@RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
+  public DefaultCommonResult insert(@RequestBody @Validated MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.insert(mtdClassifyVO);
     return DefaultCommonResult.success();
   }
@@ -50,7 +50,7 @@ public class MtdClassifyController {
    */
   @PutMapping("/{id}")
   public DefaultCommonResult update(
-      @PathVariable("id") Long id, @RequestBody @Valid MtdClassifyVO mtdClassifyVO) {
+      @PathVariable("id") Long id, @RequestBody @Validated MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.update(id, mtdClassifyVO);
     return DefaultCommonResult.success();
   }
