@@ -11,6 +11,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -23,7 +24,6 @@ import org.springframework.util.CollectionUtils;
  */
 @Service
 public class DsDirServiceImpl implements DsDirService {
-  private static final Logger logger = LoggerFactory.getLogger(DsDirServiceImpl.class);
   private final QDsDir qDsDir = QDsDir.dsDir;
   private final DsDirRepository dsDirRepository;
 
@@ -75,7 +75,7 @@ public class DsDirServiceImpl implements DsDirService {
             dsDirVOList.add(dsDirVO);
           });
     } else {
-      logger.info("获取目录为空");
+      throw new BizException("获取目录为空");
     }
     return dsDirVOList;
   }

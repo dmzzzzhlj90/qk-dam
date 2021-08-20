@@ -12,6 +12,7 @@ public class DasApiBasicInfo implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+
   /** 主键ID */
   @Id
   @Column(name = "id", nullable = false)
@@ -68,5 +69,6 @@ public class DasApiBasicInfo implements Serializable {
 
   /** 是否删除；0逻辑删除，1物理删除； */
   @Column(name = "del_flag", nullable = false)
-  private Integer delFlag = 0;
+  private Integer delFlag;
+
 }

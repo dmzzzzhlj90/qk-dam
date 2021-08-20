@@ -1,5 +1,8 @@
 package com.qk.dm.datasource.util;
 
+import org.apache.commons.codec.binary.Base64;
+
+import javax.crypto.Cipher;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -18,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * @since 1.0.0
  */
 public class DsDataSourceUtil {
-  private static final Logger logger = LoggerFactory.getLogger(DsDataSourceUtil.class);
   public static final String KEY_ALGORITHM = "RSA";
 
   // 公钥

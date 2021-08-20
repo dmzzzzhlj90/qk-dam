@@ -39,6 +39,7 @@ public class DsDatasourceVO {
   private String homeSystem;
 
   /** 数据 源连接值 */
+  @NotBlank(message = "数据源连接值")
   private LinkedHashMap<String, String> dataSourceValuesMap;
 
   /** 连接方式 */
