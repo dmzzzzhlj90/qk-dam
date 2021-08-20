@@ -9,7 +9,6 @@ import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasSyncApiGatewayService;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
-import com.qk.plugin.dataservice.apisix.route.entity.Labels;
 import com.qk.plugin.dataservice.apisix.route.entity.Nodes;
 import com.qk.plugin.dataservice.apisix.route.entity.Timeout;
 import com.qk.plugin.dataservice.apisix.route.entity.Upstream;
@@ -68,7 +67,10 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
 
   @Override
   public void syncApiSixRoutes() {
-    // TODO 增量对比同步
+    /**
+     * TODO 20210819数据服务 待完成 1.增量对比同步 (API_ID复用) 2.同步参数校验 3.注册API参数传递 --4.BUG API_VERSION标签
+     * 5.数据服务API_CODE是否有必要使用,同步网关如何进行数据对比 (API_ID复用) 6.同步留存状态记录 (API_ID复用) 7.数据源新建API+网关同步
+     */
     // 获取API
     List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicInfoRepository.findAll();
     Map<String, List<DasApiBasicInfo>> apiBasicInfoMap =
@@ -88,23 +90,25 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
       //            setRouteRegexUrls(apiSixRouteInfo);
       setRouteUpstream(dasApiRegister, apiSixRouteInfo);
       setRouteLabels(apiSixRouteInfo);
-      initApiSixGatewayRoute(apiSixRouteInfo);
+      initApiSixGatewayRoute(apiSixRouteInfo, dasApiRegister.getApiId());
     }
   }
 
-  private void initApiSixGatewayRoute(ApiSixRouteInfo apiSixRouteInfo) {
+  private void initApiSixGatewayRoute(ApiSixRouteInfo apiSixRouteInfo, String apiId) {
     RouteContext routeContext = new RouteContext();
     routeContext.setRouteInfo(apiSixRouteInfo);
     Map<String, String> systemParam = new HashMap<>();
     systemParam.put(ApiSixConstant.API_SIX_ADMIN_ROUTE_URL_KEY, API_SIX_ADMIN_ROUTE_URL);
     systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, API_SIX_HEAD_KEY_VALUE);
+    systemParam.put(ApiSixConstant.API_SIX_ROUTE_ID, apiId);
     routeContext.setParams(systemParam);
 
     apiGatewayManager.initRouteService(GATEWAY_TYPE_API_SIX, routeContext);
   }
 
   private void setRouteLabels(ApiSixRouteInfo apiSixRouteInfo) {
-    Labels labels = Labels.builder().API_VERSION(API_SIX_API_VERSION).build();
+    Map<String, String> labels = new HashMap<>();
+    labels.put(ApiSixConstant.API_SIX_API_VERSION_KEY, API_SIX_API_VERSION);
     apiSixRouteInfo.setLabels(labels);
   }
 

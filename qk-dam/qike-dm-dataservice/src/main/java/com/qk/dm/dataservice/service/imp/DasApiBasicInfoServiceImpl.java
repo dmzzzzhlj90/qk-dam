@@ -1,6 +1,8 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
@@ -12,20 +14,20 @@ import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
+import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.*;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import java.util.*;
 
 /**
  * @author wjq
@@ -81,6 +83,10 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         dasApiBasicInfo -> {
           DasApiBasicInfoVO dasApiBasicinfoVO =
               DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
+          dasApiBasicinfoVO.setDasApiBasicInfoRequestParasVO(
+              GsonUtil.fromJsonString(
+                  dasApiBasicInfo.getDefInputParam(),
+                  new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {}.getType()));
           dasApiBasicInfoVOList.add(dasApiBasicinfoVO);
         });
     return new PageResultVO<>(
@@ -93,8 +99,11 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   @Override
   public void addDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
     DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
+    dasApiBasicInfo.setDefInputParam(
+        GsonUtil.toJsonString(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO()));
     dasApiBasicInfo.setGmtCreate(new Date());
     dasApiBasicInfo.setGmtModified(new Date());
+    dasApiBasicInfo.setDelFlag(0);
 
     Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfo.getApiId());
     boolean exists = dasApiBasicinfoRepository.exists(predicate);
@@ -107,7 +116,10 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   @Override
   public void updateDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
     DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
+    dasApiBasicInfo.setDefInputParam(
+        GsonUtil.toJsonString(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO()));
     dasApiBasicInfo.setGmtModified(new Date());
+    dasApiBasicInfo.setDelFlag(0);
     Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfo.getApiId());
     boolean exists = dasApiBasicinfoRepository.exists(predicate);
     if (exists) {
@@ -156,6 +168,11 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   @Override
   public List<Map<String, String>> getDMSourceType() {
     return DasConstant.getDMSourceType();
+  }
+
+  @Override
+  public Map<String, String> getRequestParasHeaderInfos() {
+    return DasConstant.getRequestParasHeaderInfos();
   }
 
   private DasApiBasicInfo transformToEntity(DasApiBasicInfoVO dasApiBasicInfoVO) {

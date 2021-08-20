@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.vo;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,10 +36,10 @@ public class DasApiRegisterVO {
   private String backendTimeout;
 
   /** 后端服务参数 */
-  private String backendRequestParas;
+  private List<DasApiRegisterBackendParaVO> dasApiRegisterBackendParaVO;
 
   /** 常量参数 */
-  private String backendConstants;
+  private List<DasApiRegisterConstantParaVO> dasApiRegisterConstantParaVO;
 
   /** 描述 */
   private String description;

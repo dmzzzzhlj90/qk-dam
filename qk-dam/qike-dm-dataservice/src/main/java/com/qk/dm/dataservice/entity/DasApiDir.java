@@ -48,5 +48,5 @@ public class DasApiDir implements Serializable {
 
   /** 是否删除；0逻辑删除，1物理删除； */
   @Column(name = "del_flag", nullable = false)
-  private Integer delFlag = 0;
+  private Integer delFlag;
 }

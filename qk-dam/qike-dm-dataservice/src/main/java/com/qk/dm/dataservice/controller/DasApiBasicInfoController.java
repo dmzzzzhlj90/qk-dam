@@ -113,4 +113,15 @@ public class DasApiBasicInfoController {
   public DefaultCommonResult<List<Map<String, String>>> getDMSourceType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDMSourceType());
   }
+
+  /**
+   * API基础信息__入参定义表头
+   *
+   * @return DefaultCommonResult<Map<String, String>>
+   */
+  @GetMapping(value = "/query/request/paras/header/infos")
+  public DefaultCommonResult<Map<String, String>> getRequestParasHeaderInfos() {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dasApiBasicInfoService.getRequestParasHeaderInfos());
+  }
 }

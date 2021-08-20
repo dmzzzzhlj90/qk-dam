@@ -28,4 +28,6 @@ public interface DasApiBasicInfoService {
   List<Map<String, String>> getApiType();
 
   List<Map<String, String>> getDMSourceType();
+
+  Map<String, String> getRequestParasHeaderInfos();
 }

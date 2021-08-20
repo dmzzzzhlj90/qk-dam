@@ -6,7 +6,6 @@ import com.qk.dam.dataservice.spi.route.RoutesService;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
 import java.util.Map;
-import java.util.UUID;
 import org.springframework.http.*;
 
 /**
@@ -28,7 +27,6 @@ public class ApiSixRoutesService implements RoutesService {
   public void initRouteInfo() {
     Map<String, String> params = routeContext.getParams();
 
-    String routeId = UUID.randomUUID().toString().replaceAll("-", "");
     ApiSixRouteInfo routeInfo = (ApiSixRouteInfo) routeContext.getRouteInfo();
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", MediaType.APPLICATION_JSON.toString());
@@ -36,7 +34,8 @@ public class ApiSixRoutesService implements RoutesService {
     headers.add(ApiSixConstant.API_SIX_HEAD_KEY, params.get(ApiSixConstant.API_SIX_HEAD_KEY));
     HttpEntity httpEntity = new HttpEntity<>(routeInfo, headers);
     RestTemplateUtils.exchange(
-        params.get(ApiSixConstant.API_SIX_ADMIN_ROUTE_URL_KEY) + routeId,
+        params.get(ApiSixConstant.API_SIX_ADMIN_ROUTE_URL_KEY)
+            + params.get(ApiSixConstant.API_SIX_ROUTE_ID),
         HttpMethod.PUT,
         httpEntity,
         String.class);

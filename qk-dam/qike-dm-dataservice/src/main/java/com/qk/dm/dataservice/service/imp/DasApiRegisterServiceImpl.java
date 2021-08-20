@@ -1,6 +1,8 @@
 package com.qk.dm.dataservice.service.imp;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiRegister;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
@@ -16,6 +18,7 @@ import com.qk.dm.dataservice.vo.DasApiRegisterVO;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -96,9 +99,14 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     // 保存注册API信息
     DasApiRegister dasApiRegister =
         DasApiRegisterMapper.INSTANCE.useDasApiRegister(dasApiRegisterVO);
+    dasApiRegister.setBackendRequestParas(
+        GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterBackendParaVO()));
+    dasApiRegister.setBackendConstants(
+        GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterConstantParaVO()));
     dasApiRegister.setApiId(apiId);
     dasApiRegister.setGmtCreate(new Date());
     dasApiRegister.setGmtModified(new Date());
+    dasApiRegister.setDelFlag(0);
     dasApiRegisterRepository.save(dasApiRegister);
   }
 
@@ -111,7 +119,12 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     // 更新注册API
     DasApiRegister dasApiRegister =
         DasApiRegisterMapper.INSTANCE.useDasApiRegister(dasApiRegisterVO);
+    dasApiRegister.setBackendRequestParas(
+        GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterBackendParaVO()));
+    dasApiRegister.setBackendConstants(
+        GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterConstantParaVO()));
     dasApiRegister.setGmtModified(new Date());
+    dasApiRegister.setDelFlag(0);
     Predicate predicate = qDasApiRegister.apiId.eq(dasApiRegister.getApiId());
     boolean exists = dasApiRegisterRepository.exists(predicate);
     if (exists) {
@@ -120,5 +133,15 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
       throw new BizException(
           "当前要新增的注册API名称为:" + dasApiBasicInfoVO.getApiName() + " 数据的配置信息，不存在！！！");
     }
+  }
+
+  @Override
+  public Map<String, String> getBackendParaHeaderInfo() {
+    return DasConstant.getBackendParaHeaderInfo();
+  }
+
+  @Override
+  public Map<String, String> getConstantParaHeaderInfo() {
+    return DasConstant.getConstantParaHeaderInfo();
   }
 }

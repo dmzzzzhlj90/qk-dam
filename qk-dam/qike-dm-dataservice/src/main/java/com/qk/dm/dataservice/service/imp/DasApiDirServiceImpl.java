@@ -53,6 +53,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
     dasApiDir.setGmtCreate(new Date());
     dasApiDir.setGmtModified(new Date());
+    dasApiDir.setDelFlag(0);
     dasApiDir.setApiDirId(UUID.randomUUID().toString().replaceAll("-", ""));
 
     Predicate predicate = qDasApiDir.apiDirLevel.eq(dasApiDirVO.getApiDirLevel());
@@ -73,6 +74,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
   public void updateDasApiDir(DasApiDirVO dasApiDirVO) {
     DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
     dasApiDir.setGmtModified(new Date());
+    dasApiDir.setDelFlag(0);
     Predicate predicate = qDasApiDir.apiDirId.eq(dasApiDir.getApiDirId());
     final Optional<DasApiDir> dasApiDirOptional = dasApiDirRepository.findOne(predicate);
     if (dasApiDirOptional.isPresent()) {

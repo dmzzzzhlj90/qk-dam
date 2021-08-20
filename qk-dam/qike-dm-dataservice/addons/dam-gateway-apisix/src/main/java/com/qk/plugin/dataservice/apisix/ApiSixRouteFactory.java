@@ -3,7 +3,6 @@ package com.qk.plugin.dataservice.apisix;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.dataservice.spi.route.RouteFactory;
 
-
 public class ApiSixRouteFactory implements RouteFactory {
   private RouteContext routeContext;
 
@@ -18,4 +17,3 @@ public class ApiSixRouteFactory implements RouteFactory {
     return new ApiSixRoutesService(routeContext);
   }
 }
-
