@@ -4,6 +4,7 @@ import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangzp
@@ -37,7 +38,7 @@ public interface AtlasMetaDataService {
    *
    * @return
    */
-  List<MtdAtlasEntityTypeVO> getAllEntityType();
+  Map<String, List<MtdAtlasEntityTypeVO>> getAllEntityType();
 
   /**
    * 根据guid删除元数据信息
