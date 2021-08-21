@@ -47,6 +47,17 @@ public class ApiGatewayManager {
     }
   }
 
+  public synchronized void getRouteInfo(final String type, RouteContext routeContext) {
+    GatewayPlugin gatewayPlugin = plugins.get(type);
+
+    if (gatewayPlugin != null) {
+      RouteFactory routeFactory = gatewayPlugin.routeFactory(routeContext);
+      this.routesService = routeFactory.getRoutesService();
+      routesService.getRouteInfo();
+      log.info("路由服务初始化完成！");
+    }
+  }
+
   public RoutesService getRoutesService() {
     return routesService;
   }

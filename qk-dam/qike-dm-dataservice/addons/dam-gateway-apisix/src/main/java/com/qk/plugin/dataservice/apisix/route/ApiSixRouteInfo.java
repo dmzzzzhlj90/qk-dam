@@ -10,12 +10,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 封装ApiSix入参实体对象
+ *
+ * @author wjq
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiSixRouteInfo extends RouteInfo {
+  private String id;
   private String name;
   private Integer status;
   private List<String> uris; // [\"/das/*\"]

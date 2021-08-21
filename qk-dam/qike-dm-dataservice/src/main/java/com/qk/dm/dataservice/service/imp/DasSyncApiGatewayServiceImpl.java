@@ -1,12 +1,17 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.dataservice.spi.route.RouteContext;
+import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiRegister;
 import com.qk.dm.dataservice.manager.ApiGatewayManager;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasSyncApiGatewayService;
+import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
+import com.qk.dm.dataservice.vo.DasApiRegisterBackendParaVO;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
 import com.qk.plugin.dataservice.apisix.route.entity.Nodes;
@@ -29,6 +34,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
   private static final String GATEWAY_TYPE_API_SIX = "ApiSix";
+  // API_SIX请求参数前缀_请求参数
+  private static final String API_SIX_REQUEST_PARAMETER_ARG_PREFIX = "arg_";
+  // API_SIX请求参数前缀_HTTP 请求头
+  private static final String API_SIX_REQUEST_PARAMETER_HTTP_PREFIX = "http_";
+  // API_SIX请求参数前缀_Cookie
+  private static final String API_SIX_REQUEST_PARAMETER_COOKIE_PREFIX = "cookie_";
+  // 注册API参数操作符号默认设置为:"=="
+  private static final String API_REGISTER_PARAM_SYMBOL = "==";
 
   @Value("${api_six.admin.route.url}")
   private String API_SIX_ADMIN_ROUTE_URL;
@@ -67,10 +80,6 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
 
   @Override
   public void syncApiSixRoutes() {
-    /**
-     * TODO 20210819数据服务 待完成 1.增量对比同步 (API_ID复用) 2.同步参数校验 3.注册API参数传递 --4.BUG API_VERSION标签
-     * 5.数据服务API_CODE是否有必要使用,同步网关如何进行数据对比 (API_ID复用) 6.同步留存状态记录 (API_ID复用) 7.数据源新建API+网关同步
-     */
     // 获取API
     List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicInfoRepository.findAll();
     Map<String, List<DasApiBasicInfo>> apiBasicInfoMap =
@@ -86,7 +95,7 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
       apiSixRouteInfo.setDesc(dasApiBasicInfo.getDescription());
       setRouteUrl(dasApiRegister, apiSixRouteInfo);
       setRouteMethod(dasApiRegister, apiSixRouteInfo);
-      //            setRouteParams(apiSixRouteInfo);
+      setRouteParams(dasApiBasicInfo, dasApiRegister, apiSixRouteInfo);
       //            setRouteRegexUrls(apiSixRouteInfo);
       setRouteUpstream(dasApiRegister, apiSixRouteInfo);
       setRouteLabels(apiSixRouteInfo);
@@ -102,7 +111,6 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
     systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, API_SIX_HEAD_KEY_VALUE);
     systemParam.put(ApiSixConstant.API_SIX_ROUTE_ID, apiId);
     routeContext.setParams(systemParam);
-
     apiGatewayManager.initRouteService(GATEWAY_TYPE_API_SIX, routeContext);
   }
 
@@ -147,11 +155,54 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
     apiSixRouteInfo.setPlugins(pluginsMap);
   }
 
-  private void setRouteParams(ApiSixRouteInfo apiSixRouteInfo) {
-    List<List<String>> varsKey = new ArrayList<>();
-    List<String> varsValue = new ArrayList<>();
-    varsKey.add(varsValue);
-    apiSixRouteInfo.setVars(varsKey);
+  private void setRouteParams(
+      DasApiBasicInfo dasApiBasicInfo,
+      DasApiRegister dasApiRegister,
+      ApiSixRouteInfo apiSixRouteInfo) {
+    if (dasApiBasicInfo.getDefInputParam().length() > 0
+        && dasApiRegister.getBackendRequestParas().length() > 0) {
+      List<List<String>> varsKey = new ArrayList<>();
+      List<String> varsValue = new ArrayList<>();
+      String backendRequestParas = dasApiRegister.getBackendRequestParas();
+      // 基础信息入参定义(默认值获取)
+      String defInputParam = dasApiBasicInfo.getDefInputParam();
+      List<DasApiBasicInfoRequestParasVO> basicRPList =
+          GsonUtil.fromJsonString(
+              defInputParam, new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {}.getType());
+      Map<String, List<DasApiBasicInfoRequestParasVO>> delParamMap =
+          basicRPList.stream()
+              .collect(Collectors.groupingBy(DasApiBasicInfoRequestParasVO::getParaName));
+      // 后端指定入参
+      List<DasApiRegisterBackendParaVO> registerRPlist =
+          GsonUtil.fromJsonString(
+              backendRequestParas, new TypeToken<List<DasApiRegisterBackendParaVO>>() {}.getType());
+      // 指定参数+默认值
+      for (DasApiRegisterBackendParaVO backendParaVO : registerRPlist) {
+        DasApiBasicInfoRequestParasVO dasApiBasicInfoRequestParasVO =
+            delParamMap.get(backendParaVO.getParaName()).get(0);
+        String paraPosition = dasApiBasicInfoRequestParasVO.getParaPosition();
+        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY
+            .getTypeName()
+            .equals(paraPosition)) {
+          varsValue.add(API_SIX_REQUEST_PARAMETER_ARG_PREFIX + backendParaVO.getBackendParaName());
+        }
+        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_HEADER
+            .getTypeName()
+            .equals(paraPosition)) {
+          varsValue.add(API_SIX_REQUEST_PARAMETER_HTTP_PREFIX + backendParaVO.getBackendParaName());
+        }
+        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_COOKIE
+            .getTypeName()
+            .equals(paraPosition)) {
+          varsValue.add(
+              API_SIX_REQUEST_PARAMETER_COOKIE_PREFIX + backendParaVO.getBackendParaName());
+        }
+        varsValue.add(API_REGISTER_PARAM_SYMBOL);
+        varsValue.add(dasApiBasicInfoRequestParasVO.getDefaultValue());
+        varsKey.add(varsValue);
+      }
+      apiSixRouteInfo.setVars(varsKey);
+    }
   }
 
   private void setRouteMethod(DasApiRegister dasApiRegister, ApiSixRouteInfo apiSixRouteInfo) {

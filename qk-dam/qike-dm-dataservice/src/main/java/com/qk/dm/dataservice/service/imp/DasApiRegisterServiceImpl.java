@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataservice.constant.DasConstant;
@@ -13,14 +14,12 @@ import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
+import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import com.qk.dm.dataservice.vo.DasApiRegisterVO;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.Date;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,16 +71,29 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     Optional<DasApiRegister> onDasApiRegister =
         dasApiRegisterRepository.findOne(qDasApiRegister.apiId.eq(apiId));
     if (onDasApiRegister.isEmpty()) {
-      return DasApiRegisterVO.builder()
-          .dasApiBasicInfoVO(
-              DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(onDasApiBasicInfo.get()))
-          .build();
+      DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
+      return DasApiRegisterVO.builder().dasApiBasicInfoVO(dasApiBasicInfoVO).build();
     }
     DasApiRegisterVO dasApiRegisterVO =
         DasApiRegisterMapper.INSTANCE.useDasApiRegisterVO(onDasApiRegister.get());
-    dasApiRegisterVO.setDasApiBasicInfoVO(
-        DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(onDasApiBasicInfo.get()));
+    DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
+    dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
     return dasApiRegisterVO;
+  }
+
+  private DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(
+      Optional<DasApiBasicInfo> onDasApiBasicInfo) {
+    DasApiBasicInfo dasApiBasicInfo = onDasApiBasicInfo.get();
+    DasApiBasicInfoVO dasApiBasicInfoVO =
+        DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
+    String defInputParam = dasApiBasicInfo.getDefInputParam();
+    if (defInputParam != null && defInputParam.length() != 0) {
+      dasApiBasicInfoVO.setDasApiBasicInfoRequestParasVO(
+          GsonUtil.fromJsonString(
+              dasApiBasicInfo.getDefInputParam(),
+              new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {}.getType()));
+    }
+    return dasApiBasicInfoVO;
   }
 
   @Transactional
