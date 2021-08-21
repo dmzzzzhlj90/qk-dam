@@ -15,9 +15,7 @@ import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
-import org.apache.atlas.model.instance.EntityMutationResponse;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -106,20 +104,21 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   }
 
   @Override
-  public List<MtdAtlasEntityTypeVO> getAllEntityType() {
-    List<MtdAtlasEntityTypeVO> mtdAtlasEntityTypeVOList = new ArrayList<>();
+  public Map<String, List<MtdAtlasEntityTypeVO>>getAllEntityType() {
+    Map<String, List<MtdAtlasEntityTypeVO>> mtdAtlasEntityMap = new HashMap<>();
     try {
       SearchFilter searchFilter = new SearchFilter();
       searchFilter.setParam("type", "entity");
       List<AtlasTypeDefHeader> allTypeDefHeaders = atlasClientV2.getAllTypeDefHeaders(searchFilter);
-      mtdAtlasEntityTypeVOList =
+      List<MtdAtlasEntityTypeVO>  mtdAtlasEntityTypeVOList =
           GsonUtil.fromJsonString(
               GsonUtil.toJsonString(allTypeDefHeaders),
               new TypeToken<List<MtdAtlasEntityTypeVO>>() {}.getType());
+       mtdAtlasEntityMap = mtdAtlasEntityTypeVOList.stream().collect(Collectors.groupingBy(MtdAtlasEntityTypeVO::getServiceType));
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return mtdAtlasEntityTypeVOList;
+    return mtdAtlasEntityMap;
   }
 
   @Override
@@ -131,9 +130,4 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     }
   }
 
-  public static void main(String[] args) throws AtlasServiceException {
-    String guids = "a16f051d-4756-42c8-acc6-d6925f0a3900";
-    EntityMutationResponse respose = atlasClientV2.deleteEntitiesByGuids(Arrays.asList(guids.split(",")));
-    System.out.println(GsonUtil.toJsonString(respose));
-  }
 }

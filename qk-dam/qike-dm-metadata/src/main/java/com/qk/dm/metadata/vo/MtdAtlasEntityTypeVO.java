@@ -9,4 +9,6 @@ public class MtdAtlasEntityTypeVO {
   private String guid;
 
   private String name;
+
+  private String serviceType;
 }

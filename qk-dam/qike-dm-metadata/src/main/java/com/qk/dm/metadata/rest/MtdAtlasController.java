@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 元数据查询相关接口（元数据列表查询、元数据详情、元数据类型等接口）
@@ -31,11 +32,11 @@ public class MtdAtlasController {
 
     /**
      * 获取所有的基础类型
-     * @return DefaultCommonResult<List<MtdAtlasEntityTypeVO>>
+     * @return DefaultCommonResult<Map<String, List<MtdAtlasEntityTypeVO>>>
      */
     @GetMapping("/allEntityType")
-    public DefaultCommonResult<List<MtdAtlasEntityTypeVO>> getAllEntityType(){
-        List<MtdAtlasEntityTypeVO> mtdAtlasEntityTypeVOList = atlasMetaDataService.getAllEntityType();
+    public DefaultCommonResult<Map<String, List<MtdAtlasEntityTypeVO>>> getAllEntityType(){
+        Map<String, List<MtdAtlasEntityTypeVO>> mtdAtlasEntityTypeVOList = atlasMetaDataService.getAllEntityType();
         return DefaultCommonResult.success(ResultCodeEnum.OK,mtdAtlasEntityTypeVOList);
     }
 
