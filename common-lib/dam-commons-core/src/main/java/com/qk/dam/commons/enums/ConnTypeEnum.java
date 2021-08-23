@@ -3,7 +3,7 @@ package com.qk.dam.commons.enums;
 /**
  * 数据源连接类型
  *
- * @author daomingzhu
+ * @author weijunqi
  */
 public enum ConnTypeEnum {
 
