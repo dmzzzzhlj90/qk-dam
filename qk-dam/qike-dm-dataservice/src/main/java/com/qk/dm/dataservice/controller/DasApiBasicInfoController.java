@@ -124,4 +124,15 @@ public class DasApiBasicInfoController {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiBasicInfoService.getRequestParasHeaderInfos());
   }
+
+  /**
+   * API基础信息__参数位置下拉列表
+   *
+   * @return DefaultCommonResult<Map<String, String>>
+   */
+  @GetMapping(value = "/query/request/param/positions")
+  public DefaultCommonResult<Map<String,String>> getRequestParamsPositions() {
+    return DefaultCommonResult.success(
+            ResultCodeEnum.OK, dasApiBasicInfoService.getRequestParamsPositions());
+  }
 }

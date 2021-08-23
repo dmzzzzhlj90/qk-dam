@@ -5,6 +5,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.constant.DasConstant;
+import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
@@ -173,6 +174,11 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   @Override
   public Map<String, String> getRequestParasHeaderInfos() {
     return DasConstant.getRequestParasHeaderInfos();
+  }
+
+  @Override
+  public Map<String,String> getRequestParamsPositions() {
+    return  RequestParamPositionEnum.getAllValue();
   }
 
   private DasApiBasicInfo transformToEntity(DasApiBasicInfoVO dasApiBasicInfoVO) {
