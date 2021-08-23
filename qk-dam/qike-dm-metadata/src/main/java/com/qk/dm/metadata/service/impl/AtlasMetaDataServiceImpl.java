@@ -10,6 +10,7 @@ import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.instance.AtlasEntity;
@@ -130,4 +131,8 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     }
   }
 
+  public static void main(String[] args) throws AtlasServiceException {
+    AtlasSearchResult result = atlasClientV2.basicSearch("mysql_db", null, null, true, 20, 0);
+    System.out.println(GsonUtil.toJsonString(result));
+  }
 }
