@@ -10,7 +10,6 @@ import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.apache.atlas.AtlasClientV2;
-import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.instance.AtlasEntity;
@@ -33,7 +32,8 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     List<MtdAtlasBaseVO> atlasBaseMainDataVOList = null;
     try {
       AtlasSearchResult atlasSearchResult =
-          atlasClientV2.basicSearch(typeName, classification, query, true, 5, 0);
+          atlasClientV2.basicSearch(typeName, classification, query, true, limit, offse);
+
       List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
       atlasBaseMainDataVOList = buildMataDataList(entities);
     } catch (Exception e) {
