@@ -1,15 +1,19 @@
 package com.qk.dm.datasource.util;
 
 import com.alibaba.nacos.common.utils.StringUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qk.dam.commons.enums.ConnTypeEnum;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.datasource.datasourinfo.HiveInfo;
+import com.qk.dm.datasource.datasourinfo.MysqlInfo;
+import com.qk.dm.datasource.datasourinfo.OracleInfo;
+import com.qk.dm.datasource.datasourinfo.PostgetsqlInfo;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 数据库测试连接
@@ -58,17 +62,24 @@ public class DsDataSouurceConnectUtil {
   private static Boolean connectPostSql(DsDatasourceVO dsDatasourceVO) {
     Boolean connect = false;
     Connection connection = null;
-    LinkedHashMap<String, String> res = dsDatasourceVO.getDataSourceValuesMap();
-    String driver = (String) res.get("service"); // 获取postgetsql数据驱动类
+    ObjectMapper objectMapper = new ObjectMapper();
+    PostgetsqlInfo postgetsqlInfo =
+        objectMapper.convertValue(dsDatasourceVO.getBaseDataSourceTypeInfo(), PostgetsqlInfo.class);
+    String driver = postgetsqlInfo.getService(); // 获取postgetsql数据驱动类
     String url =
         "jdbc:postgresql://"
-            + (String) res.get("server")
+            + postgetsqlInfo.getServer()
             + ":"
-            + res.get("port")
-            + "/"
-            + res.get("dataBaseName"); // 127.0.0.1是本机地址，XE是精简版Oracle的默认数据库名
-    String user = (String) res.get("username");
-    String password = (String) res.get("password");
+            + postgetsqlInfo.getPort(); // 127.0.0.1是本机地址，
+    String user = postgetsqlInfo.getUsername();
+    String password = postgetsqlInfo.getPassword();
+    connect = getConnect(url, user, password, driver);
+    return connect;
+  }
+
+  private static Boolean getConnect(String url, String user, String password, String driver) {
+    Boolean connect = false;
+    Connection connection = null;
     try {
       Class.forName(driver);
       connection = DriverManager.getConnection(url, user, password); // 获取连接
@@ -98,34 +109,15 @@ public class DsDataSouurceConnectUtil {
   private static Boolean connectHive(DsDatasourceVO dsDatasourceVO) {
     Boolean connect = false;
     Connection connection = null;
-    LinkedHashMap<String, String> res = dsDatasourceVO.getDataSourceValuesMap();
-    String driver = (String) res.get("service"); // 获取oracle数据驱动类
+    ObjectMapper objectMapper = new ObjectMapper();
+    HiveInfo hiveInfo =
+        objectMapper.convertValue(dsDatasourceVO.getBaseDataSourceTypeInfo(), HiveInfo.class);
+    String driver = hiveInfo.getService(); // 获取hive数据驱动类
     String url =
-        "jdbc:hive://"
-            + (String) res.get("server")
-            + ":"
-            + res.get("port")
-            + "/"
-            + res.get("dataBaseName"); // 127.0.0.1是本机地址，XE是精简版Oracle的默认数据库名
-    String user = (String) res.get("username"); // 连接oracle的用户名
-    String password = (String) res.get("password"); // 连接oracle的密码
-    try {
-      Class.forName(driver);
-      connection = DriverManager.getConnection(url, user, password); // 获取连接
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    } finally {
-      if (connection != null) {
-        connect = true;
-        try {
-          connection.close();
-        } catch (SQLException throwables) {
-          throwables.printStackTrace();
-        }
-      }
-    }
+        "jdbc:hive://" + hiveInfo.getServer() + ":" + hiveInfo.getPort(); // 127.0.0.1是本机地址，
+    String user = hiveInfo.getUsername();
+    String password = hiveInfo.getPassword();
+    connect = getConnect(url, user, password, driver);
     return connect;
   }
 
@@ -138,34 +130,18 @@ public class DsDataSouurceConnectUtil {
   private static Boolean connectOracle(DsDatasourceVO dsDatasourceVO) {
     Boolean connect = false;
     Connection connection = null;
-    LinkedHashMap<String, String> res = dsDatasourceVO.getDataSourceValuesMap();
-    String driver = (String) res.get("service"); // 获取oracle数据驱动类
+    ObjectMapper objectMapper = new ObjectMapper();
+    OracleInfo oracleInfo =
+        objectMapper.convertValue(dsDatasourceVO.getBaseDataSourceTypeInfo(), OracleInfo.class);
+    String driver = oracleInfo.getService(); // 获取oracle数据驱动类
     String url =
         "jdbc:oracle:thin:"
-            + (String) res.get("server")
+            + oracleInfo.getServer()
             + ":"
-            + (String) res.get("prot")
-            + ":"
-            + res.get("dataBaseName"); // 127.0.0.1是本机地址，XE是精简版Oracle的默认数据库名
-    String user = (String) res.get("username"); // 连接oracle的用户名
-    String password = (String) res.get("password"); // 连接oracle的密码
-    try {
-      Class.forName(driver);
-      connection = DriverManager.getConnection(url, user, password); // 获取连接
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    } finally {
-      if (connection != null) {
-        connect = true;
-        try {
-          connection.close();
-        } catch (SQLException throwables) {
-          throwables.printStackTrace();
-        }
-      }
-    }
+            + oracleInfo.getPort(); // 127.0.0.1是本机地址，
+    String user = oracleInfo.getUsername();
+    String password = oracleInfo.getPassword();
+    connect = getConnect(url, user, password, driver);
     return connect;
   }
 
@@ -179,34 +155,50 @@ public class DsDataSouurceConnectUtil {
     Boolean connect = false;
     Connection conn = null;
     // 获取数据源连接值
-    LinkedHashMap<String, String> res = dsDatasourceVO.getDataSourceValuesMap();
-    String driver = (String) res.get("service"); // 获取mysql数据库的驱动类
+    ObjectMapper objectMapper = new ObjectMapper();
+    MysqlInfo mysqlInfo =
+        objectMapper.convertValue(dsDatasourceVO.getBaseDataSourceTypeInfo(), MysqlInfo.class);
+    String driver = mysqlInfo.getService(); // 获取oracle数据驱动类
     String url =
-        "jdbc:mysql://"
-            + (String) res.get("server")
-            + ":"
-            + (String) res.get("port")
-            + "/"
-            + res.get("dataBaseName"); // 连接数据库（qkdam是数据库名）
-    String name = (String) res.get("username"); // 连接mysql的用户名
-    String pwd = (String) res.get("password"); // 连接mysql的密码
-    try {
-      Class.forName(driver);
-      conn = DriverManager.getConnection(url, name, pwd); // 获取连接对象
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    } finally {
-      if (conn != null) {
-        connect = true;
-        try {
-          conn.close();
-        } catch (SQLException throwables) {
-          throwables.printStackTrace();
-        }
-      }
-    }
+        "jdbc:mysql://" + mysqlInfo.getServer() + ":" + mysqlInfo.getPort(); // 127.0.0.1是本机地址，
+    String user = mysqlInfo.getUsername();
+    String password = mysqlInfo.getPassword();
+    connect = getConnect(url, user, password, driver);
     return connect;
+  }
+
+  public static Map<String, String> getDataSourceType() {
+    Map<String, String> map = new HashMap();
+    map.put("MYSQL", ConnTypeEnum.MYSQL.getName());
+    map.put("ORACLE", ConnTypeEnum.ORACLE.getName());
+    map.put("DB2", ConnTypeEnum.DB2.getName());
+    map.put("SQLSERVER", ConnTypeEnum.SQLSERVER.getName());
+    map.put("HIVE", ConnTypeEnum.HIVE.getName());
+    map.put("HBASE", ConnTypeEnum.HBASE.getName());
+    map.put("REDIS", ConnTypeEnum.REDIS.getName());
+    map.put("EXCEL", ConnTypeEnum.EXCEL.getName());
+    map.put("CSV", ConnTypeEnum.CSV.getName());
+    map.put("REST", ConnTypeEnum.REST.getName());
+    return map;
+  }
+
+  public static Object getParamsByType(String type) {
+    if (type.equals("db-mysql")) {
+      return new MysqlInfo();
+    }
+    if (type.equals("db-oracle")) {
+      return new OracleInfo();
+    }
+    if (type.equals("db-oracle")) {
+      return new OracleInfo();
+    }
+    if (type.equals("db-hive")) {
+      return new HiveInfo();
+    }
+    if (type.equals("db-sqlserver")) {
+      return new PostgetsqlInfo();
+    } else {
+      throw new BizException("没有匹配的数据源参数类型");
+    }
   }
 }
