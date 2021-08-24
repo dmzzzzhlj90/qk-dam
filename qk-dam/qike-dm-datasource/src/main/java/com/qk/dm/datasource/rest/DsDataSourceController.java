@@ -2,14 +2,18 @@ package com.qk.dm.datasource.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.service.DsDataSourceService;
+import com.qk.dm.datasource.util.DsDataSouurceConnectUtil;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.PageResultVO;
 import com.qk.dm.datasource.vo.params.DsDataSourceParamsVO;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 数据管理—数据源连接
@@ -79,13 +83,26 @@ public class DsDataSourceController {
   }
 
   /**
-   * 数据源连接——获取连接类型接口
+   * 数据源连接——获取数据源类型
    *
    * @return
    */
   @GetMapping("/getdatatype")
   public DefaultCommonResult<List<String>> getDataType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsDataSourceService.getDataType());
+  }
+
+  /**
+   * 数据源连接——根据数据库类型获取数据源连接信息
+   *
+   * @param linkType
+   * @return
+   */
+  @GetMapping("/getdatasource/bytype/{linkType}")
+  public DefaultCommonResult<List<DsDatasource>> getDataSourceByType(
+      @PathVariable("linkType") String linkType) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByType(linkType));
   }
 
   /**
@@ -99,5 +116,28 @@ public class DsDataSourceController {
       @RequestBody DsDatasourceVO dsDatasourceVO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDataSourceService.dsDataSoureceConnect(dsDatasourceVO));
+  }
+
+  /**
+   * 数据源来接——获取数源类型
+   *
+   * @return
+   */
+  @GetMapping("/getdatasourcetype")
+  public DefaultCommonResult<Map<String, String>> getDataSourceType() {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, DsDataSouurceConnectUtil.getDataSourceType());
+  }
+
+  /**
+   * 获取入参类型
+   *
+   * @param type
+   * @return
+   */
+  @GetMapping("/getparamsbytype/{type}")
+  public DefaultCommonResult<Object> getParamsByType(@PathVariable("type") String type) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, DsDataSouurceConnectUtil.getParamsByType(type));
   }
 }

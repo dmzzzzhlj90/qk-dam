@@ -1,10 +1,10 @@
 package com.qk.dm.datasource.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Entity
