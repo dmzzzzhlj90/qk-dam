@@ -52,7 +52,7 @@ public class DsDataSourceController {
    * @param dsDatasourceVO
    * @return
    */
-  @PostMapping("/add")
+  @PostMapping
   public DefaultCommonResult<?> addDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
     dsDataSourceService.addDsDataSource(dsDatasourceVO);
     return DefaultCommonResult.success();
@@ -64,7 +64,7 @@ public class DsDataSourceController {
    * @param id
    * @return
    */
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/{id}")
   public DefaultCommonResult deleteDsDataSource(@PathVariable("id") Integer id) {
     dsDataSourceService.deleteDsDataSource(id);
     return DefaultCommonResult.success();
@@ -76,7 +76,7 @@ public class DsDataSourceController {
    * @param dsDatasourceVO
    * @return
    */
-  @PostMapping("/update")
+  @PutMapping
   public DefaultCommonResult updateDsDataSourece(@RequestBody DsDatasourceVO dsDatasourceVO) {
     dsDataSourceService.updateDsDataSourece(dsDatasourceVO);
     return DefaultCommonResult.success();
@@ -87,7 +87,7 @@ public class DsDataSourceController {
    *
    * @return
    */
-  @GetMapping("/getdatatype")
+  @GetMapping("/type")
   public DefaultCommonResult<List<String>> getDataType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsDataSourceService.getDataType());
   }
@@ -95,14 +95,13 @@ public class DsDataSourceController {
   /**
    * 数据源连接——根据数据库类型获取数据源连接信息
    *
-   * @param linkType
-   * @return
+   * @param type
+   * @return DefaultCommonResult<List<DsDatasourceVO>>
    */
-  @GetMapping("/getdatasource/bytype/{linkType}")
-  public DefaultCommonResult<List<DsDatasource>> getDataSourceByType(
-      @PathVariable("linkType") String linkType) {
+  @GetMapping("/database/{type}")
+  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByType(@PathVariable("type") String type) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByType(linkType));
+        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByType(type));
   }
 
   /**
@@ -119,14 +118,14 @@ public class DsDataSourceController {
   }
 
   /**
-   * 数据源来接——获取数源类型
+   * 查询所有数据源连接类型
    *
    * @return
    */
-  @GetMapping("/getdatasourcetype")
-  public DefaultCommonResult<Map<String, String>> getDataSourceType() {
+  @GetMapping("/connect/type/all")
+  public DefaultCommonResult<List<String>> getAllConnType() {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, DsDataSouurceConnectUtil.getDataSourceType());
+            ResultCodeEnum.OK, dsDataSourceService.dsDataSourceService());
   }
 
   /**
@@ -135,7 +134,7 @@ public class DsDataSourceController {
    * @param type
    * @return
    */
-  @GetMapping("/getparamsbytype/{type}")
+  @GetMapping("/param/{type}")
   public DefaultCommonResult<Object> getParamsByType(@PathVariable("type") String type) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, DsDataSouurceConnectUtil.getParamsByType(type));

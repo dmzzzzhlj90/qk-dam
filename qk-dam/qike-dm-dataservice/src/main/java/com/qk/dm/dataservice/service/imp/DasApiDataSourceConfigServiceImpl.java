@@ -203,4 +203,15 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
   public Map<String, String> getDSConfigOrderParaHeaderInfo() {
     return DasConstant.getDSConfigOrderParaHeaderInfo();
   }
+
+  @Override
+  public List<String> getDSConfigParasCompareSymbol() {
+    return DasConstant.getDSConfigParasCompareSymbol();
+  }
+
+  @Override
+  public Map<String, String> getDSConfigParasSortStyle() {
+    return DasConstant.getDSConfigParasSortStyle();
+  }
+
 }

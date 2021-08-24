@@ -6,6 +6,7 @@ import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.qk.dm.datasource.datasourinfo.BaseDataSourceTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,7 +40,7 @@ public class DsDatasourceVO {
 
   /** 数据 源连接值 */
   @NotBlank(message = "数据源连接值")
-  private Object baseDataSourceTypeInfo;
+  private BaseDataSourceTypeInfo baseDataSourceTypeInfo;
 
   /** 连接方式 */
   private String linkType;
@@ -59,17 +60,12 @@ public class DsDatasourceVO {
   /** 状态设置状态值 */
   private Integer status;
 
-  @ExcelIgnore
-  @ExcelProperty("创建时间")
+  /**
+   * 创建时间
+   **/
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtCreate;
-
-  @ExcelIgnore
-  @ExcelProperty("修改时间")
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date gmtModified;
 
   /** 创建人id（后期设置为必填） */
   private String createUserid;

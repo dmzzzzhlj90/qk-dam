@@ -2,8 +2,12 @@ package com.qk.dm.datasource.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
+import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.enums.ConnTypeEnum;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.datasource.datasourinfo.BaseDataSourceTypeInfo;
+import com.qk.dm.datasource.datasourinfo.MysqlInfo;
 import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.entity.QDsDatasource;
 import com.qk.dm.datasource.mapstruct.mapper.DSDatasourceMapper;
@@ -85,9 +89,9 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   private void setCodeTableValues(DsDatasource dsd, DsDatasourceVO dsDatasourceVO) {
-    if (StringUtils.isNotBlank(dsd.getDataSourceValues())) {
-      dsDatasourceVO.setBaseDataSourceTypeInfo((Object) dsd.getDataSourceValues());
-    }
+//    if (StringUtils.isNotBlank(dsd.getDataSourceValues())) {
+//      dsDatasourceVO.setBaseDataSourceTypeInfo((Object) dsd.getDataSourceValues());
+//    }
   }
 
   /**
@@ -195,13 +199,26 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   @Override
-  public List<DsDatasource> getDataSourceByType(String linkType) {
-    List<DsDatasource> datasourceList = dsDatasourceRepository.getDsdataSourceByType(linkType);
-    if (CollectionUtils.isNotEmpty(datasourceList)) {
-      return datasourceList;
-    } else {
-      throw new BizException("根据数据库类型获取数据库连接为空");
+  public List<DsDatasourceVO> getDataSourceByType(String linkType) {
+    List<DsDatasourceVO> resultDataList = new ArrayList<>();
+    Iterable<DsDatasource> dsDatasourceIterable = dsDatasourceRepository.findAll(qDsDatasource.linkType.eq(linkType));
+    for (DsDatasource dsDatasource : dsDatasourceIterable) {
+      DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
+      if (linkType.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
+        String dataSourceValues = dsDatasource.getDataSourceValues();
+        BaseDataSourceTypeInfo mysqlInfo = (BaseDataSourceTypeInfo)GsonUtil.fromJsonString(dataSourceValues, new TypeToken<MysqlInfo>() {
+        }.getType());
+        mysqlInfo.setService("112233");
+        dsDatasourceVO.setBaseDataSourceTypeInfo(mysqlInfo);
+        resultDataList.add(dsDatasourceVO);
+      }
     }
+    return resultDataList;
+  }
+
+  @Override
+  public List<String> dsDataSourceService() {
+    return ConnTypeEnum.getConnTypeName();
   }
 
   /**

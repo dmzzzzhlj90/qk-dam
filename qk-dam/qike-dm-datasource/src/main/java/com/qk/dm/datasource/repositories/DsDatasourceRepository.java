@@ -12,6 +12,4 @@ public interface DsDatasourceRepository extends BaseRepository<DsDatasource, Int
   @Query(" select linkType from DsDatasource group by linkType")
   List<String> getlinkType();
 
-  @Query(" select dsDatasource from DsDatasource dsDatasource where linkType =:linkType")
-  List<DsDatasource> getDsdataSourceByType(@Param("linkType") String linkType);
 }
