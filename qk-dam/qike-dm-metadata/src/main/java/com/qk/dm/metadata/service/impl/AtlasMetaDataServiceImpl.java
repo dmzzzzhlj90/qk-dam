@@ -57,7 +57,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                   .guid(e.getGuid())
                   .typeName(e.getTypeName())
                   .displayName(e.getDisplayText())
-                  .qualifiedName(e.getAttributes().get("qualifiedName").toString())
+                  .qualifiedName(e.getAttributes().get("qualifiedName").toString().replace(".","/"))
                   .createTime(
                       Objects.isNull(e.getAttributes().get("createTime"))
                           ? null

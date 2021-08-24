@@ -47,6 +47,7 @@ public class DasConstant {
     return sourceTypeList;
   }
 
+  // API基础信息_入参定义表头信息
   public static Map<String, String> getRequestParasHeaderInfos() {
     LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
     headMap.put("paraName", "http请求参数");
@@ -60,7 +61,8 @@ public class DasConstant {
     return headMap;
   }
 
-  public static Map<String, String> getBackendParaHeaderInfo() {
+  // 注册API_后端请求参数表头信息
+  public static Map<String, String> getRegisterBackendParaHeaderInfo() {
     LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
     headMap.put("paraName", "入参名称");
     headMap.put("paraPosition", "入参位置");
@@ -70,12 +72,46 @@ public class DasConstant {
     return headMap;
   }
 
-  public static Map<String, String> getConstantParaHeaderInfo() {
+  // 注册API_常量参数表头信息
+  public static Map<String, String> getRegisterConstantParaHeaderInfo() {
     LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
     headMap.put("constantParaName", "常量参数名称");
     headMap.put("constantParaPosition", "参数位置");
     headMap.put("constantParaType", "参数类型");
     headMap.put("constantParaValue", "参数值");
+    headMap.put("description", "描述");
+    return headMap;
+  }
+
+  // 注册API_常量参数表头信息
+  public static Map<String, String> getDSConfigRequestParaHeaderInfo() {
+    LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
+    headMap.put("paraName", "绑定参数");
+    headMap.put("mappingName", "绑定字段");
+    headMap.put("conditionType", "操作符");
+    headMap.put("backendParaName", "后端参数");
+    headMap.put("backendParaPosition", "后端参数位置");
+    return headMap;
+  }
+
+  public static Map<String, String> getDSConfigResponseParaHeaderInfo() {
+    LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
+    headMap.put("paraName", "参数名");
+    headMap.put("mappingName", "绑定字段");
+    headMap.put("paraType", "参数类型");
+    headMap.put("exampleValue", "示例值");
+    headMap.put("defaultValue", "默认值");
+    headMap.put("description", "描述");
+    return headMap;
+  }
+
+  public static Map<String, String> getDSConfigOrderParaHeaderInfo() {
+    LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
+    headMap.put("orderNum", "序号");
+    headMap.put("columnName", "参数名");
+    headMap.put("paraName", "字段名称");
+    headMap.put("optional", "是否可选");
+    headMap.put("orderType", "排序方式");
     headMap.put("description", "描述");
     return headMap;
   }
