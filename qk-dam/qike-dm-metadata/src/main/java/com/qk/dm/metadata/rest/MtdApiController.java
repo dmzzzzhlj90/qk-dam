@@ -32,7 +32,7 @@ public class MtdApiController {
      * 获取所有的类型
      * @return DefaultCommonResult<List<MtdAtlasEntityTypeVO>>
      */
-    @GetMapping("/allEntityType")
+    @GetMapping("/all/entity/type")
     public DefaultCommonResult<List<MtdAtlasEntityTypeVO>> getAllEntityType(){
         List<MtdAtlasEntityTypeVO> entityTypeList = mtdApiService.getAllEntityType();
         return DefaultCommonResult.success(ResultCodeEnum.OK,entityTypeList);
@@ -43,7 +43,7 @@ public class MtdApiController {
      * @param mtdApiParamsVO
      * @return DefaultCommonResult<MtdApiVO>
      */
-    @PostMapping("/mtdDetail")
+    @PostMapping("/mtd/detail")
     public DefaultCommonResult<MtdApiVO> mtdDetail(@RequestBody @Validated MtdApiParamsVO mtdApiParamsVO){
         MtdApiVO mtdApiVO = mtdApiService.mtdDetail(mtdApiParamsVO.getTypeName(),mtdApiParamsVO.getDbName(),mtdApiParamsVO.getTableName());
         return DefaultCommonResult.success(ResultCodeEnum.OK,mtdApiVO);
