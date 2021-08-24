@@ -177,8 +177,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   }
 
   @Override
-  public Map<String,String> getRequestParamsPositions() {
-    return  RequestParamPositionEnum.getAllValue();
+  public Map<String, String> getRequestParamsPositions() {
+    return RequestParamPositionEnum.getAllValue();
   }
 
   private DasApiBasicInfo transformToEntity(DasApiBasicInfoVO dasApiBasicInfoVO) {

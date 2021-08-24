@@ -131,8 +131,8 @@ public class DasApiBasicInfoController {
    * @return DefaultCommonResult<Map<String, String>>
    */
   @GetMapping(value = "/query/request/param/positions")
-  public DefaultCommonResult<Map<String,String>> getRequestParamsPositions() {
+  public DefaultCommonResult<Map<String, String>> getRequestParamsPositions() {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dasApiBasicInfoService.getRequestParamsPositions());
+        ResultCodeEnum.OK, dasApiBasicInfoService.getRequestParamsPositions());
   }
 }

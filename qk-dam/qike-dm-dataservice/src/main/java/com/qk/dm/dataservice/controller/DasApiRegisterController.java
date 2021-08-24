@@ -73,9 +73,9 @@ public class DasApiRegisterController {
    * @return DefaultCommonResult
    */
   @GetMapping("/query/backend/paras/header/infos")
-  public DefaultCommonResult<Map<String, String>> getBackendParaHeaderInfo() {
+  public DefaultCommonResult<Map<String, String>> getRegisterBackendParaHeaderInfo() {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiRegisterService.getBackendParaHeaderInfo());
+        ResultCodeEnum.OK, dasApiRegisterService.getRegisterBackendParaHeaderInfo());
   }
 
   /**
@@ -84,8 +84,8 @@ public class DasApiRegisterController {
    * @return DefaultCommonResult
    */
   @GetMapping("/query/constant/paras/header/infos")
-  public DefaultCommonResult<Map<String, String>> getConstantParaHeaderInfo() {
+  public DefaultCommonResult<Map<String, String>> getRegisterConstantParaHeaderInfo() {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiRegisterService.getConstantParaHeaderInfo());
+        ResultCodeEnum.OK, dasApiRegisterService.getRegisterConstantParaHeaderInfo());
   }
 }

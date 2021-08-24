@@ -14,9 +14,7 @@ import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
-import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
-import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
-import com.qk.dm.dataservice.vo.DasApiRegisterVO;
+import com.qk.dm.dataservice.vo.*;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.*;
@@ -74,11 +72,35 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
       DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
       return DasApiRegisterVO.builder().dasApiBasicInfoVO(dasApiBasicInfoVO).build();
     }
+    DasApiRegister dasApiRegister = onDasApiRegister.get();
     DasApiRegisterVO dasApiRegisterVO =
-        DasApiRegisterMapper.INSTANCE.useDasApiRegisterVO(onDasApiRegister.get());
+        DasApiRegisterMapper.INSTANCE.useDasApiRegisterVO(dasApiRegister);
+    // API基础信息,设置入参定义VO转换对象
     DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
     dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
+    // 注册API配置信息,设置后端参数VO转换对象
+    setRegisterVOBackendAndConstantsParams(dasApiRegister, dasApiRegisterVO);
     return dasApiRegisterVO;
+  }
+
+  private void setRegisterVOBackendAndConstantsParams(
+      DasApiRegister dasApiRegister, DasApiRegisterVO dasApiRegisterVO) {
+    if (null != dasApiRegister.getBackendRequestParas()
+        && dasApiRegister.getBackendRequestParas().length() > 0) {
+      dasApiRegisterVO.setDasApiRegisterBackendParaVO(
+          GsonUtil.fromJsonString(
+              dasApiRegister.getBackendRequestParas(),
+              new TypeToken<List<DasApiRegisterBackendParaVO>>() {}.getType()));
+    }
+
+    if (null != dasApiRegister.getBackendConstants()
+        && dasApiRegister.getBackendConstants().length() > 0) {
+
+      dasApiRegisterVO.setDasApiRegisterConstantParaVO(
+          GsonUtil.fromJsonString(
+              dasApiRegister.getBackendConstants(),
+              new TypeToken<List<DasApiRegisterConstantParaVO>>() {}.getType()));
+    }
   }
 
   private DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(
@@ -148,12 +170,12 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
   }
 
   @Override
-  public Map<String, String> getBackendParaHeaderInfo() {
-    return DasConstant.getBackendParaHeaderInfo();
+  public Map<String, String> getRegisterBackendParaHeaderInfo() {
+    return DasConstant.getRegisterBackendParaHeaderInfo();
   }
 
   @Override
-  public Map<String, String> getConstantParaHeaderInfo() {
-    return DasConstant.getConstantParaHeaderInfo();
+  public Map<String, String> getRegisterConstantParaHeaderInfo() {
+    return DasConstant.getRegisterConstantParaHeaderInfo();
   }
 }

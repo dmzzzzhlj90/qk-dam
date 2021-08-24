@@ -18,7 +18,7 @@ public interface DasApiRegisterService {
 
   void updateDasApiRegister(DasApiRegisterVO dasApiRegisterVO);
 
-  Map<String, String> getBackendParaHeaderInfo();
+  Map<String, String> getRegisterBackendParaHeaderInfo();
 
-  Map<String, String> getConstantParaHeaderInfo();
+  Map<String, String> getRegisterConstantParaHeaderInfo();
 }
