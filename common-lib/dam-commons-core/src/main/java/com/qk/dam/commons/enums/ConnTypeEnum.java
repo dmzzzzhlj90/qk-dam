@@ -8,7 +8,7 @@ package com.qk.dam.commons.enums;
 public enum ConnTypeEnum {
 
     /*数据连接枚举信息*/
-    MYSQL("db-mysql"), ORACLE("db-oracle"), DB2("db-db2"), SQLSERVER("db-sqlserver"), HIVE("db-hive"),
+    MYSQL("db-mysql"), ORACLE("db-oracle"), DB2("db-db2"), SQLSERVER("db-sqlserver"), HIVE("db-hive"),POSTGETSQL("db-postgetsql"),
     HBASE("hbase"), REDIS("redis"), EXCEL("excel"), CSV("csv"), REST("rest");
 
     /**定义一个public修饰的实例变量*/
