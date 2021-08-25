@@ -2,18 +2,15 @@ package com.qk.dm.datasource.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.service.DsDataSourceService;
 import com.qk.dm.datasource.util.DsDataSouurceConnectUtil;
+import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.PageResultVO;
-import com.qk.dm.datasource.vo.params.DsDataSourceParamsVO;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 数据管理—数据源连接
@@ -24,7 +21,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/datasource")
+@RequestMapping("/data/source")
 public class DsDataSourceController {
   private final DsDataSourceService dsDataSourceService;
 
@@ -53,7 +50,7 @@ public class DsDataSourceController {
    * @return
    */
   @PostMapping
-  public DefaultCommonResult<?> addDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
+  public DefaultCommonResult addDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
     dsDataSourceService.addDsDataSource(dsDatasourceVO);
     return DefaultCommonResult.success();
   }
@@ -77,8 +74,8 @@ public class DsDataSourceController {
    * @return
    */
   @PutMapping
-  public DefaultCommonResult updateDsDataSourece(@RequestBody DsDatasourceVO dsDatasourceVO) {
-    dsDataSourceService.updateDsDataSourece(dsDatasourceVO);
+  public DefaultCommonResult updateDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
+    dsDataSourceService.updateDsDataSource(dsDatasourceVO);
     return DefaultCommonResult.success();
   }
 
@@ -99,7 +96,8 @@ public class DsDataSourceController {
    * @return DefaultCommonResult<List<DsDatasourceVO>>
    */
   @GetMapping("/database/{type}")
-  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByType(@PathVariable("type") String type) {
+  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByType(
+      @PathVariable("type") String type) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDataSourceService.getDataSourceByType(type));
   }
@@ -124,10 +122,10 @@ public class DsDataSourceController {
    * @return
    */
   @PostMapping("/connect")
-  public DefaultCommonResult<Boolean> dsDataSoureceConnect(
+  public DefaultCommonResult<Boolean> dataSourceConnect(
       @RequestBody DsDatasourceVO dsDatasourceVO) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.dsDataSoureceConnect(dsDatasourceVO));
+        ResultCodeEnum.OK, dsDataSourceService.dataSourceConnect(dsDatasourceVO));
   }
 
   /**
@@ -138,7 +136,7 @@ public class DsDataSourceController {
   @GetMapping("/connect/type/all")
   public DefaultCommonResult<List<String>> getAllConnType() {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dsDataSourceService.dsDataSourceService());
+        ResultCodeEnum.OK, dsDataSourceService.dsDataSourceService());
   }
 
   /**

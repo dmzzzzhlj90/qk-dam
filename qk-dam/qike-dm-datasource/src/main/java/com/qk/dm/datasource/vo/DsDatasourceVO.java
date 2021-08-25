@@ -1,12 +1,11 @@
 package com.qk.dm.datasource.vo;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.alibaba.excel.annotation.write.style.ContentRowHeight;
-import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.fasterxml.jackson.annotation.JsonFormat;
+<<<<<<< HEAD
 import com.qk.dm.datasource.datasourinfo.BaseDataSourceTypeInfo;
+=======
+import com.qk.dm.datasource.connect.DSConnectBasicInfo;
+>>>>>>> 924c3726a7d40d2748c3bbdbf9f084e08075e558
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -24,9 +23,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ContentRowHeight(20)
-@HeadRowHeight(20)
-@ColumnWidth(25)
 public class DsDatasourceVO {
   /** 数据源主键id */
   private Integer id;
@@ -40,7 +36,7 @@ public class DsDatasourceVO {
 
   /** 数据 源连接值 */
   @NotBlank(message = "数据源连接值")
-  private BaseDataSourceTypeInfo baseDataSourceTypeInfo;
+  private DSConnectBasicInfo dsConnectBasicInfo;
 
   /** 连接方式 */
   private String linkType;
