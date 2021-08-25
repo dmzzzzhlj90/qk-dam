@@ -12,12 +12,13 @@ import java.util.Map;
 
 /**
  * 元数据列表筛选条件功能
+ *
  * @author shenpj
  * @date 2021/8/17 11:21 上午
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/screening")
+//@RequestMapping("/screening")
 public class MtdScreeningController {
 
   private final MtdScreeningService mtdScreeningService;
@@ -29,10 +30,9 @@ public class MtdScreeningController {
   /**
    * 查询筛选条件列表
    *
-   * @param
-   * @return DefaultCommonResult
+   * @return DefaultCommonResult<Map<String, List<String>>>
    */
-  @GetMapping("/list")
+//  @GetMapping("/list")
   public DefaultCommonResult<Map<String, List<String>>> screeningList() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdScreeningService.screeningList());
   }

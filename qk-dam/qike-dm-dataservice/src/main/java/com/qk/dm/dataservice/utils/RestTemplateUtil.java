@@ -3,7 +3,6 @@ package com.qk.dm.dataservice.utils;
 import cn.hutool.json.JSONObject;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -19,7 +18,11 @@ public class RestTemplateUtil {
 
   private static final Log LOG = LogFactory.get("restTemplate远程调用");
 
-  @Autowired RestTemplate restTemplate;
+  private final RestTemplate restTemplate;
+
+  public RestTemplateUtil(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+  }
 
   /**
    * 通用get接口
@@ -58,6 +61,29 @@ public class RestTemplateUtil {
       headers.setContentType(type);
       HttpEntity<JSONObject> httpEntity = new HttpEntity<>(hashMapList, headers);
       LOG.info("通用post接口发送内容->{}", httpEntity.toString());
+      ResponseEntity<String> exchange =
+          restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+      LOG.info("通用post接口返回结果->{}", exchange.getBody());
+      if (exchange.getStatusCode() != HttpStatus.OK) {
+        throw new RuntimeException("远程post调用接口失败！");
+      }
+      return exchange.getBody();
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException("远程post调用接口失败！");
+    }
+  }
+
+  public String postByToken(String url, JSONObject hashMapList, String token) {
+    LOG.info("通用post接口URL->{}", url);
+    try {
+      HttpHeaders headers = new HttpHeaders();
+      MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+      headers.setContentType(type);
+      headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+      headers.add("token", token);
+      HttpEntity<JSONObject> httpEntity = new HttpEntity<>(hashMapList, headers);
+      //      LOG.info("通用post接口发送内容->{}", httpEntity.toString());
       ResponseEntity<String> exchange =
           restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
       LOG.info("通用post接口返回结果->{}", exchange.getBody());
