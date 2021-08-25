@@ -57,7 +57,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                   .guid(e.getGuid())
                   .typeName(e.getTypeName())
                   .displayName(e.getDisplayText())
-                  .qualifiedName(e.getAttributes().get("qualifiedName").toString())
+                  .qualifiedName(e.getAttributes().get("qualifiedName").toString().replace(".","/"))
                   .createTime(
                       Objects.isNull(e.getAttributes().get("createTime"))
                           ? null
@@ -104,17 +104,19 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   }
 
   @Override
-  public Map<String, List<MtdAtlasEntityTypeVO>>getAllEntityType() {
+  public Map<String, List<MtdAtlasEntityTypeVO>> getAllEntityType() {
     Map<String, List<MtdAtlasEntityTypeVO>> mtdAtlasEntityMap = new HashMap<>();
     try {
       SearchFilter searchFilter = new SearchFilter();
       searchFilter.setParam("type", "entity");
       List<AtlasTypeDefHeader> allTypeDefHeaders = atlasClientV2.getAllTypeDefHeaders(searchFilter);
-      List<MtdAtlasEntityTypeVO>  mtdAtlasEntityTypeVOList =
+      List<MtdAtlasEntityTypeVO> mtdAtlasEntityTypeVOList =
           GsonUtil.fromJsonString(
               GsonUtil.toJsonString(allTypeDefHeaders),
               new TypeToken<List<MtdAtlasEntityTypeVO>>() {}.getType());
-       mtdAtlasEntityMap = mtdAtlasEntityTypeVOList.stream().collect(Collectors.groupingBy(MtdAtlasEntityTypeVO::getServiceType));
+      mtdAtlasEntityMap =
+          mtdAtlasEntityTypeVOList.stream()
+              .collect(Collectors.groupingBy(MtdAtlasEntityTypeVO::getServiceType));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -123,11 +125,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
   @Override
   public void deleteEntitiesByGuids(String guids) {
-    try{
+    try {
       atlasClientV2.deleteEntitiesByGuids(Arrays.asList(guids.split(",")));
-    }catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
-
 }
