@@ -30,4 +30,9 @@ public interface DsDataSourceService {
     List<DsDatasourceVO>getDataSourceByType(String linkType);
 
     List<String> dsDataSourceService();
+
+ 	List<DsDatasource> getDataSourceByType(String linkType);
+
+  	List<DsDatasource> getDataSourceByDsname(String dataSourceName);
+
 }

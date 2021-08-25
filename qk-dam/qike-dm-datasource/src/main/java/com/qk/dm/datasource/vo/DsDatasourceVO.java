@@ -7,14 +7,13 @@ import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qk.dm.datasource.datasourinfo.BaseDataSourceTypeInfo;
+import java.util.Date;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.NotBlank;
-import java.util.Date;
 
 /**
  * @author zys
@@ -29,6 +28,7 @@ import java.util.Date;
 @HeadRowHeight(20)
 @ColumnWidth(25)
 public class DsDatasourceVO {
+  /** 数据源主键id */
   private Integer id;
 
   /** 系统名称 */
@@ -60,12 +60,12 @@ public class DsDatasourceVO {
   /** 状态设置状态值 */
   private Integer status;
 
-  /**
-   * 创建时间
-   **/
+  /** 修改时间 */
+  @ExcelIgnore
+  @ExcelProperty("修改时间")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date gmtCreate;
+  private Date gmtModified;
 
   /** 创建人id（后期设置为必填） */
   private String createUserid;

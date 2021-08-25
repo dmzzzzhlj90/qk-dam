@@ -105,7 +105,20 @@ public class DsDataSourceController {
   }
 
   /**
-   * 数据源连接——连接接口
+   * 数据源连接——根据数据源名称获取数据源连接信息
+   *
+   * @param dataSourceName
+   * @return
+   */
+  @GetMapping("/getdatasource/bydsname/{dataSourceName}")
+  public DefaultCommonResult<List<DsDatasource>> getDataSourceByDsname(
+      @PathVariable("dataSourceName") String dataSourceName) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByDsname(dataSourceName));
+  }
+
+  /**
+   * 数据源连接——测试连接
    *
    * @param dsDatasourceVO
    * @return
@@ -129,7 +142,7 @@ public class DsDataSourceController {
   }
 
   /**
-   * 获取入参类型
+   * 数据源连接——获取入参类型
    *
    * @param type
    * @return
