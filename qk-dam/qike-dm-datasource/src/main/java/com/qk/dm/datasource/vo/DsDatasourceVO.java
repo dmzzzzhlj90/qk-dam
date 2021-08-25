@@ -1,9 +1,10 @@
 package com.qk.dm.datasource.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.qk.dm.datasource.connect.DSConnectBasicInfo;
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
+
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +33,7 @@ public class DsDatasourceVO {
 
   /** 数据 源连接值 */
   @NotBlank(message = "数据源连接值")
-  private DSConnectBasicInfo dsConnectBasicInfo;
+  private ConnectBasicInfo connectBasicInfo;
 
   /** 连接方式 */
   private String linkType;

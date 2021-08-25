@@ -2,12 +2,12 @@ package com.qk.dm.datasource.util;
 
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qk.dam.commons.enums.ConnTypeEnum;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.datasource.connect.HiveInfo;
-import com.qk.dm.datasource.connect.MysqlInfo;
-import com.qk.dm.datasource.connect.OracleInfo;
-import com.qk.dm.datasource.connect.PostgresqlInfo;
+import com.qk.dam.datasource.entity.HiveInfo;
+import com.qk.dam.datasource.entity.MysqlInfo;
+import com.qk.dam.datasource.entity.OracleInfo;
+import com.qk.dam.datasource.entity.PostgresqlInfo;
+import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -61,7 +61,7 @@ public class DsDataSouurceConnectUtil {
     Connection connection = null;
     ObjectMapper objectMapper = new ObjectMapper();
     PostgresqlInfo postgetsqlInfo =
-        objectMapper.convertValue(dsDatasourceVO.getDsConnectBasicInfo(), PostgresqlInfo.class);
+        objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), PostgresqlInfo.class);
     String driver = postgetsqlInfo.getDriverInfo(); // 获取postgetsql数据驱动类
     String url =
         "jdbc:postgresql://"
@@ -108,7 +108,7 @@ public class DsDataSouurceConnectUtil {
     Connection connection = null;
     ObjectMapper objectMapper = new ObjectMapper();
     HiveInfo hiveInfo =
-        objectMapper.convertValue(dsDatasourceVO.getDsConnectBasicInfo(), HiveInfo.class);
+        objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), HiveInfo.class);
     String driver = hiveInfo.getDriverInfo(); // 获取hive数据驱动类
     String url =
         "jdbc:hive://" + hiveInfo.getServer() + ":" + hiveInfo.getPort(); // 127.0.0.1是本机地址，
@@ -129,7 +129,7 @@ public class DsDataSouurceConnectUtil {
     Connection connection = null;
     ObjectMapper objectMapper = new ObjectMapper();
     OracleInfo oracleInfo =
-        objectMapper.convertValue(dsDatasourceVO.getDsConnectBasicInfo(), OracleInfo.class);
+        objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), OracleInfo.class);
     String driver = oracleInfo.getDriverInfo(); // 获取oracle数据驱动类
     String url =
         "jdbc:oracle:thin:"
@@ -154,7 +154,7 @@ public class DsDataSouurceConnectUtil {
     // 获取数据源连接值
     ObjectMapper objectMapper = new ObjectMapper();
     MysqlInfo mysqlInfo =
-        objectMapper.convertValue(dsDatasourceVO.getDsConnectBasicInfo(), MysqlInfo.class);
+        objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), MysqlInfo.class);
     String driver = mysqlInfo.getDriverInfo(); // 获取oracle数据驱动类
     String url =
         "jdbc:mysql://" + mysqlInfo.getServer() + ":" + mysqlInfo.getPort(); // 127.0.0.1是本机地址，

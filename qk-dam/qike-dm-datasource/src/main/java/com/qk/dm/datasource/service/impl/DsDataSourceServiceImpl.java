@@ -3,10 +3,10 @@ package com.qk.dm.datasource.service.impl;
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.google.gson.reflect.TypeToken;
-import com.qk.dam.commons.enums.ConnTypeEnum;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dm.datasource.connect.*;
+import com.qk.dam.datasource.entity.*;
+import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.entity.QDsDatasource;
 import com.qk.dm.datasource.mapstruct.mapper.DSDatasourceMapper;
@@ -89,7 +89,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
 
   private void setCodeTableValues(DsDatasource dsd, DsDatasourceVO dsDatasourceVO) {
     if (StringUtils.isNotBlank(dsd.getDataSourceValues())) {
-      dsDatasourceVO.setDsConnectBasicInfo(getConnectInfo(dsd.getLinkType(), dsd));
+      dsDatasourceVO.setConnectBasicInfo(getConnectInfo(dsd.getLinkType(), dsd));
     }
   }
 
@@ -104,7 +104,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     setDataSourceValues(dsDatasource, dsDatasourceVO);
     dsDatasource.setGmtCreate(new Date());
     // 将传入的数据源连接信息转换赋值
-    dsDatasource.setDataSourceValues(dsDatasourceVO.getDsConnectBasicInfo().toString());
+    dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfo().toString());
     BooleanExpression predicate = qDsDatasource.dataSourceName.eq(dsDatasource.getDataSourceName());
     boolean exists = dsDatasourceRepository.exists(predicate);
     if (exists) {
@@ -119,7 +119,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   private void setDataSourceValues(DsDatasource dsDatasource, DsDatasourceVO dsDatasourceVO) {
-    Object baseDataSourceTypeInfo = dsDatasourceVO.getDsConnectBasicInfo();
+    Object baseDataSourceTypeInfo = dsDatasourceVO.getConnectBasicInfo();
     if (baseDataSourceTypeInfo != null) {
       dsDatasource.setDataSourceValues(GsonUtil.toJsonString(baseDataSourceTypeInfo));
     }
@@ -204,15 +204,15 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
         dsDatasourceRepository.findAll(qDsDatasource.linkType.eq(type));
     for (DsDatasource dsDatasource : dsDatasourceIterable) {
       DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
-      DSConnectBasicInfo dsConnectBasicInfo = getConnectInfo(type, dsDatasource);
-      dsDatasourceVO.setDsConnectBasicInfo(dsConnectBasicInfo);
+      ConnectBasicInfo dsConnectBasicInfo = getConnectInfo(type, dsDatasource);
+      dsDatasourceVO.setConnectBasicInfo(dsConnectBasicInfo);
       resultDataList.add(dsDatasourceVO);
     }
     return resultDataList;
   }
 
-  private DSConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource) {
-    DSConnectBasicInfo dsConnectBasicInfo = null;
+  private ConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource) {
+    ConnectBasicInfo dsConnectBasicInfo = null;
     if (type.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
       dsConnectBasicInfo =
