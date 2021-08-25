@@ -3,6 +3,10 @@ package com.qk.dm.metadata.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
+import com.qk.dam.metedata.entity.MtdApi;
+import com.qk.dam.metedata.entity.MtdApiDb;
+import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dam.metedata.entity.MtdAttributes;
 import com.qk.dm.metadata.service.MtdApiService;
 import com.qk.dm.metadata.vo.*;
 import org.apache.atlas.AtlasClientV2;
@@ -29,8 +33,8 @@ public class MtdApiServiceImpl implements MtdApiService {
   private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
   @Override
-  public List<MtdAtlasEntityTypeVO> getAllEntityType() {
-    List<MtdAtlasEntityTypeVO> mtdAtlasEntityTypeVOList = new ArrayList<>();
+  public List<MtdAtlasEntityType> getAllEntityType() {
+    List<MtdAtlasEntityType> mtdAtlasEntityTypeVOList = new ArrayList<>();
     try {
       SearchFilter searchFilter = new SearchFilter();
       searchFilter.setParam("type", "entity");
@@ -38,7 +42,7 @@ public class MtdApiServiceImpl implements MtdApiService {
       mtdAtlasEntityTypeVOList =
           GsonUtil.fromJsonString(
               GsonUtil.toJsonString(allTypeDefHeaders),
-              new TypeToken<List<MtdAtlasEntityTypeVO>>() {}.getType());
+              new TypeToken<List<MtdAtlasEntityType>>() {}.getType());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -46,7 +50,7 @@ public class MtdApiServiceImpl implements MtdApiService {
   }
 
   @Override
-  public MtdApiVO mtdDetail(String typeName, String dbName, String tableName, String server) {
+  public MtdApi mtdDetail(String typeName, String dbName, String tableName, String server) {
     if (StringUtils.isBlank(dbName)
         && StringUtils.isBlank(tableName)
         && StringUtils.isBlank(server)) {
@@ -70,25 +74,25 @@ public class MtdApiServiceImpl implements MtdApiService {
     }
   }
 
-  private MtdApiVO getDbs(String typeName) {
-    MtdApiVO mtdApiVO = new MtdApiVO();
+  private MtdApi getDbs(String typeName) {
+    MtdApi mtdApi = new MtdApi();
     try {
       AtlasSearchResult atlasSearchResult =
           atlasClientV2.basicSearch(typeName, null, null, true, 1000, 0);
       List<AtlasEntityHeader> atlasEntityHeaderList = atlasSearchResult.getEntities();
-      mtdApiVO.setEntities(buildMataDataList(atlasEntityHeaderList));
+      mtdApi.setEntities(buildMataDataList(atlasEntityHeaderList));
     } catch (AtlasServiceException e) {
       e.printStackTrace();
     }
-    return mtdApiVO;
+    return mtdApi;
   }
 
-  private List<MtdApiDbVO> buildMataDataList(List<AtlasEntityHeader> entities) {
-    List<MtdApiDbVO> mtdApiDbVOList = new ArrayList<>();
+  private List<MtdApiDb> buildMataDataList(List<AtlasEntityHeader> entities) {
+    List<MtdApiDb> mtdApiDbVOList = new ArrayList<>();
     entities.forEach(
         e -> {
           mtdApiDbVOList.add(
-              MtdApiDbVO.builder()
+              MtdApiDb.builder()
                   .guid(e.getGuid())
                   .typeName(e.getTypeName())
                   .displayText(e.getDisplayText())
@@ -97,30 +101,30 @@ public class MtdApiServiceImpl implements MtdApiService {
     return mtdApiDbVOList;
   }
 
-  private MtdApiVO getDetail(
+  private MtdApi getDetail(
       String typeName, List<Map<String, String>> uniqAttributesList, String tableName) {
-    MtdApiVO mtdApiVO = null;
+    MtdApi mtdApi = null;
     try {
       AtlasEntity.AtlasEntitiesWithExtInfo result =
           atlasClientV2.getEntitiesByAttribute(typeName, uniqAttributesList);
       Map<String, Object> tables = result.getEntities().get(0).getRelationshipAttributes();
-      mtdApiVO = GsonUtil.fromMap(tables, MtdApiVO.class);
+      mtdApi = GsonUtil.fromMap(tables, MtdApi.class);
       if (StringUtils.isNotBlank(tableName)) {
         List<AtlasEntity> atlasEntityList = new ArrayList<>(result.getReferredEntities().values());
-        List<MtdAttributesVO> tableAttrs =
+        List<MtdAttributes> tableAttrs =
             atlasEntityList.stream()
                 .map(
                     e -> {
                       Map<String, Object> att = e.getAttributes();
-                      return GsonUtil.fromMap(att, MtdAttributesVO.class);
+                      return GsonUtil.fromMap(att, MtdAttributes.class);
                     })
                 .collect(Collectors.toList());
-        mtdApiVO.setColumns(tableAttrs);
+        mtdApi.setColumns(tableAttrs);
       }
 
     } catch (AtlasServiceException e) {
       e.printStackTrace();
     }
-    return mtdApiVO;
+    return mtdApi;
   }
 }

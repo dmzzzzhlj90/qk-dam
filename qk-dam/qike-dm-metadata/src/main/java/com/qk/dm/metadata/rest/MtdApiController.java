@@ -2,10 +2,10 @@ package com.qk.dm.metadata.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.metedata.entity.MtdApi;
+import com.qk.dam.metedata.entity.MtdApiParams;
 import com.qk.dm.metadata.service.MtdApiService;
-import com.qk.dm.metadata.vo.MtdApiParamsVO;
-import com.qk.dm.metadata.vo.MtdApiVO;
-import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
+import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,20 +33,20 @@ public class MtdApiController {
      * @return DefaultCommonResult<List<MtdAtlasEntityTypeVO>>
      */
     @GetMapping("/all/entity/type")
-    public DefaultCommonResult<List<MtdAtlasEntityTypeVO>> getAllEntityType(){
-        List<MtdAtlasEntityTypeVO> entityTypeList = mtdApiService.getAllEntityType();
+    public DefaultCommonResult<List<MtdAtlasEntityType>> getAllEntityType(){
+        List<MtdAtlasEntityType> entityTypeList = mtdApiService.getAllEntityType();
         return DefaultCommonResult.success(ResultCodeEnum.OK,entityTypeList);
     }
 
     /**
      * 获取元数据详情信息
-     * @param mtdApiParamsVO
+     * @param mtdApiParams
      * @return DefaultCommonResult<MtdApiVO>
      */
     @PostMapping("/mtd/detail")
-    public DefaultCommonResult<MtdApiVO> mtdDetail(@RequestBody @Validated MtdApiParamsVO mtdApiParamsVO){
-        MtdApiVO mtdApiVO = mtdApiService.mtdDetail(mtdApiParamsVO.getTypeName(),mtdApiParamsVO.getDbName(),mtdApiParamsVO.getTableName(),mtdApiParamsVO.getServer());
-        return DefaultCommonResult.success(ResultCodeEnum.OK,mtdApiVO);
+    public DefaultCommonResult<MtdApi> mtdDetail(@RequestBody @Validated MtdApiParams mtdApiParams){
+        MtdApi mtdApi = mtdApiService.mtdDetail(mtdApiParams.getTypeName(),mtdApiParams.getDbName(),mtdApiParams.getTableName(),mtdApiParams.getServer());
+        return DefaultCommonResult.success(ResultCodeEnum.OK,mtdApi);
     }
 
 

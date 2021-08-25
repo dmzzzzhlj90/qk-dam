@@ -8,6 +8,7 @@ dependencies {
     compile 'org.projectlombok:lombok'
     compile group: 'com.google.code.gson', name: 'gson'
     compile 'javax.servlet:javax.servlet-api'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     implementation 'org.springframework:spring-web'
     annotationProcessor 'org.projectlombok:lombok'
 }

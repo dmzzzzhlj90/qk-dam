@@ -6,7 +6,7 @@ import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
-import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
+import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.apache.atlas.AtlasClientV2;
@@ -104,19 +104,19 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   }
 
   @Override
-  public Map<String, List<MtdAtlasEntityTypeVO>> getAllEntityType() {
-    Map<String, List<MtdAtlasEntityTypeVO>> mtdAtlasEntityMap = new HashMap<>();
+  public Map<String, List<MtdAtlasEntityType>> getAllEntityType() {
+    Map<String, List<MtdAtlasEntityType>> mtdAtlasEntityMap = new HashMap<>();
     try {
       SearchFilter searchFilter = new SearchFilter();
       searchFilter.setParam("type", "entity");
       List<AtlasTypeDefHeader> allTypeDefHeaders = atlasClientV2.getAllTypeDefHeaders(searchFilter);
-      List<MtdAtlasEntityTypeVO> mtdAtlasEntityTypeVOList =
+      List<MtdAtlasEntityType> mtdAtlasEntityTypeVOList =
           GsonUtil.fromJsonString(
               GsonUtil.toJsonString(allTypeDefHeaders),
-              new TypeToken<List<MtdAtlasEntityTypeVO>>() {}.getType());
+              new TypeToken<List<MtdAtlasEntityType>>() {}.getType());
       mtdAtlasEntityMap =
           mtdAtlasEntityTypeVOList.stream()
-              .collect(Collectors.groupingBy(MtdAtlasEntityTypeVO::getServiceType));
+              .collect(Collectors.groupingBy(MtdAtlasEntityType::getServiceType));
     } catch (Exception e) {
       e.printStackTrace();
     }

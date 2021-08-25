@@ -124,4 +124,26 @@ public class DasApiDataSourceConfigController {
     return DefaultCommonResult.success(
             ResultCodeEnum.OK, dasApiDataSourceConfigService.getDSConfigParasSortStyle());
   }
+
+    /**
+     * 查询所有数据源连接类型
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/datasource/type/all")
+    public DefaultCommonResult<List<String>> getAllConnType() {
+        return DefaultCommonResult.success(
+                ResultCodeEnum.OK, dasApiDataSourceConfigService.getAllConnType());
+    }
+
+    /**
+     * 根据数据库类型获取数据源连接信息
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/datasource/database/{type}")
+    public DefaultCommonResult getDataSourceByType(@PathVariable("type") String type) {
+        return DefaultCommonResult.success(
+                ResultCodeEnum.OK, dasApiDataSourceConfigService.getDataSourceByType(type));
+    }
 }

@@ -1,5 +1,6 @@
 package com.qk.dam.commons.http.result;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 
 /**
@@ -25,7 +26,7 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
     setRetMsg(retMsg);
     setData(data);
   }
-
+  @JsonCreator
   public static DefaultCommonResult<Object> success() {
     return success(ResultCodeEnum.OK, null);
   }

@@ -2,12 +2,14 @@ package com.qk.dm.dataservice.service.imp;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiDatasourceConfig;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiDatasourceConfig;
+import com.qk.dm.dataservice.feign.DataSourceFeign;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiDataSourceConfigMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
@@ -39,6 +41,7 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
   private final DasApiBasicInfoService dasApiBasicInfoService;
   private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
   private final DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository;
+  private final DataSourceFeign dataSourceFeign;
   private final EntityManager entityManager;
   private JPAQueryFactory jpaQueryFactory;
 
@@ -49,13 +52,14 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
 
   @Autowired
   public DasApiDataSourceConfigServiceImpl(
-      DasApiBasicInfoService dasApiBasicInfoService,
-      DasApiBasicInfoRepository dasApiBasicinfoRepository,
-      DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository,
-      EntityManager entityManager) {
+          DasApiBasicInfoService dasApiBasicInfoService,
+          DasApiBasicInfoRepository dasApiBasicinfoRepository,
+          DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository,
+          DataSourceFeign dataSourceFeign, EntityManager entityManager) {
     this.dasApiBasicInfoService = dasApiBasicInfoService;
     this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
     this.dasApiDatasourceConfigRepository = dasApiDatasourceConfigRepository;
+    this.dataSourceFeign = dataSourceFeign;
     this.entityManager = entityManager;
   }
 
@@ -212,6 +216,16 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
   @Override
   public Map<String, String> getDSConfigParasSortStyle() {
     return DasConstant.getDSConfigParasSortStyle();
+  }
+
+  @Override
+  public List<String> getAllConnType() {
+    return dataSourceFeign.getAllConnType().getData();
+  }
+
+  @Override
+  public DefaultCommonResult getDataSourceByType(String type) {
+    return dataSourceFeign.getDataSourceByType(type);
   }
 
 }

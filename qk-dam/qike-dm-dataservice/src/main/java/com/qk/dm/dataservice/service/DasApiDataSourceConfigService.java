@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service;
 
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.vo.DasApiDataSourceConfigVO;
 import org.springframework.stereotype.Service;
 
@@ -30,4 +31,7 @@ public interface DasApiDataSourceConfigService {
 
     Map<String, String> getDSConfigParasSortStyle();
 
+    List<String> getAllConnType();
+
+    DefaultCommonResult getDataSourceByType(String type);
 }

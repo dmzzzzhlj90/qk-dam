@@ -1,7 +1,7 @@
 package com.qk.dm.metadata.service;
 
-import com.qk.dm.metadata.vo.MtdApiVO;
-import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
+import com.qk.dam.metedata.entity.MtdApi;
+import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface MtdApiService {
    *
    * @return
    */
-  List<MtdAtlasEntityTypeVO> getAllEntityType();
+  List<MtdAtlasEntityType> getAllEntityType();
 
   /**
    * 获取元数据详情
@@ -26,5 +26,5 @@ public interface MtdApiService {
    * @param server
    * @return
    */
-  MtdApiVO mtdDetail(String typeName, String dbName, String tableName,String server);
+  MtdApi mtdDetail(String typeName, String dbName, String tableName, String server);
 }

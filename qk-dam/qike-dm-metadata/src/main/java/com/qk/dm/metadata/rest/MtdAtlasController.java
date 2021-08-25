@@ -2,10 +2,10 @@ package com.qk.dm.metadata.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
-import com.qk.dm.metadata.vo.MtdAtlasEntityTypeVO;
 import com.qk.dm.metadata.vo.MtdAtlasParamsVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +35,8 @@ public class MtdAtlasController {
      * @return DefaultCommonResult<Map<String, List<MtdAtlasEntityTypeVO>>>
      */
     @GetMapping("/allEntityType")
-    public DefaultCommonResult<Map<String, List<MtdAtlasEntityTypeVO>>> getAllEntityType(){
-        Map<String, List<MtdAtlasEntityTypeVO>> mtdAtlasEntityTypeVOList = atlasMetaDataService.getAllEntityType();
+    public DefaultCommonResult<Map<String, List<MtdAtlasEntityType>>> getAllEntityType(){
+        Map<String, List<MtdAtlasEntityType>> mtdAtlasEntityTypeVOList = atlasMetaDataService.getAllEntityType();
         return DefaultCommonResult.success(ResultCodeEnum.OK,mtdAtlasEntityTypeVOList);
     }
 
