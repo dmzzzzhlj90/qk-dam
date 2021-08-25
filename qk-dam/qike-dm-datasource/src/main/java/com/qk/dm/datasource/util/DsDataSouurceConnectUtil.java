@@ -4,10 +4,10 @@ import com.alibaba.nacos.common.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.dam.commons.enums.ConnTypeEnum;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.datasource.datasourinfo.HiveInfo;
-import com.qk.dm.datasource.datasourinfo.MysqlInfo;
-import com.qk.dm.datasource.datasourinfo.OracleInfo;
-import com.qk.dm.datasource.datasourinfo.PostgetsqlInfo;
+import com.qk.dm.datasource.connect.HiveInfo;
+import com.qk.dm.datasource.connect.MysqlInfo;
+import com.qk.dm.datasource.connect.OracleInfo;
+import com.qk.dm.datasource.connect.PostgresqlInfo;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,10 +23,7 @@ import java.util.Map;
  * @since 1.0.0
  */
 public class DsDataSouurceConnectUtil {
-  public static final String DATA_SOURCE_MYSQL = "MySQL";
-  public static final String DATA_SOURCE_ORACLE = "Oracle";
-  public static final String DATA_SOURCE_HIVE = "Hive";
-  public static final String DATA_SOURCE_POSTGRESQL = "PostgreSQL";
+
   /**
    * 判定传入的数据源连接是否测试连接成功
    *
@@ -38,13 +35,13 @@ public class DsDataSouurceConnectUtil {
     // 获取数据库连接类型
     String linkType = dsDatasourceVO.getLinkType();
     if (StringUtils.isNotBlank(linkType)) {
-      if (linkType.equals(DATA_SOURCE_MYSQL)) {
+      if (linkType.equals(ConnTypeEnum.MYSQL.getName())) {
         connect = connectMySQL(dsDatasourceVO);
-      } else if (linkType.equals(DATA_SOURCE_ORACLE)) {
+      } else if (linkType.equals(ConnTypeEnum.ORACLE.getName())) {
         connect = connectOracle(dsDatasourceVO);
-      } else if (linkType.equals(DATA_SOURCE_HIVE)) {
+      } else if (linkType.equals(ConnTypeEnum.HIVE.getName())) {
         connect = connectHive(dsDatasourceVO);
-      } else if (linkType.equals(DATA_SOURCE_POSTGRESQL)) {
+      } else if (linkType.equals(ConnTypeEnum.POSTGRESQL.getName())) {
         connect = connectPostSql(dsDatasourceVO);
       }
     } else {
@@ -63,15 +60,15 @@ public class DsDataSouurceConnectUtil {
     Boolean connect = false;
     Connection connection = null;
     ObjectMapper objectMapper = new ObjectMapper();
-    PostgetsqlInfo postgetsqlInfo =
-        objectMapper.convertValue(dsDatasourceVO.getBaseDataSourceTypeInfo(), PostgetsqlInfo.class);
-    String driver = postgetsqlInfo.getService(); // 获取postgetsql数据驱动类
+    PostgresqlInfo postgetsqlInfo =
+        objectMapper.convertValue(dsDatasourceVO.getDsConnectBasicInfo(), PostgresqlInfo.class);
+    String driver = postgetsqlInfo.getDriverInfo(); // 获取postgetsql数据驱动类
     String url =
         "jdbc:postgresql://"
             + postgetsqlInfo.getServer()
             + ":"
             + postgetsqlInfo.getPort(); // 127.0.0.1是本机地址，
-    String user = postgetsqlInfo.getUsername();
+    String user = postgetsqlInfo.getUserName();
     String password = postgetsqlInfo.getPassword();
     connect = getConnect(url, user, password, driver);
     return connect;
@@ -111,11 +108,11 @@ public class DsDataSouurceConnectUtil {
     Connection connection = null;
     ObjectMapper objectMapper = new ObjectMapper();
     HiveInfo hiveInfo =
-        objectMapper.convertValue(dsDatasourceVO.getBaseDataSourceTypeInfo(), HiveInfo.class);
-    String driver = hiveInfo.getService(); // 获取hive数据驱动类
+        objectMapper.convertValue(dsDatasourceVO.getDsConnectBasicInfo(), HiveInfo.class);
+    String driver = hiveInfo.getDriverInfo(); // 获取hive数据驱动类
     String url =
         "jdbc:hive://" + hiveInfo.getServer() + ":" + hiveInfo.getPort(); // 127.0.0.1是本机地址，
-    String user = hiveInfo.getUsername();
+    String user = hiveInfo.getUserName();
     String password = hiveInfo.getPassword();
     connect = getConnect(url, user, password, driver);
     return connect;
@@ -132,14 +129,14 @@ public class DsDataSouurceConnectUtil {
     Connection connection = null;
     ObjectMapper objectMapper = new ObjectMapper();
     OracleInfo oracleInfo =
-        objectMapper.convertValue(dsDatasourceVO.getBaseDataSourceTypeInfo(), OracleInfo.class);
-    String driver = oracleInfo.getService(); // 获取oracle数据驱动类
+        objectMapper.convertValue(dsDatasourceVO.getDsConnectBasicInfo(), OracleInfo.class);
+    String driver = oracleInfo.getDriverInfo(); // 获取oracle数据驱动类
     String url =
         "jdbc:oracle:thin:"
             + oracleInfo.getServer()
             + ":"
             + oracleInfo.getPort(); // 127.0.0.1是本机地址，
-    String user = oracleInfo.getUsername();
+    String user = oracleInfo.getUserName();
     String password = oracleInfo.getPassword();
     connect = getConnect(url, user, password, driver);
     return connect;
@@ -157,11 +154,11 @@ public class DsDataSouurceConnectUtil {
     // 获取数据源连接值
     ObjectMapper objectMapper = new ObjectMapper();
     MysqlInfo mysqlInfo =
-        objectMapper.convertValue(dsDatasourceVO.getBaseDataSourceTypeInfo(), MysqlInfo.class);
-    String driver = mysqlInfo.getService(); // 获取oracle数据驱动类
+        objectMapper.convertValue(dsDatasourceVO.getDsConnectBasicInfo(), MysqlInfo.class);
+    String driver = mysqlInfo.getDriverInfo(); // 获取oracle数据驱动类
     String url =
         "jdbc:mysql://" + mysqlInfo.getServer() + ":" + mysqlInfo.getPort(); // 127.0.0.1是本机地址，
-    String user = mysqlInfo.getUsername();
+    String user = mysqlInfo.getUserName();
     String password = mysqlInfo.getPassword();
     connect = getConnect(url, user, password, driver);
     return connect;
@@ -196,7 +193,7 @@ public class DsDataSouurceConnectUtil {
       return new HiveInfo();
     }
     if (type.equals("db-sqlserver")) {
-      return new PostgetsqlInfo();
+      return new PostgresqlInfo();
     } else {
       throw new BizException("没有匹配的数据源参数类型");
     }

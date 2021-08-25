@@ -1,4 +1,4 @@
-package com.qk.dm.datasource.vo.params;
+package com.qk.dm.datasource.vo;
 
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DsDataSourceParamsVO {
+  /** 分页信息 */
   private Pagination pagination;
 
   /** 数据连接名称 */

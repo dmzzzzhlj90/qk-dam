@@ -32,7 +32,6 @@ public class DsDirServiceImpl implements DsDirService {
   public void addDsDir(DsDirVO dsDirVO) {
     DsDir dsDir = DsDirMapper.INSTANCE.useDsDir(dsDirVO);
     dsDir.setGmtCreate(new Date());
-    dsDir.setDsDirCode(UUID.randomUUID().toString().replaceAll("-", ""));
     BooleanExpression predicate = qDsDir.dsDirCode.eq(dsDir.getDsDirCode());
     boolean exists = dsDirRepository.exists(predicate);
     if (exists) {

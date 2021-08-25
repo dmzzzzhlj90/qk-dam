@@ -2,18 +2,15 @@ package com.qk.dm.datasource.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.service.DsDataSourceService;
 import com.qk.dm.datasource.util.DsDataSouurceConnectUtil;
+import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.PageResultVO;
-import com.qk.dm.datasource.vo.params.DsDataSourceParamsVO;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 数据管理—数据源连接
@@ -35,8 +32,8 @@ public class DsDataSourceController {
   /**
    * 数据源连接——统一查询接口
    *
-   * @param dsDataSourceParamsVO
-   * @return DefaultCommonResult
+   * @param dsDataSourceParamsVO 数据源参数
+   * @return DefaultCommonResult<PageResultVO<DsDatasourceVO>> 分页查询数据源信息
    */
   @PostMapping("/query")
   public DefaultCommonResult<PageResultVO<DsDatasourceVO>> getDsDataSource(
@@ -49,11 +46,11 @@ public class DsDataSourceController {
   /**
    * 数据源连接——新增接口
    *
-   * @param dsDatasourceVO
-   * @return
+   * @param dsDatasourceVO 数据源信息
+   * @return DefaultCommonResult
    */
   @PostMapping
-  public DefaultCommonResult<?> addDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
+  public DefaultCommonResult addDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
     dsDataSourceService.addDsDataSource(dsDatasourceVO);
     return DefaultCommonResult.success();
   }
@@ -61,8 +58,8 @@ public class DsDataSourceController {
   /**
    * 数据源连接——删除接口
    *
-   * @param id
-   * @return
+   * @param id 数据源id
+   * @return DefaultCommonResult
    */
   @DeleteMapping("/{id}")
   public DefaultCommonResult deleteDsDataSource(@PathVariable("id") Integer id) {
@@ -73,19 +70,19 @@ public class DsDataSourceController {
   /**
    * 数据源连接——修改接口
    *
-   * @param dsDatasourceVO
-   * @return
+   * @param dsDatasourceVO 查询条件
+   * @return DefaultCommonResult 成功
    */
   @PutMapping
-  public DefaultCommonResult updateDsDataSourece(@RequestBody DsDatasourceVO dsDatasourceVO) {
-    dsDataSourceService.updateDsDataSourece(dsDatasourceVO);
+  public DefaultCommonResult updateDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
+    dsDataSourceService.updateDsDataSource(dsDatasourceVO);
     return DefaultCommonResult.success();
   }
 
   /**
    * 数据源连接——获取数据源类型
    *
-   * @return
+   * @return DefaultCommonResult<List<String>> 数据源类型
    */
   @GetMapping("/type")
   public DefaultCommonResult<List<String>> getDataType() {
@@ -95,46 +92,60 @@ public class DsDataSourceController {
   /**
    * 数据源连接——根据数据库类型获取数据源连接信息
    *
-   * @param type
-   * @return DefaultCommonResult<List<DsDatasourceVO>>
+   * @param type 数据连接类型
+   * @return DefaultCommonResult<List<DsDatasourceVO>> 数据源信息
    */
   @GetMapping("/database/{type}")
-  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByType(@PathVariable("type") String type) {
+  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByType(
+      @PathVariable("type") String type) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDataSourceService.getDataSourceByType(type));
   }
 
   /**
-   * 数据源连接——连接接口
+   * 数据源连接——根据数据源名称获取数据源连接信息
    *
-   * @param dsDatasourceVO
-   * @return
+   * @param dataSourceName 数据源名称
+   * @return DefaultCommonResult<List<DsDatasource>> 数据源信息
    */
-  @PostMapping("/connect")
-  public DefaultCommonResult<Boolean> dsDataSoureceConnect(
+  @GetMapping("/name/{dataSourceName}")
+  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByDsname(
+      @PathVariable("dataSourceName") String dataSourceName) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByDsname(dataSourceName));
+  }
+
+  /**
+   * 数据源连接——测试连接
+   *
+   * @param dsDatasourceVO 数据信息
+   * @return DefaultCommonResult<Boolean>  true:连接成功，false:连接失败
+   */
+  @PostMapping("/connecting")
+  public DefaultCommonResult<Boolean> dataSourceConnect(
       @RequestBody DsDatasourceVO dsDatasourceVO) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.dsDataSoureceConnect(dsDatasourceVO));
+        ResultCodeEnum.OK, dsDataSourceService.dataSourceConnect(dsDatasourceVO));
   }
 
   /**
    * 查询所有数据源连接类型
    *
-   * @return
+   * @return DefaultCommonResult<List<String>> 所有数据源列席
    */
-  @GetMapping("/connect/type/all")
+  @GetMapping("/type/all")
   public DefaultCommonResult<List<String>> getAllConnType() {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dsDataSourceService.dsDataSourceService());
+        ResultCodeEnum.OK, dsDataSourceService.dsDataSourceService());
   }
 
   /**
-   * 获取入参类型
+   * 数据源连接——获取入参类型
    *
-   * @param type
-   * @return
+   * @param type 数据库类型
+   * @return DefaultCommonResult<Object> 返回入参信息
    */
-  @GetMapping("/param/{type}")
+  @GetMapping("/in/params/{type}")
   public DefaultCommonResult<Object> getParamsByType(@PathVariable("type") String type) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, DsDataSouurceConnectUtil.getParamsByType(type));

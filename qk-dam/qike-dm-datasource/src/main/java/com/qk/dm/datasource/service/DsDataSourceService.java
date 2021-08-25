@@ -1,12 +1,11 @@
 package com.qk.dm.datasource.service;
 
 import com.qk.dm.datasource.entity.DsDatasource;
+import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.PageResultVO;
-import com.qk.dm.datasource.vo.params.DsDataSourceParamsVO;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * @author zys
@@ -15,19 +14,23 @@ import java.util.List;
  */
 @Service
 public interface DsDataSourceService {
-    PageResultVO<DsDatasourceVO> getDsDataSource(DsDataSourceParamsVO dsDataSourceParamsVO);
+  PageResultVO<DsDatasourceVO> getDsDataSource(DsDataSourceParamsVO dsDataSourceParamsVO);
 
-    void addDsDataSource(DsDatasourceVO dsDatasourceVO);
+  void addDsDataSource(DsDatasourceVO dsDatasourceVO);
 
-    void deleteDsDataSource(Integer id);
+  void deleteDsDataSource(Integer id);
 
-    void updateDsDataSourece(DsDatasourceVO dsDatasourceVO);
+  void updateDsDataSource(DsDatasourceVO dsDatasourceVO);
 
-    List<String> getDataType();
+  Boolean dataSourceConnect(DsDatasourceVO dsDatasourceVO);
 
-    Boolean dsDataSoureceConnect(DsDatasourceVO dsDatasourceVO);
+  List<String> getDataType();
 
-    List<DsDatasourceVO>getDataSourceByType(String linkType);
+  List<String> dsDataSourceService();
 
-    List<String> dsDataSourceService();
+  List<DsDatasourceVO> getDataSourceByType(String linkType);
+
+  List<DsDatasourceVO> getDataSourceByDsname(String dataSourceName);
+
+
 }
