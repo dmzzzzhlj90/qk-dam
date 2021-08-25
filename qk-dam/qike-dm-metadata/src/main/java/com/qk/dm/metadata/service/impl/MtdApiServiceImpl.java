@@ -66,7 +66,7 @@ public class MtdApiServiceImpl implements MtdApiService {
       }
       map.put("qualifiedName", qualifiedName);
       uniqAttributesList.add(map);
-      return getDetail(typeName, uniqAttributesList);
+      return getDetail(typeName, uniqAttributesList, tableName);
     }
   }
 
@@ -97,23 +97,26 @@ public class MtdApiServiceImpl implements MtdApiService {
     return mtdApiDbVOList;
   }
 
-  private MtdApiVO getDetail(String typeName, List<Map<String, String>> uniqAttributesList) {
+  private MtdApiVO getDetail(
+      String typeName, List<Map<String, String>> uniqAttributesList, String tableName) {
     MtdApiVO mtdApiVO = null;
     try {
       AtlasEntity.AtlasEntitiesWithExtInfo result =
           atlasClientV2.getEntitiesByAttribute(typeName, uniqAttributesList);
       Map<String, Object> tables = result.getEntities().get(0).getRelationshipAttributes();
-      List<AtlasEntity> atlasEntityList = new ArrayList<>(result.getReferredEntities().values());
-      List<MtdAttributesVO> tableAttrs =
-          atlasEntityList.stream()
-              .map(
-                  e -> {
-                    Map<String, Object> att = e.getAttributes();
-                    return GsonUtil.fromMap(att, MtdAttributesVO.class);
-                  })
-              .collect(Collectors.toList());
       mtdApiVO = GsonUtil.fromMap(tables, MtdApiVO.class);
-      mtdApiVO.setColumns(tableAttrs);
+      if (StringUtils.isNotBlank(tableName)) {
+        List<AtlasEntity> atlasEntityList = new ArrayList<>(result.getReferredEntities().values());
+        List<MtdAttributesVO> tableAttrs =
+            atlasEntityList.stream()
+                .map(
+                    e -> {
+                      Map<String, Object> att = e.getAttributes();
+                      return GsonUtil.fromMap(att, MtdAttributesVO.class);
+                    })
+                .collect(Collectors.toList());
+        mtdApiVO.setColumns(tableAttrs);
+      }
 
     } catch (AtlasServiceException e) {
       e.printStackTrace();
