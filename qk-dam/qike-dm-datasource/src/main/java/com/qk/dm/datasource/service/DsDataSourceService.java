@@ -4,8 +4,9 @@ import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.PageResultVO;
 import com.qk.dm.datasource.vo.params.DsDataSourceParamsVO;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author zys
@@ -27,4 +28,6 @@ public interface DsDataSourceService {
   Boolean dsDataSoureceConnect(DsDatasourceVO dsDatasourceVO);
 
   List<DsDatasource> getDataSourceByType(String linkType);
+
+  List<DsDatasource> getDataSourceByDsname(String dataSourceName);
 }

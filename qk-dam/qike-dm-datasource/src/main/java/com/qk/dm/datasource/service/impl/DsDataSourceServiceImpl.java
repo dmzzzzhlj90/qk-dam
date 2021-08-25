@@ -204,6 +204,17 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     }
   }
 
+  @Override
+  public List<DsDatasource> getDataSourceByDsname(String dataSourceName) {
+    List<DsDatasource> datasourceList =
+        dsDatasourceRepository.getDataSourceByDsname(dataSourceName);
+    if (CollectionUtils.isNotEmpty(datasourceList)) {
+      return datasourceList;
+    } else {
+      throw new BizException("根据数据源名称获取数据源连接信息为空");
+    }
+  }
+
   /**
    * 根据条件查询数据源连接
    *

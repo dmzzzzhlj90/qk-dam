@@ -14,4 +14,8 @@ public interface DsDatasourceRepository extends BaseRepository<DsDatasource, Int
 
   @Query(" select dsDatasource from DsDatasource dsDatasource where linkType =:linkType")
   List<DsDatasource> getDsdataSourceByType(@Param("linkType") String linkType);
+
+  @Query(
+      " select dsDatasource from DsDatasource dsDatasource where dataSourceName =:dataSourceName")
+  List<DsDatasource> getDataSourceByDsname(@Param("dataSourceName") String dataSourceName);
 }

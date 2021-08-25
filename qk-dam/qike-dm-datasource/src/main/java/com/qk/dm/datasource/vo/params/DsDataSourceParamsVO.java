@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DsDataSourceParamsVO {
+  /** 分页信息 */
   private Pagination pagination;
 
   /** 数据连接名称 */

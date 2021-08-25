@@ -6,13 +6,14 @@ import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 /**
  * @author zys
@@ -56,12 +57,14 @@ public class DsDirectoryVO {
   /** 部署地 */
   private String deployPlace;
 
+  /** 创建时间 */
   @ExcelIgnore
   @ExcelProperty("创建时间")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtCreate;
 
+  /** 修改时间 */
   @ExcelIgnore
   @ExcelProperty("修改时间")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
