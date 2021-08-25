@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/data/source")
+@RequestMapping("/datasource")
 public class DsDataSourceController {
   private final DsDataSourceService dsDataSourceService;
 
@@ -32,8 +32,8 @@ public class DsDataSourceController {
   /**
    * 数据源连接——统一查询接口
    *
-   * @param dsDataSourceParamsVO
-   * @return DefaultCommonResult
+   * @param dsDataSourceParamsVO 数据源参数
+   * @return DefaultCommonResult<PageResultVO<DsDatasourceVO>> 分页查询数据源信息
    */
   @PostMapping("/query")
   public DefaultCommonResult<PageResultVO<DsDatasourceVO>> getDsDataSource(
@@ -46,8 +46,8 @@ public class DsDataSourceController {
   /**
    * 数据源连接——新增接口
    *
-   * @param dsDatasourceVO
-   * @return
+   * @param dsDatasourceVO 数据源信息
+   * @return DefaultCommonResult
    */
   @PostMapping
   public DefaultCommonResult addDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
@@ -58,8 +58,8 @@ public class DsDataSourceController {
   /**
    * 数据源连接——删除接口
    *
-   * @param id
-   * @return
+   * @param id 数据源id
+   * @return DefaultCommonResult
    */
   @DeleteMapping("/{id}")
   public DefaultCommonResult deleteDsDataSource(@PathVariable("id") Integer id) {
@@ -70,8 +70,8 @@ public class DsDataSourceController {
   /**
    * 数据源连接——修改接口
    *
-   * @param dsDatasourceVO
-   * @return
+   * @param dsDatasourceVO 查询条件
+   * @return DefaultCommonResult 成功
    */
   @PutMapping
   public DefaultCommonResult updateDsDataSource(@RequestBody DsDatasourceVO dsDatasourceVO) {
@@ -82,7 +82,7 @@ public class DsDataSourceController {
   /**
    * 数据源连接——获取数据源类型
    *
-   * @return
+   * @return DefaultCommonResult<List<String>> 数据源类型
    */
   @GetMapping("/type")
   public DefaultCommonResult<List<String>> getDataType() {
@@ -92,8 +92,8 @@ public class DsDataSourceController {
   /**
    * 数据源连接——根据数据库类型获取数据源连接信息
    *
-   * @param type
-   * @return DefaultCommonResult<List<DsDatasourceVO>>
+   * @param type 数据连接类型
+   * @return DefaultCommonResult<List<DsDatasourceVO>> 数据源信息
    */
   @GetMapping("/database/{type}")
   public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByType(
@@ -105,10 +105,10 @@ public class DsDataSourceController {
   /**
    * 数据源连接——根据数据源名称获取数据源连接信息
    *
-   * @param dataSourceName
-   * @return
+   * @param dataSourceName 数据源名称
+   * @return DefaultCommonResult<List<DsDatasource>> 数据源信息
    */
-  @GetMapping("/getdatasource/bydsname/{dataSourceName}")
+  @GetMapping("/name/{dataSourceName}")
   public DefaultCommonResult<List<DsDatasource>> getDataSourceByDsname(
       @PathVariable("dataSourceName") String dataSourceName) {
     return DefaultCommonResult.success(
@@ -118,10 +118,10 @@ public class DsDataSourceController {
   /**
    * 数据源连接——测试连接
    *
-   * @param dsDatasourceVO
-   * @return
+   * @param dsDatasourceVO 数据信息
+   * @return DefaultCommonResult<Boolean>  true:连接成功，false:连接失败
    */
-  @PostMapping("/connect")
+  @PostMapping("/connecting")
   public DefaultCommonResult<Boolean> dataSourceConnect(
       @RequestBody DsDatasourceVO dsDatasourceVO) {
     return DefaultCommonResult.success(
@@ -131,9 +131,9 @@ public class DsDataSourceController {
   /**
    * 查询所有数据源连接类型
    *
-   * @return
+   * @return DefaultCommonResult<List<String>> 所有数据源列席
    */
-  @GetMapping("/connect/type/all")
+  @GetMapping("/type/all")
   public DefaultCommonResult<List<String>> getAllConnType() {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDataSourceService.dsDataSourceService());
@@ -142,10 +142,10 @@ public class DsDataSourceController {
   /**
    * 数据源连接——获取入参类型
    *
-   * @param type
-   * @return
+   * @param type 数据库类型
+   * @return DefaultCommonResult<Object> 返回入参信息
    */
-  @GetMapping("/param/{type}")
+  @GetMapping("/in/params/{type}")
   public DefaultCommonResult<Object> getParamsByType(@PathVariable("type") String type) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, DsDataSouurceConnectUtil.getParamsByType(type));
