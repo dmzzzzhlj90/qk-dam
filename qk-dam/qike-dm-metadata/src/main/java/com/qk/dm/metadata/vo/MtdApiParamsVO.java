@@ -4,6 +4,7 @@ public class MtdApiParamsVO {
   private String typeName;
   private String dbName;
   private String tableName;
+  private String server;
 
   public String getTypeName() {
     return typeName;
@@ -27,5 +28,13 @@ public class MtdApiParamsVO {
 
   public void setTableName(String tableName) {
     this.tableName = tableName;
+  }
+
+  public String getServer() {
+    return server;
+  }
+
+  public void setServer(String server) {
+    this.server = server;
   }
 }
