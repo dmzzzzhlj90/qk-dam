@@ -109,7 +109,7 @@ public class DsDataSourceController {
    * @return DefaultCommonResult<List<DsDatasource>> 数据源信息
    */
   @GetMapping("/name/{dataSourceName}")
-  public DefaultCommonResult<List<DsDatasource>> getDataSourceByDsname(
+  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByDsname(
       @PathVariable("dataSourceName") String dataSourceName) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDataSourceService.getDataSourceByDsname(dataSourceName));

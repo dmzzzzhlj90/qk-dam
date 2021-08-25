@@ -24,6 +24,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.*;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,9 +88,9 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   private void setCodeTableValues(DsDatasource dsd, DsDatasourceVO dsDatasourceVO) {
-    //    if (StringUtils.isNotBlank(dsd.getDataSourceValues())) {
-    //      dsDatasourceVO.setBaseDataSourceTypeInfo((Object) dsd.getDataSourceValues());
-    //    }
+    if (StringUtils.isNotBlank(dsd.getDataSourceValues())) {
+      dsDatasourceVO.setDsConnectBasicInfo(getConnectInfo(dsd.getLinkType(), dsd));
+    }
   }
 
   /**
@@ -241,11 +242,13 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   @Override
-  public List<DsDatasource> getDataSourceByDsname(String dataSourceName) {
+  public List<DsDatasourceVO> getDataSourceByDsname(String dataSourceName) {
     List<DsDatasource> datasourceList =
         dsDatasourceRepository.getDataSourceByDsname(dataSourceName);
     if (CollectionUtils.isNotEmpty(datasourceList)) {
-      return datasourceList;
+      return datasourceList.stream()
+              .map(DSDatasourceMapper.INSTANCE::useDsDatasourceVO)
+              .collect(Collectors.toList());
     } else {
       throw new BizException("根据数据源名称获取数据源连接信息为空");
     }

@@ -4,6 +4,7 @@ import com.qk.dam.jpa.base.BaseRepository;
 import com.qk.dm.datasource.entity.DsDatasource;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface DsDatasourceRepository extends BaseRepository<DsDatasource, Integer> {
 

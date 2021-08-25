@@ -1,5 +1,6 @@
 package com.qk.dm.datasource.service;
 
+import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.PageResultVO;
@@ -23,15 +24,13 @@ public interface DsDataSourceService {
 
   Boolean dataSourceConnect(DsDatasourceVO dsDatasourceVO);
 
-  List<DsDatasourceVO> getDataSourceByType(String type);
-
   List<String> getDataType();
 
   List<String> dsDataSourceService();
 
-  List<DsDatasource> getDataSourceByType(String linkType);
+  List<DsDatasourceVO> getDataSourceByType(String linkType);
 
-  List<DsDatasource> getDataSourceByDsname(String dataSourceName);
+  List<DsDatasourceVO> getDataSourceByDsname(String dataSourceName);
 
 
 }

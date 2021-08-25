@@ -1,11 +1,7 @@
 package com.qk.dm.datasource.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-<<<<<<< HEAD
-import com.qk.dm.datasource.datasourinfo.BaseDataSourceTypeInfo;
-=======
 import com.qk.dm.datasource.connect.DSConnectBasicInfo;
->>>>>>> 924c3726a7d40d2748c3bbdbf9f084e08075e558
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -57,8 +53,6 @@ public class DsDatasourceVO {
   private Integer status;
 
   /** 修改时间 */
-  @ExcelIgnore
-  @ExcelProperty("修改时间")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtModified;
