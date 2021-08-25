@@ -59,10 +59,10 @@ public class MtdApiServiceImpl implements MtdApiService {
         qualifiedName = qualifiedName + dbName;
       }
       if (StringUtils.isNotBlank(tableName)) {
-        qualifiedName = qualifiedName + "." +tableName;
+        qualifiedName = qualifiedName + "." + tableName;
       }
       if (StringUtils.isNotBlank(server)) {
-        qualifiedName = qualifiedName+ "@" + server;
+        qualifiedName = qualifiedName + "@" + server;
       }
       map.put("qualifiedName", qualifiedName);
       uniqAttributesList.add(map);
@@ -102,23 +102,22 @@ public class MtdApiServiceImpl implements MtdApiService {
     try {
       AtlasEntity.AtlasEntitiesWithExtInfo result =
           atlasClientV2.getEntitiesByAttribute(typeName, uniqAttributesList);
-        Map<String, Object> tables = result.getEntities().get(0).getRelationshipAttributes();
-        List<AtlasEntity> atlasEntityList = new ArrayList<>(result.getReferredEntities().values());
-        List<MtdAttributesVO> tableAttrs =
-            atlasEntityList.stream()
-                .map(
-                    e -> {
-                      Map<String, Object> att = e.getAttributes();
-                      return GsonUtil.fromMap(att, MtdAttributesVO.class);
-                    })
-                .collect(Collectors.toList());
-        mtdApiVO = GsonUtil.fromMap(tables, MtdApiVO.class);
-        mtdApiVO.setColumns(tableAttrs);
+      Map<String, Object> tables = result.getEntities().get(0).getRelationshipAttributes();
+      List<AtlasEntity> atlasEntityList = new ArrayList<>(result.getReferredEntities().values());
+      List<MtdAttributesVO> tableAttrs =
+          atlasEntityList.stream()
+              .map(
+                  e -> {
+                    Map<String, Object> att = e.getAttributes();
+                    return GsonUtil.fromMap(att, MtdAttributesVO.class);
+                  })
+              .collect(Collectors.toList());
+      mtdApiVO = GsonUtil.fromMap(tables, MtdApiVO.class);
+      mtdApiVO.setColumns(tableAttrs);
 
     } catch (AtlasServiceException e) {
       e.printStackTrace();
     }
     return mtdApiVO;
   }
-
 }
