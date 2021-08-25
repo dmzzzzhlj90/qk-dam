@@ -19,12 +19,12 @@ public interface MtdApiService {
   List<MtdAtlasEntityTypeVO> getAllEntityType();
 
   /**
-   * 获取元数据信息
-   *
+   * 获取元数据详情
    * @param typeName
    * @param dbName
    * @param tableName
+   * @param server
    * @return
    */
-  MtdApiVO mtdDetail(String typeName, String dbName, String tableName);
+  MtdApiVO mtdDetail(String typeName, String dbName, String tableName,String server);
 }
