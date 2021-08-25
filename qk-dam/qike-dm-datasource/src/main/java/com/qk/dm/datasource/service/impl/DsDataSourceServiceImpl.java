@@ -6,8 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.enums.ConnTypeEnum;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dm.datasource.datasourinfo.BaseDataSourceTypeInfo;
-import com.qk.dm.datasource.datasourinfo.MysqlInfo;
+import com.qk.dm.datasource.connect.*;
 import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.entity.QDsDatasource;
 import com.qk.dm.datasource.mapstruct.mapper.DSDatasourceMapper;
@@ -15,22 +14,21 @@ import com.qk.dm.datasource.repositories.DsDatasourceRepository;
 import com.qk.dm.datasource.service.DsDataSourceService;
 import com.qk.dm.datasource.service.DsDirService;
 import com.qk.dm.datasource.util.DsDataSouurceConnectUtil;
+import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.PageResultVO;
-import com.qk.dm.datasource.vo.params.DsDataSourceParamsVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.*;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import java.util.*;
 
 /**
  * 数据源连接实现接口
@@ -89,9 +87,9 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   private void setCodeTableValues(DsDatasource dsd, DsDatasourceVO dsDatasourceVO) {
-//    if (StringUtils.isNotBlank(dsd.getDataSourceValues())) {
-//      dsDatasourceVO.setBaseDataSourceTypeInfo((Object) dsd.getDataSourceValues());
-//    }
+    //    if (StringUtils.isNotBlank(dsd.getDataSourceValues())) {
+    //      dsDatasourceVO.setBaseDataSourceTypeInfo((Object) dsd.getDataSourceValues());
+    //    }
   }
 
   /**
@@ -105,7 +103,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     setDataSourceValues(dsDatasource, dsDatasourceVO);
     dsDatasource.setGmtCreate(new Date());
     // 将传入的数据源连接信息转换赋值
-    dsDatasource.setDataSourceValues(dsDatasourceVO.getBaseDataSourceTypeInfo().toString());
+    dsDatasource.setDataSourceValues(dsDatasourceVO.getDsConnectBasicInfo().toString());
     BooleanExpression predicate = qDsDatasource.dataSourceName.eq(dsDatasource.getDataSourceName());
     boolean exists = dsDatasourceRepository.exists(predicate);
     if (exists) {
@@ -120,7 +118,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   private void setDataSourceValues(DsDatasource dsDatasource, DsDatasourceVO dsDatasourceVO) {
-    Object baseDataSourceTypeInfo = dsDatasourceVO.getBaseDataSourceTypeInfo();
+    Object baseDataSourceTypeInfo = dsDatasourceVO.getDsConnectBasicInfo();
     if (baseDataSourceTypeInfo != null) {
       dsDatasource.setDataSourceValues(GsonUtil.toJsonString(baseDataSourceTypeInfo));
     }
@@ -148,7 +146,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
    * @param dsDatasourceVO
    */
   @Override
-  public void updateDsDataSourece(DsDatasourceVO dsDatasourceVO) {
+  public void updateDsDataSource(DsDatasourceVO dsDatasourceVO) {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
     setDataSourceValues(dsDatasource, dsDatasourceVO);
     dsDatasource.setGmtModified(new Date());
@@ -188,7 +186,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
    * @return
    */
   @Override
-  public Boolean dsDataSoureceConnect(DsDatasourceVO dsDatasourceVO) {
+  public Boolean dataSourceConnect(DsDatasourceVO dsDatasourceVO) {
     Boolean connect = false;
     if (dsDatasourceVO != null) {
       connect = DsDataSouurceConnectUtil.getDataSourceConnect(dsDatasourceVO);
@@ -199,21 +197,42 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   @Override
-  public List<DsDatasourceVO> getDataSourceByType(String linkType) {
+  public List<DsDatasourceVO> getDataSourceByType(String type) {
     List<DsDatasourceVO> resultDataList = new ArrayList<>();
-    Iterable<DsDatasource> dsDatasourceIterable = dsDatasourceRepository.findAll(qDsDatasource.linkType.eq(linkType));
+    Iterable<DsDatasource> dsDatasourceIterable =
+        dsDatasourceRepository.findAll(qDsDatasource.linkType.eq(type));
     for (DsDatasource dsDatasource : dsDatasourceIterable) {
       DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
-      if (linkType.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
-        String dataSourceValues = dsDatasource.getDataSourceValues();
-        BaseDataSourceTypeInfo mysqlInfo = (BaseDataSourceTypeInfo)GsonUtil.fromJsonString(dataSourceValues, new TypeToken<MysqlInfo>() {
-        }.getType());
-        mysqlInfo.setService("112233");
-        dsDatasourceVO.setBaseDataSourceTypeInfo(mysqlInfo);
-        resultDataList.add(dsDatasourceVO);
-      }
+      DSConnectBasicInfo dsConnectBasicInfo = getConnectInfo(type, dsDatasource);
+      dsDatasourceVO.setDsConnectBasicInfo(dsConnectBasicInfo);
+      resultDataList.add(dsDatasourceVO);
     }
     return resultDataList;
+  }
+
+  private DSConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource) {
+    DSConnectBasicInfo dsConnectBasicInfo = null;
+    if (type.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
+      String dataSourceValues = dsDatasource.getDataSourceValues();
+      dsConnectBasicInfo =
+          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<MysqlInfo>() {}.getType());
+    }
+    if (type.equalsIgnoreCase(ConnTypeEnum.HIVE.getName())) {
+      String dataSourceValues = dsDatasource.getDataSourceValues();
+      dsConnectBasicInfo =
+          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<HiveInfo>() {}.getType());
+    }
+    if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
+      String dataSourceValues = dsDatasource.getDataSourceValues();
+      dsConnectBasicInfo =
+          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
+    }
+    if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
+      String dataSourceValues = dsDatasource.getDataSourceValues();
+      dsConnectBasicInfo =
+          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
+    }
+    return dsConnectBasicInfo;
   }
 
   @Override

@@ -1,4 +1,4 @@
-package com.qk.dm.datasource.vo.params;
+package com.qk.dm.datasource.vo;
 
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;

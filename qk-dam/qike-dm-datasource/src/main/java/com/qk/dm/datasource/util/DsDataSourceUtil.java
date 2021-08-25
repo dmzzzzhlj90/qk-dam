@@ -1,13 +1,12 @@
 package com.qk.dm.datasource.util;
 
-import org.apache.commons.codec.binary.Base64;
-
-import javax.crypto.Cipher;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import javax.crypto.Cipher;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * 数据源连接用户名密码加密解密操作
