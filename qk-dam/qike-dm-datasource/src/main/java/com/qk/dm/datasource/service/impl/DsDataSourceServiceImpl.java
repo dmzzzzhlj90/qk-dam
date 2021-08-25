@@ -77,7 +77,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     list.forEach(
         dsd -> {
           DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsd);
-          setCodeTableValues(dsd, dsDatasourceVO);
+          setConnectBasicInfo(dsd, dsDatasourceVO);
           dsDataSourceVOList.add(dsDatasourceVO);
         });
     return new PageResultVO<>(
@@ -87,7 +87,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
         dsDataSourceVOList);
   }
 
-  private void setCodeTableValues(DsDatasource dsd, DsDatasourceVO dsDatasourceVO) {
+  private void setConnectBasicInfo(DsDatasource dsd, DsDatasourceVO dsDatasourceVO) {
     if (StringUtils.isNotBlank(dsd.getDataSourceValues())) {
       dsDatasourceVO.setConnectBasicInfo(getConnectInfo(dsd.getLinkType(), dsd));
     }
@@ -101,10 +101,9 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   @Override
   public void addDsDataSource(DsDatasourceVO dsDatasourceVO) {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
-    setDataSourceValues(dsDatasource, dsDatasourceVO);
     dsDatasource.setGmtCreate(new Date());
     // 将传入的数据源连接信息转换赋值
-    dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfo().toString());
+    dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
     BooleanExpression predicate = qDsDatasource.dataSourceName.eq(dsDatasource.getDataSourceName());
     boolean exists = dsDatasourceRepository.exists(predicate);
     if (exists) {
@@ -149,8 +148,8 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   @Override
   public void updateDsDataSource(DsDatasourceVO dsDatasourceVO) {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
-    setDataSourceValues(dsDatasource, dsDatasourceVO);
     dsDatasource.setGmtModified(new Date());
+    dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
     Predicate predicate = qDsDatasource.id.eq(dsDatasource.getId());
     boolean exists = dsDatasourceRepository.exists(predicate);
     if (exists) {
@@ -247,8 +246,8 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
         dsDatasourceRepository.getDataSourceByDsname(dataSourceName);
     if (CollectionUtils.isNotEmpty(datasourceList)) {
       return datasourceList.stream()
-              .map(DSDatasourceMapper.INSTANCE::useDsDatasourceVO)
-              .collect(Collectors.toList());
+          .map(DSDatasourceMapper.INSTANCE::useDsDatasourceVO)
+          .collect(Collectors.toList());
     } else {
       throw new BizException("根据数据源名称获取数据源连接信息为空");
     }

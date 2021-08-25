@@ -119,7 +119,7 @@ public class DsDataSourceController {
    * 数据源连接——测试连接
    *
    * @param dsDatasourceVO 数据信息
-   * @return DefaultCommonResult<Boolean>  true:连接成功，false:连接失败
+   * @return DefaultCommonResult<Boolean> true:连接成功，false:连接失败
    */
   @PostMapping("/connecting")
   public DefaultCommonResult<Boolean> dataSourceConnect(
