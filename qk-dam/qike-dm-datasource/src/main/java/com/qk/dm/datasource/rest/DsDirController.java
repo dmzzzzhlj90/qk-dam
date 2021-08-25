@@ -29,8 +29,7 @@ public class DsDirController {
   /**
    * 数据标准分类目录-查询
    *
-   * @param:
-   * @return: DefaultCommonResult
+   * @return DefaultCommonResult<List<DsDirVO>>
    */
   @PostMapping("/query")
   public DefaultCommonResult<List<DsDirVO>> getDsDir() {
@@ -40,8 +39,8 @@ public class DsDirController {
   /**
    * 新增数据标准分类目录
    *
-   * @param: dsdDirVO 数据标准分类目录VO
-   * @return: DefaultCommonResult
+   * @param dsDirVO 数据标准分类目录VO
+   * @return DefaultCommonResult
    */
   @PostMapping("/add")
   public DefaultCommonResult addDsDir(@RequestBody DsDirVO dsDirVO) {
@@ -52,8 +51,8 @@ public class DsDirController {
   /**
    * 标准目录支持根节点关联删除子节点方式
    *
-   * @param: id
-   * @return: DefaultCommonResult
+   * @param id 目录id
+   * @return DefaultCommonResult
    */
   @DeleteMapping("/delete/{id}")
   public DefaultCommonResult deleteDsDir(@PathVariable("id") Integer id) {

@@ -32,7 +32,7 @@ public class DsDirectoryController {
   /**
    * 数据源管理—查询应用系统
    *
-   * @param pagination ：分页信息
+   * @param pagination 分页信息
    * @return DefaultCommonResult
    */
   @PostMapping(value = "/query")
@@ -45,7 +45,7 @@ public class DsDirectoryController {
   /**
    * 数据管理—新增应用系统新
    *
-   * @param dsDirectoryVO :应用系统VO
+   * @param dsDirectoryVO 应用系统VO
    * @return DefaultCommonResult
    */
   @PostMapping(value = "/add")
@@ -57,8 +57,8 @@ public class DsDirectoryController {
   /**
    * 数据源管理—删除应用系统信息
    *
-   * @param: id
-   * @return: DefaultCommonResult
+   * @param id 应用系统id
+   * @return DefaultCommonResult
    */
   @DeleteMapping("/delete/{id}")
   public DefaultCommonResult deleteDsDirectory(@PathVariable("id") Integer id) {
