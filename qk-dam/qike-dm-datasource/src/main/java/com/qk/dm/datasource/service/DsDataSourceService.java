@@ -1,10 +1,11 @@
 package com.qk.dm.datasource.service;
 
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
-import com.qk.dm.datasource.vo.PageResultVO;
+
 import java.util.List;
 import org.springframework.stereotype.Service;
 

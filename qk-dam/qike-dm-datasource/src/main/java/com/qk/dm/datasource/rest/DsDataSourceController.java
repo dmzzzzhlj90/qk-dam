@@ -2,11 +2,12 @@ package com.qk.dm.datasource.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datasource.service.DsDataSourceService;
 import com.qk.dm.datasource.util.DsDataSouurceConnectUtil;
 import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
-import com.qk.dm.datasource.vo.PageResultVO;
+
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

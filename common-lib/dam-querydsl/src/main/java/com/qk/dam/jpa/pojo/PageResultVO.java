@@ -1,6 +1,5 @@
 package com.qk.dam.jpa.pojo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
  * @date 2021/6/8
  * @since 1.0.0
  */
-public class PageResultVO<T> {
+public class PageResultVO<O> {
 
   /** 数据总量 */
   private long total;
@@ -22,11 +21,11 @@ public class PageResultVO<T> {
   private int pageSize;
 
   /** 返回数据data */
-  private List<T> list = new ArrayList();
+  private List<O> list;
 
   public PageResultVO() {}
 
-  public PageResultVO(long total, int pageNum, int pageSize, List<T> list) {
+  public PageResultVO(long total, int pageNum, int pageSize, List<O> list) {
     this.total = total;
     this.pageNum = pageNum;
     this.pageSize = pageSize;
@@ -57,11 +56,11 @@ public class PageResultVO<T> {
     this.pageSize = pageSize;
   }
 
-  public List<T> getList() {
+  public List<O> getList() {
     return list;
   }
 
-  public void setList(List<T> list) {
+  public void setList(List<O> list) {
     this.list = list;
   }
 
