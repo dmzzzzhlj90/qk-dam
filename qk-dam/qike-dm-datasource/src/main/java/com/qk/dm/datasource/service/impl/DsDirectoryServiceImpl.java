@@ -1,6 +1,7 @@
 package com.qk.dm.datasource.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.datasource.entity.DsDir;
 import com.qk.dm.datasource.entity.DsDirectory;
@@ -11,9 +12,12 @@ import com.qk.dm.datasource.repositories.DsDirectoryRepository;
 import com.qk.dm.datasource.service.DsDirectoryService;
 import com.qk.dm.datasource.vo.DsDirectoryVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,15 +35,21 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
   private final QDsDirectory qDsDirectory = QDsDirectory.dsDirectory;
   private final DsDirectoryRepository dsDirectoryRepository;
   private final DsDirRepository dsDirRepository;
+  private final EntityManager entityManager;
+  private JPAQueryFactory jpaQueryFactory;
 
   public DsDirectoryServiceImpl(
-      DsDirectoryRepository dsDirectoryRepository, DsDirRepository dsDirRepository) {
+          DsDirectoryRepository dsDirectoryRepository, DsDirRepository dsDirRepository, EntityManager entityManager) {
     this.dsDirectoryRepository = dsDirectoryRepository;
     this.dsDirRepository = dsDirRepository;
+    this.entityManager = entityManager;
   }
-
+  @PostConstruct
+  public void initFactory() {
+    jpaQueryFactory = new JPAQueryFactory(entityManager);
+  }
   @Override
-  public List<DsDirectoryVO> getSysDirectory(Pagination pagination) {
+  public PageResultVO<DsDirectoryVO> getSysDirectory(Pagination pagination) {
     List<DsDirectoryVO> dsDirectorielist = new ArrayList<>();
     Page<DsDirectory> pageList = dsDirectoryRepository.findAll(pagination.getPageable());
     pageList
@@ -50,7 +60,17 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
                   DsDirectoryMapper.INSTANCE.useDsDirectoryVO(dsDirectory);
               dsDirectorielist.add(dsDirectoryVO);
             });
-    return dsDirectorielist;
+    //获取总数量
+    long count =
+            jpaQueryFactory
+                    .select(qDsDirectory.count())
+                    .from(qDsDirectory)
+                    .fetchOne();
+    return new PageResultVO<>(
+            count,
+            pagination.getPage(),
+            pagination.getSize(),
+            dsDirectorielist);
   }
 
   @Override
