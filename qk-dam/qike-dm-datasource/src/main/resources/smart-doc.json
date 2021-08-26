@@ -1,5 +1,5 @@
 {
-  "serverUrl": "http://172.31.0.44:8781/ds", //服务器地址,非必须。导出postman建议设置成http://{{server}}方便直接在postman直接设置环境变量
+  "serverUrl": "http://172.20.0.13:8781/ds", //服务器地址,非必须。导出postman建议设置成http://{{server}}方便直接在postman直接设置环境变量
   "isStrict": false, //是否开启严格模式
   "allInOne": true,  //是否将文档合并到一个文件中，一般推荐为true
   "outPath": "../../docs/数据连接", //指定文档的输出路径
@@ -20,11 +20,11 @@
   "requestExample":"true",//是否将请求示例展示在文档中，默认true，@since 1.9.0
   "responseExample":"true",//是否将响应示例展示在文档中，默认为true，@since 1.9.0
   "displayActualType":false,//配置true会在注释栏自动显示泛型的真实类型短类名，@since 1.9.6
-  "appKey": "20210825880058253906542592",// torna平台对接appKey,, @since 2.0.9
-  "appToken": "552882c8e8174516a0f533694ae771ef", //torna平台appToken,@since 2.0.9
-  "secret": "py49e%~#y5Hprz77$&%&4w$B0vKFvqw~",//torna平台secret，@since 2.0.9
-  "openUrl": "http://172.31.0.80:7700/api",//torna平台地址，填写自己的私有化部署地址@since 2.0.9
+  "appKey": "20210826880414224336027648",// torna平台对接appKey,, @since 2.0.9
+  "appToken": "432f0a40861e472d8a64555acc9b25a2", //torna平台appToken,@since 2.0.9
+  "secret": "&fyuDW.6DyOfYvlPamfoaq39G^L6V#lt",//torna平台secret，@since 2.0.9
+  "openUrl": "http://172.20.0.24:7700/api",//torna平台地址，填写自己的私有化部署地址@since 2.0.9
   "debugEnvName":"测试环境", //torna环境名称
-  "debugEnvUrl":"http://172.31.0.44:8781/ds",//推送torna配置接口服务地址
+  "debugEnvUrl":"http://172.20.0.13:8781/ds",//推送torna配置接口服务地址
   "tornaDebug":true
 }
