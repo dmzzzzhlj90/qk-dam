@@ -56,11 +56,11 @@ spring:
         - RemoveRequestHeader=Cookie
     nacos:
       discovery:
-        server-addr: 172.31.0.44:8847
+        server-addr: http://172.20.0.13/nacos
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         group: DM-GROUP
       config:
-        server-addr: 172.31.0.44:8847
+        server-addr: http://172.20.0.13/nacos
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         extension-configs:
           - dataId: dm-gateway.yml
