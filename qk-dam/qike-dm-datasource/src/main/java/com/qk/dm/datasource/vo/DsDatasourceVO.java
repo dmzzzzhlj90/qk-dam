@@ -1,14 +1,14 @@
 package com.qk.dm.datasource.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.qk.dam.datasource.entity.ConnectBasicInfo;
-import java.util.Date;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 /**
  * @author zys
@@ -30,12 +30,13 @@ public class DsDatasourceVO {
   /** 所属系统 */
   private String homeSystem;
 
-  /** 数据源连接入参参数 */
-  @NotBlank(message = "数据源连接值")
-  private String connectBasicInfoJson;
 
-  /** 数据源连接返回信息 */
-  private ConnectBasicInfo connectBasicInfo;
+ /* @NotBlank(message = "数据源连接值")
+  private String connectBasicInfoJson;*/
+
+  /** 数据源连接信息 */
+  @NotBlank(message = "数据源连接值")
+  private Object connectBasicInfo;
 
   /** 连接方式 */
   private String linkType;

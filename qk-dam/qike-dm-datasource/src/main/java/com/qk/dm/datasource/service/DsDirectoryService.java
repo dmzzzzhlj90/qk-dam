@@ -2,8 +2,9 @@ package com.qk.dm.datasource.service;
 
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.datasource.vo.DsDirectoryVO;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author zys
@@ -17,4 +18,6 @@ public interface DsDirectoryService {
   void addSysDirectory(DsDirectoryVO dsDirectoryVO);
 
   void deleteDsDirectory(Integer id);
+
+  void updateDsDirectory(DsDirectoryVO dsDirectoryVO);
 }

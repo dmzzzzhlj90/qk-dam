@@ -5,11 +5,12 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.datasource.service.DsDirectoryService;
 import com.qk.dm.datasource.vo.DsDirectoryVO;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 数据源管理__应用系统录入接口
@@ -43,7 +44,7 @@ public class DsDirectoryController {
   }
 
   /**
-   * 数据管理—新增应用系统新
+   * 数据源管理—新增应用系统新
    *
    * @param dsDirectoryVO 应用系统VO
    * @return DefaultCommonResult
@@ -63,6 +64,17 @@ public class DsDirectoryController {
   @DeleteMapping("/delete/{id}")
   public DefaultCommonResult deleteDsDirectory(@PathVariable("id") Integer id) {
     dsDirectoryService.deleteDsDirectory(id);
+    return DefaultCommonResult.success();
+  }
+
+  /**
+   * 数据源管理—修改应用系统信息
+   * @param dsDirectoryVO 应用系统VO
+   * @return DefaultCommonResult 成功
+   */
+  @PutMapping
+  public DefaultCommonResult updateDsDirectory(@RequestBody @Validated DsDirectoryVO dsDirectoryVO){
+    dsDirectoryService.updateDsDirectory(dsDirectoryVO);
     return DefaultCommonResult.success();
   }
 }

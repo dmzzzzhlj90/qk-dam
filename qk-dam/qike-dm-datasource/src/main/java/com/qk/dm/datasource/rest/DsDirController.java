@@ -4,10 +4,11 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datasource.service.DsDirService;
 import com.qk.dm.datasource.vo.DsDirVO;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 数据源管理—数据源连接目录
@@ -37,7 +38,7 @@ public class DsDirController {
   }
 
   /**
-   * 新增数据标准分类目录
+   * 数据标准分类目录-新增
    *
    * @param dsDirVO 数据标准分类目录VO
    * @return DefaultCommonResult
@@ -49,7 +50,7 @@ public class DsDirController {
   }
 
   /**
-   * 标准目录支持根节点关联删除子节点方式
+   * 标准目录支持根节点关联删除子节点方式-删除
    *
    * @param id 目录id
    * @return DefaultCommonResult

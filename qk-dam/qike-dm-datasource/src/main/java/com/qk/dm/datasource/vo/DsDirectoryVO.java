@@ -6,13 +6,14 @@ import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 /**
  * @author zys
@@ -30,33 +31,33 @@ public class DsDirectoryVO {
   /** 主键ID */
   private Integer id;
 
-  /** 应用系统名称 */
+  /** 应用系统名称(返回值显示) */
   @NotBlank(message = "应用系统名称不能为空！")
   private String sysName;
 
-  /** 应用系统名称简称 */
+  /** 应用系统名称简称(返回值显示) */
   @NotBlank(message = "应用系统名称简称不能为空！")
   private String sysShortName;
 
-  /** 区域 */
+  /** 区域(返回值显示) */
   private String area;
 
   /** IT部门 */
   private String itDepartment;
 
-  /** 业务部门 */
+  /** 业务部门 (返回值显示)*/
   private String busiDepartment;
 
   /** 重要性(1-高 2-中 3-低) */
   private Integer importance;
 
-  /** 负责人 */
+  /** 负责人(返回值显示) */
   private String leader;
 
-  /** 部署地 */
+  /** 部署地 (返回值显示)*/
   private String deployPlace;
 
-  /** 创建时间 */
+  /** 创建时间 (返回值显示)*/
   @ExcelIgnore
   @ExcelProperty("创建时间")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -82,7 +83,7 @@ public class DsDirectoryVO {
   /** 多租户标识 */
   private String versionConsumer;
 
-  /** 描述 */
+  /** 描述 (返回值显示)*/
   private String sysDesc;
 
   /** 标签名称组合(ETL,PII)名称用逗号隔开 */

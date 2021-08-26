@@ -181,19 +181,24 @@ public class DsDataSouurceConnectUtil {
 
   public static Object getParamsByType(String type) {
     if (type.equals("db-mysql")) {
-      return new MysqlInfo();
+      MysqlInfo mysqlInfo = new MysqlInfo();
+      mysqlInfo.setDriverInfo("com.mysql.cj.jdbc.Driver");
+      return mysqlInfo;
     }
     if (type.equals("db-oracle")) {
-      return new OracleInfo();
-    }
-    if (type.equals("db-oracle")) {
-      return new OracleInfo();
+      OracleInfo oracleInfo = new OracleInfo();
+      oracleInfo.setDriverInfo("oracle.jdbc.driver.OracleDriver");
+      return oracleInfo;
     }
     if (type.equals("db-hive")) {
-      return new HiveInfo();
+      HiveInfo hiveInfo = new HiveInfo();
+      hiveInfo.setDriverInfo("org.apache.hive.jdbc.HiveDriver");
+      return hiveInfo;
     }
-    if (type.equals("db-sqlserver")) {
-      return new PostgresqlInfo();
+    if (type.equals("db-postgresql")) {
+      PostgresqlInfo postgresqlInfo = new PostgresqlInfo();
+      postgresqlInfo.setDriverInfo("org.postgresql.Driver");
+      return postgresqlInfo;
     } else {
       throw new BizException("没有匹配的数据源参数类型");
     }

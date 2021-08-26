@@ -11,12 +11,13 @@ import com.qk.dm.datasource.repositories.DsDirectoryRepository;
 import com.qk.dm.datasource.service.DsDirectoryService;
 import com.qk.dm.datasource.vo.DsDirectoryVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 /**
  * 数据源管理应用系统录入接口实现
@@ -102,5 +103,22 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
     } else {
       throw new BizException("当前要删除的应用系统,id为:" + id + " 的数据不存在");
     }
+  }
+
+  @Override
+  public void updateDsDirectory(DsDirectoryVO dsDirectoryVO) {
+    // 将vo转成数据库类
+    DsDirectory dsDirectory = DsDirectoryMapper.INSTANCE.useDsDirectory(dsDirectoryVO);
+    // 添加新增时间和修改时间
+    dsDirectory.setGmtModified(new Date());
+    // 根据应用系统名称判断数据库中是否存在，如果存在就抛出异常，否则新增
+    BooleanExpression predicate = qDsDirectory.id.eq(dsDirectoryVO.getId());
+    boolean exists = dsDirectoryRepository.exists(predicate);
+    if (exists) {
+      dsDirectoryRepository.saveAndFlush(dsDirectory);
+    } else {
+      throw new BizException("当前要新增的应用系统,名称为:" + dsDirectory.getSysName() + " 的数据，不存在！！！");
+    }
+
   }
 }
