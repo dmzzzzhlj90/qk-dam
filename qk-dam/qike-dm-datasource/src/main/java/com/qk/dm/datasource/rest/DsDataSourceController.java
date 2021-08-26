@@ -129,17 +129,6 @@ public class DsDataSourceController {
   }
 
   /**
-   * 查询所有数据源连接类型
-   *
-   * @return DefaultCommonResult<List<String>> 所有数据源列席
-   */
-  @GetMapping("/type/all")
-  public DefaultCommonResult<List<String>> getAllConnType() {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.dsDataSourceService());
-  }
-
-  /**
    * 数据源连接——获取入参类型
    *
    * @param type 数据库类型

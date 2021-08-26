@@ -43,7 +43,7 @@ public class MtdApiController {
      * @param mtdApiParams
      * @return DefaultCommonResult<MtdApiVO>
      */
-    @PostMapping("/mtd/detail")
+    @PostMapping("/detail")
     public DefaultCommonResult<MtdApi> mtdDetail(@RequestBody @Validated MtdApiParams mtdApiParams){
         MtdApi mtdApi = mtdApiService.mtdDetail(mtdApiParams.getTypeName(),mtdApiParams.getDbName(),mtdApiParams.getTableName(),mtdApiParams.getServer());
         return DefaultCommonResult.success(ResultCodeEnum.OK,mtdApi);

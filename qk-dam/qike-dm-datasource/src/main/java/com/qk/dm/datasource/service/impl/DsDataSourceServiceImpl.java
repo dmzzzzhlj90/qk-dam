@@ -117,13 +117,6 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     dsDatasourceRepository.save(dsDatasource);
   }
 
-  private void setDataSourceValues(DsDatasource dsDatasource, DsDatasourceVO dsDatasourceVO) {
-    Object baseDataSourceTypeInfo = dsDatasourceVO.getConnectBasicInfo();
-    if (baseDataSourceTypeInfo != null) {
-      dsDatasource.setDataSourceValues(GsonUtil.toJsonString(baseDataSourceTypeInfo));
-    }
-  }
-
   /**
    * 删除数据源连接
    *
@@ -210,34 +203,30 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     return resultDataList;
   }
 
-  private ConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource) {
-    ConnectBasicInfo dsConnectBasicInfo = null;
+  @Override
+  public ConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource) {
+    ConnectBasicInfo connectBasicInfo = null;
     if (type.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
-      dsConnectBasicInfo =
+      connectBasicInfo =
           GsonUtil.fromJsonString(dataSourceValues, new TypeToken<MysqlInfo>() {}.getType());
     }
     if (type.equalsIgnoreCase(ConnTypeEnum.HIVE.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
-      dsConnectBasicInfo =
+      connectBasicInfo =
           GsonUtil.fromJsonString(dataSourceValues, new TypeToken<HiveInfo>() {}.getType());
     }
     if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
-      dsConnectBasicInfo =
+      connectBasicInfo =
           GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
     }
     if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
-      dsConnectBasicInfo =
+      connectBasicInfo =
           GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
     }
-    return dsConnectBasicInfo;
-  }
-
-  @Override
-  public List<String> dsDataSourceService() {
-    return ConnTypeEnum.getConnTypeName();
+    return connectBasicInfo;
   }
 
   @Override

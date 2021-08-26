@@ -1,5 +1,6 @@
 package com.qk.dm.datasource.mapstruct.mapper;
 
+import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 import org.mapstruct.Mapper;
@@ -19,4 +20,6 @@ public interface DSDatasourceMapper {
   DsDatasourceVO useDsDatasourceVO(DsDatasource dsDatasource);
 
   DsDatasource useDsDatasource(DsDatasourceVO dsDatasourceVO);
+
+  ResultDatasourceInfo useResultDatasourceInfo(DsDatasource dsDatasource);
 }

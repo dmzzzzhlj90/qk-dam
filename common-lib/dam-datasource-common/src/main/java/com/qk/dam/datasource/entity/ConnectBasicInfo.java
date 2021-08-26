@@ -1,9 +1,6 @@
 package com.qk.dam.datasource.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 数据源连接信息
@@ -11,9 +8,6 @@ import lombok.NoArgsConstructor;
  * @author wjq
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ConnectBasicInfo {
 
   /** 数据源连接服务地址 */

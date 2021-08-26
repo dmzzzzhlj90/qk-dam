@@ -2,14 +2,18 @@ package com.qk.dm.dataservice.service.imp;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.datasource.entity.ResultDatasourceInfo;
+import com.qk.dam.metedata.entity.MtdApi;
+import com.qk.dam.metedata.entity.MtdApiParams;
+import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiDatasourceConfig;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiDatasourceConfig;
 import com.qk.dm.dataservice.feign.DataSourceFeign;
+import com.qk.dm.dataservice.feign.MetaDataFeign;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiDataSourceConfigMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
@@ -41,7 +45,10 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
   private final DasApiBasicInfoService dasApiBasicInfoService;
   private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
   private final DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository;
+
   private final DataSourceFeign dataSourceFeign;
+  private final MetaDataFeign metaDataFeign;
+
   private final EntityManager entityManager;
   private JPAQueryFactory jpaQueryFactory;
 
@@ -52,14 +59,17 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
 
   @Autowired
   public DasApiDataSourceConfigServiceImpl(
-          DasApiBasicInfoService dasApiBasicInfoService,
-          DasApiBasicInfoRepository dasApiBasicinfoRepository,
-          DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository,
-          DataSourceFeign dataSourceFeign, EntityManager entityManager) {
+      DasApiBasicInfoService dasApiBasicInfoService,
+      DasApiBasicInfoRepository dasApiBasicinfoRepository,
+      DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository,
+      DataSourceFeign dataSourceFeign,
+      MetaDataFeign metaDataFeign,
+      EntityManager entityManager) {
     this.dasApiBasicInfoService = dasApiBasicInfoService;
     this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
     this.dasApiDatasourceConfigRepository = dasApiDatasourceConfigRepository;
     this.dataSourceFeign = dataSourceFeign;
+    this.metaDataFeign = metaDataFeign;
     this.entityManager = entityManager;
   }
 
@@ -218,14 +228,31 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
     return DasConstant.getDSConfigParasSortStyle();
   }
 
+  // ========================数据源服务API调用=====================================
+
   @Override
   public List<String> getAllConnType() {
     return dataSourceFeign.getAllConnType().getData();
   }
 
   @Override
-  public DefaultCommonResult getDataSourceByType(String type) {
-    return dataSourceFeign.getDataSourceByType(type);
+  public List<ResultDatasourceInfo> getResultDataSourceByType(String type) {
+    return dataSourceFeign.getResultDataSourceByType(type).getData();
   }
 
+  @Override
+  public ResultDatasourceInfo getResultDataSourceByConnectName(String connectName) {
+    return dataSourceFeign.getResultDataSourceByConnectName(connectName).getData();
+  }
+
+  // ========================元数据服务API调用=====================================
+  @Override
+  public List<MtdAtlasEntityType> getAllEntityType() {
+    return metaDataFeign.getAllEntityType().getData();
+  }
+
+  @Override
+  public MtdApi mtdDetail(MtdApiParams mtdApiParams) {
+    return metaDataFeign.mtdDetail(mtdApiParams).getData();
+  }
 }
