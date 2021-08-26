@@ -27,7 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.session:spring-session-data-redis'
-    implementation 'org.springframework.security.experimental:spring-security-oauth2-authorization-server'
+    implementation group: 'org.springframework.security.experimental', name: 'spring-security-oauth2-authorization-server', version: '0.1.2'
 }
 dependencyManagement {
     imports {
