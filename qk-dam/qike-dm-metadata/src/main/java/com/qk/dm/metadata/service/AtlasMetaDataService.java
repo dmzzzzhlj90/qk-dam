@@ -1,8 +1,11 @@
 package com.qk.dm.metadata.service;
 
 import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
+import com.qk.dm.metadata.vo.MtdAtlasBaseSearchVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dm.metadata.vo.MtdAtlasParamsVO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,15 +18,19 @@ public interface AtlasMetaDataService {
   /**
    * 查找元数据信息
    *
-   * @param query
-   * @param typeName
-   * @param classification
-   * @param limit
-   * @param offse
+   * @param mtdAtlasParamsVO
+   * @return
+   */
+  List<MtdAtlasBaseVO> searchList(MtdAtlasParamsVO mtdAtlasParamsVO);
+
+  /**
+   * 查找元数据信息-高级条件
+   * @param mtdAtlasBaseSearchVO
+   * @param excludeDeletedEntities
    * @return
    */
   List<MtdAtlasBaseVO> searchList(
-      String query, String typeName, String classification, int limit, int offse);
+      MtdAtlasBaseSearchVO mtdAtlasBaseSearchVO, Boolean excludeDeletedEntities);
 
   /**
    * 获取元数据详情
