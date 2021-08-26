@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/screening")
+//@RequestMapping("/screening")
 public class MtdScreeningController {
 
   private final MtdScreeningService mtdScreeningService;
@@ -29,9 +29,9 @@ public class MtdScreeningController {
   /**
    * 查询筛选条件列表
    *
-   * @return DefaultCommonResult
+   * @return DefaultCommonResult<Map<String, List<String>>>
    */
-  @GetMapping("/list")
+//  @GetMapping("/list")
   public DefaultCommonResult<Map<String, List<String>>> screeningList() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdScreeningService.screeningList());
   }
