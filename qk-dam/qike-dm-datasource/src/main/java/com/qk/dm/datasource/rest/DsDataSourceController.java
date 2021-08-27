@@ -105,16 +105,16 @@ public class DsDataSourceController {
   }
 
   /**
-   * 数据源连接——根据数据源名称获取数据源连接信息
+   * 数据源连接——根据数据源id获取数据源信息
    *
-   * @param dataSourceName 数据源名称
+   * @param id 数据源名称
    * @return DefaultCommonResult<List<DsDatasource>> 数据源信息
    */
-  @GetMapping("/name/{dataSourceName}")
+  @GetMapping("/{id}")
   public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByDsname(
-      @PathVariable("dataSourceName") String dataSourceName) {
+     @PathVariable("id") Integer id) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByDsname(dataSourceName));
+        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByDsname(id));
   }
 
   /**
@@ -130,17 +130,6 @@ public class DsDataSourceController {
         ResultCodeEnum.OK, dsDataSourceService.dataSourceConnect(dsDatasourceVO));
   }
 
-  /**
-   * 数据源连接——获取入参类型
-   *
-   * @param type 数据库类型
-   * @return DefaultCommonResult<Object> 返回入参信息
-   */
-  @GetMapping("/in/params/{type}")
-  public DefaultCommonResult<Object> getParamsByType(@PathVariable("type") String type) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, DsDataSouurceConnectUtil.getParamsByType(type));
-  }
 
   /**
    * 数据源连接——获取所有数据源类型

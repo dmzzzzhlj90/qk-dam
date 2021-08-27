@@ -3,12 +3,14 @@ package com.qk.dm.datasource.util;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.HiveInfo;
 import com.qk.dam.datasource.entity.MysqlInfo;
 import com.qk.dam.datasource.entity.OracleInfo;
 import com.qk.dam.datasource.entity.PostgresqlInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -202,5 +204,32 @@ public class DsDataSouurceConnectUtil {
     } else {
       throw new BizException("没有匹配的数据源参数类型");
     }
+  }
+
+  public static String addDriverinfo(Object baseDataSourceTypeInfo, String type) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    if (StringUtils.isNotBlank(type)){
+      if (type.equals("db-mysql")) {
+        MysqlInfo mysqlInfo = objectMapper.convertValue(baseDataSourceTypeInfo, MysqlInfo.class);
+        mysqlInfo.setDriverInfo("com.mysql.cj.jdbc.Driver");
+        type = GsonUtil.toJsonString(mysqlInfo);
+      }
+      if (type.equals("db-oracle")) {
+        OracleInfo oracleInfo = objectMapper.convertValue(baseDataSourceTypeInfo, OracleInfo.class);
+        oracleInfo.setDriverInfo("oracle.jdbc.driver.OracleDriver");
+        type = GsonUtil.toJsonString(oracleInfo);
+      }
+      if (type.equals("db-hive")) {
+        HiveInfo hiveInfo = objectMapper.convertValue(baseDataSourceTypeInfo, HiveInfo.class);
+        hiveInfo.setDriverInfo("org.apache.hive.jdbc.HiveDriver");
+        type = GsonUtil.toJsonString(hiveInfo);
+      }
+      if (type.equals("db-postgresql")) {
+        PostgresqlInfo postgresqlInfo= objectMapper.convertValue(baseDataSourceTypeInfo, PostgresqlInfo.class);
+        postgresqlInfo.setDriverInfo("org.postgresql.Driver");
+        type = GsonUtil.toJsonString(postgresqlInfo);
+      }
+    }
+    return type;
   }
 }

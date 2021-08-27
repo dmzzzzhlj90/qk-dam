@@ -19,12 +19,12 @@ import java.util.List;
 @Builder
 public class DsDirReturnVO {
     /** 主键ID */
-    private Integer id;
+    private Integer key;
 
     /**
      * 目录名称
      */
-    private String dicName;
+    private String title;
 
     /**
      * 父级id

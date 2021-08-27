@@ -70,6 +70,8 @@ public class DsDirServiceImpl implements DsDirService {
       dsDirList.forEach(
           dsDir -> {
             DsDirReturnVO dsDirReturnVO = DsDirMapper.INSTANCE.useDsDirVO(dsDir);
+            dsDirReturnVO.setKey(dsDir.getId());
+            dsDirReturnVO.setTitle(dsDir.getDicName());
             dsDirVOList.add(dsDirReturnVO);
           });
     } else {
@@ -79,7 +81,7 @@ public class DsDirServiceImpl implements DsDirService {
   }
 
   private List<DsDirReturnVO> buildByRecursive(List<DsDirReturnVO> dsDirVOList) {
-    DsDirReturnVO dsDirReturnVO=DsDirReturnVO.builder().id(0).dicName("全部数据源").build();
+    DsDirReturnVO dsDirReturnVO=DsDirReturnVO.builder().key(0).title("全部数据源").build();
     List<DsDirReturnVO> trees = new ArrayList<>();
     trees.add(findChildren(dsDirReturnVO, dsDirVOList));
     return trees;
@@ -94,7 +96,7 @@ public class DsDirServiceImpl implements DsDirService {
   private DsDirReturnVO findChildren(DsDirReturnVO dsDirReturnVO, List<DsDirReturnVO> dsDirVOList) {
     dsDirReturnVO.setChildren(new ArrayList<>());
     for (DsDirReturnVO DSDTV : dsDirVOList) {
-      if (dsDirReturnVO.getId().equals(DSDTV.getParentId())) {
+      if (dsDirReturnVO.getKey().equals(DSDTV.getParentId())) {
         if (dsDirReturnVO.getChildren() == null) {
           dsDirReturnVO.setChildren(new ArrayList<>());
         }

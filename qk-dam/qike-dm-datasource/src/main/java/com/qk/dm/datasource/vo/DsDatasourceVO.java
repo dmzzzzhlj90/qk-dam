@@ -30,15 +30,12 @@ public class DsDatasourceVO {
   /** 所属系统（返回值显示）*/
   private String homeSystem;
 
-
- /* @NotBlank(message = "数据源连接值")
-  private String connectBasicInfoJson;*/
-
   /** 数据源连接信息（返回值显示） */
   @NotBlank(message = "数据源连接值")
   private Object connectBasicInfo;
 
   /** 连接方式 （返回值显示）*/
+  @NotBlank(message = "连接方式")
   private String linkType;
 
   /** 标签（名称用逗号隔开） */

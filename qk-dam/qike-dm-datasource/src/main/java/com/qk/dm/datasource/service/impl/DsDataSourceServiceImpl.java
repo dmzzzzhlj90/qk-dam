@@ -162,9 +162,12 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   private void setDataSourceValues(DsDatasource dsDatasource, DsDatasourceVO dsDatasourceVO) {
     Object baseDataSourceTypeInfo = dsDatasourceVO.getConnectBasicInfo();
     if (baseDataSourceTypeInfo != null) {
-      dsDatasource.setDataSourceValues(GsonUtil.toJsonString(baseDataSourceTypeInfo));
+      String baseDataInfo = DsDataSouurceConnectUtil.addDriverinfo(baseDataSourceTypeInfo, dsDatasource.getLinkType());
+      dsDatasource.setDataSourceValues(baseDataInfo);
     }
   }
+
+
 
   /**
    * 获取数据源连接类型
@@ -239,17 +242,15 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   @Override
-  public List<DsDatasourceVO> getDataSourceByDsname(String dataSourceName) {
+  public List<DsDatasourceVO> getDataSourceByDsname(Integer id) {
     List<DsDatasourceVO> resultDataList = new ArrayList<>();
-    List<DsDatasource> datasourceList =
-            dsDatasourceRepository.getDataSourceByDsname(dataSourceName);
-    if (CollectionUtils.isNotEmpty(datasourceList)) {
-      for (DsDatasource dsDatasource : datasourceList) {
-        DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
+    Optional<DsDatasource> datasourceList = dsDatasourceRepository.findById(id);
+    if (datasourceList != null) {
+      DsDatasource dsDatasource = datasourceList.get();
+      DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
         ConnectBasicInfo dsConnectBasicInfo = getConnectInfo(dsDatasource.getLinkType(), dsDatasource);
         dsDatasourceVO.setConnectBasicInfo(dsConnectBasicInfo);
         resultDataList.add(dsDatasourceVO);
-      }
       return resultDataList;
     } else {
       throw new BizException("根据数据源名称获取数据源连接信息为空");
