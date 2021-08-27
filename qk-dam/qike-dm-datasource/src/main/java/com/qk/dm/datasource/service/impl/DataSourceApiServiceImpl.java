@@ -45,8 +45,8 @@ public class DataSourceApiServiceImpl implements DataSourceApiService {
     for (DsDatasource dsDatasource : dsDatasourceIterable) {
       ResultDatasourceInfo resultDatasourceInfo =
           DSDatasourceMapper.INSTANCE.useResultDatasourceInfo(dsDatasource);
-      ConnectBasicInfo connectBasicInfo = dsDataSourceService.getConnectInfo(type, dsDatasource);
-      resultDatasourceInfo.setConnectBasicInfo(connectBasicInfo);
+      resultDatasourceInfo.setDbType(dsDatasource.getLinkType());
+      resultDatasourceInfo.setConnectBasicInfoJson(dsDatasource.getDataSourceValues());
       resultDataList.add(resultDatasourceInfo);
     }
     return resultDataList;
@@ -60,9 +60,8 @@ public class DataSourceApiServiceImpl implements DataSourceApiService {
       DsDatasource dsDatasource = dsDatasourceOptional.get();
       ResultDatasourceInfo resultDatasourceInfo =
           DSDatasourceMapper.INSTANCE.useResultDatasourceInfo(dsDatasource);
-      ConnectBasicInfo connectBasicInfo =
-          dsDataSourceService.getConnectInfo(dsDatasource.getLinkType(), dsDatasource);
-      resultDatasourceInfo.setConnectBasicInfo(connectBasicInfo);
+      resultDatasourceInfo.setDbType(dsDatasource.getLinkType());
+      resultDatasourceInfo.setConnectBasicInfoJson(dsDatasource.getDataSourceValues());
       return resultDatasourceInfo;
     }
     return null;

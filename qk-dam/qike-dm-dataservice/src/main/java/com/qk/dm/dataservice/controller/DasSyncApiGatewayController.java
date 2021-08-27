@@ -17,23 +17,34 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/sync/gate_way")
+@RequestMapping("/api/sync/gateWay")
 public class DasSyncApiGatewayController {
-  private final DasSyncApiGatewayService dasSyncApiGatewayService;
+    private final DasSyncApiGatewayService dasSyncApiGatewayService;
 
-  @Autowired
-  public DasSyncApiGatewayController(DasSyncApiGatewayService dasSyncApiGatewayService) {
-    this.dasSyncApiGatewayService = dasSyncApiGatewayService;
-  }
+    @Autowired
+    public DasSyncApiGatewayController(DasSyncApiGatewayService dasSyncApiGatewayService) {
+        this.dasSyncApiGatewayService = dasSyncApiGatewayService;
+    }
 
-  /**
-   * 同步数据服务API至API_SIX
-   *
-   * @return DefaultCommonResult
-   */
-  @PostMapping("/api_six/routes")
-  public DefaultCommonResult syncApiSixRoutes() {
-    dasSyncApiGatewayService.syncApiSixRoutes();
-    return DefaultCommonResult.success();
-  }
+    /**
+     * 同步数据服务注册API至API_SIX
+     *
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/register/apiSix/routes")
+    public DefaultCommonResult syncRegisterApiSixRoutes() {
+        dasSyncApiGatewayService.syncRegisterApiSixRoutes();
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 同步数据服务新建API至API_SIX
+     *
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/create/apiSix/routes")
+    public DefaultCommonResult syncCreateApiSixRoutes() {
+        dasSyncApiGatewayService.syncCreateApiSixRoutes();
+        return DefaultCommonResult.success();
+    }
 }

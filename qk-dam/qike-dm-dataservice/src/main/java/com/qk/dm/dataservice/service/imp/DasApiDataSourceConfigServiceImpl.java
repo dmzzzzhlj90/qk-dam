@@ -2,11 +2,12 @@ package com.qk.dm.dataservice.service.imp;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
+import com.qk.dam.metedata.entity.*;
 import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiDatasourceConfig;
@@ -24,6 +25,7 @@ import com.qk.dm.dataservice.vo.*;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.*;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -228,6 +230,31 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
     return DasConstant.getDSConfigParasSortStyle();
   }
 
+  @Override
+  public List<String> getAllDataBase(String dbType) {
+    String type = dbType.split("-")[1];
+    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult = metaDataFeign.mtdDetail(MtdApiParams.builder().typeName(type + "_db").build());
+    List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
+    return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
+  }
+
+  @Override
+  public List<String> getAllTable(String dbType, String server, String dbName) {
+    String type = dbType.split("-")[1];
+    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult = metaDataFeign.mtdDetail(
+            MtdApiParams.builder().typeName(type + "_db").server(server).dbName(dbName).build());
+    List<MtdTables> mtdTablesList = mtdApiDefaultCommonResult.getData().getTables();
+    return mtdTablesList.stream().map(MtdTables::getDisplayText).collect(Collectors.toList());
+  }
+
+  @Override
+  public List getAllColumn(String dbType, String server, String dbName, String tableName) {
+    String type = dbType.split("-")[1];
+    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult = metaDataFeign.mtdDetail(
+            MtdApiParams.builder().typeName(type + "_table").server(server).dbName(dbName).tableName(tableName).build());
+    return mtdApiDefaultCommonResult.getData().getColumns();
+  }
+
   // ========================数据源服务API调用=====================================
 
   @Override
@@ -242,7 +269,9 @@ public class DasApiDataSourceConfigServiceImpl implements DasApiDataSourceConfig
 
   @Override
   public ResultDatasourceInfo getResultDataSourceByConnectName(String connectName) {
-    return dataSourceFeign.getResultDataSourceByConnectName(connectName).getData();
+    ResultDatasourceInfo resultDatasourceInfo = dataSourceFeign.getResultDataSourceByConnectName(connectName).getData();
+    ConnectBasicInfo connectInfo = ConnectInfoConvertUtils.getConnectInfo(resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
+    return resultDatasourceInfo;
   }
 
   // ========================元数据服务API调用=====================================

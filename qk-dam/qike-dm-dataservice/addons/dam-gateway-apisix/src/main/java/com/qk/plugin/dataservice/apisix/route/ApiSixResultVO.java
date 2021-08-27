@@ -1,5 +1,6 @@
 package com.qk.plugin.dataservice.apisix.route;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.qk.plugin.dataservice.apisix.route.result.Node;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,5 +20,6 @@ public class ApiSixResultVO {
 
   private int count;
   private String action;
+  @JsonIgnore
   private Node node;
 }

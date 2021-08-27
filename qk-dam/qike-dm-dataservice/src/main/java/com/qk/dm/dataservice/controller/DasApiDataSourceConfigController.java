@@ -128,6 +128,47 @@ public class DasApiDataSourceConfigController {
         ResultCodeEnum.OK, dasApiDataSourceConfigService.getDSConfigParasSortStyle());
   }
 
+  /**
+   * 新建API__获取db库信息下拉列表
+   *
+   * @param dbType
+   * @return DefaultCommonResult<List<String>>
+   */
+  @GetMapping("/database/all")
+  public DefaultCommonResult<List<String>> getAllDataBase(@RequestParam("dbType")String dbType) {
+    return DefaultCommonResult.success(
+            ResultCodeEnum.OK, dasApiDataSourceConfigService.getAllDataBase(dbType));
+  }
+
+  /**
+   * 新建API__获取table表信息下拉列表
+   *
+   * @param dbType,server,dbName
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/table/all")
+  public DefaultCommonResult<List<String>> getAllTable(@RequestParam("dbType")String dbType,
+                                                          @RequestParam("server") String server,
+                                                          @RequestParam("dbName") String dbName) {
+    return DefaultCommonResult.success(
+            ResultCodeEnum.OK, dasApiDataSourceConfigService.getAllTable(dbType, server, dbName));
+  }
+
+  /**
+   * 新建API__获取column字段信息下拉列表
+   *
+   * @param dbType,server,dbName
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/column/all")
+  public DefaultCommonResult<List> getAllColumn(@RequestParam("dbType") String dbType,
+                                                       @RequestParam("server") String server,
+                                                       @RequestParam("dbName") String dbName,
+                                                       @RequestParam("tableName") String tableName) {
+    return DefaultCommonResult.success(
+            ResultCodeEnum.OK, dasApiDataSourceConfigService.getAllColumn(dbType, server, dbName,tableName));
+  }
+
   // ========================数据源服务API调用=====================================
 
   /**
@@ -138,7 +179,7 @@ public class DasApiDataSourceConfigController {
   @GetMapping("/datasource/api/type/all")
   public DefaultCommonResult<List<String>> getAllConnType() {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiDataSourceConfigService.getAllConnType());
+            ResultCodeEnum.OK, dasApiDataSourceConfigService.getAllConnType());
   }
 
   /**
@@ -148,9 +189,9 @@ public class DasApiDataSourceConfigController {
    */
   @GetMapping("/datasource/api/database/{type}")
   DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
-      @PathVariable("type") String type) {
+          @PathVariable("type") String type) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiDataSourceConfigService.getResultDataSourceByType(type));
+            ResultCodeEnum.OK, dasApiDataSourceConfigService.getResultDataSourceByType(type));
   }
 
   /**
@@ -160,10 +201,10 @@ public class DasApiDataSourceConfigController {
    */
   @GetMapping("/datasource/api/name/{connectName}")
   public DefaultCommonResult<ResultDatasourceInfo> getResultDataSourceByConnectName(
-      @PathVariable("connectName") String connectName) {
+          @PathVariable("connectName") String connectName) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK,
-        dasApiDataSourceConfigService.getResultDataSourceByConnectName(connectName));
+            ResultCodeEnum.OK,
+            dasApiDataSourceConfigService.getResultDataSourceByConnectName(connectName));
   }
 
   // ========================数据源服务API调用=====================================
@@ -176,7 +217,7 @@ public class DasApiDataSourceConfigController {
   @GetMapping("/mtd/api/all/entity/type")
   public DefaultCommonResult<List<MtdAtlasEntityType>> getAllEntityType() {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiDataSourceConfigService.getAllEntityType());
+            ResultCodeEnum.OK, dasApiDataSourceConfigService.getAllEntityType());
   }
 
   /**
@@ -188,6 +229,7 @@ public class DasApiDataSourceConfigController {
   @PostMapping("/mtd/detail")
   DefaultCommonResult<MtdApi> mtdDetail(@RequestBody @Validated MtdApiParams mtdApiParams) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiDataSourceConfigService.mtdDetail(mtdApiParams));
+            ResultCodeEnum.OK, dasApiDataSourceConfigService.mtdDetail(mtdApiParams));
   }
+
 }

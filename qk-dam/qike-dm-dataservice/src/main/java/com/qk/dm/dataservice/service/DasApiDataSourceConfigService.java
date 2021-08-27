@@ -5,9 +5,10 @@ import com.qk.dam.metedata.entity.MtdApi;
 import com.qk.dam.metedata.entity.MtdApiParams;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.dataservice.vo.DasApiDataSourceConfigVO;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Service;
 
 /**
  * @author wjq
@@ -17,33 +18,42 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiDataSourceConfigService {
 
-  DasApiDataSourceConfigVO getDasDataSourceConfigInfoByApiId(String apiId);
+    DasApiDataSourceConfigVO getDasDataSourceConfigInfoByApiId(String apiId);
 
-  void addDasDataSourceConfig(DasApiDataSourceConfigVO dasDataSourceConfigVO);
+    void addDasDataSourceConfig(DasApiDataSourceConfigVO dasDataSourceConfigVO);
 
-  void updateDasDataSourceConfig(DasApiDataSourceConfigVO dasDataSourceConfigVO);
+    void updateDasDataSourceConfig(DasApiDataSourceConfigVO dasDataSourceConfigVO);
 
-  Map<String, String> getDSConfigRequestParaHeaderInfo();
+    Map<String, String> getDSConfigRequestParaHeaderInfo();
 
-  Map<String, String> getDSConfigResponseParaHeaderInfo();
+    Map<String, String> getDSConfigResponseParaHeaderInfo();
 
-  Map<String, String> getDSConfigOrderParaHeaderInfo();
+    Map<String, String> getDSConfigOrderParaHeaderInfo();
 
-  List<String> getDSConfigParasCompareSymbol();
+    List<String> getDSConfigParasCompareSymbol();
 
-  Map<String, String> getDSConfigParasSortStyle();
+    Map<String, String> getDSConfigParasSortStyle();
 
-  // ========================数据源服务API调用=====================================
+    List<String> getAllDataBase(String dbType);
 
-  List<String> getAllConnType();
+    List<String> getAllTable(String dbType, String server, String dbName);
 
-  List<ResultDatasourceInfo> getResultDataSourceByType(String type);
+    List getAllColumn(String dbType, String server, String dbName, String tableName);
 
-  ResultDatasourceInfo getResultDataSourceByConnectName(String connectName);
+    // ========================数据源服务API调用=====================================
 
-  // ========================元数据服务API调用=====================================
+    List<String> getAllConnType();
 
-  List<MtdAtlasEntityType> getAllEntityType();
+    List<ResultDatasourceInfo> getResultDataSourceByType(String type);
 
-  MtdApi mtdDetail(MtdApiParams mtdApiParams);
+    ResultDatasourceInfo getResultDataSourceByConnectName(String connectName);
+
+    // ========================元数据服务API调用=====================================
+
+    List<MtdAtlasEntityType> getAllEntityType();
+
+    MtdApi mtdDetail(MtdApiParams mtdApiParams);
+
+
+
 }

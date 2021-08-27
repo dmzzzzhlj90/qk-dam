@@ -51,9 +51,11 @@ public class ApiSixRoutesService implements RoutesService {
             HttpMethod.GET,
             httpEntity,
             ApiSixResultVO.class);
-    List<Nodes> nodes = responseEntity.getBody().getNode().getNodes();
-    for (Nodes node : nodes) {
-      result.add(node.getValue().getId());
+    if (null != responseEntity.getBody().getNode()) {
+      List<Nodes> nodes = responseEntity.getBody().getNode().getNodes();
+      for (Nodes node : nodes) {
+        result.add(node.getValue().getId());
+      }
     }
     return result;
   }

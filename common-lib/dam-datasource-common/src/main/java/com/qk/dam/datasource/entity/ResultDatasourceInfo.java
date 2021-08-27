@@ -20,8 +20,8 @@ public class ResultDatasourceInfo {
   /** 所属系统 */
   private String homeSystem;
 
-  /** 数据源连接返回信息 */
-  private ConnectBasicInfo connectBasicInfo;
+  /** 数据源连接返回JSON信息 */
+  private String connectBasicInfoJson;
 
   /** 连接方式 */
   private String dbType;
