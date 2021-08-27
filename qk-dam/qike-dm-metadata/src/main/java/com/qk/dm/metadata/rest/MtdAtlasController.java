@@ -58,15 +58,15 @@ public class MtdAtlasController {
   }
 
   /**
-   * 查询元数据列表-高级
-   * @param mtdAtlasParamsVO
-   * @return
+   * 多条件查询元数据列表
+   * @param mtdAtlasBaseSearchVO
+   * @return DefaultCommonResult<List<MtdAtlasBaseVO>>
    */
   @PostMapping("/list/criteria")
   public DefaultCommonResult<List<MtdAtlasBaseVO>> searchListByCriteria(
-      @RequestBody @Validated MtdAtlasBaseSearchVO mtdAtlasParamsVO) {
+      @RequestBody @Validated MtdAtlasBaseSearchVO mtdAtlasBaseSearchVO) {
     List<MtdAtlasBaseVO> atlasBaseMainDataVOList =
-        atlasMetaDataService.searchList(mtdAtlasParamsVO, true);
+        atlasMetaDataService.searchList(mtdAtlasBaseSearchVO, true);
     return DefaultCommonResult.success(ResultCodeEnum.OK, atlasBaseMainDataVOList);
   }
 

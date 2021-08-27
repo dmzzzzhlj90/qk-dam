@@ -19,12 +19,12 @@ import java.util.List;
 public class MtdAtlasBaseSearchVO{
 
     private String query;
-    @Builder.Default private String typeName = "_ALL_ENTITY_TYPES";
+    @Builder.Default private String typeName = "Asset";
 
     private String classification;
     @Builder.Default
     private int limit = 20;
     @Builder.Default
     private int offse = 0;
-    List<MtdAtlasSearchVO> list;
+    List<MtdAtlasSearchVO> entityFilters;
 }

@@ -55,7 +55,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       AtlasSearchResult atlasSearchResult =
           atlasClientV2.basicSearch(
               mtdAtlasParamsVO.getTypeName(),
-              getFilterCriteria(mtdAtlasParamsVO.getList()),
+              getFilterCriteria(mtdAtlasParamsVO.getEntityFilters()),
               mtdAtlasParamsVO.getClassification(),
               mtdAtlasParamsVO.getQuery(),
               true,

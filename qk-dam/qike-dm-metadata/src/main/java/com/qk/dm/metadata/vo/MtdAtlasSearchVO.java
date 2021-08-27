@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MtdAtlasSearchVO {
     String attributeName;
+    /**
+     * 数组，或者关系
+     */
     String[] attributeValue;
     String operator;
 }
