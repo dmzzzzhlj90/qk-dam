@@ -10,6 +10,7 @@ public class AtlasSearchParameters {
     public static class AttributeName {
         public static final String TYPENAME = "__typeName";
         public static final String NAME = "name";
+        public static final String LABELS = "__labels";
 
     }
 

@@ -24,5 +24,6 @@ public class MtdAtlasBaseSearchVO{
     private int offset = 0;
     private String[] typeNameValue;
     private String[] nameValue;
+    private String[] labelsValue;
 //    List<MtdAtlasSearchVO> entityFilters;
 }
