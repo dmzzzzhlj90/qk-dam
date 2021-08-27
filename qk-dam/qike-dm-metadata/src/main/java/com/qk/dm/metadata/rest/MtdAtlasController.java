@@ -4,10 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
-import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
-import com.qk.dm.metadata.vo.MtdAtlasBaseSearchVO;
-import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
-import com.qk.dm.metadata.vo.MtdAtlasParamsVO;
+import com.qk.dm.metadata.vo.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +19,6 @@ import java.util.Map;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/atlas")
 public class MtdAtlasController {
 
   private final AtlasMetaDataService atlasMetaDataService;
@@ -70,17 +66,44 @@ public class MtdAtlasController {
     return DefaultCommonResult.success(ResultCodeEnum.OK, atlasBaseMainDataVOList);
   }
 
+
+
   /**
-   * 根据guid获取元数据详情
+   * 根据guid获取数据库的元数据信息
    *
    * @param guid 元数据唯一id
-   * @return DefaultCommonResult<AtlasBaseMainDataDetailVO>
+   * @return DefaultCommonResult<MtdAtlasDbDetailVO>
    */
-  @GetMapping("/entity/{guid}")
-  public DefaultCommonResult<MtdAtlasBaseDetailVO> getEntityByGuid(
-      @PathVariable("guid") String guid) {
-    MtdAtlasBaseDetailVO atlasBaseMainDataDetailVO = atlasMetaDataService.getEntityByGuid(guid);
-    return DefaultCommonResult.success(ResultCodeEnum.OK, atlasBaseMainDataDetailVO);
+  @GetMapping("/techno/db/detail/{guid}")
+  public DefaultCommonResult<MtdDbDetailVO> getDbDetailByGuid(
+          @PathVariable("guid") String guid) {
+    MtdDbDetailVO mtdAtlasDbDetailVO = atlasMetaDataService.getDbDetailByGuid(guid);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, mtdAtlasDbDetailVO);
+  }
+  /**
+   * 根据guid获取表的元数据详情
+   *
+   * @param guid 元数据唯一id
+   * @return DefaultCommonResult<MtdAtlasTableDetailVO>
+   */
+  @GetMapping("/techno/table/detail/{guid}")
+  public DefaultCommonResult<MtdTableDetailVO> getTableDetailByGuid(
+          @PathVariable("guid") String guid) {
+    MtdTableDetailVO mtdTableDetailVO = atlasMetaDataService.getTableDetailByGuid(guid);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, mtdTableDetailVO);
+  }
+
+  /**
+   * 根据guid获取列元数据详情
+   *
+   * @param guid 元数据唯一id
+   * @return DefaultCommonResult<MtdColumnVO>
+   */
+  @GetMapping("/techno/column/detail/{guid}")
+  public DefaultCommonResult<MtdColumnVO> getColumnDetailByGuid(
+          @PathVariable("guid") String guid) {
+    MtdColumnVO mtdColumnVO = atlasMetaDataService.getColumnDetailByGuid(guid);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, mtdColumnVO);
   }
 
   /**
@@ -89,7 +112,7 @@ public class MtdAtlasController {
    * @param guids
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/entity/{guids}")
+  @DeleteMapping("/{guids}")
   public DefaultCommonResult deleteEntitiesByGuids(@PathVariable("guids") String guids) {
     atlasMetaDataService.deleteEntitiesByGuids(guids);
     return DefaultCommonResult.success(ResultCodeEnum.OK, null);

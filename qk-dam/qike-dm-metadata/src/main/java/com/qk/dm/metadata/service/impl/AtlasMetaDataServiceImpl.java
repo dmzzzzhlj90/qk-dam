@@ -8,6 +8,7 @@ import com.qk.dm.metadata.properties.AtlasSearchParameters;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.*;
 import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
@@ -171,20 +172,53 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   }
 
   @Override
-  public MtdAtlasBaseDetailVO getEntityByGuid(String guid) {
-    MtdAtlasBaseDetailVO atlasBaseMainDataDetailVO = null;
+  public MtdColumnVO getColumnDetailByGuid(String guid) {
+    MtdColumnVO mtdColumnVO = null;
     try {
       AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
-      atlasBaseMainDataDetailVO = GsonUtil.fromMap(attributes, MtdAtlasBaseDetailVO.class);
-      atlasBaseMainDataDetailVO.setTypeName(detail.getEntity().getTypeName());
-      atlasBaseMainDataDetailVO.setReferredEntities(buildReferredEntities(detail));
-      atlasBaseMainDataDetailVO.setRelationshipAttributes(
-          detail.getEntity().getRelationshipAttributes());
+      mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
+      mtdColumnVO.setTypeName(detail.getEntity().getTypeName());
+      mtdColumnVO.setDataType(Objects.nonNull(attributes.get("data_type"))?attributes.get("data_type").toString():null);
+      mtdColumnVO.setDefaultValue(Objects.nonNull(attributes.get("default_value"))?attributes.get("default_value").toString():null);
+      MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("table")), MtdTableInfoVO.class);
+      mtdColumnVO.setTable(mtdTableInfoVO);
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return atlasBaseMainDataDetailVO;
+    return mtdColumnVO;
+  }
+
+  @Override
+  public MtdDbDetailVO getDbDetailByGuid(String guid) {
+    MtdDbDetailVO mtdAtlasDbDetailVO = null;
+    try {
+      AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
+      Map<String, Object> attributes = detail.getEntity().getAttributes();
+      mtdAtlasDbDetailVO = GsonUtil.fromMap(attributes, MtdDbDetailVO.class);
+      mtdAtlasDbDetailVO.setTypeName(detail.getEntity().getTypeName());
+      mtdAtlasDbDetailVO.setTables(buildReferredEntities(detail));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return mtdAtlasDbDetailVO;
+  }
+
+  @Override
+  public MtdTableDetailVO getTableDetailByGuid(String guid) {
+    MtdTableDetailVO mtdTableDetailVO = null;
+    try {
+      AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
+      Map<String, Object> attributes = detail.getEntity().getAttributes();
+      mtdTableDetailVO = GsonUtil.fromMap(attributes, MtdTableDetailVO.class);
+      MtdDbInfoVO mtdDbInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("db")), MtdDbInfoVO.class);
+      mtdTableDetailVO.setDb(mtdDbInfoVO);
+      mtdTableDetailVO.setTypeName(detail.getEntity().getTypeName());
+      mtdTableDetailVO.setColumns(buildReferredEntities(detail));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return mtdTableDetailVO;
   }
 
   /**
@@ -201,6 +235,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
             e -> {
               Map<String, Object> attr = e.getAttributes();
               attr.put("guid", e.getGuid());
+              attr.put("typeName",e.getTypeName());
               return attr;
             })
         .collect(Collectors.toList());
@@ -233,5 +268,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public static void main(String[] args) throws AtlasServiceException {
+    AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid("85b14f4d-d09b-4c98-9004-069b7c21a289", true, false);
+    System.out.println(GsonUtil.toJsonString(detail));
   }
 }
