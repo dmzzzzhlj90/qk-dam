@@ -71,7 +71,7 @@ public class DasApiBasicInfoController {
   }
 
   /**
-   * //TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 删除API基础信息
+   * //TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 删除API基础信息,关联删除新建&&注册API
    *
    * @param id
    * @return DefaultCommonResult

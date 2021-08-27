@@ -27,6 +27,17 @@ public class DasSyncApiGatewayController {
     }
 
     /**
+     * 同步数据服务所有的API至API_SIX
+     *
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/apiSix/routes/all")
+    public DefaultCommonResult syncApiSixRoutesAll() {
+        dasSyncApiGatewayService.syncApiSixRoutesAll();
+        return DefaultCommonResult.success();
+    }
+
+    /**
      * 同步数据服务注册API至API_SIX
      *
      * @return DefaultCommonResult
@@ -48,14 +59,4 @@ public class DasSyncApiGatewayController {
         return DefaultCommonResult.success();
     }
 
-    /**
-     * 同步数据服务所有的API至API_SIX
-     *
-     * @return DefaultCommonResult
-     */
-    @PostMapping("/apiSix/routes/all")
-    public DefaultCommonResult syncApiSixRoutesAll() {
-        dasSyncApiGatewayService.syncApiSixRoutesAll();
-        return DefaultCommonResult.success();
-    }
 }
