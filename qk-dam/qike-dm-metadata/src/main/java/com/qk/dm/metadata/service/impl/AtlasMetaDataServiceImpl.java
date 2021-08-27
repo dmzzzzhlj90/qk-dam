@@ -62,7 +62,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               mtdAtlasParamsVO.getQuery(),
               true,
               mtdAtlasParamsVO.getLimit(),
-              mtdAtlasParamsVO.getOffse());
+              mtdAtlasParamsVO.getOffset());
       List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
       atlasBaseMainDataVOList = buildMataDataList(entities);
     } catch (Exception e) {

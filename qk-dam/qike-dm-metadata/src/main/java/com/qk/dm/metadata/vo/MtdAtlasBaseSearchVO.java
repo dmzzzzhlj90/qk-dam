@@ -21,7 +21,7 @@ public class MtdAtlasBaseSearchVO{
     @Builder.Default
     private int limit = 20;
     @Builder.Default
-    private int offse = 0;
+    private int offset = 0;
     private String[] typeNameValue;
     private String[] nameValue;
 //    List<MtdAtlasSearchVO> entityFilters;
