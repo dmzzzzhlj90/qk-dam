@@ -57,52 +57,69 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       AtlasSearchResult atlasSearchResult =
           atlasClientV2.basicSearch(
               mtdAtlasParamsVO.getTypeName(),
-              getFilterCriteria(
-                  mtdAtlasParamsVO.getTypeNameValue(), mtdAtlasParamsVO.getNameValue()),
+              getFilterCriteria(mtdAtlasParamsVO),
               mtdAtlasParamsVO.getClassification(),
               mtdAtlasParamsVO.getQuery(),
               true,
               mtdAtlasParamsVO.getLimit(),
               mtdAtlasParamsVO.getOffse());
       List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
-      atlasBaseMainDataVOList = buildMataDataList(entities);
+      if (entities != null) {
+        atlasBaseMainDataVOList = buildMataDataList(entities);
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
     return atlasBaseMainDataVOList;
   }
 
-  public SearchParameters.FilterCriteria getFilterCriteria(
-      String[] typeNameValue, String[] nameValue) {
+  public SearchParameters.FilterCriteria getFilterCriteria(MtdAtlasBaseSearchVO mtdAtlasParamsVO) {
     SearchParameters.FilterCriteria entityFilters = new SearchParameters.FilterCriteria();
     entityFilters.setCondition(SearchParameters.FilterCriteria.Condition.AND);
     List<SearchParameters.FilterCriteria> filterCriteriaList = new ArrayList<>();
-    if (typeNameValue != null && typeNameValue.length > 0) {
+    if (mtdAtlasParamsVO.getTypeNameValue() != null
+        && mtdAtlasParamsVO.getTypeNameValue().length > 0) {
       filterCriteriaList.add(
           getFilterCriteria(
-              typeNameValue,
+              mtdAtlasParamsVO.getTypeNameValue(),
               AtlasSearchParameters.AttributeName.TYPENAME,
-              AtlasSearchParameters.Operator.EQ));
+              AtlasSearchParameters.Operator.EQ,
+              SearchParameters.FilterCriteria.Condition.OR));
     }
-    if (nameValue != null && nameValue.length > 0) {
+    if (mtdAtlasParamsVO.getNameValue() != null && mtdAtlasParamsVO.getNameValue().length > 0) {
       filterCriteriaList.add(
           getFilterCriteria(
-              nameValue,
+              mtdAtlasParamsVO.getNameValue(),
               AtlasSearchParameters.AttributeName.NAME,
-              AtlasSearchParameters.Operator.CONTAINS));
+              AtlasSearchParameters.Operator.CONTAINS,
+              SearchParameters.FilterCriteria.Condition.AND));
+    }
+    if (mtdAtlasParamsVO.getLabelsValue() != null && mtdAtlasParamsVO.getLabelsValue().length > 0) {
+      SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
+      entity.setCondition(SearchParameters.FilterCriteria.Condition.AND);
+      entity.setCriterion(Arrays.asList(getFilterCriteria(
+              mtdAtlasParamsVO.getLabelsValue(),
+              AtlasSearchParameters.AttributeName.LABELS,
+              AtlasSearchParameters.Operator.CONTAINS,
+              SearchParameters.FilterCriteria.Condition.OR)));
+      filterCriteriaList.add(entity);
     }
     entityFilters.setCriterion(filterCriteriaList);
     return entityFilters;
   }
 
   public SearchParameters.FilterCriteria getFilterCriteria(
-      String[] typeNameValue, String attributeName, String operator) {
+      String[] typeNameValue,
+      String attributeName,
+      String operator,
+      SearchParameters.FilterCriteria.Condition condition) {
     SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
-    entity.setCondition(
-        typeNameValue.length > 1
-            ? SearchParameters.FilterCriteria.Condition.OR
-            : SearchParameters.FilterCriteria.Condition.AND);
     entity.setCriterion(getFilterCriteriaList(typeNameValue, attributeName, operator));
+    entity.setCondition(condition);
+    //    entity.setCondition(
+    //        typeNameValue.length > 1
+    //            ? SearchParameters.FilterCriteria.Condition.OR
+    //            : SearchParameters.FilterCriteria.Condition.AND);
     return entity;
   }
 
