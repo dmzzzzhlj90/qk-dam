@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dm.metadata.properties.AtlasSearchParameters;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.*;
 import org.apache.atlas.AtlasClientV2;
@@ -55,7 +56,8 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       AtlasSearchResult atlasSearchResult =
           atlasClientV2.basicSearch(
               mtdAtlasParamsVO.getTypeName(),
-              getFilterCriteria(mtdAtlasParamsVO.getEntityFilters()),
+              getFilterCriteria(
+                  mtdAtlasParamsVO.getTypeNameValue(), mtdAtlasParamsVO.getNameValue()),
               mtdAtlasParamsVO.getClassification(),
               mtdAtlasParamsVO.getQuery(),
               true,
@@ -67,6 +69,55 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       e.printStackTrace();
     }
     return atlasBaseMainDataVOList;
+  }
+
+  public SearchParameters.FilterCriteria getFilterCriteria(
+      String[] typeNameValue, String[] nameValue) {
+    SearchParameters.FilterCriteria entityFilters = new SearchParameters.FilterCriteria();
+    entityFilters.setCondition(SearchParameters.FilterCriteria.Condition.AND);
+    List<SearchParameters.FilterCriteria> filterCriteriaList = new ArrayList<>();
+    if (typeNameValue != null && typeNameValue.length > 0) {
+      filterCriteriaList.add(
+          getFilterCriteria(
+              typeNameValue,
+              AtlasSearchParameters.AttributeName.TYPENAME,
+              AtlasSearchParameters.Operator.EQ));
+    }
+    if (nameValue != null && nameValue.length > 0) {
+      filterCriteriaList.add(
+          getFilterCriteria(
+              nameValue,
+              AtlasSearchParameters.AttributeName.NAME,
+              AtlasSearchParameters.Operator.CONTAINS));
+    }
+    entityFilters.setCriterion(filterCriteriaList);
+    return entityFilters;
+  }
+
+  public SearchParameters.FilterCriteria getFilterCriteria(
+      String[] typeNameValue, String attributeName, String operator) {
+    SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
+    entity.setCondition(
+        typeNameValue.length > 1
+            ? SearchParameters.FilterCriteria.Condition.OR
+            : SearchParameters.FilterCriteria.Condition.AND);
+    entity.setCriterion(getFilterCriteriaList(typeNameValue, attributeName, operator));
+    return entity;
+  }
+
+  public List<SearchParameters.FilterCriteria> getFilterCriteriaList(
+      String[] attributeValue, String attributeName, String operator) {
+    List<SearchParameters.FilterCriteria> entityList = new ArrayList<>();
+    Arrays.stream(attributeValue)
+        .forEach(
+            i -> {
+              SearchParameters.FilterCriteria criteria = new SearchParameters.FilterCriteria();
+              criteria.setAttributeValue(i);
+              criteria.setAttributeName(attributeName);
+              criteria.setOperator(SearchParameters.Operator.fromString(operator));
+              entityList.add(criteria);
+            });
+    return entityList;
   }
 
   public SearchParameters.FilterCriteria getFilterCriteria(List<MtdAtlasSearchVO> list) {
@@ -91,21 +142,6 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                 })
             .collect(Collectors.toList()));
     return entityFilters;
-  }
-
-  public List<SearchParameters.FilterCriteria> getFilterCriteriaList(
-      String[] attributeValue, String attributeName, String operator) {
-    List<SearchParameters.FilterCriteria> entityList = new ArrayList<>();
-    Arrays.stream(attributeValue)
-        .forEach(
-            i -> {
-              SearchParameters.FilterCriteria criteria = new SearchParameters.FilterCriteria();
-              criteria.setAttributeValue(i);
-              criteria.setAttributeName(attributeName);
-              criteria.setOperator(SearchParameters.Operator.fromString(operator));
-              entityList.add(criteria);
-            });
-    return entityList;
   }
 
   /**
