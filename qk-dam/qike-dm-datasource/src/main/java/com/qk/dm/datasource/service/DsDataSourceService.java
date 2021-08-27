@@ -5,9 +5,9 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 /**
  * @author zys
@@ -33,4 +33,5 @@ public interface DsDataSourceService {
   List<DsDatasourceVO> getDataSourceByDsname(String dataSourceName);
 
   ConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource);
+
 }

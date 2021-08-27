@@ -6,11 +6,13 @@ import com.qk.dm.datasource.entity.QDsDir;
 import com.qk.dm.datasource.mapstruct.mapper.DsDirMapper;
 import com.qk.dm.datasource.repositories.DsDirRepository;
 import com.qk.dm.datasource.service.DsDirService;
+import com.qk.dm.datasource.vo.DsDirReturnVO;
 import com.qk.dm.datasource.vo.DsDirVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import java.util.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+import java.util.*;
 
 /**
  * 数据连接目录接口实现
@@ -61,19 +63,45 @@ public class DsDirServiceImpl implements DsDirService {
   }
 
   @Override
-  public List<DsDirVO> getDsDir() {
+  public List<DsDirReturnVO> getDsDir() {
     List<DsDir> dsDirList = dsDirRepository.findAll();
-    List<DsDirVO> dsDirVOList = new ArrayList<>();
+    List<DsDirReturnVO> dsDirVOList = new ArrayList<>();
     if (!CollectionUtils.isEmpty(dsDirList)) {
       dsDirList.forEach(
           dsDir -> {
-            DsDirVO dsDirVO = DsDirMapper.INSTANCE.useDsDirVO(dsDir);
-            dsDirVOList.add(dsDirVO);
+            DsDirReturnVO dsDirReturnVO = DsDirMapper.INSTANCE.useDsDirVO(dsDir);
+            dsDirVOList.add(dsDirReturnVO);
           });
     } else {
       throw new BizException("获取目录为空");
     }
-    return dsDirVOList;
+    return buildByRecursive(dsDirVOList);
+  }
+
+  private List<DsDirReturnVO> buildByRecursive(List<DsDirReturnVO> dsDirVOList) {
+    DsDirReturnVO dsDirReturnVO=DsDirReturnVO.builder().id(0).dicName("全部数据源").build();
+    List<DsDirReturnVO> trees = new ArrayList<>();
+    trees.add(findChildren(dsDirReturnVO, dsDirVOList));
+    return trees;
+  }
+
+  /**
+   * 递归查找子类
+   * @param dsDirReturnVO
+   * @param dsDirVOList
+   * @return
+   */
+  private DsDirReturnVO findChildren(DsDirReturnVO dsDirReturnVO, List<DsDirReturnVO> dsDirVOList) {
+    dsDirReturnVO.setChildren(new ArrayList<>());
+    for (DsDirReturnVO DSDTV : dsDirVOList) {
+      if (dsDirReturnVO.getId().equals(DSDTV.getParentId())) {
+        if (dsDirReturnVO.getChildren() == null) {
+          dsDirReturnVO.setChildren(new ArrayList<>());
+        }
+        dsDirReturnVO.getChildren().add(findChildren(DSDTV, dsDirVOList));
+      }
+    }
+    return dsDirReturnVO;
   }
 
   /**

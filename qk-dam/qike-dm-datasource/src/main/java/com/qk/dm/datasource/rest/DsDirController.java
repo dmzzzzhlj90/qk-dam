@@ -3,6 +3,7 @@ package com.qk.dm.datasource.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datasource.service.DsDirService;
+import com.qk.dm.datasource.vo.DsDirReturnVO;
 import com.qk.dm.datasource.vo.DsDirVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ public class DsDirController {
   public DsDirController(DsDirService dsDirService) {
     this.dsDirService = dsDirService;
   }
+
   /**
    * 数据标准分类目录-查询
-   *
-   * @return DefaultCommonResult<List<DsDirVO>>
+   * @return DefaultCommonResult<List<DsDirReturnVO>>
    */
   @PostMapping("/query")
-  public DefaultCommonResult<List<DsDirVO>> getDsDir() {
+  public DefaultCommonResult<List<DsDirReturnVO>> getDsDir() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsDirService.getDsDir());
   }
 
