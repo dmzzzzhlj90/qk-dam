@@ -5,6 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
+import com.qk.dm.metadata.vo.MtdAtlasBaseSearchVO;
 import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dm.metadata.vo.MtdAtlasParamsVO;
 import org.springframework.validation.annotation.Validated;
@@ -30,46 +31,67 @@ public class MtdAtlasController {
     this.atlasMetaDataService = atlasMetaDataService;
   }
 
-    /**
-     * 获取所有的基础类型
-     * @return DefaultCommonResult<Map<String, List<MtdAtlasEntityTypeVO>>>
-     */
-    @GetMapping("/allEntityType")
-    public DefaultCommonResult<Map<String, List<MtdAtlasEntityType>>> getAllEntityType(){
-        Map<String, List<MtdAtlasEntityType>> mtdAtlasEntityTypeVOList = atlasMetaDataService.getAllEntityType();
-        return DefaultCommonResult.success(ResultCodeEnum.OK,mtdAtlasEntityTypeVOList);
-    }
+  /**
+   * 获取所有的基础类型
+   *
+   * @return DefaultCommonResult<Map<String, List<MtdAtlasEntityTypeVO>>>
+   */
+  @GetMapping("/allEntityType")
+  public DefaultCommonResult<Map<String, List<MtdAtlasEntityType>>> getAllEntityType() {
+    Map<String, List<MtdAtlasEntityType>> mtdAtlasEntityTypeVOList =
+        atlasMetaDataService.getAllEntityType();
+    return DefaultCommonResult.success(ResultCodeEnum.OK, mtdAtlasEntityTypeVOList);
+  }
 
-    /**
-     * 查询元数据列表
-     * @param mtdAtlasParamsVO
-     * @return DefaultCommonResult<List<MtdAtlasBaseVO>>
-     */
-    @PostMapping("/list")
-    public DefaultCommonResult<List<MtdAtlasBaseVO>> searchList(@RequestBody @Validated MtdAtlasParamsVO mtdAtlasParamsVO){
-        List<MtdAtlasBaseVO> atlasBaseMainDataVOList = atlasMetaDataService.searchList(mtdAtlasParamsVO.getQuery(), mtdAtlasParamsVO.getTypeName(), mtdAtlasParamsVO.getClassification(), mtdAtlasParamsVO.getLimit(), mtdAtlasParamsVO.getOffse());
-        return DefaultCommonResult.success(ResultCodeEnum.OK,atlasBaseMainDataVOList);
-    }
+  /**
+   * 查询元数据列表
+   *
+   * @param mtdAtlasParamsVO
+   * @return DefaultCommonResult<List<MtdAtlasBaseVO>>
+   */
+  @PostMapping("/list")
+  public DefaultCommonResult<List<MtdAtlasBaseVO>> searchList(
+      @RequestBody @Validated MtdAtlasParamsVO mtdAtlasParamsVO) {
+    List<MtdAtlasBaseVO> atlasBaseMainDataVOList =
+        atlasMetaDataService.searchList(mtdAtlasParamsVO);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, atlasBaseMainDataVOList);
+  }
 
-    /**
-     * 根据guid获取元数据详情
-     * @param guid 元数据唯一id
-     * @return DefaultCommonResult<AtlasBaseMainDataDetailVO>
-     */
-    @GetMapping("/entity/{guid}")
-    public DefaultCommonResult<MtdAtlasBaseDetailVO> getEntityByGuid(@PathVariable("guid") String guid){
-        MtdAtlasBaseDetailVO atlasBaseMainDataDetailVO = atlasMetaDataService.getEntityByGuid(guid);
-        return DefaultCommonResult.success(ResultCodeEnum.OK,atlasBaseMainDataDetailVO);
-    }
+  /**
+   * 多条件查询元数据列表
+   * @param mtdAtlasBaseSearchVO
+   * @return DefaultCommonResult<List<MtdAtlasBaseVO>>
+   */
+  @PostMapping("/list/criteria")
+  public DefaultCommonResult<List<MtdAtlasBaseVO>> searchListByCriteria(
+      @RequestBody @Validated MtdAtlasBaseSearchVO mtdAtlasBaseSearchVO) {
+    List<MtdAtlasBaseVO> atlasBaseMainDataVOList =
+        atlasMetaDataService.searchList(mtdAtlasBaseSearchVO, true);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, atlasBaseMainDataVOList);
+  }
 
-    /**
-     * 根据guid删除元数据,多个guid 使用英文逗号分割
-     * @param guids
-     * @return DefaultCommonResult
-     */
-    @DeleteMapping("/entity/{guids}")
-    public DefaultCommonResult deleteEntitiesByGuids(@PathVariable("guids") String guids){
-        atlasMetaDataService.deleteEntitiesByGuids(guids);
-        return DefaultCommonResult.success(ResultCodeEnum.OK,null);
-    }
+  /**
+   * 根据guid获取元数据详情
+   *
+   * @param guid 元数据唯一id
+   * @return DefaultCommonResult<AtlasBaseMainDataDetailVO>
+   */
+  @GetMapping("/entity/{guid}")
+  public DefaultCommonResult<MtdAtlasBaseDetailVO> getEntityByGuid(
+      @PathVariable("guid") String guid) {
+    MtdAtlasBaseDetailVO atlasBaseMainDataDetailVO = atlasMetaDataService.getEntityByGuid(guid);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, atlasBaseMainDataDetailVO);
+  }
+
+  /**
+   * 根据guid删除元数据,多个guid 使用英文逗号分割
+   *
+   * @param guids
+   * @return DefaultCommonResult
+   */
+  @DeleteMapping("/entity/{guids}")
+  public DefaultCommonResult deleteEntitiesByGuids(@PathVariable("guids") String guids) {
+    atlasMetaDataService.deleteEntitiesByGuids(guids);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, null);
+  }
 }

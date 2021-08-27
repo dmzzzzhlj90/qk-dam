@@ -3,19 +3,20 @@ package com.qk.dm.metadata.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
-import com.qk.dm.metadata.service.AtlasMetaDataService;
-import com.qk.dm.metadata.vo.MtdAtlasBaseDetailVO;
-import com.qk.dm.metadata.vo.MtdAtlasBaseVO;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.qk.dm.metadata.service.AtlasMetaDataService;
+import com.qk.dm.metadata.vo.*;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
+import org.apache.atlas.model.discovery.SearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wangzp
@@ -27,19 +28,84 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
   @Override
-  public List<MtdAtlasBaseVO> searchList(
-      String query, String typeName, String classification, int limit, int offse) {
+  public List<MtdAtlasBaseVO> searchList(MtdAtlasParamsVO mtdAtlasParamsVO) {
     List<MtdAtlasBaseVO> atlasBaseMainDataVOList = null;
     try {
       AtlasSearchResult atlasSearchResult =
-          atlasClientV2.basicSearch(typeName, classification, query, true, limit, offse);
-
+          atlasClientV2.basicSearch(
+              mtdAtlasParamsVO.getTypeName(),
+              mtdAtlasParamsVO.getClassification(),
+              mtdAtlasParamsVO.getQuery(),
+              true,
+              mtdAtlasParamsVO.getLimit(),
+              mtdAtlasParamsVO.getOffse());
       List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
       atlasBaseMainDataVOList = buildMataDataList(entities);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return atlasBaseMainDataVOList;
+  }
+
+  @Override
+  public List<MtdAtlasBaseVO> searchList(
+      MtdAtlasBaseSearchVO mtdAtlasParamsVO, Boolean excludeDeletedEntities) {
+    List<MtdAtlasBaseVO> atlasBaseMainDataVOList = null;
+    try {
+      AtlasSearchResult atlasSearchResult =
+          atlasClientV2.basicSearch(
+              mtdAtlasParamsVO.getTypeName(),
+              getFilterCriteria(mtdAtlasParamsVO.getEntityFilters()),
+              mtdAtlasParamsVO.getClassification(),
+              mtdAtlasParamsVO.getQuery(),
+              true,
+              mtdAtlasParamsVO.getLimit(),
+              mtdAtlasParamsVO.getOffse());
+      List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
+      atlasBaseMainDataVOList = buildMataDataList(entities);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return atlasBaseMainDataVOList;
+  }
+
+  public SearchParameters.FilterCriteria getFilterCriteria(List<MtdAtlasSearchVO> list) {
+    SearchParameters.FilterCriteria entityFilters = new SearchParameters.FilterCriteria();
+    entityFilters.setCondition(SearchParameters.FilterCriteria.Condition.AND);
+    entityFilters.setCriterion(
+        list.stream()
+            .map(
+                mtdAtlasSearchVO -> {
+                  SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
+                  String[] attributeValue = mtdAtlasSearchVO.getAttributeValue();
+                  entity.setCondition(
+                      attributeValue.length > 1
+                          ? SearchParameters.FilterCriteria.Condition.OR
+                          : SearchParameters.FilterCriteria.Condition.AND);
+                  entity.setCriterion(
+                      getFilterCriteriaList(
+                          attributeValue,
+                          mtdAtlasSearchVO.getAttributeName(),
+                          mtdAtlasSearchVO.getOperator()));
+                  return entity;
+                })
+            .collect(Collectors.toList()));
+    return entityFilters;
+  }
+
+  public List<SearchParameters.FilterCriteria> getFilterCriteriaList(
+      String[] attributeValue, String attributeName, String operator) {
+    List<SearchParameters.FilterCriteria> entityList = new ArrayList<>();
+    Arrays.stream(attributeValue)
+        .forEach(
+            i -> {
+              SearchParameters.FilterCriteria criteria = new SearchParameters.FilterCriteria();
+              criteria.setAttributeValue(i);
+              criteria.setAttributeName(attributeName);
+              criteria.setOperator(SearchParameters.Operator.fromString(operator));
+              entityList.add(criteria);
+            });
+    return entityList;
   }
 
   /**
@@ -57,7 +123,8 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                   .guid(e.getGuid())
                   .typeName(e.getTypeName())
                   .displayName(e.getDisplayText())
-                  .qualifiedName(e.getAttributes().get("qualifiedName").toString().replace(".","/"))
+                  .qualifiedName(
+                      e.getAttributes().get("qualifiedName").toString().replace(".", "/"))
                   .createTime(
                       Objects.isNull(e.getAttributes().get("createTime"))
                           ? null
