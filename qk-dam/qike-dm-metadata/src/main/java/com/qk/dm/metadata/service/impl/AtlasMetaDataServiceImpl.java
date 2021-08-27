@@ -4,9 +4,11 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dm.metadata.properties.AtlasSearchParameters;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.*;
 import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
@@ -55,18 +57,85 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       AtlasSearchResult atlasSearchResult =
           atlasClientV2.basicSearch(
               mtdAtlasParamsVO.getTypeName(),
-              getFilterCriteria(mtdAtlasParamsVO.getEntityFilters()),
+              getFilterCriteria(mtdAtlasParamsVO),
               mtdAtlasParamsVO.getClassification(),
               mtdAtlasParamsVO.getQuery(),
               true,
               mtdAtlasParamsVO.getLimit(),
               mtdAtlasParamsVO.getOffse());
       List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
-      atlasBaseMainDataVOList = buildMataDataList(entities);
+      if (entities != null) {
+        atlasBaseMainDataVOList = buildMataDataList(entities);
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
     return atlasBaseMainDataVOList;
+  }
+
+  public SearchParameters.FilterCriteria getFilterCriteria(MtdAtlasBaseSearchVO mtdAtlasParamsVO) {
+    SearchParameters.FilterCriteria entityFilters = new SearchParameters.FilterCriteria();
+    entityFilters.setCondition(SearchParameters.FilterCriteria.Condition.AND);
+    List<SearchParameters.FilterCriteria> filterCriteriaList = new ArrayList<>();
+    if (mtdAtlasParamsVO.getTypeNameValue() != null
+        && mtdAtlasParamsVO.getTypeNameValue().length > 0) {
+      filterCriteriaList.add(
+          getFilterCriteria(
+              mtdAtlasParamsVO.getTypeNameValue(),
+              AtlasSearchParameters.AttributeName.TYPENAME,
+              AtlasSearchParameters.Operator.EQ,
+              SearchParameters.FilterCriteria.Condition.OR));
+    }
+    if (mtdAtlasParamsVO.getNameValue() != null && mtdAtlasParamsVO.getNameValue().length > 0) {
+      filterCriteriaList.add(
+          getFilterCriteria(
+              mtdAtlasParamsVO.getNameValue(),
+              AtlasSearchParameters.AttributeName.NAME,
+              AtlasSearchParameters.Operator.CONTAINS,
+              SearchParameters.FilterCriteria.Condition.AND));
+    }
+    if (mtdAtlasParamsVO.getLabelsValue() != null && mtdAtlasParamsVO.getLabelsValue().length > 0) {
+      SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
+      entity.setCondition(SearchParameters.FilterCriteria.Condition.AND);
+      entity.setCriterion(Arrays.asList(getFilterCriteria(
+              mtdAtlasParamsVO.getLabelsValue(),
+              AtlasSearchParameters.AttributeName.LABELS,
+              AtlasSearchParameters.Operator.CONTAINS,
+              SearchParameters.FilterCriteria.Condition.OR)));
+      filterCriteriaList.add(entity);
+    }
+    entityFilters.setCriterion(filterCriteriaList);
+    return entityFilters;
+  }
+
+  public SearchParameters.FilterCriteria getFilterCriteria(
+      String[] typeNameValue,
+      String attributeName,
+      String operator,
+      SearchParameters.FilterCriteria.Condition condition) {
+    SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
+    entity.setCriterion(getFilterCriteriaList(typeNameValue, attributeName, operator));
+    entity.setCondition(condition);
+    //    entity.setCondition(
+    //        typeNameValue.length > 1
+    //            ? SearchParameters.FilterCriteria.Condition.OR
+    //            : SearchParameters.FilterCriteria.Condition.AND);
+    return entity;
+  }
+
+  public List<SearchParameters.FilterCriteria> getFilterCriteriaList(
+      String[] attributeValue, String attributeName, String operator) {
+    List<SearchParameters.FilterCriteria> entityList = new ArrayList<>();
+    Arrays.stream(attributeValue)
+        .forEach(
+            i -> {
+              SearchParameters.FilterCriteria criteria = new SearchParameters.FilterCriteria();
+              criteria.setAttributeValue(i);
+              criteria.setAttributeName(attributeName);
+              criteria.setOperator(SearchParameters.Operator.fromString(operator));
+              entityList.add(criteria);
+            });
+    return entityList;
   }
 
   public SearchParameters.FilterCriteria getFilterCriteria(List<MtdAtlasSearchVO> list) {
@@ -91,21 +160,6 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
                 })
             .collect(Collectors.toList()));
     return entityFilters;
-  }
-
-  public List<SearchParameters.FilterCriteria> getFilterCriteriaList(
-      String[] attributeValue, String attributeName, String operator) {
-    List<SearchParameters.FilterCriteria> entityList = new ArrayList<>();
-    Arrays.stream(attributeValue)
-        .forEach(
-            i -> {
-              SearchParameters.FilterCriteria criteria = new SearchParameters.FilterCriteria();
-              criteria.setAttributeValue(i);
-              criteria.setAttributeName(attributeName);
-              criteria.setOperator(SearchParameters.Operator.fromString(operator));
-              entityList.add(criteria);
-            });
-    return entityList;
   }
 
   /**
@@ -135,20 +189,53 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   }
 
   @Override
-  public MtdAtlasBaseDetailVO getEntityByGuid(String guid) {
-    MtdAtlasBaseDetailVO atlasBaseMainDataDetailVO = null;
+  public MtdColumnVO getColumnDetailByGuid(String guid) {
+    MtdColumnVO mtdColumnVO = null;
     try {
       AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
-      atlasBaseMainDataDetailVO = GsonUtil.fromMap(attributes, MtdAtlasBaseDetailVO.class);
-      atlasBaseMainDataDetailVO.setTypeName(detail.getEntity().getTypeName());
-      atlasBaseMainDataDetailVO.setReferredEntities(buildReferredEntities(detail));
-      atlasBaseMainDataDetailVO.setRelationshipAttributes(
-          detail.getEntity().getRelationshipAttributes());
+      mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
+      mtdColumnVO.setTypeName(detail.getEntity().getTypeName());
+      mtdColumnVO.setDataType(Objects.nonNull(attributes.get("data_type"))?attributes.get("data_type").toString():null);
+      mtdColumnVO.setDefaultValue(Objects.nonNull(attributes.get("default_value"))?attributes.get("default_value").toString():null);
+      MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("table")), MtdTableInfoVO.class);
+      mtdColumnVO.setTable(mtdTableInfoVO);
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return atlasBaseMainDataDetailVO;
+    return mtdColumnVO;
+  }
+
+  @Override
+  public MtdDbDetailVO getDbDetailByGuid(String guid) {
+    MtdDbDetailVO mtdAtlasDbDetailVO = null;
+    try {
+      AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
+      Map<String, Object> attributes = detail.getEntity().getAttributes();
+      mtdAtlasDbDetailVO = GsonUtil.fromMap(attributes, MtdDbDetailVO.class);
+      mtdAtlasDbDetailVO.setTypeName(detail.getEntity().getTypeName());
+      mtdAtlasDbDetailVO.setTables(buildReferredEntities(detail));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return mtdAtlasDbDetailVO;
+  }
+
+  @Override
+  public MtdTableDetailVO getTableDetailByGuid(String guid) {
+    MtdTableDetailVO mtdTableDetailVO = null;
+    try {
+      AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
+      Map<String, Object> attributes = detail.getEntity().getAttributes();
+      mtdTableDetailVO = GsonUtil.fromMap(attributes, MtdTableDetailVO.class);
+      MtdDbInfoVO mtdDbInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("db")), MtdDbInfoVO.class);
+      mtdTableDetailVO.setDb(mtdDbInfoVO);
+      mtdTableDetailVO.setTypeName(detail.getEntity().getTypeName());
+      mtdTableDetailVO.setColumns(buildReferredEntities(detail));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return mtdTableDetailVO;
   }
 
   /**
@@ -165,6 +252,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
             e -> {
               Map<String, Object> attr = e.getAttributes();
               attr.put("guid", e.getGuid());
+              attr.put("typeName",e.getTypeName());
               return attr;
             })
         .collect(Collectors.toList());
@@ -197,5 +285,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public static void main(String[] args) throws AtlasServiceException {
+    AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid("85b14f4d-d09b-4c98-9004-069b7c21a289", true, false);
+    System.out.println(GsonUtil.toJsonString(detail));
   }
 }
