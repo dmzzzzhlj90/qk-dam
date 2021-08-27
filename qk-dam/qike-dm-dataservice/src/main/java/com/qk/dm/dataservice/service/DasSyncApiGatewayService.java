@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasSyncApiGatewayService {
 
+    void syncApiSixRoutesAll();
+
     void syncApiSixRoutesRegister();
 
     void syncApiSixRoutesCreate();
-
-    void syncApiSixRoutesAll();
 
 }
