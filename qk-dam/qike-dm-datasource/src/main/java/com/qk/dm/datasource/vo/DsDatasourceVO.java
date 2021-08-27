@@ -23,22 +23,22 @@ public class DsDatasourceVO {
   /** 数据源主键id */
   private Integer id;
 
-  /** 系统名称 */
+  /** 系统名称（返回值显示） */
   @NotBlank(message = "连接名称不为空")
   private String dataSourceName;
 
-  /** 所属系统 */
+  /** 所属系统（返回值显示）*/
   private String homeSystem;
 
 
  /* @NotBlank(message = "数据源连接值")
   private String connectBasicInfoJson;*/
 
-  /** 数据源连接信息 */
+  /** 数据源连接信息（返回值显示） */
   @NotBlank(message = "数据源连接值")
   private Object connectBasicInfo;
 
-  /** 连接方式 */
+  /** 连接方式 （返回值显示）*/
   private String linkType;
 
   /** 标签（名称用逗号隔开） */
@@ -56,12 +56,17 @@ public class DsDatasourceVO {
   /** 状态设置状态值 */
   private Integer status;
 
-  /** 修改时间 */
+  /** 修改时间 （返回值显示）*/
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtModified;
 
-  /** 创建人id（后期设置为必填） */
+  /** 创建时间（返回值显示） */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date gmtCreate;
+
+  /** 创建人id（后期设置为必填）（返回值显示） */
   private String createUserid;
 
   /** 修改人id */
