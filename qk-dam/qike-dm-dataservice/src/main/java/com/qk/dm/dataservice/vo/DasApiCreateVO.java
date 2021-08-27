@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DasApiDataSourceConfigVO {
+public class DasApiCreateVO {
   /** API基础信息 */
   private DasApiBasicInfoVO dasApiBasicInfoVO;
 
@@ -36,13 +36,13 @@ public class DasApiDataSourceConfigVO {
   private String tableName;
 
   /** 请求参数 */
-  private List<DasApiDataSourceConfRequestParasVO> apiDataSourceConfRequestParasVOS;
+  private List<DasApiCreateRequestParasVO> apiCreateRequestParasVOS;
 
   /** 响应参数 */
-  private List<DasApiDataSourceConfResponseParasVO> apiDataSourceConfResponseParasVOS;
+  private List<DasApiCreateResponseParasVO> apiCreateResponseParasVOS;
 
   /** 排序参数 */
-  private List<DasApiDataSourceConfOrderParasVO> apiDataSourceConfOrderParasVOS;
+  private List<DasApiCreateOrderParasVO> apiCreateOrderParasVOS;
 
   /** 取数脚本 */
   private String sqlPara;

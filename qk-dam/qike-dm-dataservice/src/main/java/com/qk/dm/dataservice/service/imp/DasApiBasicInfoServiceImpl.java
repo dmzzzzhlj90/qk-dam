@@ -10,7 +10,7 @@ import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
-import com.qk.dm.dataservice.repositories.DasApiDatasourceConfigRepository;
+import com.qk.dm.dataservice.repositories.DasApiCreateRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiDirService;
@@ -42,22 +42,21 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   private final DasApiDirService dasApiDirService;
   private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
   private final DasApiRegisterRepository dasApiRegisterRepository;
-  private final DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository;
+  private final DasApiCreateRepository dasApiCreateRepository;
 
   private final EntityManager entityManager;
   private JPAQueryFactory jpaQueryFactory;
 
   @Autowired
   public DasApiBasicInfoServiceImpl(
-      DasApiDirService dasApiDirService,
-      DasApiBasicInfoRepository dasApiBasicinfoRepository,
-      DasApiRegisterRepository dasApiRegisterRepository,
-      DasApiDatasourceConfigRepository dasApiDatasourceConfigRepository,
-      EntityManager entityManager) {
+          DasApiDirService dasApiDirService,
+          DasApiBasicInfoRepository dasApiBasicinfoRepository,
+          DasApiRegisterRepository dasApiRegisterRepository,
+          DasApiCreateRepository dasApiCreateRepository, EntityManager entityManager) {
     this.dasApiDirService = dasApiDirService;
     this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
     this.dasApiRegisterRepository = dasApiRegisterRepository;
-    this.dasApiDatasourceConfigRepository = dasApiDatasourceConfigRepository;
+    this.dasApiCreateRepository = dasApiCreateRepository;
     this.entityManager = entityManager;
   }
 
@@ -144,7 +143,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         dasApiRegisterRepository.deleteByApiId(apiId);
       }
       if (DasConstant.DM_SOURCE_API_CODE.equalsIgnoreCase(apiType)) {
-        dasApiDatasourceConfigRepository.deleteByApiId(apiId);
+        dasApiCreateRepository.deleteByApiId(apiId);
       }
       // 删除AIP基本信息
       dasApiBasicinfoRepository.deleteById(delId);
