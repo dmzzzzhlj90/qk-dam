@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DasApiDataSourceConfRequestParasVO {
+public class DasApiCreateRequestParasVO {
 
   /** 绑定参数 */
   private String paraName;

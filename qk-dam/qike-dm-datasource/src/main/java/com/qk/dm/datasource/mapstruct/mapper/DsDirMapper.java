@@ -1,6 +1,7 @@
 package com.qk.dm.datasource.mapstruct.mapper;
 
 import com.qk.dm.datasource.entity.DsDir;
+import com.qk.dm.datasource.vo.DsDirReturnVO;
 import com.qk.dm.datasource.vo.DsDirVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,7 +17,7 @@ import org.mapstruct.factory.Mappers;
 public interface DsDirMapper {
   DsDirMapper INSTANCE = Mappers.getMapper(DsDirMapper.class);
 
-  DsDirVO useDsDirVO(DsDir dsDir);
+  DsDirReturnVO useDsDirVO(DsDir dsDir);
 
   DsDir useDsDir(DsDirVO dsDirVO);
 }

@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DasApiDataSourceConfOrderParasVO {
+public class DasApiCreateResponseParasVO {
 
-  /** 序号 */
-  private Integer orderNum;
-
-  /** 参数名称 */
+  /** 参数名 */
   private String paraName;
 
-  /** 字段名称 */
-  private String columnName;
+  /** 绑定字段 */
+  private String mappingName;
 
-  /** 是否可选 */
-  private boolean optional;
+  /** 参数类型 */
+  private String paraType;
 
-  /** 排序方式 */
-  private String orderType;
+  /** 示例值 */
+  private String exampleValue;
+
+  /** 默认值 */
+  private String defaultValue;
 
   /** 描述 */
   private String description;

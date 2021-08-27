@@ -42,7 +42,7 @@ public class DasApiRegisterController {
   }
 
   /**
-   * 新增API基础信息
+   * 新增注册API
    *
    * @param dasApiRegisterVO
    * @return DefaultCommonResult
@@ -55,7 +55,7 @@ public class DasApiRegisterController {
   }
 
   /**
-   * 编辑API基础信息
+   * 编辑注册API
    *
    * @param dasApiRegisterVO
    * @return DefaultCommonResult

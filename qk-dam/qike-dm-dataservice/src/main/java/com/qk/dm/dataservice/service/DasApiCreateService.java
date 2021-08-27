@@ -4,7 +4,7 @@ import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metedata.entity.MtdApi;
 import com.qk.dam.metedata.entity.MtdApiParams;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-import com.qk.dm.dataservice.vo.DasApiDataSourceConfigVO;
+import com.qk.dm.dataservice.vo.DasApiCreateVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,23 +16,23 @@ import java.util.Map;
  * @since 1.0.0
  */
 @Service
-public interface DasApiDataSourceConfigService {
+public interface DasApiCreateService {
 
-    DasApiDataSourceConfigVO getDasDataSourceConfigInfoByApiId(String apiId);
+    DasApiCreateVO getDasApiCreateInfoByApiId(String apiId);
 
-    void addDasDataSourceConfig(DasApiDataSourceConfigVO dasDataSourceConfigVO);
+    void addDasApiCreate(DasApiCreateVO dasApiCreateVO);
 
-    void updateDasDataSourceConfig(DasApiDataSourceConfigVO dasDataSourceConfigVO);
+    void updateDasApiCreate(DasApiCreateVO dasApiCreateVO);
 
-    Map<String, String> getDSConfigRequestParaHeaderInfo();
+    Map<String, String> getDasApiCreateRequestParaHeaderInfo();
 
-    Map<String, String> getDSConfigResponseParaHeaderInfo();
+    Map<String, String> getDasApiCreateResponseParaHeaderInfo();
 
-    Map<String, String> getDSConfigOrderParaHeaderInfo();
+    Map<String, String> getDasApiCreateOrderParaHeaderInfo();
 
-    List<String> getDSConfigParasCompareSymbol();
+    List<String> getDasApiCreateParasCompareSymbol();
 
-    Map<String, String> getDSConfigParasSortStyle();
+    Map<String, String> getDasApiCreateParasSortStyle();
 
     List<String> getAllDataBase(String dbType);
 
@@ -54,6 +54,7 @@ public interface DasApiDataSourceConfigService {
 
     MtdApi mtdDetail(MtdApiParams mtdApiParams);
 
-
-
 }
+
+
+

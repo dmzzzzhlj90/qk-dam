@@ -83,8 +83,8 @@ public class DasConstant {
     return headMap;
   }
 
-  // 注册API_常量参数表头信息
-  public static Map<String, String> getDSConfigRequestParaHeaderInfo() {
+  // 新建API_请求参数表头信息
+  public static Map<String, String> getDasApiCreateRequestParaHeaderInfo() {
     LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
     headMap.put("paraName", "绑定参数");
     headMap.put("mappingName", "绑定字段");
@@ -94,7 +94,8 @@ public class DasConstant {
     return headMap;
   }
 
-  public static Map<String, String> getDSConfigResponseParaHeaderInfo() {
+  // 新建API_响应参数表头信息
+  public static Map<String, String> getDasApiCreateResponseParaHeaderInfo() {
     LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
     headMap.put("paraName", "参数名");
     headMap.put("mappingName", "绑定字段");
@@ -105,7 +106,8 @@ public class DasConstant {
     return headMap;
   }
 
-  public static Map<String, String> getDSConfigOrderParaHeaderInfo() {
+  // 新建API_排序表头信息
+  public static Map<String, String> getDasApiCreateOrderParaHeaderInfo() {
     LinkedHashMap<String, String> headMap = new LinkedHashMap<>();
     headMap.put("orderNum", "序号");
     headMap.put("columnName", "参数名");
@@ -116,7 +118,8 @@ public class DasConstant {
     return headMap;
   }
 
-  public static List<String> getDSConfigParasCompareSymbol() {
+  // 新建API_字段操作符号
+  public static List<String> getDasApiCreateParasCompareSymbol() {
     LinkedList<String> compareSymbolList = new LinkedList<>();
     compareSymbolList.add("=");
     compareSymbolList.add("<>");
@@ -129,7 +132,8 @@ public class DasConstant {
     return compareSymbolList;
   }
 
-  public static Map<String, String> getDSConfigParasSortStyle() {
+  // 新建API_排序方式
+  public static Map<String, String> getDasApiCreateParasSortStyle() {
     LinkedHashMap<String, String> sortStyleMap = new LinkedHashMap<>();
     sortStyleMap.put("ASC", "升序");
     sortStyleMap.put("DESC", "降序");
