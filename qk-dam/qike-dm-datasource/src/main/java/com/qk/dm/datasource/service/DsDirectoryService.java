@@ -5,6 +5,8 @@ import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.datasource.vo.DsDirectoryVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author zys
  * @date 20210729
@@ -19,4 +21,6 @@ public interface DsDirectoryService {
   void deleteDsDirectory(Integer id);
 
   void updateDsDirectory(DsDirectoryVO dsDirectoryVO);
+
+  List<String> getSysName();
 }

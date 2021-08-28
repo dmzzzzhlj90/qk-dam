@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 数据源管理__应用系统录入接口
  *
@@ -38,6 +40,8 @@ public class DsDirectoryController {
   @PostMapping(value = "/query")
   public DefaultCommonResult<PageResultVO<DsDirectoryVO>> getDsDirectory(
       @RequestBody Pagination pagination) {
+    //默认设置id为查询排序
+    pagination.setSortField("id");
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDirectoryService.getSysDirectory(pagination));
   }
@@ -75,5 +79,15 @@ public class DsDirectoryController {
   public DefaultCommonResult updateDsDirectory(@RequestBody @Validated DsDirectoryVO dsDirectoryVO){
     dsDirectoryService.updateDsDirectory(dsDirectoryVO);
     return DefaultCommonResult.success();
+  }
+
+  /**
+   * 数据源管理—查询应用系统名称
+   * @return
+   */
+  @GetMapping("/sysname")
+  public DefaultCommonResult<List<String>> getSysName(){
+    List<String> sysNameList = dsDirectoryService.getSysName();
+    return DefaultCommonResult.success(ResultCodeEnum.OK,sysNameList);
   }
 }
