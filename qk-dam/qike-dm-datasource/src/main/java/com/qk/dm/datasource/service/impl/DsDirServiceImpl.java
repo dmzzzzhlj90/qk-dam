@@ -131,16 +131,16 @@ public class DsDirServiceImpl implements DsDirService {
    * @return
    */
   private DsDirReturnVO findDirChildren(DsDirReturnVO dsDirReturnVO, List<DsDirReturnVO> dsDirVOList) {
-    dsDirReturnVO.setTyep(DsConstant.DIR_TYPE);
     dsDirReturnVO.setChildren(new ArrayList<>());
     for (DsDirReturnVO DSDTV : dsDirVOList) {
       if (dsDirReturnVO.getKey().equals(DSDTV.getParentId())) {
+        DSDTV.setTyep(DsConstant.DIR_TYPE);
         if (dsDirReturnVO.getChildren() == null) {
           dsDirReturnVO.setChildren(new ArrayList<>());
         }
         List<DsDatasourceVO> datasourceList =getDataSourceList(dsDirReturnVO.getKey());
         dsDirReturnVO.setDatasourceVOList(datasourceList);
-        dsDirReturnVO.getChildren().add(findChildren(DSDTV, dsDirVOList));
+        dsDirReturnVO.getChildren().add(findDirChildren(DSDTV, dsDirVOList));
       }
     }
     return dsDirReturnVO;
@@ -250,7 +250,7 @@ public class DsDirServiceImpl implements DsDirService {
   }
 
   private List<DsDirReturnVO> buildByRecursives(List<DsDirReturnVO> dsDirVOList) {
-    DsDirReturnVO dsDirReturnVO=DsDirReturnVO.builder().key(0).title("全部数据源").build();
+    DsDirReturnVO dsDirReturnVO=DsDirReturnVO.builder().key(0).title("全部数据源").tyep(DsConstant.DIR_TYPE).build();
     List<DsDirReturnVO> trees = new ArrayList<>();
     trees.add(findDirChildren(dsDirReturnVO, dsDirVOList));
     return trees;
