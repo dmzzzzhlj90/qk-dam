@@ -1,5 +1,6 @@
 package com.qk.dm.datasource.service.impl;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
@@ -140,5 +141,17 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
       throw new BizException("当前要新增的应用系统,名称为:" + dsDirectory.getSysName() + " 的数据，不存在！！！");
     }
 
+  }
+
+  @Override
+  public List<String> getSysName() {
+    List<String> returnList = new ArrayList<>();
+    List<String> sysNameList  = dsDirectoryRepository.getSysName();
+    if (CollectionUtils.isNotEmpty(sysNameList)){
+      returnList.addAll(sysNameList);
+    }else {
+      throw new BizException("当前应用系统名称获取为空");
+    }
+    return returnList;
   }
 }
