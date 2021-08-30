@@ -2,6 +2,9 @@ package com.qk.dm.metadata.service;
 
 import com.qk.dm.metadata.vo.*;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import org.apache.atlas.model.audit.EntityAuditEventV2;
+import org.apache.atlas.model.instance.AtlasEntity;
+import org.apache.atlas.model.instance.AtlasEntityHeader;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +31,16 @@ public interface AtlasMetaDataService {
    */
   List<MtdAtlasBaseVO> searchList(
       MtdAtlasBaseSearchVO mtdAtlasBaseSearchVO, Boolean excludeDeletedEntities);
+
+  /**
+   * 获取元数据详情
+   */
+  AtlasEntity getDetailByQName(String qualifiedName, String typename);
+
+  /**
+   * 获取操作元数据详情
+   */
+  List<EntityAuditEventV2>  getAuditByGuid(String guid,String startKey);
 
   /**
    * 获取列的元数据详情

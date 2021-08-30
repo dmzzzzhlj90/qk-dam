@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
@@ -7,14 +8,19 @@ import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.metadata.properties.AtlasSearchParameters;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
+import org.apache.atlas.model.audit.AuditSearchParameters;
+import org.apache.atlas.model.audit.EntityAuditEventV2;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,6 +31,8 @@ import java.util.stream.Collectors;
  * @date 2021/8/03 10:06
  * @since 1.0.0
  */
+@NoArgsConstructor
+@Data
 @Service
 public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
@@ -189,6 +197,38 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   }
 
   @Override
+  public List<EntityAuditEventV2>  getAuditByGuid(String guid,String startKey) {
+    try {
+      List<EntityAuditEventV2> tmp = Lists.newArrayList();
+      List<EntityAuditEventV2> auditEvents1 = atlasClientV2.getAuditEvents(guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_CREATE, (short) 1);
+      List<EntityAuditEventV2> auditEvents2 = atlasClientV2.getAuditEvents(guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_UPDATE, (short) 10);
+      List<EntityAuditEventV2> auditEvents3 = atlasClientV2.getAuditEvents(guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_DELETE, (short) 10);
+      tmp.addAll(auditEvents1);
+      tmp.addAll(auditEvents2);
+      tmp.addAll(auditEvents3);
+      return tmp;
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+    return List.of();
+  }
+
+  @Override
+  public AtlasEntity getDetailByQName(String qualifiedName, String typename) {
+    Map<String, String> uniqAttributes = new HashMap<>();
+    uniqAttributes.put("qualifiedName", qualifiedName);
+    try {
+      AtlasEntity.AtlasEntityWithExtInfo entityHeaderByAttribute = atlasClientV2.getEntityByAttribute(typename, uniqAttributes,true,true);
+
+      return entityHeaderByAttribute.getEntity();
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  @Override
   public MtdColumnVO getColumnDetailByGuid(String guid) {
     MtdColumnVO mtdColumnVO = null;
     try {
@@ -285,10 +325,5 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
-
-  public static void main(String[] args) throws AtlasServiceException {
-    AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid("85b14f4d-d09b-4c98-9004-069b7c21a289", true, false);
-    System.out.println(GsonUtil.toJsonString(detail));
   }
 }

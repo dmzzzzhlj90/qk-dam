@@ -5,6 +5,9 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.*;
+import org.apache.atlas.model.audit.EntityAuditEventV2;
+import org.apache.atlas.model.instance.AtlasEntity;
+import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,7 +69,33 @@ public class MtdAtlasController {
     return DefaultCommonResult.success(ResultCodeEnum.OK, atlasBaseMainDataVOList);
   }
 
+  /**
+   * 根据guid获取数据库的元数据信息
+   *
+   * @param qualifiedName 元数据
+   * @return DefaultCommonResult<MtdAtlasDbDetailVO>
+   */
+  @GetMapping("/techno/detail/{qualifiedName}/{typename}")
+  public DefaultCommonResult<AtlasEntity> getDetailByQName(
+          @PathVariable("qualifiedName") String qualifiedName,
+          @PathVariable("typename") String typename) {
+    //todo 元数据详情获取接口--需要优化这个部分
+    AtlasEntity detailByQName = atlasMetaDataService.getDetailByQName(qualifiedName, typename);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, detailByQName);
+  }
 
+  /**
+   * 根据guid获取数据库的元数据信息
+   * @param guid id
+   * @return List<EntityAuditEventV2>
+   */
+  @GetMapping("/techno/audit/{guid}")
+  public DefaultCommonResult<List<EntityAuditEventV2>> getAuditByGuid(
+          @PathVariable("guid") String guid) {
+    //todo 元数据操作数据获取接口--需要优化这个部分
+    List<EntityAuditEventV2> entityAuditEventV2s = atlasMetaDataService.getAuditByGuid(guid,"");
+    return DefaultCommonResult.success(ResultCodeEnum.OK, entityAuditEventV2s);
+  }
 
   /**
    * 根据guid获取数据库的元数据信息
