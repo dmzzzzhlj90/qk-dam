@@ -16,6 +16,7 @@ import java.util.Set;
  */
 @Service
 public interface DsDirService {
+  
   void addDsDir(DsDirVO dsDirVO);
 
   void deleteDsDir(Integer id);
@@ -23,4 +24,8 @@ public interface DsDirService {
   List<DsDirReturnVO> getDsDir();
 
   void getDsdId(Set<String> dsDicIdSet, String dicId);
+
+  List<DsDirReturnVO> getDsDirDataSource();
+
+  void updateDsDir(DsDirVO dsDirVO);
 }
