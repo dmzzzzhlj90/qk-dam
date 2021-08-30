@@ -23,7 +23,7 @@ public class DsDatasourceVO {
   /** 数据源主键id */
   private Integer id;
 
-  /** 系统名称（返回值显示） */
+  /** 数据源名称（返回值显示） */
   @NotBlank(message = "连接名称不为空")
   private String dataSourceName;
 
@@ -80,4 +80,9 @@ public class DsDatasourceVO {
 
   /** 备注 */
   private String remark;
+
+  /**
+   * 类型（用于区分数据源和文件夹/dir表示文件夹，datasource表示数据）
+   */
+  private String tyep;
 }

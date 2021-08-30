@@ -64,7 +64,7 @@ public class DsDataSouurceConnectUtil {
     ObjectMapper objectMapper = new ObjectMapper();
     PostgresqlInfo postgetsqlInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), PostgresqlInfo.class);
-    String driver = postgetsqlInfo.getDriverInfo(); // 获取postgetsql数据驱动类
+    String driver =getParamsByType(postgetsqlInfo.getType()); // 获取postgetsql数据驱动类
     String url =
         "jdbc:postgresql://"
             + postgetsqlInfo.getServer()
@@ -111,7 +111,7 @@ public class DsDataSouurceConnectUtil {
     ObjectMapper objectMapper = new ObjectMapper();
     HiveInfo hiveInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), HiveInfo.class);
-    String driver = hiveInfo.getDriverInfo(); // 获取hive数据驱动类
+    String driver = getParamsByType(hiveInfo.getType()); // 获取hive数据驱动类
     String url =
         "jdbc:hive://" + hiveInfo.getServer() + ":" + hiveInfo.getPort(); // 127.0.0.1是本机地址，
     String user = hiveInfo.getUserName();
@@ -132,7 +132,7 @@ public class DsDataSouurceConnectUtil {
     ObjectMapper objectMapper = new ObjectMapper();
     OracleInfo oracleInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), OracleInfo.class);
-    String driver = oracleInfo.getDriverInfo(); // 获取oracle数据驱动类
+    String driver = getParamsByType(oracleInfo.getType());// 获取oracle数据驱动类 // 获取oracle数据驱动类
     String url =
         "jdbc:oracle:thin:"
             + oracleInfo.getServer()
@@ -157,7 +157,7 @@ public class DsDataSouurceConnectUtil {
     ObjectMapper objectMapper = new ObjectMapper();
     MysqlInfo mysqlInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), MysqlInfo.class);
-    String driver = mysqlInfo.getDriverInfo(); // 获取oracle数据驱动类
+    String driver = getParamsByType(mysqlInfo.getType());// 获取oracle数据驱动类
     String url =
         "jdbc:mysql://" + mysqlInfo.getServer() + ":" + mysqlInfo.getPort(); // 127.0.0.1是本机地址，
     String user = mysqlInfo.getUserName();
@@ -181,29 +181,23 @@ public class DsDataSouurceConnectUtil {
     return map;
   }
 
-  public static Object getParamsByType(String type) {
+  public static String getParamsByType(String type) {
+    String driverInfo = null;
     if (type.equals("db-mysql")) {
-      MysqlInfo mysqlInfo = new MysqlInfo();
-      mysqlInfo.setDriverInfo("com.mysql.cj.jdbc.Driver");
-      return mysqlInfo;
+      driverInfo = "com.mysql.cj.jdbc.Driver";
     }
-    if (type.equals("db-oracle")) {
-      OracleInfo oracleInfo = new OracleInfo();
-      oracleInfo.setDriverInfo("oracle.jdbc.driver.OracleDriver");
-      return oracleInfo;
+    else if (type.equals("db-oracle")) {
+      driverInfo = "oracle.jdbc.driver.OracleDriver";
     }
-    if (type.equals("db-hive")) {
-      HiveInfo hiveInfo = new HiveInfo();
-      hiveInfo.setDriverInfo("org.apache.hive.jdbc.HiveDriver");
-      return hiveInfo;
+    else if (type.equals("db-hive")) {
+      driverInfo = "org.apache.hive.jdbc.HiveDriver";
     }
-    if (type.equals("db-postgresql")) {
-      PostgresqlInfo postgresqlInfo = new PostgresqlInfo();
-      postgresqlInfo.setDriverInfo("org.postgresql.Driver");
-      return postgresqlInfo;
+    else if (type.equals("db-postgresql")) {
+      driverInfo = "org.postgresql.Driver";
     } else {
       throw new BizException("没有匹配的数据源参数类型");
     }
+    return driverInfo;
   }
 
   public static String addDriverinfo(Object baseDataSourceTypeInfo, String type) {
