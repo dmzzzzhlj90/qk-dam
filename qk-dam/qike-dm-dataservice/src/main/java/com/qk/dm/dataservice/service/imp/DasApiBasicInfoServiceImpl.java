@@ -10,7 +10,8 @@ import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
-import com.qk.dm.dataservice.repositories.DasApiCreateRepository;
+import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
+import com.qk.dm.dataservice.repositories.DasApiCreateSqlScriptRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiDirService;
@@ -44,7 +45,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     private final DasApiDirService dasApiDirService;
     private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
     private final DasApiRegisterRepository dasApiRegisterRepository;
-    private final DasApiCreateRepository dasApiCreateRepository;
+    private final DasApiCreateConfigRepository dasApiCreateConfigRepository;
+    private final DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository;
 
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
@@ -54,11 +56,14 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
             DasApiDirService dasApiDirService,
             DasApiBasicInfoRepository dasApiBasicinfoRepository,
             DasApiRegisterRepository dasApiRegisterRepository,
-            DasApiCreateRepository dasApiCreateRepository, EntityManager entityManager) {
+            DasApiCreateConfigRepository dasApiCreateConfigRepository,
+            DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository,
+            EntityManager entityManager) {
         this.dasApiDirService = dasApiDirService;
         this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
         this.dasApiRegisterRepository = dasApiRegisterRepository;
-        this.dasApiCreateRepository = dasApiCreateRepository;
+        this.dasApiCreateConfigRepository = dasApiCreateConfigRepository;
+        this.dasApiCreateSqlScriptRepository = dasApiCreateSqlScriptRepository;
         this.entityManager = entityManager;
     }
 
@@ -102,8 +107,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     @Override
     public void addDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
-      setDedInputParams(dasApiBasicInfoVO, dasApiBasicInfo);
-      dasApiBasicInfo.setGmtCreate(new Date());
+        setDedInputParams(dasApiBasicInfoVO, dasApiBasicInfo);
+        dasApiBasicInfo.setGmtCreate(new Date());
         dasApiBasicInfo.setGmtModified(new Date());
         dasApiBasicInfo.setDelFlag(0);
 
@@ -115,14 +120,14 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         dasApiBasicinfoRepository.save(dasApiBasicInfo);
     }
 
-  private void setDedInputParams(DasApiBasicInfoVO dasApiBasicInfoVO, DasApiBasicInfo dasApiBasicInfo) {
-    if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO())) {
-        dasApiBasicInfo.setDefInputParam(
-                GsonUtil.toJsonString(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO()));
+    private void setDedInputParams(DasApiBasicInfoVO dasApiBasicInfoVO, DasApiBasicInfo dasApiBasicInfo) {
+        if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO())) {
+            dasApiBasicInfo.setDefInputParam(
+                    GsonUtil.toJsonString(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO()));
+        }
     }
-  }
 
-  @Override
+    @Override
     public void updateDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParams(dasApiBasicInfoVO, dasApiBasicInfo);
@@ -151,7 +156,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
                 dasApiRegisterRepository.deleteByApiId(apiId);
             }
             if (DasConstant.DM_SOURCE_API_CODE.equalsIgnoreCase(apiType)) {
-                dasApiCreateRepository.deleteByApiId(apiId);
+                dasApiCreateConfigRepository.deleteByApiId(apiId);
+                dasApiCreateSqlScriptRepository.deleteByApiId(apiId);
             }
             // 删除AIP基本信息
             dasApiBasicinfoRepository.deleteById(delId);

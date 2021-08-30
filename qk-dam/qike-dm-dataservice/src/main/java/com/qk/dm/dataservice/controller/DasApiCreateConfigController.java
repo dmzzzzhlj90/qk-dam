@@ -6,8 +6,8 @@ import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metedata.entity.MtdApi;
 import com.qk.dam.metedata.entity.MtdApiParams;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-import com.qk.dm.dataservice.service.DasApiCreateService;
-import com.qk.dm.dataservice.vo.DasApiCreateVO;
+import com.qk.dm.dataservice.service.DasApiCreateConfigService;
+import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 数据服务_新建API
+ * 数据服务_新建API_配置方式
  *
  * @author wjq
  * @date 20210823
@@ -25,50 +25,50 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/create")
-public class DasApiCreateController {
-    private final DasApiCreateService dasApiCreateService;
+@RequestMapping("/api/create/config")
+public class DasApiCreateConfigController {
+    private final DasApiCreateConfigService dasApiCreateConfigService;
 
     @Autowired
-    public DasApiCreateController(DasApiCreateService dasApiCreateService) {
-        this.dasApiCreateService = dasApiCreateService;
+    public DasApiCreateConfigController(DasApiCreateConfigService dasApiCreateConfigService) {
+        this.dasApiCreateConfigService = dasApiCreateConfigService;
     }
 
 
     /**
-     * 新增API_详情展示
+     * 新增API配置方式_详情展示
      *
      * @param apiId
      * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
      */
     @GetMapping(value = "/query/{apiId}")
-    public DefaultCommonResult<DasApiCreateVO> getDasApiCreateInfoByApiId(
+    public DefaultCommonResult<DasApiCreateConfigVO> getDasApiCreateConfigInfoByApiId(
             @PathVariable("apiId") String apiId) {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getDasApiCreateInfoByApiId(apiId));
+                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateConfigInfoByApiId(apiId));
     }
 
     /**
-     * 新增API基础信息
+     * 新增API配置方式
      *
-     * @param dasApiCreateVO
+     * @param dasApiCreateConfigVO
      * @return DefaultCommonResult
      */
     @PostMapping("/add")
-    public DefaultCommonResult addDasApiCreate(@RequestBody @Validated DasApiCreateVO dasApiCreateVO) {
-        dasApiCreateService.addDasApiCreate(dasApiCreateVO);
+    public DefaultCommonResult addDasApiCreateConfig(@RequestBody @Validated DasApiCreateConfigVO dasApiCreateConfigVO) {
+        dasApiCreateConfigService.addDasApiCreateConfig(dasApiCreateConfigVO);
         return DefaultCommonResult.success();
     }
 
     /**
-     * 编辑API基础信息
+     * 编辑API配置方式
      *
-     * @param dasApiCreateVO
+     * @param dasApiCreateConfigVO
      * @return DefaultCommonResult
      */
     @PutMapping("/update")
-    public DefaultCommonResult updateDasApiCreate(@RequestBody @Validated DasApiCreateVO dasApiCreateVO) {
-        dasApiCreateService.updateDasApiCreate(dasApiCreateVO);
+    public DefaultCommonResult updateDasApiCreateConfig(@RequestBody @Validated DasApiCreateConfigVO dasApiCreateConfigVO) {
+        dasApiCreateConfigService.updateDasApiCreateConfig(dasApiCreateConfigVO);
         return DefaultCommonResult.success();
     }
 
@@ -80,7 +80,7 @@ public class DasApiCreateController {
     @GetMapping("/request/paras/header/infos")
     public DefaultCommonResult<Map<String, String>> getDasApiCreateRequestParaHeaderInfo() {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getDasApiCreateRequestParaHeaderInfo());
+                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateRequestParaHeaderInfo());
     }
 
     /**
@@ -91,7 +91,7 @@ public class DasApiCreateController {
     @GetMapping("/response/paras/header/infos")
     public DefaultCommonResult<Map<String, String>> getDasApiCreateResponseParaHeaderInfo() {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getDasApiCreateResponseParaHeaderInfo());
+                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateResponseParaHeaderInfo());
     }
 
     /**
@@ -102,7 +102,7 @@ public class DasApiCreateController {
     @GetMapping("/query/order/paras/header/infos")
     public DefaultCommonResult<Map<String, String>> getDasApiCreateOrderParaHeaderInfo() {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getDasApiCreateOrderParaHeaderInfo());
+                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateOrderParaHeaderInfo());
     }
 
     /**
@@ -113,7 +113,7 @@ public class DasApiCreateController {
     @GetMapping("/paras/compare/symbol")
     public DefaultCommonResult<List<String>> getDasApiCreateParasCompareSymbol() {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getDasApiCreateParasCompareSymbol());
+                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateParasCompareSymbol());
     }
 
     /**
@@ -124,7 +124,7 @@ public class DasApiCreateController {
     @GetMapping("/paras/sort/style")
     public DefaultCommonResult<Map<String, String>> getDasApiCreateParasSortStyle() {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getDasApiCreateParasSortStyle());
+                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateParasSortStyle());
     }
 
     /**
@@ -136,7 +136,7 @@ public class DasApiCreateController {
     @GetMapping("/database/all")
     public DefaultCommonResult<List<String>> getAllDataBase(@RequestParam("dbType") String dbType) {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getAllDataBase(dbType));
+                ResultCodeEnum.OK, dasApiCreateConfigService.getAllDataBase(dbType));
     }
 
     /**
@@ -150,7 +150,7 @@ public class DasApiCreateController {
                                                          @RequestParam("server") String server,
                                                          @RequestParam("dbName") String dbName) {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getAllTable(dbType, server, dbName));
+                ResultCodeEnum.OK, dasApiCreateConfigService.getAllTable(dbType, server, dbName));
     }
 
     /**
@@ -165,7 +165,7 @@ public class DasApiCreateController {
                                                   @RequestParam("dbName") String dbName,
                                                   @RequestParam("tableName") String tableName) {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getAllColumn(dbType, server, dbName, tableName));
+                ResultCodeEnum.OK, dasApiCreateConfigService.getAllColumn(dbType, server, dbName, tableName));
     }
 
     // ========================数据源服务API调用=====================================
@@ -178,7 +178,7 @@ public class DasApiCreateController {
     @GetMapping("/datasource/api/type/all")
     public DefaultCommonResult<List<String>> getAllConnType() {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getAllConnType());
+                ResultCodeEnum.OK, dasApiCreateConfigService.getAllConnType());
     }
 
     /**
@@ -190,7 +190,7 @@ public class DasApiCreateController {
     DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
             @PathVariable("type") String type) {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getResultDataSourceByType(type));
+                ResultCodeEnum.OK, dasApiCreateConfigService.getResultDataSourceByType(type));
     }
 
     /**
@@ -203,7 +203,7 @@ public class DasApiCreateController {
             @PathVariable("connectName") String connectName) {
         return DefaultCommonResult.success(
                 ResultCodeEnum.OK,
-                dasApiCreateService.getResultDataSourceByConnectName(connectName));
+                dasApiCreateConfigService.getResultDataSourceByConnectName(connectName));
     }
 
     // ========================数据源服务API调用=====================================
@@ -216,7 +216,7 @@ public class DasApiCreateController {
     @GetMapping("/mtd/api/all/entity/type")
     public DefaultCommonResult<List<MtdAtlasEntityType>> getAllEntityType() {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.getAllEntityType());
+                ResultCodeEnum.OK, dasApiCreateConfigService.getAllEntityType());
     }
 
     /**
@@ -228,7 +228,7 @@ public class DasApiCreateController {
     @PostMapping("/mtd/detail")
     DefaultCommonResult<MtdApi> mtdDetail(@RequestBody @Validated MtdApiParams mtdApiParams) {
         return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateService.mtdDetail(mtdApiParams));
+                ResultCodeEnum.OK, dasApiCreateConfigService.mtdDetail(mtdApiParams));
     }
 
 }

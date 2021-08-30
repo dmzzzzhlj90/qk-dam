@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "qk_das_api_create")
-public class DasApiCreate implements Serializable {
+@Table(name = "qk_das_api_create_config")
+public class DasApiCreateConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -98,11 +98,5 @@ public class DasApiCreate implements Serializable {
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag;
-
-    /**
-     * 取数脚本
-     */
-    @Column(name = "sql_para", nullable = false)
-    private String sqlPara;
 
 }

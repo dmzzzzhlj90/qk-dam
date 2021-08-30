@@ -7,11 +7,11 @@ import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
-import com.qk.dm.dataservice.entity.DasApiCreate;
+import com.qk.dm.dataservice.entity.DasApiCreateConfig;
 import com.qk.dm.dataservice.entity.DasApiRegister;
 import com.qk.dm.dataservice.manager.ApiGatewayManager;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
-import com.qk.dm.dataservice.repositories.DasApiCreateRepository;
+import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasSyncApiGatewayService;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
@@ -84,17 +84,17 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
     private final ApiGatewayManager apiGatewayManager;
     private final DasApiBasicInfoRepository dasApiBasicInfoRepository;
     private final DasApiRegisterRepository dasApiRegisterRepository;
-    private final DasApiCreateRepository dasApiCreateRepository;
+    private final DasApiCreateConfigRepository dasApiCreateConfigRepository;
 
     @Autowired
     public DasSyncApiGatewayServiceImpl(
             ApiGatewayManager apiGatewayManager,
             DasApiBasicInfoRepository dasApiBasicInfoRepository,
-            DasApiRegisterRepository dasApiRegisterRepository, DasApiCreateRepository dasApiCreateRepository) {
+            DasApiRegisterRepository dasApiRegisterRepository, DasApiCreateConfigRepository dasApiCreateConfigRepository) {
         this.apiGatewayManager = apiGatewayManager;
         this.dasApiBasicInfoRepository = dasApiBasicInfoRepository;
         this.dasApiRegisterRepository = dasApiRegisterRepository;
-        this.dasApiCreateRepository = dasApiCreateRepository;
+        this.dasApiCreateConfigRepository = dasApiCreateConfigRepository;
     }
 
     @Override
@@ -144,8 +144,8 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
 
     private void singleSyncCreateApi(Map<String, List<DasApiBasicInfo>> apiBasicInfoMap) {
         try {
-            List<DasApiCreate> apiCreateList = dasApiCreateRepository.findAll();
-            for (DasApiCreate dasApiCreate : apiCreateList) {
+            List<DasApiCreateConfig> apiCreateList = dasApiCreateConfigRepository.findAll();
+            for (DasApiCreateConfig dasApiCreate : apiCreateList) {
                 DasApiBasicInfo dasApiBasicInfo = apiBasicInfoMap.get(dasApiCreate.getApiId()).get(0);
                 // 同步API
                 ApiSixRouteInfo apiSixRouteInfo = new ApiSixRouteInfo();
@@ -267,9 +267,9 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
         }
     }
 
-    private void setRouteCreateParams(DasApiBasicInfo dasApiBasicInfo, DasApiCreate dasApiCreate, ApiSixRouteInfo apiSixRouteInfo) {
+    private void setRouteCreateParams(DasApiBasicInfo dasApiBasicInfo, DasApiCreateConfig dasApiCreateConfig, ApiSixRouteInfo apiSixRouteInfo) {
         String defInputParam = dasApiBasicInfo.getDefInputParam();
-        String createApiRequestParas = dasApiCreate.getApiRequestParas();
+        String createApiRequestParas = dasApiCreateConfig.getApiRequestParas();
         if (!ObjectUtils.isEmpty(defInputParam) && !ObjectUtils.isEmpty(createApiRequestParas)) {
             List<List<String>> varsKey = new ArrayList<>();
             List<String> varsValue = new ArrayList<>();

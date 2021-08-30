@@ -4,26 +4,29 @@ import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metedata.entity.MtdApi;
 import com.qk.dam.metedata.entity.MtdApiParams;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-import com.qk.dm.dataservice.vo.DasApiCreateVO;
+import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 /**
+ * 数据服务_新建API_配置方式
+ *
  * @author wjq
  * @date 20210823
  * @since 1.0.0
  */
 @Service
-public interface DasApiCreateService {
+public interface DasApiCreateConfigService {
 
-    DasApiCreateVO getDasApiCreateInfoByApiId(String apiId);
+    DasApiCreateConfigVO getDasApiCreateConfigInfoByApiId(String apiId);
 
-    void addDasApiCreate(DasApiCreateVO dasApiCreateVO);
+    void addDasApiCreateConfig(DasApiCreateConfigVO dasApiCreateConfigVO);
 
-    void updateDasApiCreate(DasApiCreateVO dasApiCreateVO);
+    void updateDasApiCreateConfig(DasApiCreateConfigVO dasApiCreateConfigVO);
 
+    // ========================参数配置表头信息=====================================
     Map<String, String> getDasApiCreateRequestParaHeaderInfo();
 
     Map<String, String> getDasApiCreateResponseParaHeaderInfo();
@@ -34,14 +37,7 @@ public interface DasApiCreateService {
 
     Map<String, String> getDasApiCreateParasSortStyle();
 
-    List<String> getAllDataBase(String dbType);
-
-    List<String> getAllTable(String dbType, String server, String dbName);
-
-    List getAllColumn(String dbType, String server, String dbName, String tableName);
-
     // ========================数据源服务API调用=====================================
-
     List<String> getAllConnType();
 
     List<ResultDatasourceInfo> getResultDataSourceByType(String type);
@@ -49,10 +45,15 @@ public interface DasApiCreateService {
     ResultDatasourceInfo getResultDataSourceByConnectName(String connectName);
 
     // ========================元数据服务API调用=====================================
-
     List<MtdAtlasEntityType> getAllEntityType();
 
     MtdApi mtdDetail(MtdApiParams mtdApiParams);
+
+    List<String> getAllDataBase(String dbType);
+
+    List<String> getAllTable(String dbType, String server, String dbName);
+
+    List getAllColumn(String dbType, String server, String dbName, String tableName);
 
 }
 
