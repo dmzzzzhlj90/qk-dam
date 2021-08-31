@@ -40,12 +40,12 @@ public class DsDirReturnVO {
     private List<DsDirReturnVO> children;
 
     /**
-     * 目录下的数据源
-     */
-    private List<DsDatasourceVO> datasourceVOList;
-
-    /**
      * 类型（用于区分数据源和文件夹/dir表示文件夹，datasource表示数据）
      */
-    private String tyep;
+    private String dataType;
+
+    /**
+     * 返回数据源类型
+     */
+    private String conType;
 }

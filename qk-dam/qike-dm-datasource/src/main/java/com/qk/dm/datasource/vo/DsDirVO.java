@@ -26,12 +26,21 @@ public class DsDirVO {
   /** 主键ID */
   private Integer id;
 
+  /**
+   * 目录名称
+   */
   @NotBlank(message = "目录名称")
   private String dicName;
 
+  /**
+   * 父级id
+   */
   @NotBlank(message = "父级id(一级目录是0，二级目录是上级的id)")
   private Integer parentId;
 
+  /**
+   * 目录层级编码
+   */
   @NotBlank(message = "目录层级编码")
   /** 目录编码 */
   private String dsDirCode;
