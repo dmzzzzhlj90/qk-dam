@@ -53,6 +53,7 @@ public class DsdBasicinfoVO {
   private String dataCapacity;
 
   /** 码表标准分类ID */
+  @ExcelIgnore
   private String codeDirId;
 
   /** 引用码表 */
@@ -72,6 +73,7 @@ public class DsdBasicinfoVO {
 
   /** 标准层级ID */
   @NotBlank(message = "标准层级目录ID不能为空！")
+  @ExcelIgnore
   private String dsdLevelId;
 
   /** 标准层级目录名称 */

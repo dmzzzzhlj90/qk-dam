@@ -17,12 +17,14 @@ import com.qk.dm.dataservice.service.DasApiRegisterService;
 import com.qk.dm.dataservice.vo.*;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.*;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import java.util.*;
 
 /**
  * @author wjq
@@ -31,151 +33,255 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class DasApiRegisterServiceImpl implements DasApiRegisterService {
-  private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
-  private static final QDasApiRegister qDasApiRegister = QDasApiRegister.dasApiRegister;
+    private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
+    private static final QDasApiRegister qDasApiRegister = QDasApiRegister.dasApiRegister;
+    public static final String EXIST_ID = "EXIST_ID";
+    public static final String EXIST_FLAG = "EXIST_FLAG";
 
-  private final DasApiBasicInfoService dasApiBasicInfoService;
-  private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
-  private final DasApiRegisterRepository dasApiRegisterRepository;
-  private final EntityManager entityManager;
-  private JPAQueryFactory jpaQueryFactory;
+    private final DasApiBasicInfoService dasApiBasicInfoService;
+    private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
+    private final DasApiRegisterRepository dasApiRegisterRepository;
+    private final EntityManager entityManager;
+    private JPAQueryFactory jpaQueryFactory;
 
-  @Autowired
-  public DasApiRegisterServiceImpl(
-      DasApiBasicInfoService dasApiBasicInfoService,
-      DasApiBasicInfoRepository dasApiBasicinfoRepository,
-      DasApiRegisterRepository dasApiRegisterRepository,
-      EntityManager entityManager) {
-    this.dasApiBasicInfoService = dasApiBasicInfoService;
-    this.dasApiRegisterRepository = dasApiRegisterRepository;
-    this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
-    this.entityManager = entityManager;
-  }
-
-  @PostConstruct
-  public void initFactory() {
-    jpaQueryFactory = new JPAQueryFactory(entityManager);
-  }
-
-  @Override
-  public DasApiRegisterVO getDasApiRegisterInfoByApiId(String apiId) {
-    // 获取API基础信息
-    Optional<DasApiBasicInfo> onDasApiBasicInfo =
-        dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.apiId.eq(apiId));
-    if (onDasApiBasicInfo.isEmpty()) {
-      throw new BizException("查询不到对应的API基础信息!!!");
-    }
-    // 获取注册API信息
-    Optional<DasApiRegister> onDasApiRegister =
-        dasApiRegisterRepository.findOne(qDasApiRegister.apiId.eq(apiId));
-    if (onDasApiRegister.isEmpty()) {
-      DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
-      return DasApiRegisterVO.builder().dasApiBasicInfoVO(dasApiBasicInfoVO).build();
-    }
-    DasApiRegister dasApiRegister = onDasApiRegister.get();
-    DasApiRegisterVO dasApiRegisterVO =
-        DasApiRegisterMapper.INSTANCE.useDasApiRegisterVO(dasApiRegister);
-    // API基础信息,设置入参定义VO转换对象
-    DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
-    dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
-    // 注册API配置信息,设置后端参数VO转换对象
-    setRegisterVOBackendAndConstantsParams(dasApiRegister, dasApiRegisterVO);
-    return dasApiRegisterVO;
-  }
-
-  private void setRegisterVOBackendAndConstantsParams(
-      DasApiRegister dasApiRegister, DasApiRegisterVO dasApiRegisterVO) {
-    if (null != dasApiRegister.getBackendRequestParas()
-        && dasApiRegister.getBackendRequestParas().length() > 0) {
-      dasApiRegisterVO.setDasApiRegisterBackendParaVO(
-          GsonUtil.fromJsonString(
-              dasApiRegister.getBackendRequestParas(),
-              new TypeToken<List<DasApiRegisterBackendParaVO>>() {}.getType()));
+    @Autowired
+    public DasApiRegisterServiceImpl(
+            DasApiBasicInfoService dasApiBasicInfoService,
+            DasApiBasicInfoRepository dasApiBasicinfoRepository,
+            DasApiRegisterRepository dasApiRegisterRepository,
+            EntityManager entityManager) {
+        this.dasApiBasicInfoService = dasApiBasicInfoService;
+        this.dasApiRegisterRepository = dasApiRegisterRepository;
+        this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
+        this.entityManager = entityManager;
     }
 
-    if (null != dasApiRegister.getBackendConstants()
-        && dasApiRegister.getBackendConstants().length() > 0) {
-
-      dasApiRegisterVO.setDasApiRegisterConstantParaVO(
-          GsonUtil.fromJsonString(
-              dasApiRegister.getBackendConstants(),
-              new TypeToken<List<DasApiRegisterConstantParaVO>>() {}.getType()));
+    @PostConstruct
+    public void initFactory() {
+        jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
-  }
 
-  private DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(
-      Optional<DasApiBasicInfo> onDasApiBasicInfo) {
-    DasApiBasicInfo dasApiBasicInfo = onDasApiBasicInfo.get();
-    DasApiBasicInfoVO dasApiBasicInfoVO =
-        DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
-    String defInputParam = dasApiBasicInfo.getDefInputParam();
-    if (defInputParam != null && defInputParam.length() != 0) {
-      dasApiBasicInfoVO.setDasApiBasicInfoRequestParasVO(
-          GsonUtil.fromJsonString(
-              dasApiBasicInfo.getDefInputParam(),
-              new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {}.getType()));
+    @Override
+    public DasApiRegisterVO getDasApiRegisterInfoByApiId(String apiId) {
+        // 获取API基础信息
+        Optional<DasApiBasicInfo> onDasApiBasicInfo =
+                dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.apiId.eq(apiId));
+        if (onDasApiBasicInfo.isEmpty()) {
+            throw new BizException("查询不到对应的API基础信息!!!");
+        }
+        // 获取注册API信息
+        Optional<DasApiRegister> onDasApiRegister =
+                dasApiRegisterRepository.findOne(qDasApiRegister.apiId.eq(apiId));
+        if (onDasApiRegister.isEmpty()) {
+            DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
+            return DasApiRegisterVO.builder().dasApiBasicInfoVO(dasApiBasicInfoVO).build();
+        }
+        DasApiRegister dasApiRegister = onDasApiRegister.get();
+        DasApiRegisterVO dasApiRegisterVO =
+                DasApiRegisterMapper.INSTANCE.useDasApiRegisterVO(dasApiRegister);
+        // API基础信息,设置入参定义VO转换对象
+        DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
+        dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
+        // 注册API配置信息,设置后端参数VO转换对象
+        setRegisterVOBackendAndConstantsParams(dasApiRegister, dasApiRegisterVO);
+        return dasApiRegisterVO;
     }
-    return dasApiBasicInfoVO;
-  }
 
-  @Transactional
-  @Override
-  public void addDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
-    String apiId = UUID.randomUUID().toString().replaceAll("-", "");
-    // 保存API基础信息
-    DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
-    if (dasApiBasicInfoVO == null) {
-      throw new BizException("当前新增的API所对应的基础信息为空!!!");
+    private void setRegisterVOBackendAndConstantsParams(
+            DasApiRegister dasApiRegister, DasApiRegisterVO dasApiRegisterVO) {
+        if (null != dasApiRegister.getBackendRequestParas()
+                && dasApiRegister.getBackendRequestParas().length() > 0) {
+            dasApiRegisterVO.setDasApiRegisterBackendParaVO(
+                    GsonUtil.fromJsonString(
+                            dasApiRegister.getBackendRequestParas(),
+                            new TypeToken<List<DasApiRegisterBackendParaVO>>() {
+                            }.getType()));
+        }
+
+        if (null != dasApiRegister.getBackendConstants()
+                && dasApiRegister.getBackendConstants().length() > 0) {
+
+            dasApiRegisterVO.setDasApiRegisterConstantParaVO(
+                    GsonUtil.fromJsonString(
+                            dasApiRegister.getBackendConstants(),
+                            new TypeToken<List<DasApiRegisterConstantParaVO>>() {
+                            }.getType()));
+        }
     }
-    dasApiBasicInfoVO.setApiId(apiId);
-    dasApiBasicInfoService.addDasApiBasicInfo(dasApiBasicInfoVO);
 
-    // 保存注册API信息
-    DasApiRegister dasApiRegister =
-        DasApiRegisterMapper.INSTANCE.useDasApiRegister(dasApiRegisterVO);
-    dasApiRegister.setBackendRequestParas(
-        GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterBackendParaVO()));
-    dasApiRegister.setBackendConstants(
-        GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterConstantParaVO()));
-    dasApiRegister.setApiId(apiId);
-    dasApiRegister.setGmtCreate(new Date());
-    dasApiRegister.setGmtModified(new Date());
-    dasApiRegister.setDelFlag(0);
-    dasApiRegisterRepository.save(dasApiRegister);
-  }
-
-  @Transactional
-  @Override
-  public void updateDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
-    // 更新API基础信息
-    DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
-    dasApiBasicInfoService.updateDasApiBasicInfo(dasApiBasicInfoVO);
-    // 更新注册API
-    DasApiRegister dasApiRegister =
-        DasApiRegisterMapper.INSTANCE.useDasApiRegister(dasApiRegisterVO);
-    dasApiRegister.setBackendRequestParas(
-        GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterBackendParaVO()));
-    dasApiRegister.setBackendConstants(
-        GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterConstantParaVO()));
-    dasApiRegister.setGmtModified(new Date());
-    dasApiRegister.setDelFlag(0);
-    Predicate predicate = qDasApiRegister.apiId.eq(dasApiRegister.getApiId());
-    boolean exists = dasApiRegisterRepository.exists(predicate);
-    if (exists) {
-      dasApiRegisterRepository.saveAndFlush(dasApiRegister);
-    } else {
-      throw new BizException(
-          "当前要新增的注册API名称为:" + dasApiBasicInfoVO.getApiName() + " 数据的配置信息，不存在！！！");
+    private DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(
+            Optional<DasApiBasicInfo> onDasApiBasicInfo) {
+        DasApiBasicInfo dasApiBasicInfo = onDasApiBasicInfo.get();
+        DasApiBasicInfoVO dasApiBasicInfoVO =
+                DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
+        String defInputParam = dasApiBasicInfo.getDefInputParam();
+        if (defInputParam != null && defInputParam.length() != 0) {
+            dasApiBasicInfoVO.setDasApiBasicInfoRequestParasVO(
+                    GsonUtil.fromJsonString(
+                            dasApiBasicInfo.getDefInputParam(),
+                            new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
+                            }.getType()));
+        }
+        return dasApiBasicInfoVO;
     }
-  }
 
-  @Override
-  public Map<String, String> getRegisterBackendParaHeaderInfo() {
-    return DasConstant.getRegisterBackendParaHeaderInfo();
-  }
+    @Transactional
+    @Override
+    public void addDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
+        String apiId = UUID.randomUUID().toString().replaceAll("-", "");
+        // 保存API基础信息
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        if (dasApiBasicInfoVO == null) {
+            throw new BizException("当前新增的API所对应的基础信息为空!!!");
+        }
+        dasApiBasicInfoVO.setApiId(apiId);
+        dasApiBasicInfoService.addDasApiBasicInfo(dasApiBasicInfoVO);
 
-  @Override
-  public Map<String, String> getRegisterConstantParaHeaderInfo() {
-    return DasConstant.getRegisterConstantParaHeaderInfo();
-  }
+        // 保存注册API信息
+        DasApiRegister dasApiRegister =
+                DasApiRegisterMapper.INSTANCE.useDasApiRegister(dasApiRegisterVO);
+        dasApiRegister.setBackendRequestParas(
+                GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterBackendParaVO()));
+        dasApiRegister.setBackendConstants(
+                GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterConstantParaVO()));
+        dasApiRegister.setApiId(apiId);
+        dasApiRegister.setGmtCreate(new Date());
+        dasApiRegister.setGmtModified(new Date());
+        dasApiRegister.setDelFlag(0);
+        dasApiRegisterRepository.save(dasApiRegister);
+    }
+
+    @Transactional
+    @Override
+    public void updateDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
+        // 更新API基础信息
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        dasApiBasicInfoService.updateDasApiBasicInfo(dasApiBasicInfoVO);
+        // 更新注册API
+        DasApiRegister dasApiRegister =
+                DasApiRegisterMapper.INSTANCE.useDasApiRegister(dasApiRegisterVO);
+        dasApiRegister.setBackendRequestParas(
+                GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterBackendParaVO()));
+        dasApiRegister.setBackendConstants(
+                GsonUtil.toJsonString(dasApiRegisterVO.getDasApiRegisterConstantParaVO()));
+        dasApiRegister.setGmtModified(new Date());
+        dasApiRegister.setDelFlag(0);
+        Predicate predicate = qDasApiRegister.apiId.eq(dasApiRegister.getApiId());
+        boolean exists = dasApiRegisterRepository.exists(predicate);
+        if (exists) {
+            dasApiRegisterRepository.saveAndFlush(dasApiRegister);
+        } else {
+            throw new BizException(
+                    "当前要新增的注册API名称为:" + dasApiBasicInfoVO.getApiName() + " 数据的配置信息，不存在！！！");
+        }
+    }
+
+    @Override
+    public Map<String, String> getRegisterBackendParaHeaderInfo() {
+        return DasConstant.getRegisterBackendParaHeaderInfo();
+    }
+
+    @Override
+    public Map<String, String> getRegisterConstantParaHeaderInfo() {
+        return DasConstant.getRegisterConstantParaHeaderInfo();
+    }
+
+    @Override
+    public void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList) {
+        if (!ObjectUtils.isEmpty(dasApiRegisterVOList)) {
+            for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterVOList) {
+                DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+                Optional<DasApiBasicInfo> optionalDasApiBasicInfo = dasApiBasicInfoService.checkExistApiBasicInfo(dasApiBasicInfoVO);
+                if (optionalDasApiBasicInfo.isPresent()) {
+                    DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
+                    Long id = dasApiBasicInfo.getId();
+                    String apiId = dasApiBasicInfo.getApiId();
+                    Optional<DasApiRegister> optionalDasApiRegister = dasApiRegisterRepository.findOne(qDasApiRegister.apiId.eq(apiId));
+                    if (optionalDasApiRegister.isPresent()) {
+                        dasApiBasicInfoVO.setId(id);
+                        dasApiBasicInfoVO.setApiId(apiId);
+                        dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
+                        dasApiRegisterVO.setId(optionalDasApiRegister.get().getId());
+                        dasApiRegisterVO.setApiId(apiId);
+                        updateDasApiRegister(dasApiRegisterVO);
+                    }
+                } else {
+                    addDasApiRegister(dasApiRegisterVO);
+                }
+            }
+        }
+    }
+
+//    @Transactional
+//    @Override
+//    public void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList) {
+//        Optional<DasApiBasicInfo> optionalDasApiBasicInfo = null;
+//        List<String> delInputParamJsonList = null;
+//        Map<Long, List<DasApiBasicInfo>> searchMap = null;
+//
+//        if (null != dasApiRegisterVOList && dasApiRegisterVOList.size() > 0) {
+//            for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterVOList) {
+//                DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+//                List<DasApiBasicInfoRequestParasVO> requestParasVOList = dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO();
+//                if (ObjectUtils.isEmpty(requestParasVOList)) {
+//                    optionalDasApiBasicInfo = dasApiBasicInfoService.searchApiBasicInfoByDelParamIsEmpty(dasApiBasicInfoVO);
+//                } else {
+//                    List<DasApiBasicInfo> dasApiBasicInfoList = dasApiBasicInfoService.checkExistApiBasicInfo(dasApiRegisterVO.getDasApiBasicInfoVO());
+//                    delInputParamJsonList = dasApiBasicInfoList.stream().map(DasApiBasicInfo::getDefInputParam).collect(Collectors.toList());
+//                    searchMap = dasApiBasicInfoList.stream().collect(Collectors.groupingBy(DasApiBasicInfo::getId));
+//                }
+//                Map<String, Object> checkExistApiMap = checkExistApi(optionalDasApiBasicInfo, requestParasVOList, delInputParamJsonList, searchMap);
+//                boolean flag = (boolean) checkExistApiMap.get(EXIST_FLAG);
+//                if (flag) {
+//                    dasApiBasicInfoService.deleteDasApiBasicInfo((Long) checkExistApiMap.get(EXIST_ID));
+//                    updateDasApiRegister(dasApiRegisterVO);
+//                }
+//                addDasApiRegister(dasApiRegisterVO);
+//            }
+//        }
+//    }
+//
+//    private Map<String, Object> checkExistApi(Optional<DasApiBasicInfo> optionalDasApiBasicInfo, List<DasApiBasicInfoRequestParasVO> requestParasVOList, List<String> delInputParamJsonList, Map<Long, List<DasApiBasicInfo>> searchMap) {
+//        Map<String, Object> checkExistApiMap = new HashMap<>();
+//        boolean flag = false;
+//        if (ObjectUtils.isEmpty(requestParasVOList)) {
+//            //参数为空
+//            if (optionalDasApiBasicInfo.isPresent()) {
+//                //存在
+//                checkExistApiMap.put(EXIST_ID, optionalDasApiBasicInfo.get().getId());
+//                flag = true;
+//            }
+//        } else {
+//            //是否存在相同的入参
+//            flag = sameRequestParams(requestParasVOList, delInputParamJsonList, searchMap, checkExistApiMap, flag);
+//        }
+//        checkExistApiMap.put(EXIST_FLAG, flag);
+//        return checkExistApiMap;
+//    }
+//
+//    private boolean sameRequestParams(List<DasApiBasicInfoRequestParasVO> requestParasVOList, List<String> delInputParamJsonList, Map<Long, List<DasApiBasicInfo>> searchMap, Map<String, Object> checkExistApiMap, boolean flag) {
+//        if (!ObjectUtils.isEmpty(delInputParamJsonList)) {
+//            //查询到的参数不为空
+//            List<String> paraNameList = requestParasVOList.stream()
+//                    .map(DasApiBasicInfoRequestParasVO::getParaName).collect(Collectors.toList());
+//            for (Map.Entry<Long, List<DasApiBasicInfo>> entry : searchMap.entrySet()) {
+//                DasApiBasicInfo dasApiBasicInfo = entry.getValue().get(0);
+//                String defInputParamJson = dasApiBasicInfo.getDefInputParam();
+//                List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOList =
+//                        GsonUtil.fromJsonString(defInputParamJson, new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
+//                        }.getType());
+//                List<DasApiBasicInfoRequestParasVO> compareList = basicInfoRequestParasVOList.stream()
+//                        .filter(dasApiBasicInfoRequestParasVO -> !paraNameList.contains(dasApiBasicInfoRequestParasVO.getParaName()))
+//                        .collect(Collectors.toList());
+//                if (ObjectUtils.isEmpty(compareList)) {
+//                    //参数相同
+//                    checkExistApiMap.put(EXIST_ID, dasApiBasicInfo.getId());
+//                    flag = true;
+//                    break;
+//                }
+//            }
+//        }
+//        return flag;
+//    }
+
 }

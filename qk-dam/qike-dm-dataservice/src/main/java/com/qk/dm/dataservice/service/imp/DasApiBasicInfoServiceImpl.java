@@ -106,17 +106,18 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
     @Override
     public void addDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        Optional<DasApiBasicInfo> optionalDasApiBasicInfo = checkExistApiBasicInfo(dasApiBasicInfoVO);
+        if (optionalDasApiBasicInfo.isPresent()) {
+            DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
+            throw new BizException("当前要新增的API标准名称为:" + dasApiBasicInfo.getApiName() +
+                    ",API目录为:" + dasApiBasicInfo.getApiPath() + ",请求方式为:" + dasApiBasicInfo.getRequestType() + " 的数据，已存在！！！");
+        }
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParams(dasApiBasicInfoVO, dasApiBasicInfo);
         dasApiBasicInfo.setGmtCreate(new Date());
         dasApiBasicInfo.setGmtModified(new Date());
         dasApiBasicInfo.setDelFlag(0);
 
-        Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfo.getApiId());
-        boolean exists = dasApiBasicinfoRepository.exists(predicate);
-        if (exists) {
-            throw new BizException("当前要新增的API标准名称为:" + dasApiBasicInfo.getApiName() + " 的数据，已存在！！！");
-        }
         dasApiBasicinfoRepository.save(dasApiBasicInfo);
     }
 
@@ -129,17 +130,18 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
     @Override
     public void updateDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        Optional<DasApiBasicInfo> optionalDasApiBasicInfo = checkExistApiBasicInfo(dasApiBasicInfoVO);
+        if (optionalDasApiBasicInfo.isEmpty()) {
+            DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
+            throw new BizException("当前要新增的API标准名称为:" + dasApiBasicInfo.getApiName() +
+                    ",API目录为:" + dasApiBasicInfo.getApiPath() + ",请求方式为:" + dasApiBasicInfo.getRequestType() + " 的数据，不存在！！！");
+        }
+
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParams(dasApiBasicInfoVO, dasApiBasicInfo);
         dasApiBasicInfo.setGmtModified(new Date());
         dasApiBasicInfo.setDelFlag(0);
-        Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfo.getApiId());
-        boolean exists = dasApiBasicinfoRepository.exists(predicate);
-        if (exists) {
-            dasApiBasicinfoRepository.saveAndFlush(dasApiBasicInfo);
-        } else {
-            throw new BizException("当前要新增的API标准名称为:" + dasApiBasicInfo.getApiName() + " 的数据，不存在！！！");
-        }
+        dasApiBasicinfoRepository.saveAndFlush(dasApiBasicInfo);
     }
 
     @Transactional
@@ -192,6 +194,24 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     @Override
     public Map<String, String> getRequestParamsPositions() {
         return RequestParamPositionEnum.getAllValue();
+    }
+
+    @Override
+    public Optional<DasApiBasicInfo> searchApiBasicInfoByDelParamIsEmpty(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        Predicate predicate = qDasApiBasicInfo.apiName.eq(dasApiBasicInfoVO.getApiName())
+                .and(qDasApiBasicInfo.apiPath.eq(dasApiBasicInfoVO.getApiPath()))
+                .and(qDasApiBasicInfo.apiType.eq(dasApiBasicInfoVO.getApiType()))
+                .and(qDasApiBasicInfo.defInputParam.isNull());
+        return dasApiBasicinfoRepository.findOne(predicate);
+    }
+
+    @Override
+    public Optional<DasApiBasicInfo> checkExistApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        Predicate predicate = qDasApiBasicInfo.apiName.eq(dasApiBasicInfoVO.getApiName())
+                .and(qDasApiBasicInfo.apiPath.eq(dasApiBasicInfoVO.getApiPath()))
+                .and(qDasApiBasicInfo.apiType.eq(dasApiBasicInfoVO.getApiType()))
+                .and(qDasApiBasicInfo.apiType.eq(DasConstant.REGISTER_API_CODE));
+        return dasApiBasicinfoRepository.findOne(predicate);
     }
 
     private DasApiBasicInfo transformToEntity(DasApiBasicInfoVO dasApiBasicInfoVO) {

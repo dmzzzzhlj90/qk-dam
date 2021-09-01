@@ -40,6 +40,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
+    implementation group: 'org.openapi4j', name: 'openapi-core', version: '1.0.7'
+    implementation group: 'org.openapi4j', name: 'openapi-parser', version: '1.0.7'
+    implementation group: 'com.github.shalousun', name: 'smart-doc', version: '2.2.5'
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
