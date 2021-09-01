@@ -1,6 +1,7 @@
 package com.qk.dm.indicator.mapstruct.mapper;
 
 import com.qk.dm.indicator.entity.IdcFunction;
+import com.qk.dm.indicator.params.dto.IdcFunctionDTO;
 import com.qk.dm.indicator.params.vo.IdcFunctionVO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -20,5 +21,9 @@ public interface IdcFunctionMapper {
     IdcFunctionMapper INSTANCE = Mappers.getMapper(IdcFunctionMapper.class);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void useIdcFunction(IdcFunctionVO idcFunctionVO, @MappingTarget IdcFunction idcFunction);
+    void useIdcFunction(IdcFunctionDTO idcFunctionDTO, @MappingTarget IdcFunction idcFunction);
+
+    IdcFunction useIdcFunction(IdcFunctionDTO idcFunctionDTO);
+
+    IdcFunctionVO useIdcFunctionVO(IdcFunction idcFunction);
 }
