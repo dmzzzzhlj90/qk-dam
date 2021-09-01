@@ -7,18 +7,27 @@
   },
   "paths": {
     "/api/v2/getentid/": {
+      "parameters": [
+        {
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "in": "query",
+          "name": "guids"
+        },
+        {
+          "required": false,
+          "schema": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "in": "query",
+          "name": "age"
+        }
+      ],
       "post": {
         "summary": "这个接口啊啊啊",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/GetentidPayload"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "ok"

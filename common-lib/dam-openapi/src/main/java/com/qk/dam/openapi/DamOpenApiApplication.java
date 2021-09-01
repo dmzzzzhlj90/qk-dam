@@ -30,8 +30,27 @@ public class DamOpenApiApplication {
         EnumSet<SerializationFlag> enumSet = EnumSet.of(SerializationFlag.OUT_AS_JSON);
         return openApi3.toString(enumSet);
     }
+    public static String test2() throws EncodeException {
+        List<ComponentField> componentFields = Lists.newArrayList(
+                new ComponentField("key","测key","string",true),
+                new ComponentField("ctype","cccctype","string",false));
+
+        OpenApi3 openApi3 = OpenapiBuilder
+                .builder()
+                .build()
+                .info("test","测试一下","3.0.3")
+                .components("GetentidPayload",componentFields)
+                .path("/api/v2/getentid/","post","这个接口啊啊啊")
+                .parameter("/api/v2/getentid/","query","guids",true,"string")
+                .parameter("/api/v2/getentid/","query","age",false,"integer")
+                .response("/api/v2/getentid/","post","200","ok")
+                .getOpenApi3();
+        EnumSet<SerializationFlag> enumSet = EnumSet.of(SerializationFlag.OUT_AS_JSON);
+        return openApi3.toString(enumSet);
+    }
     public static void main(String[] args) throws MalformedURLException, ResolutionException, ValidationException, EncodeException {
         System.out.println(test1());
+        System.out.println(test2());
 
     }
 }

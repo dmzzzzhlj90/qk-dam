@@ -140,8 +140,9 @@ public class OpenapiBuilder {
                 .setRequired(required)
                 .setSchema(new Schema()
                         .setType(type)
-                        .setFormat("integer".equals(type) ? "int64" : null));
+                        .setFormat(type.startsWith("int") ? "int64" : null));
         parameters.add(parameter);
+        path.setParameters(parameters);
         return this;
     }
 
