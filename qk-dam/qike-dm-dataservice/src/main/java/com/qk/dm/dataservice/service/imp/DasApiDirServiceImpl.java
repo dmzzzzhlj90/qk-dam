@@ -11,10 +11,11 @@ import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.vo.DasApiDirTreeVO;
 import com.qk.dm.dataservice.vo.DasApiDirVO;
 import com.querydsl.core.types.Predicate;
-import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 /**
  * @author wjq
@@ -174,6 +175,19 @@ public class DasApiDirServiceImpl implements DasApiDirService {
       }
     }
   }
+
+  @Override
+  public List<DasApiDirVO> getDasApiDirByDirName(String title) {
+    List<DasApiDirVO> dasApiDirVOList = new ArrayList<>();
+    Predicate predicate = qDasApiDir.apiDirName.eq(title);
+    Iterable<DasApiDir> dasApiDirs = dasApiDirRepository.findAll(predicate);
+    for (DasApiDir dasApiDir : dasApiDirs) {
+      DasApiDirVO dasApiDirVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirVO(dasApiDir);
+      dasApiDirVOList.add(dasApiDirVO);
+    }
+    return dasApiDirVOList;
+  }
+
 
   /**
    * 获取删除叶子节点ID
