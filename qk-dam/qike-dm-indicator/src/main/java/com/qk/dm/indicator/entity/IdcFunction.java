@@ -27,12 +27,6 @@ public class IdcFunction implements Serializable {
     private String name;
 
     /**
-     * 分类
-     */
-    @Column(name = "classify")
-    private String classify;
-
-    /**
      * 函数
      */
     @Column(name = "function", nullable = false)
@@ -80,6 +74,6 @@ public class IdcFunction implements Serializable {
      * 是否删除；0逻辑删除，1物理删除
      */
     @Column(name = "del_flag")
-    private Integer delFlag;
+    private Integer delFlag = 0;
 
 }

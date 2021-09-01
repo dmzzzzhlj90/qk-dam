@@ -1,22 +1,20 @@
-package com.qk.dm.indicator.vo;
+package com.qk.dm.indicator.params.vo;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
-
+/**
+ * @author shenpj
+ * @date 2021/9/1 2:48 下午
+ * @since 1.0.0
+ */
 @Data
+@Builder
 public class IdcFunctionVO {
-    private Integer id;
-
     /**
      * 函数名称
      */
     private String name;
-
-    /**
-     * 分类
-     */
-    private String classify;
 
     /**
      * 函数
@@ -42,20 +40,4 @@ public class IdcFunctionVO {
      * 父级id
      */
     private Integer parentId;
-
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    private Date gmtModified;
-
-    /**
-     * 是否删除；0逻辑删除，1物理删除
-     */
-    private Integer delFlag;
-
 }

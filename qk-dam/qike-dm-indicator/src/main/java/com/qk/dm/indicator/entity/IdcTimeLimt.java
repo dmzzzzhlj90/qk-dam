@@ -80,6 +80,6 @@ public class IdcTimeLimt implements Serializable {
      * 0未删除 1已删除
      */
     @Column(name = "del_flag")
-    private Integer delFlag;
+    private Integer delFlag = 0;
 
 }
