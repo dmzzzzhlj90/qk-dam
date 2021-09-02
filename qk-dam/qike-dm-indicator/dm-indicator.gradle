@@ -27,6 +27,7 @@ dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
+    implementation project(":indicator-common-core")
 //    implementation project(":metadata-common-core")
 //
     implementation 'org.springframework.boot:spring-boot-starter-web'
