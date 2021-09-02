@@ -11,4 +11,8 @@ public interface MtdLabelsAtlasRepository extends BaseRepository<MtdLabelsAtlas,
   List<MtdLabelsAtlas> findAllByLabelsIsLikeAndSynchStatusIsNot(String labels, Integer synchStatus);
 
   List<MtdLabelsAtlas> findAllBySynchStatusIsNot(Integer synchStatus);
+
+  MtdLabelsAtlas findByGuid(String guid);
+
+  List<MtdLabelsAtlas> findAllByGuidIn(List<String> guids);
 }

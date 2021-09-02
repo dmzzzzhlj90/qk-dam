@@ -6,10 +6,14 @@ import com.qk.dm.metadata.entity.QMtdLabelsAtlas;
 import com.qk.dm.metadata.mapstruct.mapper.MtdLabelsAtlasMapper;
 import com.qk.dm.metadata.repositories.MtdLabelsAtlasRepository;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
+import com.qk.dm.metadata.vo.MtdLabelsAtlasBulkVO;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
 import com.querydsl.core.types.Predicate;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author spj
@@ -63,5 +67,32 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
     Predicate predicate = qMtdLabelsAtlas.guid.eq(guid).and(qMtdLabelsAtlas.synchStatus.ne(-1));
     Optional<MtdLabelsAtlas> one = mtdLabelsAtlasRepository.findOne(predicate);
     return one.map(MtdLabelsAtlasMapper.INSTANCE::useMtdLabelsAtlasVO).orElse(null);
+  }
+
+  @Override
+  public void bulk(MtdLabelsAtlasBulkVO mtdLabelsVO) {
+    List<MtdLabelsAtlas> labelsAtlasList = new ArrayList<>();
+    List<String> guidList = Arrays.asList(mtdLabelsVO.getGuids());
+    Map<String, MtdLabelsAtlas> labelsAtlasMap =
+        mtdLabelsAtlasRepository.findAllByGuidIn(guidList).stream()
+            .collect(Collectors.toMap(MtdLabelsAtlas::getGuid, MtdLabelsAtlas -> MtdLabelsAtlas));
+    for (String guid : guidList) {
+      MtdLabelsAtlas byGuid;
+      if (labelsAtlasMap.get(guid) != null) {
+        byGuid = labelsAtlasMap.get(guid);
+        byGuid.setSynchStatus(0);
+        byGuid.setLabels(
+                String.join(",", Stream.concat(
+                                Arrays.stream(byGuid.getLabels().split(",")),
+                                Arrays.stream(mtdLabelsVO.getLabels().split(",")))
+                        .collect(Collectors.toSet())));
+      } else {
+        byGuid = new MtdLabelsAtlas();
+        byGuid.setGuid(guid);
+        byGuid.setLabels(mtdLabelsVO.getLabels());
+      }
+      labelsAtlasList.add(byGuid);
+    }
+    mtdLabelsAtlasRepository.saveAll(labelsAtlasList);
   }
 }
