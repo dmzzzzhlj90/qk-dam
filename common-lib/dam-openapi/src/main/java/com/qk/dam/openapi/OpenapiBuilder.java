@@ -99,7 +99,8 @@ public class OpenapiBuilder {
                                String summary) {
         openApi3.setPath(pathName, new Path()
                 .setOperation(httpMethod, new Operation()
-                        .setSummary(summary)));
+                        .setSummary(summary)
+                        .setParameters(new ArrayList<>())));
         return this;
     }
 
@@ -135,12 +136,15 @@ public class OpenapiBuilder {
      */
     public OpenapiBuilder parameter(
             String pathName,
+            String httpMethod,
             String in,
             String name,
             boolean required,
             String type) {
         Path path = openApi3.getPath(pathName);
-        List<Parameter> parameters = path.getParameters();
+        Operation operation = path.getOperation(httpMethod);
+        List<Parameter> parameters = operation.getParameters();
+
         if (parameters == null) {
             parameters = new ArrayList<>();
         }
@@ -152,7 +156,8 @@ public class OpenapiBuilder {
                         .setType(type)
                         .setFormat(type.startsWith("int") ? "int64" : null));
         parameters.add(parameter);
-        path.setParameters(parameters);
+        operation.setParameters(parameters);
+        path.setOperation(httpMethod,operation);
         return this;
     }
 

@@ -42,8 +42,8 @@ public class DamOpenApiApplication {
                 .info("test", "测试一下", "3.0.3")
                 .components("GetentidPayload", componentFields)
                 .path("/api/v2/getentid/", "post", "这个接口啊啊啊")
-                .parameter("/api/v2/getentid/", "query", "guids", true, "string")
-                .parameter("/api/v2/getentid/", "query", "age", false, "integer")
+                .parameter("/api/v2/getentid/", "post","query", "guids", true, "string")
+                .parameter("/api/v2/getentid/", "post","query", "age", false, "integer")
                 .response("/api/v2/getentid/", "post", "200", "ok")
                 .getOpenApi3();
         EnumSet<SerializationFlag> enumSet = EnumSet.of(SerializationFlag.OUT_AS_JSON);

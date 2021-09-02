@@ -7,7 +7,7 @@ public interface MtdLabelsAtlasService {
 
   void insert(MtdLabelsAtlasVO mtdLabelsAtlasVO);
 
-  void update(Long id, MtdLabelsAtlasVO mtdLabelsAtlasVO);
+  void update(MtdLabelsAtlasVO mtdLabelsAtlasVO);
 
   MtdLabelsAtlasVO getByGuid(String guid);
 

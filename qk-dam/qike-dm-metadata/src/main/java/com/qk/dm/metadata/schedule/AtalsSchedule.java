@@ -15,12 +15,12 @@ public class AtalsSchedule {
     this.synchAtalsService = synchAtalsService;
   }
 
-  @Scheduled(fixedDelay = 60000)
+  @Scheduled(fixedDelay = 30000)
   public void synchLabelsAtlas() {
     synchAtalsService.synchLabelsAtlas();
   }
 
-  @Scheduled(fixedDelay = 60000)
+  @Scheduled(fixedDelay = 30000)
   public void synchClassify() {
     synchAtalsService.synchClassify();
     synchAtalsService.synchClassifyAtlas();
