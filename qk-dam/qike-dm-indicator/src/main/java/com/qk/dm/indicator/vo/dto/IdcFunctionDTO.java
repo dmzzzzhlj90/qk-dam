@@ -1,4 +1,4 @@
-package com.qk.dm.indicator.params.dto;
+package com.qk.dm.indicator.vo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

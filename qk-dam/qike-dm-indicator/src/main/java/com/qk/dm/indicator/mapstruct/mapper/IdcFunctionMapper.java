@@ -1,8 +1,8 @@
 package com.qk.dm.indicator.mapstruct.mapper;
 
 import com.qk.dm.indicator.entity.IdcFunction;
-import com.qk.dm.indicator.params.dto.IdcFunctionDTO;
-import com.qk.dm.indicator.params.vo.IdcFunctionVO;
+import com.qk.dm.indicator.vo.dto.IdcFunctionDTO;
+import com.qk.dm.indicator.vo.IdcFunctionVO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
