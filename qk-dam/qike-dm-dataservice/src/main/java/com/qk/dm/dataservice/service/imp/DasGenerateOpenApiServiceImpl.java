@@ -92,7 +92,11 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
                 } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_PATH.getTypeName()
                         .equalsIgnoreCase(apiRegisterBackendParaVOList.get(0).getBackendParaPosition())) {
                     //path,Parameters
-                    parameterRegisterBuilder(openapiBuilder, dasApiRegisterVO.getBackendPath(), apiRegisterBackendParaVOList, basicInfoRequestParasMap);
+                    parameterRegisterBuilder(openapiBuilder,
+                            dasApiRegisterVO.getBackendPath(),
+                            dasApiRegisterVO.getRequestType(),
+                            apiRegisterBackendParaVOList,
+                            basicInfoRequestParasMap);
                 }
             } else {
                 //pathsBuilder
@@ -169,11 +173,12 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
 
     private void parameterRegisterBuilder(OpenapiBuilder openapiBuilder,
                                           String backendPath,
+                                          String httpMethod,
                                           List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList,
                                           Map<String, List<DasApiBasicInfoRequestParasVO>> basicInfoRequestParasMap) {
         for (DasApiRegisterBackendParaVO backendParaVO : apiRegisterBackendParaVOList) {
             DasApiBasicInfoRequestParasVO requestParasVO = basicInfoRequestParasMap.get(backendParaVO.getParaName()).get(0);
-            openapiBuilder.parameter(backendPath, OPEN_API_PARAMETER_TYPE_QUERY, backendParaVO.getBackendParaName(), requestParasVO.isNecessary(), requestParasVO.getParaType().toLowerCase());
+            openapiBuilder.parameter(backendPath, httpMethod.toLowerCase(), OPEN_API_PARAMETER_TYPE_QUERY, backendParaVO.getBackendParaName(), requestParasVO.isNecessary(), requestParasVO.getParaType().toLowerCase());
         }
     }
 

@@ -1,11 +1,9 @@
 package com.qk.dm.dataservice.controller;
 
-import com.qk.dam.commons.enums.ResultCodeEnum;
-import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasGenerateOpenApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,9 +31,9 @@ public class DasGenerateOpenApiController {
      *
      * @return DefaultCommonResult
      */
-    @PostMapping("/register")
-    public DefaultCommonResult<String> generateOpenApiRegister() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasGenerateOpenApiService.generateOpenApiRegister());
+    @GetMapping(value = "/register",produces = "application/json;charset=utf-8")
+    public String generateOpenApiRegister() {
+        return dasGenerateOpenApiService.generateOpenApiRegister();
     }
 
 
