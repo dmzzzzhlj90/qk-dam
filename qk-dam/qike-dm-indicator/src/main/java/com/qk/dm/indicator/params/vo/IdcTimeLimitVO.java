@@ -1,6 +1,5 @@
 package com.qk.dm.indicator.params.vo;
 
-import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class IdcTimeLimitVO {
 
-    private Pagination pagination;
 
     private Long id;
 

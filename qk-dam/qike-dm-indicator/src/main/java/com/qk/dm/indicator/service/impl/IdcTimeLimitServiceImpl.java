@@ -64,6 +64,7 @@ public class IdcTimeLimitServiceImpl implements IdcTimeLimitService {
         if (Objects.isNull(idcTimeLimit)) {
             throw new BizException("当前时间限定：" + id + " 的数据不存在！！！");
         }
+        IdcTimeLimitMapper.INSTANCE.useIdcTimeLimit(idcTimeLimitDTO,idcTimeLimit);
         idcTimeLimitRepository.saveAndFlush(idcTimeLimit);
     }
 

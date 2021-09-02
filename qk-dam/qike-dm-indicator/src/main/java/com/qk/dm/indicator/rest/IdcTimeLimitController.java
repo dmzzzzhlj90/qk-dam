@@ -80,7 +80,7 @@ public class IdcTimeLimitController {
      *
      * @return DefaultCommonResult<List < IdcTimeLimitVO>>
      */
-    @GetMapping("/findAll")
+    @GetMapping("/find/all")
     public DefaultCommonResult<List<IdcTimeLimitVO>> findAll() {
         List<IdcTimeLimitVO> idcTimeLimitVOList = idcTimeLimitService.findAll();
         return DefaultCommonResult.success(ResultCodeEnum.OK, idcTimeLimitVOList);
@@ -90,7 +90,7 @@ public class IdcTimeLimitController {
      * @param idcTimeLimitPageDTO
      * @return DefaultCommonResult<PageResultVO < IdcTimeLimitVO>>
      */
-    @GetMapping("/pageList")
+    @GetMapping("/page/list")
     public DefaultCommonResult<PageResultVO<IdcTimeLimitVO>> pageList(@RequestBody @Validated IdcTimeLimitPageDTO idcTimeLimitPageDTO) {
         PageResultVO<IdcTimeLimitVO> list = idcTimeLimitService.findListPage(idcTimeLimitPageDTO);
         return DefaultCommonResult.success(ResultCodeEnum.OK, list);
