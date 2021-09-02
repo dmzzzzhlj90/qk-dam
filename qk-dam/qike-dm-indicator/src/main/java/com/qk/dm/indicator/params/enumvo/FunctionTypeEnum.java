@@ -1,4 +1,4 @@
-package com.qk.dm.indicator.vo.enumvo;
+package com.qk.dm.indicator.params.enumvo;
 
 import java.util.Arrays;
 import java.util.Map;

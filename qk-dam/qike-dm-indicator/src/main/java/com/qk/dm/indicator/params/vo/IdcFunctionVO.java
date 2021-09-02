@@ -1,6 +1,5 @@
-package com.qk.dm.indicator.vo.dto;
+package com.qk.dm.indicator.params.vo;
 
-import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,15 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class IdcFunctionPageDTO {
-
-  private Pagination pagination;
-
-  /** 开始时间 */
-  private String beginDay;
-
-  /** 结束时间 */
-  private String endDay;
+public class IdcFunctionVO {
+  private Long id;
 
   /** 函数名称 */
   private String name;
