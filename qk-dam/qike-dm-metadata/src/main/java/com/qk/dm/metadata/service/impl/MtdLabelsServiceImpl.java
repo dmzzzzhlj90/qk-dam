@@ -1,6 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.entity.MtdLabels;
 import com.qk.dm.metadata.entity.MtdLabelsAtlas;
 import com.qk.dm.metadata.entity.QMtdLabels;
@@ -58,7 +59,7 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
   public void insert(MtdLabelsVO mtdLabelsVO) {
     Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName());
     if (mtdLabelsRepository.exists(predicate)) {
-      throw new BizException("当前要新增的标签名为：" + mtdLabelsVO.getName() + " 的数据，已存在！！！");
+      throw new BizException("当前要新增的标签名为：" + mtdLabelsVO.getName() + " 的数据已存在！！！");
     }
     MtdLabels mtdLabels = MtdLabelsMapper.INSTANCE.useMtdLabels(mtdLabelsVO);
     mtdLabelsRepository.save(mtdLabels);
@@ -68,10 +69,14 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
   public void update(Long id, MtdLabelsVO mtdLabelsVO) {
     Predicate predicate = qMtdLabels.name.eq(mtdLabelsVO.getName()).and(qMtdLabels.id.ne(id));
     if (mtdLabelsRepository.exists(predicate)) {
-      throw new BizException("当前要修改的标签名为：" + mtdLabelsVO.getName() + " 的数据，已存在！！！");
+      throw new BizException("当前要修改的标签名为：" + mtdLabelsVO.getName() + " 的数据已存在！！！");
     }
-    MtdLabels mtdLabels = mtdLabelsRepository.findById(id).orElse(new MtdLabels());
+    MtdLabels mtdLabels = mtdLabelsRepository.findById(id).orElse(null);
+    if (mtdLabels == null) {
+      throw new BizException("当前要修改的标签id为：" + id + " 的数据不存在！！！");
+    }
     MtdLabelsMapper.INSTANCE.updateMtdLabelsVO(mtdLabelsVO, mtdLabels);
+    //todo 如果启用，需要删除或替换atlas中的标签名
     mtdLabelsRepository.saveAndFlush(mtdLabels);
   }
 
@@ -90,7 +95,8 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
 
   public List<MtdLabelsAtlas> synchLabels(List<MtdLabels> labelAllList) {
     // todo 可考虑优化 提前放到缓存中，维护缓存
-    List<MtdLabelsAtlas> labelsAtlases = mtdLabelsAtlasRepository.findAllBySynchStatusIsNot(-1);
+    List<MtdLabelsAtlas> labelsAtlases =
+        mtdLabelsAtlasRepository.findAllBySynchStatusIsNot(SynchStateProperty.LabelsAtlas.DELETE);
     List<String> labelsNameList =
         labelAllList.stream().map(MtdLabels::getName).collect(Collectors.toList());
     return labelsAtlases.stream()
@@ -105,7 +111,10 @@ public class MtdLabelsServiceImpl implements MtdLabelsService {
                       .filter(y -> !labelsNameList.contains(y))
                       .collect(Collectors.joining(","));
               mla.setLabels(labels.isEmpty() ? mla.getLabels() : labels);
-              mla.setSynchStatus(labels.isEmpty() ? -1 : 0);
+              mla.setSynchStatus(
+                  labels.isEmpty()
+                      ? SynchStateProperty.LabelsAtlas.DELETE
+                      : SynchStateProperty.LabelsAtlas.NOT_SYNCH);
             })
         .collect(Collectors.toList());
   }
