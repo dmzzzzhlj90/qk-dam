@@ -38,9 +38,9 @@ import org.springframework.http.HttpStatus;
 public enum ResultCodeEnum {
 
   /** 一切皆ok */
-  OK(HttpStatus.OK, "DM-200-00000", "数据返回正常"),
+  OK(HttpStatus.OK, "DM-200-00000", "请求处理成功"),
   /** 一切皆ok */
-  OK_MSG(HttpStatus.OK, "DM-200-00000", "数据返回正常"),
+  OK_MSG(HttpStatus.OK, "DM-200-00000", "请求处理成功"),
   /** 请求发生未知错误 */
   BAD_REQUEST(HttpStatus.BAD_REQUEST, "DM-400-A0001", "请求发生未知错误"),
 
