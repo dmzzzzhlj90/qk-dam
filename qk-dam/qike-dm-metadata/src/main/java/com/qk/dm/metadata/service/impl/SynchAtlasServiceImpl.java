@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.service.impl;
 
+import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dam.metedata.util.AtlasClassificationUtil;
 import com.qk.dam.metedata.util.AtlasLabelsUtil;
 import com.qk.dm.metadata.entity.MtdClassify;
@@ -9,13 +10,11 @@ import com.qk.dm.metadata.repositories.MtdClassifyAtlasRepository;
 import com.qk.dm.metadata.repositories.MtdClassifyRepository;
 import com.qk.dm.metadata.repositories.MtdLabelsAtlasRepository;
 import com.qk.dm.metadata.service.SynchAtlasService;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.apache.atlas.AtlasServiceException;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author spj
@@ -41,29 +40,37 @@ public class SynchAtlasServiceImpl implements SynchAtlasService {
   /** 刷新标签绑定 */
   public void synchLabelsAtlas() {
     List<MtdLabelsAtlas> labelAllList =
-        mtdLabelsAtlasRepository.findAllBySynchStatusInOrderByGmtCreateAsc(Arrays.asList(-1, 0));
+        mtdLabelsAtlasRepository.findAllBySynchStatusNotOrderByGmtCreateAsc(
+            SynchStateProperty.LabelsAtlas.SYNCH);
     if (!labelAllList.isEmpty()) {
       List<MtdLabelsAtlas> updateList =
-          labelAllList.stream().filter(i -> i.getSynchStatus() == 0).collect(Collectors.toList());
+          labelAllList.stream()
+              .filter(
+                  i -> Objects.equals(i.getSynchStatus(), SynchStateProperty.LabelsAtlas.NOT_SYNCH))
+              .collect(Collectors.toList());
       this.putAtlasLabels(updateList);
       List<MtdLabelsAtlas> deleteList =
-          labelAllList.stream().filter(i -> i.getSynchStatus() == -1).collect(Collectors.toList());
+          labelAllList.stream()
+              .filter(
+                  i -> Objects.equals(i.getSynchStatus(), SynchStateProperty.LabelsAtlas.DELETE))
+              .collect(Collectors.toList());
       this.delAtlasLabels(deleteList);
     }
   }
 
   /** 刷新分类 */
   public void synchClassify() {
-    List<MtdClassify> mtdClassifyList = mtdClassifyRepository.findAllBySynchStatusIsNot(1);
+    List<MtdClassify> mtdClassifyList =
+        mtdClassifyRepository.findAllBySynchStatusIsNot(SynchStateProperty.Classify.SYNCH);
     if (!mtdClassifyList.isEmpty()) {
       List<MtdClassify> addClassList =
           mtdClassifyList.stream()
-              .filter(i -> i.getSynchStatus() == 2)
+              .filter(i -> Objects.equals(i.getSynchStatus(), SynchStateProperty.Classify.ADD))
               .collect(Collectors.toList());
       this.addClassify(addClassList);
       List<MtdClassify> deleteClassList =
           mtdClassifyList.stream()
-              .filter(i -> i.getSynchStatus() == -1)
+              .filter(i -> Objects.equals(i.getSynchStatus(), SynchStateProperty.Classify.DELETE))
               .collect(Collectors.toList());
       this.delClassify(deleteClassList);
     }
@@ -72,16 +79,21 @@ public class SynchAtlasServiceImpl implements SynchAtlasService {
   /** 刷新分类绑定 */
   public void synchClassifyAtlas() {
     List<MtdClassifyAtlas> classifyAtlasList =
-        mtdClassifyAtlasRepository.findAllBySynchStatusInOrderByGmtCreateAsc(Arrays.asList(-1, 0));
+        mtdClassifyAtlasRepository.findAllBySynchStatusNotOrderByGmtCreateAsc(
+            SynchStateProperty.ClassifyAtlas.SYNCH);
     if (!classifyAtlasList.isEmpty()) {
       List<MtdClassifyAtlas> updateClassList =
           classifyAtlasList.stream()
-              .filter(i -> i.getSynchStatus() == 0)
+              .filter(
+                  i ->
+                      Objects.equals(
+                          i.getSynchStatus(), SynchStateProperty.ClassifyAtlas.NOT_SYNCH))
               .collect(Collectors.toList());
       this.putAtlasClassify(updateClassList);
       List<MtdClassifyAtlas> deleteClassList =
           classifyAtlasList.stream()
-              .filter(i -> i.getSynchStatus() == -1)
+              .filter(
+                  i -> Objects.equals(i.getSynchStatus(), SynchStateProperty.ClassifyAtlas.DELETE))
               .collect(Collectors.toList());
       this.delAtlasClassify(deleteClassList);
     }
@@ -93,7 +105,7 @@ public class SynchAtlasServiceImpl implements SynchAtlasService {
           mtdLabelsAtlas -> {
             try {
               AtlasLabelsUtil.setLabels(mtdLabelsAtlas.getGuid(), mtdLabelsAtlas.getLabels());
-              mtdLabelsAtlas.setSynchStatus(1);
+              mtdLabelsAtlas.setSynchStatus(SynchStateProperty.LabelsAtlas.SYNCH);
             } catch (AtlasServiceException e) {
               // 降级处理
               e.printStackTrace();
@@ -127,7 +139,9 @@ public class SynchAtlasServiceImpl implements SynchAtlasService {
                 .collect(Collectors.toMap(MtdClassify::getName, MtdClassify::getDescription));
         AtlasLabelsUtil.addTypedefs(addClassMap);
         mtdClassifyRepository.saveAll(
-            addClassList.stream().peek(i -> i.setSynchStatus(1)).collect(Collectors.toList()));
+            addClassList.stream()
+                .peek(i -> i.setSynchStatus(SynchStateProperty.Classify.SYNCH))
+                .collect(Collectors.toList()));
       } catch (AtlasServiceException e) {
         // 降级处理
         e.printStackTrace();
@@ -160,7 +174,7 @@ public class SynchAtlasServiceImpl implements SynchAtlasService {
             try {
               AtlasLabelsUtil.upEntitiesClassis(
                   mtdClassifyAtlas.getGuid(), mtdClassifyAtlas.getClassify());
-              mtdClassifyAtlas.setSynchStatus(1);
+              mtdClassifyAtlas.setSynchStatus(SynchStateProperty.ClassifyAtlas.SYNCH);
             } catch (AtlasServiceException e) {
               // 降级处理
               e.printStackTrace();

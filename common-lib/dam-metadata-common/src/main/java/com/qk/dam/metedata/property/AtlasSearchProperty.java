@@ -1,11 +1,11 @@
-package com.qk.dm.metadata.properties;
+package com.qk.dam.metedata.property;
 
 /**
  * @author shenpj
  * @date 2021/8/27 4:04 下午
  * @since 1.0.0
  */
-public class AtlasSearchParameters {
+public class AtlasSearchProperty {
 
     public static class AttributeName {
         public static final String TYPENAME = "__typeName";

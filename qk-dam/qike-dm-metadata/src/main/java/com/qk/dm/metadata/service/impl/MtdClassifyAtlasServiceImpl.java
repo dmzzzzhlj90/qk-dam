@@ -1,6 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.entity.MtdClassifyAtlas;
 import com.qk.dm.metadata.entity.QMtdClassifyAtlas;
 import com.qk.dm.metadata.mapstruct.mapper.MtdClassifyAtlasMapper;
@@ -34,7 +35,7 @@ public class MtdClassifyAtlasServiceImpl implements MtdClassifyAtlasService {
         qMtdClassifyAtlas
             .guid
             .eq(mtdClassifyAtlasVO.getGuid())
-            .and(qMtdClassifyAtlas.synchStatus.ne(-1));
+            .and(qMtdClassifyAtlas.synchStatus.ne(SynchStateProperty.ClassifyAtlas.DELETE));
     if (mtdClassifyAtlasRepository.exists(predicate)) {
       throw new BizException("当前要绑定标签的元数据为：" + mtdClassifyAtlasVO.getGuid() + " 的数据已存在！！！");
     }
@@ -49,23 +50,27 @@ public class MtdClassifyAtlasServiceImpl implements MtdClassifyAtlasService {
         qMtdClassifyAtlas
             .guid
             .eq(mtdClassifyAtlasVO.getGuid())
-            .and(qMtdClassifyAtlas.synchStatus.ne(-1));
+            .and(qMtdClassifyAtlas.synchStatus.ne(SynchStateProperty.ClassifyAtlas.DELETE));
     MtdClassifyAtlas classifyAtlas = mtdClassifyAtlasRepository.findOne(predicate).orElse(null);
     if (classifyAtlas == null) {
       throw new BizException("当前要绑定分类的元数据为：" + mtdClassifyAtlasVO.getGuid() + " 的数据不存在！！！");
     }
     if (mtdClassifyAtlasVO.getClassify().isEmpty()) {
-      classifyAtlas.setSynchStatus(-1);
+      classifyAtlas.setSynchStatus(SynchStateProperty.ClassifyAtlas.DELETE);
     } else {
       classifyAtlas.setClassify(mtdClassifyAtlasVO.getClassify());
-      classifyAtlas.setSynchStatus(0);
+      classifyAtlas.setSynchStatus(SynchStateProperty.ClassifyAtlas.NOT_SYNCH);
     }
     mtdClassifyAtlasRepository.saveAndFlush(classifyAtlas);
   }
 
   @Override
   public MtdClassifyAtlasVO getByGuid(String guid) {
-    Predicate predicate = qMtdClassifyAtlas.guid.eq(guid).and(qMtdClassifyAtlas.synchStatus.ne(-1));
+    Predicate predicate =
+        qMtdClassifyAtlas
+            .guid
+            .eq(guid)
+            .and(qMtdClassifyAtlas.synchStatus.ne(SynchStateProperty.ClassifyAtlas.DELETE));
     Optional<MtdClassifyAtlas> one = mtdClassifyAtlasRepository.findOne(predicate);
     return one.map(MtdClassifyAtlasMapper.INSTANCE::useMtdClassifyAtlasVO).orElse(null);
   }
