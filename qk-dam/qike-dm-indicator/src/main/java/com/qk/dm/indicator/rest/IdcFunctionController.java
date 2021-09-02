@@ -2,10 +2,10 @@ package com.qk.dm.indicator.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.indicator.common.enums.FunctionTypeEnum;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.params.dto.IdcFunctionDTO;
 import com.qk.dm.indicator.params.dto.IdcFunctionPageDTO;
-import com.qk.dm.indicator.params.enumvo.FunctionTypeEnum;
 import com.qk.dm.indicator.params.vo.IdcFunctionVO;
 import com.qk.dm.indicator.service.IdcFunctionService;
 import org.springframework.validation.annotation.Validated;
