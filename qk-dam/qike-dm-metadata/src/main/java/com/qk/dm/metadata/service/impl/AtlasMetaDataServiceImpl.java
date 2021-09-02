@@ -21,8 +21,11 @@ import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -269,10 +272,13 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     try {
       AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
+      attributes.remove("createTime");
       mtdTableDetailVO = GsonUtil.fromMap(attributes, MtdTableDetailVO.class);
+//      mtdTableDetailVO.setCreateTime(DateFormatUtils.format(new Date(mtdTableDetailVO.getCreateTime()),"yyyy-MM-dd HH:mm:ss"));
       MtdDbInfoVO mtdDbInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("db")), MtdDbInfoVO.class);
       mtdTableDetailVO.setDb(mtdDbInfoVO);
       mtdTableDetailVO.setTypeName(detail.getEntity().getTypeName());
+      mtdTableDetailVO.setCreateTime(detail.getEntity().getCreateTime());
       mtdTableDetailVO.setColumns(buildReferredEntities(detail));
     } catch (Exception e) {
       e.printStackTrace();
@@ -295,7 +301,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               Map<String, Object> attr = e.getAttributes();
               attr.put("guid", e.getGuid());
               attr.put("typeName",e.getTypeName());
-              attr.put("createTime",e.getCreateTime());
+              attr.put("createTime",DateFormatUtils.format(e.getCreateTime(),"yyyy-MM-dd HH:mm:ss"));
               return attr;
             })
         .collect(Collectors.toList());
