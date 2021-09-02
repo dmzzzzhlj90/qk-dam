@@ -4,7 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-import com.qk.dm.metadata.properties.AtlasSearchParameters;
+import com.qk.dam.metedata.property.AtlasSearchProperty;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.*;
 import org.apache.atlas.AtlasClientV2;
@@ -82,16 +82,16 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       filterCriteriaList.add(
           getFilterCriteria(
               mtdAtlasParamsVO.getTypeNameValue(),
-              AtlasSearchParameters.AttributeName.TYPENAME,
-              AtlasSearchParameters.Operator.EQ,
+              AtlasSearchProperty.AttributeName.TYPENAME,
+              AtlasSearchProperty.Operator.EQ,
               SearchParameters.FilterCriteria.Condition.OR));
     }
     if (mtdAtlasParamsVO.getNameValue() != null && mtdAtlasParamsVO.getNameValue().length > 0) {
       filterCriteriaList.add(
           getFilterCriteria(
               mtdAtlasParamsVO.getNameValue(),
-              AtlasSearchParameters.AttributeName.NAME,
-              AtlasSearchParameters.Operator.CONTAINS,
+              AtlasSearchProperty.AttributeName.NAME,
+              AtlasSearchProperty.Operator.CONTAINS,
               SearchParameters.FilterCriteria.Condition.AND));
     }
     if (mtdAtlasParamsVO.getLabelsValue() != null && mtdAtlasParamsVO.getLabelsValue().length > 0) {
@@ -99,8 +99,8 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       entity.setCondition(SearchParameters.FilterCriteria.Condition.AND);
       entity.setCriterion(Arrays.asList(getFilterCriteria(
               mtdAtlasParamsVO.getLabelsValue(),
-              AtlasSearchParameters.AttributeName.LABELS,
-              AtlasSearchParameters.Operator.CONTAINS,
+              AtlasSearchProperty.AttributeName.LABELS,
+              AtlasSearchProperty.Operator.CONTAINS,
               SearchParameters.FilterCriteria.Condition.OR)));
       filterCriteriaList.add(entity);
     }
