@@ -59,7 +59,7 @@ public class IdcBusinessController {
     /**
      * 根据id删除业务指标
      * @param ids
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/{ids}")
     public DefaultCommonResult delete(@PathVariable("ids") String ids) {
@@ -71,7 +71,7 @@ public class IdcBusinessController {
      * 根据id获取业务指标详情
      *
      * @param id
-     * @return
+     * @return DefaultCommonResult<IdcBusinessVO>
      */
     @GetMapping("/{id}")
     public DefaultCommonResult<IdcBusinessVO> detail(@PathVariable("id") Long id) {
@@ -83,7 +83,7 @@ public class IdcBusinessController {
      * 获取指标分页查询列表
      *
      * @param idcBusinessPageDTO
-     * @return DefaultCommonResult<PageResultVO < IdcTimeLimitVO>>
+     * @return DefaultCommonResult<PageResultVO<IdcBusinessVO>>
      */
     @GetMapping("/page/list")
     public DefaultCommonResult<PageResultVO<IdcBusinessVO>> pageList(@RequestBody @Validated IdcBusinessPageDTO idcBusinessPageDTO) {

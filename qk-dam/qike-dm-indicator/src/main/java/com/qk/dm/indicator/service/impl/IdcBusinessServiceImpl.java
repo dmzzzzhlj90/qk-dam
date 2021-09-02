@@ -10,17 +10,18 @@ import com.qk.dm.indicator.params.dto.IdcBusinessPageDTO;
 import com.qk.dm.indicator.params.vo.IdcBusinessVO;
 import com.qk.dm.indicator.repositories.IdcBusinessRepository;
 import com.qk.dm.indicator.service.IdcBusinessService;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -89,6 +90,66 @@ public class IdcBusinessServiceImpl implements IdcBusinessService {
 
     @Override
     public PageResultVO<IdcBusinessVO> findListPage(IdcBusinessPageDTO idcBusinessPageDTO) {
-        return null;
+        Map<String, Object> map;
+        try {
+            map = queryIdcIdcBusinessByParams(idcBusinessPageDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BizException("查询失败!!!");
+        }
+        List<IdcBusiness> list = (List<IdcBusiness>) map.get("list");
+        List<IdcBusinessVO> idcBusinessVOList = IdcBusinessMapper.INSTANCE.userIdcBusinessListVO(list);
+        return new PageResultVO<>(
+                (long) map.get("total"),
+                idcBusinessPageDTO.getPagination().getPage(),
+                idcBusinessPageDTO.getPagination().getSize(),
+                idcBusinessVOList);
+    }
+
+    private Map<String, Object> queryIdcIdcBusinessByParams(IdcBusinessPageDTO idcBusinessPageDTO) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        checkCondition(booleanBuilder, idcBusinessPageDTO);
+        Map<String, Object> result = new HashMap<>();
+        long count =
+                jpaQueryFactory
+                        .select(qIdcBusiness.count())
+                        .from(qIdcBusiness)
+                        .where(booleanBuilder)
+                        .fetchOne();
+
+        List<IdcBusiness> idcBusinessList = jpaQueryFactory
+                .select(qIdcBusiness)
+                .from(qIdcBusiness)
+                .where(booleanBuilder)
+                .orderBy(qIdcBusiness.id.asc())
+                .offset(
+                        (long) (idcBusinessPageDTO.getPagination().getPage() - 1)
+                                * idcBusinessPageDTO.getPagination().getSize())
+                .limit(idcBusinessPageDTO.getPagination().getSize())
+                .fetch();
+        result.put("list", idcBusinessList);
+        result.put("total", count);
+        return result;
+    }
+
+    public void checkCondition(BooleanBuilder booleanBuilder, IdcBusinessPageDTO idcBusinessPageDTO) {
+        if (!StringUtils.isEmpty(idcBusinessPageDTO.getBIndicatorName())) {
+            booleanBuilder.and(qIdcBusiness.bIndicatorName.contains(idcBusinessPageDTO.getBIndicatorName()));
+        }
+        if (!StringUtils.isEmpty(idcBusinessPageDTO.getIndicatorPersonLiable())) {
+            booleanBuilder.and(qIdcBusiness.indicatorPersonLiable.contains(idcBusinessPageDTO.getIndicatorPersonLiable()));
+        }
+        if(Objects.nonNull(idcBusinessPageDTO.getIndicatorStatus())){
+            booleanBuilder.and(qIdcBusiness.indicatorStatus.eq(idcBusinessPageDTO.getIndicatorStatus()));
+        }
+        if (!StringUtils.isEmpty(idcBusinessPageDTO.getStartTime())
+                && !StringUtils.isEmpty(idcBusinessPageDTO.getEndTime())) {
+            StringTemplate dateExpr =
+                    Expressions.stringTemplate(
+                            "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qIdcBusiness.gmtCreate);
+            booleanBuilder.and(
+                    dateExpr.between(idcBusinessPageDTO.getStartTime(), idcBusinessPageDTO.getEndTime()));
+        }
+        booleanBuilder.and(qIdcBusiness.delFlag.eq(0));
     }
 }
