@@ -3,6 +3,8 @@ package com.qk.dm.metadata.vo;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @Builder
 public class MtdColumnVO {
@@ -26,7 +28,7 @@ public class MtdColumnVO {
     /** 默认值 */
     private String defaultValue;
     /** 创建时间 */
-    private String createTime;
+    private Date createTime;
     /** 标签 */
     private String labels;
     /** 分类 */

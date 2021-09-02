@@ -236,6 +236,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       Map<String, Object> attributes = detail.getEntity().getAttributes();
       mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
       mtdColumnVO.setTypeName(detail.getEntity().getTypeName());
+      mtdColumnVO.setCreateTime(detail.getEntity().getCreateTime());
       mtdColumnVO.setDataType(Objects.nonNull(attributes.get("data_type"))?attributes.get("data_type").toString():null);
       mtdColumnVO.setDefaultValue(Objects.nonNull(attributes.get("default_value"))?attributes.get("default_value").toString():null);
       MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("table")), MtdTableInfoVO.class);
@@ -254,6 +255,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       Map<String, Object> attributes = detail.getEntity().getAttributes();
       mtdAtlasDbDetailVO = GsonUtil.fromMap(attributes, MtdDbDetailVO.class);
       mtdAtlasDbDetailVO.setTypeName(detail.getEntity().getTypeName());
+      mtdAtlasDbDetailVO.setCreateTime(detail.getEntity().getCreateTime());
       mtdAtlasDbDetailVO.setTables(buildReferredEntities(detail));
     } catch (Exception e) {
       e.printStackTrace();
@@ -293,6 +295,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               Map<String, Object> attr = e.getAttributes();
               attr.put("guid", e.getGuid());
               attr.put("typeName",e.getTypeName());
+              attr.put("createTime",e.getCreateTime());
               return attr;
             })
         .collect(Collectors.toList());
@@ -326,4 +329,5 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       e.printStackTrace();
     }
   }
+
 }

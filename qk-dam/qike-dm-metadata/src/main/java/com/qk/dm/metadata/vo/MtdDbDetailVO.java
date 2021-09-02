@@ -3,6 +3,7 @@ package com.qk.dm.metadata.vo;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class MtdDbDetailVO {
   /** 描述信息 */
   private String description;
   /** 创建时间 */
-  private String createTime;
+  private Date createTime;
   /** 标签 */
   private String labels;
   /** 分类 */
