@@ -43,10 +43,9 @@ public class MtdLabelsAtlasController {
    * @param mtdLabelsVO 元数据标签VO
    * @return DefaultCommonResult
    */
-  @PutMapping("/{id}")
-  public DefaultCommonResult update(
-      @PathVariable("id") Long id, @RequestBody @Validated MtdLabelsAtlasVO mtdLabelsVO) {
-    mtdLabelsAtlasService.update(id, mtdLabelsVO);
+  @PutMapping("")
+  public DefaultCommonResult update(@RequestBody @Validated MtdLabelsAtlasVO mtdLabelsVO) {
+    mtdLabelsAtlasService.update(mtdLabelsVO);
     return DefaultCommonResult.success();
   }
 

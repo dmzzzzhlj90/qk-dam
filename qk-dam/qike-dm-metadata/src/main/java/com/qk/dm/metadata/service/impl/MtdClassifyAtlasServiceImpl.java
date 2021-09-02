@@ -8,9 +8,10 @@ import com.qk.dm.metadata.repositories.MtdClassifyAtlasRepository;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
 import com.querydsl.core.types.Predicate;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @author wangzp
@@ -35,7 +36,7 @@ public class MtdClassifyAtlasServiceImpl implements MtdClassifyAtlasService {
             .eq(mtdClassifyAtlasVO.getGuid())
             .and(qMtdClassifyAtlas.synchStatus.ne(-1));
     if (mtdClassifyAtlasRepository.exists(predicate)) {
-      throw new BizException("当前要绑定标签的元数据为：" + mtdClassifyAtlasVO.getGuid() + " 的数据，已存在！！！");
+      throw new BizException("当前要绑定标签的元数据为：" + mtdClassifyAtlasVO.getGuid() + " 的数据已存在！！！");
     }
     MtdClassifyAtlas mtdClassifyAtlas =
         MtdClassifyAtlasMapper.INSTANCE.useMtdClassifyAtlas(mtdClassifyAtlasVO);
@@ -49,11 +50,10 @@ public class MtdClassifyAtlasServiceImpl implements MtdClassifyAtlasService {
             .guid
             .eq(mtdClassifyAtlasVO.getGuid())
             .and(qMtdClassifyAtlas.synchStatus.ne(-1));
-    Optional<MtdClassifyAtlas> mtdClassifyAtlas = mtdClassifyAtlasRepository.findOne(predicate);
-    if (mtdClassifyAtlas.isEmpty()) {
+    MtdClassifyAtlas classifyAtlas = mtdClassifyAtlasRepository.findOne(predicate).orElse(null);
+    if (classifyAtlas == null) {
       throw new BizException("当前要绑定分类的元数据为：" + mtdClassifyAtlasVO.getGuid() + " 的数据不存在！！！");
     }
-    MtdClassifyAtlas classifyAtlas = mtdClassifyAtlas.get();
     if (mtdClassifyAtlasVO.getClassify().isEmpty()) {
       classifyAtlas.setSynchStatus(-1);
     } else {
