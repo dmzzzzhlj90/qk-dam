@@ -34,7 +34,7 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
     Predicate predicate =
         qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
     if (mtdLabelsAtlasRepository.exists(predicate)) {
-      throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据，已存在！！！");
+      throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据已存在！！！");
     }
     MtdLabelsAtlas mtdLabelsAtlas =
         MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlas(mtdLabelsAtlasVO);
@@ -42,13 +42,9 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
   }
 
   @Override
-  public void update(Long id, MtdLabelsAtlasVO mtdLabelsAtlasVO) {
+  public void update(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
     Predicate predicate =
-        qMtdLabelsAtlas
-            .id
-            .eq(id)
-            .and(qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()))
-            .and(qMtdLabelsAtlas.synchStatus.ne(-1));
+        qMtdLabelsAtlas.guid.eq(mtdLabelsAtlasVO.getGuid()).and(qMtdLabelsAtlas.synchStatus.ne(-1));
     MtdLabelsAtlas mtdLabelsAtlas = mtdLabelsAtlasRepository.findOne(predicate).orElse(null);
     if (mtdLabelsAtlas == null) {
       throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据不存在！！！");
@@ -82,10 +78,12 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
         byGuid = labelsAtlasMap.get(guid);
         byGuid.setSynchStatus(0);
         byGuid.setLabels(
-                String.join(",", Stream.concat(
-                                Arrays.stream(byGuid.getLabels().split(",")),
-                                Arrays.stream(mtdLabelsVO.getLabels().split(",")))
-                        .collect(Collectors.toSet())));
+            String.join(
+                ",",
+                Stream.concat(
+                        Arrays.stream(byGuid.getLabels().split(",")),
+                        Arrays.stream(mtdLabelsVO.getLabels().split(",")))
+                    .collect(Collectors.toSet())));
       } else {
         byGuid = new MtdLabelsAtlas();
         byGuid.setGuid(guid);

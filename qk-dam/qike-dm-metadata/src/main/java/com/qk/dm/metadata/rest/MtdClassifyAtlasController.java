@@ -4,7 +4,6 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +43,8 @@ public class MtdClassifyAtlasController {
    * @param mtdClassifyAtlasVO 元数据分类VO
    * @return DefaultCommonResult
    */
-  @PutMapping("/{id}")
-  public DefaultCommonResult update(
-      @PathVariable("id") Long id, @RequestBody @Validated MtdClassifyAtlasVO mtdClassifyAtlasVO) {
-    mtdClassifyAtlasVO.setId(id);
+  @PutMapping("")
+  public DefaultCommonResult update(@RequestBody @Validated MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasService.update(mtdClassifyAtlasVO);
     return DefaultCommonResult.success();
   }

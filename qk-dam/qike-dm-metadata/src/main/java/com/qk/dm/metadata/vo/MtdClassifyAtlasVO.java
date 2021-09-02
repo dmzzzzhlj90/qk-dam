@@ -1,11 +1,11 @@
 package com.qk.dm.metadata.vo;
 
-import com.qk.dam.jpa.pojo.Pagination;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author wangzp
@@ -17,11 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MtdClassifyAtlasVO {
-
-  private Pagination pagination;
-
-  private Long id;
-
   /** 元数据标识 */
   @NotBlank(message = "元数据标识不能为空！")
   private String guid;
