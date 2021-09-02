@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.service;
 
+import com.qk.dm.metadata.vo.MtdLabelsAtlasBulkVO;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
 
 public interface MtdLabelsAtlasService {
@@ -9,4 +10,6 @@ public interface MtdLabelsAtlasService {
   void update(Long id, MtdLabelsAtlasVO mtdLabelsAtlasVO);
 
   MtdLabelsAtlasVO getByGuid(String guid);
+
+  void bulk(MtdLabelsAtlasBulkVO mtdLabelsVO);
 }
