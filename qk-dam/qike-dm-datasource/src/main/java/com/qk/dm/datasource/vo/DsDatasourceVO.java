@@ -80,9 +80,4 @@ public class DsDatasourceVO {
 
   /** 备注 */
   private String remark;
-
-  /**
-   * 类型（用于区分数据源和文件夹/dir表示文件夹，datasource表示数据）
-   */
-  private String tyep;
 }

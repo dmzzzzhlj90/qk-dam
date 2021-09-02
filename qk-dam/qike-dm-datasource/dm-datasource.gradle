@@ -41,6 +41,7 @@ dependencies {
        exclude group: '*'
     }
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
+    implementation group: 'com.github.noraui', name: 'ojdbc8', version: '12.2.0.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.mapstruct:mapstruct'
