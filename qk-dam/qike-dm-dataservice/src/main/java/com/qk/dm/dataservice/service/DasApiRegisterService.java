@@ -25,4 +25,7 @@ public interface DasApiRegisterService {
     Map<String, String> getRegisterConstantParaHeaderInfo();
 
     void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList);
+
+    List<DasApiRegisterVO> findAll();
+
 }

@@ -40,5 +40,5 @@ public interface DasApiBasicInfoService {
 
     Optional<DasApiBasicInfo> checkExistApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
 
-
+    List<DasApiBasicInfoVO> findAllByApiType(String apiType);
 }

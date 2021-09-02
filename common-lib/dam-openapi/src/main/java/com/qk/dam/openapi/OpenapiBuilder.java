@@ -1,6 +1,8 @@
 package com.qk.dam.openapi;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.openapi4j.core.model.v3.OAI3Context;
 import org.openapi4j.parser.model.v3.*;
 
@@ -19,7 +21,8 @@ public class OpenapiBuilder {
     public static final String MEDIA_CONTENT_JSON = "application/json; charset=utf-8";
     public static final String MEDIA_CONTENT_ALL = "*/*";
     private final OpenApi3 openApi3 = new OpenApi3();
-    public OpenapiBuilder(){
+
+    public OpenapiBuilder() {
         try {
             openApi3.setOpenapi("3.0.3");
             openApi3.setContext(new OAI3Context(new URL("http://172.20.0.8:18910/")));
@@ -27,6 +30,7 @@ public class OpenapiBuilder {
             e.printStackTrace();
         }
     }
+
     public OpenApi3 getOpenApi3() {
         return openApi3;
     }
@@ -58,17 +62,23 @@ public class OpenapiBuilder {
                                 new Schema()
                                         .setTitle(componentField.getFieldName())
                                         .setType(componentField.getType())
-                                        .setDescription(componentField.getDesc())));
+                                        .setDescription(componentField.getDesc())
+                                        .setDefault(componentField.getDefaultValue())));
 
         List<String> requiredFields = componentFields.stream()
                 .filter(ComponentField::isRequired).map(ComponentField::getFieldName)
                 .collect(Collectors.toList());
 
+        if (requiredFields.size() > 0) {
+            componentsSchemas.put(name, new Schema()
+                    .setProperties(properties)
+                    .setTitle(name).setRequiredFields(requiredFields));
+        } else {
+            componentsSchemas.put(name, new Schema()
+                    .setProperties(properties)
+                    .setTitle(name));
+        }
 
-        componentsSchemas.put(name, new Schema()
-                .setProperties(properties)
-                .setTitle(name)
-                .setRequiredFields(requiredFields));
         components.setSchemas(componentsSchemas);
         openApi3.setComponents(components);
         return this;
@@ -108,7 +118,7 @@ public class OpenapiBuilder {
         Map<String, MediaType> contentMediaTypes = new HashMap<>();
         MediaType mt = new MediaType();
         Schema schema = new Schema();
-        schema.setReference(openApi3.getContext(),openApi3.getContext().getBaseUrl(), "#/components/schemas/"+refValue);
+        schema.setReference(openApi3.getContext(), openApi3.getContext().getBaseUrl(), "#/components/schemas/" + refValue);
         mt.setSchema(schema);
         contentMediaTypes.put(mediaType.endsWith("json") ? MEDIA_CONTENT_JSON : MEDIA_CONTENT_FORM, mt);
         requestBody.setRequired(required).setContentMediaTypes(contentMediaTypes);
@@ -154,7 +164,7 @@ public class OpenapiBuilder {
         Operation operation = path.getOperation(httpMethod);
 
         Map<String, Response> responses = operation.getResponses();
-        if (responses==null){
+        if (responses == null) {
             responses = new HashMap<>();
         }
 
@@ -162,6 +172,7 @@ public class OpenapiBuilder {
         operation.setResponses(responses);
         return this;
     }
+
     public OpenapiBuilder response(String pathName,
                                    String httpMethod,
                                    String responseCode,
@@ -174,7 +185,7 @@ public class OpenapiBuilder {
 
         MediaType mediaType = new MediaType();
         Schema schema = new Schema();
-        schema.setReference(openApi3.getContext(), openApi3.getContext().getBaseUrl(), "#/components/schemas/"+refValue);
+        schema.setReference(openApi3.getContext(), openApi3.getContext().getBaseUrl(), "#/components/schemas/" + refValue);
         mediaType.setSchema(schema);
 
         responses.put(responseCode, new Response().setDescription(responseDesc).setContentMediaType("*/*", mediaType));

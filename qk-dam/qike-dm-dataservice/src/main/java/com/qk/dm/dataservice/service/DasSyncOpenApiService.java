@@ -10,10 +10,8 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0
  */
 @Service
-public interface DasOpenApiService {
+public interface DasSyncOpenApiService {
 
     void syncRegister();
-
-    void sendApiToTorNaRest();
 
 }

@@ -1,11 +1,11 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.qk.dam.openapi.OpenapiBuilder;
 import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
 import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
-import com.qk.dm.dataservice.service.DasOpenApiService;
-import com.qk.dm.dataservice.test.ApiDocTest;
+import com.qk.dm.dataservice.service.DasSyncOpenApiService;
 import com.qk.dm.dataservice.vo.*;
 import org.openapi4j.parser.OpenApi3Parser;
 import org.openapi4j.parser.model.v3.*;
@@ -27,7 +27,7 @@ import java.util.Map;
  * @since 1.0.0
  */
 @Service
-public class DasOpenApiServiceImpl implements DasOpenApiService {
+public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
     private final DasApiDirService dasApiDirService;
     private final DasApiRegisterService dasApiRegisterService;
 
@@ -41,7 +41,7 @@ public class DasOpenApiServiceImpl implements DasOpenApiService {
     private String OPEN_API_PROTOCOL_TYPE;
 
     @Autowired
-    public DasOpenApiServiceImpl(DasApiDirService dasApiDirService, DasApiRegisterService dasApiRegisterService) {
+    public DasSyncOpenApiServiceImpl(DasApiDirService dasApiDirService, DasApiRegisterService dasApiRegisterService) {
         this.dasApiDirService = dasApiDirService;
         this.dasApiRegisterService = dasApiRegisterService;
     }
@@ -82,10 +82,11 @@ public class DasOpenApiServiceImpl implements DasOpenApiService {
         Map<String, Schema> schemaMap = openApi3.getComponents().getSchemas();
         Map<String, Path> apiMap = openApi3.getPaths();
         for (String pathKey : apiMap.keySet()) {
-            //构建注册ApiVO对象
             DasApiBasicInfoVO.DasApiBasicInfoVOBuilder apiBasicInfoVOBuilder = DasApiBasicInfoVO.builder();
             DasApiRegisterVO.DasApiRegisterVOBuilder apiRegisterVOBuilder = DasApiRegisterVO.builder();
+            //设置目录信息
             apiBasicInfoVOBuilder.dasDirId(dasApiDirVO.getApiDirId()).apiDirLevel(dasApiDirVO.getApiDirLevel());
+            //构建注册Api对象
             DasApiRegisterVO dasApiRegisterVO = buildRegisterVO(schemaMap, apiMap, pathKey, apiBasicInfoVOBuilder, apiRegisterVOBuilder);
             dasApiRegisterVOList.add(dasApiRegisterVO);
         }
@@ -105,16 +106,17 @@ public class DasOpenApiServiceImpl implements DasOpenApiService {
             //请求方式
             String requestType = operationEntry.getKey();
             String apiName = operationEntry.getValue().getSummary();
-            String paraPosition = operationEntry.getValue().getDescription();
             RequestBody requestBody = operationEntry.getValue().getRequestBody();
             apiBasicInfoVOBuilder.apiName(apiName).apiPath(pathKey).apiType(DasConstant.REGISTER_API_CODE)
                     .protocolType(OPEN_API_PROTOCOL_TYPE).requestType(requestType).description("自动同步注册Api," + apiName);
             apiRegisterVOBuilder.backendHost(OPEN_API_HOST).backendPath(pathKey).backendTimeout("30").protocolType(OPEN_API_PROTOCOL_TYPE)
                     .requestType(requestType).description("自动同步注册Api," + apiName);
-            //Api有入参,需要获取入参信息
-            existRequestBody(schemaMap, apiBasicInfoVOBuilder, apiRegisterVOBuilder, paraPosition, requestBody);
+            //同步入参信息
+            existRequestBody(schemaMap, apiBasicInfoVOBuilder, apiRegisterVOBuilder, requestBody);
+            //构建API基础信息
             DasApiBasicInfoVO dasApiBasicInfoVO = apiBasicInfoVOBuilder.build();
             apiRegisterVOBuilder.dasApiBasicInfoVO(dasApiBasicInfoVO);
+            //构建注册API
             dasApiRegisterVO = apiRegisterVOBuilder.build();
         }
         return dasApiRegisterVO;
@@ -123,10 +125,11 @@ public class DasOpenApiServiceImpl implements DasOpenApiService {
     private void existRequestBody(Map<String, Schema> schemaMap,
                                   DasApiBasicInfoVO.DasApiBasicInfoVOBuilder apiBasicInfoVOBuilder,
                                   DasApiRegisterVO.DasApiRegisterVOBuilder apiRegisterVOBuilder,
-                                  String paraPosition, RequestBody requestBody) {
+                                  RequestBody requestBody) {
         if (!ObjectUtils.isEmpty(requestBody)) {
+            String paraPosition = new ArrayList<>(requestBody.getContentMediaTypes().keySet()).get(0);
             for (Map.Entry<String, MediaType> mediaTypeEntry : requestBody.getContentMediaTypes().entrySet()) {
-                List<DasApiBasicInfoRequestParasVO> apiBasicInfoRequestParasVOList = new ArrayList<>();
+                List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOList = new ArrayList<>();
                 String ref = mediaTypeEntry.getValue().getSchema().getRef();
                 Map<String, Schema> properties;
                 List<String> requiredFields;
@@ -139,41 +142,54 @@ public class DasOpenApiServiceImpl implements DasOpenApiService {
                     properties = mediaTypeEntry.getValue().getSchema().getProperties();
                     requiredFields = mediaTypeEntry.getValue().getSchema().getRequiredFields();
                 }
-                //构建API基础信息
-                buildDasApiBasicInfoVO(paraPosition, apiBasicInfoRequestParasVOList, properties, requiredFields);
-                apiBasicInfoVOBuilder.dasApiBasicInfoRequestParasVO(apiBasicInfoRequestParasVOList);
-                List<DasApiRegisterBackendParaVO> dasApiRegisterBackendParaVOList = getDasApiRegisterBackendParaVO(apiBasicInfoRequestParasVOList);
+                //构建API基础信息入参定义对象
+                buildBasicInfoRequestParasVO(paraPosition, basicInfoRequestParasVOList, properties, requiredFields);
+                apiBasicInfoVOBuilder.dasApiBasicInfoRequestParasVO(basicInfoRequestParasVOList);
+                //构建注册API后端参数对象
+                List<DasApiRegisterBackendParaVO> dasApiRegisterBackendParaVOList = getDasApiRegisterBackendParaVO(basicInfoRequestParasVOList);
                 apiRegisterVOBuilder.dasApiRegisterBackendParaVO(dasApiRegisterBackendParaVOList);
-
             }
         }
     }
 
-    private void buildDasApiBasicInfoVO(String paraPosition, List<DasApiBasicInfoRequestParasVO> apiBasicInfoRequestParasVOList, Map<String, Schema> properties, List<String> requiredFields) {
+    private void buildBasicInfoRequestParasVO(String paraPosition,
+                                              List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOList,
+                                              Map<String, Schema> properties,
+                                              List<String> requiredFields) {
         for (Map.Entry<String, Schema> schemaEntry : properties.entrySet()) {
+            String key = schemaEntry.getKey();
             Schema schemaEntryValue = schemaEntry.getValue();
+            //入参定义对象
             DasApiBasicInfoRequestParasVO.DasApiBasicInfoRequestParasVOBuilder basicInfoRequestParasVOBuilder
                     = DasApiBasicInfoRequestParasVO.builder();
-            basicInfoRequestParasVOBuilder.paraName(schemaEntryValue.getTitle())
-                    .paraType(schemaEntryValue.getType().toUpperCase()).description(schemaEntryValue.getDescription());
-            setRequiredFields(requiredFields, schemaEntryValue, basicInfoRequestParasVOBuilder);
+            //构建入参定义对象
+            basicInfoRequestParasVOBuilder.paraName(key)
+                    .paraCHNName(schemaEntryValue.getDescription())
+                    .paraType(schemaEntryValue.getType().toUpperCase())
+                    .defaultValue((String) schemaEntryValue.getDefault())
+                    .description(schemaEntryValue.getDescription());
+            //设置必填参数
+            setRequiredFields(requiredFields, key, basicInfoRequestParasVOBuilder);
+            //设置参数位置
             setParaPosition(paraPosition, basicInfoRequestParasVOBuilder);
-            apiBasicInfoRequestParasVOList.add(basicInfoRequestParasVOBuilder.build());
+            basicInfoRequestParasVOList.add(basicInfoRequestParasVOBuilder.build());
         }
     }
 
     private void setParaPosition(String paraPosition, DasApiBasicInfoRequestParasVO.DasApiBasicInfoRequestParasVOBuilder basicInfoRequestParasVOBuilder) {
         //TODO 根据具体参数位置进行设定
-        if ("form".equalsIgnoreCase(paraPosition)) {
+        if (OpenapiBuilder.MEDIA_CONTENT_FORM.equalsIgnoreCase(paraPosition)) {
+            //Request body
             basicInfoRequestParasVOBuilder.paraPosition(RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY.getTypeName());
         } else {
-            basicInfoRequestParasVOBuilder.paraPosition(RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY.getTypeName());
+            //Parameters
+            basicInfoRequestParasVOBuilder.paraPosition(RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_PATH.getTypeName());
         }
     }
 
-    private void setRequiredFields(List<String> requiredFields, Schema schemaEntryValue, DasApiBasicInfoRequestParasVO.DasApiBasicInfoRequestParasVOBuilder basicInfoRequestParasVOBuilder) {
+    private void setRequiredFields(List<String> requiredFields, String key, DasApiBasicInfoRequestParasVO.DasApiBasicInfoRequestParasVOBuilder basicInfoRequestParasVOBuilder) {
         if (requiredFields != null && requiredFields.size() > 0) {
-            if (requiredFields.contains(schemaEntryValue.getTitle())) {
+            if (requiredFields.contains(key)) {
                 basicInfoRequestParasVOBuilder.necessary(true).supportNull(true);
             } else {
                 basicInfoRequestParasVOBuilder.necessary(false).supportNull(false);
@@ -184,21 +200,19 @@ public class DasOpenApiServiceImpl implements DasOpenApiService {
 
     }
 
-    private List<DasApiRegisterBackendParaVO> getDasApiRegisterBackendParaVO(List<DasApiBasicInfoRequestParasVO> dasApiBasicInfoRequestParasVO) {
+    private List<DasApiRegisterBackendParaVO> getDasApiRegisterBackendParaVO(List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOList) {
         List<DasApiRegisterBackendParaVO> backendParaVOList = new ArrayList<>();
-        for (DasApiBasicInfoRequestParasVO requestParasVO : dasApiBasicInfoRequestParasVO) {
+        for (DasApiBasicInfoRequestParasVO requestParasVO : basicInfoRequestParasVOList) {
             DasApiRegisterBackendParaVO backendParaVO = DasApiRegisterBackendParaVO.builder()
                     .paraName(requestParasVO.getParaName()).paraPosition(requestParasVO.getParaPosition())
                     .paraType(requestParasVO.getParaType())
-                    .backendParaName(requestParasVO.getParaName()).backendParaPosition(requestParasVO.getParaPosition()).build();
+                    .backendParaName(requestParasVO.getParaName())
+                    .backendParaPosition(requestParasVO.getParaPosition())
+                    .description(requestParasVO.getDescription())
+                    .build();
             backendParaVOList.add(backendParaVO);
         }
         return backendParaVOList;
-    }
-
-    @Override
-    public void sendApiToTorNaRest() {
-        ApiDocTest.testBuilderControllersApi();
     }
 
 }
