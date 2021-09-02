@@ -10,15 +10,15 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "qk_idc_time_limt")
-public class IdcTimeLimt implements Serializable {
+@Table(name = "qk_idc_time_limit")
+public class IdcTimeLimit implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     /**
      * 限定名称
