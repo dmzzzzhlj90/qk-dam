@@ -3,6 +3,7 @@ package com.qk.dm.indicator.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_idc_function")
+@Where(clause = "delete_flag = 0 ")
 public class IdcFunction implements Serializable {
 
     private static final long serialVersionUID = 1L;

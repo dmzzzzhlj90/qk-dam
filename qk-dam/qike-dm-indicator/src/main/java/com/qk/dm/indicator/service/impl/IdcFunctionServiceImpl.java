@@ -54,7 +54,7 @@ public class IdcFunctionServiceImpl implements IdcFunctionService {
   public void update(Long id, IdcFunctionDTO idcFunctionDTO) {
     IdcFunction idcFunction = idcFunctionRepository.findById(id).orElse(null);
     if (idcFunction == null) {
-      throw new BizException("当前要修改的函数id为：" + id + " 的数据，不存在！！！");
+      throw new BizException("当前要修改的函数id为：" + id + " 的数据不存在！！！");
     }
     IdcFunctionMapper.INSTANCE.useIdcFunction(idcFunctionDTO, idcFunction);
     idcFunctionRepository.save(idcFunction);
@@ -66,7 +66,7 @@ public class IdcFunctionServiceImpl implements IdcFunctionService {
         Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
     List<IdcFunction> idcFunctionList = idcFunctionRepository.findAllById(idSet);
     if (idcFunctionList.isEmpty()) {
-      throw new BizException("当前要删除的函数id为：" + ids + " 的数据，不存在！！！");
+      throw new BizException("当前要删除的函数id为：" + ids + " 的数据不存在！！！");
     }
     idcFunctionRepository.deleteAll(idcFunctionList);
   }
@@ -75,7 +75,7 @@ public class IdcFunctionServiceImpl implements IdcFunctionService {
   public IdcFunctionVO detail(Long id) {
     Optional<IdcFunction> idcFunction = idcFunctionRepository.findById(id);
     if (idcFunction.isEmpty()) {
-      throw new BizException("当前要查询的函数id为：" + id + " 的数据，不存在！！！");
+      throw new BizException("当前要查询的函数id为：" + id + " 的数据不存在！！！");
     }
     return IdcFunctionMapper.INSTANCE.useIdcFunctionVO(idcFunction.get());
   }
