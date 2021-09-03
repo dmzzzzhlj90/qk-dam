@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.service.impl;
 
+import com.google.common.collect.Sets;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
@@ -256,8 +257,13 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     uniqAttributes.put("qualifiedName", qualifiedName);
     try {
       AtlasEntity.AtlasEntityWithExtInfo entityHeaderByAttribute = atlasClientV2.getEntityByAttribute(typename, uniqAttributes,true,true);
-
-      return entityHeaderByAttribute.getEntity();
+      // todo 查询最上级的DB  String qfd = qualifiedName.split("\\.")[0]+qualifiedName.split("@")[1];
+      MtdLabelsAtlasVO mtdLabelsAtlasVO = mtdLabelsAtlasService.getByGuid(entityHeaderByAttribute.getEntity().getGuid());
+      AtlasEntity entity = entityHeaderByAttribute.getEntity();
+      if(mtdLabelsAtlasVO!=null){
+        entity.setLabels(Sets.newHashSet(mtdLabelsAtlasVO.getLabels().split(",")));
+      }
+      return entity;
     } catch (AtlasServiceException e) {
       e.printStackTrace();
     }
