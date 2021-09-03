@@ -311,6 +311,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   private List<Map<String, Object>> buildReferredEntities(
       AtlasEntity.AtlasEntityWithExtInfo detail) {
     List<AtlasEntity> atlasEntityList = new ArrayList<>(detail.getReferredEntities().values());
+    Map<String, List<MtdLabelsAtlasVO>> labsMap = getlabs(atlasEntityList);
     return atlasEntityList.stream()
         .map(
             e -> {
@@ -318,6 +319,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               attr.put("guid", e.getGuid());
               attr.put("typeName",e.getTypeName());
               attr.put("createTime",DateFormatUtils.format(e.getCreateTime(),"yyyy-MM-dd HH:mm:ss"));
+              List<MtdLabelsAtlasVO> labList = labsMap.get(e.getGuid());
+              if(!CollectionUtils.isEmpty(labList)) {
+                attr.put("labels", labsMap.get(e.getGuid()).get(0).getLabels());
+              }
               return attr;
             })
         .collect(Collectors.toList());
@@ -331,9 +336,9 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   private  Map<String, List<MtdLabelsAtlasVO>> getlabs(List<AtlasEntity> atlasEntityList ){
     Map<String, List<MtdLabelsAtlasVO>> labMap = new HashMap<>();
     List<String> guidList = atlasEntityList.stream().map(AtlasEntity::getGuid).collect(Collectors.toList());
-    List<MtdLabelsAtlasVO> list = new ArrayList<>();
-    if(!CollectionUtils.isEmpty(list)){
-      labMap = list.stream().collect(Collectors.groupingBy(MtdLabelsAtlasVO::getGuid));
+    List<MtdLabelsAtlasVO> labelsAtlasVOList = mtdLabelsAtlasService.getByBulk(guidList);
+    if(!CollectionUtils.isEmpty(labelsAtlasVOList)){
+      labMap = labelsAtlasVOList.stream().collect(Collectors.groupingBy(MtdLabelsAtlasVO::getGuid));
     }
     return labMap;
   }
