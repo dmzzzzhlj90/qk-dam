@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_idc_function")
-@Where(clause = "delete_flag = 0 ")
+@Where(clause = "del_flag = 0 ")
 public class IdcFunction implements Serializable {
 
     private static final long serialVersionUID = 1L;

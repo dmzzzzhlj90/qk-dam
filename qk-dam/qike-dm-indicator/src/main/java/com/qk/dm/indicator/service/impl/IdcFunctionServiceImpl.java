@@ -1,11 +1,9 @@
 package com.qk.dm.indicator.service.impl;
 
-import com.qk.dm.indicator.entity.QIdcFunction;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.entity.IdcFunction;
+import com.qk.dm.indicator.entity.QIdcFunction;
 import com.qk.dm.indicator.mapstruct.mapper.IdcFunctionMapper;
 import com.qk.dm.indicator.params.dto.IdcFunctionDTO;
 import com.qk.dm.indicator.params.dto.IdcFunctionPageDTO;
@@ -15,6 +13,8 @@ import com.qk.dm.indicator.service.IdcFunctionService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -34,7 +34,8 @@ public class IdcFunctionServiceImpl implements IdcFunctionService {
   private final QIdcFunction qIdcFunction = QIdcFunction.idcFunction;
   private final IdcFunctionRepository idcFunctionRepository;
 
-  public IdcFunctionServiceImpl(EntityManager entityManager, IdcFunctionRepository idcFunctionRepository) {
+  public IdcFunctionServiceImpl(
+      EntityManager entityManager, IdcFunctionRepository idcFunctionRepository) {
     this.entityManager = entityManager;
     this.idcFunctionRepository = idcFunctionRepository;
   }
@@ -82,7 +83,12 @@ public class IdcFunctionServiceImpl implements IdcFunctionService {
 
   @Override
   public Map<String, List<IdcFunctionVO>> getList(String engine) {
-    List<IdcFunction> functionList = idcFunctionRepository.findAllByEngine(engine);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    if (!StringUtils.isEmpty(engine)) {
+      booleanBuilder.and(qIdcFunction.engine.eq(engine));
+    }
+    List<IdcFunction> functionList =
+        jpaQueryFactory.select(qIdcFunction).from(qIdcFunction).where(booleanBuilder).fetch();
     return functionList.stream()
         .map(IdcFunctionMapper.INSTANCE::useIdcFunctionVO)
         .collect(Collectors.groupingBy(IdcFunctionVO::getTypeName));
@@ -98,15 +104,12 @@ public class IdcFunctionServiceImpl implements IdcFunctionService {
       throw new BizException("查询失败!!!");
     }
     List<IdcFunction> list = (List<IdcFunction>) map.get("list");
-    List<IdcFunctionVO> functionVOS =
-        list.stream()
-            .map(IdcFunctionMapper.INSTANCE::useIdcFunctionVO)
-            .collect(Collectors.toList());
+    List<IdcFunctionVO> voList = IdcFunctionMapper.INSTANCE.useIdcFunctionVO(list);
     return new PageResultVO<>(
         (long) map.get("total"),
         idcFunctionPageDTO.getPagination().getPage(),
         idcFunctionPageDTO.getPagination().getSize(),
-        functionVOS);
+        voList);
   }
 
   private Map<String, Object> queryByParams(IdcFunctionPageDTO idcFunctionPageDTO) {

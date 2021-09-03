@@ -9,6 +9,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author shenpj
  * @date 2021/9/1 2:48 下午
@@ -26,4 +28,6 @@ public interface IdcFunctionMapper {
     IdcFunction useIdcFunction(IdcFunctionDTO idcFunctionDTO);
 
     IdcFunctionVO useIdcFunctionVO(IdcFunction idcFunction);
+
+    List<IdcFunctionVO> useIdcFunctionVO(List<IdcFunction> idcFunction);
 }

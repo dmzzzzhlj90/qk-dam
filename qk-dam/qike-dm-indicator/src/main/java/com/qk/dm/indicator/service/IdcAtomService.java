@@ -3,6 +3,7 @@ package com.qk.dm.indicator.service;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.params.dto.IdcAtomDTO;
 import com.qk.dm.indicator.params.dto.IdcAtomPageDTO;
+import com.qk.dm.indicator.params.vo.IdcAtomPageVO;
 import com.qk.dm.indicator.params.vo.IdcAtomVO;
 
 import java.util.List;
@@ -13,15 +14,19 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface IdcAtomService {
-    void insert(IdcAtomDTO idcAtomDTO);
+  void insert(IdcAtomDTO idcAtomDTO);
 
-    void update(Long id, IdcAtomDTO idcAtomDTO);
+  void update(Long id, IdcAtomDTO idcAtomDTO);
 
-    void delete(String ids);
+  void publish(Long id);
 
-    IdcAtomVO detail(Long id);
+  void offline(Long id);
 
-    List<IdcAtomVO> getList();
+  void delete(String ids);
 
-    PageResultVO<IdcAtomVO> listByPage(IdcAtomPageDTO idcAtomPageDTO);
+  IdcAtomVO detail(Long id);
+
+  List<IdcAtomVO> getList();
+
+  PageResultVO<IdcAtomPageVO> listByPage(IdcAtomPageDTO idcAtomPageDTO);
 }

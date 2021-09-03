@@ -2,11 +2,15 @@ package com.qk.dm.indicator.mapstruct.mapper;
 
 import com.qk.dm.indicator.entity.IdcAtom;
 import com.qk.dm.indicator.params.dto.IdcAtomDTO;
+import com.qk.dm.indicator.params.vo.IdcAtomPageVO;
+import com.qk.dm.indicator.params.vo.IdcAtomVO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * @author shenpj
@@ -22,7 +26,11 @@ public interface IdcAtomMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void useIdcAtom(IdcAtomDTO idcAtomDTO, @MappingTarget IdcAtom idcAtom);
 
-    IdcAtom useIdcFunction(IdcAtomDTO idcAtomDTO);
+    IdcAtom useIdcAtom(IdcAtomDTO idcAtomDTO);
 
-    IdcAtomDTO useIdcFunctionVO(IdcAtom idcAtom);
+    IdcAtomVO useIdcAtomVO(IdcAtom idcAtom);
+
+    List<IdcAtomVO> useIdcAtomVO(List<IdcAtom> idcAtom);
+
+    List<IdcAtomPageVO> useIdcAtomPageVO(List<IdcAtom> idcAtom);
 }

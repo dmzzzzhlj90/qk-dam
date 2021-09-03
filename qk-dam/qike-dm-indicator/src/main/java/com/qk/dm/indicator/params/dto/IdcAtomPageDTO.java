@@ -30,4 +30,7 @@ public class IdcAtomPageDTO {
 
   /** 原子指标编码 */
   private String atomIndicatorCode;
+
+  /** 指标名称或指标编码 */
+  private String nameOrCode;
 }
