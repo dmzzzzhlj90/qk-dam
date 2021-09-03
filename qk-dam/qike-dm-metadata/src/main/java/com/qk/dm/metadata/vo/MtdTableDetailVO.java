@@ -1,8 +1,11 @@
 package com.qk.dm.metadata.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 @Data
@@ -29,7 +32,9 @@ public class MtdTableDetailVO {
     /** 分类 */
     private String classification;
     /** 创建时间 */
-    private String createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
     /** db信息 */
     private MtdDbInfoVO db;
 

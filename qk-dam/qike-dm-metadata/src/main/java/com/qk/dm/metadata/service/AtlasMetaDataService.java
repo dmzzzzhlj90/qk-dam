@@ -42,6 +42,8 @@ public interface AtlasMetaDataService {
    */
   List<EntityAuditEventV2>  getAuditByGuid(String guid,String startKey);
 
+  MtdCommonDetailVO getDetailByGuid(String guid,String typeName);
+
   /**
    * 获取列的元数据详情
    *
