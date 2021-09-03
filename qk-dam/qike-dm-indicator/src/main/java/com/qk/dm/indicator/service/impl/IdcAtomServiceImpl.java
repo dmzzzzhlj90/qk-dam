@@ -1,7 +1,7 @@
 package com.qk.dm.indicator.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.indicator.common.property.IdcAtomState;
+import com.qk.dam.indicator.common.property.IdcState;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.entity.IdcAtom;
 import com.qk.dm.indicator.entity.QIdcAtom;
@@ -68,7 +68,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
     if (idcAtom == null) {
       throw new BizException("当前要修改的原子指标id为：" + id + " 的数据不存在！！！");
     }
-    idcAtom.setIndicatorStatus(IdcAtomState.ONLINE);
+    idcAtom.setIndicatorStatus(IdcState.Atom.ONLINE);
     idcAtomRepository.save(idcAtom);
   }
 
@@ -78,7 +78,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
     if (idcAtom == null) {
       throw new BizException("当前要修改的原子指标id为：" + id + " 的数据不存在！！！");
     }
-    idcAtom.setIndicatorStatus(IdcAtomState.OFFLINE);
+    idcAtom.setIndicatorStatus(IdcState.Atom.OFFLINE);
     idcAtomRepository.save(idcAtom);
   }
 
