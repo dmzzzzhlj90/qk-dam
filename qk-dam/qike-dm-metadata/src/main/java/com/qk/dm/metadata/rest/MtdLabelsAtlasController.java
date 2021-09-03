@@ -62,6 +62,7 @@ public class MtdLabelsAtlasController {
 
   /**
    * 批量绑定元数据标签
+   *
    * @param mtdLabelsVO
    * @return DefaultCommonResult
    */
