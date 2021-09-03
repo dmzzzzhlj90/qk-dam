@@ -1,19 +1,18 @@
 package com.qk.dm.metadata.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dam.metedata.property.AtlasSearchProperty;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
+import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
-import org.apache.atlas.model.audit.AuditSearchParameters;
 import org.apache.atlas.model.audit.EntityAuditEventV2;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
@@ -22,10 +21,10 @@ import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,11 +33,17 @@ import java.util.stream.Collectors;
  * @date 2021/8/03 10:06
  * @since 1.0.0
  */
-@NoArgsConstructor
 @Data
 @Service
 public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
+
+  private final MtdLabelsAtlasService mtdLabelsAtlasService;
+
+  @Autowired
+  public AtlasMetaDataServiceImpl(MtdLabelsAtlasService mtdLabelsAtlasService){
+    this.mtdLabelsAtlasService = mtdLabelsAtlasService;
+  }
 
   @Override
   public List<MtdAtlasBaseVO> searchList(MtdAtlasParamsVO mtdAtlasParamsVO) {
@@ -244,6 +249,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       mtdColumnVO.setDefaultValue(Objects.nonNull(attributes.get("default_value"))?attributes.get("default_value").toString():null);
       MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("table")), MtdTableInfoVO.class);
       mtdColumnVO.setTable(mtdTableInfoVO);
+      MtdLabelsAtlasVO mtdLabelsAtlasVO = mtdLabelsAtlasService.getByGuid(guid);
+      if(Objects.nonNull(mtdLabelsAtlasVO)){
+        mtdColumnVO.setLabels(mtdLabelsAtlasVO.getLabels());
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -260,6 +269,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       mtdAtlasDbDetailVO.setTypeName(detail.getEntity().getTypeName());
       mtdAtlasDbDetailVO.setCreateTime(detail.getEntity().getCreateTime());
       mtdAtlasDbDetailVO.setTables(buildReferredEntities(detail));
+      MtdLabelsAtlasVO mtdLabelsAtlasVO = mtdLabelsAtlasService.getByGuid(guid);
+      if(Objects.nonNull(mtdLabelsAtlasVO)){
+        mtdAtlasDbDetailVO.setLabels(mtdLabelsAtlasVO.getLabels());
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -274,12 +287,15 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       Map<String, Object> attributes = detail.getEntity().getAttributes();
       attributes.remove("createTime");
       mtdTableDetailVO = GsonUtil.fromMap(attributes, MtdTableDetailVO.class);
-//      mtdTableDetailVO.setCreateTime(DateFormatUtils.format(new Date(mtdTableDetailVO.getCreateTime()),"yyyy-MM-dd HH:mm:ss"));
       MtdDbInfoVO mtdDbInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("db")), MtdDbInfoVO.class);
       mtdTableDetailVO.setDb(mtdDbInfoVO);
       mtdTableDetailVO.setTypeName(detail.getEntity().getTypeName());
       mtdTableDetailVO.setCreateTime(detail.getEntity().getCreateTime());
       mtdTableDetailVO.setColumns(buildReferredEntities(detail));
+      MtdLabelsAtlasVO mtdLabelsAtlasVO = mtdLabelsAtlasService.getByGuid(guid);
+      if(Objects.nonNull(mtdLabelsAtlasVO)){
+        mtdTableDetailVO.setLabels(mtdLabelsAtlasVO.getLabels());
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -305,6 +321,21 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               return attr;
             })
         .collect(Collectors.toList());
+  }
+
+  /**
+   * 批量获取标签
+   * @param atlasEntityList
+   * @return
+   */
+  private  Map<String, List<MtdLabelsAtlasVO>> getlabs(List<AtlasEntity> atlasEntityList ){
+    Map<String, List<MtdLabelsAtlasVO>> labMap = new HashMap<>();
+    List<String> guidList = atlasEntityList.stream().map(AtlasEntity::getGuid).collect(Collectors.toList());
+    List<MtdLabelsAtlasVO> list = new ArrayList<>();
+    if(!CollectionUtils.isEmpty(list)){
+      labMap = list.stream().collect(Collectors.groupingBy(MtdLabelsAtlasVO::getGuid));
+    }
+    return labMap;
   }
 
   @Override
