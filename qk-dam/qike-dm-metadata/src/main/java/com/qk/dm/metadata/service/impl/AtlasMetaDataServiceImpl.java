@@ -5,6 +5,7 @@ import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dam.metedata.property.AtlasSearchProperty;
+import com.qk.dm.metadata.mapstruct.mapper.MtdCommonDetailMapper;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
@@ -222,6 +223,31 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       e.printStackTrace();
     }
     return List.of();
+  }
+
+  @Override
+  public MtdCommonDetailVO getDetailByGuid(String guid, String typeName) {
+    MtdCommonDetailVO mtdCommonDetailVO = null;
+    Map<String,Object> info = new HashMap<>();
+    if(typeName.contains("db")){
+      MtdDbDetailVO dbDetail = getDbDetailByGuid(guid);
+      mtdCommonDetailVO = MtdCommonDetailMapper.INSTANCE.userMtdCommonDetail(dbDetail);
+      info.put("tables",dbDetail.getTables());
+      mtdCommonDetailVO.setRelationshipAttributes(info);
+    }else if(typeName.contains("table")){
+      MtdTableDetailVO tableDetail = getTableDetailByGuid(guid);
+      mtdCommonDetailVO = MtdCommonDetailMapper.INSTANCE.userMtdCommonDetail(tableDetail);
+      info.put("columns",tableDetail.getColumns());
+      mtdCommonDetailVO.setRelationshipAttributes(info);
+    }else if(typeName.contains("column")){
+      MtdColumnVO columnDetail = getColumnDetailByGuid(guid);
+      mtdCommonDetailVO = MtdCommonDetailMapper.INSTANCE.userMtdCommonDetail(columnDetail);
+      info.put("table",columnDetail.getTable());
+      mtdCommonDetailVO.setRelationshipAttributes(info);
+    }
+    return mtdCommonDetailVO;
+
+
   }
 
   @Override
