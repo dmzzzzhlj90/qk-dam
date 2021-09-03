@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service;
 
+import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,5 +18,7 @@ public interface DasSyncApiGatewayService {
     void syncApiSixRoutesRegister();
 
     void syncApiSixRoutesCreate();
+
+    void apiSixConsumersKeyAuth(ApiSixConsumerInfo apiSixConsumerInfo);
 
 }

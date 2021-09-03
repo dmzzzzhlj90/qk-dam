@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 封装ApiSix接口返回实体对象
+ * 封装ApiSix_Result接口返回实体对象
  *
  * @author wjq
  */

@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 封装ApiSix入参实体对象
+ * 封装ApiSix_Route入参实体对象
  *
  * @author wjq
  */
@@ -29,7 +29,7 @@ public class ApiSixRouteInfo extends RouteInfo {
       methods; // [\"GET\",\"POST\",\"PUT\",\"DELETE\",\"PATCH\",\"HEAD\",\"OPTIONS\",\"CONNECT\",\"TRACE\"]
   private List<List<String>>
       vars; // [[\"arg_code111\",\"==\",\"123\"],[\"arg_value222\",\"==\",\"666\"]]
-  private Map<String, Map<String, List<String>>> plugins;
+  private Map<String, Map<String, Object>> plugins;
   private Upstream upstream;
   private Map<String, String> labels;
   private String desc;

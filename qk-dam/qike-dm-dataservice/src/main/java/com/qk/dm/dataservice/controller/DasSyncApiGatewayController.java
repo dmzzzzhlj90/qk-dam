@@ -2,9 +2,12 @@ package com.qk.dm.dataservice.controller;
 
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasSyncApiGatewayService;
+import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 1.0.0
  */
 @Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("/sync/api/gateway")
 public class DasSyncApiGatewayController {
@@ -56,6 +60,17 @@ public class DasSyncApiGatewayController {
     @PostMapping("/apiSix/routes/create")
     public DefaultCommonResult syncApiSixRoutesCreate() {
         dasSyncApiGatewayService.syncApiSixRoutesCreate();
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 创建ApiSix接口认证插件key-auth
+     *
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/apiSix/consumers/keyAuth")
+    public DefaultCommonResult apiSixConsumersKeyAuth(@RequestBody ApiSixConsumerInfo apiSixConsumerInfo) {
+        dasSyncApiGatewayService.apiSixConsumersKeyAuth(apiSixConsumerInfo);
         return DefaultCommonResult.success();
     }
 

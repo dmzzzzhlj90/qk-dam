@@ -15,6 +15,7 @@ import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
 import com.qk.dm.dataservice.vo.*;
+import com.qk.dm.dataservice.config.ApiSixConnectInfo;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * 数据服务_注册API
+ *
  * @author wjq
  * @date 20210817
  * @since 1.0.0
@@ -38,6 +41,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     private final DasApiBasicInfoService dasApiBasicInfoService;
     private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
     private final DasApiRegisterRepository dasApiRegisterRepository;
+    private final ApiSixConnectInfo apiSixConnectInfo;
 
 
     @Autowired
@@ -45,10 +49,11 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
             DasApiBasicInfoService dasApiBasicInfoService,
             DasApiBasicInfoRepository dasApiBasicinfoRepository,
             DasApiRegisterRepository dasApiRegisterRepository,
-            EntityManager entityManager) {
+            EntityManager entityManager, ApiSixConnectInfo apiSixConnectInfo) {
         this.dasApiBasicInfoService = dasApiBasicInfoService;
         this.dasApiRegisterRepository = dasApiRegisterRepository;
         this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
+        this.apiSixConnectInfo = apiSixConnectInfo;
     }
 
 
@@ -95,6 +100,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         setBackendRequestParaJson(dasApiRegisterVO, dasApiRegister);
         setBackendConstantJson(dasApiRegisterVO, dasApiRegister);
         dasApiRegister.setApiId(apiId);
+        dasApiRegister.setBackendTimeout(String.valueOf(apiSixConnectInfo));
         dasApiRegister.setGmtCreate(new Date());
         dasApiRegister.setGmtModified(new Date());
         dasApiRegister.setDelFlag(0);
@@ -111,6 +117,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterVO);
         setBackendRequestParaJson(dasApiRegisterVO, dasApiRegister);
         setBackendConstantJson(dasApiRegisterVO, dasApiRegister);
+        dasApiRegister.setBackendTimeout(String.valueOf(apiSixConnectInfo.getUpstreamConnectTimeOut()));
         dasApiRegister.setGmtModified(new Date());
         dasApiRegister.setDelFlag(0);
         Predicate predicate = qDasApiRegister.apiId.eq(dasApiRegister.getApiId());

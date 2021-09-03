@@ -1,5 +1,7 @@
 package com.qk.plugin.dataservice.apisix;
 
+import com.qk.dam.dataservice.spi.consunmer.ConsumerContext;
+import com.qk.dam.dataservice.spi.consunmer.ConsumerFactory;
 import com.qk.dam.dataservice.spi.plugin.GatewayPlugin;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.dataservice.spi.route.RouteFactory;
@@ -23,4 +25,10 @@ public class ApiSixGatewayPlugin implements GatewayPlugin {
   public UpstreamFactory upstreamFactory(UpstreamContext routeContext) {
     return null;
   }
+
+  @Override
+  public ConsumerFactory consumerFactory(ConsumerContext consumerContext) {
+    return new ApiSixConsumerFactory(consumerContext);
+  }
+
 }

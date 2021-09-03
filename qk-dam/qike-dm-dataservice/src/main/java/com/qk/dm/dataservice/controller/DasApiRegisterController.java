@@ -7,6 +7,7 @@ import com.qk.dm.dataservice.vo.DasApiRegisterVO;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0.0
  */
 @Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("/api/register")
 public class DasApiRegisterController {

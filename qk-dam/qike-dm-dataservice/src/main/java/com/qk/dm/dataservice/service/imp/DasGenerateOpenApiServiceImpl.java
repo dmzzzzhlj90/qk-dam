@@ -80,15 +80,15 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
             if (!ObjectUtils.isEmpty(apiRegisterBackendParaVOList)) {
                 //获取基础信定义参数信息
                 Map<String, List<DasApiBasicInfoRequestParasVO>> basicInfoRequestParasMap = getBasicRequestParas(dasApiRegisterVO);
-                //registerComponentsBuilder
-                String compKey = registerComponentsBuilder(openapiBuilder, dasApiRegisterVO, apiRegisterBackendParaVOList, basicInfoRequestParasMap);
+                //registerRequestComponentsBuilder TODO registerResponseComponentsBuilder响应参数
+                String requestCompKey = registerRequestComponentsBuilder(openapiBuilder, dasApiRegisterVO, apiRegisterBackendParaVOList, basicInfoRequestParasMap);
                 //pathsBuilder
                 pathsBuilder(openapiBuilder, dasApiRegisterVO.getBackendPath(), dasApiRegisterVO.getRequestType(), dasApiRegisterVO.getDescription());
                 //参数位置
                 if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY.getTypeName()
                         .equalsIgnoreCase(apiRegisterBackendParaVOList.get(0).getBackendParaPosition())) {
                     //form,Request body
-                    openapiBuilder.requestBody(dasApiRegisterVO.getBackendPath(), dasApiRegisterVO.getRequestType().toLowerCase(), true, OpenapiBuilder.MEDIA_CONTENT_FORM, compKey);
+                    openapiBuilder.requestBody(dasApiRegisterVO.getBackendPath(), dasApiRegisterVO.getRequestType().toLowerCase(), true, OpenapiBuilder.MEDIA_CONTENT_FORM, requestCompKey);
                 } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_PATH.getTypeName()
                         .equalsIgnoreCase(apiRegisterBackendParaVOList.get(0).getBackendParaPosition())) {
                     //path,Parameters
@@ -102,7 +102,7 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
                 //pathsBuilder
                 pathsBuilder(openapiBuilder, dasApiRegisterVO.getBackendPath(), dasApiRegisterVO.getRequestType(), dasApiRegisterVO.getDescription());
             }
-            //response
+            //response todo response  ref
             openapiBuilder.response(dasApiRegisterVO.getBackendPath(), dasApiRegisterVO.getRequestType().toLowerCase(), "200", "ok");
         }
     }
@@ -115,10 +115,10 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
         openapiBuilder.path(pathName, httpMethod.toLowerCase(), summary);
     }
 
-    private String registerComponentsBuilder(OpenapiBuilder openapiBuilder,
-                                             DasApiRegisterVO dasApiRegisterVO,
-                                             List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList,
-                                             Map<String, List<DasApiBasicInfoRequestParasVO>> basicInfoRequestParasMap) {
+    private String registerRequestComponentsBuilder(OpenapiBuilder openapiBuilder,
+                                                    DasApiRegisterVO dasApiRegisterVO,
+                                                    List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList,
+                                                    Map<String, List<DasApiBasicInfoRequestParasVO>> basicInfoRequestParasMap) {
         List<ComponentField> componentFields = new ArrayList<>();
         //构建components
         for (DasApiRegisterBackendParaVO backendParaVO : apiRegisterBackendParaVOList) {
@@ -132,9 +132,9 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
             componentFields.add(componentField);
         }
         String backendPath = dasApiRegisterVO.getBackendPath();
-        String compKey = StringFormatUtils.camelName(backendPath.split("/")[backendPath.split("/").length - 1]) + OPEN_API_REQUEST_BODY_REF_SUFFIX;
-        openapiBuilder.components(compKey, componentFields);
-        return compKey;
+        String requestCompKey = StringFormatUtils.camelName(backendPath.split("/")[backendPath.split("/").length - 1]) + OPEN_API_REQUEST_BODY_REF_SUFFIX;
+        openapiBuilder.components(requestCompKey, componentFields);
+        return requestCompKey;
     }
 
     private Map<String, List<DasApiBasicInfoRequestParasVO>> getBasicRequestParas(DasApiRegisterVO dasApiRegisterVO) {
