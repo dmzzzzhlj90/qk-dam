@@ -1,6 +1,5 @@
 package com.qk.dm.metadata.service.impl;
 
-import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.entity.MtdClassifyAtlas;
 import com.qk.dm.metadata.entity.QMtdClassifyAtlas;
@@ -12,6 +11,7 @@ import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,37 +31,24 @@ public class MtdClassifyAtlasServiceImpl implements MtdClassifyAtlasService {
 
   @Override
   public void insert(MtdClassifyAtlasVO mtdClassifyAtlasVO) {
-    Predicate predicate =
-        qMtdClassifyAtlas
-            .guid
-            .eq(mtdClassifyAtlasVO.getGuid())
-            .and(qMtdClassifyAtlas.synchStatus.ne(SynchStateProperty.ClassifyAtlas.DELETE));
-    if (mtdClassifyAtlasRepository.exists(predicate)) {
-      throw new BizException("当前要绑定标签的元数据为：" + mtdClassifyAtlasVO.getGuid() + " 的数据已存在！！！");
-    }
-    MtdClassifyAtlas mtdClassifyAtlas =
-        MtdClassifyAtlasMapper.INSTANCE.useMtdClassifyAtlas(mtdClassifyAtlasVO);
-    mtdClassifyAtlasRepository.save(mtdClassifyAtlas);
+    update(mtdClassifyAtlasVO);
   }
 
   @Override
   public void update(MtdClassifyAtlasVO mtdClassifyAtlasVO) {
-    Predicate predicate =
-        qMtdClassifyAtlas
-            .guid
-            .eq(mtdClassifyAtlasVO.getGuid())
-            .and(qMtdClassifyAtlas.synchStatus.ne(SynchStateProperty.ClassifyAtlas.DELETE));
-    MtdClassifyAtlas classifyAtlas = mtdClassifyAtlasRepository.findOne(predicate).orElse(null);
-    if (classifyAtlas == null) {
-      throw new BizException("当前要绑定分类的元数据为：" + mtdClassifyAtlasVO.getGuid() + " 的数据不存在！！！");
-    }
-    if (mtdClassifyAtlasVO.getClassify().isEmpty()) {
-      classifyAtlas.setSynchStatus(SynchStateProperty.ClassifyAtlas.DELETE);
+    MtdClassifyAtlas mtdClassifyAtlas =
+        mtdClassifyAtlasRepository.findByGuid(mtdClassifyAtlasVO.getGuid());
+    if (mtdClassifyAtlas != null) {
+      if (mtdClassifyAtlasVO.getClassify().isEmpty()) {
+        mtdClassifyAtlas.setSynchStatus(SynchStateProperty.ClassifyAtlas.DELETE);
+      } else {
+        mtdClassifyAtlas.setClassify(mtdClassifyAtlasVO.getClassify());
+        mtdClassifyAtlas.setSynchStatus(SynchStateProperty.ClassifyAtlas.NOT_SYNCH);
+      }
     } else {
-      classifyAtlas.setClassify(mtdClassifyAtlasVO.getClassify());
-      classifyAtlas.setSynchStatus(SynchStateProperty.ClassifyAtlas.NOT_SYNCH);
+      mtdClassifyAtlas = MtdClassifyAtlasMapper.INSTANCE.useMtdClassifyAtlas(mtdClassifyAtlasVO);
     }
-    mtdClassifyAtlasRepository.saveAndFlush(classifyAtlas);
+    mtdClassifyAtlasRepository.saveAndFlush(mtdClassifyAtlas);
   }
 
   @Override
@@ -73,5 +60,11 @@ public class MtdClassifyAtlasServiceImpl implements MtdClassifyAtlasService {
             .and(qMtdClassifyAtlas.synchStatus.ne(SynchStateProperty.ClassifyAtlas.DELETE));
     Optional<MtdClassifyAtlas> one = mtdClassifyAtlasRepository.findOne(predicate);
     return one.map(MtdClassifyAtlasMapper.INSTANCE::useMtdClassifyAtlasVO).orElse(null);
+  }
+
+  @Override
+  public List<MtdClassifyAtlasVO> getByBulk(List<String> guids) {
+    return MtdClassifyAtlasMapper.INSTANCE.useMtdClassifyAtlasListVO(
+        mtdClassifyAtlasRepository.findAllByGuidIn(guids));
   }
 }

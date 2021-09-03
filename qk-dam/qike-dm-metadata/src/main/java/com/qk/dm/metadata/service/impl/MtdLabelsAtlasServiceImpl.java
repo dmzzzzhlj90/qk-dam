@@ -1,6 +1,5 @@
 package com.qk.dm.metadata.service.impl;
 
-import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.entity.MtdLabelsAtlas;
 import com.qk.dm.metadata.entity.QMtdLabelsAtlas;
@@ -32,35 +31,21 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
 
   @Override
   public void insert(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
-    Predicate predicate =
-        qMtdLabelsAtlas
-            .guid
-            .eq(mtdLabelsAtlasVO.getGuid())
-            .and(qMtdLabelsAtlas.synchStatus.ne(SynchStateProperty.LabelsAtlas.DELETE));
-    if (mtdLabelsAtlasRepository.exists(predicate)) {
-      throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据已存在！！！");
-    }
-    MtdLabelsAtlas mtdLabelsAtlas =
-        MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlas(mtdLabelsAtlasVO);
-    mtdLabelsAtlasRepository.save(mtdLabelsAtlas);
+    update(mtdLabelsAtlasVO);
   }
 
   @Override
   public void update(MtdLabelsAtlasVO mtdLabelsAtlasVO) {
-    Predicate predicate =
-        qMtdLabelsAtlas
-            .guid
-            .eq(mtdLabelsAtlasVO.getGuid())
-            .and(qMtdLabelsAtlas.synchStatus.ne(SynchStateProperty.LabelsAtlas.DELETE));
-    MtdLabelsAtlas mtdLabelsAtlas = mtdLabelsAtlasRepository.findOne(predicate).orElse(null);
-    if (mtdLabelsAtlas == null) {
-      throw new BizException("当前要绑定标签的元数据为：" + mtdLabelsAtlasVO.getGuid() + " 的数据不存在！！！");
-    }
-    if (mtdLabelsAtlasVO.getLabels().isEmpty()) {
-      mtdLabelsAtlas.setSynchStatus(SynchStateProperty.LabelsAtlas.DELETE);
+    MtdLabelsAtlas mtdLabelsAtlas = mtdLabelsAtlasRepository.findByGuid(mtdLabelsAtlasVO.getGuid());
+    if (mtdLabelsAtlas != null) {
+      if (mtdLabelsAtlasVO.getLabels().isEmpty()) {
+        mtdLabelsAtlas.setSynchStatus(SynchStateProperty.LabelsAtlas.DELETE);
+      } else {
+        mtdLabelsAtlas.setLabels(mtdLabelsAtlasVO.getLabels());
+        mtdLabelsAtlas.setSynchStatus(SynchStateProperty.LabelsAtlas.NOT_SYNCH);
+      }
     } else {
-      mtdLabelsAtlas.setLabels(mtdLabelsAtlasVO.getLabels());
-      mtdLabelsAtlas.setSynchStatus(SynchStateProperty.LabelsAtlas.NOT_SYNCH);
+      mtdLabelsAtlas = MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlas(mtdLabelsAtlasVO);
     }
     mtdLabelsAtlasRepository.saveAndFlush(mtdLabelsAtlas);
   }
@@ -103,5 +88,11 @@ public class MtdLabelsAtlasServiceImpl implements MtdLabelsAtlasService {
       labelsAtlasList.add(byGuid);
     }
     mtdLabelsAtlasRepository.saveAll(labelsAtlasList);
+  }
+
+  @Override
+  public List<MtdLabelsAtlasVO> getByBulk(List<String> guids) {
+    return MtdLabelsAtlasMapper.INSTANCE.useMtdLabelsAtlasListVO(
+        mtdLabelsAtlasRepository.findAllByGuidIn(guids));
   }
 }
