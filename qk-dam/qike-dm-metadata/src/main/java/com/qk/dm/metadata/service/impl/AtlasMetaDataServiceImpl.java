@@ -6,10 +6,10 @@ import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dam.metedata.property.AtlasSearchProperty;
 import com.qk.dm.metadata.service.AtlasMetaDataService;
+import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
@@ -40,9 +40,12 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
   private final MtdLabelsAtlasService mtdLabelsAtlasService;
 
+  private final MtdClassifyAtlasService mtdClassifyAtlasService;
+
   @Autowired
-  public AtlasMetaDataServiceImpl(MtdLabelsAtlasService mtdLabelsAtlasService){
+  public AtlasMetaDataServiceImpl(MtdLabelsAtlasService mtdLabelsAtlasService,MtdClassifyAtlasService mtdClassifyAtlasService){
     this.mtdLabelsAtlasService = mtdLabelsAtlasService;
+    this.mtdClassifyAtlasService = mtdClassifyAtlasService;
   }
 
   @Override
@@ -253,6 +256,11 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       if(Objects.nonNull(mtdLabelsAtlasVO)){
         mtdColumnVO.setLabels(mtdLabelsAtlasVO.getLabels());
       }
+      MtdClassifyAtlasVO mtdClass = mtdClassifyAtlasService.getByGuid(guid);
+      if(Objects.nonNull(mtdClass)) {
+        mtdColumnVO.setClassification(mtdClass.getClassify());
+      }
+
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -272,6 +280,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       MtdLabelsAtlasVO mtdLabelsAtlasVO = mtdLabelsAtlasService.getByGuid(guid);
       if(Objects.nonNull(mtdLabelsAtlasVO)){
         mtdAtlasDbDetailVO.setLabels(mtdLabelsAtlasVO.getLabels());
+      }
+      MtdClassifyAtlasVO mtdClass = mtdClassifyAtlasService.getByGuid(guid);
+      if(Objects.nonNull(mtdClass)) {
+        mtdAtlasDbDetailVO.setClassification(mtdClass.getClassify());
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -296,6 +308,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       if(Objects.nonNull(mtdLabelsAtlasVO)){
         mtdTableDetailVO.setLabels(mtdLabelsAtlasVO.getLabels());
       }
+      MtdClassifyAtlasVO mtdClass = mtdClassifyAtlasService.getByGuid(guid);
+      if(Objects.nonNull(mtdClass)) {
+        mtdTableDetailVO.setClassification(mtdClass.getClassify());
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -312,6 +328,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       AtlasEntity.AtlasEntityWithExtInfo detail) {
     List<AtlasEntity> atlasEntityList = new ArrayList<>(detail.getReferredEntities().values());
     Map<String, List<MtdLabelsAtlasVO>> labsMap = getlabs(atlasEntityList);
+    Map<String, List<MtdClassifyAtlasVO>> classMap = getClassification(atlasEntityList);
     return atlasEntityList.stream()
         .map(
             e -> {
@@ -322,6 +339,14 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               List<MtdLabelsAtlasVO> labList = labsMap.get(e.getGuid());
               if(!CollectionUtils.isEmpty(labList)) {
                 attr.put("labels", labsMap.get(e.getGuid()).get(0).getLabels());
+              }else {
+                attr.put("labels",null);
+              }
+              List<MtdClassifyAtlasVO> classList = classMap.get(e.getGuid());
+              if(!CollectionUtils.isEmpty(classList)) {
+                attr.put("classification", classMap.get(e.getGuid()).get(0).getClassify());
+              }else {
+                attr.put("classification", null);
               }
               return attr;
             })
@@ -341,6 +366,20 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       labMap = labelsAtlasVOList.stream().collect(Collectors.groupingBy(MtdLabelsAtlasVO::getGuid));
     }
     return labMap;
+  }
+
+  /**
+   * 获取分类
+   * @param atlasEntityList
+   */
+  private Map<String, List<MtdClassifyAtlasVO>> getClassification(List<AtlasEntity> atlasEntityList){
+    Map<String, List<MtdClassifyAtlasVO>> classMap = new HashMap<>();
+    List<String> guidList = atlasEntityList.stream().map(AtlasEntity::getGuid).collect(Collectors.toList());
+    List<MtdClassifyAtlasVO> classList = mtdClassifyAtlasService.getByBulk(guidList);
+    if(!CollectionUtils.isEmpty(classList)){
+      classMap = classList.stream().collect(Collectors.groupingBy(MtdClassifyAtlasVO::getGuid));
+    }
+    return classMap;
   }
 
   @Override
