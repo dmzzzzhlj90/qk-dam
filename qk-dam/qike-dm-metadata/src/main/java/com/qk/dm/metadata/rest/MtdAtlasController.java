@@ -115,6 +115,19 @@ public class MtdAtlasController {
    * @param guid 元数据唯一id
    * @return DefaultCommonResult<MtdAtlasDbDetailVO>
    */
+  @GetMapping("/techno/detail/{guid}")
+  public DefaultCommonResult<MtdCommonDetailVO> getDetailByGuid(
+          @PathVariable("guid") String guid) {
+    MtdCommonDetailVO detail = atlasMetaDataService.getDetailByGuid(guid);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, detail);
+  }
+
+  /**
+   * 根据guid获取数据库的元数据信息
+   *
+   * @param guid 元数据唯一id
+   * @return DefaultCommonResult<MtdAtlasDbDetailVO>
+   */
   @GetMapping("/techno/db/detail/{guid}")
   public DefaultCommonResult<MtdDbDetailVO> getDbDetailByGuid(
           @PathVariable("guid") String guid) {

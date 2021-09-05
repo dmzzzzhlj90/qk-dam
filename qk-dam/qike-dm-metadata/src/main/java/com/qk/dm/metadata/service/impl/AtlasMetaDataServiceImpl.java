@@ -38,6 +38,10 @@ import java.util.stream.Collectors;
 @Data
 @Service
 public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
+  private static final String DB = "db";
+  private static final String TABLE = "table";
+  private static final String COLUMN = "column";
+
   private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
   private final MtdLabelsAtlasService mtdLabelsAtlasService;
@@ -230,17 +234,17 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   public MtdCommonDetailVO getDetailByGuid(String guid, String typeName) {
     MtdCommonDetailVO mtdCommonDetailVO = null;
     Map<String,Object> info = new HashMap<>();
-    if(typeName.contains("db")){
+    if(typeName.contains(DB)){
       MtdDbDetailVO dbDetail = getDbDetailByGuid(guid);
       mtdCommonDetailVO = MtdCommonDetailMapper.INSTANCE.userMtdCommonDetail(dbDetail);
       info.put("tables",dbDetail.getTables());
       mtdCommonDetailVO.setRelationshipAttributes(info);
-    }else if(typeName.contains("table")){
+    }else if(typeName.contains(TABLE)){
       MtdTableDetailVO tableDetail = getTableDetailByGuid(guid);
       mtdCommonDetailVO = MtdCommonDetailMapper.INSTANCE.userMtdCommonDetail(tableDetail);
       info.put("columns",tableDetail.getColumns());
       mtdCommonDetailVO.setRelationshipAttributes(info);
-    }else if(typeName.contains("column")){
+    }else if(typeName.contains(COLUMN)){
       MtdColumnVO columnDetail = getColumnDetailByGuid(guid);
       mtdCommonDetailVO = MtdCommonDetailMapper.INSTANCE.userMtdCommonDetail(columnDetail);
       info.put("table",columnDetail.getTable());
@@ -280,7 +284,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
       mtdColumnVO.setTypeName(detail.getEntity().getTypeName());
       mtdColumnVO.setCreateTime(detail.getEntity().getCreateTime());
-      mtdColumnVO.setDataType(Objects.nonNull(attributes.get("data_type"))?attributes.get("data_type").toString():null);
+      mtdColumnVO.setDataType(Objects.nonNull(attributes.get("data_type")) ? attributes.get("data_type").toString() : null);
       mtdColumnVO.setDefaultValue(Objects.nonNull(attributes.get("default_value"))?attributes.get("default_value").toString():null);
       MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("table")), MtdTableInfoVO.class);
       mtdColumnVO.setTable(mtdTableInfoVO);
@@ -298,6 +302,48 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     }
     return mtdColumnVO;
   }
+
+  public MtdCommonDetailVO getDetailByGuid(String guid) {
+    Map<String,Object> info = new HashMap<>();
+    MtdCommonDetailVO mtdCommonDetailVO = null;
+    try {
+      AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
+      Map<String, Object> attributes = detail.getEntity().getAttributes();
+      attributes.remove("createTime");
+      mtdCommonDetailVO = GsonUtil.fromMap(attributes, MtdCommonDetailVO.class);
+      mtdCommonDetailVO.setTypeName(detail.getEntity().getTypeName());
+      mtdCommonDetailVO.setCreateTime(detail.getEntity().getCreateTime());
+      MtdLabelsAtlasVO mtdLabelsAtlasVO = mtdLabelsAtlasService.getByGuid(guid);
+      if(Objects.nonNull(mtdLabelsAtlasVO)){
+        mtdCommonDetailVO.setLabels(mtdLabelsAtlasVO.getLabels());
+      }
+      MtdClassifyAtlasVO mtdClass = mtdClassifyAtlasService.getByGuid(guid);
+      if(Objects.nonNull(mtdClass)) {
+        mtdCommonDetailVO.setClassification(mtdClass.getClassify());
+      }
+      if(mtdCommonDetailVO.getTypeName().contains(DB)) {
+        info.put("tables",buildReferredEntities(detail));
+        mtdCommonDetailVO.setRelationshipAttributes(info);
+      }else if(mtdCommonDetailVO.getTypeName().contains(TABLE)){
+        MtdDbInfoVO mtdDbInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("db")), MtdDbInfoVO.class);
+        mtdCommonDetailVO.setDb(mtdDbInfoVO);
+        info.put("columns",buildReferredEntities(detail));
+        mtdCommonDetailVO.setRelationshipAttributes(info);
+      }else if(mtdCommonDetailVO.getTypeName().contains(COLUMN)){
+        mtdCommonDetailVO.setDataType(Objects.nonNull(attributes.get("data_type"))?attributes.get("data_type").toString():null);
+        mtdCommonDetailVO.setDefaultValue(Objects.nonNull(attributes.get("default_value"))?attributes.get("default_value").toString():null);
+        MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("table")), MtdTableInfoVO.class);
+        info.put("table",mtdTableInfoVO);
+        mtdCommonDetailVO.setRelationshipAttributes(info);
+        MtdDbInfoVO mtdDbInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get("db")), MtdDbInfoVO.class);
+        mtdCommonDetailVO.setDb(mtdDbInfoVO);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return mtdCommonDetailVO;
+  }
+
 
   @Override
   public MtdDbDetailVO getDbDetailByGuid(String guid) {
