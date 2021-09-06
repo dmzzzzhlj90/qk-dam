@@ -3,6 +3,7 @@ package com.qk.dm.indicator.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_idc_atom")
+@Where(clause = "del_flag = 0 ")
 public class IdcAtom implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,7 +23,7 @@ public class IdcAtom implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     /**
      * 原子指标名称

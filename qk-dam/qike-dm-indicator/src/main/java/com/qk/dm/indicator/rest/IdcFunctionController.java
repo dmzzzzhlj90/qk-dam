@@ -2,6 +2,7 @@ package com.qk.dm.indicator.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.indicator.common.enums.DateCycleEnum;
 import com.qk.dam.indicator.common.enums.FunctionTypeEnum;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.params.dto.IdcFunctionDTO;
@@ -109,7 +110,16 @@ public class IdcFunctionController {
    * @return DefaultCommonResult<Map<Object, String>>
    */
   @GetMapping("/type")
-  public DefaultCommonResult<Map<Object, String>> listByPage() {
+  public DefaultCommonResult<Map<Object, String>> type() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, FunctionTypeEnum.EnumToMap());
+  }
+
+  /**
+   * 统计周期
+   * @return DefaultCommonResult<Map<Object, String>>
+   */
+  @GetMapping("/cycle")
+  public DefaultCommonResult<Map<Object, String>> cycle() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, DateCycleEnum.EnumToMap());
   }
 }

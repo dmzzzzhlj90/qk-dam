@@ -1,8 +1,9 @@
 package com.qk.dm.indicator.mapstruct.mapper;
 
-import com.qk.dm.indicator.entity.IdcFunction;
-import com.qk.dm.indicator.params.dto.IdcFunctionDTO;
-import com.qk.dm.indicator.params.vo.IdcFunctionVO;
+import com.qk.dm.indicator.entity.IdcAtom;
+import com.qk.dm.indicator.params.dto.IdcAtomDTO;
+import com.qk.dm.indicator.params.vo.IdcAtomPageVO;
+import com.qk.dm.indicator.params.vo.IdcAtomVO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -19,15 +20,17 @@ import java.util.List;
 @Mapper
 //        (nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
 //                nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-public interface IdcFunctionMapper {
-    IdcFunctionMapper INSTANCE = Mappers.getMapper(IdcFunctionMapper.class);
+public interface IdcAtomMapper {
+    IdcAtomMapper INSTANCE = Mappers.getMapper(IdcAtomMapper.class);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void useIdcFunction(IdcFunctionDTO idcFunctionDTO, @MappingTarget IdcFunction idcFunction);
+    void useIdcAtom(IdcAtomDTO idcAtomDTO, @MappingTarget IdcAtom idcAtom);
 
-    IdcFunction useIdcFunction(IdcFunctionDTO idcFunctionDTO);
+    IdcAtom useIdcAtom(IdcAtomDTO idcAtomDTO);
 
-    IdcFunctionVO useIdcFunctionVO(IdcFunction idcFunction);
+    IdcAtomVO useIdcAtomVO(IdcAtom idcAtom);
 
-    List<IdcFunctionVO> useIdcFunctionVO(List<IdcFunction> idcFunction);
+    List<IdcAtomVO> useIdcAtomVO(List<IdcAtom> idcAtom);
+
+    List<IdcAtomPageVO> useIdcAtomPageVO(List<IdcAtom> idcAtom);
 }
