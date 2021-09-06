@@ -70,7 +70,7 @@ public class IdcCompositeServiceImpl implements IdcCompositeService {
     if (idcComposite == null) {
       throw new BizException("当前要修改的复合指标id为：" + id + " 的数据不存在！！！");
     }
-    idcComposite.setIndicatorStatus(IdcState.Composite.ONLINE);
+    idcComposite.setIndicatorStatus(IdcState.ONLINE);
     idcCompositeRepository.save(idcComposite);
   }
 
@@ -80,7 +80,7 @@ public class IdcCompositeServiceImpl implements IdcCompositeService {
     if (idcComposite == null) {
       throw new BizException("当前要修改的复合指标id为：" + id + " 的数据不存在！！！");
     }
-    idcComposite.setIndicatorStatus(IdcState.Composite.OFFLINE);
+    idcComposite.setIndicatorStatus(IdcState.OFFLINE);
     idcCompositeRepository.save(idcComposite);
   }
 

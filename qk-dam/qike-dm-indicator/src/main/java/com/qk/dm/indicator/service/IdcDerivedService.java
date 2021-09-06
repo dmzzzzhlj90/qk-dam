@@ -15,5 +15,9 @@ public interface IdcDerivedService {
 
     IdcDerivedVO detail(Long id);
 
+    void publish(Long id);
+
+    void offline(Long id);
+
     PageResultVO<IdcDerivedVO> findListPage(IdcDerivedPageDTO idcDerivedPageDTO);
 }

@@ -68,7 +68,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
     if (idcAtom == null) {
       throw new BizException("当前要修改的原子指标id为：" + id + " 的数据不存在！！！");
     }
-    idcAtom.setIndicatorStatus(IdcState.Atom.ONLINE);
+    idcAtom.setIndicatorStatus(IdcState.ONLINE);
     idcAtomRepository.save(idcAtom);
   }
 
@@ -78,7 +78,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
     if (idcAtom == null) {
       throw new BizException("当前要修改的原子指标id为：" + id + " 的数据不存在！！！");
     }
-    idcAtom.setIndicatorStatus(IdcState.Atom.OFFLINE);
+    idcAtom.setIndicatorStatus(IdcState.OFFLINE);
     idcAtomRepository.save(idcAtom);
   }
 

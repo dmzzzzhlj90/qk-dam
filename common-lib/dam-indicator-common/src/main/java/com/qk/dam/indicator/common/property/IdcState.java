@@ -7,15 +7,8 @@ package com.qk.dam.indicator.common.property;
  */
 public class IdcState {
 
-  public static class Atom {
-    public static final Integer DRAFT = 0;
-    public static final Integer ONLINE = 1;
-    public static final Integer OFFLINE = 2;
-  }
+  public static final Integer DRAFT = 0;
+  public static final Integer ONLINE = 1;
+  public static final Integer OFFLINE = 2;
 
-  public static class Composite {
-    public static final Integer DRAFT = 0;
-    public static final Integer ONLINE = 1;
-    public static final Integer OFFLINE = 2;
-  }
 }
