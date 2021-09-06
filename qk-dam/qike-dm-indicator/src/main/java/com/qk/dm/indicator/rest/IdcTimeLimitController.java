@@ -8,7 +8,6 @@ import com.qk.dm.indicator.params.dto.IdcTimeLimitPageDTO;
 import com.qk.dm.indicator.params.vo.IdcTimeLimitVO;
 import com.qk.dm.indicator.service.IdcTimeLimitService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +20,7 @@ import java.util.List;
  * @date 2021/9/1 15:51
  * @since 1.0.0
  */
-@Controller
+@RestController
 @RequestMapping("/time/limit")
 public class IdcTimeLimitController {
 
@@ -91,7 +90,7 @@ public class IdcTimeLimitController {
      * @return DefaultCommonResult<PageResultVO < IdcTimeLimitVO>>
      */
     @GetMapping("/page/list")
-    public DefaultCommonResult<PageResultVO<IdcTimeLimitVO>> pageList(@RequestBody @Validated IdcTimeLimitPageDTO idcTimeLimitPageDTO) {
+    public DefaultCommonResult<PageResultVO<IdcTimeLimitVO>> pageList(IdcTimeLimitPageDTO idcTimeLimitPageDTO) {
         PageResultVO<IdcTimeLimitVO> list = idcTimeLimitService.findListPage(idcTimeLimitPageDTO);
         return DefaultCommonResult.success(ResultCodeEnum.OK, list);
     }

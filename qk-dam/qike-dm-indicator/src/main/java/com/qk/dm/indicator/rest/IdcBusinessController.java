@@ -8,7 +8,6 @@ import com.qk.dm.indicator.params.dto.IdcBusinessPageDTO;
 import com.qk.dm.indicator.params.vo.IdcBusinessVO;
 import com.qk.dm.indicator.service.IdcBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2021/9/2 15:18
  * @since 1.0.0
  */
-@Controller
+@RestController
 @RequestMapping("/business")
 public class IdcBusinessController {
 
@@ -86,7 +85,7 @@ public class IdcBusinessController {
      * @return DefaultCommonResult<PageResultVO<IdcBusinessVO>>
      */
     @GetMapping("/page/list")
-    public DefaultCommonResult<PageResultVO<IdcBusinessVO>> pageList(@RequestBody @Validated IdcBusinessPageDTO idcBusinessPageDTO) {
+    public DefaultCommonResult<PageResultVO<IdcBusinessVO>> pageList(IdcBusinessPageDTO idcBusinessPageDTO) {
         PageResultVO<IdcBusinessVO> list = idcBusinessService.findListPage(idcBusinessPageDTO);
         return DefaultCommonResult.success(ResultCodeEnum.OK, list);
     }

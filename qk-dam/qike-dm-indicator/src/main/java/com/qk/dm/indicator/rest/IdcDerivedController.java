@@ -3,21 +3,12 @@ package com.qk.dm.indicator.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.indicator.entity.IdcDerived;
-import com.qk.dm.indicator.params.dto.IdcAtomDTO;
-import com.qk.dm.indicator.params.dto.IdcAtomPageDTO;
 import com.qk.dm.indicator.params.dto.IdcDerivedDTO;
 import com.qk.dm.indicator.params.dto.IdcDerivedPageDTO;
-import com.qk.dm.indicator.params.vo.IdcAtomPageVO;
-import com.qk.dm.indicator.params.vo.IdcAtomVO;
 import com.qk.dm.indicator.params.vo.IdcDerivedVO;
 import com.qk.dm.indicator.service.IdcDerivedService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 指标通用限定相关接口
@@ -26,7 +17,7 @@ import java.util.List;
  * @date 2021/9/5 15:42
  * @since 1.0.0
  */
-@Controller
+@RestController
 @RequestMapping("/derived")
 public class IdcDerivedController {
     private final IdcDerivedService idcDerivedService;

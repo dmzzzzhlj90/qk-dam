@@ -3,7 +3,6 @@ package com.qk.dm.indicator.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.indicator.common.property.IdcState;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.indicator.entity.IdcAtom;
 import com.qk.dm.indicator.entity.IdcDerived;
 import com.qk.dm.indicator.entity.QIdcDerived;
 import com.qk.dm.indicator.mapstruct.mapper.IdcDerivedMapper;
