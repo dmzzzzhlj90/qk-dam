@@ -27,28 +27,19 @@ spring:
     oauth2:
       client:
         provider:
-          spring:
-            issuer-uri: http://auth-server:9901
+          qkdatacenter:
+            issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
         registration:
-          qk-dam-client-oidc:
-            provider: spring
-            client-id: qk-dam-client
-            client-secret: qk-dam-client-zzr
+          qkdatacenter:
+            client-id: qk-dam
+            client-secret: a68d8cd6-2620-481b-bb15-3d2c19c0d760
             authorization-grant-type: authorization_code
-            redirect-uri: "http://auth-client:8780/login/oauth2/code/{registrationId}"
-            scope: openid
-            client-name: qk-dam-client-oidc
-          qk-dam-front-oidc:
-            provider: spring
-            client-id: qk-dam-front
-            client-secret: qk-dam-front-zzr
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://auth-client:8780/login/oauth2/code/{registrationId}"
-            scope: openid
-            client-name: qk-dam-front-oidc
+            scope:
+              - openid
+              - email
       resourceserver:
         jwt:
-          issuer-uri: http://auth-server:9901
+          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
   cloud:
     gateway:
       default-filters:

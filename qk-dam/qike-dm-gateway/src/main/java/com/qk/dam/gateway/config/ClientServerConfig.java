@@ -28,12 +28,13 @@ public class ClientServerConfig {
     http.authorizeExchange(
             exchanges ->
                 exchanges
-                    .pathMatchers("/access/**", "/current/**")
+                    .pathMatchers("/**")
                     .hasAuthority("SCOPE_openid")
                     .anyExchange()
-                    .access(AuthenticatedReactiveAuthorizationManager.authenticated()))
+                        .authenticated()
+                        .and()
         .oauth2ResourceServer()
-        .jwt();
+        .jwt());
 
     // oauth 登录 客户端配置
     http.oauth2Login(withDefaults()).oauth2Client(withDefaults());
@@ -47,8 +48,8 @@ public class ClientServerConfig {
         new DelegatingServerLogoutHandler(securityContext, clearSiteData);
     OidcClientInitiatedServerLogoutSuccessHandler oidcClientInitiatedServerLogoutSuccessHandler =
         new OidcClientInitiatedServerLogoutSuccessHandler(clientRegistrationRepository);
-    oidcClientInitiatedServerLogoutSuccessHandler.setLogoutSuccessUrl(
-        new URI("http://auth-server:9901/logout?r=http://auth-client:8780/access/token"));
+//    oidcClientInitiatedServerLogoutSuccessHandler.setLogoutSuccessUrl(
+//        new URI("http://auth-server:9901/logout?r=http://auth-client:8780/access/token"));
 
     http.logout(
         (o) ->
