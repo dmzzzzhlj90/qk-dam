@@ -2,6 +2,7 @@ package com.qk.dm.indicator.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.indicator.common.property.IdcState;
+import com.qk.dam.indicator.common.sqlbuilder.SqlBuilderUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.entity.IdcAtom;
 import com.qk.dm.indicator.entity.QIdcAtom;
@@ -13,6 +14,7 @@ import com.qk.dm.indicator.params.vo.IdcAtomVO;
 import com.qk.dm.indicator.repositories.IdcAtomRepository;
 import com.qk.dm.indicator.service.IdcAtomService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -49,6 +51,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
   @Override
   public void insert(IdcAtomDTO idcAtomDTO) {
     IdcAtom idcAtom = IdcAtomMapper.INSTANCE.useIdcAtom(idcAtomDTO);
+    idcAtom.setSqlSentence(SqlBuilderUtil.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
     idcAtomRepository.save(idcAtom);
   }
 
@@ -59,6 +62,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
       throw new BizException("当前要修改的原子指标id为：" + id + " 的数据不存在！！！");
     }
     IdcAtomMapper.INSTANCE.useIdcAtom(idcAtomDTO, idcAtom);
+    idcAtom.setSqlSentence(SqlBuilderUtil.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
     idcAtomRepository.save(idcAtom);
   }
 
@@ -98,6 +102,16 @@ public class IdcAtomServiceImpl implements IdcAtomService {
     Optional<IdcAtom> idcAtom = idcAtomRepository.findById(id);
     if (idcAtom.isEmpty()) {
       throw new BizException("当前要查询的原子指标id为：" + id + " 的数据不存在！！！");
+    }
+    return IdcAtomMapper.INSTANCE.useIdcAtomVO(idcAtom.get());
+  }
+
+  @Override
+  public IdcAtomVO getDetailByCode(String code) {
+    Predicate predicate = qIdcAtom.atomIndicatorCode.eq(code);
+    Optional<IdcAtom> idcAtom = idcAtomRepository.findOne(predicate);
+    if (idcAtom.isEmpty()) {
+      throw new BizException("当前要查询的原子指标编码为：" + code + " 的数据不存在！！！");
     }
     return IdcAtomMapper.INSTANCE.useIdcAtomVO(idcAtom.get());
   }

@@ -2,10 +2,13 @@ package com.qk.dm.indicator.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.indicator.common.sqlbuilder.SqlBuilderUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.params.dto.IdcDerivedDTO;
 import com.qk.dm.indicator.params.dto.IdcDerivedPageDTO;
+import com.qk.dm.indicator.params.vo.IdcAtomVO;
 import com.qk.dm.indicator.params.vo.IdcDerivedVO;
+import com.qk.dm.indicator.service.IdcAtomService;
 import com.qk.dm.indicator.service.IdcDerivedService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +24,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/derived")
 public class IdcDerivedController {
     private final IdcDerivedService idcDerivedService;
+    private final IdcAtomService idcAtomService;
 
-    public IdcDerivedController(IdcDerivedService idcDerivedService){
+    public IdcDerivedController(IdcDerivedService idcDerivedService,IdcAtomService idcAtomService){
         this.idcDerivedService = idcDerivedService;
+        this.idcAtomService = idcAtomService;
     }
     /**
      * 新增
@@ -109,6 +114,20 @@ public class IdcDerivedController {
             IdcDerivedPageDTO idcDerivedPageDTO) {
         return DefaultCommonResult.success(
                 ResultCodeEnum.OK, idcDerivedService.findListPage(idcDerivedPageDTO));
+    }
+
+    /**
+     * SQL预览
+     * @param atomicCode 原子指标编码
+     * @param generalLimit 通用限定
+     * @return
+     */
+    @GetMapping("/preview")
+    public DefaultCommonResult<String> sqlPreview(String atomicCode,String generalLimit){
+        IdcAtomVO idcAtomVO = idcAtomService.getDetailByCode(atomicCode);
+        return DefaultCommonResult.success(
+                ResultCodeEnum.OK,
+                SqlBuilderUtil.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),generalLimit));
     }
 
 }

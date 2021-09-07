@@ -27,15 +27,6 @@ public enum DateCycleEnum {
     this.name = name;
   }
 
-  public static DateCycleEnum getFunctionTypeEnum(String code) {
-    for (DateCycleEnum date : values()) {
-      if (code == date.code) {
-        return date;
-      }
-    }
-    return DAY;
-  }
-
   public static Map<Object, String> EnumToMap() {
     return Arrays.stream(values())
         .collect(Collectors.toMap(DateCycleEnum::getCode, DateCycleEnum::getName));

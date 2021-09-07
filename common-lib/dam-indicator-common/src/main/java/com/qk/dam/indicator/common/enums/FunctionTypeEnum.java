@@ -23,15 +23,6 @@ public enum FunctionTypeEnum {
     this.typeName = typeName;
   }
 
-  public static FunctionTypeEnum getFunctionTypeEnum(Integer status) {
-    for (FunctionTypeEnum sum : values()) {
-      if (status == sum.type) {
-        return sum;
-      }
-    }
-    return SUM;
-  }
-
   public static Map<Object, String> EnumToMap() {
     return Arrays.stream(values())
         .collect(Collectors.toMap(FunctionTypeEnum::getType, FunctionTypeEnum::getTypeName));

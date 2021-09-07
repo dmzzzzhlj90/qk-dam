@@ -26,6 +26,8 @@ public interface IdcAtomService {
 
   IdcAtomVO detail(Long id);
 
+  IdcAtomVO getDetailByCode(String code);
+
   List<IdcAtomVO> getList();
 
   PageResultVO<IdcAtomPageVO> listByPage(IdcAtomPageDTO idcAtomPageDTO);
