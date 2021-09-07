@@ -1,8 +1,11 @@
 package com.qk.dm.dataservice.service.imp;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.dataservice.config.ApiSixConnectInfo;
 import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiRegister;
@@ -15,7 +18,6 @@ import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
 import com.qk.dm.dataservice.vo.*;
-import com.qk.dm.dataservice.config.ApiSixConnectInfo;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +38,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DasApiRegisterServiceImpl implements DasApiRegisterService {
+    private static final Log LOG = LogFactory.get("数据服务_注册API操作");
+
     private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
     private static final QDasApiRegister qDasApiRegister = QDasApiRegister.dasApiRegister;
 
@@ -94,13 +99,17 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         }
         dasApiBasicInfoVO.setApiId(apiId);
         dasApiBasicInfoService.addDasApiBasicInfo(dasApiBasicInfoVO);
+        singleUpdateApiRegister(dasApiRegisterVO, apiId);
 
+    }
+
+    private void singleUpdateApiRegister(DasApiRegisterVO dasApiRegisterVO, String apiId) {
         // 保存注册API信息
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterVO);
         setBackendRequestParaJson(dasApiRegisterVO, dasApiRegister);
         setBackendConstantJson(dasApiRegisterVO, dasApiRegister);
         dasApiRegister.setApiId(apiId);
-        dasApiRegister.setBackendTimeout(String.valueOf(apiSixConnectInfo));
+        dasApiRegister.setBackendTimeout(String.valueOf(apiSixConnectInfo.getUpstreamConnectTimeOut()));
         dasApiRegister.setGmtCreate(new Date());
         dasApiRegister.setGmtModified(new Date());
         dasApiRegister.setDelFlag(0);
@@ -140,30 +149,45 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         return DasConstant.getRegisterConstantParaHeaderInfo();
     }
 
+    @Transactional
     @Override
     public void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList) {
+        AtomicInteger saveCount = new AtomicInteger(0);
+        AtomicInteger updateCount = new AtomicInteger(0);
         if (!ObjectUtils.isEmpty(dasApiRegisterVOList)) {
-            for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterVOList) {
-                DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
-                Optional<DasApiBasicInfo> optionalDasApiBasicInfo = dasApiBasicInfoService.checkExistApiBasicInfo(dasApiBasicInfoVO);
-                if (optionalDasApiBasicInfo.isPresent()) {
-                    DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
-                    Long id = dasApiBasicInfo.getId();
-                    String apiId = dasApiBasicInfo.getApiId();
-                    Optional<DasApiRegister> optionalDasApiRegister = dasApiRegisterRepository.findOne(qDasApiRegister.apiId.eq(apiId));
-                    if (optionalDasApiRegister.isPresent()) {
-                        dasApiBasicInfoVO.setId(id);
-                        dasApiBasicInfoVO.setApiId(apiId);
-                        dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
-                        dasApiRegisterVO.setId(optionalDasApiRegister.get().getId());
-                        dasApiRegisterVO.setApiId(apiId);
-                        updateDasApiRegister(dasApiRegisterVO);
+            try {
+                for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterVOList) {
+                    DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+                    Optional<DasApiBasicInfo> optionalDasApiBasicInfo = dasApiBasicInfoService.checkExistApiBasicInfo(dasApiBasicInfoVO);
+                    if (optionalDasApiBasicInfo.isPresent()) {
+                        DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
+                        Long id = dasApiBasicInfo.getId();
+                        String apiId = dasApiBasicInfo.getApiId();
+                        Optional<DasApiRegister> optionalDasApiRegister = dasApiRegisterRepository.findOne(qDasApiRegister.apiId.eq(apiId));
+                        if (optionalDasApiRegister.isPresent()) {
+                            dasApiBasicInfoVO.setId(id);
+                            dasApiBasicInfoVO.setApiId(apiId);
+                            dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
+                            dasApiRegisterVO.setId(optionalDasApiRegister.get().getId());
+                            dasApiRegisterVO.setApiId(apiId);
+                            updateDasApiRegister(dasApiRegisterVO);
+                        } else {
+                            singleUpdateApiRegister(dasApiRegisterVO, dasApiBasicInfo.getApiId());
+                        }
+                        updateCount.getAndIncrement();
+                    } else {
+                        addDasApiRegister(dasApiRegisterVO);
+                        saveCount.getAndIncrement();
                     }
-                } else {
-                    addDasApiRegister(dasApiRegisterVO);
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new BizException(e.getMessage());
             }
         }
+        LOG.info("同步OpenApi,新增注册API个数为: 【{}】", saveCount);
+        LOG.info("同步OpenApi,更新注册API个数为: 【{}】", updateCount);
+
     }
 
     @Override

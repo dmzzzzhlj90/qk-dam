@@ -1,6 +1,5 @@
 package com.qk.dam.dataservice.spi.consunmer;
 
-import com.qk.dam.dataservice.spi.route.RouteInfo;
 import lombok.*;
 
 import java.util.Map;
@@ -11,6 +10,6 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class ConsumerContext {
-  private ConsumerInfo consumerInfo;
-  private Map<String, String> params;
+    private ConsumerInfo consumerInfo;
+    private Map<String, String> params;
 }

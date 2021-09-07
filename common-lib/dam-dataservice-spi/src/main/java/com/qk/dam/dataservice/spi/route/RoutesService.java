@@ -11,5 +11,8 @@ public interface RoutesService {
     }
 
     List getRouteInfo();
+
+    void clearRoute();
+
 }
 

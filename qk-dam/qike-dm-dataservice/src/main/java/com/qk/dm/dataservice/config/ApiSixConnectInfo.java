@@ -22,6 +22,10 @@ public class ApiSixConnectInfo {
 
     private String adminConsumerUrl;
 
+    private String adminUpstreamUrl;
+
+    private String adminServerUrl;
+
     private String headKeyValue;
 
     private String apiStatus;

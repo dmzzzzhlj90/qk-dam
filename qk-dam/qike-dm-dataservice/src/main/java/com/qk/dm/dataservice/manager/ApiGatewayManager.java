@@ -7,11 +7,15 @@ import com.qk.dam.dataservice.spi.plugin.GatewayPlugin;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.dataservice.spi.route.RouteFactory;
 import com.qk.dam.dataservice.spi.route.RoutesService;
+import com.qk.dam.dataservice.spi.server.ServerContext;
+import com.qk.dam.dataservice.spi.server.ServerFactory;
+import com.qk.dam.dataservice.spi.server.ServerService;
 import com.qk.dam.dataservice.spi.upstream.UpstreamContext;
 import com.qk.dam.dataservice.spi.upstream.UpstreamFactory;
 import com.qk.dam.dataservice.spi.upstream.UpstreamService;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -21,6 +25,7 @@ public class ApiGatewayManager {
     private RoutesService routesService = null;
     private UpstreamService upstreamService = null;
     private ConsumerService consumerService = null;
+    private ServerService serverService = null;
 
     public void addPlugin(final GatewayPlugin gatewayPlugin) {
         plugins.put(gatewayPlugin.getType(), gatewayPlugin);
@@ -37,7 +42,7 @@ public class ApiGatewayManager {
             RouteFactory routeFactory = gatewayPlugin.routeFactory(routeContext);
             this.routesService = routeFactory.getRoutesService();
             routesService.initRouteInfo();
-            log.info("路由服务初始化完成！");
+            log.info("======路由服务初始化完成！======");
         }
     }
 
@@ -45,7 +50,6 @@ public class ApiGatewayManager {
         GatewayPlugin gatewayPlugin = plugins.get(type);
 
         if (gatewayPlugin != null) {
-
             UpstreamFactory upstreamFactory = gatewayPlugin.upstreamFactory(upstreamContext);
             this.upstreamService = upstreamFactory.getUpstreamService();
             log.info("负载信息服务初始化完成！");
@@ -59,7 +63,7 @@ public class ApiGatewayManager {
             ConsumerFactory consumerFactory = gatewayPlugin.consumerFactory(consumerContext);
             this.consumerService = consumerFactory.getConsumerService();
             consumerService.initConsumersAuth();
-            log.info("消费者服务初始化完成！");
+            log.info("======消费者服务初始化完成！======");
         }
     }
 
@@ -70,7 +74,7 @@ public class ApiGatewayManager {
             RouteFactory routeFactory = gatewayPlugin.routeFactory(routeContext);
             this.routesService = routeFactory.getRoutesService();
             routesService.getRouteInfo();
-            log.info("路由服务初始化完成！");
+            log.info("======路由服务初始化完成！======");
         }
     }
 
@@ -82,5 +86,62 @@ public class ApiGatewayManager {
         return upstreamService;
     }
 
+    public List getUpstreamInfo(final String type, UpstreamContext upstreamContext) {
+        GatewayPlugin gatewayPlugin = plugins.get(type);
+        if (gatewayPlugin != null) {
+            UpstreamFactory upstreamFactory = gatewayPlugin.upstreamFactory(upstreamContext);
+            this.upstreamService = upstreamFactory.getUpstreamService();
+            List upstreamInfoList = upstreamService.getUpstreamInfo();
+            log.info("======成功获取到路由Upstream信息！======");
+            return upstreamInfoList;
+        }
+        return null;
+    }
 
+    public List getServiceInfo(final String type, ServerContext serverContext) {
+        GatewayPlugin gatewayPlugin = plugins.get(type);
+        if (gatewayPlugin != null) {
+            ServerFactory serverFactory = gatewayPlugin.serverFactory(serverContext);
+            this.serverService = serverFactory.getServerService();
+            List serverInfoList = serverService.getServerInfo();
+            log.info("======成功获取到服务Service信息！======");
+            return serverInfoList;
+        }
+        return null;
+    }
+
+    public List apiSixUpstreamInfoIds(String type, UpstreamContext upstreamContext) {
+        GatewayPlugin gatewayPlugin = plugins.get(type);
+        if (gatewayPlugin != null) {
+            UpstreamFactory upstreamFactory = gatewayPlugin.upstreamFactory(upstreamContext);
+            this.upstreamService = upstreamFactory.getUpstreamService();
+            List upstreamInfoIds = upstreamService.apiSixUpstreamInfoIds();
+            log.info("======成功获取到路由Upstream信息！======");
+            return upstreamInfoIds;
+        }
+        return null;
+    }
+
+    public List apiSixServiceInfoIds(String type, ServerContext serverContext) {
+        GatewayPlugin gatewayPlugin = plugins.get(type);
+        if (gatewayPlugin != null) {
+            ServerFactory serverFactory = gatewayPlugin.serverFactory(serverContext);
+            this.serverService = serverFactory.getServerService();
+            List serviceInfoIds = serverService.apiSixServiceInfoIds();
+            log.info("======成功获取到服务Service信息！======");
+            return serviceInfoIds;
+        }
+        return null;
+    }
+
+    public synchronized void clearRouteService(final String type, RouteContext routeContext) {
+        GatewayPlugin gatewayPlugin = plugins.get(type);
+
+        if (gatewayPlugin != null) {
+            RouteFactory routeFactory = gatewayPlugin.routeFactory(routeContext);
+            this.routesService = routeFactory.getRoutesService();
+            routesService.clearRoute();
+            log.info("======路由清除完成！======");
+        }
+    }
 }
