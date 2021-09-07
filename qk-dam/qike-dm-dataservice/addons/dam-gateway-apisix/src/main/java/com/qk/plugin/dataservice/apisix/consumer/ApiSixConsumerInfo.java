@@ -2,10 +2,7 @@ package com.qk.plugin.dataservice.apisix.consumer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.qk.dam.dataservice.spi.consunmer.ConsumerInfo;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Map;
 
@@ -14,6 +11,7 @@ import java.util.Map;
  *
  * @author wjq
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

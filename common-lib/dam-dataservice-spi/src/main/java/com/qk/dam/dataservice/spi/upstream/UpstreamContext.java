@@ -1,8 +1,13 @@
 package com.qk.dam.dataservice.spi.upstream;
 
 import java.util.Map;
-import lombok.Builder;
 
+import lombok.*;
+
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UpstreamContext {
   private UpstreamInfo upstreamInfo;

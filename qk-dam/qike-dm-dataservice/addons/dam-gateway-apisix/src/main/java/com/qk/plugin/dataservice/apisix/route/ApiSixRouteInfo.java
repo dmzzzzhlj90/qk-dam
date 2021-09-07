@@ -5,16 +5,15 @@ import com.qk.dam.dataservice.spi.route.RouteInfo;
 import com.qk.plugin.dataservice.apisix.route.entity.Upstream;
 import java.util.List;
 import java.util.Map;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 /**
  * 封装ApiSix_Route入参实体对象
  *
  * @author wjq
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,12 +24,12 @@ public class ApiSixRouteInfo extends RouteInfo {
   private String name;
   private Integer status;
   private List<String> uris; // [\"/das/*\"]
-  private List<String>
-      methods; // [\"GET\",\"POST\",\"PUT\",\"DELETE\",\"PATCH\",\"HEAD\",\"OPTIONS\",\"CONNECT\",\"TRACE\"]
-  private List<List<String>>
-      vars; // [[\"arg_code111\",\"==\",\"123\"],[\"arg_value222\",\"==\",\"666\"]]
-  private Map<String, Map<String, Object>> plugins;
-  private Upstream upstream;
+  private List<String> methods; // [\"GET\",\"POST\",\"PUT\",\"DELETE\",\"PATCH\",\"HEAD\",\"OPTIONS\",\"CONNECT\",\"TRACE\"]
+  //  private List<List<String>> vars; // [[\"arg_code111\",\"==\",\"123\"],[\"arg_value222\",\"==\",\"666\"]]
+//  private Map<String, Map<String, Object>> plugins;
+//  private Upstream upstream;
+  private String upstream_id;
+  private String service_id;
   private Map<String, String> labels;
   private String desc;
 }

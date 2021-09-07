@@ -4,6 +4,8 @@ import com.qk.dam.dataservice.spi.consunmer.ConsumerContext;
 import com.qk.dam.dataservice.spi.consunmer.ConsumerFactory;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.dataservice.spi.route.RouteFactory;
+import com.qk.dam.dataservice.spi.server.ServerContext;
+import com.qk.dam.dataservice.spi.server.ServerFactory;
 import com.qk.dam.dataservice.spi.upstream.UpstreamContext;
 import com.qk.dam.dataservice.spi.upstream.UpstreamFactory;
 
@@ -15,4 +17,7 @@ public interface GatewayPlugin {
   UpstreamFactory upstreamFactory(UpstreamContext routeContext);
 
   ConsumerFactory consumerFactory(ConsumerContext consumerContext);
+
+  ServerFactory serverFactory(ServerContext serverContext);
+
 }
