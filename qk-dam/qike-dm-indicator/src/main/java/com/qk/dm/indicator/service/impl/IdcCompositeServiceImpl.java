@@ -61,7 +61,7 @@ public class IdcCompositeServiceImpl implements IdcCompositeService {
       throw new BizException("当前要修改的复合指标id为：" + id + " 的数据不存在！！！");
     }
     IdcCompositeMapper.INSTANCE.useIdc(idcCompositeDTO, idcComposite);
-    idcCompositeRepository.save(idcComposite);
+    idcCompositeRepository.saveAndFlush(idcComposite);
   }
 
   @Override
@@ -71,7 +71,7 @@ public class IdcCompositeServiceImpl implements IdcCompositeService {
       throw new BizException("当前要修改的复合指标id为：" + id + " 的数据不存在！！！");
     }
     idcComposite.setIndicatorStatus(IdcState.ONLINE);
-    idcCompositeRepository.save(idcComposite);
+    idcCompositeRepository.saveAndFlush(idcComposite);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class IdcCompositeServiceImpl implements IdcCompositeService {
       throw new BizException("当前要修改的复合指标id为：" + id + " 的数据不存在！！！");
     }
     idcComposite.setIndicatorStatus(IdcState.OFFLINE);
-    idcCompositeRepository.save(idcComposite);
+    idcCompositeRepository.saveAndFlush(idcComposite);
   }
 
   @Override

@@ -79,6 +79,30 @@ public class IdcBusinessController {
     }
 
     /**
+     * 发布
+     *
+     * @param id
+     * @return DefaultCommonResult
+     */
+    @PutMapping("/{id}/publish")
+    public DefaultCommonResult publish(@PathVariable("id") Long id) {
+        idcBusinessService.publish(id);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 下线
+     *
+     * @param id
+     * @return DefaultCommonResult
+     */
+    @PutMapping("/{id}/offline")
+    public DefaultCommonResult offline(@PathVariable("id") Long id) {
+        idcBusinessService.offline(id);
+        return DefaultCommonResult.success();
+    }
+
+    /**
      * 获取指标分页查询列表
      *
      * @param idcBusinessPageDTO

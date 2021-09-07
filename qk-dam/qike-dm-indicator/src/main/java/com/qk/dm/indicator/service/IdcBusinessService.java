@@ -19,6 +19,9 @@ public interface IdcBusinessService {
 
     IdcBusinessVO detail(Long id);
 
+    void publish(Long id);
+
+    void offline(Long id);
 
     PageResultVO<IdcBusinessVO> findListPage(IdcBusinessPageDTO idcBusinessPageDTO);
 }

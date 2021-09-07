@@ -1,6 +1,7 @@
 package com.qk.dm.indicator.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.indicator.common.property.IdcState;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.entity.IdcBusiness;
 import com.qk.dm.indicator.entity.QIdcBusiness;
@@ -86,6 +87,26 @@ public class IdcBusinessServiceImpl implements IdcBusinessService {
             throw new BizException("当前要查询的业务指标id为：" + id + " 的数据，不存在！！！");
         }
         return IdcBusinessMapper.INSTANCE.useIdcBusinessVO(idcBusiness.get());
+    }
+
+    @Override
+    public void publish(Long id) {
+        IdcBusiness idcBusiness = idcBusinessRepository.findById(id).orElse(null);
+        if (idcBusiness == null) {
+            throw new BizException("当前要发布的业务指标id为：" + id + " 的数据不存在！！！");
+        }
+        idcBusiness.setIndicatorStatus(IdcState.ONLINE);
+        idcBusinessRepository.saveAndFlush(idcBusiness);
+    }
+
+    @Override
+    public void offline(Long id) {
+        IdcBusiness idcBusiness = idcBusinessRepository.findById(id).orElse(null);
+        if (idcBusiness == null) {
+            throw new BizException("当前要下线的业务指标id为：" + id + " 的数据不存在！！！");
+        }
+        idcBusiness.setIndicatorStatus(IdcState.OFFLINE);
+        idcBusinessRepository.saveAndFlush(idcBusiness);
     }
 
     @Override

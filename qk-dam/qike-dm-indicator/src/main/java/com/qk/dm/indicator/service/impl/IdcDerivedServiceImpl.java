@@ -2,14 +2,17 @@ package com.qk.dm.indicator.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.indicator.common.property.IdcState;
+import com.qk.dam.indicator.common.sqlbuilder.SqlBuilderUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.entity.IdcDerived;
 import com.qk.dm.indicator.entity.QIdcDerived;
 import com.qk.dm.indicator.mapstruct.mapper.IdcDerivedMapper;
 import com.qk.dm.indicator.params.dto.IdcDerivedDTO;
 import com.qk.dm.indicator.params.dto.IdcDerivedPageDTO;
+import com.qk.dm.indicator.params.vo.IdcAtomVO;
 import com.qk.dm.indicator.params.vo.IdcDerivedVO;
 import com.qk.dm.indicator.repositories.IdcDerivedRepository;
+import com.qk.dm.indicator.service.IdcAtomService;
 import com.qk.dm.indicator.service.IdcDerivedService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -32,10 +35,13 @@ public class IdcDerivedServiceImpl implements IdcDerivedService {
     private final EntityManager entityManager;
     private final QIdcDerived qIdcDerived = QIdcDerived.idcDerived;
     private final IdcDerivedRepository idcDerivedRepository;
+    private final IdcAtomService idcAtomService;
     @Autowired
-    public IdcDerivedServiceImpl(EntityManager entityManager,IdcDerivedRepository idcDerivedRepository){
+    public IdcDerivedServiceImpl(EntityManager entityManager,IdcDerivedRepository idcDerivedRepository,
+                                 IdcAtomService idcAtomService){
         this.entityManager = entityManager;
         this.idcDerivedRepository = idcDerivedRepository;
+        this.idcAtomService = idcAtomService;
     }
 
     @PostConstruct
@@ -46,6 +52,10 @@ public class IdcDerivedServiceImpl implements IdcDerivedService {
     @Override
     public void insert(IdcDerivedDTO idcDerivedDTO) {
         IdcDerived idcDerived = IdcDerivedMapper.INSTANCE.useIdcDerived(idcDerivedDTO);
+        IdcAtomVO idcAtomVO = idcAtomService.getDetailByCode(idcDerived.getAtomIndicatorCode());
+        String sql = SqlBuilderUtil.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),
+                idcDerived.getGeneralLimit());
+        idcDerived.setSqlSentence(sql);
         idcDerivedRepository.save(idcDerived);
     }
 
@@ -56,6 +66,11 @@ public class IdcDerivedServiceImpl implements IdcDerivedService {
             throw new BizException("当前要修改的衍生指标id为：" + id + " 的数据不存在！！！");
         }
         IdcDerivedMapper.INSTANCE.useIdcDerived(idcDerivedDTO,idcDerived);
+
+        IdcAtomVO idcAtomVO = idcAtomService.getDetailByCode(idcDerived.getAtomIndicatorCode());
+        String sql = SqlBuilderUtil.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),
+                idcDerived.getGeneralLimit());
+        idcDerived.setSqlSentence(sql);
         idcDerivedRepository.saveAndFlush(idcDerived);
     }
 
@@ -87,7 +102,7 @@ public class IdcDerivedServiceImpl implements IdcDerivedService {
     public void publish(Long id) {
         IdcDerived idcDerived = idcDerivedRepository.findById(id).orElse(null);
         if (idcDerived == null) {
-            throw new BizException("当前要修改的衍生指标id为：" + id + " 的数据不存在！！！");
+            throw new BizException("当前要上线的衍生指标id为：" + id + " 的数据不存在！！！");
         }
         idcDerived.setIndicatorStatus(IdcState.ONLINE);
         idcDerivedRepository.saveAndFlush(idcDerived);
@@ -97,7 +112,7 @@ public class IdcDerivedServiceImpl implements IdcDerivedService {
     public void offline(Long id) {
         IdcDerived idcDerived = idcDerivedRepository.findById(id).orElse(null);
         if (idcDerived == null) {
-            throw new BizException("当前要修改的衍生指标id为：" + id + " 的数据不存在！！！");
+            throw new BizException("当前要下线的衍生指标id为：" + id + " 的数据不存在！！！");
         }
         idcDerived.setIndicatorStatus(IdcState.OFFLINE);
         idcDerivedRepository.saveAndFlush(idcDerived);

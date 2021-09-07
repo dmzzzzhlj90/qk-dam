@@ -63,7 +63,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
     }
     IdcAtomMapper.INSTANCE.useIdcAtom(idcAtomDTO, idcAtom);
     idcAtom.setSqlSentence(SqlBuilderUtil.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
-    idcAtomRepository.save(idcAtom);
+    idcAtomRepository.saveAndFlush(idcAtom);
   }
 
   @Override
