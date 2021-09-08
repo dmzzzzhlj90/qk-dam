@@ -54,7 +54,7 @@ public class SqlBuilderUtil {
     public static String orderBy(String tableName,String expression,
                                  String where,String orderBy){
         StringSql sql = new StringSql()
-                .select(expression)
+                .select(Arrays.asList(expression.split(COMMA)))
                 .from(tableName)
                 .where(where)
                 .orderBy(orderBy);
