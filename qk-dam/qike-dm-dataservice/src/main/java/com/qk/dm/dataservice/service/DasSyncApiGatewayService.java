@@ -15,11 +15,13 @@ import java.util.List;
 @Service
 public interface DasSyncApiGatewayService {
 
-    void syncApiSixRoutesAll();
+//    void syncApiSixRoutesAll();
 
-    void syncApiSixRoutesRegister(String upstreamId,String serviceId);
+    int apiSixRoutesRegisterAll(String upstreamId, String serviceId);
 
-    void syncApiSixRoutesCreate();
+    int apiSixRoutesRegisterByPath(String upstreamId, String serviceId, String apiPath);
+
+//    void syncApiSixRoutesCreate();
 
     void apiSixConsumersKeyAuth(ApiSixConsumerInfo apiSixConsumerInfo);
 

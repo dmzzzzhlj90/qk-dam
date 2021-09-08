@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasSyncOpenApiService {
 
-    void syncRegister();
+    int syncRegister();
 
 }

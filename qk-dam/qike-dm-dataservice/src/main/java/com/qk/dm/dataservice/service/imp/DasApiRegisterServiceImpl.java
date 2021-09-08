@@ -7,6 +7,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataservice.config.ApiSixConnectInfo;
 import com.qk.dm.dataservice.constant.DasConstant;
+import com.qk.dm.dataservice.constant.SyncStatusEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiRegister;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
@@ -110,6 +111,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         setBackendConstantJson(dasApiRegisterVO, dasApiRegister);
         dasApiRegister.setApiId(apiId);
         dasApiRegister.setBackendTimeout(String.valueOf(apiSixConnectInfo.getUpstreamConnectTimeOut()));
+        dasApiRegister.setStatus(SyncStatusEnum.CREATE_NO_SYNC.getCode());
         dasApiRegister.setGmtCreate(new Date());
         dasApiRegister.setGmtModified(new Date());
         dasApiRegister.setDelFlag(0);
@@ -127,6 +129,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         setBackendRequestParaJson(dasApiRegisterVO, dasApiRegister);
         setBackendConstantJson(dasApiRegisterVO, dasApiRegister);
         dasApiRegister.setBackendTimeout(String.valueOf(apiSixConnectInfo.getUpstreamConnectTimeOut()));
+        dasApiRegister.setStatus(SyncStatusEnum.CREATE_NO_SYNC.getCode());
         dasApiRegister.setGmtModified(new Date());
         dasApiRegister.setDelFlag(0);
         Predicate predicate = qDasApiRegister.apiId.eq(dasApiRegister.getApiId());

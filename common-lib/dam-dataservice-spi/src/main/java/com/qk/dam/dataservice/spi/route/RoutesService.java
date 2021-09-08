@@ -14,5 +14,6 @@ public interface RoutesService {
 
     void clearRoute();
 
+    void deleteRouteByRouteId();
 }
 

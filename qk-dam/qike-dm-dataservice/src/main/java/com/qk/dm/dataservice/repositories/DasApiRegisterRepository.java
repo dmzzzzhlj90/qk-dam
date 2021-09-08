@@ -11,4 +11,5 @@ public interface DasApiRegisterRepository extends BaseRepository<DasApiRegister,
   @Modifying
   @Query(" DELETE from DasApiRegister where apiId = :apiId ")
   void deleteByApiId(@Param("apiId") String apiId);
+
 }

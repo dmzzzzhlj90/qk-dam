@@ -30,39 +30,53 @@ public class DasSyncApiGatewayController {
         this.dasSyncApiGatewayService = dasSyncApiGatewayService;
     }
 
+//    /**
+//     * 同步数据服务所有的API至API_SIX
+//     *
+//     * @return DefaultCommonResult
+//     */
+//    @PostMapping("/apiSix/routes/all")
+//    public DefaultCommonResult syncApiSixRoutesAll() {
+//        dasSyncApiGatewayService.syncApiSixRoutesAll();
+//        return DefaultCommonResult.success();
+//    }
+
     /**
-     * 同步数据服务所有的API至API_SIX
+     * 全量同步__数据服务注册API至API_SIX
      *
+     * @param upstreamId,serviceId
      * @return DefaultCommonResult
      */
-    @PostMapping("/apiSix/routes/all")
-    public DefaultCommonResult syncApiSixRoutesAll() {
-        dasSyncApiGatewayService.syncApiSixRoutesAll();
-        return DefaultCommonResult.success();
+    @PostMapping("/apiSix/routes/register/all")
+    public DefaultCommonResult apiSixRoutesRegisterAll(@RequestParam("upstreamId") String upstreamId,
+                                                       @RequestParam("serviceId") String serviceId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dasSyncApiGatewayService.apiSixRoutesRegisterAll(upstreamId, serviceId));
     }
 
     /**
-     * 同步数据服务注册API至API_SIX
+     * 模糊匹配同步__注册API至API_SIX
      *
+     * @param upstreamId,serviceId,apiPath
      * @return DefaultCommonResult
      */
-    @PostMapping("/apiSix/routes/register")
-    public DefaultCommonResult syncApiSixRoutesRegister(@RequestParam("upstreamId") String upstreamId,
-                                                        @RequestParam("serviceId") String serviceId) {
-        dasSyncApiGatewayService.syncApiSixRoutesRegister(upstreamId, serviceId);
-        return DefaultCommonResult.success();
+    @PostMapping("/apiSix/routes/register/path")
+    public DefaultCommonResult apiSixRoutesRegisterByPath(@RequestParam("upstreamId") String upstreamId,
+                                                          @RequestParam("serviceId") String serviceId,
+                                                          @RequestParam("apiPath") String apiPath) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,
+                dasSyncApiGatewayService.apiSixRoutesRegisterByPath(upstreamId, serviceId, apiPath));
     }
 
-    /**
-     * 同步数据服务新建API至API_SIX
-     *
-     * @return DefaultCommonResult
-     */
-    @PostMapping("/apiSix/routes/create")
-    public DefaultCommonResult syncApiSixRoutesCreate() {
-        dasSyncApiGatewayService.syncApiSixRoutesCreate();
-        return DefaultCommonResult.success();
-    }
+//    /**
+//     * 同步数据服务新建API至API_SIX
+//     *
+//     * @return DefaultCommonResult
+//     */
+//    @PostMapping("/apiSix/routes/create")
+//    public DefaultCommonResult syncApiSixRoutesCreate() {
+//        dasSyncApiGatewayService.syncApiSixRoutesCreate();
+//        return DefaultCommonResult.success();
+//    }
 
     /**
      * 创建ApiSix接口认证插件key-auth
@@ -82,7 +96,7 @@ public class DasSyncApiGatewayController {
      */
     @GetMapping("/apiSix/upstream/info")
     public DefaultCommonResult<List> apiSixUpstreamInfo() {
-       return DefaultCommonResult.success(ResultCodeEnum.OK,dasSyncApiGatewayService.apiSixUpstreamInfo());
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixUpstreamInfo());
     }
 
     /**
