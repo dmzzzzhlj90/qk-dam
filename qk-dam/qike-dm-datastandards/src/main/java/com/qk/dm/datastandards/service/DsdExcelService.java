@@ -1,11 +1,10 @@
 package com.qk.dm.datastandards.service;
 
-import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
-import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 数据标准excel导入导出
@@ -17,23 +16,28 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface DsdExcelService {
 
-  List<DsdBasicinfoVO> queryBasicInfos(String dirDsdId);
+    //  ================================basicInfo===============================================
+    void basicInfoUpload(MultipartFile file, String dirDsdId);
 
-  void basicInfoUpload(MultipartFile file, String dirDsdId);
+    void basicInfoDownloadAll(HttpServletResponse response) throws IOException;
 
-  List<String> findAllDsdDirLevel();
+    void basicInfoDownloadByDirDsdId(String dirDsdId, HttpServletResponse response) throws IOException;
 
-  List<String> findAllDsdCodeDirLevel();
+    void basicInfoDownloadTemplate(HttpServletResponse response) throws IOException;
 
-  List<DsdBasicinfoVO> dsdBasicInfoSampleData();
+    //  ================================codeInfo===============================================
+    void codeInfoAllUpload(MultipartFile file, String codeDirId);
 
-  void codeValuesDownloadByCodeInfoId(HttpServletResponse response, Long dsdCodeInfoId);
+    void codeInfoAllDownload(String codeDirId, HttpServletResponse response) throws IOException;
 
-  void codeValuesUploadByCodeInfoId(MultipartFile file, long dsdCodeInfoId);
+    void codeInfoDownloadTemplate(HttpServletResponse response) throws IOException;
 
-  void codeValuesDownloadTemplate(HttpServletResponse response, long dsdCodeInfoId);
+    //  ================================codeValues===============================================
+    void codeValuesUploadByCodeInfoId(MultipartFile file, long dsdCodeInfoId);
 
-  List<DsdCodeInfoVO> codeInfoAllDownload(String codeDirId);
+    void codeValuesDownloadByCodeInfoId(HttpServletResponse response, Long dsdCodeInfoId);
 
-  void codeInfoAllUpload(MultipartFile file, String codeDirId);
+    void codeValuesDownloadTemplate(HttpServletResponse response, long dsdCodeInfoId);
+
+
 }

@@ -15,24 +15,24 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: dm-dataservice
+    name: dm-dataservice-prod
   cloud:
     nacos:
       discovery:
         server-addr: http://172.20.0.13
-        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
-        group: DM-GROUP
+        namespace: 4ffde52b-d587-4e13-b5df-7aa081d71a81
       config:
         server-addr: http://172.20.0.13
-        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        namespace: 4ffde52b-d587-4e13-b5df-7aa081d71a81
         extension-configs:
-          - dataId: test44-mysql-dev.yml
+          - dataId: qkdam-mysql-prod.yml
+            group: DAM
             refresh: true
-          - dataId: test44-redis-dev.yml
+          - dataId: qkdam-redis-prod.yml
+            group: DAM
             refresh: true
-          - dataId: test44-leaf-dev.yml
-            refresh: true
-          - dataId: dm-dataservice.yml
+          - dataId: qkdam-dataservice-prod.yml
+            group: DAM
             refresh: true
 management:
   endpoints:
