@@ -90,7 +90,7 @@ public class IdcTimeLimitController {
      * @return DefaultCommonResult<PageResultVO < IdcTimeLimitVO>>
      */
     @GetMapping("/page/list")
-    public DefaultCommonResult<PageResultVO<IdcTimeLimitVO>> pageList(IdcTimeLimitPageDTO idcTimeLimitPageDTO) {
+    public DefaultCommonResult<PageResultVO<IdcTimeLimitVO>> pageList(@RequestBody IdcTimeLimitPageDTO idcTimeLimitPageDTO) {
         PageResultVO<IdcTimeLimitVO> list = idcTimeLimitService.findListPage(idcTimeLimitPageDTO);
         return DefaultCommonResult.success(ResultCodeEnum.OK, list);
     }

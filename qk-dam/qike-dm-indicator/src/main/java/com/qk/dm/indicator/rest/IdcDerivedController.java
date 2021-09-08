@@ -111,7 +111,7 @@ public class IdcDerivedController {
      */
     @GetMapping("/page")
     public DefaultCommonResult<PageResultVO<IdcDerivedVO>> listByPage(
-            IdcDerivedPageDTO idcDerivedPageDTO) {
+            @RequestBody IdcDerivedPageDTO idcDerivedPageDTO) {
         return DefaultCommonResult.success(
                 ResultCodeEnum.OK, idcDerivedService.findListPage(idcDerivedPageDTO));
     }

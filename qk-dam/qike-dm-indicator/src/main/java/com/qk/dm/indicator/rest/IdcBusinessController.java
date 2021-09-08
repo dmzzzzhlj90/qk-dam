@@ -109,7 +109,7 @@ public class IdcBusinessController {
      * @return DefaultCommonResult<PageResultVO<IdcBusinessVO>>
      */
     @GetMapping("/page/list")
-    public DefaultCommonResult<PageResultVO<IdcBusinessVO>> pageList(IdcBusinessPageDTO idcBusinessPageDTO) {
+    public DefaultCommonResult<PageResultVO<IdcBusinessVO>> pageList(@RequestBody IdcBusinessPageDTO idcBusinessPageDTO) {
         PageResultVO<IdcBusinessVO> list = idcBusinessService.findListPage(idcBusinessPageDTO);
         return DefaultCommonResult.success(ResultCodeEnum.OK, list);
     }
