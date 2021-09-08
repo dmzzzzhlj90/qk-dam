@@ -2,8 +2,13 @@ package com.qk.dm.metadata.mapstruct.mapper;
 
 import com.qk.dm.metadata.entity.MtdClassifyAtlas;
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * @author wangzp
@@ -17,4 +22,9 @@ public interface MtdClassifyAtlasMapper {
   MtdClassifyAtlas useMtdClassifyAtlas(MtdClassifyAtlasVO mtdClassifyAtlasVO);
 
   MtdClassifyAtlasVO useMtdClassifyAtlasVO(MtdClassifyAtlas mtdClassifyAtlas);
+
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void useMtdClassifyAtlas(MtdClassifyAtlasVO mtdClassifyAtlasVO, @MappingTarget MtdClassifyAtlas mtdClassifyAtlas);
+
+  List<MtdClassifyAtlasVO> useMtdClassifyAtlasListVO(List<MtdClassifyAtlas> mtdClassifyAtlass);
 }

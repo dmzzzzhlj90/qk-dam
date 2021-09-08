@@ -1,6 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.entity.MtdClassify;
 import com.qk.dm.metadata.entity.MtdClassifyAtlas;
 import com.qk.dm.metadata.entity.QMtdClassify;
@@ -15,19 +16,20 @@ import com.qk.dm.metadata.vo.PageResultVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @author wangzp
@@ -60,12 +62,15 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
   @Override
   public void insert(MtdClassifyVO mtdClassifyVO) {
     Predicate predicate =
-        qMtdClassify.name.eq(mtdClassifyVO.getName()).and(qMtdClassify.synchStatus.ne(-1));
+        qMtdClassify
+            .name
+            .eq(mtdClassifyVO.getName())
+            .and(qMtdClassify.synchStatus.ne(SynchStateProperty.Classify.DELETE));
     if (mtdClassifyRepository.exists(predicate)) {
-      throw new BizException("当前要新增的分类为：" + mtdClassifyVO.getName() + " 的数据，已存在！！！");
+      throw new BizException("当前要新增的分类为：" + mtdClassifyVO.getName() + " 的数据已存在！！！");
     }
     MtdClassify mtdClassify = MtdClassifyMapper.INSTANCE.useMtdClassify(mtdClassifyVO);
-    mtdClassify.setSynchStatus(2);
+    mtdClassify.setSynchStatus(SynchStateProperty.Classify.ADD);
     mtdClassifyRepository.save(mtdClassify);
   }
 
@@ -75,14 +80,21 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
         qMtdClassify
             .name
             .eq(mtdClassifyVO.getName())
-            .and(qMtdClassify.synchStatus.ne(-1))
+            .and(qMtdClassify.synchStatus.ne(SynchStateProperty.Classify.DELETE))
             .and(qMtdClassify.id.ne(id));
     if (mtdClassifyRepository.exists(predicate)) {
-      throw new BizException("当前要修改的分类为：" + mtdClassifyVO.getName() + " 的数据，已存在！！！");
+      throw new BizException("当前要修改的分类为：" + mtdClassifyVO.getName() + " 的数据已存在！！！");
     }
-    MtdClassify mtdClassify = mtdClassifyRepository.findById(id).orElse(new MtdClassify());
+    MtdClassify mtdClassify = mtdClassifyRepository.findById(id).orElse(null);
+    if (mtdClassify == null) {
+      throw new BizException("当前要修改的分类id为：" + id + " 的数据不存在！！！");
+    }
     MtdClassifyMapper.INSTANCE.updateMtdClassifyVO(mtdClassifyVO, mtdClassify);
-    mtdClassify.setSynchStatus(mtdClassify.getSynchStatus() == 2 ? 2 : 0);
+    // todo 如果启用，需要删除或替换atlas中的分类名
+    mtdClassify.setSynchStatus(
+        mtdClassify.getSynchStatus() == SynchStateProperty.Classify.ADD
+            ? SynchStateProperty.Classify.ADD
+            : SynchStateProperty.Classify.NOT_SYNCH);
     mtdClassifyRepository.saveAndFlush(mtdClassify);
   }
 
@@ -97,13 +109,13 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
     if (!mtdClassifyAtlasList.isEmpty()) {
       mtdClassifyAtlasRepository.saveAll(mtdClassifyAtlasList);
     }
-    mtdClassifyList.forEach(item -> item.setSynchStatus(-1));
+    mtdClassifyList.forEach(item -> item.setSynchStatus(SynchStateProperty.Classify.DELETE));
     mtdClassifyRepository.saveAll(mtdClassifyList);
   }
 
   public List<MtdClassifyAtlas> synchClassAtlas(List<MtdClassify> mtdClassifyList) {
     List<MtdClassifyAtlas> classifyAtlasList =
-        mtdClassifyAtlasRepository.findAllBySynchStatusNot(-1);
+        mtdClassifyAtlasRepository.findAllBySynchStatusNot(SynchStateProperty.ClassifyAtlas.DELETE);
     List<String> nameList =
         mtdClassifyList.stream().map(MtdClassify::getName).collect(Collectors.toList());
     return classifyAtlasList.stream()
@@ -116,7 +128,10 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
                       .filter(y -> !nameList.contains(y))
                       .collect(Collectors.joining(","));
               mla.setClassify(classify.isEmpty() ? mla.getClassify() : classify);
-              mla.setSynchStatus(classify.isEmpty() ? -1 : mla.getSynchStatus());
+              mla.setSynchStatus(
+                  classify.isEmpty()
+                      ? SynchStateProperty.ClassifyAtlas.DELETE
+                      : SynchStateProperty.ClassifyAtlas.NOT_SYNCH);
             })
         .collect(Collectors.toList());
   }
@@ -191,6 +206,6 @@ public class MtdClassifyServiceImpl implements MtdClassifyService {
     if (!StringUtils.isEmpty(mtdClassifyVO.getName())) {
       booleanBuilder.and(qMtdClassify.name.contains(mtdClassifyVO.getName()));
     }
-    booleanBuilder.and(qMtdClassify.synchStatus.ne(-1));
+    booleanBuilder.and(qMtdClassify.synchStatus.ne(SynchStateProperty.Classify.DELETE));
   }
 }

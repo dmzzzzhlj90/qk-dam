@@ -149,4 +149,8 @@ public class DasConstant {
         sortStyleMap.put("CUSTOM", "自定义");
         return sortStyleMap;
     }
+
+    // API类型-参数数据类型
+    public static final String DAS_API_PARA_COL_TYPE_STRING = "STRING";
+    public static final String DAS_API_PARA_COL_TYPE_INTEGER = "INTEGER";
 }

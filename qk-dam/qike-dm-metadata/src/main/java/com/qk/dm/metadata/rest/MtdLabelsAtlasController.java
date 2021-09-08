@@ -3,6 +3,7 @@ package com.qk.dm.metadata.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
+import com.qk.dm.metadata.vo.MtdLabelsAtlasBulkVO;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -42,10 +43,9 @@ public class MtdLabelsAtlasController {
    * @param mtdLabelsVO 元数据标签VO
    * @return DefaultCommonResult
    */
-  @PutMapping("/{id}")
-  public DefaultCommonResult update(
-      @PathVariable("id") Long id, @RequestBody @Validated MtdLabelsAtlasVO mtdLabelsVO) {
-    mtdLabelsAtlasService.update(id, mtdLabelsVO);
+  @PutMapping("")
+  public DefaultCommonResult update(@RequestBody @Validated MtdLabelsAtlasVO mtdLabelsVO) {
+    mtdLabelsAtlasService.update(mtdLabelsVO);
     return DefaultCommonResult.success();
   }
 
@@ -58,5 +58,17 @@ public class MtdLabelsAtlasController {
   @GetMapping("/{guid}")
   public DefaultCommonResult<MtdLabelsAtlasVO> getByGuid(@PathVariable("guid") String guid) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdLabelsAtlasService.getByGuid(guid));
+  }
+
+  /**
+   * 批量绑定元数据标签
+   *
+   * @param mtdLabelsVO
+   * @return DefaultCommonResult
+   */
+  @PostMapping("/bulk")
+  public DefaultCommonResult bulk(@RequestBody @Validated MtdLabelsAtlasBulkVO mtdLabelsVO) {
+    mtdLabelsAtlasService.bulk(mtdLabelsVO);
+    return DefaultCommonResult.success();
   }
 }

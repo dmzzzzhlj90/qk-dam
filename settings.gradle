@@ -8,7 +8,7 @@ pluginManagement {
                     password = 'admin123'
                 }
             }
-            maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+            maven { url 'https://maven.aliyun.com/repository/public' }
             maven {
                 url "https://plugins.gradle.org/m2/"
             }
@@ -19,14 +19,14 @@ pluginManagement {
             mavenLocal()
         }
         dependencies {
-            classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.2.4'
+            classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.3.5'
             classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.2.3'
         }
 
     }
     repositories {
         mavenLocal()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
         maven {
             url = 'http://172.20.0.22:8081/repository/qkdam/'
             credentials {

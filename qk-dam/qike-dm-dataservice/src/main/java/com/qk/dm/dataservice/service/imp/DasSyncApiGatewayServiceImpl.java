@@ -2,10 +2,12 @@ package com.qk.dm.dataservice.service.imp;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.google.gson.reflect.TypeToken;
-import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.dataservice.spi.consunmer.ConsumerContext;
 import com.qk.dam.dataservice.spi.route.RouteContext;
-import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
+import com.qk.dam.dataservice.spi.server.ServerContext;
+import com.qk.dam.dataservice.spi.upstream.UpstreamContext;
+import com.qk.dm.dataservice.config.ApiSixConnectInfo;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateConfig;
 import com.qk.dm.dataservice.entity.DasApiRegister;
@@ -14,14 +16,9 @@ import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasSyncApiGatewayService;
-import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
-import com.qk.dm.dataservice.vo.DasApiCreateRequestParasVO;
-import com.qk.dm.dataservice.vo.DasApiRegisterBackendParaVO;
+import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
-import com.qk.plugin.dataservice.apisix.route.entity.Nodes;
-import com.qk.plugin.dataservice.apisix.route.entity.Timeout;
-import com.qk.plugin.dataservice.apisix.route.entity.Upstream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,38 +39,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
-    private static final Log LOG = LogFactory.get("文件下载程序");
-
-    private static final String GATEWAY_TYPE_API_SIX = "ApiSix";
-    // API_SIX请求参数前缀_请求参数
-    private static final String API_SIX_REQUEST_PARAMETER_ARG_PREFIX = "arg_";
-    // API_SIX请求参数前缀_HTTP 请求头
-    private static final String API_SIX_REQUEST_PARAMETER_HTTP_PREFIX = "http_";
-    // API_SIX请求参数前缀_Cookie
-    private static final String API_SIX_REQUEST_PARAMETER_COOKIE_PREFIX = "cookie_";
-    // 注册API参数操作符号默认设置为:"=="
-    private static final String API_REGISTER_PARAM_SYMBOL = "==";
-
-    @Value("${api_six.admin.route.url}")
-    private String API_SIX_ADMIN_ROUTE_URL;
-
-    @Value("${api_six.head.key.value}")
-    private String API_SIX_HEAD_KEY_VALUE;
-
-    @Value("${api_six.api.status}")
-    private String API_SIX_API_STATUS;
-
-    @Value("${api_six.api.version}")
-    private String API_SIX_API_VERSION;
-
-    @Value("${api_six.upstream.pass_host}")
-    private String API_SIX_UPSTREAM_PASS_HOST;
-
-    @Value("${api_six.upstream.type}")
-    private String API_SIX_UPSTREAM_TYPE;
-
-    @Value("${api_six.upstream.weight}")
-    private String API_SIX_UPSTREAM_WEIGHT;
+    private static final Log LOG = LogFactory.get("同步数据服务API至服务网关下载程序");
 
     @Value("${create.api.upstream.host_port}")
     private String CREATE_API_UPSTREAM_HOST_PORT;
@@ -85,33 +51,34 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
     private final DasApiBasicInfoRepository dasApiBasicInfoRepository;
     private final DasApiRegisterRepository dasApiRegisterRepository;
     private final DasApiCreateConfigRepository dasApiCreateConfigRepository;
+    private final ApiSixConnectInfo apiSixConnectInfo;
 
     @Autowired
     public DasSyncApiGatewayServiceImpl(
             ApiGatewayManager apiGatewayManager,
             DasApiBasicInfoRepository dasApiBasicInfoRepository,
-            DasApiRegisterRepository dasApiRegisterRepository, DasApiCreateConfigRepository dasApiCreateConfigRepository) {
+            DasApiRegisterRepository dasApiRegisterRepository, DasApiCreateConfigRepository dasApiCreateConfigRepository, ApiSixConnectInfo apiSixConnectInfo) {
         this.apiGatewayManager = apiGatewayManager;
         this.dasApiBasicInfoRepository = dasApiBasicInfoRepository;
         this.dasApiRegisterRepository = dasApiRegisterRepository;
         this.dasApiCreateConfigRepository = dasApiCreateConfigRepository;
+        this.apiSixConnectInfo = apiSixConnectInfo;
     }
 
     @Override
     public void syncApiSixRoutesAll() {
         LOG.info("====================开始同步数据服务API至网关ApiSix!====================");
         Map<String, List<DasApiBasicInfo>> apiBasicInfoMap = getDasApiBasicInfoAll();
-        singleSyncRegisterApi(apiBasicInfoMap);
-        LOG.info("==========注册API同步完成!==========");
+        singleSyncRegisterApi(apiBasicInfoMap, "", "");
         singleSyncCreateApi(apiBasicInfoMap);
-        LOG.info("==========新建API同步完成!==========");
         LOG.info("====================数据服务API同步已经完成!====================");
     }
 
     @Override
-    public void syncApiSixRoutesRegister() {
+    public void syncApiSixRoutesRegister(String upstreamId, String serviceId) {
+        checkUpstreamAndService(upstreamId, serviceId);
         Map<String, List<DasApiBasicInfo>> apiBasicInfoMap = getDasApiBasicInfoAll();
-        singleSyncRegisterApi(apiBasicInfoMap);
+        singleSyncRegisterApi(apiBasicInfoMap, upstreamId, serviceId);
     }
 
     @Override
@@ -120,49 +87,123 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
         singleSyncCreateApi(apiBasicInfoMap);
     }
 
-    private void singleSyncRegisterApi(Map<String, List<DasApiBasicInfo>> apiBasicInfoMap) {
+    @Override
+    public void apiSixConsumersKeyAuth(ApiSixConsumerInfo apiSixConsumerInfo) {
+        ConsumerContext consumerContext = new ConsumerContext();
+        consumerContext.setConsumerInfo(apiSixConsumerInfo);
+        Map<String, String> systemParam = new HashMap<>();
+        systemParam.put(ApiSixConstant.API_SIX_ADMIN_CONSUMER_URL_KEY, apiSixConnectInfo.getAdminConsumerUrl());
+        systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
+        consumerContext.setParams(systemParam);
+        apiGatewayManager.initConsumersAuth(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, consumerContext);
+    }
+
+    @Override
+    public List apiSixUpstreamInfo() {
+        UpstreamContext upstreamContext = new UpstreamContext();
+        Map<String, String> systemParam = new HashMap<>();
+        systemParam.put(ApiSixConstant.API_SIX_ADMIN_UPSTREAM_URL_KEY, apiSixConnectInfo.getAdminUpstreamUrl());
+        systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
+        upstreamContext.setParams(systemParam);
+        List upstreamInfoList = apiGatewayManager.getUpstreamInfo(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, upstreamContext);
+        return upstreamInfoList;
+    }
+
+    public List apiSixUpstreamInfoIds() {
+        UpstreamContext upstreamContext = new UpstreamContext();
+        Map<String, String> systemParam = new HashMap<>();
+        systemParam.put(ApiSixConstant.API_SIX_ADMIN_UPSTREAM_URL_KEY, apiSixConnectInfo.getAdminUpstreamUrl());
+        systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
+        upstreamContext.setParams(systemParam);
+        List upstreamInfoIds = apiGatewayManager.apiSixUpstreamInfoIds(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, upstreamContext);
+        return upstreamInfoIds;
+    }
+
+    @Override
+    public List apiSixServiceInfo() {
+        ServerContext serverContext = new ServerContext();
+        Map<String, String> systemParam = new HashMap<>();
+        systemParam.put(ApiSixConstant.API_SIX_ADMIN_SERVER_URL_KEY, apiSixConnectInfo.getAdminServerUrl());
+        systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
+        serverContext.setParams(systemParam);
+        List serviceInfoList = apiGatewayManager.getServiceInfo(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, serverContext);
+        return serviceInfoList;
+    }
+
+    public List apiSixServiceInfoIds() {
+        ServerContext serverContext = new ServerContext();
+        Map<String, String> systemParam = new HashMap<>();
+        systemParam.put(ApiSixConstant.API_SIX_ADMIN_SERVER_URL_KEY, apiSixConnectInfo.getAdminServerUrl());
+        systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
+        serverContext.setParams(systemParam);
+        List serviceInfoIds = apiGatewayManager.apiSixServiceInfoIds(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, serverContext);
+        return serviceInfoIds;
+    }
+
+
+    private void singleSyncRegisterApi(Map<String, List<DasApiBasicInfo>> apiBasicInfoMap, String upstreamId, String serviceId) {
         try {
+            //清除路由信息
+            RouteContext routeContext = buildRouteContext();
+            apiGatewayManager.clearRouteService(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeContext);
             List<DasApiRegister> apiRegisterList = dasApiRegisterRepository.findAll();
             for (DasApiRegister dasApiRegister : apiRegisterList) {
                 DasApiBasicInfo dasApiBasicInfo = apiBasicInfoMap.get(dasApiRegister.getApiId()).get(0);
                 ApiSixRouteInfo apiSixRouteInfo = new ApiSixRouteInfo();
                 setRouteName(dasApiBasicInfo.getApiPath(), apiSixRouteInfo);
-                apiSixRouteInfo.setStatus(Integer.parseInt(API_SIX_API_STATUS));
-                apiSixRouteInfo.setDesc(dasApiBasicInfo.getDescription());
+                apiSixRouteInfo.setStatus(Integer.parseInt(apiSixConnectInfo.getApiStatus()));
+                apiSixRouteInfo.setDesc(dasApiBasicInfo.getApiName());
                 setRouteUrl(dasApiRegister.getBackendPath(), apiSixRouteInfo);
                 setRouteMethod(dasApiRegister.getRequestType(), apiSixRouteInfo);
-//                setRouteRegisterParams(dasApiBasicInfo, dasApiRegister, apiSixRouteInfo);
-//                setRouteRegexUrls(apiSixRouteInfo);
-                setRouteUpstream(dasApiRegister.getBackendHost(), dasApiRegister.getProtocolType(), apiSixRouteInfo);
+    //                setRouteRegisterParams(dasApiBasicInfo, dasApiRegister, apiSixRouteInfo);
+    //                setRoutePlugins(apiSixRouteInfo);
+    //                setRouteUpstream(dasApiRegister.getBackendHost(), dasApiRegister.getProtocolType(), apiSixRouteInfo);
+                setRouteUpstreamId(apiSixRouteInfo, upstreamId);
+                setRouteServiceId(apiSixRouteInfo, serviceId);
                 setRouteLabels(apiSixRouteInfo);
-                initApiSixGatewayRoute(apiSixRouteInfo, dasApiRegister.getApiId());
+                initApiSixGatewayRoute(apiSixRouteInfo, dasApiRegister.getApiId(), routeContext);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new BizException(e.getMessage());
         }
+        LOG.info("==========注册API同步完成!==========");
+    }
+
+    private RouteContext buildRouteContext() {
+        RouteContext routeContext = new RouteContext();
+        Map<String, String> systemParam = new HashMap<>();
+        systemParam.put(ApiSixConstant.API_SIX_ADMIN_ROUTE_URL_KEY, apiSixConnectInfo.getAdminRouteUrl());
+        systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
+        routeContext.setParams(systemParam);
+        return routeContext;
     }
 
     private void singleSyncCreateApi(Map<String, List<DasApiBasicInfo>> apiBasicInfoMap) {
         try {
+            //TODO 等数据服务页面调试开发
+            RouteContext routeContext = buildRouteContext();
             List<DasApiCreateConfig> apiCreateList = dasApiCreateConfigRepository.findAll();
             for (DasApiCreateConfig dasApiCreate : apiCreateList) {
                 DasApiBasicInfo dasApiBasicInfo = apiBasicInfoMap.get(dasApiCreate.getApiId()).get(0);
                 // 同步API
                 ApiSixRouteInfo apiSixRouteInfo = new ApiSixRouteInfo();
                 setRouteName(dasApiBasicInfo.getApiPath(), apiSixRouteInfo);
-                apiSixRouteInfo.setStatus(Integer.parseInt(API_SIX_API_STATUS));
+                apiSixRouteInfo.setStatus(Integer.parseInt(apiSixConnectInfo.getApiStatus()));
                 apiSixRouteInfo.setDesc(dasApiBasicInfo.getDescription());
                 setRouteUrl(dasApiBasicInfo.getApiPath(), apiSixRouteInfo);
                 setRouteMethod(dasApiBasicInfo.getRequestType(), apiSixRouteInfo);
 //                setRouteCreateParams(dasApiBasicInfo, dasApiCreate, apiSixRouteInfo);
-//                setRouteRegexUrls(apiSixRouteInfo);
-                setRouteUpstream(CREATE_API_UPSTREAM_HOST_PORT, CREATE_API_UPSTREAM_PROTOCOL_TYPE, apiSixRouteInfo);
+//                setRoutePlugins(apiSixRouteInfo);
+//                setRouteUpstream(CREATE_API_UPSTREAM_HOST_PORT, CREATE_API_UPSTREAM_PROTOCOL_TYPE, apiSixRouteInfo);
                 setRouteLabels(apiSixRouteInfo);
-                initApiSixGatewayRoute(apiSixRouteInfo, dasApiCreate.getApiId());
+                initApiSixGatewayRoute(apiSixRouteInfo, dasApiCreate.getApiId(), routeContext);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new BizException(e.getMessage());
         }
+        LOG.info("==========新建API同步完成!==========");
     }
 
     private Map<String, List<DasApiBasicInfo>> getDasApiBasicInfoAll() {
@@ -171,6 +212,31 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
         return apiBasicInfoList.stream().collect(Collectors.groupingBy(DasApiBasicInfo::getApiId));
     }
 
+    private void checkUpstreamAndService(String upstreamId, String serviceId) {
+        if (ObjectUtils.isEmpty(upstreamId)) {
+            throw new BizException("ApiSix上游参数: upstreamId为空!!!");
+        }
+        if (ObjectUtils.isEmpty(serviceId)) {
+            throw new BizException("ApiSix服务参数: serviceId为空!!!");
+        }
+        List upstreamInfoIds = apiSixUpstreamInfoIds();
+        if (ObjectUtils.isEmpty(upstreamInfoIds)) {
+            throw new BizException("未配置ApiSix上游信息!!!");
+        }
+
+        if (!upstreamInfoIds.contains(upstreamId)) {
+            throw new BizException("ApiSix中配置的上游信息中,不包含参数: " + upstreamId + "!!!");
+        }
+
+        List serviceInfoIds = apiSixServiceInfoIds();
+        if (ObjectUtils.isEmpty(serviceInfoIds)) {
+            throw new BizException("未配置ApiSix服务信息!!!");
+        }
+
+        if (!serviceInfoIds.contains(serviceId)) {
+            throw new BizException("ApiSix中配置的服务信息中,不包含参数: " + serviceId + "!!!");
+        }
+    }
 
     private void setRouteName(String apiPath, ApiSixRouteInfo apiSixRouteInfo) {
         //TODO 后期设置多租户,增加分类命名RouteName,或者根据数据服务维护基础信息Api名称+Url进行Name生成;
@@ -191,136 +257,154 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
         apiSixRouteInfo.setMethods(methods);
     }
 
-    private void setRouteUpstream(String requestHostPort, String protocolType, ApiSixRouteInfo apiSixRouteInfo) {
-        List<Nodes> nodes = new ArrayList<>();
-        Nodes node =
-                Nodes.builder()
-                        .host(requestHostPort.split(":")[0])
-                        .port(Integer.parseInt(requestHostPort.split(":")[1]))
-                        .weight(Integer.parseInt(API_SIX_UPSTREAM_WEIGHT))
-                        .build();
-        nodes.add(node);
-
-        // TODO 后期同步流控策略设置
-        Timeout timeout = Timeout.builder().connect(30).read(30).send(30).build();
-        Upstream upstream =
-                Upstream.builder()
-                        .nodes(nodes)
-                        .timeout(timeout)
-                        .pass_host(API_SIX_UPSTREAM_PASS_HOST)
-                        .scheme(protocolType.toLowerCase())
-                        .type(API_SIX_UPSTREAM_TYPE)
-                        .build();
-
-        apiSixRouteInfo.setUpstream(upstream);
-    }
 
     private void setRouteLabels(ApiSixRouteInfo apiSixRouteInfo) {
         Map<String, String> labels = new HashMap<>();
-        labels.put(ApiSixConstant.API_SIX_API_VERSION_KEY, API_SIX_API_VERSION);
+        labels.put(ApiSixConstant.API_SIX_API_VERSION_KEY, apiSixConnectInfo.getApiVersion());
         apiSixRouteInfo.setLabels(labels);
     }
 
-    private void initApiSixGatewayRoute(ApiSixRouteInfo apiSixRouteInfo, String apiId) {
-        RouteContext routeContext = new RouteContext();
+    private void initApiSixGatewayRoute(ApiSixRouteInfo apiSixRouteInfo, String apiId, RouteContext routeContext) {
         routeContext.setRouteInfo(apiSixRouteInfo);
-        Map<String, String> systemParam = new HashMap<>();
-        systemParam.put(ApiSixConstant.API_SIX_ADMIN_ROUTE_URL_KEY, API_SIX_ADMIN_ROUTE_URL);
-        systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, API_SIX_HEAD_KEY_VALUE);
-        systemParam.put(ApiSixConstant.API_SIX_ROUTE_ID, apiId);
-        routeContext.setParams(systemParam);
-        apiGatewayManager.initRouteService(GATEWAY_TYPE_API_SIX, routeContext);
+        Map<String, String> contextParams = routeContext.getParams();
+        contextParams.put(ApiSixConstant.API_SIX_ROUTE_ID, apiId);
+        routeContext.setParams(contextParams);
+        apiGatewayManager.initRouteService(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeContext);
     }
 
 
-    private void setRouteRegexUrls(ApiSixRouteInfo apiSixRouteInfo) {
-        Map<String, Map<String, List<String>>> pluginsMap = new HashMap<>();
-        Map<String, List<String>> regexUrisMap = new HashMap<>();
-        List<String> regexUris = new ArrayList<>();
-        regexUris.add("^/das/(.*)");
-        regexUris.add("/$1");
-        regexUrisMap.put("regex_uri", regexUris);
-        pluginsMap.put("proxy-rewrite", regexUrisMap);
-        apiSixRouteInfo.setPlugins(pluginsMap);
+    private void setRouteUpstreamId(ApiSixRouteInfo apiSixRouteInfo, String upstreamId) {
+        apiSixRouteInfo.setUpstream_id(upstreamId);
     }
 
-    private void setRouteRegisterParams(DasApiBasicInfo dasApiBasicInfo, DasApiRegister dasApiRegister, ApiSixRouteInfo apiSixRouteInfo) {
-        String defInputParam = dasApiBasicInfo.getDefInputParam();
-        String backendRequestParas = dasApiRegister.getBackendRequestParas();
-        if (!ObjectUtils.isEmpty(defInputParam) && !ObjectUtils.isEmpty(backendRequestParas)) {
-            List<List<String>> varsKey = new ArrayList<>();
-            List<String> varsValue = new ArrayList<>();
-            // 基础信息入参定义(默认值获取)
-            Map<String, List<DasApiBasicInfoRequestParasVO>> delParamMap = getBasicDefParamByKeyList(dasApiBasicInfo);
-            // 后端指定入参
-            List<DasApiRegisterBackendParaVO> registerRPlist =
-                    GsonUtil.fromJsonString(
-                            backendRequestParas, new TypeToken<List<DasApiRegisterBackendParaVO>>() {
-                            }.getType());
-            // 指定参数+默认值
-            for (DasApiRegisterBackendParaVO backendParaVO : registerRPlist) {
-                DasApiBasicInfoRequestParasVO dasApiBasicInfoRequestParasVO = delParamMap.get(backendParaVO.getParaName()).get(0);
-                String paraPosition = dasApiBasicInfoRequestParasVO.getParaPosition();
-                setParamPosition(varsKey, varsValue, dasApiBasicInfoRequestParasVO, paraPosition, backendParaVO.getBackendParaName());
-            }
-            apiSixRouteInfo.setVars(varsKey);
-        }
+    private void setRouteServiceId(ApiSixRouteInfo apiSixRouteInfo, String serviceId) {
+        apiSixRouteInfo.setService_id(serviceId);
     }
 
-    private void setRouteCreateParams(DasApiBasicInfo dasApiBasicInfo, DasApiCreateConfig dasApiCreateConfig, ApiSixRouteInfo apiSixRouteInfo) {
-        String defInputParam = dasApiBasicInfo.getDefInputParam();
-        String createApiRequestParas = dasApiCreateConfig.getApiRequestParas();
-        if (!ObjectUtils.isEmpty(defInputParam) && !ObjectUtils.isEmpty(createApiRequestParas)) {
-            List<List<String>> varsKey = new ArrayList<>();
-            List<String> varsValue = new ArrayList<>();
-            // 基础信息入参定义(默认值获取)
-            Map<String, List<DasApiBasicInfoRequestParasVO>> delParamMap = getBasicDefParamByKeyList(dasApiBasicInfo);
-            // 后端指定入参
-            List<DasApiCreateRequestParasVO> createRPlist =
-                    GsonUtil.fromJsonString(
-                            createApiRequestParas, new TypeToken<List<DasApiCreateRequestParasVO>>() {
-                            }.getType());
-            // 指定参数+默认值
-            for (DasApiCreateRequestParasVO createRequestParasVO : createRPlist) {
-                DasApiBasicInfoRequestParasVO dasApiBasicInfoRequestParasVO = delParamMap.get(createRequestParasVO.getParaName()).get(0);
-                String paraPosition = dasApiBasicInfoRequestParasVO.getParaPosition();
-                setParamPosition(varsKey, varsValue, dasApiBasicInfoRequestParasVO, paraPosition, createRequestParasVO.getMappingName());
-            }
-            apiSixRouteInfo.setVars(varsKey);
-        }
-    }
 
-    private Map<String, List<DasApiBasicInfoRequestParasVO>> getBasicDefParamByKeyList(DasApiBasicInfo dasApiBasicInfo) {
-        // 基础信息入参定义(默认值获取)
-        String defInputParam = dasApiBasicInfo.getDefInputParam();
-        List<DasApiBasicInfoRequestParasVO> basicRPList =
-                GsonUtil.fromJsonString(defInputParam, new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
-                }.getType());
-        return basicRPList.stream()
-                .collect(Collectors.groupingBy(DasApiBasicInfoRequestParasVO::getParaName));
-    }
+//        ===============================ApiSix上游,服务信息======================================================
+//    private void setRouteUpstream(String requestHostPort, String protocolType, ApiSixRouteInfo apiSixRouteInfo) {
+//        List<Nodes> nodes = new ArrayList<>();
+//        Nodes node =
+//                Nodes.builder()
+//                        .host(requestHostPort.split(":")[0])
+//                        .port(Integer.parseInt(requestHostPort.split(":")[1]))
+//                        .weight(Integer.parseInt(apiSixConnectInfo.getUpstreamWeight()))
+//                        .build();
+//        nodes.add(node);
+//
+//        // TODO 后期同步流控策略设置
+//        Timeout timeout = Timeout.builder()
+//                .connect(apiSixConnectInfo.getUpstreamConnectTimeOut())
+//                .read(apiSixConnectInfo.getUpstreamConnectTimeOut())
+//                .send(apiSixConnectInfo.getUpstreamConnectTimeOut()).build();
+//        Upstream upstream =
+//                Upstream.builder()
+//                        .nodes(nodes)
+//                        .timeout(timeout)
+//                        .pass_host(apiSixConnectInfo.getUpstreamPassHost())
+//                        .scheme(protocolType.toLowerCase())
+//                        .type(apiSixConnectInfo.getUpstreamType())
+//                        .build();
+//
+//        apiSixRouteInfo.setUpstream(upstream);
+//    }
+//
+//    private void setRoutePlugins(ApiSixRouteInfo apiSixRouteInfo) {
+//        Map<String, Map<String, Object>> pluginsMap = new HashMap<>();
+////        setRouteRegexUrl(pluginsMap);
+//        Map<String, Object> keyAuthMap = new HashMap<>();
+//        keyAuthMap.put(ApiSixConstant.API_SIX_KEY_AUTH_POSITION_HEADER_KEY, ApiSixConstant.API_SIX_KEY_AUTH_POSITION_HEADER_VAL);
+//        pluginsMap.put(ApiSixConstant.API_SIX_CONSUMER_PLUGINS_KEY_AUTH, keyAuthMap);
+//        apiSixRouteInfo.setPlugins(pluginsMap);
+//    }
+//
+//    private void setRouteRegexUrl(Map<String, Map<String, Object>> pluginsMap) {
+//        Map<String,Object> regexUrisMap = new HashMap<>();
+//        List<String> regexUris = new ArrayList<>();
+//        regexUris.add("^/das/(.*)");
+//        regexUris.add("/$1");
+//        regexUrisMap.put("regex_uri", regexUris);
+//        pluginsMap.put("proxy-rewrite", regexUrisMap);
+//    }
 
-    private void setParamPosition(List<List<String>> varsKey, List<String> varsValue,
-                                  DasApiBasicInfoRequestParasVO dasApiBasicInfoRequestParasVO,
-                                  String paraPosition, String mappingName) {
-        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY
-                .getTypeName()
-                .equals(paraPosition)) {
-            varsValue.add(API_SIX_REQUEST_PARAMETER_ARG_PREFIX + mappingName);
-        }
-        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_HEADER
-                .getTypeName()
-                .equals(paraPosition)) {
-            varsValue.add(API_SIX_REQUEST_PARAMETER_HTTP_PREFIX + mappingName);
-        }
-        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_COOKIE
-                .getTypeName()
-                .equals(paraPosition)) {
-            varsValue.add(
-                    API_SIX_REQUEST_PARAMETER_COOKIE_PREFIX + mappingName);
-        }
-        varsValue.add(API_REGISTER_PARAM_SYMBOL);
-        varsValue.add(dasApiBasicInfoRequestParasVO.getDefaultValue());
-        varsKey.add(varsValue);
-    }
+//    ===============================ApiSix参数,Route版本的信息======================================================
+//    private void setRouteRegisterParams(DasApiBasicInfo dasApiBasicInfo, DasApiRegister dasApiRegister, ApiSixRouteInfo apiSixRouteInfo) {
+//        String defInputParam = dasApiBasicInfo.getDefInputParam();
+//        String backendRequestParas = dasApiRegister.getBackendRequestParas();
+//        if (!ObjectUtils.isEmpty(defInputParam) && !ObjectUtils.isEmpty(backendRequestParas)) {
+//            List<List<String>> varsKey = new ArrayList<>();
+//            List<String> varsValue = new ArrayList<>();
+//            // 基础信息入参定义(默认值获取)
+//            Map<String, List<DasApiBasicInfoRequestParasVO>> delParamMap = getBasicDefParamByKeyList(dasApiBasicInfo);
+//            // 后端指定入参
+//            List<DasApiRegisterBackendParaVO> registerRPlist =
+//                    GsonUtil.fromJsonString(
+//                            backendRequestParas, new TypeToken<List<DasApiRegisterBackendParaVO>>() {
+//                            }.getType());
+//            // 指定参数+默认值
+//            for (DasApiRegisterBackendParaVO backendParaVO : registerRPlist) {
+//                DasApiBasicInfoRequestParasVO dasApiBasicInfoRequestParasVO = delParamMap.get(backendParaVO.getParaName()).get(0);
+//                String paraPosition = dasApiBasicInfoRequestParasVO.getParaPosition();
+//                setParamPosition(varsKey, varsValue, dasApiBasicInfoRequestParasVO, paraPosition, backendParaVO.getBackendParaName());
+//            }
+//            apiSixRouteInfo.setVars(varsKey);
+//        }
+//    }
+//
+//    private void setRouteCreateParams(DasApiBasicInfo dasApiBasicInfo, DasApiCreateConfig dasApiCreateConfig, ApiSixRouteInfo apiSixRouteInfo) {
+//        String defInputParam = dasApiBasicInfo.getDefInputParam();
+//        String createApiRequestParas = dasApiCreateConfig.getApiRequestParas();
+//        if (!ObjectUtils.isEmpty(defInputParam) && !ObjectUtils.isEmpty(createApiRequestParas)) {
+//            List<List<String>> varsKey = new ArrayList<>();
+//            List<String> varsValue = new ArrayList<>();
+//            // 基础信息入参定义(默认值获取)
+//            Map<String, List<DasApiBasicInfoRequestParasVO>> delParamMap = getBasicDefParamByKeyList(dasApiBasicInfo);
+//            // 后端指定入参
+//            List<DasApiCreateRequestParasVO> createRPlist =
+//                    GsonUtil.fromJsonString(
+//                            createApiRequestParas, new TypeToken<List<DasApiCreateRequestParasVO>>() {
+//                            }.getType());
+//            // 指定参数+默认值
+//            for (DasApiCreateRequestParasVO createRequestParasVO : createRPlist) {
+//                DasApiBasicInfoRequestParasVO dasApiBasicInfoRequestParasVO = delParamMap.get(createRequestParasVO.getParaName()).get(0);
+//                String paraPosition = dasApiBasicInfoRequestParasVO.getParaPosition();
+//                setParamPosition(varsKey, varsValue, dasApiBasicInfoRequestParasVO, paraPosition, createRequestParasVO.getMappingName());
+//            }
+//            apiSixRouteInfo.setVars(varsKey);
+//        }
+//    }
+//
+//    private Map<String, List<DasApiBasicInfoRequestParasVO>> getBasicDefParamByKeyList(DasApiBasicInfo dasApiBasicInfo) {
+//        // 基础信息入参定义(默认值获取)
+//        String defInputParam = dasApiBasicInfo.getDefInputParam();
+//        List<DasApiBasicInfoRequestParasVO> basicRPList =
+//                GsonUtil.fromJsonString(defInputParam, new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
+//                }.getType());
+//        return basicRPList.stream()
+//                .collect(Collectors.groupingBy(DasApiBasicInfoRequestParasVO::getParaName));
+//    }
+//
+//    private void setParamPosition(List<List<String>> varsKey, List<String> varsValue,
+//                                  DasApiBasicInfoRequestParasVO dasApiBasicInfoRequestParasVO,
+//                                  String paraPosition, String mappingName) {
+//        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY
+//                .getTypeName()
+//                .equals(paraPosition)) {
+//            varsValue.add(ApiSixConnectInfo.API_SIX_REQUEST_PARAMETER_ARG_PREFIX + mappingName);
+//        }
+//        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_HEADER
+//                .getTypeName()
+//                .equals(paraPosition)) {
+//            varsValue.add(ApiSixConnectInfo.API_SIX_REQUEST_PARAMETER_HTTP_PREFIX + mappingName);
+//        }
+//        if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_COOKIE
+//                .getTypeName()
+//                .equals(paraPosition)) {
+//            varsValue.add(ApiSixConnectInfo.API_SIX_REQUEST_PARAMETER_COOKIE_PREFIX + mappingName);
+//        }
+//        varsValue.add(ApiSixConnectInfo.API_REGISTER_PARAM_SYMBOL);
+//        varsValue.add(dasApiBasicInfoRequestParasVO.getDefaultValue());
+//        varsKey.add(varsValue);
+//    }
 }

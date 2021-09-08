@@ -45,8 +45,6 @@ public class AppJpaConfig {
   public JpaVendorAdapter jpaVendorAdapter() {
     var jpaVendorAdapter = new HibernateJpaVendorAdapter();
     jpaVendorAdapter.setDatabase(database);
-    jpaVendorAdapter.setGenerateDdl(true);
-    jpaVendorAdapter.setShowSql(true);
     return jpaVendorAdapter;
   }
 

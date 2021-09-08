@@ -132,18 +132,47 @@ public class DsDirServiceImpl implements DsDirService {
    */
   private DsDirReturnVO findDirChildren(DsDirReturnVO dsDirReturnVO, List<DsDirReturnVO> dsDirVOList) {
     dsDirReturnVO.setChildren(new ArrayList<>());
-    for (DsDirReturnVO DSDTV : dsDirVOList) {
+    //将数据源转成目录
+    List<DsDatasourceVO> datasourceList =getDataSourceList(dsDirReturnVO.getKey());
+    List<DsDirReturnVO> dsDirReturnVOList = getDsDirReturnVoList(datasourceList);
+    dsDirReturnVO.getChildren().addAll(dsDirReturnVOList);
+    dsDirVOList.forEach(DSDTV ->{
       if (dsDirReturnVO.getKey().equals(DSDTV.getParentId())) {
-        DSDTV.setTyep(DsConstant.DIR_TYPE);
+        DSDTV.setDataType(DsConstant.DIR_TYPE);
         if (dsDirReturnVO.getChildren() == null) {
           dsDirReturnVO.setChildren(new ArrayList<>());
         }
-        List<DsDatasourceVO> datasourceList =getDataSourceList(dsDirReturnVO.getKey());
-        dsDirReturnVO.setDatasourceVOList(datasourceList);
         dsDirReturnVO.getChildren().add(findDirChildren(DSDTV, dsDirVOList));
       }
-    }
+    });
     return dsDirReturnVO;
+  }
+
+  /**
+   * 将数据源信息转换成目录
+   * @param datasourceList
+   * @return
+   */
+  private List<DsDirReturnVO> getDsDirReturnVoList(List<DsDatasourceVO> datasourceList) {
+    List<DsDirReturnVO> returnVOList = new ArrayList<>();
+    if (!CollectionUtils.isEmpty(datasourceList)){
+      datasourceList.forEach(
+              dsDatasourceVO -> {
+                DsDirReturnVO dsDirReturnVO = new DsDirReturnVO();
+                //赋值目录id
+                dsDirReturnVO.setKey(dsDatasourceVO.getId());
+                //赋值目录名称
+                dsDirReturnVO.setTitle(dsDatasourceVO.getDataSourceName());
+                //赋值父类名称
+                dsDirReturnVO.setParentId(Integer.valueOf(dsDatasourceVO.getDicId()));
+                //赋值类型
+                dsDirReturnVO.setDataType(DsConstant.DATASOURCE_TYPE);
+                //赋值数据源连接类型
+                dsDirReturnVO.setConType(dsDatasourceVO.getLinkType());
+                returnVOList.add(dsDirReturnVO);
+      });
+    }
+    return returnVOList;
   }
 
   private List<DsDatasourceVO> getDataSourceList(Integer dicid) {
@@ -154,7 +183,6 @@ public class DsDirServiceImpl implements DsDirService {
         byDicIdList.forEach(
                 dsDatasource -> {
                   DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
-                  dsDatasourceVO.setTyep(DsConstant.DATASOURCE_TYPE);
                   ConnectBasicInfo dsConnectBasicInfo = getConnectInfo(dsDatasource.getLinkType(), dsDatasource);
                   dsDatasourceVO.setConnectBasicInfo(dsConnectBasicInfo);
                   dsDatasourceVOList.add(dsDatasourceVO);
@@ -250,7 +278,7 @@ public class DsDirServiceImpl implements DsDirService {
   }
 
   private List<DsDirReturnVO> buildByRecursives(List<DsDirReturnVO> dsDirVOList) {
-    DsDirReturnVO dsDirReturnVO=DsDirReturnVO.builder().key(0).title("全部数据源").tyep(DsConstant.DIR_TYPE).build();
+    DsDirReturnVO dsDirReturnVO=DsDirReturnVO.builder().key(0).title("全部数据源").dataType(DsConstant.DIR_TYPE).build();
     List<DsDirReturnVO> trees = new ArrayList<>();
     trees.add(findDirChildren(dsDirReturnVO, dsDirVOList));
     return trees;

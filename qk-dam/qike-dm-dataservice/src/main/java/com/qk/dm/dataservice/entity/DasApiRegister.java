@@ -43,7 +43,7 @@ public class DasApiRegister implements Serializable {
   private String backendTimeout;
 
   /** 后端服务参数 */
-  @Column(name = "backend_request_paras", nullable = false)
+  @Column(name = "backend_request_paras")
   private String backendRequestParas;
 
   /** 常量参数 */

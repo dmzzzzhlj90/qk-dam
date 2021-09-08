@@ -1,3 +1,10 @@
 package com.qk.dam.dataservice.spi.upstream;
 
-public interface UpstreamService {}
+import java.util.List;
+
+public interface UpstreamService {
+    List getUpstreamInfo();
+
+    List apiSixUpstreamInfoIds();
+
+}

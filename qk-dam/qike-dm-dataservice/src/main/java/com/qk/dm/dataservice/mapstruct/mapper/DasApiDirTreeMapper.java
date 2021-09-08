@@ -15,9 +15,12 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DasApiDirTreeMapper {
-  DasApiDirTreeMapper INSTANCE = Mappers.getMapper(DasApiDirTreeMapper.class);
+    DasApiDirTreeMapper INSTANCE = Mappers.getMapper(DasApiDirTreeMapper.class);
 
-  DasApiDirTreeVO useDasApiDirTreeVO(DasApiDir dasApiDir);
+    DasApiDirTreeVO useDasApiDirTreeVO(DasApiDir dasApiDir);
 
-  DasApiDir useDasApiDir(DasApiDirVO dasApiDirVO);
+    DasApiDir useDasApiDir(DasApiDirVO dasApiDirVO);
+
+    DasApiDirVO useDasApiDirVO(DasApiDir dasApiDir);
+
 }

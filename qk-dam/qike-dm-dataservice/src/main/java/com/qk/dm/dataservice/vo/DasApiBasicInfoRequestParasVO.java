@@ -11,27 +11,48 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DasApiBasicInfoRequestParasVO {
 
-  /** http请求参数 */
-  private String paraName;
+    /**
+     * http请求参数
+     */
+    private String paraName;
 
-  /** 入参位置 */
-  private String paraPosition;
+    /**
+     * http请求参数中文名称
+     */
+    private String paraCHNName;
 
-  /** 参数类型 */
-  private String paraType;
+    /**
+     * 入参位置
+     */
+    private String paraPosition;
 
-  /** 是否必填 */
-  private boolean necessary;
+    /**
+     * 参数类型
+     */
+    private String paraType;
 
-  /** 允许空值 */
-  private boolean supportNull;
+    /**
+     * 是否必填
+     */
+    private boolean necessary;
 
-  /** 示例值 */
-  private String defaultValue;
+    /**
+     * 允许空值
+     */
+    private boolean supportNull;
 
-  /** 默认值 */
-  private String exampleValue;
+    /**
+     * 示例值
+     */
+    private String defaultValue;
 
-  /** 描述 */
-  private String description;
+    /**
+     * 默认值
+     */
+    private String exampleValue;
+
+    /**
+     * 描述
+     */
+    private String description;
 }
