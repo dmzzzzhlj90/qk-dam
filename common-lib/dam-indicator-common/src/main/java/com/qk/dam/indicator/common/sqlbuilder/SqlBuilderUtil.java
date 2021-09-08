@@ -43,4 +43,51 @@ public class SqlBuilderUtil {
         return sql.getSqlParams().getSql();
     }
 
+    /**
+     * 生成SQL，支持排序
+     * @param tableName 表名
+     * @param expression 字段
+     * @param where 条件
+     * @param orderBy 排序字段
+     * @return
+     */
+    public static String orderBy(String tableName,String expression,
+                                 String where,String orderBy){
+        StringSql sql = new StringSql()
+                .select(expression)
+                .from(tableName)
+                .where(where)
+                .orderBy(orderBy);
+        return sql.getSqlParams().getSql();
+    }
+
+    /**
+     * 生成统计总数的SQL
+     * @param tableName 表名
+     * @param where 条件
+     * @return
+     */
+    public static String count(String tableName,String where){
+        StringSql sql = new StringSql()
+                .count()
+                .from(tableName)
+                .where(where);
+        return sql.getSqlParams().getSql();
+    }
+
+    /**
+     * 生成统计总数的SQL，按列去重
+     * @param tableName 表名
+     * @param where 条件
+     * @param column 去重字段
+     * @return
+     */
+    public static String countDistinct(String tableName,String where,String column){
+         StringSql sql = new StringSql()
+                 .countDistinct(column)
+                 .from(tableName)
+                 .where(where);
+         return sql.getSqlParams().getSql();
+    }
+
 }

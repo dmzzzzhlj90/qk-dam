@@ -150,6 +150,7 @@ public class IdcBusinessServiceImpl implements IdcBusinessService {
                 .fetch();
         result.put("list", idcBusinessList);
         result.put("total", count);
+
         return result;
     }
 

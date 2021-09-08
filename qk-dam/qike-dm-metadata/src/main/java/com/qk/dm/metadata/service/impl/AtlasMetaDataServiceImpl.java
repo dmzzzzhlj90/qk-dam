@@ -489,4 +489,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     }
   }
 
+  public static void main(String[] args) throws AtlasServiceException {
+    AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid("aa1f53ba-3aca-413f-9870-06fc94d127b4", true, false);
+    detail.getEntity().getRelationshipAttributes();
+    System.out.println(GsonUtil.toJsonString(detail));
+  }
+
 }
