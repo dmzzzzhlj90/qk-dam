@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.controller;
 
+import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasSyncOpenApiService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +36,7 @@ public class DasSyncOpenApiController {
      */
     @GetMapping("/register")
     public DefaultCommonResult syncRegister() {
-        dasSyncOpenApiService.syncRegister();
-        return DefaultCommonResult.success();
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncOpenApiService.syncRegister());
     }
 
 }

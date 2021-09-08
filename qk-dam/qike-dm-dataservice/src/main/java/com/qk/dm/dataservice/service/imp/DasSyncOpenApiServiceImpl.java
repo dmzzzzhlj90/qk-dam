@@ -8,6 +8,7 @@ import com.qk.dm.dataservice.config.ApiSixConnectInfo;
 import com.qk.dm.dataservice.config.OpenApiConnectInfo;
 import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
+import com.qk.dm.dataservice.constant.SyncStatusEnum;
 import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
 import com.qk.dm.dataservice.service.DasSyncOpenApiService;
@@ -53,7 +54,7 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
     }
 
     @Override
-    public void syncRegister() {
+    public int syncRegister() {
         List<DasApiRegisterVO> dasApiRegisterVOList = new ArrayList<>();
         try {
             LOG.info("开始同步OpenApi,同步地址为: 【{}】", openApiConnectInfo.getUrl());
@@ -70,10 +71,12 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
             //执行注册API落库
             syncRegisterApi(dasApiRegisterVOList);
             LOG.info("执行注册API落库,同步完成!");
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException(e.getMessage());
         }
+
     }
 
     private DasApiDirVO getApiDirVO(OpenApi3 openApi3) {
@@ -134,7 +137,9 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
                     .backendTimeout(String.valueOf(apiSixConnectInfo.getUpstreamConnectTimeOut()))
                     .protocolType(openApiConnectInfo.getProtocolType())
                     .requestType(requestType)
+                    .status(SyncStatusEnum.CREATE_NO_SYNC.getCode())
                     .description(title + " : " + apiName);
+
             //同步入参信息
             existRequestBody(schemaMap, apiBasicInfoVOBuilder, apiRegisterVOBuilder, requestBody);
             //构建API基础信息

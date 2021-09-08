@@ -32,7 +32,6 @@ public class ApiSixRoutesService implements RoutesService {
 
     @Override
     public void initRouteInfo() {
-//        deleteRouteByRouteId();
         ApiSixRouteInfo routeInfo = (ApiSixRouteInfo) routeContext.getRouteInfo();
         HttpEntity httpEntity = setHttpEntity(routeInfo, routeContext.getParams());
         RestTemplateUtils.exchange(
@@ -63,31 +62,27 @@ public class ApiSixRoutesService implements RoutesService {
         return result;
     }
 
-    public void deleteRouteByRouteId() {
-        List<String> ids = getRouteInfo();
-        if (ids.contains(routeContext.getParams().get(ApiSixConstant.API_SIX_ROUTE_ID))) {
-            HttpEntity httpEntity = setHttpEntity(null, routeContext.getParams());
-            RestTemplateUtils.exchange(
-                    routeContext.getParams().get(ApiSixConstant.API_SIX_ADMIN_ROUTE_URL_KEY)
-                            + routeContext.getParams().get(ApiSixConstant.API_SIX_ROUTE_ID),
-                    HttpMethod.DELETE,
-                    httpEntity,
-                    String.class);
-        }
-    }
-
     public void clearRoute() {
         List<String> ids = getRouteInfo();
         if (!ObjectUtils.isEmpty(ids)) {
-            for (String id : ids) {
-                HttpEntity httpEntity = setHttpEntity(null, routeContext.getParams());
-                RestTemplateUtils.exchange(
-                        routeContext.getParams().get(ApiSixConstant.API_SIX_ADMIN_ROUTE_URL_KEY) + id,
-                        HttpMethod.DELETE,
-                        httpEntity,
-                        String.class);
+            for (String routeId : ids) {
+                deleteRouteByRouteId(routeId);
             }
         }
+    }
+
+    @Override
+    public void deleteRouteByRouteId() {
+        deleteRouteByRouteId(routeContext.getParams().get(ApiSixConstant.API_SIX_ROUTE_ID));
+    }
+
+    private void deleteRouteByRouteId(String routeId) {
+        HttpEntity httpEntity = setHttpEntity(null, routeContext.getParams());
+        RestTemplateUtils.exchange(
+                routeContext.getParams().get(ApiSixConstant.API_SIX_ADMIN_ROUTE_URL_KEY) + routeId,
+                HttpMethod.DELETE,
+                httpEntity,
+                String.class);
     }
 
     private HttpEntity setHttpEntity(ApiSixRouteInfo routeInfo, Map<String, String> params) {
