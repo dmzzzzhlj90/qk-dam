@@ -2,6 +2,8 @@ package com.qk.dm.datastandards.easyexcel.listener;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -15,7 +17,11 @@ import javax.validation.groups.Default;
  * @date 20210803
  */
 public class EasyExcelValidateHelper {
-  private EasyExcelValidateHelper() {}
+  private final static List<String> ignoreFields = Arrays.asList("dsdLevelId","dsdLevel");
+
+
+  private EasyExcelValidateHelper() {
+  }
 
   private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
@@ -24,9 +30,11 @@ public class EasyExcelValidateHelper {
     Set<ConstraintViolation<T>> set = validator.validate(obj, Default.class);
     if (set != null && !set.isEmpty()) {
       for (ConstraintViolation<T> cv : set) {
-        Field declaredField = obj.getClass().getDeclaredField(cv.getPropertyPath().toString());
-        if (null != declaredField.getAnnotation(ExcelProperty.class)) {
-          result.append(cv.getMessage()).append(";");
+        if (!ignoreFields.contains(cv.getPropertyPath().toString())) {
+          Field declaredField = obj.getClass().getDeclaredField(cv.getPropertyPath().toString());
+          if (null != declaredField.getAnnotation(ExcelProperty.class)) {
+            result.append(cv.getMessage()).append(";");
+          }
         }
       }
     }

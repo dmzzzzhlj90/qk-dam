@@ -5,13 +5,14 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.*;
 import com.qk.dm.datastandards.repositories.*;
 import com.querydsl.core.types.Predicate;
-import java.util.*;
-import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 数据标准excel 批量导入导出
@@ -51,7 +52,7 @@ public class DsdExcelBatchService {
       Map<String, String> codeDirLevelMap) {
     List<DsdDir> dsdDirAllList = dsdDirRepository.findAll();
     List<String> dsdDirLevels =
-        dsdDirAllList.stream().map(dsdDir -> dsdDir.getDsdDirLevel()).collect(Collectors.toList());
+        dsdDirAllList.stream().map(DsdDir::getDsdDirLevel).collect(Collectors.toList());
 
     dsdDirLevelSet.forEach(
         dirDsdLevel -> {
@@ -157,7 +158,7 @@ public class DsdExcelBatchService {
     List<DsdCodeDir> codeDirAllList = dsdCodeDirRepository.findAll();
     List<String> codeDirLevels =
         codeDirAllList.stream()
-            .map(dsdCodeDir -> dsdCodeDir.getCodeDirLevel())
+            .map(DsdCodeDir::getCodeDirLevel)
             .collect(Collectors.toList());
 
     codeDirLevelSet.forEach(
@@ -202,7 +203,7 @@ public class DsdExcelBatchService {
   public DsdCodeDir getCodeDir(String codeDirId) {
     Optional<DsdCodeDir> dsdCodeDirOptional =
         dsdCodeDirRepository.findOne(QDsdCodeDir.dsdCodeDir.codeDirId.eq(codeDirId));
-    if (!dsdCodeDirOptional.isPresent()) {
+    if (dsdCodeDirOptional.isEmpty()) {
       throw new BizException("码表层级目录不存在!!!");
     }
     return dsdCodeDirOptional.get();

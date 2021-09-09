@@ -1,8 +1,14 @@
 package com.qk.dm.dataservice.service.imp;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.openapi.OpenapiBuilder;
+import com.qk.dm.dataservice.config.ApiSixConnectInfo;
+import com.qk.dm.dataservice.config.OpenApiConnectInfo;
 import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
+import com.qk.dm.dataservice.constant.SyncStatusEnum;
 import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
 import com.qk.dm.dataservice.service.DasSyncOpenApiService;
@@ -10,7 +16,7 @@ import com.qk.dm.dataservice.vo.*;
 import org.openapi4j.parser.OpenApi3Parser;
 import org.openapi4j.parser.model.v3.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -20,48 +26,57 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * OPEN-API同步操作
+ * OPEN-API同步至数据服务操作
  *
  * @author wjq
  * @date 2021/8/30 17:49
  * @since 1.0.0
  */
+@RefreshScope
 @Service
 public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
+    private static final Log LOG = LogFactory.get("OPEN-API同步至数据服务操作");
     private final DasApiDirService dasApiDirService;
     private final DasApiRegisterService dasApiRegisterService;
 
-    @Value("${open_api.url}")
-    private String OPEN_API_URL;
-
-    @Value("${open_api.host}")
-    private String OPEN_API_HOST;
-
-    @Value("${open_api.protocol_type}")
-    private String OPEN_API_PROTOCOL_TYPE;
+    private final ApiSixConnectInfo apiSixConnectInfo;
+    private final OpenApiConnectInfo openApiConnectInfo;
 
     @Autowired
-    public DasSyncOpenApiServiceImpl(DasApiDirService dasApiDirService, DasApiRegisterService dasApiRegisterService) {
+    public DasSyncOpenApiServiceImpl(DasApiDirService dasApiDirService,
+                                     DasApiRegisterService dasApiRegisterService,
+                                     ApiSixConnectInfo apiSixConnectInfo,
+                                     OpenApiConnectInfo openApiConnectInfo) {
         this.dasApiDirService = dasApiDirService;
         this.dasApiRegisterService = dasApiRegisterService;
+        this.apiSixConnectInfo = apiSixConnectInfo;
+        this.openApiConnectInfo = openApiConnectInfo;
     }
 
     @Override
-    public void syncRegister() {
+    public int syncRegister() {
         List<DasApiRegisterVO> dasApiRegisterVOList = new ArrayList<>();
         try {
+            LOG.info("开始同步OpenApi,同步地址为: 【{}】", openApiConnectInfo.getUrl());
             //获取同步API信息
-            URL url = new URL(OPEN_API_URL);
+            URL url = new URL(openApiConnectInfo.getUrl());
             OpenApi3 openApi3 = new OpenApi3Parser().parse(url, false);
+            LOG.info("成功解析OenApi3对象!");
             //目录设置
             DasApiDirVO dasApiDirVO = getApiDirVO(openApi3);
+            LOG.info("自动创建数据服务API目录成功!");
             //构建同步对象
             getDasApiRegister(dasApiRegisterVOList, dasApiDirVO, openApi3);
+            LOG.info("成功构建注册API对象,待同步对象的个数为: 【{}】 ", dasApiRegisterVOList.size());
             //执行注册API落库
             syncRegisterApi(dasApiRegisterVOList);
+            LOG.info("执行注册API落库,同步完成!");
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
+            throw new BizException(e.getMessage());
         }
+
     }
 
     private DasApiDirVO getApiDirVO(OpenApi3 openApi3) {
@@ -81,13 +96,15 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
     private void getDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList, DasApiDirVO dasApiDirVO, OpenApi3 openApi3) {
         Map<String, Schema> schemaMap = openApi3.getComponents().getSchemas();
         Map<String, Path> apiMap = openApi3.getPaths();
+        String title = openApi3.getInfo().getTitle();
         for (String pathKey : apiMap.keySet()) {
             DasApiBasicInfoVO.DasApiBasicInfoVOBuilder apiBasicInfoVOBuilder = DasApiBasicInfoVO.builder();
             DasApiRegisterVO.DasApiRegisterVOBuilder apiRegisterVOBuilder = DasApiRegisterVO.builder();
             //设置目录信息
             apiBasicInfoVOBuilder.dasDirId(dasApiDirVO.getApiDirId()).apiDirLevel(dasApiDirVO.getApiDirLevel());
             //构建注册Api对象
-            DasApiRegisterVO dasApiRegisterVO = buildRegisterVO(schemaMap, apiMap, pathKey, apiBasicInfoVOBuilder, apiRegisterVOBuilder);
+            DasApiRegisterVO dasApiRegisterVO = buildRegisterVO(schemaMap, apiMap, pathKey, title,
+                    apiBasicInfoVOBuilder, apiRegisterVOBuilder);
             dasApiRegisterVOList.add(dasApiRegisterVO);
         }
     }
@@ -96,7 +113,7 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
         dasApiRegisterService.bulkAddDasApiRegister(dasApiRegisterVOList);
     }
 
-    private DasApiRegisterVO buildRegisterVO(Map<String, Schema> schemaMap, Map<String, Path> apiMap, String pathKey,
+    private DasApiRegisterVO buildRegisterVO(Map<String, Schema> schemaMap, Map<String, Path> apiMap, String pathKey, String title,
                                              DasApiBasicInfoVO.DasApiBasicInfoVOBuilder apiBasicInfoVOBuilder,
                                              DasApiRegisterVO.DasApiRegisterVOBuilder apiRegisterVOBuilder) {
         DasApiRegisterVO dasApiRegisterVO = null;
@@ -107,10 +124,22 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
             String requestType = operationEntry.getKey();
             String apiName = operationEntry.getValue().getSummary();
             RequestBody requestBody = operationEntry.getValue().getRequestBody();
-            apiBasicInfoVOBuilder.apiName(apiName).apiPath(pathKey).apiType(DasConstant.REGISTER_API_CODE)
-                    .protocolType(OPEN_API_PROTOCOL_TYPE).requestType(requestType).description("自动同步注册Api," + apiName);
-            apiRegisterVOBuilder.backendHost(OPEN_API_HOST).backendPath(pathKey).backendTimeout("30").protocolType(OPEN_API_PROTOCOL_TYPE)
-                    .requestType(requestType).description("自动同步注册Api," + apiName);
+            apiBasicInfoVOBuilder
+                    .apiName(apiName)
+                    .apiPath(pathKey)
+                    .apiType(DasConstant.REGISTER_API_CODE)
+                    .protocolType(openApiConnectInfo.getProtocolType())
+                    .requestType(requestType)
+                    .description(title + " : " + apiName);
+            apiRegisterVOBuilder
+                    .backendHost(openApiConnectInfo.getHost())
+                    .backendPath(pathKey)
+                    .backendTimeout(String.valueOf(apiSixConnectInfo.getUpstreamConnectTimeOut()))
+                    .protocolType(openApiConnectInfo.getProtocolType())
+                    .requestType(requestType)
+                    .status(SyncStatusEnum.CREATE_NO_SYNC.getCode())
+                    .description(title + " : " + apiName);
+
             //同步入参信息
             existRequestBody(schemaMap, apiBasicInfoVOBuilder, apiRegisterVOBuilder, requestBody);
             //构建API基础信息
@@ -204,7 +233,8 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
         List<DasApiRegisterBackendParaVO> backendParaVOList = new ArrayList<>();
         for (DasApiBasicInfoRequestParasVO requestParasVO : basicInfoRequestParasVOList) {
             DasApiRegisterBackendParaVO backendParaVO = DasApiRegisterBackendParaVO.builder()
-                    .paraName(requestParasVO.getParaName()).paraPosition(requestParasVO.getParaPosition())
+                    .paraName(requestParasVO.getParaName())
+                    .paraPosition(requestParasVO.getParaPosition())
                     .paraType(requestParasVO.getParaType())
                     .backendParaName(requestParasVO.getParaName())
                     .backendParaPosition(requestParasVO.getParaPosition())

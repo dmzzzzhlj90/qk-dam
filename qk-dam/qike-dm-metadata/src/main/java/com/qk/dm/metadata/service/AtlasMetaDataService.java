@@ -63,6 +63,13 @@ public interface AtlasMetaDataService {
   MtdTableDetailVO getTableDetailByGuid(String guid);
 
   /**
+   * 根据guid 元数据详情
+   * @param guid
+   * @return
+   */
+  MtdCommonDetailVO getDetailByGuid(String guid);
+
+  /**
    * 获取所有的基础类型
    *
    * @return

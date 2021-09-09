@@ -1,16 +1,18 @@
 package com.qk.dm.dataservice.controller;
 
+import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasSyncOpenApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * OPEN-API同步操作
+ * OPEN-API同步至数据服务操作
  *
  * @author wjq
  * @date 20210830
@@ -28,14 +30,13 @@ public class DasSyncOpenApiController {
     }
 
     /**
-     * 同步Swagger注册Api
+     * 同步Swagger至数据服务注册API
      *
      * @return DefaultCommonResult
      */
     @GetMapping("/register")
     public DefaultCommonResult syncRegister() {
-        dasSyncOpenApiService.syncRegister();
-        return DefaultCommonResult.success();
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncOpenApiService.syncRegister());
     }
 
 }

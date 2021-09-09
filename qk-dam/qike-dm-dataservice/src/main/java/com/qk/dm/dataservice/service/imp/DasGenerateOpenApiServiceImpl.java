@@ -1,5 +1,7 @@
 package com.qk.dm.dataservice.service.imp;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.openapi.ComponentField;
 import com.qk.dam.openapi.OpenapiBuilder;
@@ -34,6 +36,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService {
+    private static final Log LOG = LogFactory.get("数据服务_根据数据服务API生成OpenApiJson操作");
+
     public static final String OPEN_API_REQUEST_BODY_REF_SUFFIX = "Payload";
     public static final String OPEN_API_PARAMETER_TYPE_QUERY = "query";
     private final DasApiBasicInfoService dasApiBasicInfoService;
@@ -51,21 +55,24 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
     @Override
     public String generateOpenApiRegister() {
         //TODO 后期考虑版本,目录进行不同API的测试接口生成
+        LOG.info("开始执行生成OpenApiJson操作!");
         String openApi3Json = null;
         try {
             //获取所有注册API信息
             List<DasApiRegisterVO> dasApiRegisterList = dasApiRegisterService.findAll();
+            LOG.info("获取到注册API个数为: 【{}】", dasApiRegisterList.size());
             if (!ObjectUtils.isEmpty(dasApiRegisterList)) {
                 //构建OpenApi3
                 OpenapiBuilder openapiBuilder = getOpenApiBuilder(DasConstant.REGISTER_API_CODE, "数据服务-注册Api-TEST", "3.0.3");
                 openApiRegisterBuilder(dasApiRegisterList, openapiBuilder);
                 //构建完成,获取OpenApi3
                 OpenApi3 openApi3 = openapiBuilder.getOpenApi3();
+                LOG.info("成功获取OpenApi3!");
                 EnumSet<SerializationFlag> enumSet = EnumSet.of(SerializationFlag.OUT_AS_JSON);
                 openApi3Json = openApi3.toString(enumSet);
-            } else {
-                openApi3Json = "生成数据服务注册API信息为空!";
+                LOG.info("成功生成OpenApiJson!");
             }
+            LOG.info("数据服务注册API信息为空!");
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException("生成OpenApi失败!!!");

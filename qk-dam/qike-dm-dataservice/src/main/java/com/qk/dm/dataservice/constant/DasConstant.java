@@ -21,6 +21,9 @@ public class DasConstant {
     // API类型-DM取数API
     public static final String DM_SOURCE_API_CODE = "DM-SOURCE-API";
 
+    // API路由匹配,无API_ROUTE_ID,默认值为0
+    public static final String DEFAULT_API_ROUTE_ID = "0";
+
     // API类型
     public static List<Map<String, String>> getApiType() {
         List<Map<String, String>> apiTypeList = new ArrayList();
