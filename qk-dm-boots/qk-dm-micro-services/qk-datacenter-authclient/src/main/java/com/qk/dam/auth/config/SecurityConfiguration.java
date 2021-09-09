@@ -15,13 +15,15 @@ public class SecurityConfiguration {
   RedisIndexedSessionRepository redisIndexedSessionRepository(final RedisTemplate redisTemplate) {
     return new RedisIndexedSessionRepository(redisTemplate);
   }
+
   @Bean
   public ObjectMapper objectMapper() {
     return new ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
   }
+
   @Bean
   @ConfigurationProperties(prefix = "auth.client", ignoreInvalidFields = true)
-  public ClientInfo clientInfo(){
+  public ClientInfo clientInfo() {
     return new ClientInfo();
   }
 }

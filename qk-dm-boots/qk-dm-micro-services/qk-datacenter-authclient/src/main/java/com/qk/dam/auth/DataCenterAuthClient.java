@@ -7,7 +7,7 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @EnableWebFlux
 @SpringBootApplication
 public class DataCenterAuthClient {
-    public static void main(String[] args) {
-        SpringApplication.run(DataCenterAuthClient.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(DataCenterAuthClient.class, args);
+  }
 }

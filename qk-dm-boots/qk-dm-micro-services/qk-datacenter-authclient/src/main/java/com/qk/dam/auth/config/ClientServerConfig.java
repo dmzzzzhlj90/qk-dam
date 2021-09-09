@@ -1,10 +1,12 @@
 package com.qk.dam.auth.config;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import com.qk.dam.auth.client.ClientInfo;
+import java.net.URISyntaxException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
@@ -12,11 +14,6 @@ import org.springframework.security.web.server.authentication.logout.HeaderWrite
 import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
 import org.springframework.security.web.server.authentication.logout.ServerLogoutHandler;
 import org.springframework.security.web.server.header.ClearSiteDataServerHttpHeadersWriter;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebSecurity
 public class ClientServerConfig {
@@ -53,10 +50,7 @@ public class ClientServerConfig {
     DelegatingServerLogoutHandler logoutHandler =
         new DelegatingServerLogoutHandler(securityContext, clearSiteData);
 
-    http.logout(
-        (o) ->
-            o.logoutUrl("/logout")
-                .logoutHandler(logoutHandler));
+    http.logout((o) -> o.logoutUrl("/logout").logoutHandler(logoutHandler));
     http.csrf().disable();
     return http.build();
   }
