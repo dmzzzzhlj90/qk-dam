@@ -2,6 +2,7 @@ package com.qk.dm.indicator.params.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -21,9 +22,11 @@ public class IdcAtomDTO implements Serializable {
   private String atomIndicatorCode;
 
   /** 数据表 */
+  @NotNull(message = "数据表不能为空！")
   private String dataSheet;
 
   /** 主题名称 */
+  @NotNull(message = "主题不能为空！")
   private String themeCode;
 
   /** 函数字段表达式 */

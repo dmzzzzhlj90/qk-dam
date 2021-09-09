@@ -1,8 +1,6 @@
 package com.qk.dam.indicator.common.sqlbuilder;
 
-
 import tech.ibit.sqlbuilder.StringSql;
-
 import java.util.Arrays;
 
 /**
@@ -22,7 +20,7 @@ public class SqlBuilderUtil {
      * @return
      */
     public static String atomicSql(String expression,String tableName){
-        StringSql sql = new StringSql()
+        StringSql sql = SqlBuilder.builder()
                 .select(Arrays.asList(expression.split(COMMA)))
                 .from(tableName);
         return sql.getSqlParams().getSql();
@@ -36,10 +34,27 @@ public class SqlBuilderUtil {
      * @return
      */
     public static String derived(String expression,String tableName,String where){
-        StringSql sql = new StringSql()
+        StringSql sql = SqlBuilder.builder()
                 .select(Arrays.asList(expression.split(COMMA)))
                 .from(tableName)
                 .where(where);
+        return sql.getSqlParams().getSql();
+    }
+
+    /**
+     * 表关联
+     * @param expression 表达式（查询的字段）
+     * @param tableName 表名称
+     * @param where 查询条件
+     * @param joinTable 关联的表
+     * @return
+     */
+    public static String joinSql(String expression,String tableName,String where,String joinTable){
+        StringSql sql = SqlBuilder.builder()
+                .select(Arrays.asList(expression.split(COMMA)))
+                .from(tableName)
+                .where(where)
+                .joinOn(joinTable);
         return sql.getSqlParams().getSql();
     }
 
@@ -53,7 +68,7 @@ public class SqlBuilderUtil {
      */
     public static String orderBy(String tableName,String expression,
                                  String where,String orderBy){
-        StringSql sql = new StringSql()
+        StringSql sql =SqlBuilder.builder()
                 .select(Arrays.asList(expression.split(COMMA)))
                 .from(tableName)
                 .where(where)
@@ -68,7 +83,7 @@ public class SqlBuilderUtil {
      * @return
      */
     public static String count(String tableName,String where){
-        StringSql sql = new StringSql()
+        StringSql sql = SqlBuilder.builder()
                 .count()
                 .from(tableName)
                 .where(where);
@@ -83,11 +98,12 @@ public class SqlBuilderUtil {
      * @return
      */
     public static String countDistinct(String tableName,String where,String column){
-         StringSql sql = new StringSql()
+         StringSql sql = SqlBuilder.builder()
                  .countDistinct(column)
                  .from(tableName)
                  .where(where);
          return sql.getSqlParams().getSql();
     }
+
 
 }

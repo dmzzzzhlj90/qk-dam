@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Pattern;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,6 +15,9 @@ public class IdcBusinessDTO {
     /**
      * 业务指标名称
      */
+    @Pattern(
+            regexp = "^[a-zA-Z\u4E00-\u9FA5][\u4E00-\u9FA5A-Za-z0-9_]+$",
+            message = "只能包含中文、英文字母、数字和下划线,且以中文或英文字母开头")
     private String bIndicatorName;
 
     /**
