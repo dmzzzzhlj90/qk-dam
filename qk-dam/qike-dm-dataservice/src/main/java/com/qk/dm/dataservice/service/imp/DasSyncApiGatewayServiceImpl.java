@@ -83,7 +83,7 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
         LOG.info("====================开始全量同步数据服务注册API至网关ApiSix!====================");
         checkUpstreamAndService(upstreamId, serviceId);
         Map<String, List<DasApiBasicInfo>> apiBasicInfoMap = getDasApiBasicInfoAll();
-        int status =singleSyncRegisterApi(apiBasicInfoMap, upstreamId, serviceId);
+        int status = singleSyncRegisterApi(apiBasicInfoMap, upstreamId, serviceId);
         LOG.info("====================数据服务注册API全量同步已经完成!====================");
         return status;
     }
@@ -148,6 +148,13 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
         return serviceInfoList;
     }
 
+    @Override
+    public void clearRouteInfo() {
+        RouteContext routeContext = buildRouteContext();
+        //清除路由信息
+        apiGatewayManager.clearRouteService(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeContext);
+    }
+
     public List apiSixServiceInfoIds() {
         ServerContext serverContext = new ServerContext();
         Map<String, String> systemParam = new HashMap<>();
@@ -159,8 +166,8 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
     }
 
     private int singleSyncRegisterApi(Map<String, List<DasApiBasicInfo>> apiBasicInfoMap,
-                                       String upstreamId,
-                                       String serviceId) {
+                                      String upstreamId,
+                                      String serviceId) {
         AtomicInteger successfulNum = new AtomicInteger(0);
         AtomicInteger failNum = new AtomicInteger(0);
         try {

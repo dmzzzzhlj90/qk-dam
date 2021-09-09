@@ -1,5 +1,7 @@
 package com.qk.plugin.dataservice.apisix;
 
+import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.commons.util.RestTemplateUtils;
 import com.qk.dam.dataservice.spi.server.ServerContext;
 import com.qk.dam.dataservice.spi.server.ServerInfo;
@@ -11,6 +13,7 @@ import com.qk.plugin.dataservice.apisix.route.ApiSixResultVO;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
 import com.qk.plugin.dataservice.apisix.route.result.Nodes;
 import org.springframework.http.*;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +46,15 @@ public class ApiSixServerService implements ServerService {
                     HttpMethod.GET,
                     httpEntity,
                     ApiSixResultVO.class);
-    if (null != responseEntity.getBody().getNode()) {
-      List<Nodes> nodes = responseEntity.getBody().getNode().getNodes();
-      return nodes;
+    if (isEmptyResponseBody(responseEntity.getBody().getNode())) {
+      Object nodes = responseEntity.getBody().getNode().get("nodes");
+      if (isEmptyResponseBody(nodes)) {
+        List<Nodes> nodeList = GsonUtil.fromJsonString(GsonUtil.toJsonString(nodes), new TypeToken<List<Nodes>>() {
+        }.getType());
+        return nodeList;
+      }
     }
+
     return null;
   }
 
@@ -61,12 +69,20 @@ public class ApiSixServerService implements ServerService {
                     HttpMethod.GET,
                     httpEntity,
                     ApiSixResultVO.class);
-    if (null != responseEntity.getBody().getNode()) {
-      List<Nodes> nodes = responseEntity.getBody().getNode().getNodes();
-      serviceInfoIds = nodes.stream().map(nodes1 -> nodes1.getValue().getId()).collect(Collectors.toList());
-      return serviceInfoIds;
+    if (isEmptyResponseBody(responseEntity.getBody().getNode())) {
+      Object nodes = responseEntity.getBody().getNode().get("nodes");
+      if (isEmptyResponseBody(nodes)) {
+        List<Nodes> nodeList = GsonUtil.fromJsonString(GsonUtil.toJsonString(nodes), new TypeToken<List<Nodes>>() {
+        }.getType());
+        serviceInfoIds= nodeList.stream().map(nodes1 -> nodes1.getValue().getId()).collect(Collectors.toList());
+        return serviceInfoIds;
+      }
     }
-    return null;
+    return serviceInfoIds;
+  }
+
+  private boolean isEmptyResponseBody(Object node) {
+    return !ObjectUtils.isEmpty(node);
   }
 
 

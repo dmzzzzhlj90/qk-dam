@@ -29,4 +29,6 @@ public interface DasSyncApiGatewayService {
 
     List apiSixServiceInfo();
 
+    void clearRouteInfo();
+
 }

@@ -42,7 +42,7 @@ public class DasSyncApiGatewayController {
 //    }
 
     /**
-     * 全量同步__数据服务注册API至API_SIX
+     * 全量同步__数据服务注册API至API_SIX (内部使用)
      *
      * @param upstreamId,serviceId
      * @return DefaultCommonResult
@@ -50,7 +50,7 @@ public class DasSyncApiGatewayController {
     @PostMapping("/apiSix/routes/register/all")
     public DefaultCommonResult apiSixRoutesRegisterAll(@RequestParam("upstreamId") String upstreamId,
                                                        @RequestParam("serviceId") String serviceId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dasSyncApiGatewayService.apiSixRoutesRegisterAll(upstreamId, serviceId));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixRoutesRegisterAll(upstreamId, serviceId));
     }
 
     /**
@@ -108,5 +108,17 @@ public class DasSyncApiGatewayController {
     public DefaultCommonResult<List> apiSixServiceInfo() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixServiceInfo());
     }
+
+    /**
+     * 批量清除ApiSix路由信息(内部使用)
+     *
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("/clear/apiSix/route/info")
+    public DefaultCommonResult clearRouteInfo() {
+        dasSyncApiGatewayService.clearRouteInfo();
+        return DefaultCommonResult.success();
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package com.qk.plugin.dataservice.apisix;
 
+import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.commons.util.RestTemplateUtils;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.dataservice.spi.route.RoutesService;
@@ -44,7 +46,7 @@ public class ApiSixRoutesService implements RoutesService {
 
     @Override
     public List<String> getRouteInfo() {
-        List<String> result = new ArrayList();
+        List<String> result = new ArrayList<>();
         Map<String, String> params = routeContext.getParams();
         HttpEntity httpEntity = setHttpEntity(null, params);
         ResponseEntity<ApiSixResultVO> responseEntity =
@@ -53,13 +55,21 @@ public class ApiSixRoutesService implements RoutesService {
                         HttpMethod.GET,
                         httpEntity,
                         ApiSixResultVO.class);
-        if (null != responseEntity.getBody().getNode()) {
-            List<Nodes> nodes = responseEntity.getBody().getNode().getNodes();
-            for (Nodes node : nodes) {
-                result.add(node.getValue().getId());
+        if (isEmptyResponseEntityBody(responseEntity.getBody().getNode())) {
+            Object nodes = responseEntity.getBody().getNode().get("nodes");
+            if (isEmptyResponseEntityBody(nodes)) {
+                List<Nodes> nodeList = GsonUtil.fromJsonString(GsonUtil.toJsonString(nodes), new TypeToken<List<Nodes>>() {
+                }.getType());
+                for (Nodes node : nodeList) {
+                    result.add(node.getValue().getId());
+                }
             }
         }
         return result;
+    }
+
+    private boolean isEmptyResponseEntityBody(Object node) {
+        return !ObjectUtils.isEmpty(node);
     }
 
     public void clearRoute() {
