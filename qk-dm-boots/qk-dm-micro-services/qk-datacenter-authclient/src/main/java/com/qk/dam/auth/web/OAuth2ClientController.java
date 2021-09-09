@@ -1,5 +1,7 @@
 package com.qk.dam.auth.web;
 
+import com.qk.dam.auth.client.ClientInfo;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -9,7 +11,6 @@ import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2Aut
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.WebSession;
@@ -20,7 +21,13 @@ import java.net.URI;
 import static org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository.DEFAULT_SPRING_SECURITY_CONTEXT_ATTR_NAME;
 
 @RestController
+@RefreshScope
 public class OAuth2ClientController {
+    final ClientInfo clientInfo;
+
+    public OAuth2ClientController(ClientInfo clientInfo) {
+        this.clientInfo = clientInfo;
+    }
 
     @GetMapping("/oauth2/auth/{registerId}")
     public Mono<Void> registerId(
@@ -33,7 +40,7 @@ public class OAuth2ClientController {
                     HttpHeaders headers = response.getHeaders();
                     headers.setLocation(
                             URI.create(
-                                    "http://localhost:8000/"));
+                                    clientInfo.getFrontend()));
                 });
 
     }
@@ -71,7 +78,7 @@ public class OAuth2ClientController {
                     response.setStatusCode(HttpStatus.FOUND);
                     HttpHeaders headers = response.getHeaders();
                     headers.setLocation(
-                            URI.create("http://localhost:8000/"));
+                            URI.create(clientInfo.getFrontend()));
                 });
     }
 }

@@ -1,5 +1,6 @@
 package com.qk.dam.auth.config;
 
+import com.qk.dam.auth.client.ClientInfo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -19,6 +20,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebSecurity
 public class ClientServerConfig {
+  final ClientInfo clientInfo;
+
+  public ClientServerConfig(ClientInfo clientInfo) {
+    this.clientInfo = clientInfo;
+  }
 
   @Bean
   SecurityWebFilterChain springSecurityFilterChain(
@@ -46,15 +52,10 @@ public class ClientServerConfig {
     ServerLogoutHandler clearSiteData = new HeaderWriterServerLogoutHandler(writer);
     DelegatingServerLogoutHandler logoutHandler =
         new DelegatingServerLogoutHandler(securityContext, clearSiteData);
-    OidcClientInitiatedServerLogoutSuccessHandler oidcClientInitiatedServerLogoutSuccessHandler =
-        new OidcClientInitiatedServerLogoutSuccessHandler(clientRegistrationRepository);
-        oidcClientInitiatedServerLogoutSuccessHandler.setLogoutSuccessUrl(
-            new URI("http://localhost:8000/"));
 
     http.logout(
         (o) ->
             o.logoutUrl("/logout")
-                .logoutSuccessHandler(oidcClientInitiatedServerLogoutSuccessHandler)
                 .logoutHandler(logoutHandler));
     http.csrf().disable();
     return http.build();
