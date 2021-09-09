@@ -1,13 +1,12 @@
 package com.qk.dm.metadata.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
-import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Builder
 public class MtdDbDetailVO extends MtdAtlasBaseDetailVO{

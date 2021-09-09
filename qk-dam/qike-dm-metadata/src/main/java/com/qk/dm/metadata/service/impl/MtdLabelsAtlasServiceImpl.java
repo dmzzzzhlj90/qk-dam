@@ -9,11 +9,10 @@ import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasBulkVO;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
 import com.querydsl.core.types.Predicate;
-import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.springframework.stereotype.Service;
 
 /**
  * @author spj

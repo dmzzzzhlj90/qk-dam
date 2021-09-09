@@ -9,11 +9,11 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface MtdCommonDetailMapper {
-    MtdCommonDetailMapper INSTANCE = Mappers.getMapper(MtdCommonDetailMapper.class);
+  MtdCommonDetailMapper INSTANCE = Mappers.getMapper(MtdCommonDetailMapper.class);
 
-    MtdCommonDetailVO userMtdCommonDetail(MtdDbDetailVO mtdDbDetailVO);
+  MtdCommonDetailVO userMtdCommonDetail(MtdDbDetailVO mtdDbDetailVO);
 
-    MtdCommonDetailVO userMtdCommonDetail(MtdTableDetailVO mtdTableDetailVO);
+  MtdCommonDetailVO userMtdCommonDetail(MtdTableDetailVO mtdTableDetailVO);
 
-    MtdCommonDetailVO userMtdCommonDetail(MtdColumnVO mtdColumnVO);
+  MtdCommonDetailVO userMtdCommonDetail(MtdColumnVO mtdColumnVO);
 }

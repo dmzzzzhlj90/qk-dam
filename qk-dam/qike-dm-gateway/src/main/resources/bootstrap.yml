@@ -13,57 +13,28 @@ spring:
     locale: zh_CN
   logging:
     level: info
-    path: logs/dm-datastandards.log
+    path: logs/dm-gateway.log
     appender:
       ref: CONSOLE
-  messages:
-    basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
-  jackson:
-    serialization:
-      FAIL_ON_EMPTY_BEANS: false
-  security:
-    oauth2:
-      client:
-        provider:
-          spring:
-            issuer-uri: http://auth-server:9901
-        registration:
-          qk-dam-client-oidc:
-            provider: spring
-            client-id: qk-dam-client
-            client-secret: qk-dam-client-zzr
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://auth-client:8780/login/oauth2/code/{registrationId}"
-            scope: openid
-            client-name: qk-dam-client-oidc
-          qk-dam-front-oidc:
-            provider: spring
-            client-id: qk-dam-front
-            client-secret: qk-dam-front-zzr
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://auth-client:8780/login/oauth2/code/{registrationId}"
-            scope: openid
-            client-name: qk-dam-front-oidc
-      resourceserver:
-        jwt:
-          issuer-uri: http://auth-server:9901
   cloud:
-    gateway:
-      default-filters:
-        - TokenRelay=
-        - RemoveRequestHeader=Cookie
     nacos:
       discovery:
         server-addr: http://172.20.0.13
-        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
-        group: DM-GROUP
+        namespace: b283864b-1e78-429e-b322-db0f5720f55c
       config:
         server-addr: http://172.20.0.13
-        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        namespace: b283864b-1e78-429e-b322-db0f5720f55c
         extension-configs:
-          - dataId: dm-gateway.yml
+          - dataId: qkdam-gateway-test.yml
+            group: DAM
             refresh: true
-          - dataId: test44-redis-dev.yml
+          - dataId: qkdam-oauth2-resource-test.yml
+            group: DAM
             refresh: true
+          - dataId: qkdam-redis-test.yml
+            group: DAM
+            refresh: true
+  profiles:
+    default: test

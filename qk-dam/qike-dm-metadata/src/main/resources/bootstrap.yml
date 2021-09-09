@@ -22,13 +22,13 @@ spring:
     nacos:
       discovery:
         server-addr: http://172.20.0.13
-        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
-        group: DM-GROUP
+        namespace: b283864b-1e78-429e-b322-db0f5720f55c
       config:
         server-addr: http://172.20.0.13
-        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        namespace: b283864b-1e78-429e-b322-db0f5720f55c
         extension-configs:
-          - dataId: test44-mysql-dev.yml
+          - dataId: qkdam-mysql-test.yml
+            group: DAM
             refresh: true
 management:
   endpoints:

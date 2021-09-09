@@ -2,7 +2,6 @@ package com.qk.dm.metadata.service;
 
 import com.qk.dam.metedata.entity.MtdApi;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-
 import java.util.List;
 
 /**
@@ -20,6 +19,7 @@ public interface MtdApiService {
 
   /**
    * 获取元数据详情
+   *
    * @param typeName
    * @param dbName
    * @param tableName

@@ -7,8 +7,12 @@ buildscript {
                 password = 'admin123'
             }
         }
-        maven { url 'https://maven.aliyun.com/repository/public' }
         mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.openapitools:openapi-generator-gradle-plugin:5.0.0"
+        classpath 'gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.9'
     }
 }
 
@@ -21,7 +25,8 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
-
+    apply plugin: 'org.openapi.generator'
+    apply plugin: 'com.github.sherter.google-java-format'
     repositories {
         maven {
             url = 'http://172.20.0.22:8081/repository/qkdam/'
@@ -86,6 +91,7 @@ subprojects {
                 from('build/libs')
                 into(distroPath)
             }
+
         }
         smartdoc {
             configFile = file("src/main/resources/smart-doc.json")
