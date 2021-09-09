@@ -1,4 +1,4 @@
-package com.qk.dam.gateway.config;
+package com.qk.dam.auth.config;
 
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;

@@ -1,7 +1,6 @@
 package com.qk.dm.metadata.service;
 
 import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
-
 import java.util.List;
 
 public interface MtdClassifyAtlasService {

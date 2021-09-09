@@ -2,7 +2,6 @@ package com.qk.dm.metadata.service;
 
 import com.qk.dm.metadata.vo.MtdLabelsAtlasBulkVO;
 import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
-
 import java.util.List;
 
 public interface MtdLabelsAtlasService {

@@ -4,7 +4,7 @@ plugins {
 }
 version "${damDependenciesVersion}"
 group "com.qk.dam"
-
+description "中台统一依赖版本管理"
 javaPlatform {
     allowDependencies()
 }

@@ -9,6 +9,8 @@ import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dam.metedata.entity.MtdAttributes;
 import com.qk.dm.metadata.service.MtdApiService;
 import com.qk.dm.metadata.vo.*;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
@@ -18,9 +20,6 @@ import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author wangzp

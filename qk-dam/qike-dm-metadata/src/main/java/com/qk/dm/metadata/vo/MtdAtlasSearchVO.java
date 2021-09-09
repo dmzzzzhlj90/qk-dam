@@ -15,10 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MtdAtlasSearchVO {
-    String attributeName;
-    /**
-     * 数组，或者关系
-     */
-    String[] attributeValue;
-    String operator;
+  String attributeName;
+  /** 数组，或者关系 */
+  String[] attributeValue;
+
+  String operator;
 }

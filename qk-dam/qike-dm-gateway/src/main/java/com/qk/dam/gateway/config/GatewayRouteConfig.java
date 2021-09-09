@@ -12,6 +12,7 @@ public class GatewayRouteConfig {
     return builder
         .routes()
         .route("dm-datastandards-route", r -> r.path("/dsd/**").uri("lb://dm-datastandards"))
+        .route("dm-metadata-route", r -> r.path("/mtd/**").uri("lb://dm-metadata"))
         .build();
   }
 }
