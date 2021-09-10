@@ -65,7 +65,7 @@ public class DataStandardCodeInfoController {
   public DefaultCommonResult<DsdCodeInfoVO> getBasicDsdCodeInfoById(@PathVariable("id") String id) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK,
-        dataStandardCodeInfoService.getDsdCodeInfoById(Long.valueOf(id).longValue()));
+        dataStandardCodeInfoService.getDsdCodeInfoById(Long.parseLong(id)));
   }
 
   /**
@@ -89,7 +89,7 @@ public class DataStandardCodeInfoController {
    */
   @DeleteMapping("/basic/delete/{id}")
   public DefaultCommonResult deleteDsdCodeInfo(@PathVariable("id") Integer id) {
-    dataStandardCodeInfoService.deleteDsdCodeInfo(Long.valueOf(id).longValue());
+    dataStandardCodeInfoService.deleteDsdCodeInfo(Long.valueOf(id));
     return DefaultCommonResult.success();
   }
 
@@ -153,7 +153,7 @@ public class DataStandardCodeInfoController {
       @PathVariable("id") String id) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK,
-        dataStandardCodeInfoService.getBasicDsdCodeInfoExtById(Long.valueOf(id).longValue()));
+        dataStandardCodeInfoService.getBasicDsdCodeInfoExtById(Long.parseLong(id)));
   }
 
   /**
@@ -177,7 +177,7 @@ public class DataStandardCodeInfoController {
    */
   @DeleteMapping("/ext/delete/{id}")
   public DefaultCommonResult deleteDsdCodeInfoExt(@PathVariable("id") Integer id) {
-    dataStandardCodeInfoService.deleteDsdCodeInfoExt(Long.valueOf(id).longValue());
+    dataStandardCodeInfoService.deleteDsdCodeInfoExt(Long.valueOf(id));
     return DefaultCommonResult.success();
   }
 

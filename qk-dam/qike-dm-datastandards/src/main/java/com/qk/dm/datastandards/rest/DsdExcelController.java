@@ -138,9 +138,8 @@ public class DsdExcelController {
      */
     @PostMapping("/code/values/dsdCodeInfoId/upload")
     @ResponseBody
-    public DefaultCommonResult codeValuesUploadByCodeInfoId(
-            MultipartFile file, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
-        dsdExcelService.codeValuesUploadByCodeInfoId(file, Long.valueOf(dsdCodeInfoId).longValue());
+    public DefaultCommonResult codeValuesUploadByCodeInfoId(MultipartFile file, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
+        dsdExcelService.codeValuesUploadByCodeInfoId(file, Long.parseLong(dsdCodeInfoId));
         return DefaultCommonResult.success();
     }
 
@@ -150,10 +149,8 @@ public class DsdExcelController {
      * @param response
      */
     @PostMapping("/code/values/dsdCodeInfoId/download")
-    public void codeValuesDownloadByCodeInfoId(
-            HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
-        dsdExcelService.codeValuesDownloadByCodeInfoId(
-                response, Long.valueOf(dsdCodeInfoId).longValue());
+    public void codeValuesDownloadByCodeInfoId(HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
+        dsdExcelService.codeValuesDownloadByCodeInfoId(response, Long.parseLong(dsdCodeInfoId));
     }
 
     /**
@@ -162,9 +159,8 @@ public class DsdExcelController {
      * @param response
      */
     @PostMapping("/code/values/download/template")
-    public void codeValuesDownloadTemplate(
-            HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
-        dsdExcelService.codeValuesDownloadTemplate(response, Long.valueOf(dsdCodeInfoId).longValue());
+    public void codeValuesDownloadTemplate(HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
+        dsdExcelService.codeValuesDownloadTemplate(response, Long.parseLong(dsdCodeInfoId));
     }
 
 }
