@@ -46,10 +46,7 @@ public class DsdExcelBatchService {
   }
 
   @Transactional(rollbackFor = Exception.class)
-  public void saveDsdBasicInfo(
-      List<DsdBasicinfo> dsdBasicInfoList,
-      Set<String> dsdDirLevelSet,
-      Map<String, String> codeDirLevelMap) {
+  public void saveDsdBasicInfo(List<DsdBasicinfo> dsdBasicInfoList, Set<String> dsdDirLevelSet, Map<String, String> codeDirLevelMap) {
     List<DsdDir> dsdDirAllList = dsdDirRepository.findAll();
     List<String> dsdDirLevels =
         dsdDirAllList.stream().map(DsdDir::getDsdDirLevel).collect(Collectors.toList());
@@ -77,6 +74,7 @@ public class DsdExcelBatchService {
       dsdBasicinfo.setDsdLevel(dsdDirList.get(0).getDsdDirLevel());
       dsdBasicinfo.setGmtCreate(new Date());
       dsdBasicinfo.setGmtModified(new Date());
+      dsdBasicinfo.setDelFlag(0);
       entityManager.persist(dsdBasicinfo); // insert插入操作
     }
     entityManager.flush();
@@ -101,6 +99,7 @@ public class DsdExcelBatchService {
         dsdBasicinfo.setDsdLevel(dsdDir.get().getDsdDirLevel());
         dsdBasicinfo.setGmtCreate(new Date());
         dsdBasicinfo.setGmtModified(new Date());
+        dsdBasicinfo.setDelFlag(0);
         entityManager.persist(dsdBasicinfo); // insert插入操作
       }
     } else {
@@ -140,6 +139,7 @@ public class DsdExcelBatchService {
       dsdCodeInfo.setCodeDirLevel(dsdCodeDir.getCodeDirLevel());
       dsdCodeInfo.setGmtCreate(new Date());
       dsdCodeInfo.setGmtModified(new Date());
+      dsdCodeInfo.setDelFlag(0);
       if (primaryIDKeySet.contains(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode())) {
         dsdCodeInfo.setId(
             primaryIDMap.get(dsdCodeInfo.getCodeDirLevel() + dsdCodeInfo.getTableCode()));

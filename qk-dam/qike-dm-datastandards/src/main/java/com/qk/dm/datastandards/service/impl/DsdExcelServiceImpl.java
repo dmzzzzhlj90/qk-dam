@@ -1,5 +1,7 @@
 package com.qk.dm.datastandards.service.impl;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.util.IoUtils;
@@ -48,8 +50,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DsdExcelServiceImpl implements DsdExcelService {
-    private final DsdBasicinfoRepository dsdBasicinfoRepository;
+    private static final Log LOG = LogFactory.get("数据标准excel导入导出");
 
+    private final DsdBasicinfoRepository dsdBasicinfoRepository;
     private final DsdCodeInfoRepository dsdCodeInfoRepository;
     private final DsdCodeInfoExtRepository dsdCodeInfoExtRepository;
 
@@ -78,6 +81,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     //  ================================basicInfo===============================================
     @Override
     public void basicInfoUpload(MultipartFile file, String dirDsdId) {
+        LOG.info("======开始导入数据标准!======");
         try {
             EasyExcel.read(
                     file.getInputStream(),
@@ -86,8 +90,10 @@ public class DsdExcelServiceImpl implements DsdExcelService {
                     .sheet()
                     .doRead();
         } catch (Exception e) {
+            LOG.info("======导入数据标准失败!======");
             throw new BizException("导入失败: " + e.getMessage());
         }
+        LOG.info("======成功导入数据标准!======");
     }
 
     @Override
@@ -295,29 +301,27 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         try {
             InputStream inputStream = file.getInputStream();
             byte[] stream = IoUtils.toByteArray(inputStream);
+            //解析excel数据
             DsdCodeValuesUploadDataListener readListener = new DsdCodeValuesUploadDataListener();
             EasyExcelFactory.read(new ByteArrayInputStream(stream))
                     .registerReadListener(readListener)
                     .headRowNumber(1)
                     .sheet(0)
                     .doRead();
-
+            //码表基础信息
             Optional<DsdCodeInfo> dsdCodeInfo = dsdCodeInfoRepository.findById(dsdCodeInfoId);
+            //字段配置信息
             String tableConfFieldsStr = dsdCodeInfo.get().getTableConfFields();
             List<CodeTableFieldsVO> codeTableFieldsVOList =
-                    GsonUtil.fromJsonString(
-                            tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {
-                            }.getType());
-
-            List<Map<Integer, String>> headList =
-                    checkCodeInfoHeadList(readListener, codeTableFieldsVOList);
+                    GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {
+                    }.getType());
+            //表头信息
+            List<Map<Integer, String>> headList = checkCodeInfoHeadList(readListener, codeTableFieldsVOList);
+            //数据体信息
             List<Map<Integer, String>> dataList = checkCodeInfoDataList(readListener);
 
             Map<String, String> fieldMap =
-                    codeTableFieldsVOList.stream()
-                            .collect(
-                                    Collectors.toMap(
-                                            CodeTableFieldsVO::getName_ch, CodeTableFieldsVO::getCode_table_id));
+                    codeTableFieldsVOList.stream().collect(Collectors.toMap(CodeTableFieldsVO::getName_ch, CodeTableFieldsVO::getCode_table_id));
             Map<Integer, String> excelHeadIdxNameMap = headList.get(headList.size() - 1);
             List<DsdCodeInfoExt> saveDataList = Lists.newArrayList();
             getCodeValues(dsdCodeInfoId, dataList, fieldMap, excelHeadIdxNameMap, saveDataList);
