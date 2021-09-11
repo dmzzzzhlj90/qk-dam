@@ -7,12 +7,11 @@ import com.qk.dm.datasource.service.DsDataSourceService;
 import com.qk.dm.datasource.util.DsDataSouurceConnectUtil;
 import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 数据管理—数据源连接
@@ -112,7 +111,7 @@ public class DsDataSourceController {
    */
   @GetMapping("/{id}")
   public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByDsname(
-     @PathVariable("id") Integer id) {
+      @PathVariable("id") Integer id) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDataSourceService.getDataSourceByDsname(id));
   }
@@ -130,13 +129,14 @@ public class DsDataSourceController {
         ResultCodeEnum.OK, dsDataSourceService.dataSourceConnect(dsDatasourceVO));
   }
 
-
   /**
    * 数据源连接——获取所有数据源类型
+   *
    * @return DefaultCommonResult<Map<String,String>> 数据源类型
    */
   @GetMapping("/alltype")
-  public DefaultCommonResult<Map<String,String>> getAllType(){
-    return DefaultCommonResult.success(ResultCodeEnum.OK,DsDataSouurceConnectUtil.getDataSourceType());
+  public DefaultCommonResult<Map<String, String>> getAllType() {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, DsDataSouurceConnectUtil.getDataSourceType());
   }
 }

@@ -23,13 +23,12 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.*;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import java.util.*;
 
 /**
  * 数据源连接实现接口
@@ -48,9 +47,9 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
 
   @Autowired
   public DsDataSourceServiceImpl(
-          DsDirService dsDirService,
-          EntityManager entityManager,
-          DsDatasourceRepository dsDatasourceRepository) {
+      DsDirService dsDirService,
+      EntityManager entityManager,
+      DsDatasourceRepository dsDatasourceRepository) {
     this.dsDirService = dsDirService;
     this.entityManager = entityManager;
     this.dsDatasourceRepository = dsDatasourceRepository;
@@ -75,16 +74,16 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     long total = (long) map.get("total");
 
     list.forEach(
-            dsd -> {
-              DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsd);
-              setConnectBasicInfo(dsd, dsDatasourceVO);
-              dsDataSourceVOList.add(dsDatasourceVO);
-            });
+        dsd -> {
+          DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsd);
+          setConnectBasicInfo(dsd, dsDatasourceVO);
+          dsDataSourceVOList.add(dsDatasourceVO);
+        });
     return new PageResultVO<>(
-            total,
-            dsDataSourceParamsVO.getPagination().getPage(),
-            dsDataSourceParamsVO.getPagination().getSize(),
-            dsDataSourceVOList);
+        total,
+        dsDataSourceParamsVO.getPagination().getPage(),
+        dsDataSourceParamsVO.getPagination().getSize(),
+        dsDataSourceVOList);
   }
 
   private void setConnectBasicInfo(DsDatasource dsd, DsDatasourceVO dsDatasourceVO) {
@@ -103,17 +102,17 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
     dsDatasource.setGmtCreate(new Date());
     // 将传入的数据源连接信息转换赋值
-    setDataSourceValues(dsDatasource,dsDatasourceVO);
-    //dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
+    setDataSourceValues(dsDatasource, dsDatasourceVO);
+    // dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
     BooleanExpression predicate = qDsDatasource.dataSourceName.eq(dsDatasource.getDataSourceName());
     boolean exists = dsDatasourceRepository.exists(predicate);
     if (exists) {
       throw new BizException(
-              "当前要新增数据连接应用系统名称为:"
-                      + dsDatasource.getHomeSystem()
-                      + " 所属的节点层级目录id为:"
-                      + dsDatasource.getDicId()
-                      + " 的数据，已存在！！！");
+          "当前要新增数据连接应用系统名称为:"
+              + dsDatasource.getHomeSystem()
+              + " 所属的节点层级目录id为:"
+              + dsDatasource.getDicId()
+              + " 的数据，已存在！！！");
     }
     dsDatasourceRepository.save(dsDatasource);
   }
@@ -143,31 +142,31 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   public void updateDsDataSource(DsDatasourceVO dsDatasourceVO) {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
     dsDatasource.setGmtModified(new Date());
-    setDataSourceValues(dsDatasource,dsDatasourceVO);
-    //dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
+    setDataSourceValues(dsDatasource, dsDatasourceVO);
+    // dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
     Predicate predicate = qDsDatasource.id.eq(dsDatasource.getId());
     boolean exists = dsDatasourceRepository.exists(predicate);
     if (exists) {
       dsDatasourceRepository.saveAndFlush(dsDatasource);
     } else {
       throw new BizException(
-              "当前要更新的数据连接的ID为："
-                      + dsDatasource.getId()
-                      + "数据连接所属系统名称为:"
-                      + dsDatasource.getHomeSystem()
-                      + " 的数据，不存在！！！");
+          "当前要更新的数据连接的ID为："
+              + dsDatasource.getId()
+              + "数据连接所属系统名称为:"
+              + dsDatasource.getHomeSystem()
+              + " 的数据，不存在！！！");
     }
   }
 
   private void setDataSourceValues(DsDatasource dsDatasource, DsDatasourceVO dsDatasourceVO) {
     Object baseDataSourceTypeInfo = dsDatasourceVO.getConnectBasicInfo();
     if (baseDataSourceTypeInfo != null) {
-      String baseDataInfo = DsDataSouurceConnectUtil.addDriverinfo(baseDataSourceTypeInfo, dsDatasource.getLinkType());
+      String baseDataInfo =
+          DsDataSouurceConnectUtil.addDriverinfo(
+              baseDataSourceTypeInfo, dsDatasource.getLinkType());
       dsDatasource.setDataSourceValues(baseDataInfo);
     }
   }
-
-
 
   /**
    * 获取数据源连接类型
@@ -205,7 +204,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   public List<DsDatasourceVO> getDataSourceByType(String type) {
     List<DsDatasourceVO> resultDataList = new ArrayList<>();
     Iterable<DsDatasource> dsDatasourceIterable =
-            dsDatasourceRepository.findAll(qDsDatasource.linkType.eq(type));
+        dsDatasourceRepository.findAll(qDsDatasource.linkType.eq(type));
     for (DsDatasource dsDatasource : dsDatasourceIterable) {
       DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
       ConnectBasicInfo dsConnectBasicInfo = getConnectInfo(type, dsDatasource);
@@ -221,22 +220,22 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     if (type.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
       connectBasicInfo =
-              GsonUtil.fromJsonString(dataSourceValues, new TypeToken<MysqlInfo>() {}.getType());
+          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<MysqlInfo>() {}.getType());
     }
     if (type.equalsIgnoreCase(ConnTypeEnum.HIVE.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
       connectBasicInfo =
-              GsonUtil.fromJsonString(dataSourceValues, new TypeToken<HiveInfo>() {}.getType());
+          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<HiveInfo>() {}.getType());
     }
     if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
       connectBasicInfo =
-              GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
+          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
     }
     if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
       connectBasicInfo =
-              GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
+          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
     }
     return connectBasicInfo;
   }
@@ -248,9 +247,10 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     if (datasourceList != null) {
       DsDatasource dsDatasource = datasourceList.get();
       DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
-        ConnectBasicInfo dsConnectBasicInfo = getConnectInfo(dsDatasource.getLinkType(), dsDatasource);
-        dsDatasourceVO.setConnectBasicInfo(dsConnectBasicInfo);
-        resultDataList.add(dsDatasourceVO);
+      ConnectBasicInfo dsConnectBasicInfo =
+          getConnectInfo(dsDatasource.getLinkType(), dsDatasource);
+      dsDatasourceVO.setConnectBasicInfo(dsConnectBasicInfo);
+      resultDataList.add(dsDatasourceVO);
       return resultDataList;
     } else {
       throw new BizException("根据数据源名称获取数据源连接信息为空");
@@ -269,22 +269,22 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     checkCondition(booleanBuilder, qDsDatasource, dsDataSourceParamsVO);
     long count =
-            jpaQueryFactory
-                    .select(qDsDatasource.count())
-                    .from(qDsDatasource)
-                    .where(booleanBuilder)
-                    .fetchOne();
+        jpaQueryFactory
+            .select(qDsDatasource.count())
+            .from(qDsDatasource)
+            .where(booleanBuilder)
+            .fetchOne();
     List<DsDatasource> dsdBasicInfoList =
-            jpaQueryFactory
-                    .select(qDsDatasource)
-                    .from(qDsDatasource)
-                    .where(booleanBuilder)
-                    .orderBy(qDsDatasource.id.asc())
-                    .offset(
-                            (dsDataSourceParamsVO.getPagination().getPage() - 1)
-                                    * dsDataSourceParamsVO.getPagination().getSize())
-                    .limit(dsDataSourceParamsVO.getPagination().getSize())
-                    .fetch();
+        jpaQueryFactory
+            .select(qDsDatasource)
+            .from(qDsDatasource)
+            .where(booleanBuilder)
+            .orderBy(qDsDatasource.id.asc())
+            .offset(
+                (dsDataSourceParamsVO.getPagination().getPage() - 1)
+                    * dsDataSourceParamsVO.getPagination().getSize())
+            .limit(dsDataSourceParamsVO.getPagination().getSize())
+            .fetch();
     result.put("list", dsdBasicInfoList);
     result.put("total", count);
     return result;
@@ -297,9 +297,9 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
    * @param dsDataSourceParamsVO
    */
   private void checkCondition(
-          BooleanBuilder booleanBuilder,
-          QDsDatasource qDsDatasource,
-          DsDataSourceParamsVO dsDataSourceParamsVO) {
+      BooleanBuilder booleanBuilder,
+      QDsDatasource qDsDatasource,
+      DsDataSourceParamsVO dsDataSourceParamsVO) {
     if (!StringUtils.isEmpty(dsDataSourceParamsVO.getDicId())) {
       Set<String> dsDicIdSet = new HashSet<>();
       dsDicIdSet.add(dsDataSourceParamsVO.getDicId());
@@ -308,18 +308,18 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     }
     if (!StringUtils.isEmpty(dsDataSourceParamsVO.getDataSourceName())) {
       booleanBuilder.and(
-              qDsDatasource.dataSourceName.contains(dsDataSourceParamsVO.getDataSourceName()));
+          qDsDatasource.dataSourceName.contains(dsDataSourceParamsVO.getDataSourceName()));
     }
     if (!StringUtils.isEmpty(dsDataSourceParamsVO.getLinkType())) {
       booleanBuilder.and(qDsDatasource.linkType.contains(dsDataSourceParamsVO.getLinkType()));
     }
     if (!StringUtils.isEmpty(dsDataSourceParamsVO.getBeginDay())
-            && !StringUtils.isEmpty(dsDataSourceParamsVO.getEndDay())) {
+        && !StringUtils.isEmpty(dsDataSourceParamsVO.getEndDay())) {
       StringTemplate dateExpr =
-              Expressions.stringTemplate(
-                      "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDsDatasource.gmtModified);
+          Expressions.stringTemplate(
+              "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDsDatasource.gmtModified);
       booleanBuilder.and(
-              dateExpr.between(dsDataSourceParamsVO.getBeginDay(), dsDataSourceParamsVO.getEndDay()));
+          dateExpr.between(dsDataSourceParamsVO.getBeginDay(), dsDataSourceParamsVO.getEndDay()));
     }
   }
 }

@@ -3,14 +3,13 @@ package com.qk.dm.datasource.vo;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.NotBlank;
-import java.util.Date;
 
 /**
  * @author zys
@@ -26,21 +25,15 @@ public class DsDirVO {
   /** 主键ID */
   private Integer id;
 
-  /**
-   * 目录名称
-   */
+  /** 目录名称 */
   @NotBlank(message = "目录名称")
   private String dicName;
 
-  /**
-   * 父级id
-   */
+  /** 父级id */
   @NotBlank(message = "父级id(一级目录是0，二级目录是上级的id)")
   private Integer parentId;
 
-  /**
-   * 目录层级编码
-   */
+  /** 目录层级编码 */
   @NotBlank(message = "目录层级编码")
   /** 目录编码 */
   private String dsDirCode;

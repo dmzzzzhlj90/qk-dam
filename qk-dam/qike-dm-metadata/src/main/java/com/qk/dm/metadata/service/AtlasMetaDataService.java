@@ -64,6 +64,7 @@ public interface AtlasMetaDataService {
 
   /**
    * 根据guid 元数据详情
+   *
    * @param guid
    * @return
    */

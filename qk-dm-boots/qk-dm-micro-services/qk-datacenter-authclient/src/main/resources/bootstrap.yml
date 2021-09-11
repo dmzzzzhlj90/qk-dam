@@ -7,6 +7,11 @@ logging:
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
 spring:
+  session:
+    redis:
+      cleanup-cron: "0 0 /2 * * ?"
+      namespace: qkdam:session
+      flush-mode: on_save
   application:
     name: dm-authclient
   web:
@@ -22,14 +27,14 @@ spring:
     nacos:
       discovery:
         server-addr: http://172.20.0.13
-        namespace: b283864b-1e78-429e-b322-db0f5720f55c
+        namespace: b70cde8c-05da-4032-9637-59d6d640296b
       config:
         server-addr: http://172.20.0.13
-        namespace: b283864b-1e78-429e-b322-db0f5720f55c
+        namespace: b70cde8c-05da-4032-9637-59d6d640296b
         extension-configs:
-          - dataId: qkdam-oauth2-client-test.yml
+          - dataId: qkdam-oauth2-client-dev.yml
             group: DAM
             refresh: true
-          - dataId: qkdam-redis-test.yml
+          - dataId: qkdam-redis-dev.yml
             group: DAM
             refresh: true

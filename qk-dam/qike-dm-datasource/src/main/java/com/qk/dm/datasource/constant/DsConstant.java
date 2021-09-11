@@ -6,8 +6,8 @@ package com.qk.dm.datasource.constant;
  * @since 1.0.0
  */
 public class DsConstant {
-    /** 返回值数据类型区分-数据*/
-    public static final String DATASOURCE_TYPE = "datasource";
-    /** 返回值数据类型区分-文件夹*/
-    public static final String DIR_TYPE = "dir";
+  /** 返回值数据类型区分-数据 */
+  public static final String DATASOURCE_TYPE = "datasource";
+  /** 返回值数据类型区分-文件夹 */
+  public static final String DIR_TYPE = "dir";
 }

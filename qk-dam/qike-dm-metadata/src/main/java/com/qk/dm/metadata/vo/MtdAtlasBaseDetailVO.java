@@ -1,9 +1,8 @@
 package com.qk.dm.metadata.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class MtdAtlasBaseDetailVO {
 
@@ -17,7 +16,7 @@ public class MtdAtlasBaseDetailVO {
   private String qualifiedName;
   /** 描述信息 */
   private String description;
-  /**数据类型 */
+  /** 数据类型 */
   private String dataType;
   /** 标签 */
   private String labels;

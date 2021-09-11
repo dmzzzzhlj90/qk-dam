@@ -14,15 +14,14 @@ import com.qk.dm.datasource.service.DsDirectoryService;
 import com.qk.dm.datasource.vo.DsDirectoryVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 /**
  * 数据源管理应用系统录入接口实现
@@ -40,15 +39,19 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
   private JPAQueryFactory jpaQueryFactory;
 
   public DsDirectoryServiceImpl(
-          DsDirectoryRepository dsDirectoryRepository, DsDirRepository dsDirRepository, EntityManager entityManager) {
+      DsDirectoryRepository dsDirectoryRepository,
+      DsDirRepository dsDirRepository,
+      EntityManager entityManager) {
     this.dsDirectoryRepository = dsDirectoryRepository;
     this.dsDirRepository = dsDirRepository;
     this.entityManager = entityManager;
   }
+
   @PostConstruct
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
+
   @Override
   public PageResultVO<DsDirectoryVO> getSysDirectory(Pagination pagination) {
     List<DsDirectoryVO> dsDirectorielist = new ArrayList<>();
@@ -61,17 +64,9 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
                   DsDirectoryMapper.INSTANCE.useDsDirectoryVO(dsDirectory);
               dsDirectorielist.add(dsDirectoryVO);
             });
-    //获取总数量
-    long count =
-            jpaQueryFactory
-                    .select(qDsDirectory.count())
-                    .from(qDsDirectory)
-                    .fetchOne();
-    return new PageResultVO<>(
-            count,
-            pagination.getPage(),
-            pagination.getSize(),
-            dsDirectorielist);
+    // 获取总数量
+    long count = jpaQueryFactory.select(qDsDirectory.count()).from(qDsDirectory).fetchOne();
+    return new PageResultVO<>(count, pagination.getPage(), pagination.getSize(), dsDirectorielist);
   }
 
   @Override
@@ -140,16 +135,15 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
     } else {
       throw new BizException("当前要新增的应用系统,名称为:" + dsDirectory.getSysName() + " 的数据，不存在！！！");
     }
-
   }
 
   @Override
   public List<String> getSysName() {
     List<String> returnList = new ArrayList<>();
-    List<String> sysNameList  = dsDirectoryRepository.getSysName();
-    if (CollectionUtils.isNotEmpty(sysNameList)){
+    List<String> sysNameList = dsDirectoryRepository.getSysName();
+    if (CollectionUtils.isNotEmpty(sysNameList)) {
       returnList.addAll(sysNameList);
-    }else {
+    } else {
       throw new BizException("当前应用系统名称获取为空");
     }
     return returnList;

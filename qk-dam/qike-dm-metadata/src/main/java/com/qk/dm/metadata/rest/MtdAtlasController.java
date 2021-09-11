@@ -117,8 +117,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<MtdAtlasDbDetailVO>
    */
   @GetMapping("/techno/detail/{guid}")
-  public DefaultCommonResult<MtdCommonDetailVO> getDetailByGuid(
-          @PathVariable("guid") String guid) {
+  public DefaultCommonResult<MtdCommonDetailVO> getDetailByGuid(@PathVariable("guid") String guid) {
     MtdCommonDetailVO detail = atlasMetaDataService.getDetailByGuid(guid);
     return DefaultCommonResult.success(ResultCodeEnum.OK, detail);
   }

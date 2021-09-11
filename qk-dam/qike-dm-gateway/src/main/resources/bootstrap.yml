@@ -22,18 +22,18 @@ spring:
     nacos:
       discovery:
         server-addr: http://172.20.0.13
-        namespace: b283864b-1e78-429e-b322-db0f5720f55c
+        namespace: b70cde8c-05da-4032-9637-59d6d640296b
       config:
         server-addr: http://172.20.0.13
-        namespace: b283864b-1e78-429e-b322-db0f5720f55c
+        namespace: b70cde8c-05da-4032-9637-59d6d640296b
         extension-configs:
-          - dataId: qkdam-gateway-test.yml
+          - dataId: qkdam-gateway-dev.yml
             group: DAM
             refresh: true
-          - dataId: qkdam-oauth2-resource-test.yml
+          - dataId: qkdam-oauth2-resource-dev.yml
             group: DAM
             refresh: true
-          - dataId: qkdam-redis-test.yml
+          - dataId: qkdam-redis-dev.yml
             group: DAM
             refresh: true
   profiles:

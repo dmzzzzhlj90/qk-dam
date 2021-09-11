@@ -10,7 +10,6 @@ import com.qk.dam.datasource.entity.OracleInfo;
 import com.qk.dam.datasource.entity.PostgresqlInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -64,7 +63,7 @@ public class DsDataSouurceConnectUtil {
     ObjectMapper objectMapper = new ObjectMapper();
     PostgresqlInfo postgetsqlInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), PostgresqlInfo.class);
-    String driver =getParamsByType(postgetsqlInfo.getType()); // 获取postgetsql数据驱动类
+    String driver = getParamsByType(postgetsqlInfo.getType()); // 获取postgetsql数据驱动类
     String url =
         "jdbc:postgresql://"
             + postgetsqlInfo.getServer()
@@ -132,7 +131,7 @@ public class DsDataSouurceConnectUtil {
     ObjectMapper objectMapper = new ObjectMapper();
     OracleInfo oracleInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), OracleInfo.class);
-    String driver = getParamsByType(oracleInfo.getType());// 获取oracle数据驱动类 // 获取oracle数据驱动类
+    String driver = getParamsByType(oracleInfo.getType()); // 获取oracle数据驱动类 // 获取oracle数据驱动类
     String url =
         "jdbc:oracle:thin:"
             + oracleInfo.getServer()
@@ -157,7 +156,7 @@ public class DsDataSouurceConnectUtil {
     ObjectMapper objectMapper = new ObjectMapper();
     MysqlInfo mysqlInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), MysqlInfo.class);
-    String driver = getParamsByType(mysqlInfo.getType());// 获取oracle数据驱动类
+    String driver = getParamsByType(mysqlInfo.getType()); // 获取oracle数据驱动类
     String url =
         "jdbc:mysql://" + mysqlInfo.getServer() + ":" + mysqlInfo.getPort(); // 127.0.0.1是本机地址，
     String user = mysqlInfo.getUserName();
@@ -185,14 +184,11 @@ public class DsDataSouurceConnectUtil {
     String driverInfo = null;
     if (type.equals("db-mysql")) {
       driverInfo = "com.mysql.cj.jdbc.Driver";
-    }
-    else if (type.equals("db-oracle")) {
+    } else if (type.equals("db-oracle")) {
       driverInfo = "oracle.jdbc.driver.OracleDriver";
-    }
-    else if (type.equals("db-hive")) {
+    } else if (type.equals("db-hive")) {
       driverInfo = "org.apache.hive.jdbc.HiveDriver";
-    }
-    else if (type.equals("db-postgresql")) {
+    } else if (type.equals("db-postgresql")) {
       driverInfo = "org.postgresql.Driver";
     } else {
       throw new BizException("没有匹配的数据源参数类型");
@@ -202,7 +198,7 @@ public class DsDataSouurceConnectUtil {
 
   public static String addDriverinfo(Object baseDataSourceTypeInfo, String type) {
     ObjectMapper objectMapper = new ObjectMapper();
-    if (StringUtils.isNotBlank(type)){
+    if (StringUtils.isNotBlank(type)) {
       if (type.equals("db-mysql")) {
         MysqlInfo mysqlInfo = objectMapper.convertValue(baseDataSourceTypeInfo, MysqlInfo.class);
         mysqlInfo.setDriverInfo("com.mysql.cj.jdbc.Driver");
@@ -219,7 +215,8 @@ public class DsDataSouurceConnectUtil {
         type = GsonUtil.toJsonString(hiveInfo);
       }
       if (type.equals("db-postgresql")) {
-        PostgresqlInfo postgresqlInfo= objectMapper.convertValue(baseDataSourceTypeInfo, PostgresqlInfo.class);
+        PostgresqlInfo postgresqlInfo =
+            objectMapper.convertValue(baseDataSourceTypeInfo, PostgresqlInfo.class);
         postgresqlInfo.setDriverInfo("org.postgresql.Driver");
         type = GsonUtil.toJsonString(postgresqlInfo);
       }

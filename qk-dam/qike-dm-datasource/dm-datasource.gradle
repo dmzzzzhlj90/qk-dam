@@ -25,10 +25,8 @@ compileJava {
 
 dependencies {
     implementation project(":qk-data-jpa")
-   //implementation project(":qk-data-redis")
     implementation project(":dam-mvc-validation")
     implementation project(":commons-core")
-    //implementation project(":dam-log")
     implementation project(":datasource-common-core")
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'

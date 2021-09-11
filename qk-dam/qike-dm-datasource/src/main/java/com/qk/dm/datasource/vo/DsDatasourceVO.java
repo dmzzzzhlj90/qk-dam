@@ -1,14 +1,13 @@
 package com.qk.dm.datasource.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.NotBlank;
-import java.util.Date;
 
 /**
  * @author zys
@@ -27,14 +26,14 @@ public class DsDatasourceVO {
   @NotBlank(message = "连接名称不为空")
   private String dataSourceName;
 
-  /** 所属系统（返回值显示）*/
+  /** 所属系统（返回值显示） */
   private String homeSystem;
 
   /** 数据源连接信息（返回值显示） */
   @NotBlank(message = "数据源连接值")
   private Object connectBasicInfo;
 
-  /** 连接方式 （返回值显示）*/
+  /** 连接方式 （返回值显示） */
   @NotBlank(message = "连接方式")
   private String linkType;
 
@@ -53,7 +52,7 @@ public class DsDatasourceVO {
   /** 状态设置状态值 */
   private Integer status;
 
-  /** 修改时间 （返回值显示）*/
+  /** 修改时间 （返回值显示） */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtModified;

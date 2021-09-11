@@ -1,15 +1,11 @@
 package com.qk.dm.metadata.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import lombok.Builder;
-import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Builder
-public class MtdDbDetailVO extends MtdAtlasBaseDetailVO{
+public class MtdDbDetailVO extends MtdAtlasBaseDetailVO {
   /** 参考实体 */
   private List<Map<String, Object>> tables;
 
