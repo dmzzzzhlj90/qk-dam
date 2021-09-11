@@ -15,8 +15,8 @@ import com.qk.dm.datastandards.repositories.DsdCodeInfoRepository;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
-import com.qk.dm.datastandards.vo.DsdBasicinfoParamsVO;
-import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoParamsVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
@@ -61,8 +61,8 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
   }
 
   @Override
-  public PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(DsdBasicinfoParamsVO basicInfoParamsVO) {
-    List<DsdBasicinfoVO> dsdBasicinfoVOList = new ArrayList<DsdBasicinfoVO>();
+  public PageResultVO<DsdBasicInfoVO> getDsdBasicInfo(DsdBasicInfoParamsVO basicInfoParamsVO) {
+    List<DsdBasicInfoVO> dsdBasicinfoVOList = new ArrayList<DsdBasicInfoVO>();
     Map<String, Object> map = null;
     try {
       map = queryDsdBasicinfoByParams(basicInfoParamsVO);
@@ -75,7 +75,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
 
     list.forEach(
         dsd -> {
-          DsdBasicinfoVO dsdBasicinfoVO = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsd);
+          DsdBasicInfoVO dsdBasicinfoVO = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsd);
           String dsdLevel = dsdBasicinfoVO.getDsdLevel();
           dsdBasicinfoVO.setDsdLevelName(dsdLevel.split("/")[dsdLevel.split("/").length - 1]);
           dsdBasicinfoVOList.add(dsdBasicinfoVO);
@@ -88,7 +88,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
   }
 
   @Override
-  public void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO) {
+  public void addDsdBasicinfo(DsdBasicInfoVO dsdBasicinfoVO) {
     DsdBasicinfo dsdBasicinfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicinfoVO);
     dsdBasicinfo.setGmtCreate(new Date());
     dsdBasicinfo.setGmtModified(new Date());
@@ -107,7 +107,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
   }
 
   @Override
-  public void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO) {
+  public void updateDsdBasicinfo(DsdBasicInfoVO dsdBasicinfoVO) {
     DsdBasicinfo dsdBasicinfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicinfoVO);
     dsdBasicinfo.setGmtModified(new Date());
     Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdCode.eq(dsdBasicinfo.getDsdCode());
@@ -156,7 +156,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     return new ArrayList<>();
   }
 
-  public Map<String, Object> queryDsdBasicinfoByParams(DsdBasicinfoParamsVO basicInfoParamsVO)
+  public Map<String, Object> queryDsdBasicinfoByParams(DsdBasicInfoParamsVO basicInfoParamsVO)
       throws ParseException {
     QDsdBasicinfo qDsdBasicinfo = QDsdBasicinfo.dsdBasicinfo;
     Map<String, Object> result = new HashMap<>();
@@ -187,7 +187,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
   public void checkCondition(
       BooleanBuilder booleanBuilder,
       QDsdBasicinfo qDsdBasicinfo,
-      DsdBasicinfoParamsVO basicInfoParamsVO) {
+      DsdBasicInfoParamsVO basicInfoParamsVO) {
     if (!StringUtils.isEmpty(basicInfoParamsVO.getDsdLevelId())) {
       Set<String> dsdLevelIdSet = new HashSet<>();
       dataStandardDirService.getDsdId(dsdLevelIdSet, basicInfoParamsVO.getDsdLevelId());

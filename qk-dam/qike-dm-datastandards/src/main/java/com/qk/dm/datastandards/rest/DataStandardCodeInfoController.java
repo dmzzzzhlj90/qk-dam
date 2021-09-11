@@ -200,8 +200,7 @@ public class DataStandardCodeInfoController {
    * @return DefaultCommonResult
    */
   @PostMapping("/reverse/db")
-  public DefaultCommonResult dsdCodeInfoReverseDB(
-      @RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
+  public DefaultCommonResult dsdCodeInfoReverseDB(@RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
     dataStandardCodeInfoService.dsdCodeInfoReverseDB(dsdCodeInfoReverseDBVO);
     return DefaultCommonResult.success();
   }

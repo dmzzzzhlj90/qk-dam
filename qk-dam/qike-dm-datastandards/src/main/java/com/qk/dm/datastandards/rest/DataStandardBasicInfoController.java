@@ -5,8 +5,9 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datastandards.service.DataStandardBasicInfoService;
 import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
-import com.qk.dm.datastandards.vo.DsdBasicinfoParamsVO;
-import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoParamsVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoVO;
+
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class DataStandardBasicInfoController {
    * @return DefaultCommonResult<PageResultVO<DsdBasicinfoVO>>
    */
   @PostMapping(value = "/query")
-  public DefaultCommonResult<PageResultVO<DsdBasicinfoVO>> getDsdBasicInfoByDsdLevelId(
-      @RequestBody DsdBasicinfoParamsVO basicInfoParamsVO) {
+  public DefaultCommonResult<PageResultVO<DsdBasicInfoVO>> getDsdBasicInfoByDsdLevelId(
+      @RequestBody DsdBasicInfoParamsVO basicInfoParamsVO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dataStandardBasicInfoService.getDsdBasicInfo(basicInfoParamsVO));
   }
@@ -53,7 +54,7 @@ public class DataStandardBasicInfoController {
    */
   @PostMapping("/add")
   public DefaultCommonResult addDsdBasicInfo(
-      @RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
+      @RequestBody @Validated DsdBasicInfoVO dsdBasicinfoVO) {
     dataStandardBasicInfoService.addDsdBasicinfo(dsdBasicinfoVO);
     return DefaultCommonResult.success();
   }
@@ -66,7 +67,7 @@ public class DataStandardBasicInfoController {
    */
   @PutMapping("/update")
   public DefaultCommonResult updateDsdBasicinfo(
-      @RequestBody @Validated DsdBasicinfoVO dsdBasicinfoVO) {
+      @RequestBody @Validated DsdBasicInfoVO dsdBasicinfoVO) {
     dataStandardBasicInfoService.updateDsdBasicinfo(dsdBasicinfoVO);
     return DefaultCommonResult.success();
   }

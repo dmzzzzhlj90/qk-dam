@@ -113,7 +113,7 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
   public static List<DataStandardCodeTreeVO> buildByRecursive(
       List<DataStandardCodeTreeVO> respList) {
     DataStandardCodeTreeVO topParent =
-        DataStandardCodeTreeVO.builder().codeDirId("-1").codeDirName("全部码表").build();
+        DataStandardCodeTreeVO.builder().id(-1).codeDirId("-1").codeDirName("全部码表").build();
     List<DataStandardCodeTreeVO> trees = new ArrayList<>();
     trees.add(findChildren(topParent, respList));
     return trees;

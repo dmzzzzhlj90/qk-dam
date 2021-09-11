@@ -1,7 +1,7 @@
 package com.qk.dm.datastandards.mapstruct.mapper;
 
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
-import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -16,7 +16,7 @@ import org.mapstruct.factory.Mappers;
 public interface DsdBasicInfoMapper {
   DsdBasicInfoMapper INSTANCE = Mappers.getMapper(DsdBasicInfoMapper.class);
 
-  DsdBasicinfoVO useDsdBasicInfoVO(DsdBasicinfo dsdBasicinfo);
+  DsdBasicInfoVO useDsdBasicInfoVO(DsdBasicinfo dsdBasicinfo);
 
-  DsdBasicinfo useDsdBasicInfo(DsdBasicinfoVO dsdBasicinfoVO);
+  DsdBasicinfo useDsdBasicInfo(DsdBasicInfoVO dsdBasicinfoVO);
 }

@@ -2,8 +2,9 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
-import com.qk.dm.datastandards.vo.DsdBasicinfoParamsVO;
-import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoParamsVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoVO;
+
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataStandardBasicInfoService {
 
-  PageResultVO<DsdBasicinfoVO> getDsdBasicInfo(DsdBasicinfoParamsVO basicInfoParamsVO);
+  PageResultVO<DsdBasicInfoVO> getDsdBasicInfo(DsdBasicInfoParamsVO basicInfoParamsVO);
 
-  void addDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
+  void addDsdBasicinfo(DsdBasicInfoVO dsdBasicinfoVO);
 
-  void updateDsdBasicinfo(DsdBasicinfoVO dsdBasicinfoVO);
+  void updateDsdBasicinfo(DsdBasicInfoVO dsdBasicinfoVO);
 
   void deleteDsdBasicinfo(Integer id);
 

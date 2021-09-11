@@ -1,5 +1,7 @@
 package com.qk.dm.datastandards.service.impl;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -39,6 +41,8 @@ import java.util.*;
  */
 @Service
 public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoService {
+    private static final Log LOG = LogFactory.get("码表信息操作");
+
     private final QDsdCodeInfo qDsdCodeInfo = QDsdCodeInfo.dsdCodeInfo;
     private final QDsdCodeInfoExt qDsdCodeInfoExt = QDsdCodeInfoExt.dsdCodeInfoExt;
 
@@ -327,7 +331,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
             booleanBuilder.and(qDsdCodeInfoExt.searchCode.contains(dsdCodeInfoExtParamsVO.getSearchCode()));
         }
         if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getSearchValue())) {
-            booleanBuilder.and(qDsdCodeInfoExt.searchValue.eq(dsdCodeInfoExtParamsVO.getSearchValue()));
+            booleanBuilder.and(qDsdCodeInfoExt.searchValue.contains(dsdCodeInfoExtParamsVO.getSearchValue()));
         }
         if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getBeginDay()) && !StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getEndDay())) {
             StringTemplate dateExpr = Expressions.stringTemplate("DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDsdCodeInfoExt.gmtModified);
@@ -406,13 +410,17 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
     @Override
     public void dsdCodeInfoReverseDB(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
-        // 1.数据源====>DB级别元数据信息
-        MysqlDb mysqlDb =
-                DataSourceExtractor.mysqlMetaData(dsdCodeInfoReverseDBVO.getDataSourceJobVO());
+        LOG.info("=======开启,码表数据逆向数据库功能!======");
+        // 1.获取码表元数据信息,数据源====>DB级别元数据信息
+        MysqlDb mysqlDb = DataSourceExtractor.mysqlMetaData(dsdCodeInfoReverseDBVO.getDataSourceJobVO());
+        LOG.info("1.获取码表元数据信息,数据源====>DB级别元数据信息成功! db: 【{}】; table个数: 【{}】", mysqlDb.getName(), mysqlDb.getMysqlTables().size());
         // 2.元数据====>生成码表基本信息
         dsdCodeInfoReverseBatchService.reverseCreateCodeInfo(dsdCodeInfoReverseDBVO, mysqlDb);
+        LOG.info("2.元数据====>生成码表基本信息成功");
         // 3.字典数据====>获取并存储码表码值信息
         dsdCodeInfoReverseBatchService.reverseCreateCodeValues(dsdCodeInfoReverseDBVO, mysqlDb);
+        LOG.info("3.码表数据====>获取并存储码表码值信息成功!");
+        LOG.info("=======结束,码表数据逆向数据库功能!======");
     }
 
     private void setTableConfValuesJson(DsdCodeInfoExt dsdCodeInfoExt, DsdCodeInfoExtVO dsdCodeInfoExtVO) {

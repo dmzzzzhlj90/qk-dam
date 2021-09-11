@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @ContentRowHeight(20)
 @HeadRowHeight(20)
 @ColumnWidth(25)
-public class DsdBasicinfoVO {
+public class DsdBasicInfoVO {
 
   /** ID编号 */
   @ExcelProperty("ID编号")
