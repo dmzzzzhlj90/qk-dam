@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.easyexcel.handler.DsdBasicInfoCustomSheetWriteHandler;
 import com.qk.dm.datastandards.easyexcel.handler.DsdCodeInfoCustomSheetWriteHandler;
 import com.qk.dm.datastandards.easyexcel.listener.DsdBasicInfoUploadDataListener;
@@ -24,7 +25,7 @@ import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.service.DsdExcelService;
 import com.qk.dm.datastandards.vo.CodeTableFieldsVO;
-import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoVO;
 import com.qk.dm.datastandards.vo.DsdCodeInfoVO;
 import com.querydsl.core.types.Predicate;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
@@ -85,7 +86,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         try {
             EasyExcel.read(
                     file.getInputStream(),
-                    DsdBasicinfoVO.class,
+                    DsdBasicInfoVO.class,
                     new DsdBasicInfoUploadDataListener(dsdExcelBatchService, dirDsdId))
                     .sheet()
                     .doRead();
@@ -98,7 +99,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
 
     @Override
     public void basicInfoDownloadAll(HttpServletResponse response) throws IOException {
-        List<DsdBasicinfoVO> dsdBasicInfoVOList = queryBasicInfos(null);
+        List<DsdBasicInfoVO> dsdBasicInfoVOList = queryBasicInfos(null);
         // 获取数据标准目录
         Map<Integer, String[]> spinnerMap = getBasicInfoSpinnerMap();
 
@@ -106,7 +107,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class)
+        EasyExcel.write(response.getOutputStream(), DsdBasicInfoVO.class)
                 .sheet("模板")
                 .registerWriteHandler(new DsdBasicInfoCustomSheetWriteHandler(spinnerMap, dsdBasicInfoVOList.size()))
                 .doWrite(dsdBasicInfoVOList);
@@ -114,14 +115,14 @@ public class DsdExcelServiceImpl implements DsdExcelService {
 
     @Override
     public void basicInfoDownloadByDirDsdId(String dirDsdId, HttpServletResponse response) throws IOException {
-        List<DsdBasicinfoVO> dsdBasicInfoVOList = queryBasicInfos(dirDsdId);
+        List<DsdBasicInfoVO> dsdBasicInfoVOList = queryBasicInfos(dirDsdId);
         Map<Integer, String[]> spinnerMap = getBasicInfoSpinnerMap();
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class)
+        EasyExcel.write(response.getOutputStream(), DsdBasicInfoVO.class)
                 .sheet("模板")
                 .registerWriteHandler(new DsdBasicInfoCustomSheetWriteHandler(spinnerMap, dsdBasicInfoVOList.size()))
                 .doWrite(dsdBasicInfoVOList);
@@ -129,7 +130,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
 
     @Override
     public void basicInfoDownloadTemplate(HttpServletResponse response) throws IOException {
-        List<DsdBasicinfoVO> dsdBasicInfoSampleDataList = dsdBasicInfoSampleData();
+        List<DsdBasicInfoVO> dsdBasicInfoSampleDataList = dsdBasicInfoSampleData();
         // 获取数据标准目录下拉列表
         Map<Integer, String[]> spinnerMap = getBasicInfoSpinnerMap();
 
@@ -137,15 +138,15 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("数据标准基本信息", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-        EasyExcel.write(response.getOutputStream(), DsdBasicinfoVO.class)
+        EasyExcel.write(response.getOutputStream(), DsdBasicInfoVO.class)
                 .registerWriteHandler(new DsdBasicInfoCustomSheetWriteHandler(spinnerMap, dsdBasicInfoSampleDataList.size()))
                 .sheet("数据标准信息导入模板")
                 .doWrite(dsdBasicInfoSampleDataList);
     }
 
 
-    public List<DsdBasicinfoVO> queryBasicInfos(String dirDsdId) {
-        List<DsdBasicinfoVO> dsdBasicInfoVOList = new ArrayList<>();
+    public List<DsdBasicInfoVO> queryBasicInfos(String dirDsdId) {
+        List<DsdBasicInfoVO> dsdBasicInfoVOList = new ArrayList<>();
         if (!StringUtils.isEmpty(dirDsdId)) {
             Set<String> dsdDirSet = new HashSet<>();
             dataStandardDirService.getDsdId(dsdDirSet, dirDsdId);
@@ -153,7 +154,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             Iterable<DsdBasicinfo> dsdTermList = dsdBasicinfoRepository.findAll(predicate);
             dsdTermList.forEach(
                     dsdBasicInfo -> {
-                        DsdBasicinfoVO dsdBasicinfoVO =
+                        DsdBasicInfoVO dsdBasicinfoVO =
                                 DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsdBasicInfo);
                         dsdBasicInfoVOList.add(dsdBasicinfoVO);
                     });
@@ -161,7 +162,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             List<DsdBasicinfo> dsdTermList = dsdBasicinfoRepository.findAll();
             dsdTermList.forEach(
                     dsdBasicInfo -> {
-                        DsdBasicinfoVO dsdBasicinfoVO =
+                        DsdBasicInfoVO dsdBasicinfoVO =
                                 DsdBasicInfoMapper.INSTANCE.useDsdBasicInfoVO(dsdBasicInfo);
                         dsdBasicInfoVOList.add(dsdBasicinfoVO);
                     });
@@ -188,6 +189,7 @@ public class DsdExcelServiceImpl implements DsdExcelService {
             e.printStackTrace();
             throw new BizException("导入失败: " + e.getMessage());
         }
+        LOG.info("======成功导入数据标准!======");
     }
 
     @Override
@@ -317,13 +319,14 @@ public class DsdExcelServiceImpl implements DsdExcelService {
                     }.getType());
             //表头信息
             List<Map<Integer, String>> headList = checkCodeInfoHeadList(readListener, codeTableFieldsVOList);
-            //数据体信息
+            //数据列表信息
             List<Map<Integer, String>> dataList = checkCodeInfoDataList(readListener);
 
             Map<String, String> fieldMap =
                     codeTableFieldsVOList.stream().collect(Collectors.toMap(CodeTableFieldsVO::getName_ch, CodeTableFieldsVO::getCode_table_id));
             Map<Integer, String> excelHeadIdxNameMap = headList.get(headList.size() - 1);
             List<DsdCodeInfoExt> saveDataList = Lists.newArrayList();
+            //封装码值
             getCodeValues(dsdCodeInfoId, dataList, fieldMap, excelHeadIdxNameMap, saveDataList);
 
             dsdExcelBatchService.addDsdCodeValuesBatch(saveDataList, dsdCodeInfoId);
@@ -431,41 +434,41 @@ public class DsdExcelServiceImpl implements DsdExcelService {
         return spinnerMap;
     }
 
-    private void getCodeValues(
-            long dsdCodeInfoId,
-            List<Map<Integer, String>> dataList,
-            Map<String, String> fieldMap,
-            Map<Integer, String> excelHeadIdxNameMap,
-            List<DsdCodeInfoExt> saveDataList) {
+    private void getCodeValues(long dsdCodeInfoId,
+                               List<Map<Integer, String>> dataList,
+                               Map<String, String> fieldMap,
+                               Map<Integer, String> excelHeadIdxNameMap,
+                               List<DsdCodeInfoExt> saveDataList) {
         for (Map<Integer, String> dataRow : dataList) {
             DsdCodeInfoExt dsdCodeInfoExt = new DsdCodeInfoExt();
             dsdCodeInfoExt.setDsdCodeInfoId(dsdCodeInfoId);
             dsdCodeInfoExt.setGmtCreate(new Date());
             dsdCodeInfoExt.setGmtModified(new Date());
+            dsdCodeInfoExt.setGmtModified(new Date());
+            dsdCodeInfoExt.setDelFlag(0);
+            //设置rowExtData
             Map<String, String> rowExtData = new LinkedHashMap<>();
-            excelHeadIdxNameMap
-                    .entrySet()
-                    .forEach(
-                            columnHead -> {
-                                String value = dataRow.get(columnHead.getKey());
-                                // TODO 20210809,为了作为检索的参数,暂时注释掉,前端不然显示有bug;
-                                //                if
-                                // (columnHead.getValue().equals(DsdConstant.CODE_INFO_CODE_CH_NAME)
-                                //
-                                // ||columnHead.getValue().equalsIgnoreCase(DsdConstant.CODE_INFO_CODE_EN_NAME)) {
-                                //                  dsdCodeInfoExt.setTableConfCode(value);
-                                //                } else if
-                                // (columnHead.getValue().equals(DsdConstant.CODE_INFO_NAME_CH_NAME)
-                                //
-                                // ||columnHead.getValue().equalsIgnoreCase(DsdConstant.CODE_INFO_NAME_EN_NAME)) {
-                                //                  dsdCodeInfoExt.setTableConfValue(value);
-                                //                } else {
-                                rowExtData.put(fieldMap.get(columnHead.getValue()), value);
-                                //                }
-                            });
+            setRowExtData(fieldMap, excelHeadIdxNameMap, dataRow, dsdCodeInfoExt, rowExtData);
             dsdCodeInfoExt.setTableConfExtValues(GsonUtil.toJsonString(rowExtData));
             saveDataList.add(dsdCodeInfoExt);
         }
+    }
+
+    private void setRowExtData(Map<String, String> fieldMap, Map<Integer, String> excelHeadIdxNameMap, Map<Integer, String> dataRow, DsdCodeInfoExt dsdCodeInfoExt, Map<String, String> rowExtData) {
+        excelHeadIdxNameMap.entrySet()
+                .forEach(
+                        columnHead -> {
+                            String value = dataRow.get(columnHead.getKey());
+                            rowExtData.put(fieldMap.get(columnHead.getValue()), value);
+                            // TODO 为了作为检索的参数目前支持code||name, 20210910
+                            if (columnHead.getValue().equals(DsdConstant.CODE_INFO_CODE_CH_NAME)
+                                    || columnHead.getValue().equalsIgnoreCase(DsdConstant.CODE_INFO_CODE_EN_NAME)) {
+                                dsdCodeInfoExt.setSearchCode(value);
+                            } else if (columnHead.getValue().equals(DsdConstant.CODE_INFO_NAME_CH_NAME)
+                                    || columnHead.getValue().equalsIgnoreCase(DsdConstant.CODE_INFO_NAME_EN_NAME)) {
+                                dsdCodeInfoExt.setSearchValue(value);
+                            }
+                        });
     }
 
     private List<Map<Integer, String>> checkCodeInfoDataList(
@@ -490,11 +493,11 @@ public class DsdExcelServiceImpl implements DsdExcelService {
     }
 
     //  ================================SampleData===============================================
-    public List<DsdBasicinfoVO> dsdBasicInfoSampleData() {
-        List<DsdBasicinfoVO> list = new ArrayList<>();
+    public List<DsdBasicInfoVO> dsdBasicInfoSampleData() {
+        List<DsdBasicInfoVO> list = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            DsdBasicinfoVO dsdBasicinfoVO =
-                    DsdBasicinfoVO.builder()
+            DsdBasicInfoVO dsdBasicinfoVO =
+                    DsdBasicInfoVO.builder()
                             .dsdName("数据标准名称" + i)
                             .dsdCode("数据标准代码" + i)
                             .colName("column" + i)

@@ -123,8 +123,7 @@ public class DataStandardCodeInfoController {
    * @return DefaultCommonResult<Map < String, Object>>
    */
   @PostMapping(value = "/ext/query")
-  public DefaultCommonResult<Map<String, Object>> getDsdCodeInfoExt(
-      @RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
+  public DefaultCommonResult<Map<String, Object>> getDsdCodeInfoExt(@RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoExt(dsdCodeInfoExtParamsVO));
   }
@@ -200,8 +199,7 @@ public class DataStandardCodeInfoController {
    * @return DefaultCommonResult
    */
   @PostMapping("/reverse/db")
-  public DefaultCommonResult dsdCodeInfoReverseDB(
-      @RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
+  public DefaultCommonResult dsdCodeInfoReverseDB(@RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
     dataStandardCodeInfoService.dsdCodeInfoReverseDB(dsdCodeInfoReverseDBVO);
     return DefaultCommonResult.success();
   }

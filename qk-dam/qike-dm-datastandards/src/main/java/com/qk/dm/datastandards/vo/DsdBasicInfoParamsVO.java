@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DsdBasicinfoParamsVO {
+public class DsdBasicInfoParamsVO {
 
   private Pagination pagination;
 

@@ -8,7 +8,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdBasicInfoMapper;
 import com.qk.dm.datastandards.service.impl.DsdExcelBatchService;
-import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
+import com.qk.dm.datastandards.vo.DsdBasicInfoVO;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -20,8 +20,8 @@ import java.util.*;
  * @date 2021/6/7
  * @since 1.0.0
  */
-public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBasicinfoVO> {
-    private static final Log LOG = LogFactory.get("DsdBasicInfoUploadDataListener.saveData()");
+public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBasicInfoVO> {
+    private static final Log LOG = LogFactory.get("dsdBasicInfoUploadDataListener.saveData()");
     private final DsdExcelBatchService dsdExcelBatchService;
     private final String dirDsdId;
 
@@ -30,7 +30,7 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
      */
     private static final int BATCH_COUNT = 1000;
 
-    List<DsdBasicinfoVO> list = new ArrayList<>();
+    List<DsdBasicInfoVO> list = new ArrayList<>();
 
     public DsdBasicInfoUploadDataListener(
             DsdExcelBatchService dsdExcelBatchService, String dirDsdId) {
@@ -45,7 +45,7 @@ public class DsdBasicInfoUploadDataListener extends AnalysisEventListener<DsdBas
      * @param context
      */
     @Override
-    public void invoke(DsdBasicinfoVO data, AnalysisContext context) {
+    public void invoke(DsdBasicInfoVO data, AnalysisContext context) {
         LOG.info("======开始校验excel中的标准数据!======");
         String errMsg;
         try {
