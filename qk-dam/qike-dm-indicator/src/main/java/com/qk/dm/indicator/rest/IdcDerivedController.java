@@ -2,7 +2,7 @@ package com.qk.dm.indicator.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.indicator.common.sqlbuilder.SqlBuilderUtil;
+import com.qk.dam.indicator.common.sqlbuilder.SqlBuilder;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.params.dto.IdcDerivedDTO;
 import com.qk.dm.indicator.params.dto.IdcDerivedPageDTO;
@@ -127,7 +127,7 @@ public class IdcDerivedController {
         IdcAtomVO idcAtomVO = idcAtomService.getDetailByCode(atomicCode);
         return DefaultCommonResult.success(
                 ResultCodeEnum.OK,
-                SqlBuilderUtil.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),generalLimit));
+                SqlBuilder.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),generalLimit));
     }
 
 }

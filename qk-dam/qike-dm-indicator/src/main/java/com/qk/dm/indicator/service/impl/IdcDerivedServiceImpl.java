@@ -2,7 +2,7 @@ package com.qk.dm.indicator.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.indicator.common.property.IdcState;
-import com.qk.dam.indicator.common.sqlbuilder.SqlBuilderUtil;
+import com.qk.dam.indicator.common.sqlbuilder.SqlBuilder;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.entity.IdcDerived;
 import com.qk.dm.indicator.entity.QIdcDerived;
@@ -53,7 +53,7 @@ public class IdcDerivedServiceImpl implements IdcDerivedService {
     public void insert(IdcDerivedDTO idcDerivedDTO) {
         IdcDerived idcDerived = IdcDerivedMapper.INSTANCE.useIdcDerived(idcDerivedDTO);
         IdcAtomVO idcAtomVO = idcAtomService.getDetailByCode(idcDerived.getAtomIndicatorCode());
-        String sql = SqlBuilderUtil.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),
+        String sql = SqlBuilder.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),
                 idcDerived.getGeneralLimit());
         idcDerived.setSqlSentence(sql);
         idcDerivedRepository.save(idcDerived);
@@ -68,7 +68,7 @@ public class IdcDerivedServiceImpl implements IdcDerivedService {
         IdcDerivedMapper.INSTANCE.useIdcDerived(idcDerivedDTO,idcDerived);
 
         IdcAtomVO idcAtomVO = idcAtomService.getDetailByCode(idcDerived.getAtomIndicatorCode());
-        String sql = SqlBuilderUtil.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),
+        String sql = SqlBuilder.derived(idcAtomVO.getExpression(),idcAtomVO.getDataSheet(),
                 idcDerived.getGeneralLimit());
         idcDerived.setSqlSentence(sql);
         idcDerivedRepository.saveAndFlush(idcDerived);

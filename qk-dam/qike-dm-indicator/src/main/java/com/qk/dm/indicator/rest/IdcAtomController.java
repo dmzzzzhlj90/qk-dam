@@ -2,7 +2,7 @@ package com.qk.dm.indicator.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.indicator.common.sqlbuilder.SqlBuilderUtil;
+import com.qk.dam.indicator.common.sqlbuilder.SqlBuilder;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.params.dto.IdcAtomDTO;
 import com.qk.dm.indicator.params.dto.IdcAtomPageDTO;
@@ -135,6 +135,6 @@ public class IdcAtomController {
   @GetMapping("/preview")
   public DefaultCommonResult<String> sqlPreview(String dataSheet,String expression){
     return  DefaultCommonResult.success(
-            ResultCodeEnum.OK,SqlBuilderUtil.atomicSql(expression,dataSheet));
+            ResultCodeEnum.OK, SqlBuilder.atomicSql(expression,dataSheet));
   }
 }

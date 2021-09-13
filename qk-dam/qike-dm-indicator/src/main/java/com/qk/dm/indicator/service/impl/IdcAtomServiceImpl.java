@@ -2,7 +2,7 @@ package com.qk.dm.indicator.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.indicator.common.property.IdcState;
-import com.qk.dam.indicator.common.sqlbuilder.SqlBuilderUtil;
+import com.qk.dam.indicator.common.sqlbuilder.SqlBuilder;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.entity.IdcAtom;
 import com.qk.dm.indicator.entity.QIdcAtom;
@@ -51,7 +51,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
   @Override
   public void insert(IdcAtomDTO idcAtomDTO) {
     IdcAtom idcAtom = IdcAtomMapper.INSTANCE.useIdcAtom(idcAtomDTO);
-    idcAtom.setSqlSentence(SqlBuilderUtil.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
+    idcAtom.setSqlSentence(SqlBuilder.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
     idcAtomRepository.save(idcAtom);
   }
 
@@ -62,7 +62,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
       throw new BizException("当前要修改的原子指标id为：" + id + " 的数据不存在！！！");
     }
     IdcAtomMapper.INSTANCE.useIdcAtom(idcAtomDTO, idcAtom);
-    idcAtom.setSqlSentence(SqlBuilderUtil.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
+    idcAtom.setSqlSentence(SqlBuilder.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
     idcAtomRepository.saveAndFlush(idcAtom);
   }
 
