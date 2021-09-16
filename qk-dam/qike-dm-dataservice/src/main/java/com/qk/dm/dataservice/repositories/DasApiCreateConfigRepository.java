@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface DasApiCreateConfigRepository extends BaseRepository<DasApiCreateConfig, Long> {
 
-    @Modifying
-    @Query(" DELETE from DasApiCreateConfig where apiId = :apiId ")
-    void deleteByApiId(@Param("apiId") String apiId);
+  @Modifying
+  @Query(" DELETE from DasApiCreateConfig where apiId = :apiId ")
+  void deleteByApiId(@Param("apiId") String apiId);
 }

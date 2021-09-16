@@ -7,16 +7,14 @@ package com.qk.dam.metedata.property;
  */
 public class AtlasSearchProperty {
 
-    public static class AttributeName {
-        public static final String TYPENAME = "__typeName";
-        public static final String NAME = "name";
-        public static final String LABELS = "__labels";
+  public static class AttributeName {
+    public static final String TYPENAME = "__typeName";
+    public static final String NAME = "name";
+    public static final String LABELS = "__labels";
+  }
 
-    }
-
-    public static class Operator {
-        public static final String EQ = "eq";
-        public static final String CONTAINS = "contains";
-
-    }
+  public static class Operator {
+    public static final String EQ = "eq";
+    public static final String CONTAINS = "contains";
+  }
 }

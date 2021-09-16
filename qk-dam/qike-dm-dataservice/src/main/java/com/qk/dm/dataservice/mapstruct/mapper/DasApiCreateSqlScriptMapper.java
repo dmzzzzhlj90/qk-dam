@@ -14,9 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DasApiCreateSqlScriptMapper {
-    DasApiCreateSqlScriptMapper INSTANCE = Mappers.getMapper(DasApiCreateSqlScriptMapper.class);
+  DasApiCreateSqlScriptMapper INSTANCE = Mappers.getMapper(DasApiCreateSqlScriptMapper.class);
 
-    DasApiCreateSqlScriptVO useDasApiCreateSqlScriptVO(DasApiCreateSqlScript dasApiCreateSqlScript);
+  DasApiCreateSqlScriptVO useDasApiCreateSqlScriptVO(DasApiCreateSqlScript dasApiCreateSqlScript);
 
-    DasApiCreateSqlScript useDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
+  DasApiCreateSqlScript useDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 }

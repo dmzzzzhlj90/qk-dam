@@ -1,9 +1,8 @@
 package com.qk.dm.dataservice.service;
 
 import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * 同步数据服务API至服务网关
@@ -15,20 +14,19 @@ import java.util.List;
 @Service
 public interface DasSyncApiGatewayService {
 
-//    void syncApiSixRoutesAll();
+  //    void syncApiSixRoutesAll();
 
-    int apiSixRoutesRegisterAll(String upstreamId, String serviceId);
+  int apiSixRoutesRegisterAll(String upstreamId, String serviceId);
 
-    int apiSixRoutesRegisterByPath(String upstreamId, String serviceId, String apiPath);
+  int apiSixRoutesRegisterByPath(String upstreamId, String serviceId, String apiPath);
 
-//    void syncApiSixRoutesCreate();
+  //    void syncApiSixRoutesCreate();
 
-    void apiSixConsumersKeyAuth(ApiSixConsumerInfo apiSixConsumerInfo);
+  void apiSixConsumersKeyAuth(ApiSixConsumerInfo apiSixConsumerInfo);
 
-    List apiSixUpstreamInfo();
+  List apiSixUpstreamInfo();
 
-    List apiSixServiceInfo();
+  List apiSixServiceInfo();
 
-    void clearRouteInfo();
-
+  void clearRouteInfo();
 }

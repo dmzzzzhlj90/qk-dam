@@ -8,9 +8,9 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class ComponentField {
-    private String fieldName;
-    private String desc;
-    private String type;
-    private String defaultValue;
-    private boolean required;
+  private String fieldName;
+  private String desc;
+  private String type;
+  private String defaultValue;
+  private boolean required;
 }

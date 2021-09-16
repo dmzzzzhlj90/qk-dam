@@ -14,9 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DasApiCreateConfigMapper {
-    DasApiCreateConfigMapper INSTANCE = Mappers.getMapper(DasApiCreateConfigMapper.class);
+  DasApiCreateConfigMapper INSTANCE = Mappers.getMapper(DasApiCreateConfigMapper.class);
 
-    DasApiCreateConfigVO useDasApiCreateConfigVO(DasApiCreateConfig dasApiCreateConfig);
+  DasApiCreateConfigVO useDasApiCreateConfigVO(DasApiCreateConfig dasApiCreateConfig);
 
-    DasApiCreateConfig useDasApiCreateConfig(DasApiCreateConfigVO dasApiDataSourceConfigVO);
+  DasApiCreateConfig useDasApiCreateConfig(DasApiCreateConfigVO dasApiDataSourceConfigVO);
 }

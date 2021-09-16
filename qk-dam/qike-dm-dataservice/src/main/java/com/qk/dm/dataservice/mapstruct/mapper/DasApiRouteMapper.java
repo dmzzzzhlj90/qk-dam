@@ -14,10 +14,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DasApiRouteMapper {
-    DasApiRouteMapper INSTANCE = Mappers.getMapper(DasApiRouteMapper.class);
+  DasApiRouteMapper INSTANCE = Mappers.getMapper(DasApiRouteMapper.class);
 
-    DasApiRoute useDasApiRoute(DasApiRouteVO dasApiRouteVO);
+  DasApiRoute useDasApiRoute(DasApiRouteVO dasApiRouteVO);
 
-    DasApiRouteVO useDasApiRouteVO(DasApiRoute dasApiRoute);
-
+  DasApiRouteVO useDasApiRouteVO(DasApiRoute dasApiRoute);
 }

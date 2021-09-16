@@ -26,6 +26,7 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
     setRetMsg(retMsg);
     setData(data);
   }
+
   @JsonCreator
   public static DefaultCommonResult<Object> success() {
     return success(ResultCodeEnum.OK, null);

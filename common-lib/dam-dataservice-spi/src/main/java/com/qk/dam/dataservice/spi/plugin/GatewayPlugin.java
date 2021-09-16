@@ -19,5 +19,4 @@ public interface GatewayPlugin {
   ConsumerFactory consumerFactory(ConsumerContext consumerContext);
 
   ServerFactory serverFactory(ServerContext serverContext);
-
 }

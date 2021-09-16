@@ -13,13 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiCreateSqlScriptService {
 
-    DasApiCreateSqlScriptVO getDasApiCreateSqlScriptInfoByApiId(String apiId);
+  DasApiCreateSqlScriptVO getDasApiCreateSqlScriptInfoByApiId(String apiId);
 
-    void addDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
+  void addDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 
-    void updateDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
-
+  void updateDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 }
-
-
-

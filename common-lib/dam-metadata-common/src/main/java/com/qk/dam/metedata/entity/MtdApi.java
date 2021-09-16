@@ -1,11 +1,10 @@
 package com.qk.dam.metedata.entity;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Builder
@@ -17,5 +16,4 @@ public class MtdApi {
   private List<MtdAttributes> columns;
 
   private List<MtdTables> tables;
-
 }

@@ -30,23 +30,4 @@ spring:
           - dataId: qkdam-mysql-dev.yml
             group: DAM
             refresh: true
-management:
-  endpoints:
-    enabled-by-default: true
-    web:
-      base-path: /actuator
-      exposure:
-        include: "*"
-  endpoint:
-    info:
-      enabled: true
-    health:
-      show-details: always
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-        descriptions: true
-    tags:
-      application: ${spring.application.name}
 

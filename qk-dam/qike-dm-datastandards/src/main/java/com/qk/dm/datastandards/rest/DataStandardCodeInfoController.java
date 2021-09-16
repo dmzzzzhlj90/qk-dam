@@ -64,8 +64,7 @@ public class DataStandardCodeInfoController {
   @GetMapping(value = "/basic/query/by/{id}")
   public DefaultCommonResult<DsdCodeInfoVO> getBasicDsdCodeInfoById(@PathVariable("id") String id) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK,
-        dataStandardCodeInfoService.getDsdCodeInfoById(Long.parseLong(id)));
+        ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoById(Long.parseLong(id)));
   }
 
   /**
@@ -123,7 +122,8 @@ public class DataStandardCodeInfoController {
    * @return DefaultCommonResult<Map < String, Object>>
    */
   @PostMapping(value = "/ext/query")
-  public DefaultCommonResult<Map<String, Object>> getDsdCodeInfoExt(@RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
+  public DefaultCommonResult<Map<String, Object>> getDsdCodeInfoExt(
+      @RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoExt(dsdCodeInfoExtParamsVO));
   }
@@ -199,7 +199,8 @@ public class DataStandardCodeInfoController {
    * @return DefaultCommonResult
    */
   @PostMapping("/reverse/db")
-  public DefaultCommonResult dsdCodeInfoReverseDB(@RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
+  public DefaultCommonResult dsdCodeInfoReverseDB(
+      @RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
     dataStandardCodeInfoService.dsdCodeInfoReverseDB(dsdCodeInfoReverseDBVO);
     return DefaultCommonResult.success();
   }

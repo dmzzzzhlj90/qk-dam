@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @ComponentScan(basePackages = "com.qk")
 public class SwaggerKnife4jApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(SwaggerKnife4jApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(SwaggerKnife4jApplication.class, args);
+  }
 }

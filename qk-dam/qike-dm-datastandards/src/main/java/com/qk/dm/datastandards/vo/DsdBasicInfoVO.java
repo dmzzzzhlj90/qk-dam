@@ -53,8 +53,7 @@ public class DsdBasicInfoVO {
   private String dataCapacity;
 
   /** 码表标准分类ID */
-  @ExcelIgnore
-  private String codeDirId;
+  @ExcelIgnore private String codeDirId;
 
   /** 引用码表 */
   //    @NotBlank(message = "引用码表不能为空！")

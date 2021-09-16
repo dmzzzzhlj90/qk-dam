@@ -37,5 +37,4 @@ public class ApiSixGatewayPlugin implements GatewayPlugin {
   public ServerFactory serverFactory(ServerContext serverContext) {
     return new ApiSixServerFactory(serverContext);
   }
-
 }

@@ -1,5 +1,3 @@
 package com.qk.dam.dataservice.spi.server;
 
-public class ServerInfo {
-
-}
+public class ServerInfo {}

@@ -12,6 +12,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasGenerateOpenApiService {
 
-    String generateOpenApiRegister();
-
+  String generateOpenApiRegister();
 }

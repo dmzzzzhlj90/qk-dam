@@ -2,13 +2,12 @@ package com.qk.dm.datastandards.rest;
 
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.service.DsdExcelService;
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 数据标准__excel导入导出功能接口
@@ -28,7 +27,7 @@ public class DsdExcelController {
     this.dsdExcelService = dsdExcelService;
   }
 
-//  ================================basicInfo===============================================
+  //  ================================basicInfo===============================================
 
   /**
    * 标准基本信息excel__导入数据(默认根据Excel中选择的层级进行导入)
@@ -52,7 +51,7 @@ public class DsdExcelController {
   @PostMapping("/basic/info/upload/dirDsdId")
   @ResponseBody
   public DefaultCommonResult basicInfoUploadByDirDsdId(
-          MultipartFile file, @RequestParam("dirDsdId") String dirDsdId) {
+      MultipartFile file, @RequestParam("dirDsdId") String dirDsdId) {
     dsdExcelService.basicInfoUpload(file, dirDsdId);
     return DefaultCommonResult.success();
   }
@@ -74,7 +73,7 @@ public class DsdExcelController {
    */
   @PostMapping("/basic/info/download/dirDsdId")
   public void basicInfoDownloadByDirDsdId(
-          @RequestParam("dirDsdId") String dirDsdId, HttpServletResponse response) throws IOException {
+      @RequestParam("dirDsdId") String dirDsdId, HttpServletResponse response) throws IOException {
     dsdExcelService.basicInfoDownloadByDirDsdId(dirDsdId, response);
   }
 
@@ -86,10 +85,9 @@ public class DsdExcelController {
   @PostMapping("/basic/info/upload/template")
   public void basicInfoDownloadTemplate(HttpServletResponse response) throws IOException {
     dsdExcelService.basicInfoDownloadTemplate(response);
-
   }
 
-//  ================================codeInfo===============================================
+  //  ================================codeInfo===============================================
 
   /**
    * 码表基本信息列表__导入excel数据(全量)
@@ -100,7 +98,7 @@ public class DsdExcelController {
   @PostMapping("/code/info/all/upload")
   @ResponseBody
   public DefaultCommonResult codeInfoAllUpload(
-          MultipartFile file, @RequestParam("codeDirId") String codeDirId) {
+      MultipartFile file, @RequestParam("codeDirId") String codeDirId) {
     dsdExcelService.codeInfoAllUpload(file, codeDirId);
     return DefaultCommonResult.success();
   }
@@ -111,7 +109,9 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/code/info/all/download")
-  public void codeInfoAllDownload(@RequestParam("codeDirId") String codeDirId, HttpServletResponse response) throws IOException {
+  public void codeInfoAllDownload(
+      @RequestParam("codeDirId") String codeDirId, HttpServletResponse response)
+      throws IOException {
     dsdExcelService.codeInfoAllDownload(codeDirId, response);
   }
 
@@ -127,8 +127,7 @@ public class DsdExcelController {
     dsdExcelService.codeInfoDownloadTemplate(response);
   }
 
-//  ================================codeValues===============================================
-
+  //  ================================codeValues===============================================
 
   /**
    * 码表数值信息列表__导入excel数据(根据dsdCodeInfoId表级数据)
@@ -138,7 +137,8 @@ public class DsdExcelController {
    */
   @PostMapping("/code/values/dsdCodeInfoId/upload")
   @ResponseBody
-  public DefaultCommonResult codeValuesUploadByCodeInfoId(MultipartFile file, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
+  public DefaultCommonResult codeValuesUploadByCodeInfoId(
+      MultipartFile file, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
     dsdExcelService.codeValuesUploadByCodeInfoId(file, Long.parseLong(dsdCodeInfoId));
     return DefaultCommonResult.success();
   }
@@ -149,7 +149,8 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/code/values/dsdCodeInfoId/download")
-  public void codeValuesDownloadByCodeInfoId(HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
+  public void codeValuesDownloadByCodeInfoId(
+      HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
     dsdExcelService.codeValuesDownloadByCodeInfoId(response, Long.parseLong(dsdCodeInfoId));
   }
 
@@ -159,8 +160,8 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/code/values/download/template")
-  public void codeValuesDownloadTemplate(HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
+  public void codeValuesDownloadTemplate(
+      HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
     dsdExcelService.codeValuesDownloadTemplate(response, Long.parseLong(dsdCodeInfoId));
   }
-
 }

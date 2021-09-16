@@ -17,11 +17,9 @@ import javax.validation.groups.Default;
  * @date 20210803
  */
 public class EasyExcelValidateHelper {
-  private final static List<String> ignoreFields = Arrays.asList("dsdLevelId","dsdLevel");
+  private static final List<String> ignoreFields = Arrays.asList("dsdLevelId", "dsdLevel");
 
-
-  private EasyExcelValidateHelper() {
-  }
+  private EasyExcelValidateHelper() {}
 
   private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 

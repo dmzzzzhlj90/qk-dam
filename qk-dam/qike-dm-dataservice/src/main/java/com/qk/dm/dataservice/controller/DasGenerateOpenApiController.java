@@ -20,23 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/generate/open/api/")
 public class DasGenerateOpenApiController {
-    private final DasGenerateOpenApiService dasGenerateOpenApiService;
+  private final DasGenerateOpenApiService dasGenerateOpenApiService;
 
-    @Autowired
-    public DasGenerateOpenApiController(DasGenerateOpenApiService dasGenerateOpenApiService) {
-        this.dasGenerateOpenApiService = dasGenerateOpenApiService;
-    }
+  @Autowired
+  public DasGenerateOpenApiController(DasGenerateOpenApiService dasGenerateOpenApiService) {
+    this.dasGenerateOpenApiService = dasGenerateOpenApiService;
+  }
 
-
-    /**
-     * 根据数据服务注册API,生成OpenApiJson
-     *
-     * @return DefaultCommonResult
-     */
-    @GetMapping(value = "/register", produces = "application/json;charset=utf-8")
-    public String generateOpenApiRegister() {
-        return dasGenerateOpenApiService.generateOpenApiRegister();
-    }
-
-
+  /**
+   * 根据数据服务注册API,生成OpenApiJson
+   *
+   * @return DefaultCommonResult
+   */
+  @GetMapping(value = "/register", produces = "application/json;charset=utf-8")
+  public String generateOpenApiRegister() {
+    return dasGenerateOpenApiService.generateOpenApiRegister();
+  }
 }

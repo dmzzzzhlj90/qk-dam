@@ -1,7 +1,6 @@
 package com.qk.dam.dataservice.spi.upstream;
 
 import java.util.Map;
-
 import lombok.*;
 
 @Data

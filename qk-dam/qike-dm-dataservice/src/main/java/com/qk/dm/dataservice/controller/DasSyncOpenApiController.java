@@ -5,9 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasSyncOpenApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,21 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/sync/open/api/")
 public class DasSyncOpenApiController {
-    private final DasSyncOpenApiService dasSyncOpenApiService;
+  private final DasSyncOpenApiService dasSyncOpenApiService;
 
-    @Autowired
-    public DasSyncOpenApiController(DasSyncOpenApiService dasSyncOpenApiService) {
-        this.dasSyncOpenApiService = dasSyncOpenApiService;
-    }
+  @Autowired
+  public DasSyncOpenApiController(DasSyncOpenApiService dasSyncOpenApiService) {
+    this.dasSyncOpenApiService = dasSyncOpenApiService;
+  }
 
-    /**
-     * 同步Swagger至数据服务注册API
-     *
-     * @return DefaultCommonResult
-     */
-    @GetMapping("/register")
-    public DefaultCommonResult syncRegister() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncOpenApiService.syncRegister());
-    }
-
+  /**
+   * 同步Swagger至数据服务注册API
+   *
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/register")
+  public DefaultCommonResult syncRegister() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncOpenApiService.syncRegister());
+  }
 }

@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface DasApiCreateSqlScriptRepository extends BaseRepository<DasApiCreateSqlScript, Long> {
+public interface DasApiCreateSqlScriptRepository
+    extends BaseRepository<DasApiCreateSqlScript, Long> {
 
-    @Modifying
-    @Query(" DELETE from DasApiCreateSqlScript where apiId = :apiId ")
-    void deleteByApiId(@Param("apiId") String apiId);
-
+  @Modifying
+  @Query(" DELETE from DasApiCreateSqlScript where apiId = :apiId ")
+  void deleteByApiId(@Param("apiId") String apiId);
 }

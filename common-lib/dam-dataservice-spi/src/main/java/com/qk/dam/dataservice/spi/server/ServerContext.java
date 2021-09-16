@@ -1,8 +1,7 @@
 package com.qk.dam.dataservice.spi.server;
 
-import lombok.*;
-
 import java.util.Map;
+import lombok.*;
 
 @Data
 @ToString

@@ -4,14 +4,12 @@ import com.qk.dam.commons.util.RestTemplateUtils;
 import com.qk.dam.dataservice.spi.consunmer.ConsumerContext;
 import com.qk.dam.dataservice.spi.consunmer.ConsumerService;
 import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
-import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
+import java.util.Map;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-
-import java.util.Map;
 
 /**
  * @author wjq
@@ -20,24 +18,23 @@ import java.util.Map;
  */
 public class ApiSixConsumerService implements ConsumerService {
 
-    private ConsumerContext consumerContext;
+  private ConsumerContext consumerContext;
 
-    public ApiSixConsumerService() {
-    }
+  public ApiSixConsumerService() {}
 
-    public ApiSixConsumerService(ConsumerContext consumerContext) {
-        this.consumerContext = consumerContext;
-    }
+  public ApiSixConsumerService(ConsumerContext consumerContext) {
+    this.consumerContext = consumerContext;
+  }
 
   @Override
   public void initConsumersAuth() {
     ApiSixConsumerInfo consumerInfo = (ApiSixConsumerInfo) consumerContext.getConsumerInfo();
     HttpEntity httpEntity = setHttpEntity(consumerInfo, consumerContext.getParams());
     RestTemplateUtils.exchange(
-            consumerContext.getParams().get(ApiSixConstant.API_SIX_ADMIN_CONSUMER_URL_KEY),
-            HttpMethod.PUT,
-            httpEntity,
-            String.class);
+        consumerContext.getParams().get(ApiSixConstant.API_SIX_ADMIN_CONSUMER_URL_KEY),
+        HttpMethod.PUT,
+        httpEntity,
+        String.class);
   }
 
   private HttpEntity setHttpEntity(ApiSixConsumerInfo consumerInfo, Map<String, String> params) {

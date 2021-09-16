@@ -11,11 +11,10 @@ import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.vo.DasApiDirTreeVO;
 import com.qk.dm.dataservice.vo.DasApiDirVO;
 import com.querydsl.core.types.Predicate;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
 
 /**
  * @author wjq
@@ -187,7 +186,6 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     }
     return dasApiDirVOList;
   }
-
 
   /**
    * 获取删除叶子节点ID

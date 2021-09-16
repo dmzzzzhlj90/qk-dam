@@ -31,8 +31,10 @@ public class DataSourceExtractor {
     return new MysqlSqlAgg(dataConnect, informationSchema).searchMedataByDb();
   }
 
-  public static List<DsdCodeInfoExt> searchCodeInfoExtValues(DataSourceJobVO dataSourceJobVO, MysqlTable mysqlTable, Long codeInfoId) {
-    return new MysqlSqlAgg(dataSourceJobVO.getMysqlDataConnect(), dataSourceJobVO.getMysqlDataConnect().getDb())
-            .searchCodeInfoExtValues(mysqlTable, codeInfoId);
+  public static List<DsdCodeInfoExt> searchCodeInfoExtValues(
+      DataSourceJobVO dataSourceJobVO, MysqlTable mysqlTable, Long codeInfoId) {
+    return new MysqlSqlAgg(
+            dataSourceJobVO.getMysqlDataConnect(), dataSourceJobVO.getMysqlDataConnect().getDb())
+        .searchCodeInfoExtValues(mysqlTable, codeInfoId);
   }
 }
