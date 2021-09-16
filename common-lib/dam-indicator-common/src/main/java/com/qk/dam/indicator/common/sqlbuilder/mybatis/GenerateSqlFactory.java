@@ -8,11 +8,11 @@ import org.apache.ibatis.jdbc.SQL;
  * @date 2021/9/9 15:21
  * @since 1.0.0
  */
-public class GenerateSql {
+public class GenerateSqlFactory {
 
     private static final ThreadLocal<SQL> localSQL = new ThreadLocal<>();
 
-    private GenerateSql() {
+    private GenerateSqlFactory() {
     }
 
     static {
@@ -33,7 +33,7 @@ public class GenerateSql {
      * @param tableName 数据库表名
      * @return
      */
-    public static String atomicSql(String expression,String tableName){
+    public static String baseSql(String expression,String tableName){
                  builder()
                 .SELECT(expression)
                 .FROM(tableName);

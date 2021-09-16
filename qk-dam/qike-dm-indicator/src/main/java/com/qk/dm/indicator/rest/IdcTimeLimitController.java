@@ -26,7 +26,6 @@ public class IdcTimeLimitController {
 
     private final IdcTimeLimitService idcTimeLimitService;
 
-    @Autowired
     public IdcTimeLimitController(IdcTimeLimitService idcTimeLimitService) {
         this.idcTimeLimitService = idcTimeLimitService;
     }
@@ -89,7 +88,7 @@ public class IdcTimeLimitController {
      * @param idcTimeLimitPageDTO
      * @return DefaultCommonResult<PageResultVO < IdcTimeLimitVO>>
      */
-    @GetMapping("/page/list")
+    @GetMapping("/page")
     public DefaultCommonResult<PageResultVO<IdcTimeLimitVO>> pageList(@RequestBody IdcTimeLimitPageDTO idcTimeLimitPageDTO) {
         PageResultVO<IdcTimeLimitVO> list = idcTimeLimitService.findListPage(idcTimeLimitPageDTO);
         return DefaultCommonResult.success(ResultCodeEnum.OK, list);

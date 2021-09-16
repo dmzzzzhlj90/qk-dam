@@ -62,7 +62,7 @@ public class IdcDerivedController {
      * @param id
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}/publish")
+    @PutMapping("/publish/{id}")
     public DefaultCommonResult publish(@PathVariable("id") Long id) {
         idcDerivedService.publish(id);
         return DefaultCommonResult.success();
@@ -74,7 +74,7 @@ public class IdcDerivedController {
      * @param id
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}/offline")
+    @PutMapping("/offline/{id}")
     public DefaultCommonResult offline(@PathVariable("id") Long id) {
         idcDerivedService.offline(id);
         return DefaultCommonResult.success();
@@ -123,7 +123,8 @@ public class IdcDerivedController {
      * @return
      */
     @GetMapping("/preview")
-    public DefaultCommonResult<String> sqlPreview(String atomicCode,String generalLimit){
+    public DefaultCommonResult<String> sqlPreview(@RequestParam("atomicCode") String atomicCode,
+                                                  @RequestParam("generalLimit") String generalLimit){
         IdcAtomVO idcAtomVO = idcAtomService.getDetailByCode(atomicCode);
         return DefaultCommonResult.success(
                 ResultCodeEnum.OK,

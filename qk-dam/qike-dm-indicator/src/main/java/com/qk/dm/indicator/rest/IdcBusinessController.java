@@ -25,7 +25,6 @@ public class IdcBusinessController {
 
     private final IdcBusinessService idcBusinessService;
 
-    @Autowired
     public IdcBusinessController(IdcBusinessService idcBusinessService){
         this.idcBusinessService = idcBusinessService;
     }
@@ -84,7 +83,7 @@ public class IdcBusinessController {
      * @param id
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}/publish")
+    @PutMapping("/publish/{id}")
     public DefaultCommonResult publish(@PathVariable("id") Long id) {
         idcBusinessService.publish(id);
         return DefaultCommonResult.success();
@@ -96,7 +95,7 @@ public class IdcBusinessController {
      * @param id
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}/offline")
+    @PutMapping("/offline/{id}")
     public DefaultCommonResult offline(@PathVariable("id") Long id) {
         idcBusinessService.offline(id);
         return DefaultCommonResult.success();
@@ -108,7 +107,7 @@ public class IdcBusinessController {
      * @param idcBusinessPageDTO
      * @return DefaultCommonResult<PageResultVO<IdcBusinessVO>>
      */
-    @GetMapping("/page/list")
+    @GetMapping("/page")
     public DefaultCommonResult<PageResultVO<IdcBusinessVO>> pageList(@RequestBody IdcBusinessPageDTO idcBusinessPageDTO) {
         PageResultVO<IdcBusinessVO> list = idcBusinessService.findListPage(idcBusinessPageDTO);
         return DefaultCommonResult.success(ResultCodeEnum.OK, list);

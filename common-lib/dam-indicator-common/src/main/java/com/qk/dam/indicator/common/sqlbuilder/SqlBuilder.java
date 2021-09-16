@@ -135,8 +135,8 @@ public class SqlBuilder {
          return sql();
     }
 
-    public static String genarSql(String tableName,String where, String column){
-        builder()
+    public static String generaSql(String tableName,String where, String column){
+                 builder()
                 .count()
                 .getSqlParams()
                 .getSql();

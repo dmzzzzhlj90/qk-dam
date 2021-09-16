@@ -62,7 +62,7 @@ public class IdcAtomController {
    * @param id
    * @return DefaultCommonResult
    */
-  @PutMapping("/{id}/publish")
+  @PutMapping("/publish/{id}")
   public DefaultCommonResult publish(@PathVariable("id") Long id) {
     idcAtomService.publish(id);
     return DefaultCommonResult.success();
@@ -74,7 +74,7 @@ public class IdcAtomController {
    * @param id
    * @return DefaultCommonResult
    */
-  @PutMapping("/{id}/offline")
+  @PutMapping("/offline/{id}")
   public DefaultCommonResult offline(@PathVariable("id") Long id) {
     idcAtomService.offline(id);
     return DefaultCommonResult.success();
@@ -121,7 +121,7 @@ public class IdcAtomController {
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<IdcAtomPageVO>> listByPage(
-      IdcAtomPageDTO idcAtomPageDTO) {
+          @RequestBody IdcAtomPageDTO idcAtomPageDTO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, idcAtomService.listByPage(idcAtomPageDTO));
   }
@@ -133,7 +133,8 @@ public class IdcAtomController {
    * @return String
    */
   @GetMapping("/preview")
-  public DefaultCommonResult<String> sqlPreview(String dataSheet,String expression){
+  public DefaultCommonResult<String> sqlPreview(@RequestParam("dataSheet") String dataSheet,
+                                                @RequestParam("expression") String expression){
     return  DefaultCommonResult.success(
             ResultCodeEnum.OK, SqlBuilder.atomicSql(expression,dataSheet));
   }

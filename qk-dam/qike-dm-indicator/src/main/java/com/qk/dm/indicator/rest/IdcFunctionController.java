@@ -99,7 +99,7 @@ public class IdcFunctionController {
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<IdcFunctionVO>> listByPage(
-      IdcFunctionPageDTO idcFunctionPageDTO) {
+          @RequestBody IdcFunctionPageDTO idcFunctionPageDTO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, idcFunctionService.listByPage(idcFunctionPageDTO));
   }

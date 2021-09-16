@@ -63,7 +63,7 @@ public class IdcCompositeController {
    * @param id
    * @return DefaultCommonResult
    */
-  @PutMapping("/{id}/publish")
+  @PutMapping("/publish/{id}")
   public DefaultCommonResult publish(@PathVariable("id") Long id) {
     idcCompositeService.publish(id);
     return DefaultCommonResult.success();
@@ -75,7 +75,7 @@ public class IdcCompositeController {
    * @param id
    * @return DefaultCommonResult
    */
-  @PutMapping("/{id}/offline")
+  @PutMapping("/offline/{id}")
   public DefaultCommonResult offline(@PathVariable("id") Long id) {
     idcCompositeService.offline(id);
     return DefaultCommonResult.success();
@@ -122,7 +122,7 @@ public class IdcCompositeController {
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<IdcCompositePageVO>> listByPage(
-      IdcCompositePageDTO idcCompositePageDTO) {
+          @RequestBody IdcCompositePageDTO idcCompositePageDTO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, idcCompositeService.listByPage(idcCompositePageDTO));
   }
