@@ -1,5 +1,7 @@
 package com.qk.dam.indicator.common.sqlbuilder.mybatis;
 
+import com.alibaba.druid.DbType;
+import com.qk.dam.indicator.common.sqlbuilder.sqlparser.SqlParserFactory;
 import org.apache.ibatis.jdbc.SQL;
 
 /**
@@ -189,7 +191,13 @@ public class GenerateSqlFactory {
 
     public static String sql() {
         try {
-            return builder().toString();
+            String sql = builder().toString();
+            boolean isSql = SqlParserFactory.parseStatements(sql, DbType.hive);
+            if(isSql){
+                return sql;
+            }else {
+                throw new RuntimeException("当前生成的SQL格式错误！！！");
+            }
         } finally {
             reset();
         }

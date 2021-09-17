@@ -1,6 +1,9 @@
 package com.qk.dam.indicator.common.sqlbuilder;
 
+import com.alibaba.druid.DbType;
+import com.qk.dam.indicator.common.sqlbuilder.sqlparser.SqlParserFactory;
 import tech.ibit.sqlbuilder.StringSql;
+
 import java.util.Arrays;
 
 /**
@@ -29,7 +32,14 @@ public class SqlBuilder {
 
     private static String sql() {
         try {
-            return builder().getSqlParams().getSql();
+            String sql = builder().getSqlParams().getSql();
+            //校验SQL是否正确
+            boolean isSql = SqlParserFactory.parseStatements(sql, DbType.hive);
+            if(isSql){
+                return sql;
+            }else {
+                throw new RuntimeException("当前生成的SQL格式错误！！！");
+            }
         } finally {
             reset();
         }

@@ -74,4 +74,8 @@ public class SqlParserFactory {
         return createSQLStatementParser(sql, dbType == null ? null : DbType.valueOf(dbType), features);
     }
 
+    public static void main(String[] args) {
+       System.out.println( parseStatements("SELECT sum() FROM gvcup4 WHERE ()name234",DbType.hive));
+    }
+
 }
