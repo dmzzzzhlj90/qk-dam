@@ -1,5 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
@@ -11,8 +13,6 @@ import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
 import com.qk.dm.metadata.vo.*;
-import java.util.*;
-import java.util.stream.Collectors;
 import lombok.Data;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
@@ -28,6 +28,9 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wangzp
@@ -438,8 +441,22 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
    * @return
    */
   private List<Map<String, Object>> buildReferredEntities(
+          //todo 此方法需优化
       AtlasEntity.AtlasEntityWithExtInfo detail) {
     List<AtlasEntity> atlasEntityList = new ArrayList<>(detail.getReferredEntities().values());
+   if(atlasEntityList.size()==0){
+     List<Map<String,Object>> list= (List<Map<String,Object>>)detail.getEntity().getRelationshipAttributes().get("tables");
+     ObjectMapper mapper = new ObjectMapper();
+     list =  mapper.convertValue(list, new TypeReference<>() {
+     });
+     list.forEach(e->{
+       e.put("name",e.get("displayText"));
+       e.remove("relationshipAttributes");
+       e.remove("relationshipStatus");
+       e.remove("relationshipGuid");
+     });
+    return list;
+   }
     Map<String, List<MtdLabelsAtlasVO>> labsMap = getlabs(atlasEntityList);
     Map<String, List<MtdClassifyAtlasVO>> classMap = getClassification(atlasEntityList);
     return atlasEntityList.stream()
@@ -450,6 +467,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               attr.put("typeName", e.getTypeName());
               attr.put(
                   "createTime", DateFormatUtils.format(e.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+              attr.put("qualifiedName",Objects.isNull(attr.get("qualifiedName"))?null:attr.get("qualifiedName").toString().split("@")[0]);
+             if(Objects.isNull(attr.get("data_type"))&&Objects.nonNull(attr.get("type"))){
+                  attr.put("data_type",attr.get("type"));
+             }
               List<MtdLabelsAtlasVO> labList = labsMap.get(e.getGuid());
               if (!CollectionUtils.isEmpty(labList)) {
                 attr.put("labels", labsMap.get(e.getGuid()).get(0).getLabels());
