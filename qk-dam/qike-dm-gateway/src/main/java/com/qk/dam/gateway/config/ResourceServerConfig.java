@@ -13,14 +13,11 @@ public class ResourceServerConfig {
 
   @Bean
   SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-//    ReactiveAuthorizationManager<AuthorizationContext> authorizationManager =
-//        DamAuthorizationManager.authenticated();
     http.authorizeExchange(
         exchanges ->
             exchanges
                 .pathMatchers("/**")
-//                .access(authorizationManager)
-                                .hasAuthority("SCOPE_openid")
+                .access(DamAuthorizationManager.authenticated("SCOPE_openid"))
                 .anyExchange()
                 .authenticated()
                 .and()
