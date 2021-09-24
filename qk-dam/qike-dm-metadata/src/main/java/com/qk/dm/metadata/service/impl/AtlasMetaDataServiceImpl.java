@@ -467,7 +467,6 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               attr.put("typeName", e.getTypeName());
               attr.put(
                   "createTime", DateFormatUtils.format(e.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
-              attr.put("qualifiedName",Objects.isNull(attr.get("qualifiedName"))?null:attr.get("qualifiedName").toString().split("@")[0]);
              if(Objects.isNull(attr.get("data_type"))&&Objects.nonNull(attr.get("type"))){
                   attr.put("data_type",attr.get("type"));
              }
