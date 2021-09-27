@@ -103,6 +103,18 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
                 dsdCodeInfoVOList);
     }
 
+    @Override
+    public List<DsdCodeInfoVO> getDsdCodeInfoAll() {
+        List<DsdCodeInfoVO> dsdCodeInfoVOList = new ArrayList<>();
+
+        List<DsdCodeInfo> dsdCodeInfoList = dsdCodeInfoRepository.findAll();
+        dsdCodeInfoList.forEach(dsdCodeInfo -> {
+            DsdCodeInfoVO dsdCodeInfoVO = DsdCodeInfoMapper.INSTANCE.useDsdCodeInfoVO(dsdCodeInfo);
+            dsdCodeInfoVOList.add(dsdCodeInfoVO);
+        });
+        return dsdCodeInfoVOList;
+    }
+
     public Map<String, Object> queryDsdCodeInfoVOByParams(DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
         HashMap<String, Object> result = new HashMap<>();
         BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -158,19 +170,10 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
         setCodeTableFieldsStr(dsdCodeInfo, dsdCodeInfoVO);
         dsdCodeInfo.setGmtCreate(new Date());
         dsdCodeInfo.setGmtModified(new Date());
-        Predicate predicate =
-                qDsdCodeInfo
-                        .codeDirId
-                        .eq(dsdCodeInfo.getCodeDirId())
-                        .and(qDsdCodeInfo.tableCode.eq(dsdCodeInfo.getTableCode()));
+        Predicate predicate = qDsdCodeInfo.tableCode.eq(dsdCodeInfo.getTableCode());
         boolean exists = dsdCodeInfoRepository.exists(predicate);
         if (exists) {
-            throw new BizException(
-                    "当前要新增的码表信息,目录为："
-                            + dsdCodeInfo.getCodeDirLevel()
-                            + "表名为:"
-                            + dsdCodeInfo.getTableName()
-                            + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的码表信息, 表编码为:" + dsdCodeInfo.getTableCode() + " 的数据，已存在！！！");
         }
         if (dsdCodeInfoVO.getCodeTableFieldsList().size() == 0
                 && dsdCodeInfo.getTableConfFields() == null) {
@@ -189,6 +192,16 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
             return dsdCodeInfoVO;
         }
         return null;
+    }
+
+    @Override
+    public DsdCodeInfoVO getBasicDsdCodeInfoByTableCode(String tableCode) {
+        Optional<DsdCodeInfo> dsdCodeInfoOptional = dsdCodeInfoRepository.findOne(qDsdCodeInfo.tableCode.eq(tableCode));
+        if (dsdCodeInfoOptional.isEmpty()) {
+            throw new BizException("未查询到tableCode : " + tableCode + "的码表!!!");
+        }
+        DsdCodeInfo dsdCodeInfo = dsdCodeInfoOptional.get();
+        return DsdCodeInfoMapper.INSTANCE.useDsdCodeInfoVO(dsdCodeInfo);
     }
 
     @Override
@@ -364,10 +377,13 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     @Override
     public DsdCodeInfoExtVO getBasicDsdCodeInfoExtById(long id) {
         Optional<DsdCodeInfoExt> dsdCodeInfoExt = dsdCodeInfoExtRepository.findById(id);
-        DsdCodeInfoExtVO dsdCodeInfoExtVO =
-                DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExtVO(dsdCodeInfoExt.get());
-        setCodeTableValues(dsdCodeInfoExt.get(), dsdCodeInfoExtVO);
-        return dsdCodeInfoExtVO;
+        if (dsdCodeInfoExt.isPresent()) {
+            DsdCodeInfoExtVO dsdCodeInfoExtVO =
+                    DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExtVO(dsdCodeInfoExt.get());
+            setCodeTableValues(dsdCodeInfoExt.get(), dsdCodeInfoExtVO);
+            return dsdCodeInfoExtVO;
+        }
+        return null;
     }
 
     @Override

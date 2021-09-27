@@ -44,6 +44,16 @@ public class DataStandardCodeInfoController {
   }
 
   /**
+   * 获取所有码表基础信息列表
+   *
+   * @return DefaultCommonResult<List<DsdCodeInfoVO>>
+   */
+  @PostMapping(value = "/basic/query/all")
+  public DefaultCommonResult<List<DsdCodeInfoVO>> getDsdCodeInfoAll() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoAll());
+  }
+
+  /**
    * 新增码表基础信息
    *
    * @param dsdCodeInfoVO
@@ -55,8 +65,9 @@ public class DataStandardCodeInfoController {
     return DefaultCommonResult.success();
   }
 
+
   /**
-   * 根据Id获取码表信息列表详情信息
+   * 根据id获取码表信息列表详情信息
    *
    * @param id
    * @return DefaultCommonResult<DsdCodeInfoVO>
@@ -64,8 +75,19 @@ public class DataStandardCodeInfoController {
   @GetMapping(value = "/basic/query/by/{id}")
   public DefaultCommonResult<DsdCodeInfoVO> getBasicDsdCodeInfoById(@PathVariable("id") String id) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK,
-        dataStandardCodeInfoService.getDsdCodeInfoById(Long.parseLong(id)));
+            ResultCodeEnum.OK,
+            dataStandardCodeInfoService.getDsdCodeInfoById(Long.parseLong(id)));
+  }
+
+  /**
+   * 根据tableCode(表编码)获取码表基础详情信息
+   *
+   * @param tableCode
+   * @return DefaultCommonResult<DsdCodeInfoVO>
+   */
+  @GetMapping(value = "/basic/query/tableCode")
+  public DefaultCommonResult<DsdCodeInfoVO> getBasicDsdCodeInfoByTableCode(@RequestParam String tableCode) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataStandardCodeInfoService.getBasicDsdCodeInfoByTableCode(tableCode));
   }
 
   /**
@@ -148,11 +170,8 @@ public class DataStandardCodeInfoController {
    * @return DefaultCommonResult<DsdCodeInfoExtVO>
    */
   @GetMapping(value = "/ext/query/by/{id}")
-  public DefaultCommonResult<DsdCodeInfoExtVO> getBasicDsdCodeInfoExtById(
-      @PathVariable("id") String id) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK,
-        dataStandardCodeInfoService.getBasicDsdCodeInfoExtById(Long.parseLong(id)));
+  public DefaultCommonResult<DsdCodeInfoExtVO> getBasicDsdCodeInfoExtById(@PathVariable("id") String id) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataStandardCodeInfoService.getBasicDsdCodeInfoExtById(Long.parseLong(id)));
   }
 
   /**

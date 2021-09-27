@@ -54,8 +54,8 @@ public class DsdConstant {
     dataTypes.add(timestampMap);
 
     Map<String, String> otherTypeMap = new HashMap<>();
-    timestampMap.put("id", "OTHER_TYPE");
-    timestampMap.put("label", "其他数据类型(OTHER_TYPE)");
+    otherTypeMap.put("id", "OTHER_TYPE");
+    otherTypeMap.put("label", "其他数据类型(OTHER_TYPE)");
     dataTypes.add(otherTypeMap);
     return dataTypes;
   }

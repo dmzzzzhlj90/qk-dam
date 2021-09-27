@@ -1,7 +1,8 @@
 {
   "components": {
     "schemas": {
-      "_code_info_reverse_dbResponse": {
+      "_basic_info_search_code_field_by_codeDirId__codeDirId_request": {},
+      "_code_info_basic_addresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -24,625 +25,8 @@
           }
         }
       },
-      "_excel_basic_info_upload_dirDsdIdRequest": {},
-      "_excel_basic_info_downloadRequest": {},
-      "_code_info_basic_queryRequest": {
-        "properties": {
-          "pagination": {
-            "description": "No comments found.(object)",
-            "type": "object",
-            "properties": {
-              "page": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "size": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "sortField": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              }
-            }
-          },
-          "beginDay": {
-            "format": "string",
-            "description": "开始时间",
-            "type": "string"
-          },
-          "endDay": {
-            "format": "string",
-            "description": "结束时间",
-            "type": "string"
-          },
-          "codeDirId": {
-            "format": "string",
-            "description": "所属目录id",
-            "type": "string"
-          },
-          "codeDirLevel": {
-            "format": "string",
-            "description": "所属目录层级",
-            "type": "string"
-          },
-          "tableName": {
-            "format": "string",
-            "description": "基础配置-表名",
-            "type": "string"
-          },
-          "tableCode": {
-            "format": "string",
-            "description": "基础配置-表编码",
-            "type": "string"
-          }
-        },
-        "required": [
-          "codeDirId",
-          "codeDirLevel"
-        ]
-      },
-      "_excel_basic_info_uploadResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_dir_delete_root__id_Request": {},
-      "_code_info_basic_query_by__id_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object",
-            "properties": {
-              "id": {
-                "format": "int64",
-                "description": "主键ID",
-                "type": "integer"
-              },
-              "codeDirId": {
-                "format": "string",
-                "description": "所属目录ID",
-                "type": "string"
-              },
-              "codeDirLevel": {
-                "format": "string",
-                "description": "所属目录层级",
-                "type": "string"
-              },
-              "tableName": {
-                "format": "string",
-                "description": "基础配置-表名",
-                "type": "string"
-              },
-              "tableCode": {
-                "format": "string",
-                "description": "基础配置-表编码",
-                "type": "string"
-              },
-              "tableDesc": {
-                "format": "string",
-                "description": "基础配置-描述",
-                "type": "string"
-              },
-              "gmtModified": {
-                "format": "string",
-                "description": "修改时间",
-                "type": "string"
-              },
-              "codeTableFieldsList": {
-                "description": "建表配置字段集合",
-                "type": "array",
-                "items": {
-                  "properties": {
-                    "code_table_id": {
-                      "format": "string",
-                      "description": "配置字段编码",
-                      "type": "string"
-                    },
-                    "name_ch": {
-                      "format": "string",
-                      "description": "字段中文名称",
-                      "type": "string"
-                    },
-                    "name_en": {
-                      "format": "string",
-                      "description": "字段英文名称",
-                      "type": "string"
-                    },
-                    "data_type": {
-                      "format": "string",
-                      "description": "字段数据类型",
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "codeTableId": {
-                "format": "string",
-                "description": "配置字段编码",
-                "type": "string"
-              },
-              "nameCh": {
-                "format": "string",
-                "description": "字段中文名称",
-                "type": "string"
-              },
-              "nameEn": {
-                "format": "string",
-                "description": "字段英文名称",
-                "type": "string"
-              },
-              "dataType": {
-                "format": "string",
-                "description": "字段数据类型",
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "_excel_code_values_download_templateRequest": {},
-      "_code_info_ext_queryResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object",
-            "properties": {
-              "anyObject": {
-                "description": "any object.(object)",
-                "type": "object"
-              }
-            }
-          }
-        }
-      },
-      "_dir_treeResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据",
-            "type": "array",
-            "items": {
-              "properties": {
-                "id": {
-                  "format": "int32",
-                  "description": "No comments found.",
-                  "type": "integer"
-                },
-                "dirDsdId": {
-                  "format": "string",
-                  "description": "No comments found.",
-                  "type": "string"
-                },
-                "dirDsdName": {
-                  "format": "string",
-                  "description": "No comments found.",
-                  "type": "string"
-                },
-                "parentId": {
-                  "format": "string",
-                  "description": "No comments found.",
-                  "type": "string"
-                },
-                "dsdDirLevel": {
-                  "format": "string",
-                  "description": "No comments found.",
-                  "type": "string"
-                },
-                "children": {
-                  "description": "No comments found.",
-                  "type": "array",
-                  "items": {}
-                }
-              }
-            }
-          }
-        }
-      },
-      "_code_info_ext_bulk_delete__ids_Request": {},
-      "_excel_code_values_dsdCodeInfoId_downloadResponse": {},
-      "_excel_code_values_dsdCodeInfoId_uploadResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_code_info_data_typesResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据",
-            "type": "array",
-            "items": {}
-          },
-          "-": {
-            "description": "Return object.(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_code_dir_addRequest": {
-        "properties": {
-          "id": {
-            "format": "int32",
-            "description": "主键ID",
-            "type": "integer"
-          },
-          "codeDirId": {
-            "format": "string",
-            "description": "码表标准分类ID",
-            "type": "string"
-          },
-          "codeDirName": {
-            "format": "string",
-            "description": "码表标准分类名称",
-            "type": "string"
-          },
-          "parentId": {
-            "format": "string",
-            "description": "父级ID",
-            "type": "string"
-          },
-          "codeDirLevel": {
-            "format": "string",
-            "description": "码表目录层级",
-            "type": "string"
-          },
-          "description": {
-            "format": "string",
-            "description": "描述",
-            "type": "string"
-          }
-        },
-        "required": [
-          "codeDirName",
-          "parentId",
-          "codeDirLevel"
-        ]
-      },
-      "_code_info_reverse_dbRequest": {
-        "properties": {
-          "codeDirId": {
-            "format": "string",
-            "description": "所属码表目录",
-            "type": "string"
-          },
-          "codeDirLevel": {
-            "format": "string",
-            "description": "所属码表层级目录",
-            "type": "string"
-          },
-          "isUpdate": {
-            "format": "string",
-            "description": "更新已有表: 0 :不更新, 1: 更新",
-            "type": "string"
-          },
-          "isReverseData": {
-            "format": "string",
-            "description": "逆向表数据: 0 :不逆向, 1: 覆盖",
-            "type": "string"
-          },
-          "dataSourceJobVO": {
-            "description": "数据源连接信息,TODO 暂时使用接口传参的方式(object)",
-            "type": "object",
-            "properties": {
-              "name": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "dataConnectType": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "mysqlDataConnect": {
-                "description": "No comments found.(object)",
-                "type": "object",
-                "properties": {
-                  "db": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "table": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "host": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "port": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "username": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "_excel_basic_info_download_dirDsdIdRequest": {},
-      "_code_info_ext_addRequest": {
-        "properties": {
-          "id": {
-            "format": "int64",
-            "description": "主键ID",
-            "type": "integer"
-          },
-          "dsdCodeInfoId": {
-            "format": "string",
-            "description": "关键码表信息表",
-            "type": "string"
-          },
-          "tableConfCode": {
-            "format": "string",
-            "description": "建表配置编码",
-            "type": "string"
-          },
-          "tableConfValue": {
-            "format": "string",
-            "description": "建表配置值",
-            "type": "string"
-          },
-          "gmtModified": {
-            "format": "string",
-            "description": "修改时间",
-            "type": "string"
-          },
-          "codeTableFieldExtValues": {
-            "description": "建表配合扩展字段数值(object)",
-            "type": "object"
-          }
-        },
-        "required": [
-          "dsdCodeInfoId"
-        ]
-      },
-      "_dir_delete_root__id_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_dir_addResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_code_info_basic_updateResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_excel_basic_info_downloadResponse": {},
-      "_basic_info_delete__id_Request": {},
-      "_dir_updateRequest": {
-        "properties": {
-          "id": {
-            "format": "int32",
-            "description": "主键ID",
-            "type": "integer"
-          },
-          "dirDsdId": {
-            "format": "string",
-            "description": "数据标准分类编号",
-            "type": "string"
-          },
-          "dirDsdName": {
-            "format": "string",
-            "description": "数据标准分类名称",
-            "type": "string"
-          },
-          "parentId": {
-            "format": "string",
-            "description": "父级id",
-            "type": "string"
-          },
-          "dsdDirLevel": {
-            "format": "string",
-            "description": "目录节点层级",
-            "type": "string"
-          },
-          "description": {
-            "format": "string",
-            "description": "描述",
-            "type": "string"
-          }
-        },
-        "required": [
-          "dirDsdName",
-          "parentId",
-          "dsdDirLevel"
-        ]
-      },
-      "_code_dir_addResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_basic_info_updateRequest": {
+      "_code_info_basic_delete__id_request": {},
+      "_basic_info_addrequest": {
         "properties": {
           "id": {
             "format": "int32",
@@ -723,43 +107,9 @@
           "dsdLevelId"
         ]
       },
-      "_code_info_ext_updateRequest": {
-        "properties": {
-          "id": {
-            "format": "int64",
-            "description": "主键ID",
-            "type": "integer"
-          },
-          "dsdCodeInfoId": {
-            "format": "string",
-            "description": "关键码表信息表",
-            "type": "string"
-          },
-          "tableConfCode": {
-            "format": "string",
-            "description": "建表配置编码",
-            "type": "string"
-          },
-          "tableConfValue": {
-            "format": "string",
-            "description": "建表配置值",
-            "type": "string"
-          },
-          "gmtModified": {
-            "format": "string",
-            "description": "修改时间",
-            "type": "string"
-          },
-          "codeTableFieldExtValues": {
-            "description": "建表配合扩展字段数值(object)",
-            "type": "object"
-          }
-        },
-        "required": [
-          "dsdCodeInfoId"
-        ]
-      },
-      "_basic_info_bulk_delete__ids_Response": {
+      "_excel_basic_info_download_allrequest": {},
+      "_excel_code_values_dsdCodeInfoId_uploadrequest": {},
+      "_code_info_basic_delete_bulk__ids_response": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -782,8 +132,7 @@
           }
         }
       },
-      "_basic_info_search_code_field_by_codeDirId__codeDirId_Request": {},
-      "_code_info_ext_addResponse": {
+      "_excel_basic_info_upload_dirDsdIdresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -806,10 +155,8 @@
           }
         }
       },
-      "_code_dir_delete_root__id_Request": {},
-      "_code_info_ext_delete__id_Request": {},
-      "_excel_code_info_upload_templateResponse": {},
-      "_excel_basic_info_upload_dirDsdIdResponse": {
+      "_excel_code_info_upload_templateresponse": {},
+      "_excel_code_info_all_uploadresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -832,63 +179,9 @@
           }
         }
       },
-      "_excel_code_values_download_templateResponse": {},
-      "_basic_info_queryRequest": {
-        "properties": {
-          "pagination": {
-            "description": "No comments found.(object)",
-            "type": "object",
-            "properties": {
-              "page": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "size": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "sortField": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              }
-            }
-          },
-          "dsdName": {
-            "format": "string",
-            "description": "标准名称",
-            "type": "string"
-          },
-          "dsdCode": {
-            "format": "string",
-            "description": "标准代码",
-            "type": "string"
-          },
-          "dsdLevel": {
-            "format": "string",
-            "description": "标准层级",
-            "type": "string"
-          },
-          "dsdLevelId": {
-            "format": "string",
-            "description": "标准层级ID",
-            "type": "string"
-          },
-          "beginDay": {
-            "format": "string",
-            "description": "开始时间",
-            "type": "string"
-          },
-          "endDay": {
-            "format": "string",
-            "description": "结束时间",
-            "type": "string"
-          }
-        }
-      },
-      "_code_info_basic_updateRequest": {
+      "_excel_code_values_download_templateresponse": {},
+      "_code_info_data_typesrequest": {},
+      "_code_info_basic_updaterequest": {
         "properties": {
           "id": {
             "format": "int64",
@@ -981,10 +274,8 @@
           "tableCode"
         ]
       },
-      "_code_dir_delete__id_Request": {},
-      "_excel_code_info_upload_templateRequest": {},
-      "_code_info_ext_query_by__id_Request": {},
-      "_code_info_ext_updateResponse": {
+      "_code_dir_delete_root__id_request": {},
+      "_code_info_ext_delete__id_response": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1007,8 +298,62 @@
           }
         }
       },
-      "_dir_delete__id_Request": {},
-      "_dir_delete__id_Response": {
+      "_code_info_ext_query_by__id_request": {},
+      "_code_info_ext_query_by__id_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "主键ID",
+                "type": "integer"
+              },
+              "dsdCodeInfoId": {
+                "format": "string",
+                "description": "关键码表信息表",
+                "type": "string"
+              },
+              "searchCode": {
+                "format": "string",
+                "description": "建表配置查询编码",
+                "type": "string"
+              },
+              "searchValue": {
+                "format": "string",
+                "description": "建表配置查询值",
+                "type": "string"
+              },
+              "gmtModified": {
+                "format": "string",
+                "description": "修改时间",
+                "type": "string"
+              },
+              "codeTableFieldExtValues": {
+                "description": "建表配合扩展字段数值(object)",
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "_dir_delete__id_response": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1031,8 +376,8 @@
           }
         }
       },
-      "_excel_basic_info_upload_templateResponse": {},
-      "_code_dir_treeResponse": {
+      "_excel_basic_info_upload_templateresponse": {},
+      "_code_dir_treeresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1089,9 +434,8 @@
           }
         }
       },
-      "_excel_code_info_all_downloadRequest": {},
-      "_excel_code_values_dsdCodeInfoId_uploadRequest": {},
-      "_code_info_basic_delete_bulk__ids_Response": {
+      "_excel_basic_info_download_allresponse": {},
+      "_code_dir_updateresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1114,7 +458,7 @@
           }
         }
       },
-      "_excel_code_info_all_uploadResponse": {
+      "_code_info_ext_updateresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1137,100 +481,82 @@
           }
         }
       },
-      "_code_info_basic_addRequest": {
+      "_code_info_basic_delete_bulk__ids_request": {},
+      "_code_info_ext_queryrequest": {
         "properties": {
-          "id": {
-            "format": "int64",
-            "description": "主键ID",
-            "type": "integer"
-          },
-          "codeDirId": {
-            "format": "string",
-            "description": "所属目录ID",
-            "type": "string"
-          },
-          "codeDirLevel": {
-            "format": "string",
-            "description": "所属目录层级",
-            "type": "string"
-          },
-          "tableName": {
-            "format": "string",
-            "description": "基础配置-表名",
-            "type": "string"
-          },
-          "tableCode": {
-            "format": "string",
-            "description": "基础配置-表编码",
-            "type": "string"
-          },
-          "tableDesc": {
-            "format": "string",
-            "description": "基础配置-描述",
-            "type": "string"
-          },
-          "gmtModified": {
-            "format": "string",
-            "description": "修改时间",
-            "type": "string"
-          },
-          "codeTableFieldsList": {
-            "description": "建表配置字段集合",
-            "type": "array",
-            "items": {
-              "properties": {
-                "code_table_id": {
-                  "format": "string",
-                  "description": "配置字段编码",
-                  "type": "string"
-                },
-                "name_ch": {
-                  "format": "string",
-                  "description": "字段中文名称",
-                  "type": "string"
-                },
-                "name_en": {
-                  "format": "string",
-                  "description": "字段英文名称",
-                  "type": "string"
-                },
-                "data_type": {
-                  "format": "string",
-                  "description": "字段数据类型",
-                  "type": "string"
-                }
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
               }
             }
           },
-          "codeTableId": {
+          "beginDay": {
             "format": "string",
-            "description": "配置字段编码",
+            "description": "开始时间",
             "type": "string"
           },
-          "nameCh": {
+          "endDay": {
             "format": "string",
-            "description": "字段中文名称",
+            "description": "结束时间",
             "type": "string"
           },
-          "nameEn": {
+          "dsdCodeInfoId": {
             "format": "string",
-            "description": "字段英文名称",
+            "description": "关键码表信息表id",
             "type": "string"
           },
-          "dataType": {
+          "searchCode": {
             "format": "string",
-            "description": "字段数据类型",
+            "description": "建表配置查询编码",
+            "type": "string"
+          },
+          "searchValue": {
+            "format": "string",
+            "description": "建表配置查询值",
             "type": "string"
           }
-        },
-        "required": [
-          "codeDirId",
-          "codeDirLevel",
-          "tableName",
-          "tableCode"
-        ]
+        }
       },
-      "_basic_info_queryResponse": {
+      "_basic_info_updateresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_excel_basic_info_uploadrequest": {},
+      "_basic_info_queryresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1348,10 +674,7 @@
           }
         }
       },
-      "_code_info_basic_query_by__id_Request": {},
-      "_code_info_basic_delete__id_Request": {},
-      "_excel_basic_info_upload_templateRequest": {},
-      "_basic_info_updateResponse": {
+      "_code_info_basic_updateresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1374,7 +697,64 @@
           }
         }
       },
-      "_code_info_ext_delete__id_Response": {
+      "_basic_info_queryrequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "dsdName": {
+            "format": "string",
+            "description": "标准名称",
+            "type": "string"
+          },
+          "dsdCode": {
+            "format": "string",
+            "description": "标准代码",
+            "type": "string"
+          },
+          "dsdLevel": {
+            "format": "string",
+            "description": "标准层级",
+            "type": "string"
+          },
+          "dsdLevelId": {
+            "format": "string",
+            "description": "标准层级ID",
+            "type": "string"
+          },
+          "beginDay": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDay": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          }
+        }
+      },
+      "_excel_basic_info_upload_templaterequest": {},
+      "_code_dir_delete__id_request": {},
+      "_code_dir_addresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1397,7 +777,46 @@
           }
         }
       },
-      "_code_info_ext_query_by__id_Response": {
+      "_code_dir_addrequest": {
+        "properties": {
+          "id": {
+            "format": "int32",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "codeDirId": {
+            "format": "string",
+            "description": "码表标准分类ID",
+            "type": "string"
+          },
+          "codeDirName": {
+            "format": "string",
+            "description": "码表标准分类名称",
+            "type": "string"
+          },
+          "parentId": {
+            "format": "string",
+            "description": "父级ID",
+            "type": "string"
+          },
+          "codeDirLevel": {
+            "format": "string",
+            "description": "码表目录层级",
+            "type": "string"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          }
+        },
+        "required": [
+          "codeDirName",
+          "parentId",
+          "codeDirLevel"
+        ]
+      },
+      "_code_info_basic_query_tableCoderesponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1423,19 +842,29 @@
                 "description": "主键ID",
                 "type": "integer"
               },
-              "dsdCodeInfoId": {
+              "codeDirId": {
                 "format": "string",
-                "description": "关键码表信息表",
+                "description": "所属目录ID",
                 "type": "string"
               },
-              "tableConfCode": {
+              "codeDirLevel": {
                 "format": "string",
-                "description": "建表配置编码",
+                "description": "所属目录层级",
                 "type": "string"
               },
-              "tableConfValue": {
+              "tableName": {
                 "format": "string",
-                "description": "建表配置值",
+                "description": "基础配置-表名",
+                "type": "string"
+              },
+              "tableCode": {
+                "format": "string",
+                "description": "基础配置-表编码",
+                "type": "string"
+              },
+              "tableDesc": {
+                "format": "string",
+                "description": "基础配置-描述",
                 "type": "string"
               },
               "gmtModified": {
@@ -1443,15 +872,580 @@
                 "description": "修改时间",
                 "type": "string"
               },
-              "codeTableFieldExtValues": {
-                "description": "建表配合扩展字段数值(object)",
+              "codeTableFieldsList": {
+                "description": "建表配置字段集合",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "code_table_id": {
+                      "format": "string",
+                      "description": "配置字段编码",
+                      "type": "string"
+                    },
+                    "name_ch": {
+                      "format": "string",
+                      "description": "字段中文名称",
+                      "type": "string"
+                    },
+                    "name_en": {
+                      "format": "string",
+                      "description": "字段英文名称",
+                      "type": "string"
+                    },
+                    "data_type": {
+                      "format": "string",
+                      "description": "字段数据类型",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "codeTableId": {
+                "format": "string",
+                "description": "配置字段编码",
+                "type": "string"
+              },
+              "nameCh": {
+                "format": "string",
+                "description": "字段中文名称",
+                "type": "string"
+              },
+              "nameEn": {
+                "format": "string",
+                "description": "字段英文名称",
+                "type": "string"
+              },
+              "dataType": {
+                "format": "string",
+                "description": "字段数据类型",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_code_info_data_typesresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {}
+          },
+          "-": {
+            "description": "Return object.(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_info_basic_addrequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "codeDirId": {
+            "format": "string",
+            "description": "所属目录ID",
+            "type": "string"
+          },
+          "codeDirLevel": {
+            "format": "string",
+            "description": "所属目录层级",
+            "type": "string"
+          },
+          "tableName": {
+            "format": "string",
+            "description": "基础配置-表名",
+            "type": "string"
+          },
+          "tableCode": {
+            "format": "string",
+            "description": "基础配置-表编码",
+            "type": "string"
+          },
+          "tableDesc": {
+            "format": "string",
+            "description": "基础配置-描述",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          },
+          "codeTableFieldsList": {
+            "description": "建表配置字段集合",
+            "type": "array",
+            "items": {
+              "properties": {
+                "code_table_id": {
+                  "format": "string",
+                  "description": "配置字段编码",
+                  "type": "string"
+                },
+                "name_ch": {
+                  "format": "string",
+                  "description": "字段中文名称",
+                  "type": "string"
+                },
+                "name_en": {
+                  "format": "string",
+                  "description": "字段英文名称",
+                  "type": "string"
+                },
+                "data_type": {
+                  "format": "string",
+                  "description": "字段数据类型",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "codeTableId": {
+            "format": "string",
+            "description": "配置字段编码",
+            "type": "string"
+          },
+          "nameCh": {
+            "format": "string",
+            "description": "字段中文名称",
+            "type": "string"
+          },
+          "nameEn": {
+            "format": "string",
+            "description": "字段英文名称",
+            "type": "string"
+          },
+          "dataType": {
+            "format": "string",
+            "description": "字段数据类型",
+            "type": "string"
+          }
+        },
+        "required": [
+          "codeDirId",
+          "codeDirLevel",
+          "tableName",
+          "tableCode"
+        ]
+      },
+      "_code_info_basic_query_tableCoderequest": {},
+      "_dir_delete_root__id_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_info_ext_updaterequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "dsdCodeInfoId": {
+            "format": "string",
+            "description": "关键码表信息表",
+            "type": "string"
+          },
+          "searchCode": {
+            "format": "string",
+            "description": "建表配置查询编码",
+            "type": "string"
+          },
+          "searchValue": {
+            "format": "string",
+            "description": "建表配置查询值",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          },
+          "codeTableFieldExtValues": {
+            "description": "建表配合扩展字段数值(object)",
+            "type": "object"
+          }
+        },
+        "required": [
+          "dsdCodeInfoId"
+        ]
+      },
+      "_dir_addresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_basic_info_bulk_delete__ids_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_info_basic_query_by__id_request": {},
+      "_code_info_ext_bulk_delete__ids_request": {},
+      "_basic_info_delete__id_request": {},
+      "_dir_updaterequest": {
+        "properties": {
+          "id": {
+            "format": "int32",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "dirDsdId": {
+            "format": "string",
+            "description": "数据标准分类编号",
+            "type": "string"
+          },
+          "dirDsdName": {
+            "format": "string",
+            "description": "数据标准分类名称",
+            "type": "string"
+          },
+          "parentId": {
+            "format": "string",
+            "description": "父级id",
+            "type": "string"
+          },
+          "dsdDirLevel": {
+            "format": "string",
+            "description": "目录节点层级",
+            "type": "string"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dirDsdName",
+          "parentId",
+          "dsdDirLevel"
+        ]
+      },
+      "_dir_delete_root__id_request": {},
+      "_excel_code_info_all_downloadrequest": {},
+      "_code_info_reverse_dbresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_dir_treerequest": {},
+      "_code_info_basic_query_allresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "主键ID",
+                  "type": "integer"
+                },
+                "codeDirId": {
+                  "format": "string",
+                  "description": "所属目录ID",
+                  "type": "string"
+                },
+                "codeDirLevel": {
+                  "format": "string",
+                  "description": "所属目录层级",
+                  "type": "string"
+                },
+                "tableName": {
+                  "format": "string",
+                  "description": "基础配置-表名",
+                  "type": "string"
+                },
+                "tableCode": {
+                  "format": "string",
+                  "description": "基础配置-表编码",
+                  "type": "string"
+                },
+                "tableDesc": {
+                  "format": "string",
+                  "description": "基础配置-描述",
+                  "type": "string"
+                },
+                "gmtModified": {
+                  "format": "string",
+                  "description": "修改时间",
+                  "type": "string"
+                },
+                "codeTableFieldsList": {
+                  "description": "建表配置字段集合",
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "code_table_id": {
+                        "format": "string",
+                        "description": "配置字段编码",
+                        "type": "string"
+                      },
+                      "name_ch": {
+                        "format": "string",
+                        "description": "字段中文名称",
+                        "type": "string"
+                      },
+                      "name_en": {
+                        "format": "string",
+                        "description": "字段英文名称",
+                        "type": "string"
+                      },
+                      "data_type": {
+                        "format": "string",
+                        "description": "字段数据类型",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "codeTableId": {
+                  "format": "string",
+                  "description": "配置字段编码",
+                  "type": "string"
+                },
+                "nameCh": {
+                  "format": "string",
+                  "description": "字段中文名称",
+                  "type": "string"
+                },
+                "nameEn": {
+                  "format": "string",
+                  "description": "字段英文名称",
+                  "type": "string"
+                },
+                "dataType": {
+                  "format": "string",
+                  "description": "字段数据类型",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_code_info_ext_addresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dir_addrequest": {
+        "properties": {
+          "id": {
+            "format": "int32",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "dirDsdId": {
+            "format": "string",
+            "description": "数据标准分类编号",
+            "type": "string"
+          },
+          "dirDsdName": {
+            "format": "string",
+            "description": "数据标准分类名称",
+            "type": "string"
+          },
+          "parentId": {
+            "format": "string",
+            "description": "父级id",
+            "type": "string"
+          },
+          "dsdDirLevel": {
+            "format": "string",
+            "description": "目录节点层级",
+            "type": "string"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dirDsdName",
+          "parentId",
+          "dsdDirLevel"
+        ]
+      },
+      "_dir_treerequest": {},
+      "_excel_code_values_dsdCodeInfoId_uploadresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_info_ext_queryresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "any object": {
+                "description": "any object.(object)",
                 "type": "object"
               }
             }
           }
         }
       },
-      "_code_dir_updateResponse": {
+      "_excel_code_info_all_uploadrequest": {},
+      "_excel_basic_info_uploadresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1474,7 +1468,8 @@
           }
         }
       },
-      "_code_info_basic_addResponse": {
+      "_excel_code_values_dsdCodeInfoId_downloadresponse": {},
+      "_basic_info_delete__id_response": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1497,54 +1492,7 @@
           }
         }
       },
-      "_code_info_ext_bulk_delete__ids_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_excel_code_info_all_downloadResponse": {},
-      "_basic_info_delete__id_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_basic_info_search_code_field_by_codeDirId__codeDirId_Response": {
+      "_basic_info_search_code_field_by_codeDirId__codeDirId_response": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1591,33 +1539,7 @@
           }
         }
       },
-      "_excel_basic_info_download_dirDsdIdResponse": {},
-      "_dir_updateResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_dir_treeRequest": {},
-      "_basic_info_bulk_delete__ids_Request": {},
-      "_basic_info_addRequest": {
+      "_basic_info_updaterequest": {
         "properties": {
           "id": {
             "format": "int32",
@@ -1698,31 +1620,149 @@
           "dsdLevelId"
         ]
       },
-      "_dir_addRequest": {
+      "_dir_treeresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int32",
+                  "description": "No comments found.",
+                  "type": "integer"
+                },
+                "dirDsdId": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "dirDsdName": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "parentId": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "dsdDirLevel": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "children": {
+                  "description": "No comments found.",
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "_excel_code_values_dsdCodeInfoId_downloadrequest": {},
+      "_code_info_ext_addrequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "dsdCodeInfoId": {
+            "format": "string",
+            "description": "关键码表信息表",
+            "type": "string"
+          },
+          "searchCode": {
+            "format": "string",
+            "description": "建表配置查询编码",
+            "type": "string"
+          },
+          "searchValue": {
+            "format": "string",
+            "description": "建表配置查询值",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          },
+          "codeTableFieldExtValues": {
+            "description": "建表配合扩展字段数值(object)",
+            "type": "object"
+          }
+        },
+        "required": [
+          "dsdCodeInfoId"
+        ]
+      },
+      "_excel_basic_info_download_dirDsdIdrequest": {},
+      "_code_info_basic_delete__id_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_dir_updaterequest": {
         "properties": {
           "id": {
             "format": "int32",
             "description": "主键ID",
             "type": "integer"
           },
-          "dirDsdId": {
+          "codeDirId": {
             "format": "string",
-            "description": "数据标准分类编号",
+            "description": "码表标准分类ID",
             "type": "string"
           },
-          "dirDsdName": {
+          "codeDirName": {
             "format": "string",
-            "description": "数据标准分类名称",
+            "description": "码表标准分类名称",
             "type": "string"
           },
           "parentId": {
             "format": "string",
-            "description": "父级id",
+            "description": "父级ID",
             "type": "string"
           },
-          "dsdDirLevel": {
+          "codeDirLevel": {
             "format": "string",
-            "description": "目录节点层级",
+            "description": "码表目录层级",
             "type": "string"
           },
           "description": {
@@ -1732,12 +1772,59 @@
           }
         },
         "required": [
-          "dirDsdName",
+          "codeDirName",
           "parentId",
-          "dsdDirLevel"
+          "codeDirLevel"
         ]
       },
-      "_code_info_basic_queryResponse": {
+      "_excel_basic_info_download_dirDsdIdresponse": {},
+      "_code_info_ext_bulk_delete__ids_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dir_updateresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_info_basic_queryresponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1868,8 +1955,7 @@
           }
         }
       },
-      "_code_dir_treeRequest": {},
-      "_code_dir_delete_root__id_Response": {
+      "_code_dir_delete__id_response": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1892,7 +1978,117 @@
           }
         }
       },
-      "_code_info_basic_delete__id_Response": {
+      "_excel_code_info_upload_templaterequest": {},
+      "_code_info_basic_query_by__id_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "主键ID",
+                "type": "integer"
+              },
+              "codeDirId": {
+                "format": "string",
+                "description": "所属目录ID",
+                "type": "string"
+              },
+              "codeDirLevel": {
+                "format": "string",
+                "description": "所属目录层级",
+                "type": "string"
+              },
+              "tableName": {
+                "format": "string",
+                "description": "基础配置-表名",
+                "type": "string"
+              },
+              "tableCode": {
+                "format": "string",
+                "description": "基础配置-表编码",
+                "type": "string"
+              },
+              "tableDesc": {
+                "format": "string",
+                "description": "基础配置-描述",
+                "type": "string"
+              },
+              "gmtModified": {
+                "format": "string",
+                "description": "修改时间",
+                "type": "string"
+              },
+              "codeTableFieldsList": {
+                "description": "建表配置字段集合",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "code_table_id": {
+                      "format": "string",
+                      "description": "配置字段编码",
+                      "type": "string"
+                    },
+                    "name_ch": {
+                      "format": "string",
+                      "description": "字段中文名称",
+                      "type": "string"
+                    },
+                    "name_en": {
+                      "format": "string",
+                      "description": "字段英文名称",
+                      "type": "string"
+                    },
+                    "data_type": {
+                      "format": "string",
+                      "description": "字段数据类型",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "codeTableId": {
+                "format": "string",
+                "description": "配置字段编码",
+                "type": "string"
+              },
+              "nameCh": {
+                "format": "string",
+                "description": "字段中文名称",
+                "type": "string"
+              },
+              "nameEn": {
+                "format": "string",
+                "description": "字段英文名称",
+                "type": "string"
+              },
+              "dataType": {
+                "format": "string",
+                "description": "字段数据类型",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_code_info_ext_delete__id_request": {},
+      "_code_dir_delete_root__id_response": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1915,9 +2111,9 @@
           }
         }
       },
-      "_excel_code_info_all_uploadRequest": {},
-      "_code_info_basic_delete_bulk__ids_Request": {},
-      "_code_info_ext_queryRequest": {
+      "_basic_info_bulk_delete__ids_request": {},
+      "_excel_basic_info_upload_dirDsdIdrequest": {},
+      "_code_info_basic_queryrequest": {
         "properties": {
           "pagination": {
             "description": "No comments found.(object)",
@@ -1950,111 +2146,141 @@
             "description": "结束时间",
             "type": "string"
           },
-          "dsdCodeInfoId": {
-            "format": "string",
-            "description": "关键码表信息表id",
-            "type": "string"
-          },
-          "tableConfCode": {
-            "format": "string",
-            "description": "建表配置编码",
-            "type": "string"
-          },
-          "tableConfValue": {
-            "format": "string",
-            "description": "建表配置值",
-            "type": "string"
-          }
-        }
-      },
-      "_basic_info_addResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_excel_basic_info_uploadRequest": {},
-      "_excel_code_values_dsdCodeInfoId_downloadRequest": {},
-      "_code_dir_delete__id_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_code_dir_updateRequest": {
-        "properties": {
-          "id": {
-            "format": "int32",
-            "description": "主键ID",
-            "type": "integer"
-          },
           "codeDirId": {
             "format": "string",
-            "description": "码表标准分类ID",
-            "type": "string"
-          },
-          "codeDirName": {
-            "format": "string",
-            "description": "码表标准分类名称",
-            "type": "string"
-          },
-          "parentId": {
-            "format": "string",
-            "description": "父级ID",
+            "description": "所属目录id",
             "type": "string"
           },
           "codeDirLevel": {
             "format": "string",
-            "description": "码表目录层级",
+            "description": "所属目录层级",
             "type": "string"
           },
-          "description": {
+          "tableName": {
             "format": "string",
-            "description": "描述",
+            "description": "基础配置-表名",
+            "type": "string"
+          },
+          "tableCode": {
+            "format": "string",
+            "description": "基础配置-表编码",
             "type": "string"
           }
         },
         "required": [
-          "codeDirName",
-          "parentId",
+          "codeDirId",
           "codeDirLevel"
         ]
       },
-      "_code_info_data_typesRequest": {}
+      "_basic_info_addresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_info_reverse_dbrequest": {
+        "properties": {
+          "codeDirId": {
+            "format": "string",
+            "description": "所属码表目录",
+            "type": "string"
+          },
+          "codeDirLevel": {
+            "format": "string",
+            "description": "所属码表层级目录",
+            "type": "string"
+          },
+          "isUpdate": {
+            "format": "string",
+            "description": "更新已有表: 0 :不更新, 1: 更新",
+            "type": "string"
+          },
+          "isReverseData": {
+            "format": "string",
+            "description": "逆向表数据: 0 :不逆向, 1: 覆盖",
+            "type": "string"
+          },
+          "dataSourceJobVO": {
+            "description": "数据源连接信息,TODO 暂时使用接口传参的方式(object)",
+            "type": "object",
+            "properties": {
+              "name": {
+                "format": "string",
+                "description": "数据源连接名称",
+                "type": "string"
+              },
+              "dataConnectType": {
+                "format": "string",
+                "description": "数据源连接类型",
+                "type": "string"
+              },
+              "mysqlDataConnect": {
+                "description": "mysql类型数据源连接信息(object)",
+                "type": "object",
+                "properties": {
+                  "db": {
+                    "format": "string",
+                    "description": "数据库名称",
+                    "type": "string"
+                  },
+                  "table": {
+                    "format": "string",
+                    "description": "表名称",
+                    "type": "string"
+                  },
+                  "host": {
+                    "format": "string",
+                    "description": "主机host",
+                    "type": "string"
+                  },
+                  "port": {
+                    "format": "string",
+                    "description": "端口port",
+                    "type": "string"
+                  },
+                  "username": {
+                    "format": "string",
+                    "description": "用户名称",
+                    "type": "string"
+                  },
+                  "password": {
+                    "format": "string",
+                    "description": "用户密码",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "codeDirId",
+          "codeDirLevel",
+          "isUpdate",
+          "isReverseData"
+        ]
+      },
+      "_dir_delete__id_request": {},
+      "_code_info_basic_query_allrequest": {},
+      "_excel_code_values_download_templaterequest": {},
+      "_excel_code_info_all_downloadresponse": {}
     }
   },
   "servers": [
@@ -2070,7 +2296,7 @@
         "deprecated": false,
         "description": "标准目录支持根节点关联删除子节点方式",
         "tags": [
-          "DataStandardDirController"
+          "数据标准__目录接口"
         ],
         "responses": {
           "200": {
@@ -2078,19 +2304,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_dir_delete_root__id_Response"
+                  "$ref": "#/components/schemas/_dir_delete_root__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"1r2nxe\",\n  \"tips\": \"6udp68\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"ma710c\",\n  \"tips\": \"x2lrc3\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteDsdDirRoot",
+        "operationId": "429b999fb6c3ec66169fb022920f7c30",
         "parameters": [
           {
             "schema": {
@@ -2100,7 +2326,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "586",
+            "example": "796",
             "name": "id"
           }
         ]
@@ -2112,7 +2338,7 @@
         "deprecated": false,
         "description": "删除码表数值信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "responses": {
           "200": {
@@ -2120,19 +2346,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_ext_delete__id_Response"
+                  "$ref": "#/components/schemas/_code_info_ext_delete__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"68ficq\",\n  \"tips\": \"7v39bq\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"sceihu\",\n  \"tips\": \"nexwpk\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteDsdCodeInfoExt",
+        "operationId": "f64de930335c3d5d52ace57c14372571",
         "parameters": [
           {
             "schema": {
@@ -2142,7 +2368,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "873",
+            "example": "152",
             "name": "id"
           }
         ]
@@ -2154,7 +2380,7 @@
         "deprecated": false,
         "description": "码表目录单叶子节点删除方式",
         "tags": [
-          "DataStandardCodeDirController"
+          "数据标准__码表目录接口"
         ],
         "responses": {
           "200": {
@@ -2162,19 +2388,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_dir_delete__id_Response"
+                  "$ref": "#/components/schemas/_code_dir_delete__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"0z9h1e\",\n  \"tips\": \"6bapsi\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"82l7ow\",\n  \"tips\": \"2ldssx\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteDsdDir",
+        "operationId": "aa553c99c2dd4897e98c80bf6e98f68a",
         "parameters": [
           {
             "schema": {
@@ -2184,7 +2410,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "900",
+            "example": "351",
             "name": "id"
           }
         ]
@@ -2196,18 +2422,18 @@
         "deprecated": false,
         "description": "统一查询标准信息入口",
         "tags": [
-          "DataStandardBasicInfoController"
+          "数据标准__标准基本信息接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_basic_info_queryRequest"
+                "$ref": "#/components/schemas/_basic_info_queryrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"bjp3kq\"\n  },\n  \"dsdName\": \"danyelle.moore\",\n  \"dsdCode\": \"52239\",\n  \"dsdLevel\": \"zdtifh\",\n  \"dsdLevelId\": \"50\",\n  \"beginDay\": \"5e8842\",\n  \"endDay\": \"cooqqr\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"5m6h42\"\n  },\n  \"dsdName\": \"鑫鹏.覃\",\n  \"dsdCode\": \"45468\",\n  \"dsdLevel\": \"mkkoyt\",\n  \"dsdLevelId\": \"75\",\n  \"beginDay\": \"z2klwk\",\n  \"endDay\": \"76gpt2\"\n}"
                 }
               }
             }
@@ -2219,19 +2445,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_basic_info_queryResponse"
+                  "$ref": "#/components/schemas/_basic_info_queryresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"130238\",\n  \"tips\": \"866lgj\",\n  \"data\": {\n    \"total\": 580,\n    \"pageNum\": 759,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 448,\n        \"dsdName\": \"danyelle.moore\",\n        \"dsdCode\": \"52239\",\n        \"colName\": \"danyelle.moore\",\n        \"dataType\": \"f3blms\",\n        \"dataCapacity\": \"taprs7\",\n        \"codeDirId\": \"50\",\n        \"useCodeLevel\": \"3or5c7\",\n        \"codeCol\": \"6bth27\",\n        \"dsdLevel\": \"5rg4g5\",\n        \"dsdLevelId\": \"50\",\n        \"dsdLevelName\": \"danyelle.moore\",\n        \"description\": \"cahyqt\",\n        \"gmtModified\": \"2021-09-08 17:33:59\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"onz54x\",\n  \"tips\": \"foqomh\",\n  \"data\": {\n    \"total\": 382,\n    \"pageNum\": 540,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 906,\n        \"dsdName\": \"鑫鹏.覃\",\n        \"dsdCode\": \"45468\",\n        \"colName\": \"鑫鹏.覃\",\n        \"dataType\": \"tdjpwi\",\n        \"dataCapacity\": \"bqt6qx\",\n        \"codeDirId\": \"75\",\n        \"useCodeLevel\": \"xyyy8v\",\n        \"codeCol\": \"qobo0w\",\n        \"dsdLevel\": \"cxx01b\",\n        \"dsdLevelId\": \"75\",\n        \"dsdLevelName\": \"鑫鹏.覃\",\n        \"description\": \"unjrnt\",\n        \"gmtModified\": \"2021-09-27 11:01:20\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getDsdBasicInfoByDsdLevelId",
+        "operationId": "9291c30a8704b60ca066f1eb37646f6b",
         "parameters": []
       }
     },
@@ -2241,7 +2467,7 @@
         "deprecated": false,
         "description": "标准目录单子节点删除方式",
         "tags": [
-          "DataStandardDirController"
+          "数据标准__目录接口"
         ],
         "responses": {
           "200": {
@@ -2249,19 +2475,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_dir_delete__id_Response"
+                  "$ref": "#/components/schemas/_dir_delete__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"oe7aqx\",\n  \"tips\": \"959ayu\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"ww95i0\",\n  \"tips\": \"5i182e\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteDsdDir",
+        "operationId": "968201adeb0c7742766c50f5d92095d1",
         "parameters": [
           {
             "schema": {
@@ -2271,7 +2497,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "909",
+            "example": "732",
             "name": "id"
           }
         ]
@@ -2283,7 +2509,7 @@
         "deprecated": false,
         "description": "标准基本信息excel__导入数据(默认根据Excel中选择的层级进行导入)",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
@@ -2314,19 +2540,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_basic_info_uploadResponse"
+                  "$ref": "#/components/schemas/_excel_basic_info_uploadresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"qm0x3j\",\n  \"tips\": \"tlj9u1\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"c2sp1d\",\n  \"tips\": \"30zdng\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "basicInfoUploadBydirDsdId",
+        "operationId": "abaac1bef4b3d6e411e75047b05bb5f6",
         "parameters": []
       }
     },
@@ -2336,13 +2562,13 @@
         "deprecated": false,
         "description": "标准基本信息excel__模板下载",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded;charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_excel_basic_info_upload_templateRequest"
+                "$ref": "#/components/schemas/_excel_basic_info_upload_templaterequest"
               },
               "examples": {
                 "json": {
@@ -2359,7 +2585,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_basic_info_upload_templateResponse"
+                  "$ref": "#/components/schemas/_excel_basic_info_upload_templateresponse"
                 },
                 "examples": {
                   "json": {
@@ -2371,7 +2597,7 @@
             }
           }
         },
-        "operationId": "basicInfoDownloadTemplate",
+        "operationId": "a0213afabf0ff0a06e76adae67df96a6",
         "parameters": []
       }
     },
@@ -2381,18 +2607,18 @@
         "deprecated": false,
         "description": "标准基本信息excel__导出数据 (根据标准分类目录Id)",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded;charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_excel_basic_info_download_dirDsdIdRequest"
+                "$ref": "#/components/schemas/_excel_basic_info_download_dirDsdIdrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/basic/info/download/dirDsdId --data \u0027dirDsdId\u003d50\u0027"
+                  "value": "curl -X POST -i http://{{server}}/excel/basic/info/download/dirDsdId --data \u0027dirDsdId\u003d75\u0027"
                 }
               }
             }
@@ -2404,7 +2630,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_basic_info_download_dirDsdIdResponse"
+                  "$ref": "#/components/schemas/_excel_basic_info_download_dirDsdIdresponse"
                 },
                 "examples": {
                   "json": {
@@ -2416,7 +2642,7 @@
             }
           }
         },
-        "operationId": "basicInfoDownloadByDirDsdId",
+        "operationId": "f69a43cb107888491229904ff91bb4bb",
         "parameters": [
           {
             "schema": {
@@ -2425,7 +2651,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "75",
             "name": "dirDsdId"
           }
         ]
@@ -2437,7 +2663,7 @@
         "deprecated": false,
         "description": "码表目录支持根节点删除关联删除叶子节点方式",
         "tags": [
-          "DataStandardCodeDirController"
+          "数据标准__码表目录接口"
         ],
         "responses": {
           "200": {
@@ -2445,19 +2671,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_dir_delete_root__id_Response"
+                  "$ref": "#/components/schemas/_code_dir_delete_root__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"t1dof8\",\n  \"tips\": \"4e3psf\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"2fbehs\",\n  \"tips\": \"jmr4aq\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteDsdDirRoot",
+        "operationId": "f2ee3617fffa5bdf5be582bddb5af835",
         "parameters": [
           {
             "schema": {
@@ -2467,7 +2693,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "534",
+            "example": "744",
             "name": "id"
           }
         ]
@@ -2479,18 +2705,18 @@
         "deprecated": false,
         "description": "编辑数据标准分类目录",
         "tags": [
-          "DataStandardDirController"
+          "数据标准__目录接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_dir_updateRequest"
+                "$ref": "#/components/schemas/_dir_updaterequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 394,\n  \"dirDsdId\": \"50\",\n  \"dirDsdName\": \"danyelle.moore\",\n  \"parentId\": \"50\",\n  \"dsdDirLevel\": \"its70k\",\n  \"description\": \"sko0cz\"\n}"
+                  "value": "{\n  \"id\": 288,\n  \"dirDsdId\": \"75\",\n  \"dirDsdName\": \"鑫鹏.覃\",\n  \"parentId\": \"75\",\n  \"dsdDirLevel\": \"luri5r\",\n  \"description\": \"aqz8x5\"\n}"
                 }
               }
             }
@@ -2502,19 +2728,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_dir_updateResponse"
+                  "$ref": "#/components/schemas/_dir_updateresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"wi4jlw\",\n  \"tips\": \"iuee0m\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"qgjafu\",\n  \"tips\": \"uipiui\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "updateDsdDir",
+        "operationId": "2870663c8bb97f1e4824e2ecb2433a75",
         "parameters": []
       }
     },
@@ -2524,18 +2750,18 @@
         "deprecated": false,
         "description": "编辑码表信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_info_basic_updateRequest"
+                "$ref": "#/components/schemas/_code_info_basic_updaterequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 51,\n  \"codeDirId\": \"50\",\n  \"codeDirLevel\": \"93zlfg\",\n  \"tableName\": \"danyelle.moore\",\n  \"tableCode\": \"52239\",\n  \"tableDesc\": \"j8p730\",\n  \"gmtModified\": \"2021-09-08 17:33:59\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"50\",\n      \"name_ch\": \"9vw7pl\",\n      \"name_en\": \"5ums4h\",\n      \"data_type\": \"q0kckr\"\n    }\n  ],\n  \"codeTableId\": \"50\",\n  \"nameCh\": \"esil7o\",\n  \"nameEn\": \"3v539r\",\n  \"dataType\": \"azrv2n\"\n}"
+                  "value": "{\n  \"id\": 809,\n  \"codeDirId\": \"75\",\n  \"codeDirLevel\": \"lkono2\",\n  \"tableName\": \"鑫鹏.覃\",\n  \"tableCode\": \"45468\",\n  \"tableDesc\": \"g6qcpb\",\n  \"gmtModified\": \"2021-09-27 11:01:20\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"75\",\n      \"name_ch\": \"5s7tdr\",\n      \"name_en\": \"kky1y9\",\n      \"data_type\": \"rqvl9o\"\n    }\n  ],\n  \"codeTableId\": \"75\",\n  \"nameCh\": \"nb5lnl\",\n  \"nameEn\": \"fth4ke\",\n  \"dataType\": \"xcr0vn\"\n}"
                 }
               }
             }
@@ -2547,19 +2773,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_basic_updateResponse"
+                  "$ref": "#/components/schemas/_code_info_basic_updateresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"n0bu92\",\n  \"tips\": \"0xrn2n\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"88eo9k\",\n  \"tips\": \"1jzsx4\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "modifyDsdCodeInfo",
+        "operationId": "de616b1f53b1b4411c963623010448f4",
         "parameters": []
       }
     },
@@ -2569,18 +2795,18 @@
         "deprecated": false,
         "description": "新增数据标准分类目录",
         "tags": [
-          "DataStandardDirController"
+          "数据标准__目录接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_dir_addRequest"
+                "$ref": "#/components/schemas/_dir_addrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 760,\n  \"dirDsdId\": \"50\",\n  \"dirDsdName\": \"danyelle.moore\",\n  \"parentId\": \"50\",\n  \"dsdDirLevel\": \"rl1mor\",\n  \"description\": \"ysmq60\"\n}"
+                  "value": "{\n  \"id\": 279,\n  \"dirDsdId\": \"75\",\n  \"dirDsdName\": \"鑫鹏.覃\",\n  \"parentId\": \"75\",\n  \"dsdDirLevel\": \"gvd2ce\",\n  \"description\": \"dpsugf\"\n}"
                 }
               }
             }
@@ -2592,19 +2818,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_dir_addResponse"
+                  "$ref": "#/components/schemas/_dir_addresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"tdmw6k\",\n  \"tips\": \"la9dlb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"cawskv\",\n  \"tips\": \"symfnz\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "addDsdDir",
+        "operationId": "f01702ed9c51444c980810334fc03c1c",
         "parameters": []
       }
     },
@@ -2614,7 +2840,7 @@
         "deprecated": false,
         "description": "码表数值信息列表__导入excel数据(根据dsdCodeInfoId表级数据)",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
@@ -2631,14 +2857,14 @@
                   "dsdCodeInfoId": {
                     "description": "No comments found.",
                     "type": "string",
-                    "example": "\"50\""
+                    "example": "\"75\""
                   }
                 }
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/code/values/dsdCodeInfoId/upload --data \u0027dsdCodeInfoId\u003d50\u0027"
+                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/code/values/dsdCodeInfoId/upload --data \u0027dsdCodeInfoId\u003d75\u0027"
                 }
               }
             }
@@ -2650,19 +2876,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_code_values_dsdCodeInfoId_uploadResponse"
+                  "$ref": "#/components/schemas/_excel_code_values_dsdCodeInfoId_uploadresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"m8ag0q\",\n  \"tips\": \"3r0awf\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"t5m6o5\",\n  \"tips\": \"cczcbd\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "codeValuesUploadByCodeInfoId",
+        "operationId": "232264f81e20ec55eb29d662cb7a624e",
         "parameters": []
       }
     },
@@ -2672,7 +2898,7 @@
         "deprecated": false,
         "description": "标准基本信息excel__导入数据 (根据标准分类目录Id)",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
@@ -2689,14 +2915,14 @@
                   "dirDsdId": {
                     "description": "No comments found.",
                     "type": "string",
-                    "example": "\"50\""
+                    "example": "\"75\""
                   }
                 }
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/basic/info/upload/dirDsdId --data \u0027dirDsdId\u003d50\u0027"
+                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/basic/info/upload/dirDsdId --data \u0027dirDsdId\u003d75\u0027"
                 }
               }
             }
@@ -2708,19 +2934,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_basic_info_upload_dirDsdIdResponse"
+                  "$ref": "#/components/schemas/_excel_basic_info_upload_dirDsdIdresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"r4rzgt\",\n  \"tips\": \"r40w4v\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"wmdkyj\",\n  \"tips\": \"m3hxns\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "basicInfoUploadByDirDsdId",
+        "operationId": "7e5417fee558ac05f6b6990eefa69106",
         "parameters": []
       }
     },
@@ -2730,7 +2956,7 @@
         "deprecated": false,
         "description": "获取数据标准码表分类目录树",
         "tags": [
-          "DataStandardCodeDirController"
+          "数据标准__码表目录接口"
         ],
         "responses": {
           "200": {
@@ -2738,19 +2964,64 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_dir_treeResponse"
+                  "$ref": "#/components/schemas/_code_dir_treeresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"9ogw7g\",\n  \"tips\": \"3dtnyp\",\n  \"data\": [\n    {\n      \"id\": 665,\n      \"codeDirId\": \"50\",\n      \"codeDirName\": \"danyelle.moore\",\n      \"parentId\": \"50\",\n      \"codeDirLevel\": \"223psv\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"bm4895\",\n  \"tips\": \"9hoo9f\",\n  \"data\": [\n    {\n      \"id\": 76,\n      \"codeDirId\": \"75\",\n      \"codeDirName\": \"鑫鹏.覃\",\n      \"parentId\": \"75\",\n      \"codeDirLevel\": \"le9825\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getDsdDirTree",
+        "operationId": "de2047530645cc31ad80216c05f45f1b",
+        "parameters": []
+      }
+    },
+    "/excel/basic/info/download/all": {
+      "post": {
+        "summary": "标准基本信息excel__全部导出数据",
+        "deprecated": false,
+        "description": "标准基本信息excel__全部导出数据",
+        "tags": [
+          "数据标准__excel导入导出功能接口"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_excel_basic_info_download_allrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://{{server}}/excel/basic/info/download/all"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_excel_basic_info_download_allresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Doesn\u0027t return a value."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "e34c9269dd4d93a7fe6684810ea3b478",
         "parameters": []
       }
     },
@@ -2760,7 +3031,7 @@
         "deprecated": false,
         "description": "批量删除码表信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "responses": {
           "200": {
@@ -2768,19 +3039,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_basic_delete_bulk__ids_Response"
+                  "$ref": "#/components/schemas/_code_info_basic_delete_bulk__ids_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"epl3s7\",\n  \"tips\": \"nz73av\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"niq3af\",\n  \"tips\": \"77cp4t\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteBulkDsdCodeInfo",
+        "operationId": "4322c32f28b1333045ecab3b7b7e87e6",
         "parameters": [
           {
             "schema": {
@@ -2789,7 +3060,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "q4hifb",
+            "example": "ygyild",
             "name": "ids"
           }
         ]
@@ -2801,7 +3072,7 @@
         "deprecated": false,
         "description": "批量删除标准信息",
         "tags": [
-          "DataStandardBasicInfoController"
+          "数据标准__标准基本信息接口"
         ],
         "responses": {
           "200": {
@@ -2809,19 +3080,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_basic_info_bulk_delete__ids_Response"
+                  "$ref": "#/components/schemas/_basic_info_bulk_delete__ids_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"tebn15\",\n  \"tips\": \"vqmza7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"7prhml\",\n  \"tips\": \"061epu\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "bulkDeleteDsdBasicInfo",
+        "operationId": "770c58bf1c6fd8a7454356760b60a72c",
         "parameters": [
           {
             "schema": {
@@ -2830,7 +3101,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "668o0d",
+            "example": "b7kysi",
             "name": "ids"
           }
         ]
@@ -2842,18 +3113,18 @@
         "deprecated": false,
         "description": "高级筛选_查询码表数值以及扩展信息列表",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_info_ext_queryRequest"
+                "$ref": "#/components/schemas/_code_info_ext_queryrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"m603r6\"\n  },\n  \"beginDay\": \"3qf4ae\",\n  \"endDay\": \"htx7k8\",\n  \"dsdCodeInfoId\": \"50\",\n  \"tableConfCode\": \"52239\",\n  \"tableConfValue\": \"nb4g6a\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"r3v43e\"\n  },\n  \"beginDay\": \"wexlul\",\n  \"endDay\": \"s6g9lh\",\n  \"dsdCodeInfoId\": \"75\",\n  \"searchCode\": \"45468\",\n  \"searchValue\": \"dnd8gi\"\n}"
                 }
               }
             }
@@ -2865,19 +3136,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_ext_queryResponse"
+                  "$ref": "#/components/schemas/_code_info_ext_queryresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"rxwley\",\n  \"tips\": \"w7uqvw\",\n  \"data\": {\n    \"mapKey\": {\n      \"waring\": \"You may use java.util.Object for Map value; smart-doc can\u0027t be handle.\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"075xcx\",\n  \"tips\": \"n9uhgn\",\n  \"data\": {\n    \"mapKey\": {\n      \"waring\": \"You may use java.util.Object for Map value; smart-doc can\u0027t be handle.\"\n    }\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getDsdCodeInfoExt",
+        "operationId": "32b56a231d8c73af10dd0b2f92d04f94",
         "parameters": []
       }
     },
@@ -2887,18 +3158,18 @@
         "deprecated": false,
         "description": "编辑码表数值信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_info_ext_updateRequest"
+                "$ref": "#/components/schemas/_code_info_ext_updaterequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 579,\n  \"dsdCodeInfoId\": \"50\",\n  \"tableConfCode\": \"52239\",\n  \"tableConfValue\": \"evt36e\",\n  \"gmtModified\": \"2021-09-08 17:33:59\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"f7csku\"\n  }\n}"
+                  "value": "{\n  \"id\": 939,\n  \"dsdCodeInfoId\": \"75\",\n  \"searchCode\": \"45468\",\n  \"searchValue\": \"at0t0d\",\n  \"gmtModified\": \"2021-09-27 11:01:20\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"74tly6\"\n  }\n}"
                 }
               }
             }
@@ -2910,19 +3181,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_ext_updateResponse"
+                  "$ref": "#/components/schemas/_code_info_ext_updateresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"0z8sf5\",\n  \"tips\": \"2cp1ge\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"mwialq\",\n  \"tips\": \"470270\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "modifyDsdCodeInfoExt",
+        "operationId": "dbfc2b7fa44affd6e6dd0c3f90173dd6",
         "parameters": []
       }
     },
@@ -2932,7 +3203,7 @@
         "deprecated": false,
         "description": "获取数据标准分类目录树",
         "tags": [
-          "DataStandardDirController"
+          "数据标准__目录接口"
         ],
         "responses": {
           "200": {
@@ -2940,19 +3211,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_dir_treeResponse"
+                  "$ref": "#/components/schemas/_dir_treeresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"h2mgld\",\n  \"tips\": \"qn0ecj\",\n  \"data\": [\n    {\n      \"id\": 374,\n      \"dirDsdId\": \"50\",\n      \"dirDsdName\": \"danyelle.moore\",\n      \"parentId\": \"50\",\n      \"dsdDirLevel\": \"enaf0h\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"8j3gdi\",\n  \"tips\": \"f203kx\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"dirDsdId\": \"75\",\n      \"dirDsdName\": \"鑫鹏.覃\",\n      \"parentId\": \"75\",\n      \"dsdDirLevel\": \"1pe0os\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getDsdDirTree",
+        "operationId": "b80c2d73b93fdea755f6b18b41085aa9",
         "parameters": []
       }
     },
@@ -2962,18 +3233,18 @@
         "deprecated": false,
         "description": "码表数据逆向数据库功能",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_info_reverse_dbRequest"
+                "$ref": "#/components/schemas/_code_info_reverse_dbrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"codeDirId\": \"50\",\n  \"codeDirLevel\": \"u43vsz\",\n  \"isUpdate\": \"2021-09-08\",\n  \"isReverseData\": \"n4fbqm\",\n  \"dataSourceJobVO\": {\n    \"name\": \"danyelle.moore\",\n    \"dataConnectType\": \"q875ht\",\n    \"mysqlDataConnect\": {\n      \"db\": \"5lvc9h\",\n      \"table\": \"ahrai6\",\n      \"host\": \"smnntf\",\n      \"port\": \"05eton\",\n      \"username\": \"danyelle.moore\",\n      \"password\": \"eno1ze\"\n    }\n  }\n}"
+                  "value": "{\n  \"codeDirId\": \"75\",\n  \"codeDirLevel\": \"bd7ly7\",\n  \"isUpdate\": \"2021-09-27\",\n  \"isReverseData\": \"ftr7uw\",\n  \"dataSourceJobVO\": {\n    \"name\": \"鑫鹏.覃\",\n    \"dataConnectType\": \"w2wsoi\",\n    \"mysqlDataConnect\": {\n      \"db\": \"8u9r8q\",\n      \"table\": \"3h3tr6\",\n      \"host\": \"wbewtt\",\n      \"port\": \"bkcyki\",\n      \"username\": \"鑫鹏.覃\",\n      \"password\": \"xqs9zy\"\n    }\n  }\n}"
                 }
               }
             }
@@ -2985,19 +3256,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_reverse_dbResponse"
+                  "$ref": "#/components/schemas/_code_info_reverse_dbresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"c56bbf\",\n  \"tips\": \"sk50c3\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"eberh2\",\n  \"tips\": \"e7p7hh\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "dsdCodeInfoReverseDB",
+        "operationId": "1ba4219e60a968ce85982a5fe239141e",
         "parameters": []
       }
     },
@@ -3007,13 +3278,13 @@
         "deprecated": false,
         "description": "码表基本信息excel__模板下载",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded;charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_excel_code_info_upload_templateRequest"
+                "$ref": "#/components/schemas/_excel_code_info_upload_templaterequest"
               },
               "examples": {
                 "json": {
@@ -3030,7 +3301,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_code_info_upload_templateResponse"
+                  "$ref": "#/components/schemas/_excel_code_info_upload_templateresponse"
                 },
                 "examples": {
                   "json": {
@@ -3042,8 +3313,49 @@
             }
           }
         },
-        "operationId": "ccodeInfoDownloadTemplate",
+        "operationId": "a73994dbc76621930a7bbf6362a6150c",
         "parameters": []
+      }
+    },
+    "/basic/info/search/code/field/by/codeDirId/{codeDirId}": {
+      "get": {
+        "summary": "引用码表字段",
+        "deprecated": false,
+        "description": "引用码表字段",
+        "tags": [
+          "数据标准__标准基本信息接口"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_basic_info_search_code_field_by_codeDirId__codeDirId_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"kr750h\",\n  \"tips\": \"9vdjk7\",\n  \"data\": [\n    {\n      \"code_table_id\": \"75\",\n      \"name_ch\": \"15nrek\",\n      \"name_en\": \"hwea7b\",\n      \"data_type\": \"7azeiw\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "63eb3f7a606689bb7f1a5b35e3eae47c",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "75",
+            "name": "codeDirId"
+          }
+        ]
       }
     },
     "/excel/code/info/all/upload": {
@@ -3052,7 +3364,7 @@
         "deprecated": false,
         "description": "码表基本信息列表__导入excel数据(全量)",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
@@ -3069,14 +3381,14 @@
                   "codeDirId": {
                     "description": "No comments found.",
                     "type": "string",
-                    "example": "\"50\""
+                    "example": "\"75\""
                   }
                 }
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/code/info/all/upload --data \u0027codeDirId\u003d50\u0027"
+                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/code/info/all/upload --data \u0027codeDirId\u003d75\u0027"
                 }
               }
             }
@@ -3088,61 +3400,20 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_code_info_all_uploadResponse"
+                  "$ref": "#/components/schemas/_excel_code_info_all_uploadresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"exck8n\",\n  \"tips\": \"95qt20\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"sbe3z3\",\n  \"tips\": \"iyxfr9\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "codeInfoAllUpload",
+        "operationId": "7c8838da7ded316c8184e929b12238f8",
         "parameters": []
-      }
-    },
-    "/basic/info/search/code/field/by/codeDirId/{codeDirId}": {
-      "get": {
-        "summary": "引用码表字段",
-        "deprecated": false,
-        "description": "引用码表字段",
-        "tags": [
-          "DataStandardBasicInfoController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_basic_info_search_code_field_by_codeDirId__codeDirId_Response"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"485t7g\",\n  \"tips\": \"pfebmj\",\n  \"data\": [\n    {\n      \"code_table_id\": \"50\",\n      \"name_ch\": \"levx4c\",\n      \"name_en\": \"ps8o2a\",\n      \"data_type\": \"jinsn2\"\n    }\n  ]\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "getCodeFieldByCodeDirId",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "No comments found.",
-            "required": true,
-            "example": "50",
-            "name": "codeDirId"
-          }
-        ]
       }
     },
     "/code/info/basic/delete/{id}": {
@@ -3151,7 +3422,7 @@
         "deprecated": false,
         "description": "删除码表信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "responses": {
           "200": {
@@ -3159,19 +3430,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_basic_delete__id_Response"
+                  "$ref": "#/components/schemas/_code_info_basic_delete__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"jbwzli\",\n  \"tips\": \"mxqg5z\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"153ila\",\n  \"tips\": \"oytkk6\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteDsdCodeInfo",
+        "operationId": "59a1d239a2d7cc814bf1eaaba6f908bc",
         "parameters": [
           {
             "schema": {
@@ -3181,7 +3452,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "658",
+            "example": "288",
             "name": "id"
           }
         ]
@@ -3193,18 +3464,18 @@
         "deprecated": false,
         "description": "新增标准信息",
         "tags": [
-          "DataStandardBasicInfoController"
+          "数据标准__标准基本信息接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_basic_info_addRequest"
+                "$ref": "#/components/schemas/_basic_info_addrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 605,\n  \"dsdName\": \"danyelle.moore\",\n  \"dsdCode\": \"52239\",\n  \"colName\": \"danyelle.moore\",\n  \"dataType\": \"6jgiiq\",\n  \"dataCapacity\": \"myu1jm\",\n  \"codeDirId\": \"50\",\n  \"useCodeLevel\": \"k0vgs6\",\n  \"codeCol\": \"31jkzo\",\n  \"dsdLevel\": \"dy9jnx\",\n  \"dsdLevelId\": \"50\",\n  \"dsdLevelName\": \"danyelle.moore\",\n  \"description\": \"vxepr8\",\n  \"gmtModified\": \"2021-09-08 17:33:59\"\n}"
+                  "value": "{\n  \"id\": 638,\n  \"dsdName\": \"鑫鹏.覃\",\n  \"dsdCode\": \"45468\",\n  \"colName\": \"鑫鹏.覃\",\n  \"dataType\": \"8p60v4\",\n  \"dataCapacity\": \"c4cqd8\",\n  \"codeDirId\": \"75\",\n  \"useCodeLevel\": \"lz7rwi\",\n  \"codeCol\": \"ipc8hr\",\n  \"dsdLevel\": \"dmulsa\",\n  \"dsdLevelId\": \"75\",\n  \"dsdLevelName\": \"鑫鹏.覃\",\n  \"description\": \"ukpq40\",\n  \"gmtModified\": \"2021-09-27 11:01:20\"\n}"
                 }
               }
             }
@@ -3216,19 +3487,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_basic_info_addResponse"
+                  "$ref": "#/components/schemas/_basic_info_addresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"4ean02\",\n  \"tips\": \"ywiyih\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"az8ndh\",\n  \"tips\": \"kw5gf0\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "addDsdBasicInfo",
+        "operationId": "5e0fc37f63b7a2854ca50125864395c7",
         "parameters": []
       }
     },
@@ -3238,18 +3509,18 @@
         "deprecated": false,
         "description": "编辑码表分类目录",
         "tags": [
-          "DataStandardCodeDirController"
+          "数据标准__码表目录接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_dir_updateRequest"
+                "$ref": "#/components/schemas/_code_dir_updaterequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 822,\n  \"codeDirId\": \"50\",\n  \"codeDirName\": \"danyelle.moore\",\n  \"parentId\": \"50\",\n  \"codeDirLevel\": \"v7np4h\",\n  \"description\": \"a3lf3u\"\n}"
+                  "value": "{\n  \"id\": 188,\n  \"codeDirId\": \"75\",\n  \"codeDirName\": \"鑫鹏.覃\",\n  \"parentId\": \"75\",\n  \"codeDirLevel\": \"lelu83\",\n  \"description\": \"f6fne2\"\n}"
                 }
               }
             }
@@ -3261,20 +3532,61 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_dir_updateResponse"
+                  "$ref": "#/components/schemas/_code_dir_updateresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"h7ifsd\",\n  \"tips\": \"6mf7q9\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"jfydez\",\n  \"tips\": \"3gsupv\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "updateDsdDir",
+        "operationId": "26d7218ef85469e8272956db5e7d40cc",
         "parameters": []
+      }
+    },
+    "/code/info/basic/query/tableCode": {
+      "get": {
+        "summary": "根据tableCode(表编码)获取码表基础详情信息",
+        "deprecated": false,
+        "description": "根据tableCode(表编码)获取码表基础详情信息",
+        "tags": [
+          "数据标准__码表管理接口"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_code_info_basic_query_tableCoderesponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"7d77kj\",\n  \"tips\": \"en5qbp\",\n  \"data\": {\n    \"id\": 95,\n    \"codeDirId\": \"75\",\n    \"codeDirLevel\": \"ju42f8\",\n    \"tableName\": \"鑫鹏.覃\",\n    \"tableCode\": \"45468\",\n    \"tableDesc\": \"2rjdbe\",\n    \"gmtModified\": \"2021-09-27 11:01:20\",\n    \"codeTableFieldsList\": [\n      {\n        \"code_table_id\": \"75\",\n        \"name_ch\": \"gd2z68\",\n        \"name_en\": \"64e3u7\",\n        \"data_type\": \"39jp5y\"\n      }\n    ],\n    \"codeTableId\": \"75\",\n    \"nameCh\": \"mxwc2p\",\n    \"nameEn\": \"k7tlv3\",\n    \"dataType\": \"zmxqxl\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "1f97ddfa11d7b9342051f0b7808b74cc",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "45468",
+            "name": "tableCode"
+          }
+        ]
       }
     },
     "/code/info/basic/add": {
@@ -3283,18 +3595,18 @@
         "deprecated": false,
         "description": "新增码表基础信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_info_basic_addRequest"
+                "$ref": "#/components/schemas/_code_info_basic_addrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 913,\n  \"codeDirId\": \"50\",\n  \"codeDirLevel\": \"piqcc5\",\n  \"tableName\": \"danyelle.moore\",\n  \"tableCode\": \"52239\",\n  \"tableDesc\": \"0jw5m8\",\n  \"gmtModified\": \"2021-09-08 17:33:59\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"50\",\n      \"name_ch\": \"exlerb\",\n      \"name_en\": \"xpeytn\",\n      \"data_type\": \"sgtyeg\"\n    }\n  ],\n  \"codeTableId\": \"50\",\n  \"nameCh\": \"jrw5s9\",\n  \"nameEn\": \"kgtox5\",\n  \"dataType\": \"pktfj9\"\n}"
+                  "value": "{\n  \"id\": 568,\n  \"codeDirId\": \"75\",\n  \"codeDirLevel\": \"0e8tl9\",\n  \"tableName\": \"鑫鹏.覃\",\n  \"tableCode\": \"45468\",\n  \"tableDesc\": \"v5bqkz\",\n  \"gmtModified\": \"2021-09-27 11:01:20\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"75\",\n      \"name_ch\": \"vzeekh\",\n      \"name_en\": \"1xzzgx\",\n      \"data_type\": \"8lwkfl\"\n    }\n  ],\n  \"codeTableId\": \"75\",\n  \"nameCh\": \"8u12v6\",\n  \"nameEn\": \"qdgvvd\",\n  \"dataType\": \"lxto8f\"\n}"
                 }
               }
             }
@@ -3306,19 +3618,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_basic_addResponse"
+                  "$ref": "#/components/schemas/_code_info_basic_addresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"eblx8a\",\n  \"tips\": \"w7x0jb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"l09ibo\",\n  \"tips\": \"8vrmgg\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "addDsdCodeInfo",
+        "operationId": "4bdb0adf25d0bc6915d23697fc5740fd",
         "parameters": []
       }
     },
@@ -3328,18 +3640,18 @@
         "deprecated": false,
         "description": "新增码表数值信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_info_ext_addRequest"
+                "$ref": "#/components/schemas/_code_info_ext_addrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 584,\n  \"dsdCodeInfoId\": \"50\",\n  \"tableConfCode\": \"52239\",\n  \"tableConfValue\": \"ye3av7\",\n  \"gmtModified\": \"2021-09-08 17:33:59\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"1fqgqn\"\n  }\n}"
+                  "value": "{\n  \"id\": 704,\n  \"dsdCodeInfoId\": \"75\",\n  \"searchCode\": \"45468\",\n  \"searchValue\": \"r3hfqb\",\n  \"gmtModified\": \"2021-09-27 11:01:20\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"hmtiyu\"\n  }\n}"
                 }
               }
             }
@@ -3351,19 +3663,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_ext_addResponse"
+                  "$ref": "#/components/schemas/_code_info_ext_addresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"hd83vb\",\n  \"tips\": \"oykgfi\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"lsxveq\",\n  \"tips\": \"42h0q5\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "addDsdCodeInfoExt",
+        "operationId": "a6ad39ff521a7345780eb859c1066f5c",
         "parameters": []
       }
     },
@@ -3373,18 +3685,18 @@
         "deprecated": false,
         "description": "码表数值信息列表__导出excel数据(根据dsdCodeInfoId表级数据)",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded;charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_excel_code_values_dsdCodeInfoId_downloadRequest"
+                "$ref": "#/components/schemas/_excel_code_values_dsdCodeInfoId_downloadrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/code/values/dsdCodeInfoId/download --data \u0027dsdCodeInfoId\u003d50\u0027"
+                  "value": "curl -X POST -i http://{{server}}/excel/code/values/dsdCodeInfoId/download --data \u0027dsdCodeInfoId\u003d75\u0027"
                 }
               }
             }
@@ -3396,7 +3708,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_code_values_dsdCodeInfoId_downloadResponse"
+                  "$ref": "#/components/schemas/_excel_code_values_dsdCodeInfoId_downloadresponse"
                 },
                 "examples": {
                   "json": {
@@ -3408,7 +3720,7 @@
             }
           }
         },
-        "operationId": "codeValuesDownloadByCodeInfoId",
+        "operationId": "1bec4ec44fb4465cb95058329e122084",
         "parameters": [
           {
             "schema": {
@@ -3417,7 +3729,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "75",
             "name": "dsdCodeInfoId"
           }
         ]
@@ -3429,7 +3741,7 @@
         "deprecated": false,
         "description": "根据Id获取码表数值列表详情信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "responses": {
           "200": {
@@ -3437,19 +3749,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_ext_query_by__id_Response"
+                  "$ref": "#/components/schemas/_code_info_ext_query_by__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"o8kr2f\",\n  \"tips\": \"s3wft8\",\n  \"data\": {\n    \"id\": 173,\n    \"dsdCodeInfoId\": \"50\",\n    \"tableConfCode\": \"52239\",\n    \"tableConfValue\": \"2zoyjs\",\n    \"gmtModified\": \"2021-09-08 17:33:59\",\n    \"codeTableFieldExtValues\": {\n      \"mapKey\": \"zzqv0s\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"x1afr7\",\n  \"tips\": \"uyull1\",\n  \"data\": {\n    \"id\": 927,\n    \"dsdCodeInfoId\": \"75\",\n    \"searchCode\": \"45468\",\n    \"searchValue\": \"9vn4ty\",\n    \"gmtModified\": \"2021-09-27 11:01:20\",\n    \"codeTableFieldExtValues\": {\n      \"mapKey\": \"agqfzp\"\n    }\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getBasicDsdCodeInfoExtById",
+        "operationId": "de00221719e026d38771fecc503133c4",
         "parameters": [
           {
             "schema": {
@@ -3458,7 +3770,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "75",
             "name": "id"
           }
         ]
@@ -3470,7 +3782,7 @@
         "deprecated": false,
         "description": "删除标准信息",
         "tags": [
-          "DataStandardBasicInfoController"
+          "数据标准__标准基本信息接口"
         ],
         "responses": {
           "200": {
@@ -3478,19 +3790,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_basic_info_delete__id_Response"
+                  "$ref": "#/components/schemas/_basic_info_delete__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"4owd68\",\n  \"tips\": \"sm0kif\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"9jn1v0\",\n  \"tips\": \"y8bl7j\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteDsdBasicinfo",
+        "operationId": "1090906dbb8a59a0d50a01864be964f1",
         "parameters": [
           {
             "schema": {
@@ -3500,7 +3812,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "339",
+            "example": "64",
             "name": "id"
           }
         ]
@@ -3512,7 +3824,7 @@
         "deprecated": false,
         "description": "批量删除码表数值信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "responses": {
           "200": {
@@ -3520,19 +3832,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_ext_bulk_delete__ids_Response"
+                  "$ref": "#/components/schemas/_code_info_ext_bulk_delete__ids_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"mzmseu\",\n  \"tips\": \"vy61xa\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"9xyzf5\",\n  \"tips\": \"wakbme\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "deleteBulkDsdCodeInfoExt",
+        "operationId": "800eebf11b4bd21eccb33d86917641ae",
         "parameters": [
           {
             "schema": {
@@ -3541,7 +3853,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "28wpa6",
+            "example": "qhsbj5",
             "name": "ids"
           }
         ]
@@ -3553,18 +3865,18 @@
         "deprecated": false,
         "description": "新增码表分类目录",
         "tags": [
-          "DataStandardCodeDirController"
+          "数据标准__码表目录接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_dir_addRequest"
+                "$ref": "#/components/schemas/_code_dir_addrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 611,\n  \"codeDirId\": \"50\",\n  \"codeDirName\": \"danyelle.moore\",\n  \"parentId\": \"50\",\n  \"codeDirLevel\": \"bjfuaa\",\n  \"description\": \"07lba4\"\n}"
+                  "value": "{\n  \"id\": 437,\n  \"codeDirId\": \"75\",\n  \"codeDirName\": \"鑫鹏.覃\",\n  \"parentId\": \"75\",\n  \"codeDirLevel\": \"kr51ld\",\n  \"description\": \"rxxta0\"\n}"
                 }
               }
             }
@@ -3576,64 +3888,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_dir_addResponse"
+                  "$ref": "#/components/schemas/_code_dir_addresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"zu6k8z\",\n  \"tips\": \"tr0k98\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"9h8wzv\",\n  \"tips\": \"nei9wp\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "addDsdDir",
-        "parameters": []
-      }
-    },
-    "/excel/basic/info/download": {
-      "post": {
-        "summary": "标准基本信息excel__全部导出数据",
-        "deprecated": false,
-        "description": "标准基本信息excel__全部导出数据",
-        "tags": [
-          "DsdExcelController"
-        ],
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded;charset\u003dutf-8": {
-              "schema": {
-                "$ref": "#/components/schemas/_excel_basic_info_downloadRequest"
-              },
-              "examples": {
-                "json": {
-                  "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/basic/info/download"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_excel_basic_info_downloadResponse"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "Doesn\u0027t return a value."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "basicInfoDownload",
+        "operationId": "3e8887c620bbee584152da7edb99dd07",
         "parameters": []
       }
     },
@@ -3643,18 +3910,18 @@
         "deprecated": false,
         "description": "高级筛选_查询码表基础信息列表",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_code_info_basic_queryRequest"
+                "$ref": "#/components/schemas/_code_info_basic_queryrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"yqp9po\"\n  },\n  \"beginDay\": \"ap992i\",\n  \"endDay\": \"xjgvi8\",\n  \"codeDirId\": \"50\",\n  \"codeDirLevel\": \"z544hv\",\n  \"tableName\": \"danyelle.moore\",\n  \"tableCode\": \"52239\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zzrjyu\"\n  },\n  \"beginDay\": \"m5a6rk\",\n  \"endDay\": \"jegxsk\",\n  \"codeDirId\": \"75\",\n  \"codeDirLevel\": \"zn4kgx\",\n  \"tableName\": \"鑫鹏.覃\",\n  \"tableCode\": \"45468\"\n}"
                 }
               }
             }
@@ -3666,29 +3933,74 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_basic_queryResponse"
+                  "$ref": "#/components/schemas/_code_info_basic_queryresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"z7u7at\",\n  \"tips\": \"4482nx\",\n  \"data\": {\n    \"total\": 713,\n    \"pageNum\": 979,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 57,\n        \"codeDirId\": \"50\",\n        \"codeDirLevel\": \"mi9u5c\",\n        \"tableName\": \"danyelle.moore\",\n        \"tableCode\": \"52239\",\n        \"tableDesc\": \"n0bj3n\",\n        \"gmtModified\": \"2021-09-08 17:33:59\",\n        \"codeTableFieldsList\": [\n          {\n            \"code_table_id\": \"50\",\n            \"name_ch\": \"6c9kwc\",\n            \"name_en\": \"foy3fz\",\n            \"data_type\": \"jt8i7u\"\n          }\n        ],\n        \"codeTableId\": \"50\",\n        \"nameCh\": \"ah0wbw\",\n        \"nameEn\": \"goffhi\",\n        \"dataType\": \"l2btgn\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"c53nr0\",\n  \"tips\": \"v15vae\",\n  \"data\": {\n    \"total\": 535,\n    \"pageNum\": 947,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 690,\n        \"codeDirId\": \"75\",\n        \"codeDirLevel\": \"36x7c5\",\n        \"tableName\": \"鑫鹏.覃\",\n        \"tableCode\": \"45468\",\n        \"tableDesc\": \"dtaacm\",\n        \"gmtModified\": \"2021-09-27 11:01:20\",\n        \"codeTableFieldsList\": [\n          {\n            \"code_table_id\": \"75\",\n            \"name_ch\": \"wowtca\",\n            \"name_en\": \"xiip1p\",\n            \"data_type\": \"iwlen8\"\n          }\n        ],\n        \"codeTableId\": \"75\",\n        \"nameCh\": \"wxs03y\",\n        \"nameEn\": \"nsk3ue\",\n        \"dataType\": \"pl5yh7\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getDsdCodeInfo",
+        "operationId": "cb6e37547bfd2009c8c5fd2fd8303d35",
+        "parameters": []
+      }
+    },
+    "/code/info/basic/query/all": {
+      "post": {
+        "summary": "获取所有码表基础信息列表",
+        "deprecated": false,
+        "description": "获取所有码表基础信息列表",
+        "tags": [
+          "数据标准__码表管理接口"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_code_info_basic_query_allrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://{{server}}/code/info/basic/query/all"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_code_info_basic_query_allresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"v030ag\",\n  \"tips\": \"qnb0fj\",\n  \"data\": [\n    {\n      \"id\": 450,\n      \"codeDirId\": \"75\",\n      \"codeDirLevel\": \"chi5c7\",\n      \"tableName\": \"鑫鹏.覃\",\n      \"tableCode\": \"45468\",\n      \"tableDesc\": \"89o4k9\",\n      \"gmtModified\": \"2021-09-27 11:01:20\",\n      \"codeTableFieldsList\": [\n        {\n          \"code_table_id\": \"75\",\n          \"name_ch\": \"dcadbq\",\n          \"name_en\": \"nj3qki\",\n          \"data_type\": \"s6p55m\"\n        }\n      ],\n      \"codeTableId\": \"75\",\n      \"nameCh\": \"xqee66\",\n      \"nameEn\": \"8uy5k9\",\n      \"dataType\": \"xq8h3l\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "8bee485ac11bc10af745edf3f6fd1c40",
         "parameters": []
       }
     },
     "/code/info/basic/query/by/{id}": {
       "get": {
-        "summary": "根据Id获取码表信息列表详情信息",
+        "summary": "根据id获取码表信息列表详情信息",
         "deprecated": false,
-        "description": "根据Id获取码表信息列表详情信息",
+        "description": "根据id获取码表信息列表详情信息",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "responses": {
           "200": {
@@ -3696,19 +4008,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_basic_query_by__id_Response"
+                  "$ref": "#/components/schemas/_code_info_basic_query_by__id_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"vdzs2r\",\n  \"tips\": \"zvrcg2\",\n  \"data\": {\n    \"id\": 703,\n    \"codeDirId\": \"50\",\n    \"codeDirLevel\": \"6gdddu\",\n    \"tableName\": \"danyelle.moore\",\n    \"tableCode\": \"52239\",\n    \"tableDesc\": \"vo59jr\",\n    \"gmtModified\": \"2021-09-08 17:33:59\",\n    \"codeTableFieldsList\": [\n      {\n        \"code_table_id\": \"50\",\n        \"name_ch\": \"0vkqsd\",\n        \"name_en\": \"2a0wb0\",\n        \"data_type\": \"l67mh7\"\n      }\n    ],\n    \"codeTableId\": \"50\",\n    \"nameCh\": \"swwo3t\",\n    \"nameEn\": \"49ol3v\",\n    \"dataType\": \"ojv924\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"qum7kv\",\n  \"tips\": \"onthw9\",\n  \"data\": {\n    \"id\": 915,\n    \"codeDirId\": \"75\",\n    \"codeDirLevel\": \"ltjzoj\",\n    \"tableName\": \"鑫鹏.覃\",\n    \"tableCode\": \"45468\",\n    \"tableDesc\": \"hxx69b\",\n    \"gmtModified\": \"2021-09-27 11:01:20\",\n    \"codeTableFieldsList\": [\n      {\n        \"code_table_id\": \"75\",\n        \"name_ch\": \"650246\",\n        \"name_en\": \"rw6bt3\",\n        \"data_type\": \"xjshuw\"\n      }\n    ],\n    \"codeTableId\": \"75\",\n    \"nameCh\": \"0h9xr7\",\n    \"nameEn\": \"btfn4v\",\n    \"dataType\": \"vkezcr\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getBasicDsdCodeInfoById",
+        "operationId": "b20b7461caf091f5b88727e22dbd3980",
         "parameters": [
           {
             "schema": {
@@ -3717,7 +4029,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "75",
             "name": "id"
           }
         ]
@@ -3729,18 +4041,18 @@
         "deprecated": false,
         "description": "码表数值信息excel__模板下载",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded;charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_excel_code_values_download_templateRequest"
+                "$ref": "#/components/schemas/_excel_code_values_download_templaterequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/code/values/download/template --data \u0027dsdCodeInfoId\u003d50\u0027"
+                  "value": "curl -X POST -i http://{{server}}/excel/code/values/download/template --data \u0027dsdCodeInfoId\u003d75\u0027"
                 }
               }
             }
@@ -3752,7 +4064,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_code_values_download_templateResponse"
+                  "$ref": "#/components/schemas/_excel_code_values_download_templateresponse"
                 },
                 "examples": {
                   "json": {
@@ -3764,7 +4076,7 @@
             }
           }
         },
-        "operationId": "codeValuesDownloadTemplate",
+        "operationId": "752c5c64777c54717426e2438024ebd0",
         "parameters": [
           {
             "schema": {
@@ -3773,7 +4085,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "75",
             "name": "dsdCodeInfoId"
           }
         ]
@@ -3785,7 +4097,7 @@
         "deprecated": false,
         "description": "数据类型下拉列表",
         "tags": [
-          "DataStandardCodeInfoController"
+          "数据标准__码表管理接口"
         ],
         "responses": {
           "200": {
@@ -3793,19 +4105,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_code_info_data_typesResponse"
+                  "$ref": "#/components/schemas/_code_info_data_typesresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"q7e6fn\",\n  \"tips\": \"4tcyai\",\n  \"data\": [\n    {\n      \"mapKey1\": \"7zhoqa\",\n      \"mapKey2\": \"4d8umg\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"4j31uo\",\n  \"tips\": \"jvvvwq\",\n  \"data\": [\n    {\n      \"mapKey1\": \"06henw\",\n      \"mapKey2\": \"e7jdy0\"\n    }\n  ]\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getDataTypes",
+        "operationId": "91f679bdf80ad5900ec00199d5c10345",
         "parameters": []
       }
     },
@@ -3815,18 +4127,18 @@
         "deprecated": false,
         "description": "码表基本信息列表__导出excel数据(全量)",
         "tags": [
-          "DsdExcelController"
+          "数据标准__excel导入导出功能接口"
         ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded;charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_excel_code_info_all_downloadRequest"
+                "$ref": "#/components/schemas/_excel_code_info_all_downloadrequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/code/info/all/download --data \u0027codeDirId\u003d50\u0027"
+                  "value": "curl -X POST -i http://{{server}}/excel/code/info/all/download --data \u0027codeDirId\u003d75\u0027"
                 }
               }
             }
@@ -3838,7 +4150,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_excel_code_info_all_downloadResponse"
+                  "$ref": "#/components/schemas/_excel_code_info_all_downloadresponse"
                 },
                 "examples": {
                   "json": {
@@ -3850,7 +4162,7 @@
             }
           }
         },
-        "operationId": "codeInfoAllDownload",
+        "operationId": "e804442d3faf47f82bd20a5a3f9339e5",
         "parameters": [
           {
             "schema": {
@@ -3859,7 +4171,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "75",
             "name": "codeDirId"
           }
         ]
@@ -3871,18 +4183,18 @@
         "deprecated": false,
         "description": "编辑标准信息",
         "tags": [
-          "DataStandardBasicInfoController"
+          "数据标准__标准基本信息接口"
         ],
         "requestBody": {
           "content": {
             "application/json; charset\u003dutf-8": {
               "schema": {
-                "$ref": "#/components/schemas/_basic_info_updateRequest"
+                "$ref": "#/components/schemas/_basic_info_updaterequest"
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 429,\n  \"dsdName\": \"danyelle.moore\",\n  \"dsdCode\": \"52239\",\n  \"colName\": \"danyelle.moore\",\n  \"dataType\": \"o7yf5w\",\n  \"dataCapacity\": \"v8v2sj\",\n  \"codeDirId\": \"50\",\n  \"useCodeLevel\": \"s8fyxc\",\n  \"codeCol\": \"88qee4\",\n  \"dsdLevel\": \"p8afhd\",\n  \"dsdLevelId\": \"50\",\n  \"dsdLevelName\": \"danyelle.moore\",\n  \"description\": \"bgzo5g\",\n  \"gmtModified\": \"2021-09-08 17:33:59\"\n}"
+                  "value": "{\n  \"id\": 516,\n  \"dsdName\": \"鑫鹏.覃\",\n  \"dsdCode\": \"45468\",\n  \"colName\": \"鑫鹏.覃\",\n  \"dataType\": \"8104xy\",\n  \"dataCapacity\": \"32q0q9\",\n  \"codeDirId\": \"75\",\n  \"useCodeLevel\": \"3qh2da\",\n  \"codeCol\": \"xuap57\",\n  \"dsdLevel\": \"we8k6g\",\n  \"dsdLevelId\": \"75\",\n  \"dsdLevelName\": \"鑫鹏.覃\",\n  \"description\": \"7dv7hq\",\n  \"gmtModified\": \"2021-09-27 11:01:20\"\n}"
                 }
               }
             }
@@ -3894,19 +4206,19 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_basic_info_updateResponse"
+                  "$ref": "#/components/schemas/_basic_info_updateresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"7o9456\",\n  \"tips\": \"6bn7us\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"45468\",\n  \"retMsg\": \"9gpm9x\",\n  \"tips\": \"jpnl0q\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "updateDsdBasicinfo",
+        "operationId": "054fe618401dcbde02ee033a3799f65b",
         "parameters": []
       }
     }
