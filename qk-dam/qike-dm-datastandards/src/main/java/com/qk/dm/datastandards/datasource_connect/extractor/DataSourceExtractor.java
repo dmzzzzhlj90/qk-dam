@@ -33,8 +33,7 @@ public class DataSourceExtractor {
 
   public static List<DsdCodeInfoExt> searchCodeInfoExtValues(
       DataSourceJobVO dataSourceJobVO, MysqlTable mysqlTable, Long codeInfoId) {
-    return new MysqlSqlAgg(
-            dataSourceJobVO.getMysqlDataConnect(), dataSourceJobVO.getMysqlDataConnect().getDb())
+    return new MysqlSqlAgg(dataSourceJobVO.getMysqlDataConnect(), dataSourceJobVO.getMysqlDataConnect().getDb())
         .searchCodeInfoExtValues(mysqlTable, codeInfoId);
   }
 }
