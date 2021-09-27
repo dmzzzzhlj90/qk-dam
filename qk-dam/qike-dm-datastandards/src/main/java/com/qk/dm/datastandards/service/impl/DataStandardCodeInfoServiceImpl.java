@@ -25,13 +25,14 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.*;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import java.util.*;
 
 /**
  * @author wjq
@@ -55,11 +56,11 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
   @Autowired
   public DataStandardCodeInfoServiceImpl(
-      DsdCodeInfoRepository dsdCodeInfoRepository,
-      DsdCodeInfoExtRepository dsdCodeInfoExtRepository,
-      DataStandardCodeDirService dataStandardCodeDirService,
-      DsdCodeInfoReverseBatchService dsdCodeInfoReverseBatchService,
-      EntityManager entityManager) {
+          DsdCodeInfoRepository dsdCodeInfoRepository,
+          DsdCodeInfoExtRepository dsdCodeInfoExtRepository,
+          DataStandardCodeDirService dataStandardCodeDirService,
+          DsdCodeInfoReverseBatchService dsdCodeInfoReverseBatchService,
+          EntityManager entityManager) {
     this.dsdCodeInfoRepository = dsdCodeInfoRepository;
     this.dsdCodeInfoExtRepository = dsdCodeInfoExtRepository;
     this.dataStandardCodeDirService = dataStandardCodeDirService;
@@ -72,7 +73,9 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
 
-  /** 码表基本信息_表 */
+  /**
+   * 码表基本信息_表
+   */
   @Override
   public PageResultVO<DsdCodeInfoVO> getDsdCodeInfo(DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
     List<DsdCodeInfoVO> dsdCodeInfoVOList = new ArrayList<>();
@@ -88,16 +91,28 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     long total = (long) map.get("total");
 
     list.forEach(
-        dsdCodeInfo -> {
-          DsdCodeInfoVO dsdCodeInfoVO = DsdCodeInfoMapper.INSTANCE.useDsdCodeInfoVO(dsdCodeInfo);
-          setCodeTableFields(dsdCodeInfo, dsdCodeInfoVO);
-          dsdCodeInfoVOList.add(dsdCodeInfoVO);
-        });
+            dsdCodeInfo -> {
+              DsdCodeInfoVO dsdCodeInfoVO = DsdCodeInfoMapper.INSTANCE.useDsdCodeInfoVO(dsdCodeInfo);
+              setCodeTableFields(dsdCodeInfo, dsdCodeInfoVO);
+              dsdCodeInfoVOList.add(dsdCodeInfoVO);
+            });
     return new PageResultVO<>(
-        total,
-        dsdCodeInfoParamsVO.getPagination().getPage(),
-        dsdCodeInfoParamsVO.getPagination().getSize(),
-        dsdCodeInfoVOList);
+            total,
+            dsdCodeInfoParamsVO.getPagination().getPage(),
+            dsdCodeInfoParamsVO.getPagination().getSize(),
+            dsdCodeInfoVOList);
+  }
+
+  @Override
+  public List<DsdCodeInfoVO> getDsdCodeInfoAll() {
+    List<DsdCodeInfoVO> dsdCodeInfoVOList = new ArrayList<>();
+
+    List<DsdCodeInfo> dsdCodeInfoList = dsdCodeInfoRepository.findAll();
+    dsdCodeInfoList.forEach(dsdCodeInfo -> {
+      DsdCodeInfoVO dsdCodeInfoVO = DsdCodeInfoMapper.INSTANCE.useDsdCodeInfoVO(dsdCodeInfo);
+      dsdCodeInfoVOList.add(dsdCodeInfoVO);
+    });
+    return dsdCodeInfoVOList;
   }
 
   public Map<String, Object> queryDsdCodeInfoVOByParams(DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
@@ -105,31 +120,29 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     basicCheckCondition(booleanBuilder, qDsdCodeInfo, dsdCodeInfoParamsVO);
     long count =
-        jpaQueryFactory
-            .select(qDsdCodeInfo.count())
-            .from(qDsdCodeInfo)
-            .where(booleanBuilder)
-            .fetchOne();
+            jpaQueryFactory
+                    .select(qDsdCodeInfo.count())
+                    .from(qDsdCodeInfo)
+                    .where(booleanBuilder)
+                    .fetchOne();
     List<DsdCodeInfo> dsdCodeInfoVOList =
-        jpaQueryFactory
-            .select(qDsdCodeInfo)
-            .from(qDsdCodeInfo)
-            .where(booleanBuilder)
-            .orderBy(qDsdCodeInfo.gmtCreate.desc())
-            .offset(
-                (dsdCodeInfoParamsVO.getPagination().getPage() - 1)
-                    * dsdCodeInfoParamsVO.getPagination().getSize())
-            .limit(dsdCodeInfoParamsVO.getPagination().getSize())
-            .fetch();
+            jpaQueryFactory
+                    .select(qDsdCodeInfo)
+                    .from(qDsdCodeInfo)
+                    .where(booleanBuilder)
+                    .orderBy(qDsdCodeInfo.gmtCreate.desc())
+                    .offset((dsdCodeInfoParamsVO.getPagination().getPage() - 1) * dsdCodeInfoParamsVO.getPagination().getSize())
+                    .limit(dsdCodeInfoParamsVO.getPagination().getSize())
+                    .fetch();
     result.put("list", dsdCodeInfoVOList);
     result.put("total", count);
     return result;
   }
 
   public void basicCheckCondition(
-      BooleanBuilder booleanBuilder,
-      QDsdCodeInfo qDsdCodeInfo,
-      DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
+          BooleanBuilder booleanBuilder,
+          QDsdCodeInfo qDsdCodeInfo,
+          DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
     if (!StringUtils.isEmpty(dsdCodeInfoParamsVO.getCodeDirId())) {
       Set<String> codeDirIdSet = new HashSet<>();
       dataStandardCodeDirService.getCodeDirId(codeDirIdSet, dsdCodeInfoParamsVO.getCodeDirId());
@@ -142,12 +155,12 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
       booleanBuilder.and(qDsdCodeInfo.tableCode.contains(dsdCodeInfoParamsVO.getTableCode()));
     }
     if (!StringUtils.isEmpty(dsdCodeInfoParamsVO.getBeginDay())
-        && !StringUtils.isEmpty(dsdCodeInfoParamsVO.getEndDay())) {
+            && !StringUtils.isEmpty(dsdCodeInfoParamsVO.getEndDay())) {
       StringTemplate dateExpr =
-          Expressions.stringTemplate(
-              "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDsdCodeInfo.gmtModified);
+              Expressions.stringTemplate(
+                      "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDsdCodeInfo.gmtModified);
       booleanBuilder.and(
-          dateExpr.between(dsdCodeInfoParamsVO.getBeginDay(), dsdCodeInfoParamsVO.getEndDay()));
+              dateExpr.between(dsdCodeInfoParamsVO.getBeginDay(), dsdCodeInfoParamsVO.getEndDay()));
     }
   }
 
@@ -157,22 +170,13 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     setCodeTableFieldsStr(dsdCodeInfo, dsdCodeInfoVO);
     dsdCodeInfo.setGmtCreate(new Date());
     dsdCodeInfo.setGmtModified(new Date());
-    Predicate predicate =
-        qDsdCodeInfo
-            .codeDirId
-            .eq(dsdCodeInfo.getCodeDirId())
-            .and(qDsdCodeInfo.tableCode.eq(dsdCodeInfo.getTableCode()));
+    Predicate predicate = qDsdCodeInfo.tableCode.eq(dsdCodeInfo.getTableCode());
     boolean exists = dsdCodeInfoRepository.exists(predicate);
     if (exists) {
-      throw new BizException(
-          "当前要新增的码表信息,目录为："
-              + dsdCodeInfo.getCodeDirLevel()
-              + "表名为:"
-              + dsdCodeInfo.getTableName()
-              + " 的数据，已存在！！！");
+      throw new BizException("当前要新增的码表信息, 表编码为:" + dsdCodeInfo.getTableCode() + " 的数据，已存在！！！");
     }
     if (dsdCodeInfoVO.getCodeTableFieldsList().size() == 0
-        && dsdCodeInfo.getTableConfFields() == null) {
+            && dsdCodeInfo.getTableConfFields() == null) {
       dsdCodeInfo.setTableConfFields(DsdConstant.defaultTableConfFields());
     }
 
@@ -191,6 +195,16 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
   }
 
   @Override
+  public DsdCodeInfoVO getBasicDsdCodeInfoByTableCode(String tableCode) {
+    Optional<DsdCodeInfo> dsdCodeInfoOptional = dsdCodeInfoRepository.findOne(qDsdCodeInfo.tableCode.eq(tableCode));
+    if (dsdCodeInfoOptional.isEmpty()) {
+      throw new BizException("未查询到tableCode : " + tableCode + "的码表!!!");
+    }
+    DsdCodeInfo dsdCodeInfo = dsdCodeInfoOptional.get();
+    return DsdCodeInfoMapper.INSTANCE.useDsdCodeInfoVO(dsdCodeInfo);
+  }
+
+  @Override
   public void modifyDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO) {
     if (StringUtils.isEmpty(String.valueOf(dsdCodeInfoVO.getId()))) {
       throw new BizException("编辑失败!数据id为空!!!");
@@ -206,11 +220,11 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
       dsdCodeInfoRepository.saveAndFlush(dsdCodeInfo);
     } else {
       throw new BizException(
-          "当前要新增的码表信息,目录为："
-              + dsdCodeInfo.getCodeDirLevel()
-              + "表名为:"
-              + dsdCodeInfo.getTableName()
-              + " 的数据，不存在！！！");
+              "当前要新增的码表信息,目录为："
+                      + dsdCodeInfo.getCodeDirLevel()
+                      + "表名为:"
+                      + dsdCodeInfo.getTableName()
+                      + " 的数据，不存在！！！");
     }
   }
 
@@ -247,9 +261,8 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
   private void setCodeTableFields(DsdCodeInfo dsdCodeInfo, DsdCodeInfoVO dsdCodeInfoVO) {
     if (!StringUtils.isEmpty(dsdCodeInfo.getTableConfFields())) {
       dsdCodeInfoVO.setCodeTableFieldsList(
-          GsonUtil.fromJsonString(
-              dsdCodeInfo.getTableConfFields(),
-              new TypeToken<List<CodeTableFieldsVO>>() {}.getType()));
+              GsonUtil.fromJsonString(dsdCodeInfo.getTableConfFields(), new TypeToken<List<CodeTableFieldsVO>>() {
+              }.getType()));
     } else {
       dsdCodeInfoVO.setCodeTableFieldsList(new ArrayList<>());
     }
@@ -275,103 +288,88 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     long total = (long) map.get("total");
 
     list.forEach(
-        dsdCodeInfoExt -> {
-          DsdCodeInfoExtVO dsdCodeInfoExtVO =
-              DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExtVO(dsdCodeInfoExt);
-          setCodeTableValues(dsdCodeInfoExt, dsdCodeInfoExtVO);
-          dsdCodeInfoExtVOList.add(dsdCodeInfoExtVO);
-        });
+            dsdCodeInfoExt -> {
+              DsdCodeInfoExtVO dsdCodeInfoExtVO =
+                      DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExtVO(dsdCodeInfoExt);
+              setCodeTableValues(dsdCodeInfoExt, dsdCodeInfoExtVO);
+              dsdCodeInfoExtVOList.add(dsdCodeInfoExtVO);
+            });
     PageResultVO<DsdCodeInfoExtVO> pageResultVO =
-        new PageResultVO<>(
-            total,
-            dsdCodeInfoExtParamsVO.getPagination().getPage(),
-            dsdCodeInfoExtParamsVO.getPagination().getSize(),
-            dsdCodeInfoExtVOList);
+            new PageResultVO<>(
+                    total,
+                    dsdCodeInfoExtParamsVO.getPagination().getPage(),
+                    dsdCodeInfoExtParamsVO.getPagination().getSize(),
+                    dsdCodeInfoExtVOList);
 
     Optional<DsdCodeInfo> dsdCodeInfo =
-        dsdCodeInfoRepository.findById(Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId()));
+            dsdCodeInfoRepository.findById(Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId()));
     String tableConfFieldsStr = dsdCodeInfo.get().getTableConfFields();
     List<CodeTableFieldsVO> codeTableFieldsVOList =
-        GsonUtil.fromJsonString(
-            tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {}.getType());
+            GsonUtil.fromJsonString(tableConfFieldsStr, new TypeToken<List<CodeTableFieldsVO>>() {
+            }.getType());
     result.put("headList", codeTableFieldsVOList);
     result.put("dataList", pageResultVO);
     return result;
   }
 
-  public Map<String, Object> queryDsdCodeInfoVOExtByParams(
-      DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
+  public Map<String, Object> queryDsdCodeInfoVOExtByParams(DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
     HashMap<String, Object> result = new HashMap<>();
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     extCheckCondition(booleanBuilder, qDsdCodeInfoExt, dsdCodeInfoExtParamsVO);
     long count =
-        jpaQueryFactory
-            .select(qDsdCodeInfoExt.count())
-            .from(qDsdCodeInfoExt)
-            .where(booleanBuilder)
-            .fetchOne();
+            jpaQueryFactory
+                    .select(qDsdCodeInfoExt.count())
+                    .from(qDsdCodeInfoExt)
+                    .where(booleanBuilder)
+                    .fetchOne();
     List<DsdCodeInfoExt> dsdCodeInfoExtList =
-        jpaQueryFactory
-            .select(qDsdCodeInfoExt)
-            .from(qDsdCodeInfoExt)
-            .where(booleanBuilder)
-            .orderBy(qDsdCodeInfoExt.gmtCreate.desc())
-            .offset(
-                (dsdCodeInfoExtParamsVO.getPagination().getPage() - 1)
-                    * dsdCodeInfoExtParamsVO.getPagination().getSize())
-            .limit(dsdCodeInfoExtParamsVO.getPagination().getSize())
-            .fetch();
+            jpaQueryFactory
+                    .select(qDsdCodeInfoExt)
+                    .from(qDsdCodeInfoExt)
+                    .where(booleanBuilder)
+                    .orderBy(qDsdCodeInfoExt.gmtCreate.desc())
+                    .offset((dsdCodeInfoExtParamsVO.getPagination().getPage() - 1) * dsdCodeInfoExtParamsVO.getPagination().getSize())
+                    .limit(dsdCodeInfoExtParamsVO.getPagination().getSize())
+                    .fetch();
     result.put("list", dsdCodeInfoExtList);
     result.put("total", count);
     return result;
   }
 
-  public void extCheckCondition(
-      BooleanBuilder booleanBuilder,
-      QDsdCodeInfoExt qDsdCodeInfoExt,
-      DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
+  public void extCheckCondition(BooleanBuilder booleanBuilder, QDsdCodeInfoExt qDsdCodeInfoExt, DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
     if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getDsdCodeInfoId())) {
-      booleanBuilder.and(
-          qDsdCodeInfoExt.dsdCodeInfoId.eq(
-              Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId())));
+      booleanBuilder.and(qDsdCodeInfoExt.dsdCodeInfoId.eq(Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId())));
     }
     if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getSearchCode())) {
-      booleanBuilder.and(
-          qDsdCodeInfoExt.searchCode.contains(dsdCodeInfoExtParamsVO.getSearchCode()));
+      booleanBuilder.and(qDsdCodeInfoExt.searchCode.contains(dsdCodeInfoExtParamsVO.getSearchCode()));
     }
     if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getSearchValue())) {
-      booleanBuilder.and(
-          qDsdCodeInfoExt.searchValue.contains(dsdCodeInfoExtParamsVO.getSearchValue()));
+      booleanBuilder.and(qDsdCodeInfoExt.searchValue.contains(dsdCodeInfoExtParamsVO.getSearchValue()));
     }
-    if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getBeginDay())
-        && !StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getEndDay())) {
-      StringTemplate dateExpr =
-          Expressions.stringTemplate(
-              "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDsdCodeInfoExt.gmtModified);
-      booleanBuilder.and(
-          dateExpr.between(
-              dsdCodeInfoExtParamsVO.getBeginDay(), dsdCodeInfoExtParamsVO.getEndDay()));
+    if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getBeginDay()) && !StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getEndDay())) {
+      StringTemplate dateExpr = Expressions.stringTemplate("DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDsdCodeInfoExt.gmtModified);
+      booleanBuilder.and(dateExpr.between(dsdCodeInfoExtParamsVO.getBeginDay(), dsdCodeInfoExtParamsVO.getEndDay()));
     }
   }
 
   @Override
   public void addDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO) {
     DsdCodeInfoExt dsdCodeInfoExt =
-        DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
+            DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
     setTableConfValuesJson(dsdCodeInfoExt, dsdCodeInfoExtVO);
     dsdCodeInfoExt.setGmtCreate(new Date());
     dsdCodeInfoExt.setGmtModified(new Date());
     dsdCodeInfoExt.setDelFlag(0);
 
     Predicate predicate =
-        qDsdCodeInfoExt
-            .dsdCodeInfoId
-            .eq(dsdCodeInfoExt.getDsdCodeInfoId())
-            .and(qDsdCodeInfoExt.searchCode.eq(dsdCodeInfoExt.getSearchCode()));
+            qDsdCodeInfoExt
+                    .dsdCodeInfoId
+                    .eq(dsdCodeInfoExt.getDsdCodeInfoId())
+                    .and(qDsdCodeInfoExt.searchCode.eq(dsdCodeInfoExt.getSearchCode()));
     boolean exists = dsdCodeInfoExtRepository.exists(predicate);
     if (exists) {
       throw new BizException(
-          "当前要新增的码表数值,编码code为:" + dsdCodeInfoExt.getSearchCode() + " 的数据，已存在！！！");
+              "当前要新增的码表数值,编码code为:" + dsdCodeInfoExt.getSearchCode() + " 的数据，已存在！！！");
     }
     dsdCodeInfoExtRepository.save(dsdCodeInfoExt);
   }
@@ -379,10 +377,13 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
   @Override
   public DsdCodeInfoExtVO getBasicDsdCodeInfoExtById(long id) {
     Optional<DsdCodeInfoExt> dsdCodeInfoExt = dsdCodeInfoExtRepository.findById(id);
-    DsdCodeInfoExtVO dsdCodeInfoExtVO =
-        DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExtVO(dsdCodeInfoExt.get());
-    setCodeTableValues(dsdCodeInfoExt.get(), dsdCodeInfoExtVO);
-    return dsdCodeInfoExtVO;
+    if (dsdCodeInfoExt.isPresent()) {
+      DsdCodeInfoExtVO dsdCodeInfoExtVO =
+              DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExtVO(dsdCodeInfoExt.get());
+      setCodeTableValues(dsdCodeInfoExt.get(), dsdCodeInfoExtVO);
+      return dsdCodeInfoExtVO;
+    }
+    return null;
   }
 
   @Override
@@ -392,7 +393,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     }
 
     DsdCodeInfoExt dsdCodeInfoExt =
-        DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
+            DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
     setTableConfValuesJson(dsdCodeInfoExt, dsdCodeInfoExtVO);
     dsdCodeInfoExt.setGmtCreate(new Date());
     dsdCodeInfoExt.setGmtModified(new Date());
@@ -404,7 +405,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
       dsdCodeInfoExtRepository.saveAndFlush(dsdCodeInfoExt);
     } else {
       throw new BizException(
-          "当前要新增的码表数值,编码code为:" + dsdCodeInfoExt.getSearchCode() + " 的数据，不存在！！！");
+              "当前要新增的码表数值,编码code为:" + dsdCodeInfoExt.getSearchCode() + " 的数据，不存在！！！");
     }
   }
 
@@ -419,7 +420,7 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     Set<Long> idSet = new HashSet<>();
     idList.forEach(id -> idSet.add(Long.valueOf(id)));
     Iterable<DsdCodeInfoExt> codeInfoExtIter =
-        dsdCodeInfoExtRepository.findAll(qDsdCodeInfoExt.id.in(idSet));
+            dsdCodeInfoExtRepository.findAll(qDsdCodeInfoExt.id.in(idSet));
     dsdCodeInfoExtRepository.deleteInBatch(codeInfoExtIter);
   }
 
@@ -427,12 +428,8 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
   public void dsdCodeInfoReverseDB(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
     LOG.info("=======开启,码表数据逆向数据库功能!======");
     // 1.获取码表元数据信息,数据源====>DB级别元数据信息
-    MysqlDb mysqlDb =
-        DataSourceExtractor.mysqlMetaData(dsdCodeInfoReverseDBVO.getDataSourceJobVO());
-    LOG.info(
-        "1.获取码表元数据信息,数据源====>DB级别元数据信息成功! db: 【{}】; table个数: 【{}】",
-        mysqlDb.getName(),
-        mysqlDb.getMysqlTables().size());
+    MysqlDb mysqlDb = DataSourceExtractor.mysqlMetaData(dsdCodeInfoReverseDBVO.getDataSourceJobVO());
+    LOG.info("1.获取码表元数据信息,数据源====>DB级别元数据信息成功! db: 【{}】; table个数: 【{}】", mysqlDb.getName(), mysqlDb.getMysqlTables().size());
     // 2.元数据====>生成码表基本信息
     dsdCodeInfoReverseBatchService.reverseCreateCodeInfo(dsdCodeInfoReverseDBVO, mysqlDb);
     LOG.info("2.元数据====>生成码表基本信息成功");
@@ -442,21 +439,18 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
     LOG.info("=======结束,码表数据逆向数据库功能!======");
   }
 
-  private void setTableConfValuesJson(
-      DsdCodeInfoExt dsdCodeInfoExt, DsdCodeInfoExtVO dsdCodeInfoExtVO) {
+  private void setTableConfValuesJson(DsdCodeInfoExt dsdCodeInfoExt, DsdCodeInfoExtVO dsdCodeInfoExtVO) {
     Map<String, String> codeTableFieldExtValues = dsdCodeInfoExtVO.getCodeTableFieldExtValues();
     if (codeTableFieldExtValues != null && codeTableFieldExtValues.size() > 0) {
       dsdCodeInfoExt.setTableConfExtValues(GsonUtil.toJsonString(codeTableFieldExtValues));
     }
   }
 
-  private void setCodeTableValues(
-      DsdCodeInfoExt dsdCodeInfoExt, DsdCodeInfoExtVO dsdCodeInfoExtVO) {
+  private void setCodeTableValues(DsdCodeInfoExt dsdCodeInfoExt, DsdCodeInfoExtVO dsdCodeInfoExtVO) {
     if (!StringUtils.isEmpty(dsdCodeInfoExt.getTableConfExtValues())) {
       dsdCodeInfoExtVO.setCodeTableFieldExtValues(
-          GsonUtil.fromJsonString(
-              dsdCodeInfoExt.getTableConfExtValues(),
-              new TypeToken<LinkedHashMap<String, String>>() {}.getType()));
+              GsonUtil.fromJsonString(dsdCodeInfoExt.getTableConfExtValues(), new TypeToken<LinkedHashMap<String, String>>() {
+              }.getType()));
     }
   }
 }
