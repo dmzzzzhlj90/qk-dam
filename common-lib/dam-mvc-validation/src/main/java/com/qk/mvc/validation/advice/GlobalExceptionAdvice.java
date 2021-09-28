@@ -55,6 +55,9 @@ public class GlobalExceptionAdvice {
   @ExceptionHandler(RuntimeException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public <T> BaseResult<T> sendErrorResponse(RuntimeException exception) {
+    if (exception.getClass().getName().contains("AccessDenied")){
+      return DefaultCommonResult.fail(ResultCodeEnum.UN_AUTHORIZED);
+    }
     log.error("系统运行时异常: {}", getStackTrace(exception));
     return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST);
   }
