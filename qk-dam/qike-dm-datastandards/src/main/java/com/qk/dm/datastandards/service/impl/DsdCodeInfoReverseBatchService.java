@@ -55,8 +55,7 @@ public class DsdCodeInfoReverseBatchService {
   }
 
   @Transactional(rollbackFor = Exception.class)
-  public void reverseCreateCodeInfo(
-      DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO, MysqlDb mysqlDb) {
+  public void reverseCreateCodeInfo(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO, MysqlDb mysqlDb) {
     String codeDirId = dsdCodeInfoReverseDBVO.getCodeDirId();
     String codeDirLevel = dsdCodeInfoReverseDBVO.getCodeDirLevel();
     String isUpdate = dsdCodeInfoReverseDBVO.getIsUpdate();
@@ -76,31 +75,28 @@ public class DsdCodeInfoReverseBatchService {
                   dsdCodeInfo.setTableConfFields(setCodeTableFieldsByMetaData(mysqlTable));
                   dsdCodeInfo.setGmtModified(new Date());
                   dsdCodeInfo.setGmtCreate(new Date());
+                  dsdCodeInfo.setDelFlag(0);
                   return dsdCodeInfo;
                 })
             .collect(Collectors.toList());
-    bulkSaveCodeInfoReverseData(codeInfoList, codeDirId, isUpdate);
+    bulkSaveCodeInfoReverseData(codeInfoList, isUpdate);
   }
 
-  private void bulkSaveCodeInfoReverseData(
-      List<DsdCodeInfo> codeInfoList, String codeDirId, String isUpdate) {
+  private void bulkSaveCodeInfoReverseData(List<DsdCodeInfo> codeInfoList, String isUpdate) {
     // 更新已有表: 0 :不更新, 1: 更新
     if (Integer.parseInt(isUpdate) == DsdConstant.CODE_INFO_INSERT) {
-      bulkInsertCodeInfoData(codeInfoList, codeDirId);
+      bulkInsertCodeInfoData(codeInfoList);
     } else {
-      bulkUpdateCodeInfoData(codeInfoList, codeDirId);
+      bulkUpdateCodeInfoData(codeInfoList);
     }
     entityManager.flush();
     entityManager.clear();
   }
 
-  private void bulkInsertCodeInfoData(List<DsdCodeInfo> codeInfoList, String codeDirId) {
+  private void bulkInsertCodeInfoData(List<DsdCodeInfo> codeInfoList) {
     // 清除已存在的码表信息列表
-    List<String> tableCodeList =
-        codeInfoList.stream().map(DsdCodeInfo::getTableCode).collect(Collectors.toList());
-    Predicate predicate =
-        qDsdCodeInfo.codeDirId.eq(codeDirId).and(qDsdCodeInfo.tableCode.in(tableCodeList));
-    Iterable<DsdCodeInfo> existDsdCodeInfos = dsdCodeInfoRepository.findAll(predicate);
+    List<String> tableCodeList = codeInfoList.stream().map(DsdCodeInfo::getTableCode).collect(Collectors.toList());
+    Iterable<DsdCodeInfo> existDsdCodeInfos = dsdCodeInfoRepository.findAll(qDsdCodeInfo.tableCode.in(tableCodeList));
     dsdCodeInfoRepository.deleteAll(existDsdCodeInfos);
     // 由于码表新建,需要清除码值
     Set<Long> codeInfoIds = new HashSet<>();
@@ -115,35 +111,28 @@ public class DsdCodeInfoReverseBatchService {
     }
   }
 
-  private void bulkUpdateCodeInfoData(List<DsdCodeInfo> codeInfoList, String codeDirId) {
-    List<String> tableCodeList =
-        codeInfoList.stream().map(DsdCodeInfo::getTableCode).collect(Collectors.toList());
-    Predicate predicate =
-        qDsdCodeInfo.codeDirId.eq(codeDirId).and(qDsdCodeInfo.tableCode.in(tableCodeList));
-    Iterable<DsdCodeInfo> existDsdCodeInfos = dsdCodeInfoRepository.findAll(predicate);
+  private void bulkUpdateCodeInfoData(List<DsdCodeInfo> codeInfoList) {
+    List<String> tableCodeList = codeInfoList.stream().map(DsdCodeInfo::getTableCode).collect(Collectors.toList());
+    Iterable<DsdCodeInfo> existDsdCodeInfos = dsdCodeInfoRepository.findAll(qDsdCodeInfo.tableCode.in(tableCodeList));
 
     HashMap<String, Long> primaryIDMap = Maps.newHashMap();
     for (DsdCodeInfo dsdCodeInfo : existDsdCodeInfos) {
-      primaryIDMap.put(
-          dsdCodeInfo.getCodeDirLevel() + "_" + dsdCodeInfo.getTableCode(), dsdCodeInfo.getId());
+      primaryIDMap.put(dsdCodeInfo.getTableCode(), dsdCodeInfo.getId());
     }
     Set<String> primaryIDKeySet = primaryIDMap.keySet();
     for (DsdCodeInfo dsdCodeInfo : codeInfoList) {
-      if (primaryIDKeySet.contains(
-          dsdCodeInfo.getCodeDirLevel() + "_" + dsdCodeInfo.getTableCode())) {
-        dsdCodeInfo.setId(
-            primaryIDMap.get(dsdCodeInfo.getCodeDirLevel() + "_" + dsdCodeInfo.getTableCode()));
+      if (primaryIDKeySet.contains(dsdCodeInfo.getTableCode())) {
+        dsdCodeInfo.setId(primaryIDMap.get(dsdCodeInfo.getTableCode()));
         entityManager.merge(dsdCodeInfo); // update 更新操作
       } else {
         entityManager.persist(dsdCodeInfo); // insert 更新操作
       }
-      LOG.info("码表基础信息更新,成功更新码表名称 【{}】信息", dsdCodeInfo.getTableName());
+      LOG.info("码表基础信息更新,成功更新码表名称 【{}】信息", dsdCodeInfo.getTableCode()+"_"+dsdCodeInfo.getTableName());
     }
   }
 
   @Transactional(rollbackFor = Exception.class)
-  public void reverseCreateCodeValues(
-      DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO, MysqlDb mysqlDb) {
+  public void reverseCreateCodeValues(DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO, MysqlDb mysqlDb) {
     String isReverseData = dsdCodeInfoReverseDBVO.getIsReverseData();
     // 逆向表数据: 0 :不逆向, 1: 覆盖
     if (Integer.parseInt(isReverseData) == DsdConstant.CODE_INFO_VALUES_UPDATE) {
@@ -151,31 +140,19 @@ public class DsdCodeInfoReverseBatchService {
       Set<Long> codeInfoIds = new HashSet<>();
 
       for (MysqlTable mysqlTable : mysqlDb.getMysqlTables()) {
-        Predicate predicate =
-            qDsdCodeInfo
-                .codeDirId
-                .eq(dsdCodeInfoReverseDBVO.getCodeDirId())
-                .and(qDsdCodeInfo.tableCode.eq(mysqlTable.getName()));
-        Optional<DsdCodeInfo> dsdCodeInfo = dsdCodeInfoRepository.findOne(predicate);
+        Optional<DsdCodeInfo> dsdCodeInfo = dsdCodeInfoRepository.findOne(qDsdCodeInfo.tableCode.eq(mysqlTable.getName()));
         if (dsdCodeInfo.isPresent()) {
           Long codeInfoId = dsdCodeInfo.get().getId();
           codeInfoIds.add(codeInfoId);
           // 获取原始库码值列表信息
           List<DsdCodeInfoExt> codeInfoExtValues =
-              DataSourceExtractor.searchCodeInfoExtValues(
-                  dsdCodeInfoReverseDBVO.getDataSourceJobVO(), mysqlTable, codeInfoId);
+              DataSourceExtractor.searchCodeInfoExtValues(dsdCodeInfoReverseDBVO.getDataSourceJobVO(), mysqlTable, codeInfoId);
           dsdCodeInfoExtList.addAll(codeInfoExtValues);
-          LOG.info(
-              "成功获取到码表名称 【{}】的码值个数 【{}】",
-              dsdCodeInfo.get().getTableName(),
-              codeInfoExtValues.size());
+          LOG.info("成功获取到码表名称 【{}】的码值个数 【{}】", dsdCodeInfo.get().getTableName(), codeInfoExtValues.size());
         } else {
           throw new BizException(
-              "逆向同步码值时,未匹配到层级为:"
-                  + dsdCodeInfoReverseDBVO.getCodeDirLevel()
-                  + " 表编码为:"
-                  + mysqlTable.getName()
-                  + ",所对应的码表信息!!!");
+              "逆向同步码值时,未匹配到层级为:" + dsdCodeInfoReverseDBVO.getCodeDirLevel() +
+                      " 表编码为:" + mysqlTable.getName() + ",所对应的码表信息!!!");
         }
       }
       // 更新保存码值
@@ -184,8 +161,7 @@ public class DsdCodeInfoReverseBatchService {
     }
   }
 
-  private void bulkSaveCodeValuesReverseData(
-      List<DsdCodeInfoExt> dsdCodeInfoExtList, Set<Long> codeInfoIds) {
+  private void bulkSaveCodeValuesReverseData(List<DsdCodeInfoExt> dsdCodeInfoExtList, Set<Long> codeInfoIds) {
     // 批量清除码值基本信息
     dsdCodeInfoExtRepository.deleteByDsdCodeInfoIdBatch(codeInfoIds);
     LOG.info("成功清除码表数量 【{}】所对应的码值信息", codeInfoIds.size());
