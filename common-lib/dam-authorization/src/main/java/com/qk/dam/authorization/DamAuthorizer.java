@@ -1,5 +1,5 @@
 package com.qk.dam.authorization;
 
 public interface DamAuthorizer {
-    boolean isAccessAllowed();
+  boolean isAccessAllowed();
 }

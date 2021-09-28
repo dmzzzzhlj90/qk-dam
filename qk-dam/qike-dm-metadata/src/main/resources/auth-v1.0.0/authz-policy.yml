@@ -5,10 +5,8 @@ namespace: default
 roles:
   DAM_ADMIN:
     desc: 系统管理员
-    mvcMatchers:
-      - '/mtd/cas/**'
     action:
-      - 'entity:*'
+      - 'entity:list'
       - 'entityType:*'
       - 'domain:*'
       - '*:import*'
