@@ -13,6 +13,7 @@ import org.apache.atlas.model.instance.AtlasEntity;
  * @since 1.0.0
  */
 public interface AtlasMetaDataService {
+  public static String sss = "";
   /**
    * 查找元数据信息
    *
