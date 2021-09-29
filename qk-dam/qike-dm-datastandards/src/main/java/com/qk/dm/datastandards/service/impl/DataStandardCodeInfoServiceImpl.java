@@ -29,6 +29,7 @@ import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -175,8 +176,8 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
         Predicate predicate = qDsdCodeInfo.tableCode.eq(dsdCodeInfo.getTableCode());
         boolean exists = dsdCodeInfoRepository.exists(predicate);
         if (exists) {
-          throw new BizException("当前要新增的码表信息,表编码为:" + dsdCodeInfo.getTableCode()
-                  + "，层级目录为:" + dsdCodeInfo.getCodeDirLevel() + "的数据 已存在！！！");
+            throw new BizException("当前要新增的码表信息,表编码为:" + dsdCodeInfo.getTableCode()
+                    + "，层级目录为:" + dsdCodeInfo.getCodeDirLevel() + "的数据 已存在！！！");
         }
         if (dsdCodeInfoVO.getCodeTableFieldsList().size() == 0
                 && dsdCodeInfo.getTableConfFields() == null) {
@@ -223,6 +224,14 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
         Predicate predicate = qDsdCodeInfo.id.eq(dsdCodeInfoVO.getId());
         boolean exists = dsdCodeInfoRepository.exists(predicate);
         if (exists) {
+            Optional<DsdCodeInfo> optionalDsdCodeInfo =
+                    dsdCodeInfoRepository.findOne(
+                            qDsdCodeInfo.tableCode.eq(dsdCodeInfoVO.getTableCode())
+                                    .and(qDsdCodeInfo.id.ne(dsdCodeInfoVO.getId())));
+            if (optionalDsdCodeInfo.isPresent()) {
+                throw new BizException("在层级目录为:" + optionalDsdCodeInfo.get().getCodeDirLevel() +
+                        "已经存在表编码为：" + optionalDsdCodeInfo.get().getTableCode() + " 的数据！！！");
+            }
             dsdCodeInfoRepository.saveAndFlush(dsdCodeInfo);
         } else {
             throw new BizException("当前要新增的码表信息,目录为：" + dsdCodeInfo.getCodeDirLevel()
@@ -356,24 +365,31 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
 
     @Override
     public void addDsdCodeInfoExt(DsdCodeInfoExtVO dsdCodeInfoExtVO) {
-        DsdCodeInfoExt dsdCodeInfoExt =
-                DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
-        setTableConfValuesJson(dsdCodeInfoExt, dsdCodeInfoExtVO);
-        dsdCodeInfoExt.setGmtCreate(new Date());
-        dsdCodeInfoExt.setGmtModified(new Date());
-        dsdCodeInfoExt.setDelFlag(0);
+        try {
+            DsdCodeInfoExt dsdCodeInfoExt =
+                    DsdCodeInfoExtMapper.INSTANCE.useDsdCodeInfoExt(dsdCodeInfoExtVO);
+            setTableConfValuesJson(dsdCodeInfoExt, dsdCodeInfoExtVO);
+            dsdCodeInfoExt.setGmtCreate(new Date());
+            dsdCodeInfoExt.setGmtModified(new Date());
+            dsdCodeInfoExt.setDelFlag(0);
 
-        Predicate predicate =
-                qDsdCodeInfoExt
-                        .dsdCodeInfoId
-                        .eq(dsdCodeInfoExt.getDsdCodeInfoId())
-                        .and(qDsdCodeInfoExt.searchCode.eq(dsdCodeInfoExt.getSearchCode()));
-        boolean exists = dsdCodeInfoExtRepository.exists(predicate);
-        if (exists) {
-            throw new BizException(
-                    "当前要新增的码表数值,编码code为:" + dsdCodeInfoExt.getSearchCode() + " 的数据，已存在！！！");
+            if (!ObjectUtils.isEmpty(dsdCodeInfoExt.getSearchCode())) {
+                Predicate predicate =
+                        qDsdCodeInfoExt
+                                .dsdCodeInfoId
+                                .eq(dsdCodeInfoExt.getDsdCodeInfoId())
+                                .and(qDsdCodeInfoExt.searchCode.eq(dsdCodeInfoExt.getSearchCode()));
+                boolean exists = dsdCodeInfoExtRepository.exists(predicate);
+                if (exists) {
+                    throw new BizException(
+                            "当前要新增的码表数值,编码code为:" + dsdCodeInfoExt.getSearchCode() + " 的数据，已存在！！！");
+                }
+            }
+            dsdCodeInfoExtRepository.save(dsdCodeInfoExt);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BizException(e.getMessage());
         }
-        dsdCodeInfoExtRepository.save(dsdCodeInfoExt);
     }
 
     @Override
