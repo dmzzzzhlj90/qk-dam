@@ -1,6 +1,5 @@
 package com.qk.dm.metadata.service.impl;
 
-import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.metedata.config.AtlasConfig;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.apache.atlas.model.instance.*;
 import org.apache.atlas.model.typedef.AtlasClassificationDef;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.atlas.model.typedef.AtlasTypesDef;
-import org.apache.kerby.kerberos.kerb.admin.AuthUtil;
 
 /**
  * @author spj

@@ -85,7 +85,8 @@ public class DsdCodeInfoUploadDataListener extends AnalysisEventListener<DsdCode
         DsdCodeDir dsdCodeDir = dsdExcelBatchService.getCodeDir(codeDirId);
         Map<String, List<DsdCodeInfoVO>> tableCodeMap =
             list.stream()
-//                .filter(dsdCodeInfoVO -> dsdCodeInfoVO.getCodeDirLevel().equals(dsdCodeDir.getCodeDirLevel()))
+                //                .filter(dsdCodeInfoVO ->
+                // dsdCodeInfoVO.getCodeDirLevel().equals(dsdCodeDir.getCodeDirLevel()))
                 .collect(Collectors.groupingBy(DsdCodeInfoVO::getTableCode));
         getDataListAllByCodeDirId(tableCodeSet, dataList, tableCodeMap);
         dsdExcelBatchService.saveCodeInfosByCodeDirId(dataList, tableCodeSet, dsdCodeDir);

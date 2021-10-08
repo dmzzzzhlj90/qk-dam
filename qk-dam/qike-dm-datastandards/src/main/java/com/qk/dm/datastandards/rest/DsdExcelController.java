@@ -97,7 +97,8 @@ public class DsdExcelController {
    */
   @PostMapping("/code/info/all/upload")
   @ResponseBody
-  public DefaultCommonResult codeInfoAllUpload(MultipartFile file, @RequestParam("codeDirId") String codeDirId) {
+  public DefaultCommonResult codeInfoAllUpload(
+      MultipartFile file, @RequestParam("codeDirId") String codeDirId) {
     dsdExcelService.codeInfoAllUpload(file, codeDirId);
     return DefaultCommonResult.success();
   }
@@ -108,7 +109,9 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/code/info/all/download")
-  public void codeInfoAllDownload(@RequestParam("codeDirId") String codeDirId, HttpServletResponse response) throws IOException {
+  public void codeInfoAllDownload(
+      @RequestParam("codeDirId") String codeDirId, HttpServletResponse response)
+      throws IOException {
     dsdExcelService.codeInfoAllDownload(codeDirId, response);
   }
 

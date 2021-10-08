@@ -10,7 +10,6 @@ import com.qk.dam.metedata.entity.MtdApiParams;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.metadata.service.MtdApiService;
 import java.util.List;
-
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +35,7 @@ public class MtdApiController {
    * @return DefaultCommonResult<List<MtdAtlasEntityTypeVO>> 元数据所有实体类型
    */
   @GetMapping("/entity/types")
-  @Auth(bizType= BizResource.MTD_ENTITY_TYPE,actionType = RestActionType.LIST)
+  @Auth(bizType = BizResource.MTD_ENTITY_TYPE, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<MtdAtlasEntityType>> getAllEntityType() {
 
     List<MtdAtlasEntityType> entityTypeList = mtdApiService.getAllEntityType();
@@ -50,7 +49,7 @@ public class MtdApiController {
    * @return DefaultCommonResult<MtdApiVO> 元数据实体详情
    */
   @PostMapping("/entity/detail")
-  @Auth(bizType= BizResource.MTD_ENTITY,actionType = RestActionType.DETAIL)
+  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdApi> mtdDetail(@RequestBody @Validated MtdApiParams mtdApiParams) {
     MtdApi mtdApi =
         mtdApiService.mtdDetail(

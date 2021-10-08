@@ -1,17 +1,15 @@
 plugins {
-    id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
 }
 version "${commonLibVersion}"
 group "com.qk.dam.authorization"
 dependencies {
-    compile project(":commons-core")
-    compile 'org.projectlombok:lombok'
-    compile "org.slf4j:slf4j-api"
+    implementation project(":commons-core")
     implementation 'ch.qos.logback:logback-classic'
     implementation 'ch.qos.logback:logback-core'
     implementation group: 'org.yaml', name: 'snakeyaml'
     implementation group: 'cn.hutool', name: 'hutool-core'
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
     compile 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     annotationProcessor 'org.projectlombok:lombok'
 }
@@ -19,6 +17,9 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     }
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"

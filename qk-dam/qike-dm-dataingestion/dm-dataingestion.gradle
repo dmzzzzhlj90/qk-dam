@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
 version "${dmDataingestionVersion}"
 group "com.qk.dm.dataingestion"
@@ -11,7 +11,14 @@ configurations {
         it.outgoing.artifact(bootJar)
     }
 }
-
+docker {
+    springBootApplication {
+        baseImage = "${baseImage}"
+        ports = [8788]
+        images = ["${imagePath}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
 dependencies {
     implementation project(":commons-core")
     implementation project(":dam-log")

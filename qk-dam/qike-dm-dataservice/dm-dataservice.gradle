@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
 version "${dmDataServiceVersion}"
 group "com.qk.dm.dataservice"
@@ -9,6 +9,14 @@ configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
         it.outgoing.artifact(bootJar)
+    }
+}
+docker {
+    springBootApplication {
+        baseImage = "${baseImage}"
+        ports = [8786]
+        images = ["${imagePath}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
     }
 }
 
