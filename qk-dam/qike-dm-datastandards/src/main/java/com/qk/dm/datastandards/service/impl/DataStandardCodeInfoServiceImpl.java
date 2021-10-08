@@ -32,6 +32,7 @@ import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 /**
  * @author wjq
@@ -362,9 +363,11 @@ public class DataStandardCodeInfoServiceImpl implements DataStandardCodeInfoServ
           qDsdCodeInfoExt.dsdCodeInfoId.eq(
               Long.valueOf(dsdCodeInfoExtParamsVO.getDsdCodeInfoId())));
     }
+
     if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getSearchCode())) {
       booleanBuilder.and(
           qDsdCodeInfoExt.searchCode.contains(dsdCodeInfoExtParamsVO.getSearchCode()));
+
     }
     if (!StringUtils.isEmpty(dsdCodeInfoExtParamsVO.getSearchValue())) {
       booleanBuilder.and(

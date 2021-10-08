@@ -1,17 +1,14 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dam.metedata.entity.*;
 import com.qk.dm.metadata.service.MtdApiService;
-import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 其它服务调用的元数据接口（数据服务）
@@ -21,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0.0
  */
 @RestController
+@RequestMapping("/api")
 public class MtdApiController {
-
   private final MtdApiService mtdApiService;
 
   public MtdApiController(MtdApiService mtdApiService) {
@@ -59,4 +56,5 @@ public class MtdApiController {
             mtdApiParams.getServer());
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdApi);
   }
+
 }
