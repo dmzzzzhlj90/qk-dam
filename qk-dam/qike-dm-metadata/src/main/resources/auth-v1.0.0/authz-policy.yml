@@ -6,10 +6,13 @@ roles:
   DAM_ADMIN:
     desc: 系统管理员
     action:
-      - 'entity:list'
+      - 'entity:**'
+      - 'class:**'
+      - 'labels:**'
+      - 'audit:*'
       - 'entityType:*'
-      - 'domain:*'
-      - '*:import*'
+      - 'basicType:*'
+      - 'criteria:*'
   DAM_DATA_SCIENTIST:
     desc: 数据科学家
     mvcMatchers:

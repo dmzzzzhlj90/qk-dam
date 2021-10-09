@@ -97,6 +97,7 @@ public class MtdAtlasController {
    * @return List<EntityAuditEventV2>
    */
   @GetMapping("/audit/{guid}")
+  @Auth(bizType = BizResource.MTD_AUDIT, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<EntityAuditEventV2>> getAuditByGuid(
       @PathVariable("guid") String guid) {
     // todo 元数据操作数据获取接口--需要优化这个部分
@@ -150,6 +151,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<MtdAtlasTableDetailVO>
    */
   @GetMapping("/table/{guid}")
+  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdTableDetailVO> getTableDetailByGuid(
       @PathVariable("guid") String guid) {
     MtdTableDetailVO mtdTableDetailVO = atlasMetaDataService.getTableDetailByGuid(guid);
@@ -163,6 +165,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<MtdColumnVO>
    */
   @GetMapping("/column/{guid}")
+  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdColumnVO> getColumnDetailByGuid(@PathVariable("guid") String guid) {
     MtdColumnVO mtdColumnVO = atlasMetaDataService.getColumnDetailByGuid(guid);
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdColumnVO);
@@ -175,6 +178,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/{guids}")
+  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DELETE)
   public DefaultCommonResult deleteEntitiesByGuids(@PathVariable("guids") String guids) {
     atlasMetaDataService.deleteEntitiesByGuids(guids);
     return DefaultCommonResult.success(ResultCodeEnum.OK, null);

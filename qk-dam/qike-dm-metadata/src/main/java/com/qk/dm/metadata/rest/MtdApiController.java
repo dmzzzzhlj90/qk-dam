@@ -1,5 +1,8 @@
 package com.qk.dm.metadata.rest;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.metedata.entity.*;
@@ -18,7 +21,6 @@ import java.util.Map;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/api")
 public class MtdApiController {
   private final MtdApiService mtdApiService;
 
