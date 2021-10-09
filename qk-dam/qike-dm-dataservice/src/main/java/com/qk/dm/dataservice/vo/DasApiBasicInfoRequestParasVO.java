@@ -30,7 +30,7 @@ public class DasApiBasicInfoRequestParasVO {
   private boolean supportNull;
 
   /** 示例值 */
-  private String defaultValue;
+  private Object defaultValue;
 
   /** 默认值 */
   private String exampleValue;
