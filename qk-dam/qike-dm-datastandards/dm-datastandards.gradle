@@ -33,7 +33,6 @@ compileJava {
 
 dependencies {
     implementation project(":qk-data-jpa")
-    implementation project(":qk-data-redis")
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
 

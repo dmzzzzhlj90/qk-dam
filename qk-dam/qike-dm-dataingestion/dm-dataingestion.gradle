@@ -11,14 +11,7 @@ configurations {
         it.outgoing.artifact(bootJar)
     }
 }
-docker {
-    springBootApplication {
-        baseImage = "openjdk:11.0.12-jre-slim-buster"
-        ports = [8788]
-        images = ["${imagePath}/${project.name}:${version}"]
-        jvmArgs = ['-Xmx248m']
-    }
-}
+
 dependencies {
     implementation project(":commons-core")
     implementation project(":dam-log")
