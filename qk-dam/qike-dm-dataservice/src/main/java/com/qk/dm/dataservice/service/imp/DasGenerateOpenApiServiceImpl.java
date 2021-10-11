@@ -191,7 +191,7 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
       String paraType,
       String fieldName,
       String description,
-      String defaultValue,
+      Object defaultValue,
       boolean required) {
     ComponentField.ComponentFieldBuilder componentFieldBuilder =
         ComponentField.builder()

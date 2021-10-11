@@ -57,7 +57,6 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
     @Override
     public int syncRegister() {
         LOG.info("========================同步OenApi开始!========================");
-        List<DasApiRegisterVO> dasApiRegisterVOList = new ArrayList<>();
         try {
             String urlParams = openApiConnectInfo.getUrl();
             if (ObjectUtils.isEmpty(urlParams)) {
@@ -66,7 +65,7 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
 
             String[] arrOpenApiUrl = urlParams.split(",");
             for (String openApiUrl : arrOpenApiUrl) {
-                singleSyncRegisterByOpenApiUrl(dasApiRegisterVOList, openApiUrl);
+                singleSyncRegisterByOpenApiUrl(openApiUrl);
             }
             LOG.info("=====================同步OenApi已完成!======================");
             return 1;
@@ -76,7 +75,8 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
         }
     }
 
-    private void singleSyncRegisterByOpenApiUrl(List<DasApiRegisterVO> dasApiRegisterVOList, String openApiUrl) throws Exception {
+    private void singleSyncRegisterByOpenApiUrl(String openApiUrl) throws Exception {
+        List<DasApiRegisterVO> dasApiRegisterVOList = new ArrayList<>();
         LOG.info("开始同步OpenApi,同步地址为: 【{}】", openApiUrl);
         // 获取同步API信息
         URL url = new URL(openApiUrl);
@@ -90,7 +90,7 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
         LOG.info("成功构建注册API对象,待同步对象的个数为: 【{}】 ", dasApiRegisterVOList.size());
         // 执行注册API落库
         syncRegisterApi(dasApiRegisterVOList);
-        LOG.info("执行同步" +openApiUrl+ "的API解析,注册API落库已完成!!!");
+        LOG.info("执行同步" + openApiUrl + "的API解析,注册API落库已完成!!!");
     }
 
     private DasApiDirVO getApiDirVO(OpenApi3 openApi3) {
@@ -229,7 +229,7 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
                     .paraName(key)
                     .paraCHNName(schemaEntryValue.getDescription())
                     .paraType(schemaEntryValue.getType().toUpperCase())
-                    .defaultValue((String) schemaEntryValue.getDefault())
+                    .defaultValue(schemaEntryValue.getDefault())
                     .description(schemaEntryValue.getDescription());
             // 设置必填参数
             setRequiredFields(requiredFields, key, basicInfoRequestParasVOBuilder);
