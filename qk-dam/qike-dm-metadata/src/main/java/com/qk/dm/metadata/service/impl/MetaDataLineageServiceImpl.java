@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.service.impl;
 
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.mapstruct.mapper.MtdLineageMapper;
 import com.qk.dm.metadata.service.MetaDataLineageService;
@@ -38,14 +39,13 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
 
             List<AtlasEntityHeader> atlasEntityHeaderList = new ArrayList<>(atlasLineageInfo.getGuidEntityMap().values());
             List<MtdLineageDetailVO> mtdLineageDetailVOList = MtdLineageMapper.INSTANCE.userMtdLineageDetailVO(atlasEntityHeaderList);
-            if(!CollectionUtils.isEmpty(mtdLineageDetailVOList)) {
-                //获取当前节点
-                List<MtdLineageDetailVO> currentNodeList = mtdLineageDetailVOList.stream()
-                        .filter(e -> e.getGuid().equals(mtdLineageParaVO.getGuid()))
-                        .collect(Collectors.toList());
-
+            //获取当前节点
+            List<MtdLineageDetailVO> currentNodeList = mtdLineageDetailVOList.stream()
+                    .filter(e -> e.getGuid().equals(mtdLineageParaVO.getGuid()))
+                    .collect(Collectors.toList());
+            List<ProcessVO> processVOList = new ArrayList<>();
+            if (!CollectionUtils.isEmpty(mtdLineageDetailVOList)) {
                 Set<AtlasLineageInfo.LineageRelation> relationSet = atlasLineageInfo.getRelations();
-                List<ProcessVO> processVOList = new ArrayList<>();
                 for (AtlasLineageInfo.LineageRelation relation : relationSet) {
                     ProcessVO processVO = new ProcessVO();
                     processVO.setGuid(mtdLineageParaVO.getGuid());
@@ -53,12 +53,11 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
                     processVO.setTargetId(relation.getToEntityId());
                     processVOList.add(processVO);
                 }
-
-                mtdLineageVO = MtdLineageVO.builder()
-                        .currentNode(CollectionUtils.isEmpty(currentNodeList) ? null : currentNodeList.get(0))
-                        .nodes(mtdLineageDetailVOList)
-                        .edges(processVOList).build();
             }
+            mtdLineageVO = MtdLineageVO.builder()
+                    .currentNode(CollectionUtils.isEmpty(currentNodeList) ? new MtdLineageDetailVO() : currentNodeList.get(0))
+                    .nodes(mtdLineageDetailVOList)
+                    .edges(processVOList).build();
 
         } catch (AtlasServiceException e) {
             e.printStackTrace();
@@ -94,5 +93,11 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
         return AtlasLineageInfo.LineageDirection.BOTH;
     }
 
+    public static void main(String[] args) {
+        MtdLineageParamsVO mtdLineageParaVO = new MtdLineageParamsVO();
+        mtdLineageParaVO.setGuid("a16257f8-17ce-4c95-9142-54ed9219864a");
+        MtdLineageVO mtdLineageVO = new MetaDataLineageServiceImpl().getLineageInfo(mtdLineageParaVO);
+        System.out.println(GsonUtil.toJsonString(mtdLineageVO));
+    }
 
 }
