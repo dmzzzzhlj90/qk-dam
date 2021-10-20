@@ -20,6 +20,7 @@ import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
+import org.apache.atlas.model.lineage.AtlasLineageInfo;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -488,11 +489,4 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       e.printStackTrace();
     }
   }
-
-  public static void main(String[] args) throws AtlasServiceException {
-    AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid("aa1f53ba-3aca-413f-9870-06fc94d127b4", true, false);
-    detail.getEntity().getRelationshipAttributes();
-    System.out.println(GsonUtil.toJsonString(detail));
-  }
-
 }
