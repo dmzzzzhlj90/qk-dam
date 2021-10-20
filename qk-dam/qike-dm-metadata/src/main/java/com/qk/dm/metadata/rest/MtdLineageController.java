@@ -5,7 +5,6 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MetaDataLineageService;
 import com.qk.dm.metadata.vo.MtdLineageParamsVO;
 import com.qk.dm.metadata.vo.MtdLineageVO;
-import org.apache.atlas.model.lineage.AtlasLineageInfo;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
