@@ -92,12 +92,4 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
         }
         return AtlasLineageInfo.LineageDirection.BOTH;
     }
-
-    public static void main(String[] args) {
-        MtdLineageParamsVO mtdLineageParaVO = new MtdLineageParamsVO();
-        mtdLineageParaVO.setGuid("a16257f8-17ce-4c95-9142-54ed9219864a");
-        MtdLineageVO mtdLineageVO = new MetaDataLineageServiceImpl().getLineageInfo(mtdLineageParaVO);
-        System.out.println(GsonUtil.toJsonString(mtdLineageVO));
-    }
-
 }
