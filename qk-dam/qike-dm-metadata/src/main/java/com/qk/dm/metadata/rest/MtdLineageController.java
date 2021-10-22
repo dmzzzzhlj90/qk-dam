@@ -5,6 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MetaDataLineageService;
 import com.qk.dm.metadata.vo.MtdLineageParamsVO;
 import com.qk.dm.metadata.vo.MtdLineageVO;
+import com.qk.dm.metadata.vo.RelationVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,11 +39,12 @@ public class MtdLineageController {
     /**
      * 获取元数据过程 input output
      * @param guid
-     * @return DefaultCommonResult<Map<String,Object>>
+     * @return DefaultCommonResult<RelationVO>
      */
-    @GetMapping("/process/{guid}")
-    public DefaultCommonResult<Map<String,Object>> getProcess(@PathVariable("guid") String guid){
-        return DefaultCommonResult.success(ResultCodeEnum.OK,metaDataLineageService.getProcess(guid));
+    @GetMapping("/relation/{guid}")
+    public DefaultCommonResult<RelationVO> relationShip(@PathVariable("guid") String guid){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,metaDataLineageService.relationShip(guid));
     }
+
 
 }

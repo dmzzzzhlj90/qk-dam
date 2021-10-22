@@ -2,9 +2,7 @@ package com.qk.dm.metadata.service;
 
 import com.qk.dm.metadata.vo.MtdLineageParamsVO;
 import com.qk.dm.metadata.vo.MtdLineageVO;
-
-
-import java.util.Map;
+import com.qk.dm.metadata.vo.RelationVO;
 
 /**
  * @author wangzp
@@ -24,6 +22,7 @@ public interface MetaDataLineageService {
      * @param guid
      * @return
      */
-    Map<String,Object> getProcess(String guid);
+    RelationVO relationShip(String guid);
+
 
 }

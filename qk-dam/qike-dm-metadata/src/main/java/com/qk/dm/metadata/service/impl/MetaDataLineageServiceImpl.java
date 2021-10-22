@@ -4,10 +4,7 @@ import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.mapstruct.mapper.MtdLineageMapper;
 import com.qk.dm.metadata.service.MetaDataLineageService;
-import com.qk.dm.metadata.vo.MtdLineageDetailVO;
-import com.qk.dm.metadata.vo.MtdLineageParamsVO;
-import com.qk.dm.metadata.vo.MtdLineageVO;
-import com.qk.dm.metadata.vo.ProcessVO;
+import com.qk.dm.metadata.vo.*;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
@@ -28,7 +25,6 @@ import java.util.stream.Collectors;
 @Service
 public class MetaDataLineageServiceImpl implements MetaDataLineageService {
     private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
-
     @Override
     public MtdLineageVO getLineageInfo(MtdLineageParamsVO mtdLineageParaVO) {
         MtdLineageVO mtdLineageVO = null;
@@ -65,20 +61,19 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
         return mtdLineageVO;
     }
 
+
     @Override
-    public Map<String, Object> getProcess(String guid) {
-        Map<String, Object> process = null;
+    public RelationVO relationShip(String guid) {
+        RelationVO relationVO = null;
         try {
             AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
-
-            process = detail.getEntity().getRelationshipAttributes().entrySet().stream()
-                    .filter(r -> r.getKey().equals("outputs") || r.getKey().equals("inputs"))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            Map<String, Object> map = detail.getEntity().getRelationshipAttributes();
+            relationVO = GsonUtil.fromMap(map, RelationVO.class);
 
         } catch (AtlasServiceException e) {
             e.printStackTrace();
         }
-        return process;
+        return relationVO;
     }
 
     private AtlasLineageInfo.LineageDirection getLineageDirectionEnum(String direction) {
@@ -92,4 +87,8 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
         }
         return AtlasLineageInfo.LineageDirection.BOTH;
     }
+
+
+
+
 }
