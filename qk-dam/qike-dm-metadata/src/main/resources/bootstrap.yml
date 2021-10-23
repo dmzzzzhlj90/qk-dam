@@ -1,41 +1,22 @@
-server:
-  port: 8782
-nacos:
-  serverAddr: http://172.21.32.2
-  namespace: b283864b-1e78-429e-b322-db0f5720f55c
 spring:
+  profiles:
+    active: dev
+  application:
+    name: ${name}-\${spring.profiles.active}
   logging:
     level: info
-    path: logs/dm-metadata.log
     appender:
       ref: CONSOLE
-  messages:
-    basename: i18n/messages
-  mvc:
-    message-codes-resolver-format: postfix_error_code
-    servlet:
-      path: /mtd
-  main:
-    allow-bean-definition-overriding: true
-  jpa:
-    show-sql: false
-  application:
-    name: dm-metadata
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
+    path: logs/\${spring.application.name}.log
   cloud:
     nacos:
       discovery:
-        server-addr: ${nacos.serverAddr}
-        namespace: ${nacos.namespace}
+        server-addr: ${nacos.server.addr}
+        namespace: ${nacos.server.namespace}-\${spring.profiles.active}
       config:
-        server-addr: ${nacos.serverAddr}
-        namespace: ${nacos.namespace}
+        server-addr: ${nacos.server.addr}
+        namespace: ${nacos.server.namespace}-\${spring.profiles.active}
         extension-configs:
-          - dataId: qkdam-mysql-test.yml
+          - dataId: qkdam-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
-
