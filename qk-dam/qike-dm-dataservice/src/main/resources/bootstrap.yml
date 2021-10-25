@@ -1,8 +1,5 @@
 server:
   port: 8786
-nacos:
-  serverAddr: http://172.21.32.2
-  namespace: 4ffde52b-d587-4e13-b5df-7aa081d71a81
 spring:
   logging:
     level: info
@@ -18,23 +15,23 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: dm-dataservice-prod
+    name: dm-dataservice-dev
   cloud:
     nacos:
       discovery:
-        server-addr: ${nacos.serverAddr}
-        namespace: ${nacos.namespace}
+        server-addr: http://172.21.32.2
+        namespace: b70cde8c-05da-4032-9637-59d6d640296b
       config:
-        server-addr: ${nacos.serverAddr}
-        namespace: ${nacos.namespace}
+        server-addr: http://172.21.32.2
+        namespace: b70cde8c-05da-4032-9637-59d6d640296b
         extension-configs:
-          - dataId: qkdam-mysql-prod.yml
+          - dataId: qkdam-mysql-dev.yml
             group: DAM
             refresh: true
-          - dataId: qkdam-redis-prod.yml
+          - dataId: qkdam-redis-dev.yml
             group: DAM
             refresh: true
-          - dataId: qkdam-dataservice-prod.yml
+          - dataId: qkdam-dataservice-dev.yml
             group: DAM
             refresh: true
 management:
