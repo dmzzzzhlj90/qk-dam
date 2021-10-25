@@ -3,13 +3,16 @@ plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
-version "${dmMicroServices}"
+version "${damProfilesActive}-v${dmMicroServices}"
 group "com.qk.dam.auth"
 configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
         it.outgoing.artifact(bootJar)
     }
+}
+processResources {
+    expand(project.properties)
 }
 docker {
     springBootApplication {

@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: dev
   application:
     name: ${name}-\${spring.profiles.active}
   logging:
@@ -11,12 +9,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${nacos.server.addr}
-        namespace: ${nacos.server.namespace}-\${spring.profiles.active}
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
       config:
-        server-addr: ${nacos.server.addr}
-        namespace: ${nacos.server.namespace}-\${spring.profiles.active}
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
         extension-configs:
           - dataId: qkdam-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
+  profiles:
+    active: ${damProfilesActive}

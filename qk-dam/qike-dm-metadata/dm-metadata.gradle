@@ -3,7 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
-version "${dmDatastandardsVersion}"
+version "${damProfilesActive}-v${dmDatastandardsVersion}"
 group "com.qk.dm.metadata"
 configurations {
     [apiElements, runtimeElements].each {
