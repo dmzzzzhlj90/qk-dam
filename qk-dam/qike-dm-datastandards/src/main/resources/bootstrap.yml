@@ -21,11 +21,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr:  http://172.20.0.13
+        server-addr:  http://172.21.32.2
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         group: DM-GROUP
       config:
-        server-addr:  http://172.20.0.13
+        server-addr:  http://172.21.32.2
         namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
         extension-configs:
           - dataId: test44-mysql-dev.yml
