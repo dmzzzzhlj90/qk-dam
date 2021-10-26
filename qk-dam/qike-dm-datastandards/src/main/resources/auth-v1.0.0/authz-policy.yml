@@ -1,23 +1,22 @@
 version: 1.0.0
-name: metadata
-desc: 元数据权限策略
+name: dataStandard
+desc: 数据标准权限策略
 namespace: default
 roles:
   DAM_ADMIN:
     desc: 系统管理员
     action:
-      - 'entity:**'
-      - 'class:**'
-      - 'labels:**'
-      - 'audit:*'
-      - 'entityType:*'
-      - 'basicType:*'
-      - 'criteria:*'
+      - 'dsdDir:**'
+      - 'basicInfo:**'
+      - 'dsdCodeDir:**'
+      - 'dsdCodeInfo:**'
+      - 'dsdCodeInfoExt:**'
+      - 'dsdExcelUpload:**'
+      - 'dsdExcelDownload:**'
   DAM_DATA_SCIENTIST:
     desc: 数据科学家
     mvcMatchers:
-      - '/entity/**'
-      - '/basic/**'
+      - '/basic/info/**'
     action:
       - '*:get*'
       - '*:import*'
@@ -28,7 +27,7 @@ roles:
   DAM_DATA_EXT:
     desc: 外部用户
     action:
-      - 'criteria:list'
+      - 'basicInfo:list'
 userRoles:
   admin:
     - ROLE_ADMIN
