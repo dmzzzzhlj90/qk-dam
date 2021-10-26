@@ -11,6 +11,8 @@ public enum BizResource {
   MTD_AUDIT("audit", "元数据操作资源"),
   MTD_ENTITY_DB("entity:db", "元数据实体DB资源"),
   MTD_CRITERIA_ENTITY("criteria", "元数据条件查询实体资源"),
+  DSD_BASIC_INFO("basicInfo", "数据标准标准基础信息"),
+  DSD_BASIC_INFO_CODE("basicInfo:code", "标准信息引用码表"),
   ;
 
   private String bizCls;
