@@ -1,11 +1,12 @@
+
 spring:
   application:
     name: ${name}-\${spring.profiles.active}
   session:
     redis:
-      cleanup-cron: "0 0/6 * * * ?"
+      configure-action: none
+      flush-mode: immediate
       namespace: qkdam:session
-      flush-mode: on_save
   logging:
     level: info
     appender:
