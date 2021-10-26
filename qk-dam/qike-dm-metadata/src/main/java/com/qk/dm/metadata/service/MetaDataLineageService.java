@@ -4,6 +4,8 @@ import com.qk.dm.metadata.vo.MtdLineageParamsVO;
 import com.qk.dm.metadata.vo.MtdLineageVO;
 import com.qk.dm.metadata.vo.RelationVO;
 
+import java.util.Map;
+
 /**
  * @author wangzp
  * @date 2021/10/15 15:14
@@ -22,7 +24,7 @@ public interface MetaDataLineageService {
      * @param guid
      * @return
      */
-    RelationVO relationShip(String guid);
+    Map<String,Object> relationShip(String guid);
 
 
 }

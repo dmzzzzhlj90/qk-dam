@@ -1,6 +1,6 @@
 package com.qk.dm.metadata.service.impl;
 
-import com.qk.dam.commons.util.GsonUtil;
+
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.mapstruct.mapper.MtdLineageMapper;
 import com.qk.dm.metadata.service.MetaDataLineageService;
@@ -13,7 +13,6 @@ import org.apache.atlas.model.lineage.AtlasLineageInfo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,17 +62,34 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
 
 
     @Override
-    public RelationVO relationShip(String guid) {
-        RelationVO relationVO = null;
+    public Map<String,Object> relationShip(String guid) {
+        Map<String, Object> map = new HashMap<>();
         try {
             AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
-            Map<String, Object> map = detail.getEntity().getRelationshipAttributes();
-            relationVO = GsonUtil.fromMap(map, RelationVO.class);
+            Map<String, Object> relationShip = detail.getEntity().getRelationshipAttributes();
+            List<Map<String,Object>> relationShipVOList = new ArrayList<>();
+            if(!CollectionUtils.isEmpty(relationShip)){
+                for(Map.Entry<String, Object> r:relationShip.entrySet()){
+                    if(r.getValue() instanceof List){
+                        List v = (List) r.getValue();
+                        if(v.size()>0) {
+                            Map<String,Object> relation = new HashMap<>();
+                            relation.put("displayText",r.getKey());
+                            relation.put("children", r.getValue());
+                            relationShipVOList.add(relation);
+                        }
+                    }
+                }
+            }
+            map.put("guid",guid);
+            map.put("typeName",detail.getEntity().getTypeName());
+            map.put("displayText",detail.getEntity().getAttributes().get("name"));
+            map.put("children",relationShipVOList);
 
         } catch (AtlasServiceException e) {
             e.printStackTrace();
         }
-        return relationVO;
+        return map;
     }
 
     private AtlasLineageInfo.LineageDirection getLineageDirectionEnum(String direction) {
@@ -87,8 +103,5 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
         }
         return AtlasLineageInfo.LineageDirection.BOTH;
     }
-
-
-
 
 }

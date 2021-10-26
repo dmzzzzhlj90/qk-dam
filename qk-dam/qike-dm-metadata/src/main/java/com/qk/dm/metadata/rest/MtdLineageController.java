@@ -42,7 +42,7 @@ public class MtdLineageController {
      * @return DefaultCommonResult<RelationVO>
      */
     @GetMapping("/relation/{guid}")
-    public DefaultCommonResult<RelationVO> relationShip(@PathVariable("guid") String guid){
+    public DefaultCommonResult<Map<String,Object>> relationShip(@PathVariable("guid") String guid){
         return DefaultCommonResult.success(ResultCodeEnum.OK,metaDataLineageService.relationShip(guid));
     }
 
