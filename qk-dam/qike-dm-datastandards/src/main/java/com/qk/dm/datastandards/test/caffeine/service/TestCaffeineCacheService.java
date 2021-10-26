@@ -13,13 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TestCaffeineCacheService {
 
-    DsdCodeInfoExt queryData(Long id);
+  DsdCodeInfoExt queryData(Long id);
 
-    void addData(DsdCodeInfoExt dsdCodeInfoExt);
+  void addData(DsdCodeInfoExt dsdCodeInfoExt);
 
-    void updateData(DsdCodeInfoExt dsdCodeInfoExt);
+  void updateData(DsdCodeInfoExt dsdCodeInfoExt);
 
-    void deleteData(Long id);
-
-
+  void deleteData(Long id);
 }

@@ -1,5 +1,8 @@
 package com.qk.dm.datastandards.rest;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.service.DsdExcelService;
 import java.io.IOException;
@@ -37,6 +40,7 @@ public class DsdExcelController {
    */
   @PostMapping("/basic/info/upload")
   @ResponseBody
+  @Auth(bizType = BizResource.DSD_EXCEL_UPLOAD, actionType = RestActionType.IMPORT)
   public DefaultCommonResult basicInfoUpload(MultipartFile file) {
     dsdExcelService.basicInfoUpload(file, null);
     return DefaultCommonResult.success();
@@ -50,6 +54,7 @@ public class DsdExcelController {
    */
   @PostMapping("/basic/info/upload/dirDsdId")
   @ResponseBody
+  @Auth(bizType = BizResource.DSD_EXCEL_UPLOAD, actionType = RestActionType.IMPORT)
   public DefaultCommonResult basicInfoUploadByDirDsdId(
       MultipartFile file, @RequestParam("dirDsdId") String dirDsdId) {
     dsdExcelService.basicInfoUpload(file, dirDsdId);
@@ -62,6 +67,7 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/basic/info/download/all")
+  @Auth(bizType = BizResource.DSD_EXCEL_UPLOAD, actionType = RestActionType.EXPORT)
   public void basicInfoDownloadAll(HttpServletResponse response) throws IOException {
     dsdExcelService.basicInfoDownloadAll(response);
   }
@@ -72,6 +78,7 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/basic/info/download/dirDsdId")
+  @Auth(bizType = BizResource.DSD_EXCEL_DOWNLOAD, actionType = RestActionType.EXPORT)
   public void basicInfoDownloadByDirDsdId(
       @RequestParam("dirDsdId") String dirDsdId, HttpServletResponse response) throws IOException {
     dsdExcelService.basicInfoDownloadByDirDsdId(dirDsdId, response);
@@ -83,6 +90,7 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/basic/info/upload/template")
+  @Auth(bizType = BizResource.DSD_EXCEL_DOWNLOAD, actionType = RestActionType.EXPORT)
   public void basicInfoDownloadTemplate(HttpServletResponse response) throws IOException {
     dsdExcelService.basicInfoDownloadTemplate(response);
   }
@@ -97,6 +105,7 @@ public class DsdExcelController {
    */
   @PostMapping("/code/info/all/upload")
   @ResponseBody
+  @Auth(bizType = BizResource.DSD_EXCEL_UPLOAD, actionType = RestActionType.IMPORT)
   public DefaultCommonResult codeInfoAllUpload(
       MultipartFile file, @RequestParam("codeDirId") String codeDirId) {
     dsdExcelService.codeInfoAllUpload(file, codeDirId);
@@ -109,6 +118,7 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/code/info/all/download")
+  @Auth(bizType = BizResource.DSD_EXCEL_DOWNLOAD, actionType = RestActionType.EXPORT)
   public void codeInfoAllDownload(
       @RequestParam("codeDirId") String codeDirId, HttpServletResponse response)
       throws IOException {
@@ -121,6 +131,7 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/code/info/upload/template")
+  @Auth(bizType = BizResource.DSD_EXCEL_DOWNLOAD, actionType = RestActionType.EXPORT)
   public void codeInfoDownloadTemplate(HttpServletResponse response) throws IOException {
     //        List<DsdBasicinfoVO> dsdBasicInfoSampleDataList =
     // dsdExcelService.dsdBasicInfoSampleData();
@@ -137,6 +148,7 @@ public class DsdExcelController {
    */
   @PostMapping("/code/values/dsdCodeInfoId/upload")
   @ResponseBody
+  @Auth(bizType = BizResource.DSD_EXCEL_UPLOAD, actionType = RestActionType.IMPORT)
   public DefaultCommonResult codeValuesUploadByCodeInfoId(
       MultipartFile file, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
     dsdExcelService.codeValuesUploadByCodeInfoId(file, Long.parseLong(dsdCodeInfoId));
@@ -149,6 +161,7 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/code/values/dsdCodeInfoId/download")
+  @Auth(bizType = BizResource.DSD_EXCEL_DOWNLOAD, actionType = RestActionType.EXPORT)
   public void codeValuesDownloadByCodeInfoId(
       HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
     dsdExcelService.codeValuesDownloadByCodeInfoId(response, Long.parseLong(dsdCodeInfoId));
@@ -160,6 +173,7 @@ public class DsdExcelController {
    * @param response
    */
   @PostMapping("/code/values/download/template")
+  @Auth(bizType = BizResource.DSD_EXCEL_DOWNLOAD, actionType = RestActionType.EXPORT)
   public void codeValuesDownloadTemplate(
       HttpServletResponse response, @RequestParam("dsdCodeInfoId") String dsdCodeInfoId) {
     dsdExcelService.codeValuesDownloadTemplate(response, Long.parseLong(dsdCodeInfoId));
