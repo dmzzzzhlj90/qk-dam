@@ -30,7 +30,7 @@ public class DasApiRouteServiceImpl implements DasApiRouteService {
   }
 
   @Override
-  public List<DasApiRouteVO> getDasApiRouteInfoAll() {
+  public List<DasApiRouteVO> searchList() {
     List<DasApiRouteVO> dasApiRouteVOList = new ArrayList<>();
 
     List<DasApiRoute> dasApiRouteList = dasApiRouteRepository.findAll();
@@ -42,7 +42,7 @@ public class DasApiRouteServiceImpl implements DasApiRouteService {
   }
 
   @Override
-  public void addDasApiRoute(DasApiRouteVO dasApiRouteVO) {
+  public void insert(DasApiRouteVO dasApiRouteVO) {
     String apiRoutePath = dasApiRouteVO.getApiRoutePath();
     Optional<DasApiRoute> apiRouteOptional =
         dasApiRouteRepository.findOne(qDasApiRoute.apiRoutePath.eq(apiRoutePath));
@@ -59,7 +59,7 @@ public class DasApiRouteServiceImpl implements DasApiRouteService {
   }
 
   @Override
-  public void updateDasApiRoute(DasApiRouteVO dasApiRouteVO) {
+  public void update(DasApiRouteVO dasApiRouteVO) {
     String apiRouteId = dasApiRouteVO.getApiRouteId();
     Optional<DasApiRoute> apiRouteOptional =
         dasApiRouteRepository.findOne(qDasApiRoute.apiRouteId.eq(apiRouteId));
@@ -74,7 +74,7 @@ public class DasApiRouteServiceImpl implements DasApiRouteService {
   }
 
   @Override
-  public void bulkDeleteDasApiRoute(List<String> ids) {
+  public void deleteBulk(List<String> ids) {
     if (!ObjectUtils.isEmpty(ids)) {
       Set<Long> idSet = new HashSet<>();
       ids.forEach(id -> idSet.add(Long.valueOf(id)));

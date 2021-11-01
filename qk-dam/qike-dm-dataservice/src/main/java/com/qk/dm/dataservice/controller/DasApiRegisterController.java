@@ -1,5 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
@@ -37,10 +40,9 @@ public class DasApiRegisterController {
    * @return DefaultCommonResult<PageResultVO < DasApiRegisterVO>>
    */
   @GetMapping(value = "/query/by/{apiId}")
-  public DefaultCommonResult<DasApiRegisterVO> getDasApiRegisterInfoByApiId(
-      @PathVariable("apiId") String apiId) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiRegisterService.getDasApiRegisterInfoByApiId(apiId));
+  @Auth(bizType = BizResource.DAS_API_REGISTER, actionType = RestActionType.DETAIL)
+  public DefaultCommonResult<DasApiRegisterVO> detail(@PathVariable("apiId") String apiId) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiRegisterService.detail(apiId));
   }
 
   /**
@@ -49,10 +51,10 @@ public class DasApiRegisterController {
    * @param dasApiRegisterVO
    * @return DefaultCommonResult
    */
-  @PostMapping("/add")
-  public DefaultCommonResult addDasApiRegister(
-      @RequestBody @Validated DasApiRegisterVO dasApiRegisterVO) {
-    dasApiRegisterService.addDasApiRegister(dasApiRegisterVO);
+  @PostMapping("")
+  @Auth(bizType = BizResource.DAS_API_REGISTER, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insert(@RequestBody @Validated DasApiRegisterVO dasApiRegisterVO) {
+    dasApiRegisterService.insert(dasApiRegisterVO);
     return DefaultCommonResult.success();
   }
 
@@ -62,10 +64,10 @@ public class DasApiRegisterController {
    * @param dasApiRegisterVO
    * @return DefaultCommonResult
    */
-  @PutMapping("/update")
-  public DefaultCommonResult updateDasApiRegister(
-      @RequestBody @Validated DasApiRegisterVO dasApiRegisterVO) {
-    dasApiRegisterService.updateDasApiRegister(dasApiRegisterVO);
+  @PutMapping("")
+  @Auth(bizType = BizResource.DAS_API_REGISTER, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(@RequestBody @Validated DasApiRegisterVO dasApiRegisterVO) {
+    dasApiRegisterService.update(dasApiRegisterVO);
     return DefaultCommonResult.success();
   }
 
@@ -74,10 +76,10 @@ public class DasApiRegisterController {
    *
    * @return DefaultCommonResult
    */
-  @GetMapping("/query/backend/paras/header/infos")
+  @GetMapping("/backend/paras/header/infos")
+  @Auth(bizType = BizResource.DAS_API_REGISTER, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getRegisterBackendParaHeaderInfo() {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiRegisterService.getRegisterBackendParaHeaderInfo());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiRegisterService.getRegisterBackendParaHeaderInfo());
   }
 
   /**
@@ -85,9 +87,9 @@ public class DasApiRegisterController {
    *
    * @return DefaultCommonResult
    */
-  @GetMapping("/query/constant/paras/header/infos")
+  @GetMapping("/constant/paras/header/infos")
+  @Auth(bizType = BizResource.DAS_API_REGISTER, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getRegisterConstantParaHeaderInfo() {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiRegisterService.getRegisterConstantParaHeaderInfo());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiRegisterService.getRegisterConstantParaHeaderInfo());
   }
 }

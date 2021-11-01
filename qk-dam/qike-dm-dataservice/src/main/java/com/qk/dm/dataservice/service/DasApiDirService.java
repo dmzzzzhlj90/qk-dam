@@ -14,15 +14,15 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiDirService {
 
-  List<DasApiDirTreeVO> getTree();
+  List<DasApiDirTreeVO> searchList();
 
-  void addDasApiDir(DasApiDirVO daasApiDirVO);
+  void insert(DasApiDirVO dasApiDirVO);
 
-  void updateDasApiDir(DasApiDirVO daasApiDirVO);
+  void update(DasApiDirVO dasApiDirVO);
 
-  void deleteDasApiDir(Long delId);
+  void delete(Long delId);
 
-  void deleteDasApiDirRoot(Long delId);
+  void deleteRoot(Long delId);
 
   void getApiDirId(Set<String> apiDirIdSet, String apiDirId);
 

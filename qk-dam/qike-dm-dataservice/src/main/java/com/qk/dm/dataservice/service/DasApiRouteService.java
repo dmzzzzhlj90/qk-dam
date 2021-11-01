@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiRouteService {
 
-  List<DasApiRouteVO> getDasApiRouteInfoAll();
+  List<DasApiRouteVO> searchList();
 
-  void addDasApiRoute(DasApiRouteVO dasApiRouteVO);
+  void insert(DasApiRouteVO dasApiRouteVO);
 
-  void updateDasApiRoute(DasApiRouteVO dasApiRouteVO);
+  void update(DasApiRouteVO dasApiRouteVO);
 
-  void bulkDeleteDasApiRoute(List<String> ids);
+  void deleteBulk(List<String> ids);
 }

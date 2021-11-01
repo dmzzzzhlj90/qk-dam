@@ -107,7 +107,7 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
                             .parentId(DasConstant.TREE_DIR_TOP_PARENT_ID)
                             .description("自动同步注册Api，根据Title自动创建目录!")
                             .build();
-            dasApiDirService.addDasApiDir(dasApiDirVO);
+            dasApiDirService.insert(dasApiDirVO);
         }
         return dasApiDirVO;
     }
