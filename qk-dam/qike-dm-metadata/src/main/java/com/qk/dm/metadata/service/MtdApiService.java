@@ -2,7 +2,9 @@ package com.qk.dm.metadata.service;
 
 import com.qk.dam.metedata.entity.MtdApi;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dam.metedata.entity.MtdTables;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangzp
@@ -27,4 +29,21 @@ public interface MtdApiService {
    * @return
    */
   MtdApi mtdDetail(String typeName, String dbName, String tableName, String server);
+
+  /**
+   * 获取所有表信息
+   *
+   * @param typeName
+   * @param classification
+   * @return
+   */
+  List<MtdTables> getTables(String typeName, String classification);
+
+  /**
+   * 获取表的字段信息
+   *
+   * @param guid
+   * @return
+   */
+  List<Map<String, Object>> getColumns(String guid);
 }

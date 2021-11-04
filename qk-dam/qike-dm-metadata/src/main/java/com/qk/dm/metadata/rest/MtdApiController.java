@@ -1,10 +1,11 @@
 package com.qk.dm.metadata.rest;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dam.metedata.entity.*;
 import com.qk.dm.metadata.service.MtdApiService;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/api")
 public class MtdApiController {
-
   private final MtdApiService mtdApiService;
 
   public MtdApiController(MtdApiService mtdApiService) {
@@ -30,10 +29,12 @@ public class MtdApiController {
   /**
    * 获取所有的类型
    *
-   * @return DefaultCommonResult<List<MtdAtlasEntityTypeVO>>
+   * @return DefaultCommonResult<List<MtdAtlasEntityTypeVO>> 元数据所有实体类型
    */
-  @GetMapping("/all/entity/type")
+  @GetMapping("/entity/types")
+  @Auth(bizType = BizResource.MTD_ENTITY_TYPE, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<MtdAtlasEntityType>> getAllEntityType() {
+
     List<MtdAtlasEntityType> entityTypeList = mtdApiService.getAllEntityType();
     return DefaultCommonResult.success(ResultCodeEnum.OK, entityTypeList);
   }
@@ -41,10 +42,11 @@ public class MtdApiController {
   /**
    * 获取元数据详情信息
    *
-   * @param mtdApiParams
-   * @return DefaultCommonResult<MtdApiVO>
+   * @param mtdApiParams 实体参数
+   * @return DefaultCommonResult<MtdApiVO> 元数据实体详情
    */
-  @PostMapping("/detail")
+  @PostMapping("/entity/detail")
+  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdApi> mtdDetail(@RequestBody @Validated MtdApiParams mtdApiParams) {
     MtdApi mtdApi =
         mtdApiService.mtdDetail(

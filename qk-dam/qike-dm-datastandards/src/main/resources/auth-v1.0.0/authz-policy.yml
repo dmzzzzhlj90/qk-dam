@@ -1,0 +1,39 @@
+version: 1.0.0
+name: dataStandard
+desc: 数据标准权限策略
+namespace: default
+roles:
+  DAM_ADMIN:
+    desc: 系统管理员
+    action:
+      - 'dsdDir:**'
+      - 'basicInfo:**'
+      - 'dsdCodeDir:**'
+      - 'dsdCodeInfo:**'
+      - 'dsdCodeInfoExt:**'
+      - 'dsdExcelUpload:**'
+      - 'dsdExcelDownload:**'
+  DAM_DATA_SCIENTIST:
+    desc: 数据科学家
+    mvcMatchers:
+      - '/basic/info/**'
+    action:
+      - '*:get*'
+      - '*:import*'
+  DAM_DATA_STEWARD:
+    desc: 数据管理员
+    action:
+      - '*:import*'
+  DAM_DATA_EXT:
+    desc: 外部用户
+    action:
+      - 'basicInfo:list'
+userRoles:
+  admin:
+    - ROLE_ADMIN
+  dev:
+    - DATA_STEWARD
+groupRoles:
+  dataMe:
+    - DATA_SCIENTIST
+    - DATA_STEWARD

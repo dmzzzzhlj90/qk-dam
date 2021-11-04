@@ -22,7 +22,6 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.text.ParseException;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -66,7 +65,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     Map<String, Object> map = null;
     try {
       map = queryDsdBasicinfoByParams(basicInfoParamsVO);
-    } catch (ParseException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       throw new BizException("查询失败!!!");
     }
@@ -92,6 +91,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     DsdBasicinfo dsdBasicinfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicinfoVO);
     dsdBasicinfo.setGmtCreate(new Date());
     dsdBasicinfo.setGmtModified(new Date());
+    dsdBasicinfo.setDelFlag(0);
 
     Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdCode.eq(dsdBasicinfo.getDsdCode());
     boolean exists = dsdBasicinfoRepository.exists(predicate);
@@ -110,6 +110,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
   public void updateDsdBasicinfo(DsdBasicInfoVO dsdBasicinfoVO) {
     DsdBasicinfo dsdBasicinfo = DsdBasicInfoMapper.INSTANCE.useDsdBasicInfo(dsdBasicinfoVO);
     dsdBasicinfo.setGmtModified(new Date());
+    dsdBasicinfo.setDelFlag(0);
     Predicate predicate = QDsdBasicinfo.dsdBasicinfo.dsdCode.eq(dsdBasicinfo.getDsdCode());
     boolean exists = dsdBasicinfoRepository.exists(predicate);
     if (exists) {
@@ -126,9 +127,10 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
 
   @Override
   public void deleteDsdBasicinfo(Integer delId) {
-    boolean exists = dsdBasicinfoRepository.exists(QDsdBasicinfo.dsdBasicinfo.id.eq(delId));
+    boolean exists =
+        dsdBasicinfoRepository.exists(QDsdBasicinfo.dsdBasicinfo.id.eq(Long.valueOf(delId)));
     if (exists) {
-      dsdBasicinfoRepository.deleteById(delId);
+      dsdBasicinfoRepository.deleteById(Long.valueOf(delId));
     }
   }
 
@@ -136,8 +138,8 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
   @Override
   public void bulkDeleteDsdBasicInfo(String ids) {
     List<String> idList = Arrays.asList(ids.split(","));
-    Set<Integer> idSet = new HashSet<>();
-    idList.forEach(id -> idSet.add(Integer.parseInt(id)));
+    Set<Long> idSet = new HashSet<>();
+    idList.forEach(id -> idSet.add(Long.valueOf(id)));
     List<DsdBasicinfo> basicInfoList = dsdBasicinfoRepository.findAllById(idSet);
     dsdBasicinfoRepository.deleteInBatch(basicInfoList);
   }
@@ -156,8 +158,7 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
     return new ArrayList<>();
   }
 
-  public Map<String, Object> queryDsdBasicinfoByParams(DsdBasicInfoParamsVO basicInfoParamsVO)
-      throws ParseException {
+  public Map<String, Object> queryDsdBasicinfoByParams(DsdBasicInfoParamsVO basicInfoParamsVO) {
     QDsdBasicinfo qDsdBasicinfo = QDsdBasicinfo.dsdBasicinfo;
     Map<String, Object> result = new HashMap<>();
     BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -173,12 +174,14 @@ public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoSe
             .select(qDsdBasicinfo)
             .from(qDsdBasicinfo)
             .where(booleanBuilder)
-            .orderBy(qDsdBasicinfo.dsdCode.asc())
+            .orderBy(qDsdBasicinfo.sortField.asc())
+            .orderBy(qDsdBasicinfo.dsdName.asc())
             .offset(
                 (basicInfoParamsVO.getPagination().getPage() - 1)
                     * basicInfoParamsVO.getPagination().getSize())
             .limit(basicInfoParamsVO.getPagination().getSize())
             .fetch();
+
     result.put("list", dsdBasicInfoList);
     result.put("total", count);
     return result;

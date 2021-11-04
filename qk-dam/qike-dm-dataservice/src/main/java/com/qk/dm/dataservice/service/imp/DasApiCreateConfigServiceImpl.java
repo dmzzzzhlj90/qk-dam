@@ -78,7 +78,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
   }
 
   @Override
-  public DasApiCreateConfigVO getDasApiCreateConfigInfoByApiId(String apiId) {
+  public DasApiCreateConfigVO detail(String apiId) {
 
     // 获取API基础信息
     Optional<DasApiBasicInfo> onDasApiBasicInfo =
@@ -147,7 +147,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
 
   @Transactional
   @Override
-  public void addDasApiCreateConfig(DasApiCreateConfigVO dasApiCreateConfigVO) {
+  public void insert(DasApiCreateConfigVO dasApiCreateConfigVO) {
     String apiId = UUID.randomUUID().toString().replaceAll("-", "");
     // 保存API基础信息
     DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateConfigVO.getDasApiBasicInfoVO();
@@ -155,7 +155,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
       throw new BizException("当前新增的API所对应的基础信息为空!!!");
     }
     dasApiBasicInfoVO.setApiId(apiId);
-    dasApiBasicInfoService.addDasApiBasicInfo(dasApiBasicInfoVO);
+    dasApiBasicInfoService.insert(dasApiBasicInfoVO);
 
     // 保存新建API信息
     DasApiCreateConfig dasApiCreateConfig =
@@ -178,10 +178,10 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
 
   @Transactional
   @Override
-  public void updateDasApiCreateConfig(DasApiCreateConfigVO dasApiCreateConfigVO) {
+  public void update(DasApiCreateConfigVO dasApiCreateConfigVO) {
     // 更新API基础信息
     DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateConfigVO.getDasApiBasicInfoVO();
-    dasApiBasicInfoService.updateDasApiBasicInfo(dasApiBasicInfoVO);
+    dasApiBasicInfoService.update(dasApiBasicInfoVO);
     // 更新新建API
     DasApiCreateConfig dasApiCreate =
         DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfig(dasApiCreateConfigVO);

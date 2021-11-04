@@ -16,7 +16,7 @@ public class DsdBasicinfo implements Serializable {
   @Id
   @Column(name = "id", nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private Long id;
 
   /** 标准名称 */
   @Column(name = "dsd_name", nullable = false)
@@ -57,6 +57,10 @@ public class DsdBasicinfo implements Serializable {
   /** 标准层级ID */
   @Column(name = "dsd_level_id", nullable = false)
   private String dsdLevelId;
+
+  /** 排序字段(不设置根据标准名称进行排序) */
+  @Column(name = "sort_field")
+  private Integer sortField;
 
   /** 描述 */
   @Column(name = "description")

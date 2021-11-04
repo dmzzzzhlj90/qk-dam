@@ -26,7 +26,7 @@ public class DsdBasicInfoVO {
   /** ID编号 */
   @ExcelProperty("ID编号")
   @ExcelIgnore
-  private Integer id;
+  private Long id;
 
   /** 标准名称 */
   @NotBlank(message = "标准名称不能为空！")
@@ -80,6 +80,10 @@ public class DsdBasicInfoVO {
   @ExcelProperty("标准层级目录名称")
   @ExcelIgnore
   private String dsdLevelName;
+
+  /** 排序字段(不设置根据标准名称进行排序) */
+  @ExcelProperty("排序字段")
+  private Integer sortField;
 
   /** 描述 */
   @ExcelProperty("描述")

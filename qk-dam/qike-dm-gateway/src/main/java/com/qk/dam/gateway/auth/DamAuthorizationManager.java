@@ -1,11 +1,15 @@
 package com.qk.dam.gateway.auth;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
@@ -15,13 +19,22 @@ import reactor.core.publisher.Mono;
  */
 public class DamAuthorizationManager<T extends AuthorizationContext>
     implements ReactiveAuthorizationManager<T> {
-  DamAuthorizationManager() {}
+  private final List<String> authorities;
+
+  DamAuthorizationManager(String... authorities) {
+    this.authorities = Arrays.asList(authorities);
+  }
 
   @Override
   public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, T ac) {
+    ServerWebExchange exchange = ac.getExchange();
+    ServerHttpRequest request = exchange.getRequest();
     return authentication
-        .filter(this::isNotAnonymous)
-        .map(this::getAuthorizationDecision)
+        .filter((a) -> a.isAuthenticated())
+        .flatMapIterable(Authentication::getAuthorities)
+        .map(grantedAuthority -> grantedAuthority.getAuthority())
+        .any(c -> this.authorities.contains(c))
+        .map(AuthorizationDecision::new)
         .defaultIfEmpty(new AuthorizationDecision(false));
   }
 
@@ -37,7 +50,8 @@ public class DamAuthorizationManager<T extends AuthorizationContext>
     return true;
   }
 
-  public static <T extends AuthorizationContext> DamAuthorizationManager<T> authenticated() {
-    return new DamAuthorizationManager<>();
+  public static <T extends AuthorizationContext> DamAuthorizationManager<T> authenticated(
+      String... authorities) {
+    return new DamAuthorizationManager<>(authorities);
   }
 }

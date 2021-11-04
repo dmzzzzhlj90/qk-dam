@@ -1,0 +1,39 @@
+version: 1.0.0
+name: dataService
+desc: 数据服务权限策略
+namespace: default
+roles:
+  DAM_ADMIN:
+    desc: 系统管理员
+    action:
+      - 'apiBasicInfo:**'
+      - 'apiDir:**'
+      - 'apiCreateConfig:**'
+      - 'apiCreateSqlScript:**'
+      - 'apiRegister:**'
+      - 'openApiRegister:**'
+      - 'syncApiGateway:**'
+  DAM_DATA_SCIENTIST:
+    desc: 数据科学家
+    mvcMatchers:
+      - '/api/basic/info/**'
+    action:
+      - '*:get*'
+      - '*:import*'
+  DAM_DATA_STEWARD:
+    desc: 数据管理员
+    action:
+      - '*:import*'
+  DAM_DATA_EXT:
+    desc: 外部用户
+    action:
+      - 'apiBasicInfo:list'
+userRoles:
+  admin:
+    - ROLE_ADMIN
+  dev:
+    - DATA_STEWARD
+groupRoles:
+  dataMe:
+    - DATA_SCIENTIST
+    - DATA_STEWARD

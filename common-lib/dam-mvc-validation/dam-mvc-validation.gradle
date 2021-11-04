@@ -6,11 +6,12 @@ group "com.qk.mvc.validation"
 
 dependencies {
     compile project(":commons-core")
+    compile 'javax.el:javax.el-api:2.2.5'
+    compile 'org.glassfish.web:javax.el:2.2.6'
     compile group: 'javax.validation', name: 'validation-api'
     compile 'org.springframework.boot:spring-boot-starter-validation'
     compile 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.code.gson:gson'
-    implementation 'org.springframework.boot:spring-boot-starter-undertow'
     annotationProcessor 'org.projectlombok:lombok'
 }
 dependencyManagement {

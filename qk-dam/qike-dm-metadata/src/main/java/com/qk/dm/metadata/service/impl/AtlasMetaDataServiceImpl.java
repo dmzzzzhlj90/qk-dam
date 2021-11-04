@@ -514,7 +514,9 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
               new TypeToken<List<MtdAtlasEntityType>>() {}.getType());
       mtdAtlasEntityMap =
           mtdAtlasEntityTypeVOList.stream()
-              .collect(Collectors.groupingBy(MtdAtlasEntityType::getServiceType));
+              .collect(
+                  Collectors.groupingBy(
+                      mtd -> mtd.getServiceType() == null ? "" : mtd.getServiceType()));
     } catch (Exception e) {
       e.printStackTrace();
     }

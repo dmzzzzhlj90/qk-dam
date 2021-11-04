@@ -1,0 +1,40 @@
+version: 1.0.0
+name: metadata
+desc: 元数据权限策略
+namespace: default
+roles:
+  DAM_ADMIN:
+    desc: 系统管理员
+    action:
+      - 'entity:**'
+      - 'class:**'
+      - 'labels:**'
+      - 'audit:*'
+      - 'entityType:*'
+      - 'basicType:*'
+      - 'criteria:*'
+  DAM_DATA_SCIENTIST:
+    desc: 数据科学家
+    mvcMatchers:
+      - '/entity/**'
+      - '/basic/**'
+    action:
+      - '*:get*'
+      - '*:import*'
+  DAM_DATA_STEWARD:
+    desc: 数据管理员
+    action:
+      - '*:import*'
+  DAM_DATA_EXT:
+    desc: 外部用户
+    action:
+      - 'criteria:list'
+userRoles:
+  admin:
+    - ROLE_ADMIN
+  dev:
+    - DATA_STEWARD
+groupRoles:
+  dataMe:
+    - DATA_SCIENTIST
+    - DATA_STEWARD

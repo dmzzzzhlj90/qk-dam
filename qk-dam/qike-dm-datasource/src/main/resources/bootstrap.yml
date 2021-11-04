@@ -1,5 +1,8 @@
 server:
   port: 8781
+nacos:
+  serverAddr: http://172.21.32.2
+  namespace: b283864b-1e78-429e-b322-db0f5720f55c
 spring:
   logging:
     level: info
@@ -19,12 +22,12 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: http://172.20.0.13
-        namespace: b283864b-1e78-429e-b322-db0f5720f55c
+        server-addr: ${nacos.serverAddr}
+        namespace: ${nacos.namespace}
         group: DM-GROUP
       config:
-        server-addr: http://172.20.0.13
-        namespace: b283864b-1e78-429e-b322-db0f5720f55c
+        server-addr: ${nacos.serverAddr}
+        namespace: ${nacos.namespace}
         extension-configs:
           - dataId: qkdam-mysql-test.yml
             group: DAM

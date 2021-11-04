@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
 version "${dmDatastandardsVersion}"
 group "com.qk.dm.datastandards"
@@ -9,6 +9,17 @@ configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
         it.outgoing.artifact(bootJar)
+    }
+}
+processResources {
+    expand(project.properties)
+}
+docker {
+    springBootApplication {
+        baseImage = "openjdk:11.0.12-jre-slim-buster"
+        ports = [8780]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
     }
 }
 
@@ -25,7 +36,6 @@ compileJava {
 
 dependencies {
     implementation project(":qk-data-jpa")
-    implementation project(":qk-data-redis")
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
 
@@ -34,17 +44,18 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "com.github.ben-manes.caffeine:caffeine"
+    compile project(":qk-authorization")
 
     implementation 'com.alibaba:easyexcel'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
             "javax.annotation:javax.annotation-api",
             "com.querydsl:querydsl-apt:4.4.0:jpa",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
-    implementation 'com.zaxxer:HikariCP:3.4.5'
-    implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
+    implementation group: 'cn.hutool', name: 'hutool-db'
+    implementation 'org.aspectj:aspectjweaver'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }

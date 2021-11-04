@@ -10,6 +10,10 @@ dependencies {
     compile 'javax.servlet:javax.servlet-api'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     implementation 'org.springframework:spring-web'
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    implementation "org.springframework.boot:spring-boot-starter-cache"
+    implementation "com.github.ben-manes.caffeine:caffeine"
+
     annotationProcessor 'org.projectlombok:lombok'
 }
 

@@ -1,5 +1,5 @@
 server:
-  port: 8780
+  port: 8785
 logging:
   level:
     root: INFO

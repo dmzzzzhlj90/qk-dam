@@ -17,9 +17,13 @@ public interface DataStandardCodeInfoService {
   /** 码表基本信息_表 */
   PageResultVO<DsdCodeInfoVO> getDsdCodeInfo(DsdCodeInfoParamsVO dsdCodeInfoParamsVO);
 
+  List<DsdCodeInfoVO> getDsdCodeInfoAll();
+
   void addDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO);
 
   DsdCodeInfoVO getDsdCodeInfoById(long id);
+
+  DsdCodeInfoVO getBasicDsdCodeInfoByTableCode(String tableCode);
 
   void modifyDsdCodeInfo(DsdCodeInfoVO dsdCodeInfoVO);
 

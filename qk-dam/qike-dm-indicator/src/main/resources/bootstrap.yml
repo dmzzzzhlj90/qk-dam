@@ -1,0 +1,50 @@
+server:
+  port: 8783
+spring:
+  logging:
+    level: info
+    path: logs/dm-indicator.log
+    appender:
+      ref: CONSOLE
+  messages:
+    basename: i18n/messages
+  mvc:
+    message-codes-resolver-format: postfix_error_code
+    servlet:
+      path: /idc
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: dm-indicator
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.20.0.13
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        group: DM-GROUP
+      config:
+        server-addr: http://172.20.0.13
+        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        extension-configs:
+          - dataId: test44-mysql-dev.yml
+            refresh: true
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
+  endpoint:
+    info:
+      enabled: true
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        descriptions: true
+    tags:
+      application: ${spring.application.name}
+

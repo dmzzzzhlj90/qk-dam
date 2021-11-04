@@ -79,7 +79,7 @@ public class OAuth2ClientController {
         () -> {
           response.setStatusCode(HttpStatus.FOUND);
           HttpHeaders headers = response.getHeaders();
-          headers.setLocation(URI.create(clientInfo.getFrontend()));
+          headers.setLocation(URI.create(clientInfo.getLoginSuccessUrl()));
         });
   }
 }

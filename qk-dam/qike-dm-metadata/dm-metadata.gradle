@@ -1,9 +1,9 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
-version "${dmDatastandardsVersion}"
+version "${damProfilesActive}-v${dmDatastandardsVersion}"
 group "com.qk.dm.metadata"
 configurations {
     [apiElements, runtimeElements].each {
@@ -11,7 +11,17 @@ configurations {
         it.outgoing.artifact(bootJar)
     }
 }
-
+processResources {
+    expand(project.properties)
+}
+docker {
+    springBootApplication {
+        baseImage = "openjdk:11.0.12-jre-slim-buster"
+        ports = [8782]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
 compileJava {
     doFirst {
         options.compilerArgs = [
@@ -28,9 +38,8 @@ dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
     implementation project(":metadata-common-core")
-
+    compile project(":qk-authorization")
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
@@ -55,6 +64,7 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
 openApiGenerate {
     generatorName = "java"
     inputSpec = "$rootDir/docs/数据服务/openapi.json".toString()

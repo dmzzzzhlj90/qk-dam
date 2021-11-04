@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiCreateConfigService {
 
-  DasApiCreateConfigVO getDasApiCreateConfigInfoByApiId(String apiId);
+  DasApiCreateConfigVO detail(String apiId);
 
-  void addDasApiCreateConfig(DasApiCreateConfigVO dasApiCreateConfigVO);
+  void insert(DasApiCreateConfigVO dasApiCreateConfigVO);
 
-  void updateDasApiCreateConfig(DasApiCreateConfigVO dasApiCreateConfigVO);
+  void update(DasApiCreateConfigVO dasApiCreateConfigVO);
 
   // ========================参数配置表头信息=====================================
   Map<String, String> getDasApiCreateRequestParaHeaderInfo();

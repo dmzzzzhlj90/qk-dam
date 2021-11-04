@@ -1,0 +1,11 @@
+server:
+  port: 8765
+spring:
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG

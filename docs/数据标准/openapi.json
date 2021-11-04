@@ -25,7 +25,116 @@
         }
       },
       "_excel_basic_info_upload_dirDsdIdRequest": {},
-      "_excel_basic_info_downloadRequest": {},
+      "_code_info_basic_query_allResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "主键ID",
+                  "type": "integer"
+                },
+                "codeDirId": {
+                  "format": "string",
+                  "description": "所属目录ID",
+                  "type": "string"
+                },
+                "codeDirLevel": {
+                  "format": "string",
+                  "description": "所属目录层级",
+                  "type": "string"
+                },
+                "tableName": {
+                  "format": "string",
+                  "description": "基础配置-表名",
+                  "type": "string"
+                },
+                "tableCode": {
+                  "format": "string",
+                  "description": "基础配置-表编码",
+                  "type": "string"
+                },
+                "tableDesc": {
+                  "format": "string",
+                  "description": "基础配置-描述",
+                  "type": "string"
+                },
+                "gmtModified": {
+                  "format": "string",
+                  "description": "修改时间",
+                  "type": "string"
+                },
+                "codeTableFieldsList": {
+                  "description": "建表配置字段集合",
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "code_table_id": {
+                        "format": "string",
+                        "description": "配置字段编码",
+                        "type": "string"
+                      },
+                      "name_ch": {
+                        "format": "string",
+                        "description": "字段中文名称",
+                        "type": "string"
+                      },
+                      "name_en": {
+                        "format": "string",
+                        "description": "字段英文名称",
+                        "type": "string"
+                      },
+                      "data_type": {
+                        "format": "string",
+                        "description": "字段数据类型",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "codeTableId": {
+                  "format": "string",
+                  "description": "配置字段编码",
+                  "type": "string"
+                },
+                "nameCh": {
+                  "format": "string",
+                  "description": "字段中文名称",
+                  "type": "string"
+                },
+                "nameEn": {
+                  "format": "string",
+                  "description": "字段英文名称",
+                  "type": "string"
+                },
+                "dataType": {
+                  "format": "string",
+                  "description": "字段数据类型",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "_code_info_basic_queryRequest": {
         "properties": {
           "pagination": {
@@ -84,29 +193,6 @@
           "codeDirId",
           "codeDirLevel"
         ]
-      },
-      "_excel_basic_info_uploadResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
       },
       "_dir_delete_root__id_Request": {},
       "_code_info_basic_query_by__id_Response": {
@@ -217,7 +303,30 @@
           }
         }
       },
-      "_excel_code_values_download_templateRequest": {},
+      "_excel_basic_info_uploadResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_info_basic_query_tableCodeRequest": {},
       "_code_info_ext_queryResponse": {
         "properties": {
           "retCode": {
@@ -239,7 +348,7 @@
             "description": "返回数据(object)",
             "type": "object",
             "properties": {
-              "anyObject": {
+              "any object": {
                 "description": "any object.(object)",
                 "type": "object"
               }
@@ -247,6 +356,7 @@
           }
         }
       },
+      "_excel_code_values_download_templateRequest": {},
       "_dir_treeResponse": {
         "properties": {
           "retCode": {
@@ -305,30 +415,6 @@
         }
       },
       "_code_info_ext_bulk_delete__ids_Request": {},
-      "_excel_code_values_dsdCodeInfoId_downloadResponse": {},
-      "_excel_code_values_dsdCodeInfoId_uploadResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
       "_code_info_data_typesResponse": {
         "properties": {
           "retCode": {
@@ -356,6 +442,112 @@
             "type": "object"
           }
         }
+      },
+      "_excel_code_values_dsdCodeInfoId_uploadResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_excel_code_values_dsdCodeInfoId_downloadResponse": {},
+      "_code_info_reverse_dbRequest": {
+        "properties": {
+          "codeDirId": {
+            "format": "string",
+            "description": "所属码表目录",
+            "type": "string"
+          },
+          "codeDirLevel": {
+            "format": "string",
+            "description": "所属码表层级目录",
+            "type": "string"
+          },
+          "isUpdate": {
+            "format": "string",
+            "description": "更新已有表: 0 :不更新, 1: 更新",
+            "type": "string"
+          },
+          "isReverseData": {
+            "format": "string",
+            "description": "逆向表数据: 0 :不逆向, 1: 覆盖",
+            "type": "string"
+          },
+          "dataSourceJobVO": {
+            "description": "数据源连接信息,TODO 暂时使用接口传参的方式(object)",
+            "type": "object",
+            "properties": {
+              "name": {
+                "format": "string",
+                "description": "数据源连接名称",
+                "type": "string"
+              },
+              "dataConnectType": {
+                "format": "string",
+                "description": "数据源连接类型",
+                "type": "string"
+              },
+              "mysqlDataConnect": {
+                "description": "mysql类型数据源连接信息(object)",
+                "type": "object",
+                "properties": {
+                  "db": {
+                    "format": "string",
+                    "description": "数据库名称",
+                    "type": "string"
+                  },
+                  "table": {
+                    "format": "string",
+                    "description": "表名称",
+                    "type": "string"
+                  },
+                  "host": {
+                    "format": "string",
+                    "description": "主机host",
+                    "type": "string"
+                  },
+                  "port": {
+                    "format": "string",
+                    "description": "端口port",
+                    "type": "string"
+                  },
+                  "username": {
+                    "format": "string",
+                    "description": "用户名称",
+                    "type": "string"
+                  },
+                  "password": {
+                    "format": "string",
+                    "description": "用户密码",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "codeDirId",
+          "codeDirLevel",
+          "isUpdate",
+          "isReverseData"
+        ]
       },
       "_code_dir_addRequest": {
         "properties": {
@@ -396,82 +588,6 @@
           "codeDirLevel"
         ]
       },
-      "_code_info_reverse_dbRequest": {
-        "properties": {
-          "codeDirId": {
-            "format": "string",
-            "description": "所属码表目录",
-            "type": "string"
-          },
-          "codeDirLevel": {
-            "format": "string",
-            "description": "所属码表层级目录",
-            "type": "string"
-          },
-          "isUpdate": {
-            "format": "string",
-            "description": "更新已有表: 0 :不更新, 1: 更新",
-            "type": "string"
-          },
-          "isReverseData": {
-            "format": "string",
-            "description": "逆向表数据: 0 :不逆向, 1: 覆盖",
-            "type": "string"
-          },
-          "dataSourceJobVO": {
-            "description": "数据源连接信息,TODO 暂时使用接口传参的方式(object)",
-            "type": "object",
-            "properties": {
-              "name": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "dataConnectType": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "mysqlDataConnect": {
-                "description": "No comments found.(object)",
-                "type": "object",
-                "properties": {
-                  "db": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "table": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "host": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "port": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "username": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "password": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "_excel_basic_info_download_dirDsdIdRequest": {},
       "_code_info_ext_addRequest": {
         "properties": {
@@ -485,14 +601,14 @@
             "description": "关键码表信息表",
             "type": "string"
           },
-          "tableConfCode": {
+          "searchCode": {
             "format": "string",
-            "description": "建表配置编码",
+            "description": "建表配置查询编码",
             "type": "string"
           },
-          "tableConfValue": {
+          "searchValue": {
             "format": "string",
-            "description": "建表配置值",
+            "description": "建表配置查询值",
             "type": "string"
           },
           "gmtModified": {
@@ -578,8 +694,6 @@
           }
         }
       },
-      "_excel_basic_info_downloadResponse": {},
-      "_basic_info_delete__id_Request": {},
       "_dir_updateRequest": {
         "properties": {
           "id": {
@@ -619,6 +733,7 @@
           "dsdDirLevel"
         ]
       },
+      "_basic_info_delete__id_Request": {},
       "_code_dir_addResponse": {
         "properties": {
           "retCode": {
@@ -735,14 +850,14 @@
             "description": "关键码表信息表",
             "type": "string"
           },
-          "tableConfCode": {
+          "searchCode": {
             "format": "string",
-            "description": "建表配置编码",
+            "description": "建表配置查询编码",
             "type": "string"
           },
-          "tableConfValue": {
+          "searchValue": {
             "format": "string",
-            "description": "建表配置值",
+            "description": "建表配置查询值",
             "type": "string"
           },
           "gmtModified": {
@@ -783,6 +898,114 @@
         }
       },
       "_basic_info_search_code_field_by_codeDirId__codeDirId_Request": {},
+      "_code_info_basic_query_tableCodeResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "主键ID",
+                "type": "integer"
+              },
+              "codeDirId": {
+                "format": "string",
+                "description": "所属目录ID",
+                "type": "string"
+              },
+              "codeDirLevel": {
+                "format": "string",
+                "description": "所属目录层级",
+                "type": "string"
+              },
+              "tableName": {
+                "format": "string",
+                "description": "基础配置-表名",
+                "type": "string"
+              },
+              "tableCode": {
+                "format": "string",
+                "description": "基础配置-表编码",
+                "type": "string"
+              },
+              "tableDesc": {
+                "format": "string",
+                "description": "基础配置-描述",
+                "type": "string"
+              },
+              "gmtModified": {
+                "format": "string",
+                "description": "修改时间",
+                "type": "string"
+              },
+              "codeTableFieldsList": {
+                "description": "建表配置字段集合",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "code_table_id": {
+                      "format": "string",
+                      "description": "配置字段编码",
+                      "type": "string"
+                    },
+                    "name_ch": {
+                      "format": "string",
+                      "description": "字段中文名称",
+                      "type": "string"
+                    },
+                    "name_en": {
+                      "format": "string",
+                      "description": "字段英文名称",
+                      "type": "string"
+                    },
+                    "data_type": {
+                      "format": "string",
+                      "description": "字段数据类型",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "codeTableId": {
+                "format": "string",
+                "description": "配置字段编码",
+                "type": "string"
+              },
+              "nameCh": {
+                "format": "string",
+                "description": "字段中文名称",
+                "type": "string"
+              },
+              "nameEn": {
+                "format": "string",
+                "description": "字段英文名称",
+                "type": "string"
+              },
+              "dataType": {
+                "format": "string",
+                "description": "字段数据类型",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
       "_code_info_ext_addResponse": {
         "properties": {
           "retCode": {
@@ -832,7 +1055,6 @@
           }
         }
       },
-      "_excel_code_values_download_templateResponse": {},
       "_basic_info_queryRequest": {
         "properties": {
           "pagination": {
@@ -888,6 +1110,7 @@
           }
         }
       },
+      "_excel_code_values_download_templateResponse": {},
       "_code_info_basic_updateRequest": {
         "properties": {
           "id": {
@@ -1031,6 +1254,7 @@
           }
         }
       },
+      "_excel_basic_info_download_allResponse": {},
       "_excel_basic_info_upload_templateResponse": {},
       "_code_dir_treeResponse": {
         "properties": {
@@ -1089,8 +1313,8 @@
           }
         }
       },
-      "_excel_code_info_all_downloadRequest": {},
-      "_excel_code_values_dsdCodeInfoId_uploadRequest": {},
+      "_code_info_basic_query_allRequest": {},
+      "_excel_basic_info_download_allRequest": {},
       "_code_info_basic_delete_bulk__ids_Response": {
         "properties": {
           "retCode": {
@@ -1114,6 +1338,8 @@
           }
         }
       },
+      "_excel_code_info_all_downloadRequest": {},
+      "_excel_code_values_dsdCodeInfoId_uploadRequest": {},
       "_excel_code_info_all_uploadResponse": {
         "properties": {
           "retCode": {
@@ -1350,7 +1576,6 @@
       },
       "_code_info_basic_query_by__id_Request": {},
       "_code_info_basic_delete__id_Request": {},
-      "_excel_basic_info_upload_templateRequest": {},
       "_basic_info_updateResponse": {
         "properties": {
           "retCode": {
@@ -1374,6 +1599,7 @@
           }
         }
       },
+      "_excel_basic_info_upload_templateRequest": {},
       "_code_info_ext_delete__id_Response": {
         "properties": {
           "retCode": {
@@ -1428,14 +1654,14 @@
                 "description": "关键码表信息表",
                 "type": "string"
               },
-              "tableConfCode": {
+              "searchCode": {
                 "format": "string",
-                "description": "建表配置编码",
+                "description": "建表配置查询编码",
                 "type": "string"
               },
-              "tableConfValue": {
+              "searchValue": {
                 "format": "string",
-                "description": "建表配置值",
+                "description": "建表配置查询值",
                 "type": "string"
               },
               "gmtModified": {
@@ -1448,29 +1674,6 @@
                 "type": "object"
               }
             }
-          }
-        }
-      },
-      "_code_dir_updateResponse": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
           }
         }
       },
@@ -1498,6 +1701,29 @@
         }
       },
       "_code_info_ext_bulk_delete__ids_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_code_dir_updateResponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1591,7 +1817,6 @@
           }
         }
       },
-      "_excel_basic_info_download_dirDsdIdResponse": {},
       "_dir_updateResponse": {
         "properties": {
           "retCode": {
@@ -1615,8 +1840,48 @@
           }
         }
       },
+      "_excel_basic_info_download_dirDsdIdResponse": {},
       "_dir_treeRequest": {},
       "_basic_info_bulk_delete__ids_Request": {},
+      "_dir_addRequest": {
+        "properties": {
+          "id": {
+            "format": "int32",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "dirDsdId": {
+            "format": "string",
+            "description": "数据标准分类编号",
+            "type": "string"
+          },
+          "dirDsdName": {
+            "format": "string",
+            "description": "数据标准分类名称",
+            "type": "string"
+          },
+          "parentId": {
+            "format": "string",
+            "description": "父级id",
+            "type": "string"
+          },
+          "dsdDirLevel": {
+            "format": "string",
+            "description": "目录节点层级",
+            "type": "string"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dirDsdName",
+          "parentId",
+          "dsdDirLevel"
+        ]
+      },
       "_basic_info_addRequest": {
         "properties": {
           "id": {
@@ -1696,45 +1961,6 @@
           "colName",
           "dsdLevel",
           "dsdLevelId"
-        ]
-      },
-      "_dir_addRequest": {
-        "properties": {
-          "id": {
-            "format": "int32",
-            "description": "主键ID",
-            "type": "integer"
-          },
-          "dirDsdId": {
-            "format": "string",
-            "description": "数据标准分类编号",
-            "type": "string"
-          },
-          "dirDsdName": {
-            "format": "string",
-            "description": "数据标准分类名称",
-            "type": "string"
-          },
-          "parentId": {
-            "format": "string",
-            "description": "父级id",
-            "type": "string"
-          },
-          "dsdDirLevel": {
-            "format": "string",
-            "description": "目录节点层级",
-            "type": "string"
-          },
-          "description": {
-            "format": "string",
-            "description": "描述",
-            "type": "string"
-          }
-        },
-        "required": [
-          "dirDsdName",
-          "parentId",
-          "dsdDirLevel"
         ]
       },
       "_code_info_basic_queryResponse": {
@@ -1915,7 +2141,6 @@
           }
         }
       },
-      "_excel_code_info_all_uploadRequest": {},
       "_code_info_basic_delete_bulk__ids_Request": {},
       "_code_info_ext_queryRequest": {
         "properties": {
@@ -1955,18 +2180,19 @@
             "description": "关键码表信息表id",
             "type": "string"
           },
-          "tableConfCode": {
+          "searchCode": {
             "format": "string",
-            "description": "建表配置编码",
+            "description": "建表配置查询编码",
             "type": "string"
           },
-          "tableConfValue": {
+          "searchValue": {
             "format": "string",
-            "description": "建表配置值",
+            "description": "建表配置查询值",
             "type": "string"
           }
         }
       },
+      "_excel_code_info_all_uploadRequest": {},
       "_basic_info_addResponse": {
         "properties": {
           "retCode": {
@@ -2015,6 +2241,7 @@
           }
         }
       },
+      "_code_info_data_typesRequest": {},
       "_code_dir_updateRequest": {
         "properties": {
           "id": {
@@ -2053,13 +2280,12 @@
           "parentId",
           "codeDirLevel"
         ]
-      },
-      "_code_info_data_typesRequest": {}
+      }
     }
   },
   "servers": [
     {
-      "url": "http://{{server}}"
+      "url": "http://172.20.0.14:8780/dsd/"
     }
   ],
   "openapi": "3.0.3",
@@ -2083,7 +2309,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"1r2nxe\",\n  \"tips\": \"6udp68\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"sv5rjx\",\n  \"tips\": \"4mpf4y\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2100,7 +2326,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "586",
+            "example": "464",
             "name": "id"
           }
         ]
@@ -2125,7 +2351,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"68ficq\",\n  \"tips\": \"7v39bq\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"mrwf62\",\n  \"tips\": \"1rmkpd\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2142,7 +2368,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "873",
+            "example": "388",
             "name": "id"
           }
         ]
@@ -2167,7 +2393,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"0z9h1e\",\n  \"tips\": \"6bapsi\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"o1d57j\",\n  \"tips\": \"bfi36c\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2184,7 +2410,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "900",
+            "example": "818",
             "name": "id"
           }
         ]
@@ -2207,7 +2433,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"bjp3kq\"\n  },\n  \"dsdName\": \"danyelle.moore\",\n  \"dsdCode\": \"52239\",\n  \"dsdLevel\": \"zdtifh\",\n  \"dsdLevelId\": \"50\",\n  \"beginDay\": \"5e8842\",\n  \"endDay\": \"cooqqr\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"hg9ljk\"\n  },\n  \"dsdName\": \"else.franecki\",\n  \"dsdCode\": \"9350\",\n  \"dsdLevel\": \"tu1zm9\",\n  \"dsdLevelId\": \"88\",\n  \"beginDay\": \"36g2sl\",\n  \"endDay\": \"79bbk8\"\n}"
                 }
               }
             }
@@ -2224,7 +2450,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"130238\",\n  \"tips\": \"866lgj\",\n  \"data\": {\n    \"total\": 580,\n    \"pageNum\": 759,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 448,\n        \"dsdName\": \"danyelle.moore\",\n        \"dsdCode\": \"52239\",\n        \"colName\": \"danyelle.moore\",\n        \"dataType\": \"f3blms\",\n        \"dataCapacity\": \"taprs7\",\n        \"codeDirId\": \"50\",\n        \"useCodeLevel\": \"3or5c7\",\n        \"codeCol\": \"6bth27\",\n        \"dsdLevel\": \"5rg4g5\",\n        \"dsdLevelId\": \"50\",\n        \"dsdLevelName\": \"danyelle.moore\",\n        \"description\": \"cahyqt\",\n        \"gmtModified\": \"2021-09-08 17:33:59\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"1manwt\",\n  \"tips\": \"3e2n5u\",\n  \"data\": {\n    \"total\": 426,\n    \"pageNum\": 663,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 997,\n        \"dsdName\": \"else.franecki\",\n        \"dsdCode\": \"9350\",\n        \"colName\": \"else.franecki\",\n        \"dataType\": \"9qnxmy\",\n        \"dataCapacity\": \"5jyxhn\",\n        \"codeDirId\": \"88\",\n        \"useCodeLevel\": \"hxixox\",\n        \"codeCol\": \"i0eahr\",\n        \"dsdLevel\": \"n0vax5\",\n        \"dsdLevelId\": \"88\",\n        \"dsdLevelName\": \"else.franecki\",\n        \"description\": \"pwbelz\",\n        \"gmtModified\": \"2021-09-27 15:03:44\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -2254,7 +2480,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"oe7aqx\",\n  \"tips\": \"959ayu\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"t9mpvr\",\n  \"tips\": \"yzf4nh\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2271,7 +2497,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "909",
+            "example": "123",
             "name": "id"
           }
         ]
@@ -2302,7 +2528,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/basic/info/upload"
+                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://172.20.0.14:8780/dsd/excel/basic/info/upload"
                 }
               }
             }
@@ -2319,14 +2545,14 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"qm0x3j\",\n  \"tips\": \"tlj9u1\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"nsg59g\",\n  \"tips\": \"zxs134\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "basicInfoUploadBydirDsdId",
+        "operationId": "basicInfoUpload",
         "parameters": []
       }
     },
@@ -2347,7 +2573,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/basic/info/upload/template"
+                  "value": "curl -X POST -i http://172.20.0.14:8780/dsd/excel/basic/info/upload/template"
                 }
               }
             }
@@ -2364,7 +2590,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "Doesn\u0027t return a value."
+                    "value": "Return void."
                   }
                 }
               }
@@ -2392,7 +2618,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/basic/info/download/dirDsdId --data \u0027dirDsdId\u003d50\u0027"
+                  "value": "curl -X POST -i http://172.20.0.14:8780/dsd/excel/basic/info/download/dirDsdId --data \u0027dirDsdId\u003d88\u0027"
                 }
               }
             }
@@ -2409,7 +2635,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "Doesn\u0027t return a value."
+                    "value": "Return void."
                   }
                 }
               }
@@ -2425,7 +2651,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "88",
             "name": "dirDsdId"
           }
         ]
@@ -2450,7 +2676,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"t1dof8\",\n  \"tips\": \"4e3psf\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"79rhn8\",\n  \"tips\": \"2985yt\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2467,7 +2693,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "534",
+            "example": "409",
             "name": "id"
           }
         ]
@@ -2490,7 +2716,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 394,\n  \"dirDsdId\": \"50\",\n  \"dirDsdName\": \"danyelle.moore\",\n  \"parentId\": \"50\",\n  \"dsdDirLevel\": \"its70k\",\n  \"description\": \"sko0cz\"\n}"
+                  "value": "{\n  \"id\": 544,\n  \"dirDsdId\": \"88\",\n  \"dirDsdName\": \"else.franecki\",\n  \"parentId\": \"88\",\n  \"dsdDirLevel\": \"35pjd8\",\n  \"description\": \"3w6tee\"\n}"
                 }
               }
             }
@@ -2507,7 +2733,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"wi4jlw\",\n  \"tips\": \"iuee0m\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"ipe61k\",\n  \"tips\": \"2kdjgk\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2535,7 +2761,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 51,\n  \"codeDirId\": \"50\",\n  \"codeDirLevel\": \"93zlfg\",\n  \"tableName\": \"danyelle.moore\",\n  \"tableCode\": \"52239\",\n  \"tableDesc\": \"j8p730\",\n  \"gmtModified\": \"2021-09-08 17:33:59\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"50\",\n      \"name_ch\": \"9vw7pl\",\n      \"name_en\": \"5ums4h\",\n      \"data_type\": \"q0kckr\"\n    }\n  ],\n  \"codeTableId\": \"50\",\n  \"nameCh\": \"esil7o\",\n  \"nameEn\": \"3v539r\",\n  \"dataType\": \"azrv2n\"\n}"
+                  "value": "{\n  \"id\": 533,\n  \"codeDirId\": \"88\",\n  \"codeDirLevel\": \"x2u3jp\",\n  \"tableName\": \"else.franecki\",\n  \"tableCode\": \"9350\",\n  \"tableDesc\": \"ac143k\",\n  \"gmtModified\": \"2021-09-27 15:03:44\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"88\",\n      \"name_ch\": \"8nn8xx\",\n      \"name_en\": \"djjs8p\",\n      \"data_type\": \"45kco7\"\n    }\n  ],\n  \"codeTableId\": \"88\",\n  \"nameCh\": \"tzqylz\",\n  \"nameEn\": \"6pk2fq\",\n  \"dataType\": \"qoufqq\"\n}"
                 }
               }
             }
@@ -2552,7 +2778,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"n0bu92\",\n  \"tips\": \"0xrn2n\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"niffl6\",\n  \"tips\": \"96yc1h\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2580,7 +2806,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 760,\n  \"dirDsdId\": \"50\",\n  \"dirDsdName\": \"danyelle.moore\",\n  \"parentId\": \"50\",\n  \"dsdDirLevel\": \"rl1mor\",\n  \"description\": \"ysmq60\"\n}"
+                  "value": "{\n  \"id\": 560,\n  \"dirDsdId\": \"88\",\n  \"dirDsdName\": \"else.franecki\",\n  \"parentId\": \"88\",\n  \"dsdDirLevel\": \"tx5pf8\",\n  \"description\": \"ze9425\"\n}"
                 }
               }
             }
@@ -2597,7 +2823,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"tdmw6k\",\n  \"tips\": \"la9dlb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"x1pm5w\",\n  \"tips\": \"ei1c6w\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2631,14 +2857,14 @@
                   "dsdCodeInfoId": {
                     "description": "No comments found.",
                     "type": "string",
-                    "example": "\"50\""
+                    "example": "\"88\""
                   }
                 }
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/code/values/dsdCodeInfoId/upload --data \u0027dsdCodeInfoId\u003d50\u0027"
+                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://172.20.0.14:8780/dsd/excel/code/values/dsdCodeInfoId/upload --data \u0027dsdCodeInfoId\u003d88\u0027"
                 }
               }
             }
@@ -2655,7 +2881,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"m8ag0q\",\n  \"tips\": \"3r0awf\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"9pqo4d\",\n  \"tips\": \"quucvf\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2689,14 +2915,14 @@
                   "dirDsdId": {
                     "description": "No comments found.",
                     "type": "string",
-                    "example": "\"50\""
+                    "example": "\"88\""
                   }
                 }
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/basic/info/upload/dirDsdId --data \u0027dirDsdId\u003d50\u0027"
+                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://172.20.0.14:8780/dsd/excel/basic/info/upload/dirDsdId --data \u0027dirDsdId\u003d88\u0027"
                 }
               }
             }
@@ -2713,7 +2939,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"r4rzgt\",\n  \"tips\": \"r40w4v\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"jlmsht\",\n  \"tips\": \"39bl9b\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2743,7 +2969,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"9ogw7g\",\n  \"tips\": \"3dtnyp\",\n  \"data\": [\n    {\n      \"id\": 665,\n      \"codeDirId\": \"50\",\n      \"codeDirName\": \"danyelle.moore\",\n      \"parentId\": \"50\",\n      \"codeDirLevel\": \"223psv\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"6fkclt\",\n  \"tips\": \"abdq37\",\n  \"data\": [\n    {\n      \"id\": 351,\n      \"codeDirId\": \"88\",\n      \"codeDirName\": \"else.franecki\",\n      \"parentId\": \"88\",\n      \"codeDirLevel\": \"pv28dq\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
@@ -2751,6 +2977,51 @@
           }
         },
         "operationId": "getDsdDirTree",
+        "parameters": []
+      }
+    },
+    "/excel/basic/info/download/all": {
+      "post": {
+        "summary": "标准基本信息excel__全部导出数据",
+        "deprecated": false,
+        "description": "标准基本信息excel__全部导出数据",
+        "tags": [
+          "DsdExcelController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_excel_basic_info_download_allRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.20.0.14:8780/dsd/excel/basic/info/download/all"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_excel_basic_info_download_allResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "basicInfoDownloadAll",
         "parameters": []
       }
     },
@@ -2773,7 +3044,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"epl3s7\",\n  \"tips\": \"nz73av\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"qoxv4g\",\n  \"tips\": \"09v95u\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2789,7 +3060,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "q4hifb",
+            "example": "04msvy",
             "name": "ids"
           }
         ]
@@ -2814,7 +3085,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"tebn15\",\n  \"tips\": \"vqmza7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"f3r056\",\n  \"tips\": \"a8myfm\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2830,7 +3101,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "668o0d",
+            "example": "duvvw9",
             "name": "ids"
           }
         ]
@@ -2853,7 +3124,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"m603r6\"\n  },\n  \"beginDay\": \"3qf4ae\",\n  \"endDay\": \"htx7k8\",\n  \"dsdCodeInfoId\": \"50\",\n  \"tableConfCode\": \"52239\",\n  \"tableConfValue\": \"nb4g6a\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"yudfqe\"\n  },\n  \"beginDay\": \"jsw3jx\",\n  \"endDay\": \"bko9na\",\n  \"dsdCodeInfoId\": \"88\",\n  \"searchCode\": \"9350\",\n  \"searchValue\": \"jbasbi\"\n}"
                 }
               }
             }
@@ -2870,7 +3141,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"rxwley\",\n  \"tips\": \"w7uqvw\",\n  \"data\": {\n    \"mapKey\": {\n      \"waring\": \"You may use java.util.Object for Map value; smart-doc can\u0027t be handle.\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"m25st3\",\n  \"tips\": \"5jvh5y\",\n  \"data\": {\n    \"mapKey\": {\n      \"waring\": \"You may use java.util.Object for Map value; smart-doc can\u0027t be handle.\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -2898,7 +3169,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 579,\n  \"dsdCodeInfoId\": \"50\",\n  \"tableConfCode\": \"52239\",\n  \"tableConfValue\": \"evt36e\",\n  \"gmtModified\": \"2021-09-08 17:33:59\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"f7csku\"\n  }\n}"
+                  "value": "{\n  \"id\": 572,\n  \"dsdCodeInfoId\": \"88\",\n  \"searchCode\": \"9350\",\n  \"searchValue\": \"6aal5q\",\n  \"gmtModified\": \"2021-09-27 15:03:44\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"x8um2s\"\n  }\n}"
                 }
               }
             }
@@ -2915,7 +3186,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"0z8sf5\",\n  \"tips\": \"2cp1ge\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"ruxbgi\",\n  \"tips\": \"zto2ve\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2945,7 +3216,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"h2mgld\",\n  \"tips\": \"qn0ecj\",\n  \"data\": [\n    {\n      \"id\": 374,\n      \"dirDsdId\": \"50\",\n      \"dirDsdName\": \"danyelle.moore\",\n      \"parentId\": \"50\",\n      \"dsdDirLevel\": \"enaf0h\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"225aks\",\n  \"tips\": \"xki7zf\",\n  \"data\": [\n    {\n      \"id\": 521,\n      \"dirDsdId\": \"88\",\n      \"dirDsdName\": \"else.franecki\",\n      \"parentId\": \"88\",\n      \"dsdDirLevel\": \"r99n5b\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
@@ -2973,7 +3244,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"codeDirId\": \"50\",\n  \"codeDirLevel\": \"u43vsz\",\n  \"isUpdate\": \"2021-09-08\",\n  \"isReverseData\": \"n4fbqm\",\n  \"dataSourceJobVO\": {\n    \"name\": \"danyelle.moore\",\n    \"dataConnectType\": \"q875ht\",\n    \"mysqlDataConnect\": {\n      \"db\": \"5lvc9h\",\n      \"table\": \"ahrai6\",\n      \"host\": \"smnntf\",\n      \"port\": \"05eton\",\n      \"username\": \"danyelle.moore\",\n      \"password\": \"eno1ze\"\n    }\n  }\n}"
+                  "value": "{\n  \"codeDirId\": \"88\",\n  \"codeDirLevel\": \"rs8qsi\",\n  \"isUpdate\": \"2021-09-27\",\n  \"isReverseData\": \"ujk7t0\",\n  \"dataSourceJobVO\": {\n    \"name\": \"else.franecki\",\n    \"dataConnectType\": \"xlg7sl\",\n    \"mysqlDataConnect\": {\n      \"db\": \"px6b2e\",\n      \"table\": \"vbrnfj\",\n      \"host\": \"c6ever\",\n      \"port\": \"kxzwu3\",\n      \"username\": \"else.franecki\",\n      \"password\": \"vjwqi4\"\n    }\n  }\n}"
                 }
               }
             }
@@ -2990,7 +3261,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"c56bbf\",\n  \"tips\": \"sk50c3\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"82g27m\",\n  \"tips\": \"vrwbkz\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3018,7 +3289,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/code/info/upload/template"
+                  "value": "curl -X POST -i http://172.20.0.14:8780/dsd/excel/code/info/upload/template"
                 }
               }
             }
@@ -3035,15 +3306,56 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "Doesn\u0027t return a value."
+                    "value": "Return void."
                   }
                 }
               }
             }
           }
         },
-        "operationId": "ccodeInfoDownloadTemplate",
+        "operationId": "codeInfoDownloadTemplate",
         "parameters": []
+      }
+    },
+    "/basic/info/search/code/field/by/codeDirId/{codeDirId}": {
+      "get": {
+        "summary": "引用码表字段",
+        "deprecated": false,
+        "description": "引用码表字段",
+        "tags": [
+          "DataStandardBasicInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_basic_info_search_code_field_by_codeDirId__codeDirId_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"i28wgw\",\n  \"tips\": \"1v4kdi\",\n  \"data\": [\n    {\n      \"code_table_id\": \"88\",\n      \"name_ch\": \"30zme5\",\n      \"name_en\": \"4249k9\",\n      \"data_type\": \"3bqvqa\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getCodeFieldByCodeDirId",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "88",
+            "name": "codeDirId"
+          }
+        ]
       }
     },
     "/excel/code/info/all/upload": {
@@ -3069,14 +3381,14 @@
                   "codeDirId": {
                     "description": "No comments found.",
                     "type": "string",
-                    "example": "\"50\""
+                    "example": "\"88\""
                   }
                 }
               },
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://{{server}}/excel/code/info/all/upload --data \u0027codeDirId\u003d50\u0027"
+                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://172.20.0.14:8780/dsd/excel/code/info/all/upload --data \u0027codeDirId\u003d88\u0027"
                 }
               }
             }
@@ -3093,7 +3405,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"exck8n\",\n  \"tips\": \"95qt20\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"emqjcx\",\n  \"tips\": \"ytlof7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3102,47 +3414,6 @@
         },
         "operationId": "codeInfoAllUpload",
         "parameters": []
-      }
-    },
-    "/basic/info/search/code/field/by/codeDirId/{codeDirId}": {
-      "get": {
-        "summary": "引用码表字段",
-        "deprecated": false,
-        "description": "引用码表字段",
-        "tags": [
-          "DataStandardBasicInfoController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_basic_info_search_code_field_by_codeDirId__codeDirId_Response"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"485t7g\",\n  \"tips\": \"pfebmj\",\n  \"data\": [\n    {\n      \"code_table_id\": \"50\",\n      \"name_ch\": \"levx4c\",\n      \"name_en\": \"ps8o2a\",\n      \"data_type\": \"jinsn2\"\n    }\n  ]\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "getCodeFieldByCodeDirId",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "No comments found.",
-            "required": true,
-            "example": "50",
-            "name": "codeDirId"
-          }
-        ]
       }
     },
     "/code/info/basic/delete/{id}": {
@@ -3164,7 +3435,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"jbwzli\",\n  \"tips\": \"mxqg5z\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"ij0scn\",\n  \"tips\": \"3kq4bt\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3181,7 +3452,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "658",
+            "example": "904",
             "name": "id"
           }
         ]
@@ -3204,7 +3475,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 605,\n  \"dsdName\": \"danyelle.moore\",\n  \"dsdCode\": \"52239\",\n  \"colName\": \"danyelle.moore\",\n  \"dataType\": \"6jgiiq\",\n  \"dataCapacity\": \"myu1jm\",\n  \"codeDirId\": \"50\",\n  \"useCodeLevel\": \"k0vgs6\",\n  \"codeCol\": \"31jkzo\",\n  \"dsdLevel\": \"dy9jnx\",\n  \"dsdLevelId\": \"50\",\n  \"dsdLevelName\": \"danyelle.moore\",\n  \"description\": \"vxepr8\",\n  \"gmtModified\": \"2021-09-08 17:33:59\"\n}"
+                  "value": "{\n  \"id\": 287,\n  \"dsdName\": \"else.franecki\",\n  \"dsdCode\": \"9350\",\n  \"colName\": \"else.franecki\",\n  \"dataType\": \"askzec\",\n  \"dataCapacity\": \"b3qze6\",\n  \"codeDirId\": \"88\",\n  \"useCodeLevel\": \"p2pg1s\",\n  \"codeCol\": \"f7qspi\",\n  \"dsdLevel\": \"y56bpu\",\n  \"dsdLevelId\": \"88\",\n  \"dsdLevelName\": \"else.franecki\",\n  \"description\": \"2pay54\",\n  \"gmtModified\": \"2021-09-27 15:03:44\"\n}"
                 }
               }
             }
@@ -3221,7 +3492,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"4ean02\",\n  \"tips\": \"ywiyih\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"aj2fzv\",\n  \"tips\": \"5km9a8\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3249,7 +3520,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 822,\n  \"codeDirId\": \"50\",\n  \"codeDirName\": \"danyelle.moore\",\n  \"parentId\": \"50\",\n  \"codeDirLevel\": \"v7np4h\",\n  \"description\": \"a3lf3u\"\n}"
+                  "value": "{\n  \"id\": 496,\n  \"codeDirId\": \"88\",\n  \"codeDirName\": \"else.franecki\",\n  \"parentId\": \"88\",\n  \"codeDirLevel\": \"fn8524\",\n  \"description\": \"h7tyw6\"\n}"
                 }
               }
             }
@@ -3266,7 +3537,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"h7ifsd\",\n  \"tips\": \"6mf7q9\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"2oduih\",\n  \"tips\": \"bbusau\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3275,6 +3546,47 @@
         },
         "operationId": "updateDsdDir",
         "parameters": []
+      }
+    },
+    "/code/info/basic/query/tableCode": {
+      "get": {
+        "summary": "根据tableCode(表编码)获取码表基础详情信息",
+        "deprecated": false,
+        "description": "根据tableCode(表编码)获取码表基础详情信息",
+        "tags": [
+          "DataStandardCodeInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_code_info_basic_query_tableCodeResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"x6l3hm\",\n  \"tips\": \"eimjn0\",\n  \"data\": {\n    \"id\": 702,\n    \"codeDirId\": \"88\",\n    \"codeDirLevel\": \"5vt05c\",\n    \"tableName\": \"else.franecki\",\n    \"tableCode\": \"9350\",\n    \"tableDesc\": \"1h0p12\",\n    \"gmtModified\": \"2021-09-27 15:03:44\",\n    \"codeTableFieldsList\": [\n      {\n        \"code_table_id\": \"88\",\n        \"name_ch\": \"qpl7am\",\n        \"name_en\": \"55inbb\",\n        \"data_type\": \"cmqzsb\"\n      }\n    ],\n    \"codeTableId\": \"88\",\n    \"nameCh\": \"5qtxck\",\n    \"nameEn\": \"vqccso\",\n    \"dataType\": \"n8mryt\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getBasicDsdCodeInfoByTableCode",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "9350",
+            "name": "tableCode"
+          }
+        ]
       }
     },
     "/code/info/basic/add": {
@@ -3294,7 +3606,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 913,\n  \"codeDirId\": \"50\",\n  \"codeDirLevel\": \"piqcc5\",\n  \"tableName\": \"danyelle.moore\",\n  \"tableCode\": \"52239\",\n  \"tableDesc\": \"0jw5m8\",\n  \"gmtModified\": \"2021-09-08 17:33:59\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"50\",\n      \"name_ch\": \"exlerb\",\n      \"name_en\": \"xpeytn\",\n      \"data_type\": \"sgtyeg\"\n    }\n  ],\n  \"codeTableId\": \"50\",\n  \"nameCh\": \"jrw5s9\",\n  \"nameEn\": \"kgtox5\",\n  \"dataType\": \"pktfj9\"\n}"
+                  "value": "{\n  \"id\": 165,\n  \"codeDirId\": \"88\",\n  \"codeDirLevel\": \"gokdoo\",\n  \"tableName\": \"else.franecki\",\n  \"tableCode\": \"9350\",\n  \"tableDesc\": \"afpghw\",\n  \"gmtModified\": \"2021-09-27 15:03:44\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"88\",\n      \"name_ch\": \"s3ofdn\",\n      \"name_en\": \"3f3mnl\",\n      \"data_type\": \"4aiuep\"\n    }\n  ],\n  \"codeTableId\": \"88\",\n  \"nameCh\": \"qauncz\",\n  \"nameEn\": \"b578f8\",\n  \"dataType\": \"zp3p1g\"\n}"
                 }
               }
             }
@@ -3311,7 +3623,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"eblx8a\",\n  \"tips\": \"w7x0jb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"hgvu37\",\n  \"tips\": \"igdf66\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3339,7 +3651,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 584,\n  \"dsdCodeInfoId\": \"50\",\n  \"tableConfCode\": \"52239\",\n  \"tableConfValue\": \"ye3av7\",\n  \"gmtModified\": \"2021-09-08 17:33:59\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"1fqgqn\"\n  }\n}"
+                  "value": "{\n  \"id\": 724,\n  \"dsdCodeInfoId\": \"88\",\n  \"searchCode\": \"9350\",\n  \"searchValue\": \"90ruq4\",\n  \"gmtModified\": \"2021-09-27 15:03:44\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"vxgdrl\"\n  }\n}"
                 }
               }
             }
@@ -3356,7 +3668,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"hd83vb\",\n  \"tips\": \"oykgfi\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"9tzp2z\",\n  \"tips\": \"6ekjuf\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3384,7 +3696,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/code/values/dsdCodeInfoId/download --data \u0027dsdCodeInfoId\u003d50\u0027"
+                  "value": "curl -X POST -i http://172.20.0.14:8780/dsd/excel/code/values/dsdCodeInfoId/download --data \u0027dsdCodeInfoId\u003d88\u0027"
                 }
               }
             }
@@ -3401,7 +3713,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "Doesn\u0027t return a value."
+                    "value": "Return void."
                   }
                 }
               }
@@ -3417,7 +3729,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "88",
             "name": "dsdCodeInfoId"
           }
         ]
@@ -3442,7 +3754,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"o8kr2f\",\n  \"tips\": \"s3wft8\",\n  \"data\": {\n    \"id\": 173,\n    \"dsdCodeInfoId\": \"50\",\n    \"tableConfCode\": \"52239\",\n    \"tableConfValue\": \"2zoyjs\",\n    \"gmtModified\": \"2021-09-08 17:33:59\",\n    \"codeTableFieldExtValues\": {\n      \"mapKey\": \"zzqv0s\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"j69iu8\",\n  \"tips\": \"cue9bf\",\n  \"data\": {\n    \"id\": 318,\n    \"dsdCodeInfoId\": \"88\",\n    \"searchCode\": \"9350\",\n    \"searchValue\": \"eube3x\",\n    \"gmtModified\": \"2021-09-27 15:03:44\",\n    \"codeTableFieldExtValues\": {\n      \"mapKey\": \"ckzfe1\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -3458,7 +3770,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "88",
             "name": "id"
           }
         ]
@@ -3483,7 +3795,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"4owd68\",\n  \"tips\": \"sm0kif\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"s04hs5\",\n  \"tips\": \"o980v8\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3500,7 +3812,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "339",
+            "example": "725",
             "name": "id"
           }
         ]
@@ -3525,7 +3837,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"mzmseu\",\n  \"tips\": \"vy61xa\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"qj5y3n\",\n  \"tips\": \"mn2hjg\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3541,7 +3853,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "28wpa6",
+            "example": "yot6xj",
             "name": "ids"
           }
         ]
@@ -3564,7 +3876,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 611,\n  \"codeDirId\": \"50\",\n  \"codeDirName\": \"danyelle.moore\",\n  \"parentId\": \"50\",\n  \"codeDirLevel\": \"bjfuaa\",\n  \"description\": \"07lba4\"\n}"
+                  "value": "{\n  \"id\": 465,\n  \"codeDirId\": \"88\",\n  \"codeDirName\": \"else.franecki\",\n  \"parentId\": \"88\",\n  \"codeDirLevel\": \"bza841\",\n  \"description\": \"1s4n6e\"\n}"
                 }
               }
             }
@@ -3581,7 +3893,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"zu6k8z\",\n  \"tips\": \"tr0k98\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"sohy1d\",\n  \"tips\": \"j33cll\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3589,51 +3901,6 @@
           }
         },
         "operationId": "addDsdDir",
-        "parameters": []
-      }
-    },
-    "/excel/basic/info/download": {
-      "post": {
-        "summary": "标准基本信息excel__全部导出数据",
-        "deprecated": false,
-        "description": "标准基本信息excel__全部导出数据",
-        "tags": [
-          "DsdExcelController"
-        ],
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded;charset\u003dutf-8": {
-              "schema": {
-                "$ref": "#/components/schemas/_excel_basic_info_downloadRequest"
-              },
-              "examples": {
-                "json": {
-                  "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/basic/info/download"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_excel_basic_info_downloadResponse"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "Doesn\u0027t return a value."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "basicInfoDownload",
         "parameters": []
       }
     },
@@ -3654,7 +3921,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"yqp9po\"\n  },\n  \"beginDay\": \"ap992i\",\n  \"endDay\": \"xjgvi8\",\n  \"codeDirId\": \"50\",\n  \"codeDirLevel\": \"z544hv\",\n  \"tableName\": \"danyelle.moore\",\n  \"tableCode\": \"52239\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"yiqpb2\"\n  },\n  \"beginDay\": \"4gs0q6\",\n  \"endDay\": \"yxv2aj\",\n  \"codeDirId\": \"88\",\n  \"codeDirLevel\": \"1spmls\",\n  \"tableName\": \"else.franecki\",\n  \"tableCode\": \"9350\"\n}"
                 }
               }
             }
@@ -3671,7 +3938,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"z7u7at\",\n  \"tips\": \"4482nx\",\n  \"data\": {\n    \"total\": 713,\n    \"pageNum\": 979,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 57,\n        \"codeDirId\": \"50\",\n        \"codeDirLevel\": \"mi9u5c\",\n        \"tableName\": \"danyelle.moore\",\n        \"tableCode\": \"52239\",\n        \"tableDesc\": \"n0bj3n\",\n        \"gmtModified\": \"2021-09-08 17:33:59\",\n        \"codeTableFieldsList\": [\n          {\n            \"code_table_id\": \"50\",\n            \"name_ch\": \"6c9kwc\",\n            \"name_en\": \"foy3fz\",\n            \"data_type\": \"jt8i7u\"\n          }\n        ],\n        \"codeTableId\": \"50\",\n        \"nameCh\": \"ah0wbw\",\n        \"nameEn\": \"goffhi\",\n        \"dataType\": \"l2btgn\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"jlurwo\",\n  \"tips\": \"tt4k6y\",\n  \"data\": {\n    \"total\": 115,\n    \"pageNum\": 484,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 654,\n        \"codeDirId\": \"88\",\n        \"codeDirLevel\": \"z4u4m8\",\n        \"tableName\": \"else.franecki\",\n        \"tableCode\": \"9350\",\n        \"tableDesc\": \"akbfut\",\n        \"gmtModified\": \"2021-09-27 15:03:44\",\n        \"codeTableFieldsList\": [\n          {\n            \"code_table_id\": \"88\",\n            \"name_ch\": \"7jv4nk\",\n            \"name_en\": \"dut4g5\",\n            \"data_type\": \"h4avbn\"\n          }\n        ],\n        \"codeTableId\": \"88\",\n        \"nameCh\": \"egbqo0\",\n        \"nameEn\": \"vw5ixq\",\n        \"dataType\": \"glfqfu\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -3682,11 +3949,56 @@
         "parameters": []
       }
     },
+    "/code/info/basic/query/all": {
+      "post": {
+        "summary": "获取所有码表基础信息列表",
+        "deprecated": false,
+        "description": "获取所有码表基础信息列表",
+        "tags": [
+          "DataStandardCodeInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_code_info_basic_query_allRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.20.0.14:8780/dsd/code/info/basic/query/all"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_code_info_basic_query_allResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"xdoh0f\",\n  \"tips\": \"l7ros8\",\n  \"data\": [\n    {\n      \"id\": 337,\n      \"codeDirId\": \"88\",\n      \"codeDirLevel\": \"dzpb2o\",\n      \"tableName\": \"else.franecki\",\n      \"tableCode\": \"9350\",\n      \"tableDesc\": \"ypu9fm\",\n      \"gmtModified\": \"2021-09-27 15:03:44\",\n      \"codeTableFieldsList\": [\n        {\n          \"code_table_id\": \"88\",\n          \"name_ch\": \"74tpn3\",\n          \"name_en\": \"66grn8\",\n          \"data_type\": \"gurr6a\"\n        }\n      ],\n      \"codeTableId\": \"88\",\n      \"nameCh\": \"80t6ll\",\n      \"nameEn\": \"vkrp59\",\n      \"dataType\": \"aueqls\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDsdCodeInfoAll",
+        "parameters": []
+      }
+    },
     "/code/info/basic/query/by/{id}": {
       "get": {
-        "summary": "根据Id获取码表信息列表详情信息",
+        "summary": "根据id获取码表信息列表详情信息",
         "deprecated": false,
-        "description": "根据Id获取码表信息列表详情信息",
+        "description": "根据id获取码表信息列表详情信息",
         "tags": [
           "DataStandardCodeInfoController"
         ],
@@ -3701,7 +4013,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"vdzs2r\",\n  \"tips\": \"zvrcg2\",\n  \"data\": {\n    \"id\": 703,\n    \"codeDirId\": \"50\",\n    \"codeDirLevel\": \"6gdddu\",\n    \"tableName\": \"danyelle.moore\",\n    \"tableCode\": \"52239\",\n    \"tableDesc\": \"vo59jr\",\n    \"gmtModified\": \"2021-09-08 17:33:59\",\n    \"codeTableFieldsList\": [\n      {\n        \"code_table_id\": \"50\",\n        \"name_ch\": \"0vkqsd\",\n        \"name_en\": \"2a0wb0\",\n        \"data_type\": \"l67mh7\"\n      }\n    ],\n    \"codeTableId\": \"50\",\n    \"nameCh\": \"swwo3t\",\n    \"nameEn\": \"49ol3v\",\n    \"dataType\": \"ojv924\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"k4ugbw\",\n  \"tips\": \"ibgucl\",\n  \"data\": {\n    \"id\": 779,\n    \"codeDirId\": \"88\",\n    \"codeDirLevel\": \"7l2309\",\n    \"tableName\": \"else.franecki\",\n    \"tableCode\": \"9350\",\n    \"tableDesc\": \"i44bhp\",\n    \"gmtModified\": \"2021-09-27 15:03:44\",\n    \"codeTableFieldsList\": [\n      {\n        \"code_table_id\": \"88\",\n        \"name_ch\": \"98t4mj\",\n        \"name_en\": \"api6e5\",\n        \"data_type\": \"0yxrqo\"\n      }\n    ],\n    \"codeTableId\": \"88\",\n    \"nameCh\": \"qdd5k6\",\n    \"nameEn\": \"jkqk0r\",\n    \"dataType\": \"qmf8eh\"\n  }\n}"
                   }
                 }
               }
@@ -3717,7 +4029,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "88",
             "name": "id"
           }
         ]
@@ -3740,7 +4052,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/code/values/download/template --data \u0027dsdCodeInfoId\u003d50\u0027"
+                  "value": "curl -X POST -i http://172.20.0.14:8780/dsd/excel/code/values/download/template --data \u0027dsdCodeInfoId\u003d88\u0027"
                 }
               }
             }
@@ -3757,7 +4069,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "Doesn\u0027t return a value."
+                    "value": "Return void."
                   }
                 }
               }
@@ -3773,7 +4085,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "88",
             "name": "dsdCodeInfoId"
           }
         ]
@@ -3798,7 +4110,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"q7e6fn\",\n  \"tips\": \"4tcyai\",\n  \"data\": [\n    {\n      \"mapKey1\": \"7zhoqa\",\n      \"mapKey2\": \"4d8umg\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"w85wxt\",\n  \"tips\": \"iwq3se\",\n  \"data\": [\n    {\n      \"mapKey1\": \"r37y9n\",\n      \"mapKey2\": \"zii5jy\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -3826,7 +4138,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/excel/code/info/all/download --data \u0027codeDirId\u003d50\u0027"
+                  "value": "curl -X POST -i http://172.20.0.14:8780/dsd/excel/code/info/all/download --data \u0027codeDirId\u003d88\u0027"
                 }
               }
             }
@@ -3843,7 +4155,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "Doesn\u0027t return a value."
+                    "value": "Return void."
                   }
                 }
               }
@@ -3859,7 +4171,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "50",
+            "example": "88",
             "name": "codeDirId"
           }
         ]
@@ -3882,7 +4194,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 429,\n  \"dsdName\": \"danyelle.moore\",\n  \"dsdCode\": \"52239\",\n  \"colName\": \"danyelle.moore\",\n  \"dataType\": \"o7yf5w\",\n  \"dataCapacity\": \"v8v2sj\",\n  \"codeDirId\": \"50\",\n  \"useCodeLevel\": \"s8fyxc\",\n  \"codeCol\": \"88qee4\",\n  \"dsdLevel\": \"p8afhd\",\n  \"dsdLevelId\": \"50\",\n  \"dsdLevelName\": \"danyelle.moore\",\n  \"description\": \"bgzo5g\",\n  \"gmtModified\": \"2021-09-08 17:33:59\"\n}"
+                  "value": "{\n  \"id\": 444,\n  \"dsdName\": \"else.franecki\",\n  \"dsdCode\": \"9350\",\n  \"colName\": \"else.franecki\",\n  \"dataType\": \"y31msd\",\n  \"dataCapacity\": \"8ze5dg\",\n  \"codeDirId\": \"88\",\n  \"useCodeLevel\": \"fa60w0\",\n  \"codeCol\": \"1dy0wg\",\n  \"dsdLevel\": \"sog5bt\",\n  \"dsdLevelId\": \"88\",\n  \"dsdLevelName\": \"else.franecki\",\n  \"description\": \"2gf97e\",\n  \"gmtModified\": \"2021-09-27 15:03:44\"\n}"
                 }
               }
             }
@@ -3899,7 +4211,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"52239\",\n  \"retMsg\": \"7o9456\",\n  \"tips\": \"6bn7us\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"9350\",\n  \"retMsg\": \"r44mcn\",\n  \"tips\": \"crm0mm\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }

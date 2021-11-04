@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiRegisterService {
 
-  DasApiRegisterVO getDasApiRegisterInfoByApiId(String apiId);
+  DasApiRegisterVO detail(String apiId);
 
-  void addDasApiRegister(DasApiRegisterVO dasApiRegisterVO);
+  void insert(DasApiRegisterVO dasApiRegisterVO);
 
-  void updateDasApiRegister(DasApiRegisterVO dasApiRegisterVO);
+  void update(DasApiRegisterVO dasApiRegisterVO);
 
   Map<String, String> getRegisterBackendParaHeaderInfo();
 

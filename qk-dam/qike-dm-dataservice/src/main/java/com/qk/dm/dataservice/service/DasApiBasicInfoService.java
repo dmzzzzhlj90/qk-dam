@@ -16,16 +16,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface DasApiBasicInfoService {
-  PageResultVO<DasApiBasicInfoVO> getDasApiBasicInfo(
+  PageResultVO<DasApiBasicInfoVO> searchList(
       DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO);
 
-  void addDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
+  void insert(DasApiBasicInfoVO dasApiBasicInfoVO);
 
-  void updateDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
+  void update(DasApiBasicInfoVO dasApiBasicInfoVO);
 
-  void deleteDasApiBasicInfo(Long delId);
+  void delete(Long delId);
 
-  void bulkDeleteDasApiBasicInfo(String ids);
+  void deleteBulk(String ids);
 
   List<Map<String, String>> getApiType();
 

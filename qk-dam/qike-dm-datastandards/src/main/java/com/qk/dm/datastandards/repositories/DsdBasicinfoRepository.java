@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface DsdBasicinfoRepository extends BaseRepository<DsdBasicinfo, Integer> {
+public interface DsdBasicinfoRepository extends BaseRepository<DsdBasicinfo, Long> {
 
   @Modifying
   @Query(" UPDATE DsdBasicinfo set dsdLevel = :dsdDirLevel where dsdLevelId = :dirDsdId ")

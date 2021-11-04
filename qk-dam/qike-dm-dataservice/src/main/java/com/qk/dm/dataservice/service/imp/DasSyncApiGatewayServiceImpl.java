@@ -184,10 +184,7 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
       RouteContext routeContext = buildRouteContext();
       // 清除路由信息
       apiGatewayManager.clearRouteService(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeContext);
-      Iterable<DasApiRegister> dasApiRegisterIterable =
-          dasApiRegisterRepository.findAll(
-              QDasApiRegister.dasApiRegister.status.ne(
-                  SyncStatusEnum.REQUEST_PARAMETER_POSITION_PATH.getCode()));
+      Iterable<DasApiRegister> dasApiRegisterIterable = dasApiRegisterRepository.findAll();
       for (DasApiRegister dasApiRegister : dasApiRegisterIterable) {
         boolean flag =
             setRouteInfo(apiBasicInfoMap, upstreamId, serviceId, routeContext, dasApiRegister);

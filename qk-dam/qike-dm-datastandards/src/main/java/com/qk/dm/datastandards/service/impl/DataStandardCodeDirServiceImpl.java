@@ -68,8 +68,8 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     dsdCodeDirRepository.save(dsdCodeDir);
   }
 
-  @Transactional
   @Override
+  @Transactional(rollbackFor = Exception.class)
   public void updateDsdDir(DsdCodeDirVO dsdCodeDirVO) {
     DsdCodeDir dsdCodeDir = DsdDirCodeDirTreeMapper.INSTANCE.useDsdCodeDir(dsdCodeDirVO);
     dsdCodeDir.setGmtModified(new Date());
@@ -79,7 +79,7 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
       String codeDirLevel = dsdCodeDirOptional.get().getCodeDirLevel();
       if (codeDirLevel.equals(dsdCodeDirVO.getCodeDirLevel())) {
         throw new BizException(
-            "当前要编辑的数据标准分类名称为:"
+            "当前要编辑的码表分类目录名称为:"
                 + dsdCodeDir.getCodeDirName()
                 + " 所属的节点层级目录为:"
                 + dsdCodeDir.getCodeDirLevel()

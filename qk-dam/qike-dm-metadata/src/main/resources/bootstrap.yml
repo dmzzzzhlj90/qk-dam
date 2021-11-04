@@ -1,33 +1,22 @@
-server:
-  port: 8782
 spring:
+  application:
+    name: ${name}-\${spring.profiles.active}
   logging:
     level: info
-    path: logs/dm-metadata.log
     appender:
       ref: CONSOLE
-  messages:
-    basename: i18n/messages
-  mvc:
-    message-codes-resolver-format: postfix_error_code
-    servlet:
-      path: /mtd
-  main:
-    allow-bean-definition-overriding: true
-  jpa:
-    show-sql: false
-  application:
-    name: dm-metadata
+    path: logs/\${spring.application.name}.log
   cloud:
     nacos:
       discovery:
-        server-addr: http://172.20.0.13
-        namespace: b70cde8c-05da-4032-9637-59d6d640296b
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
       config:
-        server-addr: http://172.20.0.13
-        namespace: b70cde8c-05da-4032-9637-59d6d640296b
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
         extension-configs:
-          - dataId: qkdam-mysql-dev.yml
+          - dataId: qkdam-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
-
+  profiles:
+    active: ${damProfilesActive}
