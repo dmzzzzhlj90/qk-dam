@@ -27,18 +27,22 @@ public class DsdCodeDir implements Serializable {
   private String codeDirName;
 
   /** 父级ID */
-  @Column(name = "parent_id")
+  @Column(name = "parent_id", nullable = false)
   private String parentId;
+
+  /** 码表目录层级 */
+  @Column(name = "code_dir_level", nullable = false)
+  private String codeDirLevel;
 
   /** 描述 */
   @Column(name = "description")
   private String description;
 
-  /** 创建时间 */
+  /** 修改时间 */
   @Column(name = "gmt_create")
   private Date gmtCreate;
 
-  /** 修改时间 */
+  /** 创建时间 */
   @Column(name = "gmt_modified")
   private Date gmtModified;
 

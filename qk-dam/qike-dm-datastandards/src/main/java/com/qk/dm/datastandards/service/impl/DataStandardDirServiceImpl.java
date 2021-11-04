@@ -12,14 +12,12 @@ import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdDirVO;
 import com.querydsl.core.types.Predicate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 
 /**
  * @author wjq
@@ -30,11 +28,15 @@ import java.util.*;
 @Transactional
 public class DataStandardDirServiceImpl implements DataStandardDirService {
   private final DsdDirRepository dsdDirRepository;
-  @Autowired
-  private DsdBasicinfoRepository dsdBasicinfoRepository;
 
-  public DataStandardDirServiceImpl(DsdDirRepository dsdDirRepository) {
+  private final DsdBasicinfoRepository dsdBasicinfoRepository;
+
+
+  @Autowired
+  public DataStandardDirServiceImpl(
+      DsdDirRepository dsdDirRepository, DsdBasicinfoRepository dsdBasicinfoRepository) {
     this.dsdDirRepository = dsdDirRepository;
+    this.dsdBasicinfoRepository = dsdBasicinfoRepository;
   }
 
 
@@ -52,37 +54,46 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
 
   @Override
   public void addDsdDir(DsdDirVO dsdDirVO) {
-    dsdDirVO.setDirDsdId(UUID.randomUUID().toString().replaceAll("-", ""));
     DsdDir dsdDir = DsdDirTreeMapper.INSTANCE.useDsdDir(dsdDirVO);
     dsdDir.setGmtCreate(new Date());
-    Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
+    dsdDir.setGmtModified(new Date());
+    dsdDir.setDirDsdId(UUID.randomUUID().toString().replaceAll("-", ""));
+
+    Predicate predicate = QDsdDir.dsdDir.dsdDirLevel.eq(dsdDirVO.getDsdDirLevel());
     boolean exists = dsdDirRepository.exists(predicate);
     if (exists) {
       throw new BizException(
-          "当前要新增的数据分类ID为："
-              + dsdDir.getDirDsdId()
-              + "数据标准分类名称为:"
+          "当前要新增的数据标准分类名称为:"
               + dsdDir.getDirDsdName()
+              + " 所属的节点层级目录为:"
+              + dsdDirVO.getDsdDirLevel()
               + " 的数据，已存在！！！");
     }
     dsdDirRepository.save(dsdDir);
   }
 
+  @Transactional
   @Override
   public void updateDsdDir(DsdDirVO dsdDirVO) {
     DsdDir dsdDir = DsdDirTreeMapper.INSTANCE.useDsdDir(dsdDirVO);
     dsdDir.setGmtModified(new Date());
     Predicate predicate = QDsdDir.dsdDir.dirDsdId.eq(dsdDir.getDirDsdId());
-    boolean exists = dsdDirRepository.exists(predicate);
-    if (exists) {
+    final Optional<DsdDir> dsdDirOptional = dsdDirRepository.findOne(predicate);
+    if (dsdDirOptional.isPresent()) {
+      String dsdDirLevel = dsdDirOptional.get().getDsdDirLevel();
+      if (dsdDirLevel.equals(dsdDirVO.getDsdDirLevel())) {
+        throw new BizException(
+            "当前要编辑的数据标准分类名称为:"
+                + dsdDir.getDirDsdName()
+                + " 所属的节点层级目录为:"
+                + dsdDirVO.getDsdDirLevel()
+                + ", 的数据，已存在！！！");
+      }
       dsdDirRepository.saveAndFlush(dsdDir);
+      dsdBasicinfoRepository.updateDirLevelByDirId(
+          dsdDirVO.getDsdDirLevel(), dsdDirVO.getDirDsdId());
     } else {
-      throw new BizException(
-          "当前要编辑的数据分类ID为："
-              + dsdDir.getDirDsdId()
-              + "数据标准分类名称为:"
-              + dsdDir.getDirDsdName()
-              + " 的数据，不已存在！！！");
+      throw new BizException("当前要编辑的数据标准分类名称为:" + dsdDir.getDirDsdName() + " 的数据，不存在！！！");
     }
   }
 
@@ -102,34 +113,33 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     }
   }
 
-  /**
-   * @param: respList
-   * @return: 使用递归方法建树
-   */
   public static List<DataStandardTreeVO> buildByRecursive(List<DataStandardTreeVO> respList) {
-    List<DataStandardTreeVO> trees = new ArrayList<DataStandardTreeVO>();
-    for (DataStandardTreeVO treeNode : respList) {
-      if (null == treeNode.getParentId()
-          || DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getParentId())) {
-        trees.add(findChildren(treeNode, respList));
-      }
-    }
+    DataStandardTreeVO topParent =
+        DataStandardTreeVO.builder().id(-1).dirDsdId("-1").dirDsdName("全部标准").build();
+    List<DataStandardTreeVO> trees = new ArrayList<>();
+    trees.add(findChildren(topParent, respList));
+
     return trees;
   }
 
   /**
-   * @param: treeNode, respList
-   * @return: 递归查找子节点
+   * 递归查找子节点
+   *
+   * @param treeNode,respList
+   * @return DataStandardTreeVO
    */
   public static DataStandardTreeVO findChildren(
       DataStandardTreeVO treeNode, List<DataStandardTreeVO> respList) {
-    treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
-    for (DataStandardTreeVO it : respList) {
-      if (treeNode.getDirDsdId().equals(it.getParentId())) {
+    treeNode.setChildren(new ArrayList<>());
+    for (DataStandardTreeVO DSDTV : respList) {
+      if (treeNode.getDirDsdId().equals(DSDTV.getParentId())) {
         if (treeNode.getChildren() == null) {
-          treeNode.setChildren(new ArrayList<DataStandardTreeVO>());
+          treeNode.setChildren(new ArrayList<>());
         }
-        treeNode.getChildren().add(findChildren(it, respList));
+        if (!DsdConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getDirDsdId())) {
+          DSDTV.setDsdDirLevel(treeNode.getDsdDirLevel() + "/" + DSDTV.getDirDsdName());
+        }
+        treeNode.getChildren().add(findChildren(DSDTV, respList));
       }
     }
     return treeNode;
@@ -151,64 +161,9 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
   }
 
   /**
-   * 根据id判断需要删除的目录中是否存在数据
-   * @param id
-   * @return
-   */
-  @Override
-  public Boolean deleteJudgeDsdDir(Integer id) {
-    Boolean resut = true;
-    //获取传入id目录层标准层级id
-    Optional<DsdDir> dsdDirIsExist = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(id));
-    if (!dsdDirIsExist.isPresent()) {
-      throw new BizException("参数有误,当前要删除的节点不存在！！！");
-      
-    }
-    //获取目录节点id并且查询目录下是否存在有数据
-    String dirDsdId = dsdDirIsExist.get().getDirDsdId();
-    if (StringUtils.isEmpty(dirDsdId)){
-      throw new BizException("当前要删除目录的节点不存在！！！");
-    }
-    //获取传入id目录下所有的节点
-    List<String> dirDsdIdList = new ArrayList<>();
-    dirDsdIdList.add(dirDsdId);
-    getDsdId(dirDsdIdList,id);
-    if (!CollectionUtils.isEmpty(dirDsdIdList)){
-      for (int i = 0;i<dirDsdIdList.size();i++){
-        String dsdLevelId = dirDsdIdList.get(i);
-        if (!StringUtils.isEmpty(dsdLevelId)){
-          DsdBasicinfo dsdBasicinfo = new DsdBasicinfo();
-          dsdBasicinfo.setDsdLevelId(dsdLevelId);
-          Example<DsdBasicinfo> example = Example.of(dsdBasicinfo);
-          List<DsdBasicinfo> dsdBasicinfoList = dsdBasicinfoRepository.findAll(example);
-          if (!CollectionUtils.isEmpty(dsdBasicinfoList)){
-            resut =false;
-            break;
-          }
-        }
-      }
-    }
-    return resut;
-  }
-
-  /**
-   * 根据目录id获取目录下的所有节点id
-   * @param dirDsdIdList
-   * @param id
-   */
-  private void getDsdId(List<String> dirDsdIdList, Integer id) {
-      Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(id));
-      Iterable<DsdDir> sonDirList =
-              dsdDirRepository.findAll(QDsdDir.dsdDir.parentId.eq(parentDir.get().getDirDsdId()));
-      for (DsdDir dsdDir : sonDirList) {
-        dirDsdIdList.add(dsdDir.getDirDsdId());
-        this.getDsdId(dirDsdIdList, dsdDir.getId());
-      }
-  }
-
-  /**
-   * @param: ids, delId
-   * @return: 获取删除叶子节点ID
+   * 获取删除叶子节点ID
+   *
+   * @param ids,delId
    */
   private void getIds(ArrayList<Integer> ids, Integer delId) {
     Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.id.eq(delId));
@@ -218,5 +173,32 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
       ids.add(dsdDir.getId());
       this.getIds(ids, dsdDir.getId());
     }
+  }
+
+  /**
+   * 根据目录id获取目录下的所有节点id
+   *
+   * @param dirDsdIdSet
+   * @param dirDsdId
+   */
+  @Override
+  public void getDsdId(Set<String> dirDsdIdSet, String dirDsdId) {
+    Optional<DsdDir> parentDir = dsdDirRepository.findOne(QDsdDir.dsdDir.dirDsdId.eq(dirDsdId));
+    if (parentDir.isPresent()) {
+      dirDsdIdSet.add(parentDir.get().getDirDsdId());
+      Iterable<DsdDir> sonDirList =
+          dsdDirRepository.findAll(QDsdDir.dsdDir.parentId.eq(parentDir.get().getDirDsdId()));
+      for (DsdDir dsdDir : sonDirList) {
+        dirDsdIdSet.add(dsdDir.getDirDsdId());
+        this.getDsdId(dirDsdIdSet, dsdDir.getDirDsdId());
+      }
+    }
+  }
+
+  @Override
+  public List<String> findAllDsdDirLevel() {
+    return dsdDirRepository.findAll().stream()
+        .map(dsdDir -> dsdDir.getDsdDirLevel())
+        .collect(Collectors.toList());
   }
 }

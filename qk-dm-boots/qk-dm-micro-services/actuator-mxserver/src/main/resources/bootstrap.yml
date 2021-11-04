@@ -10,6 +10,8 @@ spring:
     basename: i18n/messages
   mvc:
     message-codes-resolver-format: postfix_error_code
+    servlet:
+      path: /amx
   main:
     allow-bean-definition-overriding: true
   application:
@@ -47,10 +49,6 @@ management:
   metrics:
     export:
       prometheus:
-        pushgateway:
-          enabled: true
-          base-url: http:172.31.0.96:9090
-          job: dm-spring-mx
         enabled: true
         descriptions: true
     tags:

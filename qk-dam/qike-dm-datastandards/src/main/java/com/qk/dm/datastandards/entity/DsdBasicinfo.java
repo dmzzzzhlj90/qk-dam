@@ -16,7 +16,7 @@ public class DsdBasicinfo implements Serializable {
   @Id
   @Column(name = "id", nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private Long id;
 
   /** 标准名称 */
   @Column(name = "dsd_name", nullable = false)
@@ -35,12 +35,16 @@ public class DsdBasicinfo implements Serializable {
   private String dataType;
 
   /** 数据容量 */
-  @Column(name = "data_capacity", nullable = false)
+  @Column(name = "data_capacity")
   private String dataCapacity;
 
-  /** 引用码表 */
-  @Column(name = "use_code_id")
-  private String useCodeId;
+  /** 码表标准分类ID */
+  @Column(name = "code_dir_id")
+  private String codeDirId;
+
+  /** 引用码表层级 */
+  @Column(name = "use_code_level")
+  private String useCodeLevel;
 
   /** 码表字段 */
   @Column(name = "code_col")
@@ -53,6 +57,10 @@ public class DsdBasicinfo implements Serializable {
   /** 标准层级ID */
   @Column(name = "dsd_level_id", nullable = false)
   private String dsdLevelId;
+
+  /** 排序字段(不设置根据标准名称进行排序) */
+  @Column(name = "sort_field")
+  private Integer sortField;
 
   /** 描述 */
   @Column(name = "description")
@@ -68,5 +76,5 @@ public class DsdBasicinfo implements Serializable {
 
   /** 是否删除；0逻辑删除，1物理删除； */
   @Column(name = "del_flag", nullable = false)
-  private Integer delFlag = 0;
+  private Integer delFlag;
 }

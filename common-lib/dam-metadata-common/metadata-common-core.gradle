@@ -1,0 +1,29 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java'
+}
+version "${commonLibVersion}"
+group "com.qk.dam.metedata.common"
+dependencies {
+    compile group: 'org.projectlombok', name: 'lombok'
+    compile('org.apache.atlas:atlas-client-v2') {
+        exclude group: 'org.springframework', module: 'spring'
+        exclude group: 'org.springframework', module: 'spring-core'
+        exclude group: 'org.springframework', module: 'spring-web'
+        exclude group: 'org.springframework', module: 'spring-beans'
+        exclude group: 'org.springframework', module: 'spring-aop'
+        exclude group: 'org.springframework', module: 'spring-context'
+        exclude group: 'org.springframework', module: 'spring-expression'
+    }
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310',version: '2.12.1'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+}

@@ -1,7 +1,6 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id "smart-doc"
     id 'java'
 }
 version "${dmMicroServices}"
@@ -16,17 +15,15 @@ dependencies {
     implementation project(":commons-core")
     implementation project(":dam-log")
     implementation project(":qk-data-jpa")
-//    implementation project(":qk-data-redis")
     implementation project(":qk-sqlloader")
     implementation project(":dam-mvc-validation")
-//    implementation group: 'io.prometheus', name: 'simpleclient_pushgateway', version: '0.11.0'
-    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 dependencyManagement {

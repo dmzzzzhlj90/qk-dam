@@ -1,10 +1,7 @@
 package com.qk.dm.datastandards.service;
 
-import com.qk.dm.datastandards.vo.DsdBasicinfoVO;
-import com.qk.dm.datastandards.vo.DsdCodeTermVO;
-import com.qk.dm.datastandards.vo.DsdTermVO;
 import java.io.IOException;
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,15 +15,27 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface DsdExcelService {
 
-  List<DsdTermVO> queryAllTerm();
+  //  ================================basicInfo===============================================
+  void basicInfoUpload(MultipartFile file, String dirDsdId);
 
-  void termUpload(MultipartFile file) throws IOException;
+  void basicInfoDownloadAll(HttpServletResponse response) throws IOException;
 
-  List<DsdBasicinfoVO> queryAllBasicInfo();
+  void basicInfoDownloadByDirDsdId(String dirDsdId, HttpServletResponse response)
+      throws IOException;
 
-  void basicInfoUpload(MultipartFile file) throws IOException;
+  void basicInfoDownloadTemplate(HttpServletResponse response) throws IOException;
 
-  List<DsdCodeTermVO> queryAllCodeTerm();
+  //  ================================codeInfo===============================================
+  void codeInfoAllUpload(MultipartFile file, String codeDirId);
 
-  void codeTermUpload(MultipartFile file) throws IOException;
+  void codeInfoAllDownload(String codeDirId, HttpServletResponse response) throws IOException;
+
+  void codeInfoDownloadTemplate(HttpServletResponse response) throws IOException;
+
+  //  ================================codeValues===============================================
+  void codeValuesUploadByCodeInfoId(MultipartFile file, long dsdCodeInfoId);
+
+  void codeValuesDownloadByCodeInfoId(HttpServletResponse response, Long dsdCodeInfoId);
+
+  void codeValuesDownloadTemplate(HttpServletResponse response, long dsdCodeInfoId);
 }

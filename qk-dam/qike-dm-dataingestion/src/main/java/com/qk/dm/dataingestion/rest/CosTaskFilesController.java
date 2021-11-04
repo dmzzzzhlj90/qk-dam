@@ -4,16 +4,12 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dm.dataingestion.service.CosTaskFilesService;
 import com.qk.dm.dataingestion.vo.CosTaskFileInfoVO;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 同步获取COS客户端文件信息
@@ -38,14 +34,26 @@ public class CosTaskFilesController {
   /**
    * 获取COS任务文件信息
    *
-   * @param: frontTabNamePatter, batchNum
-   * @return: DefaultCommonResult
+   * @param dataDay
+   * @return DefaultCommonResult
    */
-  @GetMapping("/files/info")
-  public DefaultCommonResult<CosTaskFileInfoVO> getCosTaskFilesInfo() {
-    String dataDay =
-        DateTimeFormatter.ofPattern(LongGovConstant.DATE_TIME_PATTERN).format(LocalDateTime.now());
-    return new DefaultCommonResult(
-        ResultCodeEnum.OK, cosTaskFilesService.getCosTaskFilesInfo(dataDay));
+  @GetMapping("/files/info/{dataDay}")
+  public DefaultCommonResult<List<CosTaskFileInfoVO>> getCosTaskFilesInfo(
+      @PathVariable("dataDay") String dataDay) {
+    List<CosTaskFileInfoVO> cosTaskFilesInfo = cosTaskFilesService.getCosTaskFilesInfo(dataDay);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, cosTaskFilesInfo);
+  }
+
+  /**
+   * 设置COS任务文件_objectMetadata_Header信息
+   *
+   * @param dataDay
+   * @return DefaultCommonResult
+   */
+  @PutMapping("/files/metadata/header/info/{dataDay}")
+  public DefaultCommonResult<Object> setFiLesMetaDataHearderInfo(
+      @PathVariable("dataDay") String dataDay) {
+    cosTaskFilesService.setFiLesMetaDataHearderInfo(dataDay);
+    return DefaultCommonResult.success();
   }
 }

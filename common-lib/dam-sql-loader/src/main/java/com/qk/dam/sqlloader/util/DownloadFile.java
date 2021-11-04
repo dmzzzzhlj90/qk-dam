@@ -1,5 +1,6 @@
 package com.qk.dam.sqlloader.util;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.StreamProgress;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.log.Log;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 public class DownloadFile {
   private static final Log LOG = LogFactory.get("文件下载程序");
+  public static final String TMP_FILE = "/opt/dm-dataingestion/tmpfile/";
 
   public static List<String> listLocalFileNames() {
     try {
@@ -107,9 +109,13 @@ public class DownloadFile {
     return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
   }
 
-  public static byte[] downFileByteArray(String fileUrl) {
+  public static void downFileByteArray(String fileUrl) {
+    List<File> files = FileUtil.loopFiles(TMP_FILE);
+    for (File file : files) {
+      FileUtil.del(file);
+    }
     // 带进度显示的文件下载
-    byte[] bytes = HttpUtil.downloadBytes(fileUrl);
-    return bytes;
+    long byteSize = HttpUtil.downloadFile(fileUrl, TMP_FILE);
+    LOG.info("文件下载完毕，文件大小【{}】", byteSize);
   }
 }

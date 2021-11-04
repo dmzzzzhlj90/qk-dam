@@ -1,0 +1,20 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+}
+version "${commonLibVersion}"
+group "com.qk.plugin.dataservice.apisix"
+dependencies {
+    implementation project(":commons-core")
+    implementation project(":qk-dataservice-spi")
+    implementation "org.slf4j:slf4j-api:1.7.26"
+    annotationProcessor 'org.projectlombok:lombok'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}

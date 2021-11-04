@@ -25,5 +25,7 @@ public class DataStandardCodeTreeVO {
 
   private String parentId;
 
+  private String codeDirLevel;
+
   private List<DataStandardCodeTreeVO> children;
 }

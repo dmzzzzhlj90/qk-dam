@@ -256,4 +256,41 @@ public class PiciTaskLogAgg {
     }
     return null;
   }
+
+  public static int qkLogPiciModifyIsHive(String tableName, String pici) {
+    try {
+      Entity uniqWhere =
+          Entity.create("t_qk_datain_log").set("pici", pici).set("tablename", tableName);
+      long count = QkEtlAgg.QK_ETL.count(uniqWhere);
+      Entity entity = Entity.create().set("is_hive_updated", 1);
+      QkEtlAgg.QK_ETL.update(entity, uniqWhere);
+      return (int) count;
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }
+    return 0;
+  }
+
+  public static List<PiciTaskLogVO> qkLogPiciIsHiveAll() {
+    try {
+      List<Entity> query =
+          QkEtlAgg.QK_ETL.query(
+              " SELECT * FROM t_qk_datain_log t where t.is_hive_updated =0 ORDER BY pici,tablename ");
+
+      List<PiciTaskLogVO> piciTaskLogs =
+          query.stream()
+              .map(
+                  entity ->
+                      new PiciTaskLogVO(
+                          entity.getInt("pici"),
+                          entity.getStr("tablename"),
+                          entity.getInt("is_down"),
+                          entity.getInt("is_hive_updated")))
+              .collect(Collectors.toList());
+      return piciTaskLogs;
+    } catch (SQLException throwables) {
+      throwables.printStackTrace();
+    }
+    return null;
+  }
 }

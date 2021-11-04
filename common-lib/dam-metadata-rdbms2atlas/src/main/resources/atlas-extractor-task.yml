@@ -1,0 +1,15 @@
+metadata:
+  - name: job1
+    dataConnectType: mysql
+    serverinfo:
+      applicationName: 上游数据
+      owner: zhudaoming
+      description: 上游数据库
+      displayName: longgov
+    dataConnect:
+      db: longgov
+      table: "task%"
+      host: longgov-slave.rwlb.rds.aliyuncs.com
+      port: 3306
+      username: youshang_qike
+      password: Doublefly123

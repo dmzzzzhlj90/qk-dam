@@ -9,12 +9,14 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 
 @Configuration
+@Order(-1)
 class RedisConnFactoryConfig {
 
   @Bean
@@ -23,6 +25,7 @@ class RedisConnFactoryConfig {
     RedisStandaloneConfiguration redisStandaloneConfiguration =
         new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
     redisStandaloneConfiguration.setPassword(redisProperties.getPassword());
+
     return new LettuceConnectionFactory(redisStandaloneConfiguration);
   }
 
@@ -35,12 +38,7 @@ class RedisConnFactoryConfig {
     sentinelConfig.setMaster(redisProperties.getSentinel().getMaster());
     sentinelConfig.setSentinels(
         redisProperties.getSentinel().getNodes().stream()
-            .map(
-                s -> {
-                  RedisNode redisNode =
-                      new RedisNode(s.split(":")[0], Integer.parseInt(s.split(":")[1]));
-                  return redisNode;
-                })
+            .map(s -> new RedisNode(s.split(":")[0], Integer.parseInt(s.split(":")[1])))
             .collect(Collectors.toList()));
     sentinelConfig.setPassword(redisProperties.getPassword());
     return new LettuceConnectionFactory(sentinelConfig, lettuceClientConfiguration);

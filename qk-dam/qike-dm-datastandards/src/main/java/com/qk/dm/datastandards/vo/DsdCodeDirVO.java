@@ -27,6 +27,10 @@ public class DsdCodeDirVO {
   @NotBlank(message = "目录父级ID不能为空！")
   private String parentId;
 
+  /** 码表目录层级 */
+  @NotBlank(message = "码表目录层级不能为空！")
+  private String codeDirLevel;
+
   /** 描述 */
   private String description;
 }

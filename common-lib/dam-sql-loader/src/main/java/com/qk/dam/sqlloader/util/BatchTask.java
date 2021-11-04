@@ -12,6 +12,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 public class BatchTask {
+  private BatchTask() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static List<FutureTask<Integer>> batchTask(
       List<PiciTaskVO> piciTask, Function<PiciTaskVO, Integer> function) {
     ExecutorService executor =

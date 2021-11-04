@@ -30,6 +30,10 @@ public class DsdDir implements Serializable {
   @Column(name = "parent_id", nullable = false)
   private String parentId;
 
+  /** 节点目录层级 */
+  @Column(name = "dsd_dir_level", nullable = false)
+  private String dsdDirLevel;
+
   /** 描述 */
   @Column(name = "description")
   private String description;

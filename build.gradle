@@ -1,48 +1,59 @@
 buildscript {
     repositories {
-        mavenLocal()
         maven {
-            url = 'http://172.31.0.18:8081/repository/alibaba'
+            url = 'http://172.20.0.22:8081/repository/qkdam/'
             credentials {
-                username = 'qk-dm-dev'
-                password = 'qk-dm-dev123'
+                username = 'admin'
+                password = 'admin123'
             }
         }
+        mavenLocal()
+        mavenCentral()
     }
-}
-plugins {
-    id 'com.github.sherter.google-java-format' version '0.9' apply false
+    dependencies {
+        classpath "org.openapitools:openapi-generator-gradle-plugin:5.0.0"
+        classpath 'gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.9'
+    }
 }
 
 group 'com.qk'
 version "${version}"
 description = '数据中台'
 ext.snapshotBuild = version.contains("SNAPSHOT")
+def getCurrentGitBranch() {
+    def gitBranch = "Unknown branch"
+    try {
+        def workingDir = new File("${project.projectDir}")
+        def result = 'git rev-parse --abbrev-ref HEAD'.execute(null, workingDir)
+        result.waitFor()
+        if (result.exitValue() == 0) {
+            gitBranch = result.text.trim()
+        }
+    } catch (e) {
+    }
+    return gitBranch
+}
 
 subprojects {
     apply plugin: 'idea'
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
+    apply plugin: 'org.openapi.generator'
     apply plugin: 'com.github.sherter.google-java-format'
-
-
     repositories {
-        mavenLocal()
         maven {
-            url = 'http://172.31.0.18:8081/repository/alibaba'
+            url = 'http://172.20.0.22:8081/repository/qkdam/'
             credentials {
-                username = 'qk-dm-dev'
-                password = 'qk-dm-dev123'
+                username = 'admin'
+                password = 'admin123'
             }
         }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenLocal()
+
     }
     configurations.all {
-        exclude group: 'log4j', module: 'log4j'
-//        exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
-//        exclude group: 'com.fasterxml.jackson.datatype', module: 'jackson-datatype-jdk8'
-//        exclude group: 'com.fasterxml.jackson.datatype', module: 'jackson-datatype-jsr310'
-//        exclude group: 'com.fasterxml.jackson.module', module: 'jackson-module-parameter-names'
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
     plugins.withType(JavaPlugin) {
         project.sourceCompatibility = "11"
@@ -52,6 +63,11 @@ subprojects {
     }
     if (!project.name.contains("dam-dependencies")) {
         apply plugin: 'java'
+        apply plugin: "smart-doc"
+        task sourcesJar(type: Jar) {
+            from sourceSets.main.allJava
+            archiveClassifier = 'sources'
+        }
         publishing {
             publications {
                 mavenJava(MavenPublication) {
@@ -64,6 +80,7 @@ subprojects {
                         }
                     }
                     from components.java
+                    artifact sourcesJar
                     afterEvaluate {
                         group = project.group
                         artifactId = project.name
@@ -86,17 +103,22 @@ subprojects {
                 from('build/libs')
                 into(distroPath)
             }
+            damProfilesActive = getCurrentGitBranch()
+
+        }
+        smartdoc {
+            configFile = file("src/main/resources/smart-doc.json")
         }
     }
 
     uploadArchives {
         repositories {
             mavenDeployer {
-                def releasesRepoUrl = "http://172.31.0.18:8081/repository/dm-releases/"
-                def snapshotsRepoUrl = "http://172.31.0.18:8081/repository/dm-snapshot/"
+                def releasesRepoUrl = "http://172.20.0.22:8081/repository/dm-release/"
+                def snapshotsRepoUrl = "http://172.20.0.22:8081/repository/dm-snapshot/"
                 def url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
                 repository(url: url) {
-                    authentication(userName: "admin", password: "zhudao123")
+                    authentication(userName: "admin", password: "admin123")
                 }
             }
         }

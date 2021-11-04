@@ -38,9 +38,9 @@ import org.springframework.http.HttpStatus;
 public enum ResultCodeEnum {
 
   /** 一切皆ok */
-  OK(HttpStatus.OK, "DM-200-00000", "数据返回正常"),
+  OK(HttpStatus.OK, "DM-200-00000", "请求处理成功"),
   /** 一切皆ok */
-  OK_MSG(HttpStatus.OK, "DM-200-00000", "数据返回正常"),
+  OK_MSG(HttpStatus.OK, "DM-200-00000", "请求处理成功"),
   /** 请求发生未知错误 */
   BAD_REQUEST(HttpStatus.BAD_REQUEST, "DM-400-A0001", "请求发生未知错误"),
 
@@ -49,9 +49,11 @@ public enum ResultCodeEnum {
   /** 系统运行时异常 */
   DATA_OPT_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0003", "数据操作异常！"),
   TARGET_OBJ_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0004", "目标对象错误！"),
+  /** 系统运行时异常 */
+  UN_AUTHORIZED(HttpStatus.UNAUTHORIZED, "DM-401-B0003", "权限验证失败！"),
 
   /** 网关超时 */
-  GATEWAY_TIMEOUT(HttpStatus.GATEWAY_TIMEOUT, "DM-504-B0100", "网关超时】"),
+  GATEWAY_TIMEOUT(HttpStatus.GATEWAY_TIMEOUT, "DM-504-B0100", "网关超时"),
   /** 系统执行超时 */
   REQUEST_TIMEOUT(HttpStatus.REQUEST_TIMEOUT, "DM-408-B0101", "系统请求超时"),
 
@@ -87,8 +89,7 @@ public enum ResultCodeEnum {
 
   public String getFormattedErrorMessage(String... params) {
     MessageFormat mf = new MessageFormat(message);
-    String result = mf.format(params);
-    return result;
+    return mf.format(params);
   }
 
   public String getMessage() {

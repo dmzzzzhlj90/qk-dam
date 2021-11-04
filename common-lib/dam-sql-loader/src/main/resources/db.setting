@@ -6,7 +6,7 @@ password = zhudao123
 driver = com.mysql.cj.jdbc.Driver
 
 [longgov]
-url = jdbc:mysql://longgov.rwlb.rds.aliyuncs.com:3306/longgov?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+url = jdbc:mysql://longgov-slave.rwlb.rds.aliyuncs.com:3306/longgov?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
 username = youshang_qike
 password = Doublefly123
 driver = com.mysql.cj.jdbc.Driver
@@ -27,6 +27,12 @@ driver = com.mysql.cj.jdbc.Driver
 url = jdbc:mysql://172.31.0.32:3306/qk_etl?useUnicode=true&noAccessToProcedureBodies=true&autoReconnect=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
 username = zhudaoming
 password = zhudaoming112
+driver = com.mysql.cj.jdbc.Driver
+
+[dolphinscheduler]
+url = jdbc:mysql://172.31.0.44:3306/dolphinscheduler?useUnicode=true&rewriteBatchedStatements=true&characterEncoding=utf-8&useSSL=false
+username = root
+password = zhudao123
 driver = com.mysql.cj.jdbc.Driver
 
 # 自动提交

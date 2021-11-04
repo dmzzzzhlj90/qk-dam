@@ -6,7 +6,8 @@ group "com.qk.dam.jpa"
 dependencies {
     compile 'org.springframework.data:spring-data-jpa'
     compile group: 'org.hibernate', name: 'hibernate-core'
-    compile "com.querydsl:querydsl-jpa"
+    compile "com.querydsl:querydsl-core:5.0.0"
+    compile "com.querydsl:querydsl-jpa:5.0.0"
     compile project(":qk-datasource")
     implementation "org.springframework.cloud:spring-cloud-context"
 }

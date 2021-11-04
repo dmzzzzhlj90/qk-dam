@@ -1,8 +1,7 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id "smart-doc"
-    id 'java'
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
 version "${dmDataingestionVersion}"
 group "com.qk.dm.dataingestion"
@@ -15,16 +14,18 @@ configurations {
 
 dependencies {
     implementation project(":commons-core")
+    implementation project(":dam-log")
     implementation project(":dam-mvc-validation")
     implementation project(":qk-sqlloader")
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation group: 'org.apache.commons', name: 'commons-lang3'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus'
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
             "javax.annotation:javax.annotation-api",

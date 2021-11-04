@@ -38,6 +38,7 @@ public class MxTaskPiCiDataServiceImpl implements MxTaskPiCiDataService {
     LOG.info("查询到异常数据数量为:【{}】!", piciTaskLogVOList.size());
 
     LOG.info("开始同步异常数据到prometheus中......");
+    meterRegistry.clear();
     piciTaskLogVOList.forEach(
         piciTaskLogVO -> {
           Integer is_down = piciTaskLogVO.getIs_down();

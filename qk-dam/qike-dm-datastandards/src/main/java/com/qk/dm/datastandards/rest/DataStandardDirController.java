@@ -1,5 +1,8 @@
 package com.qk.dm.datastandards.rest;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.service.DataStandardDirService;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 数据标准目录接口
+ * 数据标准__目录接口
  *
  * @author wjq
  * @date 20210603
@@ -32,59 +35,64 @@ public class DataStandardDirController {
   /**
    * 获取数据标准分类目录树
    *
-   * @return: 返回数据标准分类目录树
+   * @return DefaultCommonResult<List < DataStandardTreeVO>>
    */
-  @GetMapping("/tree")
-  public DefaultCommonResult<List<DataStandardTreeVO>> getDsdDirTree() {
-    return new DefaultCommonResult(ResultCodeEnum.OK, dataStandardDirService.getTree());
+  @GetMapping("/list")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+  public DefaultCommonResult<List<DataStandardTreeVO>> searchList() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataStandardDirService.getTree());
   }
 
   /**
    * 新增数据标准分类目录
    *
-   * @param: dsdDirVO 数据标准分类目录VO
-   * @return: DefaultCommonResult
+   * @param dsdDirVO
+   * @return DefaultCommonResult
    */
-  @PostMapping("/add")
-  public DefaultCommonResult addDsdDir(@RequestBody DsdDirVO dsdDirVO) {
+  @PostMapping("")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insert(@RequestBody DsdDirVO dsdDirVO) {
     dataStandardDirService.addDsdDir(dsdDirVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
    * 编辑数据标准分类目录
    *
-   * @param: dsdDirVO 数据标准分类目录VO
-   * @return: DefaultCommonResult
+   * @param dsdDirVO
+   * @return DefaultCommonResult
    */
-  @PutMapping("/update")
-  public DefaultCommonResult updateDsdDir(@RequestBody DsdDirVO dsdDirVO) {
+  @PutMapping("")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(@RequestBody DsdDirVO dsdDirVO) {
     dataStandardDirService.updateDsdDir(dsdDirVO);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
    * 标准目录单子节点删除方式
    *
-   * @param: id
-   * @return: DefaultCommonResult
+   * @param id
+   * @return DefaultCommonResult
    */
-  @DeleteMapping("/delete/{id}")
-  public DefaultCommonResult deleteDsdDir(@PathVariable("id") Integer id) {
+  @DeleteMapping("/{id}")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult delete(@PathVariable("id") Integer id) {
     dataStandardDirService.deleteDsdDir(id);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**
    * 标准目录支持根节点关联删除子节点方式
    *
-   * @param: id
-   * @return: DefaultCommonResult
+   * @param id
+   * @return DefaultCommonResult
    */
-  @DeleteMapping("/delete/root/{id}")
-  public DefaultCommonResult deleteDsdDirRoot(@PathVariable("id") Integer id) {
+  @DeleteMapping("/root/{id}")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteBulk(@PathVariable("id") Integer id) {
     dataStandardDirService.deleteDsdDirRoot(id);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 
   /**

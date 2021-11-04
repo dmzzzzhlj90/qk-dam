@@ -11,6 +11,7 @@ public class PiciTaskLogVO {
 
   private int is_mysql_updated;
   private int is_es_updated;
+  private int is_hive_updated;
   private Date down_time;
   private Date updated;
 
@@ -29,10 +30,17 @@ public class PiciTaskLogVO {
     this.updated = updated;
   }
 
+  public PiciTaskLogVO(int pici, String tableName, int is_down, int is_hive_updated) {
+    this.pici = pici;
+    this.tableName = tableName;
+    this.is_down = is_down;
+    this.is_hive_updated = is_hive_updated;
+  }
+
   @Override
   public String toString() {
     return "PiciTaskLogVO{"
-        + ", pici="
+        + "pici="
         + pici
         + ", tableName='"
         + tableName
@@ -43,6 +51,10 @@ public class PiciTaskLogVO {
         + is_mysql_updated
         + ", is_es_updated="
         + is_es_updated
+        + ", is_hive_updated="
+        + is_hive_updated
+        + ", down_time="
+        + down_time
         + ", updated="
         + updated
         + '}';
@@ -99,6 +111,14 @@ public class PiciTaskLogVO {
 
   public void setIs_es_updated(int is_es_updated) {
     this.is_es_updated = is_es_updated;
+  }
+
+  public int getIs_hive_updated() {
+    return is_hive_updated;
+  }
+
+  public void setIs_hive_updated(int is_hive_updated) {
+    this.is_hive_updated = is_hive_updated;
   }
 
   public Date getDown_time() {

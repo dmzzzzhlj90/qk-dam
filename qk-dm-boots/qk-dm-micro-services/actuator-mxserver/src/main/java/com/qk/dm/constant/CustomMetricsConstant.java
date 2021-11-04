@@ -19,4 +19,15 @@ public class CustomMetricsConstant {
   public static final String PICI_TASK_IS_ES_UPDATED = "pici_task_is_es_updated";
   public static final String PICI_TASK_DOWN_TIME = "pici_task_down_time";
   public static final String PICI_TASK_UPDATED = "pici_task_updated";
+
+  /** 自定义指标_监控调度任务_指标名称 */
+  public static final String CUSTOM_TASK_SCHEDULER_PROCESS_INSTANCE =
+      "custom_task_scheduler_process_instance";
+
+  public static final String TASK_SCHEDULER_PROCESS_DEFINITION_CODE =
+      "task_scheduler_process_definition_code";
+  public static final String TASK_SCHEDULER_NAME = "task_scheduler_name";
+  public static final String TASK_SCHEDULER_STATE = "task_scheduler_state";
+  public static final String TASK_SCHEDULER_UPDATE_TIME = "task_scheduler_update_time";
+  public static final String TASK_SCHEDULER_USER_NAME = "task_scheduler_user_name";
 }

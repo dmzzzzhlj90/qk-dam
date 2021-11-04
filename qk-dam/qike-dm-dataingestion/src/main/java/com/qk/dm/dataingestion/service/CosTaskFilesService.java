@@ -15,4 +15,6 @@ import org.springframework.stereotype.Service;
 public interface CosTaskFilesService {
 
   List<CosTaskFileInfoVO> getCosTaskFilesInfo(String dataDay);
+
+  void setFiLesMetaDataHearderInfo(String dataDay);
 }

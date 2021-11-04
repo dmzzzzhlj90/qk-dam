@@ -1,0 +1,48 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java'
+}
+version "${commonLibVersion}"
+group "com.qk.dam.mysql2atlas"
+dependencies {
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'ch.qos.logback:logback-core:1.2.3'
+    implementation 'org.apache.atlas:atlas-client-v2:3.0.0-SNAPSHOT'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310',version: '2.12.1'
+    implementation group: 'mysql', name: 'mysql-connector-java',version:'8.0.25'
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.29'
+    implementation 'com.zaxxer:HikariCP:3.4.5'
+    implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.1.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+}
+jar {
+    archiveVersion = "${commonLibVersion}" //版本
+    manifest { //配置jar文件的manifest
+        attributes(
+                "Manifest-Version": 1.0,
+                'Main-Class': 'com.qk.dam.rdbmsl2atlas.QuickStart'
+        )
+    }
+    //打包依赖包
+    from {
+        (configurations.runtimeClasspath).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -96,6 +96,9 @@ public class TargzUtils {
       String line;
 
       while ((line = input.readLine()) != null) {
+        if (line.startsWith("UNLOCK")) {
+          break;
+        }
         if (!(line.startsWith("/*") || line.startsWith("LOCK") || line.startsWith("UNLOCK"))) {
           // 读取SQL
           if (!"".equals(line)) {

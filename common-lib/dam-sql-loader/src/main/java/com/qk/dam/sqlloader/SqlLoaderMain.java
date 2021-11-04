@@ -22,6 +22,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class SqlLoaderMain {
@@ -161,7 +162,15 @@ public class SqlLoaderMain {
 
     if (state.get() == 0) {
       // 异常状态程序终止
-      FAIL_TASK.offer(piciTaskVO);
+      List<String> piTbName =
+          FAIL_TASK.stream()
+              .map(ft -> ft.getPici() + "-" + ft.getTableName())
+              .collect(Collectors.toList());
+      if (!piTbName.isEmpty()
+          && !piTbName.contains(piciTaskVO.getPici() + "-" + piciTaskVO.getTableName())) {
+        boolean offer = FAIL_TASK.offer(piciTaskVO);
+      }
+
       LOG.error("执行sql文件失败,批次【{}】表名【{}】", piciTaskVO.getPici(), piciTaskVO.getTableName());
       return 0;
     }

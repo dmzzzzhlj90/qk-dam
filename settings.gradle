@@ -1,7 +1,14 @@
 pluginManagement {
     buildscript {
         repositories {
-            maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+            maven {
+                url = 'http://172.20.0.22:8081/repository/qkdam/'
+                credentials {
+                    username = 'admin'
+                    password = 'admin123'
+                }
+            }
+            maven { url 'https://maven.aliyun.com/repository/public' }
             maven {
                 url "https://plugins.gradle.org/m2/"
             }
@@ -10,27 +17,21 @@ pluginManagement {
                 dirs './plugin-folder/'
             }
             mavenLocal()
-            maven {
-                url = 'http://172.31.0.18:8081/repository/alibaba'
-                credentials {
-                    username = 'qk-dm-dev'
-                    password = 'qk-dm-dev123'
-                }
-            }
         }
         dependencies {
-            classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.2.1'
-            classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.2.1'
+            classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.3.6'
+            classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.2.7'
         }
 
     }
     repositories {
         mavenLocal()
+        maven { url 'https://maven.aliyun.com/repository/public' }
         maven {
-            url = 'http://172.31.0.18:8081/repository/alibaba'
+            url = 'http://172.20.0.22:8081/repository/qkdam/'
             credentials {
-                username = 'qk-dm-dev'
-                password = 'qk-dm-dev123'
+                username = 'admin'
+                password = 'admin123'
             }
         }
     }

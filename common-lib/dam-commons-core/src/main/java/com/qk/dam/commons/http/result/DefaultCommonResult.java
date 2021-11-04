@@ -1,5 +1,6 @@
 package com.qk.dam.commons.http.result;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 
 /**
@@ -9,58 +10,57 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
  */
 public class DefaultCommonResult<T> extends BaseResult<T> {
 
-  public DefaultCommonResult() {}
-
-  public DefaultCommonResult(ResultCodeEnum code) {
-    setRetCode(code.getCode());
-    setRetMsg(code.getFormattedErrorMessage());
+  public DefaultCommonResult() {
+    throw new IllegalStateException("Utility class");
   }
 
-  public DefaultCommonResult(ResultCodeEnum code, String tips) {
-    setRetCode(code.getCode());
-    setRetMsg(code.getFormattedErrorMessage());
-    setTips(tips);
-  }
-
-  public DefaultCommonResult(ResultCodeEnum code, T data) {
+  DefaultCommonResult(ResultCodeEnum code, T data, String tips) {
     setRetCode(code.getCode());
     setRetMsg(code.getFormattedErrorMessage());
     setData(data);
+    setTips(tips);
   }
 
-  public static <T> DefaultCommonResult<T> success(T data) {
-    return success(ResultCodeEnum.OK, data);
+  DefaultCommonResult(T data, String retCode, String retMsg) {
+    setRetCode(retCode);
+    setRetMsg(retMsg);
+    setData(data);
+  }
+
+  @JsonCreator
+  public static DefaultCommonResult<Object> success() {
+    return success(ResultCodeEnum.OK, null);
   }
 
   public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, T data) {
-    return new DefaultCommonResult<>(codeEnum, data);
+    return success(codeEnum, data, null);
+  }
+
+  public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, String tips) {
+    return success(codeEnum, (T) null, tips);
+  }
+
+  public static <T> DefaultCommonResult<T> success(ResultCodeEnum codeEnum, T data, String tips) {
+    return new DefaultCommonResult<>(codeEnum, data, tips);
   }
 
   public static <T> DefaultCommonResult<T> success(T data, String retCode, String retMsg) {
-    DefaultCommonResult<T> baseResult = new DefaultCommonResult<>();
-    baseResult.setRetCode(retCode);
-    baseResult.setRetMsg(retMsg);
-    baseResult.setData(data);
-    return baseResult;
+    return new DefaultCommonResult(data, retCode, retMsg);
   }
 
-  public static <T> DefaultCommonResult<T> error() {
-    return new DefaultCommonResult<>(ResultCodeEnum.BAD_REQUEST);
+  public static <T> DefaultCommonResult<T> fail() {
+    return fail(ResultCodeEnum.BAD_REQUEST);
   }
 
-  public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum) {
-    return error(codeEnum, codeEnum.getFormattedErrorMessage());
+  public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum) {
+    return fail(codeEnum, null);
   }
 
-  public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum, T data) {
-    return new DefaultCommonResult<>(codeEnum, data);
+  public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, String tips) {
+    return fail(codeEnum, null, tips);
   }
 
-  public static <T> DefaultCommonResult<T> error(ResultCodeEnum codeEnum, String tips) {
-    DefaultCommonResult<T> baseResult = new DefaultCommonResult<>();
-    baseResult.setRetCode(codeEnum.getCode());
-    baseResult.setRetMsg(codeEnum.getFormattedErrorMessage());
-    baseResult.setTips(tips);
-    return baseResult;
+  public static <T> DefaultCommonResult<T> fail(ResultCodeEnum codeEnum, T data, String tips) {
+    return new DefaultCommonResult<>(codeEnum, data, tips);
   }
 }

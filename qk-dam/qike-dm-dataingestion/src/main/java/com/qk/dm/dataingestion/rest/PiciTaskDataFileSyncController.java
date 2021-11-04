@@ -1,6 +1,5 @@
 package com.qk.dm.dataingestion.rest;
 
-import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dm.dataingestion.service.PiciTaskDataFileSyncService;
@@ -34,8 +33,8 @@ public class PiciTaskDataFileSyncController {
   /**
    * 同步阿里云数据到腾讯云
    *
-   * @param: frontTabNamePatter, batchNum
-   * @return: DefaultCommonResult
+   * @param frontTabNamePatter,batchNum
+   * @return DefaultCommonResult
    */
   @GetMapping("/files/data")
   public DefaultCommonResult syncRiZhiFilesData(
@@ -45,6 +44,6 @@ public class PiciTaskDataFileSyncController {
         DateTimeFormatter.ofPattern(LongGovConstant.DATE_TIME_PATTERN).format(LocalDateTime.now());
     piciTaskDataFileSyncService.syncPiciTaskFilesData(
         dataDay, frontTabNamePatter, batchNum, LongGovConstant.BUCKETNAME);
-    return new DefaultCommonResult(ResultCodeEnum.OK);
+    return DefaultCommonResult.success();
   }
 }
