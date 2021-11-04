@@ -20,6 +20,19 @@ group 'com.qk'
 version "${version}"
 description = '数据中台'
 ext.snapshotBuild = version.contains("SNAPSHOT")
+def getCurrentGitBranch() {
+    def gitBranch = "Unknown branch"
+    try {
+        def workingDir = new File("${project.projectDir}")
+        def result = 'git rev-parse --abbrev-ref HEAD'.execute(null, workingDir)
+        result.waitFor()
+        if (result.exitValue() == 0) {
+            gitBranch = result.text.trim()
+        }
+    } catch (e) {
+    }
+    return gitBranch
+}
 
 subprojects {
     apply plugin: 'idea'
@@ -90,6 +103,7 @@ subprojects {
                 from('build/libs')
                 into(distroPath)
             }
+            damProfilesActive = getCurrentGitBranch()
 
         }
         smartdoc {

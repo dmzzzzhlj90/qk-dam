@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProcessVO {
-    private String guid;
-    private String sourceId;
-    private String targetId;
+  private String guid;
+  private String sourceId;
+  private String targetId;
 }

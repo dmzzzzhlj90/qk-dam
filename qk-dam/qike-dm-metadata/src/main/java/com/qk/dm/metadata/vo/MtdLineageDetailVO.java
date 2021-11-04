@@ -4,11 +4,10 @@ import lombok.Data;
 
 @Data
 public class MtdLineageDetailVO {
-    private String guid;
-    private String displayText;
-    private String typeName;
-    private String status;
-    private String[] labels;
-    private boolean isIncomplete;
-
+  private String guid;
+  private String displayText;
+  private String typeName;
+  private String status;
+  private String[] labels;
+  private boolean isIncomplete;
 }
