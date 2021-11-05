@@ -1,0 +1,127 @@
+package com.qk.dm.datamodel.service.impl;
+
+import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.datamodel.entity.ModelPhysicalTable;
+import com.qk.dm.datamodel.entity.QModelPhysicalTable;
+import com.qk.dm.datamodel.mapstruct.mapper.ModelPhysicalTableMapper;
+import com.qk.dm.datamodel.params.dto.ModelPhysicalTableDTO;
+import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
+import com.qk.dm.datamodel.repositories.ModelPhysicalTableRepository;
+import com.qk.dm.datamodel.service.ModelPhysicalTableService;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService {
+
+    private JPAQueryFactory jpaQueryFactory;
+    private final EntityManager entityManager;
+    private final QModelPhysicalTable qModelPhysicalTable = QModelPhysicalTable.modelPhysicalTable;
+    private final ModelPhysicalTableRepository modelPhysicalTableRepository;
+
+    @PostConstruct
+    public void initFactory() {
+        jpaQueryFactory = new JPAQueryFactory(entityManager);
+    }
+
+    public ModelPhysicalTableServiceImpl(EntityManager entityManager,ModelPhysicalTableRepository modelPhysicalTableRepository){
+        this.entityManager = entityManager;
+        this.modelPhysicalTableRepository = modelPhysicalTableRepository;
+    }
+
+
+    @Override
+    public void insert(ModelPhysicalTableDTO modelPhysicalTableDTO) {
+        ModelPhysicalTable modelPhysicalTable = ModelPhysicalTableMapper.INSTANCE.of(modelPhysicalTableDTO);
+        modelPhysicalTable.setGmtCreate(new Date());
+        modelPhysicalTable.setGmtModified(new Date());
+        modelPhysicalTableRepository.save(modelPhysicalTable);
+    }
+
+    @Override
+    public ModelPhysicalTableVO getDetail(Long id) {
+        Optional<ModelPhysicalTable> modelPhysicalTable = modelPhysicalTableRepository.findById(id);
+        if(modelPhysicalTable.isEmpty()){
+            throw new BizException("当前要查询的物理表信息id为："+id+" 的数据不存在！！");
+        }
+        return ModelPhysicalTableMapper.INSTANCE.of(modelPhysicalTable.get());
+    }
+
+    @Override
+    public void update(Long id, ModelPhysicalTableDTO modelPhysicalTableDTO) {
+        ModelPhysicalTable modelPhysicalTable = modelPhysicalTableRepository.findById(id).orElse(null);
+        if(Objects.isNull(modelPhysicalTable)){
+            throw new BizException("当前要修改的表信息id为："+id+"的数据不存在！！！");
+        }
+        ModelPhysicalTableMapper.INSTANCE.from(modelPhysicalTableDTO,modelPhysicalTable);
+        modelPhysicalTable.setGmtModified(new Date());
+        modelPhysicalTableRepository.saveAndFlush(modelPhysicalTable);
+    }
+
+    @Override
+    public void delete(String ids) {
+        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelPhysicalTable> modelPhysicalTableList = modelPhysicalTableRepository.findAllById(idSet);
+        if(modelPhysicalTableList.isEmpty()){
+            throw new BizException("当前要删除的表id为："+ids+"的数据不存在！！！");
+        }
+        modelPhysicalTableRepository.deleteAll(modelPhysicalTableList);
+    }
+
+    @Override
+    public PageResultVO<ModelPhysicalTableVO> listPage(ModelPhysicalTableDTO modelPhysicalTableDTO) {
+        Map<String, Object> map;
+        try {
+            map = queryByParams(modelPhysicalTableDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BizException("查询失败!!!");
+        }
+        List<ModelPhysicalTable> list = (List<ModelPhysicalTable>) map.get("list");
+        List<ModelPhysicalTableVO> voList = ModelPhysicalTableMapper.INSTANCE.of(list);
+        return new PageResultVO<>(
+                (long) map.get("total"),
+                modelPhysicalTableDTO.getPagination().getPage(),
+                modelPhysicalTableDTO.getPagination().getSize(),
+                voList);
+    }
+    private Map<String, Object> queryByParams(ModelPhysicalTableDTO modelPhysicalTableDTO) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        checkCondition(booleanBuilder, modelPhysicalTableDTO);
+        Map<String, Object> result = new HashMap<>();
+        long count =
+                jpaQueryFactory.select(qModelPhysicalTable.count()).from(qModelPhysicalTable).where(booleanBuilder).fetchOne();
+        List<ModelPhysicalTable> mtdLabelsList =
+                jpaQueryFactory
+                        .select(qModelPhysicalTable)
+                        .from(qModelPhysicalTable)
+                        .where(booleanBuilder)
+                        .orderBy(qModelPhysicalTable.id.asc())
+                        .offset(
+                                (long) (modelPhysicalTableDTO.getPagination().getPage() - 1)
+                                        * modelPhysicalTableDTO.getPagination().getSize())
+                        .limit(modelPhysicalTableDTO.getPagination().getSize())
+                        .fetch();
+        result.put("list", mtdLabelsList);
+        result.put("total", count);
+        return result;
+    }
+
+    public void checkCondition(BooleanBuilder booleanBuilder, ModelPhysicalTableDTO modelPhysicalTableDTO) {
+        if (!StringUtils.isEmpty(modelPhysicalTableDTO.getTableName())) {
+            booleanBuilder.and(
+                    qModelPhysicalTable
+                            .tableName
+                            .contains(modelPhysicalTableDTO.getTableName()));
+        }
+    }
+
+}
