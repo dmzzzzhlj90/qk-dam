@@ -3,13 +3,12 @@ package com.qk.dm.indicator.mapstruct.mapper;
 import com.qk.dm.indicator.entity.IdcFunction;
 import com.qk.dm.indicator.params.dto.IdcFunctionDTO;
 import com.qk.dm.indicator.params.vo.IdcFunctionVO;
+import java.util.List;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 /**
  * @author shenpj
@@ -20,14 +19,14 @@ import java.util.List;
 //        (nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
 //                nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface IdcFunctionMapper {
-    IdcFunctionMapper INSTANCE = Mappers.getMapper(IdcFunctionMapper.class);
+  IdcFunctionMapper INSTANCE = Mappers.getMapper(IdcFunctionMapper.class);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void useIdcFunction(IdcFunctionDTO idcFunctionDTO, @MappingTarget IdcFunction idcFunction);
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void useIdcFunction(IdcFunctionDTO idcFunctionDTO, @MappingTarget IdcFunction idcFunction);
 
-    IdcFunction useIdcFunction(IdcFunctionDTO idcFunctionDTO);
+  IdcFunction useIdcFunction(IdcFunctionDTO idcFunctionDTO);
 
-    IdcFunctionVO useIdcFunctionVO(IdcFunction idcFunction);
+  IdcFunctionVO useIdcFunctionVO(IdcFunction idcFunction);
 
-    List<IdcFunctionVO> useIdcFunctionVO(List<IdcFunction> idcFunction);
+  List<IdcFunctionVO> useIdcFunctionVO(List<IdcFunction> idcFunction);
 }

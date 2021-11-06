@@ -7,17 +7,17 @@ import com.qk.dm.indicator.params.vo.IdcDerivedVO;
 
 public interface IdcDerivedService {
 
-    void insert(IdcDerivedDTO idcDerivedDTO);
+  void insert(IdcDerivedDTO idcDerivedDTO);
 
-    void update(Long id,IdcDerivedDTO idcDerivedDTO);
+  void update(Long id, IdcDerivedDTO idcDerivedDTO);
 
-    void delete(String ids);
+  void delete(String ids);
 
-    IdcDerivedVO detail(Long id);
+  IdcDerivedVO detail(Long id);
 
-    void publish(Long id);
+  void publish(Long id);
 
-    void offline(Long id);
+  void offline(Long id);
 
-    PageResultVO<IdcDerivedVO> findListPage(IdcDerivedPageDTO idcDerivedPageDTO);
+  PageResultVO<IdcDerivedVO> findListPage(IdcDerivedPageDTO idcDerivedPageDTO);
 }

@@ -4,13 +4,12 @@ import com.qk.dm.indicator.entity.IdcAtom;
 import com.qk.dm.indicator.params.dto.IdcAtomDTO;
 import com.qk.dm.indicator.params.vo.IdcAtomPageVO;
 import com.qk.dm.indicator.params.vo.IdcAtomVO;
+import java.util.List;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 /**
  * @author shenpj
@@ -21,16 +20,16 @@ import java.util.List;
 //        (nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
 //                nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface IdcAtomMapper {
-    IdcAtomMapper INSTANCE = Mappers.getMapper(IdcAtomMapper.class);
+  IdcAtomMapper INSTANCE = Mappers.getMapper(IdcAtomMapper.class);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void useIdcAtom(IdcAtomDTO idcAtomDTO, @MappingTarget IdcAtom idcAtom);
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void useIdcAtom(IdcAtomDTO idcAtomDTO, @MappingTarget IdcAtom idcAtom);
 
-    IdcAtom useIdcAtom(IdcAtomDTO idcAtomDTO);
+  IdcAtom useIdcAtom(IdcAtomDTO idcAtomDTO);
 
-    IdcAtomVO useIdcAtomVO(IdcAtom idcAtom);
+  IdcAtomVO useIdcAtomVO(IdcAtom idcAtom);
 
-    List<IdcAtomVO> useIdcAtomVO(List<IdcAtom> idcAtom);
+  List<IdcAtomVO> useIdcAtomVO(List<IdcAtom> idcAtom);
 
-    List<IdcAtomPageVO> useIdcAtomPageVO(List<IdcAtom> idcAtom);
+  List<IdcAtomPageVO> useIdcAtomPageVO(List<IdcAtom> idcAtom);
 }

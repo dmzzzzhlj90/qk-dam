@@ -41,7 +41,7 @@ public class DamRoleVoter extends DamVoter implements AccessDecisionVoter<Object
     }
     int result = ACCESS_ABSTAIN;
     Collection<String> authorities = extractAuthorities(authentication);
-    if (CollectionUtils.isEmpty(authorities)){
+    if (CollectionUtils.isEmpty(authorities)) {
       return ACCESS_DENIED;
     }
     for (ConfigAttribute attribute : attributes) {

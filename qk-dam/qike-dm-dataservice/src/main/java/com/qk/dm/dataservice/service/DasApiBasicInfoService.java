@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface DasApiBasicInfoService {
-  PageResultVO<DasApiBasicInfoVO> searchList(
-      DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO);
+  PageResultVO<DasApiBasicInfoVO> searchList(DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO);
 
   void insert(DasApiBasicInfoVO dasApiBasicInfoVO);
 

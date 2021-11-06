@@ -9,7 +9,7 @@ public enum DateCycleEnum {
   MONTH("date-0002", "月"),
   WEEK("date-0003", "星期"),
   DAY("date-0004", "日"),
-  HOURS("date-0005","时");
+  HOURS("date-0005", "时");
 
   String code;
   String name;

@@ -9,10 +9,9 @@ import com.qk.dm.indicator.params.dto.IdcAtomPageDTO;
 import com.qk.dm.indicator.params.vo.IdcAtomPageVO;
 import com.qk.dm.indicator.params.vo.IdcAtomVO;
 import com.qk.dm.indicator.service.IdcAtomService;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 原子指标功能
@@ -121,21 +120,22 @@ public class IdcAtomController {
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<IdcAtomPageVO>> listByPage(
-          @RequestBody IdcAtomPageDTO idcAtomPageDTO) {
+      @RequestBody IdcAtomPageDTO idcAtomPageDTO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, idcAtomService.listByPage(idcAtomPageDTO));
   }
 
   /**
    * SQL预览
+   *
    * @param dataSheet 数据库表
    * @param expression 表达式
    * @return String
    */
   @GetMapping("/preview")
-  public DefaultCommonResult<String> sqlPreview(@RequestParam("dataSheet") String dataSheet,
-                                                @RequestParam("expression") String expression){
-    return  DefaultCommonResult.success(
-            ResultCodeEnum.OK, SqlBuilder.atomicSql(expression,dataSheet));
+  public DefaultCommonResult<String> sqlPreview(
+      @RequestParam("dataSheet") String dataSheet, @RequestParam("expression") String expression) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, SqlBuilder.atomicSql(expression, dataSheet));
   }
 }

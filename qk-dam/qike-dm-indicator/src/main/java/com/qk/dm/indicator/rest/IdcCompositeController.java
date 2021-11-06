@@ -8,10 +8,9 @@ import com.qk.dm.indicator.params.dto.IdcCompositePageDTO;
 import com.qk.dm.indicator.params.vo.IdcCompositePageVO;
 import com.qk.dm.indicator.params.vo.IdcCompositeVO;
 import com.qk.dm.indicator.service.IdcCompositeService;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 复合指标功能
@@ -29,7 +28,6 @@ public class IdcCompositeController {
   public IdcCompositeController(IdcCompositeService idcCompositeService) {
     this.idcCompositeService = idcCompositeService;
   }
-
 
   /**
    * 新增
@@ -122,7 +120,7 @@ public class IdcCompositeController {
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<IdcCompositePageVO>> listByPage(
-          @RequestBody IdcCompositePageDTO idcCompositePageDTO) {
+      @RequestBody IdcCompositePageDTO idcCompositePageDTO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, idcCompositeService.listByPage(idcCompositePageDTO));
   }
