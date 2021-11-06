@@ -56,7 +56,7 @@ dependencies {
             'org.mapstruct:mapstruct-processor')
     implementation group: 'cn.hutool', name: 'hutool-db'
     implementation 'org.aspectj:aspectjweaver'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {

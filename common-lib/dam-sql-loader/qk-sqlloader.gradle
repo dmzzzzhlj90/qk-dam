@@ -5,12 +5,12 @@ version "${commonLibVersion}"
 group "com.qk.dam.sqlloader"
 dependencies {
     implementation "org.slf4j:slf4j-api"
-    compile 'com.zaxxer:HikariCP:3.4.5'
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    compile 'com.zaxxer:HikariCP'
+    implementation group: 'org.apache.commons', name: 'commons-lang3'
     compile group: 'com.qcloud', name: 'cos_api'
     compile "com.qcloud:cos_api"
-    implementation group: 'mysql', name: 'mysql-connector-java',version:'8.0.25'
-    implementation group: 'commons-io', name: 'commons-io', version: '2.9.0'
+    implementation group: 'mysql', name: 'mysql-connector-java'
+    implementation group: 'commons-io', name: 'commons-io'
     implementation group: 'org.apache.commons', name: 'commons-compress'
     compile group: 'cn.hutool', name: 'hutool-db'
     compile group: 'cn.hutool', name: 'hutool-http'

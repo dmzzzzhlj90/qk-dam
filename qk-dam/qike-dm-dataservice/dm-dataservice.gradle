@@ -70,7 +70,7 @@ dependencies {
             'org.springframework.boot:spring-boot-configuration-processor')
     implementation 'com.zaxxer:HikariCP:3.4.5'
     implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 
     //json序列化
