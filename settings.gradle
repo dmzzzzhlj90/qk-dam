@@ -53,6 +53,3 @@ buildFiles.each { File buildFile ->
     project.projectDir = buildFile.parentFile
     project.buildFileName = buildFile.name
 }
-include 'qk-dam:qike-dm-dataquality'
-findProject(':qk-dam:qike-dm-dataquality')?.name = 'qike-dm-dataquality'
-
