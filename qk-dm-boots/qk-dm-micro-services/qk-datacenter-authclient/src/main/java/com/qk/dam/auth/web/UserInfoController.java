@@ -1,12 +1,12 @@
 package com.qk.dam.auth.web;
 
 import com.google.common.collect.Maps;
+import java.util.Map;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 用户信息
@@ -96,13 +93,14 @@ public class UserInfoController {
       @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
     Map<String, Object> objectHashMap = Maps.newHashMap();
     return ReactiveSecurityContextHolder.getContext()
-            .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
-            .map(SecurityContext::getAuthentication)
-            .filter(Authentication::isAuthenticated)
-            .map(w -> (DefaultOidcUser) w.getPrincipal())
-            .map(userinfo->{
-              objectHashMap.put("userinfo",userinfo.getUserInfo());
-              objectHashMap.put("accessToken",authorizedClient.getAccessToken());
+        .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
+        .map(SecurityContext::getAuthentication)
+        .filter(Authentication::isAuthenticated)
+        .map(w -> (DefaultOidcUser) w.getPrincipal())
+        .map(
+            userinfo -> {
+              objectHashMap.put("userinfo", userinfo.getUserInfo());
+              objectHashMap.put("accessToken", authorizedClient.getAccessToken());
               return objectHashMap;
             });
   }

@@ -11,17 +11,17 @@ import com.qk.dm.indicator.params.vo.IdcBusinessVO;
  * @since 1.0.0
  */
 public interface IdcBusinessService {
-    void insert(IdcBusinessDTO idcBusinessDTO);
+  void insert(IdcBusinessDTO idcBusinessDTO);
 
-    void update(Long id,IdcBusinessDTO idcBusinessDTO);
+  void update(Long id, IdcBusinessDTO idcBusinessDTO);
 
-    void delete(String ids);
+  void delete(String ids);
 
-    IdcBusinessVO detail(Long id);
+  IdcBusinessVO detail(Long id);
 
-    void publish(Long id);
+  void publish(Long id);
 
-    void offline(Long id);
+  void offline(Long id);
 
-    PageResultVO<IdcBusinessVO> findListPage(IdcBusinessPageDTO idcBusinessPageDTO);
+  PageResultVO<IdcBusinessVO> findListPage(IdcBusinessPageDTO idcBusinessPageDTO);
 }

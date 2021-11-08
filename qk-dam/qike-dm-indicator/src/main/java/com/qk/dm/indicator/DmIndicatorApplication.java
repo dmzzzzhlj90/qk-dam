@@ -6,9 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
-/**
- * 数据规范-数据指标
- */
+/** 数据规范-数据指标 */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients

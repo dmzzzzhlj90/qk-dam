@@ -10,5 +10,4 @@ public class IdcState {
   public static final Integer DRAFT = 0;
   public static final Integer ONLINE = 1;
   public static final Integer OFFLINE = 2;
-
 }

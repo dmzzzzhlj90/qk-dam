@@ -29,9 +29,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                               mvcMatch -> authorize.mvcMatchers(mvcMatch).access(roleName));
                         } else {
                           // 默认角色可以访问所有
-                                                      authorize
-                                                              .mvcMatchers("/**")
-                                                              .access(roleName);
+                          authorize.mvcMatchers("/**").access(roleName);
                         }
                       });
               authorize

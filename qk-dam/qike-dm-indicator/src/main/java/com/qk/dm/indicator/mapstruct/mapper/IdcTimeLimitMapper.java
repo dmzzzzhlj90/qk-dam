@@ -1,16 +1,14 @@
 package com.qk.dm.indicator.mapstruct.mapper;
 
-
 import com.qk.dm.indicator.entity.IdcTimeLimit;
 import com.qk.dm.indicator.params.dto.IdcTimeLimitDTO;
 import com.qk.dm.indicator.params.vo.IdcTimeLimitVO;
+import java.util.List;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 /**
  * @author wangzp
@@ -19,15 +17,14 @@ import java.util.List;
  */
 @Mapper
 public interface IdcTimeLimitMapper {
-    IdcTimeLimitMapper INSTANCE = Mappers.getMapper(IdcTimeLimitMapper.class);
+  IdcTimeLimitMapper INSTANCE = Mappers.getMapper(IdcTimeLimitMapper.class);
 
-    IdcTimeLimit useIdcTimeLimit(IdcTimeLimitDTO idcTimeLimitDTO);
+  IdcTimeLimit useIdcTimeLimit(IdcTimeLimitDTO idcTimeLimitDTO);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void useIdcTimeLimit(IdcTimeLimitDTO idcTimeLimitDTO, @MappingTarget IdcTimeLimit idcTimeLimit);
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void useIdcTimeLimit(IdcTimeLimitDTO idcTimeLimitDTO, @MappingTarget IdcTimeLimit idcTimeLimit);
 
-    IdcTimeLimitVO useIdcTimeLimitVO(IdcTimeLimit idcTimeLimit);
+  IdcTimeLimitVO useIdcTimeLimitVO(IdcTimeLimit idcTimeLimit);
 
-    List<IdcTimeLimitVO> userIdcTimeLimitListVO(List<IdcTimeLimit> idcTimeLimitList);
-
+  List<IdcTimeLimitVO> userIdcTimeLimitListVO(List<IdcTimeLimit> idcTimeLimitList);
 }

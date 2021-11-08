@@ -11,7 +11,7 @@ public class OpenApiConnectInfo {
 
   private String url;
 
-//  private String host;
-//
-//  private String protocolType;
+  //  private String host;
+  //
+  //  private String protocolType;
 }

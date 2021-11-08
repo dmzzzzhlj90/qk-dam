@@ -1,11 +1,10 @@
 package com.qk.dm.indicator.params.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class IdcAtomPageVO implements Serializable {

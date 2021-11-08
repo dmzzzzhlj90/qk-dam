@@ -23,49 +23,52 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/create/sqlScript")
 public class DasApiCreateSqlScriptController {
-    private final DasApiCreateSqlScriptService dasApiCreateSqlScriptService;
+  private final DasApiCreateSqlScriptService dasApiCreateSqlScriptService;
 
-    @Autowired
-    public DasApiCreateSqlScriptController(
-            DasApiCreateSqlScriptService dasApiCreateSqlScriptService) {
-        this.dasApiCreateSqlScriptService = dasApiCreateSqlScriptService;
-    }
+  @Autowired
+  public DasApiCreateSqlScriptController(
+      DasApiCreateSqlScriptService dasApiCreateSqlScriptService) {
+    this.dasApiCreateSqlScriptService = dasApiCreateSqlScriptService;
+  }
 
-    /**
-     * 新增API脚本方式_详情展示
-     *
-     * @param apiId
-     * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
-     */
-    @GetMapping(value = "/{apiId}")
-    @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<DasApiCreateSqlScriptVO> detail(@PathVariable("apiId") String apiId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSqlScriptService.detail(apiId));
-    }
+  /**
+   * 新增API脚本方式_详情展示
+   *
+   * @param apiId
+   * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
+   */
+  @GetMapping(value = "/{apiId}")
+  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.DETAIL)
+  public DefaultCommonResult<DasApiCreateSqlScriptVO> detail(@PathVariable("apiId") String apiId) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dasApiCreateSqlScriptService.detail(apiId));
+  }
 
-    /**
-     * 新增API脚本方式
-     *
-     * @param dasApiCreateSqlScriptVO
-     * @return DefaultCommonResult
-     */
-    @PostMapping("")
-    @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.CREATE)
-    public DefaultCommonResult insert(@RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
-        dasApiCreateSqlScriptService.insert(dasApiCreateSqlScriptVO);
-        return DefaultCommonResult.success();
-    }
+  /**
+   * 新增API脚本方式
+   *
+   * @param dasApiCreateSqlScriptVO
+   * @return DefaultCommonResult
+   */
+  @PostMapping("")
+  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insert(
+      @RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+    dasApiCreateSqlScriptService.insert(dasApiCreateSqlScriptVO);
+    return DefaultCommonResult.success();
+  }
 
-    /**
-     * 编辑API脚本方式
-     *
-     * @param dasApiCreateSqlScriptVO
-     * @return DefaultCommonResult
-     */
-    @PutMapping("")
-    @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.UPDATE)
-    public DefaultCommonResult update(@RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
-        dasApiCreateSqlScriptService.update(dasApiCreateSqlScriptVO);
-        return DefaultCommonResult.success();
-    }
+  /**
+   * 编辑API脚本方式
+   *
+   * @param dasApiCreateSqlScriptVO
+   * @return DefaultCommonResult
+   */
+  @PutMapping("")
+  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(
+      @RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+    dasApiCreateSqlScriptService.update(dasApiCreateSqlScriptVO);
+    return DefaultCommonResult.success();
+  }
 }
