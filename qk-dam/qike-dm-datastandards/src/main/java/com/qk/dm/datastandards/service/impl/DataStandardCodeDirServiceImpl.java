@@ -1,26 +1,24 @@
 package com.qk.dm.datastandards.service.impl;
 
+import static com.qk.dm.datastandards.entity.QDsdCodeDir.dsdCodeDir;
+
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.constant.DsdConstant;
 import com.qk.dm.datastandards.entity.DsdCodeDir;
-import com.qk.dm.datastandards.entity.DsdCodeTerm;
 import com.qk.dm.datastandards.entity.QDsdCodeDir;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdCodeTreeMapper;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdDirCodeDirTreeMapper;
 import com.qk.dm.datastandards.repositories.DsdCodeDirRepository;
 import com.qk.dm.datastandards.repositories.DsdCodeInfoRepository;
-
 import com.qk.dm.datastandards.service.DataStandardCodeDirService;
 import com.qk.dm.datastandards.vo.DataStandardCodeTreeVO;
 import com.qk.dm.datastandards.vo.DsdCodeDirVO;
 import com.querydsl.core.types.Predicate;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 /**
  * @author wjq
@@ -28,10 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 1.0.0 数据标准目录接口实现类
  */
 @Service
-@Transactional
 public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirService {
-  @Autowired
-  private DsdCodeTermRepository dsdCodeTermRepository;
   private final DsdCodeDirRepository dsdCodeDirRepository;
   private final DsdCodeInfoRepository dsdCodeInfoRepository;
 
@@ -155,7 +150,6 @@ public class DataStandardCodeDirServiceImpl implements DataStandardCodeDirServic
     Iterable<DsdCodeDir> delDirList = dsdCodeDirRepository.findAll(dsdCodeDir.id.in(ids));
     dsdCodeDirRepository.deleteAll(delDirList);
   }
-
 
   /** @param ids,delId */
   private void getIds(ArrayList<Integer> ids, Integer delId) {

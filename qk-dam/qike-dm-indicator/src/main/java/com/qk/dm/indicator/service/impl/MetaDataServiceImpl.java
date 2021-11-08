@@ -4,11 +4,10 @@ import com.qk.dam.metedata.entity.MtdTableApiParams;
 import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.indicator.feign.MtdDataFeign;
 import com.qk.dm.indicator.service.MetaDataService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author wangzp
@@ -18,19 +17,20 @@ import java.util.Map;
 @Service
 public class MetaDataServiceImpl implements MetaDataService {
 
-    private final MtdDataFeign mtdDataFeign;
+  private final MtdDataFeign mtdDataFeign;
 
-    @Autowired
-    public MetaDataServiceImpl(MtdDataFeign mtdDataFeign){
-        this.mtdDataFeign = mtdDataFeign;
-    }
-    @Override
-    public List<MtdTables> getTables(MtdTableApiParams mtdTableApiParams) {
-        return mtdDataFeign.getTables(mtdTableApiParams).getData();
-    }
+  @Autowired
+  public MetaDataServiceImpl(MtdDataFeign mtdDataFeign) {
+    this.mtdDataFeign = mtdDataFeign;
+  }
 
-    @Override
-    public List<Map<String, Object>> getColumns(String guid) {
-        return mtdDataFeign.getColumns(guid).getData();
-    }
+  @Override
+  public List<MtdTables> getTables(MtdTableApiParams mtdTableApiParams) {
+    return mtdDataFeign.getTables(mtdTableApiParams).getData();
+  }
+
+  @Override
+  public List<Map<String, Object>> getColumns(String guid) {
+    return mtdDataFeign.getColumns(guid).getData();
+  }
 }

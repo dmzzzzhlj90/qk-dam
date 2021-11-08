@@ -4,13 +4,12 @@ import com.qk.dm.indicator.entity.IdcComposite;
 import com.qk.dm.indicator.params.dto.IdcCompositeDTO;
 import com.qk.dm.indicator.params.vo.IdcCompositePageVO;
 import com.qk.dm.indicator.params.vo.IdcCompositeVO;
+import java.util.List;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 /**
  * @author shenpj

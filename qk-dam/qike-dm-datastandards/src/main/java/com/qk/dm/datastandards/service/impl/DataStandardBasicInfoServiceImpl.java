@@ -19,18 +19,15 @@ import com.qk.dm.datastandards.vo.DsdBasicInfoParamsVO;
 import com.qk.dm.datastandards.vo.DsdBasicInfoVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 /**
  * @author wjq
@@ -38,7 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 1.0.0 数据标准标准信息接口实现类
  */
 @Service
-@Transactional
 public class DataStandardBasicInfoServiceImpl implements DataStandardBasicInfoService {
   private final DsdBasicinfoRepository dsdBasicinfoRepository;
   private final DataStandardDirService dataStandardDirService;

@@ -2,13 +2,9 @@ package com.qk.dm.datastandards.service;
 
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdDirVO;
-
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author wjq
@@ -28,9 +24,7 @@ public interface DataStandardDirService {
 
   void deleteDsdDirRoot(Integer delId);
 
-
   void getDsdId(Set<String> dirDsdIdSet, String dirDsdId);
 
   List<String> findAllDsdDirLevel();
-
 }

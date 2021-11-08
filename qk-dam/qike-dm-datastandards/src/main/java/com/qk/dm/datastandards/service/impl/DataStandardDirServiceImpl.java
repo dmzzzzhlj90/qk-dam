@@ -2,7 +2,6 @@ package com.qk.dm.datastandards.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datastandards.constant.DsdConstant;
-import com.qk.dm.datastandards.entity.DsdBasicinfo;
 import com.qk.dm.datastandards.entity.DsdDir;
 import com.qk.dm.datastandards.entity.QDsdDir;
 import com.qk.dm.datastandards.mapstruct.mapper.DsdDirTreeMapper;
@@ -12,12 +11,11 @@ import com.qk.dm.datastandards.service.DataStandardDirService;
 import com.qk.dm.datastandards.vo.DataStandardTreeVO;
 import com.qk.dm.datastandards.vo.DsdDirVO;
 import com.querydsl.core.types.Predicate;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author wjq
@@ -25,12 +23,9 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0 数据标准目录接口实现类
  */
 @Service
-@Transactional
 public class DataStandardDirServiceImpl implements DataStandardDirService {
   private final DsdDirRepository dsdDirRepository;
-
   private final DsdBasicinfoRepository dsdBasicinfoRepository;
-
 
   @Autowired
   public DataStandardDirServiceImpl(
@@ -38,7 +33,6 @@ public class DataStandardDirServiceImpl implements DataStandardDirService {
     this.dsdDirRepository = dsdDirRepository;
     this.dsdBasicinfoRepository = dsdBasicinfoRepository;
   }
-
 
   @Override
   public List<DataStandardTreeVO> getTree() {
