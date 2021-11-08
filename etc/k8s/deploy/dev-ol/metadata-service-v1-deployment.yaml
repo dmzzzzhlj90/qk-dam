@@ -8,7 +8,6 @@ metadata:
     version: v1
   annotations:
     deployment.kubernetes.io/revision: '1'
-    kubesphere.io/creator: zhudaoming
 spec:
   replicas: 1
   selector:
@@ -17,14 +16,13 @@ spec:
       version: v1
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: metadata-service
         version: v1
     spec:
       containers:
         - name: dm-metadata-$BRANCH_NAME-1.0.0-$BUILD_NUMBER
-          image: '$REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER'
+          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER
           ports:
             - name: tcp-8782
               containerPort: 8782
@@ -37,7 +35,6 @@ spec:
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
       serviceAccountName: default
-      serviceAccount: default
       securityContext: {}
       imagePullSecrets:
         - name: harbor
