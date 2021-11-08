@@ -90,7 +90,7 @@ public class DqcRuleTemplate implements Serializable {
      * 删除标识(0-保留 1-删除)
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag;
+    private Integer delFlag = 0;
 
     /**
      * 创建时间
