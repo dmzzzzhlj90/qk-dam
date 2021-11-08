@@ -21,7 +21,7 @@ spec:
         version: v1
     spec:
       containers:
-        - name: dm-metadata-$BRANCH_NAME-1.0.0-$BUILD_NUMBER
+        - name: $BUILD_NUMBER-metadata$BRANCH_NAME
           image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER
           ports:
             - name: tcp-8782
