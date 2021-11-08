@@ -18,7 +18,7 @@ processResources {
 
 docker {
     springBootApplication {
-        baseImage = "openjdk:11.0.12-jre-slim-buster"
+        baseImage = "${jre11Image}"
         ports = [8786]
         images = ["${imagePush}/${project.name}:${version}"]
         jvmArgs = ['-Xmx248m']
