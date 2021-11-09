@@ -9,6 +9,7 @@ import com.qk.dm.dataquality.vo.DqcRuleTemplateListVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 import com.qk.dm.dataquality.vo.PageResultVO;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @date 2021/11/8 7:46 下午
  * @since 1.0.0
  */
+@Service
 public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
