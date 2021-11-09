@@ -64,9 +64,9 @@ public class ModelPhysicalTableController {
      * @return
      */
     @GetMapping("/{id}")
-    public DefaultCommonResult<ModelPhysicalTableVO> getDetail(@PathVariable("id") Long id){
+    public DefaultCommonResult<ModelPhysicalTableVO> detail(@PathVariable("id") Long id){
 
-       return DefaultCommonResult.success(ResultCodeEnum.OK,modelPhysicalTableService.getDetail(id));
+       return DefaultCommonResult.success(ResultCodeEnum.OK,modelPhysicalTableService.detail(id));
     }
 
     /**
@@ -75,7 +75,7 @@ public class ModelPhysicalTableController {
      * @return
      */
     @GetMapping("")
-    public DefaultCommonResult<PageResultVO<ModelPhysicalTableVO>> getList(@RequestBody ModelPhysicalTableDTO modelPhysicalTableDTO){
+    public DefaultCommonResult<PageResultVO<ModelPhysicalTableVO>> list(@RequestBody ModelPhysicalTableDTO modelPhysicalTableDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelPhysicalTableService.listPage(modelPhysicalTableDTO));
     }
 }

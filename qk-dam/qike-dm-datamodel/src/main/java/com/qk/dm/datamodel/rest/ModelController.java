@@ -35,7 +35,7 @@ public class ModelController {
     }
     @GetMapping("")
     public DefaultCommonResult<List<ModelVO>> getList(){
-       return DefaultCommonResult.success(ResultCodeEnum.OK, modelService.getList());
+       return DefaultCommonResult.success(ResultCodeEnum.OK, modelService.list());
     }
 
 }

@@ -18,7 +18,12 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
-
+/**
+ * 物理模型表的基础信息
+ * @author wangzp
+ * @date 2021/11/09 10:02
+ * @since 1.0.0
+ */
 @Service
 public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService {
 
@@ -47,7 +52,7 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
     }
 
     @Override
-    public ModelPhysicalTableVO getDetail(Long id) {
+    public ModelPhysicalTableVO detail(Long id) {
         Optional<ModelPhysicalTable> modelPhysicalTable = modelPhysicalTableRepository.findById(id);
         if(modelPhysicalTable.isEmpty()){
             throw new BizException("当前要查询的物理表信息id为："+id+" 的数据不存在！！");
@@ -73,6 +78,7 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
         if(modelPhysicalTableList.isEmpty()){
             throw new BizException("当前要删除的表id为："+ids+"的数据不存在！！！");
         }
+
         modelPhysicalTableRepository.deleteAll(modelPhysicalTableList);
     }
 
@@ -99,7 +105,7 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
         Map<String, Object> result = new HashMap<>();
         long count =
                 jpaQueryFactory.select(qModelPhysicalTable.count()).from(qModelPhysicalTable).where(booleanBuilder).fetchOne();
-        List<ModelPhysicalTable> mtdLabelsList =
+        List<ModelPhysicalTable> modelPhysicalTableList =
                 jpaQueryFactory
                         .select(qModelPhysicalTable)
                         .from(qModelPhysicalTable)
@@ -110,7 +116,7 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
                                         * modelPhysicalTableDTO.getPagination().getSize())
                         .limit(modelPhysicalTableDTO.getPagination().getSize())
                         .fetch();
-        result.put("list", mtdLabelsList);
+        result.put("list", modelPhysicalTableList);
         result.put("total", count);
         return result;
     }

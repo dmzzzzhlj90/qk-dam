@@ -26,7 +26,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public List<ModelVO> getList() {
+    public List<ModelVO> list() {
        return ModelMapper.INSTANCE.userModelVO(modelRepository.findAll());
     }
 

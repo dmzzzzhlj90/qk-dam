@@ -19,5 +19,5 @@ public interface ModelService {
      * 获取模型列表
      * @return
      */
-    List<ModelVO> getList();
+    List<ModelVO> list();
 }

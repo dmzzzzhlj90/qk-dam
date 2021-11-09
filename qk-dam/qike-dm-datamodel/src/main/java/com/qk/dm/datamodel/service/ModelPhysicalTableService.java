@@ -8,7 +8,7 @@ public interface ModelPhysicalTableService {
 
   void insert(ModelPhysicalTableDTO modelPhysicalTableDTO);
 
-  ModelPhysicalTableVO getDetail(Long id);
+  ModelPhysicalTableVO detail(Long id);
 
   void update(Long id,ModelPhysicalTableDTO modelPhysicalTableDTO);
 
