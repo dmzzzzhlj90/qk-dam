@@ -13,7 +13,6 @@ import java.util.List;
  * @date 2021/11/8 7:46 下午
  * @since 1.0.0
  */
-@Service
 public interface DqcRuleTemplateService {
 
     List<DqcRuleTemplateListVo> searchList();

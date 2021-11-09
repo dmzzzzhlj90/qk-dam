@@ -16,30 +16,30 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/dispatch/date")
 public class DqcDispatchController {
-    private final DqcDispatchService dqcDispatchService;
+  private final DqcDispatchService dqcDispatchService;
 
-    public DqcDispatchController(DqcDispatchService dqcDispatchService) {
-        this.dqcDispatchService = dqcDispatchService;
-    }
+  public DqcDispatchController(DqcDispatchService dqcDispatchService) {
+    this.dqcDispatchService = dqcDispatchService;
+  }
 
-    @PostMapping("")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
-    public DefaultCommonResult insert(@RequestBody @Validated DqcDispatchVo dqcDispatchVo) {
-        dqcDispatchService.insert(dqcDispatchVo);
-        return DefaultCommonResult.success();
-    }
+  @PostMapping("")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insert(@RequestBody @Validated DqcDispatchVo dqcDispatchVo) {
+    dqcDispatchService.insert(dqcDispatchVo);
+    return DefaultCommonResult.success();
+  }
 
-    @PutMapping("")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-    public DefaultCommonResult update(@RequestBody @Validated DqcDispatchVo dqcDispatchVo) {
-        dqcDispatchService.update(dqcDispatchVo);
-        return DefaultCommonResult.success();
-    }
+  @PutMapping("")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(@RequestBody @Validated DqcDispatchVo dqcDispatchVo) {
+    dqcDispatchService.update(dqcDispatchVo);
+    return DefaultCommonResult.success();
+  }
 
-    @DeleteMapping("/{id}")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-    public DefaultCommonResult delete(@PathVariable("id") Integer id) {
-        dqcDispatchService.delete(id);
-        return DefaultCommonResult.success();
-    }
+  @DeleteMapping("/{id}")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult delete(@PathVariable("id") Integer id) {
+    dqcDispatchService.delete(id);
+    return DefaultCommonResult.success();
+  }
 }
