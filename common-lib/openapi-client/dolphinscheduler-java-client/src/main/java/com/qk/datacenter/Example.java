@@ -7,9 +7,8 @@ import com.qk.datacenter.api.DefaultApi;
 
 public class Example {
     public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setRequestInterceptor((r)->{
-           r.header("token","2b29f18d15f3be6642814355f3dc9229");
+        ApiClient defaultClient = Configuration.getDefaultApiClient().setRequestInterceptor((r)->{
+            r.header("token","2b29f18d15f3be6642814355f3dc9229");
         });
         DefaultApi apiInstance = new DefaultApi(defaultClient);
         Integer userId = 100; // Integer | 用户ID
