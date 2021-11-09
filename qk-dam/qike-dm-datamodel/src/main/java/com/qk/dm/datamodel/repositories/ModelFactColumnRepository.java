@@ -3,6 +3,10 @@ package com.qk.dm.datamodel.repositories;
 import com.qk.dam.jpa.base.BaseRepository;
 import com.qk.dm.datamodel.entity.ModelFactColumn;
 
-public interface ModelFactColumnRepository extends BaseRepository<ModelFactColumn, Long> {
+import java.util.List;
 
+public interface ModelFactColumnRepository extends BaseRepository<ModelFactColumn, Long> {
+      Integer deleteByFactId(Long factId);
+
+      List<ModelFactColumn> findAllByFactId(Long factId);
 }
