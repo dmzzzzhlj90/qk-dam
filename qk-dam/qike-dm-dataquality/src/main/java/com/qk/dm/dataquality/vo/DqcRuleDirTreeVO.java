@@ -18,16 +18,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DataQualityRuleDirTreeVO {
+public class DqcRuleDirTreeVO {
 
   private Integer id;
 
-  private String dirDsdId;
+  private String ruleDirId;
 
-  private String dirDsdName;
+  private String ruleDirName;
 
   private String parentId;
 
-  private List<DataQualityRuleDirTreeVO> children;
+  private List<DqcRuleDirTreeVO> children;
 
 }

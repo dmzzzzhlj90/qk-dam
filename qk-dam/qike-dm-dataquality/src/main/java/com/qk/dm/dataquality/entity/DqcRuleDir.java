@@ -22,13 +22,13 @@ public class DqcRuleDir implements Serializable {
     private Long id;
 
     /**
-     * API目录ID
+     * 规则目录ID
      */
     @Column(name = "rule_dir_id", nullable = false)
     private String ruleDirId;
 
     /**
-     * API目录名称
+     * 规则目录名称
      */
     @Column(name = "rule_dir_name", nullable = false)
     private String ruleDirName;
