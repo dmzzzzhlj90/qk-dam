@@ -36,7 +36,7 @@ public class DamAclVoter extends DamVoter implements AccessDecisionVoter<MethodI
       MethodInvocation method,
       Collection<ConfigAttribute> attributes) {
     Collection<String> roleArray = extractAuthorities(authentication);
-    if (CollectionUtils.isEmpty(roleArray)){
+    if (CollectionUtils.isEmpty(roleArray)) {
       return ACCESS_DENIED;
     }
     List<DamAuthzPolicy.AuthzRole> roles = DamStrategyAuthorizer.getRoles(roleArray);

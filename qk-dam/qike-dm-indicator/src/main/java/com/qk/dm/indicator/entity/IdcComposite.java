@@ -1,13 +1,12 @@
 package com.qk.dm.indicator.entity;
 
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Entity

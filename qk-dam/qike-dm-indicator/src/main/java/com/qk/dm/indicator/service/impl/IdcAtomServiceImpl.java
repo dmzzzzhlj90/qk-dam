@@ -18,13 +18,12 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 /**
  * @author shenpj
@@ -51,7 +50,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
   @Override
   public void insert(IdcAtomDTO idcAtomDTO) {
     IdcAtom idcAtom = IdcAtomMapper.INSTANCE.useIdcAtom(idcAtomDTO);
-    idcAtom.setSqlSentence(SqlBuilder.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
+    idcAtom.setSqlSentence(SqlBuilder.atomicSql(idcAtom.getExpression(), idcAtom.getSqlSentence()));
     idcAtomRepository.save(idcAtom);
   }
 
@@ -62,7 +61,7 @@ public class IdcAtomServiceImpl implements IdcAtomService {
       throw new BizException("当前要修改的原子指标id为：" + id + " 的数据不存在！！！");
     }
     IdcAtomMapper.INSTANCE.useIdcAtom(idcAtomDTO, idcAtom);
-    idcAtom.setSqlSentence(SqlBuilder.atomicSql(idcAtom.getExpression(),idcAtom.getSqlSentence()));
+    idcAtom.setSqlSentence(SqlBuilder.atomicSql(idcAtom.getExpression(), idcAtom.getSqlSentence()));
     idcAtomRepository.saveAndFlush(idcAtom);
   }
 

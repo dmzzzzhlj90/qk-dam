@@ -29,7 +29,7 @@ public abstract class DamVoter {
   }
 
   Collection<String> extractAuthorities(Authentication authentication) {
-    if (!ObjectUtils.isEmpty(authentication.getCredentials())){
+    if (!ObjectUtils.isEmpty(authentication.getCredentials())) {
       Jwt credentials = (Jwt) authentication.getCredentials();
       Map<String, Object> claims = credentials.getClaims();
       JSONObject resourceAccess = (JSONObject) claims.get(RESOURCE_ACCESS);

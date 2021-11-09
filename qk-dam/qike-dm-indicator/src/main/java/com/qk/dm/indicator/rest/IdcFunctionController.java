@@ -9,11 +9,10 @@ import com.qk.dm.indicator.params.dto.IdcFunctionDTO;
 import com.qk.dm.indicator.params.dto.IdcFunctionPageDTO;
 import com.qk.dm.indicator.params.vo.IdcFunctionVO;
 import com.qk.dm.indicator.service.IdcFunctionService;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 函数功能
@@ -99,7 +98,7 @@ public class IdcFunctionController {
    */
   @GetMapping("/page")
   public DefaultCommonResult<PageResultVO<IdcFunctionVO>> listByPage(
-          @RequestBody IdcFunctionPageDTO idcFunctionPageDTO) {
+      @RequestBody IdcFunctionPageDTO idcFunctionPageDTO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, idcFunctionService.listByPage(idcFunctionPageDTO));
   }
@@ -116,6 +115,7 @@ public class IdcFunctionController {
 
   /**
    * 统计周期
+   *
    * @return DefaultCommonResult<Map<Object, String>>
    */
   @GetMapping("/cycle")

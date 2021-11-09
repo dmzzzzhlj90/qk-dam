@@ -1,0 +1,6197 @@
+openapi: 3.0.1
+info:
+  version: 1.3.9
+  title: Dolphin Scheduler Api Docs
+  description: Dolphin Scheduler Api Docs
+servers:
+  - url: //dolphinscheduler.qk.cc:9080/dolphinscheduler
+tags:
+  - name: 访问token相关操作
+    description: Access Token Controller
+  - name: 告警组相关操作
+    description: Alert Group Controller
+  - name: 任务状态分析相关操作
+    description: Data Analysis Controller
+  - name: 数据源相关操作
+    description: Data Source Controller
+  - name: 日志相关操作
+    description: Logger Controller
+  - name: 用户登录相关操作
+    description: Login Controller
+  - name: 监控相关操作
+    description: Monitor Controller
+  - name: 流程定义相关操作
+    description: Process Definition Controller
+  - name: 流程实例执行相关操作
+    description: Executor Controller
+  - name: 流程实例相关操作
+    description: Process Instance Controller
+  - name: 项目相关操作
+    description: Project Controller
+  - name: 队列相关操作
+    description: Queue Controller
+  - name: 资源中心相关操作
+    description: Resources Controller
+  - name: 定时相关操作
+    description: Scheduler Controller
+  - name: 任务实例相关操作
+    description: Task Instance Controller
+  - name: 租户相关操作
+    description: Tenant Controller
+  - name: 用户相关操作
+    description: Users Controller
+  - name: Worker分组管理
+    description: Worker Group Controller
+paths:
+  /access-token/list-paging:
+    get:
+      tags:
+        - 访问token相关操作
+      summary: queryAccessTokenList
+      description: 分页查询access token列表
+      operationId: queryAccessTokenListUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /alert-group/create:
+    post:
+      tags:
+        - 告警组相关操作
+      summary: createAlertgroup
+      description: 'create alert group '
+      operationId: createAlertgroupUsingPOST
+      parameters:
+        - name: description
+          in: query
+          description: 备注(描述)
+          schema:
+            type: string
+        - name: groupName
+          in: query
+          description: 组名称
+          required: true
+          schema:
+            type: string
+        - name: groupType
+          in: query
+          description: 组类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - EMAIL
+              - SMS
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /alert-group/delete:
+    post:
+      tags:
+        - 告警组相关操作
+      summary: delAlertgroupById
+      description: 删除告警组通过ID
+      operationId: delAlertgroupByIdUsingPOST
+      parameters:
+        - name: id
+          in: query
+          description: 报警组ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /alert-group/grant-user:
+    post:
+      tags:
+        - 告警组相关操作
+      summary: grantUser
+      description: 授权告警组
+      operationId: grantUserUsingPOST
+      parameters:
+        - name: alertgroupId
+          in: query
+          description: alertgroupId
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: userIds
+          in: query
+          description: 用户ID列表
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /alert-group/list:
+    get:
+      tags:
+        - 告警组相关操作
+      summary: list
+      description: 告警组列表
+      operationId: listUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /alert-group/list-paging:
+    get:
+      tags:
+        - 告警组相关操作
+      summary: queryAlertGroupListPaging
+      description: 分页查询告警组列表
+      operationId: listPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /alert-group/update:
+    post:
+      tags:
+        - 告警组相关操作
+      summary: updateAlertgroup
+      description: 编辑(更新)告警组
+      operationId: updateAlertgroupUsingPOST
+      parameters:
+        - name: description
+          in: query
+          description: 备注(描述)
+          schema:
+            type: string
+        - name: groupName
+          in: query
+          description: 组名称
+          required: true
+          schema:
+            type: string
+        - name: groupType
+          in: query
+          description: 组类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - EMAIL
+              - SMS
+        - name: id
+          in: query
+          description: 报警组ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /alert-group/verify-group-name:
+    get:
+      tags:
+        - 告警组相关操作
+      summary: verifyGroupName
+      description: 检查告警组是否存在
+      operationId: verifyGroupNameUsingGET
+      parameters:
+        - name: groupName
+          in: query
+          description: 组名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/authed-datasource:
+    get:
+      tags:
+        - 数据源相关操作
+      summary: authedDatasource
+      description: 授权的数据源
+      operationId: authedDatasourceUsingGET
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/connect:
+    post:
+      tags:
+        - 数据源相关操作
+      summary: connectDataSource
+      description: 连接数据源
+      operationId: connectDataSourceUsingPOST
+      parameters:
+        - name: connectType
+          in: query
+          description: CONNECT_TYPE
+          schema:
+            type: object
+            enum:
+              - ORACLE_SERVICE_NAME
+              - ORACLE_SID
+        - name: database
+          in: query
+          description: 数据库名
+          required: true
+          schema:
+            type: string
+        - name: host
+          in: query
+          description: IP主机名
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 数据源名称
+          required: true
+          schema:
+            type: string
+        - name: note
+          in: query
+          description: 数据源描述
+          schema:
+            type: string
+        - name: other
+          in: query
+          description: jdbc连接参数，格式为:{"key1":"value1",...}
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: 密码
+          schema:
+            type: string
+        - name: port
+          in: query
+          description: 数据源端口
+          required: true
+          schema:
+            type: string
+        - name: principal
+          in: query
+          description: principal
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 数据源类型
+          required: true
+          schema:
+            type: array
+            enum:
+              - MYSQL
+              - POSTGRESQL
+              - HIVE
+              - SPARK
+              - CLICKHOUSE
+              - ORACLE
+              - SQLSERVER
+              - DB2
+              - H2
+        - name: userName
+          in: query
+          description: 用户名
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/connect-by-id:
+    get:
+      tags:
+        - 数据源相关操作
+      summary: connectionTest
+      description: 连接数据源测试
+      operationId: connectionTestUsingGET
+      parameters:
+        - name: id
+          in: query
+          description: 数据源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/create:
+    post:
+      tags:
+        - 数据源相关操作
+      summary: createDataSource
+      description: 创建数据源
+      operationId: createDataSourceUsingPOST
+      parameters:
+        - name: connectType
+          in: query
+          description: CONNECT_TYPE
+          schema:
+            type: object
+            enum:
+              - ORACLE_SERVICE_NAME
+              - ORACLE_SID
+        - name: database
+          in: query
+          description: 数据库名
+          required: true
+          schema:
+            type: string
+        - name: host
+          in: query
+          description: IP主机名
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 数据源名称
+          required: true
+          schema:
+            type: string
+        - name: note
+          in: query
+          description: 数据源描述
+          schema:
+            type: string
+        - name: other
+          in: query
+          description: jdbc连接参数，格式为:{"key1":"value1",...}
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: 密码
+          schema:
+            type: string
+        - name: port
+          in: query
+          description: 数据源端口
+          required: true
+          schema:
+            type: string
+        - name: principal
+          in: query
+          description: principal
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 数据源类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - MYSQL
+              - POSTGRESQL
+              - HIVE
+              - SPARK
+              - CLICKHOUSE
+              - ORACLE
+              - SQLSERVER
+              - DB2
+              - H2
+        - name: userName
+          in: query
+          description: 用户名
+          required: true
+          schema:
+            type: string
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/delete:
+    get:
+      tags:
+        - 数据源相关操作
+      summary: delete
+      description: 删除数据源
+      operationId: deleteUsingGET
+      parameters:
+        - name: id
+          in: query
+          description: 数据源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/kerberos-startup-state:
+    get:
+      tags:
+        - 数据源相关操作
+      summary: getKerberosStartupState
+      description: 获取用户信息
+      operationId: getKerberosStartupStateUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/list:
+    get:
+      tags:
+        - 数据源相关操作
+      summary: queryDataSourceList
+      description: 查询数据源列表通过数据源类型
+      operationId: queryDataSourceListUsingGET
+      parameters:
+        - name: type
+          in: query
+          description: 数据源类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - MYSQL
+              - POSTGRESQL
+              - HIVE
+              - SPARK
+              - CLICKHOUSE
+              - ORACLE
+              - SQLSERVER
+              - DB2
+              - H2
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/list-paging:
+    get:
+      tags:
+        - 数据源相关操作
+      summary: queryDataSourceListPaging
+      description: 分页查询数据源列表
+      operationId: queryDataSourceListPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/unauth-datasource:
+    get:
+      tags:
+        - 数据源相关操作
+      summary: unauthDatasource
+      description: 未授权的数据源
+      operationId: unauthDatasourceUsingGET
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/update:
+    post:
+      tags:
+        - 数据源相关操作
+      summary: updateDataSource
+      description: 更新数据源
+      operationId: updateDataSourceUsingPOST
+      parameters:
+        - name: connectType
+          in: query
+          description: CONNECT_TYPE
+          schema:
+            type: object
+            enum:
+              - ORACLE_SERVICE_NAME
+              - ORACLE_SID
+        - name: database
+          in: query
+          description: 数据库名
+          required: true
+          schema:
+            type: string
+        - name: host
+          in: query
+          description: IP主机名
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: 数据源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: name
+          in: query
+          description: 数据源名称
+          required: true
+          schema:
+            type: string
+        - name: note
+          in: query
+          description: 数据源描述
+          schema:
+            type: string
+        - name: other
+          in: query
+          description: jdbc连接参数，格式为:{"key1":"value1",...}
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: 密码
+          schema:
+            type: string
+        - name: port
+          in: query
+          description: 数据源端口
+          required: true
+          schema:
+            type: string
+        - name: principal
+          in: query
+          description: principal
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 数据源类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - MYSQL
+              - POSTGRESQL
+              - HIVE
+              - SPARK
+              - CLICKHOUSE
+              - ORACLE
+              - SQLSERVER
+              - DB2
+              - H2
+        - name: userName
+          in: query
+          description: 用户名
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/update-ui:
+    post:
+      tags:
+        - 数据源相关操作
+      summary: queryDataSource
+      description: 查询数据源通过ID
+      operationId: queryDataSourceUsingPOST
+      parameters:
+        - name: id
+          in: query
+          description: 数据源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /datasources/verify-name:
+    get:
+      tags:
+        - 数据源相关操作
+      summary: verifyDataSourceName
+      description: 验证数据源
+      operationId: verifyDataSourceNameUsingGET
+      parameters:
+        - name: name
+          in: query
+          description: 数据源名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /log/detail:
+    get:
+      tags:
+        - 日志相关操作
+      summary: queryLog
+      description: 查询任务实例日志
+      operationId: queryLogUsingGET
+      parameters:
+        - name: limit
+          in: query
+          description: 显示多少条
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: skipLineNum
+          in: query
+          description: 忽略行数
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: taskInstanceId
+          in: query
+          description: 任务实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /log/download-log:
+    get:
+      tags:
+        - 日志相关操作
+      summary: downloadTaskLog
+      description: 下载任务实例日志
+      operationId: downloadTaskLogUsingGET
+      parameters:
+        - name: taskInstanceId
+          in: query
+          description: 任务实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /login:
+    post:
+      tags:
+        - 用户登录相关操作
+      summary: login
+      description: 用户登录
+      operationId: loginUsingPOST
+      parameters:
+        - name: userName
+          in: query
+          description: 用户名
+          required: true
+          schema:
+            type: string
+        - name: userPassword
+          in: query
+          description: 用户密码
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /monitor/database:
+    get:
+      tags:
+        - 监控相关操作
+      summary: queryDatabaseState
+      description: 查询数据库状态
+      operationId: queryDatabaseStateUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /monitor/master/list:
+    get:
+      tags:
+        - 监控相关操作
+      summary: listMaster
+      description: master服务列表
+      operationId: listMasterUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /monitor/worker/list:
+    get:
+      tags:
+        - 监控相关操作
+      summary: listWorker
+      description: worker服务列表
+      operationId: listWorkerUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /monitor/zookeeper/list:
+    get:
+      tags:
+        - 监控相关操作
+      summary: queryZookeeperState
+      description: 查询Zookeeper状态
+      operationId: queryZookeeperStateUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/analysis/command-state-count:
+    get:
+      tags:
+        - 任务状态分析相关操作
+      summary: countCommandState
+      description: 统计命令状态
+      operationId: countCommandStateUsingGET
+      parameters:
+        - name: endDate
+          in: query
+          description: 结束时间
+          schema:
+            type: string
+        - name: projectId
+          in: query
+          description: 项目ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: startDate
+          in: query
+          description: 开始时间
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/analysis/define-user-count:
+    get:
+      tags:
+        - 任务状态分析相关操作
+      summary: countDefinitionByUser
+      description: 统计用户创建的流程定义
+      operationId: countDefinitionByUserUsingGET
+      parameters:
+        - name: projectId
+          in: query
+          description: 项目ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/analysis/process-state-count:
+    get:
+      tags:
+        - 任务状态分析相关操作
+      summary: countProcessInstanceState
+      description: 统计流程实例状态
+      operationId: countProcessInstanceStateUsingGET
+      parameters:
+        - name: endDate
+          in: query
+          description: 结束时间
+          schema:
+            type: string
+        - name: projectId
+          in: query
+          description: 项目ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: startDate
+          in: query
+          description: 开始时间
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/analysis/queue-count:
+    get:
+      tags:
+        - 任务状态分析相关操作
+      summary: countQueueState
+      description: 统计队列里任务状态
+      operationId: countQueueStateUsingGET
+      parameters:
+        - name: projectId
+          in: query
+          description: 项目ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/analysis/task-state-count:
+    get:
+      tags:
+        - 任务状态分析相关操作
+      summary: countTaskState
+      description: 任务状态统计
+      operationId: countTaskStateUsingGET
+      parameters:
+        - name: endDate
+          in: query
+          description: 结束时间
+          schema:
+            type: string
+        - name: projectId
+          in: query
+          description: 项目ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: startDate
+          in: query
+          description: 开始时间
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/authed-project:
+    get:
+      tags:
+        - 项目相关操作
+      summary: queryAuthorizedProject
+      description: 查询授权项目
+      operationId: queryAuthorizedProjectUsingGET
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/create:
+    post:
+      tags:
+        - 项目相关操作
+      summary: createProject
+      description: 创建项目
+      operationId: createProjectUsingPOST
+      parameters:
+        - name: description
+          in: query
+          description: 项目描述
+          schema:
+            type: string
+        - name: projectName
+          in: query
+          description: 项目名称
+          schema:
+            type: string
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/delete:
+    get:
+      tags:
+        - 项目相关操作
+      summary: deleteProjectById
+      description: 删除项目通过ID
+      operationId: deleteProjectUsingGET
+      parameters:
+        - name: projectId
+          in: query
+          description: 项目ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/import-definition:
+    post:
+      tags:
+        - 项目相关操作
+      summary: importProcessDefinition
+      description: EXPORT_PROCESS_DEFINITION_NOTES
+      operationId: importProcessDefinitionUsingPOST
+      parameters:
+        - name: projectName
+          in: query
+          description: projectName
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - file
+              properties:
+                file:
+                  type: object
+                  description: 资源文件
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/list-paging:
+    get:
+      tags:
+        - 项目相关操作
+      summary: queryProjectListPaging
+      description: 分页查询项目列表
+      operationId: queryProjectListPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: pageNo
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: pageSize
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/query-by-id:
+    get:
+      tags:
+        - 项目相关操作
+      summary: queryProjectById
+      description: 通过项目ID查询项目信息
+      operationId: queryProjectByIdUsingGET
+      parameters:
+        - name: projectId
+          in: query
+          description: 项目ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/query-project-list:
+    get:
+      tags:
+        - 项目相关操作
+      summary: queryAllProjectList
+      description: 查询所有项目
+      operationId: queryAllProjectListUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/unauth-project:
+    get:
+      tags:
+        - 项目相关操作
+      summary: queryUnauthorizedProject
+      description: 查询未授权的项目
+      operationId: queryUnauthorizedProjectUsingGET
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/update:
+    post:
+      tags:
+        - 项目相关操作
+      summary: updateProject
+      description: 更新项目
+      operationId: updateProjectUsingPOST
+      parameters:
+        - name: description
+          in: query
+          description: 项目描述
+          schema:
+            type: string
+        - name: projectId
+          in: query
+          description: 项目ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: query
+          description: 项目名称
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/executors/execute:
+    post:
+      tags:
+        - 流程实例执行相关操作
+      summary: execute
+      description: 执行流程实例的各种操作(暂停、停止、重跑、恢复等)
+      operationId: executeUsingPOST
+      parameters:
+        - name: executeType
+          in: query
+          description: 执行类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - NONE
+              - REPEAT_RUNNING
+              - RECOVER_SUSPENDED_PROCESS
+              - START_FAILURE_TASK_PROCESS
+              - STOP
+              - PAUSE
+        - name: processInstanceId
+          in: query
+          description: 流程实例ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/executors/start-check:
+    post:
+      tags:
+        - 流程实例执行相关操作
+      summary: startCheckProcessDefinition
+      description: 检查流程定义
+      operationId: startCheckProcessDefinitionUsingPOST
+      parameters:
+        - name: processDefinitionId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/executors/start-process-instance:
+    post:
+      tags:
+        - 流程实例执行相关操作
+      summary: startProcessInstance
+      description: 运行流程实例
+      operationId: startProcessInstanceUsingPOST
+      parameters:
+        - name: execType
+          in: query
+          description: 指令类型
+          schema:
+            type: object
+            enum:
+              - START_PROCESS
+              - START_CURRENT_TASK_PROCESS
+              - RECOVER_TOLERANCE_FAULT_PROCESS
+              - RECOVER_SUSPENDED_PROCESS
+              - START_FAILURE_TASK_PROCESS
+              - COMPLEMENT_DATA
+              - SCHEDULER
+              - REPEAT_RUNNING
+              - PAUSE
+              - STOP
+              - RECOVER_WAITTING_THREAD
+        - name: failureStrategy
+          in: query
+          description: 失败策略
+          required: true
+          schema:
+            type: object
+            enum:
+              - END
+              - CONTINUE
+        - name: processDefinitionId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: processInstancePriority
+          in: query
+          description: 流程实例优先级
+          required: true
+          schema:
+            type: object
+            enum:
+              - HIGHEST
+              - HIGH
+              - MEDIUM
+              - LOW
+              - LOWEST
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: receivers
+          in: query
+          description: 收件人
+          schema:
+            type: string
+        - name: receiversCc
+          in: query
+          description: 收件人(抄送)
+          schema:
+            type: string
+        - name: runMode
+          in: query
+          description: 运行模式
+          schema:
+            type: object
+            enum:
+              - RUN_MODE_SERIAL
+              - RUN_MODE_PARALLEL
+        - name: scheduleTime
+          in: query
+          description: 定时时间
+          required: true
+          schema:
+            type: string
+        - name: startNodeList
+          in: query
+          description: 开始节点列表(节点name)
+          schema:
+            type: string
+        - name: taskDependType
+          in: query
+          description: 任务依赖类型
+          schema:
+            type: object
+            enum:
+              - TASK_ONLY
+              - TASK_PRE
+              - TASK_POST
+        - name: timeout
+          in: query
+          description: 超时时间
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: warningGroupId
+          in: query
+          description: 发送组ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: warningType
+          in: query
+          description: 发送策略
+          required: true
+          schema:
+            type: object
+            enum:
+              - NONE
+              - SUCCESS
+              - FAILURE
+              - ALL
+        - name: workerGroup
+          in: query
+          description: WORKER_GROUP
+          schema:
+            type: string
+          example: default
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/batch-delete:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: batchDeleteProcessInstanceByIds
+      operationId: batchDeleteProcessInstanceByIdsUsingGET
+      parameters:
+        - name: alertGroup
+          in: query
+          schema:
+            type: string
+        - name: createTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: email
+          in: query
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: phone
+          in: query
+          schema:
+            type: string
+        - name: processInstanceIds
+          in: query
+          description: processInstanceIds
+          required: true
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: projectName
+          required: true
+          schema:
+            type: string
+        - name: queue
+          in: query
+          schema:
+            type: string
+        - name: queueName
+          in: query
+          schema:
+            type: string
+        - name: tenantCode
+          in: query
+          schema:
+            type: string
+        - name: tenantId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: tenantName
+          in: query
+          schema:
+            type: string
+        - name: updateTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: userName
+          in: query
+          schema:
+            type: string
+        - name: userPassword
+          in: query
+          schema:
+            type: string
+        - name: userType
+          in: query
+          schema:
+            type: string
+            enum:
+              - ADMIN_USER
+              - GENERAL_USER
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/delete:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: deleteProcessInstanceById
+      description: 删除流程实例通过流程实例ID
+      operationId: deleteProcessInstanceByIdUsingGET
+      parameters:
+        - name: processInstanceId
+          in: query
+          description: 流程实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/list-paging:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: queryProcessInstanceList
+      description: 查询流程实例列表
+      operationId: queryProcessInstanceListUsingGET
+      parameters:
+        - name: endDate
+          in: query
+          description: 结束时间
+          schema:
+            type: string
+        - name: executorName
+          in: query
+          description: EXECUTOR_NAME
+          schema:
+            type: string
+        - name: host
+          in: query
+          description: 运行任务的主机IP地址
+          schema:
+            type: string
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: processDefinitionId
+          in: query
+          description: 流程定义ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: 开始时间
+          schema:
+            type: string
+        - name: stateType
+          in: query
+          description: 工作流和任务节点的运行状态
+          schema:
+            type: string
+            enum:
+              - SUBMITTED_SUCCESS
+              - RUNNING_EXECUTION
+              - READY_PAUSE
+              - PAUSE
+              - READY_STOP
+              - STOP
+              - FAILURE
+              - SUCCESS
+              - NEED_FAULT_TOLERANCE
+              - KILL
+              - WAITTING_THREAD
+              - WAITTING_DEPEND
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/select-by-id:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: queryProcessInstanceById
+      description: 查询流程实例通过流程实例ID
+      operationId: queryProcessInstanceByIdUsingGET
+      parameters:
+        - name: processInstanceId
+          in: query
+          description: 流程实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/select-parent-process:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: queryParentInstanceBySubId
+      description: 查询父流程实例信息通过子流程实例ID
+      operationId: queryParentInstanceBySubIdUsingGET
+      parameters:
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: subId
+          in: query
+          description: 子流程是咧ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/select-sub-process:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: querySubProcessInstanceByTaskId
+      description: 查询子流程实例通过任务实例ID
+      operationId: querySubProcessInstanceByTaskIdUsingGET
+      parameters:
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: taskId
+          in: query
+          description: 任务实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/task-list-by-process-id:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: queryTaskListByProcessId
+      description: 通过流程实例ID查询任务列表
+      operationId: queryTaskListByProcessIdUsingGET
+      parameters:
+        - name: processInstanceId
+          in: query
+          description: 流程实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/update:
+    post:
+      tags:
+        - 流程实例相关操作
+      summary: updateProcessInstance
+      description: 更新流程实例
+      operationId: updateProcessInstanceUsingPOST
+      parameters:
+        - name: connects
+          in: query
+          description: 流程实例节点图标连接信息(json格式)
+          schema:
+            type: string
+        - name: flag
+          in: query
+          description: 是否恢复流程实例
+          schema:
+            type: string
+            enum:
+              - NO
+              - YES
+        - name: locations
+          in: query
+          description: 流程实例节点坐标位置信息(json格式)
+          schema:
+            type: string
+        - name: processInstanceId
+          in: query
+          description: 流程实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: processInstanceJson
+          in: query
+          description: 流程实例信息(json格式)
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: scheduleTime
+          in: query
+          description: 定时时间
+          schema:
+            type: string
+        - name: syncDefine
+          in: query
+          description: 更新流程实例的信息是否同步到流程定义
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/view-gantt:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: vieGanttTree
+      description: 浏览Gantt图
+      operationId: viewTreeUsingGET_1
+      parameters:
+        - name: processInstanceId
+          in: query
+          description: 流程实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/instance/view-variables:
+    get:
+      tags:
+        - 流程实例相关操作
+      summary: viewVariables
+      description: 查询流程实例全局变量和局部变量
+      operationId: viewVariablesUsingGET
+      parameters:
+        - name: processInstanceId
+          in: query
+          description: 流程实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/batch-delete:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: batchDeleteProcessDefinitionByIds
+      description: 批量删除流程定义通过流程定义ID集合
+      operationId: batchDeleteProcessDefinitionByIdsUsingGET
+      parameters:
+        - name: processDefinitionIds
+          in: query
+          description: process definition ids
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/copy:
+    post:
+      tags:
+        - 流程定义相关操作
+      summary: copyProcessDefinition
+      description: 复制流程定义
+      operationId: copyProcessDefinitionUsingPOST
+      parameters:
+        - name: processId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/delete:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: deleteProcessDefinitionById
+      description: 删除流程定义通过流程定义ID
+      operationId: deleteProcessDefinitionByIdUsingGET
+      parameters:
+        - name: processDefinitionId
+          in: query
+          description: 流程定义ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/export:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: batchExportProcessDefinitionByIds
+      description: 批量导出工作流定义
+      operationId: batchExportProcessDefinitionByIdsUsingGET
+      parameters:
+        - name: processDefinitionIds
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/gen-task-list:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: getNodeListByDefinitionId
+      description: 获得任务节点列表通过流程定义ID
+      operationId: getNodeListByDefinitionIdUsingGET
+      parameters:
+        - name: processDefinitionId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/get-task-list:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: getNodeListByDefinitionIdList
+      description: 获得任务节点列表通过流程定义ID
+      operationId: getNodeListByDefinitionIdListUsingGET
+      parameters:
+        - name: processDefinitionIdList
+          in: query
+          description: 流程定义id列表
+          required: true
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/list:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: queryProcessDefinitionList
+      description: 查询流程定义列表
+      operationId: queryProcessDefinitionListUsingGET
+      parameters:
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/list-paging:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: queryProcessDefinitionListPaging
+      description: 分页查询流程定义列表
+      operationId: queryProcessDefinitionListPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: pageSize
+          in: query
+          description: 页大小
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/queryProcessDefinitionAllByProjectId:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: queryProcessDefinitionAllByProjectId
+      description: 查询流程定义通过项目ID
+      operationId: queryProcessDefinitionAllByProjectIdUsingGET
+      parameters:
+        - name: projectId
+          in: query
+          description: projectId
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/release:
+    post:
+      tags:
+        - 流程定义相关操作
+      summary: releaseProcessDefinition
+      description: 发布流程定义
+      operationId: releaseProcessDefinitionUsingPOST
+      parameters:
+        - name: processId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: releaseState
+          in: query
+          description: 流程定义节点图标连接信息(json格式)
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/save:
+    post:
+      tags:
+        - 流程定义相关操作
+      summary: save
+      description: 创建流程定义
+      operationId: createProcessDefinitionUsingPOST
+      parameters:
+        - name: connects
+          in: query
+          description: 流程定义节点图标连接信息(json格式)
+          required: true
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: 流程定义描述信息
+          schema:
+            type: string
+        - name: locations
+          in: query
+          description: 流程定义节点坐标位置信息(json格式)
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 流程定义名称
+          required: true
+          schema:
+            type: string
+        - name: processDefinitionJson
+          in: query
+          description: 流程定义详细信息(json格式)
+          required: true
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/select-by-id:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: queryProcessDefinitionById
+      description: 查询流程定义通过流程定义ID
+      operationId: queryProcessDefinitionByIdUsingGET
+      parameters:
+        - name: processId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/update:
+    post:
+      tags:
+        - 流程定义相关操作
+      summary: updateProcessDefinition
+      description: 更新流程定义
+      operationId: updateProcessDefinitionUsingPOST
+      parameters:
+        - name: connects
+          in: query
+          description: 流程定义节点图标连接信息(json格式)
+          required: true
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: 流程定义描述信息
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: locations
+          in: query
+          description: 流程定义节点坐标位置信息(json格式)
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 流程定义名称
+          required: true
+          schema:
+            type: string
+        - name: processDefinitionJson
+          in: query
+          description: 流程定义详细信息(json格式)
+          required: true
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/verify-name:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: verify-name
+      description: 验证流程定义名字
+      operationId: verifyProcessDefinitionNameUsingGET
+      parameters:
+        - name: name
+          in: query
+          description: 流程定义名称
+          required: true
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/process/view-tree:
+    get:
+      tags:
+        - 流程定义相关操作
+      summary: viewTree
+      description: 树状图
+      operationId: viewTreeUsingGET
+      parameters:
+        - name: limit
+          in: query
+          description: 显示多少条
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: processId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/schedule/create:
+    post:
+      tags:
+        - 定时相关操作
+      summary: createSchedule
+      description: 创建定时
+      operationId: createScheduleUsingPOST
+      parameters:
+        - name: failureStrategy
+          in: query
+          description: 失败策略
+          schema:
+            type: string
+            enum:
+              - END
+              - CONTINUE
+        - name: processDefinitionId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: processInstancePriority
+          in: query
+          description: 流程实例优先级
+          schema:
+            type: string
+            enum:
+              - HIGHEST
+              - HIGH
+              - MEDIUM
+              - LOW
+              - LOWEST
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: receivers
+          in: query
+          description: 收件人
+          schema:
+            type: string
+        - name: receiversCc
+          in: query
+          description: 收件人(抄送)
+          schema:
+            type: string
+        - name: schedule
+          in: query
+          description: 定时
+          schema:
+            type: string
+          example: '{''startTime'':''2019-06-10 00:00:00'',''endTime'':''2019-06-13
+          00:00:00'',''crontab'':''0 0 3/6 * * ? *''}'
+        - name: warningGroupId
+          in: query
+          description: 发送组ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: warningType
+          in: query
+          description: 发送策略
+          schema:
+            type: string
+            enum:
+              - NONE
+              - SUCCESS
+              - FAILURE
+              - ALL
+        - name: workerGroup
+          in: query
+          description: workerGroup
+          schema:
+            type: string
+            default: default
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/schedule/delete:
+    get:
+      tags:
+        - 定时相关操作
+      summary: deleteScheduleById
+      description: 定时下线
+      operationId: deleteScheduleByIdUsingGET
+      parameters:
+        - name: alertGroup
+          in: query
+          schema:
+            type: string
+        - name: createTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: email
+          in: query
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: phone
+          in: query
+          schema:
+            type: string
+        - name: projectName
+          in: path
+          description: projectName
+          required: true
+          schema:
+            type: string
+        - name: queue
+          in: query
+          schema:
+            type: string
+        - name: queueName
+          in: query
+          schema:
+            type: string
+        - name: scheduleId
+          in: query
+          description: 定时ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: tenantCode
+          in: query
+          schema:
+            type: string
+        - name: tenantId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: tenantName
+          in: query
+          schema:
+            type: string
+        - name: updateTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: userName
+          in: query
+          schema:
+            type: string
+        - name: userPassword
+          in: query
+          schema:
+            type: string
+        - name: userType
+          in: query
+          schema:
+            type: string
+            enum:
+              - ADMIN_USER
+              - GENERAL_USER
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/schedule/list:
+    post:
+      tags:
+        - 定时相关操作
+      summary: queryScheduleList
+      description: 查询定时列表
+      operationId: queryScheduleListUsingPOST
+      parameters:
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/schedule/list-paging:
+    get:
+      tags:
+        - 定时相关操作
+      summary: queryScheduleListPaging
+      description: 分页查询定时
+      operationId: queryScheduleListPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: processDefinitionId
+          in: query
+          description: 流程定义ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/schedule/offline:
+    post:
+      tags:
+        - 定时相关操作
+      summary: offline
+      description: 定时下线
+      operationId: offlineUsingPOST
+      parameters:
+        - name: id
+          in: query
+          description: 定时ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/schedule/online:
+    post:
+      tags:
+        - 定时相关操作
+      summary: online
+      description: 定时上线
+      operationId: onlineUsingPOST
+      parameters:
+        - name: id
+          in: query
+          description: 定时ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/schedule/preview:
+    post:
+      tags:
+        - 定时相关操作
+      summary: previewSchedule
+      description: PREVIEW_SCHEDULE_NOTES
+      operationId: previewScheduleUsingPOST
+      parameters:
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: schedule
+          in: query
+          description: 定时
+          schema:
+            type: string
+          example: '{''startTime'':''2019-06-10 00:00:00'',''endTime'':''2019-06-13
+          00:00:00'',''crontab'':''0 0 3/6 * * ? *''}'
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/schedule/update:
+    post:
+      tags:
+        - 定时相关操作
+      summary: updateSchedule
+      description: 更新定时
+      operationId: updateScheduleUsingPOST
+      parameters:
+        - name: failureStrategy
+          in: query
+          description: 失败策略
+          schema:
+            type: string
+            enum:
+              - END
+              - CONTINUE
+        - name: id
+          in: query
+          description: 定时ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: processInstancePriority
+          in: query
+          description: 流程实例优先级
+          schema:
+            type: string
+            enum:
+              - HIGHEST
+              - HIGH
+              - MEDIUM
+              - LOW
+              - LOWEST
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: receivers
+          in: query
+          description: 收件人
+          schema:
+            type: string
+        - name: receiversCc
+          in: query
+          description: 收件人(抄送)
+          schema:
+            type: string
+        - name: schedule
+          in: query
+          description: 定时
+          schema:
+            type: string
+          example: '{''startTime'':''2019-06-10 00:00:00'',''endTime'':''2019-06-13
+          00:00:00'',''crontab'':''0 0 3/6 * * ? *''}'
+        - name: warningGroupId
+          in: query
+          description: 发送组ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: warningType
+          in: query
+          description: 发送策略
+          schema:
+            type: string
+            enum:
+              - NONE
+              - SUCCESS
+              - FAILURE
+              - ALL
+        - name: workerGroup
+          in: query
+          description: workerGroup
+          schema:
+            type: string
+            default: default
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /projects/{projectName}/task-instance/list-paging:
+    get:
+      tags:
+        - 任务实例相关操作
+      summary: queryTaskListPaging
+      description: QUERY_TASK_INSTANCE_LIST_PAGING_NOTES
+      operationId: queryTaskListPagingUsingGET
+      parameters:
+        - name: endDate
+          in: query
+          description: 结束时间
+          schema:
+            type: string
+        - name: executorName
+          in: query
+          description: EXECUTOR_NAME
+          schema:
+            type: string
+        - name: host
+          in: query
+          description: 运行任务的主机IP地址
+          schema:
+            type: string
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: processInstanceId
+          in: query
+          description: 流程实例ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: projectName
+          in: path
+          description: 项目名称
+          required: true
+          schema:
+            type: string
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: 开始时间
+          schema:
+            type: string
+        - name: stateType
+          in: query
+          description: 工作流和任务节点的运行状态
+          schema:
+            type: string
+            enum:
+              - SUBMITTED_SUCCESS
+              - RUNNING_EXECUTION
+              - READY_PAUSE
+              - PAUSE
+              - READY_STOP
+              - STOP
+              - FAILURE
+              - SUCCESS
+              - NEED_FAULT_TOLERANCE
+              - KILL
+              - WAITTING_THREAD
+              - WAITTING_DEPEND
+        - name: taskName
+          in: query
+          description: 任务实例名
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /queue/create:
+    post:
+      tags:
+        - 队列相关操作
+      summary: createQueue
+      description: 创建队列
+      operationId: createQueueUsingPOST
+      parameters:
+        - name: queue
+          in: query
+          description: hadoop yarn队列名
+          required: true
+          schema:
+            type: string
+        - name: queueName
+          in: query
+          description: 队列名
+          required: true
+          schema:
+            type: string
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /queue/list:
+    get:
+      tags:
+        - 队列相关操作
+      summary: queryList
+      description: 查询队列列表
+      operationId: queryListUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /queue/list-paging:
+    get:
+      tags:
+        - 队列相关操作
+      summary: queryQueueListPaging
+      description: 分页查询队列列表
+      operationId: queryQueueListPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /queue/update:
+    post:
+      tags:
+        - 队列相关操作
+      summary: updateQueue
+      description: UPDATE_QUEUE_NOTES
+      operationId: updateQueueUsingPOST
+      parameters:
+        - name: id
+          in: query
+          description: 队列ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: queue
+          in: query
+          description: hadoop yarn队列名
+          required: true
+          schema:
+            type: string
+        - name: queueName
+          in: query
+          description: 队列名
+          required: true
+          schema:
+            type: string
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /queue/verify-queue:
+    post:
+      tags:
+        - 队列相关操作
+      summary: verifyQueue
+      description: 验证队列
+      operationId: verifyQueueUsingPOST
+      parameters:
+        - name: queue
+          in: query
+          description: hadoop yarn队列名
+          required: true
+          schema:
+            type: string
+        - name: queueName
+          in: query
+          description: 队列名
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/authed-file:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: authorizedFile
+      description: 授权文件
+      operationId: authorizedFileUsingGET
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content: {}
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/authed-udf-func:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: authUDFFunc
+      description: 授权udf函数
+      operationId: authorizedUDFFunctionUsingGET
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content: {}
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/authorize-resource-tree:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: authorizeResourceTree
+      description: AUTHORIZE_RESOURCE_TREE_NOTES
+      operationId: authorizeResourceTreeUsingGET
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content: {}
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/create:
+    post:
+      tags:
+        - 资源中心相关操作
+      summary: createResource
+      description: 创建资源
+      operationId: createResourceUsingPOST
+      parameters:
+        - name: currentDir
+          in: query
+          description: currentDir
+          required: true
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: 资源文件描述
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 资源文件名称
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: query
+          description: pid
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - file
+              properties:
+                file:
+                  type: object
+                  description: 资源文件
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/delete:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: deleteResource
+      description: 删除资源通过ID
+      operationId: deleteResourceUsingGET
+      parameters:
+        - name: id
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/directory/create:
+    post:
+      tags:
+        - 资源中心相关操作
+      summary: createDirctory
+      description: 创建资源
+      operationId: createDirectoryUsingPOST
+      parameters:
+        - name: currentDir
+          in: query
+          description: currentDir
+          required: true
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: 资源文件描述
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 资源文件名称
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: query
+          description: pid
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/download:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: downloadResource
+      description: 下载资源文件
+      operationId: downloadResourceUsingGET
+      parameters:
+        - name: id
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseEntity'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/list:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: queryResourceList
+      description: 查询资源列表
+      operationId: queryResourceListUsingGET
+      parameters:
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/list-paging:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: queryResourceListPaging
+      description: QUERY_RESOURCE_LIST_PAGING_NOTES
+      operationId: queryResourceListPagingUsingGET
+      parameters:
+        - name: id
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/list/jar:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: queryResourceByProgramType
+      description: 查询资源列表
+      operationId: queryResourceJarListUsingGET
+      parameters:
+        - name: programType
+          in: query
+          description: programType
+          schema:
+            type: string
+            enum:
+              - JAVA
+              - SCALA
+              - PYTHON
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/online-create:
+    post:
+      tags:
+        - 资源中心相关操作
+      summary: onlineCreateResource
+      description: 在线创建资源
+      operationId: onlineCreateResourceUsingPOST
+      parameters:
+        - name: content
+          in: query
+          description: 资源文件内容
+          required: true
+          schema:
+            type: string
+        - name: currentDir
+          in: query
+          description: currentDir
+          required: true
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: 资源文件描述
+          schema:
+            type: string
+        - name: fileName
+          in: query
+          description: 资源文件名称
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: query
+          description: pid
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: suffix
+          in: query
+          description: 资源文件后缀
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/queryResource:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: queryResource
+      description: QUERY_BY_RESOURCE_NAME
+      operationId: queryResourceUsingGET
+      parameters:
+        - name: fullName
+          in: query
+          description: RESOURCE_FULL_NAME
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: id
+          schema:
+            type: integer
+            format: int32
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/udf-func/create:
+    post:
+      tags:
+        - 资源中心相关操作
+      summary: createUdfFunc
+      description: 创建UDF函数
+      operationId: createUdfFuncUsingPOST
+      parameters:
+        - name: argTypes
+          in: query
+          description: 参数
+          schema:
+            type: string
+        - name: className
+          in: query
+          description: className
+          required: true
+          schema:
+            type: string
+        - name: database
+          in: query
+          description: 数据库名
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: udf描述，使用说明
+          schema:
+            type: string
+        - name: funcName
+          in: query
+          description: 函数名称
+          required: true
+          schema:
+            type: string
+        - name: resourceId
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: type
+          in: query
+          description: UDF类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - HIVE
+              - SPARK
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/udf-func/delete:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: deleteUdfFunc
+      description: 删除UDF函数
+      operationId: deleteUdfFuncUsingGET
+      parameters:
+        - name: id
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/udf-func/list:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: queryUdfFuncList
+      description: QUERY_UDF_FUNC_LIST_NOTES
+      operationId: queryUdfFuncListUsingGET
+      parameters:
+        - name: type
+          in: query
+          description: UDF类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - HIVE
+              - SPARK
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/udf-func/list-paging:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: queryUdfFuncListPaging
+      description: 分页查询udf函数列表
+      operationId: queryUdfFuncListPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/udf-func/update:
+    post:
+      tags:
+        - 资源中心相关操作
+      summary: updateUdfFunc
+      description: 更新udf函数
+      operationId: updateUdfFuncUsingPOST
+      parameters:
+        - name: argTypes
+          in: query
+          description: 参数
+          schema:
+            type: string
+        - name: className
+          in: query
+          description: className
+          required: true
+          schema:
+            type: string
+        - name: database
+          in: query
+          description: 数据库名
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: udf描述，使用说明
+          schema:
+            type: string
+        - name: funcName
+          in: query
+          description: 函数名称
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: resourceId
+          in: query
+          description: resourceId
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: type
+          in: query
+          description: UDF类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - HIVE
+              - SPARK
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/udf-func/update-ui:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: viewUIUdfFunction
+      description: 查看udf函数
+      operationId: viewUIUdfFunctionUsingGET
+      parameters:
+        - name: id
+          in: query
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/udf-func/verify-name:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: verifyUdfFuncName
+      description: 验证udf函数名
+      operationId: verifyUdfFuncNameUsingGET
+      parameters:
+        - name: name
+          in: query
+          description: 函数名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/unauth-udf-func:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: unauthUDFFunc
+      description: 取消udf函数授权
+      operationId: unauthUDFFuncUsingGET
+      parameters:
+        - name: userId
+          in: query
+          description: 用户ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content: {}
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/update:
+    post:
+      tags:
+        - 资源中心相关操作
+      summary: updateResource
+      description: 在线更新资源文件
+      operationId: updateResourceUsingPOST
+      parameters:
+        - name: description
+          in: query
+          description: 资源文件描述
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: name
+          in: query
+          description: 资源文件名称
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - file
+              properties:
+                file:
+                  type: object
+                  description: 资源文件
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/update-content:
+    post:
+      tags:
+        - 资源中心相关操作
+      summary: updateResourceContent
+      description: 在线更新资源文件
+      operationId: updateResourceContentUsingPOST
+      parameters:
+        - name: content
+          in: query
+          description: 资源文件内容
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/verify-name:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: verifyResourceName
+      description: VERIFY_RESOURCE_NAME_NOTES
+      operationId: verifyResourceNameUsingGET
+      parameters:
+        - name: fullName
+          in: query
+          description: RESOURCE_FULL_NAME
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 资源文件类型
+          required: true
+          schema:
+            type: object
+            enum:
+              - FILE
+              - UDF
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /resources/view:
+    get:
+      tags:
+        - 资源中心相关操作
+      summary: viewResource
+      description: 浏览资源通通过ID
+      operationId: viewResourceUsingGET
+      parameters:
+        - name: id
+          in: query
+          description: 资源ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: limit
+          in: query
+          description: 显示多少条
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: skipLineNum
+          in: query
+          description: 忽略行数
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /signOut:
+    post:
+      tags:
+        - 用户登录相关操作
+      summary: signOut
+      description: 退出登录
+      operationId: signOutUsingPOST
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /tenant/create:
+    post:
+      tags:
+        - 租户相关操作
+      summary: createTenant
+      description: 创建租户
+      operationId: createTenantUsingPOST
+      parameters:
+        - name: description
+          in: query
+          description: 租户描述
+          schema:
+            type: string
+        - name: queueId
+          in: query
+          description: 队列ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: tenantCode
+          in: query
+          description: 租户编码
+          required: true
+          schema:
+            type: string
+        - name: tenantName
+          in: query
+          description: 租户名称
+          required: true
+          schema:
+            type: string
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /tenant/delete:
+    post:
+      tags:
+        - 租户相关操作
+      summary: deleteTenantById
+      description: 删除租户
+      operationId: deleteTenantByIdUsingPOST
+      parameters:
+        - name: id
+          in: query
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /tenant/list:
+    get:
+      tags:
+        - 租户相关操作
+      summary: queryTenantlist
+      description: 查询租户列表
+      operationId: queryTenantlistUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /tenant/list-paging:
+    get:
+      tags:
+        - 租户相关操作
+      summary: queryTenantlistPaging
+      description: 分页查询租户列表
+      operationId: queryTenantlistPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /tenant/update:
+    post:
+      tags:
+        - 租户相关操作
+      summary: updateTenant
+      description: 更新租户
+      operationId: updateTenantUsingPOST
+      parameters:
+        - name: description
+          in: query
+          description: 租户描述
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: queueId
+          in: query
+          description: 队列ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: tenantCode
+          in: query
+          description: 租户编码
+          required: true
+          schema:
+            type: string
+        - name: tenantName
+          in: query
+          description: 租户名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /tenant/verify-tenant-code:
+    get:
+      tags:
+        - 租户相关操作
+      summary: verifyTenantCode
+      description: VERIFY_TENANT_CODE_NOTES
+      operationId: verifyTenantCodeUsingGET
+      parameters:
+        - name: tenantCode
+          in: query
+          description: 租户编码
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/authed-user:
+    get:
+      tags:
+        - 用户相关操作
+      summary: authorizedUser
+      description: 授权用户
+      operationId: authorizedUserUsingGET
+      parameters:
+        - name: alertgroupId
+          in: query
+          description: 报警组ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/create:
+    post:
+      tags:
+        - 用户相关操作
+      summary: createUser
+      description: 创建用户
+      operationId: createUserUsingPOST
+      parameters:
+        - name: email
+          in: query
+          description: 邮箱
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: phone
+          in: query
+          description: 手机号
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: queue
+          in: query
+          description: 使用的队列
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: tenantId
+          in: query
+          description: 租户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: userName
+          in: query
+          description: 用户名
+          schema:
+            type: string
+        - name: userPassword
+          in: query
+          description: 用户密码
+          schema:
+            type: string
+      responses:
+        201:
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/delete:
+    post:
+      tags:
+        - 用户相关操作
+      summary: delUserById
+      description: 删除用户通过ID
+      operationId: delUserByIdUsingPOST
+      parameters:
+        - name: id
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/get-user-info:
+    get:
+      tags:
+        - 用户相关操作
+      summary: getUserInfo
+      description: 获取用户信息
+      operationId: getUserInfoUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/grant-datasource:
+    post:
+      tags:
+        - 用户相关操作
+      summary: grantDataSource
+      description: 授权数据源
+      operationId: grantDataSourceUsingPOST
+      parameters:
+        - name: datasourceIds
+          in: query
+          description: 数据源ID列表(字符串格式，多个数据源ID以","分割)
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/grant-file:
+    post:
+      tags:
+        - 用户相关操作
+      summary: grantResource
+      description: 授权资源文件
+      operationId: grantResourceUsingPOST
+      parameters:
+        - name: resourceIds
+          in: query
+          description: 资源ID列表(字符串格式，多个资源ID以","分割)
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/grant-project:
+    post:
+      tags:
+        - 用户相关操作
+      summary: grantProject
+      description: 授权项目
+      operationId: grantProjectUsingPOST
+      parameters:
+        - name: projectIds
+          in: query
+          description: 项目IDS(字符串格式，多个项目以","分割)
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/grant-udf-func:
+    post:
+      tags:
+        - 用户相关操作
+      summary: grantUDFFunc
+      description: 授权udf函数
+      operationId: grantUDFFuncUsingPOST
+      parameters:
+        - name: udfIds
+          in: query
+          description: udf函数id列表(字符串格式，多个udf函数ID以","分割)
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/list:
+    get:
+      tags:
+        - 用户相关操作
+      summary: listUser
+      description: 用户列表
+      operationId: listUserUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/list-all:
+    get:
+      tags:
+        - 用户相关操作
+      summary: listAll
+      operationId: listAllUsingGET
+      parameters:
+        - name: alertGroup
+          in: query
+          schema:
+            type: string
+        - name: createTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: email
+          in: query
+          schema:
+            type: string
+        - name: id
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: phone
+          in: query
+          schema:
+            type: string
+        - name: queue
+          in: query
+          schema:
+            type: string
+        - name: queueName
+          in: query
+          schema:
+            type: string
+        - name: tenantCode
+          in: query
+          schema:
+            type: string
+        - name: tenantId
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: tenantName
+          in: query
+          schema:
+            type: string
+        - name: updateTime
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: userName
+          in: query
+          schema:
+            type: string
+        - name: userPassword
+          in: query
+          schema:
+            type: string
+        - name: userType
+          in: query
+          schema:
+            type: string
+            enum:
+              - ADMIN_USER
+              - GENERAL_USER
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/list-paging:
+    get:
+      tags:
+        - 用户相关操作
+      summary: queryUserList
+      description: 查询用户列表
+      operationId: queryUserListUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: string
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/unauth-user:
+    get:
+      tags:
+        - 用户相关操作
+      summary: unauthorizedUser
+      description: 取消授权
+      operationId: unauthorizedUserUsingGET
+      parameters:
+        - name: alertgroupId
+          in: query
+          description: 报警组ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/update:
+    post:
+      tags:
+        - 用户相关操作
+      summary: updateUser
+      description: 更新用户
+      operationId: updateUserUsingPOST
+      parameters:
+        - name: email
+          in: query
+          description: 邮箱
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: id
+          in: query
+          description: 用户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: phone
+          in: query
+          description: 手机号
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: queue
+          in: query
+          description: 使用的队列
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: tenantId
+          in: query
+          description: 租户ID
+          schema:
+            type: integer
+            format: int32
+          example: 100
+        - name: userName
+          in: query
+          description: 用户名
+          schema:
+            type: string
+        - name: userPassword
+          in: query
+          description: 用户密码
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /users/verify-user-name:
+    get:
+      tags:
+        - 用户相关操作
+      summary: verifyUserName
+      description: 验证用户名
+      operationId: verifyUserNameUsingGET
+      parameters:
+        - name: userName
+          in: query
+          description: 用户名
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /worker-group/all-groups:
+    get:
+      tags:
+        - Worker分组管理
+      summary: queryAllWorkerGroups
+      description: 查询worker group分组
+      operationId: queryAllWorkerGroupsUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /worker-group/delete-by-id:
+    post:
+      tags:
+        - Worker分组管理
+      summary: deleteById
+      description: 删除worker group通过ID
+      operationId: deleteByIdUsingPOST
+      parameters:
+        - name: id
+          in: query
+          description: Worker Server分组ID
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 10
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /worker-group/list-paging:
+    get:
+      tags:
+        - Worker分组管理
+      summary: queryAllWorkerGroupsPaging
+      description: Worker分组管理
+      operationId: queryAllWorkerGroupsPagingUsingGET
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码号
+          schema:
+            type: integer
+            format: int32
+          example: 1
+        - name: pageSize
+          in: query
+          description: 页大小
+          schema:
+            type: integer
+            format: int32
+          example: 20
+        - name: searchVal
+          in: query
+          description: 搜索值
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /worker-group/save:
+    post:
+      tags:
+        - Worker分组管理
+      summary: saveWorkerGroup
+      description: CREATE_WORKER_GROUP_NOTES
+      operationId: saveWorkerGroupUsingPOST
+      parameters:
+        - name: addrList
+          in: query
+          description: WORKER_ADDR_LIST
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Worker Server分组ID
+          schema:
+            type: integer
+            format: int32
+            default: 0
+          example: 10
+        - name: name
+          in: query
+          description: Worker分组名称
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        201:
+          description: Created
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+  /worker-group/worker-address-list:
+    get:
+      tags:
+        - Worker分组管理
+      summary: queryWorkerAddressList
+      description: QUERY_WORKER_ADDRESS_LIST_NOTES
+      operationId: queryWorkerAddressListUsingGET
+      responses:
+        200:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Result'
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not Found
+          content: {}
+      deprecated: false
+components:
+  schemas:
+    ResponseEntity:
+      title: ResponseEntity
+      type: object
+      properties:
+        body:
+          type: object
+          properties: {}
+        statusCode:
+          type: string
+          enum:
+            - 100 CONTINUE
+            - 101 SWITCHING_PROTOCOLS
+            - 102 PROCESSING
+            - 103 CHECKPOINT
+            - 200 OK
+            - 201 CREATED
+            - 202 ACCEPTED
+            - 203 NON_AUTHORITATIVE_INFORMATION
+            - 204 NO_CONTENT
+            - 205 RESET_CONTENT
+            - 206 PARTIAL_CONTENT
+            - 207 MULTI_STATUS
+            - 208 ALREADY_REPORTED
+            - 226 IM_USED
+            - 300 MULTIPLE_CHOICES
+            - 301 MOVED_PERMANENTLY
+            - 302 FOUND
+            - 302 MOVED_TEMPORARILY
+            - 303 SEE_OTHER
+            - 304 NOT_MODIFIED
+            - 305 USE_PROXY
+            - 307 TEMPORARY_REDIRECT
+            - 308 PERMANENT_REDIRECT
+            - 400 BAD_REQUEST
+            - 401 UNAUTHORIZED
+            - 402 PAYMENT_REQUIRED
+            - 403 FORBIDDEN
+            - 404 NOT_FOUND
+            - 405 METHOD_NOT_ALLOWED
+            - 406 NOT_ACCEPTABLE
+            - 407 PROXY_AUTHENTICATION_REQUIRED
+            - 408 REQUEST_TIMEOUT
+            - 409 CONFLICT
+            - 410 GONE
+            - 411 LENGTH_REQUIRED
+            - 412 PRECONDITION_FAILED
+            - 413 PAYLOAD_TOO_LARGE
+            - 413 REQUEST_ENTITY_TOO_LARGE
+            - 414 URI_TOO_LONG
+            - 414 REQUEST_URI_TOO_LONG
+            - 415 UNSUPPORTED_MEDIA_TYPE
+            - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+            - 417 EXPECTATION_FAILED
+            - 418 I_AM_A_TEAPOT
+            - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+            - 420 METHOD_FAILURE
+            - 421 DESTINATION_LOCKED
+            - 422 UNPROCESSABLE_ENTITY
+            - 423 LOCKED
+            - 424 FAILED_DEPENDENCY
+            - 426 UPGRADE_REQUIRED
+            - 428 PRECONDITION_REQUIRED
+            - 429 TOO_MANY_REQUESTS
+            - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+            - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+            - 500 INTERNAL_SERVER_ERROR
+            - 501 NOT_IMPLEMENTED
+            - 502 BAD_GATEWAY
+            - 503 SERVICE_UNAVAILABLE
+            - 504 GATEWAY_TIMEOUT
+            - 505 HTTP_VERSION_NOT_SUPPORTED
+            - 506 VARIANT_ALSO_NEGOTIATES
+            - 507 INSUFFICIENT_STORAGE
+            - 508 LOOP_DETECTED
+            - 509 BANDWIDTH_LIMIT_EXCEEDED
+            - 510 NOT_EXTENDED
+            - 511 NETWORK_AUTHENTICATION_REQUIRED
+        statusCodeValue:
+          type: integer
+          format: int32
+    Result:
+      title: Result
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        data:
+          type: object
+          properties: {}
+        msg:
+          type: string
