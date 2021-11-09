@@ -28,6 +28,9 @@ def getCurrentGitBranch() {
         if (result.exitValue() == 0) {
             gitBranch = result.text.trim()
         }
+        if (gitBranch.contains("feature")){
+            return "${damProfilesActive}"
+        }
     } catch (e) {
     }
     return gitBranch
