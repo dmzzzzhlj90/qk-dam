@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- * 数据质量_规则模板目录
+ * 数据质量_规则分类目录
  *
  * @author wjq
  * @date 2021/11/8
@@ -83,7 +83,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         Predicate predicate = qDqcRuleDir.ruleDirName.eq(dqcRuleDir.getRuleDirName());
         boolean exists = dqcRuleDirRepository.exists(predicate);
         if (exists) {
-            throw new BizException("当前要新增的规则分类目录名称为:" + dqcRuleDirVO.getDirDsdName() + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的规则分类目录名称为:" + dqcRuleDirVO.getRuleDirName() + " 的数据，已存在！！！");
         }
         dqcRuleDirRepository.save(dqcRuleDir);
     }

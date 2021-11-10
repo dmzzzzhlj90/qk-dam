@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 数据质量_规则模板目录
+ * 数据质量_规则分类目录
  *
  * @author wjq
  * @date 20211108
@@ -67,7 +67,7 @@ public class DqcRuleDirController {
     }
 
     /**
-     * 标准目录单子节点删除方式
+     * 规则分类目录单子节点删除方式
      *
      * @param id
      * @return DefaultCommonResult
@@ -80,7 +80,7 @@ public class DqcRuleDirController {
     }
 
     /**
-     * 标准目录支持根节点关联删除子节点方式
+     * 规则分类目录批量删除方式
      *
      * @param id
      * @return DefaultCommonResult

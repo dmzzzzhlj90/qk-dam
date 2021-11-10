@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * 数据质量__规则目录VO
+ * 数据质量_规则分类目录TreeVO
  *
  * @author wjq
  * @date 20211108

@@ -1,8 +1,6 @@
 package com.qk.dm.dataquality.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,11 +8,14 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "qk_dqc_dispatch_rule")
-public class DqcDispatchRule implements Serializable {
+@Table(name = "qk_dqc_scheduler_rules")
+public class DqcSchedulerRules implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 主键ID
+     */
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +24,8 @@ public class DqcDispatchRule implements Serializable {
     /**
      * 调度模版id
      */
-    @Column(name = "dispatch_temp_id", nullable = false)
-    private Long dispatchTempId;
+    @Column(name = "scheduler_temp_id", nullable = false)
+    private Long schedulerTempId;
 
     /**
      * 规则模版id
@@ -41,8 +42,8 @@ public class DqcDispatchRule implements Serializable {
     /**
      * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔
      */
-    @Column(name = "suit_engine", nullable = false)
-    private String suitEngine;
+    @Column(name = "engine_type", nullable = false)
+    private String engineType;
 
     /**
      * 数据连接地址
@@ -53,20 +54,20 @@ public class DqcDispatchRule implements Serializable {
     /**
      * 数据库名称
      */
-    @Column(name = "databases", nullable = false)
-    private String databases;
+    @Column(name = "database_name", nullable = false)
+    private String databaseName;
 
     /**
      * 表名称
      */
-    @Column(name = "tables")
-    private String tables;
+    @Column(name = "table_name")
+    private String tableName;
 
     /**
      * 字段名称
      */
-    @Column(name = "fields")
-    private String fields;
+    @Column(name = "field_name")
+    private String fieldName;
 
     /**
      * 扫描范围 0-全表 1-条件
@@ -102,20 +103,18 @@ public class DqcDispatchRule implements Serializable {
      * 删除标识(0-保留 1-删除)
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag = 0;
+    private Integer delFlag;
 
     /**
      * 创建时间
      */
     @Column(name = "gmt_create", nullable = false)
-    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
-    @UpdateTimestamp
     private Date gmtModified;
 
 }
