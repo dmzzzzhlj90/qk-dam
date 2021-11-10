@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 数据质量_规则模板目录
+ * 数据质量_规则分类目录
  *
  * @author wjq
- * @date 20211108
+ * @date 2021/11/08
  * @since 1.0.0
  */
 @Service

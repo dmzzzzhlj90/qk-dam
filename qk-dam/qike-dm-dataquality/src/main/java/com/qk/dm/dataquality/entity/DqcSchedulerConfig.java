@@ -1,8 +1,6 @@
 package com.qk.dm.dataquality.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,11 +8,14 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "qk_dqc_dispatch")
-public class DqcDispatch implements Serializable {
+@Table(name = "qk_dqc_scheduler_config")
+public class DqcSchedulerConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 主键ID
+     */
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +24,8 @@ public class DqcDispatch implements Serializable {
     /**
      * 调度模版id
      */
-    @Column(name = "dispatch_temp_id", nullable = false)
-    private Long dispatchTempId;
+    @Column(name = "scheduler_temp_id", nullable = false)
+    private Long schedulerTempId;
 
     /**
      * 调度执行方式 1-手动执行 2-调度执行
@@ -35,26 +36,26 @@ public class DqcDispatch implements Serializable {
     /**
      * 调度周期 年、月、周、日
      */
-    @Column(name = "dispatch_cycle")
-    private String dispatchCycle;
+    @Column(name = "scheduler_cycle")
+    private String schedulerCycle;
 
     /**
      * 周期开始时间
      */
-    @Column(name = "dispatch_time_start")
-    private Date dispatchTimeStart;
+    @Column(name = "scheduler_time_start")
+    private Date schedulerTimeStart;
 
     /**
      * 周期结束时间
      */
-    @Column(name = "dispatch_time_ent")
-    private Date dispatchTimeEnt;
+    @Column(name = "scheduler_time_ent")
+    private Date schedulerTimeEnt;
 
     /**
      * 间隔时间
      */
-    @Column(name = "dispatch_interval_time")
-    private String dispatchIntervalTime;
+    @Column(name = "scheduler_interval_time")
+    private String schedulerIntervalTime;
 
     /**
      * 调度执行cron表达式
@@ -78,20 +79,18 @@ public class DqcDispatch implements Serializable {
      * 删除标识(0-保留 1-删除)
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag = 0;
+    private Integer delFlag;
 
     /**
      * 创建时间
      */
     @Column(name = "gmt_create", nullable = false)
-    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
-    @UpdateTimestamp
     private Date gmtModified;
 
 }

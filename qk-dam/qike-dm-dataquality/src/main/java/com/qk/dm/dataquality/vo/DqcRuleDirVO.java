@@ -5,13 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * 数据质量__规则目录VO
+ * 数据质量__规则分类目录VO
  *
  * @author wjq
- * @date 20211108
+ * @date 20211/11/08
  * @since 1.0.0
  */
 @Data
@@ -26,17 +30,17 @@ public class DqcRuleDirVO {
     private Long id;
 
     /**
-     * 规则目录ID
+     * 规则分类目录ID
      */
     private String ruleDirId;
 
     /**
-     * 规则目录名称
+     * 规则分类目录名称
      */
-    private String dirDsdName;
+    private String ruleDirName;
 
     /**
-     * 目录父级ID
+     * 父级id
      */
     private String parentId;
 

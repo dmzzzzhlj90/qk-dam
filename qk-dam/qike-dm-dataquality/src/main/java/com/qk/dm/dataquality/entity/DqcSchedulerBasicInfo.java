@@ -1,8 +1,6 @@
 package com.qk.dm.dataquality.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,27 +8,30 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "qk_dqc_dispatch_template")
-public class DqcDispatchTemplate implements Serializable {
+@Table(name = "qk_dqc_scheduler_basic_info")
+public class DqcSchedulerBasicInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 主键ID
+     */
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * 模板名称
+     * 作业名称
      */
-    @Column(name = "temp_name", nullable = false)
-    private String tempName;
+    @Column(name = "task_name", nullable = false)
+    private String taskName;
 
     /**
      * 分类目录
      */
-    @Column(name = "directory_id", nullable = false)
-    private Long directoryId;
+    @Column(name = "dir_id", nullable = false)
+    private Long dirId;
 
     /**
      * 提示级别 1-严重
@@ -78,20 +79,18 @@ public class DqcDispatchTemplate implements Serializable {
      * 删除标识(0-保留 1-删除)
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag = 0;
+    private Integer delFlag;
 
     /**
      * 创建时间
      */
     @Column(name = "gmt_create", nullable = false)
-    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
-    @UpdateTimestamp
     private Date gmtModified;
 
 }

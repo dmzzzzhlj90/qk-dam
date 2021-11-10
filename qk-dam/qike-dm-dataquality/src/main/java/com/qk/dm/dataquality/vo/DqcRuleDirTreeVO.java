@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * 数据质量__规则目录VO
+ * 数据质量_规则分类目录树VO
  *
  * @author wjq
- * @date 20211108
+ * @date 2021/11/08
  * @since 1.0.0
  */
 @Data

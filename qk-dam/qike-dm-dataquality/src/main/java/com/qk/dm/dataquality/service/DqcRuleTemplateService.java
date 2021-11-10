@@ -1,9 +1,9 @@
 package com.qk.dm.dataquality.service;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateListVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
-import com.qk.dm.dataquality.vo.PageResultVO;
 
 /**
  * @author shenpj
