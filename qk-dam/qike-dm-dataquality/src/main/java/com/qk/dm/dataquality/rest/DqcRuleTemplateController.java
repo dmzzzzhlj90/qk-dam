@@ -36,10 +36,10 @@ public class DqcRuleTemplateController {
     return DefaultCommonResult.success();
   }
 
-  @PutMapping("/{id}")
+  @PutMapping("")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult update(@PathVariable("id") Long id,@RequestBody @Validated DqcRuleTemplateVo dqcRuleTemplateVo) {
-    dqcRuleTemplateService.update(id,dqcRuleTemplateVo);
+  public DefaultCommonResult update(@RequestBody @Validated DqcRuleTemplateVo dqcRuleTemplateVo) {
+    dqcRuleTemplateService.update(dqcRuleTemplateVo);
     return DefaultCommonResult.success();
   }
 
@@ -50,18 +50,18 @@ public class DqcRuleTemplateController {
     return DefaultCommonResult.success();
   }
 
-  @DeleteMapping("/root/{id}")
+  @DeleteMapping("/root/{ids}")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult deleteBulk(@PathVariable("id") Long id) {
-    dqcRuleTemplateService.deleteBulk(id);
+  public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+    dqcRuleTemplateService.deleteBulk(ids);
     return DefaultCommonResult.success();
   }
 
   @GetMapping("/page/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult<PageResultVO<DqcRuleTemplateListVo>> searchPageList(
-          Pagination pagination) {
+          DqcRuleTemplateVo dqcRuleTemplateVo,Pagination pagination) {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(pagination));
+            ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplateVo,pagination));
   }
 }

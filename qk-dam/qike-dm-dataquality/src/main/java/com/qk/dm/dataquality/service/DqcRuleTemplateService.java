@@ -14,11 +14,11 @@ public interface DqcRuleTemplateService {
 
   void insert(DqcRuleTemplateVo dqcRuleTemplateVo);
 
-  void update(Long id, DqcRuleTemplateVo dqcRuleTemplateVo);
+  void update(DqcRuleTemplateVo dqcRuleTemplateVo);
 
   void delete(Long delId);
 
-  void deleteBulk(Long delId);
+  void deleteBulk(String ids);
 
-  PageResultVO<DqcRuleTemplateListVo> searchPageList(Pagination pagination);
+  PageResultVO<DqcRuleTemplateListVo> searchPageList(DqcRuleTemplateVo dqcRuleTemplateVo,Pagination pagination);
 }

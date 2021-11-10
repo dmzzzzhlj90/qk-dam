@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Data
 public class DqcRuleTemplateListVo {
 
-    private Long id;
+    private Integer id;
 
     /**
      * 模板名称
@@ -25,7 +24,7 @@ public class DqcRuleTemplateListVo {
     /**
      * 分类目录
      */
-    private Long dirId;
+    private Integer dirId;
 
     /**
      * 质量纬度id
@@ -45,13 +44,11 @@ public class DqcRuleTemplateListVo {
     /**
      * 描述
      */
-    @NotBlank(message = "描述不能为空！")
     private String description;
 
     /**
      * 模板sql
      */
-    @NotBlank(message = "模板sql不能为空！")
     private String tempSql;
 
     /**

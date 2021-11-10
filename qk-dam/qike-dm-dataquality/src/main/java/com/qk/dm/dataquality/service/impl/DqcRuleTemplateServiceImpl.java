@@ -2,7 +2,9 @@ package com.qk.dm.dataquality.service.impl;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import com.alibaba.druid.DbType;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.indicator.common.sqlbuilder.sqlparser.SqlParserFactory;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
@@ -18,10 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author shenpj
@@ -35,7 +35,6 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
   private final QDqcRuleTemplate qDqcRuleTemplate = QDqcRuleTemplate.dqcRuleTemplate;
-  public static final Integer del_state_up = 0;
   public static final Integer del_state_down = 1;
 
   public DqcRuleTemplateServiceImpl(
@@ -51,6 +50,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public void insert(DqcRuleTemplateVo dqcRuleTemplateVo) {
+    parseStatements(dqcRuleTemplateVo.getTempSql());
     DqcRuleTemplate dqcRuleTemplate =
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
     // todo 添加创建人
@@ -58,10 +58,19 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
+  private void parseStatements(String sql) {
+    if (!SqlParserFactory.parseStatements(sql, DbType.hive)) {
+      throw new BizException("本sql hive不适用！！！");
+    }
+    if (!SqlParserFactory.parseStatements(sql, DbType.mysql)) {
+      throw new BizException("本sql mysql不适用！！！");
+    }
+  }
+
   @Override
-  public void update(Long id, DqcRuleTemplateVo dqcRuleTemplateVo) {
-    DqcRuleTemplate dqcRuleTemplate = getOneByNotDel(id);
-    if (dqcRuleTemplateVo.getPublishState() != null) {
+  public void update(DqcRuleTemplateVo dqcRuleTemplateVo) {
+    if (dqcRuleTemplateVo.getId() != null && dqcRuleTemplateVo.getPublishState() != null) {
+      DqcRuleTemplate dqcRuleTemplate = getOneById(dqcRuleTemplateVo.getId());
       // todo 添加修改人
       dqcRuleTemplate.setUpdateUserid(1L);
       dqcRuleTemplate.setPublishState(dqcRuleTemplateVo.getPublishState());
@@ -71,17 +80,27 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public void delete(Long id) {
-    DqcRuleTemplate dqcRuleTemplate = getOneByNotDel(id);
+    DqcRuleTemplate dqcRuleTemplate = getOneById(id);
     dqcRuleTemplate.setDelFlag(del_state_down);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
   @Override
-  public void deleteBulk(Long delId) {}
+  public void deleteBulk(String ids) {
+    Iterable<Long> idList =
+        Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+    List<DqcRuleTemplate> idcTimeLimitList = dqcRuleTemplateRepository.findAllById(idList);
+    if (idcTimeLimitList.isEmpty()) {
+      throw new BizException("当前要删除的id为：" + ids + " 的数据，不存在！！！");
+    }
+    idcTimeLimitList.stream().peek(i -> i.setDelFlag(del_state_down)).collect(Collectors.toList());
+    dqcRuleTemplateRepository.saveAll(idcTimeLimitList);
+  }
 
   @Override
-  public PageResultVO<DqcRuleTemplateListVo> searchPageList(Pagination pagination) {
-    Map<String, Object> map = queryParams(pagination);
+  public PageResultVO<DqcRuleTemplateListVo> searchPageList(
+      DqcRuleTemplateVo dqcRuleTemplateVo, Pagination pagination) {
+    Map<String, Object> map = queryParams(dqcRuleTemplateVo, pagination);
     List<DqcRuleTemplate> list = (List<DqcRuleTemplate>) map.get("list");
     List<DqcRuleTemplateListVo> voList =
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateListVo(list);
@@ -89,9 +108,10 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         (long) map.get("total"), pagination.getPage(), pagination.getSize(), voList);
   }
 
-  private Map<String, Object> queryParams(Pagination pagination) {
+  private Map<String, Object> queryParams(
+      DqcRuleTemplateVo dqcRuleTemplateVo, Pagination pagination) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    checkCondition(booleanBuilder);
+    checkCondition(dqcRuleTemplateVo, booleanBuilder);
     Map<String, Object> result = new HashMap<>(2);
     result.put("list", getTemplateList(pagination, booleanBuilder));
     result.put("total", getCount(booleanBuilder));
@@ -128,13 +148,15 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
   }
 
-  public void checkCondition(BooleanBuilder booleanBuilder) {
-    booleanBuilder.and(qDqcRuleTemplate.delFlag.eq(del_state_up));
+  public void checkCondition(DqcRuleTemplateVo dqcRuleTemplateVo, BooleanBuilder booleanBuilder) {
+    if (dqcRuleTemplateVo.getDirId() != null) {
+      booleanBuilder.and(qDqcRuleTemplate.dirId.eq(dqcRuleTemplateVo.getDirId()));
+    }
   }
 
-  private DqcRuleTemplate getOneByNotDel(Long id) {
+  private DqcRuleTemplate getOneById(Long id) {
     Optional<DqcRuleTemplate> one = dqcRuleTemplateRepository.findById(id);
-    if (one.isPresent()) {
+    if (!one.isPresent()) {
       throw new BizException("id为：" + id + " 的模版不存在！！！");
     }
     return one.get();
