@@ -15,7 +15,7 @@ import java.util.Date;
  * 数据质量__规则分类目录VO
  *
  * @author wjq
- * @date 20211108
+ * @date 20211/11/08
  * @since 1.0.0
  */
 @Data

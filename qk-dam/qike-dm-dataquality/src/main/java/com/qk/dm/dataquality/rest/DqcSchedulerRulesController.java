@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * 数据质量_规则调度_规则信息
  *
  * @author wjq
- * @date 20211108
+ * @date 2021/11/08
  * @since 1.0.0
  */
 @Slf4j

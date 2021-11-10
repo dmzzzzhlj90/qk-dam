@@ -18,7 +18,7 @@ import java.util.*;
  * 数据质量_规则分类目录
  *
  * @author wjq
- * @date 2021/11/8
+ * @date 2021/11/08
  * @since 1.0.0
  */
 @Service
