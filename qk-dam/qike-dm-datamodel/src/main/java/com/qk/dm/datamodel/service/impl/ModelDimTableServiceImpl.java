@@ -40,8 +40,6 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     @Override
     public void insert(ModelDimTableDTO modelDimTableDTO) {
         ModelDimTable modelDimTable = ModelDimTableMapper.INSTANCE.of(modelDimTableDTO);
-        modelDimTable.setGmtCreate(new Date());
-        modelDimTable.setGmtModified(new Date());
         modelDimTableRepository.save(modelDimTable);
 
     }

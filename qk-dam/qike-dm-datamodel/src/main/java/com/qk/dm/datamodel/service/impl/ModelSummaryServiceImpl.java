@@ -38,8 +38,6 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     @Override
     public void insert(ModelSummaryDTO modelSummaryDTO) {
         ModelSummary modelSummary = ModelSummaryMapper.INSTANCE.of(modelSummaryDTO);
-        modelSummary.setGmtCreate(new Date());
-        modelSummary.setGmtModified(new Date());
         modelSummaryRepository.save(modelSummary);
     }
 

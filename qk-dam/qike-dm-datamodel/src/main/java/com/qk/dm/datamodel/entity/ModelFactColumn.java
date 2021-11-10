@@ -1,6 +1,8 @@
 package com.qk.dm.datamodel.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -78,12 +80,14 @@ public class ModelFactColumn implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
     /**

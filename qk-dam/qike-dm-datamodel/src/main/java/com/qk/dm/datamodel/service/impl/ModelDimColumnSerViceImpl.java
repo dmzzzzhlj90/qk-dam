@@ -36,11 +36,6 @@ public class ModelDimColumnSerViceImpl implements ModelDimColumnSerVice {
     @Override
     public void insert(List<ModelDimColumnDTO> modelDimColumnDTOList) {
         List<ModelDimColumn> modelDimColumnList = ModelDimColumnMapper.INSTANCE.use(modelDimColumnDTOList);
-        Date createTime = new Date();
-        modelDimColumnList.forEach(e->{
-            e.setGmtCreate(createTime);
-            e.setGmtModified(createTime);
-        });
         modelDimColumnRepository.saveAll(modelDimColumnList);
     }
 
@@ -52,11 +47,6 @@ public class ModelDimColumnSerViceImpl implements ModelDimColumnSerVice {
         }
         modelDimColumnRepository.deleteByDimId(dimId);
         List<ModelDimColumn> modelDimColumnList = ModelDimColumnMapper.INSTANCE.use(modelPhysicalColumnDTOList);
-        Date createTime = new Date();
-        modelDimColumnList.forEach(e->{
-            e.setGmtCreate(createTime);
-            e.setGmtModified(createTime);
-        });
         modelDimColumnRepository.saveAllAndFlush(modelDimColumnList);
     }
 

@@ -5,9 +5,12 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.entity.ModelDim;
 import com.qk.dm.datamodel.entity.QModelDim;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelDimMapper;
+import com.qk.dm.datamodel.params.dto.ModelDimColumnDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimDTO;
+import com.qk.dm.datamodel.params.dto.ModelDimInfoDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import com.qk.dm.datamodel.repositories.ModelDimRepository;
+import com.qk.dm.datamodel.service.ModelDimColumnSerVice;
 import com.qk.dm.datamodel.service.ModelDimService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,6 +21,8 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * 维度
  * @author wangzp
@@ -31,10 +36,16 @@ public class ModelDimServiceImpl implements ModelDimService {
     private final ModelDimRepository modelDimRepository;
     private final EntityManager entityManager;
     private final QModelDim qModelDim = QModelDim.modelDim;
+    private final ModelDimColumnSerVice modelDimColumnSerVice;
 
-    public ModelDimServiceImpl(ModelDimRepository modelDimRepository,EntityManager entityManager){
+    private static final int PUBLISH = 1; //已发布
+    private static final int OFFLINE = 2;//已下线
+
+    public ModelDimServiceImpl(ModelDimRepository modelDimRepository,EntityManager entityManager,
+                               ModelDimColumnSerVice modelDimColumnSerVice){
         this.modelDimRepository = modelDimRepository;
         this.entityManager = entityManager;
+        this.modelDimColumnSerVice = modelDimColumnSerVice;
     }
     @PostConstruct
     public void initFactory() {
@@ -42,12 +53,14 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public void insert(ModelDimDTO modelDimDTO) {
-        ModelDim modelDim = ModelDimMapper.INSTANCE.of(modelDimDTO);
-        modelDim.setGmtCreate(new Date());
-        modelDim.setGmtModified(new Date());
-        modelDimRepository.save(modelDim);
-
+    public void insert(ModelDimInfoDTO modelDimInfoDTO) {
+        ModelDim modelDim = ModelDimMapper.INSTANCE.of(modelDimInfoDTO.getModelDimBase());
+        //保存维度基本信息
+        ModelDim dim = modelDimRepository.save(modelDim);
+        //保存字段信息
+        List<ModelDimColumnDTO> modelDimColumnList = modelDimInfoDTO.getModelDimColumnList();
+        modelDimColumnList.forEach(e->e.setDimId(dim.getId()));;
+        modelDimColumnSerVice.insert(modelDimColumnList);
     }
 
     @Override
@@ -60,28 +73,24 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public void update(Long id, ModelDimDTO modelDimDTO) {
+    public void update(Long id, ModelDimInfoDTO modelDimInfoDTO) {
         ModelDim modelDim = modelDimRepository.findById(id).orElse(null);
         if(Objects.isNull(modelDim)){
             throw new BizException("当前要修改的维度信息 id为"+id+"的数据不存在！！！");
         }
-        ModelDimMapper.INSTANCE.from(modelDimDTO,modelDim);
-        modelDim.setGmtModified(new Date());
+        ModelDimMapper.INSTANCE.from(modelDimInfoDTO.getModelDimBase(),modelDim);
         modelDimRepository.saveAndFlush(modelDim);
+        modelDimColumnSerVice.update(id,modelDimInfoDTO.getModelDimColumnList());
     }
 
     @Override
     public void delete(String ids) {
-        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-        List<ModelDim> modelDimList = modelDimRepository.findAllById(idSet);
-        if(modelDimList.isEmpty()){
-            throw new BizException("当前要删除的维度id为："+ids+"的数据不存在！！！");
-        }
+        List<ModelDim> modelDimList = getModelDimList(ids);
         modelDimRepository.deleteAll(modelDimList);
     }
 
     @Override
-    public PageResultVO<ModelDimVO> listPage(ModelDimDTO modelDimDTO) {
+    public PageResultVO<ModelDimVO> list(ModelDimDTO modelDimDTO) {
         Map<String, Object> map;
         try {
             map = queryByParams(modelDimDTO);
@@ -96,6 +105,28 @@ public class ModelDimServiceImpl implements ModelDimService {
                 modelDimDTO.getPagination().getPage(),
                 modelDimDTO.getPagination().getSize(),
                 voList);
+    }
+
+    @Override
+    public void publish(String ids) {
+        List<ModelDim> modelDimList = getModelDimList(ids);
+        modelDimList.forEach(e->e.setStatus(PUBLISH));
+        modelDimRepository.saveAllAndFlush(modelDimList);
+    }
+
+    @Override
+    public void offline(String ids) {
+        List<ModelDim> modelDimList = getModelDimList(ids);
+        modelDimList.forEach(e->e.setStatus(OFFLINE));
+        modelDimRepository.saveAllAndFlush(modelDimList);
+    }
+    private List<ModelDim> getModelDimList(String ids){
+        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelDim> modelDimList = modelDimRepository.findAllById(idSet);
+        if(modelDimList.isEmpty()){
+            throw new BizException("当前要操作维度id为："+ids+"的数据不存在！！！");
+        }
+        return modelDimList;
     }
 
     private Map<String, Object> queryByParams(ModelDimDTO modelDimDTO) {

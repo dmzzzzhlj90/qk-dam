@@ -28,11 +28,6 @@ public class ModelFactColumnServiceImpl implements ModelFactColumnService {
     @Override
     public void insert(List<ModelFactColumnDTO> modelFactColumnDTOList) {
         List<ModelFactColumn> modelFactColumnList = ModelFactColumnMapper.INSTANCE.use(modelFactColumnDTOList);
-        Date date = new Date();
-        modelFactColumnDTOList.forEach(e->{
-            e.setGmtCreate(date);
-            e.setGmtModified(date);
-        });
         modelFactColumnRepository.saveAll(modelFactColumnList);
     }
 
@@ -44,11 +39,6 @@ public class ModelFactColumnServiceImpl implements ModelFactColumnService {
         }
         modelFactColumnRepository.deleteByFactId(factId);
         List<ModelFactColumn> modelFactColumnList = ModelFactColumnMapper.INSTANCE.use(modelFactColumnDTOList);
-        Date date = new Date();
-        modelFactColumnList.forEach(e->{
-            e.setGmtCreate(date);
-            e.setGmtModified(date);
-        });
         modelFactColumnRepository.saveAllAndFlush(modelFactColumnList);
     }
 
