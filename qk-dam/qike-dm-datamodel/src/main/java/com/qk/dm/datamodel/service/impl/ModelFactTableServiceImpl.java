@@ -6,9 +6,12 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.entity.ModelFactTable;
 import com.qk.dm.datamodel.entity.QModelFactTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelFactTableMapper;
+import com.qk.dm.datamodel.params.dto.ModelFactColumnDTO;
+import com.qk.dm.datamodel.params.dto.ModelFactInfoDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 import com.qk.dm.datamodel.repositories.ModelFactTableRepository;
+import com.qk.dm.datamodel.service.ModelFactColumnService;
 import com.qk.dm.datamodel.service.ModelFactTableService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,6 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @Service
 public class ModelFactTableServiceImpl implements ModelFactTableService {
 
@@ -26,11 +30,13 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     private final ModelFactTableRepository modelFactTableRepository;
     private final EntityManager entityManager;
     private final QModelFactTable qModelFactTable = QModelFactTable.modelFactTable;
+    private final ModelFactColumnService modelFactColumnService;
 
     public ModelFactTableServiceImpl(ModelFactTableRepository modelFactTableRepository,
-                                     EntityManager entityManager){
+                                     EntityManager entityManager,ModelFactColumnService modelFactColumnService){
         this.modelFactTableRepository = modelFactTableRepository;
         this.entityManager = entityManager;
+        this.modelFactColumnService = modelFactColumnService;
     }
 
     @PostConstruct
@@ -40,11 +46,12 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
 
 
     @Override
-    public void insert(ModelFactTableDTO modelFactTableDTO) {
-        ModelFactTable modelFactTable = ModelFactTableMapper.INSTANCE.of(modelFactTableDTO);
-        modelFactTable.setGmtCreate(new Date());
-        modelFactTable.setGmtModified(new Date());
-        modelFactTableRepository.save(modelFactTable);
+    public void insert(ModelFactInfoDTO modelFactInfoDTO) {
+        ModelFactTable modelFactTable = ModelFactTableMapper.INSTANCE.of(modelFactInfoDTO.getModelFactTableBase());
+        ModelFactTable modelFact = modelFactTableRepository.save(modelFactTable);
+        List<ModelFactColumnDTO> modelFactColumnList = modelFactInfoDTO.getModelFactColumnList();
+        modelFactColumnList.forEach(e->e.setFactId(modelFact.getId()));
+        modelFactColumnService.insert(modelFactColumnList);
     }
 
     @Override

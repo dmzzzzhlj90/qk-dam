@@ -10,7 +10,6 @@ import com.qk.dm.datamodel.repositories.ModelFactColumnRepository;
 import com.qk.dm.datamodel.repositories.ModelFactTableRepository;
 import com.qk.dm.datamodel.service.ModelFactColumnService;
 import org.springframework.stereotype.Service;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
