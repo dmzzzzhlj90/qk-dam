@@ -97,5 +97,25 @@ public class ModelDimTable implements Serializable {
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag;
+    /**
+     * 关联维度的id
+     */
+    @Column(name = "model_dim_id", nullable = false)
+    private Long modelDimId;
+    /**
+     * 所属层级id
+     */
+    @Column(name = "model_id", nullable = false)
+    private Long modelId;
+    /**
+     * 责任人
+     */
+    @Column(name = "responsible_by", nullable = false)
+    private String responsibleBy;
+    /**
+     * 0表示已经同步，1表示未同步
+     */
+    @Column(name = "synchronization_status", nullable = false)
+    private Integer synchronizationStatus;
 
 }

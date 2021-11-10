@@ -61,6 +61,11 @@ public class ModelSummary implements Serializable {
      */
     @Column(name = "database_name", nullable = false)
     private String databaseName;
+    /**
+     * 责任人姓名
+     */
+    @Column(name = "responsible_by", nullable = false)
+    private String responsibleBy;
 
     /**
      * 描述
@@ -85,5 +90,20 @@ public class ModelSummary implements Serializable {
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag;
+    /**
+     * 创建人id
+     */
+    @Column(name = "create_userid", nullable = false)
+    private Long createUserid;
+    /**
+     * 修改人id
+     */
+    @Column(name = "update_userid", nullable = false)
+    private Long updateUserid;
+    /**
+     * 所属层级id
+     */
+    @Column(name = "model_id", nullable = false)
+    private Long modelId;
 
 }
