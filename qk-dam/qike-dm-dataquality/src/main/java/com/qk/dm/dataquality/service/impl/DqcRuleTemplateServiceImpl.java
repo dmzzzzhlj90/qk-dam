@@ -2,7 +2,10 @@ package com.qk.dm.dataquality.service.impl;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import com.alibaba.druid.DbType;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.indicator.common.sqlbuilder.sqlparser.SqlParserFactory;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
@@ -11,17 +14,14 @@ import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateListVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
-import com.qk.dm.dataquality.vo.PageResultVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author shenpj
@@ -80,7 +80,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public void delete(Long id) {
-    DqcRuleTemplate dqcRuleTemplate = getOneByNotDel(id);
+    DqcRuleTemplate dqcRuleTemplate = getOneById(id);
     dqcRuleTemplate.setDelFlag(del_state_down);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
