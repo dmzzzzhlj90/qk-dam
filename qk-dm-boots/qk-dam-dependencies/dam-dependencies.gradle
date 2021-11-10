@@ -61,6 +61,8 @@ dependencies {
 
         api group: 'org.tsugi', name: 'tsugi-util', version: '21.0.0'
 
+        api 'org.testng:testng:7.4.0'
+
     }
 }
 

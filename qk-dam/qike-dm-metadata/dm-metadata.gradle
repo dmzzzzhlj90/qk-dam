@@ -46,14 +46,14 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
             "javax.annotation:javax.annotation-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
+    testImplementation 'org.testng:testng'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
@@ -100,5 +100,7 @@ openApiGenerate {
     ]
 }
 test {
-    useJUnitPlatform()
+    useTestNG {
+        suites(file('src/test/resources/testng.xml'));
+    }
 }
