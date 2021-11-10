@@ -1,5 +1,6 @@
 package com.qk.dm.datamodel.params.dto;
 
+import com.qk.dam.jpa.pojo.Pagination;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,6 +10,8 @@ import java.util.Date;
 public class ModelSummaryDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private Pagination pagination;
 
     private Long id;
 

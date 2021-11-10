@@ -1,6 +1,5 @@
 package com.qk.dm.datamodel.mapstruct.mapper;
 
-import com.qk.dm.datamodel.entity.ModelFactTable;
 import com.qk.dm.datamodel.entity.ModelSummary;
 import com.qk.dm.datamodel.params.dto.ModelSummaryDTO;
 import com.qk.dm.datamodel.params.vo.ModelSummaryVO;
@@ -24,5 +23,5 @@ public interface ModelSummaryMapper {
     List<ModelSummaryVO> of(List<ModelSummary> modelSummaryList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void from(ModelSummaryDTO modelSummaryDTO, @MappingTarget ModelFactTable modelFactTable);
+    void from(ModelSummaryDTO modelSummaryDTO, @MappingTarget ModelSummary modelSummary);
 }
