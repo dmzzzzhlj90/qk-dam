@@ -1,15 +1,9 @@
 package com.qk.dm.dataquality.vo;
 
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.Date;
 
 @Data
 public class DqcRuleTemplateVo {
@@ -30,7 +24,7 @@ public class DqcRuleTemplateVo {
      * 分类目录
      */
     @NotNull(message = "分类目录不能为空！")
-    private Long directoryId;
+    private Long dirId;
 
     /**
      * 质量维度
@@ -42,7 +36,7 @@ public class DqcRuleTemplateVo {
      * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔
      */
     @NotBlank(message = "适用引擎不能为空！")
-    private String suitEngine;
+    private String engineType = "1,2";
 
     /**
      * 描述
@@ -61,4 +55,9 @@ public class DqcRuleTemplateVo {
      */
     @NotBlank(message = "结果定义不能为空！")
     private String tempResult;
+
+    /**
+     * 发布状态 -1-下线 0-草稿 1-发布
+     */
+    private Integer publishState;
 }

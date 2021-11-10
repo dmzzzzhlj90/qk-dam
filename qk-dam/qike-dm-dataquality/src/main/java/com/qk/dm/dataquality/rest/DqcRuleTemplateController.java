@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * @author shenpj
  * @date 2021/11/8 7:45 下午
@@ -31,20 +29,6 @@ public class DqcRuleTemplateController {
     this.dqcRuleTemplateService = dqcRuleTemplateService;
   }
 
-  @GetMapping("/list")
-  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-  public DefaultCommonResult<List<DqcRuleTemplateListVo>> searchList() {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleTemplateService.searchList());
-  }
-
-  @GetMapping("/page/list")
-  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-  public DefaultCommonResult<PageResultVO<DqcRuleTemplateListVo>> searchPageList(
-      Pagination pagination) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(pagination));
-  }
-
   @PostMapping("")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(@RequestBody @Validated DqcRuleTemplateVo dqcRuleTemplateVo) {
@@ -52,24 +36,32 @@ public class DqcRuleTemplateController {
     return DefaultCommonResult.success();
   }
 
-  @PutMapping("")
+  @PutMapping("/{id}")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult update(@RequestBody @Validated DqcRuleTemplateVo dqcRuleTemplateVo) {
-    dqcRuleTemplateService.update(dqcRuleTemplateVo);
+  public DefaultCommonResult update(@PathVariable("id") Long id,@RequestBody @Validated DqcRuleTemplateVo dqcRuleTemplateVo) {
+    dqcRuleTemplateService.update(id,dqcRuleTemplateVo);
     return DefaultCommonResult.success();
   }
 
   @DeleteMapping("/{id}")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult delete(@PathVariable("id") Integer id) {
+  public DefaultCommonResult delete(@PathVariable("id") Long id) {
     dqcRuleTemplateService.delete(id);
     return DefaultCommonResult.success();
   }
 
   @DeleteMapping("/root/{id}")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult deleteBulk(@PathVariable("id") Integer id) {
+  public DefaultCommonResult deleteBulk(@PathVariable("id") Long id) {
     dqcRuleTemplateService.deleteBulk(id);
     return DefaultCommonResult.success();
+  }
+
+  @GetMapping("/page/list")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+  public DefaultCommonResult<PageResultVO<DqcRuleTemplateListVo>> searchPageList(
+          Pagination pagination) {
+    return DefaultCommonResult.success(
+            ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(pagination));
   }
 }

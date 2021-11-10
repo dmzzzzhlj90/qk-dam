@@ -4,9 +4,6 @@ import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateListVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 import com.qk.dm.dataquality.vo.PageResultVO;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author shenpj
@@ -15,15 +12,13 @@ import java.util.List;
  */
 public interface DqcRuleTemplateService {
 
-    List<DqcRuleTemplateListVo> searchList();
+  void insert(DqcRuleTemplateVo dqcRuleTemplateVo);
 
-    PageResultVO<DqcRuleTemplateListVo> searchPageList(Pagination pagination);
+  void update(Long id, DqcRuleTemplateVo dqcRuleTemplateVo);
 
-    void insert(DqcRuleTemplateVo dqcRuleTemplateVo);
+  void delete(Long delId);
 
-    void update(DqcRuleTemplateVo dqcRuleTemplateVo);
+  void deleteBulk(Long delId);
 
-    void delete(Integer delId);
-
-    void deleteBulk(Integer delId);
+  PageResultVO<DqcRuleTemplateListVo> searchPageList(Pagination pagination);
 }

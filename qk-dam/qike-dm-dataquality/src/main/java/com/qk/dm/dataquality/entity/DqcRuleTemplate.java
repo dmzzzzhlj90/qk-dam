@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_dqc_rule_template")
+@Where(clause = "del_flag = 0 ")
 public class DqcRuleTemplate implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,8 +37,8 @@ public class DqcRuleTemplate implements Serializable {
     /**
      * 分类目录
      */
-    @Column(name = "directory_id", nullable = false)
-    private Long directoryId;
+    @Column(name = "dir_id", nullable = false)
+    private Long dirId;
 
     /**
      * 质量维度
@@ -47,8 +49,8 @@ public class DqcRuleTemplate implements Serializable {
     /**
      * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔
      */
-    @Column(name = "suit_engine", nullable = false)
-    private String suitEngine;
+    @Column(name = "engine_type", nullable = false)
+    private String engineType;
 
     /**
      * 描述
