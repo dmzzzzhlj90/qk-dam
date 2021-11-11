@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 数据质量_规则调度查询入参对象
+ * 数据质量_调度规则查询入参对象
  *
  * @author wjq
  * @date 2021/11/10
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DqcSchedulerInfoParamsVO {
+public class DqcSchedulerRulesParamsVO {
 
     private Pagination pagination;
 
@@ -27,14 +27,19 @@ public class DqcSchedulerInfoParamsVO {
     private String taskId;
 
     /**
-     * 作业名称
+     * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔
      */
-    private String taskName;
+    private String engineType;
 
     /**
-     * 分类目录
+     * 规则类型 1-库级 2-表级 3-字段级
      */
-    private Long dirId;
+    private Integer ruleType;
+
+    /**
+     * 数据库名称
+     */
+    private String databaseName;
 
     /**
      * 开始时间

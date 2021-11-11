@@ -32,7 +32,7 @@ public class DqcSchedulerBasicInfoVO {
     /**
      * 作业id
      */
-    private Long taskId;
+    private String taskId;
 
     /**
      * 作业名称

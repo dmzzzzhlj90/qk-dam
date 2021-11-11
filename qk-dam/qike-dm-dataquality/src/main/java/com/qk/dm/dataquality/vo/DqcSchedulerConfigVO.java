@@ -32,7 +32,7 @@ public class DqcSchedulerConfigVO {
     /**
      * 作业id
      */
-    private Long taskId;
+    private String taskId;
 
     /**
      * 调度执行方式 1-手动执行 2-调度执行

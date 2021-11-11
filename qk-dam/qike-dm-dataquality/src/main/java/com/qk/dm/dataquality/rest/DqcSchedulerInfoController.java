@@ -34,7 +34,7 @@ public class DqcSchedulerInfoController {
      * @param schedulerInfoParamsVO
      * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
      */
-    @GetMapping("/list")
+    @PostMapping("/page/list")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<PageResultVO<DqcSchedulerInfoVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerInfoService.searchPageList(schedulerInfoParamsVO));

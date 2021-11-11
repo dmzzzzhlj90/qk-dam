@@ -25,13 +25,13 @@ public class DqcSchedulerConfig implements Serializable {
      * 作业id
      */
     @Column(name = "task_id", nullable = false)
-    private Long taskId;
+    private String taskId;
 
     /**
      * 调度执行方式 1-手动执行 2-调度执行
      */
     @Column(name = "run_type", nullable = false)
-    private String runType;
+    private Integer runType;
 
     /**
      * 调度周期 年、月、周、日

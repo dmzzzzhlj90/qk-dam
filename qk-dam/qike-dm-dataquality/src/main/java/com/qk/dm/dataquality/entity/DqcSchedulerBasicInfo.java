@@ -25,7 +25,7 @@ public class DqcSchedulerBasicInfo implements Serializable {
      * 作业id
      */
     @Column(name = "task_id", nullable = false)
-    private Long taskId;
+    private String taskId;
 
     /**
      * 作业名称
