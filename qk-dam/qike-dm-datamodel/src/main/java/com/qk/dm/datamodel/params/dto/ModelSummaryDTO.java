@@ -55,14 +55,5 @@ public class ModelSummaryDTO implements Serializable {
      */
     private String desc;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    private Date gmtModified;
 
 }

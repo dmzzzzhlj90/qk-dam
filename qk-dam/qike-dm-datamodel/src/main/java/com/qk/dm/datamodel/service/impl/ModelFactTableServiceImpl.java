@@ -3,6 +3,8 @@ package com.qk.dm.datamodel.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.model.constant.ModelStatus;
+import com.qk.dm.datamodel.entity.ModelDim;
 import com.qk.dm.datamodel.entity.ModelFactTable;
 import com.qk.dm.datamodel.entity.QModelFactTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelFactTableMapper;
@@ -50,8 +52,10 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         ModelFactTable modelFactTable = ModelFactTableMapper.INSTANCE.of(modelFactInfoDTO.getModelFactTableBase());
         ModelFactTable modelFact = modelFactTableRepository.save(modelFactTable);
         List<ModelFactColumnDTO> modelFactColumnList = modelFactInfoDTO.getModelFactColumnList();
-        modelFactColumnList.forEach(e->e.setFactId(modelFact.getId()));
-        modelFactColumnService.insert(modelFactColumnList);
+        if(!modelFactColumnList.isEmpty()){
+            modelFactColumnList.forEach(e->e.setFactId(modelFact.getId()));
+            modelFactColumnService.insert(modelFactColumnList);
+        }
     }
 
     @Override
@@ -64,27 +68,28 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
-    public void update(Long id, ModelFactTableDTO modelFactTableDTO) {
+    public void update(Long id, ModelFactInfoDTO modelFactInfoDTO) {
         ModelFactTable modelFactTable = modelFactTableRepository.findById(id).orElse(null);
         if(Objects.isNull(modelFactTable)){
             throw new BizException("当前要查找的事实表id为"+id+"的数据不存在");
         }
-        ModelFactTableMapper.INSTANCE.from(modelFactTableDTO,modelFactTable);
+        ModelFactTableMapper.INSTANCE.from(modelFactInfoDTO.getModelFactTableBase(),modelFactTable);
         modelFactTableRepository.saveAndFlush(modelFactTable);
+        List<ModelFactColumnDTO> modelFactColumnList = modelFactInfoDTO.getModelFactColumnList();
+        if(!modelFactColumnList.isEmpty()){
+            modelFactColumnService.update(id,modelFactColumnList);
+        }
+
     }
 
     @Override
     public void delete(String ids) {
-        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-        List<ModelFactTable> modelFactTableList = modelFactTableRepository.findAllById(idSet);
-        if(modelFactTableList.isEmpty()){
-            throw new BizException("当前要删除的事实表id为："+ids+"的数据不存在！！！");
-        }
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
         modelFactTableRepository.deleteAll(modelFactTableList);
     }
 
     @Override
-    public PageResultVO<ModelFactTableVO> listPage(ModelFactTableDTO modelFactTableDTO) {
+    public PageResultVO<ModelFactTableVO> list(ModelFactTableDTO modelFactTableDTO) {
         Map<String, Object> map;
         try {
             map = queryByParams(modelFactTableDTO);
@@ -99,6 +104,30 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
                 modelFactTableDTO.getPagination().getPage(),
                 modelFactTableDTO.getPagination().getSize(),
                 voList);
+    }
+
+    @Override
+    public void publish(String ids) {
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
+        modelFactTableList.forEach(e->e.setStatus(ModelStatus.PUBLISH));
+        modelFactTableRepository.saveAllAndFlush(modelFactTableList);
+
+    }
+
+    @Override
+    public void offline(String ids) {
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
+        modelFactTableList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
+        modelFactTableRepository.saveAllAndFlush(modelFactTableList);
+    }
+
+    private List<ModelFactTable> getModelFactTableList(String ids){
+        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelFactTable> modelFactTableList = modelFactTableRepository.findAllById(idSet);
+        if(modelFactTableList.isEmpty()){
+            throw new BizException("当前要操作的事实表id为："+ids+"的数据不存在！！！");
+        }
+        return modelFactTableList;
     }
 
     private Map<String, Object> queryByParams(ModelFactTableDTO modelFactTableDTO) {

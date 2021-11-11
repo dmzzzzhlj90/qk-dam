@@ -6,8 +6,11 @@ import com.qk.dm.datamodel.entity.ModelSummary;
 import com.qk.dm.datamodel.entity.QModelSummary;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelSummaryMapper;
 import com.qk.dm.datamodel.params.dto.ModelSummaryDTO;
+import com.qk.dm.datamodel.params.dto.ModelSummaryIdcDTO;
+import com.qk.dm.datamodel.params.dto.ModelSummaryInfoDTO;
 import com.qk.dm.datamodel.params.vo.ModelSummaryVO;
 import com.qk.dm.datamodel.repositories.ModelSummaryRepository;
+import com.qk.dm.datamodel.service.ModelSummaryIdcService;
 import com.qk.dm.datamodel.service.ModelSummaryService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ModelSummaryServiceImpl implements ModelSummaryService {
@@ -24,21 +28,31 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     private final EntityManager entityManager;
     private final ModelSummaryRepository modelSummaryRepository;
     private final QModelSummary qModelSummary = QModelSummary.modelSummary;
+    private final ModelSummaryIdcService modelSummaryIdcService;
+    private static final int PUBLISH = 1; //已发布
+    private static final int OFFLINE = 2;//已下线
 
     @PostConstruct
     public void initFactory() {
         jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
 
-    public ModelSummaryServiceImpl(EntityManager entityManager,ModelSummaryRepository modelSummaryRepository){
+    public ModelSummaryServiceImpl(EntityManager entityManager,ModelSummaryRepository modelSummaryRepository,
+                                   ModelSummaryIdcService modelSummaryIdcService){
         this.entityManager = entityManager;
         this.modelSummaryRepository = modelSummaryRepository;
+        this.modelSummaryIdcService = modelSummaryIdcService;
     }
 
     @Override
-    public void insert(ModelSummaryDTO modelSummaryDTO) {
-        ModelSummary modelSummary = ModelSummaryMapper.INSTANCE.of(modelSummaryDTO);
-        modelSummaryRepository.save(modelSummary);
+    public void insert(ModelSummaryInfoDTO modelSummaryInfoDTO) {
+        ModelSummary modelSummary = ModelSummaryMapper.INSTANCE.of(modelSummaryInfoDTO.getModelSummaryBase());
+        ModelSummary summary = modelSummaryRepository.save(modelSummary);
+        List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryInfoDTO.getModelSummaryIdcList();
+        if(!modelSummaryIdcList.isEmpty()){
+            modelSummaryIdcList.forEach(e->e.setSummaryId(summary.getId()));
+            modelSummaryIdcService.insert(modelSummaryIdcList);
+        }
     }
 
     @Override
@@ -51,22 +65,29 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     }
 
     @Override
-    public void update(Long id, ModelSummaryDTO modelSummaryDTO) {
+    public void update(Long id, ModelSummaryInfoDTO modelSummaryInfoDTO) {
         ModelSummary modelSummary = modelSummaryRepository.findById(id).orElse(null);
          if(Objects.isNull(modelSummary)){
              throw new BizException("当前查询的汇总表 id为"+id+"的数据不存在");
          }
-         ModelSummaryMapper.INSTANCE.from(modelSummaryDTO,modelSummary);
+         ModelSummaryMapper.INSTANCE.from(modelSummaryInfoDTO.getModelSummaryBase(),modelSummary);
         modelSummaryRepository.saveAndFlush(modelSummary);
+        List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryInfoDTO.getModelSummaryIdcList();
+        if(!modelSummaryIdcList.isEmpty()){
+            modelSummaryIdcList.forEach(e->e.setSummaryId(id));
+            modelSummaryIdcService.update(id,modelSummaryIdcList);
+        }
+
     }
 
     @Override
     public void delete(String ids) {
-
+        List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
+        modelSummaryRepository.deleteAll(modelSummaryList);
     }
 
     @Override
-    public PageResultVO<ModelSummaryVO> listPage(ModelSummaryDTO modelSummaryDTO) {
+    public PageResultVO<ModelSummaryVO> list(ModelSummaryDTO modelSummaryDTO) {
         Map<String, Object> map;
         try {
             map = queryByParams(modelSummaryDTO);
@@ -81,6 +102,29 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
                 modelSummaryDTO.getPagination().getPage(),
                 modelSummaryDTO.getPagination().getSize(),
                 voList);
+    }
+
+    @Override
+    public void publish(String ids) {
+        List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
+        modelSummaryList.forEach(e->e.setStatus(PUBLISH));
+        modelSummaryRepository.saveAllAndFlush(modelSummaryList);
+    }
+
+    @Override
+    public void offline(String ids) {
+        List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
+        modelSummaryList.forEach(e->e.setStatus(OFFLINE));
+        modelSummaryRepository.saveAllAndFlush(modelSummaryList);
+    }
+
+    private List<ModelSummary> getModelSummaryList(String ids){
+        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelSummary> modelSummaryList = modelSummaryRepository.findAllById(idSet);
+        if(modelSummaryList.isEmpty()){
+            throw new BizException("当前要操作的汇总表id为："+ids+"的数据不存在！！！");
+        }
+        return modelSummaryList;
     }
 
     private Map<String, Object> queryByParams(ModelSummaryDTO modelSummaryDTO) {

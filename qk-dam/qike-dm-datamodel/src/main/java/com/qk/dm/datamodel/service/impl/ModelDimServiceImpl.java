@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.model.constant.ModelStatus;
 import com.qk.dm.datamodel.entity.ModelDim;
 import com.qk.dm.datamodel.entity.QModelDim;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelDimMapper;
@@ -37,8 +38,6 @@ public class ModelDimServiceImpl implements ModelDimService {
     private final QModelDim qModelDim = QModelDim.modelDim;
     private final ModelDimColumnSerVice modelDimColumnSerVice;
 
-    private static final int PUBLISH = 1; //已发布
-    private static final int OFFLINE = 2;//已下线
 
     public ModelDimServiceImpl(ModelDimRepository modelDimRepository,EntityManager entityManager,
                                ModelDimColumnSerVice modelDimColumnSerVice){
@@ -79,7 +78,11 @@ public class ModelDimServiceImpl implements ModelDimService {
         }
         ModelDimMapper.INSTANCE.from(modelDimInfoDTO.getModelDimBase(),modelDim);
         modelDimRepository.saveAndFlush(modelDim);
-        modelDimColumnSerVice.update(id,modelDimInfoDTO.getModelDimColumnList());
+        List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimInfoDTO.getModelDimColumnList();
+        if(!modelDimColumnDTOList.isEmpty()){
+            modelDimColumnSerVice.update(id,modelDimColumnDTOList);
+        }
+
     }
 
     @Override
@@ -109,14 +112,14 @@ public class ModelDimServiceImpl implements ModelDimService {
     @Override
     public void publish(String ids) {
         List<ModelDim> modelDimList = getModelDimList(ids);
-        modelDimList.forEach(e->e.setStatus(PUBLISH));
+        modelDimList.forEach(e->e.setStatus(ModelStatus.PUBLISH));
         modelDimRepository.saveAllAndFlush(modelDimList);
     }
 
     @Override
     public void offline(String ids) {
         List<ModelDim> modelDimList = getModelDimList(ids);
-        modelDimList.forEach(e->e.setStatus(OFFLINE));
+        modelDimList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
         modelDimRepository.saveAllAndFlush(modelDimList);
     }
     private List<ModelDim> getModelDimList(String ids){

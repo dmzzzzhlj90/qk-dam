@@ -52,14 +52,5 @@ public class ModelPhysicalRelationDTO implements Serializable {
      */
     private String fatherConnectionWay;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    private Date gmtModified;
 
 }

@@ -10,9 +10,20 @@ public interface ModelFactTableService {
 
     ModelFactTableVO detail(Long id);
 
-    void update(Long id,ModelFactTableDTO modelFactTableDTO);
+    void update(Long id,ModelFactInfoDTO modelFactInfoDTO);
 
     void delete(String ids);
 
-    PageResultVO<ModelFactTableVO> listPage(ModelFactTableDTO modelFactTableDTO);
+    PageResultVO<ModelFactTableVO> list(ModelFactTableDTO modelFactTableDTO);
+    /**
+     * 发布
+     * @param ids
+     */
+    void publish(String ids);
+
+    /**
+     * 下线
+     * @param ids
+     */
+    void offline(String ids);
 }

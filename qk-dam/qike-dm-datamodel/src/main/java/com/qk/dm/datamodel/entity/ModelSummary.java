@@ -1,6 +1,8 @@
 package com.qk.dm.datamodel.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -68,6 +70,12 @@ public class ModelSummary implements Serializable {
     private String responsibleBy;
 
     /**
+     * 0待审核 1已发布2 已下线
+     */
+    @Column(name = "status", nullable = false)
+    private Integer status;
+
+    /**
      * 描述
      */
     @Column(name = "desc")
@@ -77,12 +85,14 @@ public class ModelSummary implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
     /**

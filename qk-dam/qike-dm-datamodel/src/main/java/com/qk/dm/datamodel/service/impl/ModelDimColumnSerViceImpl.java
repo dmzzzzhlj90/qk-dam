@@ -45,6 +45,7 @@ public class ModelDimColumnSerViceImpl implements ModelDimColumnSerVice {
         }
         modelDimColumnRepository.deleteByDimId(dimId);
         List<ModelDimColumn> modelDimColumnList = ModelDimColumnMapper.INSTANCE.use(modelPhysicalColumnDTOList);
+        modelDimColumnList.forEach(e->e.setDimId(dimId));
         modelDimColumnRepository.saveAllAndFlush(modelDimColumnList);
     }
 

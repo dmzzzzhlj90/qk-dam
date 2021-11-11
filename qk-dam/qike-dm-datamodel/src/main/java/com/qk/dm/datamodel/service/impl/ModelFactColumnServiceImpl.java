@@ -38,6 +38,7 @@ public class ModelFactColumnServiceImpl implements ModelFactColumnService {
         }
         modelFactColumnRepository.deleteByFactId(factId);
         List<ModelFactColumn> modelFactColumnList = ModelFactColumnMapper.INSTANCE.use(modelFactColumnDTOList);
+        modelFactColumnList.forEach(e->e.setFactId(factId));
         modelFactColumnRepository.saveAllAndFlush(modelFactColumnList);
     }
 

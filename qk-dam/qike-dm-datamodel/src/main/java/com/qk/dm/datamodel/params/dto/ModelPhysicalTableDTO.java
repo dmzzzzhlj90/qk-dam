@@ -45,15 +45,6 @@ public class ModelPhysicalTableDTO implements Serializable {
      */
     private Integer status;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    private Date gmtModified;
 
 
 }

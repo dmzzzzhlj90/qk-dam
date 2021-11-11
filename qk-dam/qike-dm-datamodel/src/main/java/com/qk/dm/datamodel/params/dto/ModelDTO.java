@@ -28,13 +28,4 @@ public class ModelDTO implements Serializable {
      */
     private Integer modelType;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    private Date gmtModified;
 }

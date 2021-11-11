@@ -55,15 +55,6 @@ public class ModelFactTableDTO implements Serializable {
      */
     private String databaseName;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    private Date gmtModified;
 
 
 }
