@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -26,9 +30,9 @@ public class DqcSchedulerConfigVO {
     private Long id;
 
     /**
-     * 调度模版id
+     * 作业id
      */
-    private Long schedulerTempId;
+    private Long taskId;
 
     /**
      * 调度执行方式 1-手动执行 2-调度执行
@@ -71,11 +75,6 @@ public class DqcSchedulerConfigVO {
     private Long updateUserid;
 
     /**
-     * 删除标识(0-保留 1-删除)
-     */
-    private Integer delFlag;
-
-    /**
      * 创建时间
      */
     private Date gmtCreate;
@@ -84,5 +83,10 @@ public class DqcSchedulerConfigVO {
      * 修改时间
      */
     private Date gmtModified;
+
+    /**
+     * 删除标识(0-保留 1-删除)
+     */
+    private Integer delFlag;
 
 }

@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -20,15 +24,17 @@ import java.util.Date;
 @Builder
 public class DqcSchedulerRulesVO {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 主键ID
      */
     private Long id;
 
     /**
-     * 调度模版id
+     * 作业id
      */
-    private Long schedulerTempId;
+    private Long taskId;
 
     /**
      * 规则模版id

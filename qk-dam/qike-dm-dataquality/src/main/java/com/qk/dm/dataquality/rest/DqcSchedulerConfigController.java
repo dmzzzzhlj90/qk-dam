@@ -4,10 +4,9 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
-import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
-import com.qk.dm.dataquality.vo.DsdSchedulerAllParamsVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -39,7 +38,7 @@ public class DqcSchedulerConfigController {
      */
     @GetMapping("/page/list")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult<PageResultVO<DqcSchedulerConfigVO>> searchPageList(@RequestBody DsdSchedulerAllParamsVO dsdSchedulerAllParamsVO) {
+    public DefaultCommonResult<PageResultVO<DqcSchedulerConfigVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerConfigService.searchPageList(dsdSchedulerAllParamsVO));
     }
 

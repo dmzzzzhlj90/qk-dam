@@ -22,10 +22,10 @@ public class DqcSchedulerRules implements Serializable {
     private Long id;
 
     /**
-     * 调度模版id
+     * 作业id
      */
-    @Column(name = "scheduler_temp_id", nullable = false)
-    private Long schedulerTempId;
+    @Column(name = "task_id", nullable = false)
+    private Long taskId;
 
     /**
      * 规则模版id

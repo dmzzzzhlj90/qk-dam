@@ -5,7 +5,7 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
-import com.qk.dm.dataquality.vo.DsdSchedulerAllParamsVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService {
 
     @Override
-    public PageResultVO<DqcSchedulerConfigVO> searchPageList(DsdSchedulerAllParamsVO dsdSchedulerAllParamsVO) {
+    public PageResultVO<DqcSchedulerConfigVO> searchPageList(DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
         return null;
     }
 

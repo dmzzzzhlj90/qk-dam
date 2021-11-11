@@ -22,10 +22,10 @@ public class DqcSchedulerConfig implements Serializable {
     private Long id;
 
     /**
-     * 调度模版id
+     * 作业id
      */
-    @Column(name = "scheduler_temp_id", nullable = false)
-    private Long schedulerTempId;
+    @Column(name = "task_id", nullable = false)
+    private Long taskId;
 
     /**
      * 调度执行方式 1-手动执行 2-调度执行
@@ -76,12 +76,6 @@ public class DqcSchedulerConfig implements Serializable {
     private Long updateUserid;
 
     /**
-     * 删除标识(0-保留 1-删除)
-     */
-    @Column(name = "del_flag", nullable = false)
-    private Integer delFlag;
-
-    /**
      * 创建时间
      */
     @Column(name = "gmt_create", nullable = false)
@@ -92,5 +86,11 @@ public class DqcSchedulerConfig implements Serializable {
      */
     @Column(name = "gmt_modified")
     private Date gmtModified;
+
+    /**
+     * 删除标识(0-保留 1-删除)
+     */
+    @Column(name = "del_flag", nullable = false)
+    private Integer delFlag;
 
 }

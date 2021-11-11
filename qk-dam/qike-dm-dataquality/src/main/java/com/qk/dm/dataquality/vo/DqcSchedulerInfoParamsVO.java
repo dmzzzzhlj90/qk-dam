@@ -17,9 +17,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DsdSchedulerAllParamsVO {
+public class DqcSchedulerInfoParamsVO {
 
     private Pagination pagination;
+
+    /**
+     * 作业id
+     */
+    private Long taskId;
 
     /**
      * 作业名称

@@ -2,7 +2,7 @@ package com.qk.dm.dataquality.service;//package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
-import com.qk.dm.dataquality.vo.DsdSchedulerAllParamsVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DqcSchedulerBasicInfoService {
 
-    PageResultVO<DqcSchedulerBasicInfoVO> searchPageList(DsdSchedulerAllParamsVO dsdSchedulerAllParamsVO);
+    PageResultVO<DqcSchedulerBasicInfoVO> searchPageList(DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO);
 
     void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
