@@ -60,7 +60,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     @Override
     public PageResultVO<DqcSchedulerInfoVO> searchPageList(DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
         List<DqcSchedulerInfoVO> dqcSchedulerInfoVOList = new ArrayList<>();
-        long total = 0;
+        long total;
         //基础信息查询
         Map<String, Object> basicInfoMap = null;
         try {
@@ -75,7 +75,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
             Map<Long, List<DqcSchedulerConfigVO>> schedulerConfigMap = getSchedulerConfigMap(taskIds);
 
             //封装统一调度信息
-            schedulerInfoBuiler(dqcSchedulerInfoVOList, dqcSchedulerBasicInfoList, schedulerRulesMap, schedulerConfigMap);
+            buildSchedulerInfo(dqcSchedulerInfoVOList, dqcSchedulerBasicInfoList, schedulerRulesMap, schedulerConfigMap);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException("查询失败!!!");
@@ -130,11 +130,9 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         if (!StringUtils.isEmpty(String.valueOf(schedulerInfoParamsVO.getDirId()))) {
             booleanBuilder.and(qDqcSchedulerBasicInfo.dirId.eq(schedulerInfoParamsVO.getDirId()));
         }
-
         if (!StringUtils.isEmpty(String.valueOf(schedulerInfoParamsVO.getTaskId()))) {
             booleanBuilder.and(qDqcSchedulerBasicInfo.taskId.eq(schedulerInfoParamsVO.getTaskId()));
         }
-
         if (!StringUtils.isEmpty(schedulerInfoParamsVO.getBeginDay())
                 && !StringUtils.isEmpty(schedulerInfoParamsVO.getEndDay())) {
             StringTemplate dateExpr =
@@ -151,8 +149,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
             DqcSchedulerConfigVO dqcSchedulerConfigVO = DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfigVO(dqcSchedulerConfig);
             schedulerConfigVOList.add(dqcSchedulerConfigVO);
         }
-        Map<Long, List<DqcSchedulerConfigVO>> schedulerConfigMap = schedulerConfigVOList.stream().collect(Collectors.groupingBy(DqcSchedulerConfigVO::getTaskId));
-        return schedulerConfigMap;
+        return schedulerConfigVOList.stream().collect(Collectors.groupingBy(DqcSchedulerConfigVO::getTaskId));
     }
 
     private Map<Long, List<DqcSchedulerRulesVO>> getSchedulerRulesMap(List<Long> taskIds) {
@@ -162,23 +159,24 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
             DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);
             schedulerRulesVOList.add(dqcSchedulerRulesVO);
         }
-        Map<Long, List<DqcSchedulerRulesVO>> schedulerRulesMap = schedulerRulesVOList.stream().collect(Collectors.groupingBy(DqcSchedulerRulesVO::getTaskId));
-        return schedulerRulesMap;
+        return schedulerRulesVOList.stream().collect(Collectors.groupingBy(DqcSchedulerRulesVO::getTaskId));
     }
 
-    private void schedulerInfoBuiler(List<DqcSchedulerInfoVO> dqcSchedulerInfoVOList, List<DqcSchedulerBasicInfo> dqcSchedulerBasicInfoList, Map<Long, List<DqcSchedulerRulesVO>> schedulerRulesMap, Map<Long, List<DqcSchedulerConfigVO>> schedulerConfigMap) {
-        for (DqcSchedulerBasicInfo dqcSchedulerBasicInfo : dqcSchedulerBasicInfoList) {
-            DqcSchedulerInfoVO.DqcSchedulerInfoVOBuilder dqcSchedulerInfoVOBuilder = DqcSchedulerInfoVO.builder();
-            Long taskId = dqcSchedulerBasicInfo.getTaskId();
-            DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfoVO(dqcSchedulerBasicInfo);
-            List<DqcSchedulerRulesVO> schedulerRulesVOList = schedulerRulesMap.get(taskId);
-            List<DqcSchedulerConfigVO> dqcSchedulerConfigVOList = schedulerConfigMap.get(taskId);
+    private void buildSchedulerInfo(List<DqcSchedulerInfoVO> dqcSchedulerInfoVOList, List<DqcSchedulerBasicInfo> dqcSchedulerBasicInfoList, Map<Long, List<DqcSchedulerRulesVO>> schedulerRulesMap, Map<Long, List<DqcSchedulerConfigVO>> schedulerConfigMap) {
+        if (dqcSchedulerBasicInfoList != null && dqcSchedulerBasicInfoList.size() > 0) {
+            for (DqcSchedulerBasicInfo dqcSchedulerBasicInfo : dqcSchedulerBasicInfoList) {
+                DqcSchedulerInfoVO.DqcSchedulerInfoVOBuilder schedulerInfoVOBuilder = DqcSchedulerInfoVO.builder();
+                Long taskId = dqcSchedulerBasicInfo.getTaskId();
+                DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfoVO(dqcSchedulerBasicInfo);
+                List<DqcSchedulerRulesVO> schedulerRulesVOList = schedulerRulesMap.get(taskId);
+                List<DqcSchedulerConfigVO> dqcSchedulerConfigVOList = schedulerConfigMap.get(taskId);
 
-            dqcSchedulerInfoVOBuilder.dqcSchedulerBasicInfoVO(dqcSchedulerBasicInfoVO)
-                    .dqcSchedulerRulesVOList(schedulerRulesVOList)
-                    .dqcSchedulerConfigVO(dqcSchedulerConfigVOList.get(0));
+                schedulerInfoVOBuilder.dqcSchedulerBasicInfoVO(dqcSchedulerBasicInfoVO)
+                        .dqcSchedulerRulesVOList(schedulerRulesVOList)
+                        .dqcSchedulerConfigVO(dqcSchedulerConfigVOList.get(0));
 
-            dqcSchedulerInfoVOList.add(dqcSchedulerInfoVOBuilder.build());
+                dqcSchedulerInfoVOList.add(schedulerInfoVOBuilder.build());
+            }
         }
     }
 
