@@ -1,7 +1,7 @@
 package com.qk.dm.dataquality.mapstruct.mapper;
 
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateListVo;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -19,6 +19,8 @@ public interface DqcRuleTemplateMapper {
 
     DqcRuleTemplate userDqcRuleTemplate(DqcRuleTemplateVo dqcRuleTemplateVo);
 
-    List<DqcRuleTemplateListVo> userDqcRuleTemplateListVo(List<DqcRuleTemplate> dqcRuleTemplateList);
+    List<DqcRuleTemplateInfoVo> userDqcRuleTemplateInfoVo(List<DqcRuleTemplate> dqcRuleTemplateList);
+
+    DqcRuleTemplateInfoVo userDqcRuleTemplateInfoVo(DqcRuleTemplate dqcRuleTemplateList);
 
 }

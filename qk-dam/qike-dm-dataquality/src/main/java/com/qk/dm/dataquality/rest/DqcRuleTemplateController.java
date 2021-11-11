@@ -5,7 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateListVo;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,11 +57,16 @@ public class DqcRuleTemplateController {
     return DefaultCommonResult.success();
   }
 
+  @GetMapping("/{id}")
+  public DefaultCommonResult<DqcRuleTemplateInfoVo> search(@PathVariable("id") Long id) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleTemplateService.search(id));
+  }
+
   @GetMapping("/page/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-  public DefaultCommonResult<PageResultVO<DqcRuleTemplateListVo>> searchPageList(
-          DqcRuleTemplateVo dqcRuleTemplateVo,Pagination pagination) {
+  public DefaultCommonResult<PageResultVO<DqcRuleTemplateInfoVo>> searchPageList(
+      DqcRuleTemplateVo dqcRuleTemplateVo, Pagination pagination) {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplateVo,pagination));
+        ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplateVo, pagination));
   }
 }

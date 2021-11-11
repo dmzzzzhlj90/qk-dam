@@ -12,7 +12,7 @@ import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcRuleTemplateMapper;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateListVo;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -36,6 +36,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   private final EntityManager entityManager;
   private final QDqcRuleTemplate qDqcRuleTemplate = QDqcRuleTemplate.dqcRuleTemplate;
   public static final Integer del_state_down = 1;
+  public static final Integer publish_state_up = 1;
 
   public DqcRuleTemplateServiceImpl(
       DqcRuleTemplateRepository dqcRuleTemplateRepository, EntityManager entityManager) {
@@ -71,6 +72,9 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   public void update(DqcRuleTemplateVo dqcRuleTemplateVo) {
     if (dqcRuleTemplateVo.getId() != null && dqcRuleTemplateVo.getPublishState() != null) {
       DqcRuleTemplate dqcRuleTemplate = getOneById(dqcRuleTemplateVo.getId());
+      if (Objects.equals(dqcRuleTemplate.getPublishState(), publish_state_up)) {
+        throw new BizException("上线规则模版不支持修改！！！");
+      }
       // todo 添加修改人
       dqcRuleTemplate.setUpdateUserid(1L);
       dqcRuleTemplate.setPublishState(dqcRuleTemplateVo.getPublishState());
@@ -80,30 +84,48 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public void delete(Long id) {
+    // todo 工作流下线
     DqcRuleTemplate dqcRuleTemplate = getOneById(id);
+    if (Objects.equals(dqcRuleTemplate.getPublishState(), publish_state_up)) {
+      throw new BizException("上线规则模版不支持删除！！！");
+    }
     dqcRuleTemplate.setDelFlag(del_state_down);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
   @Override
   public void deleteBulk(String ids) {
+    // todo 工作流下线
     Iterable<Long> idList =
         Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
     List<DqcRuleTemplate> idcTimeLimitList = dqcRuleTemplateRepository.findAllById(idList);
     if (idcTimeLimitList.isEmpty()) {
       throw new BizException("当前要删除的id为：" + ids + " 的数据，不存在！！！");
     }
-    idcTimeLimitList.stream().peek(i -> i.setDelFlag(del_state_down)).collect(Collectors.toList());
+    idcTimeLimitList.stream()
+        .peek(
+            i -> {
+              if (Objects.equals(i.getPublishState(), publish_state_up)) {
+                throw new BizException("上线规则模版不支持删除！！！");
+              }
+              i.setDelFlag(del_state_down);
+            })
+        .collect(Collectors.toList());
     dqcRuleTemplateRepository.saveAll(idcTimeLimitList);
   }
 
   @Override
-  public PageResultVO<DqcRuleTemplateListVo> searchPageList(
+  public DqcRuleTemplateInfoVo search(Long id) {
+    return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(getOneById(id));
+  }
+
+  @Override
+  public PageResultVO<DqcRuleTemplateInfoVo> searchPageList(
       DqcRuleTemplateVo dqcRuleTemplateVo, Pagination pagination) {
     Map<String, Object> map = queryParams(dqcRuleTemplateVo, pagination);
     List<DqcRuleTemplate> list = (List<DqcRuleTemplate>) map.get("list");
-    List<DqcRuleTemplateListVo> voList =
-        DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateListVo(list);
+    List<DqcRuleTemplateInfoVo> voList =
+        DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(list);
     return new PageResultVO<>(
         (long) map.get("total"), pagination.getPage(), pagination.getSize(), voList);
   }

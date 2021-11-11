@@ -40,6 +40,6 @@ public class DqcRuleTemplateVo {
   @NotBlank(message = "结果定义不能为空！")
   private String tempResult;
 
-  /** 发布状态 -1-下线 0-草稿 1-发布 */
+  /** 发布状态 0-下线 1-发布 */
   private Integer publishState = 0;
 }

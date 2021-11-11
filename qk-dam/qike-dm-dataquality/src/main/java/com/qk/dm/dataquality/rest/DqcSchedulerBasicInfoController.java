@@ -4,7 +4,6 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateListVo;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DsdSchedulerAllParamsVO;
 import lombok.extern.slf4j.Slf4j;
