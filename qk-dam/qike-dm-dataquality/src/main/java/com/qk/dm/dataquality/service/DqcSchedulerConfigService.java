@@ -2,9 +2,10 @@ package com.qk.dm.dataquality.service;//package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 数据质量_规则调度_配置信息
@@ -18,12 +19,12 @@ public interface DqcSchedulerConfigService {
 
     PageResultVO<DqcSchedulerConfigVO> searchPageList(DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO);
 
-    void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO);
+    void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO);
 
-    void update(DqcSchedulerRulesVO dqcSchedulerRulesVO);
+    void update(DqcSchedulerConfigVO dqcSchedulerConfigVO);
 
-    void delete(Long id);
+    void delete(String taskId);
 
-    void deleteBulk(String ids);
+    void deleteBulk(List<String> taskIds);
 
 }

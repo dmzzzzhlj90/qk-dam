@@ -1,14 +1,14 @@
 package com.qk.dm.dataquality.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -24,69 +24,45 @@ import java.util.Date;
 @Builder
 public class DqcSchedulerConfigVO {
 
-    /**
-     * 主键ID
-     */
-    private Long id;
+  /** 主键ID */
+  private Long id;
 
-    /**
-     * 作业id
-     */
-    private Long taskId;
+  /** 作业id */
+  @NotBlank(message = "作业id不能为空！")
+  private String taskId;
 
-    /**
-     * 调度执行方式 1-手动执行 2-调度执行
-     */
-    private String runType;
+  /** 调度执行方式 1-手动执行 2-调度执行 */
+  @NotNull(message = "调度执行方式不能为空！")
+  private Integer runType;
 
-    /**
-     * 调度周期 年、月、周、日
-     */
-    private String schedulerCycle;
+  /** 调度周期 年、月、周、日 */
+  private String schedulerCycle;
 
-    /**
-     * 周期开始时间
-     */
-    private Date schedulerTimeStart;
+  /** 周期开始时间 */
+  private Date schedulerTimeStart;
 
-    /**
-     * 周期结束时间
-     */
-    private Date schedulerTimeEnt;
+  /** 周期结束时间 */
+  private Date schedulerTimeEnt;
 
-    /**
-     * 间隔时间
-     */
-    private String schedulerIntervalTime;
+  /** 间隔时间 */
+  private String schedulerIntervalTime;
 
-    /**
-     * 调度执行cron表达式
-     */
-    private String cron;
+  /** 调度执行cron表达式 */
+  private String cron;
 
-    /**
-     * 创建人
-     */
-    private Long createUserid;
+  /** 创建人 */
+  private Long createUserid;
 
-    /**
-     * 修改人
-     */
-    private Long updateUserid;
+  /** 修改人 */
+  private Long updateUserid;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
+  /** 创建时间 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date gmtCreate;
 
-    /**
-     * 修改时间
-     */
-    private Date gmtModified;
-
-    /**
-     * 删除标识(0-保留 1-删除)
-     */
-    private Integer delFlag;
-
+  /** 修改时间 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date gmtModified;
 }

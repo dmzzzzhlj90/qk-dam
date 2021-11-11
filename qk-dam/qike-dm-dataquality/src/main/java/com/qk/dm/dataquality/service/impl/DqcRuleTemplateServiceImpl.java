@@ -71,7 +71,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   @Override
   public void update(DqcRuleTemplateVo dqcRuleTemplateVo) {
     if (dqcRuleTemplateVo.getId() != null && dqcRuleTemplateVo.getPublishState() != null) {
-      DqcRuleTemplate dqcRuleTemplate = getOneById(dqcRuleTemplateVo.getId());
+      DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
       if (Objects.equals(dqcRuleTemplate.getPublishState(), publish_state_up)) {
         throw new BizException("上线规则模版不支持修改！！！");
       }
@@ -85,7 +85,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   @Override
   public void delete(Long id) {
     // todo 工作流下线
-    DqcRuleTemplate dqcRuleTemplate = getOneById(id);
+    DqcRuleTemplate dqcRuleTemplate = getInfoById(id);
     if (Objects.equals(dqcRuleTemplate.getPublishState(), publish_state_up)) {
       throw new BizException("上线规则模版不支持删除！！！");
     }
@@ -116,7 +116,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public DqcRuleTemplateInfoVo search(Long id) {
-    return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(getOneById(id));
+    return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(getInfoById(id));
   }
 
   @Override
@@ -176,11 +176,11 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
   }
 
-  private DqcRuleTemplate getOneById(Long id) {
-    Optional<DqcRuleTemplate> one = dqcRuleTemplateRepository.findById(id);
-    if (!one.isPresent()) {
+  private DqcRuleTemplate getInfoById(Long id) {
+    Optional<DqcRuleTemplate> info = dqcRuleTemplateRepository.findById(id);
+    if (info.isEmpty()) {
       throw new BizException("id为：" + id + " 的模版不存在！！！");
     }
-    return one.get();
+    return info.get();
   }
 }

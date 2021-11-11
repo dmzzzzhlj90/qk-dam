@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.mapstruct.mapper;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -19,5 +20,7 @@ public interface DqcSchedulerBasicInfoMapper {
     DqcSchedulerBasicInfoVO userDqcSchedulerBasicInfoVO(DqcSchedulerBasicInfo dqcSchedulerBasicInfo);
 
     DqcSchedulerBasicInfo userDqcSchedulerBasicInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+
+    void toDqcSchedulerBasicInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, @MappingTarget DqcSchedulerBasicInfo dqcSchedulerBasicInfo);
 
 }

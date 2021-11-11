@@ -1,12 +1,19 @@
 package com.qk.dm.dataquality.service.impl;
 
-
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
+import com.qk.dm.dataquality.entity.QDqcSchedulerConfig;
+import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerConfigMapper;
+import com.qk.dm.dataquality.repositories.DqcSchedulerConfigRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
+import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 /**
  * @author wjq
@@ -15,30 +22,89 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService {
+  private final DqcSchedulerConfigRepository dqcSchedulerConfigRepository;
+  private final QDqcSchedulerConfig qDqcSchedulerConfig = QDqcSchedulerConfig.dqcSchedulerConfig;
 
-    @Override
-    public PageResultVO<DqcSchedulerConfigVO> searchPageList(DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
-        return null;
+  public DqcSchedulerConfigServiceImpl(DqcSchedulerConfigRepository dqcSchedulerConfigRepository) {
+    this.dqcSchedulerConfigRepository = dqcSchedulerConfigRepository;
+  }
+
+  @Override
+  public PageResultVO<DqcSchedulerConfigVO> searchPageList(
+      DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
+    return null;
+  }
+
+  @Override
+  public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+    getInfoByTaskIdIsNotNull(dqcSchedulerConfigVO.getTaskId());
+    DqcSchedulerConfig config =
+        DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
+    // todo 创建人
+    config.setCreateUserid(1L);
+    dqcSchedulerConfigRepository.saveAndFlush(config);
+  }
+
+  @Override
+  public void update(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+    DqcSchedulerConfig config = getInfoById(dqcSchedulerConfigVO.getId());
+    DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
+    // todo 修改人
+    config.setUpdateUserid(1L);
+    dqcSchedulerConfigRepository.saveAndFlush(config);
+  }
+
+  @Override
+  public void delete(String taskId) {
+    DqcSchedulerConfig schedulerConfig = getInfoByTaskIdIsNull(taskId);
+    dqcSchedulerConfigRepository.delete(schedulerConfig);
+  }
+
+  @Override
+  public void deleteBulk(List<String> taskIds) {
+    List<DqcSchedulerConfig> configs = getInfoByTaskId(taskIds);
+    dqcSchedulerConfigRepository.deleteAll(configs);
+  }
+
+  private DqcSchedulerConfig getInfoById(Long id) {
+    DqcSchedulerConfig info = dqcSchedulerConfigRepository.findById(id).orElse(null);
+    if (info == null) {
+      throw new BizException("id为：" + id + " 的配置，不存在！！！");
     }
+    return info;
+  }
 
-    @Override
-    public void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
-
+  private List<DqcSchedulerConfig> getInfoByTaskId(List<String> taskIds) {
+    List<DqcSchedulerConfig> configs = getInfoByTaskIds(taskIds);
+    if (CollectionUtils.isEmpty(configs)) {
+      throw new BizException("任务id为：" + taskIds + " 的配置，不存在！！！");
     }
+    return configs;
+  }
 
-    @Override
-    public void update(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
-
+  private DqcSchedulerConfig getInfoByTaskIdIsNull(String taskId) {
+    DqcSchedulerConfig schedulerConfig = getInfoByTaskId(taskId);
+    if (schedulerConfig == null) {
+      throw new BizException("任务id为：" + taskId + " 的配置，不存在！！！");
     }
-    @Override
-    public void delete(Long id) {
+    return schedulerConfig;
+  }
 
+  private DqcSchedulerConfig getInfoByTaskIdIsNotNull(String taskId) {
+    DqcSchedulerConfig schedulerConfig = getInfoByTaskId(taskId);
+    if (schedulerConfig != null) {
+      throw new BizException("任务id为：" + taskId + " 的配置，已存在！！！");
     }
+    return schedulerConfig;
+  }
 
-    @Override
-    public void deleteBulk(String ids) {
+  private List<DqcSchedulerConfig> getInfoByTaskIds(List<String> taskIds) {
+    Predicate predicate = qDqcSchedulerConfig.taskId.in(taskIds);
+    return (List<DqcSchedulerConfig>) dqcSchedulerConfigRepository.findAll(predicate);
+  }
 
-    }
-
-
+  private DqcSchedulerConfig getInfoByTaskId(String taskId) {
+    Predicate predicate = qDqcSchedulerConfig.taskId.eq(taskId);
+    return dqcSchedulerConfigRepository.findOne(predicate).orElse(null);
+  }
 }

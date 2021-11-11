@@ -1,14 +1,14 @@
 package com.qk.dm.dataquality.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -24,73 +24,52 @@ import java.util.Date;
 @Builder
 public class DqcSchedulerBasicInfoVO {
 
-    /**
-     * 主键ID
-     */
-    private Long id;
+  /** 主键ID */
+  private Long id;
 
-    /**
-     * 作业id
-     */
-    private Long taskId;
+  /** 作业id */
+  private String taskId;
 
-    /**
-     * 作业名称
-     */
-    private String taskName;
+  /** 作业名称 */
+  @NotBlank(message = "作业名称不能为空！")
+  private String taskName;
 
-    /**
-     * 分类目录
-     */
-    private Long dirId;
+  /** 分类目录 */
+  @NotNull(message = "分类目录不能为空！")
+  private Long dirId;
 
-    /**
-     * 提示级别 1-严重
-     */
-    private Integer notifyLevel;
+  /** 提示级别 1-严重 */
+  @NotNull(message = "提示级别不能为空！")
+  private Integer notifyLevel;
 
-    /**
-     * 通知状态 0-关 1-开
-     */
-    private Integer notifyState;
+  /** 通知状态 0-关 1-开 */
+  @NotNull(message = "通知状态不能为空！")
+  private Integer notifyState;
 
-    /**
-     * 通知类型 1-触发告警 2-运行成功
-     */
-    private Integer notifyType;
+  /** 通知类型 1-触发告警 2-运行成功 */
+  @NotNull(message = "通知类型不能为空！")
+  private Integer notifyType;
 
-    /**
-     * 主题，多个以逗号分隔
-     */
-    private String notifyThemeId;
+  /** 主题，多个以逗号分隔 */
+  @NotBlank(message = "主题不能为空！")
+  private String notifyThemeId;
 
-    /**
-     * 调度状态 1-调度中 2-运行中 3-停止
-     */
-    private Integer dispatchState;
+  /** 调度状态 1-调度中 2-运行中 3-停止 */
+  private Integer dispatchState;
 
-    /**
-     * 创建人
-     */
-    private Long createUserid;
+  /** 创建人 */
+  private Long createUserid;
 
-    /**
-     * 修改人
-     */
-    private Long updateUserid;
+  /** 修改人 */
+  private Long updateUserid;
 
-    /**
-     * 删除标识(0-保留 1-删除)
-     */
-    private Integer delFlag;
+  /** 创建时间 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date gmtCreate;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    private Date gmtModified;
+  /** 修改时间 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date gmtModified;
 }

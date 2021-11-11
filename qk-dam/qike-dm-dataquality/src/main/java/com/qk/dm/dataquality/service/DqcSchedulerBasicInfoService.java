@@ -17,7 +17,7 @@ public interface DqcSchedulerBasicInfoService {
 
     PageResultVO<DqcSchedulerBasicInfoVO> searchPageList(DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO);
 
-    void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+    String insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
     void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 

@@ -1,10 +1,9 @@
 package com.qk.dm.dataquality.mapstruct.mapper;
 
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
-import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -20,6 +19,8 @@ public interface DqcSchedulerConfigMapper {
 
     DqcSchedulerConfigVO userDqcSchedulerConfigVO(DqcSchedulerConfig dqcSchedulerConfig);
 
-    DqcSchedulerConfig userDqcSchedulerConfig(DqcSchedulerConfig dqcSchedulerConfig);
+    DqcSchedulerConfig userDqcSchedulerConfig(DqcSchedulerConfigVO dqcSchedulerConfig);
+
+    void userDqcSchedulerConfig(DqcSchedulerConfigVO dqcSchedulerConfigVO,@MappingTarget DqcSchedulerConfig dqcSchedulerConfig);
 
 }

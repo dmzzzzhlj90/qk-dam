@@ -49,9 +49,8 @@ public class DqcSchedulerBasicInfoController {
      */
     @PostMapping("")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
-    public DefaultCommonResult insert(@RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
-        return DefaultCommonResult.success();
+    public DefaultCommonResult<String> insert(@RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO));
     }
 
     /**
