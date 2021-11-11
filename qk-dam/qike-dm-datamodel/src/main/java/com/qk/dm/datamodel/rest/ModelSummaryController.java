@@ -10,6 +10,7 @@ import com.qk.dm.datamodel.service.ModelSummaryService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@RequestMapping("/summary")
 @RestController
 public class ModelSummaryController {
 

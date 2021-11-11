@@ -6,10 +6,7 @@ import com.qk.dm.datamodel.params.dto.ModelDTO;
 import com.qk.dm.datamodel.params.vo.ModelVO;
 import com.qk.dm.datamodel.service.ModelService;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +16,7 @@ import java.util.List;
  * @date 2021/11/01 15:02
  * @since 1.0.0
  */
+@RequestMapping("/model")
 @RestController
 public class ModelController {
 

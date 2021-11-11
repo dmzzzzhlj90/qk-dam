@@ -10,6 +10,7 @@ import com.qk.dm.datamodel.service.ModelFactTableService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@RequestMapping("/fact")
 @RestController
 public class ModelFactTableController {
 
