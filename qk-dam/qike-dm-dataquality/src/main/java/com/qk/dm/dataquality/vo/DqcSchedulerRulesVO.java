@@ -34,7 +34,7 @@ public class DqcSchedulerRulesVO {
     /**
      * 作业id
      */
-    private Long taskId;
+    private String taskId;
 
     /**
      * 规则模版id
