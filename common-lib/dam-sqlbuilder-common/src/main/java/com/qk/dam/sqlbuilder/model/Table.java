@@ -1,0 +1,41 @@
+package com.qk.dam.sqlbuilder.model;
+
+
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ */
+@Data
+public class Table {
+    private String name = "";
+    private List<Column> columns = new ArrayList<>();
+//    private Engine engine = Engine.InnoDB;
+//    private Charset charset = Charset.utf8;
+    private String comments = "";
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void addColumn(Column column) {
+        this.columns.add(column);
+    }
+
+
+}
