@@ -9,6 +9,7 @@ import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
+import com.qk.dm.dataquality.enums.DataSourceEnum;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcRuleTemplateMapper;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
@@ -51,7 +52,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public void insert(DqcRuleTemplateVo dqcRuleTemplateVo) {
-    parseStatements(dqcRuleTemplateVo.getTempSql());
+    parseStatements(dqcRuleTemplateVo.getEngineType(), dqcRuleTemplateVo.getTempSql());
     DqcRuleTemplate dqcRuleTemplate =
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
     // todo 添加创建人
@@ -59,13 +60,19 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
-  private void parseStatements(String sql) {
-    if (!SqlParserFactory.parseStatements(sql, DbType.hive)) {
-      throw new BizException("本sql hive不适用！！！");
-    }
-    if (!SqlParserFactory.parseStatements(sql, DbType.mysql)) {
-      throw new BizException("本sql mysql不适用！！！");
-    }
+  private void parseStatements(String engineType, String sql) {
+    Arrays.asList(engineType.split(","))
+        .forEach(
+            i -> {
+              if (Integer.parseInt(i) == DataSourceEnum.hive.getCode()
+                  && !SqlParserFactory.parseStatements(sql, DbType.hive)) {
+                throw new BizException("本sql hive不适用！！！");
+              }
+              if (Integer.parseInt(i) == DataSourceEnum.mysql.getCode()
+                  && !SqlParserFactory.parseStatements(sql, DbType.mysql)) {
+                throw new BizException("本sql mysql不适用！！！");
+              }
+            });
   }
 
   @Override

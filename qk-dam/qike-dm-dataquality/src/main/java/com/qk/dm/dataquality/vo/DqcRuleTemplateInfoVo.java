@@ -1,10 +1,14 @@
 package com.qk.dm.dataquality.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.qk.dm.dataquality.enums.DataSourceEnum;
+import com.qk.dm.dataquality.enums.DimensionEnum;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Data
 public class DqcRuleTemplateInfoVo {
@@ -29,6 +33,9 @@ public class DqcRuleTemplateInfoVo {
   /** 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔 */
   private String engineType;
 
+  /** 适用引擎 */
+  private String engineName;
+
   /** 描述 */
   private String description;
 
@@ -48,4 +55,17 @@ public class DqcRuleTemplateInfoVo {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtModified;
+
+  public void setDimensionId(Integer dimensionId) {
+    this.dimensionId = dimensionId;
+    this.dimension = DimensionEnum.fromValue(dimensionId);
+  }
+
+  public void setEngineType(String engineType) {
+    this.engineType = engineType;
+    this.engineName =
+        Arrays.stream(engineType.split(","))
+            .map(i -> DataSourceEnum.fromValue(Integer.parseInt(i)))
+            .collect(Collectors.joining(","));
+  }
 }
