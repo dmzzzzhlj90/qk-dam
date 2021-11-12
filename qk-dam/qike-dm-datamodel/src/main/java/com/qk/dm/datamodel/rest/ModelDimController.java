@@ -64,7 +64,7 @@ public class ModelDimController {
      * @param modelDimDTO
      * @return
      */
-    @GetMapping("")
+    @PostMapping(value = "/list")
     public DefaultCommonResult<PageResultVO<ModelDimVO>> list(@RequestBody ModelDimDTO modelDimDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimService.list(modelDimDTO));
     }

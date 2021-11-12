@@ -57,7 +57,7 @@ public class ModelFactTableController {
      * @param modelFactTableDTO
      * @return
      */
-    @GetMapping("")
+    @PostMapping(value = "/list")
     public DefaultCommonResult<PageResultVO<ModelFactTableVO>> list(@RequestBody ModelFactTableDTO modelFactTableDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelFactTableService.list(modelFactTableDTO));
     }

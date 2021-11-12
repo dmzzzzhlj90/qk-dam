@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.model.constant.ModelStatus;
 import com.qk.dm.datamodel.entity.ModelSummary;
 import com.qk.dm.datamodel.entity.QModelSummary;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelSummaryMapper;
@@ -29,8 +30,6 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     private final ModelSummaryRepository modelSummaryRepository;
     private final QModelSummary qModelSummary = QModelSummary.modelSummary;
     private final ModelSummaryIdcService modelSummaryIdcService;
-    private static final int PUBLISH = 1; //已发布
-    private static final int OFFLINE = 2;//已下线
 
     @PostConstruct
     public void initFactory() {
@@ -107,14 +106,14 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     @Override
     public void publish(String ids) {
         List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
-        modelSummaryList.forEach(e->e.setStatus(PUBLISH));
+        modelSummaryList.forEach(e->e.setStatus(ModelStatus.PUBLISH));
         modelSummaryRepository.saveAllAndFlush(modelSummaryList);
     }
 
     @Override
     public void offline(String ids) {
         List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
-        modelSummaryList.forEach(e->e.setStatus(OFFLINE));
+        modelSummaryList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
         modelSummaryRepository.saveAllAndFlush(modelSummaryList);
     }
 

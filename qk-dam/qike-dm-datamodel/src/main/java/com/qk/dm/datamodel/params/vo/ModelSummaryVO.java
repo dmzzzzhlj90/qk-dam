@@ -50,7 +50,7 @@ public class ModelSummaryVO implements Serializable {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 创建时间

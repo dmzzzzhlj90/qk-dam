@@ -49,14 +49,14 @@ public class ModelPhysicalTable implements Serializable {
     /**
      * 描述
      */
-    /*@Column(name = "desc")
-    private String desc;*/
+    @Column(name = "description")
+    private String description;
 
     /**
      * 0草稿 1已发布2 已下线
      */
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private Integer status = 0;
 
     /**
      * 创建时间
@@ -76,7 +76,7 @@ public class ModelPhysicalTable implements Serializable {
      * 0未删除 1已删除
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag;
+    private Integer delFlag = 0;
     /**
      * 创建人id
      */

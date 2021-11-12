@@ -33,7 +33,7 @@ public class ModelFactTableDTO implements Serializable {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 0待审核 1已发布2 已下线

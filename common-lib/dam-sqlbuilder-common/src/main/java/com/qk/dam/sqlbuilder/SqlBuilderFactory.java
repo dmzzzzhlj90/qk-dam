@@ -172,11 +172,12 @@ public class SqlBuilderFactory {
                 sb.append(" ").append( "AUTO_INCREMENT" );
             }
             // 字段是否为空
-            if(column.getEmpty()){
+            if (column.getEmpty()) {
                 sb.append(" ").append("DEFAULT NULL");
-            }else {
+            } else {
                 sb.append(" ").append("NOT NULL");
             }
+
             // 字段注解
             if (Objects.nonNull(column.getComments())) {
                 sb.append(" " + "COMMENT '").append(column.getComments()).append("',").append('\n');

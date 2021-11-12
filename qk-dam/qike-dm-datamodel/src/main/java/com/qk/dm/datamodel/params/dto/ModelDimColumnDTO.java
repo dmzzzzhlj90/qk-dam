@@ -55,7 +55,7 @@ public class ModelDimColumnDTO implements Serializable {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
 
 

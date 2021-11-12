@@ -87,6 +87,6 @@ public class ModelPhysicalRelation implements Serializable {
      * 0未删除 1已删除
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag;
+    private Integer delFlag = 0;
 
 }

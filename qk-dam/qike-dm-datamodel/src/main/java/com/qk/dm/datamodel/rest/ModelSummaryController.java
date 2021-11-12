@@ -57,7 +57,7 @@ public class ModelSummaryController {
      * @param modelSummaryDTO
      * @return
      */
-    @GetMapping("")
+    @PostMapping(value = "/list")
     public DefaultCommonResult<PageResultVO<ModelSummaryVO>> list(@RequestBody ModelSummaryDTO modelSummaryDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelSummaryService.list(modelSummaryDTO));
     }

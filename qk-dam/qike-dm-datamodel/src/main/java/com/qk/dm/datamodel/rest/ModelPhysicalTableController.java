@@ -74,7 +74,7 @@ public class ModelPhysicalTableController {
      * @param modelPhysicalTableDTO
      * @return
      */
-    @GetMapping("")
+    @PostMapping(value = "/list")
     public DefaultCommonResult<PageResultVO<ModelPhysicalTableVO>> list(@RequestBody ModelPhysicalTableDTO modelPhysicalTableDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelPhysicalTableService.listPage(modelPhysicalTableDTO));
     }

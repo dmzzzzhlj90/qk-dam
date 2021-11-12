@@ -46,7 +46,7 @@ public class ModelPhysicalTableVO implements Serializable {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 0草稿 1已发布2 已下线

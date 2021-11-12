@@ -55,14 +55,14 @@ public class ModelDimTable implements Serializable {
     /**
      * 描述
      */
-    @Column(name = "desc")
-    private String desc;
+    @Column(name = "description")
+    private String description;
 
     /**
      * 0待审核 1已发布2 已下线
      */
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private Integer status = 0;
 
     /**
      * 连接类型
@@ -100,7 +100,7 @@ public class ModelDimTable implements Serializable {
      * 0未删除 1已删除
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag;
+    private Integer delFlag = 0;
     /**
      * 关联维度的id
      */
