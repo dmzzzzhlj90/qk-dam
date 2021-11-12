@@ -9,7 +9,6 @@ import com.qk.dm.dataquality.repositories.DqcSchedulerConfigRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
-import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -56,14 +55,12 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public void delete(String taskId) {
-    DqcSchedulerConfig schedulerConfig = getInfoByTaskIdIsNull(taskId);
-    dqcSchedulerConfigRepository.delete(schedulerConfig);
+    dqcSchedulerConfigRepository.delete(getInfoByTaskIdIsNull(taskId));
   }
 
   @Override
   public void deleteBulk(List<String> taskIds) {
-    List<DqcSchedulerConfig> configs = getInfoByTaskId(taskIds);
-    dqcSchedulerConfigRepository.deleteAll(configs);
+    dqcSchedulerConfigRepository.deleteAll(getInfoByTaskId(taskIds));
   }
 
   private DqcSchedulerConfig getInfoById(Long id) {
@@ -99,12 +96,11 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   }
 
   private List<DqcSchedulerConfig> getInfoByTaskIds(List<String> taskIds) {
-    Predicate predicate = qDqcSchedulerConfig.taskId.in(taskIds);
-    return (List<DqcSchedulerConfig>) dqcSchedulerConfigRepository.findAll(predicate);
+    return (List<DqcSchedulerConfig>)
+        dqcSchedulerConfigRepository.findAll(qDqcSchedulerConfig.taskId.in(taskIds));
   }
 
   private DqcSchedulerConfig getInfoByTaskId(String taskId) {
-    Predicate predicate = qDqcSchedulerConfig.taskId.eq(taskId);
-    return dqcSchedulerConfigRepository.findOne(predicate).orElse(null);
+    return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.taskId.eq(taskId)).orElse(null);
   }
 }
