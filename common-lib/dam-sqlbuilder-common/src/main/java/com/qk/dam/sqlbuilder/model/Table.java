@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 表信息
+ * @author wangzp
+ * @date 2021/11/12 16:02
+ * @since 1.0.0
  */
 @Data
 public class Table {

@@ -15,7 +15,7 @@ import tech.ibit.sqlbuilder.StringSql;
  * SQL校验工厂
  *
  * @author wangzp
- * @date 2021/9/16 15:38
+ * @date 2021/9/16 15:41
  * @since 1.0.0
  */
 public class SqlBuilderFactory {

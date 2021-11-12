@@ -5,7 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * @author Haidnor
+ * 表字段
+ * @author wangzp
+ * @date 2021/11/12 16:01
+ * @since 1.0.0
  */
 @Data
 @Builder
