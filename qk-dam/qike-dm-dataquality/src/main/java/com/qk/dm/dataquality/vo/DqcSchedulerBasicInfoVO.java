@@ -55,7 +55,7 @@ public class DqcSchedulerBasicInfoVO {
   private String notifyThemeId;
 
   /** 调度状态 1-调度中 2-运行中 3-停止 */
-  private Integer dispatchState;
+  private Integer dispatchState = 0;
 
   /** 创建人 */
   private Long createUserid;

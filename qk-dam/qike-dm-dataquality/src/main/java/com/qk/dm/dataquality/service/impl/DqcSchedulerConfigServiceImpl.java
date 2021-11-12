@@ -10,7 +10,6 @@ import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -46,6 +45,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public void update(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+    // todo 需要判断规则调度状态
     DqcSchedulerConfig config = getInfoById(dqcSchedulerConfigVO.getId());
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
     // todo 修改人
@@ -55,12 +55,12 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public void delete(String taskId) {
-    dqcSchedulerConfigRepository.delete(getInfoByTaskIdIsNull(taskId));
+    dqcSchedulerConfigRepository.delete(getInfoByTaskId(taskId));
   }
 
   @Override
   public void deleteBulk(List<String> taskIds) {
-    dqcSchedulerConfigRepository.deleteAll(getInfoByTaskId(taskIds));
+    dqcSchedulerConfigRepository.deleteAll(getInfoByTaskIds(taskIds));
   }
 
   private DqcSchedulerConfig getInfoById(Long id) {
@@ -69,22 +69,6 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
       throw new BizException("id为：" + id + " 的配置，不存在！！！");
     }
     return info;
-  }
-
-  private List<DqcSchedulerConfig> getInfoByTaskId(List<String> taskIds) {
-    List<DqcSchedulerConfig> configs = getInfoByTaskIds(taskIds);
-    if (CollectionUtils.isEmpty(configs)) {
-      throw new BizException("任务id为：" + taskIds + " 的配置，不存在！！！");
-    }
-    return configs;
-  }
-
-  private DqcSchedulerConfig getInfoByTaskIdIsNull(String taskId) {
-    DqcSchedulerConfig schedulerConfig = getInfoByTaskId(taskId);
-    if (schedulerConfig == null) {
-      throw new BizException("任务id为：" + taskId + " 的配置，不存在！！！");
-    }
-    return schedulerConfig;
   }
 
   private DqcSchedulerConfig getInfoByTaskIdIsNotNull(String taskId) {

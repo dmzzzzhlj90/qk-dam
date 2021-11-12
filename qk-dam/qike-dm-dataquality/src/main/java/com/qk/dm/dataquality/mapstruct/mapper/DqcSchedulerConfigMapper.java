@@ -4,6 +4,8 @@ import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -13,7 +15,8 @@ import org.mapstruct.factory.Mappers;
  * @date 2021/11/09
  * @since 1.0.0
  */
-@Mapper
+@Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface DqcSchedulerConfigMapper {
     DqcSchedulerConfigMapper INSTANCE = Mappers.getMapper(DqcSchedulerConfigMapper.class);
 

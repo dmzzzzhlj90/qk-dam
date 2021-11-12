@@ -20,51 +20,54 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/scheduler/config/")
+@RequestMapping("/scheduler/config")
 public class DqcSchedulerConfigController {
-    private final DqcSchedulerConfigService dqcSchedulerConfigService;
+  private final DqcSchedulerConfigService dqcSchedulerConfigService;
 
-    @Autowired
-    public DqcSchedulerConfigController(DqcSchedulerConfigService dqcSchedulerConfigService) {
-        this.dqcSchedulerConfigService = dqcSchedulerConfigService;
-    }
-    
-    /**
-     * 获取规则调度_配置信息列表
-     *
-     * @param dsdSchedulerAllParamsVO
-     * @return DefaultCommonResult<PageResultVO<DqcSchedulerConfigVO>>
-     */
-    @GetMapping("/page/list")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult<PageResultVO<DqcSchedulerConfigVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerConfigService.searchPageList(dsdSchedulerAllParamsVO));
-    }
+  @Autowired
+  public DqcSchedulerConfigController(DqcSchedulerConfigService dqcSchedulerConfigService) {
+    this.dqcSchedulerConfigService = dqcSchedulerConfigService;
+  }
 
-    /**
-     * 新增规则调度_配置信息
-     *
-     * @param dqcSchedulerConfigVO
-     * @return DefaultCommonResult
-     */
-    @PostMapping("")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
-    public DefaultCommonResult insert(@RequestBody @Validated DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-        dqcSchedulerConfigService.insert(dqcSchedulerConfigVO);
-        return DefaultCommonResult.success();
-    }
+  /**
+   * 获取规则调度_配置信息列表
+   *
+   * @param dsdSchedulerAllParamsVO
+   * @return DefaultCommonResult<PageResultVO<DqcSchedulerConfigVO>>
+   */
+  @GetMapping("/page/list")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+  public DefaultCommonResult<PageResultVO<DqcSchedulerConfigVO>> searchPageList(
+      @RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dqcSchedulerConfigService.searchPageList(dsdSchedulerAllParamsVO));
+  }
 
-    /**
-     * 编辑规则调度_配置信息
-     *
-     * @param dqcSchedulerConfigVO
-     * @return DefaultCommonResult
-     */
-    @PutMapping("")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-    public DefaultCommonResult update(@RequestBody @Validated DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-        dqcSchedulerConfigService.update(dqcSchedulerConfigVO);
-        return DefaultCommonResult.success();
-    }
+  /**
+   * 新增规则调度_配置信息
+   *
+   * @param dqcSchedulerConfigVO
+   * @return DefaultCommonResult
+   */
+  @PostMapping("")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insert(
+      @RequestBody @Validated DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+    dqcSchedulerConfigService.insert(dqcSchedulerConfigVO);
+    return DefaultCommonResult.success();
+  }
 
+  /**
+   * 编辑规则调度_配置信息
+   *
+   * @param dqcSchedulerConfigVO
+   * @return DefaultCommonResult
+   */
+  @PutMapping("")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(
+      @RequestBody @Validated DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+    dqcSchedulerConfigService.update(dqcSchedulerConfigVO);
+    return DefaultCommonResult.success();
+  }
 }
