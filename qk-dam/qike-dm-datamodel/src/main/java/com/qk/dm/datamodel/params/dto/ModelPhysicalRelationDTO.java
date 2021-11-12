@@ -1,11 +1,22 @@
 package com.qk.dm.datamodel.params.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * 关系建模关系入参类
+ */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ModelPhysicalRelationDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -13,13 +24,14 @@ public class ModelPhysicalRelationDTO implements Serializable {
     private Long id;
 
     /**
-     * 物理表id
+     * 物理表id(基础信息id)
      */
     private Long tableId;
 
     /**
-     * 字段名称
+     * 字段名
      */
+    @NotBlank(message = "字段名称")
     private String columnName;
 
     /**
@@ -52,5 +64,18 @@ public class ModelPhysicalRelationDTO implements Serializable {
      */
     private String fatherConnectionWay;
 
+    /**
+     * 创建时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date gmtCreate;
+
+    /**
+     * 修改时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date gmtModified;
 
 }

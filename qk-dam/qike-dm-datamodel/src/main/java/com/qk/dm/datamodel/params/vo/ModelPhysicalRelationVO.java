@@ -1,6 +1,11 @@
 package com.qk.dm.datamodel.params.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,6 +14,9 @@ import java.util.Date;
  * 物理模型表关系
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ModelPhysicalRelationVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -16,7 +24,7 @@ public class ModelPhysicalRelationVO implements Serializable {
     private Long id;
 
     /**
-     * 物理表id
+     * 物理表id(基础信息id)
      */
     private Long tableId;
 
@@ -56,7 +64,16 @@ public class ModelPhysicalRelationVO implements Serializable {
     private String fatherConnectionWay;
 
     /**
+     * 创建时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date gmtCreate;
+
+    /**
      * 修改时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date gmtModified;
 }

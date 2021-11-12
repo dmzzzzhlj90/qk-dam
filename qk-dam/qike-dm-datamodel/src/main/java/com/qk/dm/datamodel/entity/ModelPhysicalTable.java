@@ -1,6 +1,8 @@
 package com.qk.dm.datamodel.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -47,8 +49,8 @@ public class ModelPhysicalTable implements Serializable {
     /**
      * 描述
      */
-    @Column(name = "desc")
-    private String desc;
+    /*@Column(name = "desc")
+    private String desc;*/
 
     /**
      * 0草稿 1已发布2 已下线
@@ -59,12 +61,14 @@ public class ModelPhysicalTable implements Serializable {
     /**
      * 创建时间
      */
+    @CreationTimestamp
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
+    @UpdateTimestamp
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
