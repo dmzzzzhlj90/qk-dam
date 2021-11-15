@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author zys
@@ -118,22 +119,24 @@ public class PhysicalServiceImpl implements PhysicalService {
     //判断新加字段是否存在重复
     List<ModelPhysicalColumnDTO> modelColumnDtoList = modelPhysicalDTO.getModelColumnDtoList();
     if (CollectionUtils.isNotEmpty(modelColumnDtoList)) {
-      //创建list用于存放建模字段的字段名
-      List<String> list = new ArrayList<>();
-      modelColumnDtoList.forEach(modelPhysicalColumnDTO -> {
-        list.add(modelPhysicalColumnDTO.getColumnName());
-      });
-      Boolean checkColumnDto = CheckUtil.checkRepeat(list);
-      if (checkColumnDto) {
+      //校验新建模型字段是否重复
+      List<String> columnList =modelColumnDtoList.stream().
+          collect(Collectors.groupingBy(modelPhysicalColumnDTO->modelPhysicalColumnDTO.getColumnName(),Collectors.counting()))
+          .entrySet().stream()
+          .filter(entry->entry.getValue()>1)
+          .map(entry->entry.getKey())
+          .collect(Collectors.toList());
+      if (columnList.size()<=0) {
         //校验关系是否重复
         List<ModelPhysicalRelationDTO> modelRelationDtoList = modelPhysicalDTO.getModelRelationDtoList();
         if (CollectionUtils.isNotEmpty(modelRelationDtoList)) {
-          List<String> relationList = new ArrayList<>();
-          modelRelationDtoList.forEach(modelPhysicalRelationDTO -> {
-            relationList.add(modelPhysicalRelationDTO.getColumnName());
-          });
-          Boolean checkRelation = CheckUtil.checkRepeat(relationList);
-          if (checkRelation) {
+          List<String> relationList =modelColumnDtoList.stream().
+              collect(Collectors.groupingBy(modelPhysicalRelationDTO->modelPhysicalRelationDTO.getColumnName(),Collectors.counting()))
+              .entrySet().stream()
+              .filter(entry->entry.getValue()>1)
+              .map(entry->entry.getKey())
+              .collect(Collectors.toList());
+          if (relationList.size()<=0) {
             check=true;
           } else {
             throw new BizException("建模关系不可重复");
@@ -181,7 +184,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     //根据表名判断表是否存在
     ModelPhysicalTableDTO modelPhysicalTableDTO = modelPhysicalDTO.getModelPhysicalTableDTO();
     ModelPhysicalTable modelPhysicalTable = ModelPhysicalTableMapper.INSTANCE.of(modelPhysicalTableDTO);
-    BooleanExpression predicate = qModelPhysicalTable.databaseName.eq(modelPhysicalTable.getDatabaseName()).and(qModelPhysicalTable.tableName.eq(modelPhysicalTable.getTableName()));
+    BooleanExpression predicate = qModelPhysicalTable.id.eq(modelPhysicalTable.getId());
     boolean exists = modelPhysicalTableRepository.exists(predicate);
     if (exists){
       Boolean check = checkModelPhysical(modelPhysicalDTO);
@@ -291,18 +294,10 @@ public class PhysicalServiceImpl implements PhysicalService {
     List<Long> idList = new ArrayList<>();
     //所有表的id存在totleList
     List<Long> totleList = new ArrayList<>();
-    list.forEach(
-        modelPhysicalTable -> {
-          if (modelPhysicalTable!=null && modelPhysicalTable.getStatus()==ModelStatus.PUBLISH){
-            idList.add(modelPhysicalTable.getId());
-          }
-          totleList.add(modelPhysicalTable.getId());
-        }
-    );
-    deleteData(totleList,idList,coverage,pushnums,fieldnums);
-    censusDataVO.setCoverage(coverage);
-    censusDataVO.setFieldnums(fieldnums);
-    censusDataVO.setPushnums(pushnums);
+    idList = list.stream().filter(modelPhysicalTable -> modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH))
+        .map(ModelPhysicalTable::getId).collect(Collectors.toList());
+    totleList = list.stream().map(ModelPhysicalTable::getId).collect(Collectors.toList());
+    deleteData(totleList,idList,coverage,pushnums,fieldnums,censusDataVO);
     return censusDataVO;
   }
 
@@ -313,8 +308,10 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @param coverage
    * @param pushnums
    * @param fieldnums
+   * @param censusDataVO
    */
-  private void deleteData(List<Long> list, List<Long> idList, String coverage, int pushnums, int fieldnums) {
+  private void deleteData(List<Long> list, List<Long> idList, String coverage,
+      int pushnums, int fieldnums, CensusDataVO censusDataVO) {
     //获取覆盖率
     coverage = getCoverage(list);
     if (CollectionUtils.isNotEmpty(idList)){
@@ -323,6 +320,9 @@ public class PhysicalServiceImpl implements PhysicalService {
       //获取已发布字段数量
       fieldnums=getFieldNums(idList);
     }
+    censusDataVO.setCoverage(coverage);
+    censusDataVO.setFieldnums(fieldnums);
+    censusDataVO.setPushnums(pushnums);
   }
 
   /**
@@ -370,14 +370,9 @@ public class PhysicalServiceImpl implements PhysicalService {
         .where(booleanBuilder).orderBy(qModelPhysicalColumn.id.asc()).fetch();
     if (CollectionUtils.isNotEmpty(modelPhysicalColumnList)){
         //获取含有标准的字段数量
-      List<ModelPhysicalColumn> columnList = new ArrayList<>();
-      modelPhysicalColumnList.forEach(
-          modelPhysicalColumn -> {
-            if (modelPhysicalColumn.getStandardsId()!=null){
-              columnList.add(modelPhysicalColumn);
-            }
-          }
-      );
+      List<ModelPhysicalColumn> columnList = modelPhysicalColumnList.stream()
+          .filter(item -> item.getStandardsId() != null)
+          .collect(Collectors.toList());
       if (CollectionUtils.isNotEmpty(columnList)){
         coverage=CheckUtil.getCoverage(columnList.size(),modelPhysicalColumnList.size());
       }

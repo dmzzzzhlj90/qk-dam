@@ -2,12 +2,14 @@ package com.qk.dm.datamodel.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
 import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
+import com.qk.dm.datamodel.service.DatasourceService;
 import com.qk.dm.datamodel.service.PhysicalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -26,8 +28,10 @@ import java.util.List;
 @RequestMapping("/modelphysical")
 public class ModelPhysicalController {
   @Autowired PhysicalService physicalService;
-  public ModelPhysicalController(PhysicalService physicalService){
+  @Autowired DatasourceService datasourceService;
+  public ModelPhysicalController(PhysicalService physicalService,DatasourceService datasourceService){
     this.physicalService = physicalService;
+    this.datasourceService=datasourceService;
   }
 
   /**
@@ -89,5 +93,41 @@ public class ModelPhysicalController {
   public DefaultCommonResult<CensusDataVO> getCensusData(@RequestBody @Validated QueryModelPhysicalDTO queryModelPhysicalDTO){
     CensusDataVO censusDataVO = physicalService.getCensusData(queryModelPhysicalDTO);
     return DefaultCommonResult.success(ResultCodeEnum.OK,censusDataVO);
+  }
+  //============================数据连接调用=========================================>
+
+  /**
+   * 查询所有数据源连接类型
+   *
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/datasource/api/type/all")
+  public DefaultCommonResult<List<String>> getAllConnType() {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, datasourceService.getAllConnType());
+  }
+
+  /**
+   * 根据数据库类型获取数据源连接信息
+   *
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/datasource/api/database/{type}")
+  DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
+      @PathVariable("type") String type) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, datasourceService.getResultDataSourceByType(type));
+  }
+
+  /**
+   * 根据数据源名称获取数据源连接信息
+   *
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/datasource/api/name/{connectName}")
+  public DefaultCommonResult<ResultDatasourceInfo> getResultDataSourceByConnectName(
+      @PathVariable("connectName") String connectName) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, datasourceService.getResultDataSourceByConnectName(connectName));
   }
 }

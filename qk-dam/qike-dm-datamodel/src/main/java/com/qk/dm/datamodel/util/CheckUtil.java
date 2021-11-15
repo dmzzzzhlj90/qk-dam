@@ -31,7 +31,7 @@ public class CheckUtil {
     NumberFormat numberFormat = NumberFormat.getInstance();
     // 设置精确到小数点后2位
     numberFormat.setMaximumFractionDigits(2);
-    String result = numberFormat.format((float)size/(float)size1*100);
+    String result = numberFormat.format((float)size/(float)size1*100)+"%";
     return result;
   }
 }
