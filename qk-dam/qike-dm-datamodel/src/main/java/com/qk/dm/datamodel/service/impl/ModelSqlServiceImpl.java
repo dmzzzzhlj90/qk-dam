@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 /**
- * 维度
+ * 模型SQL
  * @author wangzp
  * @date 2021/11/15 15:48
  * @since 1.0.0
