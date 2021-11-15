@@ -22,73 +22,87 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/scheduler/basic/info")
 public class DqcSchedulerBasicInfoController {
-    private final DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService;
+  private final DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService;
 
-    @Autowired
-    public DqcSchedulerBasicInfoController(DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService) {
-        this.dqcSchedulerBasicInfoService = dqcSchedulerBasicInfoService;
-    }
+  @Autowired
+  public DqcSchedulerBasicInfoController(
+      DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService) {
+    this.dqcSchedulerBasicInfoService = dqcSchedulerBasicInfoService;
+  }
 
-    /**
-     * 获取规则调度_基础信息列表
-     *
-     * @param dsdSchedulerAllParamsVO
-     * @return DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>>
-     */
-    @GetMapping("/page/list")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerBasicInfoService.searchPageList(dsdSchedulerAllParamsVO));
-    }
+  /**
+   * 获取规则调度_基础信息列表
+   *
+   * @param dsdSchedulerAllParamsVO
+   * @return DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>>
+   */
+  @GetMapping("/page/list")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+  public DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>> searchPageList(
+      @RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dqcSchedulerBasicInfoService.searchPageList(dsdSchedulerAllParamsVO));
+  }
 
-    /**
-     * 新增规则调度_基础信息
-     *
-     * @param dqcSchedulerBasicInfoVO
-     * @return DefaultCommonResult
-     */
-    @PostMapping("")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
-    public DefaultCommonResult<String> insert(@RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO));
-    }
+  /**
+   * 新增规则调度_基础信息
+   *
+   * @param dqcSchedulerBasicInfoVO
+   * @return DefaultCommonResult
+   */
+  @PostMapping("")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
+  public DefaultCommonResult<String> insert(
+      @RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO));
+  }
 
-    /**
-     * 编辑规则调度_基础信息
-     *
-     * @param dqcSchedulerBasicInfoVO
-     * @return DefaultCommonResult
-     */
-    @PutMapping("")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-    public DefaultCommonResult update(@RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        dqcSchedulerBasicInfoService.update(dqcSchedulerBasicInfoVO);
-        return DefaultCommonResult.success();
-    }
+  /**
+   * 编辑规则调度_基础信息
+   *
+   * @param dqcSchedulerBasicInfoVO
+   * @return DefaultCommonResult
+   */
+  @PutMapping("")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(
+      @RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    dqcSchedulerBasicInfoService.update(dqcSchedulerBasicInfoVO);
+    return DefaultCommonResult.success();
+  }
 
-    /**
-     * 删除单个规则调度_基础信息
-     *
-     * @param id
-     * @return DefaultCommonResult
-     */
-    @DeleteMapping("/{id}")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-    public DefaultCommonResult delete(@PathVariable("id") String id) {
-        dqcSchedulerBasicInfoService.delete(Long.valueOf(id));
-        return DefaultCommonResult.success();
-    }
+  @PutMapping("/state")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult publish(
+      @RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    dqcSchedulerBasicInfoService.publish(dqcSchedulerBasicInfoVO);
+    return DefaultCommonResult.success();
+  }
 
-    /**
-     * 批量删除单个规则调度_基础信息
-     *
-     * @param ids
-     * @return DefaultCommonResult
-     */
-    @DeleteMapping("/root/{ids}")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
-        dqcSchedulerBasicInfoService.deleteBulk(ids);
-        return DefaultCommonResult.success();
-    }
+  /**
+   * 删除单个规则调度_基础信息
+   *
+   * @param id
+   * @return DefaultCommonResult
+   */
+  @DeleteMapping("/{id}")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult delete(@PathVariable("id") String id) {
+    dqcSchedulerBasicInfoService.delete(Long.valueOf(id));
+    return DefaultCommonResult.success();
+  }
+
+  /**
+   * 批量删除单个规则调度_基础信息
+   *
+   * @param ids
+   * @return DefaultCommonResult
+   */
+  @DeleteMapping("/root/{ids}")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+    dqcSchedulerBasicInfoService.deleteBulk(ids);
+    return DefaultCommonResult.success();
+  }
 }

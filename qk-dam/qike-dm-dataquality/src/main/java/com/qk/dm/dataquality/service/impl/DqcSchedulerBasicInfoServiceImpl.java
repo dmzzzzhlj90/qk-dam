@@ -60,7 +60,17 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     DqcSchedulerBasicInfo basicInfo = getInfoById(dqcSchedulerBasicInfoVO.getId());
     DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(
         dqcSchedulerBasicInfoVO, basicInfo);
+    // todo 修改人
+    basicInfo.setUpdateUserid(1L);
+    dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
+  }
+
+  @Override
+  public void publish(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    DqcSchedulerBasicInfo basicInfo = getBasicInfo(dqcSchedulerBasicInfoVO.getId());
+    // 更改各种状态
     // todo 如果状态为发布状态，需要判断规则、时间是否配置
+    basicInfo.setDispatchState(dqcSchedulerBasicInfoVO.getDispatchState());
     // todo 修改人
     basicInfo.setUpdateUserid(1L);
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
@@ -92,32 +102,23 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
       throw new BizException("id为：" + idList + " 的任务，不存在！！！");
     }
     if (infoList.stream().anyMatch(i -> i.getDispatchState() != 3)) {
-      throw new BizException("只有状态是停止时才可操作！！！");
+      throw new BizException("非停止状态不可操作！！！");
     }
     return infoList;
   }
 
   private DqcSchedulerBasicInfo getInfoById(Long id) {
-    DqcSchedulerBasicInfo info = dqcSchedulerBasicInfoRepository.findById(id).orElse(null);
-    if (info == null) {
-      throw new BizException("id为：" + id + " 的任务，不存在！！！");
-    }
+    DqcSchedulerBasicInfo info = getBasicInfo(id);
     if (info.getDispatchState() != 3) {
-      throw new BizException("只有状态是停止时才可操作！！！");
+      throw new BizException("非停止状态不可操作！！！");
     }
     return info;
   }
 
-  public DqcSchedulerBasicInfo getInfoByTaskId(String taskId) {
-    DqcSchedulerBasicInfo info =
-        dqcSchedulerBasicInfoRepository
-            .findOne(qDqcSchedulerBasicInfo.taskId.eq(taskId))
-            .orElse(null);
+  private DqcSchedulerBasicInfo getBasicInfo(Long id) {
+    DqcSchedulerBasicInfo info = dqcSchedulerBasicInfoRepository.findById(id).orElse(null);
     if (info == null) {
-      throw new BizException("id为：" + taskId + " 的任务，不存在！！！");
-    }
-    if (info.getDispatchState() != 3) {
-      throw new BizException("只有状态是停止时才可操作！！！");
+      throw new BizException("id为：" + id + " 的任务，不存在！！！");
     }
     return info;
   }

@@ -2,9 +2,12 @@ package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
+import com.qk.dm.dataquality.entity.QDqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.entity.QDqcSchedulerConfig;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerConfigMapper;
+import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerConfigRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
@@ -23,8 +26,15 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   private final DqcSchedulerConfigRepository dqcSchedulerConfigRepository;
   private final QDqcSchedulerConfig qDqcSchedulerConfig = QDqcSchedulerConfig.dqcSchedulerConfig;
 
-  public DqcSchedulerConfigServiceImpl(DqcSchedulerConfigRepository dqcSchedulerConfigRepository) {
+  private final DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository;
+  private final QDqcSchedulerBasicInfo qDqcSchedulerBasicInfo =
+      QDqcSchedulerBasicInfo.dqcSchedulerBasicInfo;
+
+  public DqcSchedulerConfigServiceImpl(
+      DqcSchedulerConfigRepository dqcSchedulerConfigRepository,
+      DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository) {
     this.dqcSchedulerConfigRepository = dqcSchedulerConfigRepository;
+    this.dqcSchedulerBasicInfoRepository = dqcSchedulerBasicInfoRepository;
   }
 
   @Override
@@ -35,7 +45,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    getInfoByTaskIdIsNotNull(dqcSchedulerConfigVO.getTaskId());
+    checkConfigIsNotNullByTaskId(dqcSchedulerConfigVO.getTaskId());
     DqcSchedulerConfig config =
         DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
     // todo 创建人
@@ -45,8 +55,10 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public void update(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    // todo 需要判断规则调度状态
     DqcSchedulerConfig config = getInfoById(dqcSchedulerConfigVO.getId());
+    // 判断调度规则为停止
+    checkBasicInfoStateByTaskId(config.getTaskId());
+
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
     // todo 修改人
     config.setUpdateUserid(1L);
@@ -71,12 +83,11 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     return info;
   }
 
-  private DqcSchedulerConfig getInfoByTaskIdIsNotNull(String taskId) {
+  private void checkConfigIsNotNullByTaskId(String taskId) {
     DqcSchedulerConfig schedulerConfig = getInfoByTaskId(taskId);
     if (schedulerConfig != null) {
       throw new BizException("任务id为：" + taskId + " 的配置，已存在！！！");
     }
-    return schedulerConfig;
   }
 
   private List<DqcSchedulerConfig> getInfoByTaskIds(List<String> taskIds) {
@@ -86,5 +97,18 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   private DqcSchedulerConfig getInfoByTaskId(String taskId) {
     return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.taskId.eq(taskId)).orElse(null);
+  }
+
+  public void checkBasicInfoStateByTaskId(String taskId) {
+    DqcSchedulerBasicInfo info =
+        dqcSchedulerBasicInfoRepository
+            .findOne(qDqcSchedulerBasicInfo.taskId.eq(taskId))
+            .orElse(null);
+    if (info == null) {
+      throw new BizException("id为：" + taskId + " 的任务，不存在！！！");
+    }
+    if (info.getDispatchState() != 3) {
+      throw new BizException("非停止状态不可操作！！！");
+    }
   }
 }
