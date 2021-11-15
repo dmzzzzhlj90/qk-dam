@@ -38,6 +38,7 @@ dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
     implementation project(":qk-model-common")
+    implementation project(":metadata-common-core")
     //compile project(":qk-authorization")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'

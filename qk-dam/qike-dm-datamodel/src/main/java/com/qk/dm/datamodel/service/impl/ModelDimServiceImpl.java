@@ -22,6 +22,7 @@ import org.hibernate.persister.entity.EntityPersister;
 import org.hibernate.persister.entity.SingleTableEntityPersister;
 import org.hibernate.persister.walking.spi.AttributeDefinition;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -63,6 +64,9 @@ public class ModelDimServiceImpl implements ModelDimService {
         ModelDim dim = modelDimRepository.save(modelDim);
         //保存字段信息
         List<ModelDimColumnDTO> modelDimColumnList = modelDimInfoDTO.getModelDimColumnList();
+        if(checkRepeat(modelDimColumnList)){
+            throw new BizException("存在重复的字段！！！");
+        }
         modelDimColumnList.forEach(e->e.setDimId(dim.getId()));;
         modelDimColumnSerVice.insert(modelDimColumnList);
     }
@@ -127,6 +131,14 @@ public class ModelDimServiceImpl implements ModelDimService {
         List<ModelDim> modelDimList = getModelDimList(ids);
         modelDimList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
         modelDimRepository.saveAllAndFlush(modelDimList);
+    }
+
+    private Boolean checkRepeat(List<ModelDimColumnDTO> modelDimColumnDTOList){
+        Map<String, Long> collect = modelDimColumnDTOList.stream()
+                .collect(Collectors.groupingBy(ModelDimColumnDTO::getColumnName, Collectors.counting()));
+        List<String> list = collect.keySet().stream().
+                filter(key -> collect.get(key) > 1).collect(Collectors.toList());
+        return !CollectionUtils.isEmpty(list);
     }
     private List<ModelDim> getModelDimList(String ids){
         Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
