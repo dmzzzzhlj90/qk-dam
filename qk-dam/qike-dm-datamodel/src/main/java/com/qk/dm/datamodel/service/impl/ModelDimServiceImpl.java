@@ -60,14 +60,14 @@ public class ModelDimServiceImpl implements ModelDimService {
     @Override
     public void insert(ModelDimInfoDTO modelDimInfoDTO) {
         ModelDim modelDim = ModelDimMapper.INSTANCE.of(modelDimInfoDTO.getModelDimBase());
-        //保存维度基本信息
-        ModelDim dim = modelDimRepository.save(modelDim);
-        //保存字段信息
         List<ModelDimColumnDTO> modelDimColumnList = modelDimInfoDTO.getModelDimColumnList();
         if(checkRepeat(modelDimColumnList)){
             throw new BizException("存在重复的字段！！！");
         }
-        modelDimColumnList.forEach(e->e.setDimId(dim.getId()));;
+        //保存维度基本信息
+        ModelDim dim = modelDimRepository.save(modelDim);
+        //保存字段信息
+        modelDimColumnList.forEach(e->e.setDimId(dim.getId()));
         modelDimColumnSerVice.insert(modelDimColumnList);
     }
 

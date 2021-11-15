@@ -1,6 +1,5 @@
 package com.qk.dm.datamodel.service;
 
-import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelSummaryIdcDTO;
 import com.qk.dm.datamodel.params.vo.ModelSummaryIdcVO;
 
