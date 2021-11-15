@@ -40,6 +40,7 @@ dependencies {
     implementation project(":qk-model-common")
     implementation project(":metadata-common-core")
     implementation project(":qk-sqlbuilder")
+    implementation project(":datasource-common-core")
     //compile project(":qk-authorization")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
