@@ -35,17 +35,31 @@ public class DqcSchedulerConfigVO {
   @NotNull(message = "调度执行方式不能为空！")
   private Integer runType;
 
-  /** 调度周期 年、月、周、日 */
-  private String schedulerCycle;
+  /** 有效日期开始 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date effectiveTimeStart;
+
+  /** 有效日期结束 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date effectiveTimeEnt;
+
+  /** 调度周期 1-分钟 2-小时 3-天 4-周 */
+  private Integer schedulerCycle;
+
+  /** 间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日 */
+  private String schedulerIntervalTime;
 
   /** 周期开始时间 */
+  @DateTimeFormat(pattern = "mm:ss")
+  @JsonFormat(pattern = "mm:ss", timezone = "GMT+8")
   private Date schedulerTimeStart;
 
   /** 周期结束时间 */
+  @DateTimeFormat(pattern = "mm:ss")
+  @JsonFormat(pattern = "mm:ss", timezone = "GMT+8")
   private Date schedulerTimeEnt;
-
-  /** 间隔时间 */
-  private String schedulerIntervalTime;
 
   /** 调度执行cron表达式 */
   private String cron;

@@ -1,8 +1,8 @@
 package com.qk.dm.dataquality.enums;
 
 public enum DataSourceEnum {
-    hive(1,"have"),
-    mysql(2,"mysql");
+    CALCULATE_ENGINE_HIVE(1,"HAVE"),
+    CALCULATE_ENGINE_MYSQL(2,"MYSQL");
 
     private Integer code;
     private String name;

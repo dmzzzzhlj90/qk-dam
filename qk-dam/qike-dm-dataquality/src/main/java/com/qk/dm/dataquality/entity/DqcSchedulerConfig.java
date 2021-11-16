@@ -29,9 +29,21 @@ public class DqcSchedulerConfig implements Serializable {
   @Column(name = "run_type", nullable = false)
   private Integer runType;
 
-  /** 调度周期 年、月、周、日 */
+  /** 调度周期 1-分钟 2-小时 3-天 4-周 */
   @Column(name = "scheduler_cycle")
-  private String schedulerCycle;
+  private Integer schedulerCycle;
+
+  /** 间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日 */
+  @Column(name = "scheduler_interval_time")
+  private String schedulerIntervalTime;
+
+  /** 有效日期开始 */
+  @Column(name = "effective_time_start")
+  private Date effectiveTimeStart;
+
+  /** 有效日期结束 */
+  @Column(name = "effective_time_ent")
+  private Date effectiveTimeEnt;
 
   /** 周期开始时间 */
   @Column(name = "scheduler_time_start")
@@ -40,10 +52,6 @@ public class DqcSchedulerConfig implements Serializable {
   /** 周期结束时间 */
   @Column(name = "scheduler_time_ent")
   private Date schedulerTimeEnt;
-
-  /** 间隔时间 */
-  @Column(name = "scheduler_interval_time")
-  private String schedulerIntervalTime;
 
   /** 调度执行cron表达式 */
   @Column(name = "cron")

@@ -3,7 +3,6 @@ package com.qk.dm.dataquality.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +11,6 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_dqc_scheduler_basic_info")
-@Where(clause = "del_flag = 0 ")
 public class DqcSchedulerBasicInfo implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -52,8 +50,8 @@ public class DqcSchedulerBasicInfo implements Serializable {
   private String notifyThemeId;
 
   /** 调度状态 1-调度中 2-运行中 3-停止 */
-  @Column(name = "dispatch_state")
-  private Integer dispatchState;
+  @Column(name = "scheduler_state")
+  private Integer schedulerState;
 
   /** 创建人 */
   @Column(name = "create_userid", nullable = false)

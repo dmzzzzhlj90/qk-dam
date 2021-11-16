@@ -107,7 +107,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     if (info == null) {
       throw new BizException("id为：" + taskId + " 的任务，不存在！！！");
     }
-    if (info.getDispatchState() != 3) {
+    if (info.getSchedulerState() != 3) {
       throw new BizException("非停止状态不可操作！！！");
     }
   }

@@ -64,11 +64,11 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     Arrays.asList(engineType.split(","))
         .forEach(
             i -> {
-              if (Integer.parseInt(i) == DataSourceEnum.hive.getCode()
+              if (Integer.parseInt(i) == DataSourceEnum.CALCULATE_ENGINE_HIVE.getCode()
                   && !SqlParserFactory.parseStatements(sql, DbType.hive)) {
                 throw new BizException("本sql hive不适用！！！");
               }
-              if (Integer.parseInt(i) == DataSourceEnum.mysql.getCode()
+              if (Integer.parseInt(i) == DataSourceEnum.CALCULATE_ENGINE_MYSQL.getCode()
                   && !SqlParserFactory.parseStatements(sql, DbType.mysql)) {
                 throw new BizException("本sql mysql不适用！！！");
               }
