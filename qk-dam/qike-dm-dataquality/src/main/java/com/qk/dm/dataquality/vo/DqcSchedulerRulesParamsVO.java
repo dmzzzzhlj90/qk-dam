@@ -24,7 +24,7 @@ public class DqcSchedulerRulesParamsVO {
     /**
      * 作业id
      */
-    private String taskId;
+    private String jobId;
 
     /**
      * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔

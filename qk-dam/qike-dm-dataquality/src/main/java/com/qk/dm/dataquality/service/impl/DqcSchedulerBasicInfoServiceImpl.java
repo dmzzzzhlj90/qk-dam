@@ -48,11 +48,11 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   public String insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
     DqcSchedulerBasicInfo basicInfo =
         DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO);
-    basicInfo.setTaskId(UUID.randomUUID().toString().replaceAll("-", ""));
+    basicInfo.setJobId(UUID.randomUUID().toString().replaceAll("-", ""));
     // todo 创建人
     basicInfo.setCreateUserid(1L);
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
-    return basicInfo.getTaskId();
+    return basicInfo.getJobId();
   }
 
   @Override
@@ -80,7 +80,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   @Transient
   public void delete(Long id) {
     DqcSchedulerBasicInfo info = getInfoById(id);
-    dqcSchedulerConfigService.delete(info.getTaskId());
+    dqcSchedulerConfigService.delete(info.getJobId());
     dqcSchedulerBasicInfoRepository.delete(info);
   }
 
@@ -91,7 +91,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
     List<DqcSchedulerBasicInfo> infoList = getInfoList(idList);
     List<String> taskIds =
-        infoList.stream().map(DqcSchedulerBasicInfo::getTaskId).collect(Collectors.toList());
+        infoList.stream().map(DqcSchedulerBasicInfo::getJobId).collect(Collectors.toList());
     dqcSchedulerConfigService.deleteBulk(taskIds);
     dqcSchedulerBasicInfoRepository.deleteAll(infoList);
   }

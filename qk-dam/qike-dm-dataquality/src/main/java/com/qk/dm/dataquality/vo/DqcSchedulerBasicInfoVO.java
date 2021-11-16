@@ -28,11 +28,11 @@ public class DqcSchedulerBasicInfoVO {
   private Long id;
 
   /** 作业id */
-  private String taskId;
+  private String jobId;
 
   /** 作业名称 */
   @NotBlank(message = "作业名称不能为空！")
-  private String taskName;
+  private String jobName;
 
   /** 分类目录 */
   @NotNull(message = "分类目录不能为空！")

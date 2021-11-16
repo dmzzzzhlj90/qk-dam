@@ -1,8 +1,8 @@
 package com.qk.dm.dataquality.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.qk.dm.dataquality.enums.DataSourceEnum;
-import com.qk.dm.dataquality.enums.DimensionEnum;
+import com.qk.dm.dataquality.constant.DataSourceEnum;
+import com.qk.dm.dataquality.constant.DimensionEnum;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

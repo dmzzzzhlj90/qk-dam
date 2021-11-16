@@ -2,6 +2,7 @@ package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.utils.CronUtil;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.entity.QDqcSchedulerBasicInfo;
@@ -45,9 +46,10 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    checkConfigIsNotNullByTaskId(dqcSchedulerConfigVO.getTaskId());
+    checkConfigIsNotNullByTaskId(dqcSchedulerConfigVO.getJobId());
     DqcSchedulerConfig config =
         DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
+    config.setCron(CronUtil.createCron(dqcSchedulerConfigVO));
     // todo 创建人
     config.setCreateUserid(1L);
     dqcSchedulerConfigRepository.saveAndFlush(config);
@@ -57,8 +59,8 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   public void update(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     DqcSchedulerConfig config = getInfoById(dqcSchedulerConfigVO.getId());
     // 判断调度规则为停止
-    checkBasicInfoStateByTaskId(config.getTaskId());
-
+    checkBasicInfoStateByTaskId(config.getJobId());
+    config.setCron(CronUtil.createCron(dqcSchedulerConfigVO));
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
     // todo 修改人
     config.setUpdateUserid(1L);
@@ -92,17 +94,17 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   private List<DqcSchedulerConfig> getInfoByTaskIds(List<String> taskIds) {
     return (List<DqcSchedulerConfig>)
-        dqcSchedulerConfigRepository.findAll(qDqcSchedulerConfig.taskId.in(taskIds));
+        dqcSchedulerConfigRepository.findAll(qDqcSchedulerConfig.jobId.in(taskIds));
   }
 
   private DqcSchedulerConfig getInfoByTaskId(String taskId) {
-    return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.taskId.eq(taskId)).orElse(null);
+    return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.jobId.eq(taskId)).orElse(null);
   }
 
   public void checkBasicInfoStateByTaskId(String taskId) {
     DqcSchedulerBasicInfo info =
         dqcSchedulerBasicInfoRepository
-            .findOne(qDqcSchedulerBasicInfo.taskId.eq(taskId))
+            .findOne(qDqcSchedulerBasicInfo.jobId.eq(taskId))
             .orElse(null);
     if (info == null) {
       throw new BizException("id为：" + taskId + " 的任务，不存在！！！");

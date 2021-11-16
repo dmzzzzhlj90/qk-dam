@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.enums;
+package com.qk.dm.dataquality.constant;
 
 public enum DataSourceEnum {
     CALCULATE_ENGINE_HIVE(1,"HAVE"),

@@ -24,8 +24,8 @@ public class DqcSchedulerRules implements Serializable {
     /**
      * 作业id
      */
-    @Column(name = "task_id", nullable = false)
-    private String taskId;
+    @Column(name = "job_id", nullable = false)
+    private String jobId;
 
     /**
      * 规则模版id

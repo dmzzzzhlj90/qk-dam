@@ -9,7 +9,7 @@ import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
-import com.qk.dm.dataquality.enums.DataSourceEnum;
+import com.qk.dm.dataquality.constant.DataSourceEnum;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcRuleTemplateMapper;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;

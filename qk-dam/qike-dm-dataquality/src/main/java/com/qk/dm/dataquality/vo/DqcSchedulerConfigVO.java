@@ -29,7 +29,7 @@ public class DqcSchedulerConfigVO {
 
   /** 作业id */
   @NotBlank(message = "作业id不能为空！")
-  private String taskId;
+  private String jobId;
 
   /** 调度执行方式 1-手动执行 2-调度执行 */
   @NotNull(message = "调度执行方式不能为空！")
@@ -51,15 +51,10 @@ public class DqcSchedulerConfigVO {
   /** 间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日 */
   private String schedulerIntervalTime;
 
-  /** 周期开始时间 */
+  /** 调度时间 */
   @DateTimeFormat(pattern = "mm:ss")
   @JsonFormat(pattern = "mm:ss", timezone = "GMT+8")
-  private Date schedulerTimeStart;
-
-  /** 周期结束时间 */
-  @DateTimeFormat(pattern = "mm:ss")
-  @JsonFormat(pattern = "mm:ss", timezone = "GMT+8")
-  private Date schedulerTimeEnt;
+  private Date schedulerTime;
 
   /** 调度执行cron表达式 */
   private String cron;

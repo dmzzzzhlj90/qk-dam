@@ -3,7 +3,6 @@ package com.qk.dm.dataquality.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -22,12 +21,12 @@ public class DqcSchedulerBasicInfo implements Serializable {
   private Long id;
 
   /** 作业id */
-  @Column(name = "task_id", nullable = false)
-  private String taskId;
+  @Column(name = "job_id", nullable = false)
+  private String jobId;
 
   /** 作业名称 */
-  @Column(name = "task_name", nullable = false)
-  private String taskName;
+  @Column(name = "job_name", nullable = false)
+  private String jobName;
 
   /** 分类目录 */
   @Column(name = "dir_id", nullable = false)

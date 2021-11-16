@@ -22,8 +22,8 @@ public class DqcSchedulerConfig implements Serializable {
   private Long id;
 
   /** 作业id */
-  @Column(name = "task_id", nullable = false)
-  private String taskId;
+  @Column(name = "job_id", nullable = false)
+  private String jobId;
 
   /** 调度执行方式 1-手动执行 2-调度执行 */
   @Column(name = "run_type", nullable = false)
@@ -45,13 +45,9 @@ public class DqcSchedulerConfig implements Serializable {
   @Column(name = "effective_time_ent")
   private Date effectiveTimeEnt;
 
-  /** 周期开始时间 */
-  @Column(name = "scheduler_time_start")
-  private Date schedulerTimeStart;
-
-  /** 周期结束时间 */
-  @Column(name = "scheduler_time_ent")
-  private Date schedulerTimeEnt;
+  /** 周期时间 */
+  @Column(name = "scheduler_time")
+  private Date schedulerTime;
 
   /** 调度执行cron表达式 */
   @Column(name = "cron")
