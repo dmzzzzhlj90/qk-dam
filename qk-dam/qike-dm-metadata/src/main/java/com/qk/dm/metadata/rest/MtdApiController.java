@@ -8,6 +8,8 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.metedata.entity.*;
 import com.qk.dm.metadata.service.MtdApiService;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,4 +58,26 @@ public class MtdApiController {
             mtdApiParams.getServer());
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdApi);
   }
+  /**
+   * 获取元数据表的信息
+   * @param mtdTableApiParams
+   * @return DefaultCommonResult<List<MtdTables>>
+   */
+  @PostMapping("/tables")
+  public DefaultCommonResult<List<MtdTables>> getTables(@RequestBody @Validated MtdTableApiParams mtdTableApiParams){
+    List<MtdTables> mtdTablesList = mtdApiService.getTables(mtdTableApiParams.getTypeName(),mtdTableApiParams.getClassification());
+    return DefaultCommonResult.success(ResultCodeEnum.OK,mtdTablesList);
+  }
+
+  /**
+   * 获取表的字段信息
+   * @param guid
+   * @return
+   */
+  @GetMapping("/columns/{guid}")
+  public DefaultCommonResult<List<Map<String, Object>>> getColumns(@PathVariable("guid") String guid){
+    List<Map<String, Object>> columnList = mtdApiService.getColumns(guid);
+    return DefaultCommonResult.success(ResultCodeEnum.OK,columnList);
+  }
+
 }
