@@ -28,11 +28,11 @@ public class DqcSchedulerBasicInfoVO {
   private Long id;
 
   /** 作业id */
-  private String taskId;
+  private String jobId;
 
   /** 作业名称 */
   @NotBlank(message = "作业名称不能为空！")
-  private String taskName;
+  private String jobName;
 
   /** 分类目录 */
   @NotNull(message = "分类目录不能为空！")
@@ -55,7 +55,7 @@ public class DqcSchedulerBasicInfoVO {
   private String notifyThemeId;
 
   /** 调度状态 1-调度中 2-运行中 3-停止 */
-  private Integer dispatchState = 0;
+  private Integer schedulerState = 0;
 
   /** 创建人 */
   private Long createUserid;

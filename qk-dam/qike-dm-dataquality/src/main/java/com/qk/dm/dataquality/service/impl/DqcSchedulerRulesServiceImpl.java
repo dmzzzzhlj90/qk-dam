@@ -135,8 +135,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public void checkCondition(BooleanBuilder booleanBuilder,
                                QDqcSchedulerRules qDqcSchedulerRules,
                                DqcSchedulerRulesParamsVO dqcSchedulerRulesParamsVO) {
-        if (!ObjectUtils.isEmpty(dqcSchedulerRulesParamsVO.getTaskId())) {
-            booleanBuilder.and(qDqcSchedulerRules.taskId.eq(dqcSchedulerRulesParamsVO.getTaskId()));
+        if (!ObjectUtils.isEmpty(dqcSchedulerRulesParamsVO.getJobId())) {
+            booleanBuilder.and(qDqcSchedulerRules.jobId.eq(dqcSchedulerRulesParamsVO.getJobId()));
         }
 
         if (!ObjectUtils.isEmpty(dqcSchedulerRulesParamsVO.getEngineType())) {

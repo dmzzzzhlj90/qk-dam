@@ -48,11 +48,11 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   public String insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
     DqcSchedulerBasicInfo basicInfo =
         DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO);
-    basicInfo.setTaskId(UUID.randomUUID().toString().replaceAll("-", ""));
+    basicInfo.setJobId(UUID.randomUUID().toString().replaceAll("-", ""));
     // todo 创建人
     basicInfo.setCreateUserid(1L);
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
-    return basicInfo.getTaskId();
+    return basicInfo.getJobId();
   }
 
   @Override
@@ -70,7 +70,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     DqcSchedulerBasicInfo basicInfo = getBasicInfo(dqcSchedulerBasicInfoVO.getId());
     // 更改各种状态
     // todo 如果状态为发布状态，需要判断规则、时间是否配置
-    basicInfo.setDispatchState(dqcSchedulerBasicInfoVO.getDispatchState());
+    basicInfo.setSchedulerState(dqcSchedulerBasicInfoVO.getSchedulerState());
     // todo 修改人
     basicInfo.setUpdateUserid(1L);
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
@@ -80,7 +80,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   @Transient
   public void delete(Long id) {
     DqcSchedulerBasicInfo info = getInfoById(id);
-    dqcSchedulerConfigService.delete(info.getTaskId());
+    dqcSchedulerConfigService.delete(info.getJobId());
     dqcSchedulerBasicInfoRepository.delete(info);
   }
 
@@ -91,7 +91,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
     List<DqcSchedulerBasicInfo> infoList = getInfoList(idList);
     List<String> taskIds =
-        infoList.stream().map(DqcSchedulerBasicInfo::getTaskId).collect(Collectors.toList());
+        infoList.stream().map(DqcSchedulerBasicInfo::getJobId).collect(Collectors.toList());
     dqcSchedulerConfigService.deleteBulk(taskIds);
     dqcSchedulerBasicInfoRepository.deleteAll(infoList);
   }
@@ -101,7 +101,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     if (CollectionUtils.isEmpty(infoList)) {
       throw new BizException("id为：" + idList + " 的任务，不存在！！！");
     }
-    if (infoList.stream().anyMatch(i -> i.getDispatchState() != 3)) {
+    if (infoList.stream().anyMatch(i -> i.getSchedulerState() != 3)) {
       throw new BizException("非停止状态不可操作！！！");
     }
     return infoList;
@@ -109,7 +109,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
 
   private DqcSchedulerBasicInfo getInfoById(Long id) {
     DqcSchedulerBasicInfo info = getBasicInfo(id);
-    if (info.getDispatchState() != 3) {
+    if (info.getSchedulerState() != 3) {
       throw new BizException("非停止状态不可操作！！！");
     }
     return info;

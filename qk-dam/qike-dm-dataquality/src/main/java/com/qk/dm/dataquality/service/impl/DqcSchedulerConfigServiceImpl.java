@@ -45,7 +45,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    checkConfigIsNotNullByTaskId(dqcSchedulerConfigVO.getTaskId());
+    checkConfigIsNotNullByTaskId(dqcSchedulerConfigVO.getJobId());
     DqcSchedulerConfig config =
         DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
     // todo 创建人
@@ -57,7 +57,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   public void update(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     DqcSchedulerConfig config = getInfoById(dqcSchedulerConfigVO.getId());
     // 判断调度规则为停止
-    checkBasicInfoStateByTaskId(config.getTaskId());
+    checkBasicInfoStateByTaskId(config.getJobId());
 
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
     // todo 修改人
@@ -92,22 +92,22 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   private List<DqcSchedulerConfig> getInfoByTaskIds(List<String> taskIds) {
     return (List<DqcSchedulerConfig>)
-        dqcSchedulerConfigRepository.findAll(qDqcSchedulerConfig.taskId.in(taskIds));
+        dqcSchedulerConfigRepository.findAll(qDqcSchedulerConfig.jobId.in(taskIds));
   }
 
   private DqcSchedulerConfig getInfoByTaskId(String taskId) {
-    return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.taskId.eq(taskId)).orElse(null);
+    return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.jobId.eq(taskId)).orElse(null);
   }
 
   public void checkBasicInfoStateByTaskId(String taskId) {
     DqcSchedulerBasicInfo info =
         dqcSchedulerBasicInfoRepository
-            .findOne(qDqcSchedulerBasicInfo.taskId.eq(taskId))
+            .findOne(qDqcSchedulerBasicInfo.jobId.eq(taskId))
             .orElse(null);
     if (info == null) {
       throw new BizException("id为：" + taskId + " 的任务，不存在！！！");
     }
-    if (info.getDispatchState() != 3) {
+    if (info.getSchedulerState() != 3) {
       throw new BizException("非停止状态不可操作！！！");
     }
   }

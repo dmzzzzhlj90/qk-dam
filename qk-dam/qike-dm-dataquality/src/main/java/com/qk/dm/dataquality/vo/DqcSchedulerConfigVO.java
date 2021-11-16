@@ -29,7 +29,7 @@ public class DqcSchedulerConfigVO {
 
   /** 作业id */
   @NotBlank(message = "作业id不能为空！")
-  private String taskId;
+  private String jobId;
 
   /** 调度执行方式 1-手动执行 2-调度执行 */
   @NotNull(message = "调度执行方式不能为空！")

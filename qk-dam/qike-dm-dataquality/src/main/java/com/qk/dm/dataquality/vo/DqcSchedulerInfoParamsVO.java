@@ -24,12 +24,12 @@ public class DqcSchedulerInfoParamsVO {
     /**
      * 作业id
      */
-    private String taskId;
+    private String jobId;
 
     /**
      * 作业名称
      */
-    private String taskName;
+    private String jobName;
 
     /**
      * 分类目录
