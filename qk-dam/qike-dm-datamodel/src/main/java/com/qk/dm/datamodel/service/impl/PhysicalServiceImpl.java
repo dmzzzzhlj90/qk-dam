@@ -274,6 +274,16 @@ public class PhysicalServiceImpl implements PhysicalService {
   }
 
   /**
+   * 数据类型
+   * @return
+   */
+  @Override
+  public List<Map<String,String>> getDataTypes() {
+    List<Map<String, String>> list =CheckUtil.getDataTypes();
+    return list;
+  }
+
+  /**
    * 根据基础信息查询统计数据
    * @param list
    * @return

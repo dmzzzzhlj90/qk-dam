@@ -4,12 +4,15 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.metedata.entity.MtdTableApiParams;
+import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
 import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
 import com.qk.dm.datamodel.service.DatasourceService;
+import com.qk.dm.datamodel.service.MetaDataService;
 import com.qk.dm.datamodel.service.PhysicalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 关系建模
@@ -27,33 +31,44 @@ import java.util.List;
 @RestController
 @RequestMapping("/modelphysical")
 public class ModelPhysicalController {
-  @Autowired PhysicalService physicalService;
-  @Autowired DatasourceService datasourceService;
-  public ModelPhysicalController(PhysicalService physicalService,DatasourceService datasourceService){
+  @Autowired
+  PhysicalService physicalService;
+  @Autowired
+  DatasourceService datasourceService;
+  @Autowired
+  MetaDataService metaDataService;
+
+  public ModelPhysicalController(PhysicalService physicalService,
+      DatasourceService datasourceService,MetaDataService metaDataService) {
     this.physicalService = physicalService;
-    this.datasourceService=datasourceService;
+    this.datasourceService = datasourceService;
+    this.metaDataService=metaDataService;
   }
 
   /**
    * 新增——关系建模
+   *
    * @param modelPhysicalDTO
    * @return
    */
   @PostMapping
-  public DefaultCommonResult add(@RequestBody @Validated ModelPhysicalDTO modelPhysicalDTO){
+  public DefaultCommonResult add(
+      @RequestBody @Validated ModelPhysicalDTO modelPhysicalDTO) {
     physicalService.insert(modelPhysicalDTO);
     return DefaultCommonResult.success();
   }
 
   /**
    * 删除——关系建模（下线操作）
+   *
    * @param ids
    * @return
    */
   @PutMapping("/delete")
-  public DefaultCommonResult delete(@RequestBody @NotNull @Validated List<Long> ids){
+  public DefaultCommonResult delete(
+      @RequestBody @NotNull @Validated List<Long> ids) {
     physicalService.delete(ids);
-    return  DefaultCommonResult.success();
+    return DefaultCommonResult.success();
   }
 
   /**
@@ -61,39 +76,57 @@ public class ModelPhysicalController {
    */
 
   @PutMapping
-  public DefaultCommonResult update(@RequestBody @Validated ModelPhysicalDTO modelPhysicalDTO){
+  public DefaultCommonResult update(
+      @RequestBody @Validated ModelPhysicalDTO modelPhysicalDTO) {
     physicalService.update(modelPhysicalDTO);
     return DefaultCommonResult.success();
   }
 
   /**
    * 查询——关系建模
+   *
    * @return
    */
   @PostMapping("/query")
-  public DefaultCommonResult<PageResultVO<ModelPhysicalVO>> query(@RequestBody @Validated QueryModelPhysicalDTO queryModelPhysicalDTO){
-    PageResultVO<ModelPhysicalVO> pageList= physicalService.query(queryModelPhysicalDTO);
-    return DefaultCommonResult.success(ResultCodeEnum.OK,pageList);
+  public DefaultCommonResult<PageResultVO<ModelPhysicalVO>> query(
+      @RequestBody @Validated QueryModelPhysicalDTO queryModelPhysicalDTO) {
+    PageResultVO<ModelPhysicalVO> pageList = physicalService.query(queryModelPhysicalDTO);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, pageList);
   }
+
   /**
    * 根据id查询基本信息
    */
   @GetMapping("/{id}")
-  public DefaultCommonResult<ModelPhysicalTableVO> getModelPhysical(@NotNull @PathVariable("id") Long id){
+  public DefaultCommonResult<ModelPhysicalTableVO> getModelPhysical(
+      @NotNull @PathVariable("id") Long id) {
     ModelPhysicalTableVO modelPhysicalTableVO = physicalService.getModelPhysical(id);
-    return DefaultCommonResult.success(ResultCodeEnum.OK,modelPhysicalTableVO);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, modelPhysicalTableVO);
   }
 
   /**
    * 根据层级和主题查询相关数据统计信息
+   *
    * @param queryModelPhysicalDTO
    * @return
    */
   @PostMapping("/census")
-  public DefaultCommonResult<CensusDataVO> getCensusData(@RequestBody @Validated QueryModelPhysicalDTO queryModelPhysicalDTO){
+  public DefaultCommonResult<CensusDataVO> getCensusData(
+      @RequestBody @Validated QueryModelPhysicalDTO queryModelPhysicalDTO) {
     CensusDataVO censusDataVO = physicalService.getCensusData(queryModelPhysicalDTO);
-    return DefaultCommonResult.success(ResultCodeEnum.OK,censusDataVO);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, censusDataVO);
   }
+
+  /**
+   * 数据类型下拉列表
+   *
+   * @return0 DefaultCommonResult
+   */
+  @GetMapping("/data/types")
+  public DefaultCommonResult<List<Map<String,String>>> getDataTypes() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getDataTypes());
+  }
+
   //============================数据连接调用=========================================>
 
   /**
@@ -103,8 +136,7 @@ public class ModelPhysicalController {
    */
   @GetMapping("/datasource/api/type/all")
   public DefaultCommonResult<List<String>> getAllConnType() {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, datasourceService.getAllConnType());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, datasourceService.getAllConnType());
   }
 
   /**
@@ -113,10 +145,9 @@ public class ModelPhysicalController {
    * @return DefaultCommonResult
    */
   @GetMapping("/datasource/api/database/{type}")
-  DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
+  public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
       @PathVariable("type") String type) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, datasourceService.getResultDataSourceByType(type));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, datasourceService.getResultDataSourceByType(type));
   }
 
   /**
@@ -127,7 +158,27 @@ public class ModelPhysicalController {
   @GetMapping("/datasource/api/name/{connectName}")
   public DefaultCommonResult<ResultDatasourceInfo> getResultDataSourceByConnectName(
       @PathVariable("connectName") String connectName) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, datasourceService.getResultDataSourceByConnectName(connectName));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, datasourceService.getResultDataSourceByConnectName(connectName));
+  }
+  //=======================================元数据==================================================>
+
+  /**
+   * 获取元数据表信息
+   * @param mtdTableApiParams
+   * @return
+   */
+  @PostMapping("/meta/api/tables")
+  public DefaultCommonResult<List<MtdTables>> getTables(@RequestBody MtdTableApiParams mtdTableApiParams) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK,metaDataService.getTables(mtdTableApiParams));
+  }
+
+  /**
+   * 获取元数据表字段信息
+   * @param guid
+   * @return
+   */
+  @GetMapping("/columns/{guid}")
+  public DefaultCommonResult<List<Map<String, Object>>> getColumns(@PathVariable("guid") String guid) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK,metaDataService.getColumns(guid));
   }
 }
