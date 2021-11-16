@@ -1,11 +1,9 @@
 package com.qk.dm.dataquality.utils;
 
+import cn.hutool.core.date.DateUtil;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -71,8 +69,8 @@ public class CronUtil {
 
   private static void day(Date time, StringBuffer cronExp) {
     cronExp.append("0 ");
-    cronExp.append(minuteTime(time)).append(" ");
-    cronExp.append(hourTime(time)).append(" ");
+    cronExp.append(DateUtil.format(time,"m")).append(" ");
+    cronExp.append(DateUtil.format(time,"H")).append(" ");
     cronExp.append("* ");
     cronExp.append("* ");
     cronExp.append("?");
@@ -80,42 +78,20 @@ public class CronUtil {
 
   private static void weeks(String interval, Date time, StringBuffer cronExp) {
     cronExp.append("0 ");
-    cronExp.append(minuteTime(time)).append(" ");
-    cronExp.append(hourTime(time)).append(" ");
+    cronExp.append(DateUtil.format(time,"m")).append(" ");
+    cronExp.append(DateUtil.format(time,"H")).append(" ");
     cronExp.append("* ");
     cronExp.append("* ");
     cronExp.append(interval);
-  }
-
-  public static Date parseDate(String strDate, String format) {
-    SimpleDateFormat sdf = new SimpleDateFormat(format);
-    try {
-      return sdf.parse(strDate);
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
-  private static int hourTime(Date dateTime) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(dateTime);
-    return calendar.get(Calendar.HOUR_OF_DAY); // Calendar.HOUR为12小时制
-  }
-
-  private static int minuteTime(Date dateTime) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTime(dateTime);
-    return calendar.get(Calendar.MINUTE);
   }
 
   // 参考例子
   public static void main(String[] args) {
     // 执行时间：每天的12时12分12秒 start
     DqcSchedulerConfigVO dqcSchedulerConfigVO = new DqcSchedulerConfigVO();
-    dqcSchedulerConfigVO.setSchedulerCycle(2);
+    dqcSchedulerConfigVO.setSchedulerCycle(3);
     dqcSchedulerConfigVO.setSchedulerIntervalTime("15");
-    dqcSchedulerConfigVO.setSchedulerTime(parseDate("01:05", "HH:mm"));
+    dqcSchedulerConfigVO.setSchedulerTime(DateUtil.parse("01:05", "HH:mm"));
     System.out.println(createCron(dqcSchedulerConfigVO));
   }
 }

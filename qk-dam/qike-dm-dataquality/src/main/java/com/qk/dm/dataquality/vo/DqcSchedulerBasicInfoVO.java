@@ -38,7 +38,7 @@ public class DqcSchedulerBasicInfoVO {
   @NotNull(message = "分类目录不能为空！")
   private Long dirId;
 
-  /** 提示级别 1-严重 */
+  /** 提示级别 0-提示 1-一般 2-严重 3-致命 */
   @NotNull(message = "提示级别不能为空！")
   private Integer notifyLevel;
 

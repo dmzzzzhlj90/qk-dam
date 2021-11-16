@@ -72,7 +72,7 @@ public class DqcSchedulerBasicInfoController {
     return DefaultCommonResult.success();
   }
 
-  @PutMapping("/state")
+  @PutMapping("/release")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
   public DefaultCommonResult publish(
       @RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
