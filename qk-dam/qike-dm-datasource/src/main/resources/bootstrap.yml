@@ -2,7 +2,7 @@ server:
   port: 8781
 nacos:
   serverAddr: http://172.21.32.2
-  namespace: b283864b-1e78-429e-b322-db0f5720f55c
+  namespace: dam-dev
 spring:
   logging:
     level: info
@@ -18,18 +18,18 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: dm-datasource
+    name: dm-datasource-dev
   cloud:
     nacos:
       discovery:
         server-addr: ${nacos.serverAddr}
         namespace: ${nacos.namespace}
-        group: DM-GROUP
+        group: DEFAULT_GROUP
       config:
         server-addr: ${nacos.serverAddr}
         namespace: ${nacos.namespace}
         extension-configs:
-          - dataId: qkdam-mysql-test.yml
+          - dataId: qkdam-mysql-dev.yml
             group: DAM
             refresh: true
 management:

@@ -9,6 +9,7 @@ import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 关系建模server
@@ -27,4 +28,6 @@ public interface PhysicalService {
   ModelPhysicalTableVO getModelPhysical(Long id);
 
   CensusDataVO getCensusData(QueryModelPhysicalDTO queryModelPhysicalDTO);
+
+  List<Map<String, String>> getDataTypes();
 }
