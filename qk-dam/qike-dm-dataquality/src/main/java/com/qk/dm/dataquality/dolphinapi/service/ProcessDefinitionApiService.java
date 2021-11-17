@@ -13,6 +13,15 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ProcessDefinitionApiService {
 
-    void save(DqcSchedulerInfoVO dqcSchedulerInfoVO);
+  void save(DqcSchedulerInfoVO dqcSchedulerInfoVO);
 
+  void releaseProcessDefinition(Integer processDefinitionId, Integer releaseState);
+
+  void deleteProcessDefinitionById(Integer processDefinitionId);
+
+  void copyProcessDefinition(Integer processDefinitionId);
+
+  void startCheckProcessDefinition(Integer processDefinitionId);
+
+  void startProcessInstance(Integer processDefinitionId);
 }
