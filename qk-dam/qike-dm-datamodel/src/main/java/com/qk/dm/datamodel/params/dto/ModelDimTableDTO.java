@@ -1,9 +1,7 @@
 package com.qk.dm.datamodel.params.dto;
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.Data;
-
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 public class ModelDimTableDTO implements Serializable {

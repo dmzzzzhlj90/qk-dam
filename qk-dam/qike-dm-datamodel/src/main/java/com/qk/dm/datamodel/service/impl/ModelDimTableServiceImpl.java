@@ -74,7 +74,7 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     }
 
     @Override
-    public PageResultVO<ModelDimTableVO> listPage(ModelDimTableDTO modelDimTableDTO) {
+    public PageResultVO<ModelDimTableVO> list(ModelDimTableDTO modelDimTableDTO) {
         Map<String, Object> map;
         try {
             map = queryByParams(modelDimTableDTO);

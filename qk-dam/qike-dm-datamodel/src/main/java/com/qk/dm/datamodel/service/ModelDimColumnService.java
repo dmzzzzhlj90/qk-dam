@@ -4,7 +4,7 @@ import com.qk.dm.datamodel.params.vo.ModelDimColumnVO;
 
 import java.util.List;
 
-public interface ModelDimColumnSerVice {
+public interface ModelDimColumnService {
     void insert(List<ModelDimColumnDTO> modelDimColumnDTOList);
 
     void update(Long dimId,List<ModelDimColumnDTO> modelPhysicalColumnDTOList);

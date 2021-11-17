@@ -11,22 +11,16 @@ import com.qk.dm.datamodel.params.dto.ModelDimDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimInfoDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import com.qk.dm.datamodel.repositories.ModelDimRepository;
-import com.qk.dm.datamodel.service.ModelDimColumnSerVice;
+import com.qk.dm.datamodel.service.ModelDimColumnService;
 import com.qk.dm.datamodel.service.ModelDimService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.hibernate.SessionFactory;
-import org.hibernate.internal.SessionFactoryImpl;
-import org.hibernate.persister.entity.EntityPersister;
-import org.hibernate.persister.entity.SingleTableEntityPersister;
-import org.hibernate.persister.walking.spi.AttributeDefinition;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -43,11 +37,11 @@ public class ModelDimServiceImpl implements ModelDimService {
     private final ModelDimRepository modelDimRepository;
     private final EntityManager entityManager;
     private final QModelDim qModelDim = QModelDim.modelDim;
-    private final ModelDimColumnSerVice modelDimColumnSerVice;
+    private final ModelDimColumnService modelDimColumnSerVice;
 
 
     public ModelDimServiceImpl(ModelDimRepository modelDimRepository,EntityManager entityManager,
-                               ModelDimColumnSerVice modelDimColumnSerVice){
+                               ModelDimColumnService modelDimColumnSerVice){
         this.modelDimRepository = modelDimRepository;
         this.entityManager = entityManager;
         this.modelDimColumnSerVice = modelDimColumnSerVice;

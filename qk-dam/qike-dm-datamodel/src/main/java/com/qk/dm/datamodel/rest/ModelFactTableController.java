@@ -9,7 +9,12 @@ import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 import com.qk.dm.datamodel.service.ModelFactTableService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+/**
+ * 数据模型物理表
+ * @author wangzp
+ * @date 2021/11/10 10:28
+ * @since 1.0.0
+ */
 @RequestMapping("/fact")
 @RestController
 public class ModelFactTableController {

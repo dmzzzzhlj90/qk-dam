@@ -8,7 +8,7 @@ import com.qk.dm.datamodel.params.dto.ModelDimColumnDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimColumnVO;
 import com.qk.dm.datamodel.repositories.ModelDimColumnRepository;
 import com.qk.dm.datamodel.repositories.ModelDimRepository;
-import com.qk.dm.datamodel.service.ModelDimColumnSerVice;
+import com.qk.dm.datamodel.service.ModelDimColumnService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
@@ -19,13 +19,13 @@ import java.util.Objects;
  * @since 1.0.0
  */
 @Service
-public class ModelDimColumnSerViceImpl implements ModelDimColumnSerVice {
+public class ModelDimColumnServiceImpl implements ModelDimColumnService {
 
     private final ModelDimColumnRepository modelDimColumnRepository;
 
     private final ModelDimRepository modelDimRepository;
 
-    public ModelDimColumnSerViceImpl(ModelDimColumnRepository modelDimColumnRepository,
+    public ModelDimColumnServiceImpl(ModelDimColumnRepository modelDimColumnRepository,
                                      ModelDimRepository modelDimRepository){
         this.modelDimColumnRepository = modelDimColumnRepository;
         this.modelDimRepository = modelDimRepository;

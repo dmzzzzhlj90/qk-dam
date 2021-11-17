@@ -9,7 +9,12 @@ import com.qk.dm.datamodel.params.vo.ModelSummaryVO;
 import com.qk.dm.datamodel.service.ModelSummaryService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+/**
+ * 汇总表
+ * @author wangzp
+ * @date 2021/11/12 16:26
+ * @since 1.0.0
+ */
 @RequestMapping("/summary")
 @RestController
 public class ModelSummaryController {

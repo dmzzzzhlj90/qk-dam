@@ -13,6 +13,6 @@ public interface ModelDimTableService {
 
     void delete(String ids);
 
-    PageResultVO<ModelDimTableVO> listPage(ModelDimTableDTO modelDimTableDTO);
+    PageResultVO<ModelDimTableVO> list(ModelDimTableDTO modelDimTableDTO);
 
 }
