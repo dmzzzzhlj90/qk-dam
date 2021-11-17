@@ -24,4 +24,6 @@ public interface ProcessDefinitionApiService {
   void startCheck(Integer processDefinitionId);
 
   void startInstance(Integer processDefinitionId);
+
+  void execute(Integer processInstanceId,String executeType);
 }

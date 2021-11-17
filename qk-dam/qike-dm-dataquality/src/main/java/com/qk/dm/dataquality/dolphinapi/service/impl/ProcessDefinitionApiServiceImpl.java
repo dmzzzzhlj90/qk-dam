@@ -166,6 +166,26 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
   }
 
+  @Override
+  public void execute(Integer processInstanceId, String executeType) {
+    processInstanceId = 1304;
+    executeType="REPEAT_RUNNING";
+    // 创建工作流实例
+    ApiClient defaultClient = getApiClient();
+    // api-sdk
+    DefaultApi apiInstance = new DefaultApi(defaultClient);
+    try {
+      Result result =
+              apiInstance.executeUsingPOST(executeType,processInstanceId,"数据质量");
+      if (result.getCode() != 0) {
+        throw new BizException("删除流程失败!!!");
+      }
+    } catch (ApiException e) {
+      printException(e);
+    }
+  }
+
+
   private void printException(ApiException e) {
     System.err.println("Exception when calling DefaultApi#createSchedule");
     System.err.println("Status code: " + e.getCode());
