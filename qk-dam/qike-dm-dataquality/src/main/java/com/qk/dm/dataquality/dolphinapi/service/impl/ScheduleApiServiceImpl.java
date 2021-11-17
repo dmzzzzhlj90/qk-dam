@@ -5,10 +5,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.datacenter.api.DefaultApi;
-import com.qk.datacenter.client.ApiClient;
 import com.qk.datacenter.client.ApiException;
-import com.qk.datacenter.client.Configuration;
 import com.qk.datacenter.model.Result;
+import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
+import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
+import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
@@ -23,26 +24,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScheduleApiServiceImpl implements ScheduleApiService {
   private static final String format = "yyyy-MM-dd HH:mm:ss";
+  private final DefaultApi defaultApi;
+
+  public ScheduleApiServiceImpl(DefaultApi defaultApi) {
+    this.defaultApi = defaultApi;
+  }
 
   /** createSchedule 创建定时 */
   @Override
   public void create(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
-    // 创建工作流实例
-    ApiClient defaultClient = getApiClient();
-    // api-sdk
-    DefaultApi apiInstance = new DefaultApi(defaultClient);
     try {
       Result result =
-          apiInstance.createScheduleUsingPOST(
+          defaultApi.createScheduleUsingPOST(
               4,
               "数据质量",
-              "CONTINUE",
-              "MEDIUM",
+              FailureStrategyEnum.fromValue(1).getValue(),
+              ProcessInstancePriorityEnum.fromValue(3).getValue(),
               "",
               "",
               schedule(dqcSchedulerInfoVO.getDqcSchedulerConfigVO()),
               0,
-              "NONE",
+              WarningTypeEnum.fromValue(1).getValue(),
               "default");
       if (result.getCode() != 0) {
         throw new BizException("创建定时失败!!!");
@@ -55,22 +57,18 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   @Override
   public void update(Integer scheduleId, DqcSchedulerInfoVO dqcSchedulerInfoVO) {
     scheduleId = 7;
-    // 创建工作流实例
-    ApiClient defaultClient = getApiClient();
-    // api-sdk
-    DefaultApi apiInstance = new DefaultApi(defaultClient);
     try {
       Result result =
-          apiInstance.updateScheduleUsingPOST(
+          defaultApi.updateScheduleUsingPOST(
               scheduleId,
               "数据质量",
-              "CONTINUE",
-              "MEDIUM",
+              FailureStrategyEnum.fromValue(1).getValue(),
+              ProcessInstancePriorityEnum.fromValue(3).getValue(),
               "",
               "",
               schedule(dqcSchedulerInfoVO.getDqcSchedulerConfigVO()),
               0,
-              "NONE",
+              WarningTypeEnum.fromValue(1).getValue(),
               "default");
       if (result.getCode() != 0) {
         throw new BizException("修改定时失败!!!");
@@ -83,12 +81,8 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   @Override
   public void online(Integer scheduleId) {
     scheduleId = 7;
-    // 创建工作流实例
-    ApiClient defaultClient = getApiClient();
-    // api-sdk
-    DefaultApi apiInstance = new DefaultApi(defaultClient);
     try {
-      Result result = apiInstance.onlineUsingPOST(scheduleId, "数据质量");
+      Result result = defaultApi.onlineUsingPOST(scheduleId, "数据质量");
       if (result.getCode() != 0) {
         throw new BizException("定时上线失败!!!");
       }
@@ -100,12 +94,8 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   @Override
   public void offline(Integer scheduleId) {
     scheduleId = 7;
-    // 创建工作流实例
-    ApiClient defaultClient = getApiClient();
-    // api-sdk
-    DefaultApi apiInstance = new DefaultApi(defaultClient);
     try {
-      Result result = apiInstance.offlineUsingPOST(scheduleId, "数据质量");
+      Result result = defaultApi.offlineUsingPOST(scheduleId, "数据质量");
       if (result.getCode() != 0) {
         throw new BizException("定时下线失败!!!");
       }
@@ -117,13 +107,9 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   @Override
   public void delete(Integer scheduleId) {
     scheduleId = 7;
-    // 创建工作流实例
-    ApiClient defaultClient = getApiClient();
-    // api-sdk
-    DefaultApi apiInstance = new DefaultApi(defaultClient);
     try {
       Result result =
-          apiInstance.deleteScheduleByIdUsingGET(
+          defaultApi.deleteScheduleByIdUsingGET(
               "数据质量", scheduleId, "", null, "", null, "", "", "", "", null, "", null, "", "", "");
       if (result.getCode() != 0) {
         throw new BizException("删除定时失败!!!");
@@ -137,13 +123,9 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   public ScheduleListPageVo search(
       Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal) {
     processDefinitionId = 4;
-    // 创建工作流实例
-    ApiClient defaultClient = getApiClient();
-    // api-sdk
-    DefaultApi apiInstance = new DefaultApi(defaultClient);
     try {
       Result result =
-          apiInstance.queryScheduleListPagingUsingGET(
+          defaultApi.queryScheduleListPagingUsingGET(
               processDefinitionId, "数据质量", pageNo, pageSize, searchVal);
       if (result.getCode() != 0) {
         throw new BizException("获取定时列表失败!!!");
@@ -158,19 +140,11 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   }
 
   private void printException(ApiException e) {
-    System.err.println("Exception when calling DefaultApi#createSchedule");
+    System.err.println("Exception when calling DefaultApi#schedule");
     System.err.println("Status code: " + e.getCode());
     System.err.println("Reason: " + e.getResponseBody());
     System.err.println("Response headers: " + e.getResponseHeaders());
     e.printStackTrace();
-  }
-
-  private ApiClient getApiClient() {
-    return Configuration.getDefaultApiClient()
-        .setRequestInterceptor(
-            (r) -> {
-              r.header("token", "2b29f18d15f3be6642814355f3dc9229");
-            });
   }
 
   private String schedule(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
