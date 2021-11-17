@@ -1,8 +1,9 @@
 package com.qk.dam.sqlbuilder.model;
 
-import com.qk.dam.sqlbuilder.enums.DataType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 表字段
@@ -11,6 +12,8 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Column {
     /**
@@ -21,7 +24,7 @@ public class Column {
     /**
      * 字段数据类型
      */
-    private DataType dataType;
+    private String dataType;
 
     /**
      * 字段长度

@@ -1,15 +1,13 @@
 package com.qk.dam.sqlbuilder;
 import com.alibaba.druid.DbType;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import com.qk.dam.sqlbuilder.enums.DataType;
 import com.qk.dam.sqlbuilder.model.Column;
 import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
 import tech.ibit.sqlbuilder.StringSql;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * SQL校验工厂
@@ -193,8 +191,8 @@ public class SqlBuilderFactory {
   public static void main(String[] args) {
       Table table = new Table();
       table.setName("user");
-      table.addColumn(Column.builder().name("id").primaryKey(true).dataType(DataType.BIGINT).build());
-      table.addColumn(Column.builder().name("name").primaryKey(false).dataType(DataType.VARCHAR).empty(true).build());
+      table.addColumn(Column.builder().name("id").primaryKey(true).dataType("BIGINT").build());
+      table.addColumn(Column.builder().name("name").primaryKey(false).dataType("VARCHAR").empty(true).build());
       System.out.println(creatTableSQL(table));
   }
 }
