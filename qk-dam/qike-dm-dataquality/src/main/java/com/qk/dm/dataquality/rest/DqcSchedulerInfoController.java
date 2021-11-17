@@ -4,8 +4,9 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.service.DqcSchedulerInfoService;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
+import com.qk.dm.dataquality.vo.SchedulerRuleConstantsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,32 @@ public class DqcSchedulerInfoController {
     }
 
     /**
+     * 新增规则调度信息(基础信息,规则,调度配置)
+     *
+     * @param dqcSchedulerInfoVO
+     * @return DefaultCommonResult
+     */
+    @PostMapping("")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult insert(@RequestBody DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+        dqcSchedulerInfoService.insert(dqcSchedulerInfoVO);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 编辑规则调度信息(基础信息,规则,调度配置)
+     *
+     * @param dqcSchedulerInfoVO
+     * @return DefaultCommonResult
+     */
+    @PutMapping("")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult update(@RequestBody DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+        dqcSchedulerInfoService.update(dqcSchedulerInfoVO);
+        return DefaultCommonResult.success();
+    }
+
+    /**
      * //TODO 需要关联删除
      * 删除单个规则调度_规则调度信息
      *
@@ -66,5 +93,16 @@ public class DqcSchedulerInfoController {
     public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
         dqcSchedulerInfoService.deleteBulk(ids);
         return DefaultCommonResult.success();
+    }
+
+    /**
+     * 获取调度规则常量信息
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/scheduler/rule/constants")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+    public DefaultCommonResult<SchedulerRuleConstantsVO> getSchedulerRuLeConstants() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerInfoService.getSchedulerRuLeConstants());
     }
 }

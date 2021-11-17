@@ -82,6 +82,15 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         dqcSchedulerRulesRepository.save(dqcSchedulerRules);
     }
 
+
+    @Override
+    public void insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList) {
+        //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
+        for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
+            insert(dqcSchedulerRulesVO);
+        }
+    }
+
     @Override
     public void update(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
@@ -89,6 +98,14 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         dqcSchedulerRules.setDelFlag(0);
         dqcSchedulerRulesRepository.saveAndFlush(dqcSchedulerRules);
 
+    }
+
+    @Override
+    public void updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList) {
+        //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
+        for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
+            update(dqcSchedulerRulesVO);
+        }
     }
 
     @Override

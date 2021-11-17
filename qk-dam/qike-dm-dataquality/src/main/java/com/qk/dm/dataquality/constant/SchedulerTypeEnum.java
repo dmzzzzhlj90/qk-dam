@@ -6,32 +6,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 规则类型
+ * 调度方式
  *
  * @author wjq
  * @date 2021/11/12
  * @since 1.0.0
  */
-public enum RuleTypeEnum {
+public enum SchedulerTypeEnum {
 
-    RULE_TYPE_FIELD("RULE_TYPE_FIELD", "字段级别规则"),
-    RULE_TYPE_TABLE("RULE_TYPE_TABLE", "表级别规则"),
-    RULE_TYPE_DB("RULE_TYPE_DB", "库级别规则");
+    SCHEDULER_TYPE_SINGLE("SCHEDULER_TYPE_SINGLE", "单次调度"),
+    SCHEDULER_TYPE_CYCLE("SCHEDULER_TYPE_CYCLE", "周期调度");
 
     private String code;
     private String name;
 
-    RuleTypeEnum(String code, String name) {
+    SchedulerTypeEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    public static RuleTypeEnum getVal(String code) {
-        if (ObjectUtils.isEmpty(code)) {
+    public static SchedulerTypeEnum getVal(String name) {
+        if (ObjectUtils.isEmpty(name)) {
             return null;
         }
-        for (RuleTypeEnum enums : RuleTypeEnum.values()) {
-            if (code.equals(enums.code)) {
+        for (SchedulerTypeEnum enums : SchedulerTypeEnum.values()) {
+            if (name.equals(enums.name)) {
                 return enums;
             }
         }
@@ -40,7 +39,7 @@ public enum RuleTypeEnum {
 
     public static Map<String, String> getAllValue() {
         Map<String, String> val = new HashMap<>();
-        for (RuleTypeEnum enums : RuleTypeEnum.values()) {
+        for (SchedulerTypeEnum enums : SchedulerTypeEnum.values()) {
             val.put(enums.code, enums.name);
         }
         return val;
