@@ -73,8 +73,8 @@ public class ModelPhysicalColumn implements Serializable {
     /**
      * 描述
      */
-   /* @Column(name = "description")
-    private String description;*/
+    @Column(name = "description")
+    private String description;
 
     /**
      * 创建时间

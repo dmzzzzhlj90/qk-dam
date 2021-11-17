@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CensusDataVO {
   //标准覆盖率
+  @Builder.Default
   private String coverage="0%";
   //已经发布表数量
   private int pushnums;

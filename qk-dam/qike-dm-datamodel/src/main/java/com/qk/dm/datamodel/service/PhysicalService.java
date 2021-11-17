@@ -30,4 +30,6 @@ public interface PhysicalService {
   CensusDataVO getCensusData(QueryModelPhysicalDTO queryModelPhysicalDTO);
 
   List<Map<String, String>> getDataTypes();
+
+  String getSql(Long tableId);
 }

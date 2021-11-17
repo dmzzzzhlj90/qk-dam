@@ -5,6 +5,7 @@ import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
 import com.qk.dm.datamodel.feign.DataSourceFeign;
 import com.qk.dm.datamodel.service.DatasourceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +17,8 @@ import java.util.List;
  */
 @Service
 public class DatasourceServiceImpl implements DatasourceService {
-  private final DataSourceFeign dataSourceFeign;
-
-  public DatasourceServiceImpl(DataSourceFeign dataSourceFeign) {
-    this.dataSourceFeign = dataSourceFeign;
-  }
+ @Autowired
+ private DataSourceFeign dataSourceFeign;
 
   @Override
   public List<String> getAllConnType() {

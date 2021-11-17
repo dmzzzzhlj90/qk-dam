@@ -2,9 +2,13 @@ package com.qk.dm.datamodel.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.MapUtils;
+import com.alibaba.nacos.common.utils.StringUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.model.constant.ModelStatus;
+import com.qk.dam.sqlbuilder.SqlBuilderFactory;
+import com.qk.dam.sqlbuilder.model.Column;
+import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dm.datamodel.entity.*;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelPhysicalColumnMapper;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelPhysicalRelationMapper;
@@ -14,6 +18,7 @@ import com.qk.dm.datamodel.params.vo.*;
 import com.qk.dm.datamodel.repositories.ModelPhysicalColumnRepository;
 import com.qk.dm.datamodel.repositories.ModelPhysicalRelationRepository;
 import com.qk.dm.datamodel.repositories.ModelPhysicalTableRepository;
+import com.qk.dm.datamodel.repositories.ModelSqlRepository;
 import com.qk.dm.datamodel.service.PhysicalService;
 import com.qk.dm.datamodel.util.CheckUtil;
 import com.querydsl.core.BooleanBuilder;
@@ -38,8 +43,10 @@ public class PhysicalServiceImpl implements PhysicalService {
   private final ModelPhysicalTableRepository modelPhysicalTableRepository;
   private final ModelPhysicalColumnRepository modelPhysicalColumnRepository;
   private final ModelPhysicalRelationRepository modelPhysicalRelationRepository;
+  private final ModelSqlRepository modelSqlRepository;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
+  private SqlBuilderFactory sqlBuilderFactory;
   @PostConstruct
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
@@ -49,10 +56,11 @@ public class PhysicalServiceImpl implements PhysicalService {
       ModelPhysicalTableRepository modelPhysicalTableRepository,
       ModelPhysicalColumnRepository modelPhysicalColumnRepository,
       ModelPhysicalRelationRepository modelPhysicalRelationRepository,
-      EntityManager entityManager) {
+      ModelSqlRepository modelSqlRepository, EntityManager entityManager) {
     this.modelPhysicalTableRepository = modelPhysicalTableRepository;
     this.modelPhysicalColumnRepository = modelPhysicalColumnRepository;
     this.modelPhysicalRelationRepository = modelPhysicalRelationRepository;
+    this.modelSqlRepository = modelSqlRepository;
     this.entityManager = entityManager;
   }
 
@@ -91,22 +99,76 @@ public class PhysicalServiceImpl implements PhysicalService {
     ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTableRepository.save(modelPhysicalTable);
     //2存储字段信息
     List<ModelPhysicalColumn> columnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalDTO.getModelColumnDtoList());
-    columnList.forEach(
-        modelPhysicalColumn -> {
-          modelPhysicalColumn.setTableId(modelPhysicalTable1.getId());
-        }
-    );
-    modelPhysicalColumnRepository.saveAll(columnList);
+    List<ModelPhysicalColumn> modelPhysicalColumnList = columnList.stream()
+        .map(modelPhysicalColumn -> { modelPhysicalColumn.setTableId(
+            modelPhysicalTable1.getId());
+            return modelPhysicalColumn;
+        }).collect(Collectors.toList());
+    modelPhysicalColumnRepository.saveAll(modelPhysicalColumnList);
     //3存关系数据
     if (modelPhysicalDTO.getModelRelationDtoList()!=null){
       List<ModelPhysicalRelation> relationLists = ModelPhysicalRelationMapper.INSTANCE.use(modelPhysicalDTO.getModelRelationDtoList());
-      relationLists.forEach(
-          modelPhysicalRelation -> {
+      List<ModelPhysicalRelation> relationList = relationLists.stream()
+          .map(modelPhysicalRelation -> {
             modelPhysicalRelation.setTableId(modelPhysicalTable1.getId());
-          }
-      );
-      modelPhysicalRelationRepository.saveAll(relationLists);
+            return modelPhysicalRelation;
+          }).collect(Collectors.toList());
+      modelPhysicalRelationRepository.saveAll(relationList);
     }
+    //生成sql并存入数据库
+    ModelSql modelSql = new ModelSql();
+    Table table = getTable(modelPhysicalTable,modelPhysicalColumnList);
+    String Sql = SqlBuilderFactory.creatTableSQL(table);
+    if (StringUtils.isNotBlank(Sql)){
+      //赋值基础数据id
+      modelSql.setTableId(modelPhysicalTable1.getId());
+      //1,逻辑表2物理表 3 维度表 4 汇总表
+      modelSql.setType(1);
+      //建表sql
+      modelSql.setSqlSentence(Sql);
+      modelSqlRepository.save(modelSql);
+    }else {
+      throw  new BizException("生成sql为空");
+    }
+  }
+
+  private Table getTable(ModelPhysicalTable modelPhysicalTable, List<ModelPhysicalColumn> modelPhysicalColumnList) {
+    Table table = new Table();
+    table.setName(modelPhysicalTable.getTableName());
+    List<Column> columnList = modelPhysicalColumnList.stream()
+        .map(modelPhysicalColumn -> {
+          Column column = new Column();
+          //字段名称
+          column.setName(modelPhysicalColumn.getColumnName());
+          //字段类型类型
+          column.setDataType(modelPhysicalColumn.getColumnType());
+          //是否是主键
+          column.setPrimaryKey(
+              transFormation(modelPhysicalColumn.getItsPrimaryKey()));
+          //是否自增(目前跟着主键走，如果是主键就自增)
+          column.setAutoIncrement(
+              transFormation(modelPhysicalColumn.getItsPrimaryKey()));
+          //是否不为空
+          column.setEmpty(transFormation(modelPhysicalColumn.getItsNull()));
+          //字段注释
+          column.setComments(modelPhysicalColumn.getDescription());
+          return column;
+        }).collect(Collectors.toList());
+    table.setColumns(columnList);
+    return table;
+  }
+
+  /**
+   * 转换String类型数据到boolean
+   * @param itsPrimaryKey
+   * @return
+   */
+  private Boolean transFormation(String itsPrimaryKey) {
+    Boolean booleans=false;
+    if (StringUtils.isNotBlank(itsPrimaryKey) && itsPrimaryKey.equals("1")){
+      booleans=true;
+    }
+    return booleans;
   }
 
   /**
@@ -281,6 +343,23 @@ public class PhysicalServiceImpl implements PhysicalService {
   public List<Map<String,String>> getDataTypes() {
     List<Map<String, String>> list =CheckUtil.getDataTypes();
     return list;
+  }
+
+  /**
+   * 预览sql
+   * @param tableId
+   * @return
+   */
+  @Override
+  public String getSql(Long tableId) {
+    String sql = null;
+    ModelSql modelSql = modelSqlRepository.findByTableId(tableId);
+    if (modelSql != null){
+      sql=modelSql.getSqlSentence();
+    }else {
+      throw  new BizException("当前预览的Sql不存在");
+    }
+    return sql;
   }
 
   /**

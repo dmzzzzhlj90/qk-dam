@@ -127,6 +127,15 @@ public class ModelPhysicalController {
     return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getDataTypes());
   }
 
+  /**
+   * 预览sql
+   * @param tableId
+   * @return
+   */
+  @GetMapping("/query/sql/{tableId}")
+  public DefaultCommonResult<String> getSql(@NotNull @PathVariable("tableId") Long tableId){
+    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getSql(tableId));
+  }
   //============================数据连接调用=========================================>
 
   /**

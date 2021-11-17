@@ -1,6 +1,7 @@
 package com.qk.dm.datamodel.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
@@ -72,7 +73,7 @@ public class ModelPhysicalRelation implements Serializable {
     /**
      * 创建时间
      */
-    @CollectionTable
+    @CreationTimestamp
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
