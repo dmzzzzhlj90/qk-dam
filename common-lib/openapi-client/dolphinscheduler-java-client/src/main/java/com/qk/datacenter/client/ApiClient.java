@@ -163,7 +163,7 @@ public class ApiClient {
   public ApiClient() {
     this.builder = createDefaultHttpClientBuilder();
     this.mapper = createDefaultObjectMapper();
-    updateBaseUri(getDefaultBaseUri());
+//    updateBaseUri(getDefaultBaseUri());
     interceptor = null;
     readTimeout = null;
     responseInterceptor = null;
@@ -176,7 +176,7 @@ public class ApiClient {
   public ApiClient(HttpClient.Builder builder, ObjectMapper mapper, String baseUri) {
     this.builder = builder;
     this.mapper = mapper;
-    updateBaseUri(baseUri != null ? baseUri : getDefaultBaseUri());
+//    updateBaseUri(baseUri != null ? baseUri : getDefaultBaseUri());
     interceptor = null;
     readTimeout = null;
     responseInterceptor = null;
@@ -196,8 +196,16 @@ public class ApiClient {
     return mapper;
   }
 
-  protected String getDefaultBaseUri() {
-    return "http://dolphinscheduler.qk.cc:32055/dolphinscheduler";
+//  protected String getDefaultBaseUri() {
+//    return "http://dolphinscheduler.qk.cc:30875/dolphinscheduler";
+//  }
+
+  public void setDefaultBaseUri(String baseUri) {
+    URI uri = URI.create(baseUri);
+    scheme = uri.getScheme();
+    host = uri.getHost();
+    port = uri.getPort();
+    basePath = uri.getRawPath();
   }
 
   protected HttpClient.Builder createDefaultHttpClientBuilder() {
