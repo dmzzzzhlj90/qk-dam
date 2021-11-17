@@ -49,7 +49,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    * @param processDefinitionId
    * @param releaseState 0-下线 1-上线
    */
-  public void releaseProcessDefinition(Integer processDefinitionId, Integer releaseState) {
+  public void release(Integer processDefinitionId, Integer releaseState) {
     processDefinitionId = 4;
     // 创建工作流实例
     ApiClient defaultClient = getApiClient();
@@ -71,7 +71,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    *
    * @param processDefinitionId
    */
-  public void deleteProcessDefinitionById(Integer processDefinitionId) {
+  public void delete(Integer processDefinitionId) {
     processDefinitionId = 4;
     // 创建工作流实例
     ApiClient defaultClient = getApiClient();
@@ -92,7 +92,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    *
    * @param processDefinitionId
    */
-  public void copyProcessDefinition(Integer processDefinitionId) {
+  public void copy(Integer processDefinitionId) {
     processDefinitionId = 4;
     // 创建工作流实例
     ApiClient defaultClient = getApiClient();
@@ -113,7 +113,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    *
    * @param processDefinitionId
    */
-  public void startCheckProcessDefinition(Integer processDefinitionId) {
+  public void startCheck(Integer processDefinitionId) {
     processDefinitionId = 4;
     // 创建工作流实例
     ApiClient defaultClient = getApiClient();
@@ -134,7 +134,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    *
    * @param processDefinitionId
    */
-  public void startProcessInstance(Integer processDefinitionId) {
+  public void startInstance(Integer processDefinitionId) {
     processDefinitionId = 4;
     // 创建工作流实例
     ApiClient defaultClient = getApiClient();

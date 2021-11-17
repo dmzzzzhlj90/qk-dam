@@ -15,13 +15,13 @@ public interface ProcessDefinitionApiService {
 
   void save(DqcSchedulerInfoVO dqcSchedulerInfoVO);
 
-  void releaseProcessDefinition(Integer processDefinitionId, Integer releaseState);
+  void release(Integer processDefinitionId, Integer releaseState);
 
-  void deleteProcessDefinitionById(Integer processDefinitionId);
+  void delete(Integer processDefinitionId);
 
-  void copyProcessDefinition(Integer processDefinitionId);
+  void copy(Integer processDefinitionId);
 
-  void startCheckProcessDefinition(Integer processDefinitionId);
+  void startCheck(Integer processDefinitionId);
 
-  void startProcessInstance(Integer processDefinitionId);
+  void startInstance(Integer processDefinitionId);
 }

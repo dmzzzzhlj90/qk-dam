@@ -9,16 +9,17 @@ import com.qk.dm.dataquality.vo.ScheduleListPageVo;
  * @since 1.0.0
  */
 public interface ScheduleApiService {
-  void createSchedule(DqcSchedulerInfoVO dqcSchedulerInfoVO);
 
-  void updateSchedule(Integer scheduleId, DqcSchedulerInfoVO dqcSchedulerInfoVO);
+  void create(DqcSchedulerInfoVO dqcSchedulerInfoVO);
+
+  void update(Integer scheduleId, DqcSchedulerInfoVO dqcSchedulerInfoVO);
 
   void online(Integer scheduleId);
 
   void offline(Integer scheduleId);
 
-  void deleteScheduleById(Integer scheduleId);
+  void delete(Integer scheduleId);
 
-  ScheduleListPageVo queryScheduleListPaging(
+  ScheduleListPageVo search(
       Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal);
 }

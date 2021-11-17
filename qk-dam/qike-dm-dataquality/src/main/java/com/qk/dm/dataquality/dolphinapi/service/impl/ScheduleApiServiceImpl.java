@@ -26,7 +26,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
 
   /** createSchedule 创建定时 */
   @Override
-  public void createSchedule(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+  public void create(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
     // 创建工作流实例
     ApiClient defaultClient = getApiClient();
     // api-sdk
@@ -53,7 +53,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   }
 
   @Override
-  public void updateSchedule(Integer scheduleId, DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+  public void update(Integer scheduleId, DqcSchedulerInfoVO dqcSchedulerInfoVO) {
     scheduleId = 7;
     // 创建工作流实例
     ApiClient defaultClient = getApiClient();
@@ -115,7 +115,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   }
 
   @Override
-  public void deleteScheduleById(Integer scheduleId) {
+  public void delete(Integer scheduleId) {
     scheduleId = 7;
     // 创建工作流实例
     ApiClient defaultClient = getApiClient();
@@ -134,7 +134,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   }
 
   @Override
-  public ScheduleListPageVo queryScheduleListPaging(
+  public ScheduleListPageVo search(
       Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal) {
     processDefinitionId = 4;
     // 创建工作流实例
