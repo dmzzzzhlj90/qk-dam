@@ -87,7 +87,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
       Result result =
           defaultApi.releaseProcessDefinitionUsingPOST(processDefinitionId, "数据质量", releaseState);
       if (result.getCode() != 0) {
-        throw new BizException("删除定时失败!!!");
+        throw new BizException("流程定义发布失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -104,7 +104,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     try {
       Result result = defaultApi.deleteProcessDefinitionByIdUsingGET("数据质量", processDefinitionId);
       if (result.getCode() != 0) {
-        throw new BizException("删除流程失败!!!");
+        throw new BizException("删除流程失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -121,7 +121,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     try {
       Result result = defaultApi.copyProcessDefinitionUsingPOST(processDefinitionId, "数据质量");
       if (result.getCode() != 0) {
-        throw new BizException("删除流程失败!!!");
+        throw new BizException("复制流程失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -129,7 +129,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
   }
 
   /**
-   * 实例-检查流程
+   * 实例-检查流程--测试失败
    *
    * @param processDefinitionId
    */
@@ -138,7 +138,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     try {
       Result result = defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionId);
       if (result.getCode() != 0) {
-        throw new BizException("删除流程失败!!!");
+        throw new BizException("检查流程失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -171,7 +171,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
               null,
               "default");
       if (result.getCode() != 0) {
-        throw new BizException("运行失败!!!");
+        throw new BizException("运行失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -191,7 +191,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     try {
       Result result = defaultApi.executeUsingPOST(executeType, processInstanceId, "数据质量");
       if (result.getCode() != 0) {
-        throw new BizException("执行流程实例操作失败!!!");
+        throw new BizException("执行流程实例操作失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);

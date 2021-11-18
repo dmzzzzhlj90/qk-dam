@@ -47,7 +47,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               WarningTypeEnum.fromValue(1).getValue(),
               "default");
       if (result.getCode() != 0) {
-        throw new BizException("创建定时失败!!!");
+        throw new BizException("创建定时失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -71,7 +71,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               WarningTypeEnum.fromValue(1).getValue(),
               "default");
       if (result.getCode() != 0) {
-        throw new BizException("修改定时失败!!!");
+        throw new BizException("修改定时失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -84,7 +84,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     try {
       Result result = defaultApi.onlineUsingPOST(scheduleId, "数据质量");
       if (result.getCode() != 0) {
-        throw new BizException("定时上线失败!!!");
+        throw new BizException("定时上线失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -97,7 +97,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     try {
       Result result = defaultApi.offlineUsingPOST(scheduleId, "数据质量");
       if (result.getCode() != 0) {
-        throw new BizException("定时下线失败!!!");
+        throw new BizException("定时下线失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -112,7 +112,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
           defaultApi.deleteScheduleByIdUsingGET(
               "数据质量", scheduleId, "", null, "", null, "", "", "", "", null, "", null, "", "", "");
       if (result.getCode() != 0) {
-        throw new BizException("删除定时失败!!!");
+        throw new BizException("删除定时失败!!!" + result.getMsg());
       }
     } catch (ApiException e) {
       printException(e);
@@ -128,7 +128,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
           defaultApi.queryScheduleListPagingUsingGET(
               processDefinitionId, "数据质量", pageNo, pageSize, searchVal);
       if (result.getCode() != 0) {
-        throw new BizException("获取定时列表失败!!!");
+        throw new BizException("获取定时列表失败!!!" + result.getMsg());
       }
       return JSONObject.toJavaObject(
           (JSON) JSONObject.toJSON(JSONObject.toJSONString(result.getData())),
