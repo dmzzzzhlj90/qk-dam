@@ -5,6 +5,8 @@ import com.qk.dm.dataquality.vo.DqcSchedulerRulesParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 数据质量_规则调度_规则信息
  *
@@ -19,7 +21,11 @@ public interface DqcSchedulerRulesService {
 
     void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO);
 
+    void insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList);
+
     void update(DqcSchedulerRulesVO dqcSchedulerRulesVO);
+
+    void updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList);
 
     void delete(Long id);
 

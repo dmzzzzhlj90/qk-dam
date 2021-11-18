@@ -3,7 +3,9 @@ package com.qk.dm.dataquality.constant;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 计算引擎类型
@@ -14,34 +16,36 @@ import java.util.List;
  */
 public enum CalculateEngineTypeEnum {
 
-    CALCULATE_ENGINE_MYSQL("MYSQL"),
-    CALCULATE_ENGINE_HIVE("HIVE"),
-    CALCULATE_ENGINE_ORACLE("ORACLE");
+    CALCULATE_ENGINE_MYSQL("CALCULATE_ENGINE_MYSQL", "MYSQL"),
+    CALCULATE_ENGINE_HIVE("CALCULATE_ENGINE_HIVE", "HIVE"),
+    CALCULATE_ENGINE_ORACLE("CALCULATE_ENGINE_ORACLE", "ORACLE");
 
+    private String code;
     private String type;
 
-    CalculateEngineTypeEnum(String type) {
+    CalculateEngineTypeEnum(String code, String type) {
+        this.code = code;
         this.type = type;
     }
 
-    public static CalculateEngineTypeEnum getVal(String type) {
-        if (ObjectUtils.isEmpty(type)) {
+    public static CalculateEngineTypeEnum getVal(String code) {
+        if (ObjectUtils.isEmpty(code)) {
             return null;
         }
         for (CalculateEngineTypeEnum enums : CalculateEngineTypeEnum.values()) {
-            if (type.equals(enums.type)) {
+            if (code.equals(enums.type)) {
                 return enums;
             }
         }
         return null;
     }
 
-    public static List<String> getAllValue() {
-        List<String> valList = new ArrayList<>();
+    public static Map<String, String> getAllValue() {
+        Map<String, String> val = new HashMap<>();
         for (CalculateEngineTypeEnum enums : CalculateEngineTypeEnum.values()) {
-            valList.add(enums.type);
+            val.put(enums.code, enums.type);
         }
-        return valList;
+        return val;
     }
 
     public String getType() {
