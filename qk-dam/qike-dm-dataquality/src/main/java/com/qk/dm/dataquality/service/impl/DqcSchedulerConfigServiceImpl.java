@@ -16,6 +16,7 @@ import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,6 +57,9 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     }
     // todo 创建人
     config.setCreateUserid(1L);
+    config.setGmtCreate(new Date());
+    config.setGmtModified(new Date());
+    config.setDelFlag(0);
     dqcSchedulerConfigRepository.saveAndFlush(config);
   }
 
@@ -70,6 +74,8 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
     // todo 修改人
     config.setUpdateUserid(1L);
+    config.setGmtModified(new Date());
+    config.setDelFlag(0);
     dqcSchedulerConfigRepository.save(config);
   }
 

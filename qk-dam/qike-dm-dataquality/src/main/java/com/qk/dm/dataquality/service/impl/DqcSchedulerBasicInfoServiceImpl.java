@@ -15,10 +15,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -53,6 +50,10 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     basicInfo.setJobId(UUID.randomUUID().toString().replaceAll("-", ""));
     // todo 创建人
     basicInfo.setCreateUserid(1L);
+    basicInfo.setGmtCreate(new Date());
+    basicInfo.setGmtModified(new Date());
+    basicInfo.setDelFlag(0);
+
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
     return basicInfo.getJobId();
   }
@@ -64,6 +65,8 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         dqcSchedulerBasicInfoVO, basicInfo);
     // todo 修改人
     basicInfo.setUpdateUserid(1L);
+    basicInfo.setGmtModified(new Date());
+    basicInfo.setDelFlag(0);
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
   }
 
