@@ -54,7 +54,7 @@ public class DqcSchedulerBasicInfoVO {
   @NotBlank(message = "主题不能为空！")
   private String notifyThemeId;
 
-  /** 调度状态 1-调度中 2-运行中 3-停止 */
+  /** 调度状态 0-初始状态 1-调度中 2-运行中 3-停止 */
   private Integer schedulerState = 0;
 
   /** 创建人 */

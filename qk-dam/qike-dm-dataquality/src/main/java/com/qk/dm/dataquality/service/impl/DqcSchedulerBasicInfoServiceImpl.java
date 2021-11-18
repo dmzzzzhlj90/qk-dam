@@ -2,6 +2,7 @@ package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.entity.QDqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
@@ -16,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -101,16 +103,21 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     if (CollectionUtils.isEmpty(infoList)) {
       throw new BizException("id为：" + idList + " 的任务，不存在！！！");
     }
-    if (infoList.stream().anyMatch(i -> i.getSchedulerState() != 3)) {
-      throw new BizException("非停止状态不可操作！！！");
+    if (infoList.stream()
+        .anyMatch(
+            i ->
+                !Objects.equals(i.getSchedulerState(), DqcConstant.INIT_STATE)
+                    && !Objects.equals(i.getSchedulerState(), DqcConstant.STOP_STATE))) {
+      throw new BizException("启动调度后不可操作！！！");
     }
     return infoList;
   }
 
   private DqcSchedulerBasicInfo getInfoById(Long id) {
     DqcSchedulerBasicInfo info = getBasicInfo(id);
-    if (info.getSchedulerState() != 3) {
-      throw new BizException("非停止状态不可操作！！！");
+    if (!Objects.equals(info.getSchedulerState(), DqcConstant.INIT_STATE)
+        && !Objects.equals(info.getSchedulerState(), DqcConstant.STOP_STATE)) {
+      throw new BizException("启动调度后不可操作！！！");
     }
     return info;
   }

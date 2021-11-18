@@ -72,10 +72,14 @@ public class DqcSchedulerBasicInfoController {
     return DefaultCommonResult.success();
   }
 
+  /**
+   * 发布
+   * @param dqcSchedulerBasicInfoVO
+   * @return
+   */
   @PutMapping("/release")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult publish(
-      @RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+  public DefaultCommonResult publish(@RequestBody DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
     dqcSchedulerBasicInfoService.publish(dqcSchedulerBasicInfoVO);
     return DefaultCommonResult.success();
   }

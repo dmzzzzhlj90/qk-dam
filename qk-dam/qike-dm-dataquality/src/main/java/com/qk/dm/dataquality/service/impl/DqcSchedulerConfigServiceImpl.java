@@ -2,7 +2,7 @@ package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataquality.utils.CronUtil;
+import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.entity.QDqcSchedulerBasicInfo;
@@ -11,11 +11,13 @@ import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerConfigMapper;
 import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerConfigRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
+import com.qk.dm.dataquality.utils.CronUtil;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author wjq
@@ -49,7 +51,9 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     checkConfigIsNotNullByTaskId(dqcSchedulerConfigVO.getJobId());
     DqcSchedulerConfig config =
         DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
-    config.setCron(CronUtil.createCron(dqcSchedulerConfigVO));
+    if (Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)) {
+      config.setCron(CronUtil.createCron(dqcSchedulerConfigVO));
+    }
     // todo 创建人
     config.setCreateUserid(1L);
     dqcSchedulerConfigRepository.saveAndFlush(config);
@@ -60,11 +64,13 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     DqcSchedulerConfig config = getInfoById(dqcSchedulerConfigVO.getId());
     // 判断调度规则为停止
     checkBasicInfoStateByTaskId(config.getJobId());
-    config.setCron(CronUtil.createCron(dqcSchedulerConfigVO));
+    if (Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)) {
+      config.setCron(CronUtil.createCron(dqcSchedulerConfigVO));
+    }
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
     // todo 修改人
     config.setUpdateUserid(1L);
-    dqcSchedulerConfigRepository.saveAndFlush(config);
+    dqcSchedulerConfigRepository.save(config);
   }
 
   @Override
@@ -109,8 +115,9 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     if (info == null) {
       throw new BizException("id为：" + taskId + " 的任务，不存在！！！");
     }
-    if (info.getSchedulerState() != 3) {
-      throw new BizException("非停止状态不可操作！！！");
+    if (!Objects.equals(info.getSchedulerState(), DqcConstant.INIT_STATE)
+        && !Objects.equals(info.getSchedulerState(), DqcConstant.STOP_STATE)) {
+      throw new BizException("启动调度后不可操作！！！");
     }
   }
 }

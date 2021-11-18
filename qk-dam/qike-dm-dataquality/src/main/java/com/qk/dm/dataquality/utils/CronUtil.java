@@ -1,10 +1,9 @@
 package com.qk.dm.dataquality.utils;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
-
-import java.util.Date;
 
 /**
  * @author shenpj
@@ -25,7 +24,7 @@ public class CronUtil {
         taskScheduleModel.getSchedulerTime());
   }
 
-  public static String createCron(Integer type, String interval, Date time) {
+  public static String createCron(Integer type, String interval, String time) {
     StringBuffer cronExp = new StringBuffer("");
 
     if (null == type) {
@@ -67,22 +66,23 @@ public class CronUtil {
     cronExp.append("?");
   }
 
-  private static void day(Date time, StringBuffer cronExp) {
-    cronExp.append("0 ");
-    cronExp.append(DateUtil.format(time,"m")).append(" ");
-    cronExp.append(DateUtil.format(time,"H")).append(" ");
-    cronExp.append("* ");
-    cronExp.append("* ");
+  private static void day(String time, StringBuffer cronExp) {
+    common(time, cronExp);
     cronExp.append("?");
   }
 
-  private static void weeks(String interval, Date time, StringBuffer cronExp) {
-    cronExp.append("0 ");
-    cronExp.append(DateUtil.format(time,"m")).append(" ");
-    cronExp.append(DateUtil.format(time,"H")).append(" ");
-    cronExp.append("* ");
-    cronExp.append("* ");
+  private static void weeks(String interval, String time, StringBuffer cronExp) {
+    common(time, cronExp);
     cronExp.append(interval);
+  }
+
+  private static void common(String time, StringBuffer cronExp) {
+    DateTime parse = DateUtil.parse(time, "HH:mm");
+    cronExp.append("0 ");
+    cronExp.append(DateUtil.minute(parse)).append(" ");
+    cronExp.append(DateUtil.hour(parse, true)).append(" ");
+    cronExp.append("* ");
+    cronExp.append("* ");
   }
 
   // 参考例子
@@ -90,8 +90,8 @@ public class CronUtil {
     // 执行时间：每天的12时12分12秒 start
     DqcSchedulerConfigVO dqcSchedulerConfigVO = new DqcSchedulerConfigVO();
     dqcSchedulerConfigVO.setSchedulerCycle(3);
-    dqcSchedulerConfigVO.setSchedulerIntervalTime("15");
-    dqcSchedulerConfigVO.setSchedulerTime(DateUtil.parse("01:05", "HH:mm"));
+    dqcSchedulerConfigVO.setSchedulerIntervalTime("1");
+    dqcSchedulerConfigVO.setSchedulerTime("01:05");
     System.out.println(createCron(dqcSchedulerConfigVO));
   }
 }

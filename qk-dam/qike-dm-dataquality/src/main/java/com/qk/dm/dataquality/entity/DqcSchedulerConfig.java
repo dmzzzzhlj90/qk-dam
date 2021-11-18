@@ -47,7 +47,7 @@ public class DqcSchedulerConfig implements Serializable {
 
   /** 周期时间 */
   @Column(name = "scheduler_time")
-  private Date schedulerTime;
+  private String schedulerTime;
 
   /** 调度执行cron表达式 */
   @Column(name = "cron")

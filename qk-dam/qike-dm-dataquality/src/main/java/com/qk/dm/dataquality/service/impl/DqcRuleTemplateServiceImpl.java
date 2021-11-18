@@ -16,6 +16,7 @@ import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
@@ -77,11 +78,19 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public void update(DqcRuleTemplateVo dqcRuleTemplateVo) {
+    DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
+    if (Objects.equals(dqcRuleTemplate.getPublishState(), publish_state_up)) {
+      throw new BizException("上线规则模版不支持修改！！！");
+    }
+    // todo 添加修改人
+    dqcRuleTemplate.setUpdateUserid(1L);
+    dqcRuleTemplateRepository.save(dqcRuleTemplate);
+  }
+
+  @Override
+  public void release(DqcRuleTemplateVo dqcRuleTemplateVo) {
     if (dqcRuleTemplateVo.getId() != null && dqcRuleTemplateVo.getPublishState() != null) {
       DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
-      if (Objects.equals(dqcRuleTemplate.getPublishState(), publish_state_up)) {
-        throw new BizException("上线规则模版不支持修改！！！");
-      }
       // todo 添加修改人
       dqcRuleTemplate.setUpdateUserid(1L);
       dqcRuleTemplate.setPublishState(dqcRuleTemplateVo.getPublishState());
@@ -122,8 +131,16 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   @Override
-  public DqcRuleTemplateInfoVo search(Long id) {
+  public DqcRuleTemplateInfoVo detail(Long id) {
     return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(getInfoById(id));
+  }
+
+  @Override
+  public List<DqcRuleTemplateInfoVo> search(DqcRuleTemplateVo dqcRuleTemplateVo) {
+    Predicate predicate = qDqcRuleTemplate.publishState.eq(1);
+    List<DqcRuleTemplate> list =
+        (List<DqcRuleTemplate>) dqcRuleTemplateRepository.findAll(predicate);
+    return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(list);
   }
 
   @Override

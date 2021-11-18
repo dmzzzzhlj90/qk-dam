@@ -5,6 +5,8 @@ import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 
+import java.util.List;
+
 /**
  * @author shenpj
  * @date 2021/11/8 7:46 下午
@@ -20,7 +22,12 @@ public interface DqcRuleTemplateService {
 
   void deleteBulk(String ids);
 
-  PageResultVO<DqcRuleTemplateInfoVo> searchPageList(DqcRuleTemplateVo dqcRuleTemplateVo, Pagination pagination);
+  PageResultVO<DqcRuleTemplateInfoVo> searchPageList(
+      DqcRuleTemplateVo dqcRuleTemplateVo, Pagination pagination);
 
-  DqcRuleTemplateInfoVo search(Long id);
+  DqcRuleTemplateInfoVo detail(Long id);
+
+  void release(DqcRuleTemplateVo dqcRuleTemplateVo);
+
+  List<DqcRuleTemplateInfoVo> search(DqcRuleTemplateVo dqcRuleTemplateVo);
 }

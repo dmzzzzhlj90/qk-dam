@@ -52,9 +52,7 @@ public class DqcSchedulerConfigVO {
   private String schedulerIntervalTime;
 
   /** 调度时间 */
-  @DateTimeFormat(pattern = "mm:ss")
-  @JsonFormat(pattern = "mm:ss", timezone = "GMT+8")
-  private Date schedulerTime;
+  private String schedulerTime;
 
   /** 调度执行cron表达式 */
   private String cron;

@@ -15,6 +15,10 @@ public class DqcConstant {
      */
     public static final String TREE_DIR_TOP_PARENT_ID = "-1";
 
+    public static final Integer INIT_STATE = 0;
+    public static final Integer STOP_STATE = 3;
+    public static final Integer RUN_TYPE = 2;
+
     /**
      * 提示级别
      */
