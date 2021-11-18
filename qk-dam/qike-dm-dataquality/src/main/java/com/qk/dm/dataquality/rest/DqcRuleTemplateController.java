@@ -80,8 +80,8 @@ public class DqcRuleTemplateController {
    */
   @DeleteMapping("/{id}")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult delete(@PathVariable("id") Long id) {
-    dqcRuleTemplateService.delete(id);
+  public DefaultCommonResult deleteOne(@PathVariable("id") Long id) {
+    dqcRuleTemplateService.deleteOne(id);
     return DefaultCommonResult.success();
   }
 

@@ -74,8 +74,8 @@ public class DqcRuleDirController {
      */
     @DeleteMapping("/{id}")
 //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-    public DefaultCommonResult delete(@PathVariable("id") String id) {
-        dqcRuleDirService.delete(Long.parseLong(id));
+    public DefaultCommonResult deleteOne(@PathVariable("id") String id) {
+        dqcRuleDirService.deleteOne(Long.parseLong(id));
         return DefaultCommonResult.success();
     }
 

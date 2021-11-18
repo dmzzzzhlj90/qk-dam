@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qk.dm.dataquality.constant.DataSourceEnum;
 import com.qk.dm.dataquality.constant.DimensionEnum;
+import com.qk.dm.dataquality.constant.TempTypeEnum;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+/** @author shenpengjie */
 @Data
 public class DqcRuleTemplateInfoVo {
 
@@ -20,6 +22,9 @@ public class DqcRuleTemplateInfoVo {
 
   /** 模板类型1-系统内置 2-自定义 */
   private Integer tempType;
+
+  /** 模板类型名称 */
+  private String tempTypeName;
 
   /** 分类目录 */
   private Integer dirId;
@@ -67,5 +72,10 @@ public class DqcRuleTemplateInfoVo {
         Arrays.stream(engineType.split(","))
             .map(i -> DataSourceEnum.fromValue(Integer.parseInt(i)))
             .collect(Collectors.joining(","));
+  }
+
+  public void setTempType(Integer tempType) {
+    this.tempType = tempType;
+    this.tempTypeName = TempTypeEnum.fromValue(tempType).getValue();
   }
 }

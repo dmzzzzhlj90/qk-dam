@@ -2,7 +2,7 @@ package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.constant.SchedulerStateEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.entity.QDqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
@@ -15,7 +15,10 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -50,10 +53,8 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     basicInfo.setJobId(UUID.randomUUID().toString().replaceAll("-", ""));
     // todo 创建人
     basicInfo.setCreateUserid(1L);
-    basicInfo.setGmtCreate(new Date());
-    basicInfo.setGmtModified(new Date());
+    basicInfo.setSchedulerState(SchedulerStateEnum.NOT_STARTED.getCode());
     basicInfo.setDelFlag(0);
-
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
     return basicInfo.getJobId();
   }
@@ -65,17 +66,28 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         dqcSchedulerBasicInfoVO, basicInfo);
     // todo 修改人
     basicInfo.setUpdateUserid(1L);
-    basicInfo.setGmtModified(new Date());
-    basicInfo.setDelFlag(0);
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
   }
 
   @Override
   public void publish(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
     DqcSchedulerBasicInfo basicInfo = getBasicInfo(dqcSchedulerBasicInfoVO.getId());
+    basicInfo.setSchedulerState(dqcSchedulerBasicInfoVO.getSchedulerState());
+    switch (dqcSchedulerBasicInfoVO.getSchedulerState()){
+      case 1://启动调度
+        //流程定义不存在时创建
+        break;
+      case 2://手动执行
+
+        break;
+      case 3://停止
+
+        break;
+    }
     // 更改各种状态
     // todo 如果状态为发布状态，需要判断规则、时间是否配置
-    basicInfo.setSchedulerState(dqcSchedulerBasicInfoVO.getSchedulerState());
+    //todo 创建流程定义，根据时间配置再配置调度定时，最后发布上线
+    //todo 如果是下线时，需要把流程定义下线了
     // todo 修改人
     basicInfo.setUpdateUserid(1L);
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
@@ -83,7 +95,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
 
   @Override
   @Transient
-  public void delete(Long id) {
+  public void deleteOne(Long id) {
     DqcSchedulerBasicInfo info = getInfoById(id);
     dqcSchedulerConfigService.delete(info.getJobId());
     dqcSchedulerBasicInfoRepository.delete(info);
@@ -109,8 +121,8 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     if (infoList.stream()
         .anyMatch(
             i ->
-                !Objects.equals(i.getSchedulerState(), DqcConstant.INIT_STATE)
-                    && !Objects.equals(i.getSchedulerState(), DqcConstant.STOP_STATE))) {
+                    Objects.equals(i.getSchedulerState(), SchedulerStateEnum.SCHEDULING.getCode())
+                            || Objects.equals(i.getSchedulerState(), SchedulerStateEnum.RUNING.getCode()))) {
       throw new BizException("启动调度后不可操作！！！");
     }
     return infoList;
@@ -118,8 +130,8 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
 
   private DqcSchedulerBasicInfo getInfoById(Long id) {
     DqcSchedulerBasicInfo info = getBasicInfo(id);
-    if (!Objects.equals(info.getSchedulerState(), DqcConstant.INIT_STATE)
-        && !Objects.equals(info.getSchedulerState(), DqcConstant.STOP_STATE)) {
+    if (Objects.equals(info.getSchedulerState(), SchedulerStateEnum.SCHEDULING.getCode())
+            || Objects.equals(info.getSchedulerState(), SchedulerStateEnum.RUNING.getCode())) {
       throw new BizException("启动调度后不可操作！！！");
     }
     return info;

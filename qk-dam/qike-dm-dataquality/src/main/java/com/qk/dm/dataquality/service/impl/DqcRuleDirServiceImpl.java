@@ -78,7 +78,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         dqcRuleDir.setGmtCreate(new Date());
         dqcRuleDir.setGmtModified(new Date());
         dqcRuleDir.setRuleDirId(UUID.randomUUID().toString().replaceAll("-", ""));
-
+        dqcRuleDir.setDelFlag(0);
 
         Predicate predicate = qDqcRuleDir.ruleDirName.eq(dqcRuleDir.getRuleDirName());
         boolean exists = dqcRuleDirRepository.exists(predicate);
@@ -108,7 +108,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     }
 
     @Override
-    public void delete(Long delId) {
+    public void deleteOne(Long delId) {
         Optional<DqcRuleDir> dirOptional = dqcRuleDirRepository.findById(delId);
         if (!dirOptional.isPresent()) {
             throw new BizException("参数有误,当前要删除的节点不存在！！！");

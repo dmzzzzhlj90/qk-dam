@@ -7,6 +7,8 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
+import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.constant.TempTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.constant.DataSourceEnum;
@@ -37,8 +39,6 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
   private final QDqcRuleTemplate qDqcRuleTemplate = QDqcRuleTemplate.dqcRuleTemplate;
-  public static final Integer del_state_down = 1;
-  public static final Integer publish_state_up = 1;
 
   public DqcRuleTemplateServiceImpl(
       DqcRuleTemplateRepository dqcRuleTemplateRepository, EntityManager entityManager) {
@@ -56,8 +56,12 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     parseStatements(dqcRuleTemplateVo.getEngineType(), dqcRuleTemplateVo.getTempSql());
     DqcRuleTemplate dqcRuleTemplate =
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
+    dqcRuleTemplate.setEngineType(DqcConstant.ENGINE_TYPE);
+    dqcRuleTemplate.setTempType(TempTypeEnum.CUSTOMIZE.getCode());
+    dqcRuleTemplate.setPublishState(DqcConstant.PUBLISH_STATE_DOWN);
     // todo 添加创建人
     dqcRuleTemplate.setCreateUserid(1L);
+    dqcRuleTemplate.setDelFlag(0);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
@@ -79,7 +83,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   @Override
   public void update(DqcRuleTemplateVo dqcRuleTemplateVo) {
     DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
-    if (Objects.equals(dqcRuleTemplate.getPublishState(), publish_state_up)) {
+    if (Objects.equals(dqcRuleTemplate.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
       throw new BizException("上线规则模版不支持修改！！！");
     }
     // todo 添加修改人
@@ -99,13 +103,13 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   @Override
-  public void delete(Long id) {
+  public void deleteOne(Long id) {
     // todo 工作流下线
     DqcRuleTemplate dqcRuleTemplate = getInfoById(id);
-    if (Objects.equals(dqcRuleTemplate.getPublishState(), publish_state_up)) {
+    if (Objects.equals(dqcRuleTemplate.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
       throw new BizException("上线规则模版不支持删除！！！");
     }
-    dqcRuleTemplate.setDelFlag(del_state_down);
+    dqcRuleTemplate.setDelFlag(DqcConstant.DEL_FLAG);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
@@ -121,10 +125,10 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     idcTimeLimitList.stream()
         .peek(
             i -> {
-              if (Objects.equals(i.getPublishState(), publish_state_up)) {
+              if (Objects.equals(i.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
                 throw new BizException("上线规则模版不支持删除！！！");
               }
-              i.setDelFlag(del_state_down);
+              i.setDelFlag(DqcConstant.DEL_FLAG);
             })
         .collect(Collectors.toList());
     dqcRuleTemplateRepository.saveAll(idcTimeLimitList);
@@ -137,7 +141,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public List<DqcRuleTemplateInfoVo> search(DqcRuleTemplateVo dqcRuleTemplateVo) {
-    Predicate predicate = qDqcRuleTemplate.publishState.eq(1);
+    Predicate predicate = qDqcRuleTemplate.publishState.eq(DqcConstant.PUBLISH_STATE_UP);
     List<DqcRuleTemplate> list =
         (List<DqcRuleTemplate>) dqcRuleTemplateRepository.findAll(predicate);
     return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(list);

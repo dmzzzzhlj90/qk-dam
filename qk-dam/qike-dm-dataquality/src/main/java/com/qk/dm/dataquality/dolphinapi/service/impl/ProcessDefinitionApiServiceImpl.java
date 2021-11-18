@@ -1,9 +1,9 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
-import com.qk.dam.commons.exception.BizException;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
+import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
@@ -83,15 +83,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    */
   @Override
   public void release(Integer processDefinitionId, Integer releaseState) {
-    processDefinitionId = 4;
     try {
       Result result =
-          defaultApi.releaseProcessDefinitionUsingPOST(processDefinitionId, "数据质量", releaseState);
-      if (result.getCode() != 0) {
-        throw new BizException("流程定义发布失败!!!" + result.getMsg());
-      }
+          defaultApi.releaseProcessDefinitionUsingPOST(
+              DqcConstant.processDefinitionId, DqcConstant.projectName, releaseState);
+      DqcConstant.verification(result, "流程定义发布失败{}");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
@@ -102,14 +100,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    */
   @Override
   public void delete(Integer processDefinitionId) {
-    processDefinitionId = 4;
     try {
-      Result result = defaultApi.deleteProcessDefinitionByIdUsingGET("数据质量", processDefinitionId);
-      if (result.getCode() != 0) {
-        throw new BizException("删除流程失败!!!" + result.getMsg());
-      }
+      Result result =
+          defaultApi.deleteProcessDefinitionByIdUsingGET(
+              DqcConstant.projectName, DqcConstant.processDefinitionId);
+      DqcConstant.verification(result, "删除流程失败{}");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
@@ -120,14 +117,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    */
   @Override
   public void copy(Integer processDefinitionId) {
-    processDefinitionId = 4;
     try {
-      Result result = defaultApi.copyProcessDefinitionUsingPOST(processDefinitionId, "数据质量");
-      if (result.getCode() != 0) {
-        throw new BizException("复制流程失败!!!" + result.getMsg());
-      }
+      Result result =
+          defaultApi.copyProcessDefinitionUsingPOST(
+              DqcConstant.processDefinitionId, DqcConstant.projectName);
+      DqcConstant.verification(result, "复制流程失败{}");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
@@ -138,14 +134,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    */
   @Override
   public void startCheck(Integer processDefinitionId) {
-    processDefinitionId = 4;
     try {
-      Result result = defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionId, "数据质量");
-      if (result.getCode() != 0) {
-        throw new BizException("检查流程失败!!!" + result.getMsg());
-      }
+      Result result =
+          defaultApi.startCheckProcessDefinitionUsingPOST(
+              DqcConstant.processDefinitionId, DqcConstant.projectName);
+      DqcConstant.verification(result, "检查流程失败{}");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
@@ -156,14 +151,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    */
   @Override
   public void startInstance(Integer processDefinitionId) {
-    processDefinitionId = 4;
     try {
       Result result =
           defaultApi.startProcessInstanceUsingPOST(
               FailureStrategyEnum.fromValue(1).getValue(),
-              processDefinitionId,
+              DqcConstant.processDefinitionId,
               ProcessInstancePriorityEnum.fromValue(3).getValue(),
-              "数据质量",
+              DqcConstant.projectName,
               "",
               0,
               WarningTypeEnum.fromValue(1).getValue(),
@@ -175,11 +169,9 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
               "TASK_POST",
               null,
               "default");
-      if (result.getCode() != 0) {
-        throw new BizException("运行失败!!!" + result.getMsg());
-      }
+      DqcConstant.verification(result, "运行失败{}");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
@@ -191,23 +183,14 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    */
   @Override
   public void execute(Integer processInstanceId, String executeType) {
-    processInstanceId = 1304;
     executeType = "REPEAT_RUNNING";
     try {
-      Result result = defaultApi.executeUsingPOST(executeType, processInstanceId, "数据质量");
-      if (result.getCode() != 0) {
-        throw new BizException("执行流程实例操作失败!!!" + result.getMsg());
-      }
+      Result result =
+          defaultApi.executeUsingPOST(
+              executeType, DqcConstant.processInstanceId, DqcConstant.projectName);
+      DqcConstant.verification(result, "执行流程实例操作失败{}");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
-  }
-
-  private void printException(ApiException e) {
-    System.err.println("Exception when calling DefaultApi#processDefinition");
-    System.err.println("Status code: " + e.getCode());
-    System.err.println("Reason: " + e.getResponseBody());
-    System.err.println("Response headers: " + e.getResponseHeaders());
-    e.printStackTrace();
   }
 }

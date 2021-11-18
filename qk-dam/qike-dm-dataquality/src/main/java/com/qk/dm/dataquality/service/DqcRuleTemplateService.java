@@ -18,7 +18,7 @@ public interface DqcRuleTemplateService {
 
   void update(DqcRuleTemplateVo dqcRuleTemplateVo);
 
-  void delete(Long delId);
+  void deleteOne(Long delId);
 
   void deleteBulk(String ids);
 

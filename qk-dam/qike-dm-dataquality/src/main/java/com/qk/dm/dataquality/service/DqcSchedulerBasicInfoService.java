@@ -24,7 +24,7 @@ public interface DqcSchedulerBasicInfoService {
 
   void publish(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
-  void delete(Long id);
+  void deleteOne(Long id);
 
   void deleteBulk(String ids);
 }

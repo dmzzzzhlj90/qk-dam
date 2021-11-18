@@ -3,10 +3,10 @@ package com.qk.dm.dataquality.dolphinapi.service.impl;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.qk.dam.commons.exception.BizException;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
+import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
@@ -36,8 +36,8 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     try {
       Result result =
           defaultApi.createScheduleUsingPOST(
-              4,
-              "数据质量",
+              DqcConstant.processDefinitionId,
+              DqcConstant.projectName,
               FailureStrategyEnum.fromValue(1).getValue(),
               ProcessInstancePriorityEnum.fromValue(3).getValue(),
               "",
@@ -46,22 +46,19 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               0,
               WarningTypeEnum.fromValue(1).getValue(),
               "default");
-      if (result.getCode() != 0) {
-        throw new BizException("创建定时失败!!!" + result.getMsg());
-      }
+      DqcConstant.verification(result, "创建定时失败{},");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
   @Override
   public void update(Integer scheduleId, DqcSchedulerInfoVO dqcSchedulerInfoVO) {
-    scheduleId = 7;
     try {
       Result result =
           defaultApi.updateScheduleUsingPOST(
-              scheduleId,
-              "数据质量",
+              DqcConstant.scheduleId,
+              DqcConstant.projectName,
               FailureStrategyEnum.fromValue(1).getValue(),
               ProcessInstancePriorityEnum.fromValue(3).getValue(),
               "",
@@ -70,81 +67,78 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               0,
               WarningTypeEnum.fromValue(1).getValue(),
               "default");
-      if (result.getCode() != 0) {
-        throw new BizException("修改定时失败!!!" + result.getMsg());
-      }
+      DqcConstant.verification(result, "修改定时失败{},");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
   @Override
   public void online(Integer scheduleId) {
-    scheduleId = 7;
     try {
-      Result result = defaultApi.onlineUsingPOST(scheduleId, "数据质量");
-      if (result.getCode() != 0) {
-        throw new BizException("定时上线失败!!!" + result.getMsg());
-      }
+      Result result = defaultApi.onlineUsingPOST(DqcConstant.scheduleId, DqcConstant.projectName);
+      DqcConstant.verification(result, "定时上线失败{},");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
   @Override
   public void offline(Integer scheduleId) {
-    scheduleId = 7;
     try {
-      Result result = defaultApi.offlineUsingPOST(scheduleId, "数据质量");
-      if (result.getCode() != 0) {
-        throw new BizException("定时下线失败!!!" + result.getMsg());
-      }
+      Result result = defaultApi.offlineUsingPOST(DqcConstant.scheduleId, DqcConstant.projectName);
+      DqcConstant.verification(result, "定时下线失败{},");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
   @Override
   public void delete(Integer scheduleId) {
-    scheduleId = 7;
     try {
       Result result =
           defaultApi.deleteScheduleByIdUsingGET(
-              "数据质量", scheduleId, "", null, "", null, "", "", "", "", null, "", null, "", "", "");
-      if (result.getCode() != 0) {
-        throw new BizException("删除定时失败!!!" + result.getMsg());
-      }
+              DqcConstant.projectName,
+              DqcConstant.scheduleId,
+              "",
+              null,
+              "",
+              null,
+              "",
+              "",
+              "",
+              "",
+              null,
+              "",
+              null,
+              "",
+              "",
+              "");
+      DqcConstant.verification(result, "删除定时失败{},");
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
   }
 
   @Override
   public ScheduleListPageVo search(
       Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal) {
-    processDefinitionId = 4;
     try {
       Result result =
           defaultApi.queryScheduleListPagingUsingGET(
-              processDefinitionId, "数据质量", pageNo, pageSize, searchVal);
-      if (result.getCode() != 0) {
-        throw new BizException("获取定时列表失败!!!" + result.getMsg());
-      }
+              DqcConstant.processDefinitionId,
+              DqcConstant.projectName,
+              pageNo,
+              pageSize,
+              searchVal);
+      DqcConstant.verification(result, "获取定时列表失败{},");
       return JSONObject.toJavaObject(
           (JSON) JSONObject.toJSON(JSONObject.toJSONString(result.getData())),
           ScheduleListPageVo.class);
     } catch (ApiException e) {
-      printException(e);
+      DqcConstant.printException(e);
     }
     return null;
-  }
-
-  private void printException(ApiException e) {
-    System.err.println("Exception when calling DefaultApi#schedule");
-    System.err.println("Status code: " + e.getCode());
-    System.err.println("Reason: " + e.getResponseBody());
-    System.err.println("Response headers: " + e.getResponseHeaders());
-    e.printStackTrace();
   }
 
   private String schedule(DqcSchedulerConfigVO dqcSchedulerConfigVO) {

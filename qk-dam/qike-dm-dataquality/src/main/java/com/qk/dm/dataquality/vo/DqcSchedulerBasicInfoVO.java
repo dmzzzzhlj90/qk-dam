@@ -71,9 +71,9 @@ public class DqcSchedulerBasicInfoVO {
     private String notifyThemeId;
 
     /**
-     * 调度状态 0-初始状态 1-调度中 2-运行中 3-停止
+     * 调度状态 0-未启动 1-调度中 2-运行中 3-停止 4-运行失败
      */
-    private Integer schedulerState = 0;
+    private Integer schedulerState;
 
     /**
      * 创建人

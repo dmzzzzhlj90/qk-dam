@@ -92,8 +92,8 @@ public class DqcSchedulerBasicInfoController {
    */
   @DeleteMapping("/{id}")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult delete(@PathVariable("id") String id) {
-    dqcSchedulerBasicInfoService.delete(Long.valueOf(id));
+  public DefaultCommonResult deleteOne(@PathVariable("id") String id) {
+    dqcSchedulerBasicInfoService.deleteOne(Long.valueOf(id));
     return DefaultCommonResult.success();
   }
 

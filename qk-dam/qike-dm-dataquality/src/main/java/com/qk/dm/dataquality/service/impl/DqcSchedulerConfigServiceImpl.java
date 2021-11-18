@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.constant.SchedulerStateEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.entity.QDqcSchedulerBasicInfo;
@@ -16,7 +17,6 @@ import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,8 +57,6 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     }
     // todo 创建人
     config.setCreateUserid(1L);
-    config.setGmtCreate(new Date());
-    config.setGmtModified(new Date());
     config.setDelFlag(0);
     dqcSchedulerConfigRepository.saveAndFlush(config);
   }
@@ -74,8 +72,6 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
     // todo 修改人
     config.setUpdateUserid(1L);
-    config.setGmtModified(new Date());
-    config.setDelFlag(0);
     dqcSchedulerConfigRepository.save(config);
   }
 
@@ -121,8 +117,8 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     if (info == null) {
       throw new BizException("id为：" + taskId + " 的任务，不存在！！！");
     }
-    if (!Objects.equals(info.getSchedulerState(), DqcConstant.INIT_STATE)
-        && !Objects.equals(info.getSchedulerState(), DqcConstant.STOP_STATE)) {
+    if (Objects.equals(info.getSchedulerState(), SchedulerStateEnum.SCHEDULING.getCode())
+        || Objects.equals(info.getSchedulerState(), SchedulerStateEnum.RUNING.getCode())) {
       throw new BizException("启动调度后不可操作！！！");
     }
   }

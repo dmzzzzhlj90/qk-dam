@@ -22,7 +22,7 @@ public interface DqcRuleDirService {
 
     void update(DqcRuleDirVO dqcRuleDirVO);
 
-    void delete(Long delId);
+    void deleteOne(Long delId);
 
     void deleteBulk(Long delId);
 

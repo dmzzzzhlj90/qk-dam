@@ -48,7 +48,7 @@ public class DqcSchedulerBasicInfo implements Serializable {
   @Column(name = "notify_theme_id", nullable = false)
   private String notifyThemeId;
 
-  /** 调度状态 1-调度中 2-运行中 3-停止 */
+  /** 调度状态 0-未启动 1-调度中 2-运行中 3-停止 4-运行失败 */
   @Column(name = "scheduler_state")
   private Integer schedulerState;
 
@@ -62,7 +62,7 @@ public class DqcSchedulerBasicInfo implements Serializable {
 
   /** 删除标识(0-保留 1-删除) */
   @Column(name = "del_flag", nullable = false)
-  private Integer delFlag = 0;
+  private Integer delFlag;
 
   /** 创建时间 */
   @Column(name = "gmt_create", nullable = false)

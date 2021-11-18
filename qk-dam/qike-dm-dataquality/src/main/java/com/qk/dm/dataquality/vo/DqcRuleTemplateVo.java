@@ -15,7 +15,7 @@ public class DqcRuleTemplateVo {
   private String tempName;
 
   /** 模板类型1-系统内置 2-自定义 */
-  private Integer tempType = 2;
+  private Integer tempType;
 
   /** 分类目录 */
   @NotNull(message = "分类目录不能为空！")
@@ -26,7 +26,7 @@ public class DqcRuleTemplateVo {
   private Integer dimensionId;
 
   /** 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔 */
-  private String engineType = "1,2";
+  private String engineType;
 
   /** 描述 */
   @NotBlank(message = "描述不能为空！")
@@ -41,5 +41,5 @@ public class DqcRuleTemplateVo {
   private String tempResult;
 
   /** 发布状态 0-下线 1-发布 */
-  private Integer publishState = 0;
+  private Integer publishState;
 }
