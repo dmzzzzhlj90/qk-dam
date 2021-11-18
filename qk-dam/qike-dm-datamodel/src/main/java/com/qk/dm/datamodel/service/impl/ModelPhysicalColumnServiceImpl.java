@@ -34,11 +34,6 @@ public class ModelPhysicalColumnServiceImpl implements ModelPhysicalColumnServic
     @Override
     public void insert(List<ModelPhysicalColumnDTO> modelPhysicalColumnDTOList) {
         List<ModelPhysicalColumn> modelPhysicalColumnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalColumnDTOList);
-        Date createTime = new Date();
-        modelPhysicalColumnList.forEach(e->{
-            e.setGmtCreate(createTime);
-            e.setGmtModified(createTime);
-        });
         modelPhysicalColumnRepository.saveAll(modelPhysicalColumnList);
     }
 
@@ -50,11 +45,6 @@ public class ModelPhysicalColumnServiceImpl implements ModelPhysicalColumnServic
         }
         modelPhysicalColumnRepository.deleteByTableId(tableId);
         List<ModelPhysicalColumn> modelPhysicalColumnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalColumnDTOList);
-        Date createTime = new Date();
-        modelPhysicalColumnList.forEach(e->{
-            e.setGmtCreate(createTime);
-            e.setGmtModified(createTime);
-        });
         modelPhysicalColumnRepository.saveAllAndFlush(modelPhysicalColumnList);
     }
 

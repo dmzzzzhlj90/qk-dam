@@ -34,11 +34,6 @@ public class ModelPhysicalRelationServiceImpl implements ModelPhysicalRelationSe
     @Override
     public void insert(List<ModelPhysicalRelationDTO> modelPhysicalRelationDTOList) {
         List<ModelPhysicalRelation> list = ModelPhysicalRelationMapper.INSTANCE.use(modelPhysicalRelationDTOList);
-        Date createTime = new Date();
-        list.forEach(e->{
-            e.setGmtCreate(createTime);
-            e.setGmtModified(createTime);
-        });
         modelPhysicalRelationRepository.saveAll(list);
     }
 
@@ -50,11 +45,6 @@ public class ModelPhysicalRelationServiceImpl implements ModelPhysicalRelationSe
         }
         modelPhysicalRelationRepository.deleteByTableId(tableId);
         List<ModelPhysicalRelation> list = ModelPhysicalRelationMapper.INSTANCE.use(modelPhysicalRelationDTOList);
-        Date createTime = new Date();
-        list.forEach(e->{
-            e.setGmtCreate(createTime);
-            e.setGmtModified(createTime);
-        });
         modelPhysicalRelationRepository.saveAllAndFlush(list);
     }
 

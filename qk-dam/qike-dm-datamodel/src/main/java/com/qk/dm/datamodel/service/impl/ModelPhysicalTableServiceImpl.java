@@ -46,8 +46,6 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
     @Override
     public void insert(ModelPhysicalTableDTO modelPhysicalTableDTO) {
         ModelPhysicalTable modelPhysicalTable = ModelPhysicalTableMapper.INSTANCE.of(modelPhysicalTableDTO);
-        modelPhysicalTable.setGmtCreate(new Date());
-        modelPhysicalTable.setGmtModified(new Date());
         modelPhysicalTableRepository.save(modelPhysicalTable);
     }
 
@@ -67,7 +65,6 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
             throw new BizException("当前要修改的表信息id为："+id+"的数据不存在！！！");
         }
         ModelPhysicalTableMapper.INSTANCE.from(modelPhysicalTableDTO,modelPhysicalTable);
-        modelPhysicalTable.setGmtModified(new Date());
         modelPhysicalTableRepository.saveAndFlush(modelPhysicalTable);
     }
 
