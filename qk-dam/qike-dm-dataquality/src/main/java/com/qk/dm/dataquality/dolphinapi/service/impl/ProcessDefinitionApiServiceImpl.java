@@ -140,7 +140,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
   public void startCheck(Integer processDefinitionId) {
     processDefinitionId = 4;
     try {
-      Result result = defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionId);
+      Result result = defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionId, "数据质量");
       if (result.getCode() != 0) {
         throw new BizException("检查流程失败!!!" + result.getMsg());
       }

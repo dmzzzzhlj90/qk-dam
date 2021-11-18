@@ -8050,8 +8050,8 @@ public class DefaultApi {
    * @return Result
    * @throws ApiException if fails to make API call
    */
-  public Result startCheckProcessDefinitionUsingPOST(Integer processDefinitionId) throws ApiException {
-    ApiResponse<Result> localVarResponse = startCheckProcessDefinitionUsingPOSTWithHttpInfo(processDefinitionId);
+  public Result startCheckProcessDefinitionUsingPOST(Integer processDefinitionId,String projectName) throws ApiException {
+    ApiResponse<Result> localVarResponse = startCheckProcessDefinitionUsingPOSTWithHttpInfo(processDefinitionId,projectName);
     return localVarResponse.getData();
   }
 
@@ -8062,8 +8062,8 @@ public class DefaultApi {
    * @return ApiResponse&lt;Result&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Result> startCheckProcessDefinitionUsingPOSTWithHttpInfo(Integer processDefinitionId) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = startCheckProcessDefinitionUsingPOSTRequestBuilder(processDefinitionId);
+  public ApiResponse<Result> startCheckProcessDefinitionUsingPOSTWithHttpInfo(Integer processDefinitionId,String projectName) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = startCheckProcessDefinitionUsingPOSTRequestBuilder(processDefinitionId,projectName);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -8088,7 +8088,7 @@ public class DefaultApi {
     }
   }
 
-  private HttpRequest.Builder startCheckProcessDefinitionUsingPOSTRequestBuilder(Integer processDefinitionId) throws ApiException {
+  private HttpRequest.Builder startCheckProcessDefinitionUsingPOSTRequestBuilder(Integer processDefinitionId,String projectName) throws ApiException {
     // verify the required parameter 'processDefinitionId' is set
     if (processDefinitionId == null) {
       throw new ApiException(400, "Missing the required parameter 'processDefinitionId' when calling startCheckProcessDefinitionUsingPOST");
@@ -8096,7 +8096,7 @@ public class DefaultApi {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/projects/{projectName}/executors/start-check";
+    String localVarPath = "/projects/{projectName}/executors/start-check".replace("{projectName}", ApiClient.urlEncode(projectName.toString()));
 
     List<Pair> localVarQueryParams = new ArrayList<>();
     localVarQueryParams.addAll(ApiClient.parameterToPairs("processDefinitionId", processDefinitionId));
