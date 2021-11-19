@@ -57,8 +57,8 @@ public class ProcessDefinitionApiController {
     }
 
     @DeleteMapping("")
-    public DefaultCommonResult delete(Integer processDefinitionId) {
-        processDefinitionApiService.delete(processDefinitionId);
+    public DefaultCommonResult deleteOne(Integer processDefinitionId) {
+        processDefinitionApiService.deleteOne(processDefinitionId);
         return DefaultCommonResult.success();
     }
 

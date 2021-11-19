@@ -99,7 +99,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
    * @param processDefinitionId
    */
   @Override
-  public void delete(Integer processDefinitionId) {
+  public void deleteOne(Integer processDefinitionId) {
     try {
       Result result =
           defaultApi.deleteProcessDefinitionByIdUsingGET(

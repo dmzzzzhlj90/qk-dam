@@ -97,7 +97,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   @Transient
   public void deleteOne(Long id) {
     DqcSchedulerBasicInfo info = getInfoById(id);
-    dqcSchedulerConfigService.delete(info.getJobId());
+    dqcSchedulerConfigService.deleteOne(info.getJobId());
     dqcSchedulerBasicInfoRepository.delete(info);
   }
 

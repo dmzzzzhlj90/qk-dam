@@ -17,7 +17,7 @@ public interface ProcessDefinitionApiService {
 
   void release(Integer processDefinitionId, Integer releaseState);
 
-  void delete(Integer processDefinitionId);
+  void deleteOne(Integer processDefinitionId);
 
   void copy(Integer processDefinitionId);
 

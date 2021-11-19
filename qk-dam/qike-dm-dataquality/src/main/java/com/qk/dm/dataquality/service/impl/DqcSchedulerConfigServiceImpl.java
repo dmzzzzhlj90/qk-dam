@@ -76,7 +76,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   }
 
   @Override
-  public void delete(String taskId) {
+  public void deleteOne(String taskId) {
     dqcSchedulerConfigRepository.delete(getInfoByTaskId(taskId));
   }
 

@@ -27,7 +27,7 @@ public interface DqcSchedulerRulesService {
 
     void updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList);
 
-    void delete(Long id);
+    void deleteOne(Long id);
 
     void deleteBulk(String ids);
 

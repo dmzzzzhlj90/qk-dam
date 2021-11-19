@@ -94,7 +94,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   }
 
   @Override
-  public void delete(Integer scheduleId) {
+  public void deleteOne(Integer scheduleId) {
     try {
       Result result =
           defaultApi.deleteScheduleByIdUsingGET(

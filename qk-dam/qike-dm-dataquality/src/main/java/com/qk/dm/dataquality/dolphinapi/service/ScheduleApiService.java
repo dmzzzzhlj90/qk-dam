@@ -18,7 +18,7 @@ public interface ScheduleApiService {
 
   void offline(Integer scheduleId);
 
-  void delete(Integer scheduleId);
+  void deleteOne(Integer scheduleId);
 
   ScheduleListPageVo search(
       Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal);

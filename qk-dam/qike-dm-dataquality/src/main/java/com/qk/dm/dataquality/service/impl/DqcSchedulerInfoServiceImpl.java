@@ -123,7 +123,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     }
 
     @Override
-    public void delete(Long valueOf) {
+    public void deleteOne(Long valueOf) {
 
     }
 

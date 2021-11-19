@@ -109,7 +109,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteOne(Long id) {
         boolean exists = dqcSchedulerRulesRepository.exists(qDqcSchedulerRules.id.eq(id));
         if (exists) {
             dqcSchedulerRulesRepository.deleteById(id);
