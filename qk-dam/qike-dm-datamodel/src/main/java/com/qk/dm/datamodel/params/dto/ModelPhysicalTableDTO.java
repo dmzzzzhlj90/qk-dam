@@ -1,7 +1,6 @@
 package com.qk.dm.datamodel.params.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +21,6 @@ import java.util.Date;
 public class ModelPhysicalTableDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Pagination pagination;
     /**
      * 主键id
      */

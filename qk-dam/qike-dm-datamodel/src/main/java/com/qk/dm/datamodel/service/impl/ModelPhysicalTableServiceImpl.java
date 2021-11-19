@@ -90,10 +90,10 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
         }
         List<ModelPhysicalTable> list = (List<ModelPhysicalTable>) map.get("list");
         List<ModelPhysicalTableVO> voList = ModelPhysicalTableMapper.INSTANCE.of(list);
-        return new PageResultVO<>(
+        return new PageResultVO<ModelPhysicalTableVO>(
                 (long) map.get("total"),
-                modelPhysicalTableDTO.getPagination().getPage(),
-                modelPhysicalTableDTO.getPagination().getSize(),
+                1,
+               10,
                 voList);
     }
     private Map<String, Object> queryByParams(ModelPhysicalTableDTO modelPhysicalTableDTO) {
@@ -108,10 +108,6 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
                         .from(qModelPhysicalTable)
                         .where(booleanBuilder)
                         .orderBy(qModelPhysicalTable.id.asc())
-                        .offset(
-                                (long) (modelPhysicalTableDTO.getPagination().getPage() - 1)
-                                        * modelPhysicalTableDTO.getPagination().getSize())
-                        .limit(modelPhysicalTableDTO.getPagination().getSize())
                         .fetch();
         result.put("list", modelPhysicalTableList);
         result.put("total", count);
