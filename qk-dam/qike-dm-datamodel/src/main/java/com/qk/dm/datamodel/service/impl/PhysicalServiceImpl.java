@@ -5,6 +5,8 @@ import com.alibaba.nacos.common.utils.MapUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.metedata.entity.MtdTableApiParams;
+import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dam.model.constant.ModelStatus;
 import com.qk.dam.sqlbuilder.SqlBuilderFactory;
 import com.qk.dam.sqlbuilder.model.Column;
@@ -19,6 +21,7 @@ import com.qk.dm.datamodel.repositories.ModelPhysicalColumnRepository;
 import com.qk.dm.datamodel.repositories.ModelPhysicalRelationRepository;
 import com.qk.dm.datamodel.repositories.ModelPhysicalTableRepository;
 import com.qk.dm.datamodel.repositories.ModelSqlRepository;
+import com.qk.dm.datamodel.service.MetaDataService;
 import com.qk.dm.datamodel.service.PhysicalService;
 import com.qk.dm.datamodel.util.CheckUtil;
 import com.querydsl.core.BooleanBuilder;
@@ -47,6 +50,7 @@ public class PhysicalServiceImpl implements PhysicalService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
   private SqlBuilderFactory sqlBuilderFactory;
+  private final MetaDataService metaDataService;
   @PostConstruct
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
@@ -56,12 +60,14 @@ public class PhysicalServiceImpl implements PhysicalService {
       ModelPhysicalTableRepository modelPhysicalTableRepository,
       ModelPhysicalColumnRepository modelPhysicalColumnRepository,
       ModelPhysicalRelationRepository modelPhysicalRelationRepository,
-      ModelSqlRepository modelSqlRepository, EntityManager entityManager) {
+      ModelSqlRepository modelSqlRepository, EntityManager entityManager,
+      MetaDataService metaDataService) {
     this.modelPhysicalTableRepository = modelPhysicalTableRepository;
     this.modelPhysicalColumnRepository = modelPhysicalColumnRepository;
     this.modelPhysicalRelationRepository = modelPhysicalRelationRepository;
     this.modelSqlRepository = modelSqlRepository;
     this.entityManager = entityManager;
+    this.metaDataService = metaDataService;
   }
 
   /**
@@ -95,6 +101,23 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   private void saveModelPhysical(ModelPhysicalDTO modelPhysicalDTO,
       ModelPhysicalTable modelPhysicalTable) {
+    //状态判断是否为发布操作，如果是判断元数据中是否存在该表数据，如果不是则不用管
+    if (modelPhysicalTable.getStatus()==1){
+      List<MtdTables> tables = getTables(modelPhysicalTable.getTableName(),modelPhysicalTable.getDatabaseName());
+      if (CollectionUtils.isEmpty(tables)){
+        String sql = deleteModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+        //调用调度任务创建表
+
+      }else{
+        throw new BizException("发布失败，该表已经存在");
+      }
+    }else{
+      deleteModelPhysical(modelPhysicalDTO,modelPhysicalTable);
+    }
+  }
+
+  private String deleteModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
+    String sqls = null;
     //1存储基本信息
     ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTableRepository.save(modelPhysicalTable);
     //2存储字段信息
@@ -102,7 +125,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     List<ModelPhysicalColumn> modelPhysicalColumnList = columnList.stream()
         .map(modelPhysicalColumn -> { modelPhysicalColumn.setTableId(
             modelPhysicalTable1.getId());
-            return modelPhysicalColumn;
+          return modelPhysicalColumn;
         }).collect(Collectors.toList());
     modelPhysicalColumnRepository.saveAll(modelPhysicalColumnList);
     //3存关系数据
@@ -115,21 +138,36 @@ public class PhysicalServiceImpl implements PhysicalService {
           }).collect(Collectors.toList());
       modelPhysicalRelationRepository.saveAll(relationList);
     }
-    //生成sql并存入数据库
+    //4生成sql并存入数据库
+    sqls = createSql(modelPhysicalTable, modelPhysicalColumnList,modelPhysicalTable1.getId());
+    return sqls;
+  }
+
+  /**
+   *根据基础表和字段表创建建表sql
+   * @param modelPhysicalTable
+   * @param modelPhysicalColumnList
+   * @param id
+   */
+  private String createSql(ModelPhysicalTable modelPhysicalTable,
+      List<ModelPhysicalColumn> modelPhysicalColumnList, Long id) {
+    String sqls= null;
     ModelSql modelSql = new ModelSql();
     Table table = getTable(modelPhysicalTable,modelPhysicalColumnList);
-    String Sql = SqlBuilderFactory.creatTableSQL(table);
+    String Sql = sqlBuilderFactory.creatTableSQL(table);
     if (StringUtils.isNotBlank(Sql)){
       //赋值基础数据id
-      modelSql.setTableId(modelPhysicalTable1.getId());
+      modelSql.setTableId(id);
       //1,逻辑表2物理表 3 维度表 4 汇总表
       modelSql.setType(1);
       //建表sql
       modelSql.setSqlSentence(Sql);
       modelSqlRepository.save(modelSql);
+      sqls=Sql;
     }else {
       throw  new BizException("生成sql为空");
     }
+    return sqls;
   }
 
   private Table getTable(ModelPhysicalTable modelPhysicalTable, List<ModelPhysicalColumn> modelPhysicalColumnList) {
@@ -363,6 +401,76 @@ public class PhysicalServiceImpl implements PhysicalService {
   }
 
   /**
+   * 手动同步
+   * @param physicalIds
+   */
+  @Override
+  public void synchronization(List<Long> physicalIds) {
+      physicalIds.forEach(id->{
+        //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
+        ModelPhysicalTableVO modelPhysical = getModelPhysical(id);
+        //2如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
+        if (modelPhysical!=null){
+          List<MtdTables> tables = getTables(modelPhysical.getTableName(),modelPhysical.getDatabaseName());
+          if (CollectionUtils.isNotEmpty(tables)){
+            throw  new BizException("当前表名为"+modelPhysical.getTableName()+"已经创建");
+          }else{
+            //获取建表sql
+            //调用任务创建表
+          }
+        }else{
+          throw new BizException("当前需要同步的表id为"+id+"不存在");
+        }
+      });
+  }
+
+  /**
+   * 根据id批量发布
+   * @param idList
+   */
+  @Override
+  public void push(List<Long> idList) {
+    idList.forEach(
+        id->{
+          //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
+          ModelPhysicalTableVO modelPhysical = getModelPhysical(id);
+          //2如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
+          if (modelPhysical!=null){
+            List<MtdTables> tables = getTables(modelPhysical.getTableName(),modelPhysical.getDatabaseName());
+            if (CollectionUtils.isNotEmpty(tables)){
+             //判断存在的表种是否存在数据，如果存返回消息提示显现，如果不存在，发布修改表任务
+
+
+            }else{
+              //获取建表sql
+              ModelSql sql = modelSqlRepository.findByTableId(id);
+              //调用任务创建表
+            }
+          }else{
+            throw new BizException("当前需要同步的表id为"+id+"不存在");
+          }
+        }
+    );
+  }
+
+  /**
+   * 根据数据库名称和表明成获取元数据信息
+   * @param tableName
+   * @param databaseName
+   * @return
+   */
+  private List<MtdTables> getTables(String tableName, String databaseName) {
+    List<MtdTables> list = new ArrayList<>();
+    if (StringUtils.isNotBlank(tableName) && StringUtils.isNotBlank(databaseName)){
+      MtdTableApiParams mtdTableApiParams = new MtdTableApiParams();
+      mtdTableApiParams.setTypeName(databaseName);
+      mtdTableApiParams.setClassification(tableName);
+      list = metaDataService.getTables(mtdTableApiParams);
+    }
+    return list;
+  }
+
+  /**
    * 根据基础信息查询统计数据
    * @param list
    * @return
@@ -589,12 +697,12 @@ public class PhysicalServiceImpl implements PhysicalService {
     //2修改字段配置
     List<ModelPhysicalColumn> physicalColumnList = modelPhysicalColumnRepository.findAllByTableId(modelPhysicalTable.getId());
     if (CollectionUtils.isNotEmpty(physicalColumnList)){
-      physicalColumnList.forEach(
-          modelPhysicalColumn -> {
+      List<ModelPhysicalColumn> physicalColumnList1 = physicalColumnList.stream()
+          .map(modelPhysicalColumn -> {
             modelPhysicalColumn.setDelFlag(1);
-          }
-      );
-      modelPhysicalColumnRepository.saveAllAndFlush(physicalColumnList);
+            return modelPhysicalColumn;
+          }).collect(Collectors.toList());
+      modelPhysicalColumnRepository.saveAllAndFlush(physicalColumnList1);
     }
     List<ModelPhysicalColumn> columnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalDTO.getModelColumnDtoList());
     modelPhysicalColumnRepository.saveAll(columnList);
@@ -602,15 +710,22 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (CollectionUtils.isNotEmpty(modelPhysicalDTO.getModelRelationDtoList())){
       List<ModelPhysicalRelation> modelPhysicalRelationList = modelPhysicalRelationRepository.findAllByTableId(modelPhysicalTable.getId());
       if (CollectionUtils.isNotEmpty(modelPhysicalRelationList)){
-        modelPhysicalRelationList.forEach(
-            modelPhysicalRelation -> {
+        List<ModelPhysicalRelation> modelPhysicalRelationList1 = modelPhysicalRelationList.stream()
+            .map(modelPhysicalRelation -> {
               modelPhysicalRelation.setDelFlag(1);
-            }
-        );
-        modelPhysicalRelationRepository.saveAllAndFlush(modelPhysicalRelationList);
+              return modelPhysicalRelation;
+            }).collect(Collectors.toList());
+        modelPhysicalRelationRepository.saveAllAndFlush(modelPhysicalRelationList1);
       }
       List<ModelPhysicalRelation> relationLists = ModelPhysicalRelationMapper.INSTANCE.use(modelPhysicalDTO.getModelRelationDtoList());
       modelPhysicalRelationRepository.saveAll(relationLists);
     }
+    //4修改创建语句
+    ModelSql modelSql = modelSqlRepository.findByTableId(modelPhysicalTable.getId());
+    if (modelSql!=null){
+      modelSql.setDelFlag(1);
+      modelSqlRepository.saveAndFlush(modelSql);
+    }
+    createSql(modelPhysicalTable,columnList,modelPhysicalTable.getId());
   }
 }

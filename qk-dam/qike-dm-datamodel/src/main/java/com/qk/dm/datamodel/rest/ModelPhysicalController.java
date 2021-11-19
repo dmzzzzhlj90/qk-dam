@@ -46,7 +46,7 @@ public class ModelPhysicalController {
   }
 
   /**
-   * 新增——关系建模
+   * 新增——关系建模(创建结束时的保存发布)
    *
    * @param modelPhysicalDTO
    * @return
@@ -95,7 +95,7 @@ public class ModelPhysicalController {
   }
 
   /**
-   * 根据id查询基本信息
+   * 详情——关系建模
    */
   @GetMapping("/{id}")
   public DefaultCommonResult<ModelPhysicalTableVO> getModelPhysical(
@@ -105,7 +105,7 @@ public class ModelPhysicalController {
   }
 
   /**
-   * 根据层级和主题查询相关数据统计信息
+   * 统计信息——关系建模
    *
    * @param queryModelPhysicalDTO
    * @return
@@ -118,7 +118,7 @@ public class ModelPhysicalController {
   }
 
   /**
-   * 数据类型下拉列表
+   * 数据类型下拉列表——关系建模
    *
    * @return0 DefaultCommonResult
    */
@@ -128,7 +128,7 @@ public class ModelPhysicalController {
   }
 
   /**
-   * 预览sql
+   * 预览sql——关系建模
    * @param tableId
    * @return
    */
@@ -136,6 +136,29 @@ public class ModelPhysicalController {
   public DefaultCommonResult<String> getSql(@NotNull @PathVariable("tableId") Long tableId){
     return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getSql(tableId));
   }
+
+  /**
+   * 手动同步——关系建模
+   * @param physicalIds
+   * @return
+   */
+  @PutMapping("/synchronization")
+  public DefaultCommonResult synchronization(@RequestBody @NotNull @Validated List<Long> physicalIds){
+    physicalService.synchronization(physicalIds);
+    return DefaultCommonResult.success();
+  }
+
+  /**
+   *批量发布——关系建模
+   * @param idList
+   * @return
+   */
+  @PutMapping("/push")
+  public DefaultCommonResult push(@RequestBody @NotNull @Validated List<Long> idList){
+    physicalService.push(idList);
+    return DefaultCommonResult.success();
+  }
+
   //============================数据连接调用=========================================>
 
   /**

@@ -32,4 +32,8 @@ public interface PhysicalService {
   List<Map<String, String>> getDataTypes();
 
   String getSql(Long tableId);
+
+  void synchronization(List<Long> physicalIds);
+
+  void push(List<Long> idList);
 }
