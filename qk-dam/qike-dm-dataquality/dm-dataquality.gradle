@@ -1,0 +1,77 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
+}
+version "${dmDataqualityVersion}"
+group "com.qk.dm.dataquality"
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+processResources {
+    expand(project.properties)
+}
+docker {
+    springBootApplication {
+        baseImage = "${jre11Image}"
+        ports = [8782]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
+
+compileJava {
+    doFirst {
+        options.compilerArgs = [
+                //添加mapStruct的一些配置
+                '-Amapstruct.unmappedTargetPolicy=IGNORE',//未映射字段默认报错
+                '-Amapstruct.suppressGeneratorTimestamp=false',//未映射字段默认报错
+                '-Aspatial=false'//未映射字段默认报错
+        ]
+    }
+}
+
+dependencies {
+    implementation project(":qk-data-jpa")
+    implementation project(":dam-mvc-validation")
+    implementation project(":dam-log")
+    implementation project(":qk-sqlbuilder")
+    implementation project(":dolphinscheduler-client")
+    implementation group: 'org.apache.dolphinscheduler', name: 'dolphinscheduler-common', version: '1.3.9'
+    implementation group: 'org.apache.dolphinscheduler', name: 'dolphinscheduler-dao', version: '1.3.9'
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "com.github.ben-manes.caffeine:caffeine"
+    implementation group: 'com.alibaba', name: 'druid', version: '1.2.6'
+
+    implementation 'org.mapstruct:mapstruct'
+    annotationProcessor(
+            "javax.annotation:javax.annotation-api",
+            "com.querydsl:querydsl-apt:4.4.0:jpa",
+            "org.projectlombok:lombok",
+            'org.mapstruct:mapstruct-processor')
+    implementation group: 'cn.hutool', name: 'hutool-db'
+    implementation 'org.aspectj:aspectjweaver'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor('org.mapstruct:mapstruct-processor')
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
