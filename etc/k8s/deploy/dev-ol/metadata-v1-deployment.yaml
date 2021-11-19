@@ -1,10 +1,10 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: metadata-service-v1
-  namespace: backend
+  name: metadata-deploy
+  namespace: java-backend
   labels:
-    app: metadata-service
+    app: metadata-deploy
     version: v1
   annotations:
     deployment.kubernetes.io/revision: '1'
@@ -12,12 +12,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: metadata-service
+      app: metadata-deploy
       version: v1
   template:
     metadata:
       labels:
-        app: metadata-service
+        app: metadata-deploy
         version: v1
     spec:
       containers:
