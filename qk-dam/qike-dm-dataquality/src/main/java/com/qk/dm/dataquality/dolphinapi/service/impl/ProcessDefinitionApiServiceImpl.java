@@ -9,6 +9,7 @@ import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
+import org.apache.dolphinscheduler.dao.entity.ProcessData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
   public void save(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
     try {
       // 构建ProcessData对象
-
+      ProcessData processData = new ProcessData();
       // 构建规则流程实例
 
       // 构建同步条件流程实例
@@ -39,35 +40,38 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
       // 构建回调接口流程实例
 
       // 创建工作流实例
-      //        ApiClient defaultClient = Configuration.getDefaultApiClient();
-      //
-      // defaultClient.setDefaultBaseUri("http://dolphinscheduler.qk.cc:30875/dolphinscheduler");
-      //        defaultClient.setRequestInterceptor((r) -> {
-      //          r.header("token", "4631e5fb85b7ac4dc84aba541e64e0e0");
-      //        });
-      //        DefaultApi apiInstance = new DefaultApi(defaultClient);
-
-      //            //String connects, String locations, String name, String processDefinitionJson,
-      // String projectName, String description
-      String connects =
-          "[{\"endPointSourceId\":\"tasks-49000\",\"endPointTargetId\":\"tasks-56268\"},{\"endPointSourceId\":\"tasks-87230\",\"endPointTargetId\":\"tasks-56268\"},{\"endPointSourceId\":\"tasks-56268\",\"endPointTargetId\":\"tasks-42847\"},{\"endPointSourceId\":\"tasks-56268\",\"endPointTargetId\":\"tasks-72883\"}]";
-      String locations =
-          "{\"tasks-49000\":{\"name\":\"sql_test01\",\"targetarr\":\"\",\"nodenumber\":\"1\",\"x\":481,\"y\":151},\"tasks-87230\":{\"name\":\"sql_test02\",\"targetarr\":\"\",\"nodenumber\":\"1\",\"x\":490,\"y\":278},\"tasks-42847\":{\"name\":\"callback_01\",\"targetarr\":\"tasks-56268\",\"nodenumber\":\"0\",\"x\":802,\"y\":171},\"tasks-72883\":{\"name\":\"callback_02\",\"targetarr\":\"tasks-56268\",\"nodenumber\":\"0\",\"x\":802,\"y\":300},\"tasks-56268\":{\"name\":\"sync_01\",\"targetarr\":\"tasks-49000,tasks-87230\",\"nodenumber\":\"2\",\"x\":656,\"y\":232}}";
-      String name = "sql_8877";
-      String processDefinitionJson =
-          "{\"globalParams\":[],\"tasks\":[{\"type\":\"SQL\",\"id\":\"tasks-49000\",\"name\":\"sql_test01\",\"params\":{\"type\":\"MYSQL\",\"datasource\":1,\"sql\":\"SELECT * from TABLE\",\"udfs\":\"\",\"sqlType\":\"0\",\"sendEmail\":false,\"displayRows\":10,\"limit\":10000,\"title\":\"\",\"receivers\":\"\",\"receiversCc\":\"\",\"showType\":\"TABLE\",\"localParams\":[],\"connParams\":\"\",\"preStatements\":[],\"postStatements\":[]},\"description\":\"\",\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\"runFlag\":\"NORMAL\",\"conditionResult\":{\"successNode\":[\"\"],\"failedNode\":[\"\"]},\"dependence\":{},\"maxRetryTimes\":\"0\",\"retryInterval\":\"1\",\"taskInstancePriority\":\"MEDIUM\",\"workerGroup\":\"default\",\"preTasks\":[]},{\"type\":\"SQL\",\"id\":\"tasks-87230\",\"name\":\"sql_test02\",\"params\":{\"type\":\"MYSQL\",\"datasource\":1,\"sql\":\"select * from TABLE\",\"udfs\":\"\",\"sqlType\":\"0\",\"sendEmail\":false,\"displayRows\":10,\"limit\":10000,\"title\":\"\",\"receivers\":\"\",\"receiversCc\":\"\",\"showType\":\"TABLE\",\"localParams\":[],\"connParams\":\"\",\"preStatements\":[],\"postStatements\":[]},\"description\":\"\",\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\"runFlag\":\"NORMAL\",\"conditionResult\":{\"successNode\":[\"\"],\"failedNode\":[\"\"]},\"dependence\":{},\"maxRetryTimes\":\"0\",\"retryInterval\":\"1\",\"taskInstancePriority\":\"MEDIUM\",\"workerGroup\":\"default\",\"preTasks\":[]},{\"type\":\"HTTP\",\"id\":\"tasks-42847\",\"name\":\"callback_01\",\"params\":{\"localParams\":[],\"httpParams\":[],\"url\":\"http://127.0.0.1/api/bid_info/bid_search/\",\"httpMethod\":\"GET\",\"httpCheckCondition\":\"STATUS_CODE_DEFAULT\",\"condition\":\"\",\"connectTimeout\":60000,\"socketTimeout\":60000},\"description\":\"\",\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\"runFlag\":\"NORMAL\",\"conditionResult\":{\"successNode\":[\"\"],\"failedNode\":[\"\"]},\"dependence\":{},\"maxRetryTimes\":\"0\",\"retryInterval\":\"1\",\"taskInstancePriority\":\"MEDIUM\",\"workerGroup\":\"default\",\"preTasks\":[\"sync_01\"]},{\"type\":\"HTTP\",\"id\":\"tasks-72883\",\"name\":\"callback_02\",\"params\":{\"localParams\":[],\"httpParams\":[],\"url\":\"http://127.0.0.1/api/bid_info/bid_search/\",\"httpMethod\":\"GET\",\"httpCheckCondition\":\"STATUS_CODE_DEFAULT\",\"condition\":\"\",\"connectTimeout\":60000,\"socketTimeout\":60000},\"description\":\"\",\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\"runFlag\":\"NORMAL\",\"conditionResult\":{\"successNode\":[\"\"],\"failedNode\":[\"\"]},\"dependence\":{},\"maxRetryTimes\":\"0\",\"retryInterval\":\"1\",\"taskInstancePriority\":\"MEDIUM\",\"workerGroup\":\"default\",\"preTasks\":[\"sync_01\"]},{\"type\":\"CONDITIONS\",\"id\":\"tasks-56268\",\"name\":\"sync_01\",\"params\":{},\"description\":\"\",\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\"runFlag\":\"NORMAL\",\"conditionResult\":{\"successNode\":[\"callback_01\"],\"failedNode\":[\"callback_02\"]},\"dependence\":{\"relation\":\"AND\",\"dependTaskList\":[{\"relation\":\"AND\",\"dependItemList\":[{\"depTasks\":\"sql_test01\",\"status\":\"SUCCESS\"}]},{\"relation\":\"AND\",\"dependItemList\":[{\"depTasks\":\"sql_test02\",\"status\":\"FAILURE\"}]}]},\"maxRetryTimes\":\"0\",\"retryInterval\":\"1\",\"taskInstancePriority\":\"MEDIUM\",\"workerGroup\":\"default\",\"preTasks\":[\"sql_test01\",\"sql_test02\"]}],\"tenantId\":2,\"timeout\":0}";
-      String projectName = "数据质量测试_wei";
+      String connects = "[]";
+      String locations = "{\"tasks-66666\":{\"name\":\"test_0002\",\"targetarr\":\"\",\"nodenumber\":\"0\",\"x\":344,\"y\":171}}";
+      String name = "test_sql_123666";
+      String processDefinitionJson = "{\"globalParams\":[],\n" +
+                  "\t\n" +
+                  "\t\"tasks\":[{\n" +
+                  "\t\t\"type\":\"SHELL\",\n" +
+                  "\t\t\"id\":\"tasks-66666\",\n" +
+                  "\t\t\"name\":\"test_0002\",\n" +
+                  "\t\t\"params\":\n" +
+                  "\t\t\t{\n" +
+                  "\t\t\t\"resourceList\":[{\"id\":4,\"name\":\"sql_temp_param.py\",\"res\":\"wei/sql_temp_param.py\"}],\n" +
+                  "\t\t\t\"localParams\":[],\n" +
+                  "\t\t\t\"rawScript\":\"/opt/soft/python3/bin/python3 wei/sql_temp_param.py '{\\n    \\\"from_host\\\":\\\"172.20.0.24\\\",\\n    \\\"from_user\\\":\\\"root\\\",\\n    \\\"from_password\\\":\\\"Zhudao123!\\\",\\n    \\\"from_database\\\":\\\"qkdam\\\",\\n    \\\"search_sql\\\":\\\"select count(1) from qk_dqc_rule_template\\\",\\n\\t\\\"to_host\\\":\\\"172.20.0.24\\\",\\n    \\\"to_user\\\":\\\"root\\\",\\n    \\\"to_password\\\":\\\"Zhudao123!\\\",\\n    \\\"to_database\\\":\\\"qkdam\\\",\\n\\t\\\"job_id\\\":\\\"job_id1\\\",\\n\\t\\\"job_name\\\":\\\"job_name1\\\",\\n\\t\\\"dir_id\\\":\\\"dir_id1\\\",\\n\\t\\\"rule_temp_id\\\":\\\"rule_temp_id1\\\"\\n}'\"\n" +
+                  "\t\t\t},\n" +
+                  "\t\t\"description\":\"\",\n" +
+                  "\t\t\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\n" +
+                  "\t\t\"runFlag\":\"NORMAL\",\n" +
+                  "\t\t\"conditionResult\":{\"successNode\":[\"\"],\"failedNode\":[\"\"]},\n" +
+                  "\t\t\"dependence\":{},\n" +
+                  "\t\t\"maxRetryTimes\":\"0\",\n" +
+                  "\t\t\"retryInterval\":\"1\",\n" +
+                  "\t\t\"taskInstancePriority\":\"MEDIUM\",\n" +
+                  "\t\t\"workerGroup\":\"default\",\n" +
+                  "\t\t\"preTasks\":[]}\n" +
+                  "\t],\n" +
+                  "\t\n" +
+                  "\t\"tenantId\":1,\"timeout\":0}";
+      String projectName = "数据质量_wei";
       String description = "";
 
-      //            String json = "";
-      //            String locations = "";
-      //
-      //            String projectName = "数据质量测试_wei";
-      //            String name = "dag_test";
-      //            String description = "desc test";
-      //            String connects = "";
-      defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(
-          connects, locations, name, processDefinitionJson, projectName, description);
+      defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
     } catch (ApiException e) {
       e.printStackTrace();
     }
