@@ -46,7 +46,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     }
 
     public static List<DqcRuleDirTreeVO> buildByRecursive(List<DqcRuleDirTreeVO> respList) {
-        DqcRuleDirTreeVO topParent = DqcRuleDirTreeVO.builder().id(-1).ruleDirId("-1").ruleDirName("全部规则").build();
+        DqcRuleDirTreeVO topParent = DqcRuleDirTreeVO.builder().key("-1").title("全部规则").value("全部规则").parentId("-1").build();
         List<DqcRuleDirTreeVO> trees = new ArrayList<>();
         trees.add(findChildren(topParent, respList));
 
@@ -62,7 +62,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     public static DqcRuleDirTreeVO findChildren(DqcRuleDirTreeVO treeNode, List<DqcRuleDirTreeVO> respList) {
         treeNode.setChildren(new ArrayList<>());
         for (DqcRuleDirTreeVO dqcRuleDirTreeVO : respList) {
-            if (treeNode.getRuleDirId().equals(dqcRuleDirTreeVO.getParentId())) {
+            if (treeNode.getKey().equals(dqcRuleDirTreeVO.getParentId())) {
                 if (treeNode.getChildren() == null) {
                     treeNode.setChildren(new ArrayList<>());
                 }
@@ -83,7 +83,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         Predicate predicate = qDqcRuleDir.ruleDirName.eq(dqcRuleDir.getRuleDirName());
         boolean exists = dqcRuleDirRepository.exists(predicate);
         if (exists) {
-            throw new BizException("当前要新增的规则分类目录名称为:" + dqcRuleDirVO.getRuleDirName() + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的规则分类目录名称为:" + dqcRuleDirVO.getTitle() + " 的数据，已存在！！！");
         }
         dqcRuleDirRepository.save(dqcRuleDir);
     }
@@ -92,11 +92,11 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     public void update(DqcRuleDirVO dqcRuleDirVO) {
         DqcRuleDir dqcRuleDir = DqcRuleDirTreeMapper.INSTANCE.useDqcRuleDir(dqcRuleDirVO);
         dqcRuleDir.setGmtModified(new Date());
-        Predicate predicate = qDqcRuleDir.ruleDirId.eq(dqcRuleDirVO.getRuleDirId());
+        Predicate predicate = qDqcRuleDir.ruleDirId.eq(dqcRuleDirVO.getKey());
         final Optional<DqcRuleDir> dsdDirOptional = dqcRuleDirRepository.findOne(predicate);
         if (dsdDirOptional.isPresent()) {
             String ruleDirId = dsdDirOptional.get().getRuleDirId();
-            if (ruleDirId.equals(dqcRuleDirVO.getRuleDirId())) {
+            if (ruleDirId.equals(dqcRuleDirVO.getKey())) {
                 throw new BizException("当前要编辑的规则分类目录名称为:" + dqcRuleDir.getRuleDirName() + ", 的数据，已存在！！！");
             }
             dqcRuleDirRepository.saveAndFlush(dqcRuleDir);

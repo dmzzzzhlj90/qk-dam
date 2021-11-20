@@ -20,11 +20,11 @@ import java.util.List;
 @Builder
 public class DqcRuleDirTreeVO {
 
-  private Integer id;
+  private String key;
 
-  private String ruleDirId;
+  private String title;
 
-  private String ruleDirName;
+  private String value;
 
   private String parentId;
 
