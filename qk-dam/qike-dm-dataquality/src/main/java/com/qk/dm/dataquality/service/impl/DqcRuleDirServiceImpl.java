@@ -46,7 +46,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     }
 
     public static List<DqcRuleDirTreeVO> buildByRecursive(List<DqcRuleDirTreeVO> respList) {
-        DqcRuleDirTreeVO topParent = DqcRuleDirTreeVO.builder().key("-1").title("全部规则").value("全部规则").parentId("-1").build();
+        DqcRuleDirTreeVO topParent = DqcRuleDirTreeVO.builder().dirId("-1").key("全部规则").title("全部规则").value("全部规则").parentId("-1").build();
         List<DqcRuleDirTreeVO> trees = new ArrayList<>();
         trees.add(findChildren(topParent, respList));
 
@@ -62,7 +62,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     public static DqcRuleDirTreeVO findChildren(DqcRuleDirTreeVO treeNode, List<DqcRuleDirTreeVO> respList) {
         treeNode.setChildren(new ArrayList<>());
         for (DqcRuleDirTreeVO dqcRuleDirTreeVO : respList) {
-            if (treeNode.getKey().equals(dqcRuleDirTreeVO.getParentId())) {
+            if (treeNode.getDirId().equals(dqcRuleDirTreeVO.getParentId())) {
                 if (treeNode.getChildren() == null) {
                     treeNode.setChildren(new ArrayList<>());
                 }

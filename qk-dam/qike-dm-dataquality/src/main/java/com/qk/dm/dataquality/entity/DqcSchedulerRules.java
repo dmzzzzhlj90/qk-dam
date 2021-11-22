@@ -34,10 +34,10 @@ public class DqcSchedulerRules implements Serializable {
     private Long ruleTempId;
 
     /**
-     * 规则类型 1-库级 2-表级 3-字段级
+     * 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则";
      */
     @Column(name = "rule_type", nullable = false)
-    private Integer ruleType;
+    private String ruleType;
 
     /**
      * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔

@@ -32,12 +32,22 @@ public class DqcRuleDirVO {
     /**
      * 规则分类目录ID
      */
+    private String dirId;
+
+    /**
+     * 规则分类目录key
+     */
     private String key;
 
     /**
-     * 规则分类目录名称
+     * 规则分类目录名称 title
      */
     private String title;
+
+    /**
+     * 规则分类目录名称 value
+     */
+    private String value;
 
     /**
      * 父级id

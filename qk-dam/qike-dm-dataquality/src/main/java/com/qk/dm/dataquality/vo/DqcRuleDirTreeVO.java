@@ -20,6 +20,8 @@ import java.util.List;
 @Builder
 public class DqcRuleDirTreeVO {
 
+  private String dirId;
+
   private String key;
 
   private String title;

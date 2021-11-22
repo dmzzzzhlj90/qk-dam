@@ -21,7 +21,8 @@ public interface DqcRuleDirTreeMapper {
   DqcRuleDirTreeMapper INSTANCE = Mappers.getMapper(DqcRuleDirTreeMapper.class);
 
   @Mappings({
-          @Mapping(source = "ruleDirId", target = "key"),
+          @Mapping(source = "ruleDirId", target = "dirId"),
+          @Mapping(source = "ruleDirName", target = "key"),
           @Mapping(source = "ruleDirName", target = "title"),
           @Mapping(source = "ruleDirName", target = "value"),
           @Mapping(source = "parentId", target = "parentId")
@@ -29,7 +30,7 @@ public interface DqcRuleDirTreeMapper {
   DqcRuleDirTreeVO useDqcRuleDirTreeVO(DqcRuleDir dqcRuleDir);
 
   @Mappings({
-          @Mapping(source = "key", target = "ruleDirId"),
+          @Mapping(source = "dirId", target = "ruleDirId"),
           @Mapping(source = "title", target = "ruleDirName"),
           @Mapping(source = "parentId", target = "parentId")
   })
