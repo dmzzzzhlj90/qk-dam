@@ -101,8 +101,8 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   private void saveModelPhysical(ModelPhysicalDTO modelPhysicalDTO,
       ModelPhysicalTable modelPhysicalTable) {
-    //状态判断是否为发布操作，如果是判断元数据中是否存在该表数据，如果不是则不用管
-    if (modelPhysicalTable.getStatus()==1){
+    //状态判断是否为发布操作,判断元数据中是否存在该表数据，如果不是则不用管
+    if (modelPhysicalTable.getStatus()==ModelStatus.PUBLISH){
       List<MtdTables> tables = getTables(modelPhysicalTable.getTableName(),modelPhysicalTable.getDatabaseName());
       if (CollectionUtils.isEmpty(tables)){
         String sql = deleteModelPhysical(modelPhysicalDTO, modelPhysicalTable);
@@ -438,7 +438,7 @@ public class PhysicalServiceImpl implements PhysicalService {
           if (modelPhysical!=null){
             List<MtdTables> tables = getTables(modelPhysical.getTableName(),modelPhysical.getDatabaseName());
             if (CollectionUtils.isNotEmpty(tables)){
-             //判断存在的表种是否存在数据，如果存返回消息提示显现，如果不存在，发布修改表任务
+             //判断存在的表是否存在且是否存在数据，如果存在且没有数据就发布删除、新建任务，如果不存在就发布新建任务
 
 
             }else{
@@ -447,7 +447,7 @@ public class PhysicalServiceImpl implements PhysicalService {
               //调用任务创建表
             }
           }else{
-            throw new BizException("当前需要同步的表id为"+id+"不存在");
+            throw new BizException("当前需要同步的表id为"+id+"的表不存在");
           }
         }
     );
@@ -692,6 +692,28 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @param modelPhysicalTable
    */
   private void updateModelPhysical(ModelPhysicalDTO modelPhysicalDTO,ModelPhysicalTable modelPhysicalTable) {
+    //判断修改之后点击的是保存还是发布状态
+      if (modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)){
+        List<MtdTables> tables = getTables(modelPhysicalTable.getTableName(),modelPhysicalTable.getDatabaseName());
+        if (CollectionUtils.isNotEmpty(tables)){
+          String sql = deleteUpdateModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+          //如果之前存在表并且表中没有数据发布删除任务、创建任务，如果存在表且存在数据发布报错信息
+        }else{
+          throw new BizException("修改发布失败，该表不存在");
+        }
+      }else{
+        deleteModelPhysical(modelPhysicalDTO,modelPhysicalTable);
+      }
+  }
+
+  /**
+   * 创建修改关系建模信息方法
+   * @param modelPhysicalDTO
+   * @param modelPhysicalTable
+   * @return
+   */
+  private String deleteUpdateModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
+    String sqls = null;
     //1修改基础信息
     modelPhysicalTableRepository.saveAndFlush(modelPhysicalTable);
     //2修改字段配置
@@ -726,6 +748,9 @@ public class PhysicalServiceImpl implements PhysicalService {
       modelSql.setDelFlag(1);
       modelSqlRepository.saveAndFlush(modelSql);
     }
-    createSql(modelPhysicalTable,columnList,modelPhysicalTable.getId());
+    //生成表的修改语句（等待调整）
+    sqls = createSql(modelPhysicalTable,columnList,modelPhysicalTable.getId());
+
+    return sqls;
   }
 }

@@ -6,4 +6,5 @@ package com.qk.dam.model.constant;
 public class ModelStatus {
     public static final int PUBLISH = 1; //已发布
     public static final int OFFLINE = 2;//已下线
+    public static final int DRAFT=0;//草稿
 }
