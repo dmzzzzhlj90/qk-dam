@@ -1,10 +1,10 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: metadata-service-v1
-  namespace: backend
+  name: dgc-deploy
+  namespace: java-backend
   labels:
-    app: metadata-service
+    app: dgc-deploy
     version: v1
   annotations:
     deployment.kubernetes.io/revision: '1'
@@ -12,20 +12,20 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: metadata-service
+      app: dgc-deploy
       version: v1
   template:
     metadata:
       labels:
-        app: metadata-service
+        app: dgc-deploy
         version: v1
     spec:
       containers:
-        - name: $BUILD_NUMBER-metadata$BRANCH_NAME
+        - name: $BUILD_NUMBER-dgc$BRANCH_NAME
           image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER
           ports:
-            - name: tcp-8782
-              containerPort: 8782
+            - name: tcp-8789
+              containerPort: 8789
               protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
