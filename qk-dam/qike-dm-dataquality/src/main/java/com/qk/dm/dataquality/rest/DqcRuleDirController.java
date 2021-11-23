@@ -85,7 +85,7 @@ public class DqcRuleDirController {
      * @param id
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/root/{id}")
+    @DeleteMapping("/{id}")
 //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
     public DefaultCommonResult delete(@PathVariable("id") String id) {
         dqcRuleDirService.delete(id);
@@ -98,9 +98,9 @@ public class DqcRuleDirController {
      * @param ids
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/root/{ids}")
+    @DeleteMapping("/bulk")
 //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+    public DefaultCommonResult deleteBulk(@RequestParam("ids") String ids) {
         dqcRuleDirService.deleteBulk(ids);
         return DefaultCommonResult.success();
     }
