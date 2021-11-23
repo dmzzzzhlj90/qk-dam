@@ -104,25 +104,26 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         }
     }
 
-    @Override
-    public void deleteOne(Long delId) {
-        Optional<DqcRuleDir> dirOptional = dqcRuleDirRepository.findById(delId);
-        if (!dirOptional.isPresent()) {
-            throw new BizException("参数有误,当前要删除的节点不存在！！！");
-        }
+//    @Override
+//    public void deleteOne(Long delId) {
+//        Optional<DqcRuleDir> dirOptional = dqcRuleDirRepository.findById(delId);
+//        if (!dirOptional.isPresent()) {
+//            throw new BizException("参数有误,当前要删除的节点不存在！！！");
+//        }
+//
+//        Predicate predicate = qDqcRuleDir.parentId.eq(dirOptional.get().getRuleDirId());
+//        long count = dqcRuleDirRepository.count(predicate);
+//        if (count > 0) {
+//            throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
+//        } else {
+//            dqcRuleDirRepository.deleteById(delId);
+//        }
+//    }
 
-        Predicate predicate = qDqcRuleDir.parentId.eq(dirOptional.get().getRuleDirId());
-        long count = dqcRuleDirRepository.count(predicate);
-        if (count > 0) {
-            throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
-        } else {
-            dqcRuleDirRepository.deleteById(delId);
-        }
-    }
-
     @Override
-    public void deleteBulk(Long delId) {
+    public void delete(String id) {
         ArrayList<Long> ids = new ArrayList<>();
+        Long delId = Long.valueOf(id);
         // 删除父级ID
         Optional<DqcRuleDir> dsdDirIsExist = dqcRuleDirRepository.findOne(qDqcRuleDir.id.eq(delId));
         if (!dsdDirIsExist.isPresent()) {
@@ -133,6 +134,16 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         // 批量删除
         Iterable<DqcRuleDir> delDirList = dqcRuleDirRepository.findAll(qDqcRuleDir.id.in(ids));
         dqcRuleDirRepository.deleteAll(delDirList);
+    }
+
+    @Override
+    public void deleteBulk(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id)));
+        List<DqcRuleDir> dqcRuleDirList = dqcRuleDirRepository.findAllById(idSet);
+        dqcRuleDirRepository.deleteAll(dqcRuleDirList);
+
     }
 
     /**

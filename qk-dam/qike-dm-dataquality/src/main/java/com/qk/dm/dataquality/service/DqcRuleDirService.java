@@ -22,8 +22,10 @@ public interface DqcRuleDirService {
 
     void update(DqcRuleDirVO dqcRuleDirVO);
 
-    void deleteOne(Long delId);
+//    void deleteOne(Long delId);
 
-    void deleteBulk(Long delId);
+    void delete(String id);
+
+    void deleteBulk(String ids);
 
 }
