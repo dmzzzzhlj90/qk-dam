@@ -20,14 +20,17 @@ import java.util.List;
 @Builder
 public class DqcRuleDirTreeVO {
 
-  private String dirId;
 
-  private String title;
+    private Long id;
 
-  private String value;
+    private String dirId;
 
-  private String parentId;
+    private String title;
 
-  private List<DqcRuleDirTreeVO> children;
+    private String value;
+
+    private String parentId;
+
+    private List<DqcRuleDirTreeVO> children;
 
 }
