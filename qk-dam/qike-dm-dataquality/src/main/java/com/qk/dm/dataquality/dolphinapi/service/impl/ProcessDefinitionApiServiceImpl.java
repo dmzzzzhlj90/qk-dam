@@ -8,7 +8,7 @@ import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
-import com.qk.dm.dataquality.dolphinapi.manager.ResourceFiLeManager;
+import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import org.apache.dolphinscheduler.dao.entity.ProcessData;
@@ -35,7 +35,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public void save(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
         try {
             //获取DolphinScheduler 资源信息
-            Resource mySqlScriptResource = ResourceFiLeManager.queryMySqlScriptResource(defaultApi);
+            Resource mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
 
             //获取DolphinScheduler 资源信息
 //            Resource mySqlScriptResource = ResourceFiLeManager.queryMySqlScriptResource();
@@ -80,9 +80,9 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                     "\t\"tenantId\":1,\"timeout\":0}";
             String projectName = "数据质量_wei";
             String description = "";
-
-            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
-        } catch (ApiException e) {
+//
+//            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

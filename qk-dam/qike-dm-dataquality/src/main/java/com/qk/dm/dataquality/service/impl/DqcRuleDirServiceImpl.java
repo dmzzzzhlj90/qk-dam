@@ -46,7 +46,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     }
 
     public static List<DqcRuleDirTreeVO> buildByRecursive(List<DqcRuleDirTreeVO> respList) {
-        DqcRuleDirTreeVO topParent = DqcRuleDirTreeVO.builder().dirId("-1").key("全部规则").title("全部规则").value("全部规则").parentId("-1").build();
+        DqcRuleDirTreeVO topParent = DqcRuleDirTreeVO.builder().dirId("-1").title("全部规则").value("全部规则").parentId("-1").build();
         List<DqcRuleDirTreeVO> trees = new ArrayList<>();
         trees.add(findChildren(topParent, respList));
 
@@ -80,10 +80,10 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         dqcRuleDir.setRuleDirId(UUID.randomUUID().toString().replaceAll("-", ""));
         dqcRuleDir.setDelFlag(0);
 
-        Predicate predicate = qDqcRuleDir.ruleDirName.eq(dqcRuleDir.getRuleDirName());
+        Predicate predicate = qDqcRuleDir.ruleDirName.eq(dqcRuleDirVO.getTitle()).and(qDqcRuleDir.parentId.eq(dqcRuleDirVO.getParentId()));
         boolean exists = dqcRuleDirRepository.exists(predicate);
         if (exists) {
-            throw new BizException("当前要新增的规则分类目录名称为:" + dqcRuleDirVO.getTitle() + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的规则分类目录名称为:" + dqcRuleDirVO.getTitle() + " 的数据，在本层级下已存在！！！");
         }
         dqcRuleDirRepository.save(dqcRuleDir);
     }
@@ -92,18 +92,15 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     public void update(DqcRuleDirVO dqcRuleDirVO) {
         DqcRuleDir dqcRuleDir = DqcRuleDirTreeMapper.INSTANCE.useDqcRuleDir(dqcRuleDirVO);
         dqcRuleDir.setGmtModified(new Date());
-        Predicate predicate = qDqcRuleDir.ruleDirId.eq(dqcRuleDirVO.getKey());
-        final Optional<DqcRuleDir> dsdDirOptional = dqcRuleDirRepository.findOne(predicate);
+        dqcRuleDir.setDelFlag(0);
+
+        Optional<DqcRuleDir> dsdDirOptional = dqcRuleDirRepository.findById(dqcRuleDirVO.getId());
         if (dsdDirOptional.isPresent()) {
-            String ruleDirId = dsdDirOptional.get().getRuleDirId();
-            if (ruleDirId.equals(dqcRuleDirVO.getKey())) {
-                throw new BizException("当前要编辑的规则分类目录名称为:" + dqcRuleDir.getRuleDirName() + ", 的数据，已存在！！！");
-            }
             dqcRuleDirRepository.saveAndFlush(dqcRuleDir);
             //TODO 修改目录后影响的列表信息
 //            dsdBasicinfoRepository.updateDirLevelByDirId(dsdDirVO.getDsdDirLevel(), dsdDirVO.getDirDsdId());
         } else {
-            throw new BizException("当前要编辑的规则分类目录名称为:" + dqcRuleDir.getRuleDirName() + " 的数据，不存在！！！");
+            throw new BizException("当前要编辑的规则分类目录名称为:" + dqcRuleDirVO.getTitle() + " 的数据，不存在！！！");
         }
     }
 
