@@ -1,5 +1,7 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
@@ -7,11 +9,13 @@ import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
+import com.qk.dm.dataquality.dolphinapi.builder.ProcessData;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
-import org.apache.dolphinscheduler.dao.entity.ProcessData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author wjq
@@ -32,7 +36,8 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
   public void save(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
     try {
       // 构建ProcessData对象
-      ProcessData processData = new ProcessData();
+      org.apache.dolphinscheduler.dao.entity.ProcessData processData =
+          new org.apache.dolphinscheduler.dao.entity.ProcessData();
       // 构建规则流程实例
 
       // 构建同步条件流程实例
@@ -41,43 +46,58 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
       // 创建工作流实例
       String connects = "[]";
-      String locations = "{\"tasks-66666\":{\"name\":\"test_0002\",\"targetarr\":\"\",\"nodenumber\":\"0\",\"x\":344,\"y\":171}}";
+      String locations =
+          "{\"tasks-66666\":{\"name\":\"test_0002\",\"targetarr\":\"\",\"nodenumber\":\"0\",\"x\":344,\"y\":171}}";
       String name = "test_sql_123666";
-      String processDefinitionJson = "{\"globalParams\":[],\n" +
-                  "\t\n" +
-                  "\t\"tasks\":[{\n" +
-                  "\t\t\"type\":\"SHELL\",\n" +
-                  "\t\t\"id\":\"tasks-66666\",\n" +
-                  "\t\t\"name\":\"test_0002\",\n" +
-                  "\t\t\"params\":\n" +
-                  "\t\t\t{\n" +
-                  "\t\t\t\"resourceList\":[{\"id\":4,\"name\":\"sql_temp_param.py\",\"res\":\"wei/sql_temp_param.py\"}],\n" +
-                  "\t\t\t\"localParams\":[],\n" +
-                  "\t\t\t\"rawScript\":\"/opt/soft/python3/bin/python3 wei/sql_temp_param.py '{\\n    \\\"from_host\\\":\\\"172.20.0.24\\\",\\n    \\\"from_user\\\":\\\"root\\\",\\n    \\\"from_password\\\":\\\"Zhudao123!\\\",\\n    \\\"from_database\\\":\\\"qkdam\\\",\\n    \\\"search_sql\\\":\\\"select count(1) from qk_dqc_rule_template\\\",\\n\\t\\\"to_host\\\":\\\"172.20.0.24\\\",\\n    \\\"to_user\\\":\\\"root\\\",\\n    \\\"to_password\\\":\\\"Zhudao123!\\\",\\n    \\\"to_database\\\":\\\"qkdam\\\",\\n\\t\\\"job_id\\\":\\\"job_id1\\\",\\n\\t\\\"job_name\\\":\\\"job_name1\\\",\\n\\t\\\"dir_id\\\":\\\"dir_id1\\\",\\n\\t\\\"rule_temp_id\\\":\\\"rule_temp_id1\\\"\\n}'\"\n" +
-                  "\t\t\t},\n" +
-                  "\t\t\"description\":\"\",\n" +
-                  "\t\t\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\n" +
-                  "\t\t\"runFlag\":\"NORMAL\",\n" +
-                  "\t\t\"conditionResult\":{\"successNode\":[\"\"],\"failedNode\":[\"\"]},\n" +
-                  "\t\t\"dependence\":{},\n" +
-                  "\t\t\"maxRetryTimes\":\"0\",\n" +
-                  "\t\t\"retryInterval\":\"1\",\n" +
-                  "\t\t\"taskInstancePriority\":\"MEDIUM\",\n" +
-                  "\t\t\"workerGroup\":\"default\",\n" +
-                  "\t\t\"preTasks\":[]}\n" +
-                  "\t],\n" +
-                  "\t\n" +
-                  "\t\"tenantId\":1,\"timeout\":0}";
+      String processDefinitionJson =
+          "{\"globalParams\":[],\n"
+              + "\t\n"
+              + "\t\"tasks\":[{\n"
+              + "\t\t\"type\":\"SHELL\",\n"
+              + "\t\t\"id\":\"tasks-66666\",\n"
+              + "\t\t\"name\":\"test_0002\",\n"
+              + "\t\t\"params\":\n"
+              + "\t\t\t{\n"
+              + "\t\t\t\"resourceList\":[{\"id\":4,\"name\":\"sql_temp_param.py\",\"res\":\"wei/sql_temp_param.py\"}],\n"
+              + "\t\t\t\"localParams\":[],\n"
+              + "\t\t\t\"rawScript\":\"/opt/soft/python3/bin/python3 wei/sql_temp_param.py '{\\n    \\\"from_host\\\":\\\"172.20.0.24\\\",\\n    \\\"from_user\\\":\\\"root\\\",\\n    \\\"from_password\\\":\\\"Zhudao123!\\\",\\n    \\\"from_database\\\":\\\"qkdam\\\",\\n    \\\"search_sql\\\":\\\"select count(1) from qk_dqc_rule_template\\\",\\n\\t\\\"to_host\\\":\\\"172.20.0.24\\\",\\n    \\\"to_user\\\":\\\"root\\\",\\n    \\\"to_password\\\":\\\"Zhudao123!\\\",\\n    \\\"to_database\\\":\\\"qkdam\\\",\\n\\t\\\"job_id\\\":\\\"job_id1\\\",\\n\\t\\\"job_name\\\":\\\"job_name1\\\",\\n\\t\\\"dir_id\\\":\\\"dir_id1\\\",\\n\\t\\\"rule_temp_id\\\":\\\"rule_temp_id1\\\"\\n}'\"\n"
+              + "\t\t\t},\n"
+              + "\t\t\"description\":\"\",\n"
+              + "\t\t\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\n"
+              + "\t\t\"runFlag\":\"NORMAL\",\n"
+              + "\t\t\"conditionResult\":{\"successNode\":[\"\"],\"failedNode\":[\"\"]},\n"
+              + "\t\t\"dependence\":{},\n"
+              + "\t\t\"maxRetryTimes\":\"0\",\n"
+              + "\t\t\"retryInterval\":\"1\",\n"
+              + "\t\t\"taskInstancePriority\":\"MEDIUM\",\n"
+              + "\t\t\"workerGroup\":\"default\",\n"
+              + "\t\t\"preTasks\":[]}\n"
+              + "\t],\n"
+              + "\t\n"
+              + "\t\"tenantId\":1,\"timeout\":0}";
       String projectName = "数据质量_wei";
       String description = "";
 
-      defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
+      defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(
+          connects, locations, name, processDefinitionJson, projectName, description);
     } catch (ApiException e) {
       e.printStackTrace();
     }
   }
 
   /****************************************************************************/
+
+  public List<ProcessData> list() {
+    try {
+      Result result = defaultApi.queryProcessDefinitionListUsingGET(DqcConstant.projectName);
+      DqcConstant.verification(result, "查询流程定义列表失败{}");
+      JSONArray objects = JSONArray.parseArray(JSONArray.toJSONString(result.getData()));
+      return (List<ProcessData>) JSON.toJavaObject(objects, ProcessData.class);
+    } catch (ApiException e) {
+      DqcConstant.printException(e);
+    }
+    return null;
+  }
 
   /**
    * 流程定义发布
@@ -115,6 +135,21 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
   }
 
   /**
+   * 验证流程定义名字
+   *
+   * @param name
+   */
+  @Override
+  public void verifyName(String name) {
+    try {
+      Result result = defaultApi.verifyProcessDefinitionNameUsingGET(name, DqcConstant.projectName);
+      DqcConstant.verification(result, "验证失败{}");
+    } catch (ApiException e) {
+      DqcConstant.printException(e);
+    }
+  }
+
+  /**
    * 复制流程
    *
    * @param processDefinitionId
@@ -132,7 +167,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
   }
 
   /**
-   * 实例-检查流程--测试失败
+   * 实例-检查流程
    *
    * @param processDefinitionId
    */
@@ -174,25 +209,6 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
               null,
               "default");
       DqcConstant.verification(result, "运行失败{}");
-    } catch (ApiException e) {
-      DqcConstant.printException(e);
-    }
-  }
-
-  /**
-   * 实例-操作
-   *
-   * @param processInstanceId
-   * @param executeType
-   */
-  @Override
-  public void execute(Integer processInstanceId, String executeType) {
-    executeType = "REPEAT_RUNNING";
-    try {
-      Result result =
-          defaultApi.executeUsingPOST(
-              executeType, DqcConstant.processInstanceId, DqcConstant.projectName);
-      DqcConstant.verification(result, "执行流程实例操作失败{}");
     } catch (ApiException e) {
       DqcConstant.printException(e);
     }

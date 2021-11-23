@@ -14,9 +14,9 @@ import java.util.*;
  * @since 1.0.0
  */
 public class DqcConstant {
+  public static final String format = "yyyy-MM-dd HH:mm:ss";
   /** 目录顶级层级父级id */
   public static final String TREE_DIR_TOP_PARENT_ID = "-1";
-
   /** 调度执行方式 1-手动执行 2-调度执行 */
   public static final Integer RUN_TYPE = 2;
   /** 规则模版状态-默认引擎类型 */
@@ -33,7 +33,7 @@ public class DqcConstant {
   /** 临时使用 */
   public static final String projectName = "数据质量";
 
-  public static final Integer scheduleId = 7;
+  public static final Integer scheduleId = 1;
   public static final Integer processDefinitionId = 4;
   public static final Integer processInstanceId = 1304;
 

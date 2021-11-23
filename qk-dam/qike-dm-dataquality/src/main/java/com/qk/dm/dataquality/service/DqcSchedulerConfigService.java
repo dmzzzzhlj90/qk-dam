@@ -23,8 +23,10 @@ public interface DqcSchedulerConfigService {
 
     void update(DqcSchedulerConfigVO dqcSchedulerConfigVO);
 
-    void deleteOne(String taskId);
+    void deleteOne(String jobId);
 
     void deleteBulk(List<String> taskIds);
+
+    DqcSchedulerConfigVO detail(String jobId);
 
 }

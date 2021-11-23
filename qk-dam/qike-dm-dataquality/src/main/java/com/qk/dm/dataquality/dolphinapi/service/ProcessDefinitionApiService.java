@@ -19,11 +19,11 @@ public interface ProcessDefinitionApiService {
 
   void deleteOne(Integer processDefinitionId);
 
+  void verifyName(String name);
+
   void copy(Integer processDefinitionId);
 
   void startCheck(Integer processDefinitionId);
 
   void startInstance(Integer processDefinitionId);
-
-  void execute(Integer processInstanceId,String executeType);
 }

@@ -62,4 +62,10 @@ public class ProcessDefinitionApiController {
         return DefaultCommonResult.success();
     }
 
+    @GetMapping("/verifyName")
+    public DefaultCommonResult verifyName() {
+        processDefinitionApiService.verifyName("test");
+        return DefaultCommonResult.success();
+    }
+
 }
