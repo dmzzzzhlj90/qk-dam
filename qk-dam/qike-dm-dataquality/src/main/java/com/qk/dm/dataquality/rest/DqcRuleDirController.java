@@ -66,29 +66,42 @@ public class DqcRuleDirController {
         return DefaultCommonResult.success();
     }
 
-    /**
-     * 规则分类目录单子节点删除方式
-     *
-     * @param id
-     * @return DefaultCommonResult
-     */
-    @DeleteMapping("/{id}")
-//  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteOne(@PathVariable("id") String id) {
-        dqcRuleDirService.deleteOne(Long.parseLong(id));
-        return DefaultCommonResult.success();
-    }
+//    /**
+//     * 规则分类目录单子节点删除方式
+//     *
+//     * @param id
+//     * @return DefaultCommonResult
+//     */
+//    @DeleteMapping("/{id}")
+////  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+//    public DefaultCommonResult deleteOne(@PathVariable("id") String id) {
+//        dqcRuleDirService.deleteOne(Long.parseLong(id));
+//        return DefaultCommonResult.success();
+//    }
 
     /**
-     * 规则分类目录批量删除方式
+     * 规则分类目录单子节点级联删除方式
      *
      * @param id
      * @return DefaultCommonResult
      */
     @DeleteMapping("/root/{id}")
 //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@PathVariable("id") String id) {
-        dqcRuleDirService.deleteBulk(Long.parseLong(id));
+    public DefaultCommonResult delete(@PathVariable("id") String id) {
+        dqcRuleDirService.delete(id);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 规则分类目录单子节点级联删除方式
+     *
+     * @param ids
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("/root/{ids}")
+//  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+    public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+        dqcRuleDirService.deleteBulk(ids);
         return DefaultCommonResult.success();
     }
 }
