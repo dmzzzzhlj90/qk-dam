@@ -22,9 +22,8 @@ public interface DqcRuleDirTreeMapper {
 
   @Mappings({
           @Mapping(source = "ruleDirId", target = "dirId"),
-          @Mapping(source = "ruleDirName", target = "key"),
           @Mapping(source = "ruleDirName", target = "title"),
-          @Mapping(source = "ruleDirName", target = "value"),
+          @Mapping(source = "ruleDirId", target = "value"),
           @Mapping(source = "parentId", target = "parentId")
   })
   DqcRuleDirTreeVO useDqcRuleDirTreeVO(DqcRuleDir dqcRuleDir);

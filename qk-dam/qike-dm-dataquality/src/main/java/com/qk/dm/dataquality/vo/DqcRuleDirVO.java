@@ -35,11 +35,6 @@ public class DqcRuleDirVO {
     private String dirId;
 
     /**
-     * 规则分类目录key
-     */
-    private String key;
-
-    /**
      * 规则分类目录名称 title
      */
     private String title;
