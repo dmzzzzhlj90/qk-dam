@@ -21,6 +21,7 @@ public interface DqcRuleDirTreeMapper {
   DqcRuleDirTreeMapper INSTANCE = Mappers.getMapper(DqcRuleDirTreeMapper.class);
 
   @Mappings({
+          @Mapping(source = "id", target = "id"),
           @Mapping(source = "ruleDirId", target = "dirId"),
           @Mapping(source = "ruleDirName", target = "title"),
           @Mapping(source = "ruleDirId", target = "value"),
