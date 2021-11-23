@@ -1,7 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      label 'mypod'
+      label 'openjdk11'
       yaml '''apiVersion: v1
 kind: Pod
 spec:
@@ -15,7 +15,7 @@ spec:
         path: /usr/bin/docker
         type: \'\'
   containers:
-   - name: mypod
+   - name: openjdk11
      image: "172.21.32.2:8079/openjdk/openjdk:11-slim-buster"
      volumeMounts:
       - name: dockers
@@ -26,7 +26,7 @@ spec:
         - cat
      imagePullPolicy: IfNotPresent
      tty: true'''
-      defaultContainer 'mypod'
+      defaultContainer 'openjdk11'
     }
 
   }
@@ -43,7 +43,7 @@ ls'''
     stage('code compile') {
       agent none
       steps {
-        container('mypod') {
+        container('openjdk11') {
           sh 'sh gradlew $PROJECT_NAME:dockerCreateDockerfile -PdamProfilesActive=$BRANCH_NAME -x test'
           archiveArtifacts '**/build/docker/*'
         }
@@ -54,7 +54,7 @@ ls'''
     stage('docker build & push') {
       agent none
       steps {
-        container('mypod') {
+        container('openjdk11') {
           sh '''find ./ -regex ".*$PROJECT_NAME/build/docker"
 cd $(find ./ -regex ".*$PROJECT_NAME/build/docker")
 pwd

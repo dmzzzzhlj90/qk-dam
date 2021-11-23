@@ -9,9 +9,12 @@ import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
-import com.qk.dm.dataquality.dolphinapi.builder.ProcessData;
+import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
+import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
+import org.apache.dolphinscheduler.dao.entity.ProcessData;
+import org.apache.dolphinscheduler.dao.entity.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +38,16 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
   @Override
   public void save(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
     try {
+      // 获取DolphinScheduler 资源信息
+      Resource mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
+
+      // 获取DolphinScheduler 资源信息
+      //            Resource mySqlScriptResource = ResourceFiLeManager.queryMySqlScriptResource();
+
       // 构建ProcessData对象
-      org.apache.dolphinscheduler.dao.entity.ProcessData processData =
-          new org.apache.dolphinscheduler.dao.entity.ProcessData();
+      ProcessDataBuilder processDataBuilder =
+          ProcessDataBuilder.builder().build().info(dqcSchedulerInfoVO, mySqlScriptResource);
+      ProcessData processData = processDataBuilder.getProcessData();
       // 构建规则流程实例
 
       // 构建同步条件流程实例
@@ -77,10 +87,10 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
               + "\t\"tenantId\":1,\"timeout\":0}";
       String projectName = "数据质量_wei";
       String description = "";
-
-      defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(
-          connects, locations, name, processDefinitionJson, projectName, description);
-    } catch (ApiException e) {
+      //
+      //            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations,
+      // name, processDefinitionJson, projectName, description);
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }

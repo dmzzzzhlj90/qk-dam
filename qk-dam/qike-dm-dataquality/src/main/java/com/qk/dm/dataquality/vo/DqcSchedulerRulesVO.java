@@ -70,9 +70,9 @@ public class DqcSchedulerRulesVO {
     private String fieldName;
 
     /**
-     * 扫描范围 0-全表 1-条件
+     * 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则";
      */
-    private Integer scanType;
+    private String scanType;
 
     /**
      * 扫描条件SQL

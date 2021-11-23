@@ -46,7 +46,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     }
 
     public static List<DqcRuleDirTreeVO> buildByRecursive(List<DqcRuleDirTreeVO> respList) {
-        DqcRuleDirTreeVO topParent = DqcRuleDirTreeVO.builder().key("-1").title("全部规则").value("全部规则").parentId("-1").build();
+        DqcRuleDirTreeVO topParent = DqcRuleDirTreeVO.builder().dirId("-1").title("全部规则").value("全部规则").parentId("-1").build();
         List<DqcRuleDirTreeVO> trees = new ArrayList<>();
         trees.add(findChildren(topParent, respList));
 
@@ -62,7 +62,7 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     public static DqcRuleDirTreeVO findChildren(DqcRuleDirTreeVO treeNode, List<DqcRuleDirTreeVO> respList) {
         treeNode.setChildren(new ArrayList<>());
         for (DqcRuleDirTreeVO dqcRuleDirTreeVO : respList) {
-            if (treeNode.getKey().equals(dqcRuleDirTreeVO.getParentId())) {
+            if (treeNode.getDirId().equals(dqcRuleDirTreeVO.getParentId())) {
                 if (treeNode.getChildren() == null) {
                     treeNode.setChildren(new ArrayList<>());
                 }
@@ -80,10 +80,10 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         dqcRuleDir.setRuleDirId(UUID.randomUUID().toString().replaceAll("-", ""));
         dqcRuleDir.setDelFlag(0);
 
-        Predicate predicate = qDqcRuleDir.ruleDirName.eq(dqcRuleDir.getRuleDirName());
+        Predicate predicate = qDqcRuleDir.ruleDirName.eq(dqcRuleDirVO.getTitle()).and(qDqcRuleDir.parentId.eq(dqcRuleDirVO.getParentId()));
         boolean exists = dqcRuleDirRepository.exists(predicate);
         if (exists) {
-            throw new BizException("当前要新增的规则分类目录名称为:" + dqcRuleDirVO.getTitle() + " 的数据，已存在！！！");
+            throw new BizException("当前要新增的规则分类目录名称为:" + dqcRuleDirVO.getTitle() + " 的数据，在本层级下已存在！！！");
         }
         dqcRuleDirRepository.save(dqcRuleDir);
     }
@@ -92,40 +92,38 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
     public void update(DqcRuleDirVO dqcRuleDirVO) {
         DqcRuleDir dqcRuleDir = DqcRuleDirTreeMapper.INSTANCE.useDqcRuleDir(dqcRuleDirVO);
         dqcRuleDir.setGmtModified(new Date());
-        Predicate predicate = qDqcRuleDir.ruleDirId.eq(dqcRuleDirVO.getKey());
-        final Optional<DqcRuleDir> dsdDirOptional = dqcRuleDirRepository.findOne(predicate);
+        dqcRuleDir.setDelFlag(0);
+
+        Optional<DqcRuleDir> dsdDirOptional = dqcRuleDirRepository.findById(dqcRuleDirVO.getId());
         if (dsdDirOptional.isPresent()) {
-            String ruleDirId = dsdDirOptional.get().getRuleDirId();
-            if (ruleDirId.equals(dqcRuleDirVO.getKey())) {
-                throw new BizException("当前要编辑的规则分类目录名称为:" + dqcRuleDir.getRuleDirName() + ", 的数据，已存在！！！");
-            }
             dqcRuleDirRepository.saveAndFlush(dqcRuleDir);
             //TODO 修改目录后影响的列表信息
 //            dsdBasicinfoRepository.updateDirLevelByDirId(dsdDirVO.getDsdDirLevel(), dsdDirVO.getDirDsdId());
         } else {
-            throw new BizException("当前要编辑的规则分类目录名称为:" + dqcRuleDir.getRuleDirName() + " 的数据，不存在！！！");
+            throw new BizException("当前要编辑的规则分类目录名称为:" + dqcRuleDirVO.getTitle() + " 的数据，不存在！！！");
         }
     }
 
-    @Override
-    public void deleteOne(Long delId) {
-        Optional<DqcRuleDir> dirOptional = dqcRuleDirRepository.findById(delId);
-        if (!dirOptional.isPresent()) {
-            throw new BizException("参数有误,当前要删除的节点不存在！！！");
-        }
+//    @Override
+//    public void deleteOne(Long delId) {
+//        Optional<DqcRuleDir> dirOptional = dqcRuleDirRepository.findById(delId);
+//        if (!dirOptional.isPresent()) {
+//            throw new BizException("参数有误,当前要删除的节点不存在！！！");
+//        }
+//
+//        Predicate predicate = qDqcRuleDir.parentId.eq(dirOptional.get().getRuleDirId());
+//        long count = dqcRuleDirRepository.count(predicate);
+//        if (count > 0) {
+//            throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
+//        } else {
+//            dqcRuleDirRepository.deleteById(delId);
+//        }
+//    }
 
-        Predicate predicate = qDqcRuleDir.parentId.eq(dirOptional.get().getRuleDirId());
-        long count = dqcRuleDirRepository.count(predicate);
-        if (count > 0) {
-            throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
-        } else {
-            dqcRuleDirRepository.deleteById(delId);
-        }
-    }
-
     @Override
-    public void deleteBulk(Long delId) {
+    public void delete(String id) {
         ArrayList<Long> ids = new ArrayList<>();
+        Long delId = Long.valueOf(id);
         // 删除父级ID
         Optional<DqcRuleDir> dsdDirIsExist = dqcRuleDirRepository.findOne(qDqcRuleDir.id.eq(delId));
         if (!dsdDirIsExist.isPresent()) {
@@ -136,6 +134,16 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         // 批量删除
         Iterable<DqcRuleDir> delDirList = dqcRuleDirRepository.findAll(qDqcRuleDir.id.in(ids));
         dqcRuleDirRepository.deleteAll(delDirList);
+    }
+
+    @Override
+    public void deleteBulk(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id)));
+        List<DqcRuleDir> dqcRuleDirList = dqcRuleDirRepository.findAllById(idSet);
+        dqcRuleDirRepository.deleteAll(dqcRuleDirList);
+
     }
 
     /**
