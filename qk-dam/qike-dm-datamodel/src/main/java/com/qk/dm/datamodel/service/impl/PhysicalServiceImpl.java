@@ -105,18 +105,18 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (modelPhysicalTable.getStatus()==ModelStatus.PUBLISH){
       List<MtdTables> tables = getTables(modelPhysicalTable.getTableName(),modelPhysicalTable.getDatabaseName());
       if (CollectionUtils.isEmpty(tables)){
-        String sql = deleteModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+        String sql = dataModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+        //todo(需要完善)
         //调用调度任务创建表
-
       }else{
         throw new BizException("发布失败，该表已经存在");
       }
     }else{
-      deleteModelPhysical(modelPhysicalDTO,modelPhysicalTable);
+      dataModelPhysical(modelPhysicalDTO,modelPhysicalTable);
     }
   }
 
-  private String deleteModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
+  private String dataModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
     String sqls = null;
     //1存储基本信息
     ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTableRepository.save(modelPhysicalTable);
@@ -415,6 +415,7 @@ public class PhysicalServiceImpl implements PhysicalService {
           if (CollectionUtils.isNotEmpty(tables)){
             throw  new BizException("当前表名为"+modelPhysical.getTableName()+"已经创建");
           }else{
+            //todo(需要完善)
             //获取建表sql
             //调用任务创建表
           }
@@ -438,8 +439,8 @@ public class PhysicalServiceImpl implements PhysicalService {
           if (modelPhysical!=null){
             List<MtdTables> tables = getTables(modelPhysical.getTableName(),modelPhysical.getDatabaseName());
             if (CollectionUtils.isNotEmpty(tables)){
+              //todo(需要完善)
              //判断存在的表是否存在且是否存在数据，如果存在且没有数据就发布删除、新建任务，如果不存在就发布新建任务
-
 
             }else{
               //获取建表sql
@@ -451,6 +452,157 @@ public class PhysicalServiceImpl implements PhysicalService {
           }
         }
     );
+  }
+
+  /**
+   * 逆向数据库
+   * @param modelReverseBaseDTO
+   */
+  @Override
+  public void reverseBase(ModelReverseBaseDTO modelReverseBaseDTO) {
+    modelReverseBaseDTO.getTableList().forEach(
+        tableName -> {
+          //1根据表明成获取数据库表，判断库中经存在这个这个表判断是否需要更新，如果更新就将库中数据更新，如果不需要更新就直接结束
+          handelReverseBase(tableName,modelReverseBaseDTO);
+        }
+    );
+  }
+
+  /**
+   * 处理逆向表
+   * @param tableName
+   * @param modelReverseBaseDTO
+   */
+  private void handelReverseBase(String tableName, ModelReverseBaseDTO modelReverseBaseDTO) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    checkReverseBase(booleanBuilder, tableName);
+    List<ModelPhysicalTable> modelPhysicalTableList = jpaQueryFactory
+            .select(qModelPhysicalTable)
+            .from(qModelPhysicalTable)
+            .where(booleanBuilder)
+            .orderBy(qModelPhysicalTable.id.asc())
+            .fetch();
+    if (CollectionUtils.isNotEmpty(modelPhysicalTableList)){
+      if (modelReverseBaseDTO.getReplace()==ModelStatus.REPLACE){
+        ModelPhysicalTable updateModelPhysicalTable = getUpdateModelphyTable(modelPhysicalTableList,modelReverseBaseDTO);
+        ModelPhysicalDTO updateModelPhysicalDTO = getUpdateModelPhysicalDTO(tableName,updateModelPhysicalTable,modelReverseBaseDTO);
+        //调用修改方法修改建模信息
+        dataUpdateModelPhysical(updateModelPhysicalDTO,updateModelPhysicalTable);
+      }
+    }else{
+      ModelPhysicalTable createModelPhysicalTable = getCreateModelphyTable(modelReverseBaseDTO);
+      ModelPhysicalDTO createModelPhysicalDTO = getcreateModelPhysicalDTO(tableName,modelReverseBaseDTO);
+      //调用新增方法新增建模信息
+      dataModelPhysical(createModelPhysicalDTO,createModelPhysicalTable);
+    }
+
+  }
+
+  /**
+   * 逆向数据库获取新增入参信息
+   *
+   * @param tableName
+   * @param modelReverseBaseDTO
+   * @return
+   */
+  private ModelPhysicalDTO getcreateModelPhysicalDTO(String tableName,
+      ModelReverseBaseDTO modelReverseBaseDTO) {
+    //根据表名称查和数据库询元数据字段信息
+    ModelPhysicalDTO modelPhysicalDTO = new ModelPhysicalDTO();
+    List<MtdTables> tables = getTables(tableName,modelReverseBaseDTO.getDatabaseName());
+    List<ModelPhysicalColumnDTO> modelPhysicalColumnDTOList = new ArrayList<>();
+    if(CollectionUtils.isNotEmpty(tables)){
+      MtdTables mtdTables = tables.get(0);
+      List<Map<String,Object>> columns = metaDataService.getColumns(mtdTables.getGuid());
+      if (CollectionUtils.isNotEmpty(columns)){
+        modelPhysicalColumnDTOList= columns.stream().map(map -> {
+          ModelPhysicalColumnDTO modelPhysicalColumnDTO = new ModelPhysicalColumnDTO();
+          //todo 待完善
+          return modelPhysicalColumnDTO;
+        }).collect(Collectors.toList());
+      }
+    }
+    modelPhysicalDTO.setModelColumnDtoList(modelPhysicalColumnDTOList);
+    return modelPhysicalDTO;
+  }
+
+  /**
+   * 逆向数据库获新增取基本信息
+   * @param modelReverseBaseDTO
+   * @return
+   */
+  private ModelPhysicalTable getCreateModelphyTable(ModelReverseBaseDTO modelReverseBaseDTO) {
+    ModelPhysicalTable modelPhysicalTable = new ModelPhysicalTable();
+    getModelPhysicalTable(modelPhysicalTable,modelReverseBaseDTO);
+    return modelPhysicalTable;
+  }
+
+  /**
+   * 逆向数据库获取修改入参类
+   *
+   * @param tableName
+   * @param updateModelPhysicalTable
+   * @param modelReverseBaseDTO
+   * @return
+   */
+  private ModelPhysicalDTO getUpdateModelPhysicalDTO(String tableName,ModelPhysicalTable updateModelPhysicalTable, ModelReverseBaseDTO modelReverseBaseDTO) {
+    //根据表名称查和数据库询元数据字段信息
+    ModelPhysicalDTO modelPhysicalDTO = new ModelPhysicalDTO();
+    List<MtdTables> tables = getTables(tableName,modelReverseBaseDTO.getDatabaseName());
+    List<ModelPhysicalColumnDTO> modelPhysicalColumnDTOList = new ArrayList<>();
+    if(CollectionUtils.isNotEmpty(tables)){
+      MtdTables mtdTables = tables.get(0);
+      List<Map<String,Object>> columns = metaDataService.getColumns(mtdTables.getGuid());
+      if (CollectionUtils.isNotEmpty(columns)){
+          modelPhysicalColumnDTOList= columns.stream().map(map -> {
+          ModelPhysicalColumnDTO modelPhysicalColumnDTO = new ModelPhysicalColumnDTO();
+          //todo 待完善
+          return modelPhysicalColumnDTO;
+        }).collect(Collectors.toList());
+      }
+    }
+    modelPhysicalDTO.setModelColumnDtoList(modelPhysicalColumnDTOList);
+    return modelPhysicalDTO;
+  }
+
+  /**
+   * 逆向库获取基础信息（库中已经存在表）
+   * @param modelPhysicalTableList
+   * @param modelReverseBaseDTO
+   * @return
+   */
+  private ModelPhysicalTable getUpdateModelphyTable(List<ModelPhysicalTable> modelPhysicalTableList, ModelReverseBaseDTO modelReverseBaseDTO) {
+    ModelPhysicalTable modelPhysicalTable = modelPhysicalTableList.get(0);
+    getModelPhysicalTable(modelPhysicalTable,modelReverseBaseDTO);
+    return modelPhysicalTable;
+  }
+
+  /**
+   * 逆向库创建基础信息
+   * @param modelPhysicalTable
+   * @param modelReverseBaseDTO
+   */
+  private void getModelPhysicalTable(ModelPhysicalTable modelPhysicalTable, ModelReverseBaseDTO modelReverseBaseDTO) {
+    //所属层级id
+    modelPhysicalTable.setModelId(modelReverseBaseDTO.getModelId());
+    //主题id
+    modelPhysicalTable.setThemeId(modelReverseBaseDTO.getThemeId());
+    //主题
+    modelPhysicalTable.setTheme(modelReverseBaseDTO.getTheme());
+    //数据连接
+    modelPhysicalTable.setDataConnection(modelReverseBaseDTO.getDataConnection());
+    //数据库名称
+    modelPhysicalTable.setDatabaseName(modelReverseBaseDTO.getDatabaseName());
+    //0草稿 1已发布2 已下线
+    modelPhysicalTable.setStatus(modelReverseBaseDTO.getStatus());
+    //数据库和系统定义的sql是否同步（0表示已经同步，1表示未同步）
+    modelPhysicalTable.setSyncStatus(modelReverseBaseDTO.getSyncStatus());
+  }
+
+  private void checkReverseBase(BooleanBuilder booleanBuilder, String tableName) {
+    if (StringUtils.isNotBlank(tableName)) {
+      booleanBuilder.and(qModelPhysicalTable.tableName.eq(tableName));
+    }
   }
 
   /**
@@ -696,13 +848,14 @@ public class PhysicalServiceImpl implements PhysicalService {
       if (modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)){
         List<MtdTables> tables = getTables(modelPhysicalTable.getTableName(),modelPhysicalTable.getDatabaseName());
         if (CollectionUtils.isNotEmpty(tables)){
-          String sql = deleteUpdateModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+          String sql = dataUpdateModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+          //todo(需要完善)
           //如果之前存在表并且表中没有数据发布删除任务、创建任务，如果存在表且存在数据发布报错信息
         }else{
           throw new BizException("修改发布失败，该表不存在");
         }
       }else{
-        deleteModelPhysical(modelPhysicalDTO,modelPhysicalTable);
+        dataUpdateModelPhysical(modelPhysicalDTO,modelPhysicalTable);
       }
   }
 
@@ -712,45 +865,33 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @param modelPhysicalTable
    * @return
    */
-  private String deleteUpdateModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
+  private String dataUpdateModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
     String sqls = null;
     //1修改基础信息
     modelPhysicalTableRepository.saveAndFlush(modelPhysicalTable);
     //2修改字段配置
     List<ModelPhysicalColumn> physicalColumnList = modelPhysicalColumnRepository.findAllByTableId(modelPhysicalTable.getId());
     if (CollectionUtils.isNotEmpty(physicalColumnList)){
-      List<ModelPhysicalColumn> physicalColumnList1 = physicalColumnList.stream()
-          .map(modelPhysicalColumn -> {
-            modelPhysicalColumn.setDelFlag(1);
-            return modelPhysicalColumn;
-          }).collect(Collectors.toList());
-      modelPhysicalColumnRepository.saveAllAndFlush(physicalColumnList1);
+      modelPhysicalColumnRepository.deleteAllInBatch(physicalColumnList);
     }
     List<ModelPhysicalColumn> columnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalDTO.getModelColumnDtoList());
     modelPhysicalColumnRepository.saveAll(columnList);
     //3修改模型关系
-    if (CollectionUtils.isNotEmpty(modelPhysicalDTO.getModelRelationDtoList())){
       List<ModelPhysicalRelation> modelPhysicalRelationList = modelPhysicalRelationRepository.findAllByTableId(modelPhysicalTable.getId());
       if (CollectionUtils.isNotEmpty(modelPhysicalRelationList)){
-        List<ModelPhysicalRelation> modelPhysicalRelationList1 = modelPhysicalRelationList.stream()
-            .map(modelPhysicalRelation -> {
-              modelPhysicalRelation.setDelFlag(1);
-              return modelPhysicalRelation;
-            }).collect(Collectors.toList());
-        modelPhysicalRelationRepository.saveAllAndFlush(modelPhysicalRelationList1);
+        modelPhysicalRelationRepository.deleteAllInBatch(modelPhysicalRelationList);
       }
+    if (CollectionUtils.isNotEmpty(modelPhysicalDTO.getModelRelationDtoList())){
       List<ModelPhysicalRelation> relationLists = ModelPhysicalRelationMapper.INSTANCE.use(modelPhysicalDTO.getModelRelationDtoList());
       modelPhysicalRelationRepository.saveAll(relationLists);
     }
-    //4修改创建语句
+    //4创建新增语句
     ModelSql modelSql = modelSqlRepository.findByTableId(modelPhysicalTable.getId());
     if (modelSql!=null){
-      modelSql.setDelFlag(1);
-      modelSqlRepository.saveAndFlush(modelSql);
+      modelSqlRepository.delete(modelSql);
     }
     //生成表的修改语句（等待调整）
     sqls = createSql(modelPhysicalTable,columnList,modelPhysicalTable.getId());
-
     return sqls;
   }
 }

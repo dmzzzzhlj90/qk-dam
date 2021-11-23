@@ -7,6 +7,7 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdTableApiParams;
 import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
+import com.qk.dm.datamodel.params.dto.ModelReverseBaseDTO;
 import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
@@ -156,6 +157,17 @@ public class ModelPhysicalController {
   @PutMapping("/push")
   public DefaultCommonResult push(@RequestBody @NotNull @Validated List<Long> idList){
     physicalService.push(idList);
+    return DefaultCommonResult.success();
+  }
+
+  /**
+   * 逆向数据库
+   * @param modelReverseBaseDTO
+   * @return
+   */
+  @PostMapping("/reverse/base")
+  public DefaultCommonResult reverseBase(@RequestBody @Validated ModelReverseBaseDTO modelReverseBaseDTO){
+    physicalService.reverseBase(modelReverseBaseDTO);
     return DefaultCommonResult.success();
   }
 

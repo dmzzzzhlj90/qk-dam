@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
+import com.qk.dm.datamodel.params.dto.ModelReverseBaseDTO;
 import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
@@ -36,4 +37,6 @@ public interface PhysicalService {
   void synchronization(List<Long> physicalIds);
 
   void push(List<Long> idList);
+
+  void reverseBase(ModelReverseBaseDTO modelReverseBaseDTO);
 }
