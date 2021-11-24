@@ -18,7 +18,7 @@ public interface DqcSchedulerBasicInfoService {
   PageResultVO<DqcSchedulerBasicInfoVO> searchPageList(
       DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO);
 
-  String insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+  void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
   void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
@@ -26,9 +26,9 @@ public interface DqcSchedulerBasicInfoService {
 
   void deleteBulk(String ids);
 
-  void execute(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+  void release(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
-  Object instanceDetail(Integer id);
+  Object instanceDetailByList(Long id);
 
-    Object instanceDetailByList(Integer id);
+  void runing(Long id);
 }

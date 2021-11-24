@@ -7,18 +7,17 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
+import com.qk.dm.dataquality.constant.DataSourceEnum;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.TempTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
-import com.qk.dm.dataquality.constant.DataSourceEnum;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcRuleTemplateMapper;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
@@ -109,7 +108,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     if (Objects.equals(dqcRuleTemplate.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
       throw new BizException("上线规则模版不支持删除！！！");
     }
-    dqcRuleTemplate.setDelFlag(DqcConstant.DEL_FLAG);
+    dqcRuleTemplate.setDelFlag(DqcConstant.DEL_FLAG_DEL);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
@@ -128,7 +127,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
               if (Objects.equals(i.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
                 throw new BizException("上线规则模版不支持删除！！！");
               }
-              i.setDelFlag(DqcConstant.DEL_FLAG);
+              i.setDelFlag(DqcConstant.DEL_FLAG_DEL);
             })
         .collect(Collectors.toList());
     dqcRuleTemplateRepository.saveAll(idcTimeLimitList);
@@ -141,9 +140,15 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   @Override
   public List<DqcRuleTemplateInfoVo> search(DqcRuleTemplateVo dqcRuleTemplateVo) {
-    Predicate predicate = qDqcRuleTemplate.publishState.eq(DqcConstant.PUBLISH_STATE_UP);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    checkCondition(dqcRuleTemplateVo, booleanBuilder);
     List<DqcRuleTemplate> list =
-        (List<DqcRuleTemplate>) dqcRuleTemplateRepository.findAll(predicate);
+        jpaQueryFactory
+            .select(qDqcRuleTemplate)
+            .from(qDqcRuleTemplate)
+            .where(booleanBuilder)
+            .orderBy(qDqcRuleTemplate.tempType.desc(), qDqcRuleTemplate.gmtModified.desc())
+            .fetch();
     return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(list);
   }
 
@@ -188,7 +193,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
           .select(qDqcRuleTemplate)
           .from(qDqcRuleTemplate)
           .where(booleanBuilder)
-          .orderBy(qDqcRuleTemplate.id.asc())
+          .orderBy(qDqcRuleTemplate.tempType.desc(), qDqcRuleTemplate.gmtModified.desc())
           .offset((pagination.getPage() - 1) * pagination.getSize())
           .limit(pagination.getSize())
           .fetch();
@@ -201,6 +206,15 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   public void checkCondition(DqcRuleTemplateVo dqcRuleTemplateVo, BooleanBuilder booleanBuilder) {
     if (dqcRuleTemplateVo.getDirId() != null) {
       booleanBuilder.and(qDqcRuleTemplate.dirId.eq(dqcRuleTemplateVo.getDirId()));
+    }
+    if (dqcRuleTemplateVo.getTempName() != null) {
+      booleanBuilder.and(qDqcRuleTemplate.tempName.contains(dqcRuleTemplateVo.getTempName()));
+    }
+    if (dqcRuleTemplateVo.getDimensionId() != null) {
+      booleanBuilder.and(qDqcRuleTemplate.dimensionId.eq(dqcRuleTemplateVo.getDimensionId()));
+    }
+    if (dqcRuleTemplateVo.getEngineType() != null) {
+      booleanBuilder.and(qDqcRuleTemplate.engineType.contains(dqcRuleTemplateVo.getEngineType()));
     }
   }
 
