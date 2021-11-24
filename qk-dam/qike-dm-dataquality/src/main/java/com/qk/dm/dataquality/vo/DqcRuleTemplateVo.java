@@ -19,7 +19,7 @@ public class DqcRuleTemplateVo {
 
   /** 分类目录 */
   @NotNull(message = "分类目录不能为空！")
-  private Long dirId;
+  private String dirId;
 
   /** 质量维度 1-完整性 2-唯一性 3-及时性 4-有效性 5-准确性 6-一致性*/
   @NotNull(message = "质量维度不能为空！")
