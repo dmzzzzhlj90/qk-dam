@@ -70,4 +70,30 @@ public class DqcSchedulerConfigController {
     dqcSchedulerConfigService.update(dqcSchedulerConfigVO);
     return DefaultCommonResult.success();
   }
+
+  /**
+   * 删除规则调度_配置信息
+   *
+   * @param id
+   * @return DefaultCommonResult
+   */
+  @DeleteMapping("/{id}")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteOne(@PathVariable("id") Long id) {
+    dqcSchedulerConfigService.deleteOne(id);
+    return DefaultCommonResult.success();
+  }
+
+  /**
+   * 批量规则调度_配置信息
+   *
+   * @param ids
+   * @return DefaultCommonResult
+   */
+  @DeleteMapping("/root/{ids}")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+    dqcSchedulerConfigService.deleteBulk(ids);
+    return DefaultCommonResult.success();
+  }
 }

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 /**
  * 数据质量_规则调度_基础信息
  *
@@ -54,8 +56,10 @@ public class DqcSchedulerBasicInfoController {
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
   public DefaultCommonResult<String> insert(
       @RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    dqcSchedulerBasicInfoVO.setJobId(UUID.randomUUID().toString().replaceAll("-", ""));
+    dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO));
+        ResultCodeEnum.OK,dqcSchedulerBasicInfoVO.getJobId());
   }
 
   /**
@@ -99,29 +103,29 @@ public class DqcSchedulerBasicInfoController {
   }
 
   /**
-   * 操作(启动、停止、运行)
+   * 启动调度/停止调度
    *
    * @param dqcSchedulerBasicInfoVO
    * @return
    */
-  @PutMapping("/execute")
+  @PutMapping("/release")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult execute(
+  public DefaultCommonResult release(
           @RequestBody DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-    dqcSchedulerBasicInfoService.execute(dqcSchedulerBasicInfoVO);
+    dqcSchedulerBasicInfoService.release(dqcSchedulerBasicInfoVO);
     return DefaultCommonResult.success();
   }
 
-  @GetMapping("/instance/{id}")
+  @PutMapping("/{id}/runing")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult instanceDetail(@PathVariable("id") Integer id) {
-    return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dqcSchedulerBasicInfoService.instanceDetail(id));
+  public DefaultCommonResult runing(@PathVariable("id") Long id) {
+    dqcSchedulerBasicInfoService.runing(id);
+    return DefaultCommonResult.success();
   }
 
-  @GetMapping("/definition/{id}/instance")
+  @GetMapping("/{id}/instance")
 //    @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-  public DefaultCommonResult instanceDetailByList(@PathVariable("id") Integer id) {
+  public DefaultCommonResult instanceDetailByList(@PathVariable("id") Long id) {
     return DefaultCommonResult.success(
             ResultCodeEnum.OK, dqcSchedulerBasicInfoService.instanceDetailByList(id));
   }

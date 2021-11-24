@@ -21,8 +21,10 @@ public class DqcConstant {
   public static final Integer RUN_TYPE = 2;
   /** 规则模版状态-默认引擎类型 */
   public static final String ENGINE_TYPE = "1,2";
-  /** 删除状态 */
-  public static final Integer DEL_FLAG = 1;
+  /** 删除状态- 保留*/
+  public static final Integer DEL_FLAG_RETAIN = 0;
+  /** 删除状态 删除*/
+  public static final Integer DEL_FLAG_DEL = 1;
   /** 规则模版状态-下线 */
   public static final Integer PUBLISH_STATE_DOWN = 0;
   /** 规则模版状态-发布 */

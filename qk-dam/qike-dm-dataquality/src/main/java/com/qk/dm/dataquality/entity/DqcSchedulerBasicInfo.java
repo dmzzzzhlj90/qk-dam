@@ -48,6 +48,10 @@ public class DqcSchedulerBasicInfo implements Serializable {
   @Column(name = "notify_theme_id", nullable = false)
   private String notifyThemeId;
 
+  /** 调度开启状态 0-停止 1-启动 */
+  @Column(name = "scheduler_open_state")
+  private Integer schedulerOpenState;
+
   /** 调度状态 0-未启动 1-调度中 2-运行中 3-停止 4-运行失败 */
   @Column(name = "scheduler_state")
   private Integer schedulerState;
