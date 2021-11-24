@@ -2,6 +2,7 @@ package com.qk.dm.dataquality.dolphinapi.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
@@ -9,8 +10,12 @@ import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
+import com.qk.dm.dataquality.dolphinapi.builder.LocationsBuilder;
 import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
+import com.qk.dm.dataquality.dolphinapi.dto.LocationsDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessDataDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.TenantDTO;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.manager.TenantManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
@@ -41,52 +46,23 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         try {
             //获取DolphinScheduler 资源信息
             ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
-
             //获取DolphinScheduler 租户信息
-            TenantManager.queryTenantInfo(defaultApi);
-
+            TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi);
             // 构建ProcessData对象
-            ProcessDataBuilder processDataBuilder = ProcessDataBuilder.builder().build().info(dqcSchedulerInfoVO, mySqlScriptResource);
-            ProcessData processData = processDataBuilder.getProcessData();
-            // 构建规则流程实例
-
-            // 构建同步条件流程实例
-
-            // 构建回调接口流程实例
+            ProcessDataBuilder processDataBuilder = ProcessDataBuilder.builder().build().info(dqcSchedulerInfoVO, mySqlScriptResource, tenantDTO);
+            ProcessDataDTO processData = processDataBuilder.getProcessData();
+            //构建locations
+            LocationsDTO locationsDTO = LocationsBuilder.builder().build().info(dqcSchedulerInfoVO).taskNodeLocations();
 
             // 创建工作流实例
             String connects = "[]";
-            String locations = "{\"tasks-66666\":{\"name\":\"test_0002\",\"targetarr\":\"\",\"nodenumber\":\"0\",\"x\":344,\"y\":171}}";
-            String name = "test_sql_123666";
-            String processDefinitionJson = "{\"globalParams\":[],\n" +
-                    "\t\n" +
-                    "\t\"tasks\":[{\n" +
-                    "\t\t\"type\":\"SHELL\",\n" +
-                    "\t\t\"id\":\"tasks-66666\",\n" +
-                    "\t\t\"name\":\"test_0002\",\n" +
-                    "\t\t\"params\":\n" +
-                    "\t\t\t{\n" +
-                    "\t\t\t\"resourceList\":[{\"id\":4,\"name\":\"sql_temp_param.py\",\"res\":\"wei/sql_temp_param.py\"}],\n" +
-                    "\t\t\t\"localParams\":[],\n" +
-                    "\t\t\t\"rawScript\":\"/opt/soft/python3/bin/python3 wei/sql_temp_param.py '{\\n    \\\"from_host\\\":\\\"172.20.0.24\\\",\\n    \\\"from_user\\\":\\\"root\\\",\\n    \\\"from_password\\\":\\\"Zhudao123!\\\",\\n    \\\"from_database\\\":\\\"qkdam\\\",\\n    \\\"search_sql\\\":\\\"select count(1) from qk_dqc_rule_template\\\",\\n\\t\\\"to_host\\\":\\\"172.20.0.24\\\",\\n    \\\"to_user\\\":\\\"root\\\",\\n    \\\"to_password\\\":\\\"Zhudao123!\\\",\\n    \\\"to_database\\\":\\\"qkdam\\\",\\n\\t\\\"job_id\\\":\\\"job_id1\\\",\\n\\t\\\"job_name\\\":\\\"job_name1\\\",\\n\\t\\\"dir_id\\\":\\\"dir_id1\\\",\\n\\t\\\"rule_temp_id\\\":\\\"rule_temp_id1\\\"\\n}'\"\n" +
-                    "\t\t\t},\n" +
-                    "\t\t\"description\":\"\",\n" +
-                    "\t\t\"timeout\":{\"strategy\":\"\",\"interval\":null,\"enable\":false},\n" +
-                    "\t\t\"runFlag\":\"NORMAL\",\n" +
-                    "\t\t\"conditionResult\":{\"successNode\":[\"\"],\"failedNode\":[\"\"]},\n" +
-                    "\t\t\"dependence\":{},\n" +
-                    "\t\t\"maxRetryTimes\":\"0\",\n" +
-                    "\t\t\"retryInterval\":\"1\",\n" +
-                    "\t\t\"taskInstancePriority\":\"MEDIUM\",\n" +
-                    "\t\t\"workerGroup\":\"default\",\n" +
-                    "\t\t\"preTasks\":[]}\n" +
-                    "\t],\n" +
-                    "\t\n" +
-                    "\t\"tenantId\":1,\"timeout\":0}";
-            String projectName = "数据质量_wei";
+            String locations = GsonUtil.toJsonString(locationsDTO.getTaskNodeLocationMap());
+            String name = dqcSchedulerInfoVO.getDqcSchedulerBasicInfoVO().getJobName();
+            String processDefinitionJson = GsonUtil.toJsonString(processData);
+            String projectName = "数据质量_test";
             String description = "";
-//
-//            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
+
+            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
         } catch (Exception e) {
             e.printStackTrace();
         }

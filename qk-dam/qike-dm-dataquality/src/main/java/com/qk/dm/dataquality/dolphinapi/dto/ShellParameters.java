@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class ShellParameter {
+public class ShellParameters {
 
     private List<ResourceDTO> resourceList;
     private List<String> localParams;

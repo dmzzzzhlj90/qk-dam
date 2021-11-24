@@ -34,7 +34,7 @@ public class DqcSchedulerInfoParamsVO {
     /**
      * 分类目录
      */
-    private Long dirId;
+    private String dirId;
 
     /**
      * 开始时间
