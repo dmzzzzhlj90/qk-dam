@@ -73,6 +73,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     // todo 修改人
     config.setUpdateUserid(1L);
     dqcSchedulerConfigRepository.save(config);
+    //如果周期调度，需要调度下线并修改时间配置
   }
 
   @Override
@@ -85,6 +86,12 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     dqcSchedulerConfigRepository.deleteAll(getInfoByTaskIds(taskIds));
   }
 
+  @Override
+  public DqcSchedulerConfigVO detail(String jobId) {
+    return DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfigVO(
+        checkConfigIsNullByTaskId(jobId));
+  }
+
   private DqcSchedulerConfig getInfoById(Long id) {
     DqcSchedulerConfig info = dqcSchedulerConfigRepository.findById(id).orElse(null);
     if (info == null) {
@@ -93,32 +100,39 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     return info;
   }
 
-  private void checkConfigIsNotNullByTaskId(String taskId) {
-    DqcSchedulerConfig schedulerConfig = getInfoByTaskId(taskId);
+  private void checkConfigIsNotNullByTaskId(String jobId) {
+    DqcSchedulerConfig schedulerConfig = getInfoByTaskId(jobId);
     if (schedulerConfig != null) {
-      throw new BizException("任务id为：" + taskId + " 的配置，已存在！！！");
+      throw new BizException("任务id为：" + jobId + " 的配置，已存在！！！");
     }
   }
 
-  private List<DqcSchedulerConfig> getInfoByTaskIds(List<String> taskIds) {
+  private DqcSchedulerConfig checkConfigIsNullByTaskId(String jobId) {
+    DqcSchedulerConfig schedulerConfig = getInfoByTaskId(jobId);
+    if (schedulerConfig == null) {
+      throw new BizException("任务id为：" + jobId + " 的配置，不存在！！！");
+    }
+    return schedulerConfig;
+  }
+
+  private List<DqcSchedulerConfig> getInfoByTaskIds(List<String> jobIds) {
     return (List<DqcSchedulerConfig>)
-        dqcSchedulerConfigRepository.findAll(qDqcSchedulerConfig.jobId.in(taskIds));
+        dqcSchedulerConfigRepository.findAll(qDqcSchedulerConfig.jobId.in(jobIds));
   }
 
-  private DqcSchedulerConfig getInfoByTaskId(String taskId) {
-    return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.jobId.eq(taskId)).orElse(null);
+  private DqcSchedulerConfig getInfoByTaskId(String jobId) {
+    return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.jobId.eq(jobId)).orElse(null);
   }
 
-  public void checkBasicInfoStateByTaskId(String taskId) {
+  public void checkBasicInfoStateByTaskId(String jobId) {
     DqcSchedulerBasicInfo info =
         dqcSchedulerBasicInfoRepository
-            .findOne(qDqcSchedulerBasicInfo.jobId.eq(taskId))
+            .findOne(qDqcSchedulerBasicInfo.jobId.eq(jobId))
             .orElse(null);
     if (info == null) {
-      throw new BizException("id为：" + taskId + " 的任务，不存在！！！");
+      throw new BizException("任务id为：" + jobId + " 的任务，不存在！！！");
     }
-    if (Objects.equals(info.getSchedulerState(), SchedulerStateEnum.SCHEDULING.getCode())
-        || Objects.equals(info.getSchedulerState(), SchedulerStateEnum.RUNING.getCode())) {
+    if (!SchedulerStateEnum.checkout(SchedulerStateEnum.fromValue(info.getSchedulerState()))) {
       throw new BizException("启动调度后不可操作！！！");
     }
   }

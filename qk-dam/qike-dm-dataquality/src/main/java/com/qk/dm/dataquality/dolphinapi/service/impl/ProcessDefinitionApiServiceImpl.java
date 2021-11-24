@@ -1,5 +1,7 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
@@ -8,13 +10,16 @@ import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
+import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
+import com.qk.dm.dataquality.dolphinapi.manager.TenantManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import org.apache.dolphinscheduler.dao.entity.ProcessData;
-import org.apache.dolphinscheduler.dao.entity.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author wjq
@@ -35,13 +40,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public void save(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
         try {
             //获取DolphinScheduler 资源信息
-            Resource mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
+            ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
 
-            //获取DolphinScheduler 资源信息
-//            Resource mySqlScriptResource = ResourceFiLeManager.queryMySqlScriptResource();
+            //获取DolphinScheduler 租户信息
+            TenantManager.queryTenantInfo(defaultApi);
 
             // 构建ProcessData对象
-            ProcessDataBuilder processDataBuilder = ProcessDataBuilder.builder().build().info(dqcSchedulerInfoVO,mySqlScriptResource);
+            ProcessDataBuilder processDataBuilder = ProcessDataBuilder.builder().build().info(dqcSchedulerInfoVO, mySqlScriptResource);
             ProcessData processData = processDataBuilder.getProcessData();
             // 构建规则流程实例
 
@@ -89,6 +94,18 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
     /****************************************************************************/
 
+    public List<com.qk.dm.dataquality.dolphinapi.builder.ProcessData> list() {
+        try {
+            Result result = defaultApi.queryProcessDefinitionListUsingGET(DqcConstant.projectName);
+            DqcConstant.verification(result, "查询流程定义列表失败{}");
+            JSONArray objects = JSONArray.parseArray(JSONArray.toJSONString(result.getData()));
+            return (List<com.qk.dm.dataquality.dolphinapi.builder.ProcessData>) JSON.toJavaObject(objects, com.qk.dm.dataquality.dolphinapi.builder.ProcessData.class);
+        } catch (ApiException e) {
+            DqcConstant.printException(e);
+        }
+        return null;
+    }
+
     /**
      * 流程定义发布
      *
@@ -125,6 +142,21 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     /**
+     * 验证流程定义名字
+     *
+     * @param name
+     */
+    @Override
+    public void verifyName(String name) {
+        try {
+            Result result = defaultApi.verifyProcessDefinitionNameUsingGET(name, DqcConstant.projectName);
+            DqcConstant.verification(result, "验证失败{}");
+        } catch (ApiException e) {
+            DqcConstant.printException(e);
+        }
+    }
+
+    /**
      * 复制流程
      *
      * @param processDefinitionId
@@ -142,7 +174,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     /**
-     * 实例-检查流程--测试失败
+     * 实例-检查流程
      *
      * @param processDefinitionId
      */
@@ -184,25 +216,6 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                             null,
                             "default");
             DqcConstant.verification(result, "运行失败{}");
-        } catch (ApiException e) {
-            DqcConstant.printException(e);
-        }
-    }
-
-    /**
-     * 实例-操作
-     *
-     * @param processInstanceId
-     * @param executeType
-     */
-    @Override
-    public void execute(Integer processInstanceId, String executeType) {
-        executeType = "REPEAT_RUNNING";
-        try {
-            Result result =
-                    defaultApi.executeUsingPOST(
-                            executeType, DqcConstant.processInstanceId, DqcConstant.projectName);
-            DqcConstant.verification(result, "执行流程实例操作失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }

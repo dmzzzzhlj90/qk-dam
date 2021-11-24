@@ -4,20 +4,17 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.SchedulerStateEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
-import com.qk.dm.dataquality.entity.QDqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
 import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
-import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
+import com.qk.dm.dataquality.vo.*;
 import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -30,14 +27,15 @@ import java.util.stream.Collectors;
 public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoService {
   private final DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository;
   private final DqcSchedulerConfigService dqcSchedulerConfigService;
-  private final QDqcSchedulerBasicInfo qDqcSchedulerBasicInfo =
-      QDqcSchedulerBasicInfo.dqcSchedulerBasicInfo;
+  private final DolphinScheduler dolphinScheduler;
 
   public DqcSchedulerBasicInfoServiceImpl(
       DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository,
-      DqcSchedulerConfigService dqcSchedulerConfigService) {
+      DqcSchedulerConfigService dqcSchedulerConfigService,
+      DolphinScheduler dolphinScheduler) {
     this.dqcSchedulerBasicInfoRepository = dqcSchedulerBasicInfoRepository;
     this.dqcSchedulerConfigService = dqcSchedulerConfigService;
+    this.dolphinScheduler = dolphinScheduler;
   }
 
   @Override
@@ -70,30 +68,6 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   }
 
   @Override
-  public void publish(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-    DqcSchedulerBasicInfo basicInfo = getBasicInfo(dqcSchedulerBasicInfoVO.getId());
-    basicInfo.setSchedulerState(dqcSchedulerBasicInfoVO.getSchedulerState());
-    switch (dqcSchedulerBasicInfoVO.getSchedulerState()){
-      case 1://启动调度
-        //流程定义不存在时创建
-        break;
-      case 2://手动执行
-
-        break;
-      case 3://停止
-
-        break;
-    }
-    // 更改各种状态
-    // todo 如果状态为发布状态，需要判断规则、时间是否配置
-    //todo 创建流程定义，根据时间配置再配置调度定时，最后发布上线
-    //todo 如果是下线时，需要把流程定义下线了
-    // todo 修改人
-    basicInfo.setUpdateUserid(1L);
-    dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
-  }
-
-  @Override
   @Transient
   public void deleteOne(Long id) {
     DqcSchedulerBasicInfo info = getInfoById(id);
@@ -113,6 +87,43 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     dqcSchedulerBasicInfoRepository.deleteAll(infoList);
   }
 
+  @Override
+  public void execute(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    DqcSchedulerBasicInfo basicInfo = getBasicInfo(dqcSchedulerBasicInfoVO.getId());
+    basicInfo.setSchedulerState(dqcSchedulerBasicInfoVO.getSchedulerState());
+    doDolphin(dqcSchedulerBasicInfoVO);
+    // todo 修改人
+    basicInfo.setUpdateUserid(1L);
+    dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
+  }
+
+  private void doDolphin(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    Integer processDefinitionId = 4;
+    Integer scheduleId = null;
+    switch (dqcSchedulerBasicInfoVO.getSchedulerState()) {
+      case 0:
+        dolphinScheduler.offline(processDefinitionId);
+        break;
+      case 1:
+        dolphinScheduler.online(processDefinitionId, scheduleId);
+        break;
+      case 2:
+        dolphinScheduler.startInstance(processDefinitionId);
+        break;
+      default:
+    }
+  }
+
+  @Override
+  public Object instanceDetail(Integer id) {
+    return dolphinScheduler.detail(id);
+  }
+
+  @Override
+  public Object instanceDetailByList(Integer id) {
+    return dolphinScheduler.detailByList(id);
+  }
+
   private List<DqcSchedulerBasicInfo> getInfoList(List<Long> idList) {
     List<DqcSchedulerBasicInfo> infoList = dqcSchedulerBasicInfoRepository.findAllById(idList);
     if (CollectionUtils.isEmpty(infoList)) {
@@ -121,8 +132,8 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     if (infoList.stream()
         .anyMatch(
             i ->
-                    Objects.equals(i.getSchedulerState(), SchedulerStateEnum.SCHEDULING.getCode())
-                            || Objects.equals(i.getSchedulerState(), SchedulerStateEnum.RUNING.getCode()))) {
+                !SchedulerStateEnum.checkout(
+                    SchedulerStateEnum.fromValue(i.getSchedulerState())))) {
       throw new BizException("启动调度后不可操作！！！");
     }
     return infoList;
@@ -130,8 +141,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
 
   private DqcSchedulerBasicInfo getInfoById(Long id) {
     DqcSchedulerBasicInfo info = getBasicInfo(id);
-    if (Objects.equals(info.getSchedulerState(), SchedulerStateEnum.SCHEDULING.getCode())
-            || Objects.equals(info.getSchedulerState(), SchedulerStateEnum.RUNING.getCode())) {
+    if (!SchedulerStateEnum.checkout(SchedulerStateEnum.fromValue(info.getSchedulerState()))) {
       throw new BizException("启动调度后不可操作！！！");
     }
     return info;

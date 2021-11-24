@@ -10,10 +10,9 @@ import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
+import com.qk.dm.dataquality.dolphinapi.builder.ScheduleDataBuilder;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
-import com.qk.dm.dataquality.vo.ScheduleListPageVo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ScheduleApiServiceImpl implements ScheduleApiService {
-  private static final String format = "yyyy-MM-dd HH:mm:ss";
   private final DefaultApi defaultApi;
 
   public ScheduleApiServiceImpl(DefaultApi defaultApi) {
@@ -32,7 +30,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
 
   /** createSchedule 创建定时 */
   @Override
-  public void create(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+  public void create(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     try {
       Result result =
           defaultApi.createScheduleUsingPOST(
@@ -42,7 +40,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               ProcessInstancePriorityEnum.fromValue(3).getValue(),
               "",
               "",
-              schedule(dqcSchedulerInfoVO.getDqcSchedulerConfigVO()),
+              schedule(dqcSchedulerConfigVO),
               0,
               WarningTypeEnum.fromValue(1).getValue(),
               "default");
@@ -53,7 +51,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   }
 
   @Override
-  public void update(Integer scheduleId, DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+  public void update(Integer scheduleId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     try {
       Result result =
           defaultApi.updateScheduleUsingPOST(
@@ -63,7 +61,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               ProcessInstancePriorityEnum.fromValue(3).getValue(),
               "",
               "",
-              schedule(dqcSchedulerInfoVO.getDqcSchedulerConfigVO()),
+              schedule(dqcSchedulerConfigVO),
               0,
               WarningTypeEnum.fromValue(1).getValue(),
               "default");
@@ -121,7 +119,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   }
 
   @Override
-  public ScheduleListPageVo search(
+  public ScheduleDataBuilder search(
       Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal) {
     try {
       Result result =
@@ -134,7 +132,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
       DqcConstant.verification(result, "获取定时列表失败{},");
       return JSONObject.toJavaObject(
           (JSON) JSONObject.toJSON(JSONObject.toJSONString(result.getData())),
-          ScheduleListPageVo.class);
+          ScheduleDataBuilder.class);
     } catch (ApiException e) {
       DqcConstant.printException(e);
     }
@@ -143,8 +141,8 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
 
   private String schedule(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     JSONObject object = new JSONObject();
-    object.put("startTime", DateUtil.format(dqcSchedulerConfigVO.getEffectiveTimeStart(), format));
-    object.put("endTime", DateUtil.format(dqcSchedulerConfigVO.getEffectiveTimeEnt(), format));
+    object.put("startTime", DateUtil.format(dqcSchedulerConfigVO.getEffectiveTimeStart(), DqcConstant.format));
+    object.put("endTime", DateUtil.format(dqcSchedulerConfigVO.getEffectiveTimeEnt(), DqcConstant.format));
     object.put("crontab", dqcSchedulerConfigVO.getCron());
     return object.toJSONString();
   }

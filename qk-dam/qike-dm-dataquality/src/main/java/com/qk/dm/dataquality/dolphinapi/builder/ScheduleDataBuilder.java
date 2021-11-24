@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.vo;
+package com.qk.dm.dataquality.dolphinapi.builder;
 
 import lombok.Data;
 
@@ -10,14 +10,14 @@ import java.util.List;
  * @since 1.0.0
  */
 @Data
-public class ScheduleListPageVo {
+public class ScheduleDataBuilder {
     private Integer currentPage;
     private Integer total;
     private Integer totalPage;
     private List<ScheduleList> totalList;
 
     @Data
-    class ScheduleList{
+    public class ScheduleList{
         private Integer id;
         private String createTime;
         private String crontab;

@@ -22,9 +22,13 @@ public interface DqcSchedulerBasicInfoService {
 
   void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
-  void publish(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
-
   void deleteOne(Long id);
 
   void deleteBulk(String ids);
+
+  void execute(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+
+  Object instanceDetail(Integer id);
+
+    Object instanceDetailByList(Integer id);
 }

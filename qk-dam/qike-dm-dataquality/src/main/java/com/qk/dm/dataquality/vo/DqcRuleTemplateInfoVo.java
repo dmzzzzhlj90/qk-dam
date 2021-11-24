@@ -27,7 +27,7 @@ public class DqcRuleTemplateInfoVo {
   private String tempTypeName;
 
   /** 分类目录 */
-  private Integer dirId;
+  private String dirId;
 
   /** 质量纬度id */
   private Integer dimensionId;

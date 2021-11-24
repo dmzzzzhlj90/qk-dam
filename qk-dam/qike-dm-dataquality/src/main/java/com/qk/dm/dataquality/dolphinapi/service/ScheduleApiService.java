@@ -1,7 +1,7 @@
 package com.qk.dm.dataquality.dolphinapi.service;
 
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
-import com.qk.dm.dataquality.vo.ScheduleListPageVo;
+import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
+import com.qk.dm.dataquality.dolphinapi.builder.ScheduleDataBuilder;
 
 /**
  * @author shenpj
@@ -10,9 +10,9 @@ import com.qk.dm.dataquality.vo.ScheduleListPageVo;
  */
 public interface ScheduleApiService {
 
-  void create(DqcSchedulerInfoVO dqcSchedulerInfoVO);
+  void create(DqcSchedulerConfigVO dqcSchedulerConfigVO);
 
-  void update(Integer scheduleId, DqcSchedulerInfoVO dqcSchedulerInfoVO);
+  void update(Integer scheduleId, DqcSchedulerConfigVO dqcSchedulerConfigVO);
 
   void online(Integer scheduleId);
 
@@ -20,6 +20,6 @@ public interface ScheduleApiService {
 
   void deleteOne(Integer scheduleId);
 
-  ScheduleListPageVo search(
+  ScheduleDataBuilder search(
       Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal);
 }

@@ -73,18 +73,6 @@ public class DqcSchedulerBasicInfoController {
   }
 
   /**
-   * 发布
-   * @param dqcSchedulerBasicInfoVO
-   * @return
-   */
-  @PutMapping("/release")
-  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult publish(@RequestBody DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-    dqcSchedulerBasicInfoService.publish(dqcSchedulerBasicInfoVO);
-    return DefaultCommonResult.success();
-  }
-
-  /**
    * 删除单个规则调度_基础信息
    *
    * @param id
@@ -92,8 +80,8 @@ public class DqcSchedulerBasicInfoController {
    */
   @DeleteMapping("/{id}")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult deleteOne(@PathVariable("id") String id) {
-    dqcSchedulerBasicInfoService.deleteOne(Long.valueOf(id));
+  public DefaultCommonResult deleteOne(@PathVariable("id") Long id) {
+    dqcSchedulerBasicInfoService.deleteOne(id);
     return DefaultCommonResult.success();
   }
 
@@ -108,5 +96,33 @@ public class DqcSchedulerBasicInfoController {
   public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
     dqcSchedulerBasicInfoService.deleteBulk(ids);
     return DefaultCommonResult.success();
+  }
+
+  /**
+   * 操作(启动、停止、运行)
+   *
+   * @param dqcSchedulerBasicInfoVO
+   * @return
+   */
+  @PutMapping("/execute")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult execute(
+          @RequestBody DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    dqcSchedulerBasicInfoService.execute(dqcSchedulerBasicInfoVO);
+    return DefaultCommonResult.success();
+  }
+
+  @GetMapping("/instance/{id}")
+  //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult instanceDetail(@PathVariable("id") Integer id) {
+    return DefaultCommonResult.success(
+            ResultCodeEnum.OK, dqcSchedulerBasicInfoService.instanceDetail(id));
+  }
+
+  @GetMapping("/definition/{id}/instance")
+//    @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+  public DefaultCommonResult instanceDetailByList(@PathVariable("id") Integer id) {
+    return DefaultCommonResult.success(
+            ResultCodeEnum.OK, dqcSchedulerBasicInfoService.instanceDetailByList(id));
   }
 }
