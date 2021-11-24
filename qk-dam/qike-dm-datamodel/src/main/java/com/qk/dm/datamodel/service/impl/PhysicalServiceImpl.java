@@ -341,7 +341,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (modelPhysicalTable!=null){
       modelPhysicalTableVO= ModelPhysicalTableMapper.INSTANCE.of(modelPhysicalTable);
     }else{
-      throw  new BizException("查询详情为空");
+      throw  new BizException("id为"+id+"的基础信息不存在");
     }
     return modelPhysicalTableVO;
   }
@@ -435,8 +435,10 @@ public class PhysicalServiceImpl implements PhysicalService {
         id->{
           //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
           ModelPhysicalTableVO modelPhysical = getModelPhysical(id);
-          //2如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
-          if (modelPhysical!=null){
+          //2校验基础信息是否完善
+          Boolean check = checkPhysicalTable(modelPhysical);
+          //3如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
+          if (check){
             List<MtdTables> tables = getTables(modelPhysical.getTableName(),modelPhysical.getDatabaseName());
             if (CollectionUtils.isNotEmpty(tables)){
               //todo(需要完善)
@@ -448,10 +450,31 @@ public class PhysicalServiceImpl implements PhysicalService {
               //调用任务创建表
             }
           }else{
-            throw new BizException("当前需要同步的表id为"+id+"的表不存在");
+            throw new BizException("id为"+id+"的信息不完善请完善后发布");
           }
         }
     );
+  }
+
+  /**
+   * 校验数据的基础信息是否完善
+   * @param modelPhysical
+   * @return
+   */
+  private Boolean checkPhysicalTable(ModelPhysicalTableVO modelPhysical) {
+    Boolean check = true;
+    //1校验主题和主题id、表名、数据连接、数据库
+    if (StringUtils.isEmpty(modelPhysical.getTheme())||modelPhysical.getThemeId()==0||StringUtils.isEmpty(modelPhysical.getTableName())||
+        StringUtils.isEmpty(modelPhysical.getDataConnection())||StringUtils.isEmpty(modelPhysical.getDataConnection())||StringUtils.isEmpty(modelPhysical.getResponsibleBy())){
+      check=false;
+    }
+    //2当数据库连接是HIVE时候判断表类型、数据格式、hdfs路径是不是为空
+    if (modelPhysical.getDataConnection().equals(ModelStatus.CONNECT)){
+      if (StringUtils.isEmpty(modelPhysical.getDataFormat())||modelPhysical.getTableType()==0||StringUtils.isEmpty(modelPhysical.getHftsRoute())){
+        check=false;
+      }
+    }
+  return check;
   }
 
   /**
@@ -686,8 +709,11 @@ public class PhysicalServiceImpl implements PhysicalService {
     checkFieldNums(booleanBuilder, idList);
     List<ModelPhysicalColumn> modelPhysicalColumnList =
         jpaQueryFactory
-            .select(qModelPhysicalColumn).from(qModelPhysicalColumn)
-            .where(booleanBuilder).orderBy(qModelPhysicalColumn.id.asc()).fetch();
+            .select(qModelPhysicalColumn)
+            .from(qModelPhysicalColumn)
+            .where(booleanBuilder)
+            .orderBy(qModelPhysicalColumn.id.asc())
+            .fetch();
     if (CollectionUtils.isNotEmpty(modelPhysicalColumnList)) {
       fieldNums=modelPhysicalColumnList.size();
     }
