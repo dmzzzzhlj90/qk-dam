@@ -80,9 +80,6 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
 
     @Override
     public void insert(DqcRuleDirVO dqcRuleDirVO) {
-        //校验目录dirId是否与ParentId相等
-        checkDirIdIsEqualParentId(dqcRuleDirVO);
-
         DqcRuleDir dqcRuleDir = DqcRuleDirTreeMapper.INSTANCE.useDqcRuleDir(dqcRuleDirVO);
         dqcRuleDir.setGmtCreate(new Date());
         dqcRuleDir.setGmtModified(new Date());
@@ -99,6 +96,9 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
 
     @Override
     public void update(DqcRuleDirVO dqcRuleDirVO) {
+        //校验目录dirId是否与ParentId相等
+        checkDirIdIsEqualParentId(dqcRuleDirVO);
+
         //校验目录父节点是否放到其子节点层级下
         checkParentNodeAndChildNode(dqcRuleDirVO);
 
@@ -141,31 +141,12 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         for (DqcRuleDir dqcRuleDir : dqcRuleDirList) {
             if (dqcRuleDir.getParentId() != null) {
                 if (dqcRuleDir.getParentId().equals(dirId)) {
-                    //递归遍历下一级
                     getDirIdsByParentId(dqcRuleDirList, dqcRuleDir.getRuleDirId(), childDirIds);
-                    //末级机构才添加进去(依自己业务定义)
                     childDirIds.add(dqcRuleDir);
                 }
             }
         }
     }
-
-
-//    @Override
-//    public void deleteOne(Long delId) {
-//        Optional<DqcRuleDir> dirOptional = dqcRuleDirRepository.findById(delId);
-//        if (!dirOptional.isPresent()) {
-//            throw new BizException("参数有误,当前要删除的节点不存在！！！");
-//        }
-//
-//        Predicate predicate = qDqcRuleDir.parentId.eq(dirOptional.get().getRuleDirId());
-//        long count = dqcRuleDirRepository.count(predicate);
-//        if (count > 0) {
-//            throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
-//        } else {
-//            dqcRuleDirRepository.deleteById(delId);
-//        }
-//    }
 
     @Override
     public void delete(String id) {
