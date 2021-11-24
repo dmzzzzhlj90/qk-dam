@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.dolphinapi.entity;
+package com.qk.dm.dataquality.dolphinapi.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 public class ShellParameter {
 
-    private List<Resource> resourceList;
+    private List<ResourceDTO> resourceList;
     private List<String> localParams;
     private String rawScript;
 

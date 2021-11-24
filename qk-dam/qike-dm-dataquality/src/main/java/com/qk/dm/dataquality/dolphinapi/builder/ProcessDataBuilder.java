@@ -2,6 +2,7 @@ package com.qk.dm.dataquality.dolphinapi.builder;
 
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
+import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
@@ -12,10 +13,8 @@ import org.apache.dolphinscheduler.common.enums.Priority;
 import org.apache.dolphinscheduler.common.enums.TaskType;
 import org.apache.dolphinscheduler.common.model.TaskNode;
 import org.apache.dolphinscheduler.common.process.Property;
-import org.apache.dolphinscheduler.common.process.ResourceInfo;
 import org.apache.dolphinscheduler.common.task.shell.ShellParameters;
 import org.apache.dolphinscheduler.dao.entity.ProcessData;
-import org.apache.dolphinscheduler.dao.entity.Resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class ProcessDataBuilder {
         return processData;
     }
 
-    public ProcessDataBuilder info(DqcSchedulerInfoVO dqcSchedulerInfoVO, Resource mySqlScriptResource) {
+    public ProcessDataBuilder info(DqcSchedulerInfoVO dqcSchedulerInfoVO, ResourceDTO mySqlScriptResource) {
         taskNode(dqcSchedulerInfoVO);
         globalParams();
         timeout();

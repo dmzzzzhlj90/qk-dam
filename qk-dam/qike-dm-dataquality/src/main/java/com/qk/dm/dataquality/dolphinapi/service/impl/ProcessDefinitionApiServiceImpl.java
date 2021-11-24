@@ -8,11 +8,12 @@ import com.qk.dm.dataquality.constant.schedule.FailureStrategyEnum;
 import com.qk.dm.dataquality.constant.schedule.ProcessInstancePriorityEnum;
 import com.qk.dm.dataquality.constant.schedule.WarningTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
+import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
+import com.qk.dm.dataquality.dolphinapi.manager.TenantManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import org.apache.dolphinscheduler.dao.entity.ProcessData;
-import org.apache.dolphinscheduler.dao.entity.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +36,10 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public void save(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
         try {
             //获取DolphinScheduler 资源信息
-            Resource mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
+            ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
 
-            //获取DolphinScheduler 资源信息
-//            Resource mySqlScriptResource = ResourceFiLeManager.queryMySqlScriptResource();
+            //获取DolphinScheduler 租户信息
+            TenantManager.queryTenantInfo(defaultApi);
 
             // 构建ProcessData对象
             ProcessDataBuilder processDataBuilder = ProcessDataBuilder.builder().build().info(dqcSchedulerInfoVO,mySqlScriptResource);

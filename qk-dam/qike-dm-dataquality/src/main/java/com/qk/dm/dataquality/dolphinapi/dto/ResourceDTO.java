@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.dolphinapi.entity;
+package com.qk.dm.dataquality.dolphinapi.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class Resource {
+public class ResourceDTO {
     private int id;
     private String name;
     private String res;
