@@ -98,7 +98,7 @@ public class ModelPhysicalTableVO implements Serializable {
     private String hftsRoute;
 
     /**
-     * 数据库和系统定义的sql是否同步，0表示为同步，1表示同步
+     * 数据库和系统定义的sql是否同步，0表示为同步，1表示不同步
      */
     private Integer synchronizationStatus;
 }
