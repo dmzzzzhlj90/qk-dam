@@ -1,8 +1,8 @@
 package com.qk.dm.dataquality.mapstruct.mapper;
 
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVO;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
@@ -21,11 +21,11 @@ import java.util.List;
 public interface DqcRuleTemplateMapper {
     DqcRuleTemplateMapper INSTANCE = Mappers.getMapper(DqcRuleTemplateMapper.class);
 
-    DqcRuleTemplate userDqcRuleTemplate(DqcRuleTemplateVo dqcRuleTemplateVo);
+    DqcRuleTemplate userDqcRuleTemplate(DqcRuleTemplateVO dqcRuleTemplateVo);
 
-    List<DqcRuleTemplateInfoVo> userDqcRuleTemplateInfoVo(List<DqcRuleTemplate> dqcRuleTemplateList);
+    List<DqcRuleTemplateInfoVO> userDqcRuleTemplateInfoVo(List<DqcRuleTemplate> dqcRuleTemplateList);
 
-    DqcRuleTemplateInfoVo userDqcRuleTemplateInfoVo(DqcRuleTemplate dqcRuleTemplate);
+    DqcRuleTemplateInfoVO userDqcRuleTemplateInfoVo(DqcRuleTemplate dqcRuleTemplate);
 
-    void userDqcRuleTemplate(DqcRuleTemplateVo dqcRuleTemplateVo,@MappingTarget DqcRuleTemplate dqcRuleTemplate);
+    void userDqcRuleTemplate(DqcRuleTemplateVO dqcRuleTemplateVo, @MappingTarget DqcRuleTemplate dqcRuleTemplate);
 }

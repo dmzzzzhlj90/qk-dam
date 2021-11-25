@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
  * @author shenpengjie
  */
 @Data
-public class DqcRuleTemplateVo {
+public class DqcRuleTemplateVO {
 
   private Long id;
 

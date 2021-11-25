@@ -22,7 +22,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DqcSchedulerConfigDto {
+public class DqcSchedulerConfigDTO {
 
   /** 主键ID */
   private Long id;

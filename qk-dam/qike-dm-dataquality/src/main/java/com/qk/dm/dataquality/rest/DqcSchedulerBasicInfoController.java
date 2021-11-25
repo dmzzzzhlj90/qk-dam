@@ -3,7 +3,7 @@ package com.qk.dm.dataquality.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDto;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
@@ -110,7 +110,7 @@ public class DqcSchedulerBasicInfoController {
    */
   @PutMapping("/release")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult release(@RequestBody DqcSchedulerBasicInfoReleaseDto dqcSchedulerBasicInfoReleaseDto) {
+  public DefaultCommonResult release(@RequestBody DqcSchedulerBasicInfoReleaseDTO dqcSchedulerBasicInfoReleaseDto) {
     dqcSchedulerBasicInfoService.release(dqcSchedulerBasicInfoReleaseDto);
     return DefaultCommonResult.success();
   }

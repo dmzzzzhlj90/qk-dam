@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DqcSchedulerBasicInfoDto {
+public class DqcSchedulerBasicInfoDTO {
 
   /** 主键ID */
   private Long id;

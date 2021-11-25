@@ -12,13 +12,13 @@ import com.qk.dm.dataquality.constant.TempTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcRuleTemplateMapper;
-import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDto;
-import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDto;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDTO;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDTO;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVO;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
@@ -58,7 +58,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   @Override
-  public void insert(DqcRuleTemplateVo dqcRuleTemplateVo) {
+  public void insert(DqcRuleTemplateVO dqcRuleTemplateVo) {
     parseStatements(dqcRuleTemplateVo.getEngineType(), dqcRuleTemplateVo.getTempSql());
     DqcRuleTemplate dqcRuleTemplate =
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
@@ -72,7 +72,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   @Override
-  public void update(DqcRuleTemplateVo dqcRuleTemplateVo) {
+  public void update(DqcRuleTemplateVO dqcRuleTemplateVo) {
     DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
     checkPublishState(dqcRuleTemplate, "上线规则模版不支持修改！！！");
     DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo, dqcRuleTemplate);
@@ -82,7 +82,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   @Override
-  public void release(DqcRuleTemplateReleaseDto dqcRuleTemplateReleaseDto) {
+  public void release(DqcRuleTemplateReleaseDTO dqcRuleTemplateReleaseDto) {
     DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateReleaseDto.getId());
     // todo 添加修改人
     dqcRuleTemplate.setUpdateUserid(1L);
@@ -119,12 +119,12 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   @Override
-  public DqcRuleTemplateInfoVo detail(Long id) {
+  public DqcRuleTemplateInfoVO detail(Long id) {
     return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(getInfoById(id));
   }
 
   @Override
-  public List<DqcRuleTemplateInfoVo> search(DqcRuleTemplatePageDto dqcRuleTemplatePageDto) {
+  public List<DqcRuleTemplateInfoVO> search(DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     checkCondition(dqcRuleTemplatePageDto, booleanBuilder);
     booleanBuilder.and(qDqcRuleTemplate.publishState.eq(DqcConstant.PUBLISH_STATE_UP));
@@ -139,22 +139,24 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   @Override
-  public PageResultVO<DqcRuleTemplateInfoVo> searchPageList(
-      DqcRuleTemplatePageDto dqcRuleTemplateVo, Pagination pagination) {
-    Map<String, Object> map = queryParams(dqcRuleTemplateVo, pagination);
+  public PageResultVO<DqcRuleTemplateInfoVO> searchPageList(
+      DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
+    Map<String, Object> map = queryParams(dqcRuleTemplatePageDto);
     List<DqcRuleTemplate> list = (List<DqcRuleTemplate>) map.get("list");
-    List<DqcRuleTemplateInfoVo> voList =
+    List<DqcRuleTemplateInfoVO> voList =
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(list);
     return new PageResultVO<>(
-        (long) map.get("total"), pagination.getPage(), pagination.getSize(), voList);
+        (long) map.get("total"),
+        dqcRuleTemplatePageDto.getPagination().getPage(),
+        dqcRuleTemplatePageDto.getPagination().getSize(),
+        voList);
   }
 
-  private Map<String, Object> queryParams(
-      DqcRuleTemplatePageDto dqcRuleTemplateVo, Pagination pagination) {
+  private Map<String, Object> queryParams(DqcRuleTemplatePageDTO dqcRuleTemplateVo) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     checkCondition(dqcRuleTemplateVo, booleanBuilder);
     Map<String, Object> result = new HashMap<>(2);
-    result.put("list", getTemplateList(pagination, booleanBuilder));
+    result.put("list", getTemplateList(dqcRuleTemplateVo.getPagination(), booleanBuilder));
     result.put("total", getCount(booleanBuilder));
     return result;
   }
@@ -190,7 +192,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   public void checkCondition(
-      DqcRuleTemplatePageDto dqcRuleTemplateVo, BooleanBuilder booleanBuilder) {
+          DqcRuleTemplatePageDTO dqcRuleTemplateVo, BooleanBuilder booleanBuilder) {
     if (dqcRuleTemplateVo.getDirId() != null) {
       booleanBuilder.and(qDqcRuleTemplate.dirId.eq(dqcRuleTemplateVo.getDirId()));
     }
@@ -206,13 +208,13 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   private DqcRuleTemplate getInfoById(Long id) {
-    Optional<DqcRuleTemplate> info = dqcRuleTemplateRepository.findById(id);
+    DqcRuleTemplate info = dqcRuleTemplateRepository.findById(id).orElse(null);
     checkInfo(id, info);
-    return info.get();
+    return info;
   }
 
-  private void checkInfo(Long id, Optional<DqcRuleTemplate> info) {
-    if (info.isEmpty()) {
+  private void checkInfo(Long id, DqcRuleTemplate info) {
+    if (info == null) {
       throw new BizException("id为：" + id + " 的模版不存在");
     }
   }

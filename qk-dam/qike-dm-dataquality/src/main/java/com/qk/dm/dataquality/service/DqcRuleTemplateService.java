@@ -1,11 +1,10 @@
 package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dam.jpa.pojo.Pagination;
-import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDto;
-import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDto;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
-import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDTO;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDTO;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVO;
+import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
 
 import java.util.List;
 
@@ -16,20 +15,19 @@ import java.util.List;
  */
 public interface DqcRuleTemplateService {
 
-  void insert(DqcRuleTemplateVo dqcRuleTemplateVo);
+  void insert(DqcRuleTemplateVO dqcRuleTemplateVo);
 
-  void update(DqcRuleTemplateVo dqcRuleTemplateVo);
+  void update(DqcRuleTemplateVO dqcRuleTemplateVo);
 
   void deleteOne(Long delId);
 
   void deleteBulk(String ids);
 
-  DqcRuleTemplateInfoVo detail(Long id);
+  DqcRuleTemplateInfoVO detail(Long id);
 
-  void release(DqcRuleTemplateReleaseDto dqcRuleTemplateReleaseDto);
+  void release(DqcRuleTemplateReleaseDTO dqcRuleTemplateReleaseDto);
 
-  PageResultVO<DqcRuleTemplateInfoVo> searchPageList(
-          DqcRuleTemplatePageDto dqcRuleTemplatePageDto, Pagination pagination);
+  List<DqcRuleTemplateInfoVO> search(DqcRuleTemplatePageDTO dqcRuleTemplateVo);
 
-  List<DqcRuleTemplateInfoVo> search(DqcRuleTemplatePageDto dqcRuleTemplateVo);
+  PageResultVO<DqcRuleTemplateInfoVO> searchPageList(DqcRuleTemplatePageDTO dqcRuleTemplatePageDto);
 }

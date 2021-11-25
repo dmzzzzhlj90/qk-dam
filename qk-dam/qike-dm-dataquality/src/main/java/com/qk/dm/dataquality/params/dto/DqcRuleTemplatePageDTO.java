@@ -1,5 +1,6 @@
 package com.qk.dm.dataquality.params.dto;
 
+import com.qk.dam.jpa.pojo.Pagination;
 import lombok.Data;
 
 /**
@@ -8,7 +9,9 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
-public class DqcRuleTemplatePageDto {
+public class DqcRuleTemplatePageDTO {
+
+  Pagination pagination;
 
   /** 模板名称 */
   private String tempName;

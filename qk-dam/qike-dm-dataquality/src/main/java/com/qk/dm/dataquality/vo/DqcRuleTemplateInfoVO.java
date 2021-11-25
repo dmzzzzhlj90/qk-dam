@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 /** @author shenpengjie */
 @Data
-public class DqcRuleTemplateInfoVo {
+public class DqcRuleTemplateInfoVO {
 
   private Integer id;
 

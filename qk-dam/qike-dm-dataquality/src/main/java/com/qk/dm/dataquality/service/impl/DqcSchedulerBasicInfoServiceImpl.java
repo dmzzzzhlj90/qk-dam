@@ -9,7 +9,7 @@ import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.builder.InstanceData;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
-import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDto;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
 import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
@@ -82,7 +82,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   }
 
   @Override
-  public void release(DqcSchedulerBasicInfoReleaseDto infoReleaseDto) {
+  public void release(DqcSchedulerBasicInfoReleaseDTO infoReleaseDto) {
     DqcSchedulerBasicInfo basicInfo = getBasicInfo(infoReleaseDto.getId());
     basicInfo.setSchedulerState(infoReleaseDto.getSchedulerOpenState());
     basicInfo.setSchedulerOpenState(infoReleaseDto.getSchedulerOpenState());
