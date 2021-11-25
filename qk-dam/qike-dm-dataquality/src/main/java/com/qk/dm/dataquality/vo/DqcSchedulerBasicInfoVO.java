@@ -36,7 +36,7 @@ public class DqcSchedulerBasicInfoVO {
 
   /** 分类目录 */
   @NotNull(message = "分类目录不能为空！")
-  private Long dirId;
+  private String dirId;
 
   /** 提示级别 0-提示 1-一般 2-严重 3-致命 */
   @NotNull(message = "提示级别不能为空！")
@@ -54,13 +54,10 @@ public class DqcSchedulerBasicInfoVO {
   @NotBlank(message = "主题不能为空！")
   private String notifyThemeId;
 
-  /** 运行状态 0-停止 1-启动 */
-  private Integer runState;
-
-  /** 调度开启状态 0-停止调度 1-启动调度 */
+  /** 调度开启状态 0-停止 1-启动 */
   private Integer schedulerOpenState;
 
-  /** 调度状态 0-未启动 1-调度中 2-运行中 3-运行失败 4-正常结束 */
+  /** 调度状态 0-未启动 1-调度中 2-运行中 3-失败 4-结束 */
   private Integer schedulerState;
 
   /** 创建人 */

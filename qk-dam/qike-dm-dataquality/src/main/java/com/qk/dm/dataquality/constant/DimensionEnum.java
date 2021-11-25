@@ -1,5 +1,8 @@
 package com.qk.dm.dataquality.constant;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum DimensionEnum {
   INTEGRITY(1, "完整性"),
   UNIQUENESS(2, "唯一性"),
@@ -8,8 +11,10 @@ public enum DimensionEnum {
   ACCURACY(5, "准确性"),
   UNIFORMITY(6, "一致性");
 
-  private Integer code;
   private String name;
+  @EnumValue
+  @JsonValue
+  private Integer code;
 
   DimensionEnum(Integer code, String name) {
     this.code = code;
@@ -23,6 +28,11 @@ public enum DimensionEnum {
       }
     }
     return null;
+  }
+
+  @Override
+  public String toString() {
+    return this.name;
   }
 
   public Integer getCode() {

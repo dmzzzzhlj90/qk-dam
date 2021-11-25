@@ -40,7 +40,7 @@ public class TenantManager {
 
     public static TenantDTO queryTenantInfo(DefaultApi defaultApi) {
         List<TenantDTO> tenantDTOList = queryTenantInfoList(defaultApi);
-        List<TenantDTO> tenantDTOS = tenantDTOList.stream().filter(tenantDTO -> tenantDTO.getTenantCode().equals(TENANT_ROOT)).collect(Collectors.toList());
-        return tenantDTOS.get(0);
+        List<TenantDTO> tenantDTOs = tenantDTOList.stream().filter(tenantDTO -> tenantDTO.getTenantCode().equals(TENANT_ROOT)).collect(Collectors.toList());
+        return tenantDTOs.get(0);
     }
 }

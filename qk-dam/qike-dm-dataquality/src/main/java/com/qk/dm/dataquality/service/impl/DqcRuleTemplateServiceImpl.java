@@ -2,7 +2,6 @@ package com.qk.dm.dataquality.service.impl;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.alibaba.druid.DbType;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
@@ -20,6 +19,7 @@ import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -64,27 +64,11 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
-  private void parseStatements(String engineType, String sql) {
-    Arrays.asList(engineType.split(","))
-        .forEach(
-            i -> {
-              if (Integer.parseInt(i) == DataSourceEnum.CALCULATE_ENGINE_HIVE.getCode()
-                  && !SqlParserFactory.parseStatements(sql, DbType.hive)) {
-                throw new BizException("本sql hive不适用！！！");
-              }
-              if (Integer.parseInt(i) == DataSourceEnum.CALCULATE_ENGINE_MYSQL.getCode()
-                  && !SqlParserFactory.parseStatements(sql, DbType.mysql)) {
-                throw new BizException("本sql mysql不适用！！！");
-              }
-            });
-  }
-
   @Override
   public void update(DqcRuleTemplateVo dqcRuleTemplateVo) {
     DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
-    if (Objects.equals(dqcRuleTemplate.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
-      throw new BizException("上线规则模版不支持修改！！！");
-    }
+    checkPublishState(dqcRuleTemplate, "上线规则模版不支持修改！！！");
+    DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo, dqcRuleTemplate);
     // todo 添加修改人
     dqcRuleTemplate.setUpdateUserid(1L);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
@@ -105,9 +89,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   public void deleteOne(Long id) {
     // todo 工作流下线
     DqcRuleTemplate dqcRuleTemplate = getInfoById(id);
-    if (Objects.equals(dqcRuleTemplate.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
-      throw new BizException("上线规则模版不支持删除！！！");
-    }
+    checkPublishState(dqcRuleTemplate, "上线规则模版不支持删除！！！");
     dqcRuleTemplate.setDelFlag(DqcConstant.DEL_FLAG_DEL);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
@@ -117,20 +99,16 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     // todo 工作流下线
     Iterable<Long> idList =
         Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-    List<DqcRuleTemplate> idcTimeLimitList = dqcRuleTemplateRepository.findAllById(idList);
-    if (idcTimeLimitList.isEmpty()) {
-      throw new BizException("当前要删除的id为：" + ids + " 的数据，不存在！！！");
-    }
-    idcTimeLimitList.stream()
+    List<DqcRuleTemplate> ruleTemplates = dqcRuleTemplateRepository.findAllById(idList);
+    checkInfo(ids, ruleTemplates);
+    ruleTemplates.stream()
         .peek(
-            i -> {
-              if (Objects.equals(i.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
-                throw new BizException("上线规则模版不支持删除！！！");
-              }
-              i.setDelFlag(DqcConstant.DEL_FLAG_DEL);
+            ruleTemplate -> {
+              checkPublishState(ruleTemplate, "上线规则模版不支持删除！！！");
+              ruleTemplate.setDelFlag(DqcConstant.DEL_FLAG_DEL);
             })
         .collect(Collectors.toList());
-    dqcRuleTemplateRepository.saveAll(idcTimeLimitList);
+    dqcRuleTemplateRepository.saveAll(ruleTemplates);
   }
 
   @Override
@@ -220,9 +198,37 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
   private DqcRuleTemplate getInfoById(Long id) {
     Optional<DqcRuleTemplate> info = dqcRuleTemplateRepository.findById(id);
+    checkInfo(id, info);
+    return info.get();
+  }
+
+  private void checkInfo(Long id, Optional<DqcRuleTemplate> info) {
     if (info.isEmpty()) {
       throw new BizException("id为：" + id + " 的模版不存在！！！");
     }
-    return info.get();
+  }
+
+  private void checkInfo(String ids, List<DqcRuleTemplate> idcTimeLimitList) {
+    if (CollectionUtils.isEmpty(idcTimeLimitList)) {
+      throw new BizException("当前要删除的id为：" + ids + " 的数据，不存在！！！");
+    }
+  }
+
+  private void checkPublishState(DqcRuleTemplate dqcRuleTemplate, String s) {
+    if (Objects.equals(dqcRuleTemplate.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
+      throw new BizException(s);
+    }
+  }
+
+  private void parseStatements(String engineType, String sql) {
+    Arrays.stream(engineType.split(","))
+        .peek(i -> checkSql(sql, DataSourceEnum.fromValue(Integer.parseInt(i))))
+        .collect(Collectors.toList());
+  }
+
+  private void checkSql(String sql, DataSourceEnum dataSourceEnums) {
+    if (!SqlParserFactory.parseStatements(sql, dataSourceEnums.getDbType())) {
+      throw new BizException("本sql " + dataSourceEnums.getName() + " 不适用！！！");
+    }
   }
 }

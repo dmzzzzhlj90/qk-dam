@@ -2,10 +2,6 @@ package com.qk.dm.dataquality.dolphinapi.constant;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
-/**
- * @author qkwei
- */
-
 public enum Priority {
     /**
      * 0 highest priority
@@ -14,13 +10,13 @@ public enum Priority {
      * 3 lower priority
      * 4 lowest priority
      */
-    HIGHEST(0, "highest"),
-    HIGH(1, "high"),
-    MEDIUM(2, "medium"),
-    LOW(3, "low"),
-    LOWEST(4, "lowest");
+    HIGHEST(0, "HIGHEST"),
+    HIGH(1, "HIGH"),
+    MEDIUM(2, "MEDIUM"),
+    LOW(3, "LOW"),
+    LOWEST(4, "LOWEST");
 
-    Priority(int code, String descp) {
+    Priority(int code, String descp){
         this.code = code;
         this.descp = descp;
     }

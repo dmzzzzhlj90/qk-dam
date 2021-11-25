@@ -38,12 +38,10 @@ public class DqcSchedulerBasicInfoController {
    * @param dsdSchedulerAllParamsVO
    * @return DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>>
    */
-  @GetMapping("/page/list")
+  @PostMapping("/page/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-  public DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>> searchPageList(
-      @RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcSchedulerBasicInfoService.searchPageList(dsdSchedulerAllParamsVO));
+  public DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerBasicInfoService.searchPageList(dsdSchedulerAllParamsVO));
   }
 
   /**

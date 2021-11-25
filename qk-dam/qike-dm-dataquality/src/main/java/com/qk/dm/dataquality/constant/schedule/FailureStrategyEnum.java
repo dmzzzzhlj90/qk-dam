@@ -1,24 +1,19 @@
 package com.qk.dm.dataquality.constant.schedule;
 
+/**
+ * 失败策略
+ *
+ * @author shenpengjie
+ */
 public enum FailureStrategyEnum {
-  CONTINUE(1, "CONTINUE"),
-  END(2, "END");
+  // 失败策略
+  CONTINUE("CONTINUE"),
+  END("END");
 
-  Integer code;
   String value;
 
-  FailureStrategyEnum(Integer code, String value) {
-    this.code = code;
+  FailureStrategyEnum(String value) {
     this.value = value;
-  }
-
-  public static FailureStrategyEnum fromValue(Integer code) {
-    for (FailureStrategyEnum b : FailureStrategyEnum.values()) {
-      if (b.code.equals(code)) {
-        return b;
-      }
-    }
-    throw new IllegalArgumentException("Unexpected id '" + code + "'");
   }
 
   public String getValue() {

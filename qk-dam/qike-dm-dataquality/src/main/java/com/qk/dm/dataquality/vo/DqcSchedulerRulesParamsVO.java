@@ -34,7 +34,7 @@ public class DqcSchedulerRulesParamsVO {
     /**
      * 规则类型 1-库级 2-表级 3-字段级
      */
-    private Integer ruleType;
+    private String ruleType;
 
     /**
      * 数据库名称

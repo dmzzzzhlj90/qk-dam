@@ -40,9 +40,9 @@ public class DqcSchedulerRulesVO {
     private Long ruleTempId;
 
     /**
-     * 规则类型 1-库级 2-表级 3-字段级
+     * 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则";
      */
-    private Integer ruleType;
+    private String ruleType;
 
     /**
      * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔
@@ -87,12 +87,12 @@ public class DqcSchedulerRulesVO {
     /**
      * 创建人
      */
-    private Long createUserid;
+    private String createUserid;
 
     /**
      * 修改人
      */
-    private Long updateUserid;
+    private String updateUserid;
 
     /**
      * 删除标识(0-保留 1-删除)

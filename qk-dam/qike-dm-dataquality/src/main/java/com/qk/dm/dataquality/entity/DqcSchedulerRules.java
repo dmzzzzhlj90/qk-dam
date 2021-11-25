@@ -91,13 +91,13 @@ public class DqcSchedulerRules implements Serializable {
      * 创建人
      */
     @Column(name = "create_userid", nullable = false)
-    private Long createUserid;
+    private String createUserid;
 
     /**
      * 修改人
      */
     @Column(name = "update_userid")
-    private Long updateUserid;
+    private String updateUserid;
 
     /**
      * 删除标识(0-保留 1-删除)
