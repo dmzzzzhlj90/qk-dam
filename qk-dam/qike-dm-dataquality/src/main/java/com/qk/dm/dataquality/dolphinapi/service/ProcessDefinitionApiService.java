@@ -1,5 +1,6 @@
 package com.qk.dm.dataquality.dolphinapi.service;
 
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessDefinitionDTO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +14,20 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ProcessDefinitionApiService {
 
-  void save(DqcSchedulerInfoVO dqcSchedulerInfoVO);
+    void save(DqcSchedulerInfoVO dqcSchedulerInfoVO);
 
-  void release(Integer processDefinitionId, Integer releaseState);
+    ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId);
 
-  void deleteOne(Integer processDefinitionId);
+    void release(Integer processDefinitionId, Integer releaseState);
 
-  void verifyName(String name);
+    void deleteOne(Integer processDefinitionId);
 
-  void copy(Integer processDefinitionId);
+    void verifyName(String name);
 
-  void startCheck(Integer processDefinitionId);
+    void copy(Integer processDefinitionId);
 
-  void startInstance(Integer processDefinitionId);
+    void startCheck(Integer processDefinitionId);
+
+    void startInstance(Integer processDefinitionId);
+
 }
