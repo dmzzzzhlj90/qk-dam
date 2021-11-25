@@ -4,6 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDto;
 import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDto;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
@@ -114,29 +115,29 @@ public class DqcRuleTemplateController {
   /**
    * 规则模版下拉列表
    *
-   * @param dqcRuleTemplateVo
+   * @param dqcRuleTemplatePageDto
    * @return
    */
   @GetMapping("/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<DqcRuleTemplateInfoVo>> search(
-      DqcRuleTemplateVo dqcRuleTemplateVo) {
+          DqcRuleTemplatePageDto dqcRuleTemplatePageDto) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleTemplateService.search(dqcRuleTemplateVo));
+        ResultCodeEnum.OK, dqcRuleTemplateService.search(dqcRuleTemplatePageDto));
   }
 
   /**
    * 规则模版分页列表
    *
-   * @param dqcRuleTemplateVo
+   * @param dqcRuleTemplatePageDto
    * @param pagination
    * @return
    */
   @GetMapping("/page/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult<PageResultVO<DqcRuleTemplateInfoVo>> searchPageList(
-      DqcRuleTemplateVo dqcRuleTemplateVo, Pagination pagination) {
+          DqcRuleTemplatePageDto dqcRuleTemplatePageDto, Pagination pagination) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplateVo, pagination));
+        ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplatePageDto, pagination));
   }
 }

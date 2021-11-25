@@ -10,7 +10,7 @@ import com.qk.dm.dataquality.dolphinapi.builder.ScheduleDataBuilder;
  */
 public interface ScheduleApiService {
 
-  void create(DqcSchedulerConfigVO dqcSchedulerConfigVO);
+  void create(Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO);
 
   void update(Integer scheduleId, DqcSchedulerConfigVO dqcSchedulerConfigVO);
 

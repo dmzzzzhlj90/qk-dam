@@ -29,6 +29,7 @@ public class DqcRuleTemplateVo {
   private Integer dimensionId;
 
   /** 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔 */
+  @NotNull(message = "适用引擎不能为空！")
   private String engineType;
 
   /** 描述 */

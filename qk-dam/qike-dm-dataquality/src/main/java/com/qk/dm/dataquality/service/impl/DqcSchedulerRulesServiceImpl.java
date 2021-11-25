@@ -173,4 +173,9 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
                     dateExpr.between(dqcSchedulerRulesParamsVO.getBeginDay(), dqcSchedulerRulesParamsVO.getEndDay()));
         }
     }
+
+    @Override
+    public Boolean checkRuleTemp(Long id) {
+        return dqcSchedulerRulesRepository.exists(qDqcSchedulerRules.ruleTempId.eq(id));
+    }
 }

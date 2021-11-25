@@ -9,6 +9,7 @@ import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.builder.InstanceData;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDto;
 import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
@@ -81,10 +82,10 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   }
 
   @Override
-  public void release(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-    DqcSchedulerBasicInfo basicInfo = getBasicInfo(dqcSchedulerBasicInfoVO.getId());
-    basicInfo.setSchedulerState(dqcSchedulerBasicInfoVO.getSchedulerOpenState());
-    basicInfo.setSchedulerOpenState(dqcSchedulerBasicInfoVO.getSchedulerOpenState());
+  public void release(DqcSchedulerBasicInfoReleaseDto infoReleaseDto) {
+    DqcSchedulerBasicInfo basicInfo = getBasicInfo(infoReleaseDto.getId());
+    basicInfo.setSchedulerState(infoReleaseDto.getSchedulerOpenState());
+    basicInfo.setSchedulerOpenState(infoReleaseDto.getSchedulerOpenState());
 
     Integer processDefinitionId = 4;
     Integer scheduleId = null;
@@ -113,7 +114,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   public Object instanceDetailByList(Long id) {
     DqcSchedulerBasicInfo basicInfo = getBasicInfo(id);
     //获取到最近运行实例
-    Integer processDefinitionId = 4;
+    Integer processDefinitionId = DqcConstant.processDefinitionId;
     InstanceData instanceData = dolphinScheduler.detailByList(processDefinitionId);
     //
     InstanceStateTypeEnum instanceStateTypeEnum =
@@ -164,7 +165,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
 
   private void checkState(DqcSchedulerBasicInfo info) {
     if (info.getSchedulerOpenState().equals(SchedulerOpenStateEnum.OPEN.getCode())) {
-      throw new BizException("启动调度后不可操作！！！");
+      throw new BizException("启动调度后不可进行此操作！！！");
     }
   }
 

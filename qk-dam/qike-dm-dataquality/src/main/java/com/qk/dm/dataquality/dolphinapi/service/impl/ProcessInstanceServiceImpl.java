@@ -35,8 +35,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     executeType = "REPEAT_RUNNING";
     try {
       Result result =
-          defaultApi.executeUsingPOST(
-              executeType, DqcConstant.processInstanceId, DqcConstant.projectName);
+          defaultApi.executeUsingPOST(executeType, processInstanceId, DqcConstant.projectName);
       DqcConstant.verification(result, "执行流程实例操作失败{}");
     } catch (ApiException e) {
       DqcConstant.printException(e);
@@ -60,7 +59,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
               null,
               1,
               1,
-              DqcConstant.processDefinitionId,
+              processDefinitionId,
               null,
               null,
               null);

@@ -31,4 +31,5 @@ public interface DqcSchedulerRulesService {
 
     void deleteBulk(String ids);
 
+    Boolean checkRuleTemp(Long id);
 }
