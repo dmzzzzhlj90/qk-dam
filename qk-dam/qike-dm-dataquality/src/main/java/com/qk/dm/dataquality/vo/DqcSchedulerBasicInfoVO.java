@@ -24,78 +24,55 @@ import java.util.Date;
 @Builder
 public class DqcSchedulerBasicInfoVO {
 
-    /**
-     * 主键ID
-     */
-    private Long id;
+  /** 主键ID */
+  private Long id;
 
-    /**
-     * 作业id
-     */
-    private String jobId;
+  /** 作业id */
+  private String jobId;
 
-    /**
-     * 作业名称
-     */
-    @NotBlank(message = "作业名称不能为空！")
-    private String jobName;
+  /** 作业名称 */
+  @NotBlank(message = "作业名称不能为空！")
+  private String jobName;
 
-    /**
-     * 分类目录
-     */
-    @NotNull(message = "分类目录不能为空！")
-    private String dirId;
+  /** 分类目录 */
+  @NotNull(message = "分类目录不能为空！")
+  private String dirId;
 
-    /**
-     * 提示级别 0-提示 1-一般 2-严重 3-致命
-     */
-    @NotNull(message = "提示级别不能为空！")
-    private Integer notifyLevel;
+  /** 提示级别 0-提示 1-一般 2-严重 3-致命 */
+  @NotNull(message = "提示级别不能为空！")
+  private Integer notifyLevel;
 
-    /**
-     * 通知状态 0-关 1-开
-     */
-    @NotNull(message = "通知状态不能为空！")
-    private Integer notifyState;
+  /** 通知状态 0-关 1-开 */
+  @NotNull(message = "通知状态不能为空！")
+  private Integer notifyState;
 
-    /**
-     * 通知类型 1-触发告警 2-运行成功
-     */
-    @NotNull(message = "通知类型不能为空！")
-    private Integer notifyType;
+  /** 通知类型 1-触发告警 2-运行成功 */
+  @NotNull(message = "通知类型不能为空！")
+  private Integer notifyType;
 
-    /**
-     * 主题，多个以逗号分隔
-     */
-    @NotBlank(message = "主题不能为空！")
-    private String notifyThemeId;
+  /** 主题，多个以逗号分隔 */
+  @NotBlank(message = "主题不能为空！")
+  private String notifyThemeId;
 
-    /**
-     * 调度状态 0-未启动(停止调度) 1-调度中(启动调度) 2-运行中(运行) 3-运行失败 4-运行成功
-     */
-    private Integer schedulerState;
+  /** 调度开启状态 0-停止 1-启动 */
+  private Integer schedulerOpenState;
 
-    /**
-     * 创建人
-     */
-    private Long createUserid;
+  /** 调度状态 0-未启动 1-调度中 2-运行中 3-失败 4-结束 */
+  private Integer schedulerState;
 
-    /**
-     * 修改人
-     */
-    private Long updateUserid;
+  /** 创建人 */
+  private Long createUserid;
 
-    /**
-     * 创建时间
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date gmtCreate;
+  /** 修改人 */
+  private Long updateUserid;
 
-    /**
-     * 修改时间
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date gmtModified;
+  /** 创建时间 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date gmtCreate;
+
+  /** 修改时间 */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date gmtModified;
 }

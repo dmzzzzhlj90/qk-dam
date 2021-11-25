@@ -1,19 +1,18 @@
 package com.qk.dm.dataquality.constant.schedule;
 
 /**
- * 发送策略
+ * 任务依赖类型
  *
  * @author shenpengjie
  */
-public enum WarningTypeEnum {
-  NONE("NONE"),
-  SUCCESS("SUCCESS"),
-  FAILURE("FAILURE"),
-  ALL("ALL");
+public enum TaskDependTypeEnum {
+  TASK_ONLY("TASK_ONLY"),
+  TASK_PRE("TASK_PRE"),
+  TASK_POST("TASK_POST");
 
   String value;
 
-  WarningTypeEnum(String value) {
+  TaskDependTypeEnum(String value) {
     this.value = value;
   }
 

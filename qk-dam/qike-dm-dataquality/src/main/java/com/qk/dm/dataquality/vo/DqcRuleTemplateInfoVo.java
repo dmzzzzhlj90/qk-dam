@@ -69,9 +69,9 @@ public class DqcRuleTemplateInfoVo {
   public void setEngineType(String engineType) {
     this.engineType = engineType;
     this.engineName =
-        Arrays.stream(engineType.split(","))
-            .map(i -> DataSourceEnum.fromValue(Integer.parseInt(i)))
-            .collect(Collectors.joining(","));
+            Arrays.stream(engineType.split(","))
+                .map(i -> DataSourceEnum.fromValue(Integer.parseInt(i)).getName())
+                .collect(Collectors.joining(","));
   }
 
   public void setTempType(Integer tempType) {

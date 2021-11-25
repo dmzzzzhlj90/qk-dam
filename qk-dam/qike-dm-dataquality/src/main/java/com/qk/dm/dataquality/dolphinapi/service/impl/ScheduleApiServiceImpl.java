@@ -31,19 +31,27 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   /** createSchedule 创建定时 */
   @Override
   public void create(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+    // 发送组ID
+    Integer warningGroupId = 0;
+    // 收件人
+    String receivers = "";
+    // 收件人(抄送)
+    String receiversCc = "";
+    // WORKER_GROUP
+    String workerGroup = "default";
     try {
       Result result =
           defaultApi.createScheduleUsingPOST(
               DqcConstant.processDefinitionId,
               DqcConstant.projectName,
-              FailureStrategyEnum.fromValue(1).getValue(),
-              ProcessInstancePriorityEnum.fromValue(3).getValue(),
-              "",
-              "",
+              FailureStrategyEnum.CONTINUE.getValue(),
+              ProcessInstancePriorityEnum.MEDIUM.getValue(),
+              receivers,
+              receiversCc,
               schedule(dqcSchedulerConfigVO),
-              0,
-              WarningTypeEnum.fromValue(1).getValue(),
-              "default");
+              warningGroupId,
+              WarningTypeEnum.NONE.getValue(),
+              workerGroup);
       DqcConstant.verification(result, "创建定时失败{},");
     } catch (ApiException e) {
       DqcConstant.printException(e);
@@ -52,19 +60,27 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
 
   @Override
   public void update(Integer scheduleId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+    // 发送组ID
+    Integer warningGroupId = 0;
+    // 收件人
+    String receivers = "";
+    // 收件人(抄送)
+    String receiversCc = "";
+    // WORKER_GROUP
+    String workerGroup = "default";
     try {
       Result result =
           defaultApi.updateScheduleUsingPOST(
               DqcConstant.scheduleId,
               DqcConstant.projectName,
-              FailureStrategyEnum.fromValue(1).getValue(),
-              ProcessInstancePriorityEnum.fromValue(3).getValue(),
-              "",
-              "",
+              FailureStrategyEnum.CONTINUE.getValue(),
+              ProcessInstancePriorityEnum.MEDIUM.getValue(),
+              receivers,
+              receiversCc,
               schedule(dqcSchedulerConfigVO),
-              0,
-              WarningTypeEnum.fromValue(1).getValue(),
-              "default");
+              warningGroupId,
+              WarningTypeEnum.NONE.getValue(),
+              workerGroup);
       DqcConstant.verification(result, "修改定时失败{},");
     } catch (ApiException e) {
       DqcConstant.printException(e);
@@ -141,8 +157,11 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
 
   private String schedule(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     JSONObject object = new JSONObject();
-    object.put("startTime", DateUtil.format(dqcSchedulerConfigVO.getEffectiveTimeStart(), DqcConstant.format));
-    object.put("endTime", DateUtil.format(dqcSchedulerConfigVO.getEffectiveTimeEnt(), DqcConstant.format));
+    object.put(
+        "startTime",
+        DateUtil.format(dqcSchedulerConfigVO.getEffectiveTimeStart(), DqcConstant.format));
+    object.put(
+        "endTime", DateUtil.format(dqcSchedulerConfigVO.getEffectiveTimeEnt(), DqcConstant.format));
     object.put("crontab", dqcSchedulerConfigVO.getCron());
     return object.toJSONString();
   }
