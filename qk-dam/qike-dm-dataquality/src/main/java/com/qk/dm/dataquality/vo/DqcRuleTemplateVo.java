@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * @author shenpengjie
+ */
 @Data
 public class DqcRuleTemplateVo {
 
@@ -39,7 +42,4 @@ public class DqcRuleTemplateVo {
   /** 结果定义 */
   @NotBlank(message = "结果定义不能为空！")
   private String tempResult;
-
-  /** 发布状态 0-下线 1-发布 */
-  private Integer publishState;
 }

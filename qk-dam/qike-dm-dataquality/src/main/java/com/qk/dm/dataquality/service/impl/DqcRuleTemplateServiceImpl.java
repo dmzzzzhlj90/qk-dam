@@ -12,6 +12,7 @@ import com.qk.dm.dataquality.constant.TempTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcRuleTemplateMapper;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDto;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
@@ -75,14 +76,12 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   }
 
   @Override
-  public void release(DqcRuleTemplateVo dqcRuleTemplateVo) {
-    if (dqcRuleTemplateVo.getId() != null && dqcRuleTemplateVo.getPublishState() != null) {
-      DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
-      // todo 添加修改人
-      dqcRuleTemplate.setUpdateUserid(1L);
-      dqcRuleTemplate.setPublishState(dqcRuleTemplateVo.getPublishState());
-      dqcRuleTemplateRepository.save(dqcRuleTemplate);
-    }
+  public void release(DqcRuleTemplateReleaseDto dqcRuleTemplateReleaseDto) {
+    DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateReleaseDto.getId());
+    // todo 添加修改人
+    dqcRuleTemplate.setUpdateUserid(1L);
+    dqcRuleTemplate.setPublishState(dqcRuleTemplateReleaseDto.getPublishState());
+    dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
   @Override

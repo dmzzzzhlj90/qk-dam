@@ -4,6 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDto;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
@@ -62,13 +63,14 @@ public class DqcRuleTemplateController {
   /**
    * 发布
    *
-   * @param dqcRuleTemplateVo
+   * @param dqcRuleTemplateReleaseDto
    * @return
    */
-  @PutMapping("release")
+  @PutMapping("/release")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult release(@RequestBody DqcRuleTemplateVo dqcRuleTemplateVo) {
-    dqcRuleTemplateService.release(dqcRuleTemplateVo);
+  public DefaultCommonResult release(
+      @RequestBody @Validated DqcRuleTemplateReleaseDto dqcRuleTemplateReleaseDto) {
+    dqcRuleTemplateService.release(dqcRuleTemplateReleaseDto);
     return DefaultCommonResult.success();
   }
 
@@ -91,9 +93,9 @@ public class DqcRuleTemplateController {
    * @param ids
    * @return
    */
-  @DeleteMapping("/root/{ids}")
+  @DeleteMapping("/bulk")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+  public DefaultCommonResult deleteBulk(@RequestParam("ids") String ids) {
     dqcRuleTemplateService.deleteBulk(ids);
     return DefaultCommonResult.success();
   }

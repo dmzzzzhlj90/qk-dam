@@ -90,7 +90,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   @Override
   public void online(Integer scheduleId) {
     try {
-      Result result = defaultApi.onlineUsingPOST(DqcConstant.scheduleId, DqcConstant.projectName);
+      Result result = defaultApi.onlineUsingPOST(scheduleId, DqcConstant.projectName);
       DqcConstant.verification(result, "定时上线失败{},");
     } catch (ApiException e) {
       DqcConstant.printException(e);
@@ -100,7 +100,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   @Override
   public void offline(Integer scheduleId) {
     try {
-      Result result = defaultApi.offlineUsingPOST(DqcConstant.scheduleId, DqcConstant.projectName);
+      Result result = defaultApi.offlineUsingPOST(scheduleId, DqcConstant.projectName);
       DqcConstant.verification(result, "定时下线失败{},");
     } catch (ApiException e) {
       DqcConstant.printException(e);

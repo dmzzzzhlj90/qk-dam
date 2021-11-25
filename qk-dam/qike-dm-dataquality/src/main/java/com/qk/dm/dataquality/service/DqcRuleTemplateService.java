@@ -2,6 +2,7 @@ package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDto;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVo;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVo;
 
@@ -27,7 +28,7 @@ public interface DqcRuleTemplateService {
 
   DqcRuleTemplateInfoVo detail(Long id);
 
-  void release(DqcRuleTemplateVo dqcRuleTemplateVo);
+  void release(DqcRuleTemplateReleaseDto dqcRuleTemplateReleaseDto);
 
   List<DqcRuleTemplateInfoVo> search(DqcRuleTemplateVo dqcRuleTemplateVo);
 }
