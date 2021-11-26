@@ -1,8 +1,10 @@
 package com.qk.dm.datamodel.util;
 
 import java.text.NumberFormat;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zys
@@ -10,14 +12,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 1.0.0
  */
 public class CheckUtil {
-  public static Boolean checkRepeat(List<String> list) {
-    AtomicBoolean checkParms = new AtomicBoolean(false);
-    Set stringSet=new HashSet<>(list);
-    if (stringSet.size() == list.size()){
-      checkParms.set(true);
-    }
-    return checkParms.get();
-  }
 
   /**
    * 获取百分比

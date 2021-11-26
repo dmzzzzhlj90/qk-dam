@@ -48,7 +48,9 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
-
+    compile('org.apache.hive:hive-jdbc:3.1.2'){
+        exclude group: '*'
+    }
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.mapstruct:mapstruct'
