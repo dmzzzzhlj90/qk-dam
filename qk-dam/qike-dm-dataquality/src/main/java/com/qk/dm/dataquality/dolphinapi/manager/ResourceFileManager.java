@@ -4,9 +4,9 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.model.Result;
+import com.qk.dm.dataquality.dolphinapi.constant.ResourceType;
 import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ResourceComponentDTO;
-import org.apache.dolphinscheduler.common.enums.ResourceType;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
