@@ -11,6 +11,7 @@ import com.qk.datacenter.model.Result;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.*;
 import com.qk.dm.dataquality.dolphinapi.builder.LocationsBuilder;
+import com.qk.dm.dataquality.dolphinapi.builder.ProcessData;
 import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiService {
 
+
     private final DefaultApi defaultApi;
 
     @Autowired
@@ -46,14 +48,15 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             // 获取DolphinScheduler 租户信息
             TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi);
             // 构建ProcessData对象
-            ProcessDataBuilder processDataBuilder =
-                    ProcessDataBuilder.builder()
-                            .build()
-                            .info(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO);
-            ProcessDataDTO processData = processDataBuilder.getProcessData();
+            ProcessDataDTO processData = ProcessDataBuilder.builder()
+                    .build()
+                    .info(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO).getProcessData();
+
             // 构建locations
-            LocationsDTO locationsDTO =
-                    LocationsBuilder.builder().build().info(dqcSchedulerBasicInfoVO).taskNodeLocations();
+            LocationsDTO locationsDTO = LocationsBuilder.builder()
+                    .build()
+                    .info(dqcSchedulerBasicInfoVO)
+                    .taskNodeLocations();
 
             // 创建工作流实例
             String connects = "[]";
@@ -98,8 +101,9 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             Result result = defaultApi.queryProcessDefinitionListUsingGET(DqcConstant.projectName);
             DqcConstant.verification(result, "查询流程定义列表失败{}");
             JSONArray objects = JSONArray.parseArray(JSONArray.toJSONString(result.getData()));
-            return (List<com.qk.dm.dataquality.dolphinapi.builder.ProcessData>)
-                    JSON.toJavaObject(objects, com.qk.dm.dataquality.dolphinapi.builder.ProcessData.class);
+            List<ProcessData> processData = (List<ProcessData>)
+                    JSON.toJavaObject(objects, ProcessData.class);
+            return processData;
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
