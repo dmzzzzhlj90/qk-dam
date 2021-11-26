@@ -1,0 +1,24 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java'
+}
+version "${commonLibVersion}"
+group "com.qk.dam.databaseinfoclient"
+
+dependencies {
+    implementation project(":commons-core")
+    implementation project(":metadata-common-core")
+    implementation project(":datasource-common-core")
+
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
+
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
