@@ -4,7 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessDefinitionDTO;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -31,12 +31,12 @@ public class ProcessDefinitionApiController {
     /**
      * 新增规则调度_基础信息
      *
-     * @param dqcSchedulerInfoVO
+     * @param dqcSchedulerBasicInfoVO
      * @return DefaultCommonResult
      */
     @PostMapping("/save")
-    public DefaultCommonResult save(@RequestBody @Validated DqcSchedulerInfoVO dqcSchedulerInfoVO) {
-        processDefinitionApiService.save(dqcSchedulerInfoVO);
+    public DefaultCommonResult save(@RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        processDefinitionApiService.save(dqcSchedulerBasicInfoVO);
         return DefaultCommonResult.success();
     }
 

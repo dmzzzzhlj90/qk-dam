@@ -16,7 +16,7 @@ import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.manager.TenantManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public void save(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+    public void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         try {
             // 获取DolphinScheduler 资源信息
             ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
@@ -49,19 +49,19 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             ProcessDataBuilder processDataBuilder =
                     ProcessDataBuilder.builder()
                             .build()
-                            .info(dqcSchedulerInfoVO, mySqlScriptResource, tenantDTO);
+                            .info(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO);
             ProcessDataDTO processData = processDataBuilder.getProcessData();
             // 构建locations
             LocationsDTO locationsDTO =
-                    LocationsBuilder.builder().build().info(dqcSchedulerInfoVO).taskNodeLocations();
+                    LocationsBuilder.builder().build().info(dqcSchedulerBasicInfoVO).taskNodeLocations();
 
             // 创建工作流实例
             String connects = "[]";
             String locations = GsonUtil.toJsonString(locationsDTO.getTaskNodeLocationMap());
-            String name = dqcSchedulerInfoVO.getDqcSchedulerBasicInfoVO().getJobName();
+            String name = dqcSchedulerBasicInfoVO.getJobName();
             String processDefinitionJson = GsonUtil.toJsonString(processData);
             String projectName = "数据质量_test";
-            String description = dqcSchedulerInfoVO.getDqcSchedulerBasicInfoVO().getJobId();
+            String description = dqcSchedulerBasicInfoVO.getJobId();
 
             defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(
                     connects, locations, name, processDefinitionJson, projectName, description);
@@ -71,7 +71,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal,String jobId) {
+    public ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId) {
         ProcessDefinitionDTO processDefinitionDTO = null;
         try {
             Result result = defaultApi.queryProcessDefinitionListPagingUsingGET(1, 100, projectName, searchVal, null);

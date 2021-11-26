@@ -73,8 +73,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     }
 
     @Override
-    public PageResultVO<DqcSchedulerInfoVO> searchPageList(DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
-        List<DqcSchedulerInfoVO> dqcSchedulerInfoVOList = new ArrayList<>();
+    public PageResultVO<DqcSchedulerBasicInfoVO> searchPageList(DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
+        List<DqcSchedulerBasicInfoVO> dqcSchedulerInfoVOList = new ArrayList<>();
         long total;
         //基础信息查询
         Map<String, Object> basicInfoMap = null;
@@ -102,24 +102,24 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     }
 
     @Override
-    public void insert(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+    public void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         //基础信息
-        dqcSchedulerBasicInfoService.insert(dqcSchedulerInfoVO.getDqcSchedulerBasicInfoVO());
+        dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
         //规则信息
-        dqcSchedulerRulesService.insertBulk(dqcSchedulerInfoVO.getDqcSchedulerRulesVOList());
+        dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList());
         //调度配置信息
-        dqcSchedulerConfigService.insert(dqcSchedulerInfoVO.getDqcSchedulerConfigVO());
+        dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
         //TODO
     }
 
     @Override
-    public void update(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+    public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         //基础信息
-        dqcSchedulerBasicInfoService.update(dqcSchedulerInfoVO.getDqcSchedulerBasicInfoVO());
+        dqcSchedulerBasicInfoService.update(dqcSchedulerBasicInfoVO);
         //规则信息
-        dqcSchedulerRulesService.updateBulk(dqcSchedulerInfoVO.getDqcSchedulerRulesVOList());
+        dqcSchedulerRulesService.updateBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList());
         //调度配置信息
-        dqcSchedulerConfigService.update(dqcSchedulerInfoVO.getDqcSchedulerConfigVO());
+        dqcSchedulerConfigService.update(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
         //TODO
     }
 
@@ -211,27 +211,25 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         return schedulerRulesVOList.stream().collect(Collectors.groupingBy(DqcSchedulerRulesVO::getJobId));
     }
 
-    private void buildSchedulerInfo(List<DqcSchedulerInfoVO> dqcSchedulerInfoVOList,
+    private void buildSchedulerInfo(List<DqcSchedulerBasicInfoVO> dqcSchedulerInfoVOList,
                                     List<DqcSchedulerBasicInfo> dqcSchedulerBasicInfoList,
                                     Map<String, List<DqcSchedulerRulesVO>> schedulerRulesMap,
                                     Map<String, List<DqcSchedulerConfigVO>> schedulerConfigMap) {
         if (dqcSchedulerBasicInfoList != null && dqcSchedulerBasicInfoList.size() > 0) {
             for (DqcSchedulerBasicInfo dqcSchedulerBasicInfo : dqcSchedulerBasicInfoList) {
-                DqcSchedulerInfoVO.DqcSchedulerInfoVOBuilder schedulerInfoVOBuilder = DqcSchedulerInfoVO.builder();
                 String taskId = dqcSchedulerBasicInfo.getJobId();
                 DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfoVO(dqcSchedulerBasicInfo);
                 List<DqcSchedulerRulesVO> schedulerRulesVOList = schedulerRulesMap.get(taskId);
                 List<DqcSchedulerConfigVO> dqcSchedulerConfigVOList = schedulerConfigMap.get(taskId);
 
-                schedulerInfoVOBuilder.dqcSchedulerBasicInfoVO(dqcSchedulerBasicInfoVO);
                 if (null != schedulerRulesVOList && schedulerRulesVOList.size() > 0) {
-                    schedulerInfoVOBuilder.dqcSchedulerRulesVOList(schedulerRulesVOList);
+                    dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(schedulerRulesVOList);
                 }
 
                 if (null != dqcSchedulerConfigVOList && dqcSchedulerConfigVOList.size() > 0) {
-                    schedulerInfoVOBuilder.dqcSchedulerConfigVO(dqcSchedulerConfigVOList.get(0));
+                    dqcSchedulerBasicInfoVO.setDqcSchedulerConfigVO(dqcSchedulerConfigVOList.get(0));
                 }
-                dqcSchedulerInfoVOList.add(schedulerInfoVOBuilder.build());
+                dqcSchedulerInfoVOList.add(dqcSchedulerBasicInfoVO);
             }
         }
     }
