@@ -73,7 +73,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   @Override
   public void deleteOne(Long id) {
     dqcSchedulerBasicInfoRepository.delete(getInfoById(id));
-    //todo 删除 规则、配置、调度 是否在本处删除
+    // todo 删除 规则、配置、调度 是否在本处删除
   }
 
   @Override
@@ -87,10 +87,10 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     basicInfo.setSchedulerState(infoReleaseDto.getSchedulerOpenState());
     basicInfo.setSchedulerOpenState(infoReleaseDto.getSchedulerOpenState());
 
-    Integer processDefinitionId = 4;
+    Integer processDefinitionId = DqcConstant.processDefinitionId;
     Integer scheduleId = null;
     if (basicInfo.getSchedulerOpenState().equals(SchedulerOpenStateEnum.OPEN.getCode())) {
-      // todo 查询定时id
+      // todo 查询定时id，根据
       dolphinScheduler.online(processDefinitionId, scheduleId);
     } else {
       dolphinScheduler.offline(processDefinitionId);
@@ -113,22 +113,21 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   @Override
   public Object instanceDetailByList(Long id) {
     DqcSchedulerBasicInfo basicInfo = getBasicInfo(id);
-    //获取到最近运行实例
+    // 获取到最近运行实例
     Integer processDefinitionId = DqcConstant.processDefinitionId;
     InstanceData instanceData = dolphinScheduler.detailByList(processDefinitionId);
-    //
     InstanceStateTypeEnum instanceStateTypeEnum =
         InstanceStateTypeEnum.fromValue(instanceData.getState());
     if (instanceStateTypeEnum != null) {
-      instanceData.setStateName(instanceStateTypeEnum.getNotes());
+      instanceData.setStateName(instanceStateTypeEnum.getSchedulerState().getValue());
       basicInfo.setSchedulerState(instanceStateTypeEnum.getSchedulerState().getCode());
       // 判断开启调度
       if (basicInfo.getSchedulerOpenState().equals(SchedulerOpenStateEnum.OPEN.getCode())) {
-        switch (instanceStateTypeEnum.getSchedulerState().getCode()){
-          case 4:
+        switch (instanceStateTypeEnum.getSchedulerState()) {
+          case RUN_SUCCEED:
             basicInfo.setSchedulerState(SchedulerStateEnum.SCHEDULING.getCode());
             break;
-          case 3:
+          case RUN_FAIL:
             basicInfo.setSchedulerOpenState(SchedulerOpenStateEnum.CLOSE.getCode());
             break;
           default:
@@ -163,6 +162,12 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     return info;
   }
 
+  private void checkBasicInfo(Long id, DqcSchedulerBasicInfo info) {
+    if (info == null) {
+      throw new BizException("id为：" + id + " 的任务，不存在！！！");
+    }
+  }
+
   private void checkState(DqcSchedulerBasicInfo info) {
     if (info.getSchedulerOpenState().equals(SchedulerOpenStateEnum.OPEN.getCode())) {
       throw new BizException("启动调度后不可进行此操作！！！");
@@ -172,12 +177,6 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   private void checkBasicInfo(String ids, List<DqcSchedulerBasicInfo> infoList) {
     if (CollectionUtils.isEmpty(infoList)) {
       throw new BizException("id为：" + ids + " 的任务，不存在！！！");
-    }
-  }
-
-  private void checkBasicInfo(Long id, DqcSchedulerBasicInfo info) {
-    if (info == null) {
-      throw new BizException("id为：" + id + " 的任务，不存在！！！");
     }
   }
 }

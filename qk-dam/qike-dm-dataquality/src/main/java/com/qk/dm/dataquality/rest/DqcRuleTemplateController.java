@@ -96,7 +96,7 @@ public class DqcRuleTemplateController {
    */
   @DeleteMapping("/bulk")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult deleteBulk(@NotNull  @RequestParam("ids") String ids) {
+  public DefaultCommonResult deleteBulk(@NotNull @RequestParam("ids") String ids) {
     dqcRuleTemplateService.deleteBulk(ids);
     return DefaultCommonResult.success();
   }
@@ -121,7 +121,7 @@ public class DqcRuleTemplateController {
   @GetMapping("/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<DqcRuleTemplateInfoVO>> search(
-          DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
+      DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dqcRuleTemplateService.search(dqcRuleTemplatePageDto));
   }
@@ -132,10 +132,10 @@ public class DqcRuleTemplateController {
    * @param dqcRuleTemplatePageDto
    * @return
    */
-  @GetMapping("/page/list")
+  @PostMapping("/page/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult<PageResultVO<DqcRuleTemplateInfoVO>> searchPageList(
-          DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
+      @RequestBody DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplatePageDto));
   }

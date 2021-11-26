@@ -84,11 +84,11 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   @Override
   public void release(DqcRuleTemplateReleaseDTO dqcRuleTemplateReleaseDto) {
     DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateReleaseDto.getId());
+    // 判断是否有引用
+    checkRulesIsQuote(dqcRuleTemplateReleaseDto.getPublishState(), dqcRuleTemplate.getId());
+    dqcRuleTemplate.setPublishState(dqcRuleTemplateReleaseDto.getPublishState());
     // todo 添加修改人
     dqcRuleTemplate.setUpdateUserid(1L);
-    // todo 判断是否有引用
-    checkRulesIsExist(dqcRuleTemplateReleaseDto.getPublishState(), dqcRuleTemplate.getId());
-    dqcRuleTemplate.setPublishState(dqcRuleTemplateReleaseDto.getPublishState());
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
@@ -105,7 +105,9 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
   public void deleteBulk(String ids) {
     // todo 工作流下线
     Iterable<Long> idList =
-        Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        Arrays.stream(ids.split(","))
+                .map(Long::valueOf)
+                .collect(Collectors.toList());
     List<DqcRuleTemplate> ruleTemplates = dqcRuleTemplateRepository.findAllById(idList);
     checkInfo(ids, ruleTemplates);
     ruleTemplates.stream()
@@ -243,7 +245,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
   }
 
-  private void checkRulesIsExist(Integer publishState, Long id) {
+  private void checkRulesIsQuote(Integer publishState, Long id) {
     if (publishState.equals(DqcConstant.PUBLISH_STATE_DOWN)
         && dqcSchedulerRulesService.checkRuleTemp(id)) {
       throw new BizException("有规则引用不允许下线");
