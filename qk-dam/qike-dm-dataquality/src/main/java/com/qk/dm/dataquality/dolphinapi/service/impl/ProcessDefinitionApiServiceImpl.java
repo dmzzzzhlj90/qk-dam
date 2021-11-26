@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -11,7 +9,6 @@ import com.qk.datacenter.model.Result;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.*;
 import com.qk.dm.dataquality.dolphinapi.builder.LocationsBuilder;
-import com.qk.dm.dataquality.dolphinapi.builder.ProcessData;
 import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
@@ -96,20 +93,6 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
     /****************************************************************************/
 
-    public List<com.qk.dm.dataquality.dolphinapi.builder.ProcessData> list() {
-        try {
-            Result result = defaultApi.queryProcessDefinitionListUsingGET(DqcConstant.projectName);
-            DqcConstant.verification(result, "查询流程定义列表失败{}");
-            JSONArray objects = JSONArray.parseArray(JSONArray.toJSONString(result.getData()));
-            List<ProcessData> processData = (List<ProcessData>)
-                    JSON.toJavaObject(objects, ProcessData.class);
-            return processData;
-        } catch (ApiException e) {
-            DqcConstant.printException(e);
-        }
-        return null;
-    }
-
     /**
      * 流程定义发布
      *
@@ -121,7 +104,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         try {
             Result result =
                     defaultApi.releaseProcessDefinitionUsingPOST(
-                            processDefinitionId, DqcConstant.projectName, releaseState);
+                            processDefinitionId, DqcConstant.PROJECT_NAME, releaseState);
             DqcConstant.verification(result, "流程定义发布失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -138,7 +121,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         try {
             Result result =
                     defaultApi.deleteProcessDefinitionByIdUsingGET(
-                            DqcConstant.projectName, processDefinitionId);
+                            DqcConstant.PROJECT_NAME, processDefinitionId);
             DqcConstant.verification(result, "删除流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -153,7 +136,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     @Override
     public void verifyName(String name) {
         try {
-            Result result = defaultApi.verifyProcessDefinitionNameUsingGET(name, DqcConstant.projectName);
+            Result result = defaultApi.verifyProcessDefinitionNameUsingGET(name, DqcConstant.PROJECT_NAME);
             DqcConstant.verification(result, "验证失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -169,7 +152,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public void copy(Integer processDefinitionId) {
         try {
             Result result =
-                    defaultApi.copyProcessDefinitionUsingPOST(processDefinitionId, DqcConstant.projectName);
+                    defaultApi.copyProcessDefinitionUsingPOST(processDefinitionId, DqcConstant.PROJECT_NAME);
             DqcConstant.verification(result, "复制流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -186,7 +169,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         try {
             Result result =
                     defaultApi.startCheckProcessDefinitionUsingPOST(
-                            processDefinitionId, DqcConstant.projectName);
+                            processDefinitionId, DqcConstant.PROJECT_NAME);
             DqcConstant.verification(result, "检查流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -220,7 +203,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                             FailureStrategyEnum.CONTINUE.getValue(),
                             processDefinitionId,
                             ProcessInstancePriorityEnum.MEDIUM.getValue(),
-                            DqcConstant.projectName,
+                            DqcConstant.PROJECT_NAME,
                             scheduleTime,
                             warningGroupId,
                             WarningTypeEnum.NONE.getValue(),

@@ -1,7 +1,7 @@
 package com.qk.dm.dataquality.dolphinapi.service;
 
-import com.qk.dm.dataquality.dolphinapi.builder.InstanceData;
-import com.qk.dm.dataquality.dolphinapi.builder.InstanceDataBuilder;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
 
 /**
  * @author shenpj
@@ -12,7 +12,7 @@ public interface ProcessInstanceService {
 
     void execute(Integer processInstanceId, String executeType);
 
-    InstanceDataBuilder search(Integer processDefinitionId);
+    ProcessInstanceResultDTO search(Integer processDefinitionId, Integer pageNo, Integer pageSize);
 
-    InstanceData detail(Integer processInstanceId);
+    ProcessInstanceDTO detail(Integer processInstanceId);
 }

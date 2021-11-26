@@ -1,21 +1,24 @@
 package com.qk.dm.dataquality.constant;
 
 /** @author shenpengjie */
-public enum SchedulerOpenStateEnum {
+public enum SchedulerInstanceStateEnum {
   // 处理默认状态-未启动
-  CLOSE(0, "关闭"),
-  OPEN(1, "开启");
+  INIT(0, "初始状态"),
+  RUNING(1, "运行中"),
+  STOP(2, "停止"),
+  RUN_SUCCEED(3, "成功"),
+  RUN_FAIL(4, "失败");
 
   Integer code;
   String value;
 
-  SchedulerOpenStateEnum(Integer code, String value) {
+  SchedulerInstanceStateEnum(Integer code, String value) {
     this.code = code;
     this.value = value;
   }
 
-  public static SchedulerOpenStateEnum fromValue(Integer code) {
-    for (SchedulerOpenStateEnum b : SchedulerOpenStateEnum.values()) {
+  public static SchedulerInstanceStateEnum fromValue(Integer code) {
+    for (SchedulerInstanceStateEnum b : SchedulerInstanceStateEnum.values()) {
       if (b.code.equals(code)) {
         return b;
       }

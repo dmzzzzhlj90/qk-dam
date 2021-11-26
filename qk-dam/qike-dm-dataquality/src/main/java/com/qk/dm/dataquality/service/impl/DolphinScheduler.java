@@ -1,11 +1,13 @@
 package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dm.dataquality.constant.DqcConstant;
-import com.qk.dm.dataquality.dolphinapi.builder.InstanceData;
-import com.qk.dm.dataquality.dolphinapi.builder.InstanceDataBuilder;
+import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
+import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
 import com.qk.dm.dataquality.dolphinapi.service.impl.ProcessDefinitionApiServiceImpl;
-import com.qk.dm.dataquality.dolphinapi.service.impl.ProcessInstanceServiceImpl;
+import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,12 +19,12 @@ import org.springframework.stereotype.Service;
 public class DolphinScheduler {
   private final ProcessDefinitionApiServiceImpl processDefinitionApiService;
   private final ScheduleApiService scheduleApiService;
-  private final ProcessInstanceServiceImpl processInstanceService;
+  private final ProcessInstanceService processInstanceService;
 
   public DolphinScheduler(
       ProcessDefinitionApiServiceImpl processDefinitionApiService,
       ScheduleApiService scheduleApiService,
-      ProcessInstanceServiceImpl processInstanceService) {
+      ProcessInstanceService processInstanceService) {
     this.processDefinitionApiService = processDefinitionApiService;
     this.scheduleApiService = scheduleApiService;
     this.processInstanceService = processInstanceService;
@@ -65,6 +67,11 @@ public class DolphinScheduler {
     processDefinitionApiService.startInstance(processDefinitionId);
   }
 
+  public void stop(Integer processDefinitionId) {
+    //停止实例
+    processInstanceService.execute(processDefinitionId, ExecuteTypeEnum.STOP.getCode());
+  }
+
   /**
    * 删除流程
    *
@@ -80,18 +87,18 @@ public class DolphinScheduler {
    * @param processInstanceId
    * @return
    */
-  public InstanceData detail(Integer processInstanceId) {
-    return processInstanceService.detail(processInstanceId);
+  public DqcProcessInstanceVO detail(Integer processInstanceId) {
+    return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(processInstanceService.detail(processInstanceId));
   }
 
   /**
-   * 查询实例列表最新一跳记录
+   * 查询实例列表最新一条记录
    *
    * @param processDefinitionId
    * @return
    */
-  public InstanceData detailByList(Integer processDefinitionId) {
-    InstanceDataBuilder search = processInstanceService.search(processDefinitionId);
-    return search.getTotalList().get(0);
+  public DqcProcessInstanceVO detailByList(Integer processDefinitionId) {
+    ProcessInstanceResultDTO search = processInstanceService.search(processDefinitionId, 1, 1);
+    return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(search.getTotalList().get(0));
   }
 }

@@ -1,13 +1,13 @@
-package com.qk.dm.dataquality.dolphinapi.builder;
+package com.qk.dm.dataquality.vo;
 
 import lombok.Data;
 
-/**
- * @author shenpengjie
- */
+/** @author shenpengjie */
 @Data
-public class InstanceData {
+public class DqcProcessInstanceVO {
   Integer id;
+  /** 工作流名称 */
+  String name;
   /** 流程id */
   Integer processDefinitionId;
   /** 状态 */

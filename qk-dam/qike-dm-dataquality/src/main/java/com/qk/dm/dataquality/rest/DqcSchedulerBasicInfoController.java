@@ -4,7 +4,9 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoRuningDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import lombok.extern.slf4j.Slf4j;
@@ -115,16 +117,16 @@ public class DqcSchedulerBasicInfoController {
     return DefaultCommonResult.success();
   }
 
-  @PutMapping("/{id}/runing")
+  @PutMapping("/runing")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult runing(@PathVariable("id") Long id) {
-    dqcSchedulerBasicInfoService.runing(id);
+  public DefaultCommonResult runing(@RequestBody DqcSchedulerBasicInfoRuningDTO dqcSchedulerBasicInfoRuningDTO) {
+    dqcSchedulerBasicInfoService.runing(dqcSchedulerBasicInfoRuningDTO);
     return DefaultCommonResult.success();
   }
 
   @GetMapping("/{id}/instance")
   //    @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-  public DefaultCommonResult instanceDetailByList(@PathVariable("id") Long id) {
+  public DefaultCommonResult<DqcProcessInstanceVO> instanceDetailByList(@PathVariable("id") Long id) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dqcSchedulerBasicInfoService.instanceDetailByList(id));
   }

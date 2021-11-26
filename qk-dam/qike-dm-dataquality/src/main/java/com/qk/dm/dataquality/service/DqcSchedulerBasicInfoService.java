@@ -2,6 +2,8 @@ package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoRuningDTO;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DqcSchedulerBasicInfoService {
 
-  PageResultVO<DqcSchedulerBasicInfoVO> searchPageList(
-      DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO);
+  PageResultVO<DqcSchedulerBasicInfoVO> searchPageList(DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO);
 
   void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
@@ -29,7 +30,7 @@ public interface DqcSchedulerBasicInfoService {
 
   void release(DqcSchedulerBasicInfoReleaseDTO dqcSchedulerBasicInfoReleaseDto);
 
-  Object instanceDetailByList(Long id);
+  DqcProcessInstanceVO instanceDetailByList(Long id);
 
-  void runing(Long id);
+  void runing(DqcSchedulerBasicInfoRuningDTO dqcSchedulerBasicInfoRuningDTO);
 }
