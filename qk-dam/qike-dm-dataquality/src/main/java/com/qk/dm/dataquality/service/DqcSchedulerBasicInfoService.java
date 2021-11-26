@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public interface DqcSchedulerBasicInfoService {
 
   void deleteBulk(String ids);
 
-  void release(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+  void release(DqcSchedulerBasicInfoReleaseDTO dqcSchedulerBasicInfoReleaseDto);
 
   Object instanceDetailByList(Long id);
 

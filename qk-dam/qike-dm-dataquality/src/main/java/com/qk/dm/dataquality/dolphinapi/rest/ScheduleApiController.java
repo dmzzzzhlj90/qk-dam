@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping("/scheduler")
 public class ScheduleApiController {
   private final ScheduleApiService scheduleApiService;
 
@@ -25,33 +25,34 @@ public class ScheduleApiController {
 
   @PostMapping("")
   public DefaultCommonResult save(
+      Integer processDefinitionId,
       @RequestBody @Validated DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    scheduleApiService.create(dqcSchedulerConfigVO);
+    scheduleApiService.create(processDefinitionId, dqcSchedulerConfigVO);
     return DefaultCommonResult.success();
   }
 
-  @PutMapping("/{id}")
+  @PutMapping("/{scheduleId}")
   public DefaultCommonResult update(
-      @PathVariable("id") Integer id,
+      @PathVariable("scheduleId") Integer id,
       @RequestBody @Validated DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     scheduleApiService.update(id, dqcSchedulerConfigVO);
     return DefaultCommonResult.success();
   }
 
-  @PutMapping("/online/{id}")
-  public DefaultCommonResult online(@PathVariable("id") Integer id) {
+  @PutMapping("/{scheduleId}/online")
+  public DefaultCommonResult online(@PathVariable("scheduleId") Integer id) {
     scheduleApiService.online(id);
     return DefaultCommonResult.success();
   }
 
-  @PutMapping("/offline/{id}")
-  public DefaultCommonResult offline(@PathVariable("id") Integer id) {
+  @PutMapping("/{scheduleId}/offline")
+  public DefaultCommonResult offline(@PathVariable("scheduleId") Integer id) {
     scheduleApiService.offline(id);
     return DefaultCommonResult.success();
   }
 
-  @DeleteMapping("/{id}")
-  public DefaultCommonResult deleteOne(@PathVariable("id") Integer id) {
+  @DeleteMapping("/{scheduleId}")
+  public DefaultCommonResult deleteOne(@PathVariable("scheduleId") Integer id) {
     scheduleApiService.deleteOne(id);
     return DefaultCommonResult.success();
   }
@@ -59,6 +60,6 @@ public class ScheduleApiController {
   @GetMapping("")
   public DefaultCommonResult search(Integer processDefinitionId, Integer pageNo, Integer pageSize) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, scheduleApiService.search(processDefinitionId, 1, 1, null));
+        ResultCodeEnum.OK, scheduleApiService.search(processDefinitionId, pageNo, pageSize, null));
   }
 }

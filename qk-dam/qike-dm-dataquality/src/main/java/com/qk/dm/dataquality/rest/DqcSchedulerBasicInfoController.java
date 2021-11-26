@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
@@ -40,8 +41,10 @@ public class DqcSchedulerBasicInfoController {
    */
   @PostMapping("/page/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-  public DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerBasicInfoService.searchPageList(dsdSchedulerAllParamsVO));
+  public DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>> searchPageList(
+      @RequestBody DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dqcSchedulerBasicInfoService.searchPageList(dsdSchedulerAllParamsVO));
   }
 
   /**
@@ -56,8 +59,7 @@ public class DqcSchedulerBasicInfoController {
       @RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
     dqcSchedulerBasicInfoVO.setJobId(UUID.randomUUID().toString().replaceAll("-", ""));
     dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK,dqcSchedulerBasicInfoVO.getJobId());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerBasicInfoVO.getJobId());
   }
 
   /**
@@ -93,9 +95,9 @@ public class DqcSchedulerBasicInfoController {
    * @param ids
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/root/{ids}")
+  @DeleteMapping("/bulk")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+  public DefaultCommonResult deleteBulk(@RequestParam("ids") String ids) {
     dqcSchedulerBasicInfoService.deleteBulk(ids);
     return DefaultCommonResult.success();
   }
@@ -103,14 +105,13 @@ public class DqcSchedulerBasicInfoController {
   /**
    * 启动调度/停止调度
    *
-   * @param dqcSchedulerBasicInfoVO
+   * @param dqcSchedulerBasicInfoReleaseDto
    * @return
    */
   @PutMapping("/release")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult release(
-          @RequestBody DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-    dqcSchedulerBasicInfoService.release(dqcSchedulerBasicInfoVO);
+  public DefaultCommonResult release(@RequestBody DqcSchedulerBasicInfoReleaseDTO dqcSchedulerBasicInfoReleaseDto) {
+    dqcSchedulerBasicInfoService.release(dqcSchedulerBasicInfoReleaseDto);
     return DefaultCommonResult.success();
   }
 
@@ -122,9 +123,9 @@ public class DqcSchedulerBasicInfoController {
   }
 
   @GetMapping("/{id}/instance")
-//    @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+  //    @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult instanceDetailByList(@PathVariable("id") Long id) {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dqcSchedulerBasicInfoService.instanceDetailByList(id));
+        ResultCodeEnum.OK, dqcSchedulerBasicInfoService.instanceDetailByList(id));
   }
 }

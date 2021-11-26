@@ -1,21 +1,17 @@
 package com.qk.dm.dataquality.dolphinapi.builder;
 
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.constant.Priority;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -49,16 +45,16 @@ public class ProcessDataBuilder {
         return processData;
     }
 
-    public ProcessDataBuilder info(DqcSchedulerInfoVO dqcSchedulerInfoVO, ResourceDTO mySqlScriptResource, TenantDTO tenantDTO) {
-        taskNode(dqcSchedulerInfoVO, mySqlScriptResource);
+    public ProcessDataBuilder info(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, ResourceDTO mySqlScriptResource, TenantDTO tenantDTO) {
+        taskNode(dqcSchedulerBasicInfoVO, mySqlScriptResource);
         globalParams();
         timeout();
         tenantId(tenantDTO);
         return this;
     }
 
-    public ProcessDataBuilder taskNode(DqcSchedulerInfoVO dqcSchedulerInfoVO, ResourceDTO mySqlScriptResource) {
-        processData.setTasks(getTaskNodes(dqcSchedulerInfoVO, mySqlScriptResource));
+    public ProcessDataBuilder taskNode(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, ResourceDTO mySqlScriptResource) {
+        processData.setTasks(getTaskNodes(dqcSchedulerBasicInfoVO, mySqlScriptResource));
         return this;
     }
 
@@ -83,19 +79,17 @@ public class ProcessDataBuilder {
     /**
      * 构建任务实例执行节点信息集合
      *
-     * @param dqcSchedulerInfoVO
+     * @param dqcSchedulerBasicInfoVO
      * @param mySqlScriptResource
      * @return List<TaskNode>
      */
-    public List<TaskNodeDTO> getTaskNodes(DqcSchedulerInfoVO dqcSchedulerInfoVO, ResourceDTO mySqlScriptResource) {
+    public List<TaskNodeDTO> getTaskNodes(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, ResourceDTO mySqlScriptResource) {
         List<TaskNodeDTO> tasks = new ArrayList<>();
-
-        DqcSchedulerBasicInfoVO basicInfoVO = dqcSchedulerInfoVO.getDqcSchedulerBasicInfoVO();
-        List<DqcSchedulerRulesVO> rulesVOList = dqcSchedulerInfoVO.getDqcSchedulerRulesVOList();
+        List<DqcSchedulerRulesVO> rulesVOList = dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList();
         AtomicInteger index = new AtomicInteger();
 
         for (DqcSchedulerRulesVO rulesVO : rulesVOList) {
-            tasks.add(setTaskNodeInfo(basicInfoVO, rulesVO, mySqlScriptResource,index.get()));
+            tasks.add(setTaskNodeInfo(dqcSchedulerBasicInfoVO, rulesVO, mySqlScriptResource,index.get()));
             index.incrementAndGet();
         }
         return tasks;

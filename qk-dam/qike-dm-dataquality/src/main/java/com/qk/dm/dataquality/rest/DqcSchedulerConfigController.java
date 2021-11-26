@@ -90,9 +90,9 @@ public class DqcSchedulerConfigController {
    * @param ids
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/root/{ids}")
+  @DeleteMapping("/bulk")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+  public DefaultCommonResult deleteBulk(@RequestParam("ids") String ids) {
     dqcSchedulerConfigService.deleteBulk(ids);
     return DefaultCommonResult.success();
   }

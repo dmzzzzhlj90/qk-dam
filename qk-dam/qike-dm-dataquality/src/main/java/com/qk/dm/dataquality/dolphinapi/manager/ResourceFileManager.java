@@ -58,7 +58,11 @@ public class ResourceFileManager {
         List<ResourceComponentDTO> resourceComponentList = queryResourceList(defaultApi);
         List<ResourceComponentDTO> resourceComponents = resourceComponentList.stream().filter(resourceComponent -> resourceComponent.getFullName().equals(FULL_NAME_MYSQL)).collect(Collectors.toList());
         ResourceComponentDTO resourceComponent = resourceComponents.get(0);
-        return ResourceDTO.builder().id(resourceComponent.getId()).name(resourceComponent.getName()).res(resourceComponent.getFullName()).build();
+        return ResourceDTO.builder()
+                .id(resourceComponent.getId())
+                .name(resourceComponent.getName())
+                .res(resourceComponent.getFullName())
+                .build();
     }
 
 

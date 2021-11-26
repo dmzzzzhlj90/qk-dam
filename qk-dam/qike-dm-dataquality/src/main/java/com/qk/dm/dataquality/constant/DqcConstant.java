@@ -34,10 +34,7 @@ public class DqcConstant {
 
   /** 临时使用 */
   public static final String projectName = "数据质量";
-
-  public static final Integer scheduleId = 1;
   public static final Integer processDefinitionId = 4;
-  public static final Integer processInstanceId = 1304;
 
   /** 提示级别 */
   public static Map<String, String> getNotifyLevelMap() {

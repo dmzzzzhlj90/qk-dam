@@ -1,8 +1,10 @@
 package com.qk.dm.dataquality.dolphinapi.rest;
 
+import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessDefinitionDTO;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -29,18 +31,32 @@ public class ProcessDefinitionApiController {
     /**
      * 新增规则调度_基础信息
      *
-     * @param dqcSchedulerInfoVO
+     * @param dqcSchedulerBasicInfoVO
      * @return DefaultCommonResult
      */
     @PostMapping("/save")
-    public DefaultCommonResult save(@RequestBody @Validated DqcSchedulerInfoVO dqcSchedulerInfoVO) {
-        processDefinitionApiService.save(dqcSchedulerInfoVO);
+    public DefaultCommonResult save(@RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        processDefinitionApiService.save(dqcSchedulerBasicInfoVO);
         return DefaultCommonResult.success();
+    }
+
+    /**
+     * 新增规则调度_基础信息
+     *
+     * @param projectName,searchVal,jobId
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/definition/info")
+    public DefaultCommonResult<ProcessDefinitionDTO> queryProcessDefinitionInfo(@RequestParam("projectName") String projectName,
+                                                                                @RequestParam("searchVal") String searchVal,
+                                                                                @RequestParam("jobId") String jobId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,
+                processDefinitionApiService.queryProcessDefinitionInfo(projectName, searchVal, jobId));
     }
 
     @PutMapping("/release")
     public DefaultCommonResult release(Integer processDefinitionId, Integer releaseState) {
-        processDefinitionApiService.release(processDefinitionId,releaseState);
+        processDefinitionApiService.release(processDefinitionId, releaseState);
         return DefaultCommonResult.success();
     }
 

@@ -30,7 +30,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
 
   /** createSchedule 创建定时 */
   @Override
-  public void create(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+  public void create(Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     // 发送组ID
     Integer warningGroupId = 0;
     // 收件人
@@ -42,7 +42,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     try {
       Result result =
           defaultApi.createScheduleUsingPOST(
-              DqcConstant.processDefinitionId,
+              processDefinitionId,
               DqcConstant.projectName,
               FailureStrategyEnum.CONTINUE.getValue(),
               ProcessInstancePriorityEnum.MEDIUM.getValue(),
@@ -71,7 +71,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     try {
       Result result =
           defaultApi.updateScheduleUsingPOST(
-              DqcConstant.scheduleId,
+              scheduleId,
               DqcConstant.projectName,
               FailureStrategyEnum.CONTINUE.getValue(),
               ProcessInstancePriorityEnum.MEDIUM.getValue(),
@@ -113,21 +113,21 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
       Result result =
           defaultApi.deleteScheduleByIdUsingGET(
               DqcConstant.projectName,
-              DqcConstant.scheduleId,
-              "",
+              scheduleId,
               null,
-              "",
               null,
-              "",
-              "",
-              "",
-              "",
               null,
-              "",
               null,
-              "",
-              "",
-              "");
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null);
       DqcConstant.verification(result, "删除定时失败{},");
     } catch (ApiException e) {
       DqcConstant.printException(e);
@@ -140,14 +140,10 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     try {
       Result result =
           defaultApi.queryScheduleListPagingUsingGET(
-              DqcConstant.processDefinitionId,
-              DqcConstant.projectName,
-              pageNo,
-              pageSize,
-              searchVal);
+              processDefinitionId, DqcConstant.projectName, pageNo, pageSize, searchVal);
       DqcConstant.verification(result, "获取定时列表失败{},");
-      return JSONObject.toJavaObject(
-          (JSON) JSONObject.toJSON(JSONObject.toJSONString(result.getData())),
+      return JSON.toJavaObject(
+          JSONObject.parseObject(JSONObject.toJSONString(result.getData())),
           ScheduleDataBuilder.class);
     } catch (ApiException e) {
       DqcConstant.printException(e);

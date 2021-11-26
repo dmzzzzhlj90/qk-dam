@@ -4,8 +4,8 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.service.DqcSchedulerInfoService;
+import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import com.qk.dm.dataquality.vo.SchedulerRuleConstantsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,33 +37,33 @@ public class DqcSchedulerInfoController {
      */
     @PostMapping("/page/list")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult<PageResultVO<DqcSchedulerInfoVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
+    public DefaultCommonResult<PageResultVO<DqcSchedulerBasicInfoVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerInfoService.searchPageList(schedulerInfoParamsVO));
     }
 
     /**
      * 新增规则调度信息(基础信息,规则,调度配置)
      *
-     * @param dqcSchedulerInfoVO
+     * @param dqcSchedulerBasicInfoVO
      * @return DefaultCommonResult
      */
     @PostMapping("")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult insert(@RequestBody DqcSchedulerInfoVO dqcSchedulerInfoVO) {
-        dqcSchedulerInfoService.insert(dqcSchedulerInfoVO);
+    public DefaultCommonResult insert(@RequestBody DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        dqcSchedulerInfoService.insert(dqcSchedulerBasicInfoVO);
         return DefaultCommonResult.success();
     }
 
     /**
      * 编辑规则调度信息(基础信息,规则,调度配置)
      *
-     * @param dqcSchedulerInfoVO
+     * @param dqcSchedulerBasicInfoVO
      * @return DefaultCommonResult
      */
     @PutMapping("")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult update(@RequestBody DqcSchedulerInfoVO dqcSchedulerInfoVO) {
-        dqcSchedulerInfoService.update(dqcSchedulerInfoVO);
+    public DefaultCommonResult update(@RequestBody DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        dqcSchedulerInfoService.update(dqcSchedulerBasicInfoVO);
         return DefaultCommonResult.success();
     }
 

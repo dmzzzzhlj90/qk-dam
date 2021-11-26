@@ -1,10 +1,8 @@
 package com.qk.dm.dataquality.dolphinapi.builder;
 
-import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.dto.LocationsDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.TaskNodeLocation;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +11,6 @@ import lombok.EqualsAndHashCode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -39,16 +36,15 @@ public class LocationsBuilder {
         return locationsDTO;
     }
 
-    public LocationsBuilder info(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
-        setLocationsDTO(dqcSchedulerInfoVO);
+    public LocationsBuilder info(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        setLocationsDTO(dqcSchedulerBasicInfoVO);
         return this;
     }
 
-    private void setLocationsDTO(DqcSchedulerInfoVO dqcSchedulerInfoVO) {
+    private void setLocationsDTO(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         Map<String, TaskNodeLocation> taskNodeLocationMap = new HashMap<>(16);
 
-        DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO = dqcSchedulerInfoVO.getDqcSchedulerBasicInfoVO();
-        List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList = dqcSchedulerInfoVO.getDqcSchedulerRulesVOList();
+        List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList = dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList();
 
         AtomicInteger index = new AtomicInteger();
         for (DqcSchedulerRulesVO rulesVO : dqcSchedulerRulesVOList) {
