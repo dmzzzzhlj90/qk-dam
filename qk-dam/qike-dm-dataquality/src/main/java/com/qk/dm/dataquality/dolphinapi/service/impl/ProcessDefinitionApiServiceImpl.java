@@ -12,8 +12,9 @@ import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.*;
 import com.qk.dm.dataquality.dolphinapi.builder.LocationsBuilder;
 import com.qk.dm.dataquality.dolphinapi.builder.ProcessData;
-import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
+import com.qk.dm.dataquality.dolphinapi.executor.LocationsExecutor;
+import com.qk.dm.dataquality.dolphinapi.executor.ProcessDataExecutor;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.manager.TenantManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
@@ -48,21 +49,15 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             // 获取DolphinScheduler 租户信息
             TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi);
             // 构建ProcessData对象
-            ProcessDataDTO processData = ProcessDataBuilder.builder()
-                    .build()
-                    .info(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO).getProcessData();
-
+            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO);
             // 构建locations
-            LocationsDTO locationsDTO = LocationsBuilder.builder()
-                    .build()
-                    .info(dqcSchedulerBasicInfoVO)
-                    .taskNodeLocations();
+            LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO);
 
             // 创建工作流实例
             String connects = "[]";
             String locations = GsonUtil.toJsonString(locationsDTO.getTaskNodeLocationMap());
             String name = dqcSchedulerBasicInfoVO.getJobName();
-            String processDefinitionJson = GsonUtil.toJsonString(processData);
+            String processDefinitionJson = GsonUtil.toJsonString(processDataDTO);
             String projectName = "数据质量_test";
             String description = dqcSchedulerBasicInfoVO.getJobId();
 
