@@ -2,6 +2,13 @@ package com.qk.dm.dataquality.dolphinapi.constant;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
+/**
+ * 流程全局参数信息_预警级别
+ *
+ * @author wjq
+ * @date 2021/11/24
+ * @since 1.0.0
+ */
 public enum Priority {
     /**
      * 0 highest priority
