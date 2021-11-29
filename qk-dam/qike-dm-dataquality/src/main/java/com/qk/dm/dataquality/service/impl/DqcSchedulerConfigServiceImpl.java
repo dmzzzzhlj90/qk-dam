@@ -39,9 +39,9 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   }
 
   @Override
-  public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    DqcSchedulerConfig config =
-        DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
+  public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO, String jobId) {
+    dqcSchedulerConfigVO.setJobId(jobId);
+    DqcSchedulerConfig config = DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
     config.setCron(generateCron(dqcSchedulerConfigVO));
     // todo 创建人
     config.setCreateUserid(1L);

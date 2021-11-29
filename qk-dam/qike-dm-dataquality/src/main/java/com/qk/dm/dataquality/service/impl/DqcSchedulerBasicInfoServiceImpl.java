@@ -53,7 +53,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   public void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
     DqcSchedulerBasicInfo basicInfo = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO);
     // todo 创建人
-    basicInfo.setCreateUserid(1L);
+    basicInfo.setCreateUserid("admin");
     basicInfo.setSchedulerState(SchedulerStateEnum.NOT_STARTED.getCode());
     basicInfo.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
     basicInfo.setRunInstanceState(SchedulerInstanceStateEnum.INIT.getCode());
@@ -66,7 +66,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(
         dqcSchedulerBasicInfoVO, basicInfo);
     // todo 修改人
-    basicInfo.setUpdateUserid(1L);
+    basicInfo.setUpdateUserid("admin");
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
   }
 
@@ -95,7 +95,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     }
     basicInfo.setSchedulerState(infoReleaseDto.getSchedulerState());
     // todo 修改人
-    basicInfo.setUpdateUserid(1L);
+    basicInfo.setUpdateUserid("admin");
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
   }
 
@@ -111,7 +111,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     }
     basicInfo.setRunInstanceState(basicInfoRuningDTO.getRunInstanceState());
     // todo 修改人
-    basicInfo.setUpdateUserid(1L);
+    basicInfo.setUpdateUserid("admin");
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
     // todo 启动异步查询运行状态，直到成功或失败
   }
@@ -128,7 +128,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     instanceData.setStateName(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getValue());
     basicInfo.setRunInstanceState(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getCode());
     // todo 修改人
-    basicInfo.setUpdateUserid(1L);
+    basicInfo.setUpdateUserid("admin");
     // 保存basic
     dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
     return instanceData;

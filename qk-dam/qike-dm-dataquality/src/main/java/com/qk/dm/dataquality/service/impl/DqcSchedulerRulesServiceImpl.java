@@ -84,9 +84,10 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
 
 
     @Override
-    public void insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList) {
+    public void insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId) {
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
+            dqcSchedulerRulesVO.setJobId(jobId);
             insert(dqcSchedulerRulesVO);
         }
     }

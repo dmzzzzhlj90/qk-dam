@@ -19,7 +19,7 @@ public interface DqcSchedulerConfigService {
 
     PageResultVO<DqcSchedulerConfigVO> searchPageList(DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO);
 
-    void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO);
+    void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO, String jobId);
 
     void update(DqcSchedulerConfigVO dqcSchedulerConfigVO);
 

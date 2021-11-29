@@ -3,10 +3,14 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.*;
+import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessDefinitionDTO;
+import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.entity.*;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerConfigMapper;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerRulesMapper;
+import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerConfigRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
@@ -21,14 +25,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -41,29 +43,39 @@ import java.util.stream.Collectors;
 @Service
 public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
 
+    private final DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository;
     private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
     private final DqcSchedulerConfigRepository dqcSchedulerConfigRepository;
 
     private final DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService;
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
     private final DqcSchedulerConfigService dqcSchedulerConfigService;
+    private final ProcessDefinitionApiService processDefinitionApiService;
+
+    private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
 
 
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
 
     @Autowired
-    public DqcSchedulerInfoServiceImpl(DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
+    public DqcSchedulerInfoServiceImpl(DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository,
+                                       DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
                                        DqcSchedulerConfigRepository dqcSchedulerConfigRepository,
                                        DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService,
                                        DqcSchedulerRulesService dqcSchedulerRulesService,
                                        DqcSchedulerConfigService dqcSchedulerConfigService,
+                                       ProcessDefinitionApiService processDefinitionApiService,
+                                       DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
                                        EntityManager entityManager) {
+        this.dqcSchedulerBasicInfoRepository = dqcSchedulerBasicInfoRepository;
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
         this.dqcSchedulerConfigRepository = dqcSchedulerConfigRepository;
         this.dqcSchedulerBasicInfoService = dqcSchedulerBasicInfoService;
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
         this.dqcSchedulerConfigService = dqcSchedulerConfigService;
+        this.processDefinitionApiService = processDefinitionApiService;
+        this.dolphinSchedulerInfoConfig = dolphinSchedulerInfoConfig;
         this.entityManager = entityManager;
     }
 
@@ -102,14 +114,27 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        String jobId = UUID.randomUUID().toString().replaceAll("-", "");
+        dqcSchedulerBasicInfoVO.setJobId(jobId);
+        //首次添加先设置为0,生成流程实例后获取真正的ID进行更新操作!
+        dqcSchedulerBasicInfoVO.setProcessDefinitionId(0);
         //基础信息
         dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
         //规则信息
-        dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList());
+        dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId);
         //调度配置信息
-        dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
-        //TODO
+        dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
+        //创建流程实例ID
+        processDefinitionApiService.save(dqcSchedulerBasicInfoVO);
+        //存储流程实例ID
+        ProcessDefinitionDTO processDefinitionDTO = processDefinitionApiService
+                .queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), jobId);
+        int processDefinitionId = processDefinitionDTO.getId();
+        dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
+        //TODO 开启定时器
+
     }
 
     @Override

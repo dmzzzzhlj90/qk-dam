@@ -149,14 +149,14 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                                       DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         MysqlRawScript.MysqlRawScriptBuilder scriptBuilder = MysqlRawScript.builder();
 
+        //TODO 数据源连接信息规则调度里设置
         scriptBuilder
                 .from_host("172.20.0.24")
                 .from_user("root")
                 .from_password("Zhudao123!")
                 .from_database("qkdam");
 
-        scriptBuilder
-                .search_sql(rulesVO.getScanSql());
+        scriptBuilder.search_sql(rulesVO.getScanSql());
 
         scriptBuilder
                 .to_host("172.20.0.24")
