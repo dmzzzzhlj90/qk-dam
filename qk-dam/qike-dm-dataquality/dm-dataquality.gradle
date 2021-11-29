@@ -37,7 +37,7 @@ compileJava {
 dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
-    implementation project(":database-info-client")
+    implementation project(":feign-client")
     implementation project(":dam-log")
     implementation project(":qk-sqlbuilder")
     implementation project(":dolphinscheduler-client")
