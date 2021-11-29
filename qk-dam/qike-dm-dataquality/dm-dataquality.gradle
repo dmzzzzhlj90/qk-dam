@@ -41,6 +41,8 @@ dependencies {
     implementation project(":dam-log")
     implementation project(":qk-sqlbuilder")
     implementation project(":dolphinscheduler-client")
+    implementation project(":datasource-common-core")
+    implementation project(":metadata-common-core")
 //    implementation group: 'org.apache.dolphinscheduler', name: 'dolphinscheduler-common', version: '1.3.9'
 //    implementation group: 'org.apache.dolphinscheduler', name: 'dolphinscheduler-dao', version: '1.3.9'
     implementation group: 'com.baomidou', name: 'mybatis-plus-annotation', version: '3.4.3.4'

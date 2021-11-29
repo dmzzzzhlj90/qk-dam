@@ -59,10 +59,13 @@ public class DataBaseInfoDefaultApi {
     public ResultDatasourceInfo getResultDataSourceByConnectName(String connectName) {
         ResultDatasourceInfo resultDatasourceInfo =
                 dataSourceFeign.getResultDataSourceByConnectName(connectName).getData();
-        ConnectBasicInfo connectInfo =
-                ConnectInfoConvertUtils.getConnectInfo(
-                        resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
-        return resultDatasourceInfo;
+        //todo feign 加判断null
+        if (resultDatasourceInfo != null) {
+          ConnectBasicInfo connectInfo =
+              ConnectInfoConvertUtils.getConnectInfo(
+                  resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
+        }
+      return resultDatasourceInfo;
     }
 
     // ========================元数据服务_API调用=====================================

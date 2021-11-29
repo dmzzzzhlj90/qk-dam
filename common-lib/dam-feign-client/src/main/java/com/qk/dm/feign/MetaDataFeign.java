@@ -21,7 +21,7 @@ public interface MetaDataFeign {
    *
    * @return DefaultCommonResult<List < MtdAtlasEntityType>>
    */
-  @GetMapping("/mtd/api/all/entity/type")
+  @GetMapping("/mtd/entity/types")
   DefaultCommonResult<List<MtdAtlasEntityType>> getAllEntityType();
 
   /**
@@ -30,6 +30,6 @@ public interface MetaDataFeign {
    * @param mtdApiParams
    * @return DefaultCommonResult<MtdApi>
    */
-  @PostMapping("/mtd/api/detail")
+  @PostMapping("/mtd/entity/detail")
   DefaultCommonResult<MtdApi> mtdDetail(@RequestBody MtdApiParams mtdApiParams);
 }

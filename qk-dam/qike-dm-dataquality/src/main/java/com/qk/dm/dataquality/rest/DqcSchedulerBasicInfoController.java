@@ -59,6 +59,7 @@ public class DqcSchedulerBasicInfoController {
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
   public DefaultCommonResult<String> insert(
       @RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    //todo uuid 放到外面
     dqcSchedulerBasicInfoVO.setJobId(UUID.randomUUID().toString().replaceAll("-", ""));
     dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
     return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerBasicInfoVO.getJobId());

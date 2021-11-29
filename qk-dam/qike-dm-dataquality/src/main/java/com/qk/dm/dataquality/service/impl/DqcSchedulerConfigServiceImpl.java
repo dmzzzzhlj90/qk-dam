@@ -34,7 +34,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public PageResultVO<DqcSchedulerConfigVO> searchPageList(
-      DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
+          DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
     return null;
   }
 
@@ -42,7 +42,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     DqcSchedulerConfig config =
         DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
-    saveCron(dqcSchedulerConfigVO, config);
+    config.setCron(generateCron(dqcSchedulerConfigVO));
     // todo 创建人
     config.setCreateUserid(1L);
     config.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
@@ -53,7 +53,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   public void update(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     DqcSchedulerConfig config = getInfoById(dqcSchedulerConfigVO.getId());
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
-    saveCron(dqcSchedulerConfigVO, config);
+    config.setCron(generateCron(dqcSchedulerConfigVO));
     // todo 修改人
     config.setUpdateUserid(1L);
     dqcSchedulerConfigRepository.save(config);
@@ -125,9 +125,10 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     return dqcSchedulerConfigRepository.findOne(qDqcSchedulerConfig.jobId.eq(jobId)).orElse(null);
   }
 
-  private void saveCron(DqcSchedulerConfigVO dqcSchedulerConfigVO, DqcSchedulerConfig config) {
+  private String generateCron(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     if (Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)) {
-      config.setCron(CronUtil.createCron(dqcSchedulerConfigVO));
+      return CronUtil.createCron(dqcSchedulerConfigVO);
     }
+    return null;
   }
 }
