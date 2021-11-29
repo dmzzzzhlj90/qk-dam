@@ -1,5 +1,7 @@
 package com.qk.dm.dataquality.constant;
 
+import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
@@ -21,9 +23,9 @@ public class DqcConstant {
   public static final Integer RUN_TYPE = 2;
   /** 规则模版状态-默认引擎类型 */
   public static final String ENGINE_TYPE = "1,2";
-  /** 删除状态- 保留*/
+  /** 删除状态- 保留 */
   public static final Integer DEL_FLAG_RETAIN = 0;
-  /** 删除状态 删除*/
+  /** 删除状态 删除 */
   public static final Integer DEL_FLAG_DEL = 1;
   /** 规则模版状态-下线 */
   public static final Integer PUBLISH_STATE_DOWN = 0;
@@ -33,8 +35,13 @@ public class DqcConstant {
   public static final Integer RESULT_CODE = 0;
 
   /** 临时使用 */
-  public static final String projectName = "数据质量";
-  public static final Integer processDefinitionId = 4;
+  public static final String PROJECT_NAME = "数据质量";
+
+  public static final Integer PROCESS_DEFINITION_ID = 4;
+
+  private static final String SCHEDULE_TIME_START = "startTime";
+  private static final String SCHEDULE_TIME_END = "endTime";
+  private static final String SCHEDULE_CRON = "crontab";
 
   /** 提示级别 */
   public static Map<String, String> getNotifyLevelMap() {
@@ -95,5 +102,13 @@ public class DqcConstant {
     System.err.println("Reason: " + e.getResponseBody());
     System.err.println("Response headers: " + e.getResponseHeaders());
     e.printStackTrace();
+  }
+
+  public static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+    JSONObject object = new JSONObject();
+    object.put(SCHEDULE_TIME_START, DateUtil.format(effectiveTimeStart, format));
+    object.put(SCHEDULE_TIME_END, DateUtil.format(effectiveTimeEnt, format));
+    object.put(SCHEDULE_CRON, cron);
+    return object.toJSONString();
   }
 }

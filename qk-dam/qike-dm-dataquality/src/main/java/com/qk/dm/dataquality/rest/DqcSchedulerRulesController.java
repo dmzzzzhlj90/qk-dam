@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.database.info.client.DataBaseInfoDefaultApi;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
@@ -10,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 /**
  * 数据质量_规则调度_规则信息
@@ -23,10 +27,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/scheduler/rules")
 public class DqcSchedulerRulesController {
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
+    private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
+
 
     @Autowired
-    public DqcSchedulerRulesController(DqcSchedulerRulesService dqcSchedulerRulesService) {
+    public DqcSchedulerRulesController(DqcSchedulerRulesService dqcSchedulerRulesService, DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
+        this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
     }
 
     /**
@@ -92,5 +99,17 @@ public class DqcSchedulerRulesController {
         dqcSchedulerRulesService.deleteBulk(ids);
         return DefaultCommonResult.success();
     }
+
+    /**
+     * 查询所有数据源连接类型
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/datasource/api/type/all")
+//    @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+    public  List<String> getAllConnType() {
+        return dataBaseInfoDefaultApi.getAllConnType();
+    }
+
 
 }

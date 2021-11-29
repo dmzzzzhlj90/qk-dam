@@ -10,13 +10,16 @@ import javax.validation.constraints.NotNull;
  * @since 1.0.0
  */
 @Data
-public class DqcSchedulerBasicInfoReleaseDTO {
+public class DqcSchedulerBasicInfoRuningDTO {
 
   /** 主键ID */
   @NotNull(message = "id不能为空！")
   private Long id;
 
-  /** 调度状态 0-未启动 1-调度中 */
-  @NotNull(message = "调度状态不能为空！")
-  private Integer schedulerState;
+  /** 运行实例状态 1-运行中 2-停止 */
+  @NotNull(message = "运行实例状态不能为空！")
+  private Integer runInstanceState;
+
+  /** 实例id，停止时需要 */
+  private Integer instanceId;
 }

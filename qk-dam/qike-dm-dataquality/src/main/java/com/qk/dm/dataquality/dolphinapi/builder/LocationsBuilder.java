@@ -24,11 +24,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @EqualsAndHashCode(callSuper = false)
 @Data
 public class LocationsBuilder {
-    public static final String TASKS_NAME_MATCH = "tasks-";
-    public static final String LOCATION_NODE_NUMBER = "0";
-    public static final int LOCATION_X_INITIAL_VALUE = 200;
-    public static final int LOCATION_Y_INITIAL_VALUE = 200;
-    public static final int LOCATION_INCREMENT = 150;
 
     private final LocationsDTO locationsDTO = new LocationsDTO();
 
@@ -36,34 +31,10 @@ public class LocationsBuilder {
         return locationsDTO;
     }
 
-    public LocationsBuilder info(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        setLocationsDTO(dqcSchedulerBasicInfoVO);
+    public LocationsBuilder info(Map<String, TaskNodeLocation> taskNodeLocationMap) {
+        locationsDTO.setTaskNodeLocationMap(taskNodeLocationMap);
         return this;
     }
 
-    private void setLocationsDTO(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        Map<String, TaskNodeLocation> taskNodeLocationMap = new HashMap<>(16);
-
-        List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList = dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList();
-
-        AtomicInteger index = new AtomicInteger();
-        for (DqcSchedulerRulesVO rulesVO : dqcSchedulerRulesVOList) {
-            String key = TASKS_NAME_MATCH + index.get();
-            TaskNodeLocation taskNodeLocation = setTaskNodeLocation(index.get(), rulesVO);
-            taskNodeLocationMap.put(key, taskNodeLocation);
-            index.incrementAndGet();
-        }
-        locationsDTO.setTaskNodeLocationMap(taskNodeLocationMap);
-    }
-
-    private TaskNodeLocation setTaskNodeLocation(int index, DqcSchedulerRulesVO rulesVO) {
-        TaskNodeLocation taskNodeLocation = new TaskNodeLocation();
-        taskNodeLocation.setName(rulesVO.getRuleType() + rulesVO.getRuleTempId());
-        taskNodeLocation.setNodenumber(LOCATION_NODE_NUMBER);
-        taskNodeLocation.setTargetarr("");
-        taskNodeLocation.setX(LOCATION_X_INITIAL_VALUE);
-        taskNodeLocation.setY(LOCATION_Y_INITIAL_VALUE + LOCATION_INCREMENT * index);
-        return taskNodeLocation;
-    }
 
 }

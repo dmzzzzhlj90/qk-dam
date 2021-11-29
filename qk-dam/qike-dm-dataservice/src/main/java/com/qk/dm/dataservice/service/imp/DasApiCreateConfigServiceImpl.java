@@ -13,8 +13,8 @@ import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateConfig;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiCreateConfig;
-import com.qk.dm.dataservice.feign.DataSourceFeign;
-import com.qk.dm.dataservice.feign.MetaDataFeign;
+//import com.qk.dm.dataservice.feign.DataSourceFeign;
+//import com.qk.dm.dataservice.feign.MetaDataFeign;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateConfigMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
@@ -50,8 +50,8 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
   private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
   private final DasApiCreateConfigRepository dasApiCreateConfigRepository;
 
-  private final DataSourceFeign dataSourceFeign;
-  private final MetaDataFeign metaDataFeign;
+//  private final DataSourceFeign dataSourceFeign;
+//  private final MetaDataFeign metaDataFeign;
 
   private final EntityManager entityManager;
   private JPAQueryFactory jpaQueryFactory;
@@ -66,14 +66,14 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
       DasApiBasicInfoService dasApiBasicInfoService,
       DasApiBasicInfoRepository dasApiBasicinfoRepository,
       DasApiCreateConfigRepository dasApiCreateConfigRepository,
-      DataSourceFeign dataSourceFeign,
-      MetaDataFeign metaDataFeign,
+//      DataSourceFeign dataSourceFeign,
+//      MetaDataFeign metaDataFeign,
       EntityManager entityManager) {
     this.dasApiBasicInfoService = dasApiBasicInfoService;
     this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
     this.dasApiCreateConfigRepository = dasApiCreateConfigRepository;
-    this.dataSourceFeign = dataSourceFeign;
-    this.metaDataFeign = metaDataFeign;
+//    this.dataSourceFeign = dataSourceFeign;
+//    this.metaDataFeign = metaDataFeign;
     this.entityManager = entityManager;
   }
 
@@ -231,68 +231,69 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     return DasConstant.getDasApiCreateParasSortStyle();
   }
 
-  // ========================数据源服务API调用=====================================
-  @Override
-  public List<String> getAllConnType() {
-    return dataSourceFeign.getAllConnType().getData();
-  }
+//  // ========================数据源服务API调用=====================================
+//  @Override
+//  public List<String> getAllConnType() {
+//    return dataSourceFeign.getAllConnType().getData();
+//  }
+//
+//  @Override
+//  public List<ResultDatasourceInfo> getResultDataSourceByType(String type) {
+//    return dataSourceFeign.getResultDataSourceByType(type).getData();
+//  }
+//
+//  @Override
+//  public ResultDatasourceInfo getResultDataSourceByConnectName(String connectName) {
+//    ResultDatasourceInfo resultDatasourceInfo =
+//        dataSourceFeign.getResultDataSourceByConnectName(connectName).getData();
+//    ConnectBasicInfo connectInfo =
+//        ConnectInfoConvertUtils.getConnectInfo(
+//            resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
+//    return resultDatasourceInfo;
+//  }
+//
+//  // ========================元数据服务API调用=====================================
+//  @Override
+//  public List<MtdAtlasEntityType> getAllEntityType() {
+//    return metaDataFeign.getAllEntityType().getData();
+//  }
+//
+//  @Override
+//  public MtdApi mtdDetail(MtdApiParams mtdApiParams) {
+//    return metaDataFeign.mtdDetail(mtdApiParams).getData();
+//  }
+//
+//  @Override
+//  public List<String> getAllDataBase(String dbType) {
+//    String type = dbType.split("-")[1];
+//    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
+//        metaDataFeign.mtdDetail(MtdApiParams.builder().typeName(type + "_db").build());
+//    List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
+//    return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
+//  }
+//
+//  @Override
+//  public List<String> getAllTable(String dbType, String server, String dbName) {
+//    String type = dbType.split("-")[1];
+//    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
+//        metaDataFeign.mtdDetail(
+//            MtdApiParams.builder().typeName(type + "_db").server(server).dbName(dbName).build());
+//    List<MtdTables> mtdTablesList = mtdApiDefaultCommonResult.getData().getTables();
+//    return mtdTablesList.stream().map(MtdTables::getDisplayText).collect(Collectors.toList());
+//  }
+//
+//  @Override
+//  public List getAllColumn(String dbType, String server, String dbName, String tableName) {
+//    String type = dbType.split("-")[1];
+//    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
+//        metaDataFeign.mtdDetail(
+//            MtdApiParams.builder()
+//                .typeName(type + "_table")
+//                .server(server)
+//                .dbName(dbName)
+//                .tableName(tableName)
+//                .build());
+//    return mtdApiDefaultCommonResult.getData().getColumns();
+//  }
 
-  @Override
-  public List<ResultDatasourceInfo> getResultDataSourceByType(String type) {
-    return dataSourceFeign.getResultDataSourceByType(type).getData();
-  }
-
-  @Override
-  public ResultDatasourceInfo getResultDataSourceByConnectName(String connectName) {
-    ResultDatasourceInfo resultDatasourceInfo =
-        dataSourceFeign.getResultDataSourceByConnectName(connectName).getData();
-    ConnectBasicInfo connectInfo =
-        ConnectInfoConvertUtils.getConnectInfo(
-            resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
-    return resultDatasourceInfo;
-  }
-
-  // ========================元数据服务API调用=====================================
-  @Override
-  public List<MtdAtlasEntityType> getAllEntityType() {
-    return metaDataFeign.getAllEntityType().getData();
-  }
-
-  @Override
-  public MtdApi mtdDetail(MtdApiParams mtdApiParams) {
-    return metaDataFeign.mtdDetail(mtdApiParams).getData();
-  }
-
-  @Override
-  public List<String> getAllDataBase(String dbType) {
-    String type = dbType.split("-")[1];
-    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-        metaDataFeign.mtdDetail(MtdApiParams.builder().typeName(type + "_db").build());
-    List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
-    return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
-  }
-
-  @Override
-  public List<String> getAllTable(String dbType, String server, String dbName) {
-    String type = dbType.split("-")[1];
-    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-        metaDataFeign.mtdDetail(
-            MtdApiParams.builder().typeName(type + "_db").server(server).dbName(dbName).build());
-    List<MtdTables> mtdTablesList = mtdApiDefaultCommonResult.getData().getTables();
-    return mtdTablesList.stream().map(MtdTables::getDisplayText).collect(Collectors.toList());
-  }
-
-  @Override
-  public List getAllColumn(String dbType, String server, String dbName, String tableName) {
-    String type = dbType.split("-")[1];
-    DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-        metaDataFeign.mtdDetail(
-            MtdApiParams.builder()
-                .typeName(type + "_table")
-                .server(server)
-                .dbName(dbName)
-                .tableName(tableName)
-                .build());
-    return mtdApiDefaultCommonResult.getData().getColumns();
-  }
 }

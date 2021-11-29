@@ -4,10 +4,7 @@ package com.qk.dm.dataquality.constant;
 public enum SchedulerStateEnum {
   // 处理默认状态-未启动
   NOT_STARTED(0, "未启动"),
-  SCHEDULING(1, "调度中"),
-  RUNING(2, "运行中"),
-  RUN_FAIL(3, "失败"),
-  RUN_SUCCEED(4, "成功");
+  SCHEDULING(1, "调度中");
 
   Integer code;
   String value;

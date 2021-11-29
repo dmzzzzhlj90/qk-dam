@@ -36,21 +36,21 @@ public interface DasApiCreateConfigService {
 
   Map<String, String> getDasApiCreateParasSortStyle();
 
-  // ========================数据源服务API调用=====================================
-  List<String> getAllConnType();
-
-  List<ResultDatasourceInfo> getResultDataSourceByType(String type);
-
-  ResultDatasourceInfo getResultDataSourceByConnectName(String connectName);
-
-  // ========================元数据服务API调用=====================================
-  List<MtdAtlasEntityType> getAllEntityType();
-
-  MtdApi mtdDetail(MtdApiParams mtdApiParams);
-
-  List<String> getAllDataBase(String dbType);
-
-  List<String> getAllTable(String dbType, String server, String dbName);
-
-  List getAllColumn(String dbType, String server, String dbName, String tableName);
+//  // ========================数据源服务API调用=====================================
+//  List<String> getAllConnType();
+//
+//  List<ResultDatasourceInfo> getResultDataSourceByType(String type);
+//
+//  ResultDatasourceInfo getResultDataSourceByConnectName(String connectName);
+//
+//  // ========================元数据服务API调用=====================================
+//  List<MtdAtlasEntityType> getAllEntityType();
+//
+//  MtdApi mtdDetail(MtdApiParams mtdApiParams);
+//
+//  List<String> getAllDataBase(String dbType);
+//
+//  List<String> getAllTable(String dbType, String server, String dbName);
+//
+//  List getAllColumn(String dbType, String server, String dbName, String tableName);
 }
