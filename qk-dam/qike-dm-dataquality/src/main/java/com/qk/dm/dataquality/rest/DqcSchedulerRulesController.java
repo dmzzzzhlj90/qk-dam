@@ -3,7 +3,7 @@ package com.qk.dm.dataquality.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.database.info.client.DataBaseInfoDefaultApi;
+import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
@@ -107,9 +107,8 @@ public class DqcSchedulerRulesController {
      */
     @GetMapping("/datasource/api/type/all")
 //    @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public  List<String> getAllConnType() {
-        return dataBaseInfoDefaultApi.getAllConnType();
+    public  DefaultCommonResult<List<String>> getAllConnType() {
+       return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseInfoDefaultApi.getAllConnType());
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.qk.dm.database.info.client;
+package com.qk.dm.client;
 
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;

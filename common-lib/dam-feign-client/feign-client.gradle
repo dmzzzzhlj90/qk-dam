@@ -3,7 +3,7 @@ plugins {
     id 'java'
 }
 version "${commonLibVersion}"
-group "com.qk.dam.databaseinfoclient"
+group "com.qk.dam.client"
 
 dependencies {
     implementation project(":commons-core")
