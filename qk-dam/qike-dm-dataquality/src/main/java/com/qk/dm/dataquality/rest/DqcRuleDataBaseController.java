@@ -29,7 +29,7 @@ public class DqcRuleDataBaseController {
     }
 
     /**
-     * 查询所有数据源连接类型（搜索引擎）
+     * 查询所有数据源连接类型（计算引擎）
      *
      * @return DefaultCommonResult<List < String>>
      */
@@ -90,7 +90,7 @@ public class DqcRuleDataBaseController {
 //    }
 
     /**
-     * 新建API__获取db库信息下拉列表
+     * 获取db库信息下拉列表
      *
      * @param dbType
      * @return DefaultCommonResult<List < String>>
@@ -102,7 +102,7 @@ public class DqcRuleDataBaseController {
     }
 
     /**
-     * 新建API__获取table表信息下拉列表
+     * 获取table表信息下拉列表
      *
      * @param dbType,server,dbName
      * @return DefaultCommonResult
@@ -114,7 +114,7 @@ public class DqcRuleDataBaseController {
     }
 
     /**
-     * 新建API__获取column字段信息下拉列表
+     * 获取column字段信息下拉列表
      *
      * @param dbType,server,dbName,tableName
      * @return DefaultCommonResult
