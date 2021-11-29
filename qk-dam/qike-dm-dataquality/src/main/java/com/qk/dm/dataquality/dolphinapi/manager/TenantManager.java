@@ -5,7 +5,7 @@ import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
-import com.qk.dm.dataquality.dolphinapi.dto.ResourceComponentDTO;
+import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.TenantDTO;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 @Component
 public class TenantManager {
 
-    public static final String TENANT_ROOT = "root";
-
     public static List<TenantDTO> queryTenantInfoList(DefaultApi defaultApi) {
         List<TenantDTO> tenantDTOList = null;
         try {
@@ -38,11 +36,11 @@ public class TenantManager {
         return tenantDTOList;
     }
 
-    public static TenantDTO queryTenantInfo(DefaultApi defaultApi) {
+    public static TenantDTO queryTenantInfo(DefaultApi defaultApi, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         List<TenantDTO> tenantDTOList = queryTenantInfoList(defaultApi);
         List<TenantDTO> tenantDTOs = tenantDTOList.stream()
                 .filter(tenantDTO ->
-                        tenantDTO.getTenantCode().equals(TENANT_ROOT))
+                        tenantDTO.getTenantCode().equals(dolphinSchedulerInfoConfig.getTenantRoot()))
                 .collect(Collectors.toList());
 
         return tenantDTOs.get(0);

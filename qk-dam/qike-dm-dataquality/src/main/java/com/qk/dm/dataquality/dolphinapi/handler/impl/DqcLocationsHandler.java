@@ -1,6 +1,9 @@
 package com.qk.dm.dataquality.dolphinapi.handler.impl;
 
+import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.dolphinapi.builder.LocationsBuilder;
+import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
+import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
 import com.qk.dm.dataquality.dolphinapi.dto.LocationsDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.TaskNodeLocation;
 import com.qk.dm.dataquality.dolphinapi.handler.LocationsHandler;
@@ -18,16 +21,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 1.0.0
  */
 public class DqcLocationsHandler implements LocationsHandler<DqcSchedulerBasicInfoVO> {
-    public static final String TASKS_NAME_MATCH = "tasks-";
-    public static final String LOCATION_NODE_NUMBER = "0";
-    public static final String TASK_NULL_VALUE = "";
-    public static final int LOCATION_X_INITIAL_VALUE = 200;
-    public static final int LOCATION_Y_INITIAL_VALUE = 200;
-    public static final int LOCATION_INCREMENT = 150;
 
     @Override
-    public LocationsDTO buildLocationsDTO(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        Map<String, TaskNodeLocation> taskNodeLocationMap = getLocationsDTOInfo(dqcSchedulerBasicInfoVO);
+    public LocationsDTO buildLocationsDTO(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO,
+                                          DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+        Map<String, TaskNodeLocation> taskNodeLocationMap = getLocationsDTOInfo(dqcSchedulerBasicInfoVO,dolphinSchedulerInfoConfig);
 
         return LocationsBuilder.builder()
                 .build()
@@ -35,28 +33,33 @@ public class DqcLocationsHandler implements LocationsHandler<DqcSchedulerBasicIn
                 .getLocationsDTO();
     }
 
-    private Map<String, TaskNodeLocation> getLocationsDTOInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    private Map<String, TaskNodeLocation> getLocationsDTOInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO,
+                                                              DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         Map<String, TaskNodeLocation> taskNodeLocationMap = new HashMap<>(16);
 
         List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList = dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList();
 
         AtomicInteger index = new AtomicInteger();
         for (DqcSchedulerRulesVO rulesVO : dqcSchedulerRulesVOList) {
-            String key = TASKS_NAME_MATCH + index.get();
-            TaskNodeLocation taskNodeLocation = setTaskNodeLocation(index.get(), rulesVO);
+            String key = dolphinSchedulerInfoConfig.getTasksNameMatch() + index.get();
+            TaskNodeLocation taskNodeLocation = setTaskNodeLocation(index.get(), rulesVO,dolphinSchedulerInfoConfig);
             taskNodeLocationMap.put(key, taskNodeLocation);
             index.incrementAndGet();
         }
         return taskNodeLocationMap;
     }
 
-    private TaskNodeLocation setTaskNodeLocation(int index, DqcSchedulerRulesVO rulesVO) {
+    private TaskNodeLocation setTaskNodeLocation(int index,
+                                                 DqcSchedulerRulesVO rulesVO,
+                                                 DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         TaskNodeLocation taskNodeLocation = new TaskNodeLocation();
         taskNodeLocation.setName(rulesVO.getRuleType() + rulesVO.getRuleTempId());
-        taskNodeLocation.setNodenumber(LOCATION_NODE_NUMBER);
-        taskNodeLocation.setTargetarr(TASK_NULL_VALUE);
-        taskNodeLocation.setX(LOCATION_X_INITIAL_VALUE);
-        taskNodeLocation.setY(LOCATION_Y_INITIAL_VALUE + LOCATION_INCREMENT * index);
+        taskNodeLocation.setNodenumber(dolphinSchedulerInfoConfig.getLocationNodeNumber());
+        taskNodeLocation.setTargetarr(SchedulerConstant.NULL_VALUE);
+        taskNodeLocation.setX(dolphinSchedulerInfoConfig.getXLocationInitialValue());
+        taskNodeLocation.setY(
+                dolphinSchedulerInfoConfig.getYLocationInitialValue()
+                        + dolphinSchedulerInfoConfig.getLocationIncrement() * index);
         return taskNodeLocation;
     }
 }

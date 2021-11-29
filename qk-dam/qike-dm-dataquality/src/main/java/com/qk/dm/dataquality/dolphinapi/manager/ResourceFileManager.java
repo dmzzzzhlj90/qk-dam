@@ -4,9 +4,10 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.model.Result;
+import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.constant.ResourceType;
-import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ResourceComponentDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,10 +24,7 @@ import java.util.stream.Collectors;
 @Component
 public class ResourceFileManager {
 
-    public static final int PARENT_PID = -1;
-    public static final String FULL_NAME_MYSQL = "qk_dam_dataquality/mysql/mysql_script.py";
-
-    public static List<ResourceComponentDTO> queryResourceList(DefaultApi defaultApi) {
+    public static List<ResourceComponentDTO> queryResourceList(DefaultApi defaultApi, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         List<ResourceComponentDTO> childFileDataList = null;
         try {
             Result result = defaultApi.queryResourceListUsingGET(ResourceType.FILE);
@@ -34,7 +32,7 @@ public class ResourceFileManager {
             Object data = result.getData();
             List<ResourceComponentDTO> resourceComponentList = GsonUtil.fromJsonString(GsonUtil.toJsonString(data), new TypeToken<List<ResourceComponentDTO>>() {
             }.getType());
-            fileList(resourceComponentList, PARENT_PID, childFileDataList);
+            fileList(resourceComponentList, dolphinSchedulerInfoConfig.getParentPid(), childFileDataList);
             return childFileDataList;
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,11 +52,11 @@ public class ResourceFileManager {
 
     }
 
-    public static ResourceDTO queryMySqlScriptResource(DefaultApi defaultApi) {
-        List<ResourceComponentDTO> resourceComponentList = queryResourceList(defaultApi);
+    public static ResourceDTO queryMySqlScriptResource(DefaultApi defaultApi, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+        List<ResourceComponentDTO> resourceComponentList = queryResourceList(defaultApi, dolphinSchedulerInfoConfig);
         List<ResourceComponentDTO> resourceComponents = resourceComponentList.stream()
                 .filter(resourceComponent ->
-                        resourceComponent.getFullName().equals(FULL_NAME_MYSQL))
+                        resourceComponent.getFullName().equals(dolphinSchedulerInfoConfig.getMysqlFullName()))
                 .collect(Collectors.toList());
 
         ResourceComponentDTO resourceComponent = resourceComponents.get(0);

@@ -8,6 +8,8 @@ import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.*;
+import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
+import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.executor.LocationsExecutor;
 import com.qk.dm.dataquality.dolphinapi.executor.ProcessDataExecutor;
@@ -31,34 +33,35 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
 
     private final DefaultApi defaultApi;
+    private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
 
     @Autowired
-    public ProcessDefinitionApiServiceImpl(DefaultApi defaultApi) {
+    public ProcessDefinitionApiServiceImpl(DefaultApi defaultApi, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         this.defaultApi = defaultApi;
+        this.dolphinSchedulerInfoConfig = dolphinSchedulerInfoConfig;
     }
 
     @Override
     public void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         try {
             // 获取DolphinScheduler 资源信息
-            ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi);
+            ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi, dolphinSchedulerInfoConfig);
             // 获取DolphinScheduler 租户信息
-            TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi);
+            TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi, dolphinSchedulerInfoConfig);
             // 构建ProcessData对象
-            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO);
+            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig);
             // 构建locations
-            LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO);
+            LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO, dolphinSchedulerInfoConfig);
 
             // 创建工作流实例
-            String connects = "[]";
+            String connects = SchedulerConstant.EMPTY_ARRAY;
             String locations = GsonUtil.toJsonString(locationsDTO.getTaskNodeLocationMap());
             String name = dqcSchedulerBasicInfoVO.getJobName();
             String processDefinitionJson = GsonUtil.toJsonString(processDataDTO);
-            String projectName = "数据质量_test";
+            String projectName = dolphinSchedulerInfoConfig.getProjectName();
             String description = dqcSchedulerBasicInfoVO.getJobId();
 
-            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(
-                    connects, locations, name, processDefinitionJson, projectName, description);
+            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +71,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId) {
         ProcessDefinitionDTO processDefinitionDTO = null;
         try {
-            Result result = defaultApi.queryProcessDefinitionListPagingUsingGET(1, 100, projectName, searchVal, null);
+            Result result = defaultApi.queryProcessDefinitionListPagingUsingGET(SchedulerConstant.PAGE_NO, SchedulerConstant.PAGE_SIZE, projectName, searchVal, null);
             Object data = result.getData();
             ProcessResultDataDTO processResultDataDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(data), new TypeToken<ProcessResultDataDTO>() {
             }.getType());

@@ -16,8 +16,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApiClientConfig {
 
+    private final DolphinClientConnectInfo dolphinClientConnectInfo;
+
     @Autowired
-    private DolphinClientConnectInfo dolphinClientConnectInfo;
+    public ApiClientConfig(DolphinClientConnectInfo dolphinClientConnectInfo) {
+        this.dolphinClientConnectInfo = dolphinClientConnectInfo;
+    }
 
     @Bean
     public DefaultApi defaultApi() {

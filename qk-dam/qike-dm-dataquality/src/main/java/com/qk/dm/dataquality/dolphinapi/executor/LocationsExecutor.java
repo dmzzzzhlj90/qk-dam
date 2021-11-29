@@ -1,5 +1,6 @@
 package com.qk.dm.dataquality.dolphinapi.executor;
 
+import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.LocationsDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessDataDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
@@ -21,8 +22,8 @@ public class LocationsExecutor {
         throw new IllegalStateException("Utility class");
     }
 
-    public static LocationsDTO dqcLocations(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        return new DqcLocationsHandler().buildLocationsDTO(dqcSchedulerBasicInfoVO);
+    public static LocationsDTO dqcLocations(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+        return new DqcLocationsHandler().buildLocationsDTO(dqcSchedulerBasicInfoVO,dolphinSchedulerInfoConfig);
     }
 
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 1.0.0
  */
 @Data
-@ConfigurationProperties(prefix = "dolphin", ignoreInvalidFields = true)
+@ConfigurationProperties(prefix = "dolphin-client", ignoreInvalidFields = true)
 @Component(value = "dolphinClientConnectInfo")
 public class DolphinClientConnectInfo {
 

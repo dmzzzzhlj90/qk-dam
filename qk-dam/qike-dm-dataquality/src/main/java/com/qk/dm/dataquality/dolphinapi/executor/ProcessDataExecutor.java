@@ -1,5 +1,6 @@
 package com.qk.dm.dataquality.dolphinapi.executor;
 
+import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessDataDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.TenantDTO;
@@ -24,8 +25,10 @@ public class ProcessDataExecutor {
 
     public static ProcessDataDTO dqcProcessData(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO,
                                                 ResourceDTO mySqlScriptResource,
-                                                TenantDTO tenantDTO) {
-        return new DqcProcessDataHandler().buildProcessDataDTO(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO);
+                                                TenantDTO tenantDTO,
+                                                DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+        return new DqcProcessDataHandler()
+                .buildProcessDataDTO(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig);
     }
 
 }
