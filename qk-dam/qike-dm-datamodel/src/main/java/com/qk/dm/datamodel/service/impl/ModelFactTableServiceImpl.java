@@ -4,21 +4,27 @@ package com.qk.dm.datamodel.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.model.constant.ModelStatus;
-import com.qk.dm.datamodel.entity.ModelDim;
+import com.qk.dam.model.constant.ModelType;
+import com.qk.dam.sqlbuilder.SqlBuilderFactory;
+import com.qk.dam.sqlbuilder.model.Column;
+import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dm.datamodel.entity.ModelFactTable;
 import com.qk.dm.datamodel.entity.QModelFactTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelFactTableMapper;
 import com.qk.dm.datamodel.params.dto.ModelFactColumnDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactInfoDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
+import com.qk.dm.datamodel.params.dto.ModelSqlDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 import com.qk.dm.datamodel.repositories.ModelFactTableRepository;
 import com.qk.dm.datamodel.service.ModelFactColumnService;
 import com.qk.dm.datamodel.service.ModelFactTableService;
+import com.qk.dm.datamodel.service.ModelSqlService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -33,12 +39,15 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     private final EntityManager entityManager;
     private final QModelFactTable qModelFactTable = QModelFactTable.modelFactTable;
     private final ModelFactColumnService modelFactColumnService;
+    private final ModelSqlService modelSqlService;
 
     public ModelFactTableServiceImpl(ModelFactTableRepository modelFactTableRepository,
-                                     EntityManager entityManager,ModelFactColumnService modelFactColumnService){
+                                     EntityManager entityManager,ModelFactColumnService modelFactColumnService,
+                                     ModelSqlService modelSqlService){
         this.modelFactTableRepository = modelFactTableRepository;
         this.entityManager = entityManager;
         this.modelFactColumnService = modelFactColumnService;
+        this.modelSqlService = modelSqlService;
     }
 
     @PostConstruct
@@ -53,8 +62,15 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         ModelFactTable modelFact = modelFactTableRepository.save(modelFactTable);
         List<ModelFactColumnDTO> modelFactColumnList = modelFactInfoDTO.getModelFactColumnList();
         if(!modelFactColumnList.isEmpty()){
+            if(checkRepeat(modelFactColumnList)){
+                throw new BizException("存在重复的字段！！！");
+            }
             modelFactColumnList.forEach(e->e.setFactId(modelFact.getId()));
             modelFactColumnService.insert(modelFactColumnList);
+            //组装建表SQL,添加到数据库中
+            ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelFactTable.getFactName(), modelFactColumnList))
+                    .tableId(modelFact.getId()).type(ModelType.FACT_TABLE).build();
+            modelSqlService.insert(modelSql);
         }
     }
 
@@ -121,6 +137,34 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         modelFactTableRepository.saveAllAndFlush(modelFactTableList);
     }
 
+    @Override
+    public String previewSql(Long tableId) {
+        return modelSqlService.detail(ModelType.FACT_TABLE,tableId).getSqlSentence();
+    }
+
+    /**
+     * 组装建表SQL语句
+     * @param tableName
+     * @param modelFactColumnList
+     * @return
+     */
+    private String generateSql(String tableName,List<ModelFactColumnDTO> modelFactColumnList){
+        List<Column> columns = new ArrayList<>();
+        modelFactColumnList.forEach(column->{
+            columns.add(Column.builder().name(column.getColumnName())
+                    .dataType(column.getColumnType())
+                    .comments(column.getDescription()).build());
+        });
+        return SqlBuilderFactory.creatTableSQL(Table.builder().name(tableName).columns(columns).build());
+    }
+
+    private Boolean checkRepeat(List<ModelFactColumnDTO> modelFactColumnList){
+        Map<String, Long> collect = modelFactColumnList.stream()
+                .collect(Collectors.groupingBy(ModelFactColumnDTO::getColumnName, Collectors.counting()));
+        List<String> list = collect.keySet().stream().
+                filter(key -> collect.get(key) > 1).collect(Collectors.toList());
+        return !CollectionUtils.isEmpty(list);
+    }
     private List<ModelFactTable> getModelFactTableList(String ids){
         Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
         List<ModelFactTable> modelFactTableList = modelFactTableRepository.findAllById(idSet);

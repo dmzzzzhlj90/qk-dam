@@ -68,4 +68,14 @@ public class ModelDimTableController {
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimTableService.list(modelDimTableDTO));
     }
 
+    /**
+     * 预览SQL
+     * @param tableId
+     * @return
+     */
+    @GetMapping("/preview/sql/{tableId}")
+    public DefaultCommonResult<String> previewSql(@PathVariable("tableId") Long tableId){
+       return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimTableService.previewSql(tableId));
+    }
+
 }

@@ -14,4 +14,6 @@ public interface ModelSqlService {
 
     void delete(Long tableId);
 
+    ModelSqlVO detail(Integer type,Long tableId);
+
 }

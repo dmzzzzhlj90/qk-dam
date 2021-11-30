@@ -34,7 +34,7 @@ public class ModelSummaryIdcDTO implements Serializable {
     /**
      * 数据类型
      */
-    private Integer dataType;
+    private String dataType;
 
     /**
      * 是否为空 0为空 1不为空

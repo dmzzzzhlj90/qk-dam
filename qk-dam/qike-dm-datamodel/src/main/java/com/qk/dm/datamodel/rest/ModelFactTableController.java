@@ -87,5 +87,14 @@ public class ModelFactTableController {
         modelFactTableService.offline(ids);
         return DefaultCommonResult.success();
     }
+    /**
+     * 预览SQL
+     * @param tableId
+     * @return
+     */
+    @GetMapping("/preview/sql/{tableId}")
+    public DefaultCommonResult<String> previewSql(@PathVariable("tableId") Long tableId){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelFactTableService.previewSql(tableId));
+    }
 
 }

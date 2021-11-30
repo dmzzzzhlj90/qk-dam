@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.model.constant.ModelType;
 import com.qk.dm.datamodel.entity.ModelDimTable;
 import com.qk.dm.datamodel.entity.QModelDimTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelDimTableMapper;
@@ -9,6 +10,7 @@ import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableVO;
 import com.qk.dm.datamodel.repositories.ModelDimTableRepository;
 import com.qk.dm.datamodel.service.ModelDimTableService;
+import com.qk.dm.datamodel.service.ModelSqlService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
@@ -26,11 +28,14 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     private final ModelDimTableRepository modelDimTableRepository;
     private final EntityManager entityManager;
     private final QModelDimTable qModelDimTable = QModelDimTable.modelDimTable;
+    private final ModelSqlService modelSqlService;
 
     public ModelDimTableServiceImpl(ModelDimTableRepository modelDimTableRepository,
-                                    EntityManager entityManager){
+                                    EntityManager entityManager,
+                                    ModelSqlService modelSqlService){
         this.modelDimTableRepository = modelDimTableRepository;
         this.entityManager = entityManager;
+        this.modelSqlService = modelSqlService;
     }
     @PostConstruct
     public void initFactory() {
@@ -89,6 +94,11 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
                 modelDimTableDTO.getPagination().getPage(),
                 modelDimTableDTO.getPagination().getSize(),
                 voList);
+    }
+
+    @Override
+    public String previewSql(Long tableId) {
+        return modelSqlService.detail(ModelType.DIM_TABLE,tableId).getSqlSentence();
     }
 
     private Map<String, Object> queryByParams(ModelDimTableDTO modelDimTableDTO) {

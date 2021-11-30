@@ -50,7 +50,7 @@ public class ModelSummaryIdc implements Serializable {
      * 数据类型
      */
     @Column(name = "data_type", nullable = false)
-    private Integer dataType;
+    private String dataType;
 
     /**
      * 是否为空 0为空 1不为空

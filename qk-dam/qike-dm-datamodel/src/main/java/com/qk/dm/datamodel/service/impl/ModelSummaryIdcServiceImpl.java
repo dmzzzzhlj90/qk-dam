@@ -16,6 +16,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * 模型表指标
+ * @author wangzp
+ * @date 2021/11/11 14:48
+ * @since 1.0.0
+ */
 @Service
 public class ModelSummaryIdcServiceImpl implements ModelSummaryIdcService {
 

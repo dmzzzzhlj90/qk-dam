@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ModelSummaryIdcRepository extends BaseRepository<ModelSummaryIdc, Long> {
 
-    Integer deleteBySummaryId(Long summaryId);
+    void deleteBySummaryId(Long summaryId);
 
     List<ModelSummaryIdc> findAllBySummaryId(Long summaryId);
 

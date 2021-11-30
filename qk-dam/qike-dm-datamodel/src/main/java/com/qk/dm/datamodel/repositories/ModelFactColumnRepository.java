@@ -6,7 +6,7 @@ import com.qk.dm.datamodel.entity.ModelFactColumn;
 import java.util.List;
 
 public interface ModelFactColumnRepository extends BaseRepository<ModelFactColumn, Long> {
-      Integer deleteByFactId(Long factId);
+      void deleteByFactId(Long factId);
 
       List<ModelFactColumn> findAllByFactId(Long factId);
 }

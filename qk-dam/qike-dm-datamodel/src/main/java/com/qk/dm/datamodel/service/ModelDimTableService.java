@@ -15,4 +15,11 @@ public interface ModelDimTableService {
 
     PageResultVO<ModelDimTableVO> list(ModelDimTableDTO modelDimTableDTO);
 
+    /**
+     * 预览SQL
+     * @param tableId
+     * @return
+     */
+    String previewSql(Long tableId);
+
 }

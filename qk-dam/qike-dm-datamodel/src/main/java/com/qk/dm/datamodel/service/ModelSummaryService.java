@@ -27,4 +27,11 @@ public interface ModelSummaryService {
      * @param ids
      */
     void offline(String ids);
+
+    /**
+     * 预览SQL
+     * @param tableId
+     * @return
+     */
+    String previewSql(Long tableId);
 }

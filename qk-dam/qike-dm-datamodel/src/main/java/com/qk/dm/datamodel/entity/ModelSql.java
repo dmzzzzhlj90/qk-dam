@@ -29,7 +29,7 @@ public class ModelSql implements Serializable {
     private Long tableId;
 
     /**
-     * 1,逻辑表2物理表 3 维度表 4 汇总表
+     * 1,逻辑表2物理表 3 维度表 4 事实表 5 汇总表
      */
     @Column(name = "type", nullable = false)
     private Integer type;

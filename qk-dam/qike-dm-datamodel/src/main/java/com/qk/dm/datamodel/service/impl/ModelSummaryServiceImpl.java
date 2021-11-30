@@ -3,14 +3,20 @@ package com.qk.dm.datamodel.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.model.constant.ModelStatus;
+import com.qk.dam.model.constant.ModelType;
+import com.qk.dam.sqlbuilder.SqlBuilderFactory;
+import com.qk.dam.sqlbuilder.model.Column;
+import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dm.datamodel.entity.ModelSummary;
 import com.qk.dm.datamodel.entity.QModelSummary;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelSummaryMapper;
+import com.qk.dm.datamodel.params.dto.ModelSqlDTO;
 import com.qk.dm.datamodel.params.dto.ModelSummaryDTO;
 import com.qk.dm.datamodel.params.dto.ModelSummaryIdcDTO;
 import com.qk.dm.datamodel.params.dto.ModelSummaryInfoDTO;
 import com.qk.dm.datamodel.params.vo.ModelSummaryVO;
 import com.qk.dm.datamodel.repositories.ModelSummaryRepository;
+import com.qk.dm.datamodel.service.ModelSqlService;
 import com.qk.dm.datamodel.service.ModelSummaryIdcService;
 import com.qk.dm.datamodel.service.ModelSummaryService;
 import com.querydsl.core.BooleanBuilder;
@@ -21,7 +27,12 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
-
+/**
+ * 汇总表
+ * @author wangzp
+ * @date 2021/11/9 10:21
+ * @since 1.0.0
+ */
 @Service
 public class ModelSummaryServiceImpl implements ModelSummaryService {
 
@@ -30,6 +41,7 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     private final ModelSummaryRepository modelSummaryRepository;
     private final QModelSummary qModelSummary = QModelSummary.modelSummary;
     private final ModelSummaryIdcService modelSummaryIdcService;
+    private final ModelSqlService modelSqlService;
 
     @PostConstruct
     public void initFactory() {
@@ -37,10 +49,12 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     }
 
     public ModelSummaryServiceImpl(EntityManager entityManager,ModelSummaryRepository modelSummaryRepository,
-                                   ModelSummaryIdcService modelSummaryIdcService){
+                                   ModelSummaryIdcService modelSummaryIdcService,
+                                   ModelSqlService modelSqlService){
         this.entityManager = entityManager;
         this.modelSummaryRepository = modelSummaryRepository;
         this.modelSummaryIdcService = modelSummaryIdcService;
+        this.modelSqlService = modelSqlService;
     }
 
     @Override
@@ -51,6 +65,10 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
         if(!modelSummaryIdcList.isEmpty()){
             modelSummaryIdcList.forEach(e->e.setSummaryId(summary.getId()));
             modelSummaryIdcService.insert(modelSummaryIdcList);
+            //组装建表SQL,添加到数据库中
+            ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelSummary.getTableName(), modelSummaryIdcList))
+                    .tableId(summary.getId()).type(ModelType.SUMMARY_TABLE).build();
+            modelSqlService.insert(modelSql);
         }
     }
 
@@ -115,6 +133,27 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
         List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
         modelSummaryList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
         modelSummaryRepository.saveAllAndFlush(modelSummaryList);
+    }
+
+    @Override
+    public String previewSql(Long tableId) {
+        return modelSqlService.detail(ModelType.SUMMARY_TABLE,tableId).getSqlSentence();
+    }
+
+    /**
+     * 组装建表SQL语句
+     * @param tableName
+     * @param modelSummaryIdcList
+     * @return
+     */
+    private String generateSql(String tableName,List<ModelSummaryIdcDTO> modelSummaryIdcList){
+        List<Column> columns = new ArrayList<>();
+        modelSummaryIdcList.forEach(column->{
+            columns.add(Column.builder().name(column.getIndicatorsName())
+                    .dataType(column.getDataType())
+                    .comments(column.getDescription()).build());
+        });
+        return SqlBuilderFactory.creatTableSQL(Table.builder().name(tableName).columns(columns).build());
     }
 
     private List<ModelSummary> getModelSummaryList(String ids){

@@ -191,8 +191,8 @@ public class SqlBuilderFactory {
   public static void main(String[] args) {
       Table table = new Table();
       table.setName("user");
-      table.addColumn(Column.builder().name("id").primaryKey(true).dataType("BIGINT").build());
-      table.addColumn(Column.builder().name("name").primaryKey(false).dataType("VARCHAR").empty(true).build());
+      table.addColumn(Column.builder().name("id").primaryKey(true).dataType("BIGINT").comments("主键").build());
+      table.addColumn(Column.builder().name("name").primaryKey(false).dataType("VARCHAR").empty(true).comments("名称").build());
       System.out.println(creatTableSQL(table));
   }
 }

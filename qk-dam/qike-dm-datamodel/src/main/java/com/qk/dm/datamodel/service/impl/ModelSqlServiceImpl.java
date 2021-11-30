@@ -2,14 +2,17 @@ package com.qk.dm.datamodel.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.datamodel.entity.ModelSql;
+import com.qk.dm.datamodel.entity.QModelSql;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelSqlMapper;
 import com.qk.dm.datamodel.params.dto.ModelSqlDTO;
 import com.qk.dm.datamodel.params.vo.ModelSqlVO;
 import com.qk.dm.datamodel.repositories.ModelSqlRepository;
 import com.qk.dm.datamodel.service.ModelSqlService;
+import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 模型SQL
@@ -20,6 +23,7 @@ import java.util.Objects;
 @Service
 public class ModelSqlServiceImpl implements ModelSqlService {
     private final ModelSqlRepository modelSqlRepository;
+    private final QModelSql qModelSql = QModelSql.modelSql;
 
     public ModelSqlServiceImpl(ModelSqlRepository modelSqlRepository){
         this.modelSqlRepository = modelSqlRepository;
@@ -54,5 +58,15 @@ public class ModelSqlServiceImpl implements ModelSqlService {
     @Override
     public void delete(Long tableId) {
         modelSqlRepository.deleteByTableId(tableId);
+    }
+
+    @Override
+    public ModelSqlVO detail(Integer type, Long tableId) {
+        Predicate predicate= qModelSql.type.eq(type).and(qModelSql.tableId.eq(tableId));
+        Optional<ModelSql> modelSqlOptional = modelSqlRepository.findOne(predicate);
+        if(modelSqlOptional.isEmpty()){
+            throw new BizException("当前要查询的sql语句type:"+type+",tableId:"+tableId+" 的数据不存在！！");
+        }
+        return ModelSqlMapper.INSTANCE.of(modelSqlOptional.get());
     }
 }

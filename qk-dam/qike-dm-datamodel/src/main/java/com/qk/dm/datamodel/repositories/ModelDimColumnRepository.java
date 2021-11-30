@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ModelDimColumnRepository extends BaseRepository<ModelDimColumn, Long> {
 
-    Integer deleteByDimId(Long dimId);
+    void deleteByDimId(Long dimId);
 
     List<ModelDimColumn> findAllByDimId(Long dimId);
 }

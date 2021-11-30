@@ -9,5 +9,5 @@ public interface ModelPhysicalRelationRepository extends BaseRepository<ModelPhy
 
    List<ModelPhysicalRelation> findAllByTableId(Long tableId);
 
-   Integer deleteByTableId(Long tableId);
+   void deleteByTableId(Long tableId);
 }
