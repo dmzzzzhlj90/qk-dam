@@ -8,6 +8,7 @@ import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.*;
+import com.qk.dm.dataquality.dolphinapi.config.DolphinRunInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
@@ -34,11 +35,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
     private final DefaultApi defaultApi;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
+    private final DolphinRunInfoConfig dolphinRunInfoConfig;
 
     @Autowired
-    public ProcessDefinitionApiServiceImpl(DefaultApi defaultApi, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+    public ProcessDefinitionApiServiceImpl(DefaultApi defaultApi, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig, DolphinRunInfoConfig dolphinRunInfoConfig) {
         this.defaultApi = defaultApi;
         this.dolphinSchedulerInfoConfig = dolphinSchedulerInfoConfig;
+        this.dolphinRunInfoConfig = dolphinRunInfoConfig;
     }
 
     @Override
@@ -101,7 +104,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         try {
             Result result =
                     defaultApi.releaseProcessDefinitionUsingPOST(
-                            processDefinitionId, DqcConstant.PROJECT_NAME, releaseState);
+                            processDefinitionId, dolphinSchedulerInfoConfig.getProjectName(), releaseState);
             DqcConstant.verification(result, "流程定义发布失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -118,7 +121,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         try {
             Result result =
                     defaultApi.deleteProcessDefinitionByIdUsingGET(
-                            DqcConstant.PROJECT_NAME, processDefinitionId);
+                            dolphinSchedulerInfoConfig.getProjectName(), processDefinitionId);
             DqcConstant.verification(result, "删除流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -133,7 +136,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     @Override
     public void verifyName(String name) {
         try {
-            Result result = defaultApi.verifyProcessDefinitionNameUsingGET(name, DqcConstant.PROJECT_NAME);
+            Result result = defaultApi.verifyProcessDefinitionNameUsingGET(name, dolphinSchedulerInfoConfig.getProjectName());
             DqcConstant.verification(result, "验证失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -149,7 +152,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public void copy(Integer processDefinitionId) {
         try {
             Result result =
-                    defaultApi.copyProcessDefinitionUsingPOST(processDefinitionId, DqcConstant.PROJECT_NAME);
+                    defaultApi.copyProcessDefinitionUsingPOST(processDefinitionId, dolphinSchedulerInfoConfig.getProjectName());
             DqcConstant.verification(result, "复制流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -166,7 +169,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         try {
             Result result =
                     defaultApi.startCheckProcessDefinitionUsingPOST(
-                            processDefinitionId, DqcConstant.PROJECT_NAME);
+                            processDefinitionId, dolphinSchedulerInfoConfig.getProjectName());
             DqcConstant.verification(result, "检查流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -180,38 +183,40 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
      */
     @Override
     public void startInstance(Integer processDefinitionId) {
-        // 定时时间
-        String scheduleTime = "";
-        // 发送组ID
-        Integer warningGroupId = 0;
-        // 收件人
-        String receivers = "";
-        // 收件人(抄送)
-        String receiversCc = "";
-        // 开始节点列表(节点name)
-        String startNodeList = "";
-        // 超时时间
-        Integer timeout = null;
-        // WORKER_GROUP
-        String workerGroup = "default";
         try {
             Result result =
                     defaultApi.startProcessInstanceUsingPOST(
-                            FailureStrategyEnum.CONTINUE.getValue(),
+                            //失败策略
+                            FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getValue(),
+                            //流程定义id
                             processDefinitionId,
-                            ProcessInstancePriorityEnum.MEDIUM.getValue(),
-                            DqcConstant.PROJECT_NAME,
-                            scheduleTime,
-                            warningGroupId,
-                            WarningTypeEnum.NONE.getValue(),
-                            "",
-                            receivers,
-                            receiversCc,
-                            RunModeEnum.RUN_MODE_SERIAL.getValue(),
-                            startNodeList,
-                            TaskDependTypeEnum.TASK_POST.getValue(),
-                            timeout,
-                            workerGroup);
+                            //流程实例优先级
+                            ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getValue(),
+                            //项目名称
+                            dolphinSchedulerInfoConfig.getProjectName(),
+                            // 定时时间
+                            dolphinRunInfoConfig.getScheduleTime(),
+                            // 发送组ID
+                            dolphinRunInfoConfig.getWarningGroupId(),
+                            //发送策略
+                            WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getValue(),
+                            //指令类型
+                            ExecTypeEnum.fromValue(dolphinRunInfoConfig.getExecType()).getValue(),
+                            // 收件人
+                            dolphinRunInfoConfig.getReceivers(),
+                            // 收件人(抄送)
+                            dolphinRunInfoConfig.getReceiversCc(),
+                            //运行模式
+                            RunModeEnum.fromValue(dolphinRunInfoConfig.getRunMode()).getValue(),
+                            // 开始节点列表(节点name)
+                            dolphinRunInfoConfig.getStartNodeList(),
+                            //任务依赖类型
+                            TaskDependTypeEnum.fromValue(dolphinRunInfoConfig.getTaskDependType()).getValue(),
+                            // 超时时间
+                            dolphinRunInfoConfig.getTimeout(),
+                            // WORKER_GROUP
+                            dolphinSchedulerInfoConfig.getTaskWorkerGroup()
+                    );
             DqcConstant.verification(result, "运行失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);

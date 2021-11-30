@@ -84,8 +84,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   @Override
   public void release(DqcSchedulerBasicInfoReleaseDTO infoReleaseDto) {
     DqcSchedulerBasicInfo basicInfo = getBasicInfo(infoReleaseDto.getId());
-    // todo 查询流程Id
-    Integer processDefinitionId = DqcConstant.PROCESS_DEFINITION_ID;
+    Integer processDefinitionId = basicInfo.getProcessDefinitionId();
     Integer scheduleId = null;
     if (infoReleaseDto.getSchedulerState().equals(SchedulerStateEnum.SCHEDULING.getCode())) {
       // todo 查询定时id，根据是否是手动触发
@@ -102,11 +101,12 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   @Override
   public void runing(DqcSchedulerBasicInfoRuningDTO basicInfoRuningDTO) {
     DqcSchedulerBasicInfo basicInfo = getBasicInfo(basicInfoRuningDTO.getId());
-    // todo 查询流程Id
-    Integer processDefinitionId = DqcConstant.PROCESS_DEFINITION_ID;
     if(basicInfoRuningDTO.getRunInstanceState().equals(SchedulerInstanceStateEnum.RUNING.getCode())){
-      dolphinScheduler.startInstance(processDefinitionId);
+      dolphinScheduler.startInstance(basicInfo.getProcessDefinitionId());
     }else{
+      if(basicInfoRuningDTO.getInstanceId() == null){
+        throw new BizException("停止实例需要实例id");
+      }
       dolphinScheduler.stop(basicInfoRuningDTO.getInstanceId());
     }
     basicInfo.setRunInstanceState(basicInfoRuningDTO.getRunInstanceState());
@@ -119,10 +119,8 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
   @Override
   public DqcProcessInstanceVO instanceDetailByList(Long id) {
     DqcSchedulerBasicInfo basicInfo = getBasicInfo(id);
-    // todo 查询流程Id
-    Integer processDefinitionId = DqcConstant.PROCESS_DEFINITION_ID;
     // 获取到最近运行实例
-    DqcProcessInstanceVO instanceData = dolphinScheduler.detailByList(processDefinitionId);
+    DqcProcessInstanceVO instanceData = dolphinScheduler.detailByList(basicInfo.getProcessDefinitionId());
     //保存状态
     InstanceStateTypeEnum instanceStateTypeEnum = InstanceStateTypeEnum.fromValue(instanceData.getState());
     instanceData.setStateName(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getValue());

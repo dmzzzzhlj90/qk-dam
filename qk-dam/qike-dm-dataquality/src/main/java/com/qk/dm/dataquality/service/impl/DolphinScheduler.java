@@ -3,9 +3,10 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceSearchDTO;
+import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
-import com.qk.dm.dataquality.dolphinapi.service.impl.ProcessDefinitionApiServiceImpl;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DolphinScheduler {
-  private final ProcessDefinitionApiServiceImpl processDefinitionApiService;
+  private final ProcessDefinitionApiService processDefinitionApiService;
   private final ScheduleApiService scheduleApiService;
   private final ProcessInstanceService processInstanceService;
 
   public DolphinScheduler(
-      ProcessDefinitionApiServiceImpl processDefinitionApiService,
+      ProcessDefinitionApiService processDefinitionApiService,
       ScheduleApiService scheduleApiService,
       ProcessInstanceService processInstanceService) {
     this.processDefinitionApiService = processDefinitionApiService;
@@ -68,7 +69,7 @@ public class DolphinScheduler {
   }
 
   public void stop(Integer processDefinitionId) {
-    //停止实例
+    // 停止实例
     processInstanceService.execute(processDefinitionId, ExecuteTypeEnum.STOP.getCode());
   }
 
@@ -88,7 +89,8 @@ public class DolphinScheduler {
    * @return
    */
   public DqcProcessInstanceVO detail(Integer processInstanceId) {
-    return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(processInstanceService.detail(processInstanceId));
+    return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(
+        processInstanceService.detail(processInstanceId));
   }
 
   /**
@@ -98,7 +100,13 @@ public class DolphinScheduler {
    * @return
    */
   public DqcProcessInstanceVO detailByList(Integer processDefinitionId) {
-    ProcessInstanceResultDTO search = processInstanceService.search(processDefinitionId, 1, 1);
+    ProcessInstanceSearchDTO instanceSearchDTO =
+        ProcessInstanceSearchDTO.builder()
+            .processDefinitionId(processDefinitionId)
+            .pageNo(1)
+            .pageSize(1)
+            .build();
+    ProcessInstanceResultDTO search = processInstanceService.search(instanceSearchDTO);
     return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(search.getTotalList().get(0));
   }
 }

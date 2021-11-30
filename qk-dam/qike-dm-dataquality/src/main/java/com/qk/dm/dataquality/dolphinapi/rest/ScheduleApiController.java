@@ -2,6 +2,8 @@ package com.qk.dm.dataquality.dolphinapi.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dm.dataquality.dolphinapi.dto.ScheduleDeleteDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ScheduleSearchDTO;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import lombok.extern.slf4j.Slf4j;
@@ -53,13 +55,13 @@ public class ScheduleApiController {
 
   @DeleteMapping("/{scheduleId}")
   public DefaultCommonResult deleteOne(@PathVariable("scheduleId") Integer id) {
-    scheduleApiService.deleteOne(id);
+    scheduleApiService.deleteOne(ScheduleDeleteDTO.builder().scheduleId(id).build());
     return DefaultCommonResult.success();
   }
 
   @GetMapping("")
-  public DefaultCommonResult search(Integer processDefinitionId, Integer pageNo, Integer pageSize) {
+  public DefaultCommonResult search(ScheduleSearchDTO scheduleSearchDTO) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, scheduleApiService.search(processDefinitionId, pageNo, pageSize, null));
+        ResultCodeEnum.OK, scheduleApiService.search(scheduleSearchDTO));
   }
 }

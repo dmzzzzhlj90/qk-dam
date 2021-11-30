@@ -1,6 +1,8 @@
 package com.qk.dm.dataquality.dolphinapi.service;
 
+import com.qk.dm.dataquality.dolphinapi.dto.ScheduleDeleteDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ScheduleResultDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ScheduleSearchDTO;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 
 /**
@@ -18,8 +20,7 @@ public interface ScheduleApiService {
 
   void offline(Integer scheduleId);
 
-  void deleteOne(Integer scheduleId);
+  void deleteOne(ScheduleDeleteDTO scheduleDeleteDTO);
 
-  ScheduleResultDTO search(
-      Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal);
+  ScheduleResultDTO search(ScheduleSearchDTO scheduleSearchDTO);
 }
