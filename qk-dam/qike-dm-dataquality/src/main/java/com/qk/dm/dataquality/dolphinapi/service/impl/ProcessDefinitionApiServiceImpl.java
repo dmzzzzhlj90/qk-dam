@@ -45,6 +45,26 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
+    public int saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        int processDefinitionId = 0;
+        //是否存在工作流
+        ProcessDefinitionDTO queryProcessDefinition =
+                queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), dqcSchedulerBasicInfoVO.getJobId());
+        if (null == queryProcessDefinition) {
+            //新增
+            save(dqcSchedulerBasicInfoVO);
+            ProcessDefinitionDTO saveProcessDefinition =
+                    queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), dqcSchedulerBasicInfoVO.getJobId());
+            processDefinitionId = saveProcessDefinition.getId();
+        } else {
+            //编辑
+            update(dqcSchedulerBasicInfoVO);
+            processDefinitionId = queryProcessDefinition.getId();
+        }
+        return processDefinitionId;
+    }
+
+    @Override
     public void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         try {
             // 获取DolphinScheduler 资源信息
@@ -113,7 +133,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             processDefinitionDTO = processDefinitions.get(0);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BizException("未获取到实例ID!!!");
+//            throw new BizException("未获取到实例ID!!!");
         }
         return processDefinitionDTO;
     }

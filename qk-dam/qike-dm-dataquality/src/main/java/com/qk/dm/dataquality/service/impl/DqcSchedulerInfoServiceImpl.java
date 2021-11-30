@@ -127,9 +127,9 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         //调度配置信息
         dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
         //创建流程实例ID
-        processDefinitionApiService.save(dqcSchedulerBasicInfoVO);
+        int processDefinitionId = processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
         //存储流程实例ID
-        int processDefinitionId = updateProcessDefinitionIdByJobId(dqcSchedulerBasicInfoVO, jobId);
+        updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
         //TODO 开启定时器
 
     }
@@ -144,7 +144,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         //调度配置信息
         dqcSchedulerConfigService.update(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
         //更新流程实例
-        processDefinitionApiService.update(dqcSchedulerBasicInfoVO);
+        processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
         //TODO 更新定时器
         Integer processDefinitionId = dqcSchedulerBasicInfoVO.getProcessDefinitionId();
 
@@ -285,12 +285,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         }
     }
 
-    private int updateProcessDefinitionIdByJobId(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, String jobId) {
-        ProcessDefinitionDTO processDefinitionDTO = processDefinitionApiService
-                .queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), jobId);
-        int processDefinitionId = processDefinitionDTO.getId();
+    private void updateProcessDefinitionIdByJobId(int processDefinitionId,String jobId) {
         dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
-        return processDefinitionId;
     }
 
 }
