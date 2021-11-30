@@ -24,4 +24,7 @@ public class DqcRuleTemplatePageDTO {
 
   /** 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔 */
   private String engineType;
+
+  /** 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则"; */
+  private String ruleType;
 }

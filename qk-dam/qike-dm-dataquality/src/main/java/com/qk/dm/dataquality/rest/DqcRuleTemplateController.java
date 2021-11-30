@@ -139,4 +139,6 @@ public class DqcRuleTemplateController {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplatePageDto));
   }
+
+
 }

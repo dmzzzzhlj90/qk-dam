@@ -44,7 +44,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     DqcSchedulerConfig config = DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
     config.setCron(generateCron(dqcSchedulerConfigVO));
     // todo 创建人
-    config.setCreateUserid(1L);
+    config.setCreateUserid("admin");
     config.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
     dqcSchedulerConfigRepository.saveAndFlush(config);
   }
@@ -55,7 +55,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
     config.setCron(generateCron(dqcSchedulerConfigVO));
     // todo 修改人
-    config.setUpdateUserid(1L);
+    config.setUpdateUserid("admin");
     dqcSchedulerConfigRepository.save(config);
   }
 

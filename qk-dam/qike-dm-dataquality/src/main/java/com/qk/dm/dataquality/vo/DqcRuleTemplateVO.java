@@ -43,4 +43,7 @@ public class DqcRuleTemplateVO {
   /** 结果定义 */
   @NotBlank(message = "结果定义不能为空！")
   private String tempResult;
+
+  /** 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则"; */
+  private String ruleType;
 }

@@ -54,7 +54,10 @@ public class DqcRuleTemplateInfoVO {
   private Integer publishState;
 
   /** 创建人 */
-  private String createUser;
+  private String createUserid;
+
+  /** 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则"; */
+  private String ruleType;
 
   /** 修改时间 */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

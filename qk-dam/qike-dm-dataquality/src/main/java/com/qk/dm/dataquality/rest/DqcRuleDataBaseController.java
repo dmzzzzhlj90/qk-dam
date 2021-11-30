@@ -22,106 +22,71 @@ import java.util.List;
 @RequestMapping("/rule/db")
 public class DqcRuleDataBaseController {
 
-    private final DqcRuleDataBaseService dqcRuleDataBaseService;
+  private final DqcRuleDataBaseService dqcRuleDataBaseService;
 
-    public DqcRuleDataBaseController(DqcRuleDataBaseService dqcRuleDataBaseService) {
-        this.dqcRuleDataBaseService = dqcRuleDataBaseService;
-    }
+  public DqcRuleDataBaseController(DqcRuleDataBaseService dqcRuleDataBaseService) {
+    this.dqcRuleDataBaseService = dqcRuleDataBaseService;
+  }
 
-    /**
-     * 查询所有数据源连接类型（计算引擎）
-     *
-     * @return DefaultCommonResult<List < String>>
-     */
-    @GetMapping("/types")
-    public DefaultCommonResult<List<String>> getAllConnType() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleDataBaseService.getAllConnType());
-    }
+  /**
+   * 数据源连接类型（引擎）
+   *
+   * @return DefaultCommonResult<List < String>>
+   */
+  @GetMapping("/connect/types")
+  public DefaultCommonResult<List<String>> getAllConnType() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleDataBaseService.getAllConnType());
+  }
 
-    /**
-     * 根据数据库类型获取数据源连接信息
-     *
-     * @param type
-     * @return DefaultCommonResult<List < ResultDatasourceInfo>>
-     */
-    @GetMapping("/type/{type}")
-    public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
-            @PathVariable("type") String type) {
-        return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dqcRuleDataBaseService.getResultDataSourceByType(type));
-    }
+  /**
+   * 根据数据库类型获取数据源连接信息
+   *
+   * @param connectType
+   * @return DefaultCommonResult<List < ResultDatasourceInfo>>
+   */
+  @GetMapping("/connect/{connectType}")
+  public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
+      @PathVariable("connectType") String connectType) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dqcRuleDataBaseService.getResultDataSourceByType(connectType));
+  }
 
-//    /**
-//     * 根据数据源名称获取数据源连接信息
-//     *
-//     * @param connectName
-//     * @return DefaultCommonResult<ResultDatasourceInfo>
-//     */
-//    @GetMapping("/name/{connectName}")
-//    public DefaultCommonResult<ResultDatasourceInfo> getResultDataSourceByConnectName(
-//            @PathVariable("connectName") String connectName) {
-//        return DefaultCommonResult.success(
-//                ResultCodeEnum.OK, dqcRuleDataSourceService.getResultDataSourceByConnectName(connectName));
-//    }
+  /**
+   * 获取db库信息下拉列表
+   *
+   * @param connectType
+   * @return DefaultCommonResult<List < String>>
+   */
+  @GetMapping("")
+  public DefaultCommonResult<List<String>> getAllDataBase(String connectType) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllDataBase(connectType));
+  }
 
-    // ========================元数据服务_API调用=====================================
+  /**
+   * 获取table表信息下拉列表
+   *
+   * @param connectType,server,dataBaseName
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/table")
+  public DefaultCommonResult<List<String>> getAllTable(
+      String connectType, String server, String dataBaseName) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllTable(connectType, server, dataBaseName));
+  }
 
-//    /**
-//     * 获取所有的元数据类型
-//     *
-//     * @return DefaultCommonResult<List < MtdAtlasEntityType>>
-//     */
-//    @GetMapping("/entity/type")
-//    public DefaultCommonResult<List<MtdAtlasEntityType>> getAllEntityType() {
-//        return DefaultCommonResult.success(
-//                ResultCodeEnum.OK, dqcRuleDataSourceService.getAllEntityType());
-//    }
-//
-//    /**
-//     * 获取元数据详情信息
-//     *
-//     * @param mtdApiParams
-//     * @return DefaultCommonResult<MtdApi>
-//     */
-//    @GetMapping("/entity/detail")
-//    public DefaultCommonResult<MtdApi> mtdDetail(MtdApiParams mtdApiParams) {
-//        return DefaultCommonResult.success(
-//                ResultCodeEnum.OK, dqcRuleDataSourceService.mtdDetail(mtdApiParams));
-//    }
-
-    /**
-     * 获取db库信息下拉列表
-     *
-     * @param dbType
-     * @return DefaultCommonResult<List < String>>
-     */
-    @GetMapping("/storehouse")
-    public DefaultCommonResult<List<String>> getAllDataBase(String dbType) {
-        return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dqcRuleDataBaseService.getAllDataBase(dbType));
-    }
-
-    /**
-     * 获取table表信息下拉列表
-     *
-     * @param dbType,server,dbName
-     * @return DefaultCommonResult
-     */
-    @GetMapping("/table")
-    public DefaultCommonResult<List<String>> getAllTable(String dbType, String server, String dbName) {
-        return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dqcRuleDataBaseService.getAllTable(dbType,server,dbName));
-    }
-
-    /**
-     * 获取column字段信息下拉列表
-     *
-     * @param dbType,server,dbName,tableName
-     * @return DefaultCommonResult
-     */
-    @GetMapping("/column")
-    public DefaultCommonResult<List<String>> getAllColumn(String dbType, String server, String dbName, String tableName) {
-        return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dqcRuleDataBaseService.getAllColumn(dbType,server,dbName,tableName));
-    }
+  /**
+   * 获取column字段信息下拉列表
+   *
+   * @param connectType,server,dataBaseName,tableName
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/column")
+  public DefaultCommonResult<List<String>> getAllColumn(
+      String connectType, String tableName, String server, String dataBaseName) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK,
+        dqcRuleDataBaseService.getAllColumn(connectType, server, dataBaseName, tableName));
+  }
 }

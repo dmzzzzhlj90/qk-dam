@@ -9,9 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author shenpengjie
- */
+/** @author shenpengjie */
 @Data
 @Entity
 @Table(name = "qk_dqc_rule_template")
@@ -62,13 +60,17 @@ public class DqcRuleTemplate implements Serializable {
   @Column(name = "publish_state", nullable = false)
   private Integer publishState;
 
+  /** 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则"; */
+  @Column(name = "rule_type", nullable = false)
+  private String ruleType;
+
   /** 创建人 */
   @Column(name = "create_userid", nullable = false)
-  private Long createUserid;
+  private String createUserid;
 
   /** 修改人 */
   @Column(name = "update_userid")
-  private Long updateUserid;
+  private String updateUserid;
 
   /** 删除标识(0-保留 1-删除) */
   @Column(name = "del_flag", nullable = false)
