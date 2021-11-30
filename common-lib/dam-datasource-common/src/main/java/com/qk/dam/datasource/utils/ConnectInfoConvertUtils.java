@@ -17,17 +17,19 @@ public class ConnectInfoConvertUtils {
     ConnectBasicInfo connectBasicInfo = null;
     try {
       connectBasicInfo = null;
-      if (type.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
-        return objectMapper.readValue(connectBasicInfoJson, MysqlInfo.class);
-      }
-      if (type.equalsIgnoreCase(ConnTypeEnum.HIVE.getName())) {
-        return objectMapper.readValue(connectBasicInfoJson, HiveInfo.class);
-      }
-      if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
-        return objectMapper.readValue(connectBasicInfoJson, OracleInfo.class);
-      }
-      if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
-        return objectMapper.readValue(connectBasicInfoJson, PostgresqlInfo.class);
+      if (type != null) {
+        if (type.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
+          return objectMapper.readValue(connectBasicInfoJson, MysqlInfo.class);
+        }
+        if (type.equalsIgnoreCase(ConnTypeEnum.HIVE.getName())) {
+          return objectMapper.readValue(connectBasicInfoJson, HiveInfo.class);
+        }
+        if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
+          return objectMapper.readValue(connectBasicInfoJson, OracleInfo.class);
+        }
+        if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
+          return objectMapper.readValue(connectBasicInfoJson, PostgresqlInfo.class);
+        }
       }
     } catch (JsonProcessingException e) {
       e.printStackTrace();
