@@ -32,4 +32,9 @@ public interface DqcSchedulerRulesService {
     void deleteBulk(String ids);
 
     Boolean checkRuleTemp(Long id);
+
+    void deleteByJobId(String jobId);
+
+    void deleteBulkByJobIds(List<String> jobIds);
+
 }

@@ -22,7 +22,7 @@ public interface DqcSchedulerInfoService {
 
     void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
-    void deleteOne(Long valueOf);
+    void deleteOne(String id);
 
     void deleteBulk(String ids);
 
