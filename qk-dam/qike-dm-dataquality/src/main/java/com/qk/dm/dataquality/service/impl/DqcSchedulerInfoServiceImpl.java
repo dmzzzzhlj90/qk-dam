@@ -129,15 +129,13 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         //创建流程实例ID
         processDefinitionApiService.save(dqcSchedulerBasicInfoVO);
         //存储流程实例ID
-        ProcessDefinitionDTO processDefinitionDTO = processDefinitionApiService
-                .queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), jobId);
-        int processDefinitionId = processDefinitionDTO.getId();
-        dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
+        int processDefinitionId = updateProcessDefinitionIdByJobId(dqcSchedulerBasicInfoVO, jobId);
         //TODO 开启定时器
 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         //基础信息
         dqcSchedulerBasicInfoService.update(dqcSchedulerBasicInfoVO);
@@ -145,16 +143,44 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         dqcSchedulerRulesService.updateBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList());
         //调度配置信息
         dqcSchedulerConfigService.update(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
-        //TODO
+        //更新流程实例
+        processDefinitionApiService.update(dqcSchedulerBasicInfoVO);
+        //TODO 更新定时器
+        Integer processDefinitionId = dqcSchedulerBasicInfoVO.getProcessDefinitionId();
+
     }
 
     @Override
-    public void deleteOne(Long valueOf) {
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOne(String id) {
+        //删除基础信息
+        DqcSchedulerBasicInfo schedulerBasicInfo = dqcSchedulerBasicInfoService.getInfoById(Long.valueOf(id));
+        dqcSchedulerBasicInfoService.deleteOne(Long.valueOf(id));
+        //删除规则信息
+        dqcSchedulerRulesService.deleteByJobId(schedulerBasicInfo.getJobId());
+        //删除调度配置信息
+        dqcSchedulerConfigService.deleteByJobId(schedulerBasicInfo.getJobId());
+        //删除工作流信息
+        processDefinitionApiService.delete(dolphinSchedulerInfoConfig.getProjectName(), schedulerBasicInfo.getProcessDefinitionId());
+        //TODO 更新定时器
 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBulk(String ids) {
+        //删除基础信息
+        List<DqcSchedulerBasicInfo> basicInfoServiceInfoList = dqcSchedulerBasicInfoService.getInfoList(ids);
+        dqcSchedulerBasicInfoService.deleteBulk(basicInfoServiceInfoList);
+        List<String> jobIds = basicInfoServiceInfoList.stream().map(DqcSchedulerBasicInfo::getJobId).collect(Collectors.toList());
+        List<Integer> processDefinitionIdList = basicInfoServiceInfoList.stream().map(DqcSchedulerBasicInfo::getProcessDefinitionId).collect(Collectors.toList());
+        //删除规则信息
+        dqcSchedulerRulesService.deleteBulkByJobIds(jobIds);
+        //删除调度配置信息
+        dqcSchedulerConfigService.deleteBulkByJobIds(jobIds);
+        //删除工作流信息
+        processDefinitionApiService.deleteBulk(dolphinSchedulerInfoConfig.getProjectName(), processDefinitionIdList);
+        //TODO 更新定时器
 
     }
 
@@ -257,6 +283,14 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
                 dqcSchedulerInfoVOList.add(dqcSchedulerBasicInfoVO);
             }
         }
+    }
+
+    private int updateProcessDefinitionIdByJobId(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, String jobId) {
+        ProcessDefinitionDTO processDefinitionDTO = processDefinitionApiService
+                .queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), jobId);
+        int processDefinitionId = processDefinitionDTO.getId();
+        dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
+        return processDefinitionId;
     }
 
 }

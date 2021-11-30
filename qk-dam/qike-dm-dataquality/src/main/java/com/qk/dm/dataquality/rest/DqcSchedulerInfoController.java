@@ -68,7 +68,6 @@ public class DqcSchedulerInfoController {
     }
 
     /**
-     * //TODO 需要关联删除
      * 删除单个规则调度_规则调度信息
      *
      * @param id
@@ -77,7 +76,7 @@ public class DqcSchedulerInfoController {
     @DeleteMapping("/{id}")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
     public DefaultCommonResult deleteOne(@PathVariable("id") String id) {
-        dqcSchedulerInfoService.deleteOne(Long.valueOf(id));
+        dqcSchedulerInfoService.deleteOne(id);
         return DefaultCommonResult.success();
     }
 
@@ -88,9 +87,9 @@ public class DqcSchedulerInfoController {
      * @param ids
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/root/{ids}")
+    @DeleteMapping("/bulk")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+    public DefaultCommonResult deleteBulk(@RequestParam("ids") String ids) {
         dqcSchedulerInfoService.deleteBulk(ids);
         return DefaultCommonResult.success();
     }
