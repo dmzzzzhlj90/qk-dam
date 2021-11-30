@@ -1,8 +1,8 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsService;
@@ -38,7 +38,7 @@ public class MtdLabelsController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(@RequestBody @Validated MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.insert(mtdLabelsVO);
     return DefaultCommonResult.success();
@@ -51,7 +51,7 @@ public class MtdLabelsController {
    * @return DefaultCommonResult
    */
   @PutMapping("/{id}")
-  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(
       @PathVariable("id") Long id, @RequestBody @Validated MtdLabelsVO mtdLabelsVO) {
     mtdLabelsService.update(id, mtdLabelsVO);
@@ -65,7 +65,7 @@ public class MtdLabelsController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/{ids}")
-  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.DELETE)
+//  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.DELETE)
   public DefaultCommonResult delete(@PathVariable("ids") String ids) {
     mtdLabelsService.delete(ids);
     return DefaultCommonResult.success();
@@ -78,7 +78,7 @@ public class MtdLabelsController {
    * @return DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>>
    */
   @GetMapping("/page")
-  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.LIST)
   public DefaultCommonResult<PageResultVO<MtdLabelsInfoVO>> listByPage(
       MtdLabelsListVO mtdLabelsListVO) {
     return DefaultCommonResult.success(
@@ -92,7 +92,7 @@ public class MtdLabelsController {
    * @return DefaultCommonResult<List<MtdLabelsInfoVO>>
    */
   @GetMapping("")
-  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.MTD_LABELS, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<MtdLabelsInfoVO>> listByAll(MtdLabelsVO mtdLabelsVO) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdLabelsService.listByAll(mtdLabelsVO));
   }

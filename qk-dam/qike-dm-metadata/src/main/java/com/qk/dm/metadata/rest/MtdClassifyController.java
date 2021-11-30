@@ -1,8 +1,8 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyService;
@@ -39,7 +39,7 @@ public class MtdClassifyController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(@RequestBody @Validated MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.insert(mtdClassifyVO);
     return DefaultCommonResult.success();
@@ -52,7 +52,7 @@ public class MtdClassifyController {
    * @return DefaultCommonResult
    */
   @PutMapping("/{id}")
-  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(
       @PathVariable("id") Long id, @RequestBody @Validated MtdClassifyVO mtdClassifyVO) {
     mtdClassifyService.update(id, mtdClassifyVO);
@@ -66,7 +66,7 @@ public class MtdClassifyController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/{ids}")
-  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.DELETE)
+//  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.DELETE)
   public DefaultCommonResult delete(@PathVariable("ids") String ids) {
     mtdClassifyService.delete(ids);
     return DefaultCommonResult.success();
@@ -79,7 +79,7 @@ public class MtdClassifyController {
    * @return DefaultCommonResult<PageResultVO<MtdClassifyInfoVO>>
    */
   @GetMapping("/page")
-  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.LIST)
   public DefaultCommonResult<PageResultVO<MtdClassifyInfoVO>> classifyByPage(
       MtdClassifyListVO mtdClassifyListVO) {
     return DefaultCommonResult.success(
@@ -93,7 +93,7 @@ public class MtdClassifyController {
    * @return DefaultCommonResult<List<MtdClassifyInfoVO>>
    */
   @GetMapping("")
-  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.MTD_CLASS, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<List<MtdClassifyInfoVO>> classifyByAll(MtdClassifyVO mtdClassifyVO) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, mtdClassifyService.listByAll(mtdClassifyVO));

@@ -1,8 +1,8 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdLabelsAtlasService;
@@ -35,7 +35,7 @@ public class MtdLabelsAtlasController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.MTD_LABELS_BIND, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.MTD_LABELS_BIND, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(@RequestBody @Validated MtdLabelsAtlasVO mtdLabelsVO) {
     mtdLabelsAtlasService.insert(mtdLabelsVO);
     return DefaultCommonResult.success();
@@ -48,7 +48,7 @@ public class MtdLabelsAtlasController {
    * @return DefaultCommonResult
    */
   @PutMapping("")
-  @Auth(bizType = BizResource.MTD_LABELS_BIND, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.MTD_LABELS_BIND, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(@RequestBody @Validated MtdLabelsAtlasVO mtdLabelsVO) {
     mtdLabelsAtlasService.update(mtdLabelsVO);
     return DefaultCommonResult.success();
@@ -61,7 +61,7 @@ public class MtdLabelsAtlasController {
    * @return DefaultCommonResult<MtdLabelsAtlasVO>
    */
   @GetMapping("/{guid}")
-  @Auth(bizType = BizResource.MTD_LABELS_BIND, actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.MTD_LABELS_BIND, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdLabelsAtlasVO> getByGuid(@PathVariable("guid") String guid) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdLabelsAtlasService.getByGuid(guid));
   }
@@ -73,7 +73,7 @@ public class MtdLabelsAtlasController {
    * @return DefaultCommonResult
    */
   @PostMapping("/bulk")
-  @Auth(bizType = BizResource.MTD_LABELS_BIND, actionType = RestActionType.BIND)
+//  @Auth(bizType = BizResource.MTD_LABELS_BIND, actionType = RestActionType.BIND)
   public DefaultCommonResult bulk(@RequestBody @Validated MtdLabelsAtlasBulkVO mtdLabelsVO) {
     mtdLabelsAtlasService.bulk(mtdLabelsVO);
     return DefaultCommonResult.success();

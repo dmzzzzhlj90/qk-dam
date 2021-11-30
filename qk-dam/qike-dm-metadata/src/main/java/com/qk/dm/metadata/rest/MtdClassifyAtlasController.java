@@ -1,8 +1,8 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.metadata.service.MtdClassifyAtlasService;
@@ -35,7 +35,7 @@ public class MtdClassifyAtlasController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.MTD_CLASS_BIND, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.MTD_CLASS_BIND, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(@RequestBody @Validated MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasService.insert(mtdClassifyAtlasVO);
     return DefaultCommonResult.success();
@@ -48,7 +48,7 @@ public class MtdClassifyAtlasController {
    * @return DefaultCommonResult
    */
   @PutMapping("")
-  @Auth(bizType = BizResource.MTD_CLASS_BIND, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.MTD_CLASS_BIND, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(@RequestBody @Validated MtdClassifyAtlasVO mtdClassifyAtlasVO) {
     mtdClassifyAtlasService.update(mtdClassifyAtlasVO);
     return DefaultCommonResult.success();
@@ -61,7 +61,7 @@ public class MtdClassifyAtlasController {
    * @return DefaultCommonResult<MtdClassifyAtlasVO>
    */
   @GetMapping("/{guid}")
-  @Auth(bizType = BizResource.MTD_CLASS_BIND, actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.MTD_CLASS_BIND, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdClassifyAtlasVO> getByGuid(@PathVariable("guid") String guid) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdClassifyAtlasService.getByGuid(guid));
   }
