@@ -179,4 +179,19 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public Boolean checkRuleTemp(Long id) {
         return dqcSchedulerRulesRepository.exists(qDqcSchedulerRules.ruleTempId.eq(id));
     }
+
+    @Override
+    public void deleteByJobId(String jobId) {
+        //根据JobId查询对应规则信息
+        Iterable<DqcSchedulerRules> dqcSchedulerRules = dqcSchedulerRulesRepository.findAll(qDqcSchedulerRules.jobId.eq(jobId));
+        //执行批量删除
+        dqcSchedulerRulesRepository.deleteAllInBatch(dqcSchedulerRules);
+    }
+
+    @Override
+    public void deleteBulkByJobIds(List<String> jobIds) {
+        Iterable<DqcSchedulerRules> dqcSchedulerRules = dqcSchedulerRulesRepository.findAll(qDqcSchedulerRules.jobId.in(jobIds));
+        dqcSchedulerRulesRepository.deleteAllInBatch(dqcSchedulerRules);
+    }
+
 }

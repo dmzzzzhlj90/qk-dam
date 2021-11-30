@@ -4,6 +4,8 @@ import com.qk.dm.dataquality.dolphinapi.dto.ProcessDefinitionDTO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 调度引擎Dolphin Scheduler 流程定义相关操作
  *
@@ -16,7 +18,13 @@ public interface ProcessDefinitionApiService {
 
     void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
+    void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+
     ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId);
+
+    void delete(String projectName, Integer processDefinitionId);
+
+    void deleteBulk(String projectName, List<Integer> processDefinitionIds);
 
     void release(Integer processDefinitionId, Integer releaseState);
 
