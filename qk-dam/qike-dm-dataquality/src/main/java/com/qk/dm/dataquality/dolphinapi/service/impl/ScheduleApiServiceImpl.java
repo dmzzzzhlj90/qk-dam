@@ -85,9 +85,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 失败策略
               FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getValue(),
               // 流程实例优先级
-              ProcessInstancePriorityEnum.fromValue(
-                      dolphinRunInfoConfig.getProcessInstancePriority())
-                  .getValue(),
+              ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getValue(),
               // 收件人
               dolphinRunInfoConfig.getReceivers(),
               // 收件人(抄送)

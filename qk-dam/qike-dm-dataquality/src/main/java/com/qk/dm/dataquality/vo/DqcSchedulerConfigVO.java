@@ -57,6 +57,9 @@ public class DqcSchedulerConfigVO {
   /** 调度执行cron表达式 */
   private String cron;
 
+  /** 调度定时id */
+  private Integer schedulerId;
+
   /** 创建人 */
   private Long createUserid;
 

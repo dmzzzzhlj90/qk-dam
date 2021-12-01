@@ -8,6 +8,8 @@ import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * 数据质量_规则调度_规则信息VO转换mapper
  *
@@ -21,6 +23,8 @@ public interface DqcSchedulerConfigMapper {
     DqcSchedulerConfigMapper INSTANCE = Mappers.getMapper(DqcSchedulerConfigMapper.class);
 
     DqcSchedulerConfigVO userDqcSchedulerConfigVO(DqcSchedulerConfig dqcSchedulerConfig);
+
+    List<DqcSchedulerConfigVO> userDqcSchedulerConfigVO(List<DqcSchedulerConfig> dqcSchedulerConfig);
 
     DqcSchedulerConfig userDqcSchedulerConfig(DqcSchedulerConfigVO dqcSchedulerConfig);
 

@@ -13,10 +13,8 @@ import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author wjq
@@ -34,15 +32,18 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   @Override
   public PageResultVO<DqcSchedulerConfigVO> searchPageList(
-          DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
+      DqcSchedulerInfoParamsVO dsdSchedulerAllParamsVO) {
     return null;
   }
 
   @Override
   public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO, String jobId) {
     dqcSchedulerConfigVO.setJobId(jobId);
-    DqcSchedulerConfig config = DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
-    config.setCron(generateCron(dqcSchedulerConfigVO));
+    DqcSchedulerConfig config =
+        DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
+    String cron = generateCron(dqcSchedulerConfigVO);
+    config.setCron(cron);
+    dqcSchedulerConfigVO.setCron(cron);
     // todo 创建人
     config.setCreateUserid("admin");
     config.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
@@ -53,28 +54,36 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   public void update(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
     DqcSchedulerConfig config = getInfoById(dqcSchedulerConfigVO.getId());
     DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO, config);
-    config.setCron(generateCron(dqcSchedulerConfigVO));
+    String cron = generateCron(dqcSchedulerConfigVO);
+    config.setCron(cron);
+    dqcSchedulerConfigVO.setCron(cron);
     // todo 修改人
     config.setUpdateUserid("admin");
     dqcSchedulerConfigRepository.save(config);
   }
 
   @Override
-  public void deleteOne(Long id) {
-    boolean exists = dqcSchedulerConfigRepository.exists(qDqcSchedulerConfig.id.eq(id));
-    if (exists) {
-      dqcSchedulerConfigRepository.deleteById(id);
-    }
+  public void update(String jobId, Integer schedulerId) {
+    DqcSchedulerConfig config = checkConfigIsNotNullByTaskId(jobId);
+    config.setSchedulerId(schedulerId);
+    // todo 修改人
+    config.setUpdateUserid("admin");
+    dqcSchedulerConfigRepository.save(config);
   }
 
   @Override
-  public void deleteBulk(String ids) {
-    dqcSchedulerConfigRepository.deleteAllByIdInBatch(getIdList(ids));
+  public void deleteOne(DqcSchedulerConfig config) {
+    dqcSchedulerConfigRepository.delete(config);
+  }
+
+  @Override
+  public void deleteBulk(List<DqcSchedulerConfig> dqcSchedulerConfigs) {
+    dqcSchedulerConfigRepository.deleteAll(dqcSchedulerConfigs);
   }
 
   @Override
   public void deleteByJobId(String jobId) {
-    dqcSchedulerConfigRepository.delete(checkConfigIsNullByTaskId(jobId));
+    dqcSchedulerConfigRepository.delete(checkConfigIsNotNullByTaskId(jobId));
   }
 
   @Override
@@ -83,9 +92,13 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   }
 
   @Override
-  public DqcSchedulerConfigVO detail(String jobId) {
-    return DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfigVO(
-        checkConfigIsNullByTaskId(jobId));
+  public DqcSchedulerConfig getConfig(String jobId) {
+    return checkConfigIsNotNullByTaskId(jobId);
+  }
+
+  @Override
+  public List<DqcSchedulerConfig> getConfigList(List<String> jobIds) {
+    return getInfoByTaskIds(jobIds);
   }
 
   private DqcSchedulerConfig getInfoById(Long id) {
@@ -94,7 +107,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     return info;
   }
 
-  private DqcSchedulerConfig checkConfigIsNullByTaskId(String jobId) {
+  private DqcSchedulerConfig checkConfigIsNotNullByTaskId(String jobId) {
     DqcSchedulerConfig schedulerConfig = getInfoByTaskId(jobId);
     checkConfig(jobId, schedulerConfig);
     return schedulerConfig;
@@ -110,10 +123,6 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     if (schedulerConfig == null) {
       throw new BizException("任务id为：" + jobId + " 的配置，不存在！！！");
     }
-  }
-
-  private List<Long> getIdList(String ids) {
-    return Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
   }
 
   private List<DqcSchedulerConfig> getInfoByTaskIds(List<String> jobIds) {

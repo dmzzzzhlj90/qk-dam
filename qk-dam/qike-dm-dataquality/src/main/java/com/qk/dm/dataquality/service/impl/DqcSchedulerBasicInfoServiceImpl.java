@@ -7,6 +7,7 @@ import com.qk.dm.dataquality.constant.SchedulerInstanceStateEnum;
 import com.qk.dm.dataquality.constant.SchedulerStateEnum;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
+import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoRuningDTO;
@@ -63,8 +64,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     @Override
     public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         DqcSchedulerBasicInfo basicInfo = getInfoById(dqcSchedulerBasicInfoVO.getId());
-        DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(
-                dqcSchedulerBasicInfoVO, basicInfo);
+        DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO, basicInfo);
         // todo 修改人
         basicInfo.setUpdateUserid("admin");
         dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
@@ -84,10 +84,10 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     public void release(DqcSchedulerBasicInfoReleaseDTO infoReleaseDto) {
         DqcSchedulerBasicInfo basicInfo = getBasicInfo(infoReleaseDto.getId());
         Integer processDefinitionId = basicInfo.getProcessDefinitionId();
-        Integer scheduleId = null;
         if (infoReleaseDto.getSchedulerState().equals(SchedulerStateEnum.SCHEDULING.getCode())) {
             // todo 查询定时id，根据是否是手动触发
-            dolphinScheduler.online(processDefinitionId, scheduleId);
+            DqcSchedulerConfig config = dqcSchedulerConfigService.getConfig(basicInfo.getJobId());
+            dolphinScheduler.online(processDefinitionId, config.getSchedulerId());
         } else {
             dolphinScheduler.offline(processDefinitionId);
         }
