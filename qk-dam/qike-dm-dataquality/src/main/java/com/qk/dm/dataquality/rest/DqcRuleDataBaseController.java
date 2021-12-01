@@ -58,9 +58,9 @@ public class DqcRuleDataBaseController {
    * @return DefaultCommonResult<List < String>>
    */
   @GetMapping("")
-  public DefaultCommonResult<List<String>> getAllDataBase(String connectType) {
+  public DefaultCommonResult<List<String>> getAllDataBase(String connectType, String server) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllDataBase(connectType));
+        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllDataBase(connectType, server));
   }
 
   /**
@@ -84,7 +84,7 @@ public class DqcRuleDataBaseController {
    */
   @GetMapping("/column")
   public DefaultCommonResult<List<String>> getAllColumn(
-      String connectType, String tableName, String server, String dataBaseName) {
+      String connectType, String server, String dataBaseName, String tableName) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK,
         dqcRuleDataBaseService.getAllColumn(connectType, server, dataBaseName, tableName));

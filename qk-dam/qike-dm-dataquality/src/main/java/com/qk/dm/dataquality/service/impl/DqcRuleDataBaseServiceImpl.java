@@ -1,9 +1,6 @@
 package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.dataquality.service.DqcRuleDataBaseService;
 import org.springframework.stereotype.Service;
@@ -35,24 +32,8 @@ public class DqcRuleDataBaseServiceImpl implements DqcRuleDataBaseService {
   }
 
   @Override
-  public ResultDatasourceInfo getResultDataSourceByConnectName(String connectName) {
-    return dataBaseInfoDefaultApi.getResultDataSourceByConnectName(connectName);
-  }
-
-  @Override
-  public List<MtdAtlasEntityType> getAllEntityType() {
-    return dataBaseInfoDefaultApi.getAllEntityType();
-  }
-
-  @Override
-  public MtdApi mtdDetail(MtdApiParams mtdApiParams) {
-    return null;
-//    return dataBaseInfoDefaultApi.mtdDetail(mtdApiParams);
-  }
-
-  @Override
-  public List<String> getAllDataBase(String dbType) {
-    return dataBaseInfoDefaultApi.getAllDataBase(dbType);
+  public List<String> getAllDataBase(String dbType, String server) {
+    return dataBaseInfoDefaultApi.getAllDataBase(dbType,server);
   }
 
   @Override
