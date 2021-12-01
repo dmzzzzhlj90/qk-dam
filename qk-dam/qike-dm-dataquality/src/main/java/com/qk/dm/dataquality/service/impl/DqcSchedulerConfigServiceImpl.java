@@ -63,6 +63,13 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   }
 
   @Override
+  public void update(DqcSchedulerConfig dqcSchedulerConfig) {
+    // todo 修改人
+    dqcSchedulerConfig.setUpdateUserid("admin");
+    dqcSchedulerConfigRepository.saveAndFlush(dqcSchedulerConfig);
+  }
+
+  @Override
   public void update(String jobId, Integer schedulerId) {
     DqcSchedulerConfig config = checkConfigIsNotNullByTaskId(jobId);
     config.setSchedulerId(schedulerId);

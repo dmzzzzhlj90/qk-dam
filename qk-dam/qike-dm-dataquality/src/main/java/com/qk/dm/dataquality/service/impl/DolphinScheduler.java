@@ -9,10 +9,10 @@ import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
-import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,15 +39,10 @@ public class DolphinScheduler {
    * 流程定义上线，定时上线
    *
    * @param processDefinitionId
-   * @param scheduleId
    */
-  public void online(Integer processDefinitionId, Integer scheduleId) {
+  public void online(Integer processDefinitionId) {
     // 流程定义上线
     processDefinitionApiService.release(processDefinitionId, DqcConstant.PUBLISH_STATE_UP);
-    // 定时上线
-    if (scheduleId != null) {
-      scheduleApiService.online(scheduleId);
-    }
   }
 
   /**
@@ -72,6 +67,10 @@ public class DolphinScheduler {
     processDefinitionApiService.startInstance(processDefinitionId);
   }
 
+  /**
+   * 停止实例
+   * @param processDefinitionId
+   */
   public void stop(Integer processDefinitionId) {
     // 停止实例
     processInstanceService.execute(processDefinitionId, ExecuteTypeEnum.STOP.getCode());
@@ -116,23 +115,16 @@ public class DolphinScheduler {
 
   /**
    * 新增定时器
-   *
    * @param processDefinitionId
-   * @param dqcSchedulerConfigVO
+   * @param effectiveTimeStart
+   * @param effectiveTimeEnt
+   * @param cron
    * @return
    */
   public Integer createSchedule(
-      Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    // 流程定义上线 todo 在dolphin上线，但本地系统没有上线
-    processDefinitionApiService.release(processDefinitionId, DqcConstant.PUBLISH_STATE_UP);
-    List<ScheduleDTO> totalList = saveAndFlush(processDefinitionId, dqcSchedulerConfigVO);
-    return CollectionUtils.isEmpty(totalList) ? null : totalList.get(0).getId();
-  }
-
-  private List<ScheduleDTO> saveAndFlush(
-      Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+          Integer processDefinitionId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
     // 创建定时
-    scheduleApiService.create(processDefinitionId, dqcSchedulerConfigVO);
+    scheduleApiService.create(processDefinitionId, effectiveTimeStart,effectiveTimeEnt,cron);
     // 查询定时
     ScheduleSearchDTO scheduleSearchDTO =
         ScheduleSearchDTO.builder()
@@ -142,20 +134,18 @@ public class DolphinScheduler {
             .build();
     ScheduleResultDTO search = scheduleApiService.search(scheduleSearchDTO);
     List<ScheduleDTO> totalList = search.getTotalList();
-    return totalList;
+    return CollectionUtils.isEmpty(totalList) ? null : totalList.get(0).getId();
   }
 
   /**
    * 修改定时器
-   *
    * @param scheduleId
-   * @param dqcSchedulerConfigVO
+   * @param effectiveTimeStart
+   * @param effectiveTimeEnt
+   * @param cron
    */
-  public void updateSchedule(
-      Integer processDefinitionId, Integer scheduleId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    // 流程定义上线 todo 在dolphin上线，但本地系统没有上线
-    processDefinitionApiService.release(processDefinitionId, DqcConstant.PUBLISH_STATE_UP);
-    scheduleApiService.update(scheduleId, dqcSchedulerConfigVO);
+  public void updateSchedule(Integer scheduleId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+    scheduleApiService.update(scheduleId, effectiveTimeStart,effectiveTimeEnt,cron);
   }
 
   /**
@@ -164,8 +154,6 @@ public class DolphinScheduler {
    * @param scheduleId
    */
   public void deleteSchedule(Integer processDefinitionId, Integer scheduleId) {
-    // 流程定义上线 todo 在dolphin上线，但本地系统没有上线
-    processDefinitionApiService.release(processDefinitionId, DqcConstant.PUBLISH_STATE_UP);
     scheduleApiService.deleteOne(ScheduleDeleteDTO.builder().scheduleId(scheduleId).build());
   }
 }

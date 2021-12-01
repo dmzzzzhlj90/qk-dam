@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * @since 1.0.0
  */
 @Data
-public class DqcSchedulerBasicInfoRuningDTO {
+public class DqcSchedulerRuningDTO {
 
   /** 主键ID */
   @NotNull(message = "id不能为空！")

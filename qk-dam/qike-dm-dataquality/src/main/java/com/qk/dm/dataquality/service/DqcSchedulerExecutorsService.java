@@ -1,0 +1,24 @@
+package com.qk.dm.dataquality.service;
+
+import com.qk.dm.dataquality.params.dto.DqcSchedulerDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerReleaseDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerRuningDTO;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
+
+/**
+ * @author shenpj
+ * @date 2021/12/1 5:28 下午
+ * @since 1.0.0
+ */
+public interface DqcSchedulerExecutorsService {
+    void release(DqcSchedulerReleaseDTO dqcSchedulerReleaseDto);
+
+    void runing(DqcSchedulerRuningDTO dqcSchedulerRuningDTO);
+
+    DqcProcessInstanceVO instanceDetailByList(Long id);
+
+    void create(DqcSchedulerDTO dqcSchedulerDTO);
+
+    void update(Integer scheduleId, DqcSchedulerConfigVO dqcSchedulerConfigVO);
+}

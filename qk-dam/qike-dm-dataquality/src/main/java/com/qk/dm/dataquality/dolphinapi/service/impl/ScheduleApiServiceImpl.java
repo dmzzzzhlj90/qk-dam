@@ -18,6 +18,8 @@ import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @author shenpj
  * @date 2021/11/16 4:40 下午
@@ -40,7 +42,8 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
 
   /** createSchedule 创建定时 */
   @Override
-  public void create(Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+  public void create(
+      Integer processDefinitionId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
 
     try {
       Result result =
@@ -60,7 +63,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 收件人(抄送)
               dolphinRunInfoConfig.getReceiversCc(),
               // 拼接定时时间
-              schedule(dqcSchedulerConfigVO),
+              DqcConstant.schedule(effectiveTimeStart, effectiveTimeEnt, cron),
               // 发送组ID
               dolphinRunInfoConfig.getWarningGroupId(),
               // 发送策略
@@ -74,7 +77,8 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   }
 
   @Override
-  public void update(Integer scheduleId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+  public void update(
+      Integer scheduleId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
     try {
       Result result =
           defaultApi.updateScheduleUsingPOST(
@@ -85,13 +89,15 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 失败策略
               FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getValue(),
               // 流程实例优先级
-              ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getValue(),
+              ProcessInstancePriorityEnum.fromValue(
+                      dolphinRunInfoConfig.getProcessInstancePriority())
+                  .getValue(),
               // 收件人
               dolphinRunInfoConfig.getReceivers(),
               // 收件人(抄送)
               dolphinRunInfoConfig.getReceiversCc(),
               // 拼接定时时间
-              schedule(dqcSchedulerConfigVO),
+              DqcConstant.schedule(effectiveTimeStart, effectiveTimeEnt, cron),
               // 发送组ID
               dolphinRunInfoConfig.getWarningGroupId(),
               // 发送策略

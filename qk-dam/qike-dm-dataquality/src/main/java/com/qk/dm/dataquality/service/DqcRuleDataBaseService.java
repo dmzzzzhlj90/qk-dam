@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.service;
 
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-
 import java.util.List;
 
 /**
@@ -13,11 +11,11 @@ public interface DqcRuleDataBaseService {
 
     List<String> getAllConnType();
 
-    List<ResultDatasourceInfo> getResultDataSourceByType(String type);
+    List<String> getResultDataSourceByType(String type);
 
-    List<String> getAllDataBase(String dbType, String server);
+    List<String> getAllDataBase(String dbType, String dataSourceName);
 
-    List<String> getAllTable(String dbType, String server, String dbName);
+    List<String> getAllTable(String dbType, String dataSourceName, String dbName);
 
-    List getAllColumn(String dbType, String server, String dbName, String tableName);
+    List getAllColumn(String dbType, String dataSourceName, String dbName, String tableName);
 }

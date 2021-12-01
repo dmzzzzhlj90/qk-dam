@@ -2,7 +2,6 @@ package com.qk.dm.dataquality.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dm.dataquality.service.DqcRuleDataBaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +43,8 @@ public class DqcRuleDataBaseController {
    * @param connectType
    * @return DefaultCommonResult<List < ResultDatasourceInfo>>
    */
-  @GetMapping("/connect/{connectType}")
-  public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
-      @PathVariable("connectType") String connectType) {
+  @GetMapping("/connect/{type}")
+  public DefaultCommonResult<List<String>> getResultDataSourceByType(@PathVariable("type") String connectType) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dqcRuleDataBaseService.getResultDataSourceByType(connectType));
   }
@@ -58,9 +56,9 @@ public class DqcRuleDataBaseController {
    * @return DefaultCommonResult<List < String>>
    */
   @GetMapping("")
-  public DefaultCommonResult<List<String>> getAllDataBase(String connectType, String server) {
+  public DefaultCommonResult<List<String>> getAllDataBase(String connectType, String dataSourceName) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllDataBase(connectType, server));
+        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllDataBase(connectType, dataSourceName));
   }
 
   /**
@@ -70,10 +68,9 @@ public class DqcRuleDataBaseController {
    * @return DefaultCommonResult
    */
   @GetMapping("/table")
-  public DefaultCommonResult<List<String>> getAllTable(
-      String connectType, String server, String dataBaseName) {
+  public DefaultCommonResult<List<String>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllTable(connectType, server, dataBaseName));
+        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllTable(connectType, dataSourceName, dataBaseName));
   }
 
   /**
@@ -83,10 +80,9 @@ public class DqcRuleDataBaseController {
    * @return DefaultCommonResult
    */
   @GetMapping("/column")
-  public DefaultCommonResult<List<String>> getAllColumn(
-      String connectType, String server, String dataBaseName, String tableName) {
+  public DefaultCommonResult<List<String>> getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK,
-        dqcRuleDataBaseService.getAllColumn(connectType, server, dataBaseName, tableName));
+        dqcRuleDataBaseService.getAllColumn(connectType, dataSourceName, dataBaseName, tableName));
   }
 }

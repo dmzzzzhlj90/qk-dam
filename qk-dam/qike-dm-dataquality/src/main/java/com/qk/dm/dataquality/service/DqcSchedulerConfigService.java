@@ -24,6 +24,8 @@ public interface DqcSchedulerConfigService {
 
     void update(DqcSchedulerConfigVO dqcSchedulerConfigVO);
 
+    void update(DqcSchedulerConfig dqcSchedulerConfig);
+
     void update(String jobId,Integer schedulerId);
 
     void deleteOne(DqcSchedulerConfig config);

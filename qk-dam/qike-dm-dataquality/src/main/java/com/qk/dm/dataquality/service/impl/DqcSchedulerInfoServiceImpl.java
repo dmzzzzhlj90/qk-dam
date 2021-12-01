@@ -294,28 +294,28 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
     }
 
-    private void createSchedule(int processDefinitionId, String jobId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-        if(Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)){
-            Integer scheduleId = dolphinScheduler.createSchedule(processDefinitionId, dqcSchedulerConfigVO);
-            dqcSchedulerConfigService.update(jobId,scheduleId);
-        }
-    }
-
-    private void updateScheduler(Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-      //如果之前存在定时，并且是周期调度，修改，否则删除调度
-        if(dqcSchedulerConfigVO.getSchedulerId() != null){
-            if(Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)){
-                dolphinScheduler.updateSchedule(processDefinitionId,dqcSchedulerConfigVO.getSchedulerId(),dqcSchedulerConfigVO);
-            }else{
-                deleteScheduler(processDefinitionId,dqcSchedulerConfigVO.getSchedulerId());
-                dqcSchedulerConfigService.update(dqcSchedulerConfigVO.getJobId(), null);
-            }
-        }else{
-            createSchedule(processDefinitionId, dqcSchedulerConfigVO.getJobId(),dqcSchedulerConfigVO);
-        }
-    }
-
-    private void deleteScheduler(Integer processDefinitionId, Integer schedulerId){
-        dolphinScheduler.deleteSchedule(processDefinitionId,schedulerId);
-    }
+//    private void createSchedule(int processDefinitionId, String jobId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+//        if(Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)){
+//            Integer scheduleId = dolphinScheduler.createSchedule(processDefinitionId, dqcSchedulerConfigVO);
+//            dqcSchedulerConfigService.update(jobId,scheduleId);
+//        }
+//    }
+//
+//    private void updateScheduler(Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
+//      //如果之前存在定时，并且是周期调度，修改，否则删除调度
+//        if(dqcSchedulerConfigVO.getSchedulerId() != null){
+//            if(Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)){
+//                dolphinScheduler.updateSchedule(processDefinitionId,dqcSchedulerConfigVO.getSchedulerId(),dqcSchedulerConfigVO);
+//            }else{
+//                deleteScheduler(processDefinitionId,dqcSchedulerConfigVO.getSchedulerId());
+//                dqcSchedulerConfigService.update(dqcSchedulerConfigVO.getJobId(), null);
+//            }
+//        }else{
+//            createSchedule(processDefinitionId, dqcSchedulerConfigVO.getJobId(),dqcSchedulerConfigVO);
+//        }
+//    }
+//
+//    private void deleteScheduler(Integer processDefinitionId, Integer schedulerId){
+//        dolphinScheduler.deleteSchedule(processDefinitionId,schedulerId);
+//    }
 }
