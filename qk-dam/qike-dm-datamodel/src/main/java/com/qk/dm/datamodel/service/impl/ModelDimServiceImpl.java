@@ -5,14 +5,17 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.model.constant.ModelStatus;
 import com.qk.dm.datamodel.entity.ModelDim;
 import com.qk.dm.datamodel.entity.QModelDim;
+import com.qk.dm.datamodel.mapstruct.mapper.ModelDimColumnMapper;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelDimMapper;
 import com.qk.dm.datamodel.params.dto.ModelDimColumnDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimInfoDTO;
+import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import com.qk.dm.datamodel.repositories.ModelDimRepository;
 import com.qk.dm.datamodel.service.ModelDimColumnService;
 import com.qk.dm.datamodel.service.ModelDimService;
+import com.qk.dm.datamodel.service.ModelDimTableService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
@@ -38,13 +41,16 @@ public class ModelDimServiceImpl implements ModelDimService {
     private final EntityManager entityManager;
     private final QModelDim qModelDim = QModelDim.modelDim;
     private final ModelDimColumnService modelDimColumnSerVice;
+    private final ModelDimTableService modelDimTableService;
 
 
     public ModelDimServiceImpl(ModelDimRepository modelDimRepository,EntityManager entityManager,
-                               ModelDimColumnService modelDimColumnSerVice){
+                               ModelDimColumnService modelDimColumnSerVice,
+                               ModelDimTableService modelDimTableService){
         this.modelDimRepository = modelDimRepository;
         this.entityManager = entityManager;
         this.modelDimColumnSerVice = modelDimColumnSerVice;
+        this.modelDimTableService = modelDimTableService;
     }
     @PostConstruct
     public void initFactory() {
@@ -55,6 +61,9 @@ public class ModelDimServiceImpl implements ModelDimService {
     public void insert(ModelDimInfoDTO modelDimInfoDTO) {
         ModelDim modelDim = ModelDimMapper.INSTANCE.of(modelDimInfoDTO.getModelDimBase());
         List<ModelDimColumnDTO> modelDimColumnList = modelDimInfoDTO.getModelDimColumnList();
+        if(modelDimColumnList.isEmpty()){
+            throw new BizException("维度字段不能为空！！");
+        }
         if(checkRepeat(modelDimColumnList)){
             throw new BizException("存在重复的字段！！！");
         }
@@ -63,6 +72,12 @@ public class ModelDimServiceImpl implements ModelDimService {
         //保存字段信息
         modelDimColumnList.forEach(e->e.setDimId(dim.getId()));
         modelDimColumnSerVice.insert(modelDimColumnList);
+        //如果是直接发布 需要保存维度表
+        if(Objects.equals(ModelStatus.PUBLISH,modelDim.getStatus())){
+            ModelDimTableDTO modelDimTableDTO= ModelDimMapper.INSTANCE.ofDimTable(modelDimInfoDTO.getModelDimBase());
+            modelDimTableDTO.setColumnList(ModelDimColumnMapper.INSTANCE.ofDimTableColumn(modelDimColumnList));
+            modelDimTableService.insert(modelDimTableDTO);
+        }
     }
 
     @Override

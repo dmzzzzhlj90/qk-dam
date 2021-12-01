@@ -3,12 +3,18 @@ package com.qk.dm.datamodel.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.model.constant.ModelType;
+import com.qk.dam.sqlbuilder.SqlBuilderFactory;
+import com.qk.dam.sqlbuilder.model.Column;
+import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dm.datamodel.entity.ModelDimTable;
 import com.qk.dm.datamodel.entity.QModelDimTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelDimTableMapper;
+import com.qk.dm.datamodel.params.dto.ModelDimTableColumnDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
+import com.qk.dm.datamodel.params.dto.ModelSqlDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableVO;
 import com.qk.dm.datamodel.repositories.ModelDimTableRepository;
+import com.qk.dm.datamodel.service.ModelDimTableColumnService;
 import com.qk.dm.datamodel.service.ModelDimTableService;
 import com.qk.dm.datamodel.service.ModelSqlService;
 import com.querydsl.core.BooleanBuilder;
@@ -29,13 +35,16 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     private final EntityManager entityManager;
     private final QModelDimTable qModelDimTable = QModelDimTable.modelDimTable;
     private final ModelSqlService modelSqlService;
+    private final ModelDimTableColumnService modelDimTableColumnService;
 
     public ModelDimTableServiceImpl(ModelDimTableRepository modelDimTableRepository,
                                     EntityManager entityManager,
-                                    ModelSqlService modelSqlService){
+                                    ModelSqlService modelSqlService,
+                                    ModelDimTableColumnService modelDimTableColumnService){
         this.modelDimTableRepository = modelDimTableRepository;
         this.entityManager = entityManager;
         this.modelSqlService = modelSqlService;
+        this.modelDimTableColumnService = modelDimTableColumnService;
     }
     @PostConstruct
     public void initFactory() {
@@ -45,7 +54,16 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     @Override
     public void insert(ModelDimTableDTO modelDimTableDTO) {
         ModelDimTable modelDimTable = ModelDimTableMapper.INSTANCE.of(modelDimTableDTO);
-        modelDimTableRepository.save(modelDimTable);
+        ModelDimTable dimTable = modelDimTableRepository.save(modelDimTable);
+        List<ModelDimTableColumnDTO> modelDimTableDTOColumnList = modelDimTableDTO.getColumnList();
+        if(!modelDimTableDTOColumnList.isEmpty()){
+            modelDimTableDTOColumnList.forEach(e->e.setDimTableId(dimTable.getId()));
+            modelDimTableColumnService.insert(modelDimTableDTO.getColumnList());
+            //组装建表SQL,添加到数据库中
+            ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(dimTable.getDimName(), modelDimTableDTOColumnList))
+                    .tableId(dimTable.getId()).type(ModelType.DIM_TABLE).build();
+            modelSqlService.insert(modelSql);
+        }
 
     }
 
@@ -99,6 +117,22 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     @Override
     public String previewSql(Long tableId) {
         return modelSqlService.detail(ModelType.DIM_TABLE,tableId).getSqlSentence();
+    }
+
+    /**
+     * 组装建表SQL语句
+     * @param tableName
+     * @param modelDimTableDTOColumnList
+     * @return
+     */
+    private String generateSql(String tableName,List<ModelDimTableColumnDTO> modelDimTableDTOColumnList){
+        List<Column> columns = new ArrayList<>();
+        modelDimTableDTOColumnList.forEach(column->{
+            columns.add(Column.builder().name(column.getColumnName())
+                    .dataType(column.getColumnType())
+                    .comments(column.getDescription()).build());
+        });
+        return SqlBuilderFactory.creatTableSQL(Table.builder().name(tableName).columns(columns).build());
     }
 
     private Map<String, Object> queryByParams(ModelDimTableDTO modelDimTableDTO) {

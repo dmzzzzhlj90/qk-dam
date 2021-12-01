@@ -69,4 +69,14 @@ public class ModelSqlServiceImpl implements ModelSqlService {
         }
         return ModelSqlMapper.INSTANCE.of(modelSqlOptional.get());
     }
+
+    @Override
+    public void update( ModelSqlDTO modelDTO) {
+        Predicate predicate= qModelSql.type.eq(modelDTO.getType()).and(qModelSql.tableId.eq(modelDTO.getTableId()));
+        Optional<ModelSql> modelSqlOptional = modelSqlRepository.findOne(predicate);
+        if(modelSqlOptional.isEmpty()){
+            throw new BizException("当前要修改的sql语句type:"+modelDTO.getType()+",tableId:"+modelDTO.getTableId()+" 的数据不存在！！");
+        }
+        modelSqlRepository.saveAndFlush(modelSqlOptional.get());
+    }
 }

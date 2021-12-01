@@ -10,10 +10,7 @@ import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dm.datamodel.entity.ModelSummary;
 import com.qk.dm.datamodel.entity.QModelSummary;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelSummaryMapper;
-import com.qk.dm.datamodel.params.dto.ModelSqlDTO;
-import com.qk.dm.datamodel.params.dto.ModelSummaryDTO;
-import com.qk.dm.datamodel.params.dto.ModelSummaryIdcDTO;
-import com.qk.dm.datamodel.params.dto.ModelSummaryInfoDTO;
+import com.qk.dm.datamodel.params.dto.*;
 import com.qk.dm.datamodel.params.vo.ModelSummaryVO;
 import com.qk.dm.datamodel.repositories.ModelSummaryRepository;
 import com.qk.dm.datamodel.service.ModelSqlService;
@@ -23,6 +20,8 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
@@ -63,6 +62,9 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
         ModelSummary summary = modelSummaryRepository.save(modelSummary);
         List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryInfoDTO.getModelSummaryIdcList();
         if(!modelSummaryIdcList.isEmpty()){
+            if(checkRepeat(modelSummaryIdcList)){
+                throw new BizException("存在重复的字段！！！");
+            }
             modelSummaryIdcList.forEach(e->e.setSummaryId(summary.getId()));
             modelSummaryIdcService.insert(modelSummaryIdcList);
             //组装建表SQL,添加到数据库中
@@ -91,8 +93,15 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
         modelSummaryRepository.saveAndFlush(modelSummary);
         List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryInfoDTO.getModelSummaryIdcList();
         if(!modelSummaryIdcList.isEmpty()){
+            if(checkRepeat(modelSummaryIdcList)){
+                throw new BizException("存在重复的字段！！！");
+            }
             modelSummaryIdcList.forEach(e->e.setSummaryId(id));
             modelSummaryIdcService.update(id,modelSummaryIdcList);
+            //组装建表SQL,添加到数据库中
+            ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelSummary.getTableName(), modelSummaryIdcList))
+                    .tableId(modelSummary.getId()).type(ModelType.FACT_TABLE).build();
+            modelSqlService.update(modelSql);
         }
 
     }
@@ -138,6 +147,19 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     @Override
     public String previewSql(Long tableId) {
         return modelSqlService.detail(ModelType.SUMMARY_TABLE,tableId).getSqlSentence();
+    }
+
+    /**
+     *校验重复字段
+     * @param modelSummaryIdcList
+     * @return
+     */
+    private Boolean checkRepeat(List<ModelSummaryIdcDTO> modelSummaryIdcList){
+        Map<String, Long> collect = modelSummaryIdcList.stream()
+                .collect(Collectors.groupingBy(ModelSummaryIdcDTO::getIndicatorsName, Collectors.counting()));
+        List<String> list = collect.keySet().stream().
+                filter(key -> collect.get(key) > 1).collect(Collectors.toList());
+        return !CollectionUtils.isEmpty(list);
     }
 
     /**

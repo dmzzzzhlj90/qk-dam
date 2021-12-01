@@ -93,7 +93,14 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         modelFactTableRepository.saveAndFlush(modelFactTable);
         List<ModelFactColumnDTO> modelFactColumnList = modelFactInfoDTO.getModelFactColumnList();
         if(!modelFactColumnList.isEmpty()){
+            if(checkRepeat(modelFactColumnList)){
+                throw new BizException("存在重复的字段！！！");
+            }
             modelFactColumnService.update(id,modelFactColumnList);
+            //组装建表SQL,添加到数据库中
+            ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelFactTable.getFactName(), modelFactColumnList))
+                    .tableId(modelFactTable.getId()).type(ModelType.FACT_TABLE).build();
+            modelSqlService.update(modelSql);
         }
 
     }

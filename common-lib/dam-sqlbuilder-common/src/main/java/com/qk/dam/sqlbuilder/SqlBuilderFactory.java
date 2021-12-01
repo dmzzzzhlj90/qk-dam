@@ -8,6 +8,7 @@ import tech.ibit.sqlbuilder.StringSql;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * SQL校验工厂
@@ -153,27 +154,27 @@ public class SqlBuilderFactory {
         StringBuffer sb = new StringBuffer();
         List<Column> columns = table.getColumns();
         // 表名
-        sb.append("CREATE TABLE ").append(table.getName()).append(" (").append('\n');
+        sb.append("CREATE TABLE ").append("`").append(table.getName()).append("`").append(" (").append('\n');
         columns.forEach(column -> {
             sb.append("    ");
             // 字段名
-            sb.append(column.getName());
+            sb.append("`").append(column.getName()).append("`");
             // 字段数据类型
             sb.append(" ").append(column.getDataType());
             // 字段数据长度
             if (column.getLength() != 0) {
                 sb.append("(").append(column.getLength()).append(")");
             }
-            // 字段主键
-            if (column.getPrimaryKey()) {
-                sb.append(" ").append("PRIMARY KEY");
-                sb.append(" ").append( "AUTO_INCREMENT" );
-            }
             // 字段是否为空
             if (column.getEmpty()) {
                 sb.append(" ").append("DEFAULT NULL");
             } else {
                 sb.append(" ").append("NOT NULL");
+            }
+            // 字段主键
+            if (column.getPrimaryKey()) {
+                //sb.append(" ").append("PRIMARY KEY");
+                sb.append(" ").append( "AUTO_INCREMENT" );
             }
 
             // 字段注解
@@ -183,7 +184,10 @@ public class SqlBuilderFactory {
                 sb.append("," + '\n');
             }
         });
-        sb.deleteCharAt(sb.length() - 2);
+        List<Column> collects = columns.stream().filter(Column::getPrimaryKey).collect(Collectors.toList());
+        collects.forEach(e->{
+            sb.append("   " +" PRIMARY KEY (`").append(e.getName()).append("`)"+ '\n');
+        });
         sb.append(");");
         return sb.toString();
     }
@@ -191,8 +195,8 @@ public class SqlBuilderFactory {
   public static void main(String[] args) {
       Table table = new Table();
       table.setName("user");
-      table.addColumn(Column.builder().name("id").primaryKey(true).dataType("BIGINT").comments("主键").build());
-      table.addColumn(Column.builder().name("name").primaryKey(false).dataType("VARCHAR").empty(true).comments("名称").build());
+      table.addColumn(Column.builder().name("id").primaryKey(true).dataType("BIGINT").comments("主键").length(64).build());
+      table.addColumn(Column.builder().name("name").primaryKey(false).dataType("VARCHAR").empty(true).comments("名称").length(50).build());
       System.out.println(creatTableSQL(table));
   }
 }

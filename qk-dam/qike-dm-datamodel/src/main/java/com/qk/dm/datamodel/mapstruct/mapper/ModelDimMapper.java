@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.mapstruct.mapper;
 
 import com.qk.dm.datamodel.entity.ModelDim;
 import com.qk.dm.datamodel.params.dto.ModelDimDTO;
+import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -19,6 +20,8 @@ public interface ModelDimMapper {
     ModelDim of(ModelDimDTO modelDimDTO);
 
     ModelDimVO of(ModelDim modelDim);
+
+    ModelDimTableDTO ofDimTable(ModelDimDTO modelDimDTO);
 
     List<ModelDimVO> of(List<ModelDim> modelDimList);
 

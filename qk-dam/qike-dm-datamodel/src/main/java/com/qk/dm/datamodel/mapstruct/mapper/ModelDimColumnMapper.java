@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.mapstruct.mapper;
 
 import com.qk.dm.datamodel.entity.ModelDimColumn;
 import com.qk.dm.datamodel.params.dto.ModelDimColumnDTO;
+import com.qk.dm.datamodel.params.dto.ModelDimTableColumnDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimColumnVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,6 +17,8 @@ public interface ModelDimColumnMapper {
     ModelDimColumnVO of(ModelDimColumnDTO modelDimColumnDTO);
 
     List<ModelDimColumn> use(List<ModelDimColumnDTO> modelDimColumnDTOList);
+
+    List<ModelDimTableColumnDTO> ofDimTableColumn(List<ModelDimColumnDTO> modelDimColumnList);
 
     ModelDimColumnVO of(ModelDimColumn modelDimColumn);
 

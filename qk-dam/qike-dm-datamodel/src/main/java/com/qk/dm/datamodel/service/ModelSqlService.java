@@ -16,4 +16,6 @@ public interface ModelSqlService {
 
     ModelSqlVO detail(Integer type,Long tableId);
 
+    void update(ModelSqlDTO modelDTO);
+
 }
