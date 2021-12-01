@@ -4,6 +4,8 @@ import com.qk.dam.jpa.pojo.Pagination;
 import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class ModelDimDTO implements Serializable {
 
@@ -11,7 +13,7 @@ public class ModelDimDTO implements Serializable {
 
     private Pagination pagination;
 
-
+    private Long id;
     /**
      * 主题id
      */
@@ -61,6 +63,11 @@ public class ModelDimDTO implements Serializable {
      * 数据库名称
      */
     private String databaseName;
+
+    /**
+     * 维度字段信息
+     */
+    private List<ModelDimColumnDTO> modelDimColumnList;
 
 
 }

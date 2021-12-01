@@ -3,7 +3,6 @@ package com.qk.dm.datamodel.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.datamodel.params.dto.ModelFactInfoDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 import com.qk.dm.datamodel.service.ModelFactTableService;
@@ -27,23 +26,23 @@ public class ModelFactTableController {
 
     /**
      * 添加事实表
-     * @param modelFactInfoDTO
+     * @param modelFactTableDTO
      * @return
      */
     @PostMapping("")
-    public DefaultCommonResult add(@RequestBody @Validated ModelFactInfoDTO modelFactInfoDTO){
-        modelFactTableService.insert(modelFactInfoDTO);
+    public DefaultCommonResult add(@RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
+        modelFactTableService.insert(modelFactTableDTO);
         return DefaultCommonResult.success();
     }
     /**
      * 修改事实表
      * @param id
-     * @param modelFactInfoDTO
+     * @param modelFactTableDTO
      * @return
      */
     @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelFactInfoDTO modelFactInfoDTO){
-        modelFactTableService.update(id,modelFactInfoDTO);
+    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
+        modelFactTableService.update(id,modelFactTableDTO);
         return  DefaultCommonResult.success();
     }
 

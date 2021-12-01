@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ModelFactTableDTO implements Serializable {
@@ -54,6 +55,10 @@ public class ModelFactTableDTO implements Serializable {
      * 数据库名称
      */
     private String databaseName;
+    /**
+     * 字段信息
+     */
+    private List<ModelFactColumnDTO> modelFactColumnList;
 
 
 

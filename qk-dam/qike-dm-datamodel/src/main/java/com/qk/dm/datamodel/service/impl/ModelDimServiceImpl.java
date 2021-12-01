@@ -9,7 +9,6 @@ import com.qk.dm.datamodel.mapstruct.mapper.ModelDimColumnMapper;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelDimMapper;
 import com.qk.dm.datamodel.params.dto.ModelDimColumnDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimDTO;
-import com.qk.dm.datamodel.params.dto.ModelDimInfoDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import com.qk.dm.datamodel.repositories.ModelDimRepository;
@@ -58,9 +57,9 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public void insert(ModelDimInfoDTO modelDimInfoDTO) {
-        ModelDim modelDim = ModelDimMapper.INSTANCE.of(modelDimInfoDTO.getModelDimBase());
-        List<ModelDimColumnDTO> modelDimColumnList = modelDimInfoDTO.getModelDimColumnList();
+    public void insert(ModelDimDTO modelDimDTO) {
+        ModelDim modelDim = ModelDimMapper.INSTANCE.of(modelDimDTO);
+        List<ModelDimColumnDTO> modelDimColumnList = modelDimDTO.getModelDimColumnList();
         if(modelDimColumnList.isEmpty()){
             throw new BizException("维度字段不能为空！！");
         }
@@ -74,7 +73,7 @@ public class ModelDimServiceImpl implements ModelDimService {
         modelDimColumnSerVice.insert(modelDimColumnList);
         //如果是直接发布 需要保存维度表
         if(Objects.equals(ModelStatus.PUBLISH,modelDim.getStatus())){
-            ModelDimTableDTO modelDimTableDTO= ModelDimMapper.INSTANCE.ofDimTable(modelDimInfoDTO.getModelDimBase());
+            ModelDimTableDTO modelDimTableDTO= ModelDimMapper.INSTANCE.ofDimTable(modelDimDTO);
             modelDimTableDTO.setColumnList(ModelDimColumnMapper.INSTANCE.ofDimTableColumn(modelDimColumnList));
             modelDimTableService.insert(modelDimTableDTO);
         }
@@ -90,14 +89,14 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public void update(Long id, ModelDimInfoDTO modelDimInfoDTO) {
+    public void update(Long id, ModelDimDTO modelDimDTO) {
         ModelDim modelDim = modelDimRepository.findById(id).orElse(null);
         if(Objects.isNull(modelDim)){
             throw new BizException("当前要修改的维度信息 id为"+id+"的数据不存在！！！");
         }
-        ModelDimMapper.INSTANCE.from(modelDimInfoDTO.getModelDimBase(),modelDim);
+        ModelDimMapper.INSTANCE.from(modelDimDTO,modelDim);
         modelDimRepository.saveAndFlush(modelDim);
-        List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimInfoDTO.getModelDimColumnList();
+        List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimDTO.getModelDimColumnList();
         if(!modelDimColumnDTOList.isEmpty()){
             modelDimColumnSerVice.update(id,modelDimColumnDTOList);
         }

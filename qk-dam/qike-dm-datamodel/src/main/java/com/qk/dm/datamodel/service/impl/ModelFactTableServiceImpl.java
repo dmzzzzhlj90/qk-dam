@@ -12,7 +12,6 @@ import com.qk.dm.datamodel.entity.ModelFactTable;
 import com.qk.dm.datamodel.entity.QModelFactTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelFactTableMapper;
 import com.qk.dm.datamodel.params.dto.ModelFactColumnDTO;
-import com.qk.dm.datamodel.params.dto.ModelFactInfoDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.dto.ModelSqlDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
@@ -57,10 +56,10 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
 
 
     @Override
-    public void insert(ModelFactInfoDTO modelFactInfoDTO) {
-        ModelFactTable modelFactTable = ModelFactTableMapper.INSTANCE.of(modelFactInfoDTO.getModelFactTableBase());
+    public void insert(ModelFactTableDTO modelFactTableDTO) {
+        ModelFactTable modelFactTable = ModelFactTableMapper.INSTANCE.of(modelFactTableDTO);
         ModelFactTable modelFact = modelFactTableRepository.save(modelFactTable);
-        List<ModelFactColumnDTO> modelFactColumnList = modelFactInfoDTO.getModelFactColumnList();
+        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getModelFactColumnList();
         if(!modelFactColumnList.isEmpty()){
             if(checkRepeat(modelFactColumnList)){
                 throw new BizException("存在重复的字段！！！");
@@ -84,14 +83,14 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
-    public void update(Long id, ModelFactInfoDTO modelFactInfoDTO) {
+    public void update(Long id, ModelFactTableDTO modelFactTableDTO) {
         ModelFactTable modelFactTable = modelFactTableRepository.findById(id).orElse(null);
         if(Objects.isNull(modelFactTable)){
             throw new BizException("当前要查找的事实表id为"+id+"的数据不存在");
         }
-        ModelFactTableMapper.INSTANCE.from(modelFactInfoDTO.getModelFactTableBase(),modelFactTable);
+        ModelFactTableMapper.INSTANCE.from(modelFactTableDTO,modelFactTable);
         modelFactTableRepository.saveAndFlush(modelFactTable);
-        List<ModelFactColumnDTO> modelFactColumnList = modelFactInfoDTO.getModelFactColumnList();
+        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getModelFactColumnList();
         if(!modelFactColumnList.isEmpty()){
             if(checkRepeat(modelFactColumnList)){
                 throw new BizException("存在重复的字段！！！");

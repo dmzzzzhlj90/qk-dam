@@ -4,7 +4,6 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelSummaryDTO;
-import com.qk.dm.datamodel.params.dto.ModelSummaryInfoDTO;
 import com.qk.dm.datamodel.params.vo.ModelSummaryVO;
 import com.qk.dm.datamodel.service.ModelSummaryService;
 import org.springframework.validation.annotation.Validated;
@@ -27,23 +26,23 @@ public class ModelSummaryController {
 
     /**
      * 添加汇总表
-     * @param modelSummaryInfoDTO
+     * @param modelSummaryDTO
      * @return
      */
     @PostMapping("")
-    public DefaultCommonResult add(@RequestBody @Validated ModelSummaryInfoDTO modelSummaryInfoDTO){
-        modelSummaryService.insert(modelSummaryInfoDTO);
+    public DefaultCommonResult add(@RequestBody @Validated ModelSummaryDTO modelSummaryDTO){
+        modelSummaryService.insert(modelSummaryDTO);
         return DefaultCommonResult.success();
     }
     /**
      * 修改汇总表
      * @param id
-     * @param modelSummaryInfoDTO
+     * @param modelSummaryDTO
      * @return
      */
     @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelSummaryInfoDTO modelSummaryInfoDTO){
-        modelSummaryService.update(id,modelSummaryInfoDTO);
+    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelSummaryDTO modelSummaryDTO){
+        modelSummaryService.update(id,modelSummaryDTO);
         return  DefaultCommonResult.success();
     }
 

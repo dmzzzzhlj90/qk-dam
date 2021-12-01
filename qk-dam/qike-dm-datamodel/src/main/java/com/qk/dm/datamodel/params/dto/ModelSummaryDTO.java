@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ModelSummaryDTO implements Serializable {
@@ -54,6 +55,8 @@ public class ModelSummaryDTO implements Serializable {
      * 描述
      */
     private String description;
+
+    private List<ModelSummaryIdcDTO> modelSummaryIdcList;
 
 
 }

@@ -4,7 +4,6 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelDimDTO;
-import com.qk.dm.datamodel.params.dto.ModelDimInfoDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import com.qk.dm.datamodel.service.ModelDimService;
 import org.springframework.validation.annotation.Validated;
@@ -28,24 +27,24 @@ public class ModelDimController {
 
     /**
      * 添加维度信息
-     * @param modelDimInfoDTO
+     * @param modelDimDTO
      * @return
      */
     @PostMapping("")
-    public DefaultCommonResult insert(@RequestBody @Validated ModelDimInfoDTO modelDimInfoDTO){
-        modelDimService.insert(modelDimInfoDTO);
+    public DefaultCommonResult insert(@RequestBody @Validated ModelDimDTO modelDimDTO){
+        modelDimService.insert(modelDimDTO);
         return DefaultCommonResult.success();
     }
 
     /**
      * 修改维度
      * @param id
-     * @param modelDimInfoDTO
+     * @param modelDimDTO
      * @return
      */
     @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id,@RequestBody @Validated ModelDimInfoDTO modelDimInfoDTO){
-        modelDimService.update(id,modelDimInfoDTO);
+    public DefaultCommonResult update(@PathVariable("id") Long id,@RequestBody @Validated ModelDimDTO modelDimDTO){
+        modelDimService.update(id,modelDimDTO);
         return  DefaultCommonResult.success();
     }
 

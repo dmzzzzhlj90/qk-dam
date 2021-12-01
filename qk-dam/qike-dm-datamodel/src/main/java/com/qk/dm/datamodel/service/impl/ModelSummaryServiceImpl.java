@@ -57,10 +57,10 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     }
 
     @Override
-    public void insert(ModelSummaryInfoDTO modelSummaryInfoDTO) {
-        ModelSummary modelSummary = ModelSummaryMapper.INSTANCE.of(modelSummaryInfoDTO.getModelSummaryBase());
+    public void insert(ModelSummaryDTO modelSummaryDTO) {
+        ModelSummary modelSummary = ModelSummaryMapper.INSTANCE.of(modelSummaryDTO);
         ModelSummary summary = modelSummaryRepository.save(modelSummary);
-        List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryInfoDTO.getModelSummaryIdcList();
+        List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryDTO.getModelSummaryIdcList();
         if(!modelSummaryIdcList.isEmpty()){
             if(checkRepeat(modelSummaryIdcList)){
                 throw new BizException("存在重复的字段！！！");
@@ -84,14 +84,14 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     }
 
     @Override
-    public void update(Long id, ModelSummaryInfoDTO modelSummaryInfoDTO) {
+    public void update(Long id, ModelSummaryDTO modelSummaryDTO) {
         ModelSummary modelSummary = modelSummaryRepository.findById(id).orElse(null);
          if(Objects.isNull(modelSummary)){
              throw new BizException("当前查询的汇总表 id为"+id+"的数据不存在");
          }
-         ModelSummaryMapper.INSTANCE.from(modelSummaryInfoDTO.getModelSummaryBase(),modelSummary);
+         ModelSummaryMapper.INSTANCE.from(modelSummaryDTO,modelSummary);
         modelSummaryRepository.saveAndFlush(modelSummary);
-        List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryInfoDTO.getModelSummaryIdcList();
+        List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryDTO.getModelSummaryIdcList();
         if(!modelSummaryIdcList.isEmpty()){
             if(checkRepeat(modelSummaryIdcList)){
                 throw new BizException("存在重复的字段！！！");
