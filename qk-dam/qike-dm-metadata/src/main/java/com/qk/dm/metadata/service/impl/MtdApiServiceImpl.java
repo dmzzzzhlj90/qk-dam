@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.*;
+import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.service.MtdApiService;
 import com.qk.dm.metadata.vo.*;
 import java.util.*;
@@ -104,6 +105,26 @@ public class MtdApiServiceImpl implements MtdApiService {
       e.printStackTrace();
     }
     return collect;
+  }
+
+
+  public MtdApi getDbs(String typeName,String attrValue){
+    MtdApi mtdApi = new MtdApi();
+    AtlasSearchResult atlasSearchResult = null;
+    try {
+      if(Objects.equals(SynchStateProperty.TypeName.MYSQL_DB,typeName)){
+        atlasSearchResult = atlasClientV2.attributeSearch(typeName ,"serverInfo", attrValue, 1000, 0);
+      }else if(Objects.equals(SynchStateProperty.TypeName.HIVE_DB,typeName)){
+        atlasSearchResult = atlasClientV2.attributeSearch(typeName ,"clusterName", attrValue, 1000, 0);
+      }
+      if(Objects.nonNull(atlasSearchResult)){
+        List<AtlasEntityHeader> atlasEntityHeaderList = atlasSearchResult.getEntities();
+        mtdApi.setEntities(buildMataDataList(atlasEntityHeaderList));
+      }
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+    return mtdApi;
   }
 
   private MtdApi getDbs(String typeName) {
