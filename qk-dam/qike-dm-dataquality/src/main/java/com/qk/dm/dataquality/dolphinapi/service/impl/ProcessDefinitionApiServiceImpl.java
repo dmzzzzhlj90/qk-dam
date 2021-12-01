@@ -68,6 +68,33 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
+    public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        try {
+            Integer processDefinitionId = dqcSchedulerBasicInfoVO.getProcessDefinitionId();
+            // 获取DolphinScheduler 资源信息
+            ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi, dolphinSchedulerInfoConfig);
+            // 获取DolphinScheduler 租户信息
+            TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi, dolphinSchedulerInfoConfig);
+            // 构建ProcessData对象
+            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig);
+            // 构建locations
+            LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO, dolphinSchedulerInfoConfig);
+
+            // 创建工作流实例
+            String connects = SchedulerConstant.EMPTY_ARRAY;
+            String locations = GsonUtil.toJsonString(locationsDTO.getTaskNodeLocationMap());
+            String name = dqcSchedulerBasicInfoVO.getJobName();
+            String processDefinitionJson = GsonUtil.toJsonString(processDataDTO);
+            String projectName = dolphinSchedulerInfoConfig.getProjectName();
+            String description = dqcSchedulerBasicInfoVO.getJobId();
+
+            defaultApi.updateProcessDefinitionUsingPOST(connects, processDefinitionId, locations, name, processDefinitionJson, projectName, description);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId) {
         ProcessDefinitionDTO processDefinitionDTO = null;
         try {
@@ -86,6 +113,25 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             throw new BizException("未获取到实例ID!!!");
         }
         return processDefinitionDTO;
+    }
+
+    @Override
+    public void delete(String projectName, Integer processDefinitionId) {
+        try {
+            defaultApi.deleteProcessDefinitionByIdUsingGET(projectName, processDefinitionId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteBulk(String projectName, List<Integer> processDefinitionIdList) {
+        try {
+            String processDefinitionIds = processDefinitionIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
+            defaultApi.batchDeleteProcessDefinitionByIdsUsingGETWithHttpInfo(projectName, processDefinitionIds);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /****************************************************************************/
@@ -217,4 +263,5 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             DqcConstant.printException(e);
         }
     }
+
 }

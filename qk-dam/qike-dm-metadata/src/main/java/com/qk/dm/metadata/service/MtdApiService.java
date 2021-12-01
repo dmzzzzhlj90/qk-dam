@@ -46,4 +46,12 @@ public interface MtdApiService {
    * @return
    */
   List<Map<String, Object>> getColumns(String guid);
+
+  /**
+   * 根据类型和属性获取数据库信息
+   * @param typeName
+   * @param attrValue
+   * @return
+   */
+  MtdApi getDbs(String typeName,String attrValue);
 }
