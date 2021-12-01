@@ -56,4 +56,16 @@ public class MtdApiController {
             mtdApiParams.getServer());
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdApi);
   }
+  /**
+   * 根据数据库类型和属性获取数据库信息
+   * @param typeName
+   * @param attrValue
+   * @return
+   */
+  @GetMapping("/dbs/{typeName}/{attrValue}")
+  public DefaultCommonResult<MtdApi> getDbs(@PathVariable("typeName") String typeName,@PathVariable("attrValue") String attrValue){
+    MtdApi dbs = mtdApiService.getDbs(typeName, attrValue);
+    return DefaultCommonResult.success(ResultCodeEnum.OK,dbs);
+  }
+
 }
