@@ -44,6 +44,11 @@ public class ModelReverseBaseDTO {
   private String dataConnection;
 
   /**
+   * 数据源连接名称
+   */
+  @NotBlank(message = "数据源连接名称")
+  private String dataConnectionName;
+  /**
    * 数据库名称
    */
   @NotBlank(message = "数据库名称")

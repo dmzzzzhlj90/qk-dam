@@ -2,10 +2,7 @@ package com.qk.dm.datamodel.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dam.metedata.entity.MtdTableApiParams;
-import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
 import com.qk.dm.datamodel.params.dto.ModelReverseBaseDTO;
 import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
@@ -130,12 +127,13 @@ public class ModelPhysicalController {
 
   /**
    * 预览sql——关系建模
-   * @param tableId
+   * @param tableId 基础信息id
+   * @param type  sql类型
    * @return
    */
-  @GetMapping("/query/sql/{tableId}")
-  public DefaultCommonResult<String> getSql(@NotNull @PathVariable("tableId") Long tableId){
-    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getSql(tableId));
+  @GetMapping("/query/sql")
+  public DefaultCommonResult<String> getSql(@NotNull @RequestParam("tableId") Long tableId,@NotNull @RequestParam("type") int type){
+    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getSql(tableId,type));
   }
 
   /**
@@ -178,32 +176,32 @@ public class ModelPhysicalController {
    *
    * @return DefaultCommonResult
    */
-  @GetMapping("/datasource/api/type/all")
+ /* @GetMapping("/datasource/api/type/all")
   public DefaultCommonResult<List<String>> getAllConnType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, datasourceService.getAllConnType());
-  }
+  }*/
 
   /**
    * 根据数据库类型获取数据源连接信息
    *
    * @return DefaultCommonResult
    */
-  @GetMapping("/datasource/api/database/{type}")
+  /*@GetMapping("/datasource/api/database/{type}")
   public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
       @PathVariable("type") String type) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, datasourceService.getResultDataSourceByType(type));
-  }
+  }*/
 
   /**
    * 根据数据源名称获取数据源连接信息
    *
    * @return DefaultCommonResult
    */
-  @GetMapping("/datasource/api/name/{connectName}")
+  /*@GetMapping("/datasource/api/name/{connectName}")
   public DefaultCommonResult<ResultDatasourceInfo> getResultDataSourceByConnectName(
       @PathVariable("connectName") String connectName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, datasourceService.getResultDataSourceByConnectName(connectName));
-  }
+  }*/
   //=======================================元数据==================================================>
 
   /**
@@ -211,18 +209,18 @@ public class ModelPhysicalController {
    * @param mtdTableApiParams
    * @return
    */
-  @PostMapping("/meta/api/tables")
+  /*@PostMapping("/meta/api/tables")
   public DefaultCommonResult<List<MtdTables>> getTables(@RequestBody MtdTableApiParams mtdTableApiParams) {
     return DefaultCommonResult.success(ResultCodeEnum.OK,metaDataService.getTables(mtdTableApiParams));
-  }
+  }*/
 
   /**
    * 获取元数据表字段信息
    * @param guid
    * @return
    */
-  @GetMapping("/columns/{guid}")
+  /*@GetMapping("/columns/{guid}")
   public DefaultCommonResult<List<Map<String, Object>>> getColumns(@PathVariable("guid") String guid) {
     return DefaultCommonResult.success(ResultCodeEnum.OK,metaDataService.getColumns(guid));
-  }
+  }*/
 }
