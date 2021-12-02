@@ -15,7 +15,6 @@ import com.qk.dm.dataquality.dolphinapi.dto.ScheduleDeleteDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ScheduleResultDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ScheduleSearchDTO;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
-import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -55,9 +54,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 失败策略
               FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getValue(),
               // 流程实例优先级
-              ProcessInstancePriorityEnum.fromValue(
-                      dolphinRunInfoConfig.getProcessInstancePriority())
-                  .getValue(),
+              ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getValue(),
               // 收件人
               dolphinRunInfoConfig.getReceivers(),
               // 收件人(抄送)
@@ -89,9 +86,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 失败策略
               FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getValue(),
               // 流程实例优先级
-              ProcessInstancePriorityEnum.fromValue(
-                      dolphinRunInfoConfig.getProcessInstancePriority())
-                  .getValue(),
+              ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getValue(),
               // 收件人
               dolphinRunInfoConfig.getReceivers(),
               // 收件人(抄送)
@@ -113,8 +108,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   @Override
   public void online(Integer scheduleId) {
     try {
-      Result result =
-          defaultApi.onlineUsingPOST(scheduleId, dolphinSchedulerInfoConfig.getProjectName());
+      Result result = defaultApi.onlineUsingPOST(scheduleId, dolphinSchedulerInfoConfig.getProjectName());
       DqcConstant.verification(result, "定时上线失败{},");
     } catch (ApiException e) {
       DqcConstant.printException(e);
@@ -124,8 +118,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
   @Override
   public void offline(Integer scheduleId) {
     try {
-      Result result =
-          defaultApi.offlineUsingPOST(scheduleId, dolphinSchedulerInfoConfig.getProjectName());
+      Result result = defaultApi.offlineUsingPOST(scheduleId, dolphinSchedulerInfoConfig.getProjectName());
       DqcConstant.verification(result, "定时下线失败{},");
     } catch (ApiException e) {
       DqcConstant.printException(e);
@@ -170,18 +163,10 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               scheduleSearchDTO.getPageSize(),
               scheduleSearchDTO.getSearchVal());
       DqcConstant.verification(result, "获取定时列表失败{},");
-      return GsonUtil.fromJsonString(
-          GsonUtil.toJsonString(result.getData()), new TypeToken<ScheduleResultDTO>() {}.getType());
+      return GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ScheduleResultDTO>() {}.getType());
     } catch (ApiException e) {
       DqcConstant.printException(e);
     }
     return null;
-  }
-
-  private static String schedule(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    return DqcConstant.schedule(
-        dqcSchedulerConfigVO.getEffectiveTimeStart(),
-        dqcSchedulerConfigVO.getEffectiveTimeEnt(),
-        dqcSchedulerConfigVO.getCron());
   }
 }

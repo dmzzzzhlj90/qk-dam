@@ -39,9 +39,8 @@ public class DqcRuleDataBaseController {
 
   /**
    * 获取数据源连接
-   *
    * @param connectType
-   * @return DefaultCommonResult<List < ResultDatasourceInfo>>
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/connect/{type}")
   public DefaultCommonResult<List<String>> getResultDataSourceByType(@PathVariable("type") String connectType) {
@@ -50,9 +49,9 @@ public class DqcRuleDataBaseController {
 
   /**
    * 获取db库列表
-   *
    * @param connectType
-   * @return DefaultCommonResult<List < String>>
+   * @param dataSourceName
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("")
   public DefaultCommonResult<List<String>> getAllDataBase(String connectType, String dataSourceName) {
@@ -61,9 +60,10 @@ public class DqcRuleDataBaseController {
 
   /**
    * 获取table表列表
-   *
-   * @param connectType,server,dataBaseName
-   * @return DefaultCommonResult
+   * @param connectType
+   * @param dataSourceName
+   * @param dataBaseName
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/table")
   public DefaultCommonResult<List<String>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
@@ -72,9 +72,11 @@ public class DqcRuleDataBaseController {
 
   /**
    * 获取column字段列表
-   *
-   * @param connectType,server,dataBaseName,tableName
-   * @return DefaultCommonResult
+   * @param connectType
+   * @param dataSourceName
+   * @param dataBaseName
+   * @param tableName
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/column")
   public DefaultCommonResult<List<String>> getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {

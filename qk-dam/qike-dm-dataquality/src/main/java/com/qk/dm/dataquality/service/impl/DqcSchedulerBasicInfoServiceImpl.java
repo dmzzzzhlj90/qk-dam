@@ -9,7 +9,6 @@ import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
 import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
-import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
@@ -27,16 +26,9 @@ import java.util.stream.Collectors;
 @Service
 public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoService {
     private final DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository;
-    private final DqcSchedulerConfigService dqcSchedulerConfigService;
-    private final DolphinScheduler dolphinScheduler;
 
-    public DqcSchedulerBasicInfoServiceImpl(
-            DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository,
-            DqcSchedulerConfigService dqcSchedulerConfigService,
-            DolphinScheduler dolphinScheduler) {
+    public DqcSchedulerBasicInfoServiceImpl(DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository) {
         this.dqcSchedulerBasicInfoRepository = dqcSchedulerBasicInfoRepository;
-        this.dqcSchedulerConfigService = dqcSchedulerConfigService;
-        this.dolphinScheduler = dolphinScheduler;
     }
 
     @Override
@@ -47,10 +39,11 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
 
     @Override
     public void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        //todo jobName不能重复
         DqcSchedulerBasicInfo basicInfo = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO);
         // todo 创建人
         basicInfo.setCreateUserid("admin");
-        basicInfo.setSchedulerState(SchedulerStateEnum.NOT_STARTED.getCode());
+        basicInfo.setSchedulerState(SchedulerStateEnum.OFFLINE.getCode());
         basicInfo.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
         basicInfo.setRunInstanceState(SchedulerInstanceStateEnum.INIT.getCode());
         dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
@@ -59,6 +52,8 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     @Override
     public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         DqcSchedulerBasicInfo basicInfo = getInfoById(dqcSchedulerBasicInfoVO.getId());
+        //验证名称不能修改
+        checkJobName(dqcSchedulerBasicInfoVO, basicInfo);
         DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO, basicInfo);
         // todo 修改人
         basicInfo.setUpdateUserid("admin");
@@ -100,7 +95,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     }
 
     private void checkState(DqcSchedulerBasicInfo info) {
-        if (info.getSchedulerState().equals(SchedulerStateEnum.SCHEDULING.getCode())) {
+        if (info.getSchedulerState().equals(SchedulerStateEnum.ONLINE.getCode())) {
             throw new BizException("启动调度后不可进行此操作！");
         }
     }
@@ -125,6 +120,12 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     private void checkBasicInfo(String ids, List<DqcSchedulerBasicInfo> infoList) {
         if (CollectionUtils.isEmpty(infoList)) {
             throw new BizException("id为：" + ids + " 的任务，不存在！");
+        }
+    }
+
+    private void checkJobName(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, DqcSchedulerBasicInfo basicInfo) {
+        if(!basicInfo.getJobName().equals(dqcSchedulerBasicInfoVO.getJobName())){
+            throw new BizException("任务名称不能更改！");
         }
     }
 }

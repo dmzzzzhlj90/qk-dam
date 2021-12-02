@@ -5,7 +5,6 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.*;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
-import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
 import com.qk.dm.dataquality.entity.*;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerConfigMapper;
@@ -51,11 +50,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
     private final DqcSchedulerConfigService dqcSchedulerConfigService;
     private final ProcessDefinitionApiService processDefinitionApiService;
-    private final ScheduleApiService scheduleApiService;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
-
-    private final DolphinScheduler dolphinScheduler;
-
 
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
@@ -68,8 +63,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
                                        DqcSchedulerRulesService dqcSchedulerRulesService,
                                        DqcSchedulerConfigService dqcSchedulerConfigService,
                                        ProcessDefinitionApiService processDefinitionApiService,
-                                       ScheduleApiService scheduleApiService, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
-                                       DolphinScheduler dolphinScheduler, EntityManager entityManager) {
+                                       DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                       EntityManager entityManager) {
         this.dqcSchedulerBasicInfoRepository = dqcSchedulerBasicInfoRepository;
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
         this.dqcSchedulerConfigRepository = dqcSchedulerConfigRepository;
@@ -77,9 +72,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
         this.dqcSchedulerConfigService = dqcSchedulerConfigService;
         this.processDefinitionApiService = processDefinitionApiService;
-        this.scheduleApiService = scheduleApiService;
         this.dolphinSchedulerInfoConfig = dolphinSchedulerInfoConfig;
-        this.dolphinScheduler = dolphinScheduler;
         this.entityManager = entityManager;
     }
 
@@ -134,8 +127,6 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         int processDefinitionId = processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
         //存储流程实例ID
         updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
-        //TODO 开启定时器
-//        createSchedule(processDefinitionId, jobId,dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
     }
 
     @Override
@@ -149,8 +140,6 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         dqcSchedulerConfigService.update(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
         //更新流程实例
         processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
-        //TODO 更新定时器
-//        updateScheduler(dqcSchedulerBasicInfoVO.getProcessDefinitionId(),dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
     }
 
     @Override
@@ -163,11 +152,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         dqcSchedulerRulesService.deleteByJobId(schedulerBasicInfo.getJobId());
         //删除调度配置信息
         dqcSchedulerConfigService.deleteByJobId(schedulerBasicInfo.getJobId());
-//        DqcSchedulerConfig config = dqcSchedulerConfigService.getConfig(schedulerBasicInfo.getJobId());
-//        dqcSchedulerConfigService.deleteOne(config);
         //删除工作流信息
         processDefinitionApiService.delete(dolphinSchedulerInfoConfig.getProjectName(), schedulerBasicInfo.getProcessDefinitionId());
-        //TODO 更新定时器-定时器不用删除
     }
 
     @Override
@@ -182,11 +168,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         dqcSchedulerRulesService.deleteBulkByJobIds(jobIds);
         //删除调度配置信息
         dqcSchedulerConfigService.deleteBulkByJobIds(jobIds);
-//        List<DqcSchedulerConfig> configList = dqcSchedulerConfigService.getConfigList(jobIds);
-//        dqcSchedulerConfigService.deleteBulk(configList);
         //删除工作流信息
         processDefinitionApiService.deleteBulk(dolphinSchedulerInfoConfig.getProjectName(), processDefinitionIdList);
-        //TODO 更新定时器-定时器不用删除
     }
 
   @Override
@@ -293,29 +276,4 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     private void updateProcessDefinitionIdByJobId(int processDefinitionId,String jobId) {
         dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
     }
-
-//    private void createSchedule(int processDefinitionId, String jobId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-//        if(Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)){
-//            Integer scheduleId = dolphinScheduler.createSchedule(processDefinitionId, dqcSchedulerConfigVO);
-//            dqcSchedulerConfigService.update(jobId,scheduleId);
-//        }
-//    }
-//
-//    private void updateScheduler(Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-//      //如果之前存在定时，并且是周期调度，修改，否则删除调度
-//        if(dqcSchedulerConfigVO.getSchedulerId() != null){
-//            if(Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)){
-//                dolphinScheduler.updateSchedule(processDefinitionId,dqcSchedulerConfigVO.getSchedulerId(),dqcSchedulerConfigVO);
-//            }else{
-//                deleteScheduler(processDefinitionId,dqcSchedulerConfigVO.getSchedulerId());
-//                dqcSchedulerConfigService.update(dqcSchedulerConfigVO.getJobId(), null);
-//            }
-//        }else{
-//            createSchedule(processDefinitionId, dqcSchedulerConfigVO.getJobId(),dqcSchedulerConfigVO);
-//        }
-//    }
-//
-//    private void deleteScheduler(Integer processDefinitionId, Integer schedulerId){
-//        dolphinScheduler.deleteSchedule(processDefinitionId,schedulerId);
-//    }
 }

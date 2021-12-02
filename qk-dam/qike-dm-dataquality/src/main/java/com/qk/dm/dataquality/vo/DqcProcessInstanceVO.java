@@ -16,4 +16,6 @@ public class DqcProcessInstanceVO {
   String duration;
   /** 状态名称 */
   String stateName;
+  /** 运行类型 */
+  String commandType;
 }

@@ -3,7 +3,7 @@ package com.qk.dm.dataquality.constant;
 /** @author shenpengjie */
 public enum TempTypeEnum {
   // 系统内置
-  SYSTEM_BUILT_IN(1, "系统内置"),
+  SYSTEM(1, "系统内置"),
   // 自定义
   CUSTOMIZE(2, "自定义");
 
