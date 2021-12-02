@@ -2,7 +2,7 @@ package com.qk.dm.dataquality.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.dataquality.service.DqcRuleDataBaseService;
+import com.qk.dm.service.DataBaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,68 +21,63 @@ import java.util.List;
 @RequestMapping("/rule/db")
 public class DqcRuleDataBaseController {
 
-  private final DqcRuleDataBaseService dqcRuleDataBaseService;
+  private final DataBaseService dataBaseService;
 
-  public DqcRuleDataBaseController(DqcRuleDataBaseService dqcRuleDataBaseService) {
-    this.dqcRuleDataBaseService = dqcRuleDataBaseService;
+  public DqcRuleDataBaseController(DataBaseService dataBaseService) {
+    this.dataBaseService = dataBaseService;
   }
 
   /**
-   * 数据源连接类型（引擎）
+   * 获取数据源连接类型
    *
    * @return DefaultCommonResult<List < String>>
    */
   @GetMapping("/connect/types")
   public DefaultCommonResult<List<String>> getAllConnType() {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleDataBaseService.getAllConnType());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllConnectType());
   }
 
   /**
-   * 根据数据库类型获取数据源连接信息
+   * 获取数据源连接
    *
    * @param connectType
    * @return DefaultCommonResult<List < ResultDatasourceInfo>>
    */
   @GetMapping("/connect/{type}")
   public DefaultCommonResult<List<String>> getResultDataSourceByType(@PathVariable("type") String connectType) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleDataBaseService.getResultDataSourceByType(connectType));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSource(connectType));
   }
 
   /**
-   * 获取db库信息下拉列表
+   * 获取db库列表
    *
    * @param connectType
    * @return DefaultCommonResult<List < String>>
    */
   @GetMapping("")
   public DefaultCommonResult<List<String>> getAllDataBase(String connectType, String dataSourceName) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllDataBase(connectType, dataSourceName));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataBase(connectType, dataSourceName));
   }
 
   /**
-   * 获取table表信息下拉列表
+   * 获取table表列表
    *
    * @param connectType,server,dataBaseName
    * @return DefaultCommonResult
    */
   @GetMapping("/table")
   public DefaultCommonResult<List<String>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleDataBaseService.getAllTable(connectType, dataSourceName, dataBaseName));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllTable(connectType, dataSourceName, dataBaseName));
   }
 
   /**
-   * 获取column字段信息下拉列表
+   * 获取column字段列表
    *
    * @param connectType,server,dataBaseName,tableName
    * @return DefaultCommonResult
    */
   @GetMapping("/column")
   public DefaultCommonResult<List<String>> getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK,
-        dqcRuleDataBaseService.getAllColumn(connectType, dataSourceName, dataBaseName, tableName));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllColumn(connectType, dataSourceName, dataBaseName, tableName));
   }
 }
