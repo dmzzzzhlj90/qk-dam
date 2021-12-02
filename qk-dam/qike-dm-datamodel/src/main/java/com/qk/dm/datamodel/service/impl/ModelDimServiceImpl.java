@@ -134,6 +134,12 @@ public class ModelDimServiceImpl implements ModelDimService {
     public void publish(String ids) {
         List<ModelDim> modelDimList = getModelDimList(ids);
         modelDimList.forEach(e->e.setStatus(ModelStatus.PUBLISH));
+        modelDimList = modelDimList.stream().peek(e -> {
+            if (e.getStatus() == ModelStatus.PUBLISH) {
+                throw new BizException(e.getDimName() + "维度已发布，不可重复发布！！！");
+            }
+            e.setStatus(ModelStatus.PUBLISH);
+        }).collect(Collectors.toList());
         modelDimRepository.saveAllAndFlush(modelDimList);
     }
 

@@ -84,6 +84,16 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
         }
         ModelDimTableMapper.INSTANCE.from(modelDimTableDTO,modelDimTable);
         modelDimTableRepository.saveAndFlush(modelDimTable);
+
+        List<ModelDimTableColumnDTO> modelDimTableDTOColumnList = modelDimTableDTO.getColumnList();
+        if(!modelDimTableDTOColumnList.isEmpty()){
+            modelDimTableDTOColumnList.forEach(e->e.setDimTableId(modelDimTable.getId()));
+            modelDimTableColumnService.update(modelDimTable.getId(),modelDimTableDTO.getColumnList());
+            //修改表SQL,添加到数据库中
+            ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelDimTable.getDimName(), modelDimTableDTOColumnList))
+                    .tableId(modelDimTable.getId()).type(ModelType.DIM_TABLE).build();
+            modelSqlService.update(modelSql);
+        }
     }
 
     @Override
