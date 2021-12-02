@@ -1,7 +1,10 @@
 package com.qk.dm.dataquality.dolphinapi.service;
 
+import com.qk.dm.dataquality.dolphinapi.dto.ScheduleDeleteDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ScheduleResultDTO;
-import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
+import com.qk.dm.dataquality.dolphinapi.dto.ScheduleSearchDTO;
+
+import java.util.Date;
 
 /**
  * @author shenpj
@@ -10,16 +13,15 @@ import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
  */
 public interface ScheduleApiService {
 
-  void create(Integer processDefinitionId, DqcSchedulerConfigVO dqcSchedulerConfigVO);
+  void create(Integer processDefinitionId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron);
 
-  void update(Integer scheduleId, DqcSchedulerConfigVO dqcSchedulerConfigVO);
+  void update(Integer scheduleId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron);
 
   void online(Integer scheduleId);
 
   void offline(Integer scheduleId);
 
-  void deleteOne(Integer scheduleId);
+  void deleteOne(ScheduleDeleteDTO scheduleDeleteDTO);
 
-  ScheduleResultDTO search(
-      Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal);
+  ScheduleResultDTO search(ScheduleSearchDTO scheduleSearchDTO);
 }

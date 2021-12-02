@@ -34,11 +34,7 @@ public class DqcConstant {
   /** 调度返回code */
   public static final Integer RESULT_CODE = 0;
 
-  /** 临时使用 */
-  public static final String PROJECT_NAME = "数据质量";
-
-  public static final Integer PROCESS_DEFINITION_ID = 4;
-
+  /**拼装参数*/
   private static final String SCHEDULE_TIME_START = "startTime";
   private static final String SCHEDULE_TIME_END = "endTime";
   private static final String SCHEDULE_CRON = "crontab";

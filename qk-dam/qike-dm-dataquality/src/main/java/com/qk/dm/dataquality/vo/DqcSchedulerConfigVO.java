@@ -57,11 +57,14 @@ public class DqcSchedulerConfigVO {
   /** 调度执行cron表达式 */
   private String cron;
 
+  /** 调度定时id */
+  private Integer schedulerId;
+
   /** 创建人 */
-  private Long createUserid;
+  private String createUserid;
 
   /** 修改人 */
-  private Long updateUserid;
+  private String updateUserid;
 
   /** 创建时间 */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

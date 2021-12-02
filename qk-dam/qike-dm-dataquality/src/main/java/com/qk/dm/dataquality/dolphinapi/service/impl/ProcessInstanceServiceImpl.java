@@ -6,8 +6,10 @@ import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
 import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceSearchDTO;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +20,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProcessInstanceServiceImpl implements ProcessInstanceService {
-  /** 结束时间 */
-  private static String INSTANCE_END_DATE = null;
-  /** EXECUTOR_NAME */
-  private static String INSTANCE_EXECUTOR_NAME = null;
-  /** 运行任务的主机IP地址 */
-  private static String INSTANCE_HOST = null;
-  /** 搜索值 */
-  private static String INSTANCE_SEARCH_VAL = null;
-  /** 开始时间 */
-  private static String INSTANCE_START_DATE = null;
-  /** 工作流和任务节点的运行状态 结果：InstanceStateTypeEnum.SUCCESS.getCode() */
-  private static String INSTANCE_STATE_TYPE = null;
-
   private final DefaultApi defaultApi;
+  private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
 
-  public ProcessInstanceServiceImpl(DefaultApi defaultApi) {
+  public ProcessInstanceServiceImpl(
+      DefaultApi defaultApi, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
     this.defaultApi = defaultApi;
+    this.dolphinSchedulerInfoConfig = dolphinSchedulerInfoConfig;
   }
 
   /**
@@ -45,10 +37,10 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
    */
   @Override
   public void execute(Integer processInstanceId, String executeType) {
-    executeType = "REPEAT_RUNNING";
     try {
       Result result =
-          defaultApi.executeUsingPOST(executeType, processInstanceId, DqcConstant.PROJECT_NAME);
+          defaultApi.executeUsingPOST(
+              executeType, processInstanceId, dolphinSchedulerInfoConfig.getProjectName());
       DqcConstant.verification(result, "执行流程实例操作失败{}");
     } catch (ApiException e) {
       DqcConstant.printException(e);
@@ -58,25 +50,24 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
   /**
    * 查询流程实例列表
    *
-   * @param processDefinitionId
+   * @param instanceSearchDTO
    * @return
    */
   @Override
-  public ProcessInstanceResultDTO search(
-      Integer processDefinitionId, Integer pageNo, Integer pageSize) {
+  public ProcessInstanceResultDTO search(ProcessInstanceSearchDTO instanceSearchDTO) {
     try {
       Result result =
           defaultApi.queryProcessInstanceListUsingGET(
-              DqcConstant.PROJECT_NAME,
-              INSTANCE_END_DATE,
-              INSTANCE_EXECUTOR_NAME,
-              INSTANCE_HOST,
-              pageNo,
-              pageSize,
-              processDefinitionId,
-              INSTANCE_SEARCH_VAL,
-              INSTANCE_START_DATE,
-              INSTANCE_STATE_TYPE);
+              dolphinSchedulerInfoConfig.getProjectName(),
+              instanceSearchDTO.getEndDate(),
+              instanceSearchDTO.getExecutorName(),
+              instanceSearchDTO.getHost(),
+              instanceSearchDTO.getPageNo(),
+              instanceSearchDTO.getPageSize(),
+              instanceSearchDTO.getProcessDefinitionId(),
+              instanceSearchDTO.getSearchVal(),
+              instanceSearchDTO.getStartDate(),
+              instanceSearchDTO.getStateType());
       DqcConstant.verification(result, "查询流程实例列表失败{}");
       return GsonUtil.fromJsonString(
           GsonUtil.toJsonString(result.getData()),
@@ -91,7 +82,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
   public ProcessInstanceDTO detail(Integer processInstanceId) {
     try {
       Result result =
-          defaultApi.queryProcessInstanceByIdUsingGET(DqcConstant.PROJECT_NAME, processInstanceId);
+          defaultApi.queryProcessInstanceByIdUsingGET(
+              dolphinSchedulerInfoConfig.getProjectName(), processInstanceId);
       DqcConstant.verification(result, "查询流程实例通过流程实例ID失败{}");
       return GsonUtil.fromJsonString(
           GsonUtil.toJsonString(result.getData()),

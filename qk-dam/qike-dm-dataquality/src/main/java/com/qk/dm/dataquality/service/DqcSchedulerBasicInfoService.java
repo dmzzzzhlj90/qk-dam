@@ -2,9 +2,6 @@ package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
-import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
-import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoRuningDTO;
-import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
@@ -27,6 +24,8 @@ public interface DqcSchedulerBasicInfoService {
 
   void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
+  void update(DqcSchedulerBasicInfo dqcSchedulerBasicInfo);
+
   void deleteOne(Long id);
 
   void deleteBulk(List<DqcSchedulerBasicInfo> schedulerBasicInfoList);
@@ -35,9 +34,11 @@ public interface DqcSchedulerBasicInfoService {
 
   List<DqcSchedulerBasicInfo> getInfoList(String ids);
 
-  void release(DqcSchedulerBasicInfoReleaseDTO dqcSchedulerBasicInfoReleaseDto);
+  DqcSchedulerBasicInfo getBasicInfo(Long id);
 
-  DqcProcessInstanceVO instanceDetailByList(Long id);
-
-  void runing(DqcSchedulerBasicInfoRuningDTO dqcSchedulerBasicInfoRuningDTO);
+//  void release(DqcSchedulerBasicInfoReleaseDTO dqcSchedulerBasicInfoReleaseDto);
+//
+//  DqcProcessInstanceVO instanceDetailByList(Long id);
+//
+//  void runing(DqcSchedulerBasicInfoRuningDTO dqcSchedulerBasicInfoRuningDTO);
 }

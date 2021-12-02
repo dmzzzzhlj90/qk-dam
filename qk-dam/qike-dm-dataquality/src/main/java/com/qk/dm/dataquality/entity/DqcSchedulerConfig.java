@@ -53,13 +53,17 @@ public class DqcSchedulerConfig implements Serializable {
   @Column(name = "cron")
   private String cron;
 
+  /** 调度定时id */
+  @Column(name = "scheduler_id")
+  private Integer schedulerId;
+
   /** 创建人 */
   @Column(name = "create_userid", nullable = false)
-  private Long createUserid;
+  private String createUserid;
 
   /** 修改人 */
   @Column(name = "update_userid")
-  private Long updateUserid;
+  private String updateUserid;
 
   /** 创建时间 */
   @Column(name = "gmt_create", nullable = false)

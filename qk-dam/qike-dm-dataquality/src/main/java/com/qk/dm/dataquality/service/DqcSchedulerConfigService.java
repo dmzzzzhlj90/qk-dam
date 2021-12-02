@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.service;//package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,20 @@ public interface DqcSchedulerConfigService {
 
     void update(DqcSchedulerConfigVO dqcSchedulerConfigVO);
 
-    void deleteOne(Long id);
+    void update(DqcSchedulerConfig dqcSchedulerConfig);
 
-    void deleteBulk(String ids);
+    void update(String jobId,Integer schedulerId);
+
+    void deleteOne(DqcSchedulerConfig config);
+
+    void deleteBulk(List<DqcSchedulerConfig> dqcSchedulerConfigs);
 
     void deleteByJobId(String jobId);
 
     void deleteBulkByJobIds(List<String> jobIds);
 
-    DqcSchedulerConfigVO detail(String jobId);
+    DqcSchedulerConfig getConfig(String jobId);
+
+    List<DqcSchedulerConfig> getConfigList(List<String> jobIds);
 
 }

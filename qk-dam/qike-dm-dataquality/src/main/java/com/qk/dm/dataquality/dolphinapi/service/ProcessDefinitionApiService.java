@@ -16,6 +16,8 @@ import java.util.List;
 @Service
 public interface ProcessDefinitionApiService {
 
+    int saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+
     void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
     void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);

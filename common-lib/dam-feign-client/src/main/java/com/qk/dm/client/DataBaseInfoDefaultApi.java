@@ -104,6 +104,20 @@ public class DataBaseInfoDefaultApi {
     }
 
     /**
+     * 新建API__获取db库信息下拉列表
+     * @param dbType
+     * @param server
+     * @return
+     */
+    public List<String> getAllDataBase(String dbType,String server) {
+        String type = dbType.split("-")[1];
+        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
+                metaDataFeign.getDbs(type + "_db",server);
+        List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
+        return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
+    }
+
+    /**
      * 新建API__获取table表信息下拉列表
      *
      * @param dbType,server,dbName

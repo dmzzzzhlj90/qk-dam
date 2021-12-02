@@ -41,4 +41,9 @@ public class SchedulerConstant {
      */
     public static final int PAGE_SIZE = 100;
 
+    /**
+     * schedulerPageSize
+     */
+    public static final int SCHEDULER_PAGE_SIZE = 1;
+
 }

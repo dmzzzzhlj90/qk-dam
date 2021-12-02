@@ -1,10 +1,5 @@
 package com.qk.dm.dataquality.service;
 
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-
 import java.util.List;
 
 /**
@@ -16,17 +11,11 @@ public interface DqcRuleDataBaseService {
 
     List<String> getAllConnType();
 
-    List<ResultDatasourceInfo> getResultDataSourceByType(String type);
+    List<String> getResultDataSourceByType(String type);
 
-    ResultDatasourceInfo getResultDataSourceByConnectName(String connectName);
+    List<String> getAllDataBase(String dbType, String dataSourceName);
 
-    List<MtdAtlasEntityType> getAllEntityType();
+    List<String> getAllTable(String dbType, String dataSourceName, String dbName);
 
-    MtdApi mtdDetail(MtdApiParams mtdApiParams);
-
-    List<String> getAllDataBase(String dbType);
-
-    List<String> getAllTable(String dbType, String server, String dbName);
-
-    List getAllColumn(String dbType, String server, String dbName, String tableName);
+    List getAllColumn(String dbType, String dataSourceName, String dbName, String tableName);
 }

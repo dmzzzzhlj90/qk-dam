@@ -66,7 +66,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     dqcRuleTemplate.setTempType(TempTypeEnum.CUSTOMIZE.getCode());
     dqcRuleTemplate.setPublishState(DqcConstant.PUBLISH_STATE_DOWN);
     // todo 添加创建人
-    dqcRuleTemplate.setCreateUserid(1L);
+    dqcRuleTemplate.setCreateUserid("admin");
     dqcRuleTemplate.setDelFlag(0);
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
@@ -77,7 +77,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     checkPublishState(dqcRuleTemplate, "上线规则模版不支持修改！！！");
     DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo, dqcRuleTemplate);
     // todo 添加修改人
-    dqcRuleTemplate.setUpdateUserid(1L);
+    dqcRuleTemplate.setUpdateUserid("admin");
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
@@ -88,7 +88,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     checkRulesIsQuote(dqcRuleTemplateReleaseDto.getPublishState(), dqcRuleTemplate.getId());
     dqcRuleTemplate.setPublishState(dqcRuleTemplateReleaseDto.getPublishState());
     // todo 添加修改人
-    dqcRuleTemplate.setUpdateUserid(1L);
+    dqcRuleTemplate.setUpdateUserid("admin");
     dqcRuleTemplateRepository.save(dqcRuleTemplate);
   }
 
@@ -206,6 +206,9 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
     if (dqcRuleTemplateVo.getEngineType() != null) {
       booleanBuilder.and(qDqcRuleTemplate.engineType.contains(dqcRuleTemplateVo.getEngineType()));
+    }
+    if(dqcRuleTemplateVo.getRuleType() != null){
+      booleanBuilder.and(qDqcRuleTemplate.ruleType.contains(dqcRuleTemplateVo.getRuleType()));
     }
   }
 

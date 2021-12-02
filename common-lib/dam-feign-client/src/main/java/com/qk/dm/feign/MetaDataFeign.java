@@ -7,6 +7,7 @@ import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,4 +33,13 @@ public interface MetaDataFeign {
    */
   @PostMapping("/mtd/entity/detail")
   DefaultCommonResult<MtdApi> mtdDetail(@RequestBody MtdApiParams mtdApiParams);
+
+  /**
+   * 根据数据库类型和属性获取数据库信息
+   * @param typeName
+   * @param attrValue
+   * @return
+   */
+  @GetMapping("/mtd/dbs/{typeName}/{attrValue}")
+  DefaultCommonResult<MtdApi> getDbs(@PathVariable("typeName") String typeName, @PathVariable("attrValue") String attrValue);
 }

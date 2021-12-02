@@ -5,15 +5,11 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.SchedulerInstanceStateEnum;
 import com.qk.dm.dataquality.constant.SchedulerStateEnum;
-import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
-import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
-import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoRuningDTO;
 import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
-import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerInfoParamsVO;
 import org.springframework.stereotype.Service;
@@ -63,78 +59,30 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     @Override
     public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         DqcSchedulerBasicInfo basicInfo = getInfoById(dqcSchedulerBasicInfoVO.getId());
-        DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(
-                dqcSchedulerBasicInfoVO, basicInfo);
+        DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO, basicInfo);
         // todo 修改人
         basicInfo.setUpdateUserid("admin");
         dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
     }
 
     @Override
+    public void update(DqcSchedulerBasicInfo dqcSchedulerBasicInfo) {
+        // todo 修改人
+        dqcSchedulerBasicInfo.setUpdateUserid("admin");
+        dqcSchedulerBasicInfoRepository.saveAndFlush(dqcSchedulerBasicInfo);
+    }
+
+    @Override
     public void deleteOne(Long id) {
-        dqcSchedulerBasicInfoRepository.deleteById(id);
+        //todo 需要判断状态
+        DqcSchedulerBasicInfo infoById = getInfoById(id);
+        dqcSchedulerBasicInfoRepository.delete(infoById);
+//        dqcSchedulerBasicInfoRepository.deleteById(id);
     }
 
     @Override
     public void deleteBulk(List<DqcSchedulerBasicInfo> schedulerBasicInfoList) {
         dqcSchedulerBasicInfoRepository.deleteAll(schedulerBasicInfoList);
-    }
-
-    @Override
-    public void release(DqcSchedulerBasicInfoReleaseDTO infoReleaseDto) {
-        DqcSchedulerBasicInfo basicInfo = getBasicInfo(infoReleaseDto.getId());
-        // todo 查询流程Id
-        Integer processDefinitionId = DqcConstant.PROCESS_DEFINITION_ID;
-        Integer scheduleId = null;
-        if (infoReleaseDto.getSchedulerState().equals(SchedulerStateEnum.SCHEDULING.getCode())) {
-            // todo 查询定时id，根据是否是手动触发
-            dolphinScheduler.online(processDefinitionId, scheduleId);
-        } else {
-            dolphinScheduler.offline(processDefinitionId);
-        }
-        basicInfo.setSchedulerState(infoReleaseDto.getSchedulerState());
-        // todo 修改人
-        basicInfo.setUpdateUserid("admin");
-        dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
-    }
-
-    @Override
-    public void runing(DqcSchedulerBasicInfoRuningDTO basicInfoRuningDTO) {
-        DqcSchedulerBasicInfo basicInfo = getBasicInfo(basicInfoRuningDTO.getId());
-        // todo 查询流程Id
-        Integer processDefinitionId = DqcConstant.PROCESS_DEFINITION_ID;
-        if (basicInfoRuningDTO.getRunInstanceState().equals(SchedulerInstanceStateEnum.RUNING.getCode())) {
-            dolphinScheduler.startInstance(processDefinitionId);
-        } else {
-            dolphinScheduler.stop(basicInfoRuningDTO.getInstanceId());
-        }
-        basicInfo.setRunInstanceState(basicInfoRuningDTO.getRunInstanceState());
-        // todo 修改人
-        basicInfo.setUpdateUserid("admin");
-        dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
-        // todo 启动异步查询运行状态，直到成功或失败
-    }
-
-    @Override
-    public DqcProcessInstanceVO instanceDetailByList(Long id) {
-        DqcSchedulerBasicInfo basicInfo = getBasicInfo(id);
-        // todo 查询流程Id
-        Integer processDefinitionId = DqcConstant.PROCESS_DEFINITION_ID;
-        // 获取到最近运行实例
-        DqcProcessInstanceVO instanceData = dolphinScheduler.detailByList(processDefinitionId);
-        //保存状态
-        InstanceStateTypeEnum instanceStateTypeEnum = InstanceStateTypeEnum.fromValue(instanceData.getState());
-        instanceData.setStateName(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getValue());
-        basicInfo.setRunInstanceState(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getCode());
-        // todo 修改人
-        basicInfo.setUpdateUserid("admin");
-        // 保存basic
-        dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
-        return instanceData;
-    }
-
-    private List<Long> getIdList(String ids) {
-        return Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
     }
 
     @Override
@@ -145,33 +93,38 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     }
 
     @Override
+    public DqcSchedulerBasicInfo getBasicInfo(Long id) {
+        DqcSchedulerBasicInfo info = dqcSchedulerBasicInfoRepository.findById(id).orElse(null);
+        checkBasicInfo(id, info);
+        return info;
+    }
+
+    private void checkState(DqcSchedulerBasicInfo info) {
+        if (info.getSchedulerState().equals(SchedulerStateEnum.SCHEDULING.getCode())) {
+            throw new BizException("启动调度后不可进行此操作！");
+        }
+    }
+
+    private void checkBasicInfo(Long id, DqcSchedulerBasicInfo info) {
+        if (info == null) {
+            throw new BizException("id为：" + id + " 的任务，不存在！");
+        }
+    }
+
+    @Override
     public List<DqcSchedulerBasicInfo> getInfoList(String ids) {
         List<DqcSchedulerBasicInfo> infoList = dqcSchedulerBasicInfoRepository.findAllById(getIdList(ids));
         checkBasicInfo(ids, infoList);
         return infoList.stream().peek(this::checkState).collect(Collectors.toList());
     }
 
-    private DqcSchedulerBasicInfo getBasicInfo(Long id) {
-        DqcSchedulerBasicInfo info = dqcSchedulerBasicInfoRepository.findById(id).orElse(null);
-        checkBasicInfo(id, info);
-        return info;
-    }
-
-    private void checkBasicInfo(Long id, DqcSchedulerBasicInfo info) {
-        if (info == null) {
-            throw new BizException("id为：" + id + " 的任务，不存在！！！");
-        }
-    }
-
-    private void checkState(DqcSchedulerBasicInfo info) {
-        if (info.getSchedulerState().equals(SchedulerStateEnum.SCHEDULING.getCode())) {
-            throw new BizException("启动调度后不可进行此操作！！！");
-        }
+    private List<Long> getIdList(String ids) {
+        return Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
     }
 
     private void checkBasicInfo(String ids, List<DqcSchedulerBasicInfo> infoList) {
         if (CollectionUtils.isEmpty(infoList)) {
-            throw new BizException("id为：" + ids + " 的任务，不存在！！！");
+            throw new BizException("id为：" + ids + " 的任务，不存在！");
         }
     }
 }
