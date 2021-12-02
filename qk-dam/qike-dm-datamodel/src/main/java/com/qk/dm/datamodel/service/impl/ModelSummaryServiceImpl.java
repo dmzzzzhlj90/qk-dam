@@ -89,6 +89,9 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
          if(Objects.isNull(modelSummary)){
              throw new BizException("当前查询的汇总表 id为"+id+"的数据不存在");
          }
+        if(Objects.equals(modelSummary.getStatus(), ModelStatus.PUBLISH)){
+            throw new BizException("当前汇总表已发布，不可修改！！！");
+        }
          ModelSummaryMapper.INSTANCE.from(modelSummaryDTO,modelSummary);
         modelSummaryRepository.saveAndFlush(modelSummary);
         List<ModelSummaryIdcDTO> modelSummaryIdcList = modelSummaryDTO.getModelSummaryIdcList();

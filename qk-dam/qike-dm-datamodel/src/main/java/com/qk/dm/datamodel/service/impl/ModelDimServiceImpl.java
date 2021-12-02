@@ -94,6 +94,9 @@ public class ModelDimServiceImpl implements ModelDimService {
         if(Objects.isNull(modelDim)){
             throw new BizException("当前要修改的维度信息 id为"+id+"的数据不存在！！！");
         }
+        if(Objects.equals(modelDim.getStatus(), ModelStatus.PUBLISH)){
+            throw new BizException("当前维度已发布，不可修改！！！");
+        }
         ModelDimMapper.INSTANCE.from(modelDimDTO,modelDim);
         modelDimRepository.saveAndFlush(modelDim);
         List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimDTO.getModelDimColumnList();

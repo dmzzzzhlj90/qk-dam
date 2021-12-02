@@ -88,6 +88,9 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         if(Objects.isNull(modelFactTable)){
             throw new BizException("当前要查找的事实表id为"+id+"的数据不存在");
         }
+        if(Objects.equals(modelFactTable.getStatus(), ModelStatus.PUBLISH)){
+            throw new BizException("当前事实表已发布，不可修改！！！");
+        }
         ModelFactTableMapper.INSTANCE.from(modelFactTableDTO,modelFactTable);
         modelFactTableRepository.saveAndFlush(modelFactTable);
         List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getModelFactColumnList();
