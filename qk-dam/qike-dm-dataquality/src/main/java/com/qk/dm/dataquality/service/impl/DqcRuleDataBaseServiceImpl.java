@@ -25,6 +25,8 @@ public class DqcRuleDataBaseServiceImpl implements DqcRuleDataBaseService {
     this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
   }
 
+  private static final String server = "server";
+
   @Override
   public List<String> getAllConnType() {
     return dataBaseInfoDefaultApi.getAllConnType();
@@ -55,6 +57,6 @@ public class DqcRuleDataBaseServiceImpl implements DqcRuleDataBaseService {
     ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getResultDataSourceByConnectName(dataSourceName);
     Map<String, String> map = GsonUtil.fromJsonString(resultDataSourceByConnectName.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {
     }.getType());
-    return map.get("server");
+    return map.get(server);
   }
 }

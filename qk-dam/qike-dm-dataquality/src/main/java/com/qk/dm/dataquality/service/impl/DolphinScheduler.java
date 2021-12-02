@@ -76,25 +76,25 @@ public class DolphinScheduler {
     processInstanceService.execute(processDefinitionId, ExecuteTypeEnum.STOP.getCode());
   }
 
-  /**
-   * 删除流程
-   *
-   * @param processDefinitionId
-   */
-  public void deleteOne(Integer processDefinitionId) {
-    processDefinitionApiService.deleteOne(processDefinitionId);
-  }
+//  /**
+//   * 删除流程
+//   *
+//   * @param processDefinitionId
+//   */
+//  public void deleteOne(Integer processDefinitionId) {
+//    processDefinitionApiService.deleteOne(processDefinitionId);
+//  }
 
-  /**
-   * 查询实例详情
-   *
-   * @param processInstanceId
-   * @return
-   */
-  public DqcProcessInstanceVO detail(Integer processInstanceId) {
-    return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(
-        processInstanceService.detail(processInstanceId));
-  }
+//  /**
+//   * 查询实例详情
+//   *
+//   * @param processInstanceId
+//   * @return
+//   */
+//  public DqcProcessInstanceVO detail(Integer processInstanceId) {
+//    return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(
+//        processInstanceService.detail(processInstanceId));
+//  }
 
   /**
    * 查询实例列表最新一条记录
@@ -153,7 +153,42 @@ public class DolphinScheduler {
    *
    * @param scheduleId
    */
-  public void deleteSchedule(Integer processDefinitionId, Integer scheduleId) {
+  public void deleteSchedule(Integer scheduleId) {
     scheduleApiService.deleteOne(ScheduleDeleteDTO.builder().scheduleId(scheduleId).build());
   }
+
+  /**
+   * 上线定时器
+   * @param scheduleId
+   */
+  public void onlineSchedule(Integer scheduleId) {
+    scheduleApiService.online(scheduleId);
+  }
+
+  /**
+   * 下线定时器
+   * @param scheduleId
+   */
+  public void offlineSchedule(Integer scheduleId){
+    scheduleApiService.offline(scheduleId);
+  }
+
+  /**
+   * 查询定时器
+   * @param processDefinitionId
+   */
+  public ScheduleDTO searchSchedule(Integer processDefinitionId){
+    // 查询定时
+    ScheduleSearchDTO scheduleSearchDTO =
+            ScheduleSearchDTO.builder()
+                    .processDefinitionId(processDefinitionId)
+                    .pageNo(SchedulerConstant.PAGE_NO)
+                    .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
+                    .build();
+    ScheduleResultDTO search = scheduleApiService.search(scheduleSearchDTO);
+    List<ScheduleDTO> totalList = search.getTotalList();
+    return CollectionUtils.isEmpty(totalList) ? null : totalList.get(0);
+  }
+
+
 }
