@@ -10,4 +10,6 @@ public class ModelStatus {
     public static final int REPLACE=0;//逆向数据库更新
     public static final int NOREPLACE=1;//逆向数据库不更新
     public static final String CONNECT="HIVE";//校验数据库连接方式是HIVE
+    public static final int SYNCHRONIZATION=0;//与数据库同步
+    public static final int OUTOFSYNC=1;//与数据库不同步
 }
