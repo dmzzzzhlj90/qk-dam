@@ -4,27 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 调度状态
- *
+ * 调度周期
  * @author shenpengjie
  */
-public enum SchedulerStateEnum {
+public enum SchedulerCycleEnum {
+    minute("minute","分钟"),
+    hour("hour","小时"),
+    day("day","天"),
+    week("week","周");
 
-    OFFLINE(0,"OFFLINE", "下线"),
-    ONLINE(1,"ONLINE", "上线");
-
-    Integer state;
     String code;
     String name;
 
-    SchedulerStateEnum(Integer state, String code, String name) {
-        this.state = state;
+    SchedulerCycleEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    public static SchedulerStateEnum fromValue(String code) {
-        for (SchedulerStateEnum b : SchedulerStateEnum.values()) {
+    public static SchedulerCycleEnum fromValue(String code) {
+        for (SchedulerCycleEnum b : SchedulerCycleEnum.values()) {
             if (b.code.equals(code)) {
                 return b;
             }
@@ -34,14 +32,10 @@ public enum SchedulerStateEnum {
 
     public static Map<String, String> getAllValue() {
         Map<String, String> val = new HashMap<>();
-        for (SchedulerStateEnum enums : SchedulerStateEnum.values()) {
+        for (SchedulerCycleEnum enums : SchedulerCycleEnum.values()) {
             val.put(enums.code, enums.name);
         }
         return val;
-    }
-
-    public Integer getState() {
-        return state;
     }
 
     public String getCode() {

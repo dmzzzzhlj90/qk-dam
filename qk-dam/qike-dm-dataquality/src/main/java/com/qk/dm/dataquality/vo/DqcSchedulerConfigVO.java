@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -47,7 +45,7 @@ public class DqcSchedulerConfigVO {
   private Date effectiveTimeEnt;
 
   /** 调度周期 1-分钟 2-小时 3-天 4-周 */
-  private Integer schedulerCycle;
+  private String schedulerCycle;
 
   /** 间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日 */
   private String schedulerIntervalTime;

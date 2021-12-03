@@ -40,7 +40,7 @@ public class DolphinScheduler {
      * @param processDefinitionId
      */
     public void online(Integer processDefinitionId) {
-        processDefinitionApiService.release(processDefinitionId, SchedulerStateEnum.ONLINE.getCode());
+        processDefinitionApiService.release(processDefinitionId, SchedulerStateEnum.ONLINE.getState());
     }
 
     /**
@@ -49,7 +49,7 @@ public class DolphinScheduler {
      * @param processDefinitionId
      */
     public void offline(Integer processDefinitionId) {
-        processDefinitionApiService.release(processDefinitionId, SchedulerStateEnum.OFFLINE.getCode());
+        processDefinitionApiService.release(processDefinitionId, SchedulerStateEnum.OFFLINE.getState());
     }
 
     /**

@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public enum SchedulerTypeEnum {
 
-    SCHEDULER_TYPE_SINGLE("SCHEDULER_TYPE_SINGLE", "单次调度"),
-    SCHEDULER_TYPE_CYCLE("SCHEDULER_TYPE_CYCLE", "周期调度");
+    SINGLE("SINGLE", "单次调度"),
+    CYCLE("CYCLE", "周期调度");
 
     private String code;
     private String name;

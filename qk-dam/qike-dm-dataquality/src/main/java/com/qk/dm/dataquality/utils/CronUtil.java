@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.utils;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.dataquality.constant.SchedulerCycleEnum;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 
 /**
@@ -24,24 +25,24 @@ public class CronUtil {
         taskScheduleModel.getSchedulerTime());
   }
 
-  public static String createCron(Integer type, String interval, String time) {
+  public static String createCron(String type, String interval, String time) {
     StringBuffer cronExp = new StringBuffer("");
 
     if (null == type) {
       // 执行周期未配置
       throw new BizException("执行周期未配置");
     }
-    switch (type) {
-      case 1: // 分钟
+    switch (SchedulerCycleEnum.fromValue(type)) {
+      case minute:
         minute(interval, cronExp);
         break;
-      case 2: // 小时
+      case hour:
         hour(interval, cronExp);
         break;
-      case 3: // 天
+      case day:
         day(time, cronExp);
         break;
-      case 4: // 周
+      case week:
         weeks(interval, time, cronExp);
         break;
     }
@@ -89,7 +90,7 @@ public class CronUtil {
   public static void main(String[] args) {
     // 执行时间：每天的12时12分12秒 start
     DqcSchedulerConfigVO dqcSchedulerConfigVO = new DqcSchedulerConfigVO();
-    dqcSchedulerConfigVO.setSchedulerCycle(3);
+    dqcSchedulerConfigVO.setSchedulerCycle("day");
     dqcSchedulerConfigVO.setSchedulerIntervalTime("1");
     dqcSchedulerConfigVO.setSchedulerTime("01:05");
     System.out.println(createCron(dqcSchedulerConfigVO));

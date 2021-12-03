@@ -16,7 +16,7 @@ public class DqcSchedulerReleaseDTO {
   @NotNull(message = "主键ID不能为空！")
   private Long id;
 
-  /** 调度状态 0-未启动 1-调度中 */
+  /** 调度状态 "OFFLINE":"下线","ONLINE":"上线" */
   @NotNull(message = "调度状态不能为空！")
-  private Integer schedulerState;
+  private String schedulerState;
 }

@@ -31,7 +31,7 @@ public class DqcSchedulerConfig implements Serializable {
 
   /** 调度周期 1-分钟 2-小时 3-天 4-周 */
   @Column(name = "scheduler_cycle")
-  private Integer schedulerCycle;
+  private String schedulerCycle;
 
   /** 间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日 */
   @Column(name = "scheduler_interval_time")
@@ -77,5 +77,5 @@ public class DqcSchedulerConfig implements Serializable {
 
   /** 删除标识(0-保留 1-删除) */
   @Column(name = "del_flag", nullable = false)
-  private Integer delFlag = 0;
+  private Integer delFlag;
 }

@@ -23,12 +23,10 @@ public class SchedulerRuleConstantsVO {
      */
     private Map<String, String> notifyLevelEnum;
 
-
     /**
      * 通知状态
      */
     private Map<String, String> notifyStateEnum;
-
 
     /**
      * 通知类型
@@ -50,8 +48,13 @@ public class SchedulerRuleConstantsVO {
      */
     private Map<String, String> schedulerTypeEnum;
 
-//    /**
-//     * 调度状态
-//     */
-//    private Map<String, String> schedulerStateEnum;
+    /**
+     * 调度状态
+     */
+    private Map<String, String> schedulerStateEnum;
+
+    /**
+     * 调度周期
+     */
+    private Map<String, String> SchedulerCycleEnum;
 }

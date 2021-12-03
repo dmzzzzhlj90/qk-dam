@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.constant.SchedulerTypeEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.entity.QDqcSchedulerConfig;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerConfigMapper;
@@ -141,7 +142,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   }
 
   private String generateCron(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    if (Objects.equals(dqcSchedulerConfigVO.getSchedulerType(), DqcConstant.RUN_TYPE)) {
+    if (Objects.equals(dqcSchedulerConfigVO.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
       return CronUtil.createCron(dqcSchedulerConfigVO);
     }
     return null;

@@ -1,7 +1,6 @@
 package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.SchedulerInstanceStateEnum;
 import com.qk.dm.dataquality.constant.SchedulerStateEnum;
 import com.qk.dm.dataquality.constant.SchedulerTypeEnum;
@@ -60,7 +59,7 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
         DqcSchedulerConfig config = dqcSchedulerConfigService.getConfig(jobId);
         // 如果之前存在定时，并且是周期调度，修改，否则删除调度
         if (config.getSchedulerId() != null) {
-            if (Objects.equals(config.getSchedulerType(),  SchedulerTypeEnum.SCHEDULER_TYPE_CYCLE.getCode())) {
+            if (Objects.equals(config.getSchedulerType(),  SchedulerTypeEnum.CYCLE.getCode())) {
                 dolphinScheduler.updateSchedule(config.getSchedulerId(), config.getEffectiveTimeStart(), config.getEffectiveTimeEnt(), config.getCron());
                 online(config.getSchedulerId());
             } else {
@@ -139,7 +138,7 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
     }
 
     public void createSchedule(Integer processDefinitionId, DqcSchedulerConfig config) {
-        if (Objects.equals(config.getSchedulerType(), SchedulerTypeEnum.SCHEDULER_TYPE_CYCLE.getCode())) {
+        if (Objects.equals(config.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
             Integer scheduleId = createScheduleAndFlush(processDefinitionId, config);
             online(scheduleId);
         }
