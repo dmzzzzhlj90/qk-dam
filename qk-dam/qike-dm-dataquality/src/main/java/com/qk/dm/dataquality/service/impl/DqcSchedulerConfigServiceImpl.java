@@ -141,7 +141,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   }
 
   private String generateCron(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    if (Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)) {
+    if (Objects.equals(dqcSchedulerConfigVO.getSchedulerType(), DqcConstant.RUN_TYPE)) {
       return CronUtil.createCron(dqcSchedulerConfigVO);
     }
     return null;

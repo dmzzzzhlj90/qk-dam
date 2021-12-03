@@ -14,13 +14,16 @@ import java.util.Map;
  */
 public enum NotifyStateEnum {
 
-    NOTIFY_STATE_CLOSE(0, "关"),
-    NOTIFY_STATE_OPEN(1, "开");
+    /**
+     * 通知状态 "CLOSE":"关","OPEN":"开";
+     */
+    CLOSE("CLOSE", "关"),
+    OPEN("OPEN", "开");
 
-    private Integer code;
+    private String code;
     private String name;
 
-    NotifyStateEnum(Integer code, String name) {
+    NotifyStateEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }
@@ -37,15 +40,15 @@ public enum NotifyStateEnum {
         return null;
     }
 
-    public static Map<Integer, String> getAllValue() {
-        Map<Integer, String> val = new HashMap<>();
+    public static Map<String, String> getAllValue() {
+        Map<String, String> val = new HashMap<>();
         for (NotifyStateEnum enums : NotifyStateEnum.values()) {
             val.put(enums.code, enums.name);
         }
         return val;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 

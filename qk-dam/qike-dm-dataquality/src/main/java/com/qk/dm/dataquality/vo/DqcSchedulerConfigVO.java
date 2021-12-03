@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -31,9 +32,9 @@ public class DqcSchedulerConfigVO {
   @NotBlank(message = "作业id不能为空！")
   private String jobId;
 
-  /** 调度执行方式 1-手动执行 2-调度执行 */
-  @NotNull(message = "调度执行方式不能为空！")
-  private Integer runType;
+  /** 调度执行方式 "SCHEDULER_TYPE_SINGLE":"单次调度" "SCHEDULER_TYPE_CYCLE":周期调度; */
+  @NotBlank(message = "调度执行方式不能为空！")
+  private String schedulerType;
 
   /** 有效日期开始 */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

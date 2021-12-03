@@ -19,14 +19,21 @@ import java.util.Map;
 public class SchedulerRuleConstantsVO {
 
     /**
-     * 通知状态
-     */
-    private Map<Integer, String> notifyStateEnum;
-
-    /**
      * 提示级别
      */
-    private Map<Integer, String> notifyLevelEnum;
+    private Map<String, String> notifyLevelEnum;
+
+
+    /**
+     * 通知状态
+     */
+    private Map<String, String> notifyStateEnum;
+
+
+    /**
+     * 通知类型
+     */
+    private Map<String, String> notifyTypeEnum;
 
     /**
      * 计算引擎类型
@@ -42,4 +49,9 @@ public class SchedulerRuleConstantsVO {
      * 调度方式
      */
     private Map<String, String> schedulerTypeEnum;
+
+//    /**
+//     * 调度状态
+//     */
+//    private Map<String, String> schedulerStateEnum;
 }

@@ -25,9 +25,9 @@ public class DqcSchedulerConfig implements Serializable {
   @Column(name = "job_id", nullable = false)
   private String jobId;
 
-  /** 调度执行方式 1-手动执行 2-调度执行 */
-  @Column(name = "run_type", nullable = false)
-  private Integer runType;
+  /** 调度执行方式 "SCHEDULER_TYPE_SINGLE":"单次调度" "SCHEDULER_TYPE_CYCLE":周期调度; */
+  @Column(name = "scheduler_type", nullable = false)
+  private String schedulerType;
 
   /** 调度周期 1-分钟 2-小时 3-天 4-周 */
   @Column(name = "scheduler_cycle")

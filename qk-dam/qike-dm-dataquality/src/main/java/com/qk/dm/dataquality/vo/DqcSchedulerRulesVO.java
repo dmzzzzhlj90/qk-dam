@@ -40,19 +40,19 @@ public class DqcSchedulerRulesVO {
     private Long ruleTempId;
 
     /**
-     * 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则";
+     * 规则类型 "RULE_TYPE_FIELD":"字段级别规则","RULE_TYPE_TABLE":"表级别规则","RULE_TYPE_DB":"库级别规则";
      */
     private String ruleType;
 
     /**
-     * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔
+     * 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔
      */
     private String engineType;
 
     /**
-     * 数据连接地址
+     * 数据连接
      */
-    private String databaseUrl;
+    private String dataSourceName;
 
     /**
      * 数据库名称
@@ -70,7 +70,7 @@ public class DqcSchedulerRulesVO {
     private String fieldName;
 
     /**
-     * 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则";
+     * 扫描范围 "FULL_TABLE":"全表", "CONDITION":"条件";
      */
     private String scanType;
 

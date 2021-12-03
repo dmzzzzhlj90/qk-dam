@@ -6,34 +6,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 提示级别
+ * 通知类型
  *
  * @author wjq
- * @date 2021/11/12
+ * @date 2021/12/03
  * @since 1.0.0
  */
-public enum NotifyLevelEnum {
+public enum NotifyTypeEnum {
+
     /**
-     * 提示级别 "HINT":"提示","GENERAL":"一般","SERIOUS":"严重","FATAL":"致命";
+     * 通知类型 "TRIGGER_ALARM":"触发告警", "RUN_SUCCESS":"运行成功";
      */
-    HINT("HINT", "提示"),
-    GENERAL("GENERAL", "一般"),
-    SERIOUS("SERIOUS", "严重"),
-    FATAL("FATAL", "致命");
+    TRIGGER_ALARM("TRIGGER_ALARM", "触发告警"),
+    RUN_SUCCESS("RUN_SUCCESS", "运行成功");
 
     private String code;
     private String name;
 
-    NotifyLevelEnum(String code, String name) {
+    NotifyTypeEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    public static NotifyLevelEnum getVal(String name) {
+    public static NotifyTypeEnum getVal(String name) {
         if (ObjectUtils.isEmpty(name)) {
             return null;
         }
-        for (NotifyLevelEnum enums : NotifyLevelEnum.values()) {
+        for (NotifyTypeEnum enums : NotifyTypeEnum.values()) {
             if (name.equals(enums.name)) {
                 return enums;
             }
@@ -43,7 +42,7 @@ public enum NotifyLevelEnum {
 
     public static Map<String, String> getAllValue() {
         Map<String, String> val = new HashMap<>();
-        for (NotifyLevelEnum enums : NotifyLevelEnum.values()) {
+        for (NotifyTypeEnum enums : NotifyTypeEnum.values()) {
             val.put(enums.code, enums.name);
         }
         return val;
@@ -56,4 +55,5 @@ public enum NotifyLevelEnum {
     public String getName() {
         return name;
     }
+
 }

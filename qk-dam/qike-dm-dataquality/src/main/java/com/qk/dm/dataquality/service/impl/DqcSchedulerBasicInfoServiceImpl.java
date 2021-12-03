@@ -43,7 +43,8 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         DqcSchedulerBasicInfo basicInfo = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO);
         // todo 创建人
         basicInfo.setCreateUserid("admin");
-        basicInfo.setSchedulerState(SchedulerStateEnum.OFFLINE.getCode());
+        //TODO 调度状态
+//        basicInfo.setSchedulerState(SchedulerStateEnum.OFFLINE.getCode());
         basicInfo.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
         basicInfo.setRunInstanceState(SchedulerInstanceStateEnum.INIT.getCode());
         dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);
