@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.qk.dm.*")
 @ComponentScan(basePackages = "com.qk")
 public class DmDataModelApplication {
     public static void main(String[] args) {

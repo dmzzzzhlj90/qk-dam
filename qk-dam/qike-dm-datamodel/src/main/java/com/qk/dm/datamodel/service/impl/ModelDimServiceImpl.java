@@ -74,6 +74,7 @@ public class ModelDimServiceImpl implements ModelDimService {
         //如果是直接发布 需要保存维度表
         if(Objects.equals(ModelStatus.PUBLISH,modelDim.getStatus())){
             ModelDimTableDTO modelDimTableDTO= ModelDimMapper.INSTANCE.ofDimTable(modelDimDTO);
+            modelDimTableDTO.setModelDimId(dim.getId());
             modelDimTableDTO.setColumnList(ModelDimColumnMapper.INSTANCE.ofDimTableColumn(modelDimColumnList));
             modelDimTableService.insert(modelDimTableDTO);
         }
@@ -102,6 +103,12 @@ public class ModelDimServiceImpl implements ModelDimService {
         List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimDTO.getModelDimColumnList();
         if(!modelDimColumnDTOList.isEmpty()){
             modelDimColumnSerVice.update(id,modelDimColumnDTOList);
+        }
+        //如果是直接发布 需要修改或添加维度表
+        if(Objects.equals(ModelStatus.PUBLISH,modelDim.getStatus())){
+            ModelDimTableDTO modelDimTableDTO= ModelDimMapper.INSTANCE.ofDimTable(modelDimDTO);
+            modelDimTableDTO.setColumnList(ModelDimColumnMapper.INSTANCE.ofDimTableColumn(modelDimColumnDTOList));
+            modelDimTableService.update(modelDim.getId(),modelDimTableDTO);
         }
 
     }
@@ -133,7 +140,6 @@ public class ModelDimServiceImpl implements ModelDimService {
     @Override
     public void publish(String ids) {
         List<ModelDim> modelDimList = getModelDimList(ids);
-        modelDimList.forEach(e->e.setStatus(ModelStatus.PUBLISH));
         modelDimList = modelDimList.stream().peek(e -> {
             if (e.getStatus() == ModelStatus.PUBLISH) {
                 throw new BizException(e.getDimName() + "维度已发布，不可重复发布！！！");
@@ -146,7 +152,12 @@ public class ModelDimServiceImpl implements ModelDimService {
     @Override
     public void offline(String ids) {
         List<ModelDim> modelDimList = getModelDimList(ids);
-        modelDimList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
+        modelDimList.forEach(e->{
+            if(e.getStatus()!=ModelStatus.PUBLISH){
+                throw new BizException(e.getDimName() + "维度还未发布，不可下线！！！");
+            }
+            e.setStatus(ModelStatus.OFFLINE);
+        });
         modelDimRepository.saveAllAndFlush(modelDimList);
     }
 

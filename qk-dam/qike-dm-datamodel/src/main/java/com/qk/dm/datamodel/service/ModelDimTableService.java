@@ -9,7 +9,7 @@ public interface ModelDimTableService {
 
     ModelDimTableVO detail(Long id);
 
-    void update(Long id,ModelDimTableDTO modelDimTableDTO);
+    void update(Long modelDimId,ModelDimTableDTO modelDimTableDTO);
 
     void delete(String ids);
 

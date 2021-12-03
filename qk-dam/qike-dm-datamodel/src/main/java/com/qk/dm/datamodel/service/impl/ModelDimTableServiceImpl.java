@@ -18,6 +18,7 @@ import com.qk.dm.datamodel.service.ModelDimTableColumnService;
 import com.qk.dm.datamodel.service.ModelDimTableService;
 import com.qk.dm.datamodel.service.ModelSqlService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -77,22 +78,29 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     }
 
     @Override
-    public void update(Long id, ModelDimTableDTO modelDimTableDTO) {
-        ModelDimTable modelDimTable = modelDimTableRepository.findById(id).orElse(null);
-        if(Objects.isNull(modelDimTable)){
-            throw new BizException("当前查找的维度表id为"+id+"的数据不存在");
-        }
-        ModelDimTableMapper.INSTANCE.from(modelDimTableDTO,modelDimTable);
-        modelDimTableRepository.saveAndFlush(modelDimTable);
+    public void update(Long modelDimId, ModelDimTableDTO modelDimTableDTO) {
+        Predicate predicate = qModelDimTable.modelDimId.eq(modelDimId);
+        Optional<ModelDimTable> modelDimTable = modelDimTableRepository.findOne(predicate);
+        if(modelDimTable.isEmpty()){
+           //添加维度表
+            insert(modelDimTableDTO);
+         } else {
+              ModelDimTableMapper.INSTANCE.from(modelDimTableDTO, modelDimTable.get());
+              modelDimTableRepository.saveAndFlush(modelDimTable.get());
 
-        List<ModelDimTableColumnDTO> modelDimTableDTOColumnList = modelDimTableDTO.getColumnList();
-        if(!modelDimTableDTOColumnList.isEmpty()){
-            modelDimTableDTOColumnList.forEach(e->e.setDimTableId(modelDimTable.getId()));
-            modelDimTableColumnService.update(modelDimTable.getId(),modelDimTableDTO.getColumnList());
-            //修改表SQL,添加到数据库中
-            ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelDimTable.getDimName(), modelDimTableDTOColumnList))
-                    .tableId(modelDimTable.getId()).type(ModelType.DIM_TABLE).build();
-            modelSqlService.update(modelSql);
+              List<ModelDimTableColumnDTO> modelDimTableDTOColumnList = modelDimTableDTO.getColumnList();
+              if (!modelDimTableDTOColumnList.isEmpty()) {
+                modelDimTableDTOColumnList.forEach(e -> e.setDimTableId(modelDimTable.get().getId()));
+                modelDimTableColumnService.update(modelDimTable.get().getId(), modelDimTableDTO.getColumnList());
+                // 修改表SQL,添加到数据库中
+                ModelSqlDTO modelSql =
+                    ModelSqlDTO.builder()
+                        .sqlSentence(generateSql(modelDimTable.get().getDimName(), modelDimTableDTOColumnList))
+                        .tableId(modelDimTable.get().getId())
+                        .type(ModelType.DIM_TABLE)
+                        .build();
+                modelSqlService.update(modelSql);
+              }
         }
     }
 

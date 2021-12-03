@@ -71,6 +71,11 @@ public class ModelDimTableDTO implements Serializable {
     private String databaseName;
 
     /**
+     * 关联维度的id
+     */
+    private Long modelDimId;
+
+    /**
      * 字段信息
      */
     private List<ModelDimTableColumnDTO> columnList;
