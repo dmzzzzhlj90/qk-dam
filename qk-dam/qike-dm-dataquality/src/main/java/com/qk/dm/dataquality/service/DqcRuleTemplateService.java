@@ -5,6 +5,7 @@ import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDTO;
 import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDTO;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVO;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
+import com.qk.dm.dataquality.vo.RuleTemplateConstantsVO;
 
 import java.util.List;
 
@@ -30,4 +31,6 @@ public interface DqcRuleTemplateService {
   List<DqcRuleTemplateInfoVO> search(DqcRuleTemplatePageDTO dqcRuleTemplateVo);
 
   PageResultVO<DqcRuleTemplateInfoVO> searchPageList(DqcRuleTemplatePageDTO dqcRuleTemplatePageDto);
+
+  RuleTemplateConstantsVO getRuLeTemplateConstants();
 }

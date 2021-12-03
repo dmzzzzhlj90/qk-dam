@@ -8,6 +8,7 @@ import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDTO;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVO;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
+import com.qk.dm.dataquality.vo.RuleTemplateConstantsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -39,7 +40,7 @@ public class DqcRuleTemplateController {
    * 新增规则模版
    *
    * @param dqcRuleTemplateVo
-   * @return
+   * @return DefaultCommonResult
    */
   @PostMapping("")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
@@ -52,7 +53,7 @@ public class DqcRuleTemplateController {
    * 编辑规则模版
    *
    * @param dqcRuleTemplateVo
-   * @return
+   * @return DefaultCommonResult
    */
   @PutMapping("")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
@@ -65,7 +66,7 @@ public class DqcRuleTemplateController {
    * 发布
    *
    * @param dqcRuleTemplateReleaseDto
-   * @return
+   * @return DefaultCommonResult
    */
   @PutMapping("/release")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
@@ -79,7 +80,7 @@ public class DqcRuleTemplateController {
    * 删除单个规则模版
    *
    * @param id
-   * @return
+   * @return DefaultCommonResult
    */
   @DeleteMapping("/{id}")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
@@ -92,7 +93,7 @@ public class DqcRuleTemplateController {
    * 批量删除规则模版
    *
    * @param ids
-   * @return
+   * @return DefaultCommonResult
    */
   @DeleteMapping("/bulk")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
@@ -105,7 +106,7 @@ public class DqcRuleTemplateController {
    * 规则模版详情
    *
    * @param id
-   * @return
+   * @return DefaultCommonResult<DqcRuleTemplateInfoVO>
    */
   @GetMapping("/{id}")
   public DefaultCommonResult<DqcRuleTemplateInfoVO> detail(@PathVariable("id") Long id) {
@@ -116,7 +117,7 @@ public class DqcRuleTemplateController {
    * 规则模版下拉列表
    *
    * @param dqcRuleTemplatePageDto
-   * @return
+   * @return DefaultCommonResult<List<DqcRuleTemplateInfoVO>>
    */
   @GetMapping("/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
@@ -130,7 +131,7 @@ public class DqcRuleTemplateController {
    * 规则模版分页列表
    *
    * @param dqcRuleTemplatePageDto
-   * @return
+   * @return DefaultCommonResult<PageResultVO<DqcRuleTemplateInfoVO>>
    */
   @PostMapping("/page/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
@@ -140,5 +141,13 @@ public class DqcRuleTemplateController {
         ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplatePageDto));
   }
 
+  /**
+   * 获取规则模版常量信息
+   * @return DefaultCommonResult<RuleTemplateConstantsVO>
+   */
+  @GetMapping("/constants")
+  public DefaultCommonResult<RuleTemplateConstantsVO> getRuLeTemplateConstants() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleTemplateService.getRuLeTemplateConstants());
+  }
 
 }

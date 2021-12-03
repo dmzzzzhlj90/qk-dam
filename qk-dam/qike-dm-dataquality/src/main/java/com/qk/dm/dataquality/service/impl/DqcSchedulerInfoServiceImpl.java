@@ -179,7 +179,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         constantsVOBuilder
                 .notifyStateEnum(NotifyStateEnum.getAllValue())
                 .notifyLevelEnum(NotifyLevelEnum.getAllValue())
-                .calculateEngineTypeEnum(CalculateEngineTypeEnum.getAllValue())
+                .engineTypeEnum(EngineTypeEnum.getAllValue())
                 .ruleTypeEnum(RuleTypeEnum.getAllValue())
                 .schedulerTypeEnum(SchedulerTypeEnum.getAllValue());
         return constantsVOBuilder.build();

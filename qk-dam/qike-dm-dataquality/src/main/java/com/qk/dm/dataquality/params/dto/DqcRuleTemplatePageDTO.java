@@ -19,10 +19,10 @@ public class DqcRuleTemplatePageDTO {
   /** 分类目录 */
   private String dirId;
 
-  /** 质量维度 1-完整性 2-唯一性 3-及时性 4-有效性 5-准确性 6-一致性 */
-  private Integer dimensionId;
+  /** 质量维度 */
+  private String dimensionType;
 
-  /** 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔 */
+  /** 适用引擎 MYSQL,HIVE,ORACLE */
   private String engineType;
 
   /** 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则"; */

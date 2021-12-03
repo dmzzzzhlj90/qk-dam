@@ -6,9 +6,10 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
-import com.qk.dm.dataquality.constant.DataSourceEnum;
-import com.qk.dm.dataquality.constant.DqcConstant;
-import com.qk.dm.dataquality.constant.TempTypeEnum;
+import com.qk.dm.dataquality.constant.*;
+import com.qk.dm.dataquality.constant.ruletemplate.DimensionTypeEnum;
+import com.qk.dm.dataquality.constant.ruletemplate.PublishStateEnum;
+import com.qk.dm.dataquality.constant.ruletemplate.TempTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcRuleTemplateMapper;
@@ -19,6 +20,7 @@ import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVO;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
+import com.qk.dm.dataquality.vo.RuleTemplateConstantsVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
@@ -58,12 +60,13 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
     @Override
     public void insert(DqcRuleTemplateVO dqcRuleTemplateVo) {
-        parseStatements(dqcRuleTemplateVo.getEngineType(), dqcRuleTemplateVo.getTempSql());
+        //判断sql是否适用与引擎
+        checkEngine(dqcRuleTemplateVo.getEngineType(), dqcRuleTemplateVo.getTempSql());
         DqcRuleTemplate dqcRuleTemplate = DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
         //todo 需要更改为前端传入
 //        dqcRuleTemplate.setEngineType(DqcConstant.ENGINE_TYPE);
-        dqcRuleTemplate.setTempType(TempTypeEnum.CUSTOMIZE.getCode());
-        dqcRuleTemplate.setPublishState(DqcConstant.PUBLISH_STATE_DOWN);
+//        dqcRuleTemplate.setTempType(TempTypeEnum.CUSTOM.getCode());
+        dqcRuleTemplate.setPublishState(PublishStateEnum.OUTLINE.getCode());
         // todo 添加创建人
         dqcRuleTemplate.setCreateUserid("admin");
         dqcRuleTemplate.setDelFlag(0);
@@ -122,11 +125,13 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(getInfoById(id));
     }
 
+
+
     @Override
     public List<DqcRuleTemplateInfoVO> search(DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(dqcRuleTemplatePageDto, booleanBuilder);
-        booleanBuilder.and(qDqcRuleTemplate.publishState.eq(DqcConstant.PUBLISH_STATE_UP));
+        booleanBuilder.and(qDqcRuleTemplate.publishState.eq(PublishStateEnum.RELEASE.getCode()));
         List<DqcRuleTemplate> list =
                 jpaQueryFactory
                         .select(qDqcRuleTemplate)
@@ -149,6 +154,17 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
                 dqcRuleTemplatePageDto.getPagination().getPage(),
                 dqcRuleTemplatePageDto.getPagination().getSize(),
                 voList);
+    }
+
+    @Override
+    public RuleTemplateConstantsVO getRuLeTemplateConstants() {
+        RuleTemplateConstantsVO.RuleTemplateConstantsVOBuilder builder = RuleTemplateConstantsVO.builder();
+        builder.engineTypeEnum(EngineTypeEnum.getAllValue())
+                .dimensionTypeEnum(DimensionTypeEnum.getAllValue())
+                .publishStateEnum(PublishStateEnum.getAllValue())
+                .tempTypeEnum(TempTypeEnum.getAllValue())
+                .ruleTypeEnum(RuleTypeEnum.getAllValue());
+        return builder.build();
     }
 
     private Map<String, Object> queryParams(DqcRuleTemplatePageDTO dqcRuleTemplateVo) {
@@ -197,8 +213,8 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         if (dqcRuleTemplateVo.getTempName() != null) {
             booleanBuilder.and(qDqcRuleTemplate.tempName.contains(dqcRuleTemplateVo.getTempName()));
         }
-        if (dqcRuleTemplateVo.getDimensionId() != null) {
-            booleanBuilder.and(qDqcRuleTemplate.dimensionId.eq(dqcRuleTemplateVo.getDimensionId()));
+        if (dqcRuleTemplateVo.getDimensionType() != null) {
+            booleanBuilder.and(qDqcRuleTemplate.dimensionType.eq(dqcRuleTemplateVo.getDimensionType()));
         }
         if (dqcRuleTemplateVo.getEngineType() != null) {
             booleanBuilder.and(qDqcRuleTemplate.engineType.contains(dqcRuleTemplateVo.getEngineType()));
@@ -216,37 +232,37 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
     private void checkInfo(Long id, DqcRuleTemplate info) {
         if (info == null) {
-            throw new BizException("id为：" + id + " 的模版不存在");
+            throw new BizException("id为：" + id + " 的模版不存在!");
         }
     }
 
     private void checkInfo(String ids, List<DqcRuleTemplate> idcTimeLimitList) {
         if (CollectionUtils.isEmpty(idcTimeLimitList)) {
-            throw new BizException("当前要删除的id为：" + ids + " 的数据，不存在");
+            throw new BizException("当前要删除的id为：" + ids + " 的数据，不存在!");
         }
     }
 
     private void checkPublishState(DqcRuleTemplate dqcRuleTemplate, String s) {
-        if (Objects.equals(dqcRuleTemplate.getPublishState(), DqcConstant.PUBLISH_STATE_UP)) {
+        if (Objects.equals(dqcRuleTemplate.getPublishState(), PublishStateEnum.RELEASE.getCode())) {
             throw new BizException(s);
         }
     }
 
-    private void parseStatements(String engineType, String sql) {
+    private void checkEngine(String engineType, String sql) {
         Arrays.stream(engineType.split(","))
-                .peek(item -> checkSql(sql, DataSourceEnum.fromValue(Integer.parseInt(item))))
+                .peek(item -> checkSql(sql, EngineTypeEnum.fromValue(item)))
                 .collect(Collectors.toList());
     }
 
-    private void checkSql(String sql, DataSourceEnum dataSourceEnums) {
+    private void checkSql(String sql, EngineTypeEnum dataSourceEnums) {
         if (!SqlParserFactory.parseStatements(sql, dataSourceEnums.getDbType())) {
-            throw new BizException("本sql " + dataSourceEnums.getName() + " 不适用");
+            throw new BizException("本sql " + dataSourceEnums.getCode() + " 不适用!");
         }
     }
 
-    private void checkRulesIsQuote(Integer publishState, Long id) {
-        if (publishState.equals(DqcConstant.PUBLISH_STATE_DOWN) && dqcSchedulerRulesService.checkRuleTemp(id)) {
-            throw new BizException("有规则引用不允许下线");
+    private void checkRulesIsQuote(String publishState, Long id) {
+        if (publishState.equals(PublishStateEnum.OFFLINE.getCode()) && dqcSchedulerRulesService.checkRuleTemp(id)) {
+            throw new BizException("有规则引用不允许下线!");
         }
     }
 }

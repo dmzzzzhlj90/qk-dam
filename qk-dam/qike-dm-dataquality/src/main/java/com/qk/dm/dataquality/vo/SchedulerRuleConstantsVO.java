@@ -31,7 +31,7 @@ public class SchedulerRuleConstantsVO {
     /**
      * 计算引擎类型
      */
-    private Map<String, String> calculateEngineTypeEnum;
+    private Map<String, String> engineTypeEnum;
 
     /**
      * 规则类型
@@ -42,5 +42,4 @@ public class SchedulerRuleConstantsVO {
      * 调度方式
      */
     private Map<String, String> schedulerTypeEnum;
-
 }
