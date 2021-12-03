@@ -27,8 +27,8 @@ public class ModelDimTableController {
 
     /**
      * 添加维度表信息
-     * @param modelDimTableDTO
-     * @return
+     * @param modelDimTableDTO 维度表实体
+     * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated ModelDimTableDTO modelDimTableDTO){
@@ -38,9 +38,9 @@ public class ModelDimTableController {
 
     /**
      * 修改维度表
-     * @param id
-     * @param modelDimTableDTO
-     * @return
+     * @param id 维度表id
+     * @param modelDimTableDTO 维度表实体
+     * @return DefaultCommonResult
      */
     @PutMapping("/{id}")
     public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelDimTableDTO modelDimTableDTO){
@@ -50,8 +50,8 @@ public class ModelDimTableController {
 
     /**
      * 维度表详情
-     * @param id
-     * @return
+     * @param id 维度表id
+     * @return DefaultCommonResult<ModelDimTableVO>
      */
     @GetMapping("/{id}")
     public DefaultCommonResult<ModelDimTableVO> detail(@PathVariable("id") Long id){
@@ -60,8 +60,8 @@ public class ModelDimTableController {
 
     /**
      * 维度表列表
-     * @param modelDimTableDTO
-     * @return
+     * @param modelDimTableDTO 维度表实体
+     * @return DefaultCommonResult<PageResultVO<ModelDimTableVO>>
      */
     @PostMapping(value = "/list")
     public DefaultCommonResult<PageResultVO<ModelDimTableVO>> list(@RequestBody ModelDimTableDTO modelDimTableDTO){
@@ -70,8 +70,8 @@ public class ModelDimTableController {
 
     /**
      * 预览SQL
-     * @param tableId
-     * @return
+     * @param tableId 维度表id
+     * @return DefaultCommonResult<String>
      */
     @GetMapping("/preview/sql/{tableId}")
     public DefaultCommonResult<String> previewSql(@PathVariable("tableId") Long tableId){

@@ -150,4 +150,24 @@ public class DataBaseInfoDefaultApi {
                                 .build());
         return mtdApiDefaultCommonResult.getData().getColumns();
     }
+
+    /**
+     * 通过元数据获取表是否存在和表中是否存在数据
+     * @param dbType
+     * @param server
+     * @param dbName
+     * @param tableName
+     * @return
+     */
+    public Boolean getExistData(String dbType, String server, String dbName, String tableName){
+        String type = dbType.split("-")[1];
+        DefaultCommonResult<Boolean> existData = metaDataFeign.getExistData(
+                MtdApiParams.builder()
+                        .typeName(type + "_table")
+                        .server(server)
+                        .dbName(dbName)
+                        .tableName(tableName)
+                        .build());
+        return existData.getData();
+    }
 }

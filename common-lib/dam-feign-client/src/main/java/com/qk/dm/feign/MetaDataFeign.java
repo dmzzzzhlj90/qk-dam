@@ -6,6 +6,7 @@ import com.qk.dam.metedata.entity.MtdApiParams;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,4 +43,12 @@ public interface MetaDataFeign {
    */
   @GetMapping("/mtd/dbs/{typeName}/{attrValue}")
   DefaultCommonResult<MtdApi> getDbs(@PathVariable("typeName") String typeName, @PathVariable("attrValue") String attrValue);
+
+  /**
+   * 查询元数据是否存在该表和表中是否存在数据
+   * @param mtdApiParams
+   * @return
+   */
+  @PostMapping("/entity/exist/data")
+  DefaultCommonResult<Boolean> getExistData(@RequestBody @Validated MtdApiParams mtdApiParams);
 }

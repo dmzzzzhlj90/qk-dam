@@ -54,4 +54,14 @@ public interface MtdApiService {
    * @return
    */
   MtdApi getDbs(String typeName,String attrValue);
+
+  /**
+   * 通过元数据获取表是否存在和表中是否存在数据
+   * @param typeName
+   * @param dbName
+   * @param tableName
+   * @param server
+   * @return
+   */
+  Boolean getExistData(String typeName, String dbName, String tableName, String server);
 }

@@ -92,4 +92,18 @@ public class MtdApiController {
     return DefaultCommonResult.success(ResultCodeEnum.OK,dbs);
   }
 
+  /**
+   * 查询表中是否存在数据
+   * @param mtdApiParams
+   * @return
+   */
+  @PostMapping("/entity/exist/data")
+  public DefaultCommonResult<Boolean> getDataLength(@RequestBody @Validated MtdApiParams mtdApiParams){
+    Boolean exist = mtdApiService.getExistData(mtdApiParams.getTypeName(),
+            mtdApiParams.getDbName(),
+            mtdApiParams.getTableName(),
+            mtdApiParams.getServer());
+    return DefaultCommonResult.success(ResultCodeEnum.OK,exist);
+  }
+
 }

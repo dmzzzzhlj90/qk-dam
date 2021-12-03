@@ -19,6 +19,7 @@ import org.apache.atlas.model.instance.AtlasStruct;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author wangzp
@@ -127,6 +128,23 @@ public class MtdApiServiceImpl implements MtdApiService {
     return mtdApi;
   }
 
+  public Boolean getExistData(String typeName, String dbName, String tableName, String server){
+    List<Map<String, String>> uniqAttributesList = new ArrayList<>();
+    Map<String, String> map = new HashMap<>();
+    map.put("qualifiedName", dbName+ "." + tableName+ "@" + server);
+    uniqAttributesList.add(map);
+    try {
+      AtlasEntity.AtlasEntitiesWithExtInfo result =
+              atlasClientV2.getEntitiesByAttribute(typeName, uniqAttributesList);
+      List<AtlasEntity> entities = result.getEntities();
+      return !CollectionUtils.isEmpty(entities) && !Objects.equals(String.valueOf(entities.get(0).getAttributes().get("dataLength")), "0");
+
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   private MtdApi getDbs(String typeName) {
     MtdApi mtdApi = new MtdApi();
     try {
@@ -179,5 +197,16 @@ public class MtdApiServiceImpl implements MtdApiService {
       e.printStackTrace();
     }
     return mtdApi;
+  }
+
+  public static void main(String[] args) throws AtlasServiceException {
+    List<Map<String, String>> uniqAttributesList = new ArrayList<>();
+    Map<String,String> map = new HashMap<>();
+    map.put("qualifiedName", "qkdam.qk_das_api_basic_inf@172.20.0.24");
+    uniqAttributesList.add(map);
+    AtlasEntity.AtlasEntitiesWithExtInfo result =
+            atlasClientV2.getEntitiesByAttribute("mysql_table", uniqAttributesList);
+
+    System.out.println(GsonUtil.toJsonString(result));
   }
 }

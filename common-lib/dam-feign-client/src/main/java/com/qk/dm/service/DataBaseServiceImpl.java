@@ -52,6 +52,11 @@ public class DataBaseServiceImpl implements DataBaseService {
     return dataBaseInfoDefaultApi.getAllColumn(connectType, getServer(dataSourceName), dataBaseName, tableName);
   }
 
+  @Override
+  public Boolean getExistData(String connectType, String dataSourceName, String dataBaseName, String tableName) {
+    return dataBaseInfoDefaultApi.getExistData(connectType, getServer(dataSourceName), dataBaseName, tableName);
+  }
+
   private String getServer(String dataSourceName) {
     ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getResultDataSourceByConnectName(dataSourceName);
     Map<String, String> map = GsonUtil.fromJsonString(resultDataSourceByConnectName.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {

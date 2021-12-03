@@ -26,8 +26,8 @@ public class ModelSummaryController {
 
     /**
      * 添加汇总表
-     * @param modelSummaryDTO
-     * @return
+     * @param modelSummaryDTO 汇总表实体
+     * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult add(@RequestBody @Validated ModelSummaryDTO modelSummaryDTO){
@@ -36,9 +36,9 @@ public class ModelSummaryController {
     }
     /**
      * 修改汇总表
-     * @param id
-     * @param modelSummaryDTO
-     * @return
+     * @param id 汇总表id
+     * @param modelSummaryDTO 汇总表实体
+     * @return DefaultCommonResult
      */
     @PutMapping("/{id}")
     public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelSummaryDTO modelSummaryDTO){
@@ -48,8 +48,8 @@ public class ModelSummaryController {
 
     /**
      * 汇总表详情
-     * @param id
-     * @return
+     * @param id 汇总表id
+     * @return DefaultCommonResult<ModelSummaryVO>
      */
     @GetMapping("/{id}")
     public DefaultCommonResult<ModelSummaryVO> detail(@PathVariable("id") Long id){
@@ -58,17 +58,17 @@ public class ModelSummaryController {
 
     /**
      * 汇总表列表
-     * @param modelSummaryDTO
-     * @return
+     * @param modelSummaryDTO 汇总表实体
+     * @return DefaultCommonResult<PageResultVO<ModelSummaryVO>>
      */
     @PostMapping(value = "/list")
     public DefaultCommonResult<PageResultVO<ModelSummaryVO>> list(@RequestBody ModelSummaryDTO modelSummaryDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelSummaryService.list(modelSummaryDTO));
     }
     /**
-     * 发布事实表
-     * @param ids
-     * @return
+     * 发布汇总表
+     * @param ids 汇总表id，多个id使用英文逗号分割
+     * @return DefaultCommonResult
      */
     @PutMapping("/publish/{ids}")
     public DefaultCommonResult publish(@PathVariable("ids") String ids) {
@@ -77,8 +77,8 @@ public class ModelSummaryController {
     }
 
     /**
-     * 下线事实表
-     * @param ids
+     * 下线汇总表
+     * @param ids 汇总表id，多个id使用英文逗号分割
      * @return DefaultCommonResult
      */
     @PutMapping("/offline/{ids}")
@@ -88,8 +88,8 @@ public class ModelSummaryController {
     }
     /**
      * 预览SQL
-     * @param tableId
-     * @return
+     * @param tableId 汇总表id
+     * @return DefaultCommonResult<String>
      */
     @GetMapping("/preview/sql/{tableId}")
     public DefaultCommonResult<String> previewSql(@PathVariable("tableId") Long tableId){

@@ -26,8 +26,8 @@ public class ModelFactTableController {
 
     /**
      * 添加事实表
-     * @param modelFactTableDTO
-     * @return
+     * @param modelFactTableDTO 事实表实体
+     * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult add(@RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
@@ -36,9 +36,9 @@ public class ModelFactTableController {
     }
     /**
      * 修改事实表
-     * @param id
-     * @param modelFactTableDTO
-     * @return
+     * @param id 事实表id
+     * @param modelFactTableDTO 事实表实体
+     * @return DefaultCommonResult
      */
     @PutMapping("/{id}")
     public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
@@ -48,8 +48,8 @@ public class ModelFactTableController {
 
     /**
      * 事实表详情
-     * @param id
-     * @return
+     * @param id 事实表id
+     * @return DefaultCommonResult<ModelFactTableVO>
      */
     @GetMapping("/{id}")
     public DefaultCommonResult<ModelFactTableVO> detail(@PathVariable("id") Long id){
@@ -58,8 +58,8 @@ public class ModelFactTableController {
 
     /**
      * 事实表列表
-     * @param modelFactTableDTO
-     * @return
+     * @param modelFactTableDTO 事实表实体
+     * @return DefaultCommonResult<PageResultVO<ModelFactTableVO>>
      */
     @PostMapping(value = "/list")
     public DefaultCommonResult<PageResultVO<ModelFactTableVO>> list(@RequestBody ModelFactTableDTO modelFactTableDTO){
@@ -67,8 +67,8 @@ public class ModelFactTableController {
     }
     /**
      * 发布事实表
-     * @param ids
-     * @return
+     * @param ids 事实表id，多个id使用英文逗号分割
+     * @return DefaultCommonResult
      */
     @PutMapping("/publish/{ids}")
     public DefaultCommonResult publish(@PathVariable("ids") String ids) {
@@ -78,7 +78,7 @@ public class ModelFactTableController {
 
     /**
      * 下线事实表
-     * @param ids
+     * @param ids 事实表id，多个id使用英文逗号分割
      * @return DefaultCommonResult
      */
     @PutMapping("/offline/{ids}")
@@ -88,8 +88,8 @@ public class ModelFactTableController {
     }
     /**
      * 预览SQL
-     * @param tableId
-     * @return
+     * @param tableId 事实表id
+     * @return DefaultCommonResult<String>
      */
     @GetMapping("/preview/sql/{tableId}")
     public DefaultCommonResult<String> previewSql(@PathVariable("tableId") Long tableId){

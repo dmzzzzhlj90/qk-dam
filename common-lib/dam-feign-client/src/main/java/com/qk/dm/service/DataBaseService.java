@@ -48,4 +48,13 @@ public interface DataBaseService {
      * @return
      */
     List getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName);
+    /**
+     * 通过元数据获取表是否存在和表中是否存在数据
+     * @param connectType
+     * @param dataSourceName
+     * @param dataBaseName
+     * @param tableName
+     * @return
+     */
+    Boolean getExistData(String connectType, String dataSourceName, String dataBaseName, String tableName);
 }
