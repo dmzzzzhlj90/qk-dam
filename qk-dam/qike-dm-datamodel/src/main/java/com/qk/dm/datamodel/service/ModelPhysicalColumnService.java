@@ -1,6 +1,5 @@
 package com.qk.dm.datamodel.service;
 
-import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalColumnDTO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalColumnVO;
 
@@ -15,4 +14,6 @@ public interface ModelPhysicalColumnService {
     void delete(String ids);
 
     List<ModelPhysicalColumnVO> list(Long tableId);
+
+    List<String> queryColumn(String tableName);
 }

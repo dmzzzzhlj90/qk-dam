@@ -9,9 +9,7 @@ import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
-import com.qk.dm.datamodel.service.DatasourceService;
-import com.qk.dm.datamodel.service.MetaDataService;
-import com.qk.dm.datamodel.service.PhysicalService;
+import com.qk.dm.datamodel.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,15 +30,17 @@ public class ModelPhysicalController {
   @Autowired
   PhysicalService physicalService;
   @Autowired
-  DatasourceService datasourceService;
+  ModelPhysicalTableService modelPhysicalTableService;
   @Autowired
-  MetaDataService metaDataService;
+  ModelPhysicalColumnService modelPhysicalColumnService;
 
-  public ModelPhysicalController(PhysicalService physicalService,
-      DatasourceService datasourceService,MetaDataService metaDataService) {
+  public ModelPhysicalController(
+      PhysicalService physicalService,
+           ModelPhysicalTableService modelPhysicalTableService,
+      ModelPhysicalColumnService modelPhysicalColumnService) {
     this.physicalService = physicalService;
-    this.datasourceService = datasourceService;
-    this.metaDataService=metaDataService;
+    this.modelPhysicalTableService=modelPhysicalTableService;
+    this.modelPhysicalColumnService=modelPhysicalColumnService;
   }
 
   /**
@@ -169,6 +169,24 @@ public class ModelPhysicalController {
     return DefaultCommonResult.success();
   }
 
+  /**
+   * 新建关系获取表名称（上线表的表名称）
+   * @return
+   */
+  @GetMapping("/tables")
+  public DefaultCommonResult<List<String>> queryTables(){
+    return  DefaultCommonResult.success(ResultCodeEnum.OK,modelPhysicalTableService.queryTables());
+  }
+
+  /**
+   * 根据表名称查询表字段名称
+   * @param tableName
+   * @return
+   */
+  @GetMapping("/column")
+  public DefaultCommonResult<List<String>> queryColumn(@NotNull @RequestParam("tableName") String tableName){
+    return DefaultCommonResult.success(ResultCodeEnum.OK,modelPhysicalColumnService.queryColumn(tableName));
+  }
   //============================数据连接调用=========================================>
 
   /**

@@ -21,7 +21,6 @@ import com.qk.dm.datamodel.repositories.ModelPhysicalColumnRepository;
 import com.qk.dm.datamodel.repositories.ModelPhysicalRelationRepository;
 import com.qk.dm.datamodel.repositories.ModelPhysicalTableRepository;
 import com.qk.dm.datamodel.repositories.ModelSqlRepository;
-import com.qk.dm.datamodel.service.MetaDataService;
 import com.qk.dm.datamodel.service.ModelSqlService;
 import com.qk.dm.datamodel.service.PhysicalService;
 import com.qk.dm.datamodel.util.CheckUtil;
@@ -53,8 +52,7 @@ public class PhysicalServiceImpl implements PhysicalService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
   private SqlBuilderFactory sqlBuilderFactory;
-  private final MetaDataService metaDataService;
-  private final DataBaseService dataBaseService;
+    private final DataBaseService dataBaseService;
   @PostConstruct
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
@@ -65,14 +63,13 @@ public class PhysicalServiceImpl implements PhysicalService {
       ModelPhysicalColumnRepository modelPhysicalColumnRepository,
       ModelPhysicalRelationRepository modelPhysicalRelationRepository,
       ModelSqlRepository modelSqlRepository, EntityManager entityManager,
-      MetaDataService metaDataService, DataBaseService dataBaseService) {
+      DataBaseService dataBaseService) {
     this.modelSqlService = modelSqlService;
     this.modelPhysicalTableRepository = modelPhysicalTableRepository;
     this.modelPhysicalColumnRepository = modelPhysicalColumnRepository;
     this.modelPhysicalRelationRepository = modelPhysicalRelationRepository;
     this.modelSqlRepository = modelSqlRepository;
     this.entityManager = entityManager;
-    this.metaDataService = metaDataService;
     this.dataBaseService = dataBaseService;
   }
 
