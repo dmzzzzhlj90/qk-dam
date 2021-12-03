@@ -4,6 +4,8 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 
+import java.util.List;
+
 public interface ModelPhysicalTableService {
 
   void insert(ModelPhysicalTableDTO modelPhysicalTableDTO);
@@ -16,6 +18,5 @@ public interface ModelPhysicalTableService {
 
   PageResultVO<ModelPhysicalTableVO> listPage(ModelPhysicalTableDTO modelPhysicalTableDTO);
 
-
-
+  List<String>queryTables();
 }

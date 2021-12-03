@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.model.constant.ModelStatus;
 import com.qk.dm.datamodel.entity.ModelPhysicalTable;
 import com.qk.dm.datamodel.entity.QModelPhysicalTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelPhysicalTableMapper;
@@ -10,6 +11,7 @@ import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import com.qk.dm.datamodel.repositories.ModelPhysicalTableRepository;
 import com.qk.dm.datamodel.service.ModelPhysicalTableService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -96,6 +98,25 @@ public class ModelPhysicalTableServiceImpl implements ModelPhysicalTableService 
                10,
                 voList);
     }
+
+    /**
+     * 关系建模获取表名称
+     * @return
+     */
+    @Override
+    public List<String> queryTables() {
+        List<String> list = new ArrayList<>();
+        Predicate predicate = qModelPhysicalTable.status.eq(ModelStatus.PUBLISH);
+        Iterable<ModelPhysicalTable> modelTalbe = modelPhysicalTableRepository.findAll(predicate);
+       if (modelTalbe==null){
+           throw new BizException("获取表信息失败");
+       }
+       for (ModelPhysicalTable modelPhysicalTable : modelTalbe){
+           list.add(modelPhysicalTable.getTableName());
+       }
+       return list;
+    }
+
     private Map<String, Object> queryByParams(ModelPhysicalTableDTO modelPhysicalTableDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, modelPhysicalTableDTO);

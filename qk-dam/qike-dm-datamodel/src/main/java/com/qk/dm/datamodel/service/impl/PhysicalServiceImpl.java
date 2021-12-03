@@ -5,9 +5,9 @@ import com.alibaba.nacos.common.utils.MapUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dam.metedata.entity.MtdTableApiParams;
-import com.qk.dam.metedata.entity.MtdTables;
+import com.qk.dam.metedata.entity.MtdAttributes;
 import com.qk.dam.model.constant.ModelStatus;
+import com.qk.dam.model.constant.ModelType;
 import com.qk.dam.sqlbuilder.SqlBuilderFactory;
 import com.qk.dam.sqlbuilder.model.Column;
 import com.qk.dam.sqlbuilder.model.Table;
@@ -21,9 +21,10 @@ import com.qk.dm.datamodel.repositories.ModelPhysicalColumnRepository;
 import com.qk.dm.datamodel.repositories.ModelPhysicalRelationRepository;
 import com.qk.dm.datamodel.repositories.ModelPhysicalTableRepository;
 import com.qk.dm.datamodel.repositories.ModelSqlRepository;
-import com.qk.dm.datamodel.service.MetaDataService;
+import com.qk.dm.datamodel.service.ModelSqlService;
 import com.qk.dm.datamodel.service.PhysicalService;
 import com.qk.dm.datamodel.util.CheckUtil;
+import com.qk.dm.service.DataBaseService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -43,6 +44,7 @@ import java.util.stream.Collectors;
 public class PhysicalServiceImpl implements PhysicalService {
   private final QModelPhysicalTable qModelPhysicalTable = QModelPhysicalTable.modelPhysicalTable;
   private final QModelPhysicalColumn qModelPhysicalColumn = QModelPhysicalColumn.modelPhysicalColumn;
+  private final ModelSqlService modelSqlService;
   private final ModelPhysicalTableRepository modelPhysicalTableRepository;
   private final ModelPhysicalColumnRepository modelPhysicalColumnRepository;
   private final ModelPhysicalRelationRepository modelPhysicalRelationRepository;
@@ -50,24 +52,25 @@ public class PhysicalServiceImpl implements PhysicalService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
   private SqlBuilderFactory sqlBuilderFactory;
-  private final MetaDataService metaDataService;
+    private final DataBaseService dataBaseService;
   @PostConstruct
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
 
-  public PhysicalServiceImpl(
+  public PhysicalServiceImpl(ModelSqlService modelSqlService,
       ModelPhysicalTableRepository modelPhysicalTableRepository,
       ModelPhysicalColumnRepository modelPhysicalColumnRepository,
       ModelPhysicalRelationRepository modelPhysicalRelationRepository,
       ModelSqlRepository modelSqlRepository, EntityManager entityManager,
-      MetaDataService metaDataService) {
+      DataBaseService dataBaseService) {
+    this.modelSqlService = modelSqlService;
     this.modelPhysicalTableRepository = modelPhysicalTableRepository;
     this.modelPhysicalColumnRepository = modelPhysicalColumnRepository;
     this.modelPhysicalRelationRepository = modelPhysicalRelationRepository;
     this.modelSqlRepository = modelSqlRepository;
     this.entityManager = entityManager;
-    this.metaDataService = metaDataService;
+    this.dataBaseService = dataBaseService;
   }
 
   /**
@@ -103,7 +106,7 @@ public class PhysicalServiceImpl implements PhysicalService {
       ModelPhysicalTable modelPhysicalTable) {
     //状态判断是否为发布操作,判断元数据中是否存在该表数据，如果不是则不用管
     if (modelPhysicalTable.getStatus()==ModelStatus.PUBLISH){
-      List<MtdTables> tables = getTables(modelPhysicalTable.getTableName(),modelPhysicalTable.getDatabaseName());
+      List<String> tables = getTables(modelPhysicalTable.getDataConnection(),modelPhysicalTable.getDatabaseName(),modelPhysicalTable.getTableName());
       if (CollectionUtils.isEmpty(tables)){
         String sql = dataModelPhysical(modelPhysicalDTO, modelPhysicalTable);
         //todo(需要完善)
@@ -159,7 +162,7 @@ public class PhysicalServiceImpl implements PhysicalService {
       //赋值基础数据id
       modelSql.setTableId(id);
       //1,逻辑表2物理表 3 维度表 4 汇总表
-      modelSql.setType(1);
+      modelSql.setType(ModelType.PHYSICAL_TABLE);
       //建表sql
       modelSql.setSqlSentence(Sql);
       modelSqlRepository.save(modelSql);
@@ -202,11 +205,8 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @return
    */
   private Boolean transFormation(String itsPrimaryKey) {
-    Boolean booleans=false;
-    if (StringUtils.isNotBlank(itsPrimaryKey) && itsPrimaryKey.equals("1")){
-      booleans=true;
-    }
-    return booleans;
+    return StringUtils.isNotBlank(itsPrimaryKey) && itsPrimaryKey.equals("1");
+
   }
 
   /**
@@ -218,38 +218,32 @@ public class PhysicalServiceImpl implements PhysicalService {
     Boolean check = false;
     //判断新加字段是否存在重复
     List<ModelPhysicalColumnDTO> modelColumnDtoList = modelPhysicalDTO.getModelColumnDtoList();
-    if (CollectionUtils.isNotEmpty(modelColumnDtoList)) {
-      //校验新建模型字段是否重复
-      List<String> columnList =modelColumnDtoList.stream().
-          collect(Collectors.groupingBy(modelPhysicalColumnDTO->modelPhysicalColumnDTO.getColumnName(),Collectors.counting()))
-          .entrySet().stream()
-          .filter(entry->entry.getValue()>1)
-          .map(entry->entry.getKey())
-          .collect(Collectors.toList());
-      if (columnList.size()<=0) {
-        //校验关系是否重复
-        List<ModelPhysicalRelationDTO> modelRelationDtoList = modelPhysicalDTO.getModelRelationDtoList();
-        if (CollectionUtils.isNotEmpty(modelRelationDtoList)) {
-          List<String> relationList =modelColumnDtoList.stream().
-              collect(Collectors.groupingBy(modelPhysicalRelationDTO->modelPhysicalRelationDTO.getColumnName(),Collectors.counting()))
-              .entrySet().stream()
-              .filter(entry->entry.getValue()>1)
-              .map(entry->entry.getKey())
-              .collect(Collectors.toList());
-          if (relationList.size()<=0) {
-            check=true;
-          } else {
-            throw new BizException("建模关系不可重复");
-          }
-        } else {
-          check=true;
-        }
-      } else {
-        throw new BizException("建模表字段不可重复");
-      }
-    } else {
+    if (CollectionUtils.isEmpty(modelColumnDtoList)){
       throw new BizException("建模表字段为空，请添加字段");
     }
+    //校验新建模型字段是否重复
+    List<String> columnList =modelColumnDtoList.stream().
+        collect(Collectors.groupingBy(ModelPhysicalColumnDTO::getColumnName,Collectors.counting()))
+        .entrySet().stream()
+        .filter(entry->entry.getValue()>1)
+        .map(Map.Entry::getKey)
+        .collect(Collectors.toList());
+    if (columnList.size()>0){
+      throw new BizException("建模表字段不可重复");
+    }
+    List<ModelPhysicalRelationDTO> modelRelationDtoList = modelPhysicalDTO.getModelRelationDtoList();
+    if (CollectionUtils.isNotEmpty(modelRelationDtoList)) {
+      List<String> relationList =modelRelationDtoList.stream().
+          collect(Collectors.groupingBy(ModelPhysicalRelationDTO::getColumnName,Collectors.counting()))
+          .entrySet().stream()
+          .filter(entry->entry.getValue()>1)
+          .map(Map.Entry::getKey)
+          .collect(Collectors.toList());
+      if (relationList.size()>0) {
+        throw new BizException("建模关系不可重复");
+      }
+    }
+    check=true;
     return check;
   }
 
@@ -366,8 +360,6 @@ public class PhysicalServiceImpl implements PhysicalService {
       List<ModelPhysicalTable> list = (List<ModelPhysicalTable>) map.get("list");
       if (list.size()>0){
         censusDataVO = getCensusDataVO(list);
-      }else{
-        return censusDataVO;
       }
     }
     return censusDataVO;
@@ -379,26 +371,25 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   @Override
   public List<Map<String,String>> getDataTypes() {
-    List<Map<String, String>> list =CheckUtil.getDataTypes();
-    return list;
+    return CheckUtil.getDataTypes();
   }
 
   /**
    * 预览sql
    * @param tableId
+   * @param type
    * @return
    */
   @Override
-  public String getSql(Long tableId) {
+  public String getSql(Long tableId,int type) {
     String sql = null;
-    ModelSql modelSql = modelSqlRepository.findByTableId(tableId);
-    if (modelSql != null){
-      sql=modelSql.getSqlSentence();
-    }else {
-      throw  new BizException("当前预览的Sql不存在");
+    ModelSqlVO detail = modelSqlService.detail(type, tableId);
+    if (detail!=null){
+      sql=detail.getSqlSentence();
     }
     return sql;
   }
+
 
   /**
    * 手动同步
@@ -410,8 +401,10 @@ public class PhysicalServiceImpl implements PhysicalService {
         //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
         ModelPhysicalTableVO modelPhysical = getModelPhysical(id);
         //2如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
-        if (modelPhysical!=null){
-          List<MtdTables> tables = getTables(modelPhysical.getTableName(),modelPhysical.getDatabaseName());
+        if (modelPhysical==null){
+          throw new BizException("当前需要同步的表id为"+id+"不存在");
+        }
+          List<String> tables = getTables(modelPhysical.getDataConnection(),modelPhysical.getDatabaseName(),modelPhysical.getTableName());
           if (CollectionUtils.isNotEmpty(tables)){
             throw  new BizException("当前表名为"+modelPhysical.getTableName()+"已经创建");
           }else{
@@ -419,9 +412,6 @@ public class PhysicalServiceImpl implements PhysicalService {
             //获取建表sql
             //调用任务创建表
           }
-        }else{
-          throw new BizException("当前需要同步的表id为"+id+"不存在");
-        }
       });
   }
 
@@ -438,8 +428,10 @@ public class PhysicalServiceImpl implements PhysicalService {
           //2校验基础信息是否完善
           Boolean check = checkPhysicalTable(modelPhysical);
           //3如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
-          if (check){
-            List<MtdTables> tables = getTables(modelPhysical.getTableName(),modelPhysical.getDatabaseName());
+          if (!check){
+            throw new BizException("id为"+id+"的信息不完善请完善后发布");
+          }
+            List<String> tables = getTables(modelPhysical.getDataConnection(),modelPhysical.getDatabaseName(),modelPhysical.getTableName());
             if (CollectionUtils.isNotEmpty(tables)){
               //todo(需要完善)
              //判断存在的表是否存在且是否存在数据，如果存在且没有数据就发布删除、新建任务，如果不存在就发布新建任务
@@ -449,9 +441,6 @@ public class PhysicalServiceImpl implements PhysicalService {
               ModelSql sql = modelSqlRepository.findByTableId(id);
               //调用任务创建表
             }
-          }else{
-            throw new BizException("id为"+id+"的信息不完善请完善后发布");
-          }
         }
     );
   }
@@ -532,19 +521,21 @@ public class PhysicalServiceImpl implements PhysicalService {
       ModelReverseBaseDTO modelReverseBaseDTO) {
     //根据表名称查和数据库询元数据字段信息
     ModelPhysicalDTO modelPhysicalDTO = new ModelPhysicalDTO();
-    List<MtdTables> tables = getTables(tableName,modelReverseBaseDTO.getDatabaseName());
-    List<ModelPhysicalColumnDTO> modelPhysicalColumnDTOList = new ArrayList<>();
-    if(CollectionUtils.isNotEmpty(tables)){
-      MtdTables mtdTables = tables.get(0);
-      List<Map<String,Object>> columns = metaDataService.getColumns(mtdTables.getGuid());
-      if (CollectionUtils.isNotEmpty(columns)){
-        modelPhysicalColumnDTOList= columns.stream().map(map -> {
-          ModelPhysicalColumnDTO modelPhysicalColumnDTO = new ModelPhysicalColumnDTO();
-          //todo 待完善
-          return modelPhysicalColumnDTO;
-        }).collect(Collectors.toList());
-      }
+    //获取表字段信息
+    List<MtdAttributes> columnList = dataBaseService.getAllColumn(modelReverseBaseDTO.getDataConnection(), modelReverseBaseDTO.getDataConnectionName(), modelReverseBaseDTO.getDatabaseName(), tableName);
+    if (CollectionUtils.isEmpty(columnList)){
+      throw new BizException("表"+tableName+"字段为空");
     }
+    List<ModelPhysicalColumnDTO> modelPhysicalColumnDTOList = columnList.stream().map(column -> {
+      ModelPhysicalColumnDTO modelPhysicalColumnDTO = new ModelPhysicalColumnDTO();
+      //赋值字段名称
+      modelPhysicalColumnDTO.setColumnName(column.getName());
+      //赋值字段类型
+      modelPhysicalColumnDTO.setColumnType(column.getType());
+      //赋值字段描述
+      modelPhysicalColumnDTO.setDescription(column.getComment());
+      return modelPhysicalColumnDTO;
+    }).collect(Collectors.toList());
     modelPhysicalDTO.setModelColumnDtoList(modelPhysicalColumnDTOList);
     return modelPhysicalDTO;
   }
@@ -571,19 +562,23 @@ public class PhysicalServiceImpl implements PhysicalService {
   private ModelPhysicalDTO getUpdateModelPhysicalDTO(String tableName,ModelPhysicalTable updateModelPhysicalTable, ModelReverseBaseDTO modelReverseBaseDTO) {
     //根据表名称查和数据库询元数据字段信息
     ModelPhysicalDTO modelPhysicalDTO = new ModelPhysicalDTO();
-    List<MtdTables> tables = getTables(tableName,modelReverseBaseDTO.getDatabaseName());
-    List<ModelPhysicalColumnDTO> modelPhysicalColumnDTOList = new ArrayList<>();
-    if(CollectionUtils.isNotEmpty(tables)){
-      MtdTables mtdTables = tables.get(0);
-      List<Map<String,Object>> columns = metaDataService.getColumns(mtdTables.getGuid());
-      if (CollectionUtils.isNotEmpty(columns)){
-          modelPhysicalColumnDTOList= columns.stream().map(map -> {
-          ModelPhysicalColumnDTO modelPhysicalColumnDTO = new ModelPhysicalColumnDTO();
-          //todo 待完善
-          return modelPhysicalColumnDTO;
-        }).collect(Collectors.toList());
-      }
+    //获取表字段信息
+    List<MtdAttributes> columnList = dataBaseService.getAllColumn(modelReverseBaseDTO.getDataConnection(), modelReverseBaseDTO.getDataConnectionName(), modelReverseBaseDTO.getDatabaseName(), tableName);
+    if (CollectionUtils.isEmpty(columnList)){
+      throw new BizException("表"+tableName+"字段为空");
     }
+    List<ModelPhysicalColumnDTO> modelPhysicalColumnDTOList = columnList.stream().map(column -> {
+      ModelPhysicalColumnDTO modelPhysicalColumnDTO = new ModelPhysicalColumnDTO();
+      //赋值物理表id
+      modelPhysicalColumnDTO.setTableId(updateModelPhysicalTable.getId());
+      //赋值字段名称
+      modelPhysicalColumnDTO.setColumnName(column.getName());
+      //赋值字段类型
+      modelPhysicalColumnDTO.setColumnType(column.getType());
+      //赋值字段描述
+      modelPhysicalColumnDTO.setDescription(column.getComment());
+      return modelPhysicalColumnDTO;
+    }).collect(Collectors.toList());
     modelPhysicalDTO.setModelColumnDtoList(modelPhysicalColumnDTOList);
     return modelPhysicalDTO;
   }
@@ -617,9 +612,9 @@ public class PhysicalServiceImpl implements PhysicalService {
     //数据库名称
     modelPhysicalTable.setDatabaseName(modelReverseBaseDTO.getDatabaseName());
     //0草稿 1已发布2 已下线
-    modelPhysicalTable.setStatus(modelReverseBaseDTO.getStatus());
+    modelPhysicalTable.setStatus(ModelStatus.DRAFT);
     //数据库和系统定义的sql是否同步（0表示已经同步，1表示未同步）
-    modelPhysicalTable.setSyncStatus(modelReverseBaseDTO.getSyncStatus());
+    modelPhysicalTable.setSyncStatus(ModelStatus.SYNCHRONIZATION);
   }
 
   private void checkReverseBase(BooleanBuilder booleanBuilder, String tableName) {
@@ -630,17 +625,15 @@ public class PhysicalServiceImpl implements PhysicalService {
 
   /**
    * 根据数据库名称和表明成获取元数据信息
-   * @param tableName
-   * @param databaseName
+   * @param dataConnection 数据源连接类型
+   * @param databaseName 数据库名称
+   * @param tableName 表名称
    * @return
    */
-  private List<MtdTables> getTables(String tableName, String databaseName) {
-    List<MtdTables> list = new ArrayList<>();
-    if (StringUtils.isNotBlank(tableName) && StringUtils.isNotBlank(databaseName)){
-      MtdTableApiParams mtdTableApiParams = new MtdTableApiParams();
-      mtdTableApiParams.setTypeName(databaseName);
-      mtdTableApiParams.setClassification(tableName);
-      list = metaDataService.getTables(mtdTableApiParams);
+  private List<String> getTables(String dataConnection,String databaseName,String tableName) {
+    List<String> list = new ArrayList<>();
+    if (StringUtils.isNotBlank(tableName) && StringUtils.isNotBlank(databaseName) && StringUtils.isNotBlank(dataConnection)){
+      list = dataBaseService.getAllTable(dataConnection, databaseName, tableName);
     }
     return list;
   }
@@ -872,14 +865,13 @@ public class PhysicalServiceImpl implements PhysicalService {
   private void updateModelPhysical(ModelPhysicalDTO modelPhysicalDTO,ModelPhysicalTable modelPhysicalTable) {
     //判断修改之后点击的是保存还是发布状态
       if (modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)){
-        List<MtdTables> tables = getTables(modelPhysicalTable.getTableName(),modelPhysicalTable.getDatabaseName());
-        if (CollectionUtils.isNotEmpty(tables)){
-          String sql = dataUpdateModelPhysical(modelPhysicalDTO, modelPhysicalTable);
-          //todo(需要完善)
-          //如果之前存在表并且表中没有数据发布删除任务、创建任务，如果存在表且存在数据发布报错信息
-        }else{
+        List<String> tables = getTables(modelPhysicalTable.getDataConnection(),modelPhysicalTable.getDatabaseName(),modelPhysicalTable.getTableName());
+        if (CollectionUtils.isEmpty(tables)){
           throw new BizException("修改发布失败，该表不存在");
         }
+        String sql = dataUpdateModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+        //todo(需要完善)
+        //如果之前存在表并且表中没有数据发布删除任务、创建任务，如果存在表且存在数据发布报错信息
       }else{
         dataUpdateModelPhysical(modelPhysicalDTO,modelPhysicalTable);
       }

@@ -32,7 +32,7 @@ public interface PhysicalService {
 
   List<Map<String, String>> getDataTypes();
 
-  String getSql(Long tableId);
+  String getSql(Long tableId,int type);
 
   void synchronization(List<Long> physicalIds);
 
