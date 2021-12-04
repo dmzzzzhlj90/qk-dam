@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 数据质量_规则调度_规则信息VO
@@ -67,7 +68,7 @@ public class DqcSchedulerRulesVO {
     /**
      * 字段名称
      */
-    private String fieldName;
+    private List<String> fieldList;
 
     /**
      * 扫描范围 "FULL_TABLE":"全表", "CONDITION":"条件";
@@ -78,6 +79,11 @@ public class DqcSchedulerRulesVO {
      * 扫描条件SQL
      */
     private String scanSql;
+
+    /**
+     * 执行sql
+     */
+    private String executeSql;
 
     /**
      * 告警表达式

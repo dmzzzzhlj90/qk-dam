@@ -44,6 +44,11 @@ public class SchedulerRuleConstantsVO {
     private Map<String, String> ruleTypeEnum;
 
     /**
+     * 执行SQL扫描方式
+     */
+    private Map<String, String> ScanTypeEnum;
+
+    /**
      * 调度方式
      */
     private Map<String, String> schedulerTypeEnum;

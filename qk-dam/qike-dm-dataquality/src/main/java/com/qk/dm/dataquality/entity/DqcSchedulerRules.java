@@ -66,8 +66,8 @@ public class DqcSchedulerRules implements Serializable {
     /**
      * 字段名称
      */
-    @Column(name = "field_name")
-    private String fieldName;
+    @Column(name = "fields")
+    private String fields;
 
     /**
      * 扫描范围 "FULL_TABLE":"全表", "CONDITION":"条件";
@@ -80,6 +80,12 @@ public class DqcSchedulerRules implements Serializable {
      */
     @Column(name = "scan_sql")
     private String scanSql;
+
+    /**
+     * 执行sql
+     */
+    @Column(name = "execute_sql")
+    private String executeSql;
 
     /**
      * 告警表达式
