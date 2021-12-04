@@ -59,7 +59,7 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
         List<ModelDimTableColumnDTO> modelDimTableDTOColumnList = modelDimTableDTO.getColumnList();
         if(!modelDimTableDTOColumnList.isEmpty()){
             modelDimTableDTOColumnList.forEach(e->e.setDimTableId(dimTable.getId()));
-            modelDimTableColumnService.insert(modelDimTableDTO.getColumnList());
+            modelDimTableColumnService.insert(modelDimTableDTOColumnList);
             //组装建表SQL,添加到数据库中
             ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(dimTable.getDimName(), modelDimTableDTOColumnList))
                     .tableId(dimTable.getId()).type(ModelType.DIM_TABLE).build();

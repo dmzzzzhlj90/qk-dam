@@ -68,7 +68,7 @@ public class ModelDim implements Serializable {
      * 连接类型
      */
     @Column(name = "connection_type", nullable = false)
-    private Integer connectionType;
+    private String connectionType;
 
     /**
      * 数据连接

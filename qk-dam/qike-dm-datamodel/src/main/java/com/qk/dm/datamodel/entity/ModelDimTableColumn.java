@@ -1,6 +1,7 @@
 package com.qk.dm.datamodel.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "qk_model_dim_table_column")
+@Where(clause = "del_flag = 0 ")
 public class ModelDimTableColumn implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -88,6 +90,6 @@ public class ModelDimTableColumn implements Serializable {
      * 0未删除 1已删除
      */
     @Column(name = "del_flag", nullable = false)
-    private Integer delFlag;
+    private Integer delFlag =0;
 
 }

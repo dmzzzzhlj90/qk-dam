@@ -68,7 +68,7 @@ public class ModelDimTable implements Serializable {
      * 连接类型
      */
     @Column(name = "connection_type", nullable = false)
-    private Integer connectionType;
+    private String connectionType;
 
     /**
      * 数据连接
@@ -120,6 +120,6 @@ public class ModelDimTable implements Serializable {
      * 0表示已经同步，1表示未同步
      */
     @Column(name = "synchronization_status", nullable = false)
-    private Integer synchronizationStatus;
+    private Integer synchronizationStatus =1;
 
 }

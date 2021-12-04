@@ -19,6 +19,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
@@ -57,6 +58,7 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insert(ModelDimDTO modelDimDTO) {
         ModelDim modelDim = ModelDimMapper.INSTANCE.of(modelDimDTO);
         List<ModelDimColumnDTO> modelDimColumnList = modelDimDTO.getModelDimColumnList();

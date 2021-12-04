@@ -58,7 +58,7 @@ public class ModelDimTableDTO implements Serializable {
     /**
      * 连接类型
      */
-    private Integer connectionType;
+    private String connectionType;
 
     /**
      * 数据连接
