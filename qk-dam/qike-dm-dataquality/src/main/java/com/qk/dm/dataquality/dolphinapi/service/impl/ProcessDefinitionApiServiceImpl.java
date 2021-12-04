@@ -1,7 +1,6 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
 import com.google.gson.reflect.TypeToken;
-import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
@@ -253,11 +252,11 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             Result result =
                     defaultApi.startProcessInstanceUsingPOST(
                             //失败策略
-                            FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getValue(),
+                            FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getCode(),
                             //流程定义id
                             processDefinitionId,
                             //流程实例优先级
-                            ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getValue(),
+                            ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getCode(),
                             //项目名称
                             dolphinSchedulerInfoConfig.getProjectName(),
                             // 定时时间
@@ -265,19 +264,19 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                             // 发送组ID
                             dolphinRunInfoConfig.getWarningGroupId(),
                             //发送策略
-                            WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getValue(),
+                            WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getCode(),
                             //指令类型
-                            ExecTypeEnum.fromValue(dolphinRunInfoConfig.getExecType()).getValue(),
+                            ExecTypeEnum.fromValue(dolphinRunInfoConfig.getExecType()).getCode(),
                             // 收件人
                             dolphinRunInfoConfig.getReceivers(),
                             // 收件人(抄送)
                             dolphinRunInfoConfig.getReceiversCc(),
                             //运行模式
-                            RunModeEnum.fromValue(dolphinRunInfoConfig.getRunMode()).getValue(),
+                            RunModeEnum.fromValue(dolphinRunInfoConfig.getRunMode()).getCode(),
                             // 开始节点列表(节点name)
                             dolphinRunInfoConfig.getStartNodeList(),
                             //任务依赖类型
-                            TaskDependTypeEnum.fromValue(dolphinRunInfoConfig.getTaskDependType()).getValue(),
+                            TaskDependTypeEnum.fromValue(dolphinRunInfoConfig.getTaskDependType()).getCode(),
                             // 超时时间
                             dolphinRunInfoConfig.getTimeout(),
                             // WORKER_GROUP

@@ -52,9 +52,9 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 项目名称
               dolphinSchedulerInfoConfig.getProjectName(),
               // 失败策略
-              FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getValue(),
+              FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getCode(),
               // 流程实例优先级
-              ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getValue(),
+              ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getCode(),
               // 收件人
               dolphinRunInfoConfig.getReceivers(),
               // 收件人(抄送)
@@ -64,7 +64,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 发送组ID
               dolphinRunInfoConfig.getWarningGroupId(),
               // 发送策略
-              WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getValue(),
+              WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getCode(),
               // WORKER_GROUP
               dolphinSchedulerInfoConfig.getTaskWorkerGroup());
       DqcConstant.verification(result, "创建定时失败{},");
@@ -84,9 +84,9 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 项目名称
               dolphinSchedulerInfoConfig.getProjectName(),
               // 失败策略
-              FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getValue(),
+              FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getCode(),
               // 流程实例优先级
-              ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getValue(),
+              ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getCode(),
               // 收件人
               dolphinRunInfoConfig.getReceivers(),
               // 收件人(抄送)
@@ -96,7 +96,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
               // 发送组ID
               dolphinRunInfoConfig.getWarningGroupId(),
               // 发送策略
-              WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getValue(),
+              WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getCode(),
               // WORKER_GROUP
               dolphinSchedulerInfoConfig.getTaskWorkerGroup());
       DqcConstant.verification(result, "修改定时失败{},");

@@ -6,20 +6,20 @@ package com.qk.dm.dataquality.constant.schedule;
  * @author shenpengjie
  */
 public enum WarningTypeEnum {
-  NONE(1,"NONE"),
-  SUCCESS(2,"SUCCESS"),
-  FAILURE(3,"FAILURE"),
-  ALL(4,"ALL");
+  NONE("NONE","都不发"),
+  SUCCESS("SUCCESS","成功发"),
+  FAILURE("FAILURE","失败发"),
+  ALL("ALL","成功或失败都发");
 
-  Integer code;
-  String value;
+  String code;
+  String name;
 
-  WarningTypeEnum(Integer code, String value) {
+  WarningTypeEnum(String code, String name) {
     this.code = code;
-    this.value = value;
+    this.name = name;
   }
 
-  public static WarningTypeEnum fromValue(Integer code) {
+  public static WarningTypeEnum fromValue(String code) {
     for (WarningTypeEnum b : WarningTypeEnum.values()) {
       if (b.code.equals(code)) {
         return b;
@@ -28,7 +28,7 @@ public enum WarningTypeEnum {
     throw new IllegalArgumentException("Unexpected id '" + code + "'");
   }
 
-  public String getValue() {
-    return value;
+  public String getCode() {
+    return code;
   }
 }
