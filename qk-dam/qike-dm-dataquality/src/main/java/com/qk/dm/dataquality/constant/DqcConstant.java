@@ -119,8 +119,13 @@ public class DqcConstant {
 
     public static List<String> changeTypeToList(String fields) {
         if (!ObjectUtils.isEmpty(fields)) {
-            return GsonUtil.fromJsonString(GsonUtil.toJsonString(fields), new TypeToken<List<String>>() {}.getType());
+            return GsonUtil.fromJsonString(fields, new TypeToken<List<String>>() {}.getType());
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        String a = "[\"MYSQL\",\"HIVE\"]";
+        changeTypeToList(a);
     }
 }

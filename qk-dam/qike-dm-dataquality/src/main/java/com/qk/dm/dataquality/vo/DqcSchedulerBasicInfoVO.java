@@ -75,7 +75,7 @@ public class DqcSchedulerBasicInfoVO {
      * 主题，多个以逗号分隔
      */
     @NotBlank(message = "主题不能为空！")
-    private List<String> notifyThemeId;
+    private List<String> notifyThemeIdList;
 
     /**
      * 调度状态 "OFFLINE":"下线","ONLINE":"上线"

@@ -26,7 +26,7 @@ public class DqcRuleTemplateInfoVO{
   private String dimensionType;
 
   /** 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔 */
-  private List<String> engineType;
+  private List<String> engineTypeList;
 
   /** 描述 */
   private String description;

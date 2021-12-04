@@ -46,7 +46,7 @@ public class DqcSchedulerRulesVO {
     private String ruleType;
 
     /**
-     * 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔
+     * 适用引擎 MYSQL HIVE ORACLE
      */
     private String engineType;
 

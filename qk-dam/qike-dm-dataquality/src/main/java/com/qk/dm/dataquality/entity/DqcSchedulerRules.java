@@ -40,7 +40,7 @@ public class DqcSchedulerRules implements Serializable {
     private String ruleType;
 
     /**
-     * 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔
+     * 适用引擎 MYSQL HIVE ORACLE
      */
     @Column(name = "engine_type", nullable = false)
     private String engineType;

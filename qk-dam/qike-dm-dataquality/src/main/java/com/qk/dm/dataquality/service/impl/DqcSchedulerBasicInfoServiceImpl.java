@@ -43,7 +43,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         //todo jobName不能重复
         DqcSchedulerBasicInfo basicInfo = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO);
         //todo 转换类型
-        basicInfo.setNotifyThemeId(GsonUtil.toJsonString(dqcSchedulerBasicInfoVO.getNotifyThemeId()));
+        basicInfo.setNotifyThemeId(GsonUtil.toJsonString(dqcSchedulerBasicInfoVO.getNotifyThemeIdList()));
 
         // todo 创建人
         basicInfo.setCreateUserid("admin");
@@ -61,7 +61,7 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         checkJobName(dqcSchedulerBasicInfoVO, basicInfo);
         DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO, basicInfo);
         //todo 转换类型
-        basicInfo.setNotifyThemeId(GsonUtil.toJsonString(dqcSchedulerBasicInfoVO.getNotifyThemeId()));
+        basicInfo.setNotifyThemeId(GsonUtil.toJsonString(dqcSchedulerBasicInfoVO.getNotifyThemeIdList()));
 
         // todo 修改人
         basicInfo.setUpdateUserid("admin");

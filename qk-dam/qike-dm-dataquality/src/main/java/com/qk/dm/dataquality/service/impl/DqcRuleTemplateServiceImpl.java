@@ -64,10 +64,10 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     @Override
     public void insert(DqcRuleTemplateVO dqcRuleTemplateVo) {
         //判断sql是否适用与引擎
-        checkEngine(dqcRuleTemplateVo.getEngineType(), dqcRuleTemplateVo.getTempSql());
+        checkEngine(dqcRuleTemplateVo.getEngineTypeList(), dqcRuleTemplateVo.getTempSql());
         DqcRuleTemplate dqcRuleTemplate = DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
         //todo 转换类型
-        dqcRuleTemplate.setEngineType(GsonUtil.toJsonString(dqcRuleTemplateVo.getEngineType()));
+        dqcRuleTemplate.setEngineType(GsonUtil.toJsonString(dqcRuleTemplateVo.getEngineTypeList()));
         //todo 需要更改为前端传入
 //        dqcRuleTemplate.setEngineType(DqcConstant.ENGINE_TYPE);
 //        dqcRuleTemplate.setTempType(TempTypeEnum.CUSTOM.getCode());
@@ -84,7 +84,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         checkPublishState(dqcRuleTemplate, "上线规则模版不支持修改！！！");
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo, dqcRuleTemplate);
         //todo 转换类型
-        dqcRuleTemplate.setEngineType(GsonUtil.toJsonString(dqcRuleTemplateVo.getEngineType()));
+        dqcRuleTemplate.setEngineType(GsonUtil.toJsonString(dqcRuleTemplateVo.getEngineTypeList()));
         // todo 添加修改人
         dqcRuleTemplate.setUpdateUserid("admin");
         dqcRuleTemplateRepository.save(dqcRuleTemplate);
@@ -152,7 +152,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     private List<DqcRuleTemplateInfoVO> getRuleTemplateInfoVOS(List<DqcRuleTemplate> list) {
         return list.stream().map(it -> {
             DqcRuleTemplateInfoVO dqcRuleTemplateInfoVO = DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(it);
-            dqcRuleTemplateInfoVO.setEngineType(DqcConstant.changeTypeToList(it.getEngineType()));
+            dqcRuleTemplateInfoVO.setEngineTypeList(DqcConstant.changeTypeToList(it.getEngineType()));
             return dqcRuleTemplateInfoVO;
         }).collect(Collectors.toList());
     }

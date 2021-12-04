@@ -32,7 +32,7 @@ public class DqcRuleTemplateVO {
 
   /** 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔 */
   @NotNull(message = "适用引擎不能为空！")
-  private List<String> engineType;
+  private List<String> engineTypeList;
 
   /** 描述 */
   @NotBlank(message = "描述不能为空！")

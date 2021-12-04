@@ -267,7 +267,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
                 String taskId = dqcSchedulerBasicInfo.getJobId();
                 DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfoVO(dqcSchedulerBasicInfo);
                 //todo 转换类型
-                dqcSchedulerBasicInfoVO.setNotifyThemeId(DqcConstant.changeTypeToList(dqcSchedulerBasicInfo.getNotifyThemeId()));
+//                dqcSchedulerBasicInfoVO.setNotifyThemeIdList(DqcConstant.changeTypeToList(dqcSchedulerBasicInfo.getNotifyThemeId()));
                 List<DqcSchedulerRulesVO> schedulerRulesVOList = schedulerRulesMap.get(taskId);
                 List<DqcSchedulerConfigVO> dqcSchedulerConfigVOList = schedulerConfigMap.get(taskId);
 
