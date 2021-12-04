@@ -172,7 +172,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         processDefinitionApiService.deleteBulk(dolphinSchedulerInfoConfig.getProjectName(), processDefinitionIdList);
     }
 
-  @Override
+    @Override
     public SchedulerRuleConstantsVO getSchedulerRuLeConstants() {
         SchedulerRuleConstantsVO.SchedulerRuleConstantsVOBuilder constantsVOBuilder = SchedulerRuleConstantsVO.builder();
 
@@ -248,6 +248,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         List<DqcSchedulerRulesVO> schedulerRulesVOList = new ArrayList<>();
         for (DqcSchedulerRules dqcSchedulerRules : dqcSchedulerRulesIterable) {
             DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);
+            setFieldList(dqcSchedulerRulesVO, dqcSchedulerRules.getFields());
             schedulerRulesVOList.add(dqcSchedulerRulesVO);
         }
         return schedulerRulesVOList.stream().collect(Collectors.groupingBy(DqcSchedulerRulesVO::getJobId));
@@ -276,7 +277,11 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         }
     }
 
-    private void updateProcessDefinitionIdByJobId(int processDefinitionId,String jobId) {
+    private void updateProcessDefinitionIdByJobId(int processDefinitionId, String jobId) {
         dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
+    }
+
+    private void setFieldList(DqcSchedulerRulesVO dqcSchedulerRulesVO, String fields) {
+        dqcSchedulerRulesVO.setFieldList(Arrays.asList(fields.split(",")));
     }
 }

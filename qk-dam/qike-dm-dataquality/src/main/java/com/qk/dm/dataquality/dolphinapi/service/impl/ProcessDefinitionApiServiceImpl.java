@@ -132,7 +132,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                     .collect(Collectors.toList());
             processDefinitionDTO = processDefinitions.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
 //            throw new BizException("未获取到实例ID!!!");
         }
         return processDefinitionDTO;
