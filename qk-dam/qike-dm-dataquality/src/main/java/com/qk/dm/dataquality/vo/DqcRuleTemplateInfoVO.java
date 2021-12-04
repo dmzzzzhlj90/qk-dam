@@ -5,10 +5,11 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /** @author shenpengjie */
 @Data
-public class DqcRuleTemplateInfoVO {
+public class DqcRuleTemplateInfoVO{
 
   private Integer id;
 
@@ -25,7 +26,7 @@ public class DqcRuleTemplateInfoVO {
   private String dimensionType;
 
   /** 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔 */
-  private String engineType;
+  private List<String> engineType;
 
   /** 描述 */
   private String description;
@@ -36,14 +37,14 @@ public class DqcRuleTemplateInfoVO {
   /** 结果定义 */
   private String tempResult;
 
+  /** 规则类型 "RULE_TYPE_FIELD":"字段级别规则","RULE_TYPE_TABLE":"表级别规则","RULE_TYPE_DB":"库级别规则" */
+  private String ruleType;
+
   /** 发布状态 "OFFLINE":"下线","OUTLINE":"草稿","RELEASE":"发布"; */
   private String publishState;
 
   /** 创建人 */
   private String createUserid;
-
-  /** 规则类型 "RULE_TYPE_FIELD":"字段级别规则","RULE_TYPE_TABLE":"表级别规则","RULE_TYPE_DB":"库级别规则" */
-  private String ruleType;
 
   /** 修改时间 */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

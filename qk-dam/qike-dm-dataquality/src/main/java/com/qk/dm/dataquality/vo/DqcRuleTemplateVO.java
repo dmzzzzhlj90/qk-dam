@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author shenpengjie
@@ -31,7 +32,7 @@ public class DqcRuleTemplateVO {
 
   /** 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔 */
   @NotNull(message = "适用引擎不能为空！")
-  private String engineType;
+  private List<String> engineType;
 
   /** 描述 */
   @NotBlank(message = "描述不能为空！")

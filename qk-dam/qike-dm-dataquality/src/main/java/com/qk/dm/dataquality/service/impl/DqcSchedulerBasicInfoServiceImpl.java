@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.SchedulerInstanceStateEnum;
@@ -41,6 +42,9 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
     public void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         //todo jobName不能重复
         DqcSchedulerBasicInfo basicInfo = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO);
+        //todo 转换类型
+        basicInfo.setNotifyThemeId(GsonUtil.toJsonString(dqcSchedulerBasicInfoVO.getNotifyThemeId()));
+
         // todo 创建人
         basicInfo.setCreateUserid("admin");
         //TODO 调度状态
@@ -56,6 +60,9 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         //验证名称不能修改
         checkJobName(dqcSchedulerBasicInfoVO, basicInfo);
         DqcSchedulerBasicInfoMapper.INSTANCE.toDqcSchedulerBasicInfo(dqcSchedulerBasicInfoVO, basicInfo);
+        //todo 转换类型
+        basicInfo.setNotifyThemeId(GsonUtil.toJsonString(dqcSchedulerBasicInfoVO.getNotifyThemeId()));
+
         // todo 修改人
         basicInfo.setUpdateUserid("admin");
         dqcSchedulerBasicInfoRepository.saveAndFlush(basicInfo);

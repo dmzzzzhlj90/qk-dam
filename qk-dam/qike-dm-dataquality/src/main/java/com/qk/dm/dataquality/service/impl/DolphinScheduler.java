@@ -74,16 +74,16 @@ public class DolphinScheduler {
     /**
      * 查询实例列表最新一条记录
      *
-     * @param processDefinitionId
+     * @param instanceSearchDTO
      * @return
      */
-    public DqcProcessInstanceVO detailByList(Integer processDefinitionId) {
-        ProcessInstanceSearchDTO instanceSearchDTO =
-                ProcessInstanceSearchDTO.builder()
-                        .processDefinitionId(processDefinitionId)
-                        .pageNo(SchedulerConstant.PAGE_NO)
-                        .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
-                        .build();
+    public DqcProcessInstanceVO detailByList(ProcessInstanceSearchDTO instanceSearchDTO) {
+//        ProcessInstanceSearchDTO instanceSearchDTO =
+//                ProcessInstanceSearchDTO.builder()
+//                        .processDefinitionId(processDefinitionId)
+//                        .pageNo(SchedulerConstant.PAGE_NO)
+//                        .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
+//                        .build();
         ProcessInstanceResultDTO search = processInstanceService.search(instanceSearchDTO);
         return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(search.getTotalList().get(0));
     }

@@ -251,7 +251,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         List<DqcSchedulerRulesVO> schedulerRulesVOList = new ArrayList<>();
         for (DqcSchedulerRules dqcSchedulerRules : dqcSchedulerRulesIterable) {
             DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);
-            setFieldList(dqcSchedulerRulesVO, dqcSchedulerRules.getFields());
+            dqcSchedulerRulesVO.setFieldList(DqcConstant.changeTypeToList(dqcSchedulerRules.getFields()));
+//            setFieldList(dqcSchedulerRulesVO, dqcSchedulerRules.getFields());
             schedulerRulesVOList.add(dqcSchedulerRulesVO);
         }
         return schedulerRulesVOList.stream().collect(Collectors.groupingBy(DqcSchedulerRulesVO::getJobId));
@@ -265,6 +266,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
             for (DqcSchedulerBasicInfo dqcSchedulerBasicInfo : dqcSchedulerBasicInfoList) {
                 String taskId = dqcSchedulerBasicInfo.getJobId();
                 DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO = DqcSchedulerBasicInfoMapper.INSTANCE.userDqcSchedulerBasicInfoVO(dqcSchedulerBasicInfo);
+                //todo 转换类型
+                dqcSchedulerBasicInfoVO.setNotifyThemeId(DqcConstant.changeTypeToList(dqcSchedulerBasicInfo.getNotifyThemeId()));
                 List<DqcSchedulerRulesVO> schedulerRulesVOList = schedulerRulesMap.get(taskId);
                 List<DqcSchedulerConfigVO> dqcSchedulerConfigVOList = schedulerConfigMap.get(taskId);
 

@@ -3,7 +3,7 @@ package com.qk.dm.dataquality.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDTO;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplateParamsDTO;
 import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDTO;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVO;
@@ -116,29 +116,29 @@ public class DqcRuleTemplateController {
   /**
    * 规则模版下拉列表
    *
-   * @param dqcRuleTemplatePageDto
+   * @param dqcRuleTemplateParamsDto
    * @return DefaultCommonResult<List<DqcRuleTemplateInfoVO>>
    */
   @GetMapping("/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<DqcRuleTemplateInfoVO>> search(
-      DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
+      DqcRuleTemplateParamsDTO dqcRuleTemplateParamsDto) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleTemplateService.search(dqcRuleTemplatePageDto));
+        ResultCodeEnum.OK, dqcRuleTemplateService.search(dqcRuleTemplateParamsDto));
   }
 
   /**
    * 规则模版分页列表
    *
-   * @param dqcRuleTemplatePageDto
+   * @param dqcRuleTemplateParamsDto
    * @return DefaultCommonResult<PageResultVO<DqcRuleTemplateInfoVO>>
    */
   @PostMapping("/page/list")
   //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult<PageResultVO<DqcRuleTemplateInfoVO>> searchPageList(
-      @RequestBody DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
+      @RequestBody DqcRuleTemplateParamsDTO dqcRuleTemplateParamsDto) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplatePageDto));
+        ResultCodeEnum.OK, dqcRuleTemplateService.searchPageList(dqcRuleTemplateParamsDto));
   }
 
   /**

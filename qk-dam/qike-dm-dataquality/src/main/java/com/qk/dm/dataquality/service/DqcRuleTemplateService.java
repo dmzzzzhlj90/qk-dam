@@ -1,7 +1,7 @@
 package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDTO;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplateParamsDTO;
 import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDTO;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateInfoVO;
 import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
@@ -28,9 +28,9 @@ public interface DqcRuleTemplateService {
 
   void release(DqcRuleTemplateReleaseDTO dqcRuleTemplateReleaseDto);
 
-  List<DqcRuleTemplateInfoVO> search(DqcRuleTemplatePageDTO dqcRuleTemplateVo);
+  List<DqcRuleTemplateInfoVO> search(DqcRuleTemplateParamsDTO dqcRuleTemplateVo);
 
-  PageResultVO<DqcRuleTemplateInfoVO> searchPageList(DqcRuleTemplatePageDTO dqcRuleTemplatePageDto);
+  PageResultVO<DqcRuleTemplateInfoVO> searchPageList(DqcRuleTemplateParamsDTO dqcRuleTemplateParamsDto);
 
   RuleTemplateConstantsVO getRuLeTemplateConstants();
 }

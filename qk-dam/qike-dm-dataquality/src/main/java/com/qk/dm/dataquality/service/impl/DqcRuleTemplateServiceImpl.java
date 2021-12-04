@@ -3,17 +3,20 @@ package com.qk.dm.dataquality.service.impl;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
-import com.qk.dm.dataquality.constant.*;
+import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.constant.EngineTypeEnum;
+import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.constant.ruletemplate.DimensionTypeEnum;
 import com.qk.dm.dataquality.constant.ruletemplate.PublishStateEnum;
 import com.qk.dm.dataquality.constant.ruletemplate.TempTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcRuleTemplateMapper;
-import com.qk.dm.dataquality.params.dto.DqcRuleTemplatePageDTO;
+import com.qk.dm.dataquality.params.dto.DqcRuleTemplateParamsDTO;
 import com.qk.dm.dataquality.params.dto.DqcRuleTemplateReleaseDTO;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
@@ -63,6 +66,8 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         //判断sql是否适用与引擎
         checkEngine(dqcRuleTemplateVo.getEngineType(), dqcRuleTemplateVo.getTempSql());
         DqcRuleTemplate dqcRuleTemplate = DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
+        //todo 转换类型
+        dqcRuleTemplate.setEngineType(GsonUtil.toJsonString(dqcRuleTemplateVo.getEngineType()));
         //todo 需要更改为前端传入
 //        dqcRuleTemplate.setEngineType(DqcConstant.ENGINE_TYPE);
 //        dqcRuleTemplate.setTempType(TempTypeEnum.CUSTOM.getCode());
@@ -78,6 +83,8 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
         checkPublishState(dqcRuleTemplate, "上线规则模版不支持修改！！！");
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo, dqcRuleTemplate);
+        //todo 转换类型
+        dqcRuleTemplate.setEngineType(GsonUtil.toJsonString(dqcRuleTemplateVo.getEngineType()));
         // todo 添加修改人
         dqcRuleTemplate.setUpdateUserid("admin");
         dqcRuleTemplateRepository.save(dqcRuleTemplate);
@@ -128,9 +135,9 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
 
     @Override
-    public List<DqcRuleTemplateInfoVO> search(DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
+    public List<DqcRuleTemplateInfoVO> search(DqcRuleTemplateParamsDTO dqcRuleTemplateParamsDto) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        checkCondition(dqcRuleTemplatePageDto, booleanBuilder);
+        checkCondition(dqcRuleTemplateParamsDto, booleanBuilder);
         booleanBuilder.and(qDqcRuleTemplate.publishState.eq(PublishStateEnum.RELEASE.getCode()));
         List<DqcRuleTemplate> list =
                 jpaQueryFactory
@@ -139,21 +146,27 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
                         .where(booleanBuilder)
                         .orderBy(qDqcRuleTemplate.tempType.desc(), qDqcRuleTemplate.gmtModified.desc())
                         .fetch();
-        return DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(list);
+        return getRuleTemplateInfoVOS(list);
+    }
+
+    private List<DqcRuleTemplateInfoVO> getRuleTemplateInfoVOS(List<DqcRuleTemplate> list) {
+        return list.stream().map(it -> {
+            DqcRuleTemplateInfoVO dqcRuleTemplateInfoVO = DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(it);
+            dqcRuleTemplateInfoVO.setEngineType(DqcConstant.changeTypeToList(it.getEngineType()));
+            return dqcRuleTemplateInfoVO;
+        }).collect(Collectors.toList());
     }
 
     @Override
     public PageResultVO<DqcRuleTemplateInfoVO> searchPageList(
-            DqcRuleTemplatePageDTO dqcRuleTemplatePageDto) {
-        Map<String, Object> map = queryParams(dqcRuleTemplatePageDto);
+            DqcRuleTemplateParamsDTO dqcRuleTemplateParamsDto) {
+        Map<String, Object> map = queryParams(dqcRuleTemplateParamsDto);
         List<DqcRuleTemplate> list = (List<DqcRuleTemplate>) map.get("list");
-        List<DqcRuleTemplateInfoVO> voList =
-                DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(list);
         return new PageResultVO<>(
                 (long) map.get("total"),
-                dqcRuleTemplatePageDto.getPagination().getPage(),
-                dqcRuleTemplatePageDto.getPagination().getSize(),
-                voList);
+                dqcRuleTemplateParamsDto.getPagination().getPage(),
+                dqcRuleTemplateParamsDto.getPagination().getSize(),
+                getRuleTemplateInfoVOS(list));
     }
 
     @Override
@@ -167,7 +180,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         return builder.build();
     }
 
-    private Map<String, Object> queryParams(DqcRuleTemplatePageDTO dqcRuleTemplateVo) {
+    private Map<String, Object> queryParams(DqcRuleTemplateParamsDTO dqcRuleTemplateVo) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(dqcRuleTemplateVo, booleanBuilder);
         Map<String, Object> result = new HashMap<>(2);
@@ -206,7 +219,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         }
     }
 
-    public void checkCondition(DqcRuleTemplatePageDTO dqcRuleTemplateVo, BooleanBuilder booleanBuilder) {
+    public void checkCondition(DqcRuleTemplateParamsDTO dqcRuleTemplateVo, BooleanBuilder booleanBuilder) {
         if (dqcRuleTemplateVo.getDirId() != null) {
             booleanBuilder.and(qDqcRuleTemplate.dirId.eq(dqcRuleTemplateVo.getDirId()));
         }
@@ -248,8 +261,8 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         }
     }
 
-    private void checkEngine(String engineType, String sql) {
-        Arrays.stream(engineType.split(","))
+    private void checkEngine(List<String> engineType, String sql) {
+        engineType.stream()
                 .peek(item -> checkSql(sql, EngineTypeEnum.fromValue(item)))
                 .collect(Collectors.toList());
     }

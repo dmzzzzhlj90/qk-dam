@@ -13,7 +13,7 @@ import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 public interface DqcSchedulerExecutorsService {
     void release(DqcSchedulerReleaseDTO dqcSchedulerReleaseDto);
 
-    void runing(DqcSchedulerRuningDTO dqcSchedulerRuningDTO);
+    void runing(Long id);
 
     DqcProcessInstanceVO instanceDetailByList(Long id);
 
