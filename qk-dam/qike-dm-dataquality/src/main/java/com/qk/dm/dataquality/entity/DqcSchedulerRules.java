@@ -73,7 +73,7 @@ public class DqcSchedulerRules implements Serializable {
      * 扫描范围 "FULL_TABLE":"全表", "CONDITION":"条件";
      */
     @Column(name = "scan_type", nullable = false)
-    private Integer scanType;
+    private String scanType;
 
     /**
      * 扫描条件SQL
