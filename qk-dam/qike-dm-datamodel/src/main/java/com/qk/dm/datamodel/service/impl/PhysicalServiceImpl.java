@@ -242,6 +242,11 @@ public class PhysicalServiceImpl implements PhysicalService {
       if (relationList.size()>0) {
         throw new BizException("建模关系不可重复");
       }
+      modelRelationDtoList.stream().peek(modelPhysicalRelationDTO -> {
+        if (modelPhysicalRelationDTO.getChildTableName().equals(modelPhysicalRelationDTO.getFatherTableName())){
+          throw new BizException("建模关系子表和父表不能重复");
+        }
+      }).collect(Collectors.toList());
     }
     check=true;
     return check;
