@@ -51,7 +51,7 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
             dolphinScheduler.offline(processDefinitionId);
         }
         //TODO 调度状态
-//        basicInfo.setSchedulerState(infoReleaseDto.getSchedulerState());
+        basicInfo.setSchedulerState(infoReleaseDto.getSchedulerState());
         schedulerBasicInfoService.update(basicInfo);
     }
 
