@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
@@ -20,7 +21,6 @@ import org.springframework.util.ObjectUtils;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 数据质量_规则调度_规则信息
@@ -77,7 +77,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     @Override
     public void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
-        dqcSchedulerRules.setFields(getFieldStr(dqcSchedulerRulesVO.getFieldList()));
+
+        dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
         dqcSchedulerRules.setGmtCreate(new Date());
         dqcSchedulerRules.setGmtModified(new Date());
         dqcSchedulerRules.setDelFlag(0);
@@ -96,7 +97,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     @Override
     public void update(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
-        dqcSchedulerRules.setFields(getFieldStr(dqcSchedulerRulesVO.getFieldList()));
+
+        dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
         dqcSchedulerRules.setGmtModified(new Date());
         dqcSchedulerRules.setDelFlag(0);
         dqcSchedulerRulesRepository.saveAndFlush(dqcSchedulerRules);
@@ -194,9 +196,5 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public void deleteBulkByJobIds(List<String> jobIds) {
         Iterable<DqcSchedulerRules> dqcSchedulerRules = dqcSchedulerRulesRepository.findAll(qDqcSchedulerRules.jobId.in(jobIds));
         dqcSchedulerRulesRepository.deleteAllInBatch(dqcSchedulerRules);
-    }
-
-    private String getFieldStr(List<String> fieldList) {
-        return String.join(",", fieldList);
     }
 }

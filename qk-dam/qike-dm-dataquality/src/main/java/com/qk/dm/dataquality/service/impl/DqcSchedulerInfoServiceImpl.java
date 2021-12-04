@@ -1,6 +1,8 @@
 package com.qk.dm.dataquality.service.impl;
 
+import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.*;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
@@ -283,6 +285,10 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     }
 
     private void setFieldList(DqcSchedulerRulesVO dqcSchedulerRulesVO, String fields) {
-        dqcSchedulerRulesVO.setFieldList(Arrays.asList(fields.split(",")));
+        if (!ObjectUtils.isEmpty(fields)) {
+            dqcSchedulerRulesVO.setFieldList(GsonUtil.fromJsonString(GsonUtil.toJsonString(fields), new TypeToken<List<String>>() {
+            }.getType()));
+        }
     }
+
 }
