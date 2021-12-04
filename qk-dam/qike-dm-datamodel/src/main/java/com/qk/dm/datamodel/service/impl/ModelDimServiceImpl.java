@@ -92,6 +92,7 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(Long id, ModelDimDTO modelDimDTO) {
         ModelDim modelDim = modelDimRepository.findById(id).orElse(null);
         if(Objects.isNull(modelDim)){
