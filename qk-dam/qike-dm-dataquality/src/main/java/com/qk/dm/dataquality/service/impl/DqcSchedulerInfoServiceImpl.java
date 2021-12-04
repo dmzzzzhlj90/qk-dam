@@ -182,6 +182,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
                 .notifyTypeEnum(NotifyTypeEnum.getAllValue())
                 .engineTypeEnum(EngineTypeEnum.getAllValue())
                 .ruleTypeEnum(RuleTypeEnum.getAllValue())
+                .ScanTypeEnum(ScanTypeEnum.getAllValue())
                 .schedulerTypeEnum(SchedulerTypeEnum.getAllValue())
                 .schedulerStateEnum(SchedulerStateEnum.getAllValue())
                 .SchedulerCycleEnum(SchedulerCycleEnum.getAllValue());
