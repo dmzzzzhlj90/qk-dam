@@ -53,7 +53,7 @@ public class DataBaseServiceImpl implements DataBaseService {
   }
 
   @Override
-  public Boolean getExistData(String connectType, String dataSourceName, String dataBaseName, String tableName) {
+  public Integer getExistData(String connectType, String dataSourceName, String dataBaseName, String tableName) {
     return dataBaseInfoDefaultApi.getExistData(connectType, getServer(dataSourceName), dataBaseName, tableName);
   }
 

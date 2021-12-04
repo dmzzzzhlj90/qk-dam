@@ -159,9 +159,9 @@ public class DataBaseInfoDefaultApi {
      * @param tableName
      * @return
      */
-    public Boolean getExistData(String dbType, String server, String dbName, String tableName){
+    public Integer getExistData(String dbType, String server, String dbName, String tableName){
         String type = dbType.split("-")[1];
-        DefaultCommonResult<Boolean> existData = metaDataFeign.getExistData(
+        DefaultCommonResult<Integer> existData = metaDataFeign.getExistData(
                 MtdApiParams.builder()
                         .typeName(type + "_table")
                         .server(server)

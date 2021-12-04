@@ -63,5 +63,5 @@ public interface MtdApiService {
    * @param server
    * @return
    */
-  Boolean getExistData(String typeName, String dbName, String tableName, String server);
+  Integer getExistData(String typeName, String dbName, String tableName, String server);
 }

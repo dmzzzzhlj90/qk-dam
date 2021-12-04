@@ -56,5 +56,5 @@ public interface DataBaseService {
      * @param tableName
      * @return
      */
-    Boolean getExistData(String connectType, String dataSourceName, String dataBaseName, String tableName);
+    Integer getExistData(String connectType, String dataSourceName, String dataBaseName, String tableName);
 }

@@ -98,8 +98,8 @@ public class MtdApiController {
    * @return
    */
   @PostMapping("/entity/exist/data")
-  public DefaultCommonResult<Boolean> getDataLength(@RequestBody @Validated MtdApiParams mtdApiParams){
-    Boolean exist = mtdApiService.getExistData(mtdApiParams.getTypeName(),
+  public DefaultCommonResult<Integer> getDataLength(@RequestBody @Validated MtdApiParams mtdApiParams){
+    Integer exist = mtdApiService.getExistData(mtdApiParams.getTypeName(),
             mtdApiParams.getDbName(),
             mtdApiParams.getTableName(),
             mtdApiParams.getServer());

@@ -50,5 +50,5 @@ public interface MetaDataFeign {
    * @return
    */
   @PostMapping("/entity/exist/data")
-  DefaultCommonResult<Boolean> getExistData(@RequestBody @Validated MtdApiParams mtdApiParams);
+  DefaultCommonResult<Integer> getExistData(@RequestBody @Validated MtdApiParams mtdApiParams);
 }
