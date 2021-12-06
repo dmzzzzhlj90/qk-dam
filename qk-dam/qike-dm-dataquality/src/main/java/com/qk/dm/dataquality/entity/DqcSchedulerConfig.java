@@ -67,12 +67,12 @@ public class DqcSchedulerConfig implements Serializable {
 
   /** 创建时间 */
   @Column(name = "gmt_create", nullable = false)
-//  @CreationTimestamp
+  @CreationTimestamp
   private Date gmtCreate;
 
   /** 修改时间 */
   @Column(name = "gmt_modified")
-//  @UpdateTimestamp
+  @UpdateTimestamp
   private Date gmtModified;
 
   /** 删除标识(0-保留 1-删除) */
