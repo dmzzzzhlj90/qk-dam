@@ -5,7 +5,6 @@ package com.qk.dm.dataquality.constant.schedule;
  * @author shenpengjie
  */
 public enum ExecTypeEnum {
-  NULL(null,"空"),
   START_PROCESS("START_PROCESS",""),
   START_CURRENT_TASK_PROCESS("START_CURRENT_TASK_PROCESS",""),
   RECOVER_TOLERANCE_FAULT_PROCESS("RECOVER_TOLERANCE_FAULT_PROCESS",""),
@@ -32,7 +31,7 @@ public enum ExecTypeEnum {
         return b;
       }
     }
-    throw new IllegalArgumentException("Unexpected id '" + code + "'");
+    return null;
   }
 
   public String getCode() {

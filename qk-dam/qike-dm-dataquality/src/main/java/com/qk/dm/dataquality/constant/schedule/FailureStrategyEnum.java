@@ -24,7 +24,7 @@ public enum FailureStrategyEnum {
         return b;
       }
     }
-    throw new IllegalArgumentException("Unexpected id '" + code + "'");
+    return null;
   }
 
   public String getCode() {

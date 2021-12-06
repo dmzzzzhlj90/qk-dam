@@ -1,8 +1,13 @@
 package com.qk.dm.dataquality.service.impl;
 
+import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
+import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceSearchDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceExecuteDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerInstanceService;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
+import com.qk.dm.dataquality.vo.SchedulerInstanceConstantsVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,8 +25,8 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
     }
 
     @Override
-    public Object search(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
-                ProcessInstanceSearchDTO instanceSearchDTO =
+    public DqcProcessInstanceVO search(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
+        ProcessInstanceSearchDTO instanceSearchDTO =
                 ProcessInstanceSearchDTO.builder()
                         .processDefinitionId(instanceParamsDTO.getProcessDefinitionId())
                         .pageNo(instanceParamsDTO.getPagination().getPage())
@@ -29,8 +34,25 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
                         .startDate(instanceParamsDTO.getStartDate())
                         .endDate(instanceParamsDTO.getEndDate())
                         .searchVal(instanceParamsDTO.getSearchVal())
+                        .stateType(instanceParamsDTO.getStateType())
                         .build();
         // 获取到最近运行实例
         return dolphinScheduler.detailByList(instanceSearchDTO);
     }
+
+    @Override
+    public void execute(DqcSchedulerInstanceExecuteDTO instanceExecute) {
+        dolphinScheduler.execute(instanceExecute.getProcessInstanceId(),instanceExecute.getExecuteType());
+    }
+
+    @Override
+    public SchedulerInstanceConstantsVO getInstanceConstants() {
+        return SchedulerInstanceConstantsVO
+                .builder()
+                .instanceStateTypeEnum(InstanceStateTypeEnum.getAllValue())
+                .executeTypeEnum(ExecuteTypeEnum.getAllValue())
+                .build();
+    }
+
+
 }
