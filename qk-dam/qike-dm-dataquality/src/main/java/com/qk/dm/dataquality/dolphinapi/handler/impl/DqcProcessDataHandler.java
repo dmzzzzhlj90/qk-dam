@@ -156,7 +156,7 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                 .from_password("Zhudao123!")
                 .from_database("qkdam");
 
-        scriptBuilder.search_sql(rulesVO.getScanSql());
+        scriptBuilder.search_sql(rulesVO.getExecuteSql());
 
         scriptBuilder
                 .to_host("172.20.0.24")

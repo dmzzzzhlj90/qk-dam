@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DqcRuleSqlBuilderService {
 
-    String getExecuteSql(String tempSQL, String condition, String value);
+    String getExecuteSql(String tempSql, String condition, String value);
 
 }

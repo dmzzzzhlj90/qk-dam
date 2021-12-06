@@ -18,11 +18,20 @@ import java.util.regex.Pattern;
  */
 public class GenerateSqlUtil {
 
+    /**
+     * Schema_Table
+     */
+    public static final String SCHEMA_TABLE = "Schema_Table";
 
-    public static String matchReplaceWithCondition(String content, String condition, String value) {
+    /**
+     * Column
+     */
+    public static final String COLUMN = "Column";
+
+    public static String matchReplaceWithCondition(String tempSql, String condition, String value) {
         String pattern = "\\$\\{" + condition + "\\}";
         Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(content);
+        Matcher m = p.matcher(tempSql);
         StringBuffer sb = new StringBuffer();
         while (m.find()) {
             String group = m.group();

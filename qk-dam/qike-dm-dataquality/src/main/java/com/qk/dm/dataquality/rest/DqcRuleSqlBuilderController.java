@@ -33,10 +33,10 @@ public class DqcRuleSqlBuilderController {
      */
     @GetMapping("/execute")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult getExecuteSql(@RequestParam("tempSQL") String tempSQL,
+    public DefaultCommonResult getExecuteSql(@RequestParam("tempSql") String tempSql,
                                              @RequestParam("condition") String condition,
                                              @RequestParam("value") String value) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleSqlBuilderService.getExecuteSql(tempSQL, condition, value));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleSqlBuilderService.getExecuteSql(tempSql, condition, value));
     }
 
 }
