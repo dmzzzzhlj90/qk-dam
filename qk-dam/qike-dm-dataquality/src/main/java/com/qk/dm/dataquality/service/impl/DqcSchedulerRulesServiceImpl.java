@@ -3,9 +3,13 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.constant.RuleTypeEnum;
+import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
+import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerRulesMapper;
+import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesParamsVO;
@@ -33,12 +37,16 @@ import java.util.*;
 public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     private final QDqcSchedulerRules qDqcSchedulerRules = QDqcSchedulerRules.dqcSchedulerRules;
     private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
+    private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
 
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
 
-    public DqcSchedulerRulesServiceImpl(DqcSchedulerRulesRepository dqcSchedulerRulesRepository, EntityManager entityManager) {
+    public DqcSchedulerRulesServiceImpl(DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
+                                        DqcRuleTemplateRepository dqcRuleTemplateRepository,
+                                        EntityManager entityManager) {
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
+        this.dqcRuleTemplateRepository = dqcRuleTemplateRepository;
         this.entityManager = entityManager;
     }
 
@@ -81,6 +89,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
         dqcSchedulerRules.setGmtCreate(new Date());
         dqcSchedulerRules.setGmtModified(new Date());
+        // todo 创建人
+        dqcSchedulerRules.setCreateUserid("admin");
         dqcSchedulerRules.setDelFlag(0);
         dqcSchedulerRulesRepository.save(dqcSchedulerRules);
     }
@@ -90,6 +100,9 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
             dqcSchedulerRulesVO.setJobId(jobId);
+            //TODO 生成执行Sql;回填给basic进行实例生成;
+//            String executorSql=builderExecutorSql(dqcSchedulerRulesVO);
+//            dqcSchedulerRulesVO.setExecuteSql(executorSql);
             insert(dqcSchedulerRulesVO);
         }
     }
@@ -196,5 +209,28 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public void deleteBulkByJobIds(List<String> jobIds) {
         Iterable<DqcSchedulerRules> dqcSchedulerRules = dqcSchedulerRulesRepository.findAll(qDqcSchedulerRules.jobId.in(jobIds));
         dqcSchedulerRulesRepository.deleteAllInBatch(dqcSchedulerRules);
+    }
+
+
+    private String builderExecutorSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        //获取模板SQL
+        Optional<DqcRuleTemplate> dqcRuleTemplate = dqcRuleTemplateRepository.findOne(QDqcRuleTemplate.dqcRuleTemplate.id.eq(dqcSchedulerRulesVO.getRuleTempId()));
+
+        if (dqcRuleTemplate.isPresent()) {
+            //解析替换参数信息
+            String ruleType = dqcSchedulerRulesVO.getRuleType();
+
+            if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(ruleType)) {
+                //字段级别规则
+                String tableName = dqcSchedulerRulesVO.getTableName();
+
+            }
+
+        }
+
+
+
+
+        return null;
     }
 }

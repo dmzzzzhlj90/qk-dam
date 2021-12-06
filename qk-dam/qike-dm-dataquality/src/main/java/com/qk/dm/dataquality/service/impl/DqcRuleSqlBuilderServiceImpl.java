@@ -15,9 +15,8 @@ import org.springframework.stereotype.Service;
 public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
 
     @Override
-    public String getExecuteSql(String tempSQL, String condition, String value) {
-        String executeSql = GenerateSqlUtil.matchReplaceWithCondition(tempSQL, condition, value);
-        return executeSql;
+    public String getExecuteSql(String tempSql, String condition, String value) {
+        return GenerateSqlUtil.matchReplaceWithCondition(tempSql, condition, value);
     }
 
 }
