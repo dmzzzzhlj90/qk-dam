@@ -105,12 +105,11 @@ public class DataBaseInfoDefaultApi {
 
     /**
      * 新建API__获取db库信息下拉列表
-     * @param dbType
+     * @param type
      * @param server
      * @return
      */
-    public List<String> getAllDataBase(String dbType,String server) {
-        String type = dbType.split("-")[1];
+    public List<String> getAllDataBase(String type,String server) {
         DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
                 metaDataFeign.getDbs(type + "_db",server);
         List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
@@ -120,11 +119,10 @@ public class DataBaseInfoDefaultApi {
     /**
      * 新建API__获取table表信息下拉列表
      *
-     * @param dbType,server,dbName
+     * @param type,server,dbName
      * @return DefaultCommonResult
      */
-    public List<String> getAllTable(String dbType, String server, String dbName) {
-        String type = dbType.split("-")[1];
+    public List<String> getAllTable(String type, String server, String dbName) {
         DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
                 metaDataFeign.mtdDetail(
                         MtdApiParams.builder().typeName(type + "_db").server(server).dbName(dbName).build());
@@ -135,11 +133,10 @@ public class DataBaseInfoDefaultApi {
     /**
      * 新建API__获取column字段信息下拉列表
      *
-     * @param dbType,server,dbName
+     * @param type,server,dbName
      * @return DefaultCommonResult
      */
-    public List getAllColumn(String dbType, String server, String dbName, String tableName) {
-        String type = dbType.split("-")[1];
+    public List getAllColumn(String type, String server, String dbName, String tableName) {
         DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
                 metaDataFeign.mtdDetail(
                         MtdApiParams.builder()
