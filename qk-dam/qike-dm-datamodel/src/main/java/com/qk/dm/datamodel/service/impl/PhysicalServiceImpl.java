@@ -29,7 +29,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
@@ -51,7 +50,6 @@ public class PhysicalServiceImpl implements PhysicalService {
   private final ModelSqlRepository modelSqlRepository;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
-  private SqlBuilderFactory sqlBuilderFactory;
     private final DataBaseService dataBaseService;
   @PostConstruct
   public void initFactory() {
@@ -156,7 +154,7 @@ public class PhysicalServiceImpl implements PhysicalService {
   private String builderSql(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
     List<ModelPhysicalColumn> columnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalDTO.getModelColumnDtoList());
     Table table = getTable(modelPhysicalTable,columnList);
-    return sqlBuilderFactory.creatTableSQL(table);
+    return SqlBuilderFactory.creatTableSQL(table);
   }
 
   private String dataModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
@@ -194,23 +192,22 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   private String createSql(ModelPhysicalTable modelPhysicalTable,
       List<ModelPhysicalColumn> modelPhysicalColumnList, Long id) {
-    String sqls= null;
+
     ModelSql modelSql = new ModelSql();
     Table table = getTable(modelPhysicalTable,modelPhysicalColumnList);
-    String Sql = sqlBuilderFactory.creatTableSQL(table);
-    if (StringUtils.isNotBlank(Sql)){
+    String sql = SqlBuilderFactory.creatTableSQL(table);
+    if (StringUtils.isNotBlank(sql)){
       //赋值基础数据id
       modelSql.setTableId(id);
       //1,逻辑表2物理表 3 维度表 4 汇总表
       modelSql.setType(ModelType.PHYSICAL_TABLE);
       //建表sql
-      modelSql.setSqlSentence(Sql);
+      modelSql.setSqlSentence(sql);
       modelSqlRepository.save(modelSql);
-      sqls=Sql;
     }else {
-      throw  new BizException("生成sql为空");
+      throw new BizException("生成sql为空");
     }
-    return sqls;
+    return sql;
   }
 
   private Table getTable(ModelPhysicalTable modelPhysicalTable, List<ModelPhysicalColumn> modelPhysicalColumnList) {
@@ -255,7 +252,6 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @return
    */
   private Boolean checkModelPhysical(ModelPhysicalDTO modelPhysicalDTO) {
-    Boolean check = false;
     //判断新加字段是否存在重复
     List<ModelPhysicalColumnDTO> modelColumnDtoList = modelPhysicalDTO.getModelColumnDtoList();
     if (CollectionUtils.isEmpty(modelColumnDtoList)){
@@ -288,8 +284,7 @@ public class PhysicalServiceImpl implements PhysicalService {
         }
       }).collect(Collectors.toList());
     }
-    check=true;
-    return check;
+    return true;
   }
 
 
