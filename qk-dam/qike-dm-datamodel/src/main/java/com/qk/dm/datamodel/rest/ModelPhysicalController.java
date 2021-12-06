@@ -44,7 +44,7 @@ public class ModelPhysicalController {
   }
 
   /**
-   * 新增——关系建模(创建结束时的保存发布)
+   * 新增——关系建模(创建结束时的保存\发布)
    *
    * @param modelPhysicalDTO
    * @return

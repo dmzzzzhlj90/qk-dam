@@ -51,6 +51,12 @@ public class ModelPhysicalTableDTO implements Serializable {
     private String databaseName;
 
     /**
+     *数据源连接名称
+     */
+    @NotBlank(message = "数据源连接名称")
+    private String dataSourceName;
+
+    /**
      * 描述
      */
     private String description;

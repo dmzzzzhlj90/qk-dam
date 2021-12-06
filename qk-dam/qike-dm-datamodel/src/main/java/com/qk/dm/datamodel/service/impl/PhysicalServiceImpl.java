@@ -106,17 +106,57 @@ public class PhysicalServiceImpl implements PhysicalService {
       ModelPhysicalTable modelPhysicalTable) {
     //状态判断是否为发布操作,判断元数据中是否存在该表数据，如果不是则不用管
     if (modelPhysicalTable.getStatus()==ModelStatus.PUBLISH){
-      List<String> tables = getTables(modelPhysicalTable.getDataConnection(),modelPhysicalTable.getDatabaseName(),modelPhysicalTable.getTableName());
-      if (CollectionUtils.isEmpty(tables)){
-        String sql = dataModelPhysical(modelPhysicalDTO, modelPhysicalTable);
-        //todo(需要完善)
-        //调用调度任务创建表
-      }else{
-        throw new BizException("发布失败，该表已经存在");
-      }
+      int tables = getTables(modelPhysicalTable.getDataConnection(),
+          modelPhysicalTable.getDataSourceName(),
+          modelPhysicalTable.getDatabaseName(),
+          modelPhysicalTable.getTableName());
+      dealExistData(tables,modelPhysicalDTO,modelPhysicalTable);
     }else{
       dataModelPhysical(modelPhysicalDTO,modelPhysicalTable);
     }
+  }
+
+  /**
+   * 处理元数据表查询结果
+   * @param tables
+   * @param modelPhysicalDTO
+   * @param modelPhysicalTable
+   */
+  private void dealExistData(int tables, ModelPhysicalDTO modelPhysicalDTO,
+      ModelPhysicalTable modelPhysicalTable) {
+    switch (tables){
+      case ModelStatus.EXIST_DATA:
+        throw new BizException("发布失败,该表已经存在并且存在数据");
+      case ModelStatus.EXIST_NO_DATA:
+        //生成sql并执行
+        String sqlv1 = builderSql(modelPhysicalDTO,modelPhysicalTable);
+        //todo(需要完善)
+        //判断sql执行成功，将数据保存
+        dataModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+        break;
+      case ModelStatus.NO_EXIST:
+        //生成sql并执行
+        String sqlv0 = builderSql(modelPhysicalDTO,modelPhysicalTable);
+        //todo(需要完善)
+        //判断sql执行成功，将数据保存
+        dataModelPhysical(modelPhysicalDTO, modelPhysicalTable);
+        break;
+      default:
+        throw new BizException("元数据表查询有误请联系相关人员");
+    }
+  }
+
+
+  /**
+   * 构建sql
+   * @param modelPhysicalDTO
+   * @param modelPhysicalTable
+   * @return
+   */
+  private String builderSql(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
+    List<ModelPhysicalColumn> columnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalDTO.getModelColumnDtoList());
+    Table table = getTable(modelPhysicalTable,columnList);
+    return sqlBuilderFactory.creatTableSQL(table);
   }
 
   private String dataModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
@@ -404,20 +444,86 @@ public class PhysicalServiceImpl implements PhysicalService {
   public void synchronization(List<Long> physicalIds) {
       physicalIds.forEach(id->{
         //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
-        ModelPhysicalTableVO modelPhysical = getModelPhysical(id);
+        ModelPhysicalTable modelPhysicalTable = modelPhysicalTableRepository.findById(id).orElse(null);
         //2如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
-        if (modelPhysical==null){
+        if (modelPhysicalTable==null){
           throw new BizException("当前需要同步的表id为"+id+"不存在");
         }
-          List<String> tables = getTables(modelPhysical.getDataConnection(),modelPhysical.getDatabaseName(),modelPhysical.getTableName());
-          if (CollectionUtils.isNotEmpty(tables)){
-            throw  new BizException("当前表名为"+modelPhysical.getTableName()+"已经创建");
-          }else{
-            //todo(需要完善)
-            //获取建表sql
-            //调用任务创建表
-          }
+        int tables = getTables(modelPhysicalTable.getDataConnection(),
+            modelPhysicalTable.getDataSourceName(), modelPhysicalTable.getDatabaseName(),
+            modelPhysicalTable.getTableName());
+        dealSynzData(tables,modelPhysicalTable,id);
       });
+  }
+
+  /**
+   *处理手动同步
+   * @param tables
+   * @param modelPhysical
+   * @param id
+   */
+  private void dealSynzData(int tables, ModelPhysicalTable modelPhysical, Long id) {
+    switch (tables){
+      case ModelStatus.EXIST_DATA:
+        buildSynzData(modelPhysical);
+        break;
+      case ModelStatus.EXIST_NO_DATA:
+        buildSynzData(modelPhysical);
+        break;
+      case ModelStatus.NO_EXIST:
+        ModelSql sql = modelSqlRepository.findByTableId(id);
+        //todo(需要完善)执行sql成功后修改数据状态
+
+        buildSynzData(modelPhysical);
+        break;
+      default:
+        throw new BizException("手动同步,元数据表查询有误请联系相关人员");
+    }
+  }
+
+  /**
+   * 手动同步修改状态
+   * @param modelPhysical
+   */
+  private void buildSynzData(ModelPhysicalTable modelPhysical) {
+    modelPhysical.setSyncStatus(ModelStatus.SYNCHRONIZATION);
+    modelPhysicalTableRepository.saveAndFlush(modelPhysical);
+  }
+
+  /**
+   * 单个发布和批量发布
+   * @param tables
+   * @param modelPhysical
+   * @param id
+   */
+  private void dealPushData(int tables, ModelPhysicalTable modelPhysical, Long id) {
+    switch (tables){
+      case ModelStatus.EXIST_DATA:
+        throw new BizException("发布失败,该表已经存在并且存在数据");
+      case ModelStatus.EXIST_NO_DATA:
+        ModelSql sqlv1 = modelSqlRepository.findByTableId(id);
+        //todo(需要完善)执行sql成功后修改数据状态
+
+        builPushData(modelPhysical);
+        break;
+      case ModelStatus.NO_EXIST:
+        ModelSql sqlv0 = modelSqlRepository.findByTableId(id);
+        //todo(需要完善)执行sql成功后修改数据状态
+
+        builPushData(modelPhysical);
+        break;
+      default:
+        throw new BizException("发布失败,元数据表查询有误请联系相关人员");
+    }
+  }
+
+  /**
+   * 单个、批量发布成功修改数据状态
+   * @param modelPhysical
+   */
+  private void builPushData(ModelPhysicalTable modelPhysical) {
+    modelPhysical.setStatus(ModelStatus.PUBLISH);
+    modelPhysicalTableRepository.saveAndFlush(modelPhysical);
   }
 
   /**
@@ -429,23 +535,17 @@ public class PhysicalServiceImpl implements PhysicalService {
     idList.forEach(
         id->{
           //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
-          ModelPhysicalTableVO modelPhysical = getModelPhysical(id);
+          ModelPhysicalTable modelPhysicalTable = modelPhysicalTableRepository.findById(id).orElse(null);
           //2校验基础信息是否完善
-          Boolean check = checkPhysicalTable(modelPhysical);
+          Boolean check = checkPhysicalTable(modelPhysicalTable);
           //3如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
           if (!check){
             throw new BizException("id为"+id+"的信息不完善请完善后发布");
           }
-            List<String> tables = getTables(modelPhysical.getDataConnection(),modelPhysical.getDatabaseName(),modelPhysical.getTableName());
-            if (CollectionUtils.isNotEmpty(tables)){
-              //todo(需要完善)
-             //判断存在的表是否存在且是否存在数据，如果存在且没有数据就发布删除、新建任务，如果不存在就发布新建任务
-
-            }else{
-              //获取建表sql
-              ModelSql sql = modelSqlRepository.findByTableId(id);
-              //调用任务创建表
-            }
+          int tables = getTables(modelPhysicalTable.getDataConnection(),
+              modelPhysicalTable.getDataSourceName(), modelPhysicalTable.getDatabaseName(),
+              modelPhysicalTable.getTableName());
+          dealPushData(tables,modelPhysicalTable,id);
         }
     );
   }
@@ -455,7 +555,7 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @param modelPhysical
    * @return
    */
-  private Boolean checkPhysicalTable(ModelPhysicalTableVO modelPhysical) {
+  private Boolean checkPhysicalTable(ModelPhysicalTable modelPhysical) {
     Boolean check = true;
     //1校验主题和主题id、表名、数据连接、数据库
     if (StringUtils.isEmpty(modelPhysical.getTheme())||modelPhysical.getThemeId()==0||StringUtils.isEmpty(modelPhysical.getTableName())||
@@ -631,16 +731,19 @@ public class PhysicalServiceImpl implements PhysicalService {
   /**
    * 根据数据库名称和表明成获取元数据信息
    * @param dataConnection 数据源连接类型
+   * @parm dataSourceName 数据源连接名称
    * @param databaseName 数据库名称
    * @param tableName 表名称
    * @return
    */
-  private List<String> getTables(String dataConnection,String databaseName,String tableName) {
-    List<String> list = new ArrayList<>();
-    if (StringUtils.isNotBlank(tableName) && StringUtils.isNotBlank(databaseName) && StringUtils.isNotBlank(dataConnection)){
-      list = dataBaseService.getAllTable(dataConnection, databaseName, tableName);
+  private int getTables(String dataConnection, String dataSourceName,
+      String databaseName, String tableName) {
+     int resultTable = 3;
+    if (StringUtils.isNotBlank(tableName) && StringUtils.isNotBlank(databaseName)
+        && StringUtils.isNotBlank(dataSourceName) && StringUtils.isNotBlank(dataConnection)){
+      resultTable = dataBaseService.getExistData(dataConnection, dataSourceName, databaseName,tableName);
     }
-    return list;
+    return resultTable;
   }
 
   /**
@@ -870,13 +973,11 @@ public class PhysicalServiceImpl implements PhysicalService {
   private void updateModelPhysical(ModelPhysicalDTO modelPhysicalDTO,ModelPhysicalTable modelPhysicalTable) {
     //判断修改之后点击的是保存还是发布状态
       if (modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)){
-        List<String> tables = getTables(modelPhysicalTable.getDataConnection(),modelPhysicalTable.getDatabaseName(),modelPhysicalTable.getTableName());
-        if (CollectionUtils.isEmpty(tables)){
-          throw new BizException("修改发布失败，该表不存在");
-        }
-        String sql = dataUpdateModelPhysical(modelPhysicalDTO, modelPhysicalTable);
-        //todo(需要完善)
-        //如果之前存在表并且表中没有数据发布删除任务、创建任务，如果存在表且存在数据发布报错信息
+        int tables = getTables(modelPhysicalTable.getDataConnection(),
+            modelPhysicalTable.getDataSourceName(),
+            modelPhysicalTable.getDatabaseName(),
+            modelPhysicalTable.getTableName());
+        dealExistData(tables,modelPhysicalDTO,modelPhysicalTable);
       }else{
         dataUpdateModelPhysical(modelPhysicalDTO,modelPhysicalTable);
       }

@@ -41,6 +41,12 @@ public class ModelPhysicalTable implements Serializable {
     private String dataConnection;
 
     /**
+     * 数据源连接名称
+     */
+    @Column(name="data_source_name",nullable = false)
+    private String dataSourceName;
+
+    /**
      * 数据库名称
      */
     @Column(name = "database_name", nullable = false)
