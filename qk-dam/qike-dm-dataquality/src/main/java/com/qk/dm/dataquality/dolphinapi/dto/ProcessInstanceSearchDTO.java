@@ -1,7 +1,9 @@
 package com.qk.dm.dataquality.dolphinapi.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,6 +13,8 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ProcessInstanceSearchDTO implements Serializable {
   String projectName;

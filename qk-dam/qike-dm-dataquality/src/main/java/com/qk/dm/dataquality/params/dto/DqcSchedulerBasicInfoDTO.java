@@ -41,7 +41,7 @@ public class DqcSchedulerBasicInfoDTO {
 
   /** 通知状态 */
   @NotNull(message = "通知状态不能为空！")
-  private String notifyState;
+  private Boolean notifyState;
 
   /** 通知类型 */
   @NotNull(message = "通知类型不能为空！")

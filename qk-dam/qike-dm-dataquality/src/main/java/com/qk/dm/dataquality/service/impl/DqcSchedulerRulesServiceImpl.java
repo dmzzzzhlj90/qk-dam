@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
@@ -87,11 +88,11 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
 
         dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
-        dqcSchedulerRules.setGmtCreate(new Date());
-        dqcSchedulerRules.setGmtModified(new Date());
+//        dqcSchedulerRules.setGmtCreate(new Date());
+//        dqcSchedulerRules.setGmtModified(new Date());
         // todo 创建人
         dqcSchedulerRules.setCreateUserid("admin");
-        dqcSchedulerRules.setDelFlag(0);
+        dqcSchedulerRules.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
         dqcSchedulerRulesRepository.save(dqcSchedulerRules);
     }
 
@@ -112,16 +113,23 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
 
         dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
-        dqcSchedulerRules.setGmtModified(new Date());
-        dqcSchedulerRules.setDelFlag(0);
+//        dqcSchedulerRules.setGmtModified(new Date());
+        // todo 修改人
+        dqcSchedulerRules.setUpdateUserid("admin");
+        if(dqcSchedulerRules.getId() == null){
+            // todo 创建人
+            dqcSchedulerRules.setCreateUserid("admin");
+        }
+        dqcSchedulerRules.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
         dqcSchedulerRulesRepository.saveAndFlush(dqcSchedulerRules);
 
     }
 
     @Override
-    public void updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList) {
+    public void updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList,String jobId) {
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
+            dqcSchedulerRulesVO.setJobId(jobId);
             update(dqcSchedulerRulesVO);
         }
     }

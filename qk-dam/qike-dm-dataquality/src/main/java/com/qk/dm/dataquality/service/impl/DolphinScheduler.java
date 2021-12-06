@@ -1,7 +1,6 @@
 package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dm.dataquality.constant.SchedulerStateEnum;
-import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
@@ -63,12 +62,12 @@ public class DolphinScheduler {
     }
 
     /**
-     * 停止实例
+     * 操作实例
      *
      * @param processDefinitionId
      */
-    public void stop(Integer processDefinitionId) {
-        processInstanceService.execute(processDefinitionId, ExecuteTypeEnum.STOP.getCode());
+    public void execute(Integer processDefinitionId,String executeType) {
+        processInstanceService.execute(processDefinitionId, executeType);
     }
 
     /**
@@ -78,12 +77,6 @@ public class DolphinScheduler {
      * @return
      */
     public DqcProcessInstanceVO detailByList(ProcessInstanceSearchDTO instanceSearchDTO) {
-//        ProcessInstanceSearchDTO instanceSearchDTO =
-//                ProcessInstanceSearchDTO.builder()
-//                        .processDefinitionId(processDefinitionId)
-//                        .pageNo(SchedulerConstant.PAGE_NO)
-//                        .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
-//                        .build();
         ProcessInstanceResultDTO search = processInstanceService.search(instanceSearchDTO);
         return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(search.getTotalList().get(0));
     }

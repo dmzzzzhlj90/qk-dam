@@ -1,6 +1,8 @@
 package com.qk.dm.dataquality.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -115,12 +117,14 @@ public class DqcSchedulerRules implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create", nullable = false)
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
 }

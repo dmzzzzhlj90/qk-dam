@@ -63,7 +63,7 @@ public class DqcSchedulerBasicInfoVO {
      * 通知状态 "CLOSE":"关","OPEN":"开";
      */
     @NotNull(message = "通知状态不能为空！")
-    private String notifyState;
+    private Boolean notifyState;
 
     /**
      * 通知类型 "TRIGGER_ALARM":"触发告警", "RUN_SUCCESS":"运行成功";

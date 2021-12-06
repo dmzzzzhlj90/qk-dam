@@ -1,11 +1,9 @@
 package com.qk.dm.dataquality.mapstruct.mapper;
 
+import com.qk.dm.dataquality.constant.NotifyStateEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -16,14 +14,17 @@ import org.mapstruct.factory.Mappers;
  * @since 1.0.0
  */
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,imports = {NotifyStateEnum.class})
 public interface DqcSchedulerBasicInfoMapper {
     DqcSchedulerBasicInfoMapper INSTANCE = Mappers.getMapper(DqcSchedulerBasicInfoMapper.class);
 
+    @Mappings({@Mapping(target = "notifyState", expression = "java(NotifyStateEnum.conversionType(dqcSchedulerBasicInfo.getNotifyState()))")})
     DqcSchedulerBasicInfoVO userDqcSchedulerBasicInfoVO(DqcSchedulerBasicInfo dqcSchedulerBasicInfo);
 
+    @Mappings({@Mapping(target = "notifyState", expression = "java(NotifyStateEnum.conversionType(dqcSchedulerBasicInfoVO.getNotifyState()))")})
     DqcSchedulerBasicInfo userDqcSchedulerBasicInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
+    @Mappings({@Mapping(target = "notifyState", expression = "java(NotifyStateEnum.conversionType(dqcSchedulerBasicInfoVO.getNotifyState()))")})
     void toDqcSchedulerBasicInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, @MappingTarget DqcSchedulerBasicInfo dqcSchedulerBasicInfo);
 
 }

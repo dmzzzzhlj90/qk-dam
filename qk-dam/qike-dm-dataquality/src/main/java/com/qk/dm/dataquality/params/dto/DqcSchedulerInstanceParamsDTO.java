@@ -1,7 +1,10 @@
 package com.qk.dm.dataquality.params.dto;
 
 import com.qk.dam.jpa.pojo.Pagination;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author shenpj
@@ -9,6 +12,9 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DqcSchedulerInstanceParamsDTO {
 
     Pagination pagination;
@@ -32,4 +38,9 @@ public class DqcSchedulerInstanceParamsDTO {
      * 搜索值
      */
     String searchVal;
+
+    /**
+     * 工作流和任务节点的运行状态
+     */
+    String stateType;
 }

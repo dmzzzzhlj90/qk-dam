@@ -1,6 +1,9 @@
 package com.qk.dm.dataquality.service;
 
+import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceExecuteDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
+import com.qk.dm.dataquality.vo.SchedulerInstanceConstantsVO;
 
 /**
  * @author shenpj
@@ -8,5 +11,9 @@ import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
  * @since 1.0.0
  */
 public interface DqcSchedulerInstanceService {
-    Object search(DqcSchedulerInstanceParamsDTO dqcSchedulerInstanceParamsDTO);
+    DqcProcessInstanceVO search(DqcSchedulerInstanceParamsDTO dqcSchedulerInstanceParamsDTO);
+
+    void execute(DqcSchedulerInstanceExecuteDTO instanceExecute);
+
+    SchedulerInstanceConstantsVO getInstanceConstants();
 }
