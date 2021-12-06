@@ -71,14 +71,14 @@ public class DolphinScheduler {
     }
 
     /**
-     * 查询实例列表最新一条记录
+     * 查询实例列表
      *
      * @param instanceSearchDTO
      * @return
      */
-    public DqcProcessInstanceVO detailByList(ProcessInstanceSearchDTO instanceSearchDTO) {
+    public List<DqcProcessInstanceVO> detailByList(ProcessInstanceSearchDTO instanceSearchDTO) {
         ProcessInstanceResultDTO search = processInstanceService.search(instanceSearchDTO);
-        return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(search.getTotalList().get(0));
+        return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(search.getTotalList());
     }
 
     /**

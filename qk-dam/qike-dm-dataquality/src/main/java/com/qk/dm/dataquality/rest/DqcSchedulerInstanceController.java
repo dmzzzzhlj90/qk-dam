@@ -5,10 +5,13 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceExecuteDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerInstanceService;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.SchedulerInstanceConstantsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  *  数据质量_调度_实例信息
@@ -28,11 +31,11 @@ public class DqcSchedulerInstanceController {
     /**
      * 实例信息分页
      * @param dqcSchedulerInstanceParamsDTO
-     * @return
+     * @return DefaultCommonResult<List<DqcProcessInstanceVO>>
      */
     @PostMapping("/list")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult search(@RequestBody DqcSchedulerInstanceParamsDTO dqcSchedulerInstanceParamsDTO) {
+    public DefaultCommonResult<List<DqcProcessInstanceVO>> search(@RequestBody DqcSchedulerInstanceParamsDTO dqcSchedulerInstanceParamsDTO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerInstanceService.search(dqcSchedulerInstanceParamsDTO));
     }
 
@@ -50,7 +53,7 @@ public class DqcSchedulerInstanceController {
 
     /**
      * 获取实例信息常量信息
-     * @return DefaultCommonResult<RuleTemplateConstantsVO>
+     * @return DefaultCommonResult<SchedulerInstanceConstantsVO>
      */
     @GetMapping("/constants")
     public DefaultCommonResult<SchedulerInstanceConstantsVO> getInstanceConstants() {

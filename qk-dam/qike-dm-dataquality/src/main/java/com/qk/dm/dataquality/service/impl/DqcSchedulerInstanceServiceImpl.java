@@ -10,6 +10,8 @@ import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.SchedulerInstanceConstantsVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author shenpj
  * @date 2021/12/4 4:32 下午
@@ -25,7 +27,7 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
     }
 
     @Override
-    public DqcProcessInstanceVO search(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
+    public List<DqcProcessInstanceVO> search(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
         ProcessInstanceSearchDTO instanceSearchDTO =
                 ProcessInstanceSearchDTO.builder()
                         .processDefinitionId(instanceParamsDTO.getProcessDefinitionId())

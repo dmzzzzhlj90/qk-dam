@@ -88,8 +88,6 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
 
         dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
-//        dqcSchedulerRules.setGmtCreate(new Date());
-//        dqcSchedulerRules.setGmtModified(new Date());
         // todo 创建人
         dqcSchedulerRules.setCreateUserid("admin");
         dqcSchedulerRules.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
@@ -113,7 +111,6 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
 
         dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
-//        dqcSchedulerRules.setGmtModified(new Date());
         // todo 修改人
         dqcSchedulerRules.setUpdateUserid("admin");
         if(dqcSchedulerRules.getId() == null){
