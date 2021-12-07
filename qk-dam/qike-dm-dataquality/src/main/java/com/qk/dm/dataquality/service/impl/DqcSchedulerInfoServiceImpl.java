@@ -124,7 +124,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         //规则信息
         dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId));
         //TODO  调度配置信息
-//        dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
+        dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
         //创建流程实例ID
         int processDefinitionId = processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
         //存储流程实例ID
@@ -253,7 +253,6 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         for (DqcSchedulerRules dqcSchedulerRules : dqcSchedulerRulesIterable) {
             DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);
             dqcSchedulerRulesVO.setFieldList(DqcConstant.changeTypeToList(dqcSchedulerRules.getFields()));
-//            setFieldList(dqcSchedulerRulesVO, dqcSchedulerRules.getFields());
             schedulerRulesVOList.add(dqcSchedulerRulesVO);
         }
         return schedulerRulesVOList.stream().collect(Collectors.groupingBy(DqcSchedulerRulesVO::getJobId));
@@ -286,13 +285,6 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
 
     private void updateProcessDefinitionIdByJobId(int processDefinitionId, String jobId) {
         dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
-    }
-
-    private void setFieldList(DqcSchedulerRulesVO dqcSchedulerRulesVO, String fields) {
-        if (!ObjectUtils.isEmpty(fields)) {
-            dqcSchedulerRulesVO.setFieldList(GsonUtil.fromJsonString(GsonUtil.toJsonString(fields), new TypeToken<List<String>>() {
-            }.getType()));
-        }
     }
 
 }
