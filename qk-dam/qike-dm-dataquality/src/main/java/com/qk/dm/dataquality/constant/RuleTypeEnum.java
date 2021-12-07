@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.constant;
 
-import org.springframework.util.ObjectUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,18 +22,6 @@ public enum RuleTypeEnum {
     RuleTypeEnum(String code, String name) {
         this.code = code;
         this.name = name;
-    }
-
-    public static RuleTypeEnum getVal(String code) {
-        if (ObjectUtils.isEmpty(code)) {
-            return null;
-        }
-        for (RuleTypeEnum enums : RuleTypeEnum.values()) {
-            if (code.equals(enums.code)) {
-                return enums;
-            }
-        }
-        return null;
     }
 
     public static Map<String, String> getAllValue() {

@@ -26,18 +26,6 @@ public enum EngineTypeEnum {
         this.dbType = dbType;
     }
 
-    public static EngineTypeEnum getVal(String code) {
-        if (ObjectUtils.isEmpty(code)) {
-            return null;
-        }
-        for (EngineTypeEnum enums : EngineTypeEnum.values()) {
-            if (code.equals(enums.code)) {
-                return enums;
-            }
-        }
-        return null;
-    }
-
     public static EngineTypeEnum fromValue(String code) {
         if (!ObjectUtils.isEmpty(code)) {
             for (EngineTypeEnum b : EngineTypeEnum.values()) {
