@@ -110,8 +110,16 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
     }
 
     private String getTaskNodeName(DqcSchedulerRulesVO rulesVO) {
-        String tableStr = String.join("/", rulesVO.getTableList());
-        String fieldStr = String.join("/", rulesVO.getFieldList());
+        String tableStr = "";
+        String fieldStr = "";
+        if (rulesVO.getTableList() != null) {
+            tableStr = String.join("/", rulesVO.getTableList());
+        }
+
+        if (rulesVO.getFieldList() != null) {
+            fieldStr = String.join("/", rulesVO.getFieldList());
+        }
+
         return rulesVO.getRuleType() + "_" + rulesVO.getDatabaseName() + "_" + tableStr + "_" + fieldStr;
     }
 
