@@ -31,7 +31,7 @@ public enum ExecTypeEnum {
         return b;
       }
     }
-    return null;
+    throw new IllegalArgumentException("Unexpected id '" + code + "'");
   }
 
   public String getCode() {

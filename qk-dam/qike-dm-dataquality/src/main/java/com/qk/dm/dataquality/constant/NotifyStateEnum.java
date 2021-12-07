@@ -30,18 +30,6 @@ public enum NotifyStateEnum {
         this.state = state;
     }
 
-    public static NotifyStateEnum getVal(String name) {
-        if (ObjectUtils.isEmpty(name)) {
-            return null;
-        }
-        for (NotifyStateEnum enums : NotifyStateEnum.values()) {
-            if (name.equals(enums.name)) {
-                return enums;
-            }
-        }
-        return null;
-    }
-
     public static Map<String, String> getAllValue() {
         Map<String, String> val = new HashMap<>();
         for (NotifyStateEnum enums : NotifyStateEnum.values()) {
@@ -61,7 +49,7 @@ public enum NotifyStateEnum {
                 return enums.code;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unexpected id '" + state + "'");
     }
 
     public static Boolean conversionType(String code){
@@ -70,7 +58,7 @@ public enum NotifyStateEnum {
                 return enums.state;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unexpected id '" + code + "'");
     }
 
     public String getCode() {

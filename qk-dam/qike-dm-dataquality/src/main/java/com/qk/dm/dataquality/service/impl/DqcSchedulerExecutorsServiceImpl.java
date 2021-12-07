@@ -93,7 +93,7 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
                         .build();
 
         // 获取到最近运行实例
-        DqcProcessInstanceVO instanceData = dolphinScheduler.detailByList(instanceSearchDTO);
+        DqcProcessInstanceVO instanceData = dolphinScheduler.detailByList(instanceSearchDTO).get(0);
         // 保存状态
         InstanceStateTypeEnum instanceStateTypeEnum = InstanceStateTypeEnum.fromValue(instanceData.getState());
         instanceData.setStateName(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getValue());

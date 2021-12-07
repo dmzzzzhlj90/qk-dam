@@ -266,7 +266,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                             //发送策略
                             WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getCode(),
                             //指令类型
-                            ExecTypeEnum.fromValue(dolphinRunInfoConfig.getExecType()).getCode(),
+                            dolphinRunInfoConfig.getExecType(),
                             // 收件人
                             dolphinRunInfoConfig.getReceivers(),
                             // 收件人(抄送)
