@@ -15,7 +15,7 @@ spring:
         server-addr: ${nacosServerAddr}
         namespace: ${nacosServerNamespace}-\${spring.profiles.active}
         extension-configs:
-          - dataId: qkdam-mysql-\${spring.profiles.active}.yml
+          - dataId: qkreptile-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
   profiles:
