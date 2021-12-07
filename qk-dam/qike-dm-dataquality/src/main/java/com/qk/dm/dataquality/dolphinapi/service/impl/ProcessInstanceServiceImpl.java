@@ -8,9 +8,7 @@ import com.qk.datacenter.model.Result;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceSearchDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +40,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
             Result result =
                     defaultApi.executeUsingPOST(
                             ExecuteTypeEnum.fromValue(executeType).getCode(), processInstanceId, dolphinSchedulerInfoConfig.getProjectName());
-            DqcConstant.verification(result, "执行流程实例操作失败{}");
+            DqcConstant.verification(result, "执行流程实例操作失败{}，");
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
@@ -69,7 +67,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             instanceSearchDTO.getSearchVal(),
                             instanceSearchDTO.getStartDate(),
                             instanceSearchDTO.getStateType());
-            DqcConstant.verification(result, "查询流程实例列表失败{}");
+            DqcConstant.verification(result, "查询流程实例列表失败{}，");
             return GsonUtil.fromJsonString(
                     GsonUtil.toJsonString(result.getData()),
                     new TypeToken<ProcessInstanceResultDTO>() {
@@ -86,7 +84,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
             Result result =
                     defaultApi.queryProcessInstanceByIdUsingGET(
                             dolphinSchedulerInfoConfig.getProjectName(), processInstanceId);
-            DqcConstant.verification(result, "查询流程实例通过流程实例ID失败{}");
+            DqcConstant.verification(result, "查询流程实例通过流程实例ID失败{}，");
             return GsonUtil.fromJsonString(
                     GsonUtil.toJsonString(result.getData()),
                     new TypeToken<ProcessInstanceDTO>() {
@@ -96,4 +94,33 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
         }
         return null;
     }
+
+    @Override
+    public ProcessTaskInstanceResultDTO searchTask(ProcessTaskInstanceSearchDTO TaskInstanceSearch) {
+        try {
+            Result result =
+                    defaultApi.queryTaskListPagingUsingGET(
+                            dolphinSchedulerInfoConfig.getProjectName(),
+                            TaskInstanceSearch.getEndDate(),
+                            TaskInstanceSearch.getExecutorName(),
+                            TaskInstanceSearch.getHost(),
+                            TaskInstanceSearch.getPageNo(),
+                            TaskInstanceSearch.getPageSize(),
+                            TaskInstanceSearch.getProcessInstanceId(),
+                            TaskInstanceSearch.getSearchVal(),
+                            TaskInstanceSearch.getStartDate(),
+                            TaskInstanceSearch.getStateType(),
+                            TaskInstanceSearch.getTaskName());
+            DqcConstant.verification(result, "查询任务实例列表失败{}，");
+            return GsonUtil.fromJsonString(
+                    GsonUtil.toJsonString(result.getData()),
+                    new TypeToken<ProcessTaskInstanceResultDTO>() {
+                    }.getType());
+        } catch (ApiException e) {
+            DqcConstant.printException(e);
+        }
+        return null;
+    }
+
+
 }

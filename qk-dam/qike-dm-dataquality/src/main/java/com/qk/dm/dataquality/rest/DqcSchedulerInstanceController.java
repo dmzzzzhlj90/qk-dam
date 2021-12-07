@@ -5,8 +5,10 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceExecuteDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceParamsDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerInstanceService;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
+import com.qk.dm.dataquality.vo.DqcProcessTaskInstanceVO;
 import com.qk.dm.dataquality.vo.SchedulerInstanceConstantsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -59,6 +61,10 @@ public class DqcSchedulerInstanceController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerInstanceService.getInstanceConstants());
     }
 
-
+    @PostMapping("/task/list")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult<PageResultVO<DqcProcessTaskInstanceVO>> searchTask(@RequestBody DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerInstanceService.searchTask(taskInstanceParamsDTO));
+    }
 
 }

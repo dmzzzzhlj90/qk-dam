@@ -6,8 +6,6 @@ import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
-import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
-import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -76,8 +74,17 @@ public class DolphinScheduler {
      * @param instanceSearchDTO
      * @return
      */
-    public ProcessInstanceResultDTO detailByList(ProcessInstanceSearchDTO instanceSearchDTO) {
+    public ProcessInstanceResultDTO instanceList(ProcessInstanceSearchDTO instanceSearchDTO) {
         return processInstanceService.search(instanceSearchDTO);
+    }
+
+    /**
+     * 查询任务实例列表
+     * @param instanceSearchDTO
+     * @return
+     */
+    public ProcessTaskInstanceResultDTO taskInstanceList(ProcessTaskInstanceSearchDTO instanceSearchDTO) {
+        return processInstanceService.searchTask(instanceSearchDTO);
     }
 
     /**
