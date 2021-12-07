@@ -1,5 +1,6 @@
 package com.qk.dm.dataquality.service;
 
+import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DqcRuleSqlBuilderService {
 
-    String getExecuteSql(String tempSql, String condition, String value);
+    String getExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO);
 
 }

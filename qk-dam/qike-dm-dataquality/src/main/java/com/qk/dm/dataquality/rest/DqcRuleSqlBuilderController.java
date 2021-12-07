@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataquality.service.DqcRuleSqlBuilderService;
+import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +29,13 @@ public class DqcRuleSqlBuilderController {
     /**
      * 根据规则模板获取执行Sql
      *
-     * @param
+     * @param dqcSchedulerRulesVO
      * @return DefaultCommonResult
      */
-    @GetMapping("/execute")
+    @PostMapping("/execute")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-    public DefaultCommonResult getExecuteSql(@RequestParam("tempSql") String tempSql,
-                                             @RequestParam("condition") String condition,
-                                             @RequestParam("value") String value) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleSqlBuilderService.getExecuteSql(tempSql, condition, value));
+    public DefaultCommonResult getExecuteSql(@RequestBody DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleSqlBuilderService.getExecuteSql(dqcSchedulerRulesVO));
     }
 
 }

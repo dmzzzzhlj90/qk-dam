@@ -122,9 +122,9 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         //基础信息
         dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
         //规则信息
-        dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId);
-        //调度配置信息
-        dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
+        dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId));
+        //TODO  调度配置信息
+//        dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
         //创建流程实例ID
         int processDefinitionId = processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
         //存储流程实例ID
@@ -207,7 +207,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
                         .select(qDqcSchedulerBasicInfo)
                         .from(qDqcSchedulerBasicInfo)
                         .where(booleanBuilder)
-                        .orderBy(qDqcSchedulerBasicInfo.gmtModified.asc())
+                        .orderBy(qDqcSchedulerBasicInfo.schedulerState.desc())
+                        .orderBy(qDqcSchedulerBasicInfo.jobName.desc())
                         .offset((schedulerInfoParamsVO.getPagination().getPage() - 1) * schedulerInfoParamsVO.getPagination().getSize())
                         .limit(schedulerInfoParamsVO.getPagination().getSize())
                         .fetch();
