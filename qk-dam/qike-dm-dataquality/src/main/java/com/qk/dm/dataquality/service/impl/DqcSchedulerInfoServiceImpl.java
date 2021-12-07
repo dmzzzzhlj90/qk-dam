@@ -252,7 +252,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     }
 
     private Map<String, List<DqcSchedulerRulesVO>> getSchedulerRulesMap(List<String> taskIds) {
-        Iterable<DqcSchedulerRules> dqcSchedulerRulesIterable = dqcSchedulerRulesRepository.findAll(QDqcSchedulerRules.dqcSchedulerRules.jobId.in(taskIds));
+        Iterable<DqcSchedulerRules> dqcSchedulerRulesIterable = dqcSchedulerRulesRepository.findAll(QDqcSchedulerRules.dqcSchedulerRules.jobId.in(taskIds),QDqcSchedulerRules.dqcSchedulerRules.gmtModified.desc());
         List<DqcSchedulerRulesVO> schedulerRulesVOList = new ArrayList<>();
         for (DqcSchedulerRules dqcSchedulerRules : dqcSchedulerRulesIterable) {
             DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);
