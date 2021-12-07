@@ -1,11 +1,10 @@
 package com.qk.dm.dataquality.service;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceExecuteDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.SchedulerInstanceConstantsVO;
-
-import java.util.List;
 
 /**
  * @author shenpj
@@ -13,7 +12,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface DqcSchedulerInstanceService {
-    List<DqcProcessInstanceVO> search(DqcSchedulerInstanceParamsDTO dqcSchedulerInstanceParamsDTO);
+    PageResultVO<DqcProcessInstanceVO> search(DqcSchedulerInstanceParamsDTO dqcSchedulerInstanceParamsDTO);
 
     void execute(DqcSchedulerInstanceExecuteDTO instanceExecute);
 

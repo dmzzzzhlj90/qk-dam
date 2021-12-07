@@ -76,9 +76,8 @@ public class DolphinScheduler {
      * @param instanceSearchDTO
      * @return
      */
-    public List<DqcProcessInstanceVO> detailByList(ProcessInstanceSearchDTO instanceSearchDTO) {
-        ProcessInstanceResultDTO search = processInstanceService.search(instanceSearchDTO);
-        return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(search.getTotalList());
+    public ProcessInstanceResultDTO detailByList(ProcessInstanceSearchDTO instanceSearchDTO) {
+        return processInstanceService.search(instanceSearchDTO);
     }
 
     /**
