@@ -54,8 +54,8 @@ public class RptBaseColumnInfo implements Serializable {
     /**
      * 维度字段名称
      */
-    @Column(name = "colunm_name", nullable = false)
-    private String colunmName;
+    @Column(name = "column_name", nullable = false)
+    private String columnName;
 
     /**
      * 创建时间
