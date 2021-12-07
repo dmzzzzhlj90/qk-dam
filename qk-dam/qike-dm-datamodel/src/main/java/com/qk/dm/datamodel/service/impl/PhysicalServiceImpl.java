@@ -985,7 +985,6 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @return
    */
   private String dataUpdateModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
-    String sqls = null;
     //1修改基础信息
     modelPhysicalTableRepository.saveAndFlush(modelPhysicalTable);
     //2修改字段配置
@@ -1010,7 +1009,7 @@ public class PhysicalServiceImpl implements PhysicalService {
       modelSqlRepository.delete(modelSql);
     }
     //生成表的修改语句（等待调整）
-    sqls = createSql(modelPhysicalTable,columnList,modelPhysicalTable.getId());
+    String sqls = createSql(modelPhysicalTable,columnList,modelPhysicalTable.getId());
     return sqls;
   }
 }
