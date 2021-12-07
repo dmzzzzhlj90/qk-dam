@@ -117,15 +117,15 @@ public class DqcConstant {
         return object.toJSONString();
     }
 
-    public static List<String> changeTypeToList(String fields) {
-        if (!ObjectUtils.isEmpty(fields)) {
-            return GsonUtil.fromJsonString(fields, new TypeToken<List<String>>() {}.getType());
+    public static List<String> jsonStrToList(String jsonStr) {
+        if (!ObjectUtils.isEmpty(jsonStr)) {
+            return GsonUtil.fromJsonString(jsonStr, new TypeToken<List<String>>() {}.getType());
         }
         return null;
     }
 
     public static void main(String[] args) {
         String a = "[\"MYSQL\",\"HIVE\"]";
-        changeTypeToList(a);
+        jsonStrToList(a);
     }
 }

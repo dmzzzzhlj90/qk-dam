@@ -33,6 +33,11 @@ public class GenerateSqlUtil {
      */
     public static final String DEFAULT_NUM = "1";
 
+    /**
+     *  UNION ALL
+     */
+    public static final String UNION_ALL = " UNION ALL ";
+
     public static String generateSql(String tempSql, Map<String, String> conditionMap) {
         if (conditionMap.size() > 0) {
             for (String conditionKey : conditionMap.keySet()) {
