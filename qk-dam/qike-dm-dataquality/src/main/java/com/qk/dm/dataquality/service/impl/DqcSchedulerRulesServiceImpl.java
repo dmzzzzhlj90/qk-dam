@@ -88,6 +88,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
 
+        dqcSchedulerRules.setTables(GsonUtil.toJsonString(dqcSchedulerRulesVO.getTableList()));
         dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
         // todo 创建人
         dqcSchedulerRules.setCreateUserid("admin");
@@ -115,6 +116,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public void update(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
 
+        dqcSchedulerRules.setTables(GsonUtil.toJsonString(dqcSchedulerRulesVO.getTableList()));
         dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
         // todo 修改人
         dqcSchedulerRules.setUpdateUserid("admin");
