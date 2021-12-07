@@ -21,12 +21,28 @@ public class GenerateSqlUtil {
     /**
      * Schema_Table
      */
-    public static final String SCHEMA_TABLE = "Schema_Table";
+    public static final String SCHEMA_TABLE = "t";
 
     /**
      * Column
      */
-    public static final String COLUMN = "Column";
+    public static final String COL = "col";
+
+    /**
+     * 默认序列号
+     */
+    public static final String DEFAULT_NUM = "1";
+
+    public static String generateSql(String tempSql, Map<String, String> conditionMap) {
+        if (conditionMap.size() > 0) {
+            for (String conditionKey : conditionMap.keySet()) {
+                String value = conditionMap.get(conditionKey);
+                // 先匹配现有的内容
+                tempSql = matchReplaceWithCondition(tempSql, conditionKey, value);
+            }
+        }
+        return tempSql;
+    }
 
     public static String matchReplaceWithCondition(String tempSql, String condition, String value) {
         String pattern = "\\$\\{" + condition + "\\}";

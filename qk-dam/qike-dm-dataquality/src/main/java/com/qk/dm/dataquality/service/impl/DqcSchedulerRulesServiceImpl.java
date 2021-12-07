@@ -12,6 +12,7 @@ import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerRulesMapper;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
+import com.qk.dm.dataquality.service.DqcRuleSqlBuilderService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
@@ -38,16 +39,16 @@ import java.util.*;
 public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     private final QDqcSchedulerRules qDqcSchedulerRules = QDqcSchedulerRules.dqcSchedulerRules;
     private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
-    private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
+    private final DqcRuleSqlBuilderService dqcRuleSqlBuilderService;
+
 
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
 
     public DqcSchedulerRulesServiceImpl(DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
-                                        DqcRuleTemplateRepository dqcRuleTemplateRepository,
-                                        EntityManager entityManager) {
+                                        DqcRuleSqlBuilderService dqcRuleSqlBuilderService, EntityManager entityManager) {
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
-        this.dqcRuleTemplateRepository = dqcRuleTemplateRepository;
+        this.dqcRuleSqlBuilderService = dqcRuleSqlBuilderService;
         this.entityManager = entityManager;
     }
 
@@ -95,15 +96,19 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     }
 
     @Override
-    public void insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId) {
+    public List<DqcSchedulerRulesVO> insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId) {
+        List<DqcSchedulerRulesVO> executorRuleList = new ArrayList<>();
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
             dqcSchedulerRulesVO.setJobId(jobId);
-            //TODO 生成执行Sql;回填给basic进行实例生成;
-//            String executorSql=builderExecutorSql(dqcSchedulerRulesVO);
-//            dqcSchedulerRulesVO.setExecuteSql(executorSql);
+            //生成执行Sql;
+            String executorSql = getExecutorSql(dqcSchedulerRulesVO);
+            dqcSchedulerRulesVO.setExecuteSql(executorSql);
+            //回填basicVo进行实例生成;
+            executorRuleList.add(dqcSchedulerRulesVO);
             insert(dqcSchedulerRulesVO);
         }
+        return executorRuleList;
     }
 
     @Override
@@ -216,26 +221,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         dqcSchedulerRulesRepository.deleteAllInBatch(dqcSchedulerRules);
     }
 
-
-    private String builderExecutorSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
-        //获取模板SQL
-        Optional<DqcRuleTemplate> dqcRuleTemplate = dqcRuleTemplateRepository.findOne(QDqcRuleTemplate.dqcRuleTemplate.id.eq(dqcSchedulerRulesVO.getRuleTempId()));
-
-        if (dqcRuleTemplate.isPresent()) {
-            //解析替换参数信息
-            String ruleType = dqcSchedulerRulesVO.getRuleType();
-
-            if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(ruleType)) {
-                //字段级别规则
-                String tableName = dqcSchedulerRulesVO.getTableName();
-
-            }
-
-        }
-
-
-
-
-        return null;
+    private String getExecutorSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        return dqcRuleSqlBuilderService.getExecuteSql(dqcSchedulerRulesVO);
     }
+
 }
