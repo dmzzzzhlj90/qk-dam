@@ -28,7 +28,7 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                                               ResourceDTO mySqlScriptResource,
                                               TenantDTO tenantDTO,
                                               DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
-        List<TaskNodeDTO> taskNodes = getTaskNodes(dqcSchedulerBasicInfoVO, mySqlScriptResource,dolphinSchedulerInfoConfig);
+        List<TaskNodeDTO> taskNodes = getTaskNodes(dqcSchedulerBasicInfoVO, mySqlScriptResource, dolphinSchedulerInfoConfig);
 
         return ProcessDataBuilder.builder()
                 .build()
@@ -96,7 +96,7 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                                       int index,
                                       DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         taskNode.setId(dolphinSchedulerInfoConfig.getTasksNameMatch() + index);
-        taskNode.setName(rulesVO.getRuleType() + rulesVO.getRuleTempId());
+        taskNode.setName(getTaskNodeName(rulesVO));
         taskNode.setTimeout(setTimeOutDTO(dolphinSchedulerInfoConfig));
         taskNode.setRunFlag(dolphinSchedulerInfoConfig.getTaskRunFlag());
         taskNode.setConditionResult(setConditionResultDTO(dolphinSchedulerInfoConfig));
@@ -107,6 +107,20 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
         taskNode.setWorkerGroup(dolphinSchedulerInfoConfig.getTaskWorkerGroup());
         taskNode.setPreTasks(new ArrayList<>());
         taskNode.setDescription(SchedulerConstant.NULL_VALUE);
+    }
+
+    private String getTaskNodeName(DqcSchedulerRulesVO rulesVO) {
+        String tableStr = "";
+        String fieldStr = "";
+        if (rulesVO.getTableList() != null) {
+            tableStr = String.join("/", rulesVO.getTableList());
+        }
+
+        if (rulesVO.getFieldList() != null) {
+            fieldStr = String.join("/", rulesVO.getFieldList());
+        }
+
+        return rulesVO.getRuleType() + "_" + rulesVO.getDatabaseName() + "_" + tableStr + "_" + fieldStr;
     }
 
     private ConditionResultDTO setConditionResultDTO(DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
@@ -138,7 +152,7 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                 ShellParameters.builder()
                         .resourceList(resourceList)
                         .localParams(new ArrayList<>())
-                        .rawScript(setMysqlRuleScript(basicInfoVO, rulesVO, mySqlScriptResource,dolphinSchedulerInfoConfig));
+                        .rawScript(setMysqlRuleScript(basicInfoVO, rulesVO, mySqlScriptResource, dolphinSchedulerInfoConfig));
 
         taskNode.setParams(shellParametersBuilder.build());
     }

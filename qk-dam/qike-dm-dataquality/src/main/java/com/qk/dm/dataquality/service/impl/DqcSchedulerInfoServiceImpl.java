@@ -1,8 +1,6 @@
 package com.qk.dm.dataquality.service.impl;
 
-import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.*;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
@@ -121,9 +119,10 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         dqcSchedulerBasicInfoVO.setProcessDefinitionId(0);
         //基础信息
         dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
-        //规则信息
-        dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId));
-        //TODO  调度配置信息
+        //TODO 规则信息
+        dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(
+                        dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId));
+        //调度配置信息
         dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
         //创建流程实例ID
         int processDefinitionId = processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
@@ -252,7 +251,8 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         List<DqcSchedulerRulesVO> schedulerRulesVOList = new ArrayList<>();
         for (DqcSchedulerRules dqcSchedulerRules : dqcSchedulerRulesIterable) {
             DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);
-            dqcSchedulerRulesVO.setFieldList(DqcConstant.changeTypeToList(dqcSchedulerRules.getFields()));
+            dqcSchedulerRulesVO.setTableList(DqcConstant.jsonStrToList(dqcSchedulerRules.getTables()));
+            dqcSchedulerRulesVO.setFieldList(DqcConstant.jsonStrToList(dqcSchedulerRules.getFields()));
             schedulerRulesVOList.add(dqcSchedulerRulesVO);
         }
         return schedulerRulesVOList.stream().collect(Collectors.groupingBy(DqcSchedulerRulesVO::getJobId));

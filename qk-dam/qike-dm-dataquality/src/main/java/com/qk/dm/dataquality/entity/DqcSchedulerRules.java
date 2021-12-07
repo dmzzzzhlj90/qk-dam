@@ -62,8 +62,8 @@ public class DqcSchedulerRules implements Serializable {
     /**
      * 表名称
      */
-    @Column(name = "table_name")
-    private String tableName;
+    @Column(name = "tables")
+    private String tables;
 
     /**
      * 字段名称
@@ -74,20 +74,8 @@ public class DqcSchedulerRules implements Serializable {
     /**
      * 扫描范围 "FULL_TABLE":"全表", "CONDITION":"条件";
      */
-    @Column(name = "scan_type", nullable = false)
+    @Column(name = "scan_type")
     private String scanType;
-
-    /**
-     * 扫描条件SQL
-     */
-    @Column(name = "scan_sql")
-    private String scanSql;
-
-    /**
-     * 执行sql
-     */
-    @Column(name = "execute_sql")
-    private String executeSql;
 
     /**
      * 告警表达式
@@ -126,5 +114,17 @@ public class DqcSchedulerRules implements Serializable {
     @Column(name = "gmt_modified")
     @UpdateTimestamp
     private Date gmtModified;
+
+    /**
+     * 扫描条件SQL
+     */
+    @Column(name = "scan_sql")
+    private String scanSql;
+
+    /**
+     * 执行sql
+     */
+    @Column(name = "execute_sql")
+    private String executeSql;
 
 }

@@ -70,7 +70,7 @@ public class DqcSchedulerRulesVO {
     /**
      * 表名称
      */
-    private String tableName;
+    private List<String> tableList;
 
     /**
      * 字段名称

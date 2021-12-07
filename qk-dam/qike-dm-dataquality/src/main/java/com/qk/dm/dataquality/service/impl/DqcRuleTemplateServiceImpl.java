@@ -152,7 +152,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     private List<DqcRuleTemplateInfoVO> getRuleTemplateInfoVOS(List<DqcRuleTemplate> list) {
         return list.stream().map(it -> {
             DqcRuleTemplateInfoVO dqcRuleTemplateInfoVO = DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplateInfoVo(it);
-            dqcRuleTemplateInfoVO.setEngineTypeList(DqcConstant.changeTypeToList(it.getEngineType()));
+            dqcRuleTemplateInfoVO.setEngineTypeList(DqcConstant.jsonStrToList(it.getEngineType()));
             return dqcRuleTemplateInfoVO;
         }).collect(Collectors.toList());
     }
