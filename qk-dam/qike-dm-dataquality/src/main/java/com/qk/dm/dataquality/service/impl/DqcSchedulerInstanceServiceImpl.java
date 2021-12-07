@@ -42,17 +42,11 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         if (instanceParamsDTO.getDirId() != null) {
             return getInstancePageByDirId(instanceParamsDTO);
         }
-        ProcessInstanceSearchDTO instanceSearchDTO =
-                ProcessInstanceSearchDTO.builder()
-                        .processDefinitionId(instanceParamsDTO.getProcessDefinitionId())
-                        .pageNo(instanceParamsDTO.getPagination().getPage())
-                        .pageSize(instanceParamsDTO.getPagination().getSize())
-                        .startDate(instanceParamsDTO.getStartDate())
-                        .endDate(instanceParamsDTO.getEndDate())
-                        .searchVal(instanceParamsDTO.getSearchVal())
-                        .stateType(instanceParamsDTO.getStateType())
-                        .executorName(instanceParamsDTO.getExecutorName())
-                        .build();
+        ProcessInstanceSearchDTO instanceSearchDTO = getProcessInstanceSearch(
+                instanceParamsDTO,
+                instanceParamsDTO.getProcessDefinitionId(),
+                instanceParamsDTO.getPagination().getPage(),
+                instanceParamsDTO.getPagination().getSize());
         // 获取到最近运行实例
         ProcessInstanceResultDTO instance = dolphinScheduler.detailByList(instanceSearchDTO);
         return getPageResultVO(instanceParamsDTO, instance.getTotalList(), instance.getTotal());
@@ -64,17 +58,8 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         List<Integer> collect = infoByDirId.stream().map(DqcSchedulerBasicInfo::getProcessDefinitionId).collect(Collectors.toList());
         List<ProcessInstanceDTO> totalList = new ArrayList<>();
         collect.forEach(pdId -> {
-            ProcessInstanceSearchDTO instanceSearchDTO =
-                    ProcessInstanceSearchDTO.builder()
-                            .processDefinitionId(pdId)
-                            .pageNo(1)
-                            .pageSize(instanceParamsDTO.getPagination().getPage() * instanceParamsDTO.getPagination().getSize())
-                            .startDate(instanceParamsDTO.getStartDate())
-                            .endDate(instanceParamsDTO.getEndDate())
-                            .searchVal(instanceParamsDTO.getSearchVal())
-                            .stateType(instanceParamsDTO.getStateType())
-                            .executorName(instanceParamsDTO.getExecutorName())
-                            .build();
+            ProcessInstanceSearchDTO instanceSearchDTO = getProcessInstanceSearch(instanceParamsDTO, pdId, 1,
+                    instanceParamsDTO.getPagination().getPage() * instanceParamsDTO.getPagination().getSize());
             ProcessInstanceResultDTO instance = dolphinScheduler.detailByList(instanceSearchDTO);
             totalList.addAll(instance.getTotalList());
         });
@@ -84,6 +69,19 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         List<ProcessInstanceDTO> list = Pager.getList(instanceParamsDTO.getPagination().getPage(),
                 instanceParamsDTO.getPagination().getSize(), totalList);
         return getPageResultVO(instanceParamsDTO, list, totalList.size());
+    }
+
+    private ProcessInstanceSearchDTO getProcessInstanceSearch(DqcSchedulerInstanceParamsDTO instanceParamsDTO, Integer pdId, int page, int size) {
+        return ProcessInstanceSearchDTO.builder()
+                .processDefinitionId(pdId)
+                .pageNo(page)
+                .pageSize(size)
+                .startDate(instanceParamsDTO.getStartDate())
+                .endDate(instanceParamsDTO.getEndDate())
+                .searchVal(instanceParamsDTO.getSearchVal())
+                .stateType(instanceParamsDTO.getStateType())
+                .executorName(instanceParamsDTO.getExecutorName())
+                .build();
     }
 
     private PageResultVO<DqcProcessInstanceVO> getPageResultVO(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<ProcessInstanceDTO> list, int size) {
