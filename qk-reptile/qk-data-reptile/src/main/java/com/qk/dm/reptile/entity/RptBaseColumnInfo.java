@@ -1,6 +1,8 @@
 package com.qk.dm.reptile.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -60,12 +62,14 @@ public class RptBaseColumnInfo implements Serializable {
     /**
      * 创建时间
      */
+    @CreationTimestamp
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
+    @UpdateTimestamp
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
