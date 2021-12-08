@@ -12,7 +12,7 @@ public interface RptDimensionInfoService {
 
   void addRptDir(RptDimensionInfoDTO rptDimensionInfoDTO);
 
-  void deleteRptDir(Integer id);
+  void deleteRptDir(Long id);
 
   void updateRptDir(RptDimensionInfoDTO rptDimensionInfoDTO);
 }

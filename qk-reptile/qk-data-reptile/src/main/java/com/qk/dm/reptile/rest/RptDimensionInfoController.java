@@ -8,6 +8,7 @@ import com.qk.dm.reptile.service.RptDimensionInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -54,7 +55,7 @@ public class RptDimensionInfoController {
    * @return
    */
   @DeleteMapping("/{id}")
-  public DefaultCommonResult deleteDsDir(@PathVariable("id") Integer id) {
+  public DefaultCommonResult deleteDsDir(@NotBlank @PathVariable("id")Long id) {
     rptDimensionInfoService.deleteRptDir(id);
     return DefaultCommonResult.success();
   }

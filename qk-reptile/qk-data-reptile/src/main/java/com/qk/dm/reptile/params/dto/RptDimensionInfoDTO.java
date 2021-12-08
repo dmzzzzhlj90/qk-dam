@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -28,6 +29,7 @@ public class RptDimensionInfoDTO {
   /**
    * 维度目录名称
    */
+  @NotBlank(message = "维度目录名称不为空")
   private String dimensionName;
 
   /**

@@ -2,12 +2,15 @@ package com.qk.dm.reptile.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnDTO;
+import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnParamDTO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import com.qk.dm.reptile.service.RptDimensionInfoColumnService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -28,18 +31,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
   }
 
   /**
-   * 数据采集-目录信息查询
-   *
-   * DefaultCommonResult<List<RptDimensionInfoColumnVO>>
-   */
-  @GetMapping
-  public DefaultCommonResult<List<RptDimensionInfoColumnVO>> queryDsDir() {
-    return DefaultCommonResult
-        .success(ResultCodeEnum.OK, rptDimensionInfoColumnService.qyeryRptDimensionInfoColumn());
-  }
-
-  /**
-   * 数据采集-目录信息新增
+   * 数据采集-维度新增
    * @param rptDimensionInfoColumnDTO
    * @return
    */
@@ -50,18 +42,18 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
   }
 
   /**
-   * 数据采集-目录信息删除
+   * 数据采集-维度删除
    * @param ids
    * @return
    */
   @DeleteMapping
-  public DefaultCommonResult deleteDsDir(@RequestBody List<Long> ids) {
+  public DefaultCommonResult deleteDsDir(@NotBlank @RequestBody List<Long> ids) {
     rptDimensionInfoColumnService.deleteRptDimensionInfoColumn(ids);
     return DefaultCommonResult.success();
   }
 
   /**
-   * 数据采集-目录信息修改
+   * 数据采集-维度修改
    * @param rptDimensionInfoColumnDTO
    * @return
    */
@@ -72,13 +64,13 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
   }
 
   /**
-   * 数据采集-目录信息查询
+   * 数据采集-维度查询
    *
    * DefaultCommonResult<List<RptDimensionInfoColumnVO>>
    */
-  @GetMapping("/query/{id}")
-  public DefaultCommonResult<List<RptDimensionInfoColumnVO>> queryDsDir(@RequestParam("id") Long id) {
-    return DefaultCommonResult
-        .success(ResultCodeEnum.OK, rptDimensionInfoColumnService.qyeryRptDimensionInfoColumnById(id));
+  @PostMapping("/query")
+  public DefaultCommonResult<PageResultVO<RptDimensionInfoColumnVO>> queryDsDir(@RequestBody
+      RptDimensionInfoColumnParamDTO rptDimensionInfoColumnParamDTO) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.qyeryRptDimensionInfoColumn(rptDimensionInfoColumnParamDTO));
 }
 }

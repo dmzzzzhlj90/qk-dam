@@ -1,6 +1,8 @@
 package com.qk.dm.reptile.service;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnDTO;
+import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnParamDTO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,6 @@ public interface RptDimensionInfoColumnService {
 
   void updateRptDimensionInfoColumn(RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO);
 
-  List<RptDimensionInfoColumnVO> qyeryRptDimensionInfoColumn();
-
-  List<RptDimensionInfoColumnVO> qyeryRptDimensionInfoColumnById(Long id);
+  PageResultVO<RptDimensionInfoColumnVO> qyeryRptDimensionInfoColumn(
+      RptDimensionInfoColumnParamDTO rptDimensionInfoColumnParamDTO);
 }
