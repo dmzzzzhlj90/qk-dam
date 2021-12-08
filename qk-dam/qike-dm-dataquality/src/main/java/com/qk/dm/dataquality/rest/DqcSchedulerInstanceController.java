@@ -103,8 +103,8 @@ public class DqcSchedulerInstanceController {
      */
     @PostMapping("/task/log/download")
     @ResponseBody
-    public void downloadDxchangeCode(HttpServletResponse response, Integer taskInstanceId) {
-        Object log = dqcSchedulerInstanceService.searchTaskLogDownload(taskInstanceId);
+    public void taskLogDownload(HttpServletResponse response, Integer taskInstanceId) {
+        Object log = dqcSchedulerInstanceService.taskLogDownload(taskInstanceId);
         ExportTextUtil.writeToTxt(response, log.toString(), "任务实例日志_" + taskInstanceId + "_" + DateUtil.format(new Date(), "yyyyMMddHHmm"));
     }
 

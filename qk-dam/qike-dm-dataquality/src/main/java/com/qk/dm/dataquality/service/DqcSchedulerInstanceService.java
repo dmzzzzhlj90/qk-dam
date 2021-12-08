@@ -25,5 +25,5 @@ public interface DqcSchedulerInstanceService {
 
     Object searchTaskLog(DqcSchedulerTaskInstanceLogDTO taskInstanceLogDTO);
 
-    Object searchTaskLogDownload(Integer taskInstanceId);
+    Object taskLogDownload(Integer taskInstanceId);
 }
