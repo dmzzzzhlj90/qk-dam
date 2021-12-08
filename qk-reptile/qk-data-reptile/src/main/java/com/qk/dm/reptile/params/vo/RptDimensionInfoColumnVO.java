@@ -88,4 +88,9 @@ public class RptDimensionInfoColumnVO {
    */
   @Column(name = "update_username")
   private String updateUsername;
+
+  /**
+   * 维度字段编码
+   */
+  private String dimensionColumnCode;
 }

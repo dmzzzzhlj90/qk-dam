@@ -51,12 +51,12 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
 
   /**
    * 数据采集-目录信息删除
-   * @param id
+   * @param ids
    * @return
    */
   @DeleteMapping
-  public DefaultCommonResult deleteDsDir(@PathVariable("id") Integer id) {
-    rptDimensionInfoColumnService.deleteRptDimensionInfoColumn(id);
+  public DefaultCommonResult deleteDsDir(@RequestBody List<Long> ids) {
+    rptDimensionInfoColumnService.deleteRptDimensionInfoColumn(ids);
     return DefaultCommonResult.success();
   }
 
@@ -70,4 +70,15 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
     rptDimensionInfoColumnService.updateRptDimensionInfoColumn(rptDimensionInfoColumnDTO);
     return DefaultCommonResult.success();
   }
+
+  /**
+   * 数据采集-目录信息查询
+   *
+   * DefaultCommonResult<List<RptDimensionInfoColumnVO>>
+   */
+  @GetMapping("/query/{id}")
+  public DefaultCommonResult<List<RptDimensionInfoColumnVO>> queryDsDir(@RequestParam("id") Long id) {
+    return DefaultCommonResult
+        .success(ResultCodeEnum.OK, rptDimensionInfoColumnService.qyeryRptDimensionInfoColumnById(id));
+}
 }

@@ -10,9 +10,11 @@ import java.util.List;
 public interface RptDimensionInfoColumnService {
   void addRptDimensionInfoColumn(RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO);
 
-  void deleteRptDimensionInfoColumn(Integer id);
+  void deleteRptDimensionInfoColumn(List<Long> id);
 
   void updateRptDimensionInfoColumn(RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO);
 
   List<RptDimensionInfoColumnVO> qyeryRptDimensionInfoColumn();
+
+  List<RptDimensionInfoColumnVO> qyeryRptDimensionInfoColumnById(Long id);
 }
