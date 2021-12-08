@@ -1,9 +1,9 @@
 package com.qk.dm.reptile.repositories;
 
+import com.qk.dam.jpa.base.BaseRepository;
 import com.qk.dm.reptile.entity.RptDimensionColumnInfo;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface RptDimensionColumnInfoRepository extends JpaRepository<RptDimensionColumnInfo, Long>, JpaSpecificationExecutor<RptDimensionColumnInfo> {
+
+public interface RptDimensionColumnInfoRepository extends BaseRepository<RptDimensionColumnInfo, Long> {
 
 }

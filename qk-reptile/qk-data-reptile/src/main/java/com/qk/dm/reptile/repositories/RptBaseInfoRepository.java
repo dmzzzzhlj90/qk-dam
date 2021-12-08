@@ -1,9 +1,8 @@
 package com.qk.dm.reptile.repositories;
 
+import com.qk.dam.jpa.base.BaseRepository;
 import com.qk.dm.reptile.entity.RptBaseInfo;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface RptBaseInfoRepository extends JpaRepository<RptBaseInfo, Long>, JpaSpecificationExecutor<RptBaseInfo> {
+public interface RptBaseInfoRepository  extends BaseRepository<RptBaseInfo, Long> {
 
 }
