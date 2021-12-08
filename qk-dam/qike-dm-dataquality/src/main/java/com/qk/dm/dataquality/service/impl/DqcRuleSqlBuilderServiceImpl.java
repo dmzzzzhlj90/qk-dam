@@ -2,6 +2,7 @@ package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
+import com.qk.dm.dataquality.constant.ScanTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
@@ -41,7 +42,9 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         StringBuilder sqlBuffer = new StringBuilder();
         //解析替换参数信息
         dqcRuleTemplate.ifPresent(ruleTemplate -> buildExecuteSql(dqcSchedulerRulesVO, ruleTemplate, sqlBuffer));
-        return sqlBuffer.toString();
+        String executeSql = sqlBuffer.toString();
+        executeSql = executeSql.replaceAll(GenerateSqlUtil.SINGLE_QUOTES, GenerateSqlUtil.SINGLE_QUOTES_MARK);
+        return executeSql;
     }
 
     private void buildExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO, DqcRuleTemplate dqcRuleTemplate, StringBuilder sqlBuffer) {
@@ -74,12 +77,16 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
 
     private void ruleTypeTable(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
         List<String> tableList = dqcSchedulerRulesVO.getTableList();
+
+        //扫描方式
+        String wherePartSql = getScanSql(dqcSchedulerRulesVO);
+
         if (tableList != null) {
             AtomicInteger index = new AtomicInteger(0);
             for (String tableName : tableList) {
                 Map<String, String> conditionMap = new HashMap<>(16);
                 conditionMap.put(GenerateSqlUtil.SCHEMA_TABLE + GenerateSqlUtil.DEFAULT_NUM, tableName);
-                String generateSql = GenerateSqlUtil.generateSql(tempSql, conditionMap);
+                String generateSql = GenerateSqlUtil.generateSql(tempSql, conditionMap, wherePartSql);
                 sqlBuffer.append(generateSql);
                 if (index.get() != tableList.size() - 1) {
                     sqlBuffer.append(GenerateSqlUtil.UNION_ALL);
@@ -95,6 +102,10 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         List<String> tableList = dqcSchedulerRulesVO.getTableList();
         String tableName = tableList.get(0);
         List<String> fieldList = dqcSchedulerRulesVO.getFieldList();
+
+        //扫描方式
+        String wherePartSql = getScanSql(dqcSchedulerRulesVO);
+
         AtomicInteger index = new AtomicInteger(0);
 
         if (fieldList != null) {
@@ -102,7 +113,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
                 Map<String, String> conditionMap = new HashMap<>(16);
                 conditionMap.put(GenerateSqlUtil.SCHEMA_TABLE + GenerateSqlUtil.DEFAULT_NUM, tableName);
                 conditionMap.put(GenerateSqlUtil.COL + GenerateSqlUtil.DEFAULT_NUM, field);
-                String generateSql = GenerateSqlUtil.generateSql(tempSql, conditionMap);
+                String generateSql = GenerateSqlUtil.generateSql(tempSql, conditionMap, wherePartSql);
                 sqlBuffer.append(generateSql);
                 if (index.get() != fieldList.size() - 1) {
                     sqlBuffer.append(GenerateSqlUtil.UNION_ALL);
@@ -112,6 +123,24 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         } else {
             throw new BizException("规则信息生成SQL,规则类型为: " + dqcSchedulerRulesVO.getRuleType() + ",字段为空!");
         }
+    }
+
+    private String getScanSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        StringBuilder wherePartSqlBuilder = new StringBuilder();
+        String scanType = dqcSchedulerRulesVO.getScanType();
+        String scanSql = dqcSchedulerRulesVO.getScanSql();
+
+        if (ScanTypeEnum.FULL_TABLE.getCode().equalsIgnoreCase(scanType)) {
+            //全表
+            wherePartSqlBuilder.append(GenerateSqlUtil.WHERE_PART);
+        } else if (ScanTypeEnum.CONDITION.getCode().equalsIgnoreCase(scanType)) {
+            //条件
+            wherePartSqlBuilder.append(GenerateSqlUtil.WHERE_PART);
+            wherePartSqlBuilder.append(GenerateSqlUtil.AND);
+            wherePartSqlBuilder.append(scanSql);
+        }
+
+        return wherePartSqlBuilder.toString();
     }
 
 }
