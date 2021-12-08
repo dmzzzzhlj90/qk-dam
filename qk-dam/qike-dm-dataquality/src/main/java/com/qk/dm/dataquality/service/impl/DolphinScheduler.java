@@ -88,6 +88,26 @@ public class DolphinScheduler {
     }
 
     /**
+     * 查询任务实例日志
+     * @param taskInstanceId
+     * @param limit
+     * @param skipLineNum
+     * @return
+     */
+    public String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum){
+        return processInstanceService.taskLog(taskInstanceId,limit,skipLineNum);
+    }
+
+    /**
+     * 下载任务实例日志
+     * @param taskInstanceId
+     * @return
+     */
+    public String taskLogDownload(Integer taskInstanceId){
+        return processInstanceService.taskLogDownload(taskInstanceId);
+    }
+
+    /**
      * 新增定时器
      *
      * @param processDefinitionId

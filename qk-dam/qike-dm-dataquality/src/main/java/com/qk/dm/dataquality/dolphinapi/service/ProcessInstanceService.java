@@ -16,4 +16,8 @@ public interface ProcessInstanceService {
     ProcessInstanceDTO detail(Integer processInstanceId);
 
     ProcessTaskInstanceResultDTO searchTask(ProcessTaskInstanceSearchDTO TaskInstanceSearch);
+
+    String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum);
+
+    String taskLogDownload(Integer taskInstanceId);
 }

@@ -120,5 +120,38 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
         return null;
     }
 
+    @Override
+    public String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum) {
+        try {
+            Result result =
+                    defaultApi.queryLogUsingGET(limit,skipLineNum,taskInstanceId);
+            DqcConstant.verification(result, "查询任务实例日志失败{}，");
+            return (String) result.getData();
+        } catch (ApiException e) {
+            DqcConstant.printException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public String taskLogDownload(Integer taskInstanceId) {
+        try {
+//            ResponseEntity responseEntity = defaultApi.downloadTaskLogUsingGET(taskInstanceId);
+////            if (result.getStatusCode() != null && !result.getStatusCode().equals(DqcConstant.RESULT_CODE)) {
+////                throw new BizException("下载任务实例日志失败{}");
+////            }
+//            return (String) responseEntity.getBody();
+
+            Result result =
+                    defaultApi.queryLogUsingGET(0,100000,taskInstanceId);
+            DqcConstant.verification(result, "查询任务实例日志失败{}，");
+            return (String) result.getData();
+
+        } catch (ApiException e) {
+            DqcConstant.printException(e);
+        }
+        return null;
+    }
+
 
 }

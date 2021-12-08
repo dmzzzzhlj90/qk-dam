@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.service;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceExecuteDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceLogDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceParamsDTO;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.DqcProcessTaskInstanceVO;
@@ -21,4 +22,8 @@ public interface DqcSchedulerInstanceService {
     SchedulerInstanceConstantsVO getInstanceConstants();
 
     PageResultVO<DqcProcessTaskInstanceVO> searchTask(DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO);
+
+    Object searchTaskLog(DqcSchedulerTaskInstanceLogDTO taskInstanceLogDTO);
+
+    Object searchTaskLogDownload(Integer taskInstanceId);
 }

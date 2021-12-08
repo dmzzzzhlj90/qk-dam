@@ -36,6 +36,10 @@ public class DqcConstant {
      * 调度返回code
      */
     public static final Integer RESULT_CODE = 0;
+    /**
+     * 日志分页
+     */
+    public static final int LIMIT = 100;
 
     /**
      * 拼装参数

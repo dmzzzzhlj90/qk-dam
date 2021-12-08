@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.service.impl;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
@@ -8,6 +9,7 @@ import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceExecuteDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceLogDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceParamsDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.service.DqcSchedulerInstanceService;
@@ -150,5 +152,26 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
 
     private ProcessTaskInstanceSearchDTO getInstanceSearchDTO(DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO) {
         return DqcProcessInstanceMapper.INSTANCE.taskInstanceSearchDTO(taskInstanceParamsDTO);
+    }
+
+    @Override
+    public Object searchTaskLog(DqcSchedulerTaskInstanceLogDTO taskInstanceLogDTO) {
+        int skipLineNum = (taskInstanceLogDTO.getPagination().getPage() - 1) * taskInstanceLogDTO.getPagination().getSize();
+        return dolphinScheduler.taskLog(taskInstanceLogDTO.getTaskInstanceId(), taskInstanceLogDTO.getPagination().getSize(), skipLineNum);
+    }
+
+//    //defaultApi.downloadTaskLogUsingGETWithHttpInfo 接口最终转换出错
+//    //Cannot deserialize value of type `com.qk.datacenter.model.ResponseEntity` from Array value (token `JsonToken.START_ARRAY`)
+    @Override
+    public Object searchTaskLogDownload(Integer taskInstanceId) {
+        StringBuilder result = new StringBuilder();
+        int skipLineNum = 0;
+        String log;
+        do{
+            log = dolphinScheduler.taskLog(taskInstanceId, DqcConstant.LIMIT, skipLineNum);
+            result.append(log);
+            skipLineNum += DqcConstant.LIMIT;
+        }while (!"".equals(log));
+        return result.toString();
     }
 }
