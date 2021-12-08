@@ -87,5 +87,27 @@ public class RptInfoController {
         rptBaseInfoDTO.setStatus(RptConstant.HISTORY);
         return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO));
     }
+    /**
+     * 详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public DefaultCommonResult<RptBaseInfoVO> detail(@PathVariable("id") Long id) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.detail(id));
+    }
+
+    /**
+     * 删除
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("/{ids}")
+    private DefaultCommonResult delete(@PathVariable("ids") String ids){
+        rptBaseInfoService.delete(ids);
+        return DefaultCommonResult.success();
+    }
+
+
 
 }
