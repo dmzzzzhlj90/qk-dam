@@ -2,6 +2,7 @@ package com.qk.dm.reptile.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptBaseInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
@@ -57,6 +58,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
         RptBaseInfoMapper.INSTANCE.of(rptBaseInfoDTO, rptBaseInfo);
+        //修改为爬虫状态
+        rptBaseInfo.setStatus(RptConstant.REPTILE);
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
 
     }

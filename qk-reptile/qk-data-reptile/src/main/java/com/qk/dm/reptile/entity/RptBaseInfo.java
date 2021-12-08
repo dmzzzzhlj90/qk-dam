@@ -63,7 +63,7 @@ public class RptBaseInfo implements Serializable {
      * 数据状态（0表示待配、1表示爬虫、2表示历史）
      */
     @Column(name = "status")
-    private Integer status;
+    private Integer status = 0;
 
     /**
      * 数据启动状态（0表示启动、1表示未启动）
