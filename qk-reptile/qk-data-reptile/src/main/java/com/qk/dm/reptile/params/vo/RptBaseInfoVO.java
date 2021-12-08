@@ -163,5 +163,5 @@ public class RptBaseInfoVO {
   /**
    * 配置信息字段信息
    */
-  List<RptBaseInfoColumnVO> columnVOList;
+  List<RptBaseColumnInfoVO> columnVOList;
 }

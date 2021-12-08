@@ -4,8 +4,6 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 
-import java.util.List;
-
 public interface RptBaseInfoService {
 
     void insert(RptBaseInfoDTO rptBaseInfoDTO);

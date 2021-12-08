@@ -1,4 +1,4 @@
-package com.qk.dm.reptile.params.dto;
+package com.qk.dm.reptile.params.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -10,16 +10,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- * 维度入参DTO
+ * 配置信息字段出参VO
  * @author zys
- * @date 2021/12/8 10:31
+ * @date 2021/12/8 11:16
  * @since 1.0.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RptBaseInfoColumnDTO {
+public class RptBaseColumnInfoVO {
   /**
    * 主键id（修改接口为必填项）
    */

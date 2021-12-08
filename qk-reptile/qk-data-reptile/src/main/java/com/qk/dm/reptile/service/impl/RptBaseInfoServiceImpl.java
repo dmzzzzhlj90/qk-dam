@@ -127,5 +127,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if (!StringUtils.isEmpty(rptBaseInfoDTO.getConfigName())) {
             booleanBuilder.and(qRptBaseInfo.configName.contains(rptBaseInfoDTO.getConfigName()));
         }
+        if(Objects.nonNull(rptBaseInfoDTO.getStatus())){
+            booleanBuilder.and(qRptBaseInfo.status.eq(rptBaseInfoDTO.getStatus()));
+        }
     }
 }

@@ -170,5 +170,5 @@ public class RptBaseInfoDTO {
   /**
    * 配置信息字段信息
    */
-  List<RptBaseInfoColumnDTO> columnDTOList;
+  List<RptBaseColumnInfoDTO> columnDTOList;
 }
