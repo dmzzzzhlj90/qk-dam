@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.params.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class RptBaseInfoDTO {
+
+  private Pagination pagination;
   /**
    * 主键id（修改接口为必填项）
    */
