@@ -16,6 +16,7 @@ import com.qk.dm.datamodel.service.ModelDimColumnService;
 import com.qk.dm.datamodel.service.ModelDimService;
 import com.qk.dm.datamodel.service.ModelDimTableService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,11 @@ public class ModelDimServiceImpl implements ModelDimService {
             throw new BizException("维度字段不能为空！！");
         }
         if(checkRepeat(modelDimColumnList)){
-            throw new BizException("存在重复的字段！！！");
+            throw new BizException("存在重复的字段！！");
+        }
+        Predicate predicate = qModelDim.dimName.eq(modelDim.getDimName());
+        if(modelDimRepository.exists(predicate)){
+            throw new BizException("该维度已存在，不可重复添加！！");
         }
         //保存维度基本信息
         ModelDim dim = modelDimRepository.save(modelDim);
