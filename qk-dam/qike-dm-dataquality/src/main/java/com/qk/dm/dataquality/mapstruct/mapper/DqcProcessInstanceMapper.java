@@ -1,12 +1,14 @@
 package com.qk.dm.dataquality.mapstruct.mapper;
 
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceSearchDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.ProcessTaskInstanceSearchDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.TaskInstanceDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceParamsDTO;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.DqcProcessTaskInstanceVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -26,4 +28,16 @@ public interface DqcProcessInstanceMapper {
     List<DqcProcessInstanceVO> userDqcProcessInstanceVO(List<ProcessInstanceDTO> processInstanceDTO);
 
     List<DqcProcessTaskInstanceVO> userDqcProcessTaskInstanceVO(List<TaskInstanceDTO> taskInstanceDTOS);
+
+    @Mappings({
+            @Mapping(source = "pagination.page",target = "pageNo"),
+            @Mapping(source = "pagination.size",target = "pageSize")
+    })
+    ProcessTaskInstanceSearchDTO taskInstanceSearchDTO(DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO);
+
+    @Mappings({
+            @Mapping(source = "pagination.page",target = "pageNo"),
+            @Mapping(source = "pagination.size",target = "pageSize")
+    })
+    ProcessInstanceSearchDTO instanceSearchDTO(DqcSchedulerInstanceParamsDTO instanceParamsDTO);
 }

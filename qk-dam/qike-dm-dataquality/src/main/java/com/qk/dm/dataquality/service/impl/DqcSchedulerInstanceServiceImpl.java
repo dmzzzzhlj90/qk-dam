@@ -81,15 +81,6 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         return dqcSchedulerBasicInfoService.getInfoByDirId(dirId).stream().map(DqcSchedulerBasicInfo::getProcessDefinitionId).collect(Collectors.toList());
     }
 
-    private ProcessInstanceResultDTO getProcessInstanceResult(DqcSchedulerInstanceParamsDTO instanceParamsDTO, Integer pdId) {
-        //dolphin查询
-        return dolphinScheduler.instanceList(
-                getProcessInstanceSearch(
-                        instanceParamsDTO, pdId, 1, instanceParamsDTO.getPagination().getPage() * instanceParamsDTO.getPagination().getSize()
-                )
-        );
-    }
-
     private PageResultVO<DqcProcessInstanceVO> getInstancePage(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
         // 获取到最近运行实例
         ProcessInstanceResultDTO instance = getProcessInstanceResult(instanceParamsDTO);
@@ -97,27 +88,23 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         return getInstancePage(instanceParamsDTO, instance.getTotalList(), instance.getTotal());
     }
 
-    private ProcessInstanceResultDTO getProcessInstanceResult(DqcSchedulerInstanceParamsDTO instanceParams) {
+    private ProcessInstanceResultDTO getProcessInstanceResult(DqcSchedulerInstanceParamsDTO instanceParamsDTO, Integer pdId) {
         //dolphin查询
-        return dolphinScheduler.instanceList(
-                getProcessInstanceSearch(
-                        instanceParams, instanceParams.getProcessDefinitionId(), instanceParams.getPagination().getPage(), instanceParams.getPagination().getSize()
-                )
-        );
+        return dolphinScheduler.instanceList(getProcessInstanceSearch(instanceParamsDTO, pdId));
     }
 
-    private ProcessInstanceSearchDTO getProcessInstanceSearch(DqcSchedulerInstanceParamsDTO instanceParamsDTO, Integer pdId, int page, int size) {
+    private ProcessInstanceResultDTO getProcessInstanceResult(DqcSchedulerInstanceParamsDTO instanceParams) {
+        //dolphin查询
+        return dolphinScheduler.instanceList(DqcProcessInstanceMapper.INSTANCE.instanceSearchDTO(instanceParams));
+    }
+
+    private ProcessInstanceSearchDTO getProcessInstanceSearch(DqcSchedulerInstanceParamsDTO instanceParams, Integer pdId) {
         //封装查询参数
-        return ProcessInstanceSearchDTO.builder()
-                .processDefinitionId(pdId)
-                .pageNo(page)
-                .pageSize(size)
-                .startDate(instanceParamsDTO.getStartDate())
-                .endDate(instanceParamsDTO.getEndDate())
-                .searchVal(instanceParamsDTO.getSearchVal())
-                .stateType(instanceParamsDTO.getStateType())
-                .executorName(instanceParamsDTO.getExecutorName())
-                .build();
+        ProcessInstanceSearchDTO instanceSearchDTO = DqcProcessInstanceMapper.INSTANCE.instanceSearchDTO(instanceParams);
+        instanceSearchDTO.setPageNo(1);
+        instanceSearchDTO.setPageSize(instanceParams.getPagination().getPage() * instanceParams.getPagination().getSize());
+        instanceSearchDTO.setProcessDefinitionId(pdId);
+        return instanceSearchDTO;
     }
 
     private PageResultVO<DqcProcessInstanceVO> getInstancePage(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<ProcessInstanceDTO> list, int size) {
@@ -125,7 +112,8 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
                 size,
                 instanceParamsDTO.getPagination().getPage(),
                 instanceParamsDTO.getPagination().getSize(),
-                DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(list));
+                DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(list)
+        );
     }
 
     private List<ProcessInstanceDTO> getProcessInstanceList(List<ProcessInstanceResultDTO> instanceList) {
@@ -148,23 +136,19 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
 
     @Override
     public PageResultVO<DqcProcessTaskInstanceVO> searchTask(DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO) {
-        ProcessTaskInstanceResultDTO processTaskInstanceResultDTO = dolphinScheduler.taskInstanceList(ProcessTaskInstanceSearchDTO.builder()
-                .processInstanceId(taskInstanceParamsDTO.getProcessInstanceId())
-                .pageNo(taskInstanceParamsDTO.getPagination().getPage())
-                .pageSize(taskInstanceParamsDTO.getPagination().getSize())
-                .startDate(taskInstanceParamsDTO.getStartDate())
-                .endDate(taskInstanceParamsDTO.getEndDate())
-                .searchVal(taskInstanceParamsDTO.getSearchVal())
-                .stateType(taskInstanceParamsDTO.getStateType())
-                .executorName(taskInstanceParamsDTO.getExecutorName())
-                .taskName(taskInstanceParamsDTO.getTaskName())
-                .build());
+        ProcessTaskInstanceResultDTO taskInstanceResultDTO = getProcessTaskInstanceResultDTO(taskInstanceParamsDTO);
         return new PageResultVO<>(
-                processTaskInstanceResultDTO.getTotal(),
+                taskInstanceResultDTO.getTotal(),
                 taskInstanceParamsDTO.getPagination().getPage(),
                 taskInstanceParamsDTO.getPagination().getSize(),
-                DqcProcessInstanceMapper.INSTANCE.userDqcProcessTaskInstanceVO(processTaskInstanceResultDTO.getTotalList()));
+                DqcProcessInstanceMapper.INSTANCE.userDqcProcessTaskInstanceVO(taskInstanceResultDTO.getTotalList()));
     }
 
+    private ProcessTaskInstanceResultDTO getProcessTaskInstanceResultDTO(DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO) {
+        return dolphinScheduler.taskInstanceList(getInstanceSearchDTO(taskInstanceParamsDTO));
+    }
 
+    private ProcessTaskInstanceSearchDTO getInstanceSearchDTO(DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO) {
+        return DqcProcessInstanceMapper.INSTANCE.taskInstanceSearchDTO(taskInstanceParamsDTO);
+    }
 }

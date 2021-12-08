@@ -39,7 +39,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
         try {
             Result result =
                     defaultApi.executeUsingPOST(
-                            ExecuteTypeEnum.fromValue(executeType).getCode(), processInstanceId, dolphinSchedulerInfoConfig.getProjectName());
+                            ExecuteTypeEnum.fromValue(executeType).getCode(), processInstanceId, dolphinSchedulerInfoConfig.getProjectName()
+                    );
             DqcConstant.verification(result, "执行流程实例操作失败{}，");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -66,12 +67,11 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             instanceSearchDTO.getProcessDefinitionId(),
                             instanceSearchDTO.getSearchVal(),
                             instanceSearchDTO.getStartDate(),
-                            instanceSearchDTO.getStateType());
+                            instanceSearchDTO.getStateType()
+                    );
             DqcConstant.verification(result, "查询流程实例列表失败{}，");
-            return GsonUtil.fromJsonString(
-                    GsonUtil.toJsonString(result.getData()),
-                    new TypeToken<ProcessInstanceResultDTO>() {
-                    }.getType());
+            return GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceResultDTO>() {
+            }.getType());
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
@@ -83,12 +83,11 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
         try {
             Result result =
                     defaultApi.queryProcessInstanceByIdUsingGET(
-                            dolphinSchedulerInfoConfig.getProjectName(), processInstanceId);
+                            dolphinSchedulerInfoConfig.getProjectName(), processInstanceId
+                    );
             DqcConstant.verification(result, "查询流程实例通过流程实例ID失败{}，");
-            return GsonUtil.fromJsonString(
-                    GsonUtil.toJsonString(result.getData()),
-                    new TypeToken<ProcessInstanceDTO>() {
-                    }.getType());
+            return GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceDTO>() {
+            }.getType());
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
@@ -110,12 +109,11 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             TaskInstanceSearch.getSearchVal(),
                             TaskInstanceSearch.getStartDate(),
                             TaskInstanceSearch.getStateType(),
-                            TaskInstanceSearch.getTaskName());
+                            TaskInstanceSearch.getTaskName()
+                    );
             DqcConstant.verification(result, "查询任务实例列表失败{}，");
-            return GsonUtil.fromJsonString(
-                    GsonUtil.toJsonString(result.getData()),
-                    new TypeToken<ProcessTaskInstanceResultDTO>() {
-                    }.getType());
+            return GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessTaskInstanceResultDTO>() {
+            }.getType());
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
