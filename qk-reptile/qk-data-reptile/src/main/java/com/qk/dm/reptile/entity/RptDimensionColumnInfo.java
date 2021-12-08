@@ -79,4 +79,10 @@ public class RptDimensionColumnInfo implements Serializable {
     @Column(name = "update_username")
     private String updateUsername;
 
+    /**
+     * 维度字段编码
+     */
+    @Column(name = "dimension_column_code", nullable = false)
+    private String dimensionColumnCode;
+
 }
