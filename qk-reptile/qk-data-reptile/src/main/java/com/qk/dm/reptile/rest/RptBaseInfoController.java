@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/info")
-public class RptInfoController {
+public class RptBaseInfoController {
 
     private final RptBaseInfoService rptBaseInfoService;
 
-    public RptInfoController(RptBaseInfoService rptBaseInfoService){
+    public RptBaseInfoController(RptBaseInfoService rptBaseInfoService){
         this.rptBaseInfoService = rptBaseInfoService;
     }
 

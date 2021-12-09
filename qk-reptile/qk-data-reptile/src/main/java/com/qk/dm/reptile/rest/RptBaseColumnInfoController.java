@@ -61,6 +61,27 @@ public class RptBaseColumnInfoController {
     }
 
     /**
+     * 获取选择器详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public DefaultCommonResult<RptBaseColumnInfoVO> detail(@PathVariable("id") Long id){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,rptBaseColumnInfoService.detail(id));
+    }
+
+    /**
+     * 删除选择器
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public DefaultCommonResult delete(@PathVariable("id") Long id){
+        rptBaseColumnInfoService.detail(id);
+        return DefaultCommonResult.success();
+    }
+
+    /**
      * 选择器列表
      * @param baseInfoId
      * @return
