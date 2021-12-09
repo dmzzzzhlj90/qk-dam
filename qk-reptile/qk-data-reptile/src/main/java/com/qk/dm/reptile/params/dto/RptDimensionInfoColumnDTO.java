@@ -29,6 +29,7 @@ public class RptDimensionInfoColumnDTO {
   /**
    * 维度目录id
    */
+  @NotBlank(message = "维度所属目录id不能为空")
   private Long dimensionId;
 
   /**

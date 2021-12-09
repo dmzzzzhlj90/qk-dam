@@ -11,6 +11,7 @@ import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import com.qk.dm.reptile.repositories.RptDimensionColumnInfoRepository;
 import com.qk.dm.reptile.service.RptDimensionInfoColumnService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,14 @@ public class RptDimensionInfoColumnServiceImpl implements
    */
   @Override
   public void addRptDimensionInfoColumn(RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
+    BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId
+        .eq(rptDimensionInfoColumnDTO.getDimensionId()).and(
+            qRptDimensionColumnInfo.dimensionColumnName
+                .eq(rptDimensionInfoColumnDTO.getDimensionColumnName()));
+    boolean exists = rptDimensionColumnInfoRepository.exists(predicate);
+    if (exists){
+      throw new BizException("当前新增数据已经存在请查证");
+    }
     RptDimensionColumnInfo rptDimensionColumnInfo = RptDimensionInfoColumnMapper.INSTANCE
         .userRptDimensionInfoColumnDTO(rptDimensionInfoColumnDTO);
     rptDimensionColumnInfoRepository.save(rptDimensionColumnInfo);
@@ -144,5 +153,6 @@ public class RptDimensionInfoColumnServiceImpl implements
     if (!StringUtils.isEmpty(rptDimensionInfoColumnParamDTO.getDimensionColumnName())) {
       booleanBuilder.and(qRptDimensionColumnInfo.dimensionColumnName.contains(rptDimensionInfoColumnParamDTO.getDimensionColumnName()));
     }
+    booleanBuilder.and(qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnParamDTO.getId()));
   }
 }
