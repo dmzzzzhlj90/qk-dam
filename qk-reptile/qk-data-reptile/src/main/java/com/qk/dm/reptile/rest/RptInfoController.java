@@ -56,7 +56,7 @@ public class RptInfoController {
      * @param rptBaseInfoDTO
      * @return
      */
-    @GetMapping("/waiting")
+    @PostMapping("/waiting")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> waitingList(
             @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
         rptBaseInfoDTO.setStatus(RptConstant.WAITING);
@@ -69,7 +69,7 @@ public class RptInfoController {
      * @param rptBaseInfoDTO
      * @return
      */
-    @GetMapping("/reptile")
+    @PostMapping("/reptile")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> reptileList(
             @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
         rptBaseInfoDTO.setStatus(RptConstant.REPTILE);
@@ -81,7 +81,7 @@ public class RptInfoController {
      * @param rptBaseInfoDTO
      * @return
      */
-    @GetMapping("/history")
+    @PostMapping("/history")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> historyList(
             @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
         rptBaseInfoDTO.setStatus(RptConstant.HISTORY);
@@ -108,6 +108,18 @@ public class RptInfoController {
         return DefaultCommonResult.success();
     }
 
+    /**
+     * 修改状态
+     * @param id
+     * @param status
+     * @return
+     */
+    @PutMapping("/{id}/{status}")
+    public DefaultCommonResult updateStatus(
+            @PathVariable("id") Long id,@PathVariable("status") Integer status ) {
+        rptBaseInfoService.updateStatus(id, status);
+        return DefaultCommonResult.success();
+    }
 
 
 }

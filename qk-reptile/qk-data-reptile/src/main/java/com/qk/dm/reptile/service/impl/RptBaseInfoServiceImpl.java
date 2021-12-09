@@ -101,6 +101,16 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
                 voList);
     }
 
+    @Override
+    public void updateStatus(Long id,Integer status) {
+        RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
+        if(Objects.isNull(rptBaseInfo)){
+            throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
+        }
+        rptBaseInfo.setStatus(status);
+        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+    }
+
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptBaseInfoDTO);

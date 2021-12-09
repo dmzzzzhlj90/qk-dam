@@ -15,4 +15,6 @@ public interface RptBaseInfoService {
     void delete(String ids);
 
     PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO);
+
+    void updateStatus(Long id,Integer status);
 }
