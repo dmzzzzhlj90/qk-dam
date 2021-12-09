@@ -19,4 +19,6 @@ public interface RptBaseColumnInfoService {
 
     List<RptBaseColumnInfoVO> list(Long baseInfoId);
 
+    void deleteByBaseInfoId(Long baseInfoId);
+
 }

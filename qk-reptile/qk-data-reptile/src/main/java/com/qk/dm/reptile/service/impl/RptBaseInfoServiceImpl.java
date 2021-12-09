@@ -6,14 +6,18 @@ import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptBaseInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
+import com.qk.dm.reptile.params.dto.RptBaseColumnInfoDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
+import com.qk.dm.reptile.params.vo.RptBaseColumnInfoVO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
+import com.qk.dm.reptile.service.RptBaseColumnInfoService;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -33,6 +37,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private final EntityManager entityManager;
     private final QRptBaseInfo qRptBaseInfo = QRptBaseInfo.rptBaseInfo;
     private final RptBaseInfoRepository rptBaseInfoRepository;
+    private final RptBaseColumnInfoService rptBaseColumnInfoService;
 
     @PostConstruct
     public void initFactory() {
@@ -40,9 +45,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     public RptBaseInfoServiceImpl(RptBaseInfoRepository rptBaseInfoRepository,
-                                  EntityManager entityManager){
+                                  EntityManager entityManager,RptBaseColumnInfoService rptBaseColumnInfoService){
         this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.entityManager = entityManager;
+        this.rptBaseColumnInfoService = rptBaseColumnInfoService;
     }
 
     @Override
@@ -61,6 +67,11 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         //修改为爬虫状态
         rptBaseInfo.setStatus(RptConstant.REPTILE);
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+        List<RptBaseColumnInfoDTO>  rptBaseInfoDTOBaseColumnInfoList= rptBaseInfoDTO.getBaseColumnInfoList();
+        if(!CollectionUtils.isEmpty(rptBaseInfoDTOBaseColumnInfoList)){
+            rptBaseColumnInfoService.batchInset(id,rptBaseInfoDTOBaseColumnInfoList);
+
+        }
 
     }
 
@@ -70,7 +81,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(rptBaseInfo.isEmpty()){
             throw new BizException("当前要查询的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        return RptBaseInfoMapper.INSTANCE.userRtpBaseInfoVO(rptBaseInfo.get());
+        List<RptBaseColumnInfoVO> baseColumnInfoVOList = rptBaseColumnInfoService.list(id);
+        RptBaseInfoVO rptBaseInfoVO = RptBaseInfoMapper.INSTANCE.userRtpBaseInfoVO(rptBaseInfo.get());
+        rptBaseInfoVO.setBaseColumnInfoList(baseColumnInfoVOList);
+        return rptBaseInfoVO;
     }
 
     @Override
@@ -81,6 +95,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             throw new BizException("当前要删除的基础信息id为：" + ids + " 的数据不存在！！！");
         }
         rptBaseInfoRepository.deleteAllById(idSet);
+        rptBaseInfoList.forEach(
+            e -> {
+              rptBaseColumnInfoService.deleteByBaseInfoId(e.getId());
+            });
     }
 
     @Override

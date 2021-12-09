@@ -168,7 +168,7 @@ public class RptBaseInfoDTO {
    */
   private String updateUsername;
   /**
-   * 配置信息字段信息
+   * 配置信息选择器信息
    */
-  List<RptBaseColumnInfoDTO> columnDTOList;
+  List<RptBaseColumnInfoDTO> baseColumnInfoList;
 }

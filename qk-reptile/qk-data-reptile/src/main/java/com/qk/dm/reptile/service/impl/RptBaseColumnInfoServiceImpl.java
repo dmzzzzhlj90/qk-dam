@@ -40,9 +40,8 @@ public class RptBaseColumnInfoServiceImpl implements RptBaseColumnInfoService {
     public void batchInset(Long baseInfoId,List<RptBaseColumnInfoDTO> rptBaseColumnInfoDTOList) {
         Iterable<RptBaseColumnInfo> rptBaseColumnInfos = rptBaseColumnInfoRepository.findAll(qRptBaseColumnInfo.baseInfoId.eq(baseInfoId));
         rptBaseColumnInfoRepository.deleteAllInBatch(rptBaseColumnInfos);
-
         List<RptBaseColumnInfo> rptBaseColumnInfoList = RptBaseColumnInfoMapper.INSTANCE.of(rptBaseColumnInfoDTOList);
-        rptBaseColumnInfoDTOList.forEach(e->e.setBaseInfoId(baseInfoId));
+        rptBaseColumnInfoList.forEach(e->e.setBaseInfoId(baseInfoId));
         rptBaseColumnInfoRepository.saveAll(rptBaseColumnInfoList);
     }
 
@@ -77,5 +76,11 @@ public class RptBaseColumnInfoServiceImpl implements RptBaseColumnInfoService {
            return RptBaseColumnInfoMapper.INSTANCE.ofVO(list);
         }
         return null;
+    }
+
+    @Override
+    public void deleteByBaseInfoId(Long baseInfoId) {
+        Iterable<RptBaseColumnInfo> rptBaseColumnInfos = rptBaseColumnInfoRepository.findAll(qRptBaseColumnInfo.baseInfoId.in(baseInfoId));
+        rptBaseColumnInfoRepository.deleteAll(rptBaseColumnInfos);
     }
 }

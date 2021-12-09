@@ -41,12 +41,15 @@ public class RptBaseInfoController {
 
     /**
      * 配置爬虫信息
+     * @param id 基础信息id
+     * @param runStatus 数据启动状态（0表示启动、1表示未启动）
      * @param rptBaseInfoDTO
      * @return
      */
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/{runStatus}")
     public DefaultCommonResult update(
-            @PathVariable("id") Long id, @RequestBody @Validated RptBaseInfoDTO rptBaseInfoDTO) {
+            @PathVariable("id") Long id, @PathVariable("runStatus") Integer runStatus, @RequestBody @Validated RptBaseInfoDTO rptBaseInfoDTO) {
+        rptBaseInfoDTO.setRunStatus(runStatus);
         rptBaseInfoService.update(id, rptBaseInfoDTO);
         return DefaultCommonResult.success();
     }
