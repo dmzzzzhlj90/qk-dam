@@ -64,23 +64,23 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
 
   private List<RptDimensionInfoVO> buildByRecursive(List<RptDimensionInfoVO> rptDimensionInfoVOList) {
     List<RptDimensionInfoVO> trees = new ArrayList<>();
-    if (!CollectionUtils.isEmpty(rptDimensionInfoVOList)){
       RptDimensionInfoVO rptDimensionInfoVO = RptDimensionInfoVO.builder().id(0L).dimensionName("全部维度分类").build();
       trees.add(findChildren(rptDimensionInfoVO, rptDimensionInfoVOList));
-    }
     return trees;
   }
 
   private RptDimensionInfoVO findChildren(RptDimensionInfoVO rptDimensionInfoVO, List<RptDimensionInfoVO> rptDimensionInfoVOList) {
     rptDimensionInfoVO.setChildrenList(new ArrayList<>());
-    rptDimensionInfoVOList.forEach(rptDimensionInfoVO1 -> {
-      if (rptDimensionInfoVO.getId().equals(rptDimensionInfoVO1.getId())){
-        if (rptDimensionInfoVO.getChildrenList() == null) {
-          rptDimensionInfoVO.setChildrenList(new ArrayList<>());
+    if (!CollectionUtils.isEmpty(rptDimensionInfoVOList)){
+      rptDimensionInfoVOList.forEach(rptDimensionInfoVO1 -> {
+        if (rptDimensionInfoVO.getId().equals(rptDimensionInfoVO1.getFid())){
+          if (rptDimensionInfoVO.getChildrenList() == null) {
+            rptDimensionInfoVO.setChildrenList(new ArrayList<>());
+          }
+          rptDimensionInfoVO.getChildrenList().add(findChildren(rptDimensionInfoVO1,rptDimensionInfoVOList));
         }
-        rptDimensionInfoVO.getChildrenList().add(findChildren(rptDimensionInfoVO1,rptDimensionInfoVOList));
-      }
-    });
+      });
+    }
     return rptDimensionInfoVO;
   }
 
@@ -114,9 +114,9 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
     ids.add(id);
     getIds(ids, id);
     if (!CollectionUtils.isEmpty(ids)){
-      ids.stream().peek(dimensionId->{
-        BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId.eq(id);
-        boolean exists = rptDimensionInfoRepository.exists(predicate);
+      ids.forEach(dimensionId->{
+        BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId.eq(dimensionId);
+        boolean exists = rptDimensionColumnInfoRepository.exists(predicate);
         if (exists){
           throw  new BizException("当前删除目录包含数据信息,请删除后再操作");
         }
