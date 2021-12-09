@@ -77,7 +77,7 @@ public class RptBaseColumnInfoController {
      */
     @DeleteMapping("/{id}")
     public DefaultCommonResult delete(@PathVariable("id") Long id){
-        rptBaseColumnInfoService.detail(id);
+        rptBaseColumnInfoService.delete(id);
         return DefaultCommonResult.success();
     }
 
@@ -90,4 +90,6 @@ public class RptBaseColumnInfoController {
     public DefaultCommonResult<List<RptBaseColumnInfoVO>> list(@PathVariable("baseInfoId") Long baseInfoId){
        return DefaultCommonResult.success(ResultCodeEnum.OK,rptBaseColumnInfoService.list(baseInfoId));
     }
+
+
 }
