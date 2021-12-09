@@ -157,8 +157,8 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         return dolphinScheduler.taskLog(taskInstanceLogDTO.getTaskInstanceId(), taskInstanceLogDTO.getPagination().getSize(), skipLineNum);
     }
 
-    //    //defaultApi.downloadTaskLogUsingGETWithHttpInfo 接口最终转换出错
-//    //Cannot deserialize value of type `com.qk.datacenter.model.ResponseEntity` from Array value (token `JsonToken.START_ARRAY`)
+    //defaultApi.downloadTaskLogUsingGETWithHttpInfo 接口最终转换出错
+    //Cannot deserialize value of type `com.qk.datacenter.model.ResponseEntity` from Array value (token `JsonToken.START_ARRAY`)
     @Override
     public Object taskLogDownload(Integer taskInstanceId) {
         StringBuilder result = new StringBuilder();
