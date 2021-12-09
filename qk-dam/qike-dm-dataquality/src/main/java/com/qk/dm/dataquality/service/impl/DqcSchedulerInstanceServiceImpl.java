@@ -42,37 +42,28 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
 
     @Override
     public PageResultVO<DqcProcessInstanceVO> search(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
-        return instanceParamsDTO.getDirId() != null ? getInstancePageByDirId(instanceParamsDTO) : getInstancePage(instanceParamsDTO);
+        return instanceParamsDTO.getDirId() == null ? getInstancePage(instanceParamsDTO) : getInstancePageByDirId(instanceParamsDTO);
+    }
+
+    private PageResultVO<DqcProcessInstanceVO> getInstancePage(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
+        // 获取到最近运行实例
+        ProcessInstanceResultDTO instance = getProcessInstanceResult(getProcessInstanceSearch(instanceParamsDTO));
+        // 封装分页
+        return getInstancePage(instanceParamsDTO, instance.getTotalList(), instance.getTotal());
     }
 
     private PageResultVO<DqcProcessInstanceVO> getInstancePageByDirId(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
         //获取DirId底下所有实例信息
         List<ProcessInstanceDTO> totalList = getProcessInstanceResultList(instanceParamsDTO);
+        //排序、分页
+        List<ProcessInstanceDTO> list = getPager(instanceParamsDTO, getTotalListSort(totalList));
         //封装分页
-        return getInstancePage(instanceParamsDTO, getPager(instanceParamsDTO, totalList), totalList.size());
-    }
-
-    private List<ProcessInstanceDTO> getPager(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<ProcessInstanceDTO> totalList) {
-        //内存分页
-        return Pager.getList(instanceParamsDTO.getPagination().getPage(), instanceParamsDTO.getPagination().getSize(), totalList);
+        return getInstancePage(instanceParamsDTO, list, totalList.size());
     }
 
     private List<ProcessInstanceDTO> getProcessInstanceResultList(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
-        //根据创建时间排序
-        return getTotalListSort(getAllProcessInstance(instanceParamsDTO));
-    }
-
-    private List<ProcessInstanceDTO> getTotalListSort(List<ProcessInstanceDTO> totalList) {
-        //时间排序
-        totalList.sort((obj1, obj2) -> obj2.getStartTime().compareTo(obj1.getStartTime()));
-        return totalList;
-    }
-
-    private List<ProcessInstanceDTO> getAllProcessInstance(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
         //查询所有实例信息
-        List<ProcessInstanceDTO> totalList = new ArrayList<>();
-        getProcessDefIdByDirId(instanceParamsDTO.getDirId()).forEach(pdId -> totalList.addAll(getProcessInstanceResult(instanceParamsDTO, pdId).getTotalList()));
-        return totalList;
+        return getProcessInstanceList(instanceParamsDTO, getProcessDefIdByDirId(instanceParamsDTO.getDirId()));
     }
 
     private List<Integer> getProcessDefIdByDirId(String dirId) {
@@ -80,30 +71,34 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         return dqcSchedulerBasicInfoService.getInfoByDirId(dirId).stream().map(DqcSchedulerBasicInfo::getProcessDefinitionId).collect(Collectors.toList());
     }
 
-    private PageResultVO<DqcProcessInstanceVO> getInstancePage(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
-        // 获取到最近运行实例
-        ProcessInstanceResultDTO instance = getProcessInstanceResult(instanceParamsDTO);
-        // 封装分页
-        return getInstancePage(instanceParamsDTO, instance.getTotalList(), instance.getTotal());
-    }
-
-    private ProcessInstanceResultDTO getProcessInstanceResult(DqcSchedulerInstanceParamsDTO instanceParamsDTO, Integer pdId) {
-        //dolphin查询
-        return dolphinScheduler.instanceList(getProcessInstanceSearch(instanceParamsDTO, pdId));
-    }
-
-    private ProcessInstanceResultDTO getProcessInstanceResult(DqcSchedulerInstanceParamsDTO instanceParams) {
-        //dolphin查询
-        return dolphinScheduler.instanceList(DqcProcessInstanceMapper.INSTANCE.instanceSearchDTO(instanceParams));
+    private List<ProcessInstanceDTO> getProcessInstanceList(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<Integer> processDefIds) {
+        List<ProcessInstanceDTO> totalList = new ArrayList<>();
+        processDefIds.forEach(pdId ->
+                totalList.addAll(
+                        getProcessInstanceResult(
+                                getProcessInstanceSearch(instanceParamsDTO, pdId)
+                        ).getTotalList()
+                )
+        );
+        return totalList;
     }
 
     private ProcessInstanceSearchDTO getProcessInstanceSearch(DqcSchedulerInstanceParamsDTO instanceParams, Integer pdId) {
         //封装查询参数
-        ProcessInstanceSearchDTO instanceSearchDTO = DqcProcessInstanceMapper.INSTANCE.instanceSearchDTO(instanceParams);
+        ProcessInstanceSearchDTO instanceSearchDTO = getProcessInstanceSearch(instanceParams);
         instanceSearchDTO.setPageNo(1);
         instanceSearchDTO.setPageSize(instanceParams.getPagination().getPage() * instanceParams.getPagination().getSize());
         instanceSearchDTO.setProcessDefinitionId(pdId);
         return instanceSearchDTO;
+    }
+
+    private ProcessInstanceSearchDTO getProcessInstanceSearch(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
+        return DqcProcessInstanceMapper.INSTANCE.instanceSearchDTO(instanceParamsDTO);
+    }
+
+    private ProcessInstanceResultDTO getProcessInstanceResult(ProcessInstanceSearchDTO instanceSearch) {
+        //dolphin查询
+        return dolphinScheduler.instanceList(instanceSearch);
     }
 
     private PageResultVO<DqcProcessInstanceVO> getInstancePage(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<ProcessInstanceDTO> list, int size) {
@@ -113,6 +108,17 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
                 instanceParamsDTO.getPagination().getSize(),
                 DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(list)
         );
+    }
+
+    private List<ProcessInstanceDTO> getTotalListSort(List<ProcessInstanceDTO> totalList) {
+        //时间排序
+        totalList.sort((obj1, obj2) -> obj2.getStartTime().compareTo(obj1.getStartTime()));
+        return totalList;
+    }
+
+    private List<ProcessInstanceDTO> getPager(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<ProcessInstanceDTO> totalList) {
+        //内存分页
+        return Pager.getList(instanceParamsDTO.getPagination().getPage(), instanceParamsDTO.getPagination().getSize(), totalList);
     }
 
     private List<ProcessInstanceDTO> getProcessInstanceList(List<ProcessInstanceResultDTO> instanceList) {

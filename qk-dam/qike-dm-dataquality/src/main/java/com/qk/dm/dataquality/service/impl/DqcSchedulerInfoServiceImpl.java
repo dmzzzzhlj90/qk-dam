@@ -206,8 +206,9 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
                         .select(qDqcSchedulerBasicInfo)
                         .from(qDqcSchedulerBasicInfo)
                         .where(booleanBuilder)
-                        .orderBy(qDqcSchedulerBasicInfo.schedulerState.desc())
-                        .orderBy(qDqcSchedulerBasicInfo.jobName.desc())
+//                        .orderBy(qDqcSchedulerBasicInfo.schedulerState.desc())
+//                        .orderBy(qDqcSchedulerBasicInfo.jobName.desc())
+                        .orderBy(qDqcSchedulerBasicInfo.gmtModified.desc())
                         .offset((schedulerInfoParamsVO.getPagination().getPage() - 1) * schedulerInfoParamsVO.getPagination().getSize())
                         .limit(schedulerInfoParamsVO.getPagination().getSize())
                         .fetch();
