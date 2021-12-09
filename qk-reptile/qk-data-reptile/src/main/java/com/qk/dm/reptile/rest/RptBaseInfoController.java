@@ -109,7 +109,7 @@ public class RptBaseInfoController {
     }
 
     /**
-     * 修改状态
+     * 修改状态  0表示待配 1表示爬虫 2表示历史
      * @param id
      * @param status
      * @return
