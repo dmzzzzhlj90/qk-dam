@@ -4,13 +4,9 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.DqcConstant;
-import com.qk.dm.dataquality.constant.RuleTypeEnum;
-import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
-import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerRulesMapper;
-import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcRuleSqlBuilderService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
@@ -130,12 +126,19 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     }
 
     @Override
-    public void updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList,String jobId) {
+    public List<DqcSchedulerRulesVO> updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId) {
+        List<DqcSchedulerRulesVO> executorRuleList = new ArrayList<>();
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
             dqcSchedulerRulesVO.setJobId(jobId);
+            //生成执行Sql;
+            String executorSql = getExecutorSql(dqcSchedulerRulesVO);
+            dqcSchedulerRulesVO.setExecuteSql(executorSql);
+            //回填basicVo进行实例生成;
+            executorRuleList.add(dqcSchedulerRulesVO);
             update(dqcSchedulerRulesVO);
         }
+        return executorRuleList;
     }
 
     @Override
