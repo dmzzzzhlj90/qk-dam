@@ -135,8 +135,9 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         //基础信息
         dqcSchedulerBasicInfoService.update(dqcSchedulerBasicInfoVO);
-        //规则信息
-        dqcSchedulerRulesService.updateBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(),dqcSchedulerBasicInfoVO.getJobId());
+        //TODO 规则信息
+        dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(
+                dqcSchedulerRulesService.updateBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(),dqcSchedulerBasicInfoVO.getJobId()));
         //调度配置信息
         dqcSchedulerConfigService.update(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
         //更新流程实例
