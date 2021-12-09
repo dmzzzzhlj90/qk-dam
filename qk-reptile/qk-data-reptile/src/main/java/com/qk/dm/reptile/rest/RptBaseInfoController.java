@@ -31,7 +31,7 @@ public class RptBaseInfoController {
     /**
      * 添加基础信息
      * @param rptBaseInfoDTO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated RptBaseInfoDTO rptBaseInfoDTO){
@@ -44,7 +44,7 @@ public class RptBaseInfoController {
      * @param id 基础信息id
      * @param runStatus 数据启动状态（0表示启动、1表示未启动）
      * @param rptBaseInfoDTO
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping("/config/{id}/{runStatus}")
     public DefaultCommonResult update(
@@ -57,7 +57,7 @@ public class RptBaseInfoController {
     /**
      * 待配列表
      * @param rptBaseInfoDTO
-     * @return
+     * @return DefaultCommonResult<PageResultVO<RptBaseInfoVO>>
      */
     @PostMapping("/waiting")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> waitingList(
@@ -70,7 +70,7 @@ public class RptBaseInfoController {
     /**
      * 爬虫列表
      * @param rptBaseInfoDTO
-     * @return
+     * @return DefaultCommonResult<PageResultVO<RptBaseInfoVO>>
      */
     @PostMapping("/reptile")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> reptileList(
@@ -82,7 +82,7 @@ public class RptBaseInfoController {
     /**
      * 历史列表
      * @param rptBaseInfoDTO
-     * @return
+     * @return DefaultCommonResult<PageResultVO<RptBaseInfoVO>>
      */
     @PostMapping("/history")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> historyList(
@@ -93,7 +93,7 @@ public class RptBaseInfoController {
     /**
      * 详情
      * @param id
-     * @return
+     * @return DefaultCommonResult<RptBaseInfoVO>
      */
     @GetMapping("/{id}")
     public DefaultCommonResult<RptBaseInfoVO> detail(@PathVariable("id") Long id) {
@@ -103,7 +103,7 @@ public class RptBaseInfoController {
     /**
      * 删除
      * @param ids
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/{ids}")
     private DefaultCommonResult delete(@PathVariable("ids") String ids){
@@ -114,8 +114,8 @@ public class RptBaseInfoController {
     /**
      * 修改状态  0表示待配 1表示爬虫 2表示历史
      * @param id
-     * @param status
-     * @return
+     * @param status  0表示待配 1表示爬虫 2表示历史
+     * @return DefaultCommonResult
      */
     @PutMapping("/{id}/{status}")
     public DefaultCommonResult updateStatus(

@@ -28,7 +28,7 @@ public class RptBaseColumnInfoController {
     /**
      * 添加选择器信息
      * @param rptBaseColumnInfoDTO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated RptBaseColumnInfoDTO rptBaseColumnInfoDTO){
@@ -39,7 +39,7 @@ public class RptBaseColumnInfoController {
     /**
      * 修改选择器信息
      * @param rptBaseColumnInfoDTO
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping("/{id}")
     public DefaultCommonResult update(
@@ -50,9 +50,9 @@ public class RptBaseColumnInfoController {
 
     /**
      * 批量添加或修改
-     * @param baseInfoId
+     * @param baseInfoId 基础信息id
      * @param rptBaseColumnInfoDTOList
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("/batch/{baseInfoId}")
     public DefaultCommonResult insert( @PathVariable("baseInfoId") Long baseInfoId, @RequestBody @Validated List<RptBaseColumnInfoDTO> rptBaseColumnInfoDTOList){
@@ -63,7 +63,7 @@ public class RptBaseColumnInfoController {
     /**
      * 获取选择器详情
      * @param id
-     * @return
+     * @return DefaultCommonResult<RptBaseColumnInfoVO>
      */
     @GetMapping("/{id}")
     public DefaultCommonResult<RptBaseColumnInfoVO> detail(@PathVariable("id") Long id){
@@ -73,7 +73,7 @@ public class RptBaseColumnInfoController {
     /**
      * 删除选择器
      * @param id
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/{id}")
     public DefaultCommonResult delete(@PathVariable("id") Long id){
@@ -84,7 +84,7 @@ public class RptBaseColumnInfoController {
     /**
      * 选择器列表
      * @param baseInfoId
-     * @return
+     * @return DefaultCommonResult<List<RptBaseColumnInfoVO>>
      */
     @GetMapping("/list/{baseInfoId}")
     public DefaultCommonResult<List<RptBaseColumnInfoVO>> list(@PathVariable("baseInfoId") Long baseInfoId){
