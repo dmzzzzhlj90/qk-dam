@@ -19,6 +19,10 @@ public interface DqcSchedulerInstanceService {
 
     void execute(DqcSchedulerInstanceExecuteDTO instanceExecute);
 
+    void deleteOne(Integer processInstanceId);
+
+    void deleteBulk(String processInstanceIds);
+
     SchedulerInstanceConstantsVO getInstanceConstants();
 
     PageResultVO<DqcProcessTaskInstanceVO> searchTask(DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO);

@@ -125,6 +125,16 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
     }
 
     @Override
+    public void deleteOne(Integer processInstanceId) {
+        dolphinScheduler.deleteOne(processInstanceId);
+    }
+
+    @Override
+    public void deleteBulk(String processInstanceIds) {
+        dolphinScheduler.deleteBulk(processInstanceIds);
+    }
+
+    @Override
     public SchedulerInstanceConstantsVO getInstanceConstants() {
         return SchedulerInstanceConstantsVO
                 .builder()

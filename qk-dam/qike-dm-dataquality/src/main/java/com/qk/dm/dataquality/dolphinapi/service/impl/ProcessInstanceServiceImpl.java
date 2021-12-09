@@ -95,6 +95,48 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     }
 
     @Override
+    public void deleteOne(Integer processInstanceId) {
+        try {
+            Result result =
+                    defaultApi.deleteProcessInstanceByIdUsingGET(
+                            dolphinSchedulerInfoConfig.getProjectName(), processInstanceId
+                    );
+            DqcConstant.verification(result, "删除流程实例失败{}，");
+        } catch (ApiException e) {
+            DqcConstant.printException(e);
+        }
+    }
+
+    @Override
+    public void deleteBulk(ProcessInstanceDeleteDTO deleteDTO) {
+        try {
+            Result result =
+                    defaultApi.batchDeleteProcessInstanceByIdsUsingGET(
+                            deleteDTO.getProcessInstanceIds(),
+                            dolphinSchedulerInfoConfig.getProjectName(),
+                            deleteDTO.getAlertGroup(),
+                            deleteDTO.getCreateTime(),
+                            deleteDTO.getEmail(),
+                            deleteDTO.getId(),
+                            deleteDTO.getPhone(),
+                            deleteDTO.getQueue(),
+                            deleteDTO.getQueueName(),
+                            deleteDTO.getTenantCode(),
+                            deleteDTO.getTenantId(),
+                            deleteDTO.getTenantName(),
+                            deleteDTO.getUpdateTime(),
+                            deleteDTO.getUserName(),
+                            deleteDTO.getUserPassword(),
+                            deleteDTO.getUserType()
+                    );
+            DqcConstant.verification(result, "批量删除流程实例失败{}，");
+        } catch (ApiException e) {
+            DqcConstant.printException(e);
+        }
+    }
+
+
+    @Override
     public ProcessTaskInstanceResultDTO searchTask(ProcessTaskInstanceSearchDTO TaskInstanceSearch) {
         try {
             Result result =
@@ -124,7 +166,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     public String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum) {
         try {
             Result result =
-                    defaultApi.queryLogUsingGET(limit,skipLineNum,taskInstanceId);
+                    defaultApi.queryLogUsingGET(limit, skipLineNum, taskInstanceId);
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
             return (String) result.getData();
         } catch (ApiException e) {
@@ -143,7 +185,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
 //            return (String) responseEntity.getBody();
 
             Result result =
-                    defaultApi.queryLogUsingGET(0,100000,taskInstanceId);
+                    defaultApi.queryLogUsingGET(0, 100000, taskInstanceId);
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
             return (String) result.getData();
 

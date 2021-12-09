@@ -15,6 +15,10 @@ public interface ProcessInstanceService {
 
     ProcessInstanceDTO detail(Integer processInstanceId);
 
+    void deleteOne(Integer processInstanceId);
+
+    void deleteBulk(ProcessInstanceDeleteDTO deleteDTO);
+
     ProcessTaskInstanceResultDTO searchTask(ProcessTaskInstanceSearchDTO TaskInstanceSearch);
 
     String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum);

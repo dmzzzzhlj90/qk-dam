@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -60,6 +61,32 @@ public class DqcSchedulerInstanceController {
         dqcSchedulerInstanceService.execute(instanceExecute);
         return DefaultCommonResult.success();
     }
+
+    /**
+     * 实例删除
+     * @param processInstanceId
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("/{processInstanceId}")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+    public DefaultCommonResult deleteOne(@PathVariable("processInstanceId") Integer processInstanceId) {
+        dqcSchedulerInstanceService.deleteOne(processInstanceId);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 批量删除实例
+     *
+     * @param processInstanceIds
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("/bulk")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+    public DefaultCommonResult deleteBulk(@NotNull @RequestParam("processInstanceIds") String processInstanceIds) {
+        dqcSchedulerInstanceService.deleteBulk(processInstanceIds);
+        return DefaultCommonResult.success();
+    }
+
 
     /**
      * 获取实例信息常量信息
