@@ -10,7 +10,6 @@ import com.qk.dm.reptile.repositories.RptBaseColumnInfoRepository;
 import com.qk.dm.reptile.service.RptBaseColumnInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,8 +25,7 @@ public class RptBaseColumnInfoServiceImpl implements RptBaseColumnInfoService {
     private final RptBaseColumnInfoRepository rptBaseColumnInfoRepository;
     private final QRptBaseColumnInfo qRptBaseColumnInfo = QRptBaseColumnInfo.rptBaseColumnInfo;
 
-    public RptBaseColumnInfoServiceImpl(RptBaseColumnInfoRepository rptBaseColumnInfoRepository,
-                                        EntityManager entityManager){
+    public RptBaseColumnInfoServiceImpl(RptBaseColumnInfoRepository rptBaseColumnInfoRepository){
         this.rptBaseColumnInfoRepository = rptBaseColumnInfoRepository;
     }
 

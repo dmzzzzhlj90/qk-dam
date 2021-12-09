@@ -46,7 +46,7 @@ public class RptBaseInfoController {
      * @param rptBaseInfoDTO
      * @return
      */
-    @PutMapping("/{id}/{runStatus}")
+    @PutMapping("/config/{id}/{runStatus}")
     public DefaultCommonResult update(
             @PathVariable("id") Long id, @PathVariable("runStatus") Integer runStatus, @RequestBody @Validated RptBaseInfoDTO rptBaseInfoDTO) {
         rptBaseInfoDTO.setRunStatus(runStatus);
