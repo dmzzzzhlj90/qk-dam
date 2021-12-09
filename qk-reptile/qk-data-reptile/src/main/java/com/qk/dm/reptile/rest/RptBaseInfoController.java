@@ -12,8 +12,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 可视化_基础配置信息
- * @author zys
+ * 爬虫数据采集基础配置信息
+ * @author wangzp
  * @date 2021/12/8 12:11
  * @since 1.0.0
  */
