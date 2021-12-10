@@ -20,6 +20,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 维度目录server
@@ -154,5 +155,18 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
     }
     RptDimensionInfoMapper.INSTANCE.of(rptDimensionInfoDTO, rptDimensionInfo);
     rptDimensionInfoRepository.saveAndFlush(rptDimensionInfo);
+  }
+
+  /**
+   *获取所有目录名称
+   * @return
+   */
+  @Override
+  public List<String> updateDirName() {
+    List<RptDimensionInfo> rptDimensionInfoList= rptDimensionInfoRepository.findAll();
+    if (CollectionUtils.isEmpty(rptDimensionInfoList)){
+      throw new BizException("获取唯独目录为空，请创建目录");
+    }
+    return rptDimensionInfoList.stream().map(RptDimensionInfo::getDimensionName).collect(Collectors.toList());
   }
 }

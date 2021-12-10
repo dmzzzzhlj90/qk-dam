@@ -7,6 +7,7 @@ import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface RptDimensionInfoColumnService {
@@ -18,4 +19,6 @@ public interface RptDimensionInfoColumnService {
 
   PageResultVO<RptDimensionInfoColumnVO> qyeryRptDimensionInfoColumn(
       RptDimensionInfoColumnParamDTO rptDimensionInfoColumnParamDTO);
+
+  Map<String,String> queryColumnByDirName(String dimensionColumnName);
 }
