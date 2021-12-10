@@ -24,6 +24,12 @@ public class DqcSchedulerRules implements Serializable {
     private Long id;
 
     /**
+     * 规则id
+     */
+    @Column(name = "rule_id", nullable = false)
+    private String ruleId;
+
+    /**
      * 作业id
      */
     @Column(name = "job_id", nullable = false)
@@ -74,7 +80,7 @@ public class DqcSchedulerRules implements Serializable {
     /**
      * 扫描范围 "FULL_TABLE":"全表", "CONDITION":"条件";
      */
-    @Column(name = "scan_type")
+    @Column(name = "scan_type", nullable = false)
     private String scanType;
 
     /**

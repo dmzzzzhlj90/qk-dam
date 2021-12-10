@@ -181,7 +181,7 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
         scriptBuilder
                 .job_id(basicInfoVO.getJobId())
                 .job_name(basicInfoVO.getJobName())
-                .dir_id(basicInfoVO.getDirId())
+                .rule_id(rulesVO.getRuleId())
                 .rule_temp_id(rulesVO.getRuleTempId());
 
         MysqlRawScript mysqlRawScript = scriptBuilder.build();

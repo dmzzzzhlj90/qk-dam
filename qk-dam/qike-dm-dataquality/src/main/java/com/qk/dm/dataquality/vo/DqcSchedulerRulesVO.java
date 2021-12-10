@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,12 @@ public class DqcSchedulerRulesVO {
      * 主键ID
      */
     private Long id;
+
+    /**
+     * 规则id
+     */
+    @NotBlank(message = "规则id不能为空！")
+    private String ruleId;
 
     /**
      * 作业id

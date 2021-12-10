@@ -97,6 +97,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         List<DqcSchedulerRulesVO> executorRuleList = new ArrayList<>();
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
+            String ruleId = UUID.randomUUID().toString().replaceAll("-", "");
+            dqcSchedulerRulesVO.setRuleId(ruleId);
             dqcSchedulerRulesVO.setJobId(jobId);
             //生成执行Sql;
             String executorSql = getExecutorSql(dqcSchedulerRulesVO);
