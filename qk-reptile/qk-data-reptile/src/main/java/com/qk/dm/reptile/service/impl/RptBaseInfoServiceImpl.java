@@ -1,23 +1,19 @@
 package com.qk.dm.reptile.service.impl;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptBaseInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
-import com.qk.dm.reptile.params.dto.RptBaseColumnInfoDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
-import com.qk.dm.reptile.params.vo.RptBaseColumnInfoVO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
-import com.qk.dm.reptile.service.RptBaseColumnInfoService;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -37,7 +33,6 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private final EntityManager entityManager;
     private final QRptBaseInfo qRptBaseInfo = QRptBaseInfo.rptBaseInfo;
     private final RptBaseInfoRepository rptBaseInfoRepository;
-    private final RptBaseColumnInfoService rptBaseColumnInfoService;
 
     @PostConstruct
     public void initFactory() {
@@ -45,10 +40,9 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     public RptBaseInfoServiceImpl(RptBaseInfoRepository rptBaseInfoRepository,
-                                  EntityManager entityManager,RptBaseColumnInfoService rptBaseColumnInfoService){
+                                  EntityManager entityManager){
         this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.entityManager = entityManager;
-        this.rptBaseColumnInfoService = rptBaseColumnInfoService;
     }
 
     @Override
@@ -66,12 +60,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         RptBaseInfoMapper.INSTANCE.of(rptBaseInfoDTO, rptBaseInfo);
         //修改为爬虫状态
         rptBaseInfo.setStatus(RptConstant.REPTILE);
+        rptBaseInfo.setConfigName(rptBaseInfoDTO.getConfigName());
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
-        List<RptBaseColumnInfoDTO>  rptBaseInfoDTOBaseColumnInfoList= rptBaseInfoDTO.getBaseColumnInfoList();
-        if(!CollectionUtils.isEmpty(rptBaseInfoDTOBaseColumnInfoList)){
-            rptBaseColumnInfoService.batchInset(id,rptBaseInfoDTOBaseColumnInfoList);
-
-        }
 
     }
 
@@ -81,10 +71,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(rptBaseInfo.isEmpty()){
             throw new BizException("当前要查询的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        List<RptBaseColumnInfoVO> baseColumnInfoVOList = rptBaseColumnInfoService.list(id);
-        RptBaseInfoVO rptBaseInfoVO = RptBaseInfoMapper.INSTANCE.userRtpBaseInfoVO(rptBaseInfo.get());
-        rptBaseInfoVO.setBaseColumnInfoList(baseColumnInfoVOList);
-        return rptBaseInfoVO;
+        return RptBaseInfoMapper.INSTANCE.userRtpBaseInfoVO(rptBaseInfo.get());
     }
 
     @Override
@@ -95,10 +82,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             throw new BizException("当前要删除的基础信息id为：" + ids + " 的数据不存在！！！");
         }
         rptBaseInfoRepository.deleteAllById(idSet);
-        rptBaseInfoList.forEach(
-            e -> {
-              rptBaseColumnInfoService.deleteByBaseInfoId(e.getId());
-            });
+//        rptBaseInfoList.forEach(
+//            e -> {
+//              rptBaseColumnInfoService.deleteByBaseInfoId(e.getId());
+//            });
     }
 
     @Override
@@ -152,11 +139,14 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     public void checkCondition(BooleanBuilder booleanBuilder, RptBaseInfoDTO rptBaseInfoDTO) {
-        if (!StringUtils.isEmpty(rptBaseInfoDTO.getCnName())) {
-            booleanBuilder.and(qRptBaseInfo.cnName.contains(rptBaseInfoDTO.getCnName()));
+        if (!StringUtils.isEmpty(rptBaseInfoDTO.getWebsiteName())) {
+            booleanBuilder.and(qRptBaseInfo.websiteName.contains(rptBaseInfoDTO.getWebsiteName()));
         }
         if (!StringUtils.isEmpty(rptBaseInfoDTO.getConfigName())) {
             booleanBuilder.and(qRptBaseInfo.configName.contains(rptBaseInfoDTO.getConfigName()));
+        }
+        if (!StringUtils.isEmpty(rptBaseInfoDTO.getWebsiteUrl())) {
+           booleanBuilder.and(qRptBaseInfo.websiteUrl.contains(rptBaseInfoDTO.getWebsiteUrl()));
         }
         if(Objects.nonNull(rptBaseInfoDTO.getStatus())){
             booleanBuilder.and(qRptBaseInfo.status.eq(rptBaseInfoDTO.getStatus()));

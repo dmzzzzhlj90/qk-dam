@@ -10,8 +10,8 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "qk_rpt_base_column_info")
-public class RptBaseColumnInfo implements Serializable {
+@Table(name = "qk_rpt_selector_column_info")
+public class RptSelectorColumnInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,14 +26,8 @@ public class RptBaseColumnInfo implements Serializable {
     /**
      * 配置表id
      */
-    @Column(name = "base_info_id")
-    private Long baseInfoId;
-
-    /**
-     * 描述
-     */
-    @Column(name = "description")
-    private String description;
+    @Column(name = "config_id")
+    private Long configId;
 
     /**
      * 手动执行
@@ -62,15 +56,15 @@ public class RptBaseColumnInfo implements Serializable {
     /**
      * 创建时间
      */
-    @CreationTimestamp
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
-    @UpdateTimestamp
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
 }

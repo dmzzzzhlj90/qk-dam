@@ -24,34 +24,16 @@ public class RptBaseInfo implements Serializable {
     private Long id;
 
     /**
-     * raw参数
+     * 网站名
      */
-    @Column(name = "raw")
-    private String raw;
+    @Column(name = "website_name")
+    private String websiteName;
 
     /**
-     * x-www-form-urlencoded参数
+     * 连接
      */
-    @Column(name = "form_urlencoded")
-    private String formUrlencoded;
-
-    /**
-     * from-data参数
-     */
-    @Column(name = "from_data")
-    private String fromData;
-
-    /**
-     * cookies参数
-     */
-    @Column(name = "cookies")
-    private String cookies;
-
-    /**
-     * headers参数
-     */
-    @Column(name = "headers")
-    private String headers;
+    @Column(name = "website_url")
+    private String websiteUrl;
 
     /**
      * 执行周期
@@ -63,7 +45,7 @@ public class RptBaseInfo implements Serializable {
      * 数据状态（0表示待配、1表示爬虫、2表示历史）
      */
     @Column(name = "status")
-    private Integer status = 0;
+    private Integer status;
 
     /**
      * 数据启动状态（0表示启动、1表示未启动）
@@ -72,70 +54,16 @@ public class RptBaseInfo implements Serializable {
     private Integer runStatus;
 
     /**
-     * 描述
-     */
-    @Column(name = "description")
-    private String description;
-
-    /**
-     * 维度目录id
-     */
-    @Column(name = "dimension_id")
-    private Long dimensionId;
-
-    /**
-     * 维度目录名称
-     */
-    @Column(name = "dimension_name")
-    private String dimensionName;
-
-    /**
-     * 是否启动动态加载js(0表示未启动、1表示启动)
-     */
-    @Column(name = "startover_js")
-    private Integer startoverJs;
-
-    /**
-     * 是否启动代理IP(0表示未启动、1表示启动)
-     */
-    @Column(name = "startover_ip")
-    private Integer startoverIp;
-
-    /**
-     * 配置人名称
-     */
-    @Column(name = "config_name")
-    private String configName;
-
-    /**
      * 配置人id
      */
     @Column(name = "config_id")
     private Long configId;
 
     /**
-     * 请求路径
+     * 配置人名称
      */
-    @Column(name = "request_url")
-    private String requestUrl;
-
-    /**
-     * 请求方式
-     */
-    @Column(name = "request_type")
-    private String requestType;
-
-    /**
-     * 连接
-     */
-    @Column(name = "conn")
-    private String conn;
-
-    /**
-     * 网站名
-     */
-    @Column(name = "cn_name")
-    private String cnName;
+    @Column(name = "config_name")
+    private String configName;
 
     /**
      * 最后运行时间
@@ -146,15 +74,15 @@ public class RptBaseInfo implements Serializable {
     /**
      * 修改时间
      */
-    @UpdateTimestamp
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
     /**
      * 创建时间
      */
-    @CreationTimestamp
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**

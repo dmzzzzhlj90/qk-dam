@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping("/info")
+@RequestMapping("/base/info")
 public class RptBaseInfoController {
 
     private final RptBaseInfoService rptBaseInfoService;
