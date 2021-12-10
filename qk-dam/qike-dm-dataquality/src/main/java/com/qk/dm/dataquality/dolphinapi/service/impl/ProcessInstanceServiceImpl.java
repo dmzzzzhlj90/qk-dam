@@ -55,6 +55,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
      */
     @Override
     public ProcessInstanceResultDTO search(ProcessInstanceSearchDTO instanceSearchDTO) {
+        ProcessInstanceResultDTO processInstanceResultDTO = new ProcessInstanceResultDTO();
         try {
             Result result =
                     defaultApi.queryProcessInstanceListUsingGET(
@@ -70,28 +71,29 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             instanceSearchDTO.getStateType()
                     );
             DqcConstant.verification(result, "查询流程实例列表失败{}，");
-            return GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceResultDTO>() {
+            processInstanceResultDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceResultDTO>() {
             }.getType());
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
-        return null;
+        return processInstanceResultDTO;
     }
 
     @Override
     public ProcessInstanceDTO detail(Integer processInstanceId) {
+        ProcessInstanceDTO processInstanceDTO = new ProcessInstanceDTO();
         try {
             Result result =
                     defaultApi.queryProcessInstanceByIdUsingGET(
                             dolphinSchedulerInfoConfig.getProjectName(), processInstanceId
                     );
             DqcConstant.verification(result, "查询流程实例通过流程实例ID失败{}，");
-            return GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceDTO>() {
+            processInstanceDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceDTO>() {
             }.getType());
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
-        return null;
+        return processInstanceDTO;
     }
 
     @Override
@@ -138,6 +140,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
 
     @Override
     public ProcessTaskInstanceResultDTO searchTask(ProcessTaskInstanceSearchDTO TaskInstanceSearch) {
+        ProcessTaskInstanceResultDTO processTaskInstanceResultDTO = new ProcessTaskInstanceResultDTO();
         try {
             Result result =
                     defaultApi.queryTaskListPagingUsingGET(
@@ -154,12 +157,12 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             TaskInstanceSearch.getTaskName()
                     );
             DqcConstant.verification(result, "查询任务实例列表失败{}，");
-            return GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessTaskInstanceResultDTO>() {
+            processTaskInstanceResultDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessTaskInstanceResultDTO>() {
             }.getType());
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
-        return null;
+        return processTaskInstanceResultDTO;
     }
 
     @Override
@@ -178,17 +181,10 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     @Override
     public String taskLogDownload(Integer taskInstanceId) {
         try {
-//            ResponseEntity responseEntity = defaultApi.downloadTaskLogUsingGET(taskInstanceId);
-////            if (result.getStatusCode() != null && !result.getStatusCode().equals(DqcConstant.RESULT_CODE)) {
-////                throw new BizException("下载任务实例日志失败{}");
-////            }
-//            return (String) responseEntity.getBody();
-
             Result result =
                     defaultApi.queryLogUsingGET(0, 100000, taskInstanceId);
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
             return (String) result.getData();
-
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }

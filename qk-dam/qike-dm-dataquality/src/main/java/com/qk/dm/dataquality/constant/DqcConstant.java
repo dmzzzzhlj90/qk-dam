@@ -111,6 +111,7 @@ public class DqcConstant {
         System.err.println("Reason: " + e.getResponseBody());
         System.err.println("Response headers: " + e.getResponseHeaders());
         e.printStackTrace();
+        throw new BizException("dolphin出错{},"+e.getMessage());
     }
 
     public static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
