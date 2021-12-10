@@ -95,8 +95,11 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
             //结果集构建
             DqcSchedulerResultVO.DqcSchedulerResultVOBuilder resultBuilder = DqcSchedulerResultVO.builder();
+            resultBuilder.jobId(dqcSchedulerResult.getJobId());
             resultBuilder.jobName(dqcSchedulerResult.getJobName());
             resultBuilder.ruleId(dqcSchedulerResult.getRuleId());
+            resultBuilder.ruleName(dqcSchedulerResult.getRuleName());
+            resultBuilder.gmtModified(dqcSchedulerResult.getGmtModified());
 
             //设置列的schema
             List<DqcSchedulerResultTitleVO> resultTitleVOList = buildResultTitleVOList(goalList);
@@ -104,7 +107,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
             //设置列的信息
             resultBuilder.resultDataList(
-                    buildResultDataVOList(resultTitleVOList, dqcSchedulerResult.getRuleResult(), dqcSchedulerResult.getRuleId()));
+                    buildResultDataVOList(resultTitleVOList, dqcSchedulerResult.getRuleResult(), dqcSchedulerResult.getRuleName()));
 
             DqcSchedulerResultVO dqcSchedulerResultVO = resultBuilder.build();
             schedulerResultVOList.add(dqcSchedulerResultVO);
@@ -154,7 +157,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         return schedulerResultTitleVOList;
     }
 
-    private List<Map<String, Object>> buildResultDataVOList(List<DqcSchedulerResultTitleVO> resultTitleVOList, String ruleResultStr, String ruleId) {
+    private List<Map<String, Object>> buildResultDataVOList(List<DqcSchedulerResultTitleVO> resultTitleVOList, String ruleResultStr, String ruleName) {
         List<Map<String, Object>> resultDataVOList = new ArrayList<>();
         //获取列 dataIndexList
         List<String> dataIndexList = resultTitleVOList.stream().map(DqcSchedulerResultTitleVO::getDataIndex).collect(Collectors.toList());
@@ -166,7 +169,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         if (resultDataList.size() > 0) {
             for (List data : resultDataList) {
                 Map<String, Object> resultDataMap = new LinkedHashMap<>();
-                resultDataMap.put(dataIndexList.get(0), ruleId);
+                resultDataMap.put(dataIndexList.get(0), ruleName);
 
                 AtomicInteger index = new AtomicInteger(1);
 
@@ -211,8 +214,16 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
                                QDqcSchedulerResult qDqcSchedulerResult,
                                DqcSchedulerResultParamsVO schedulerResultParamsVO) {
 
+        if (!ObjectUtils.isEmpty(schedulerResultParamsVO.getJobId())) {
+            booleanBuilder.and(qDqcSchedulerResult.jobId.eq(schedulerResultParamsVO.getJobId()));
+        }
+
         if (!ObjectUtils.isEmpty(schedulerResultParamsVO.getJobName())) {
             booleanBuilder.and(qDqcSchedulerResult.jobName.eq(schedulerResultParamsVO.getJobName()));
+        }
+
+        if (!ObjectUtils.isEmpty(schedulerResultParamsVO.getRuleId())) {
+            booleanBuilder.and(qDqcSchedulerResult.ruleId.eq(schedulerResultParamsVO.getRuleId()));
         }
 
         if (!StringUtils.isEmpty(schedulerResultParamsVO.getBeginDay())

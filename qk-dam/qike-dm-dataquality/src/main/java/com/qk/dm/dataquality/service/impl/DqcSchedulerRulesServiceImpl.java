@@ -100,6 +100,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
             String ruleId = UUID.randomUUID().toString().replaceAll("-", "");
             dqcSchedulerRulesVO.setRuleId(ruleId);
             dqcSchedulerRulesVO.setJobId(jobId);
+            //规则名称
+            dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO));
             //生成执行Sql;
             String executorSql = getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
@@ -133,6 +135,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
             dqcSchedulerRulesVO.setJobId(jobId);
+            //规则名称
+            dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO));
             //生成执行Sql;
             String executorSql = getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
@@ -230,6 +234,20 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
 
     private String getExecutorSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         return dqcRuleSqlBuilderService.getExecuteSql(dqcSchedulerRulesVO);
+    }
+
+    private String getRuleName(DqcSchedulerRulesVO rulesVO) {
+        String tableStr = "";
+        String fieldStr = "";
+        if (rulesVO.getTableList() != null) {
+            tableStr = String.join("&", rulesVO.getTableList());
+        }
+
+        if (rulesVO.getFieldList() != null) {
+            fieldStr = String.join("&", rulesVO.getFieldList());
+        }
+
+        return rulesVO.getRuleType() + "/" + rulesVO.getDatabaseName() + "/" + tableStr + "/" + fieldStr;
     }
 
 }

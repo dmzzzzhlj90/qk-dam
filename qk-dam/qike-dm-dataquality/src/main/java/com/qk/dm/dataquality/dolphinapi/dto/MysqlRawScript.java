@@ -40,6 +40,8 @@ public class MysqlRawScript {
 
     private String rule_id;
 
+    private String rule_name;
+
     private Long rule_temp_id;
 
 }

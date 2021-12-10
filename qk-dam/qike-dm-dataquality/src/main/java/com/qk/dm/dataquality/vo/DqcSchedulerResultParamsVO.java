@@ -24,7 +24,17 @@ public class DqcSchedulerResultParamsVO {
     /**
      * 作业名称
      */
+    private String jobId;
+
+    /**
+     * 作业名称
+     */
     private String jobName;
+
+    /**
+     * 规则id
+     */
+    private String ruleId;
 
     /**
      * 开始时间

@@ -34,10 +34,16 @@ public class DqcSchedulerResult implements Serializable {
     private String jobName;
 
     /**
-     * 规则id
+     * 规则类型
      */
     @Column(name = "rule_id", nullable = false)
     private String ruleId;
+
+    /**
+     * 规则类型
+     */
+    @Column(name = "rule_name", nullable = false)
+    private String ruleName;
 
     /**
      * 规则模板id
