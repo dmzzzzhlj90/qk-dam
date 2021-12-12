@@ -4,10 +4,10 @@ import com.google.common.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataquality.entity.DqcRuleTemplate;
-import com.qk.dm.dataquality.entity.DqcSchedulerResult;
-import com.qk.dm.dataquality.entity.QDqcSchedulerResult;
+import com.qk.dm.dataquality.constant.RuleTypeEnum;
+import com.qk.dm.dataquality.entity.*;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
+import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerResultDataService;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultTitleVO;
@@ -41,17 +41,23 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     public static final String DEFAULT_TITLE = "目标对象";
     public static final String DEFAULT_DATA_INDEX = "targetObj";
     public static final String RESULT_KEY = "result";
+    public static final String DATA_INDEX_NAME_PREFIX = "dataIndexNamePrefix";
+    public static final String LOCATIONS = "locations";
 
     private final QDqcSchedulerResult qDqcSchedulerResult = QDqcSchedulerResult.dqcSchedulerResult;
 
     private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
+    private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
 
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
 
     @Autowired
-    public DqcSchedulerResultDataServiceImpl(DqcRuleTemplateRepository dqcRuleTemplateRepository, EntityManager entityManager) {
+    public DqcSchedulerResultDataServiceImpl(DqcRuleTemplateRepository dqcRuleTemplateRepository,
+                                             DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
+                                             EntityManager entityManager) {
         this.dqcRuleTemplateRepository = dqcRuleTemplateRepository;
+        this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
         this.entityManager = entityManager;
     }
 
@@ -107,7 +113,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
             //设置列的信息
             resultBuilder.resultDataList(
-                    buildResultDataVOList(resultTitleVOList, dqcSchedulerResult.getRuleResult(), dqcSchedulerResult.getRuleName()));
+                    buildResultDataVOList(resultTitleVOList, dqcSchedulerResult.getRuleResult(), dqcSchedulerResult.getRuleId()));
 
             DqcSchedulerResultVO dqcSchedulerResultVO = resultBuilder.build();
             schedulerResultVOList.add(dqcSchedulerResultVO);
@@ -157,8 +163,17 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         return schedulerResultTitleVOList;
     }
 
-    private List<Map<String, Object>> buildResultDataVOList(List<DqcSchedulerResultTitleVO> resultTitleVOList, String ruleResultStr, String ruleName) {
+    private List<Map<String, Object>> buildResultDataVOList(List<DqcSchedulerResultTitleVO> resultTitleVOList, String ruleResultStr, String ruleId) {
         List<Map<String, Object>> resultDataVOList = new ArrayList<>();
+        //获取规则信息
+
+        Optional<DqcSchedulerRules> schedulerRulesOptional = dqcSchedulerRulesRepository.findOne(QDqcSchedulerRules.dqcSchedulerRules.ruleId.eq(ruleId));
+
+        //获取规则参数位置信息
+        Map<String, Object> locationMap = getLocationMap(schedulerRulesOptional);
+        String dataIndexNamePrefix = (String) locationMap.get(DATA_INDEX_NAME_PREFIX);
+        List<String> locations = (List<String>) locationMap.get(LOCATIONS);
+
         //获取列 dataIndexList
         List<String> dataIndexList = resultTitleVOList.stream().map(DqcSchedulerResultTitleVO::getDataIndex).collect(Collectors.toList());
 
@@ -166,21 +181,67 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         List<List<Object>> resultDataList = GsonUtil.fromJsonString(ruleResultStr, new TypeToken<List<List<Object>>>() {
         }.getType());
 
+        //构建ResultData
+        buildResultData(resultDataVOList, dataIndexNamePrefix, locations, dataIndexList, resultDataList);
+        return resultDataVOList;
+    }
+
+    private Map<String, Object> getLocationMap(Optional<DqcSchedulerRules> schedulerRulesOptional) {
+        Map<String, Object> locationMap = new HashMap<>();
+        if (schedulerRulesOptional.isPresent()) {
+            List<String> locations = new ArrayList<>();
+            DqcSchedulerRules dqcSchedulerRules = schedulerRulesOptional.get();
+
+            //表列表信息
+            String tableStr = dqcSchedulerRules.getTables();
+            List<String> tableList = GsonUtil.fromJsonString(tableStr, new TypeToken<List<String>>() {
+            }.getType());
+            String tablePart = String.join("&", tableList);
+
+            //字段列表信息
+            String fieldStr = dqcSchedulerRules.getFields();
+            List<String> fieldList = GsonUtil.fromJsonString(fieldStr, new TypeToken<List<String>>() {
+            }.getType());
+            String fieldPart = String.join("&", fieldList);
+
+            //获取具体列前缀key
+            String dataIndexNamePrefix = "/" + dqcSchedulerRules.getDatabaseName() + "/" + tablePart + "/";
+
+            //获取规则参数位置信息
+            if (RuleTypeEnum.RULE_TYPE_TABLE.getCode().equalsIgnoreCase(dqcSchedulerRules.getRuleType())) {
+                dataIndexNamePrefix = "/" + dqcSchedulerRules.getDatabaseName() + "/";
+                locations.addAll(tableList);
+            } else if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(dqcSchedulerRules.getRuleType())) {
+                locations.addAll(fieldList);
+                dataIndexNamePrefix = "/" + dqcSchedulerRules.getDatabaseName() + "/" + tablePart + "/";
+            }
+
+            locationMap.put(DATA_INDEX_NAME_PREFIX, dataIndexNamePrefix);
+            locationMap.put(LOCATIONS, locations);
+        }
+        return locationMap;
+    }
+
+    private void buildResultData(List<Map<String, Object>> resultDataVOList, String dataIndexNamePrefix, List<String> locations, List<String> dataIndexList, List<List<Object>> resultDataList) {
         if (resultDataList.size() > 0) {
+            AtomicInteger dataIndex = new AtomicInteger(0);
             for (List data : resultDataList) {
                 Map<String, Object> resultDataMap = new LinkedHashMap<>();
-                resultDataMap.put(dataIndexList.get(0), ruleName);
+                //设置列具体名称
+                String fieldName = locations.get(dataIndex.get());
+                String dataIndexName = dataIndexNamePrefix + fieldName;
+                resultDataMap.put(dataIndexList.get(0), dataIndexName);
 
-                AtomicInteger index = new AtomicInteger(1);
+                AtomicInteger valueIndex = new AtomicInteger(1);
 
                 for (Object value : data) {
-                    resultDataMap.put(dataIndexList.get(index.get()), value);
-                    index.getAndIncrement();
+                    resultDataMap.put(dataIndexList.get(valueIndex.get()), value);
+                    valueIndex.getAndIncrement();
                 }
                 resultDataVOList.add(resultDataMap);
+                dataIndex.getAndIncrement();
             }
         }
-        return resultDataVOList;
     }
 
 
