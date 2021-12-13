@@ -5,6 +5,7 @@ import com.qk.dm.reptile.params.vo.RptDimensionInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface RptDimensionInfoService {
@@ -16,5 +17,5 @@ public interface RptDimensionInfoService {
 
   void updateRptDir(RptDimensionInfoDTO rptDimensionInfoDTO);
 
-  List<String> updateDirName();
+  Map<String,Long> updateDirName();
 }

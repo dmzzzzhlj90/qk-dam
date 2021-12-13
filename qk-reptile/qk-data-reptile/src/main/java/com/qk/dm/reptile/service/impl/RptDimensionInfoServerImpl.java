@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -162,11 +163,11 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
    * @return
    */
   @Override
-  public List<String> updateDirName() {
+  public Map<String,Long> updateDirName() {
     List<RptDimensionInfo> rptDimensionInfoList= rptDimensionInfoRepository.findAll();
     if (CollectionUtils.isEmpty(rptDimensionInfoList)){
       throw new BizException("获取唯独目录为空，请创建目录");
     }
-    return rptDimensionInfoList.stream().map(RptDimensionInfo::getDimensionName).collect(Collectors.toList());
+    return rptDimensionInfoList.stream().collect(Collectors.toMap(RptDimensionInfo::getDimensionName,RptDimensionInfo::getId));
   }
 }
