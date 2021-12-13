@@ -82,11 +82,9 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(rptBaseInfoList.isEmpty()){
             throw new BizException("当前要删除的基础信息id为：" + ids + " 的数据不存在！！！");
         }
-        rptBaseInfoRepository.deleteAllById(idSet);
-//        rptBaseInfoList.forEach(
-//            e -> {
-//              rptBaseColumnInfoService.deleteByBaseInfoId(e.getId());
-//            });
+        rptBaseInfoList.forEach(e->e.setStatus(RptConstant.HISTORY));
+        rptBaseInfoRepository.saveAllAndFlush(rptBaseInfoList);
+
     }
 
     @Override

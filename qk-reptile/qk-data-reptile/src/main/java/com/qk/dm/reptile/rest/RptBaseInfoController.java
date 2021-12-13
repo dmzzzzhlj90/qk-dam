@@ -116,12 +116,12 @@ public class RptBaseInfoController {
      * @param status  0表示待配 1表示爬虫 2表示历史
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}/{status}")
-    public DefaultCommonResult updateStatus(
-            @PathVariable("id") Long id,@PathVariable("status") Integer status ) {
-        rptBaseInfoService.updateStatus(id, status);
-        return DefaultCommonResult.success();
-    }
+    //@PutMapping("/{id}/{status}")
+//    public DefaultCommonResult updateStatus(
+//            @PathVariable("id") Long id,@PathVariable("status") Integer status ) {
+//        rptBaseInfoService.updateStatus(id, status);
+//        return DefaultCommonResult.success();
+//    }
 
 
 }

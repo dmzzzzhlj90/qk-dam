@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 爬虫数据采集基础配置信息
+ * 爬虫数据采集选择器配置
  * @author wangzp
  * @date 2021/12/10 16:19
  * @since 1.0.0
@@ -75,7 +75,7 @@ public class RptSelectorColumnInfoController {
     }
 
     /**
-     * 删除
+     * 删除选择器
      * @param ids
      * @return DefaultCommonResult
      */

@@ -47,6 +47,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Transactional(rollbackFor = Exception.class)
     public Long insert(RptConfigInfoDTO rptConfigInfoDTO) {
         RptConfigInfo rptConfigInfo = RptConfigInfoMapper.INSTANCE.useRptConfigInfo(rptConfigInfoDTO);
+        //rptConfigInfo.setCookies();
         List<RptSelectorColumnInfoDTO> selectorList = rptConfigInfoDTO.getSelectorList();
         RptConfigInfo config = rptConfigInfoRepository.save(rptConfigInfo);
         //添加选择器

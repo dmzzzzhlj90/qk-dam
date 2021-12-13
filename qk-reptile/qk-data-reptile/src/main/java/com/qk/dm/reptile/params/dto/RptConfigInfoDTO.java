@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 配置信息
@@ -39,27 +40,27 @@ public class RptConfigInfoDTO {
     /**
      * raw参数
      */
-    private String raw;
+    private Map<String,Object> raw;
 
     /**
      * x-www-form-urlencoded参数
      */
-    private String formUrlencoded;
+    private Map<String,Object> formUrlencoded;
 
     /**
      * from-data参数
      */
-    private String fromData;
+    private Map<String,Object> fromData;
 
     /**
      * cookies参数
      */
-    private String cookies;
+    private Map<String,Object> cookies;
 
     /**
      * headers参数
      */
-    private String headers;
+    private Map<String,Object> headers;
 
     /**
      * 维度目录id
