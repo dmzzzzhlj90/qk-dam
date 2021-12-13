@@ -37,7 +37,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
   }
 
   @Override
-  public List<DasApiDirTreeVO> getTree() {
+  public List<DasApiDirTreeVO> searchList() {
     Predicate predicate = qDasApiDir.delFlag.eq(0);
     List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate);
     List<DasApiDirTreeVO> respList = new ArrayList<>();
@@ -49,7 +49,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
   }
 
   @Override
-  public void addDasApiDir(DasApiDirVO dasApiDirVO) {
+  public void insert(DasApiDirVO dasApiDirVO) {
     DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
     dasApiDir.setGmtCreate(new Date());
     dasApiDir.setGmtModified(new Date());
@@ -71,7 +71,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
 
   @Transactional
   @Override
-  public void updateDasApiDir(DasApiDirVO dasApiDirVO) {
+  public void update(DasApiDirVO dasApiDirVO) {
     DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
     dasApiDir.setGmtModified(new Date());
     dasApiDir.setDelFlag(0);
@@ -96,7 +96,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
   }
 
   @Override
-  public void deleteDasApiDir(Long delId) {
+  public void delete(Long delId) {
     Optional<DasApiDir> dirOptional = dasApiDirRepository.findById(delId);
     if (!dirOptional.isPresent()) {
       throw new BizException("参数有误,当前要删除的节点不存在！！！");
@@ -145,7 +145,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
   }
 
   @Override
-  public void deleteDasApiDirRoot(Long delId) {
+  public void deleteRoot(Long delId) {
     ArrayList<Long> ids = new ArrayList<>();
     // 删除父级ID
     Optional<DasApiDir> dasApiDirIsExist =

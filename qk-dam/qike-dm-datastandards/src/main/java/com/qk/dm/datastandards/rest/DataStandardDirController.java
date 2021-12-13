@@ -1,5 +1,8 @@
 package com.qk.dm.datastandards.rest;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datastandards.service.DataStandardDirService;
@@ -31,10 +34,11 @@ public class DataStandardDirController {
   /**
    * 获取数据标准分类目录树
    *
-   * @return DefaultCommonResult<List<DataStandardTreeVO>>
+   * @return DefaultCommonResult<List < DataStandardTreeVO>>
    */
-  @GetMapping("/tree")
-  public DefaultCommonResult<List<DataStandardTreeVO>> getDsdDirTree() {
+  @GetMapping("/list")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+  public DefaultCommonResult<List<DataStandardTreeVO>> searchList() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dataStandardDirService.getTree());
   }
 
@@ -44,8 +48,9 @@ public class DataStandardDirController {
    * @param dsdDirVO
    * @return DefaultCommonResult
    */
-  @PostMapping("/add")
-  public DefaultCommonResult addDsdDir(@RequestBody DsdDirVO dsdDirVO) {
+  @PostMapping("")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insert(@RequestBody DsdDirVO dsdDirVO) {
     dataStandardDirService.addDsdDir(dsdDirVO);
     return DefaultCommonResult.success();
   }
@@ -56,8 +61,9 @@ public class DataStandardDirController {
    * @param dsdDirVO
    * @return DefaultCommonResult
    */
-  @PutMapping("/update")
-  public DefaultCommonResult updateDsdDir(@RequestBody DsdDirVO dsdDirVO) {
+  @PutMapping("")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(@RequestBody DsdDirVO dsdDirVO) {
     dataStandardDirService.updateDsdDir(dsdDirVO);
     return DefaultCommonResult.success();
   }
@@ -68,8 +74,9 @@ public class DataStandardDirController {
    * @param id
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/delete/{id}")
-  public DefaultCommonResult deleteDsdDir(@PathVariable("id") Integer id) {
+  @DeleteMapping("/{id}")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult delete(@PathVariable("id") Integer id) {
     dataStandardDirService.deleteDsdDir(id);
     return DefaultCommonResult.success();
   }
@@ -80,8 +87,9 @@ public class DataStandardDirController {
    * @param id
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/delete/root/{id}")
-  public DefaultCommonResult deleteDsdDirRoot(@PathVariable("id") Integer id) {
+  @DeleteMapping("/root/{id}")
+  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteBulk(@PathVariable("id") Integer id) {
     dataStandardDirService.deleteDsdDirRoot(id);
     return DefaultCommonResult.success();
   }

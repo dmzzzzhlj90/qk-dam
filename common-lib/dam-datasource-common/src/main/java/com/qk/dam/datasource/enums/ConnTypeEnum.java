@@ -11,12 +11,12 @@ import java.util.List;
 public enum ConnTypeEnum {
 
   /*数据连接枚举信息*/
-  MYSQL("db-mysql"),
-  ORACLE("db-oracle"),
-  DB2("db-db2"),
-  SQLSERVER("db-sqlserver"),
-  HIVE("db-hive"),
-  POSTGRESQL("db-postgresql"),
+  MYSQL("mysql"),
+  ORACLE("oracle"),
+  DB2("db2"),
+  SQLSERVER("sqlserver"),
+  HIVE("hive"),
+  POSTGRESQL("postgresql"),
   HBASE("hbase"),
   REDIS("redis"),
   EXCEL("excel"),

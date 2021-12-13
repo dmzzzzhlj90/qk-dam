@@ -72,7 +72,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   }
 
   @Override
-  public PageResultVO<DasApiBasicInfoVO> getDasApiBasicInfo(
+  public PageResultVO<DasApiBasicInfoVO> searchList(
       DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
     List<DasApiBasicInfoVO> dasApiBasicInfoVOList = new ArrayList<>();
     Map<String, Object> map = null;
@@ -99,7 +99,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   }
 
   @Override
-  public void addDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+  public void insert(DasApiBasicInfoVO dasApiBasicInfoVO) {
     Optional<DasApiBasicInfo> optionalDasApiBasicInfo = checkExistApiBasicInfo(dasApiBasicInfoVO);
     if (optionalDasApiBasicInfo.isPresent()) {
       DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
@@ -122,7 +122,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
   }
 
   @Override
-  public void updateDasApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+  public void update(DasApiBasicInfoVO dasApiBasicInfoVO) {
     Optional<DasApiBasicInfo> optionalDasApiBasicInfo = checkExistApiBasicInfo(dasApiBasicInfoVO);
     if (optionalDasApiBasicInfo.isEmpty()) {
       DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
@@ -145,7 +145,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
   @Transactional
   @Override
-  public void deleteDasApiBasicInfo(Long delId) {
+  public void delete(Long delId) {
     Optional<DasApiBasicInfo> onDasApiBasicInfo =
         dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.id.eq(delId));
     if (onDasApiBasicInfo.isPresent()) {
@@ -167,7 +167,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
   @Transactional
   @Override
-  public void bulkDeleteDasApiBasicInfo(String ids) {
+  public void deleteBulk(String ids) {
     //        List<String> idList = Arrays.asList(ids.split(","));
     //        Set<Long> idSet = new HashSet<>();
     //        idList.forEach(id -> idSet.add(Long.valueOf(id)));

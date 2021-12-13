@@ -1,51 +1,22 @@
-server:
-  port: 8781
 spring:
+  application:
+    name: ${name}-\${spring.profiles.active}
   logging:
     level: info
-    path: logs/dm-datasource.log
     appender:
       ref: CONSOLE
-  messages:
-    basename: i18n/messages
-  mvc:
-    message-codes-resolver-format: postfix_error_code
-    servlet:
-      path: /ds
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: dm-datasource
+    path: logs/\${spring.application.name}.log
   cloud:
     nacos:
       discovery:
-        server-addr: http://172.20.0.13
-        namespace: b283864b-1e78-429e-b322-db0f5720f55c
-        group: DM-GROUP
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
       config:
-        server-addr: http://172.20.0.13
-        namespace: b283864b-1e78-429e-b322-db0f5720f55c
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
         extension-configs:
-          - dataId: qkdam-mysql-test.yml
+          - dataId: qkdam-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
-management:
-  endpoints:
-    enabled-by-default: true
-    web:
-      base-path: /actuator
-      exposure:
-        include: "*"
-  endpoint:
-    info:
-      enabled: true
-    health:
-      show-details: always
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-        descriptions: true
-    tags:
-      application: ${spring.application.name}
-
+  profiles:
+    active: ${damProfilesActive}

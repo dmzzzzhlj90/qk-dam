@@ -1,10 +1,9 @@
 package com.qk.dm.indicator.params.dto;
 
-import lombok.Data;
-
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.io.Serializable;
+import lombok.Data;
 
 @Data
 public class IdcAtomDTO implements Serializable {
@@ -16,9 +15,7 @@ public class IdcAtomDTO implements Serializable {
   private String atomIndicatorName;
 
   /** 原子指标编码 */
-  @Pattern(
-          regexp = "^[a-zA-Z][A-Za-z0-9_]+$",
-          message = "只能包含英文字母、数字和下划线，且以英文字母开头")
+  @Pattern(regexp = "^[a-zA-Z][A-Za-z0-9_]+$", message = "只能包含英文字母、数字和下划线，且以英文字母开头")
   private String atomIndicatorCode;
 
   /** 数据表 */

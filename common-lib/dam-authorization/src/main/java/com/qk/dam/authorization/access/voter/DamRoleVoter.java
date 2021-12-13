@@ -4,6 +4,7 @@ import java.util.Collection;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 角色访问控制
@@ -40,6 +41,9 @@ public class DamRoleVoter extends DamVoter implements AccessDecisionVoter<Object
     }
     int result = ACCESS_ABSTAIN;
     Collection<String> authorities = extractAuthorities(authentication);
+    if (CollectionUtils.isEmpty(authorities)) {
+      return ACCESS_DENIED;
+    }
     for (ConfigAttribute attribute : attributes) {
       if (this.supports(attribute)) {
         result = ACCESS_DENIED;

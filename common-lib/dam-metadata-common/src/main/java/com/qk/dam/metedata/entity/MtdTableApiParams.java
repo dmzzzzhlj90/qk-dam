@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MtdTableApiParams {
 
-    private String typeName;
-    private String classification;
+  private String typeName;
+  private String classification;
 }

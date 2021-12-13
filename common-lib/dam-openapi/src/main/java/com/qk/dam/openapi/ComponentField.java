@@ -11,6 +11,6 @@ public class ComponentField {
   private String fieldName;
   private String desc;
   private String type;
-  private String defaultValue;
+  private Object defaultValue;
   private boolean required;
 }

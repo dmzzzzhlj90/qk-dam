@@ -1,40 +1,34 @@
-server:
-  port: 8765
-logging:
-  level:
-    root: INFO
-    org.springframework.web: DEBUG
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
+
 spring:
+  application:
+    name: ${name}-\${spring.profiles.active}
   session:
     redis:
-      cleanup-cron: "0 0 /2 * * ?"
+      configure-action: none
+      flush-mode: immediate
       namespace: qkdam:session
-      flush-mode: on_save
-  application:
-    name: dm-authclient
-  web:
-    locale: zh_CN
   logging:
     level: info
-    path: logs/dm-authclient.log
     appender:
       ref: CONSOLE
-  main:
-    allow-bean-definition-overriding: true
+    path: logs/\${spring.application.name}.log
   cloud:
     nacos:
       discovery:
-        server-addr: http://172.20.0.13
-        namespace: b70cde8c-05da-4032-9637-59d6d640296b
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
       config:
-        server-addr: http://172.20.0.13
-        namespace: b70cde8c-05da-4032-9637-59d6d640296b
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
         extension-configs:
-          - dataId: qkdam-oauth2-client-dev.yml
+          - dataId: qkdam-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
-          - dataId: qkdam-redis-dev.yml
+          - dataId: qkdam-oauth2-client-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
+          - dataId: qkdam-redis-\${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
+  profiles:
+    active: ${damProfilesActive}

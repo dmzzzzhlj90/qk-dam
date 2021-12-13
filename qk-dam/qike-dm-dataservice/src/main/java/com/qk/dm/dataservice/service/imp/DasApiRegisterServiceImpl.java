@@ -62,7 +62,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
   }
 
   @Override
-  public DasApiRegisterVO getDasApiRegisterInfoByApiId(String apiId) {
+  public DasApiRegisterVO detail(String apiId) {
     // 获取API基础信息
     Optional<DasApiBasicInfo> onDasApiBasicInfo =
         dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.apiId.eq(apiId));
@@ -89,7 +89,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
 
   @Transactional
   @Override
-  public void addDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
+  public void insert(DasApiRegisterVO dasApiRegisterVO) {
     String apiId = UUID.randomUUID().toString().replaceAll("-", "");
     // 保存API基础信息
     DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
@@ -97,7 +97,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
       throw new BizException("当前新增的API所对应的基础信息为空!!!");
     }
     dasApiBasicInfoVO.setApiId(apiId);
-    dasApiBasicInfoService.addDasApiBasicInfo(dasApiBasicInfoVO);
+    dasApiBasicInfoService.insert(dasApiBasicInfoVO);
     singleUpdateApiRegister(dasApiRegisterVO, apiId);
   }
 
@@ -117,10 +117,10 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
 
   @Transactional
   @Override
-  public void updateDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
+  public void update(DasApiRegisterVO dasApiRegisterVO) {
     // 更新API基础信息
     DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
-    dasApiBasicInfoService.updateDasApiBasicInfo(dasApiBasicInfoVO);
+    dasApiBasicInfoService.update(dasApiBasicInfoVO);
     // 更新注册API
     DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterVO);
     setBackendRequestParaJson(dasApiRegisterVO, dasApiRegister);
@@ -172,13 +172,13 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
               dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
               dasApiRegisterVO.setId(optionalDasApiRegister.get().getId());
               dasApiRegisterVO.setApiId(apiId);
-              updateDasApiRegister(dasApiRegisterVO);
+              update(dasApiRegisterVO);
             } else {
               singleUpdateApiRegister(dasApiRegisterVO, dasApiBasicInfo.getApiId());
             }
             updateCount.getAndIncrement();
           } else {
-            addDasApiRegister(dasApiRegisterVO);
+            insert(dasApiRegisterVO);
             saveCount.getAndIncrement();
           }
         }

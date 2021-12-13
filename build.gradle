@@ -11,8 +11,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.openapitools:openapi-generator-gradle-plugin:5.0.0"
-        classpath 'gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.9'
+        classpath "org.openapitools:openapi-generator-gradle-plugin:5.3.0"
     }
 }
 
@@ -20,13 +19,28 @@ group 'com.qk'
 version "${version}"
 description = '数据中台'
 ext.snapshotBuild = version.contains("SNAPSHOT")
+def getCurrentGitBranch() {
+    def gitBranch = "${damProfilesActive}"
+    try {
+        def workingDir = new File("${project.projectDir}")
+        def result = 'git rev-parse --abbrev-ref HEAD'.execute(null, workingDir)
+        result.waitFor()
+        if (result.exitValue() == 0) {
+            gitBranch = result.text.trim()
+        }
+        if (gitBranch.contains("feature")){
+            return "${damProfilesActive}"
+        }
+    } catch (e) {
+    }
+    return gitBranch
+}
 
 subprojects {
     apply plugin: 'idea'
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'org.openapi.generator'
-    apply plugin: 'com.github.sherter.google-java-format'
     repositories {
         maven {
             url = 'http://172.20.0.22:8081/repository/qkdam/'
@@ -40,7 +54,6 @@ subprojects {
 
     }
     configurations.all {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
     plugins.withType(JavaPlugin) {
@@ -91,6 +104,7 @@ subprojects {
                 from('build/libs')
                 into(distroPath)
             }
+            damProfilesActive = getCurrentGitBranch()
 
         }
         smartdoc {

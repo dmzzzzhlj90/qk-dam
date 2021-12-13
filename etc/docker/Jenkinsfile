@@ -1,0 +1,85 @@
+pipeline {
+  agent {
+    kubernetes {
+      label 'openjdk11'
+      yaml '''apiVersion: v1
+kind: Pod
+spec:
+  volumes:
+    - name: dockers
+      hostPath:
+        path: /var/run/docker.sock
+        type: \'\'
+    - name: dockerb
+      hostPath:
+        path: /usr/bin/docker
+        type: \'\'
+  containers:
+   - name: openjdk11
+     image: "172.21.32.2:8079/openjdk/openjdk:11-slim-buster"
+     volumeMounts:
+      - name: dockers
+        mountPath: /var/run/docker.sock
+      - name: dockerb
+        mountPath: /usr/bin/docker
+     command:
+        - cat
+     imagePullPolicy: IfNotPresent
+     tty: true'''
+      defaultContainer 'openjdk11'
+    }
+
+  }
+  stages {
+    stage('git clone') {
+      agent none
+      steps {
+        git(credentialsId: 'gitlab', url: 'http://172.20.0.22/datamiddle/backend/qk-dam.git', branch: '$BRANCH_NAME', changelog: true, poll: false)
+        sh '''pwd
+ls'''
+      }
+    }
+
+    stage('code compile') {
+      agent none
+      steps {
+        container('openjdk11') {
+          sh 'sh gradlew $PROJECT_NAME:dockerCreateDockerfile -PdamProfilesActive=$BRANCH_NAME -x test'
+          archiveArtifacts '**/build/docker/*'
+        }
+
+      }
+    }
+
+    stage('docker build & push') {
+      agent none
+      steps {
+        container('openjdk11') {
+          sh '''find ./ -regex ".*$PROJECT_NAME/build/docker"
+cd $(find ./ -regex ".*$PROJECT_NAME/build/docker")
+pwd
+ls
+docker build -t $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER .'''
+          withCredentials([usernamePassword(credentialsId : 'harbor' ,passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,)]) {
+            sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
+            sh '''find ./ -regex ".*$PROJECT_NAME/build/docker"
+cd $(find ./ -regex ".*$PROJECT_NAME/build/docker")
+pwd
+docker push $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER'''
+          }
+
+        }
+
+      }
+    }
+
+    stage('k8s-deploy') {
+      agent none
+      steps {
+        input(message: 'deploy to $BRANCH_NAME?', submitter: '')
+        kubernetesDeploy(enableConfigSubstitution: true, deleteResource: false, kubeconfigId: 'kubeconfig', configs: 'etc/k8s/deploy/dev-ol/**', dockerCredentials: [[credentialsId: 'harbor', url: '172.21.32.2']])
+      }
+    }
+
+  }
+}

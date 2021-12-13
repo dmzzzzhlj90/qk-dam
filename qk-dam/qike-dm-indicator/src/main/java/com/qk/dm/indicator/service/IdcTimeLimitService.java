@@ -4,7 +4,6 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.indicator.params.dto.IdcTimeLimitDTO;
 import com.qk.dm.indicator.params.dto.IdcTimeLimitPageDTO;
 import com.qk.dm.indicator.params.vo.IdcTimeLimitVO;
-
 import java.util.List;
 
 /**
@@ -14,15 +13,15 @@ import java.util.List;
  */
 public interface IdcTimeLimitService {
 
-    void insert(IdcTimeLimitDTO idcTimeLimitDTO);
+  void insert(IdcTimeLimitDTO idcTimeLimitDTO);
 
-    void update(Long id,IdcTimeLimitDTO idcTimeLimitDTO);
+  void update(Long id, IdcTimeLimitDTO idcTimeLimitDTO);
 
-    void delete(String ids);
+  void delete(String ids);
 
-    IdcTimeLimitVO detail(Long id);
+  IdcTimeLimitVO detail(Long id);
 
-    List<IdcTimeLimitVO> findAll();
+  List<IdcTimeLimitVO> findAll();
 
-    PageResultVO<IdcTimeLimitVO> findListPage(IdcTimeLimitPageDTO idcTimeLimitPageDTO);
+  PageResultVO<IdcTimeLimitVO> findListPage(IdcTimeLimitPageDTO idcTimeLimitPageDTO);
 }

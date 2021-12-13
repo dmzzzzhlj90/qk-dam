@@ -1,5 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
@@ -37,11 +40,12 @@ public class DasApiBasicInfoController {
    * @param dasApiBasicInfoParamsVO
    * @return DefaultCommonResult<PageResultVO < DasApiBasicInfoVO>>
    */
-  @PostMapping(value = "/query")
-  public DefaultCommonResult<PageResultVO<DasApiBasicInfoVO>> getDasApiBasicInfoByDsdLevelId(
+  @PostMapping(value = "/list")
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.LIST)
+  public DefaultCommonResult<PageResultVO<DasApiBasicInfoVO>> searchList(
       @RequestBody DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiBasicInfoService.getDasApiBasicInfo(dasApiBasicInfoParamsVO));
+        ResultCodeEnum.OK, dasApiBasicInfoService.searchList(dasApiBasicInfoParamsVO));
   }
 
   /**
@@ -50,10 +54,10 @@ public class DasApiBasicInfoController {
    * @param dasApiBasicInfoVO
    * @return DefaultCommonResult
    */
-  @PostMapping("/add")
-  public DefaultCommonResult addDasApiBasicInfo(
-      @RequestBody @Validated DasApiBasicInfoVO dasApiBasicInfoVO) {
-    dasApiBasicInfoService.addDasApiBasicInfo(dasApiBasicInfoVO);
+  @PostMapping("")
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insert(@RequestBody @Validated DasApiBasicInfoVO dasApiBasicInfoVO) {
+    dasApiBasicInfoService.insert(dasApiBasicInfoVO);
     return DefaultCommonResult.success();
   }
 
@@ -64,9 +68,9 @@ public class DasApiBasicInfoController {
    * @return DefaultCommonResult
    */
   @PutMapping("/update")
-  public DefaultCommonResult updateDasApiBasicInfo(
-      @RequestBody @Validated DasApiBasicInfoVO dasApiBasicInfoVO) {
-    dasApiBasicInfoService.updateDasApiBasicInfo(dasApiBasicInfoVO);
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(@RequestBody @Validated DasApiBasicInfoVO dasApiBasicInfoVO) {
+    dasApiBasicInfoService.update(dasApiBasicInfoVO);
     return DefaultCommonResult.success();
   }
 
@@ -76,9 +80,10 @@ public class DasApiBasicInfoController {
    * @param id
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/delete/{id}")
-  public DefaultCommonResult deleteDasApiBasicInfo(@PathVariable("id") String id) {
-    dasApiBasicInfoService.deleteDasApiBasicInfo(Long.valueOf(id));
+  @DeleteMapping("/{id}")
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
+  public DefaultCommonResult delete(@PathVariable("id") String id) {
+    dasApiBasicInfoService.delete(Long.valueOf(id));
     return DefaultCommonResult.success();
   }
 
@@ -88,9 +93,10 @@ public class DasApiBasicInfoController {
    * @param ids
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/bulk/delete/{ids}")
-  public DefaultCommonResult bulkDeleteDasApiBasicInfo(@PathVariable("ids") String ids) {
-    dasApiBasicInfoService.bulkDeleteDasApiBasicInfo(ids);
+  @DeleteMapping("/bulk/{ids}")
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+    dasApiBasicInfoService.deleteBulk(ids);
     return DefaultCommonResult.success();
   }
 
@@ -100,6 +106,7 @@ public class DasApiBasicInfoController {
    * @return DefaultCommonResult<PageResultVO < DasApiBasicInfoVO>>
    */
   @GetMapping(value = "/query/api/type")
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
   public DefaultCommonResult<List<Map<String, String>>> getApiType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getApiType());
   }
@@ -110,6 +117,7 @@ public class DasApiBasicInfoController {
    * @return DefaultCommonResult<PageResultVO < DasApiBasicInfoVO>>
    */
   @GetMapping(value = "/query/dm/source/type")
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
   public DefaultCommonResult<List<Map<String, String>>> getDMSourceType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDMSourceType());
   }
@@ -117,9 +125,10 @@ public class DasApiBasicInfoController {
   /**
    * API基础信息__入参定义表头
    *
-   * @return DefaultCommonResult<Map<String, String>>
+   * @return DefaultCommonResult<Map < String, String>>
    */
   @GetMapping(value = "/query/request/paras/header/infos")
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getRequestParasHeaderInfos() {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiBasicInfoService.getRequestParasHeaderInfos());
@@ -128,9 +137,10 @@ public class DasApiBasicInfoController {
   /**
    * API基础信息__参数位置下拉列表
    *
-   * @return DefaultCommonResult<Map<String, String>>
+   * @return DefaultCommonResult<Map < String, String>>
    */
   @GetMapping(value = "/query/request/param/positions")
+  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getRequestParamsPositions() {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiBasicInfoService.getRequestParamsPositions());

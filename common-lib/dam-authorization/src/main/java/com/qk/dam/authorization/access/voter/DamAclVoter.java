@@ -10,6 +10,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 方法访问控制
@@ -35,6 +36,9 @@ public class DamAclVoter extends DamVoter implements AccessDecisionVoter<MethodI
       MethodInvocation method,
       Collection<ConfigAttribute> attributes) {
     Collection<String> roleArray = extractAuthorities(authentication);
+    if (CollectionUtils.isEmpty(roleArray)) {
+      return ACCESS_DENIED;
+    }
     List<DamAuthzPolicy.AuthzRole> roles = DamStrategyAuthorizer.getRoles(roleArray);
     List<String> actions =
         roles.stream().flatMap(r -> r.getAction().stream()).distinct().collect(Collectors.toList());

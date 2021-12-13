@@ -52,7 +52,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
   }
 
   @Override
-  public DasApiCreateSqlScriptVO getDasApiCreateSqlScriptInfoByApiId(String apiId) {
+  public DasApiCreateSqlScriptVO detail(String apiId) {
     // 获取API基础信息
     Optional<DasApiBasicInfo> onDasApiBasicInfo =
         dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.apiId.eq(apiId));
@@ -122,7 +122,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
 
   @Transactional
   @Override
-  public void addDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+  public void insert(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
     String apiId = UUID.randomUUID().toString().replaceAll("-", "");
     // 保存API基础信息
     DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateSqlScriptVO.getDasApiBasicInfoVO();
@@ -130,7 +130,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
       throw new BizException("当前新增的API所对应的基础信息为空!!!");
     }
     dasApiBasicInfoVO.setApiId(apiId);
-    dasApiBasicInfoService.addDasApiBasicInfo(dasApiBasicInfoVO);
+    dasApiBasicInfoService.insert(dasApiBasicInfoVO);
 
     // 保存新建API信息
     DasApiCreateSqlScript dasApiCreateConfig =
@@ -153,10 +153,10 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
 
   @Transactional
   @Override
-  public void updateDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+  public void update(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
     // 更新API基础信息
     DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateSqlScriptVO.getDasApiBasicInfoVO();
-    dasApiBasicInfoService.updateDasApiBasicInfo(dasApiBasicInfoVO);
+    dasApiBasicInfoService.update(dasApiBasicInfoVO);
     // 更新新建API
     DasApiCreateSqlScript dasApiCreate =
         DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScript(dasApiCreateSqlScriptVO);

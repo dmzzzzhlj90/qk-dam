@@ -1,5 +1,8 @@
 package com.qk.dm.datastandards.rest;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
@@ -36,21 +39,24 @@ public class DataStandardCodeInfoController {
    * @param dsdCodeInfoParamsVO
    * @return DefaultCommonResult<PageResultVO < DsdCodeInfoVO>>
    */
-  @PostMapping(value = "/basic/query")
-  public DefaultCommonResult<PageResultVO<DsdCodeInfoVO>> getDsdCodeInfo(
-          @RequestBody DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
+  @PostMapping(value = "/list")
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.LIST)
+  public DefaultCommonResult<PageResultVO<DsdCodeInfoVO>> searchBasicList(
+      @RequestBody DsdCodeInfoParamsVO dsdCodeInfoParamsVO) {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfo(dsdCodeInfoParamsVO));
+        ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfo(dsdCodeInfoParamsVO));
   }
 
   /**
    * 获取所有码表基础信息列表
    *
-   * @return DefaultCommonResult<List<DsdCodeInfoVO>>
+   * @return DefaultCommonResult<List < DsdCodeInfoVO>>
    */
-  @PostMapping(value = "/basic/query/all")
-  public DefaultCommonResult<List<DsdCodeInfoVO>> getDsdCodeInfoAll() {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoAll());
+  @PostMapping(value = "/all/list")
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.LIST)
+  public DefaultCommonResult<List<DsdCodeInfoVO>> searchBasicListAll() {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoAll());
   }
 
   /**
@@ -59,12 +65,12 @@ public class DataStandardCodeInfoController {
    * @param dsdCodeInfoVO
    * @return DefaultCommonResult
    */
-  @PostMapping("/basic/add")
-  public DefaultCommonResult addDsdCodeInfo(@RequestBody @Validated DsdCodeInfoVO dsdCodeInfoVO) {
+  @PostMapping("/basic")
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insertBasic(@RequestBody @Validated DsdCodeInfoVO dsdCodeInfoVO) {
     dataStandardCodeInfoService.addDsdCodeInfo(dsdCodeInfoVO);
     return DefaultCommonResult.success();
   }
-
 
   /**
    * 根据id获取码表信息列表详情信息
@@ -72,11 +78,11 @@ public class DataStandardCodeInfoController {
    * @param id
    * @return DefaultCommonResult<DsdCodeInfoVO>
    */
-  @GetMapping(value = "/basic/query/by/{id}")
+  @GetMapping(value = "/basic/query/{id}")
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<DsdCodeInfoVO> getBasicDsdCodeInfoById(@PathVariable("id") String id) {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK,
-            dataStandardCodeInfoService.getDsdCodeInfoById(Long.parseLong(id)));
+        ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoById(Long.parseLong(id)));
   }
 
   /**
@@ -86,8 +92,11 @@ public class DataStandardCodeInfoController {
    * @return DefaultCommonResult<DsdCodeInfoVO>
    */
   @GetMapping(value = "/basic/query/tableCode")
-  public DefaultCommonResult<DsdCodeInfoVO> getBasicDsdCodeInfoByTableCode(@RequestParam() String tableCode) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dataStandardCodeInfoService.getBasicDsdCodeInfoByTableCode(tableCode));
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.DETAIL)
+  public DefaultCommonResult<DsdCodeInfoVO> getBasicDsdCodeInfoByTableCode(
+      @RequestParam() String tableCode) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK, dataStandardCodeInfoService.getBasicDsdCodeInfoByTableCode(tableCode));
   }
 
   /**
@@ -96,9 +105,9 @@ public class DataStandardCodeInfoController {
    * @param dsdCodeInfoVO
    * @return DefaultCommonResult
    */
-  @PutMapping("/basic/update")
-  public DefaultCommonResult modifyDsdCodeInfo(
-          @RequestBody @Validated DsdCodeInfoVO dsdCodeInfoVO) {
+  @PutMapping("/basic")
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult updateBasic(@RequestBody @Validated DsdCodeInfoVO dsdCodeInfoVO) {
     dataStandardCodeInfoService.modifyDsdCodeInfo(dsdCodeInfoVO);
     return DefaultCommonResult.success();
   }
@@ -109,8 +118,9 @@ public class DataStandardCodeInfoController {
    * @param id
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/basic/delete/{id}")
-  public DefaultCommonResult deleteDsdCodeInfo(@PathVariable("id") Integer id) {
+  @DeleteMapping("/basic/{id}")
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteBasic(@PathVariable("id") Integer id) {
     dataStandardCodeInfoService.deleteDsdCodeInfo(Long.valueOf(id));
     return DefaultCommonResult.success();
   }
@@ -121,8 +131,9 @@ public class DataStandardCodeInfoController {
    * @param ids
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/basic/delete/bulk/{ids}")
-  public DefaultCommonResult deleteBulkDsdCodeInfo(@PathVariable("ids") String ids) {
+  @DeleteMapping("/basic/bulk/{ids}")
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteBulkBasic(@PathVariable("ids") String ids) {
     dataStandardCodeInfoService.deleteBulkDsdCodeInfo(ids);
     return DefaultCommonResult.success();
   }
@@ -133,9 +144,10 @@ public class DataStandardCodeInfoController {
    * @return0 DefaultCommonResult
    */
   @GetMapping("/data/types")
+  @Auth(bizType = BizResource.DSD_CODE_INFO, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<Map<String, String>>> getDataTypes() {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dataStandardCodeInfoService.getDataTypes());
+        ResultCodeEnum.OK, dataStandardCodeInfoService.getDataTypes());
   }
 
   /**
@@ -144,10 +156,12 @@ public class DataStandardCodeInfoController {
    * @param dsdCodeInfoExtParamsVO
    * @return DefaultCommonResult<Map < String, Object>>
    */
-  @PostMapping(value = "/ext/query")
-  public DefaultCommonResult<Map<String, Object>> getDsdCodeInfoExt(@RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
+  @PostMapping(value = "/ext/list")
+  @Auth(bizType = BizResource.DSD_CODE_INFO_EXT, actionType = RestActionType.LIST)
+  public DefaultCommonResult<Map<String, Object>> getDsdCodeInfoExt(
+      @RequestBody DsdCodeInfoExtParamsVO dsdCodeInfoExtParamsVO) {
     return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoExt(dsdCodeInfoExtParamsVO));
+        ResultCodeEnum.OK, dataStandardCodeInfoService.getDsdCodeInfoExt(dsdCodeInfoExtParamsVO));
   }
 
   /**
@@ -156,9 +170,9 @@ public class DataStandardCodeInfoController {
    * @param dsdCodeInfoExtVO
    * @return DefaultCommonResult
    */
-  @PostMapping("/ext/add")
-  public DefaultCommonResult addDsdCodeInfoExt(
-          @RequestBody @Validated DsdCodeInfoExtVO dsdCodeInfoExtVO) {
+  @PostMapping("/ext")
+  @Auth(bizType = BizResource.DSD_CODE_INFO_EXT, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insertExt(@RequestBody @Validated DsdCodeInfoExtVO dsdCodeInfoExtVO) {
     dataStandardCodeInfoService.addDsdCodeInfoExt(dsdCodeInfoExtVO);
     return DefaultCommonResult.success();
   }
@@ -169,9 +183,13 @@ public class DataStandardCodeInfoController {
    * @param id
    * @return DefaultCommonResult<DsdCodeInfoExtVO>
    */
-  @GetMapping(value = "/ext/query/by/{id}")
-  public DefaultCommonResult<DsdCodeInfoExtVO> getBasicDsdCodeInfoExtById(@PathVariable("id") String id) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dataStandardCodeInfoService.getBasicDsdCodeInfoExtById(Long.parseLong(id)));
+  @GetMapping(value = "/ext/query/{id}")
+  @Auth(bizType = BizResource.DSD_CODE_INFO_EXT, actionType = RestActionType.DETAIL)
+  public DefaultCommonResult<DsdCodeInfoExtVO> getBasicDsdCodeInfoExtById(
+      @PathVariable("id") String id) {
+    return DefaultCommonResult.success(
+        ResultCodeEnum.OK,
+        dataStandardCodeInfoService.getBasicDsdCodeInfoExtById(Long.parseLong(id)));
   }
 
   /**
@@ -180,9 +198,9 @@ public class DataStandardCodeInfoController {
    * @param dsdCodeInfoExtVO
    * @return DefaultCommonResult
    */
-  @PutMapping("/ext/update")
-  public DefaultCommonResult modifyDsdCodeInfoExt(
-          @RequestBody @Validated DsdCodeInfoExtVO dsdCodeInfoExtVO) {
+  @PutMapping("/ext")
+  @Auth(bizType = BizResource.DSD_CODE_INFO_EXT, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult updateExt(@RequestBody @Validated DsdCodeInfoExtVO dsdCodeInfoExtVO) {
     dataStandardCodeInfoService.modifyDsdCodeInfoExt(dsdCodeInfoExtVO);
     return DefaultCommonResult.success();
   }
@@ -193,8 +211,9 @@ public class DataStandardCodeInfoController {
    * @param id
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/ext/delete/{id}")
-  public DefaultCommonResult deleteDsdCodeInfoExt(@PathVariable("id") Integer id) {
+  @DeleteMapping("/ext/{id}")
+  @Auth(bizType = BizResource.DSD_CODE_INFO_EXT, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteExt(@PathVariable("id") Integer id) {
     dataStandardCodeInfoService.deleteDsdCodeInfoExt(Long.valueOf(id));
     return DefaultCommonResult.success();
   }
@@ -205,8 +224,9 @@ public class DataStandardCodeInfoController {
    * @param ids
    * @return DefaultCommonResult
    */
-  @DeleteMapping("/ext/bulk/delete/{ids}")
-  public DefaultCommonResult deleteBulkDsdCodeInfoExt(@PathVariable("ids") String ids) {
+  @DeleteMapping("/ext/bulk/{ids}")
+  @Auth(bizType = BizResource.DSD_CODE_INFO_EXT, actionType = RestActionType.DELETE)
+  public DefaultCommonResult deleteBulkExt(@PathVariable("ids") String ids) {
     dataStandardCodeInfoService.deleteBulkDsdCodeInfoExt(ids);
     return DefaultCommonResult.success();
   }
@@ -218,7 +238,9 @@ public class DataStandardCodeInfoController {
    * @return DefaultCommonResult
    */
   @PostMapping("/reverse/db")
-  public DefaultCommonResult dsdCodeInfoReverseDB(@RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
+  @Auth(bizType = BizResource.DSD_CODE_INFO_EXT, actionType = RestActionType.CREATE)
+  public DefaultCommonResult dsdCodeInfoReverseDB(
+      @RequestBody @Validated DsdCodeInfoReverseDBVO dsdCodeInfoReverseDBVO) {
     dataStandardCodeInfoService.dsdCodeInfoReverseDB(dsdCodeInfoReverseDBVO);
     return DefaultCommonResult.success();
   }

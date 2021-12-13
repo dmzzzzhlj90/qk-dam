@@ -4,8 +4,11 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.*;
+import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.service.MtdApiService;
 import com.qk.dm.metadata.vo.*;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
@@ -15,13 +18,7 @@ import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.instance.AtlasStruct;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author wangzp
@@ -79,41 +76,55 @@ public class MtdApiServiceImpl implements MtdApiService {
   public List<MtdTables> getTables(String typeName, String classification) {
     List<MtdTables> mtdApiTableVOList = new ArrayList<>();
     try {
-      AtlasSearchResult atlasSearchResult = atlasClientV2.basicSearch(
-                      typeName,
-                      classification,
-                      null,
-                      true,
-                      2000,
-                      0);
+      AtlasSearchResult atlasSearchResult =
+          atlasClientV2.basicSearch(typeName, classification, null, true, 2000, 0);
       List<AtlasEntityHeader> entities = atlasSearchResult.getEntities();
       entities.forEach(
-              e -> {
-                mtdApiTableVOList.add(
-                        MtdTables.builder()
-                                .guid(e.getGuid())
-                                .typeName(e.getTypeName())
-                                .displayText(e.getDisplayText())
-                                .build());
-              });
+          e -> {
+            mtdApiTableVOList.add(
+                MtdTables.builder()
+                    .guid(e.getGuid())
+                    .typeName(e.getTypeName())
+                    .displayText(e.getDisplayText())
+                    .build());
+          });
     } catch (Exception e) {
       e.printStackTrace();
     }
     return mtdApiTableVOList;
   }
 
-  public List<Map<String,Object>>  getColumns(String guid){
-    List<Map<String,Object>> collect = null;
+  public List<Map<String, Object>> getColumns(String guid) {
+    List<Map<String, Object>> collect = null;
     try {
       AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
       List<AtlasEntity> atlasEntityList = new ArrayList<>(detail.getReferredEntities().values());
-      collect = atlasEntityList.stream()
-              .map(AtlasStruct::getAttributes)
-              .collect(Collectors.toList());
+      collect =
+          atlasEntityList.stream().map(AtlasStruct::getAttributes).collect(Collectors.toList());
     } catch (AtlasServiceException e) {
       e.printStackTrace();
     }
     return collect;
+  }
+
+
+  public MtdApi getDbs(String typeName,String attrValue){
+    MtdApi mtdApi = new MtdApi();
+    AtlasSearchResult atlasSearchResult = null;
+    try {
+      if(Objects.equals(SynchStateProperty.TypeName.MYSQL_DB,typeName)){
+        atlasSearchResult = atlasClientV2.attributeSearch(typeName ,"serverInfo", attrValue, 1000, 0);
+      }else if(Objects.equals(SynchStateProperty.TypeName.HIVE_DB,typeName)){
+        atlasSearchResult = atlasClientV2.attributeSearch(typeName ,"clusterName", attrValue, 1000, 0);
+      }
+      if(Objects.nonNull(atlasSearchResult)){
+        List<AtlasEntityHeader> atlasEntityHeaderList = atlasSearchResult.getEntities();
+        mtdApi.setEntities(buildMataDataList(atlasEntityHeaderList));
+      }
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+    return mtdApi;
   }
 
   private MtdApi getDbs(String typeName) {

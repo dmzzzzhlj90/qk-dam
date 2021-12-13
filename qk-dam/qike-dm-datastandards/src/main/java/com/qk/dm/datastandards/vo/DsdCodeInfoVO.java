@@ -60,8 +60,7 @@ public class DsdCodeInfoVO {
   private Date gmtModified;
 
   /** 建表配置字段集合 */
-  @ExcelIgnore
-  private List<CodeTableFieldsVO> codeTableFieldsList;
+  @ExcelIgnore private List<CodeTableFieldsVO> codeTableFieldsList;
 
   /** 配置字段编码 */
   @ExcelProperty("字段编码")

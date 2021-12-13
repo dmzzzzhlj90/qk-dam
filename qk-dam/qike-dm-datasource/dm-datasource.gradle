@@ -1,14 +1,27 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
-version "${dmDatastandardsVersion}"
+version "${dmDataServiceVersion}"
 group "com.qk.dm.datasource"
 configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
         it.outgoing.artifact(bootJar)
+    }
+}
+
+processResources {
+    expand(project.properties)
+}
+
+docker {
+    springBootApplication {
+        baseImage = "${jre11Image}"
+        ports = [8781]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
     }
 }
 
@@ -36,7 +49,7 @@ dependencies {
     implementation 'com.alibaba:easyexcel'
 
     compile('org.apache.hive:hive-jdbc:3.1.2'){
-       exclude group: '*'
+        exclude group: '*'
     }
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
     implementation group: 'com.github.noraui', name: 'ojdbc8', version: '12.2.0.1'
@@ -57,6 +70,10 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
+}
+
+smartdoc {
+    configFile = file("src/main/resources/smart-doc.json")
 }
 
 test {

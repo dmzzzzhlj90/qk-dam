@@ -1,9 +1,9 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
-version "${dmDatastandardsVersion}"
+version "${damProfilesActive}-v${dmDatastandardsVersion}"
 group "com.qk.dm.metadata"
 configurations {
     [apiElements, runtimeElements].each {
@@ -11,7 +11,17 @@ configurations {
         it.outgoing.artifact(bootJar)
     }
 }
-
+processResources {
+    expand(project.properties)
+}
+docker {
+    springBootApplication {
+        baseImage = "${jre11Image}"
+        ports = [8782]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
 compileJava {
     doFirst {
         options.compilerArgs = [
@@ -28,17 +38,13 @@ dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
     implementation project(":metadata-common-core")
-    compile project(":qk-authorization")
-
+//    compile project(":qk-authorization")
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
@@ -46,6 +52,8 @@ dependencies {
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
+    testImplementation 'org.testng:testng'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
@@ -56,19 +64,20 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
 openApiGenerate {
     generatorName = "java"
-    inputSpec = "$rootDir/docs/数据服务/openapi.json".toString()
-    outputDir = "/Users/daomingzhu/Documents/openapigener".toString()
+    inputSpec = "$rootDir/docs/dolphinscheduler/openapi.yaml".toString()
+    outputDir = "/Users/zhudaoming/Documents/openapigener".toString()
     apiPackage = "com.qk.datacenter.api"
     invokerPackage = "com.qk.datacenter.client"
     modelPackage = "com.qk.datacenter.model"
     configOptions = [
-            artifactId:"datacenterapi-java-client",
+            artifactId:"dolphinscheduler-java-client",
             artifactUrl:"qk.com",
             artifactVersion:"1.0.0",
             dateLibrary: "java8",
-            library:"okhttp-gson",
+            library:"native",
             serializationLibrary:"gson",
             bigDecimalAsString:"true",
             interfaceOnly        : "true",
@@ -91,5 +100,7 @@ openApiGenerate {
     ]
 }
 test {
-    useJUnitPlatform()
+    useTestNG {
+        suites(file('src/test/resources/testng.xml'));
+    }
 }

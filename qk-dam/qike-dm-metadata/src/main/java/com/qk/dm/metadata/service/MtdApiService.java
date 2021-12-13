@@ -3,7 +3,6 @@ package com.qk.dm.metadata.service;
 import com.qk.dam.metedata.entity.MtdApi;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dam.metedata.entity.MtdTables;
-
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ public interface MtdApiService {
 
   /**
    * 获取元数据详情
+   *
    * @param typeName
    * @param dbName
    * @param tableName
@@ -32,6 +32,7 @@ public interface MtdApiService {
 
   /**
    * 获取所有表信息
+   *
    * @param typeName
    * @param classification
    * @return
@@ -40,8 +41,17 @@ public interface MtdApiService {
 
   /**
    * 获取表的字段信息
+   *
    * @param guid
    * @return
    */
-  List<Map<String,Object>>  getColumns(String guid);
+  List<Map<String, Object>> getColumns(String guid);
+
+  /**
+   * 根据类型和属性获取数据库信息
+   * @param typeName
+   * @param attrValue
+   * @return
+   */
+  MtdApi getDbs(String typeName,String attrValue);
 }

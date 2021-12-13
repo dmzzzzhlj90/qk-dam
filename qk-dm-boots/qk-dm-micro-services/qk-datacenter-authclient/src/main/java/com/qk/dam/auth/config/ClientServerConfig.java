@@ -34,10 +34,7 @@ public class ClientServerConfig {
                 .pathMatchers("/**")
                 .hasAuthority("SCOPE_openid")
                 .anyExchange()
-                .authenticated()
-                .and()
-                .oauth2ResourceServer()
-                .jwt());
+                .authenticated());
 
     // oauth 登录 客户端配置
     http.oauth2Login(withDefaults()).oauth2Client(withDefaults());

@@ -130,8 +130,10 @@ public class DsdExcelBatchService {
   }
 
   @Transactional(rollbackFor = Exception.class)
-  public void saveCodeInfosByCodeDirId(List<DsdCodeInfo> dataList, Set<String> tableCodeSet, DsdCodeDir dsdCodeDir) {
-    Iterable<DsdCodeInfo> existList = dsdCodeInfoRepository.findAll(QDsdCodeInfo.dsdCodeInfo.tableCode.in(tableCodeSet));
+  public void saveCodeInfosByCodeDirId(
+      List<DsdCodeInfo> dataList, Set<String> tableCodeSet, DsdCodeDir dsdCodeDir) {
+    Iterable<DsdCodeInfo> existList =
+        dsdCodeInfoRepository.findAll(QDsdCodeInfo.dsdCodeInfo.tableCode.in(tableCodeSet));
     HashMap<String, Long> primaryIDMap = Maps.newHashMap();
     for (DsdCodeInfo dsdCodeInfo : existList) {
       primaryIDMap.put(dsdCodeInfo.getTableCode(), dsdCodeInfo.getId());
@@ -169,7 +171,8 @@ public class DsdExcelBatchService {
 
     Map<String, List<DsdCodeDir>> codeDirLevelMap =
         codeDirAllList.stream().collect(Collectors.groupingBy(DsdCodeDir::getCodeDirLevel));
-    Iterable<DsdCodeInfo> existList = dsdCodeInfoRepository.findAll(QDsdCodeInfo.dsdCodeInfo.tableCode.in(tableCodeSet));
+    Iterable<DsdCodeInfo> existList =
+        dsdCodeInfoRepository.findAll(QDsdCodeInfo.dsdCodeInfo.tableCode.in(tableCodeSet));
     HashMap<String, Long> primaryIDMap = Maps.newHashMap();
     for (DsdCodeInfo dsdCodeInfo : existList) {
       primaryIDMap.put(dsdCodeInfo.getTableCode(), dsdCodeInfo.getId());

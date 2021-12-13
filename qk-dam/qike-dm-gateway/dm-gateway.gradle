@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
 version "${dmMicroServices}"
 group "com.qk.dam.dmgateway"
@@ -10,6 +11,7 @@ configurations {
         it.outgoing.artifact(bootJar)
     }
 }
+
 dependencies {
     implementation project(":commons-core")
     implementation project(":dam-log")

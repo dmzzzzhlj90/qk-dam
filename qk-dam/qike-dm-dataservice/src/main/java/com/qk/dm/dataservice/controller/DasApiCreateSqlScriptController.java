@@ -1,5 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
+import com.qk.dam.authorization.Auth;
+import com.qk.dam.authorization.BizResource;
+import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasApiCreateSqlScriptService;
@@ -34,11 +37,11 @@ public class DasApiCreateSqlScriptController {
    * @param apiId
    * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
    */
-  @GetMapping(value = "/query/{apiId}")
-  public DefaultCommonResult<DasApiCreateSqlScriptVO> getDasApiCreateSqlScriptInfoByApiId(
-      @PathVariable("apiId") String apiId) {
+  @GetMapping(value = "/{apiId}")
+  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.DETAIL)
+  public DefaultCommonResult<DasApiCreateSqlScriptVO> detail(@PathVariable("apiId") String apiId) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiCreateSqlScriptService.getDasApiCreateSqlScriptInfoByApiId(apiId));
+        ResultCodeEnum.OK, dasApiCreateSqlScriptService.detail(apiId));
   }
 
   /**
@@ -47,10 +50,11 @@ public class DasApiCreateSqlScriptController {
    * @param dasApiCreateSqlScriptVO
    * @return DefaultCommonResult
    */
-  @PostMapping("/add")
-  public DefaultCommonResult addDasApiCreateSqlScript(
+  @PostMapping("")
+  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.CREATE)
+  public DefaultCommonResult insert(
       @RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
-    dasApiCreateSqlScriptService.addDasApiCreateSqlScript(dasApiCreateSqlScriptVO);
+    dasApiCreateSqlScriptService.insert(dasApiCreateSqlScriptVO);
     return DefaultCommonResult.success();
   }
 
@@ -60,10 +64,11 @@ public class DasApiCreateSqlScriptController {
    * @param dasApiCreateSqlScriptVO
    * @return DefaultCommonResult
    */
-  @PutMapping("/update")
-  public DefaultCommonResult updateDasApiCreateSqlScript(
+  @PutMapping("")
+  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.UPDATE)
+  public DefaultCommonResult update(
       @RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
-    dasApiCreateSqlScriptService.updateDasApiCreateSqlScript(dasApiCreateSqlScriptVO);
+    dasApiCreateSqlScriptService.update(dasApiCreateSqlScriptVO);
     return DefaultCommonResult.success();
   }
 }

@@ -24,4 +24,9 @@ public class SynchStateProperty {
     public static final Integer SYNCH = 1;
     public static final Integer ADD = 2;
   }
+  public static class TypeName{
+    public static final String MYSQL_DB = "mysql_db";
+    public static final String HIVE_DB = "hive_db";
+
+  }
 }

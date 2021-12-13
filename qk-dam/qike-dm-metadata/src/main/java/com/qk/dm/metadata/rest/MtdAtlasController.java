@@ -1,8 +1,8 @@
 package com.qk.dm.metadata.rest;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
@@ -37,7 +37,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<Map<String, List<MtdAtlasEntityTypeVO>>>
    */
   @GetMapping("/basic/types")
-  @Auth(bizType= BizResource.MTD_BASIC_TYPE,actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.MTD_BASIC_TYPE, actionType = RestActionType.LIST)
   public DefaultCommonResult<Map<String, List<MtdAtlasEntityType>>> getAllEntityType() {
     Map<String, List<MtdAtlasEntityType>> mtdAtlasEntityTypeVOList =
         atlasMetaDataService.getAllEntityType();
@@ -51,7 +51,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<List<MtdAtlasBaseVO>>
    */
   @PostMapping("/list")
-  @Auth(bizType= BizResource.MTD_ENTITY,actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<MtdAtlasBaseVO>> searchList(
       @RequestBody @Validated MtdAtlasParamsVO mtdAtlasParams) {
     List<MtdAtlasBaseVO> atlasBaseMainDataVOList = atlasMetaDataService.searchList(mtdAtlasParams);
@@ -65,7 +65,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<List<MtdAtlasBaseVO>>
    */
   @PostMapping("/criteria/list")
-  @Auth(bizType= BizResource.MTD_CRITERIA_ENTITY,actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.MTD_CRITERIA_ENTITY, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<MtdAtlasBaseVO>> searchListByCriteria(
       @RequestBody @Validated MtdAtlasBaseSearchVO mtdAtlasBaseSearch) {
     List<MtdAtlasBaseVO> atlasBaseMainDataVOList =
@@ -81,7 +81,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<MtdAtlasDbDetailVO>
    */
   @GetMapping("/detail/qname/{qualifiedName}/{typename}")
-  @Auth(bizType= BizResource.MTD_ENTITY,actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<AtlasEntity> getDetailByQName(
       @PathVariable("qualifiedName") String qualifiedName,
       @PathVariable("typename") String typename) {
@@ -97,6 +97,7 @@ public class MtdAtlasController {
    * @return List<EntityAuditEventV2>
    */
   @GetMapping("/audit/{guid}")
+//  @Auth(bizType = BizResource.MTD_AUDIT, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<EntityAuditEventV2>> getAuditByGuid(
       @PathVariable("guid") String guid) {
     // todo 元数据操作数据获取接口--需要优化这个部分
@@ -112,7 +113,7 @@ public class MtdAtlasController {
    * @return
    */
   @GetMapping("/detail/{typeName}/{guid}")
-  @Auth(bizType= BizResource.MTD_ENTITY,actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdCommonDetailVO> getDetailByGuid(
       @PathVariable("typeName") String typeName, @PathVariable("guid") String guid) {
     MtdCommonDetailVO mtdCommonDetailVO = atlasMetaDataService.getDetailByGuid(guid, typeName);
@@ -125,7 +126,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<MtdAtlasDbDetailVO>
    */
   @GetMapping("/detail/{guid}")
-  @Auth(bizType= BizResource.MTD_ENTITY,actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdCommonDetailVO> getDetailByGuid(@PathVariable("guid") String guid) {
     MtdCommonDetailVO detail = atlasMetaDataService.getDetailByGuid(guid);
     return DefaultCommonResult.success(ResultCodeEnum.OK, detail);
@@ -138,7 +139,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<MtdAtlasDbDetailVO>
    */
   @GetMapping("/db/{guid}")
-  @Auth(bizType= BizResource.MTD_ENTITY_DB,actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.MTD_ENTITY_DB, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdDbDetailVO> getDbDetailByGuid(@PathVariable("guid") String guid) {
     MtdDbDetailVO mtdAtlasDbDetailVO = atlasMetaDataService.getDbDetailByGuid(guid);
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdAtlasDbDetailVO);
@@ -150,6 +151,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<MtdAtlasTableDetailVO>
    */
   @GetMapping("/table/{guid}")
+//  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdTableDetailVO> getTableDetailByGuid(
       @PathVariable("guid") String guid) {
     MtdTableDetailVO mtdTableDetailVO = atlasMetaDataService.getTableDetailByGuid(guid);
@@ -163,6 +165,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult<MtdColumnVO>
    */
   @GetMapping("/column/{guid}")
+//  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdColumnVO> getColumnDetailByGuid(@PathVariable("guid") String guid) {
     MtdColumnVO mtdColumnVO = atlasMetaDataService.getColumnDetailByGuid(guid);
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdColumnVO);
@@ -175,6 +178,7 @@ public class MtdAtlasController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/{guids}")
+//  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DELETE)
   public DefaultCommonResult deleteEntitiesByGuids(@PathVariable("guids") String guids) {
     atlasMetaDataService.deleteEntitiesByGuids(guids);
     return DefaultCommonResult.success(ResultCodeEnum.OK, null);
