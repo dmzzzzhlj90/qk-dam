@@ -70,4 +70,14 @@ public class RptDimensionInfoController {
     rptDimensionInfoService.updateRptDir(rptDimensionInfoDTO);
     return DefaultCommonResult.success();
   }
+
+  /**
+   * 数据采集-获取错有目录名称
+   * @return DefaultCommonResult<String>
+   */
+  @GetMapping("/dirname")
+  public DefaultCommonResult<List<String>> updateDirName() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoService.updateDirName());
+  }
+
 }

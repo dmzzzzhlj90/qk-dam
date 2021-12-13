@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 可视化_维度信息
@@ -36,7 +37,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
    * @return
    */
   @PostMapping
-  public DefaultCommonResult addDsDir(@RequestBody RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
+  public DefaultCommonResult addColumn(@RequestBody RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
     rptDimensionInfoColumnService.addRptDimensionInfoColumn(rptDimensionInfoColumnDTO);
     return DefaultCommonResult.success();
   }
@@ -47,7 +48,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
    * @return
    */
   @DeleteMapping
-  public DefaultCommonResult deleteDsDir(@NotBlank @RequestBody List<Long> ids) {
+  public DefaultCommonResult deleteColumn(@NotBlank @RequestBody List<Long> ids) {
     rptDimensionInfoColumnService.deleteRptDimensionInfoColumn(ids);
     return DefaultCommonResult.success();
   }
@@ -58,7 +59,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
    * @return
    */
   @PutMapping
-  public DefaultCommonResult updateDsDir(@RequestBody RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
+  public DefaultCommonResult updateColumn(@RequestBody RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
     rptDimensionInfoColumnService.updateRptDimensionInfoColumn(rptDimensionInfoColumnDTO);
     return DefaultCommonResult.success();
   }
@@ -66,11 +67,21 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
   /**
    * 数据采集-维度查询
    *
-   * DefaultCommonResult<List<RptDimensionInfoColumnVO>>
+   * @return DefaultCommonResult<List<RptDimensionInfoColumnVO>>
    */
   @PostMapping("/query")
-  public DefaultCommonResult<PageResultVO<RptDimensionInfoColumnVO>> queryDsDir(@RequestBody
+  public DefaultCommonResult<PageResultVO<RptDimensionInfoColumnVO>> queryColumn(@RequestBody
       RptDimensionInfoColumnParamDTO rptDimensionInfoColumnParamDTO) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.qyeryRptDimensionInfoColumn(rptDimensionInfoColumnParamDTO));
 }
+
+  /**
+   * 数据采集-根据维度名称查询维度信息
+   *
+   * @return DefaultCommonResult<Map<String,String>>
+   */
+  @GetMapping("/{dimensionColumnName}")
+  public DefaultCommonResult<Map<String,String>> queryColumnByDirName(@NotBlank @PathVariable("dimensionColumnName")String dimensionColumnName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.queryColumnByDirName(dimensionColumnName));
+  }
 }

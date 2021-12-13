@@ -15,4 +15,6 @@ public interface RptDimensionInfoService {
   void deleteRptDir(Long id);
 
   void updateRptDir(RptDimensionInfoDTO rptDimensionInfoDTO);
+
+  List<String> updateDirName();
 }
