@@ -43,7 +43,7 @@ public class MysqlTypeAgg {
     table = mysqlDataConnectYamlVO.getTable();
   }
 
-  public MysqlDbType searchMedataByDb(ServerinfoYamlVO serverinfoYamlVO) {
+  public List<Entity> searchMedataByDb() {
     List<Entity> entityList = null;
     String inTbs =
         Stream.of(table.split(",")).map(t -> "'" + t + "'").collect(Collectors.joining(","));
@@ -54,19 +54,15 @@ public class MysqlTypeAgg {
 
       entityList = use.find(tables);
       Assert.notEmpty(
-          entityList,
-          "未查询到符合条件的db实体，请检查yml配置，错误信息db【{}】table【{}】serverinfo【{}】",
-          db,
-          table,
-          serverinfoYamlVO);
+          entityList, "未查询到符合条件的db实体，请检查yml配置，错误信息db【{}】table【{}】serverinfo【{}】", db, table);
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
-    return getMysqlDbType(db, serverinfoYamlVO, entityList);
+    return entityList;
   }
 
-  public MysqlDbType searchPatternTMedataByDb(ServerinfoYamlVO serverinfoYamlVO) {
+  public List<Entity> getEntityList() {
     List<Entity> entityList = null;
     if (table.equals("all")) {
       try {
@@ -88,11 +84,12 @@ public class MysqlTypeAgg {
     }
 
     Assert.notEmpty(
-        entityList,
-        "未查询到符合条件的db实体，请检查yml配置，错误信息db【{}】table【{}】serverinfo【{}】",
-        db,
-        table,
-        serverinfoYamlVO);
+        entityList, "未查询到符合条件的db实体，请检查yml配置，错误信息db【{}】table【{}】serverinfo【{}】", db, table);
+    return entityList;
+  }
+
+  public MysqlDbType searchPatternTMedataByDb(
+      List<Entity> entityList, ServerinfoYamlVO serverinfoYamlVO) {
     return getMysqlDbType(db, serverinfoYamlVO, entityList);
   }
 
