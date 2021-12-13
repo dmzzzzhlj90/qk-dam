@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 爬虫数据采集配置信息
+ * 数据采集配置信息
  * @author wangzp
  * @date 2021/12/10 13:47
  * @since 1.0.0
@@ -78,7 +78,7 @@ public class RptConfigInfoController {
      * @return DefaultCommonResult
      */
     @DeleteMapping("/{ids}")
-    private DefaultCommonResult delete(@PathVariable("ids") String ids){
+    public DefaultCommonResult delete(@PathVariable("ids") String ids){
         rptConfigInfoService.delete(ids);
         return DefaultCommonResult.success();
     }

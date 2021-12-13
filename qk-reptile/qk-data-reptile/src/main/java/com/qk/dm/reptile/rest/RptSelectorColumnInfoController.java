@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 爬虫数据采集选择器配置
+ * 数据采集选择器配置
  * @author wangzp
  * @date 2021/12/10 16:19
  * @since 1.0.0
@@ -69,7 +69,7 @@ public class RptSelectorColumnInfoController {
      * @param id
      * @return DefaultCommonResult<RptConfigInfoVO>
      */
-    @GetMapping("/{id}")
+    @GetMapping("/detail/{id}")
     public DefaultCommonResult<RptSelectorColumnInfoVO> detail(@PathVariable("id") Long id) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, rptSelectorColumnInfoService.detail(id));
     }
@@ -80,7 +80,7 @@ public class RptSelectorColumnInfoController {
      * @return DefaultCommonResult
      */
     @DeleteMapping("/{ids}")
-    private DefaultCommonResult delete(@PathVariable("ids") String ids){
+    public DefaultCommonResult delete(@PathVariable("ids") String ids){
         rptSelectorColumnInfoService.delete(ids);
         return DefaultCommonResult.success();
     }

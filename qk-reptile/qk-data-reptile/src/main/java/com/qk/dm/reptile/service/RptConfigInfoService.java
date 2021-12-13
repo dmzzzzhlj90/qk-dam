@@ -1,6 +1,5 @@
 package com.qk.dm.reptile.service;
 
-import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
 
@@ -17,4 +16,11 @@ public interface RptConfigInfoService {
     void delete(String ids);
 
     List<RptConfigInfoVO> list(Long baseInfoId);
+
+    /**
+     * 调用爬虫接口使用，转换headers、cookie等，按照id正序排列
+     * @param baseId
+     * @return
+     */
+    List<RptConfigInfoVO> rptList(Long baseId);
 }

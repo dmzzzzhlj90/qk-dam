@@ -8,9 +8,11 @@ import com.qk.dm.reptile.entity.QRptBaseInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
+import com.qk.dm.reptile.params.dto.RptParaBuilder;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
+import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private final EntityManager entityManager;
     private final QRptBaseInfo qRptBaseInfo = QRptBaseInfo.rptBaseInfo;
     private final RptBaseInfoRepository rptBaseInfoRepository;
+    private final RptConfigInfoService rptConfigInfoService;
 
     @PostConstruct
     public void initFactory() {
@@ -41,9 +44,11 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     public RptBaseInfoServiceImpl(RptBaseInfoRepository rptBaseInfoRepository,
-                                  EntityManager entityManager){
+                                  EntityManager entityManager,
+                                  RptConfigInfoService rptConfigInfoService){
         this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.entityManager = entityManager;
+        this.rptConfigInfoService = rptConfigInfoService;
     }
 
     @Override
@@ -59,9 +64,6 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
         RptBaseInfoMapper.INSTANCE.of(rptBaseInfoDTO, rptBaseInfo);
-        //修改为爬虫状态
-        rptBaseInfo.setStatus(RptConstant.REPTILE);
-        rptBaseInfo.setConfigName(rptBaseInfoDTO.getConfigName());
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
 
     }
@@ -116,13 +118,22 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
-    public void callReptile() {
+    public void timedExecution() {
         List<RptBaseInfo> list = rptBaseInfoRepository.findAllByStatus(RptConstant.REPTILE);
         if(!CollectionUtils.isEmpty(list)){
             list.forEach(e->{
-
+                RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(e.getId()));
             });
         }
+    }
+
+    @Override
+    public void execution(Long id) {
+        RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
+        if(Objects.isNull(rptBaseInfo)){
+            throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
+        }
+        RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(rptBaseInfo.getId()));
     }
 
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO) {
@@ -136,7 +147,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
                         .select(qRptBaseInfo)
                         .from(qRptBaseInfo)
                         .where(booleanBuilder)
-                        .orderBy(qRptBaseInfo.id.asc())
+                        .orderBy(qRptBaseInfo.id.desc())
                         .offset(
                                 (long) (rptBaseInfoDTO.getPagination().getPage() - 1)
                                         * rptBaseInfoDTO.getPagination().getSize())

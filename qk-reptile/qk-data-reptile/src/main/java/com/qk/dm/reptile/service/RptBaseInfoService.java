@@ -18,5 +18,10 @@ public interface RptBaseInfoService {
 
     void updateStatus(Long id,Integer status);
 
-    void callReptile();
+    /**
+     * 定时调用爬虫接口
+     */
+    void timedExecution();
+
+    void execution(Long id);
 }

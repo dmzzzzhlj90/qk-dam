@@ -49,4 +49,5 @@ public interface RptConfigInfoMapper {
             @Mapping(target = "headers",ignore = true)
     })
     List<RptConfigInfoVO> of(List<RptConfigInfo> rptConfigInfoList);
+
 }

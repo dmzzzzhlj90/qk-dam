@@ -1,7 +1,9 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.constant.RptConstant;
+import com.qk.dm.reptile.entity.QRptConfigInfo;
 import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
@@ -11,14 +13,12 @@ import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +36,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
 
     private final RptSelectorColumnInfoService rptSelectorColumnInfoService;
 
+    private final QRptConfigInfo qRptConfigInfo = QRptConfigInfo.rptConfigInfo;
+
     public RptConfigInfoServiceImpl(RptConfigInfoRepository rptConfigInfoRepository,
                                     RptBaseInfoService rptBaseInfoService,
                                     RptSelectorColumnInfoService rptSelectorColumnInfoService){
@@ -47,7 +49,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Transactional(rollbackFor = Exception.class)
     public Long insert(RptConfigInfoDTO rptConfigInfoDTO) {
         RptConfigInfo rptConfigInfo = RptConfigInfoMapper.INSTANCE.useRptConfigInfo(rptConfigInfoDTO);
-        //rptConfigInfo.setCookies();
+        transRptConfigInfo(rptConfigInfo,rptConfigInfoDTO);
         List<RptSelectorColumnInfoDTO> selectorList = rptConfigInfoDTO.getSelectorList();
         RptConfigInfo config = rptConfigInfoRepository.save(rptConfigInfo);
         //添加选择器
@@ -68,6 +70,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
             throw new BizException("当前要修改的配置信息id为：" + id + " 的数据不存在！！！");
         }
         RptConfigInfoMapper.INSTANCE.of(rptConfigInfoDTO, rptConfigInfo);
+        transRptConfigInfo(rptConfigInfo, rptConfigInfoDTO);
         List<RptSelectorColumnInfoDTO> selectorList = rptConfigInfoDTO.getSelectorList();
         rptConfigInfoRepository.saveAndFlush(rptConfigInfo);
         //修改选择器
@@ -80,7 +83,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(rptConfigInfo.isEmpty()){
             throw new BizException("当前要查询的配置信息id为：" + id + " 的数据不存在！！！");
         }
-        return RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(rptConfigInfo.get());
+        RptConfigInfoVO rptConfigInfoVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(rptConfigInfo.get());
+        return transRptConfigInfoVO(rptConfigInfo.get(),rptConfigInfoVO);
     }
 
     @Override
@@ -96,11 +100,63 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
 
     @Override
     public List<RptConfigInfoVO> list(Long baseInfoId) {
-        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoId(baseInfoId);
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdDesc(baseInfoId);
         if(!CollectionUtils.isEmpty(list)){
            return RptConfigInfoMapper.INSTANCE.of(list);
         }
         return null;
+    }
+
+    @Override
+    public List<RptConfigInfoVO> rptList(Long baseId) {
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(baseId);
+        List<RptConfigInfoVO> rptConfigInfoVOList = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(list)){
+            list.forEach(e->{
+                RptConfigInfoVO rptConfigVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(e);
+                transRptConfigInfoVO(e,rptConfigVO);
+                rptConfigInfoVOList.add(rptConfigVO);
+            });
+        }
+        return rptConfigInfoVOList;
+    }
+
+    private RptConfigInfo transRptConfigInfo(RptConfigInfo rptConfigInfo,RptConfigInfoDTO rptConfigInfoDTO){
+        if(Objects.nonNull(rptConfigInfoDTO.getCookies())){
+            rptConfigInfo.setCookies(GsonUtil.toJsonString(rptConfigInfoDTO.getCookies()));
+        }
+        if(Objects.nonNull(rptConfigInfoDTO.getFormUrlencoded())){
+            rptConfigInfo.setFormUrlencoded(GsonUtil.toJsonString(rptConfigInfoDTO.getFormUrlencoded()));
+        }
+        if(Objects.nonNull(rptConfigInfoDTO.getFromData())){
+            rptConfigInfo.setFromData(GsonUtil.toJsonString(rptConfigInfoDTO.getFromData()));
+        }
+        if(Objects.nonNull(rptConfigInfoDTO.getHeaders())){
+            rptConfigInfo.setHeaders(GsonUtil.toJsonString(rptConfigInfoDTO.getHeaders()));
+        }
+        if(Objects.nonNull(rptConfigInfoDTO.getRaw())){
+            rptConfigInfo.setRaw(GsonUtil.toJsonString(rptConfigInfoDTO.getRaw()));
+        }
+        return rptConfigInfo;
+    }
+
+    private RptConfigInfoVO transRptConfigInfoVO(RptConfigInfo rptConfigInfo,RptConfigInfoVO rptConfigInfoVO){
+        if(Objects.nonNull(rptConfigInfo.getCookies())){
+            rptConfigInfoVO.setCookies(GsonUtil.fromJsonString(GsonUtil.toJsonString(rptConfigInfo.getCookies()), Map.class));
+        }
+        if(Objects.nonNull(rptConfigInfo.getFormUrlencoded())){
+            rptConfigInfoVO.setFormUrlencoded(GsonUtil.fromJsonString(rptConfigInfo.getFormUrlencoded(),Map.class));
+        }
+        if(Objects.nonNull(rptConfigInfo.getFromData())){
+            rptConfigInfoVO.setFromData(GsonUtil.fromJsonString(rptConfigInfo.getFromData(),Map.class));
+        }
+        if(Objects.nonNull(rptConfigInfo.getHeaders())){
+            rptConfigInfoVO.setHeaders(GsonUtil.fromJsonString(rptConfigInfo.getHeaders(),Map.class));
+        }
+        if(Objects.nonNull(rptConfigInfo.getRaw())){
+            rptConfigInfoVO.setRaw(GsonUtil.fromJsonString(rptConfigInfo.getRaw(),Map.class));
+        }
+        return rptConfigInfoVO;
     }
 
 

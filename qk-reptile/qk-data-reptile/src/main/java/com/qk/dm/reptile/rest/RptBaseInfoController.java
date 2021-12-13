@@ -41,7 +41,7 @@ public class RptBaseInfoController {
     }
 
     /**
-     * 修改爬虫基础信息
+     * 修改基础信息
      * @param id 基础信息id
      * @param rptBaseInfoDTO
      * @return DefaultCommonResult
@@ -105,8 +105,19 @@ public class RptBaseInfoController {
      * @return DefaultCommonResult
      */
     @DeleteMapping("/{ids}")
-    private DefaultCommonResult delete(@PathVariable("ids") String ids){
+    public DefaultCommonResult delete(@PathVariable("ids") String ids){
         rptBaseInfoService.delete(ids);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 手动执行调用爬虫接口
+     * @param id
+     * @return
+     */
+    @PutMapping("/execution/{id}")
+    public DefaultCommonResult execution(@PathVariable("id") Long id){
+        rptBaseInfoService.execution(id);
         return DefaultCommonResult.success();
     }
 
