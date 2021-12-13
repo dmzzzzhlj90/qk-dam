@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 /**
  * 调度引擎Dolphin Scheduler 流程定义相关操作
  *
@@ -36,7 +38,7 @@ public class ProcessDefinitionApiController {
      */
     @PostMapping("/save")
     public DefaultCommonResult save(@RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        processDefinitionApiService.save(dqcSchedulerBasicInfoVO);
+        processDefinitionApiService.save(dqcSchedulerBasicInfoVO, new HashMap<>());
         return DefaultCommonResult.success();
     }
 

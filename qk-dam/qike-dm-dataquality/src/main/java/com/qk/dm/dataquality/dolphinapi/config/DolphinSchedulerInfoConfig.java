@@ -100,4 +100,25 @@ public class DolphinSchedulerInfoConfig {
      */
     private Integer locationIncrement;
 
+    //##结果集存储目标数据库
+    /**
+     * 结果集存储 to_host
+     */
+    private String resultDataDbHost;
+
+    /**
+     * 结果集存储 to_user
+     */
+    private String resultDataDbUser;
+
+    /**
+     * 结果集存储 to_password
+     */
+    private String resultDataDbPassword;
+
+    /**
+     * 结果集存储 to_database
+     */
+    private String resultDataDbDatabase;
+
 }

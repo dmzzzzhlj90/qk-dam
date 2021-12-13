@@ -53,7 +53,7 @@ public class DataBaseServiceImpl implements DataBaseService {
   }
 
   private String getServer(String dataSourceName) {
-    ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getResultDataSourceByConnectName(dataSourceName);
+    ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getDataSource(dataSourceName);
     Map<String, String> map = GsonUtil.fromJsonString(resultDataSourceByConnectName.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {
     }.getType());
     return map.get(server);

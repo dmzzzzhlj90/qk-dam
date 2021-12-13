@@ -5,12 +5,13 @@ import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
 import com.qk.dam.metedata.entity.*;
-
 import com.qk.dm.feign.DataSourceFeign;
 import com.qk.dm.feign.MetaDataFeign;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -56,16 +57,33 @@ public class DataBaseInfoDefaultApi {
      *
      * @return DefaultCommonResult
      */
-    public ResultDatasourceInfo getResultDataSourceByConnectName(String connectName) {
+    public ResultDatasourceInfo getDataSource(String connectName) {
         ResultDatasourceInfo resultDatasourceInfo =
-                dataSourceFeign.getResultDataSourceByConnectName(connectName).getData();
+                dataSourceFeign.getDataSource(connectName).getData();
         //todo feign 加判断null
         if (resultDatasourceInfo != null) {
-          ConnectBasicInfo connectInfo =
-              ConnectInfoConvertUtils.getConnectInfo(
-                  resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
+            ConnectBasicInfo connectInfo =
+                    ConnectInfoConvertUtils.getConnectInfo(
+                            resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
         }
-      return resultDatasourceInfo;
+        return resultDatasourceInfo;
+    }
+
+    /**
+     * 获取数据源集合
+     *
+     * @return DefaultCommonResult
+     */
+    public Map<String, ConnectBasicInfo> getDataSourceMap(List<String> dataSourceNames) {
+        Map<String, ConnectBasicInfo> dataSourceMap = new HashMap<>(16);
+        List<ResultDatasourceInfo> datasourceInfoList = dataSourceFeign.getDataSourceList(dataSourceNames).getData();
+
+        for (ResultDatasourceInfo resultDatasourceInfo : datasourceInfoList) {
+            ConnectBasicInfo connectInfo = ConnectInfoConvertUtils
+                    .getConnectInfo(resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
+            dataSourceMap.put(resultDatasourceInfo.getDataSourceName(), connectInfo);
+        }
+        return dataSourceMap;
     }
 
     // ========================元数据服务_API调用=====================================
@@ -105,13 +123,14 @@ public class DataBaseInfoDefaultApi {
 
     /**
      * 新建API__获取db库信息下拉列表
+     *
      * @param type
      * @param server
      * @return
      */
-    public List<String> getAllDataBase(String type,String server) {
+    public List<String> getAllDataBase(String type, String server) {
         DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.getDbs(type + "_db",server);
+                metaDataFeign.getDbs(type + "_db", server);
         List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
         return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
     }
