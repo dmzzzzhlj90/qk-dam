@@ -34,7 +34,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
   /**
    * 数据采集-维度新增
    * @param rptDimensionInfoColumnDTO
-   * @return
+   * @return DefaultCommonResult
    */
   @PostMapping
   public DefaultCommonResult addColumn(@RequestBody RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
@@ -45,7 +45,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
   /**
    * 数据采集-维度删除
    * @param ids
-   * @return
+   * @return DefaultCommonResult
    */
   @DeleteMapping
   public DefaultCommonResult deleteColumn(@NotBlank @RequestBody List<Long> ids) {
@@ -56,7 +56,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
   /**
    * 数据采集-维度修改
    * @param rptDimensionInfoColumnDTO
-   * @return
+   * @return DefaultCommonResult
    */
   @PutMapping
   public DefaultCommonResult updateColumn(@RequestBody RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
@@ -77,7 +77,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
 
   /**
    * 数据采集-根据维度名称查询维度信息
-   *
+   * @param dimensionColumnName
    * @return DefaultCommonResult<Map<String,String>>
    */
   @GetMapping("/{dimensionColumnName}")

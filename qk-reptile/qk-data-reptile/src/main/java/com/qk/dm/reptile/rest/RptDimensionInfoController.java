@@ -72,7 +72,7 @@ public class RptDimensionInfoController {
   }
 
   /**
-   * 数据采集-获取错有目录名称
+   * 数据采集-获取维度目录名称
    * @return DefaultCommonResult<String>
    */
   @GetMapping("/dirname")
