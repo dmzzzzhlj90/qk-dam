@@ -2,28 +2,14 @@ metadata:
   - name: job1
     dataConnectType: mysql
     serverinfo:
-<<<<<<< Updated upstream
-      applicationName: 上游数据
-      owner: wangzp
-      description: 数据中台
-      displayName: qkdam
-    dataConnect:
-      db: qkdam
-=======
       applicationName: 工商数据
       owner: zhudaoming
       description: 生产工商数据库
       displayName: hd_company
     dataConnect:
       db: hd_company
->>>>>>> Stashed changes
       table: "all"
-      host: 172.20.0.24
+      host: 172.21.33.141
       port: 3306
       username: root
-<<<<<<< Updated upstream
-      password: Zhudao123!
-
-=======
-      password: Zhudao123!
->>>>>>> Stashed changes
+      password: JMFIuOx2
