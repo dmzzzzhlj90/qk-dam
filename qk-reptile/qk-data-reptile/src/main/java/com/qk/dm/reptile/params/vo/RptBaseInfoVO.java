@@ -79,5 +79,9 @@ public class RptBaseInfoVO {
   @NotBlank(message = "添加人不能为空")
   private String createUsername;
 
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date gmtCreate;
+
 
 }

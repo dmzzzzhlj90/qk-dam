@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * 配置信
+ * 配置信息
  * @author wangzp
  * @date 2021/12/10 14:20
  * @since 1.0.0
@@ -28,13 +27,13 @@ public class RptConfigInfoDTO {
     /**
      * 基础信息表id
      */
-    @NotBlank(message = "基础信息表id不能为空")
+    @NotNull(message = "基础信息表id不能为空")
     private Long baseInfoId;
 
     /**
      * 父id
      */
-    @NotBlank(message = "父id不能为空")
+    @NotNull(message = "父id不能为空")
     private Long parentId;
 
     /**

@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 选择器信息
+ * 爬虫数据采集基础配置信息
+ * @author wangzp
+ * @date 2021/12/10 16:19
+ * @since 1.0.0
  */
 @Slf4j
 @RestController
@@ -26,7 +29,7 @@ public class RptSelectorColumnInfoController {
     }
 
     /**
-     * 添加配置信息
+     * 添加选择器信息
      * @param rptSelectorColumnInfoDTO
      * @return DefaultCommonResult
      */
@@ -37,7 +40,7 @@ public class RptSelectorColumnInfoController {
     }
 
     /**
-     * 修改配置信息
+     * 修改选择器信息
      * @param id
      * @param rptSelectorColumnInfoDTO
      * @return DefaultCommonResult

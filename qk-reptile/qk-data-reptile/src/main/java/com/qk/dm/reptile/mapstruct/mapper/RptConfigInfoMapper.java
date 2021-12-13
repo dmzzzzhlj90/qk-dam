@@ -3,10 +3,7 @@ package com.qk.dm.reptile.mapstruct.mapper;
 import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

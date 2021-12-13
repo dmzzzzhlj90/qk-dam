@@ -30,28 +30,34 @@ public class RptSelectorColumnInfo implements Serializable {
     private Long configId;
 
     /**
-     * 手动执行
-     */
-    @Column(name = "manual_execution")
-    private String manualExecution;
-
-    /**
-     * 正则
-     */
-    @Column(name = "regular")
-    private Long regular;
-
-    /**
-     * 选择器类型
-     */
-    @Column(name = "selector")
-    private Long selector;
-
-    /**
      * 维度字段名称
      */
     @Column(name = "column_name", nullable = false)
     private String columnName;
+
+    /**
+     * 维度字段编码
+     */
+    @Column(name = "column_code", nullable = false)
+    private String columnCode;
+
+    /**
+     * 选择器类型 0代表xpath、1代表正则 ，99代表手动指定
+     */
+    @Column(name = "selector")
+    private Integer selector;
+
+    /**
+     * 选择器字段值
+     */
+    @Column(name = "selector_val")
+    private String selectorVal;
+
+    /**
+     * 元素类型 0代表单元素 1代表多元素
+     */
+    @Column(name = "element_type")
+    private Integer elementType;
 
     /**
      * 创建时间

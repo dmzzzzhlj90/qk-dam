@@ -51,7 +51,7 @@ public class RptConfigInfoController {
     }
 
     /**
-     * 待配列表
+     * 配置列表
      * @param baseInfoId
      * @return DefaultCommonResult<PageResultVO<RptBaseInfoVO>>
      */

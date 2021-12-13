@@ -17,4 +17,6 @@ public interface RptBaseInfoService {
     PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO);
 
     void updateStatus(Long id,Integer status);
+
+    void callReptile();
 }

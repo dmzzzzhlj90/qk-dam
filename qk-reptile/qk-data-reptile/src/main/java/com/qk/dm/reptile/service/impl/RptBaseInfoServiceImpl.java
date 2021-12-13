@@ -14,6 +14,7 @@ import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -116,6 +117,16 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
     }
 
+    @Override
+    public void callReptile() {
+        List<RptBaseInfo> list = rptBaseInfoRepository.findAllByStatus(RptConstant.REPTILE);
+        if(!CollectionUtils.isEmpty(list)){
+            list.forEach(e->{
+
+            });
+        }
+    }
+
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptBaseInfoDTO);
@@ -147,6 +158,9 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
         if (!StringUtils.isEmpty(rptBaseInfoDTO.getWebsiteUrl())) {
            booleanBuilder.and(qRptBaseInfo.websiteUrl.contains(rptBaseInfoDTO.getWebsiteUrl()));
+        }
+        if (!StringUtils.isEmpty(rptBaseInfoDTO.getCreateUsername())) {
+            booleanBuilder.and(qRptBaseInfo.createUsername.contains(rptBaseInfoDTO.getCreateUsername()));
         }
         if(Objects.nonNull(rptBaseInfoDTO.getStatus())){
             booleanBuilder.and(qRptBaseInfo.status.eq(rptBaseInfoDTO.getStatus()));

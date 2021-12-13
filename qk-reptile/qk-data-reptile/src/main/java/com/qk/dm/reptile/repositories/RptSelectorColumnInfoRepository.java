@@ -6,7 +6,7 @@ import com.qk.dm.reptile.entity.RptSelectorColumnInfo;
 import java.util.List;
 
 public interface RptSelectorColumnInfoRepository extends BaseRepository<RptSelectorColumnInfo, Long>{
-        List<RptSelectorColumnInfo> findAllByConfigId(Long configId);
+    List<RptSelectorColumnInfo> findAllByConfigId(Long configId);
 
-        void deleteAllByConfigId(Long configId);
+    void deleteAllByConfigId(Long configId);
 }

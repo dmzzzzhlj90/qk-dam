@@ -1,9 +1,13 @@
 package com.qk.dm.reptile.params.vo;
 
+import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 配置信
@@ -54,7 +58,7 @@ public class RptConfigInfoVO {
     /**
      * headers参数
      */
-    private String headers;
+    private Map<String,Object> header;
 
     /**
      * 维度目录id
@@ -85,5 +89,10 @@ public class RptConfigInfoVO {
      * 请求方式
      */
     private String requestType;
+
+    /**
+     * 选择器列表
+     */
+    private List<RptSelectorColumnInfoDTO> selectorList;
 
 }

@@ -3,7 +3,6 @@ package com.qk.dm.reptile.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.RptConfigInfo;
-import com.qk.dm.reptile.entity.RptSelectorColumnInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
