@@ -1,8 +1,8 @@
 package com.qk.dm.datastandards.rest;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
@@ -42,7 +42,7 @@ public class DataStandardBasicInfoController {
    * @return DefaultCommonResult<PageResultVO < DsdBasicinfoVO>>
    */
   @PostMapping(value = "/list")
-  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.LIST)
   public DefaultCommonResult<PageResultVO<DsdBasicInfoVO>> searchList(
       @RequestBody DsdBasicInfoParamsVO basicInfoParamsVO) {
     return DefaultCommonResult.success(
@@ -56,7 +56,7 @@ public class DataStandardBasicInfoController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(@RequestBody @Validated DsdBasicInfoVO dsdBasicinfoVO) {
     dataStandardBasicInfoService.addDsdBasicinfo(dsdBasicinfoVO);
     return DefaultCommonResult.success();
@@ -69,7 +69,7 @@ public class DataStandardBasicInfoController {
    * @return DefaultCommonResult
    */
   @PutMapping("")
-  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(@RequestBody @Validated DsdBasicInfoVO dsdBasicinfoVO) {
     dataStandardBasicInfoService.updateDsdBasicinfo(dsdBasicinfoVO);
     return DefaultCommonResult.success();
@@ -82,7 +82,7 @@ public class DataStandardBasicInfoController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/{id}")
-  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.DELETE)
+//  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.DELETE)
   public DefaultCommonResult delete(@PathVariable("id") Integer id) {
     dataStandardBasicInfoService.deleteDsdBasicinfo(id);
     return DefaultCommonResult.success();
@@ -95,7 +95,7 @@ public class DataStandardBasicInfoController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/bulk/{ids}")
-  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.DELETE)
+//  @Auth(bizType = BizResource.DSD_BASIC_INFO, actionType = RestActionType.DELETE)
   public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
     dataStandardBasicInfoService.bulkDeleteDsdBasicInfo(ids);
     return DefaultCommonResult.success();
@@ -108,7 +108,7 @@ public class DataStandardBasicInfoController {
    * @return DefaultCommonResult
    */
   @GetMapping("/search/code/field/{codeDirId}")
-  @Auth(bizType = BizResource.DSD_BASIC_INFO_CODE, actionType = RestActionType.GET)
+//  @Auth(bizType = BizResource.DSD_BASIC_INFO_CODE, actionType = RestActionType.GET)
   public DefaultCommonResult<List<CodeTableFieldsVO>> getCodeFieldByCodeDirId(
       @PathVariable("codeDirId") String codeDirId) {
     return DefaultCommonResult.success(
