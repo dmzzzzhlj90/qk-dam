@@ -13,4 +13,5 @@ public class MtdApiDb {
   private String guid;
   private String displayText;
   private String typeName;
+  private String description;
 }

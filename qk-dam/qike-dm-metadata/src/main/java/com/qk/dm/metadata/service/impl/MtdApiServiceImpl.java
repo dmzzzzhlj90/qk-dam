@@ -6,19 +6,20 @@ import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.*;
 import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.service.MtdApiService;
-import com.qk.dm.metadata.vo.*;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
+import org.apache.atlas.model.discovery.SearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.instance.AtlasStruct;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wangzp
@@ -112,10 +113,16 @@ public class MtdApiServiceImpl implements MtdApiService {
     MtdApi mtdApi = new MtdApi();
     AtlasSearchResult atlasSearchResult = null;
     try {
+      SearchParameters.FilterCriteria filterCriteria = new SearchParameters.FilterCriteria();
+      filterCriteria.setOperator(SearchParameters.Operator.EQ);
       if(Objects.equals(SynchStateProperty.TypeName.MYSQL_DB,typeName)){
-        atlasSearchResult = atlasClientV2.attributeSearch(typeName ,"serverInfo", attrValue, 1000, 0);
+        filterCriteria.setAttributeName("serverInfo");
+        filterCriteria.setAttributeValue(attrValue);
+         atlasSearchResult = atlasClientV2.basicSearch(typeName, filterCriteria, null, null,false, 1000, 0);
       }else if(Objects.equals(SynchStateProperty.TypeName.HIVE_DB,typeName)){
-        atlasSearchResult = atlasClientV2.attributeSearch(typeName ,"clusterName", attrValue, 1000, 0);
+        filterCriteria.setAttributeName("clusterName");
+        filterCriteria.setAttributeValue(attrValue);
+        atlasSearchResult = atlasClientV2.basicSearch(typeName, filterCriteria, null, null,false, 1000, 0);
       }
       if(Objects.nonNull(atlasSearchResult)){
         List<AtlasEntityHeader> atlasEntityHeaderList = atlasSearchResult.getEntities();
@@ -149,6 +156,7 @@ public class MtdApiServiceImpl implements MtdApiService {
                   .guid(e.getGuid())
                   .typeName(e.getTypeName())
                   .displayText(e.getDisplayText())
+                  .description(String.valueOf(e.getAttribute("description")))
                   .build());
         });
     return mtdApiDbVOList;
