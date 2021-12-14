@@ -2,15 +2,14 @@ metadata:
   - name: job1
     dataConnectType: mysql
     serverinfo:
-      applicationName: 上游数据
-      owner: wangzp
-      description: 数据中台
-      displayName: qkdam
+      applicationName: 工商数据
+      owner: zhudaoming
+      description: 生产工商数据库
+      displayName: hd_company
     dataConnect:
-      db: qkdam
+      db: hd_company
       table: "all"
-      host: 172.20.0.24
+      host: 172.21.33.141
       port: 3306
       username: root
-      password: Zhudao123!
-
+      password: JMFIuOx2

@@ -24,8 +24,8 @@ spec:
         - name: $BUILD_NUMBER-ds$BRANCH_NAME
           image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER
           ports:
-            - name: tcp-8780
-              containerPort: 8780
+            - name: tcp-8781
+              containerPort: 8781
               protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
