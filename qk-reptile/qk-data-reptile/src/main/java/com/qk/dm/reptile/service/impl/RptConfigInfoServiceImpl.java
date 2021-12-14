@@ -4,16 +4,17 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptConfigInfo;
+import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
+import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -32,17 +33,17 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
 
     private final RptConfigInfoRepository rptConfigInfoRepository;
 
-    private final RptBaseInfoService rptBaseInfoService;
+    private final RptBaseInfoRepository rptBaseInfoRepository;
 
     private final RptSelectorColumnInfoService rptSelectorColumnInfoService;
 
     private final QRptConfigInfo qRptConfigInfo = QRptConfigInfo.rptConfigInfo;
 
     public RptConfigInfoServiceImpl(RptConfigInfoRepository rptConfigInfoRepository,
-                                    RptBaseInfoService rptBaseInfoService,
+                                    RptBaseInfoRepository rptBaseInfoRepository,
                                     RptSelectorColumnInfoService rptSelectorColumnInfoService){
         this.rptConfigInfoRepository = rptConfigInfoRepository;
-        this.rptBaseInfoService = rptBaseInfoService;
+        this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.rptSelectorColumnInfoService = rptSelectorColumnInfoService;
     }
     @Override
@@ -58,8 +59,16 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
             rptSelectorColumnInfoService.batchInset(selectorList);
         }
         //修改基础信息表状态为爬虫
-        rptBaseInfoService.updateStatus(rptConfigInfoDTO.getBaseInfoId(), RptConstant.REPTILE);
+        updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
         return config.getId();
+    }
+    private void updateBaseInfoStatus(Long id) {
+        RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
+        if(Objects.isNull(rptBaseInfo)){
+            throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
+        }
+        rptBaseInfo.setStatus( RptConstant.REPTILE);
+        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
     }
 
     @Override
