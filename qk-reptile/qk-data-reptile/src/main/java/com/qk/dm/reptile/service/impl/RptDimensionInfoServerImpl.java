@@ -93,7 +93,8 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
   @Override
   public void addRptDir(RptDimensionInfoDTO rptDimensionInfoDTO) {
     RptDimensionInfo rptDimensionInfo = RptDimensionInfoMapper.INSTANCE.userRptDimensionInfoDTO(rptDimensionInfoDTO);
-    BooleanExpression predicate = qRptDimensionInfo.dimensionName.eq(rptDimensionInfoDTO.getDimensionName());
+    BooleanExpression predicate = qRptDimensionInfo.dimensionName.eq(rptDimensionInfoDTO.getDimensionName())
+        .or(qRptDimensionInfo.dimensionCode.eq(rptDimensionInfo.getDimensionCode()));
     boolean exists = rptDimensionInfoRepository.exists(predicate);
     if (exists){
       throw new BizException("当前需要新增的维度目录名称为"+rptDimensionInfoDTO.getDimensionName()+"的数据已经存在");
