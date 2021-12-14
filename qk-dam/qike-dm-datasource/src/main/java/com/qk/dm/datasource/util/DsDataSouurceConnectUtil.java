@@ -182,16 +182,21 @@ public class DsDataSouurceConnectUtil {
 
   public static String getParamsByType(String type) {
     String driverInfo = null;
-    if (type.equals("db-mysql")) {
-      driverInfo = "com.mysql.cj.jdbc.Driver";
-    } else if (type.equals("db-oracle")) {
-      driverInfo = "oracle.jdbc.driver.OracleDriver";
-    } else if (type.equals("db-hive")) {
-      driverInfo = "org.apache.hive.jdbc.HiveDriver";
-    } else if (type.equals("db-postgresql")) {
-      driverInfo = "org.postgresql.Driver";
-    } else {
-      throw new BizException("没有匹配的数据源参数类型");
+    switch (type) {
+      case "mysql":
+        driverInfo = "com.mysql.cj.jdbc.Driver";
+        break;
+      case "oracle":
+        driverInfo = "oracle.jdbc.driver.OracleDriver";
+        break;
+      case "hive":
+        driverInfo = "org.apache.hive.jdbc.HiveDriver";
+        break;
+      case "postgresql":
+        driverInfo = "org.postgresql.Driver";
+        break;
+      default:
+        throw new BizException("没有匹配的数据源参数类型");
     }
     return driverInfo;
   }
@@ -199,22 +204,22 @@ public class DsDataSouurceConnectUtil {
   public static String addDriverinfo(Object baseDataSourceTypeInfo, String type) {
     ObjectMapper objectMapper = new ObjectMapper();
     if (StringUtils.isNotBlank(type)) {
-      if (type.equals("db-mysql")) {
+      if (type.equals("mysql")) {
         MysqlInfo mysqlInfo = objectMapper.convertValue(baseDataSourceTypeInfo, MysqlInfo.class);
         mysqlInfo.setDriverInfo("com.mysql.cj.jdbc.Driver");
         type = GsonUtil.toJsonString(mysqlInfo);
       }
-      if (type.equals("db-oracle")) {
+      if (type.equals("oracle")) {
         OracleInfo oracleInfo = objectMapper.convertValue(baseDataSourceTypeInfo, OracleInfo.class);
         oracleInfo.setDriverInfo("oracle.jdbc.driver.OracleDriver");
         type = GsonUtil.toJsonString(oracleInfo);
       }
-      if (type.equals("db-hive")) {
+      if (type.equals("hive")) {
         HiveInfo hiveInfo = objectMapper.convertValue(baseDataSourceTypeInfo, HiveInfo.class);
         hiveInfo.setDriverInfo("org.apache.hive.jdbc.HiveDriver");
         type = GsonUtil.toJsonString(hiveInfo);
       }
-      if (type.equals("db-postgresql")) {
+      if (type.equals("postgresql")) {
         PostgresqlInfo postgresqlInfo =
             objectMapper.convertValue(baseDataSourceTypeInfo, PostgresqlInfo.class);
         postgresqlInfo.setDriverInfo("org.postgresql.Driver");
