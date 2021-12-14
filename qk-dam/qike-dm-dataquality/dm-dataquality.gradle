@@ -56,7 +56,7 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "com.github.ben-manes.caffeine:caffeine"
-    implementation group: 'com.alibaba', name: 'druid', version: '1.2.6'
+    implementation group: 'com.alibaba', name: 'druid', version: '1.2.8'
 
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
