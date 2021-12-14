@@ -2,6 +2,7 @@ package com.qk.dm.reptile.mapstruct.mapper;
 
 import com.qk.dm.reptile.entity.RptDimensionInfo;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoDTO;
+import com.qk.dm.reptile.params.vo.RptDimensionInfoParamsVO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoVO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -25,4 +26,6 @@ public interface RptDimensionInfoMapper {
   void of(RptDimensionInfoDTO rptDimensionInfoDTO, @MappingTarget RptDimensionInfo rptDimensionInfo);
 
   List<RptDimensionInfoVO> of(List<RptDimensionInfo> rptDimensionInfoList);
+
+  List<RptDimensionInfoParamsVO> paramsof(List<RptDimensionInfo> rptDimensionInfoList);
 }

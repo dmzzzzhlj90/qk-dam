@@ -20,5 +20,5 @@ public interface RptDimensionInfoColumnService {
   PageResultVO<RptDimensionInfoColumnVO> qyeryRptDimensionInfoColumn(
       RptDimensionInfoColumnParamDTO rptDimensionInfoColumnParamDTO);
 
-  Map<String,String> queryColumnByDirName(String dimensionColumnName);
+  Map<String,String> queryColumnByDirName(Long id);
 }

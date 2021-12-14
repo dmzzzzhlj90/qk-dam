@@ -75,4 +75,10 @@ public class RptDimensionInfoDTO {
    * 修改人姓名
    */
   private String updateUsername;
+
+  /**
+   * 目录编码
+   */
+  @NotBlank(message = "目录编码不能为空")
+  private String dimensionCode;
 }

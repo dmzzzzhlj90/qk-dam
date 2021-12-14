@@ -6,6 +6,7 @@ import com.qk.dm.reptile.entity.QRptDimensionInfo;
 import com.qk.dm.reptile.entity.RptDimensionInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptDimensionInfoMapper;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoDTO;
+import com.qk.dm.reptile.params.vo.RptDimensionInfoParamsVO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoVO;
 import com.qk.dm.reptile.repositories.RptDimensionColumnInfoRepository;
 import com.qk.dm.reptile.repositories.RptDimensionInfoRepository;
@@ -19,9 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * 维度目录server
@@ -163,11 +162,13 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
    * @return
    */
   @Override
-  public Map<String,Long> updateDirName() {
+  public List<RptDimensionInfoParamsVO> getDirName() {
+    List<RptDimensionInfoParamsVO> rptDimensionInfoVOList = new ArrayList<>();
     List<RptDimensionInfo> rptDimensionInfoList= rptDimensionInfoRepository.findAll();
     if (CollectionUtils.isEmpty(rptDimensionInfoList)){
       throw new BizException("获取唯独目录为空，请创建目录");
     }
-    return rptDimensionInfoList.stream().collect(Collectors.toMap(RptDimensionInfo::getDimensionName,RptDimensionInfo::getId));
+    rptDimensionInfoVOList= RptDimensionInfoMapper.INSTANCE.paramsof(rptDimensionInfoList);
+    return rptDimensionInfoVOList;
   }
 }
