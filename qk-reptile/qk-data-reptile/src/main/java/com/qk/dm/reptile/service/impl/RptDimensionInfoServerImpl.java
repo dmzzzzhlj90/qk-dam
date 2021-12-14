@@ -167,10 +167,9 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
   public List<RptDimensionInfoParamsVO> getDirName() {
     List<RptDimensionInfoParamsVO> rptDimensionInfoVOList = new ArrayList<>();
     List<RptDimensionInfo> rptDimensionInfoList= rptDimensionInfoRepository.findAll();
-    if (CollectionUtils.isEmpty(rptDimensionInfoList)){
-      throw new BizException("获取唯独目录为空，请创建目录");
+    if (!CollectionUtils.isEmpty(rptDimensionInfoList)){
+      rptDimensionInfoVOList= RptDimensionInfoMapper.INSTANCE.paramsof(rptDimensionInfoList);
     }
-    rptDimensionInfoVOList= RptDimensionInfoMapper.INSTANCE.paramsof(rptDimensionInfoList);
     return rptDimensionInfoVOList;
   }
 }

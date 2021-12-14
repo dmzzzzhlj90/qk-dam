@@ -5,7 +5,6 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.entity.QRptDimensionColumnInfo;
 import com.qk.dm.reptile.entity.QRptDimensionInfo;
 import com.qk.dm.reptile.entity.RptDimensionColumnInfo;
-import com.qk.dm.reptile.entity.RptDimensionInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptDimensionInfoColumnMapper;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnDTO;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnParamDTO;
@@ -126,7 +125,7 @@ public class RptDimensionInfoColumnServiceImpl implements
   }
 
   /**
-   * 根据目录名称返回字段信息
+   * 根据目录id返回字段信息
    * @param id
    * @return
    */
@@ -134,9 +133,6 @@ public class RptDimensionInfoColumnServiceImpl implements
   public Map<String,String> queryColumnByDirName(Long id) {
     BooleanExpression eq = qRptDimensionColumnInfo.dimensionId.eq(id);
     Iterable<RptDimensionColumnInfo> rptDimensionColumnInfoList = rptDimensionColumnInfoRepository.findAll(eq);
-    if (Objects.isNull(rptDimensionColumnInfoList)){
-     throw new BizException("目录名为"+id+"下没有字段请添加字段");
-   }
     Map<String,String> map  = new HashMap<>();
     rptDimensionColumnInfoList.forEach(rptDimensionColumnInfo -> {
       map.put(rptDimensionColumnInfo.getDimensionColumnName(),rptDimensionColumnInfo.getDimensionColumnCode());
