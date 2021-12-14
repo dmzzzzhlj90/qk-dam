@@ -1,9 +1,10 @@
 package com.qk.dm.datasource.entity;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
-import lombok.Data;
 
 @Data
 @Entity
@@ -52,4 +53,8 @@ public class DsDir implements Serializable {
   /** 目录编码 */
   @Column(name = "ds_dir_code", nullable = false)
   private String dsDirCode;
+
+  /** 目录编码 */
+  @Column(name = "ds_system_id")
+  private Integer dsSystemId;
 }
