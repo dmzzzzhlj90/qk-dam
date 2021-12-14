@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptDimensionColumnInfo;
 import com.qk.dm.reptile.entity.QRptDimensionInfo;
 import com.qk.dm.reptile.entity.RptDimensionInfo;
@@ -65,7 +66,7 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
 
   private List<RptDimensionInfoVO> buildByRecursive(List<RptDimensionInfoVO> rptDimensionInfoVOList) {
     List<RptDimensionInfoVO> trees = new ArrayList<>();
-      RptDimensionInfoVO rptDimensionInfoVO = RptDimensionInfoVO.builder().id(0L).dimensionName("全部维度分类").build();
+      RptDimensionInfoVO rptDimensionInfoVO = RptDimensionInfoVO.builder().id(RptConstant.DIRID).dimensionName(RptConstant.DIRNAME).build();
       trees.add(findChildren(rptDimensionInfoVO, rptDimensionInfoVOList));
     return trees;
   }

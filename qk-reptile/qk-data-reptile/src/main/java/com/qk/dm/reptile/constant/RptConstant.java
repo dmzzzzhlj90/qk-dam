@@ -17,4 +17,14 @@ public class RptConstant {
      */
     public static final Integer HISTORY = 2;
 
+    /**
+     * 主目录id设置
+     */
+    public static final Long DIRID = 0L;
+
+    /**
+     * 主目录名称
+     */
+    public static final String DIRNAME = "全部维度分类";
+
 }
