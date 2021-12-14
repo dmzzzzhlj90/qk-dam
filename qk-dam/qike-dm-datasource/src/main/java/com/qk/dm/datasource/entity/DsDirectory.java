@@ -1,13 +1,14 @@
 package com.qk.dm.datasource.entity;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
-import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "qk_ds_directory")
+@Table(name = "qk_ds_system")
 public class DsDirectory implements Serializable {
 
   private static final long serialVersionUID = 1L;

@@ -20,7 +20,7 @@ pluginManagement {
         }
         dependencies {
             classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.3.6'
-            classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.2.7'
+            classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.3.4'
         }
 
     }

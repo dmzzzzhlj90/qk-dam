@@ -18,10 +18,11 @@ import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.DsDirReturnVO;
 import com.qk.dm.datasource.vo.DsDirVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import java.util.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.*;
 
 /**
  * 数据连接目录接口实现
@@ -97,8 +98,6 @@ public class DsDirServiceImpl implements DsDirService {
             dsDirReturnVO.setTitle(dsDir.getDicName());
             dsDirVOList.add(dsDirReturnVO);
           });
-    } else {
-      throw new BizException("获取目录为空");
     }
     return buildByRecursive(dsDirVOList);
   }
@@ -253,8 +252,6 @@ public class DsDirServiceImpl implements DsDirService {
             dsDirReturnVO.setTitle(dsDir.getDicName());
             dsDirVOList.add(dsDirReturnVO);
           });
-    } else {
-      throw new BizException("获取目录为空");
     }
     return buildByRecursives(dsDirVOList);
   }
