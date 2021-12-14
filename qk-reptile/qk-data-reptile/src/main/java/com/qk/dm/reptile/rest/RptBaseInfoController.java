@@ -115,9 +115,19 @@ public class RptBaseInfoController {
      * @param id
      * @return
      */
-    @PutMapping("/execution/{id}")
+    @GetMapping("/execution/{id}")
     public DefaultCommonResult execution(@PathVariable("id") Long id){
         rptBaseInfoService.execution(id);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 定时执行调用爬虫接口
+     * @return
+     */
+    @GetMapping("/timed/execution")
+    public DefaultCommonResult timedExecution(){
+        rptBaseInfoService.timedExecution();
         return DefaultCommonResult.success();
     }
 

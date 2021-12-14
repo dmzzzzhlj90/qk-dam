@@ -3,7 +3,6 @@ package com.qk.dm.reptile.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.constant.RptConstant;
-import com.qk.dm.reptile.entity.QRptConfigInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
@@ -12,7 +11,6 @@ import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
-import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
 import org.springframework.stereotype.Service;
@@ -36,8 +34,6 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     private final RptBaseInfoRepository rptBaseInfoRepository;
 
     private final RptSelectorColumnInfoService rptSelectorColumnInfoService;
-
-    private final QRptConfigInfo qRptConfigInfo = QRptConfigInfo.rptConfigInfo;
 
     public RptConfigInfoServiceImpl(RptConfigInfoRepository rptConfigInfoRepository,
                                     RptBaseInfoRepository rptBaseInfoRepository,
@@ -67,8 +63,10 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        rptBaseInfo.setStatus( RptConstant.REPTILE);
-        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+       if (!Objects.equals(rptBaseInfo.getStatus(), RptConstant.REPTILE)) {
+          rptBaseInfo.setStatus(RptConstant.REPTILE);
+          rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+        }
     }
 
     @Override
@@ -124,13 +122,14 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
             list.forEach(e->{
                 RptConfigInfoVO rptConfigVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(e);
                 transRptConfigInfoVO(e,rptConfigVO);
+                rptConfigVO.setSelectorList(rptSelectorColumnInfoService.list(rptConfigVO.getId()));
                 rptConfigInfoVOList.add(rptConfigVO);
             });
         }
         return rptConfigInfoVOList;
     }
 
-    private RptConfigInfo transRptConfigInfo(RptConfigInfo rptConfigInfo,RptConfigInfoDTO rptConfigInfoDTO){
+    private void transRptConfigInfo(RptConfigInfo rptConfigInfo, RptConfigInfoDTO rptConfigInfoDTO){
         if(Objects.nonNull(rptConfigInfoDTO.getCookies())){
             rptConfigInfo.setCookies(GsonUtil.toJsonString(rptConfigInfoDTO.getCookies()));
         }
@@ -146,7 +145,6 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(Objects.nonNull(rptConfigInfoDTO.getRaw())){
             rptConfigInfo.setRaw(GsonUtil.toJsonString(rptConfigInfoDTO.getRaw()));
         }
-        return rptConfigInfo;
     }
 
     private RptConfigInfoVO transRptConfigInfoVO(RptConfigInfo rptConfigInfo,RptConfigInfoVO rptConfigInfoVO){
