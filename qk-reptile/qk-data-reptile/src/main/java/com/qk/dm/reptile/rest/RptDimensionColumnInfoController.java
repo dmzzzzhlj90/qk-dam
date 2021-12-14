@@ -77,11 +77,11 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
 
   /**
    * 数据采集-根据维度名称查询维度信息
-   * @param dimensionColumnName
+   * @param id
    * @return DefaultCommonResult<Map<String,String>>
    */
-  @GetMapping("/{dimensionColumnName}")
-  public DefaultCommonResult<Map<String,String>> queryColumnByDirName(@NotBlank @PathVariable("dimensionColumnName")String dimensionColumnName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.queryColumnByDirName(dimensionColumnName));
+  @GetMapping("/{id}")
+  public DefaultCommonResult<Map<String,String>> queryColumnByDirName(@NotBlank @PathVariable("id")Long id) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.queryColumnByDirName(id));
   }
 }

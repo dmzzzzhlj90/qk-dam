@@ -127,20 +127,15 @@ public class RptDimensionInfoColumnServiceImpl implements
 
   /**
    * 根据目录名称返回字段信息
-   * @param dimensionColumnName
+   * @param id
    * @return
    */
   @Override
-  public Map<String,String> queryColumnByDirName(String dimensionColumnName) {
-    BooleanExpression predicate = qRptDimensionInfo.dimensionName.eq(dimensionColumnName);
-    RptDimensionInfo rptDimensionInfo = rptDimensionInfoRepository.findOne(predicate).orElse(null);
-    if (Objects.isNull(rptDimensionInfo)){
-      throw new BizException("目录名为"+dimensionColumnName+"为空");
-    }
-    BooleanExpression eq = qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfo.getId());
+  public Map<String,String> queryColumnByDirName(Long id) {
+    BooleanExpression eq = qRptDimensionColumnInfo.dimensionId.eq(id);
     Iterable<RptDimensionColumnInfo> rptDimensionColumnInfoList = rptDimensionColumnInfoRepository.findAll(eq);
     if (Objects.isNull(rptDimensionColumnInfoList)){
-     throw new BizException("目录名为"+dimensionColumnName+"下没有字段请添加字段");
+     throw new BizException("目录名为"+id+"下没有字段请添加字段");
    }
     Map<String,String> map  = new HashMap<>();
     rptDimensionColumnInfoList.forEach(rptDimensionColumnInfo -> {

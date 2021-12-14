@@ -1,11 +1,11 @@
 package com.qk.dm.reptile.service;
 
 import com.qk.dm.reptile.params.dto.RptDimensionInfoDTO;
+import com.qk.dm.reptile.params.vo.RptDimensionInfoParamsVO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public interface RptDimensionInfoService {
@@ -17,5 +17,6 @@ public interface RptDimensionInfoService {
 
   void updateRptDir(RptDimensionInfoDTO rptDimensionInfoDTO);
 
-  Map<String,Long> updateDirName();
+  List<RptDimensionInfoParamsVO> getDirName();
+
 }

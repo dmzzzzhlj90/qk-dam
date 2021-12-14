@@ -78,4 +78,9 @@ public class RptDimensionInfoVO {
    * 子集目录
    */
   List<RptDimensionInfoVO> childrenList;
+
+  /**
+   * 目录编码
+   */
+  private String dimensionCode;
 }

@@ -3,6 +3,7 @@ package com.qk.dm.reptile.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoDTO;
+import com.qk.dm.reptile.params.vo.RptDimensionInfoParamsVO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoVO;
 import com.qk.dm.reptile.service.RptDimensionInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 可视化_维度信息
@@ -73,12 +73,12 @@ public class RptDimensionInfoController {
   }
 
   /**
-   * 数据采集-获取维度目录名称
+   * 数据采集-获取维度目录名称、id、编码
    * DefaultCommonResult<Map<String,Long>>
    */
   @GetMapping("/dirname")
-  public DefaultCommonResult<Map<String,Long>> updateDirName() {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoService.updateDirName());
+  public DefaultCommonResult<List<RptDimensionInfoParamsVO>> updateDirName() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoService.getDirName());
   }
 
 }
