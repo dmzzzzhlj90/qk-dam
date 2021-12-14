@@ -73,8 +73,8 @@ public class RptDimensionInfoController {
   }
 
   /**
-   * 数据采集-获取维度目录名称、id、编码
-   * DefaultCommonResult<Map<String,Long>>
+   * 数据采集-获取维度目录名称
+   * DefaultCommonResult<List<RptDimensionInfoParamsVO>>
    */
   @GetMapping("/dirname")
   public DefaultCommonResult<List<RptDimensionInfoParamsVO>> updateDirName() {
