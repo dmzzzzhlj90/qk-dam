@@ -73,6 +73,11 @@ public class RptConfigInfoDTO {
     private String dimensionName;
 
     /**
+     * 维度目录编码
+     */
+    private String dimensionCode;
+
+    /**
      * 是否启动动态加载js(0表示未启动、1表示启动)
      */
     private Integer startoverJs;

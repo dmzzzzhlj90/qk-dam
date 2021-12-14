@@ -1,6 +1,5 @@
 package com.qk.dm.reptile.params.vo;
 
-import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -71,6 +70,11 @@ public class RptConfigInfoVO {
     private String dimensionName;
 
     /**
+     * 维度目录编码
+     */
+    private String dimensionCode;
+
+    /**
      * 是否启动动态加载js(0表示未启动、1表示启动)
      */
     private Integer startoverJs;
@@ -93,6 +97,6 @@ public class RptConfigInfoVO {
     /**
      * 选择器列表
      */
-    private List<RptSelectorColumnInfoDTO> selectorList;
+    private List<RptSelectorColumnInfoVO> selectorList;
 
 }

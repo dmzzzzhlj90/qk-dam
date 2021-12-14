@@ -84,6 +84,12 @@ public class RptConfigInfo implements Serializable {
     private String dimensionName;
 
     /**
+     * 维度目录编码
+     */
+    @Column(name = "dimension_code")
+    private String dimensionCode;
+
+    /**
      * 是否启动动态加载js(0表示未启动、1表示启动)
      */
     @Column(name = "startover_js")

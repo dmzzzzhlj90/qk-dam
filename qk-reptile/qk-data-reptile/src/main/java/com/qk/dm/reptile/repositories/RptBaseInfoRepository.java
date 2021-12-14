@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RptBaseInfoRepository extends BaseRepository<RptBaseInfo, Long> {
         List<RptBaseInfo> findAllByStatus(Integer status);
+
+        List<RptBaseInfo> findAllByRunStatus(Integer runStatus);
 }
