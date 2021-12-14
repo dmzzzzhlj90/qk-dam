@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 可视化_维度信息
@@ -73,10 +74,10 @@ public class RptDimensionInfoController {
 
   /**
    * 数据采集-获取维度目录名称
-   * @return DefaultCommonResult<String>
+   * DefaultCommonResult<Map<String,Long>>
    */
   @GetMapping("/dirname")
-  public DefaultCommonResult<List<String>> updateDirName() {
+  public DefaultCommonResult<Map<String,Long>> updateDirName() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoService.updateDirName());
   }
 
