@@ -144,7 +144,7 @@ public class DataBaseInfoDefaultApi {
     public List<String> getAllTable(String type, String server, String dbName) {
         DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
                 metaDataFeign.mtdDetail(
-                        MtdApiParams.builder().typeName(type + "_db").server(server).dbName(dbName).build());
+                        MtdApiParams.builder().typeName(type + "_table").server(server).dbName(dbName).build());
         List<MtdTables> mtdTablesList = mtdApiDefaultCommonResult.getData().getTables();
         return mtdTablesList.stream().map(MtdTables::getDisplayText).collect(Collectors.toList());
     }
@@ -159,7 +159,7 @@ public class DataBaseInfoDefaultApi {
         DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
                 metaDataFeign.mtdDetail(
                         MtdApiParams.builder()
-                                .typeName(type + "_table")
+                                .typeName(type + "_column")
                                 .server(server)
                                 .dbName(dbName)
                                 .tableName(tableName)
