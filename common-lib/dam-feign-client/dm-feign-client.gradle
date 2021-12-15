@@ -19,6 +19,6 @@ dependencyManagement {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
     }
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     }
 }
