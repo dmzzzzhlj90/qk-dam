@@ -4,6 +4,7 @@ import com.google.common.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.constant.NumberIndexEnum;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.entity.*;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
@@ -23,6 +24,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -43,6 +45,9 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     public static final String RESULT_KEY = "result";
     public static final String DATA_INDEX_NAME_PREFIX = "dataIndexNamePrefix";
     public static final String LOCATIONS = "locations";
+
+    public static final DecimalFormat df = new DecimalFormat("########0.00");
+    public static final String NUMERICAL_VALUE = "率";
 
     private final QDqcSchedulerResult qDqcSchedulerResult = QDqcSchedulerResult.dqcSchedulerResult;
 
@@ -175,15 +180,26 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         List<String> locations = (List<String>) locationMap.get(LOCATIONS);
 
         //获取列 dataIndexList
-        List<String> dataIndexList = resultTitleVOList.stream().map(DqcSchedulerResultTitleVO::getDataIndex).collect(Collectors.toList());
+        Map<String, Boolean> dataIndexMap = new LinkedHashMap<>();
+        getDataIndexMap(resultTitleVOList, dataIndexMap);
 
         //转换结果集
         List<List<Object>> resultDataList = GsonUtil.fromJsonString(ruleResultStr, new TypeToken<List<List<Object>>>() {
         }.getType());
 
         //构建ResultData
-        buildResultData(resultDataVOList, dataIndexNamePrefix, locations, dataIndexList, resultDataList);
+        buildResultData(resultDataVOList, dataIndexNamePrefix, locations, dataIndexMap, resultDataList);
         return resultDataVOList;
+    }
+
+    private void getDataIndexMap(List<DqcSchedulerResultTitleVO> resultTitleVOList, Map<String, Boolean> dataIndexMap) {
+        for (DqcSchedulerResultTitleVO resultTitleVO : resultTitleVOList) {
+            if (resultTitleVO.getTitle().contains(NUMERICAL_VALUE) || NumberIndexEnum.getAllValue().contains(resultTitleVO.getTitle())) {
+                dataIndexMap.put(resultTitleVO.getDataIndex(), true);
+            } else {
+                dataIndexMap.put(resultTitleVO.getDataIndex(), false);
+            }
+        }
     }
 
     private Map<String, Object> getLocationMap(Optional<DqcSchedulerRules> schedulerRulesOptional) {
@@ -222,7 +238,13 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         return locationMap;
     }
 
-    private void buildResultData(List<Map<String, Object>> resultDataVOList, String dataIndexNamePrefix, List<String> locations, List<String> dataIndexList, List<List<Object>> resultDataList) {
+    private void buildResultData(List<Map<String, Object>> resultDataVOList,
+                                 String dataIndexNamePrefix,
+                                 List<String> locations,
+                                 Map<String, Boolean> dataIndexMap,
+                                 List<List<Object>> resultDataList) {
+        Set<String> dataIndexSet = dataIndexMap.keySet();
+        List<String> dataIndexList = new ArrayList<>(dataIndexSet);
         if (resultDataList.size() > 0) {
             AtomicInteger dataIndex = new AtomicInteger(0);
             for (List data : resultDataList) {
@@ -233,14 +255,25 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
                 resultDataMap.put(dataIndexList.get(0), dataIndexName);
 
                 AtomicInteger valueIndex = new AtomicInteger(1);
-
-                for (Object value : data) {
-                    resultDataMap.put(dataIndexList.get(valueIndex.get()), value);
-                    valueIndex.getAndIncrement();
-                }
+                //获取指标数值
+                getDataValue(dataIndexMap, dataIndexList, data, resultDataMap, valueIndex);
+                
                 resultDataVOList.add(resultDataMap);
                 dataIndex.getAndIncrement();
             }
+        }
+    }
+
+    private void getDataValue(Map<String, Boolean> dataIndexMap, List<String> dataIndexList, List data, Map<String, Object> resultDataMap, AtomicInteger valueIndex) {
+        for (Object value : data) {
+            String dataIndexKey = dataIndexList.get(valueIndex.get());
+            Boolean isDouble = dataIndexMap.get(dataIndexKey);
+            //是否为Double数据类型
+            if (isDouble) {
+                value = df.format((Double) value * 100);
+            }
+            resultDataMap.put(dataIndexKey, value);
+            valueIndex.getAndIncrement();
         }
     }
 

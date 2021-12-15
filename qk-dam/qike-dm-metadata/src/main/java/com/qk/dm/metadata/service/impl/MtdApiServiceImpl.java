@@ -96,6 +96,12 @@ public class MtdApiServiceImpl implements MtdApiService {
   }
 
 
+  /**
+   * 测试dbs
+   * @param typeName 类型名称
+   * @param attrValue 属性值
+   * @return MtdApi
+   */
   public MtdApi getDbs(String typeName,String attrValue){
     MtdApi mtdApi = new MtdApi();
     AtlasSearchResult atlasSearchResult = null;
