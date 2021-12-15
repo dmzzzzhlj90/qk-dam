@@ -48,6 +48,7 @@ dependencies {
     implementation group: 'com.baomidou', name: 'mybatis-plus-annotation', version: '3.4.3.4'
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.78'
 
+    implementation 'org.codehaus.groovy:groovy-all:3.0.5'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
