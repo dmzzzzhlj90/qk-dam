@@ -5,6 +5,10 @@ import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
 import com.qk.dam.metedata.entity.*;
+import com.qk.dam.metedata.vo.AtlasPagination;
+import com.qk.dam.metedata.vo.MtdColumnSearchVO;
+import com.qk.dam.metedata.vo.MtdDbSearchVO;
+import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.feign.DataSourceFeign;
 import com.qk.dm.feign.MetaDataFeign;
 import org.springframework.stereotype.Component;
@@ -107,32 +111,21 @@ public class DataBaseInfoDefaultApi {
         return metaDataFeign.mtdDetail(mtdApiParams).getData();
     }
 
-    /**
-     * 新建API__获取db库信息下拉列表
-     *
-     * @param dbType
-     * @return DefaultCommonResult<List < String>>
-     */
-    public List<String> getAllDataBase(String dbType) {
-        String type = dbType.split("-")[1];
-        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.mtdDetail(MtdApiParams.builder().typeName(type + "_db").build());
-        List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
-        return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
-    }
 
     /**
      * 新建API__获取db库信息下拉列表
      *
      * @param type
-     * @param server
+     * @param dbName
      * @return
      */
-    public List<String> getAllDataBase(String type, String server) {
-        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.getDbs(type + "_db", server);
-        List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
+    public List<String> getAllDataBase(String type, String dbName) {
+        DefaultCommonResult<List<MtdApiDb>> dataBaseList = metaDataFeign.getDataBaseList(
+                new MtdDbSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
+                        type + "_db", dbName));
+        List<MtdApiDb> mtdApiDbs = dataBaseList.getData();
         return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
+
     }
 
     /**
@@ -142,10 +135,11 @@ public class DataBaseInfoDefaultApi {
      * @return DefaultCommonResult
      */
     public List<String> getAllTable(String type, String server, String dbName) {
-        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.mtdDetail(
-                        MtdApiParams.builder().typeName(type + "_table").server(server).dbName(dbName).build());
-        List<MtdTables> mtdTablesList = mtdApiDefaultCommonResult.getData().getTables();
+        DefaultCommonResult<List<MtdTables>> tableList = metaDataFeign.getTableList(
+                new MtdTableSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
+                        type + "_table", dbName, server));
+
+        List<MtdTables> mtdTablesList = tableList.getData();
         return mtdTablesList.stream().map(MtdTables::getDisplayText).collect(Collectors.toList());
     }
 
@@ -156,14 +150,11 @@ public class DataBaseInfoDefaultApi {
      * @return DefaultCommonResult
      */
     public List getAllColumn(String type, String server, String dbName, String tableName) {
-        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.mtdDetail(
-                        MtdApiParams.builder()
-                                .typeName(type + "_column")
-                                .server(server)
-                                .dbName(dbName)
-                                .tableName(tableName)
-                                .build());
-        return mtdApiDefaultCommonResult.getData().getColumns();
+
+        DefaultCommonResult<List<MtdAttributes>> columnList = metaDataFeign.getColumnList(
+                new MtdColumnSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
+                        type + "_column", dbName, server, tableName));
+
+        return columnList.getData();
     }
 }

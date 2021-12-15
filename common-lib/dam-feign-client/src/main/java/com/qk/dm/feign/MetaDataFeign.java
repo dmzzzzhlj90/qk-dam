@@ -1,9 +1,10 @@
 package com.qk.dm.feign;
 
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dam.metedata.entity.*;
+import com.qk.dam.metedata.vo.MtdColumnSearchVO;
+import com.qk.dam.metedata.vo.MtdDbSearchVO;
+import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,30 @@ public interface MetaDataFeign {
    */
   @PostMapping("/mtd/entity/detail")
   DefaultCommonResult<MtdApi> mtdDetail(@RequestBody MtdApiParams mtdApiParams);
+
+  /**
+   * 获取数据库列表
+   * @param mtdDbSearchVO 库对象
+   * @return List<MtdApiDb>
+   */
+  @PostMapping("/mtd/database/list")
+  DefaultCommonResult<List<MtdApiDb>> getDataBaseList(@RequestBody MtdDbSearchVO mtdDbSearchVO);
+
+  /**
+   * 获取数据表列表
+   * @param mtdTableSearchVO 表对象
+   * @return List<MtdTables>
+   */
+  @PostMapping("/mtd/table/list")
+  DefaultCommonResult<List<MtdTables>> getTableList(@RequestBody MtdTableSearchVO mtdTableSearchVO);
+
+  /**
+   * 获取数据列列表
+   * @param mtdColumnSearchVO 列对象
+   * @return MtdTables
+   */
+  @PostMapping("/mtd/column/list")
+  DefaultCommonResult<List<MtdAttributes>> getColumnList(@RequestBody MtdColumnSearchVO mtdColumnSearchVO);
 
   /**
    * 根据数据库类型和属性获取数据库信息
