@@ -5,6 +5,7 @@ import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.*;
 import com.qk.dam.metedata.property.SynchStateProperty;
+import com.qk.dam.metedata.util.AtlasSearchUtil;
 import com.qk.dm.metadata.service.MtdApiService;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
@@ -55,21 +56,7 @@ public class MtdApiServiceImpl implements MtdApiService {
         && StringUtils.isBlank(server)) {
       return getDbs(typeName);
     } else {
-      List<Map<String, String>> uniqAttributesList = new ArrayList<>();
-      Map<String, String> map = new HashMap<>();
-      String qualifiedName = "";
-      if (StringUtils.isNotBlank(dbName)) {
-        qualifiedName = qualifiedName + dbName;
-      }
-      if (StringUtils.isNotBlank(tableName)) {
-        qualifiedName = qualifiedName + "." + tableName;
-      }
-      if (StringUtils.isNotBlank(server)) {
-        qualifiedName = qualifiedName + "@" + server;
-      }
-      map.put("qualifiedName", qualifiedName);
-      uniqAttributesList.add(map);
-      return getDetail(typeName, uniqAttributesList, tableName);
+      return getDetail(typeName,dbName,tableName,server);
     }
   }
 
@@ -162,30 +149,38 @@ public class MtdApiServiceImpl implements MtdApiService {
     return mtdApiDbVOList;
   }
 
-  private MtdApi getDetail(
-      String typeName, List<Map<String, String>> uniqAttributesList, String tableName) {
-    MtdApi mtdApi = null;
-    try {
-      AtlasEntity.AtlasEntitiesWithExtInfo result =
-          atlasClientV2.getEntitiesByAttribute(typeName, uniqAttributesList);
-      Map<String, Object> tables = result.getEntities().get(0).getRelationshipAttributes();
-      mtdApi = GsonUtil.fromMap(tables, MtdApi.class);
-      if (StringUtils.isNotBlank(tableName)) {
-        List<AtlasEntity> atlasEntityList = new ArrayList<>(result.getReferredEntities().values());
-        List<MtdAttributes> tableAttrs =
-            atlasEntityList.stream()
-                .map(
-                    e -> {
-                      Map<String, Object> att = e.getAttributes();
-                      return GsonUtil.fromMap(att, MtdAttributes.class);
-                    })
-                .collect(Collectors.toList());
-        mtdApi.setColumns(tableAttrs);
+  private MtdApi getDetail(String typeName, String dbName, String tableName, String server) {
+      MtdApi mtdApi = MtdApi.builder().build();
+      List<AtlasEntityHeader> atlasEntityHeaderList = AtlasSearchUtil.getEntitiesByAttr(typeName, dbName, tableName, server);
+      if(!StringUtils.isBlank(tableName)){
+        mtdApi.setColumns(builderMtdAttributes(atlasEntityHeaderList));
+      }else {
+        mtdApi.setTables(builderMtdTables(atlasEntityHeaderList));
       }
-
-    } catch (AtlasServiceException e) {
-      e.printStackTrace();
-    }
     return mtdApi;
+  }
+  private List<MtdAttributes> builderMtdAttributes(List<AtlasEntityHeader> atlasEntityHeaderList){
+    List<MtdAttributes> columns = new ArrayList<>();
+    atlasEntityHeaderList.forEach(e->{
+      columns.add(MtdAttributes.builder().type(e.getTypeName())
+              .owner(String.valueOf(e.getAttribute("owner")))
+              .comment(String.valueOf(e.getAttribute("description")))
+              .name(e.getDisplayText())
+              .build()
+      );
+    });
+    return columns;
+  }
+  private List<MtdTables>  builderMtdTables(List<AtlasEntityHeader> atlasEntityHeaderList){
+    List<MtdTables> tablesList = new ArrayList<>();
+    atlasEntityHeaderList.forEach(e->{
+      tablesList.add(MtdTables.builder().displayText(e.getDisplayText())
+              .guid(e.getGuid())
+              .typeName(e.getTypeName())
+              .comment(String.valueOf(e.getAttribute("description")))
+              .entityStatus(String.valueOf(e.getAttribute("status"))).build()
+      );
+    });
+   return tablesList;
   }
 }

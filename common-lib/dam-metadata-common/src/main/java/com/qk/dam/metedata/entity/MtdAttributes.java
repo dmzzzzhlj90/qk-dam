@@ -18,6 +18,4 @@ public class MtdAttributes {
   private String type;
 
   private String comment;
-
-  private String description;
 }
