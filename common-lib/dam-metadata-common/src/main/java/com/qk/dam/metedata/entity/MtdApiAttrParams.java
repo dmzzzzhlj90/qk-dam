@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MtdApiParams {
-  private String typeName;
-  private String dbName;
-  private String tableName;
-  private String server;
-  private Integer limit;
-  private Integer offset;
+public class MtdApiAttrParams {
+    private String typeName;
+    private String attrName;
+    private String attrValue;
+    private Integer limit;
+    private Integer offset;
 }

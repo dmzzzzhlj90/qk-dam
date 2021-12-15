@@ -7,11 +7,15 @@ import org.apache.atlas.model.discovery.SearchParameters;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class AtlasSearchUtil {
+
+  private static final String QUALIFIED_NAME = "qualifiedName";
+  private static final String EMPTY = "";
+  private static final String SPOT = ".";
+
   private AtlasSearchUtil() {
     throw new IllegalStateException("Utility search");
   }
@@ -24,15 +28,20 @@ public class AtlasSearchUtil {
    * @param typeName
    * @return
    */
-  public static List<AtlasEntityHeader> getDataBaseList(String typeName) {
+  public static List<AtlasEntityHeader> getDataBaseList(String typeName,Integer limit, Integer offset) {
     try {
       AtlasSearchResult atlasSearchResult =
-          atlasClientV2.basicSearch(typeName, null, null, true, 1000, 0);
+          atlasClientV2.basicSearch(typeName, null, null, true,
+                  Objects.isNull(limit)?1000:limit, Objects.isNull(offset)?0:offset);
       return atlasSearchResult.getEntities();
     } catch (Exception e) {
       e.printStackTrace();
     }
     return null;
+  }
+
+  public static List<AtlasEntityHeader> getAtlasEntityHeaderListByAttr(String typeName,SearchParameters.FilterCriteria filterCriteria, Integer limit, Integer offset){
+    return getPageEntities(typeName,filterCriteria,limit,offset);
   }
 
   /**
@@ -43,53 +52,73 @@ public class AtlasSearchUtil {
    * @param server
    * @return
    */
-  public static List<AtlasEntityHeader> getTableList(
-      String typeName, String dbName, String server) {
-    SearchParameters.FilterCriteria filterCriteria = new SearchParameters.FilterCriteria();
-    filterCriteria.setCondition(SearchParameters.FilterCriteria.Condition.AND);
+  public static List<AtlasEntityHeader> getTableList(String typeName, String dbName, String server,
+                                                     Integer limit, Integer offset) {
     List<SearchParameters.FilterCriteria> criterion = new ArrayList<>();
-    SearchParameters.FilterCriteria db = new SearchParameters.FilterCriteria();
-    db.setOperator(SearchParameters.Operator.STARTS_WITH);
-    db.setAttributeName("qualifiedName");
-    db.setAttributeValue(dbName);
-    criterion.add(db);
-    SearchParameters.FilterCriteria table = new SearchParameters.FilterCriteria();
-    table.setOperator(SearchParameters.Operator.ENDS_WITH);
-    table.setAttributeName("qualifiedName");
-    table.setAttributeValue(server);
-    criterion.add(table);
-    filterCriteria.setCriterion(criterion);
-    return getEntities(typeName, filterCriteria);
+    criterion.add(getFilterCriteria(QUALIFIED_NAME,String.join(SPOT,dbName,EMPTY),
+            SearchParameters.Operator.STARTS_WITH));
+    criterion.add(getFilterCriteria(QUALIFIED_NAME,server,SearchParameters.Operator.ENDS_WITH));
+    return getPageEntities(typeName, getFilterCriteria(criterion,SearchParameters.FilterCriteria.Condition.AND),limit,offset);
   }
 
+  /**
+   * 获取某张表中所有的字段
+   * @param typeName
+   * @param dbName
+   * @param tableName
+   * @param server
+   * @return
+   */
+  public static List<AtlasEntityHeader> getColumnList(String typeName, String dbName, String tableName,String server,
+                                                      Integer limit, Integer offset){
+      List<SearchParameters.FilterCriteria> criterion = new ArrayList<>();
+      criterion.add(getFilterCriteria(QUALIFIED_NAME,String.join(SPOT, dbName, tableName,EMPTY),
+              SearchParameters.Operator.STARTS_WITH));
+      criterion.add(getFilterCriteria(QUALIFIED_NAME,server,SearchParameters.Operator.ENDS_WITH));
+      return getPageEntities(typeName, getFilterCriteria(criterion,SearchParameters.FilterCriteria.Condition.AND),
+              limit,offset);
+  }
+
+  private static SearchParameters.FilterCriteria getFilterCriteria(List<SearchParameters.FilterCriteria> filterCriteriaList,
+                                                                   SearchParameters.FilterCriteria.Condition condition){
+    SearchParameters.FilterCriteria filterCriteria = new SearchParameters.FilterCriteria();
+    filterCriteria.setCondition(condition);
+    filterCriteria.setCriterion(filterCriteriaList);
+    return filterCriteria;
+  }
+
+  public static SearchParameters.FilterCriteria  getFilterCriteria(String attrName, String attrValue, SearchParameters.Operator operator){
+    SearchParameters.FilterCriteria filterCriteria = new SearchParameters.FilterCriteria();
+    filterCriteria.setOperator(operator);
+    filterCriteria.setAttributeName(attrName);
+    filterCriteria.setAttributeValue(attrValue);
+    return filterCriteria;
+  }
+
+  /**
+   * 获取表或字段信息
+   * @param typeName
+   * @param dbName
+   * @param tableName
+   * @param server
+   * @return
+   */
   public static List<AtlasEntityHeader> getEntitiesByAttr(
       String typeName, String dbName, String tableName, String server) {
-    SearchParameters.FilterCriteria filterCriteria = new SearchParameters.FilterCriteria();
-    filterCriteria.setCondition(SearchParameters.FilterCriteria.Condition.AND);
-    List<SearchParameters.FilterCriteria> criterion = new ArrayList<>();
-    SearchParameters.FilterCriteria db = new SearchParameters.FilterCriteria();
-    db.setOperator(SearchParameters.Operator.STARTS_WITH);
-    db.setAttributeName("qualifiedName");
     if (Objects.nonNull(tableName)) {
-      db.setAttributeValue(String.join(".", dbName, tableName,""));
+       return getColumnList(typeName,dbName,tableName,server,null,null);
     } else {
-      db.setAttributeValue(String.join(".",dbName,""));
+      return  getTableList(typeName,dbName,server,null,null);
     }
-    criterion.add(db);
-    SearchParameters.FilterCriteria table = new SearchParameters.FilterCriteria();
-    table.setOperator(SearchParameters.Operator.ENDS_WITH);
-    table.setAttributeName("qualifiedName");
-    table.setAttributeValue(server);
-    criterion.add(table);
-    filterCriteria.setCriterion(criterion);
-    return getEntities(typeName, filterCriteria);
   }
+
 
   private static List<AtlasEntityHeader> getEntities(
       String typeName, SearchParameters.FilterCriteria filterCriteria) {
     try {
       AtlasSearchResult atlasSearchResult =
-          atlasClientV2.basicSearch(typeName, filterCriteria, null, null, false, 1000, 0);
+          atlasClientV2.basicSearch(typeName, filterCriteria, null, null, false,
+                  1000, 0);
       return atlasSearchResult.getEntities();
     } catch (Exception e) {
       e.printStackTrace();
@@ -97,29 +126,22 @@ public class AtlasSearchUtil {
     return null;
   }
 
-  private static SearchParameters.FilterCriteria getFilterCriteria(
-      String[] typeNameValue,
-      String attributeName,
-      String operator,
-      SearchParameters.FilterCriteria.Condition condition) {
-    SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
-    entity.setCriterion(getFilterCriteriaList(typeNameValue, attributeName, operator));
-    entity.setCondition(condition);
-    return entity;
+  /**
+   * atlas根据属性查询（分页）
+   * @param typeName
+   * @param filterCriteria
+   * @return
+   */
+  private static List<AtlasEntityHeader> getPageEntities(String typeName, SearchParameters.FilterCriteria filterCriteria,
+                                                         Integer limit, Integer offset){
+    try {
+      AtlasSearchResult atlasSearchResult =
+              atlasClientV2.basicSearch(typeName, filterCriteria, null, null, false,
+                      Objects.isNull(limit)?1000:limit, Objects.isNull(offset)?0:offset);
+      return atlasSearchResult.getEntities();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
   }
-
-  private static List<SearchParameters.FilterCriteria> getFilterCriteriaList(
-        String[] attributeValue, String attributeName, String operator) {
-        List<SearchParameters.FilterCriteria> entityList = new ArrayList<>();
-        Arrays.stream(attributeValue)
-            .forEach(
-                i -> {
-                  SearchParameters.FilterCriteria criteria = new SearchParameters.FilterCriteria();
-                  criteria.setAttributeValue(i);
-                  criteria.setAttributeName(attributeName);
-                  criteria.setOperator(SearchParameters.Operator.fromString(operator));
-                  entityList.add(criteria);
-                });
-        return entityList;
-      }
 }

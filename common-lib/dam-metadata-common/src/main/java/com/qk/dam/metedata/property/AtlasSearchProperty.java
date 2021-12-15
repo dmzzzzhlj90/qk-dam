@@ -11,6 +11,8 @@ public class AtlasSearchProperty {
     public static final String TYPENAME = "__typeName";
     public static final String NAME = "name";
     public static final String LABELS = "__labels";
+    public static final String SERVER_INFO = "serverInfo";
+    public static final String CLUSTER_NAME = "clusterName";
   }
 
   public static class Operator {
