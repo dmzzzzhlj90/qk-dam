@@ -12,10 +12,6 @@ import javax.validation.constraints.NotNull;
 @Data
 public class MtdColumnSearchVO extends MtdTableSearchVO {
     public MtdColumnSearchVO(){}
-    public MtdColumnSearchVO(String typeName, String dbName, String server, String tableName) {
-        super(typeName, dbName, server);
-        this.tableName = tableName;
-    }
 
     public MtdColumnSearchVO(Integer limit, Integer offset, String typeName, String dbName, String server, String tableName) {
         super(limit, offset, typeName, dbName, server);

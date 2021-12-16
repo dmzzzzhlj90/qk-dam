@@ -12,10 +12,6 @@ import javax.validation.constraints.NotNull;
 @Data
 public class MtdDbSearchVO extends AtlasPagination{
     public MtdDbSearchVO(){}
-    public MtdDbSearchVO(String typeName,String server) {
-        this.typeName = typeName;
-        this.server = server;
-    }
 
     public MtdDbSearchVO(Integer limit, Integer offset, String typeName,String server) {
         super(limit, offset);
