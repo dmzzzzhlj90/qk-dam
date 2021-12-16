@@ -5,6 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
+import com.qk.dm.reptile.params.dto.RptRunStatusDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -55,14 +56,12 @@ public class RptBaseInfoController {
 
     /**
      * 修改运行状态(启动或关闭)
-     * @param id 基础信息id
-     * @param runStatus
      * @return DefaultCommonResult
      */
-    @PutMapping("/run/status/{id}/{runStatus}")
+    @PutMapping("/run/status")
     public DefaultCommonResult updateRunStatus(
-            @PathVariable("id") Long id,  @PathVariable("runStatus") Integer runStatus) {
-        rptBaseInfoService.updateRunStatus(id, runStatus);
+            @RequestBody @Validated RptRunStatusDTO rptRunStatusDTO) {
+        rptBaseInfoService.updateRunStatus(rptRunStatusDTO.getId(), rptRunStatusDTO.getRunStatus());
         return DefaultCommonResult.success();
     }
 
