@@ -2,6 +2,8 @@ package com.qk.dm.dataquality.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.metedata.entity.MtdApiDb;
+import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.service.DataBaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +56,7 @@ public class DqcRuleDataBaseController {
    * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("")
-  public DefaultCommonResult<List<String>> getAllDataBase(String connectType, String dataSourceName) {
+  public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(String connectType, String dataSourceName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataBase(connectType, dataSourceName));
   }
 
@@ -66,7 +68,7 @@ public class DqcRuleDataBaseController {
    * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/table")
-  public DefaultCommonResult<List<String>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
+  public DefaultCommonResult<List<MtdTables>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllTable(connectType, dataSourceName, dataBaseName));
   }
 
