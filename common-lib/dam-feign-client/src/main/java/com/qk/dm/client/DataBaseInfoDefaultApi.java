@@ -119,12 +119,11 @@ public class DataBaseInfoDefaultApi {
      * @param server
      * @return
      */
-    public List<String> getAllDataBase(String type, String server) {
+    public List<MtdApiDb> getAllDataBase(String type, String server) {
         DefaultCommonResult<List<MtdApiDb>> dataBaseList = metaDataFeign.getDataBaseList(
                 new MtdDbSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
                         type + "_db", server));
-        List<MtdApiDb> mtdApiDbs = dataBaseList.getData();
-        return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
+        return dataBaseList.getData();
 
     }
 
@@ -134,13 +133,12 @@ public class DataBaseInfoDefaultApi {
      * @param type,server,dbName
      * @return DefaultCommonResult
      */
-    public List<String> getAllTable(String type, String server, String dbName) {
+    public List<MtdTables> getAllTable(String type, String server, String dbName) {
         DefaultCommonResult<List<MtdTables>> tableList = metaDataFeign.getTableList(
                 new MtdTableSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
                         type + "_table", dbName, server));
 
-        List<MtdTables> mtdTablesList = tableList.getData();
-        return mtdTablesList.stream().map(MtdTables::getDisplayText).collect(Collectors.toList());
+        return tableList.getData();
     }
 
     /**
