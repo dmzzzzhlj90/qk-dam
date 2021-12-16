@@ -9,6 +9,8 @@ public interface RptConfigInfoService {
 
     Long insert(RptConfigInfoDTO rptConfigInfoDTO);
 
+    Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO);
+
     void update(Long id, RptConfigInfoDTO rptConfigInfoDTO);
 
     RptConfigInfoVO detail(Long id);

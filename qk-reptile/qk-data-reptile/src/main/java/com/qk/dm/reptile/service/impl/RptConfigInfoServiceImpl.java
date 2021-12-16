@@ -3,9 +3,11 @@ package com.qk.dm.reptile.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.constant.RptConstant;
+import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
+import com.qk.dm.reptile.params.builder.RptParaBuilder;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
@@ -45,6 +47,28 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long insert(RptConfigInfoDTO rptConfigInfoDTO) {
+        RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
+        //修改基础信息表状态为爬虫
+        updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
+        return config.getId();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO) {
+        RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
+        //修改基础信息表状态为爬虫
+        start(rptConfigInfoDTO.getBaseInfoId());
+        RptParaBuilder.rptConfigInfoList(rptList(config.getBaseInfoId()));
+        return config.getId();
+    }
+
+    /**
+     * 保存配置信息和选择器信息
+     * @param rptConfigInfoDTO
+     * @return
+     */
+    private RptConfigInfo addConfigAndSelector(RptConfigInfoDTO rptConfigInfoDTO){
         RptConfigInfo rptConfigInfo = RptConfigInfoMapper.INSTANCE.useRptConfigInfo(rptConfigInfoDTO);
         transRptConfigInfo(rptConfigInfo,rptConfigInfoDTO);
         List<RptSelectorColumnInfoDTO> selectorList = rptConfigInfoDTO.getSelectorList();
@@ -54,10 +78,9 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
             selectorList.forEach(e->e.setConfigId(config.getId()));
             rptSelectorColumnInfoService.batchInset(selectorList);
         }
-        //修改基础信息表状态为爬虫
-        updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
-        return config.getId();
+        return config;
     }
+
     private void updateBaseInfoStatus(Long id) {
         RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
         if(Objects.isNull(rptBaseInfo)){
@@ -67,6 +90,17 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
           rptBaseInfo.setStatus(RptConstant.REPTILE);
           rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
         }
+    }
+
+    private void start(Long id) {
+        RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
+        if(Objects.isNull(rptBaseInfo)){
+            throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
+        }
+        rptBaseInfo.setStatus(RptConstant.REPTILE);
+        rptBaseInfo.setRunStatus(RptRunStatusConstant.START);
+        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+
     }
 
     @Override
@@ -149,7 +183,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
 
     private RptConfigInfoVO transRptConfigInfoVO(RptConfigInfo rptConfigInfo,RptConfigInfoVO rptConfigInfoVO){
         if(Objects.nonNull(rptConfigInfo.getCookies())){
-            rptConfigInfoVO.setCookies(GsonUtil.fromJsonString(GsonUtil.toJsonString(rptConfigInfo.getCookies()), Map.class));
+            rptConfigInfoVO.setCookies(GsonUtil.fromJsonString(rptConfigInfo.getCookies(), Map.class));
         }
         if(Objects.nonNull(rptConfigInfo.getFormUrlencoded())){
             rptConfigInfoVO.setFormUrlencoded(GsonUtil.fromJsonString(rptConfigInfo.getFormUrlencoded(),Map.class));
@@ -165,6 +199,5 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }
         return rptConfigInfoVO;
     }
-
 
 }

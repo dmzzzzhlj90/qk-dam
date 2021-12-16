@@ -36,6 +36,15 @@ public class RptConfigInfoController {
     public DefaultCommonResult<Long> insert(@RequestBody @Validated RptConfigInfoDTO rptConfigInfoDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,rptConfigInfoService.insert(rptConfigInfoDTO));
     }
+    /**
+     * 结束并启动
+     * @param rptConfigInfoDTO
+     * @return DefaultCommonResult<Long> 返回id
+     */
+    @PostMapping("/end/start")
+    public DefaultCommonResult<Long> endAndStart(@RequestBody @Validated RptConfigInfoDTO rptConfigInfoDTO){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,rptConfigInfoService.endAndStart(rptConfigInfoDTO));
+    }
 
     /**
      * 修改配置信息

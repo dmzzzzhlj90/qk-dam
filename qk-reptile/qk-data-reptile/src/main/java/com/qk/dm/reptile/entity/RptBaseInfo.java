@@ -51,7 +51,7 @@ public class RptBaseInfo implements Serializable {
      * 数据启动状态（0表示启动、1表示未启动）
      */
     @Column(name = "run_status")
-    private Integer runStatus;
+    private Integer runStatus = 1;
 
     /**
      * 配置人id
