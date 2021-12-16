@@ -54,7 +54,7 @@ public class RptBaseInfoController {
     }
 
     /**
-     * 修改运行状态启动或关闭
+     * 修改运行状态(启动或关闭)
      * @param id 基础信息id
      * @param runStatus
      * @return DefaultCommonResult
