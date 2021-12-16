@@ -41,7 +41,7 @@ public class RptConfigInfoController {
      * @param rptConfigInfoDTO
      * @return DefaultCommonResult<Long> 返回id
      */
-    @PostMapping("/end/start")
+    @PostMapping("/complete/start")
     public DefaultCommonResult<Long> endAndStart(@RequestBody @Validated RptConfigInfoDTO rptConfigInfoDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,rptConfigInfoService.endAndStart(rptConfigInfoDTO));
     }
