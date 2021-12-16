@@ -45,6 +45,19 @@ public class AtlasSearchUtil {
   }
 
   /**
+   * 获取数据库
+   *
+   * @param typeName
+   * @param server
+   * @return
+   */
+  public static List<AtlasEntityHeader> getDataBaseList(String typeName,  String server) {
+    List<SearchParameters.FilterCriteria> criterion = new ArrayList<>();
+    criterion.add(getFilterCriteria(QUALIFIED_NAME,server,SearchParameters.Operator.ENDS_WITH));
+    return getPageEntities(typeName, getFilterCriteria(criterion,SearchParameters.FilterCriteria.Condition.AND),null,null);
+  }
+
+  /**
    * 获取数据库下所有的表
    *
    * @param typeName

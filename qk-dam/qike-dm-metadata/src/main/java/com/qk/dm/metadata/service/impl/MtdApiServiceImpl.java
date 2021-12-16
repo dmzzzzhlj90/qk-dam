@@ -53,8 +53,8 @@ public class MtdApiServiceImpl implements MtdApiService {
   public MtdApi mtdDetail(String typeName, String dbName, String tableName, String server) {
     if (StringUtils.isBlank(dbName)
         && StringUtils.isBlank(tableName)
-        && StringUtils.isBlank(server)) {
-      return getDbs(typeName);
+        && StringUtils.isNotBlank(server)) {
+      return  MtdApi.builder().entities(buildMataDataList(AtlasSearchUtil.getDataBaseList(typeName,server))).build();
     } else {
       return getDetail(typeName,dbName,tableName,server);
     }
@@ -121,19 +121,6 @@ public class MtdApiServiceImpl implements MtdApiService {
         List<AtlasEntityHeader> atlasEntityHeaderList = atlasSearchResult.getEntities();
         mtdApi.setEntities(buildMataDataList(atlasEntityHeaderList));
       }
-    } catch (AtlasServiceException e) {
-      e.printStackTrace();
-    }
-    return mtdApi;
-  }
-
-  private MtdApi getDbs(String typeName) {
-    MtdApi mtdApi = new MtdApi();
-    try {
-      AtlasSearchResult atlasSearchResult =
-          atlasClientV2.basicSearch(typeName, null, null, true, 1000, 0);
-      List<AtlasEntityHeader> atlasEntityHeaderList = atlasSearchResult.getEntities();
-      mtdApi.setEntities(buildMataDataList(atlasEntityHeaderList));
     } catch (AtlasServiceException e) {
       e.printStackTrace();
     }
