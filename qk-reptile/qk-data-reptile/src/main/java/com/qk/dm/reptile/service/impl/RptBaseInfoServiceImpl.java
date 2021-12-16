@@ -69,6 +69,16 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
+    public void updateRunStatus(Long id, Integer runStatus) {
+        RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
+        if (Objects.isNull(rptBaseInfo)) {
+            throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
+        }
+        rptBaseInfo.setRunStatus(runStatus);
+        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+    }
+
+    @Override
     public RptBaseInfoVO detail(Long id) {
         Optional<RptBaseInfo> rptBaseInfo = rptBaseInfoRepository.findById(id);
         if(rptBaseInfo.isEmpty()){

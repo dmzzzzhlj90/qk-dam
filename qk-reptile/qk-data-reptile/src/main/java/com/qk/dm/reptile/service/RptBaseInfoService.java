@@ -10,6 +10,8 @@ public interface RptBaseInfoService {
 
     void update(Long id, RptBaseInfoDTO rptBaseInfoDTO);
 
+    void updateRunStatus(Long id,Integer runStatus);
+
     RptBaseInfoVO detail(Long id);
 
     void delete(String ids);

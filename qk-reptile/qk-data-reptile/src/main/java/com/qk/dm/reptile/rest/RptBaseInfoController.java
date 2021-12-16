@@ -54,6 +54,19 @@ public class RptBaseInfoController {
     }
 
     /**
+     * 修改运行状态启动或关闭
+     * @param id 基础信息id
+     * @param runStatus
+     * @return DefaultCommonResult
+     */
+    @PutMapping("/run/status/{id}/{runStatus}")
+    public DefaultCommonResult updateRunStatus(
+            @PathVariable("id") Long id,  @PathVariable("runStatus") Integer runStatus) {
+        rptBaseInfoService.updateRunStatus(id, runStatus);
+        return DefaultCommonResult.success();
+    }
+
+    /**
      * 待配列表
      * @param rptBaseInfoDTO
      * @return DefaultCommonResult<PageResultVO<RptBaseInfoVO>>
