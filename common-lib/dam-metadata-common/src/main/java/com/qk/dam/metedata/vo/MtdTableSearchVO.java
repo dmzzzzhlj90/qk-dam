@@ -21,7 +21,8 @@ public class MtdTableSearchVO extends MtdDbSearchVO{
         super(limit, offset, typeName, dbName);
         this.server = server;
     }
-
+    @NotNull(message = "dbName不能为空！")
+    private String dbName;
     @NotNull(message = "元数据数据库地址不能为空！")
     protected String server;
 

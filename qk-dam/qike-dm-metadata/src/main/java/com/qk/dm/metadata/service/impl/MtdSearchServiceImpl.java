@@ -29,8 +29,7 @@ public class MtdSearchServiceImpl implements MtdSearchService {
 
     @Override
     public List<MtdApiDb> getDataBaseList(MtdDbSearchVO mtdDbSearchVO) {
-        List<AtlasEntityHeader> atlasEntityHeaderList = AtlasSearchUtil.getDataBaseList(mtdDbSearchVO.getTypeName(),
-                mtdDbSearchVO.getLimit(), mtdDbSearchVO.getOffset());
+        List<AtlasEntityHeader> atlasEntityHeaderList = AtlasSearchUtil.getDataBaseList(mtdDbSearchVO.getTypeName(),mtdDbSearchVO.getServer(),mtdDbSearchVO.getLimit(),mtdDbSearchVO.getOffset());
         return buildMataDataList(atlasEntityHeaderList);
     }
 
