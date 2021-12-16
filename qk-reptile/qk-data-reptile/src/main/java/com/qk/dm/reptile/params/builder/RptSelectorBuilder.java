@@ -1,4 +1,4 @@
-package com.qk.dm.reptile.params.dto;
+package com.qk.dm.reptile.params.builder;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

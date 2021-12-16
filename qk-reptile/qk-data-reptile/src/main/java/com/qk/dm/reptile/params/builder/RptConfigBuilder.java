@@ -1,4 +1,5 @@
-package com.qk.dm.reptile.params.dto;
+package com.qk.dm.reptile.params.builder;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,5 +18,5 @@ public class RptConfigBuilder {
     private Map<String,Object> cookies;
     private Integer ip_start;
     private Integer js_start;
-    private Map<String,RptSelectorBuilder> columns;
+    private Map<String, RptSelectorBuilder> columns;
 }
