@@ -12,19 +12,19 @@ import javax.validation.constraints.NotNull;
 @Data
 public class MtdDbSearchVO extends AtlasPagination{
     public MtdDbSearchVO(){}
-    public MtdDbSearchVO(String typeName, String dbName) {
+    public MtdDbSearchVO(String typeName,String server) {
         this.typeName = typeName;
-        this.dbName = dbName;
+        this.server = server;
     }
 
-    public MtdDbSearchVO(Integer limit, Integer offset, String typeName, String dbName) {
+    public MtdDbSearchVO(Integer limit, Integer offset, String typeName,String server) {
         super(limit, offset);
         this.typeName = typeName;
-        this.dbName = dbName;
+        this.server = server;
     }
 
     @NotNull(message = "元数据数据库类型不能为空！")
     private String typeName;
-    @NotNull(message = "dbName不能为空！")
-    private String dbName;
+    @NotNull(message = "server不能为空！")
+    private String server;
 }
