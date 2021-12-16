@@ -116,13 +116,13 @@ public class DataBaseInfoDefaultApi {
      * 新建API__获取db库信息下拉列表
      *
      * @param type
-     * @param dbName
+     * @param server
      * @return
      */
-    public List<String> getAllDataBase(String type, String dbName) {
+    public List<String> getAllDataBase(String type, String server) {
         DefaultCommonResult<List<MtdApiDb>> dataBaseList = metaDataFeign.getDataBaseList(
                 new MtdDbSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
-                        type + "_db", dbName));
+                        type + "_db", server));
         List<MtdApiDb> mtdApiDbs = dataBaseList.getData();
         return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
 
