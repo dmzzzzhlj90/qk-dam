@@ -6,8 +6,8 @@
 // import io.micrometer.core.instrument.binder.MeterBinder;
 // import org.springframework.stereotype.Component;
 //
-// import java.util.HashMap;
-// import java.util.Map;
+// import java.com.qk.dm.groovy.util.HashMap;
+// import java.com.qk.dm.groovy.util.Map;
 //
 /// **
 // * @author wjq

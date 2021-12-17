@@ -325,13 +325,13 @@ public class ApiClient {
    *
    * <p>A request interceptor is a mechanism for altering each request before it
    * is sent. After the request has been fully configured but not yet built, the
-   * request builder is passed into this function for further modification,
+   * request builder is passed into this com.qk.dm.groovy.function for further modification,
    * after which it is sent out.</p>
    *
    * <p>This is useful for altering the requests in a custom manner, such as
    * adding headers. It could also be used for logging and monitoring.</p>
    *
-   * @param interceptor A function invoked before creating each request. A value
+   * @param interceptor A com.qk.dm.groovy.function invoked before creating each request. A value
    *                    of null resets the interceptor to a no-op.
    * @return This object.
    */
@@ -354,7 +354,7 @@ public class ApiClient {
    *
    * <p>This is useful for logging, monitoring or extraction of header variables</p>
    *
-   * @param interceptor A function invoked before creating each request. A value
+   * @param interceptor A com.qk.dm.groovy.function invoked before creating each request. A value
    *                    of null resets the interceptor to a no-op.
    * @return This object.
    */
@@ -377,7 +377,7 @@ public class ApiClient {
    *
    * <p>This is useful for logging, monitoring or extraction of header variables</p>
    *
-   * @param interceptor A function invoked before creating each request. A value
+   * @param interceptor A com.qk.dm.groovy.function invoked before creating each request. A value
    *                    of null resets the interceptor to a no-op.
    * @return This object.
    */

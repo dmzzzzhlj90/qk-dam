@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
+    id 'groovy'
 }
 version "${dmDataqualityVersion}"
 group "com.qk.dm.dataquality"
@@ -14,6 +15,9 @@ configurations {
 processResources {
     expand(project.properties)
 }
+tasks.withType(GroovyCompile).configureEach {
+    options.incremental = true
+}
 docker {
     springBootApplication {
         baseImage = "${jre11Image}"
@@ -22,8 +26,8 @@ docker {
         jvmArgs = ['-Xmx248m']
     }
 }
-
 compileJava {
+//    dependsOn(compileGroovy)
     doFirst {
         options.compilerArgs = [
                 //添加mapStruct的一些配置
@@ -32,6 +36,7 @@ compileJava {
                 '-Aspatial=false'//未映射字段默认报错
         ]
     }
+
 }
 
 dependencies {
@@ -82,3 +87,4 @@ dependencyManagement {
 test {
     useJUnitPlatform()
 }
+

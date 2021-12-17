@@ -3,8 +3,8 @@
 //import com.qk.dam.commons.enums.ResultCodeEnum;
 //import com.qk.dam.commons.http.result.DefaultCommonResult;
 //import com.qk.dam.jpa.pojo.PageResultVO;
-//import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoReleaseDTO;
-//import com.qk.dm.dataquality.params.dto.DqcSchedulerBasicInfoRuningDTO;
+//import com.qk.dm.dataquality.params.com.qk.dm.groovy.dto.DqcSchedulerBasicInfoReleaseDTO;
+//import com.qk.dm.dataquality.params.com.qk.dm.groovy.dto.DqcSchedulerBasicInfoRuningDTO;
 //import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 //import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 //import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
@@ -14,7 +14,7 @@
 //import org.springframework.validation.annotation.Validated;
 //import org.springframework.web.bind.annotation.*;
 //
-//import java.util.UUID;
+//import java.com.qk.dm.groovy.util.UUID;
 //
 ///**
 // * 数据质量_规则调度_基础信息

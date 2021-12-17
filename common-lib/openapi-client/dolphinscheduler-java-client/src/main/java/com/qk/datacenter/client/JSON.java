@@ -106,7 +106,7 @@ public class JSON {
 
     /**
      * Returns the target model class that should be used to deserialize the input data.
-     * This function can be invoked for anyOf/oneOf composed models with discriminator mappings.
+     * This com.qk.dm.groovy.function can be invoked for anyOf/oneOf composed models with discriminator mappings.
      * The discriminator mappings are used to determine the target model class.
      *
      * @param node The input data.

@@ -4,7 +4,7 @@
 //import com.qk.dam.metedata.entity.MtdApi;
 //import com.qk.dam.metedata.entity.MtdApiParams;
 //import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-//import java.util.List;
+//import java.com.qk.dm.groovy.util.List;
 //import org.springframework.cloud.openfeign.FeignClient;
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PostMapping;

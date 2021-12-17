@@ -11,7 +11,7 @@
 ### ${SECOND}: current second of minute, format is ss
 ###
 ### ${package}: package name, eg: org.example
-### ${importClassList}: import class list, type is java.util.List
+### ${importClassList}: import class list, type is java.com.qk.dm.groovy.util.List
 ### ${simpleName}: repository class simple name, eg: ExampleRepository
 ### ${entitySimpleName}: entity class simple name, eg: Example
 ### ${primaryKeyDataType}: entity class primary key field type simple name, eg: Long, String or Void
