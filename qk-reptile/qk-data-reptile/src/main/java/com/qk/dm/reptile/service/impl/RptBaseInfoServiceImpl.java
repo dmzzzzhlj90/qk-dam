@@ -2,6 +2,7 @@ package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
@@ -17,6 +18,7 @@ import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
@@ -133,8 +135,24 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatus(RptRunStatusConstant.START);
         if(!CollectionUtils.isEmpty(list)){
             list.forEach(e->{
-                RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(e.getId()));
+                String result = RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(e.getId()));
+                if(!StringUtils.isBlank(result)){
+                    updateBaseInfo(e,result);
+                }
             });
+        }
+    }
+
+    /**
+     * 将爬虫接口返回的jobid存入数据库中
+     * @param rptBaseInfo
+     * @param result
+     */
+    public void updateBaseInfo(RptBaseInfo rptBaseInfo,String result){
+        Map<String,String> map = GsonUtil.fromJsonString(result, Map.class);
+        if(Objects.nonNull(map.get(RptConstant.JOBID))){
+            rptBaseInfo.setJobId(map.get(RptConstant.JOBID));
+            rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
         }
     }
 
@@ -144,7 +162,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(rptBaseInfo.getId()));
+        String result = RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(rptBaseInfo.getId()));
+        if (!StringUtils.isBlank(result)) {
+             updateBaseInfo(rptBaseInfo, result);
+        }
     }
 
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO) {

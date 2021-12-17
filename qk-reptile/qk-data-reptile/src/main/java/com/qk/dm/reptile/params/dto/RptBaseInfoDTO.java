@@ -67,6 +67,11 @@ public class RptBaseInfoDTO {
   private String configName;
 
   /**
+   * 爬虫接口返回，用于查看日志
+   */
+  private String jobId;
+
+  /**
    * 最后运行时间
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
