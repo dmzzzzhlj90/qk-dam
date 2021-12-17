@@ -102,6 +102,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         rptBaseInfo.setJobId(map.get(RptConstant.JOBID));
         rptBaseInfo.setStatus(RptConstant.REPTILE);
         rptBaseInfo.setRunStatus(RptRunStatusConstant.START);
+        rptBaseInfo.setGmtFunction(new Date());
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
 
     }

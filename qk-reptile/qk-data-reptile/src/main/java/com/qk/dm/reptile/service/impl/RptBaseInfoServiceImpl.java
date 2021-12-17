@@ -132,7 +132,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
     @Override
     public void timedExecution() {
-    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatus(RptRunStatusConstant.START);
+    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatus(RptRunStatusConstant.START,RptConstant.REPTILE);
         if(!CollectionUtils.isEmpty(list)){
             list.forEach(e->{
                 String result = RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(e.getId()));
@@ -152,6 +152,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         Map<String,String> map = GsonUtil.fromJsonString(result, Map.class);
         if(Objects.nonNull(map.get(RptConstant.JOBID))){
             rptBaseInfo.setJobId(map.get(RptConstant.JOBID));
+            rptBaseInfo.setGmtFunction(new Date());
             rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
         }
     }
