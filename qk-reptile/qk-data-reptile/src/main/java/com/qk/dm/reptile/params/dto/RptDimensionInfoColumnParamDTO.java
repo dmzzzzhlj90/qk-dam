@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-
 /**
  * 根据目录id和相关条件查询维度字段信息
  * @author zys
@@ -24,7 +22,6 @@ public class RptDimensionInfoColumnParamDTO {
   /**
    * 主键id（维度目录id）
    */
-  @NotBlank(message = "维度目录id不能为空")
   private Long id;
 
   /**

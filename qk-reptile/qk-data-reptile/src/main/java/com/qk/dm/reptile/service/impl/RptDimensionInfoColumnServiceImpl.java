@@ -172,6 +172,8 @@ public class RptDimensionInfoColumnServiceImpl implements
     if (!StringUtils.isEmpty(rptDimensionInfoColumnParamDTO.getDimensionColumnName())) {
       booleanBuilder.and(qRptDimensionColumnInfo.dimensionColumnName.contains(rptDimensionInfoColumnParamDTO.getDimensionColumnName()));
     }
-    booleanBuilder.and(qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnParamDTO.getId()));
+    if (!Objects.isNull(rptDimensionInfoColumnParamDTO.getId())){
+      booleanBuilder.and(qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnParamDTO.getId()));
+    }
   }
 }
