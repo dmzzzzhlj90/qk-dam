@@ -107,10 +107,10 @@ public class HttpClientUtils {
             }
             // 设置参数
             Builder customReqConf = RequestConfig.custom();
-            if (connTimeout != null) {
+            if (Objects.nonNull(connTimeout)) {
                 customReqConf.setConnectTimeout(connTimeout);
             }
-            if (readTimeout != null) {
+            if (Objects.nonNull(readTimeout)) {
                 customReqConf.setSocketTimeout(readTimeout);
             }
             post.setConfig(customReqConf.build());
@@ -128,7 +128,7 @@ public class HttpClientUtils {
             result = IOUtils.toString(res.getEntity().getContent(), charset);
         } finally {
             post.releaseConnection();
-            if (url.startsWith("https") && client != null&& client instanceof CloseableHttpClient) {
+            if (url.startsWith("https") && client instanceof CloseableHttpClient) {
                 ((CloseableHttpClient) client).close();
             }
         }
@@ -154,7 +154,7 @@ public class HttpClientUtils {
         HttpClient client = null;
         HttpPost post = new HttpPost(url);
         try {
-            if (params != null && !params.isEmpty()) {
+            if (Objects.nonNull(params) && !params.isEmpty()) {
                 List<NameValuePair> formParams = new ArrayList<NameValuePair>();
                 Set<Entry<String, String>> entrySet = params.entrySet();
                 for (Entry<String, String> entry : entrySet) {
@@ -164,17 +164,17 @@ public class HttpClientUtils {
                 post.setEntity(entity);
             }
 
-            if (headers != null && !headers.isEmpty()) {
+            if (Objects.nonNull(headers) && !headers.isEmpty()) {
                 for (Entry<String, String> entry : headers.entrySet()) {
                     post.addHeader(entry.getKey(), entry.getValue());
                 }
             }
             // 设置参数
             Builder customReqConf = RequestConfig.custom();
-            if (connTimeout != null) {
+            if (Objects.nonNull(connTimeout)) {
                 customReqConf.setConnectTimeout(connTimeout);
             }
-            if (readTimeout != null) {
+            if (Objects.nonNull(readTimeout)) {
                 customReqConf.setSocketTimeout(readTimeout);
             }
             post.setConfig(customReqConf.build());
@@ -219,10 +219,10 @@ public class HttpClientUtils {
         try {
             // 设置参数
             Builder customReqConf = RequestConfig.custom();
-            if (connTimeout != null) {
+            if (Objects.nonNull(connTimeout)) {
                 customReqConf.setConnectTimeout(connTimeout);
             }
-            if (readTimeout != null) {
+            if (Objects.nonNull(readTimeout)) {
                 customReqConf.setSocketTimeout(readTimeout);
             }
             get.setConfig(customReqConf.build());
@@ -255,7 +255,7 @@ public class HttpClientUtils {
     @SuppressWarnings("unused")
     private static String getCharsetFromResponse(HttpResponse ressponse) {
         // Content-Type:text/html; charset=GBK
-        if (ressponse.getEntity() != null  && ressponse.getEntity().getContentType() != null && ressponse.getEntity().getContentType().getValue() != null) {
+        if (Objects.nonNull(ressponse.getEntity())  && Objects.nonNull(ressponse.getEntity().getContentType()) && Objects.nonNull(ressponse.getEntity().getContentType().getValue())) {
             String contentType = ressponse.getEntity().getContentType().getValue();
             if (contentType.contains("charset=")) {
                 return contentType.substring(contentType.indexOf("charset=") + 8);
@@ -307,36 +307,6 @@ public class HttpClientUtils {
 
         } catch (GeneralSecurityException e) {
             throw e;
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            Map<String,String> map = new HashMap<>();
-            map.put("project","search_mirror");
-            map.put("spider","booksc");
-            Map<String,Object> arg = new HashMap<>();
-            arg.put("url","http://www.zfcg.edu.cn/purchase/portal/purchasetList/1");
-            arg.put("xpath", "//div[contains(@class, 'list pagelist')]/ul/li/a");
-            map.put("arg1",GsonUtil.toJsonString(arg));
-
-            //String str= post( "http://172.21.3.202:6800/schedule.json","data="+GsonUtil.toJsonString(map),"application/x-www-form-urlencoded", "UTF-8", 10000, 10000);
-            String str= postForm("http://172.21.3.202:6800/schedule.json",map,null, 30000, 30000);
-            //String str= get("https://localhost:443/ssl/test.shtml?name=12&page=34","GBK");
-            /*Map<String,String> map = new HashMap<String,String>();
-            map.put("name", "111");
-            map.put("page", "222");
-            String str= postForm("https://localhost:443/ssl/test.shtml",map,null, 10000, 10000);*/
-            System.out.println(str);
-        } catch (ConnectTimeoutException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SocketTimeoutException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 

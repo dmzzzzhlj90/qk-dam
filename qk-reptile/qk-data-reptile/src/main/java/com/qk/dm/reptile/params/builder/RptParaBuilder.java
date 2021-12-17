@@ -8,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +25,8 @@ public class RptParaBuilder {
     private static final String MODE = "mode";
     private static final String START_URL = "start_url";
     private static final String LIST = "list";
+    private static final String EMPTY = "";
+    //todo 目前在测试，地址暂时写此，之后提到Nacos上
     private static final String REQUEST_URL = "http://172.21.3.202:6800/schedule.json";
 
   public static String rptConfigInfoList(List<RptConfigInfoVO> rptConfigInfoList) {
@@ -101,12 +100,12 @@ public class RptParaBuilder {
         }
         return selectorList.stream().collect(Collectors.toMap(RptSelectorColumnInfoVO::getColumnCode, selector-> RptSelectorBuilder.builder()
                 .method(selector.getSelector())
-                .val(selector.getSelectorVal())
+                .val(Objects.isNull(selector.getSelectorVal())?EMPTY:selector.getSelectorVal())
                 .num(selector.getElementType())
                 .build()));
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         List<RptConfigInfoVO> rptConfigInfoList = new ArrayList<>();
         RptConfigInfoVO vo = new RptConfigInfoVO();
         vo.setRequestUrl("http://www.zfcg.edu.cn/purchase/portal/purchasetList/1");

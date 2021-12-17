@@ -4,6 +4,7 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
+import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.QRptBaseInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
@@ -129,7 +130,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
     @Override
     public void timedExecution() {
-        List<RptBaseInfo> list = rptBaseInfoRepository.findAllByStatus(RptConstant.REPTILE);
+    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatus(RptRunStatusConstant.START);
         if(!CollectionUtils.isEmpty(list)){
             list.forEach(e->{
                 RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(e.getId()));
