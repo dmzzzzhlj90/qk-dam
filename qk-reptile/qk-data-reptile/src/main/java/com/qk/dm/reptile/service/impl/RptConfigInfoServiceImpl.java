@@ -58,9 +58,9 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Transactional(rollbackFor = Exception.class)
     public Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO) {
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
+        String result = RptParaBuilder.rptConfigInfoList(rptList(config.getBaseInfoId()));
         //修改基础信息表状态为爬虫
-        start(rptConfigInfoDTO.getBaseInfoId());
-        RptParaBuilder.rptConfigInfoList(rptList(config.getBaseInfoId()));
+        start(rptConfigInfoDTO.getBaseInfoId(),result);
         return config.getId();
     }
 
@@ -89,15 +89,17 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }
        if (!Objects.equals(rptBaseInfo.getStatus(), RptConstant.REPTILE)) {
           rptBaseInfo.setStatus(RptConstant.REPTILE);
-          rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+              rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
         }
     }
 
-    private void start(Long id) {
+    private void start(Long id,String result) {
         RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
+        Map<String,String> map = GsonUtil.fromJsonString(result, Map.class);
+        rptBaseInfo.setJobId(map.get(RptConstant.JOBID));
         rptBaseInfo.setStatus(RptConstant.REPTILE);
         rptBaseInfo.setRunStatus(RptRunStatusConstant.START);
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);

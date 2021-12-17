@@ -108,5 +108,10 @@ public class RptBaseInfo implements Serializable {
      */
     @Column(name = "update_username")
     private String updateUsername;
+    /**
+     * 爬虫接口返回，用于查看日志
+     */
+    @Column(name = "job_id")
+    private String jobId;
 
 }

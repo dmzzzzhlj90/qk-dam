@@ -26,5 +26,9 @@ public class RptConstant {
      * 主目录名称
      */
     public static final String DIRNAME = "全部维度分类";
+    /**
+     * 爬虫接口返回的jobid
+     */
+    public static final String JOBID = "jobid";
 
 }
