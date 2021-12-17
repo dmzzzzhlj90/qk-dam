@@ -217,22 +217,22 @@ public class SnowflakeZookeeperHolder {
     if (exists) {
       try {
         FileUtils.writeStringToFile(leafConfFile, "workerID=" + workerID, false);
-        LOGGER.info("update file cache workerID is {}", workerID);
+        LOGGER.info("update file com.qk.dm.groovy.cache workerID is {}", workerID);
       } catch (IOException e) {
-        LOGGER.error("update file cache error ", e);
+        LOGGER.error("update file com.qk.dm.groovy.cache error ", e);
       }
     } else {
       // 不存在文件,父目录页肯定不存在
       try {
         boolean mkdirs = leafConfFile.getParentFile().mkdirs();
         LOGGER.info(
-            "init local file cache create parent dis status is {}, worker id is {}",
+            "init local file com.qk.dm.groovy.cache create parent dis status is {}, worker id is {}",
             mkdirs,
             workerID);
         if (mkdirs) {
           if (leafConfFile.createNewFile()) {
             FileUtils.writeStringToFile(leafConfFile, "workerID=" + workerID, false);
-            LOGGER.info("local file cache workerID is {}", workerID);
+            LOGGER.info("local file com.qk.dm.groovy.cache workerID is {}", workerID);
           }
         } else {
           LOGGER.warn("create parent dir error===");

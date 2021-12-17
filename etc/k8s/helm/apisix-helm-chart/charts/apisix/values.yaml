@@ -153,7 +153,7 @@ plugins:
   - openid-connect
   - authz-casbin
   - prometheus
-  - proxy-cache
+  - proxy-com.qk.dm.groovy.cache
   - proxy-mirror
   - proxy-rewrite
   - redirect
@@ -161,8 +161,8 @@ plugins:
   - request-id
   - request-validation
   - response-rewrite
-  - serverless-post-function
-  - serverless-pre-function
+  - serverless-post-com.qk.dm.groovy.function
+  - serverless-pre-com.qk.dm.groovy.function
   - sls-logger
   - syslog
   - tcp-logger

@@ -125,7 +125,7 @@ public class SegmentIDGenImpl implements IDGen {
         logger.info("Remove tag {} from IdCache", tag);
       }
     } catch (Exception e) {
-      logger.warn("update cache from db exception", e);
+      logger.warn("update com.qk.dm.groovy.cache from db exception", e);
     }
   }
 

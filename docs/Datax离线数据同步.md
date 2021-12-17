@@ -565,7 +565,7 @@ DataX的内部类型在实现上会选用不同的java类型：
 
 | 内部类型 | 实现类型 | 备注 |
 | ----- | -------- | ----- |
-| Date  | java.util.Date |     |
+| Date  | java.com.qk.dm.groovy.util.Date |     |
 | Long  | java.math.BigInteger|  使用无限精度的大整数，保证不失真   |
 | Double| java.lang.String| 用String表示，保证不失真 |
 | Bytes | byte[]|  |
