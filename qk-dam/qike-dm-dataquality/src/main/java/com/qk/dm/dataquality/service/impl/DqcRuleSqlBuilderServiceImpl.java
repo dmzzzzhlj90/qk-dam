@@ -128,6 +128,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
     private String getScanSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         StringBuilder wherePartSqlBuilder = new StringBuilder();
         String scanType = dqcSchedulerRulesVO.getScanType();
+        //and day = tradeDay(20211215,1) and day2 = tradeDay(20211215,1)
         String scanSql = dqcSchedulerRulesVO.getScanSql();
 
         if (ScanTypeEnum.FULL_TABLE.getCode().equalsIgnoreCase(scanType)) {
@@ -137,6 +138,8 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
             //条件
             wherePartSqlBuilder.append(GenerateSqlUtil.WHERE_PART);
             wherePartSqlBuilder.append(GenerateSqlUtil.AND);
+            //TODO
+//            scanSqlFunction();
             wherePartSqlBuilder.append(scanSql);
         }
 

@@ -12,14 +12,10 @@ import javax.validation.constraints.NotNull;
 @Data
 public class MtdTableSearchVO extends MtdDbSearchVO{
     public MtdTableSearchVO(){}
-    public MtdTableSearchVO(String typeName, String dbName, String server) {
-        super(typeName, server);
-        this.dbName = dbName;
-    }
 
     public MtdTableSearchVO(Integer limit, Integer offset, String typeName, String dbName, String server) {
         super(limit, offset, typeName, server);
-        this.dbName = dbName;
+        this.dbName=dbName;
     }
     @NotNull(message = "dbName不能为空！")
     private String dbName;
