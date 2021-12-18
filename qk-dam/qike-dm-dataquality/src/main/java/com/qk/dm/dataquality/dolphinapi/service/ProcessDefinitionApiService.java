@@ -1,10 +1,12 @@
 package com.qk.dm.dataquality.dolphinapi.service;
 
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessDefinitionDTO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 调度引擎Dolphin Scheduler 流程定义相关操作
@@ -18,9 +20,9 @@ public interface ProcessDefinitionApiService {
 
     int saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
-    void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+    void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo);
 
-    void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+    void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo);
 
     ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId);
 

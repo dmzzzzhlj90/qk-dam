@@ -21,11 +21,11 @@ public interface DqcSchedulerRulesService {
 
     void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO);
 
-    void insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId);
+    List<DqcSchedulerRulesVO> insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId);
 
     void update(DqcSchedulerRulesVO dqcSchedulerRulesVO);
 
-    void updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList,String jobId);
+    List<DqcSchedulerRulesVO> updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList,String jobId);
 
     void deleteOne(Long id);
 

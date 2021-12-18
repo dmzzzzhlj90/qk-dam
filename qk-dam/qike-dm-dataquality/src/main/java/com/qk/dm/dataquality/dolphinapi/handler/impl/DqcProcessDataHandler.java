@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.dolphinapi.handler.impl;
 
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dm.dataquality.dolphinapi.builder.ProcessDataBuilder;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.constant.Priority;
@@ -13,6 +14,7 @@ import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -27,8 +29,10 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
     public ProcessDataDTO buildProcessDataDTO(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO,
                                               ResourceDTO mySqlScriptResource,
                                               TenantDTO tenantDTO,
-                                              DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
-        List<TaskNodeDTO> taskNodes = getTaskNodes(dqcSchedulerBasicInfoVO, mySqlScriptResource,dolphinSchedulerInfoConfig);
+                                              DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                              Map<String, ConnectBasicInfo> dataSourceInfo) {
+        List<TaskNodeDTO> taskNodes = getTaskNodes(
+                dqcSchedulerBasicInfoVO, mySqlScriptResource, dolphinSchedulerInfoConfig,dataSourceInfo);
 
         return ProcessDataBuilder.builder()
                 .build()
@@ -43,11 +47,13 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
      * @param dqcSchedulerBasicInfoVO
      * @param mySqlScriptResource
      * @param dolphinSchedulerInfoConfig
+     * @param dataSourceInfo
      * @return List<TaskNode>
      */
     public List<TaskNodeDTO> getTaskNodes(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO,
                                           ResourceDTO mySqlScriptResource,
-                                          DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+                                          DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                          Map<String, ConnectBasicInfo> dataSourceInfo) {
         List<TaskNodeDTO> tasks = new ArrayList<>();
         List<DqcSchedulerRulesVO> rulesVOList = dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList();
         AtomicInteger index = new AtomicInteger();
@@ -58,7 +64,8 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                             rulesVO,
                             mySqlScriptResource,
                             index.get(),
-                            dolphinSchedulerInfoConfig));
+                            dolphinSchedulerInfoConfig,
+                            dataSourceInfo));
             index.incrementAndGet();
         }
         return tasks;
@@ -68,7 +75,8 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                                         DqcSchedulerRulesVO rulesVO,
                                         ResourceDTO mySqlScriptResource,
                                         int index,
-                                        DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+                                        DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                        Map<String, ConnectBasicInfo> dataSourceInfo) {
         TaskNodeDTO taskNode = null;
         try {
             taskNode = new TaskNodeDTO();
@@ -83,7 +91,8 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                     rulesVO,
                     taskNode,
                     mySqlScriptResource,
-                    dolphinSchedulerInfoConfig);
+                    dolphinSchedulerInfoConfig,
+                    dataSourceInfo);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,7 +105,7 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                                       int index,
                                       DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         taskNode.setId(dolphinSchedulerInfoConfig.getTasksNameMatch() + index);
-        taskNode.setName(rulesVO.getRuleType() + rulesVO.getRuleTempId());
+        taskNode.setName(rulesVO.getRuleName());
         taskNode.setTimeout(setTimeOutDTO(dolphinSchedulerInfoConfig));
         taskNode.setRunFlag(dolphinSchedulerInfoConfig.getTaskRunFlag());
         taskNode.setConditionResult(setConditionResultDTO(dolphinSchedulerInfoConfig));
@@ -129,7 +138,8 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                                             DqcSchedulerRulesVO rulesVO,
                                             TaskNodeDTO taskNode,
                                             ResourceDTO mySqlScriptResource,
-                                            DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+                                            DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                            Map<String, ConnectBasicInfo> dataSourceInfo) {
         taskNode.setType(dolphinSchedulerInfoConfig.getTypeShell());
         List<ResourceDTO> resourceList = new ArrayList<>();
         resourceList.add(mySqlScriptResource);
@@ -138,7 +148,8 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
                 ShellParameters.builder()
                         .resourceList(resourceList)
                         .localParams(new ArrayList<>())
-                        .rawScript(setMysqlRuleScript(basicInfoVO, rulesVO, mySqlScriptResource,dolphinSchedulerInfoConfig));
+                        .rawScript(
+                                setMysqlRuleScript(basicInfoVO, rulesVO, mySqlScriptResource, dolphinSchedulerInfoConfig,dataSourceInfo));
 
         taskNode.setParams(shellParametersBuilder.build());
     }
@@ -146,28 +157,31 @@ public class DqcProcessDataHandler implements ProcessDataHandler<DqcSchedulerBas
     private String setMysqlRuleScript(DqcSchedulerBasicInfoVO basicInfoVO,
                                       DqcSchedulerRulesVO rulesVO,
                                       ResourceDTO mySqlScriptResource,
-                                      DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+                                      DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                      Map<String, ConnectBasicInfo> dataSourceInfo) {
         MysqlRawScript.MysqlRawScriptBuilder scriptBuilder = MysqlRawScript.builder();
 
-        //TODO 数据源连接信息规则调度里设置
+        //数据源连接信息规则调度里设置
+        ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(rulesVO.getDataSourceName());
         scriptBuilder
-                .from_host("172.20.0.24")
-                .from_user("root")
-                .from_password("Zhudao123!")
-                .from_database("qkdam");
+                .from_host(connectBasicInfo.getServer())
+                .from_user(connectBasicInfo.getUserName())
+                .from_password(connectBasicInfo.getPassword())
+                .from_database(rulesVO.getDatabaseName());
 
         scriptBuilder.search_sql(rulesVO.getExecuteSql());
 
         scriptBuilder
-                .to_host("172.20.0.24")
-                .to_user("root")
-                .to_password("Zhudao123!")
-                .to_database("qkdam");
+                .to_host(dolphinSchedulerInfoConfig.getResultDataDbHost())
+                .to_user(dolphinSchedulerInfoConfig.getResultDataDbUser())
+                .to_password(dolphinSchedulerInfoConfig.getResultDataDbPassword())
+                .to_database(dolphinSchedulerInfoConfig.getResultDataDbDatabase());
 
         scriptBuilder
                 .job_id(basicInfoVO.getJobId())
                 .job_name(basicInfoVO.getJobName())
-                .dir_id(basicInfoVO.getDirId())
+                .rule_id(rulesVO.getRuleId())
+                .rule_name(rulesVO.getRuleName())
                 .rule_temp_id(rulesVO.getRuleTempId());
 
         MysqlRawScript mysqlRawScript = scriptBuilder.build();

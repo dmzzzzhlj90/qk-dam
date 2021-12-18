@@ -38,7 +38,7 @@ public enum InstanceStateTypeEnum {
         return b;
       }
     }
-    return null;
+    throw new IllegalArgumentException("Unexpected id '" + code + "'");
   }
 
   public static Map<String, String> getAllValue() {

@@ -36,6 +36,8 @@ public interface DqcSchedulerBasicInfoService {
 
   DqcSchedulerBasicInfo getBasicInfo(Long id);
 
+  List<DqcSchedulerBasicInfo> getInfoByDirId(String dirId);
+
 //  void release(DqcSchedulerBasicInfoReleaseDTO dqcSchedulerBasicInfoReleaseDto);
 //
 //  DqcProcessInstanceVO instanceDetailByList(Long id);

@@ -35,7 +35,7 @@ public class DqcSchedulerInstanceParamsDTO {
     String endDate;
 
     /**
-     * 搜索值
+     * 搜索值(名称)
      */
     String searchVal;
 
@@ -43,4 +43,14 @@ public class DqcSchedulerInstanceParamsDTO {
      * 工作流和任务节点的运行状态
      */
     String stateType;
+
+    /**
+     * 执行用户
+     */
+    String executorName;
+
+    /**
+     * 分类目录
+     */
+    String dirId;
 }

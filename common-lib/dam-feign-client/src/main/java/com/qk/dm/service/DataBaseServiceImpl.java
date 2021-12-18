@@ -3,6 +3,8 @@ package com.qk.dm.service;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
+import com.qk.dam.metedata.entity.MtdApiDb;
+import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
 import org.springframework.stereotype.Service;
 
@@ -38,12 +40,12 @@ public class DataBaseServiceImpl implements DataBaseService {
   }
 
   @Override
-  public List<String> getAllDataBase(String connectType, String dataSourceName) {
+  public List<MtdApiDb> getAllDataBase(String connectType, String dataSourceName) {
     return dataBaseInfoDefaultApi.getAllDataBase(connectType,getServer(dataSourceName));
   }
 
   @Override
-  public List<String> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
+  public List<MtdTables> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
     return dataBaseInfoDefaultApi.getAllTable(connectType, getServer(dataSourceName), dataBaseName);
   }
 
@@ -53,7 +55,7 @@ public class DataBaseServiceImpl implements DataBaseService {
   }
 
   private String getServer(String dataSourceName) {
-    ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getResultDataSourceByConnectName(dataSourceName);
+    ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getDataSource(dataSourceName);
     Map<String, String> map = GsonUtil.fromJsonString(resultDataSourceByConnectName.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {
     }.getType());
     return map.get(server);

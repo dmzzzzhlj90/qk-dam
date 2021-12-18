@@ -81,26 +81,26 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
         schedulerBasicInfoService.update(basicInfo);
     }
 
-    @Override
-    public DqcProcessInstanceVO instanceDetailByList(Long id) {
-        DqcSchedulerBasicInfo basicInfo = schedulerBasicInfoService.getBasicInfo(id);
-
-        ProcessInstanceSearchDTO instanceSearchDTO =
-                ProcessInstanceSearchDTO.builder()
-                        .processDefinitionId(basicInfo.getProcessDefinitionId())
-                        .pageNo(SchedulerConstant.PAGE_NO)
-                        .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
-                        .build();
-
-        // 获取到最近运行实例
-        DqcProcessInstanceVO instanceData = dolphinScheduler.detailByList(instanceSearchDTO);
-        // 保存状态
-        InstanceStateTypeEnum instanceStateTypeEnum = InstanceStateTypeEnum.fromValue(instanceData.getState());
-        instanceData.setStateName(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getValue());
-        basicInfo.setRunInstanceState(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getCode());
-        schedulerBasicInfoService.update(basicInfo);
-        return instanceData;
-    }
+//    @Override
+//    public DqcProcessInstanceVO instanceDetailByList(Long id) {
+//        DqcSchedulerBasicInfo basicInfo = schedulerBasicInfoService.getBasicInfo(id);
+//
+//        ProcessInstanceSearchDTO instanceSearchDTO =
+//                ProcessInstanceSearchDTO.builder()
+//                        .processDefinitionId(basicInfo.getProcessDefinitionId())
+//                        .pageNo(SchedulerConstant.PAGE_NO)
+//                        .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
+//                        .build();
+//
+//        // 获取到最近运行实例
+//        DqcProcessInstanceVO instanceData = dolphinScheduler.detailByList(instanceSearchDTO).get(0);
+//        // 保存状态
+//        InstanceStateTypeEnum instanceStateTypeEnum = InstanceStateTypeEnum.fromValue(instanceData.getState());
+//        instanceData.setStateName(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getValue());
+//        basicInfo.setRunInstanceState(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getCode());
+//        schedulerBasicInfoService.update(basicInfo);
+//        return instanceData;
+//    }
 
     public void createSchedule(Integer processDefinitionId, DqcSchedulerConfig config) {
         if (Objects.equals(config.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {

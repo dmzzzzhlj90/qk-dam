@@ -6,8 +6,6 @@ import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
-import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
-import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -32,6 +30,8 @@ public class DolphinScheduler {
         this.scheduleApiService = scheduleApiService;
         this.processInstanceService = processInstanceService;
     }
+
+    /*****************************流程定义**开始*************************************************/
 
     /**
      * 流程定义上线
@@ -61,6 +61,8 @@ public class DolphinScheduler {
         processDefinitionApiService.startInstance(processDefinitionId);
     }
 
+    /*****************************流程实例**开始*************************************************/
+
     /**
      * 操作实例
      *
@@ -71,15 +73,61 @@ public class DolphinScheduler {
     }
 
     /**
-     * 查询实例列表最新一条记录
+     * 查询实例列表
      *
      * @param instanceSearchDTO
      * @return
      */
-    public DqcProcessInstanceVO detailByList(ProcessInstanceSearchDTO instanceSearchDTO) {
-        ProcessInstanceResultDTO search = processInstanceService.search(instanceSearchDTO);
-        return DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(search.getTotalList().get(0));
+    public ProcessInstanceResultDTO instanceList(ProcessInstanceSearchDTO instanceSearchDTO) {
+        return processInstanceService.search(instanceSearchDTO);
     }
+
+    /**
+     * 删除实例
+     * @param processInstanceId
+     */
+    public void deleteOne(Integer processInstanceId) {
+        processInstanceService.deleteOne(processInstanceId);
+    }
+
+    /**
+     * 批量删除实例
+     * @param processInstanceIds
+     */
+    public void deleteBulk(String processInstanceIds) {
+        processInstanceService.deleteBulk(ProcessInstanceDeleteDTO.builder().processInstanceIds(processInstanceIds).build());
+    }
+
+    /**
+     * 查询任务实例列表
+     * @param instanceSearchDTO
+     * @return
+     */
+    public ProcessTaskInstanceResultDTO taskInstanceList(ProcessTaskInstanceSearchDTO instanceSearchDTO) {
+        return processInstanceService.searchTask(instanceSearchDTO);
+    }
+
+    /**
+     * 查询任务实例日志
+     * @param taskInstanceId
+     * @param limit
+     * @param skipLineNum
+     * @return
+     */
+    public String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum){
+        return processInstanceService.taskLog(taskInstanceId,limit,skipLineNum);
+    }
+
+    /**
+     * 下载任务实例日志
+     * @param taskInstanceId
+     * @return
+     */
+    public String taskLogDownload(Integer taskInstanceId){
+        return processInstanceService.taskLogDownload(taskInstanceId);
+    }
+
+    /*****************************定时操作**开始*************************************************/
 
     /**
      * 新增定时器
@@ -162,6 +210,4 @@ public class DolphinScheduler {
         List<ScheduleDTO> totalList = search.getTotalList();
         return CollectionUtils.isEmpty(totalList) ? null : totalList.get(0);
     }
-
-
 }

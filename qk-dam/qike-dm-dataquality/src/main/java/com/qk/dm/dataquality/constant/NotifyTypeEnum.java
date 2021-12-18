@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.constant;
 
-import org.springframework.util.ObjectUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,18 +24,6 @@ public enum NotifyTypeEnum {
     NotifyTypeEnum(String code, String name) {
         this.code = code;
         this.name = name;
-    }
-
-    public static NotifyTypeEnum getVal(String name) {
-        if (ObjectUtils.isEmpty(name)) {
-            return null;
-        }
-        for (NotifyTypeEnum enums : NotifyTypeEnum.values()) {
-            if (name.equals(enums.name)) {
-                return enums;
-            }
-        }
-        return null;
     }
 
     public static Map<String, String> getAllValue() {

@@ -1,5 +1,8 @@
 package com.qk.dm.service;
 
+import com.qk.dam.metedata.entity.MtdApiDb;
+import com.qk.dam.metedata.entity.MtdTables;
+
 import java.util.List;
 
 /**
@@ -28,7 +31,7 @@ public interface DataBaseService {
      * @param dataSourceName
      * @return
      */
-    List<String> getAllDataBase(String connectType, String dataSourceName);
+    List<MtdApiDb> getAllDataBase(String connectType, String dataSourceName);
 
     /**
      * 获取table表列表
@@ -37,7 +40,7 @@ public interface DataBaseService {
      * @param dataBaseName
      * @return
      */
-    List<String> getAllTable(String connectType, String dataSourceName, String dataBaseName);
+    List<MtdTables> getAllTable(String connectType, String dataSourceName, String dataBaseName);
 
     /**
      * 获取column字段列表

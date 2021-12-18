@@ -1,12 +1,12 @@
 // package com.qk.dm.dataservice.test;
 //
-// import com.power.common.util.DateTimeUtil;
+// import com.power.common.com.qk.dm.groovy.util.DateTimeUtil;
 // import com.power.doc.builder.TornaBuilder;
 // import com.power.doc.model.*;
 // import com.power.doc.model.rpc.RpcApiDependency;
 //
-// import java.util.ArrayList;
-// import java.util.List;
+// import java.com.qk.dm.groovy.util.ArrayList;
+// import java.com.qk.dm.groovy.util.List;
 //
 /// **
 // * Description:
@@ -46,7 +46,7 @@
 //
 //                //SourcePath.path().setPath("F:\\Personal\\project\\smart\\src\\main\\java")
 //
-// //SourcePath.path().setDesc("加载项目外代码").setPath("E:\\ApplicationPower\\ApplicationPower\\Common-util\\src\\main\\java")
+// //SourcePath.path().setDesc("加载项目外代码").setPath("E:\\ApplicationPower\\ApplicationPower\\Common-com.qk.dm.groovy.util\\src\\main\\java")
 ////        );
 ////        config.setPackageFilters("com.power.doc.dubbo.*");
 ////        config.setDataDictionaries(

@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.constant;
 
-import org.springframework.util.ObjectUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,18 +24,6 @@ public enum ScanTypeEnum {
     ScanTypeEnum(String code, String name) {
         this.code = code;
         this.name = name;
-    }
-
-    public static ScanTypeEnum getVal(String name) {
-        if (ObjectUtils.isEmpty(name)) {
-            return null;
-        }
-        for (ScanTypeEnum enums : ScanTypeEnum.values()) {
-            if (name.equals(enums.name)) {
-                return enums;
-            }
-        }
-        return null;
     }
 
     public static Map<String, String> getAllValue() {
