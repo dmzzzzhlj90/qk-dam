@@ -28,17 +28,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 /**
- * Result
+ * ResultMapstringobject
  */
 @JsonPropertyOrder({
-  Result.JSON_PROPERTY_CODE,
-  Result.JSON_PROPERTY_DATA,
-  Result.JSON_PROPERTY_FAILED,
-  Result.JSON_PROPERTY_MSG,
-  Result.JSON_PROPERTY_SUCCESS
+  ResultMapstringobject.JSON_PROPERTY_CODE,
+  ResultMapstringobject.JSON_PROPERTY_DATA,
+  ResultMapstringobject.JSON_PROPERTY_FAILED,
+  ResultMapstringobject.JSON_PROPERTY_MSG,
+  ResultMapstringobject.JSON_PROPERTY_SUCCESS
 })
 @javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-18T14:27:46.433909+08:00[Asia/Shanghai]")
-public class Result {
+public class ResultMapstringobject {
   public static final String JSON_PROPERTY_CODE = "code";
   private Integer code;
 
@@ -55,7 +55,7 @@ public class Result {
   private Boolean success;
 
 
-  public Result code(Integer code) {
+  public ResultMapstringobject code(Integer code) {
     this.code = code;
     return this;
   }
@@ -81,7 +81,7 @@ public class Result {
   }
 
 
-  public Result data(Object data) {
+  public ResultMapstringobject data(Object data) {
     this.data = data;
     return this;
   }
@@ -107,7 +107,7 @@ public class Result {
   }
 
 
-  public Result failed(Boolean failed) {
+  public ResultMapstringobject failed(Boolean failed) {
     this.failed = failed;
     return this;
   }
@@ -133,7 +133,7 @@ public class Result {
   }
 
 
-  public Result msg(String msg) {
+  public ResultMapstringobject msg(String msg) {
     this.msg = msg;
     return this;
   }
@@ -159,7 +159,7 @@ public class Result {
   }
 
 
-  public Result success(Boolean success) {
+  public ResultMapstringobject success(Boolean success) {
     this.success = success;
     return this;
   }
@@ -186,7 +186,7 @@ public class Result {
 
 
   /**
-   * Return true if this Result object is equal to o.
+   * Return true if this Result&lt;Map&lt;string,object&gt;&gt; object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -196,12 +196,12 @@ public class Result {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Result result = (Result) o;
-    return Objects.equals(this.code, result.code) &&
-        Objects.equals(this.data, result.data) &&
-        Objects.equals(this.failed, result.failed) &&
-        Objects.equals(this.msg, result.msg) &&
-        Objects.equals(this.success, result.success);
+    ResultMapstringobject resultLessThanMapLessThanStringCommaObjectGreaterThanGreaterThan = (ResultMapstringobject) o;
+    return Objects.equals(this.code, resultLessThanMapLessThanStringCommaObjectGreaterThanGreaterThan.code) &&
+        Objects.equals(this.data, resultLessThanMapLessThanStringCommaObjectGreaterThanGreaterThan.data) &&
+        Objects.equals(this.failed, resultLessThanMapLessThanStringCommaObjectGreaterThanGreaterThan.failed) &&
+        Objects.equals(this.msg, resultLessThanMapLessThanStringCommaObjectGreaterThanGreaterThan.msg) &&
+        Objects.equals(this.success, resultLessThanMapLessThanStringCommaObjectGreaterThanGreaterThan.success);
   }
 
   @Override
@@ -212,7 +212,7 @@ public class Result {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Result {\n");
+    sb.append("class ResultMapstringobject {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    failed: ").append(toIndentedString(failed)).append("\n");
