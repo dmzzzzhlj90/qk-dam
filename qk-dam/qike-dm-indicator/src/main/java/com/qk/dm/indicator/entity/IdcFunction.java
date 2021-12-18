@@ -26,11 +26,11 @@ public class IdcFunction implements Serializable {
   private String name;
 
   /** 函数 */
-  @Column(name = "com.qk.dm.groovy.function", nullable = false)
+  @Column(name = "function", nullable = false)
   private String function;
 
   /** 引擎 */
-  @Column(name = "com.qk.dm.groovy.engine")
+  @Column(name = "engine")
   private String engine;
 
   /** 类型 */

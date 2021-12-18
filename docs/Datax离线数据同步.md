@@ -9,18 +9,18 @@ DataX本身作为数据同步框架，将不同数据源的同步抽象为从源
 # 依赖软件
 
 - Linux
-- [JDK(1.8以上，推荐1.8) ](http://www.oracle.com/technetwork/cn/java/javase/downloads/index.html) 
+- [JDK(1.8以上，推荐1.8) ](http://www.oracle.com/technetwork/cn/java/javase/downloads/index.html)
 - [Python(推荐Python2.6.X) ](https://www.python.org/downloads/)
 - [Apache Maven 3.x](https://maven.apache.org/download.cgi) (Compile DataX)
 
 # 快速启动
 
 * 工具部署
-  
+
   * 方法一、直接下载DataX工具包：[DataX下载地址](http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz)
-    
+
     下载后解压至本地某个目录，进入bin目录，即可运行同步作业：
-    
+
     ``` shell
     $ cd  {YOUR_DATAX_HOME}/bin
     $ python datax.py {YOUR_JOB.json}
@@ -28,22 +28,22 @@ DataX本身作为数据同步框架，将不同数据源的同步抽象为从源
     自检脚本：
     python {YOUR_DATAX_HOME}/bin/datax.py {YOUR_DATAX_HOME}/job/job.json
   * 方法二、下载DataX源码，自己编译：[DataX源码](https://github.com/alibaba/DataX)
-    
+
     (1)、下载DataX源码：
-    
+
     ``` shell
     $ git clone git@github.com:alibaba/DataX.git
     ```
-    
+
     (2)、通过maven打包：
-    
+
     ``` shell
     $ cd  {DataX_source_code_home}
     $ mvn -U clean package assembly:assembly -Dmaven.test.skip=true
     ```
-    
+
     打包成功，日志显示如下：
-    
+
     ``` 
     [INFO] BUILD SUCCESS
     [INFO] -----------------------------------------------------------------
@@ -52,9 +52,9 @@ DataX本身作为数据同步框架，将不同数据源的同步抽象为从源
     [INFO] Final Memory: 133M/960M
     [INFO] -----------------------------------------------------------------
     ```
-    
+
     打包成功后的DataX包位于 {DataX_source_code_home}/target/datax/datax/ ，结构如下：
-    
+
     ``` shell
     $ cd  {DataX_source_code_home}
     $ ls ./target/datax/datax/
@@ -63,11 +63,11 @@ DataX本身作为数据同步框架，将不同数据源的同步抽象为从源
 
 
 * 配置示例：从stream读取数据并打印到控制台
-  
+
   * 第一步、创建作业的配置文件（json格式）
-    
+
     可以通过命令查看配置模板： python datax.py -r {YOUR_READER} -w {YOUR_WRITER}
-    
+
     ``` shell
     $ cd  {YOUR_DATAX_HOME}/bin
     $  python datax.py -r streamreader -w streamwriter
@@ -111,9 +111,9 @@ DataX本身作为数据同步框架，将不同数据源的同步抽象为从源
         }
     }
     ```
-    
+
     根据模板配置json如下：
-    
+
     ``` json
     #stream2stream.json
     {
@@ -153,16 +153,16 @@ DataX本身作为数据同步框架，将不同数据源的同步抽象为从源
       }
     }
     ```
-    
+
   * 第二步：启动DataX
-    
+
     ``` shell
     $ cd {YOUR_DATAX_DIR_BIN}
     $ python datax.py ./stream2stream.json 
     ```
-    
+
     同步结束，显示日志如下：
-    
+
     ``` shell
     ...
     2015-12-17 11:20:25.263 [job-0] INFO  JobContainer - 
@@ -220,53 +220,53 @@ DataX本身作为数据同步框架，将不同数据源的同步抽象为从源
 
 ```java
 public class SomeReader extends Reader {
-    public static class Job extends Reader.Job {
+  public static class Job extends Reader.Job {
 
-        @Override
-        public void init() {
-        }
-		
-		@Override
-		public void prepare() {
-        }
-
-        @Override
-        public List<Configuration> split(int adviceNumber) {
-            return null;
-        }
-
-        @Override
-        public void post() {
-        }
-
-        @Override
-        public void destroy() {
-        }
-
+    @Override
+    public void init() {
     }
 
-    public static class Task extends Reader.Task {
-
-        @Override
-        public void init() {
-        }
-		
-		@Override
-		public void prepare() {
-        }
-
-        @Override
-        public void startRead(RecordSender recordSender) {
-        }
-
-        @Override
-        public void post() {
-        }
-
-        @Override
-        public void destroy() {
-        }
+    @Override
+    public void prepare() {
     }
+
+    @Override
+    public List<Configuration> split(int adviceNumber) {
+      return null;
+    }
+
+    @Override
+    public void post() {
+    }
+
+    @Override
+    public void destroy() {
+    }
+
+  }
+
+  public static class Task extends Reader.Task {
+
+    @Override
+    public void init() {
+    }
+
+    @Override
+    public void prepare() {
+    }
+
+    @Override
+    public void startRead(RecordSender recordSender) {
+    }
+
+    @Override
+    public void post() {
+    }
+
+    @Override
+    public void destroy() {
+    }
+  }
 }
 ```
 
@@ -307,10 +307,10 @@ public class SomeReader extends Reader {
 
 ```json
 {
-    "name": "mysqlwriter",
-    "class": "com.alibaba.datax.plugin.writer.mysqlwriter.MysqlWriter",
-    "description": "Use Jdbc connect to database, execute insert sql.",
-    "developer": "alibaba"
+  "name": "mysqlwriter",
+  "class": "com.alibaba.datax.plugin.writer.mysqlwriter.MysqlWriter",
+  "description": "Use Jdbc connect to database, execute insert sql.",
+  "developer": "alibaba"
 }
 ```
 
@@ -434,8 +434,8 @@ ${DATAX_HOME}
 - 驼峰命名：所有配置项采用驼峰命名法，首字母小写，单词首字母大写。
 - 正交原则：配置项必须正交，功能没有重复，没有潜规则。
 - 富类型：合理使用json的类型，减少无谓的处理逻辑，减少出错的可能。
-    - 使用正确的数据类型。比如，bool类型的值使用`true`/`false`，而非`"yes"`/`"true"`/`0`等。
-    - 合理使用集合类型，比如，用数组替代有分隔符的字符串。
+  - 使用正确的数据类型。比如，bool类型的值使用`true`/`false`，而非`"yes"`/`"true"`/`0`等。
+  - 合理使用集合类型，比如，用数组替代有分隔符的字符串。
 - 类似通用：遵守同一类型的插件的习惯，比如关系型数据库的`connection`参数都是如下结构：
 
     ```json
@@ -520,18 +520,18 @@ ${DATAX_HOME}
 
 ```java
 public interface Record {
-    // 加入一个列，放在最后的位置
-    void addColumn(Column column);
-    // 在指定下标处放置一个列
-    void setColumn(int i, final Column column);
-    // 获取一个列
-    Column getColumn(int i);
-    // 转换为json String
-    String toString();
-    // 获取总列数
-    int getColumnNumber();
-    // 计算整条记录在内存中占用的字节数
-    int getByteSize();
+  // 加入一个列，放在最后的位置
+  void addColumn(Column column);
+  // 在指定下标处放置一个列
+  void setColumn(int i, final Column column);
+  // 获取一个列
+  Column getColumn(int i);
+  // 转换为json String
+  String toString();
+  // 获取总列数
+  int getColumnNumber();
+  // 计算整条记录在内存中占用的字节数
+  int getByteSize();
 }
 ```
 
@@ -565,7 +565,7 @@ DataX的内部类型在实现上会选用不同的java类型：
 
 | 内部类型 | 实现类型 | 备注 |
 | ----- | -------- | ----- |
-| Date  | java.com.qk.dm.groovy.util.Date |     |
+| Date  | java.util.Date |     |
 | Long  | java.math.BigInteger|  使用无限精度的大整数，保证不失真   |
 | Double| java.lang.String| 用String表示，保证不失真 |
 | Bytes | byte[]|  |

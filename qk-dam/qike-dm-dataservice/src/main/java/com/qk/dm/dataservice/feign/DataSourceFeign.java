@@ -2,7 +2,7 @@
 //
 //import com.qk.dam.commons.http.result.DefaultCommonResult;
 //import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-//import java.com.qk.dm.groovy.util.List;
+//import java.util.List;
 //import org.springframework.cloud.openfeign.FeignClient;
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PathVariable;

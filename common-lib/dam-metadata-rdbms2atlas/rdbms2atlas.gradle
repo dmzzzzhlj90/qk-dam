@@ -20,7 +20,7 @@ dependencies {
     implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.1.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-com.qk.dm.groovy.engine:5.1.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.0")
 }
 jar {
     archiveVersion = "${commonLibVersion}" //版本

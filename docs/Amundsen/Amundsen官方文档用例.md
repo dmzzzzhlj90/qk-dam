@@ -5,7 +5,7 @@
 ```shell
 sudo yum remove -y docker*
 ```
-##### 2、安装需要的软件包， yum-com.qk.dm.groovy.util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的
+##### 2、安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的
 ```shell
 yum install -y yum-utils
 ```

@@ -59,7 +59,7 @@ dependencies {
         api 'org.apache.atlas:atlas-notification:3.0.0-SNAPSHOT'
         api 'org.apache.atlas:atlas-common:3.0.0-SNAPSHOT'
 
-        api group: 'org.tsugi', name: 'tsugi-com.qk.dm.groovy.util', version: '21.0.0'
+        api group: 'org.tsugi', name: 'tsugi-util', version: '21.0.0'
 
         api 'org.testng:testng:7.4.0'
 
