@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Set;
 
 @javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-18T14:27:46.433909+08:00[Asia/Shanghai]")
-public class TokenApi {
+public class UiApi {
   private final HttpClient memberVarHttpClient;
   private final ObjectMapper memberVarObjectMapper;
   private final String memberVarBaseUri;
@@ -47,11 +47,11 @@ public class TokenApi {
   private final Consumer<HttpResponse<InputStream>> memberVarResponseInterceptor;
   private final Consumer<HttpResponse<String>> memberVarAsyncResponseInterceptor;
 
-  public TokenApi() {
+  public UiApi() {
     this(new ApiClient());
   }
 
-  public TokenApi(ApiClient apiClient) {
+  public UiApi(ApiClient apiClient) {
     memberVarHttpClient = apiClient.getHttpClient();
     memberVarObjectMapper = apiClient.getObjectMapper();
     memberVarBaseUri = apiClient.getBaseUri();
@@ -75,30 +75,24 @@ public class TokenApi {
   }
 
   /**
-   * queryAccessTokenList
-   * 分页查询access token列表
-   * @param pageNo 页码号 (required)
-   * @param pageSize 页大小 (required)
-   * @param searchVal 搜索值 (optional)
-   * @return Result
+   * queryUiPluginDetailById
+   * 通过ID查询UI插件详情
+   * @param id 插件ID (required)
    * @throws ApiException if fails to make API call
    */
-  public Result queryAccessTokenListUsingGET(Integer pageNo, Integer pageSize, String searchVal) throws ApiException {
-    ApiResponse<Result> localVarResponse = queryAccessTokenListUsingGETWithHttpInfo(pageNo, pageSize, searchVal);
-    return localVarResponse.getData();
+  public void queryUiPluginDetailByIdUsingGET(Integer id) throws ApiException {
+    queryUiPluginDetailByIdUsingGETWithHttpInfo(id);
   }
 
   /**
-   * queryAccessTokenList
-   * 分页查询access token列表
-   * @param pageNo 页码号 (required)
-   * @param pageSize 页大小 (required)
-   * @param searchVal 搜索值 (optional)
-   * @return ApiResponse&lt;Result&gt;
+   * queryUiPluginDetailById
+   * 通过ID查询UI插件详情
+   * @param id 插件ID (required)
+   * @return ApiResponse&lt;Void&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Result> queryAccessTokenListUsingGETWithHttpInfo(Integer pageNo, Integer pageSize, String searchVal) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = queryAccessTokenListUsingGETRequestBuilder(pageNo, pageSize, searchVal);
+  public ApiResponse<Void> queryUiPluginDetailByIdUsingGETWithHttpInfo(Integer id) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = queryUiPluginDetailByIdUsingGETRequestBuilder(id);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -107,12 +101,12 @@ public class TokenApi {
         memberVarResponseInterceptor.accept(localVarResponse);
       }
       if (localVarResponse.statusCode()/ 100 != 2) {
-        throw getApiException("queryAccessTokenListUsingGET", localVarResponse);
+        throw getApiException("queryUiPluginDetailByIdUsingGET", localVarResponse);
       }
-      return new ApiResponse<Result>(
+      return new ApiResponse<Void>(
           localVarResponse.statusCode(),
           localVarResponse.headers().map(),
-          memberVarObjectMapper.readValue(localVarResponse.body(), new TypeReference<Result>() {})
+          null
         );
     } catch (IOException e) {
       throw new ApiException(e);
@@ -123,24 +117,85 @@ public class TokenApi {
     }
   }
 
-  private HttpRequest.Builder queryAccessTokenListUsingGETRequestBuilder(Integer pageNo, Integer pageSize, String searchVal) throws ApiException {
-    // verify the required parameter 'pageNo' is set
-    if (pageNo == null) {
-      throw new ApiException(400, "Missing the required parameter 'pageNo' when calling queryAccessTokenListUsingGET");
-    }
-    // verify the required parameter 'pageSize' is set
-    if (pageSize == null) {
-      throw new ApiException(400, "Missing the required parameter 'pageSize' when calling queryAccessTokenListUsingGET");
+  private HttpRequest.Builder queryUiPluginDetailByIdUsingGETRequestBuilder(Integer id) throws ApiException {
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling queryUiPluginDetailByIdUsingGET");
     }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-    String localVarPath = "/access-tokens";
+    String localVarPath = "/ui-plugins/{id}"
+        .replace("{id}", ApiClient.urlEncode(id.toString()));
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    localVarRequestBuilder.header("Accept", "application/json");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+  /**
+   * queryUiPluginsByType
+   * 通过类型查询UI插件
+   * @param pluginType pluginType (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void queryUiPluginsByTypeUsingGET(Object pluginType) throws ApiException {
+    queryUiPluginsByTypeUsingGETWithHttpInfo(pluginType);
+  }
+
+  /**
+   * queryUiPluginsByType
+   * 通过类型查询UI插件
+   * @param pluginType pluginType (required)
+   * @return ApiResponse&lt;Void&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> queryUiPluginsByTypeUsingGETWithHttpInfo(Object pluginType) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = queryUiPluginsByTypeUsingGETRequestBuilder(pluginType);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      if (localVarResponse.statusCode()/ 100 != 2) {
+        throw getApiException("queryUiPluginsByTypeUsingGET", localVarResponse);
+      }
+      return new ApiResponse<Void>(
+          localVarResponse.statusCode(),
+          localVarResponse.headers().map(),
+          null
+        );
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder queryUiPluginsByTypeUsingGETRequestBuilder(Object pluginType) throws ApiException {
+    // verify the required parameter 'pluginType' is set
+    if (pluginType == null) {
+      throw new ApiException(400, "Missing the required parameter 'pluginType' when calling queryUiPluginsByTypeUsingGET");
+    }
+
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/ui-plugins/query-by-type";
 
     List<Pair> localVarQueryParams = new ArrayList<>();
-    localVarQueryParams.addAll(ApiClient.parameterToPairs("pageNo", pageNo));
-    localVarQueryParams.addAll(ApiClient.parameterToPairs("pageSize", pageSize));
-    localVarQueryParams.addAll(ApiClient.parameterToPairs("searchVal", searchVal));
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("pluginType", pluginType));
 
     if (!localVarQueryParams.isEmpty()) {
       StringJoiner queryJoiner = new StringJoiner("&");

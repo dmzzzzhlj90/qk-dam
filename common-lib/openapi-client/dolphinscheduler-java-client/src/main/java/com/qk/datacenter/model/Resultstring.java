@@ -28,22 +28,22 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 /**
- * Result
+ * Resultstring
  */
 @JsonPropertyOrder({
-  Result.JSON_PROPERTY_CODE,
-  Result.JSON_PROPERTY_DATA,
-  Result.JSON_PROPERTY_FAILED,
-  Result.JSON_PROPERTY_MSG,
-  Result.JSON_PROPERTY_SUCCESS
+  Resultstring.JSON_PROPERTY_CODE,
+  Resultstring.JSON_PROPERTY_DATA,
+  Resultstring.JSON_PROPERTY_FAILED,
+  Resultstring.JSON_PROPERTY_MSG,
+  Resultstring.JSON_PROPERTY_SUCCESS
 })
 @javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-18T14:27:46.433909+08:00[Asia/Shanghai]")
-public class Result {
+public class Resultstring {
   public static final String JSON_PROPERTY_CODE = "code";
   private Integer code;
 
   public static final String JSON_PROPERTY_DATA = "data";
-  private Object data;
+  private String data;
 
   public static final String JSON_PROPERTY_FAILED = "failed";
   private Boolean failed;
@@ -55,7 +55,7 @@ public class Result {
   private Boolean success;
 
 
-  public Result code(Integer code) {
+  public Resultstring code(Integer code) {
     this.code = code;
     return this;
   }
@@ -81,7 +81,7 @@ public class Result {
   }
 
 
-  public Result data(Object data) {
+  public Resultstring data(String data) {
     this.data = data;
     return this;
   }
@@ -95,19 +95,19 @@ public class Result {
   @JsonProperty(JSON_PROPERTY_DATA)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public Object getData() {
+  public String getData() {
     return data;
   }
 
 
   @JsonProperty(JSON_PROPERTY_DATA)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setData(Object data) {
+  public void setData(String data) {
     this.data = data;
   }
 
 
-  public Result failed(Boolean failed) {
+  public Resultstring failed(Boolean failed) {
     this.failed = failed;
     return this;
   }
@@ -133,7 +133,7 @@ public class Result {
   }
 
 
-  public Result msg(String msg) {
+  public Resultstring msg(String msg) {
     this.msg = msg;
     return this;
   }
@@ -159,7 +159,7 @@ public class Result {
   }
 
 
-  public Result success(Boolean success) {
+  public Resultstring success(Boolean success) {
     this.success = success;
     return this;
   }
@@ -186,7 +186,7 @@ public class Result {
 
 
   /**
-   * Return true if this Result object is equal to o.
+   * Return true if this Result&lt;string&gt; object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -196,12 +196,12 @@ public class Result {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Result result = (Result) o;
-    return Objects.equals(this.code, result.code) &&
-        Objects.equals(this.data, result.data) &&
-        Objects.equals(this.failed, result.failed) &&
-        Objects.equals(this.msg, result.msg) &&
-        Objects.equals(this.success, result.success);
+    Resultstring resultLessThanStringGreaterThan = (Resultstring) o;
+    return Objects.equals(this.code, resultLessThanStringGreaterThan.code) &&
+        Objects.equals(this.data, resultLessThanStringGreaterThan.data) &&
+        Objects.equals(this.failed, resultLessThanStringGreaterThan.failed) &&
+        Objects.equals(this.msg, resultLessThanStringGreaterThan.msg) &&
+        Objects.equals(this.success, resultLessThanStringGreaterThan.success);
   }
 
   @Override
@@ -212,7 +212,7 @@ public class Result {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Result {\n");
+    sb.append("class Resultstring {\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    failed: ").append(toIndentedString(failed)).append("\n");
