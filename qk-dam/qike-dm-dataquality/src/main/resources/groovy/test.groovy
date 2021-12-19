@@ -6,6 +6,5 @@ class test {
 
         return "hello:" + name + " age: " + age + " count:" + count;
 
-
     }
 }

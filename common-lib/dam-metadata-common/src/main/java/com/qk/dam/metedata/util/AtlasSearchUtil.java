@@ -22,23 +22,6 @@ public class AtlasSearchUtil {
 
   private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
-  /**
-   * 根据数据库类型，获取所有的数据库信息
-   *
-   * @param typeName
-   * @return
-   */
-  public static List<AtlasEntityHeader> getDataBaseList(String typeName,Integer limit, Integer offset) {
-    try {
-      AtlasSearchResult atlasSearchResult =
-          atlasClientV2.basicSearch(typeName, null, null, true,
-                  Objects.isNull(limit)?1000:limit, Objects.isNull(offset)?0:offset);
-      return atlasSearchResult.getEntities();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
 
   public static List<AtlasEntityHeader> getAtlasEntityHeaderListByAttr(String typeName,SearchParameters.FilterCriteria filterCriteria, Integer limit, Integer offset){
     return getPageEntities(typeName,filterCriteria,limit,offset);
@@ -136,20 +119,6 @@ public class AtlasSearchUtil {
     } else {
       return  getTableList(typeName,dbName,server,null,null);
     }
-  }
-
-
-  private static List<AtlasEntityHeader> getEntities(
-      String typeName, SearchParameters.FilterCriteria filterCriteria) {
-    try {
-      AtlasSearchResult atlasSearchResult =
-          atlasClientV2.basicSearch(typeName, filterCriteria, null, null, false,
-                  1000, 0);
-      return atlasSearchResult.getEntities();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 
   /**

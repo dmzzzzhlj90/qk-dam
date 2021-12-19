@@ -15,7 +15,7 @@ dependencies {
         exclude group: 'org.springframework', module: 'spring-context'
         exclude group: 'org.springframework', module: 'spring-expression'
     }
-    compile group: 'javax.validation', name: 'validation-api'
+    implementation group: 'javax.validation', name: 'validation-api'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'

@@ -70,7 +70,7 @@ public class MtdSearchServiceImpl implements MtdSearchService {
                 .guid(e.getGuid())
                 .typeName(e.getTypeName())
                 .displayText(e.getDisplayText())
-                .description(String.valueOf(e.getAttribute("description")))
+                .description(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION)))
                 .build()).collect(Collectors.toList());
     }
 
@@ -79,16 +79,16 @@ public class MtdSearchServiceImpl implements MtdSearchService {
                 .displayText(e.getDisplayText())
                 .guid(e.getGuid())
                 .typeName(e.getTypeName())
-                .comment(String.valueOf(e.getAttribute("description")))
-                .entityStatus(String.valueOf(e.getAttribute("status")))
+                .comment(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION)))
+                .entityStatus(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.STATUS)))
                 .build()).collect(Collectors.toList());
     }
 
     private List<MtdAttributes> builderMtdAttributes(List<AtlasEntityHeader> atlasEntityHeaderList) {
         return atlasEntityHeaderList.stream().map(e -> MtdAttributes.builder()
                 .type(e.getTypeName())
-                .owner(String.valueOf(e.getAttribute("owner")))
-                .comment(String.valueOf(e.getAttribute("description")))
+                .owner(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER)))
+                .comment(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION)))
                 .name(e.getDisplayText())
                 .build()).collect(Collectors.toList());
     }
