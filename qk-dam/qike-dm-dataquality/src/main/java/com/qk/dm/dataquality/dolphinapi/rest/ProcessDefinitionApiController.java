@@ -56,34 +56,34 @@ public class ProcessDefinitionApiController {
                 processDefinitionApiService.queryProcessDefinitionInfo(projectName, searchVal, jobId));
     }
 
-    @PutMapping("/release")
-    public DefaultCommonResult release(Integer processDefinitionId, Integer releaseState) {
-        processDefinitionApiService.release(processDefinitionId, releaseState);
-        return DefaultCommonResult.success();
-    }
-
-    @PutMapping("/startInstance")
-    public DefaultCommonResult startInstance(Integer processDefinitionId) {
-        processDefinitionApiService.startInstance(processDefinitionId);
-        return DefaultCommonResult.success();
-    }
-
-    @PutMapping("/startCheck")
-    public DefaultCommonResult startCheck(Integer processDefinitionId) {
-        processDefinitionApiService.startCheck(processDefinitionId);
-        return DefaultCommonResult.success();
-    }
-
-    @DeleteMapping("")
-    public DefaultCommonResult deleteOne(Integer processDefinitionId) {
-        processDefinitionApiService.deleteOne(processDefinitionId);
-        return DefaultCommonResult.success();
-    }
-
-    @GetMapping("/verifyName")
-    public DefaultCommonResult verifyName() {
-        processDefinitionApiService.verifyName("test");
-        return DefaultCommonResult.success();
-    }
+//    @PutMapping("/release")
+//    public DefaultCommonResult release(Integer processDefinitionId, Integer releaseState) {
+//        processDefinitionApiService.release(processDefinitionId, releaseState);
+//        return DefaultCommonResult.success();
+//    }
+//
+//    @PutMapping("/startInstance")
+//    public DefaultCommonResult startInstance(Integer processDefinitionId) {
+//        processDefinitionApiService.startInstance(processDefinitionId);
+//        return DefaultCommonResult.success();
+//    }
+//
+//    @PutMapping("/startCheck")
+//    public DefaultCommonResult startCheck(Integer processDefinitionId) {
+//        processDefinitionApiService.startCheck(processDefinitionId);
+//        return DefaultCommonResult.success();
+//    }
+//
+//    @DeleteMapping("")
+//    public DefaultCommonResult deleteOne(Integer processDefinitionId) {
+//        processDefinitionApiService.deleteOne(processDefinitionId);
+//        return DefaultCommonResult.success();
+//    }
+//
+//    @GetMapping("/verifyName")
+//    public DefaultCommonResult verifyName() {
+//        processDefinitionApiService.verifyName("test");
+//        return DefaultCommonResult.success();
+//    }
 
 }

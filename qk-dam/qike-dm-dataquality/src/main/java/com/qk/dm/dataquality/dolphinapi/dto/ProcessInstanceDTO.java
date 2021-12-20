@@ -19,7 +19,6 @@ package com.qk.dm.dataquality.dolphinapi.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 流程实例
@@ -31,8 +30,8 @@ public class ProcessInstanceDTO implements Serializable {
   private int processDefinitionId;
   private String state;
   private String recovery;
-  private Date startTime;
-  private Date endTime;
+  private String startTime;
+  private String endTime;
   private int runTimes;
   private String name;
   private String host;

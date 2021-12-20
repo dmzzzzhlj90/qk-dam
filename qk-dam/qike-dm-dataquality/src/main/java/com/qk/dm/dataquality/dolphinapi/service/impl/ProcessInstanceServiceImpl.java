@@ -5,6 +5,8 @@ import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
+import com.qk.datacenter.model.ResultProcessInstance;
+import com.qk.datacenter.model.Resultstring;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
@@ -29,17 +31,18 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     }
 
     /**
-     * 实例-操作
-     *
-     * @param processInstanceId
-     * @param executeType
+     * execute
+     * 执行流程实例的各种操作(暂停、停止、重跑、恢复等)
+     * executeType 执行类型 (required)
+     * processInstanceId 流程实例ID (required)
+     * projectCode PROJECT_CODE (required)
      */
     @Override
     public void execute(Integer processInstanceId, String executeType) {
         try {
             Result result =
                     defaultApi.executeUsingPOST(
-                            ExecuteTypeEnum.fromValue(executeType).getCode(), processInstanceId, dolphinSchedulerInfoConfig.getProjectName()
+                            ExecuteTypeEnum.fromValue(executeType).getCode(), processInstanceId, dolphinSchedulerInfoConfig.getProjectCode()
                     );
             DqcConstant.verification(result, "执行流程实例操作失败{}，");
         } catch (ApiException e) {
@@ -48,10 +51,18 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     }
 
     /**
+     * queryProcessInstanceListPaging
      * 查询流程实例列表
-     *
-     * @param instanceSearchDTO
-     * @return
+     * pageNo 页码号 (required)
+     * pageSize 页大小 (required)
+     * projectCode PROJECT_CODE (required)
+     * endDate 结束时间 (optional)
+     * executorName 流程名称 (optional)
+     * host 运行任务的主机IP地址 (optional)
+     * processDefineCode processDefineCode (optional, default to 0)
+     * searchVal 搜索值 (optional)
+     * startDate 开始时间 (optional)
+     * stateType 工作流和任务节点的运行状态 (optional)
      */
     @Override
     public ProcessInstanceResultDTO search(ProcessInstanceSearchDTO instanceSearchDTO) {
@@ -59,13 +70,13 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
         try {
             Result result =
                     defaultApi.queryProcessInstanceListUsingGET(
-                            dolphinSchedulerInfoConfig.getProjectName(),
+                            instanceSearchDTO.getPageNo(),
+                            instanceSearchDTO.getPageSize(),
+                            dolphinSchedulerInfoConfig.getProjectCode(),
                             instanceSearchDTO.getEndDate(),
                             instanceSearchDTO.getExecutorName(),
                             instanceSearchDTO.getHost(),
-                            instanceSearchDTO.getPageNo(),
-                            instanceSearchDTO.getPageSize(),
-                            instanceSearchDTO.getProcessDefinitionId(),
+                            instanceSearchDTO.getProcessDefineCode(),
                             instanceSearchDTO.getSearchVal(),
                             instanceSearchDTO.getStartDate(),
                             instanceSearchDTO.getStateType()
@@ -79,14 +90,17 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
         return processInstanceResultDTO;
     }
 
+    /**
+     * 通过流程实例ID查询流程实例
+     *
+     * @param processInstanceId
+     * @return
+     */
     @Override
     public ProcessInstanceDTO detail(Integer processInstanceId) {
         ProcessInstanceDTO processInstanceDTO = new ProcessInstanceDTO();
         try {
-            Result result =
-                    defaultApi.queryProcessInstanceByIdUsingGET(
-                            dolphinSchedulerInfoConfig.getProjectName(), processInstanceId
-                    );
+            Result result = defaultApi.queryProcessInstanceByIdUsingGET(processInstanceId, dolphinSchedulerInfoConfig.getProjectCode());
             DqcConstant.verification(result, "查询流程实例通过流程实例ID失败{}，");
             processInstanceDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceDTO>() {
             }.getType());
@@ -99,10 +113,7 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     @Override
     public void deleteOne(Integer processInstanceId) {
         try {
-            Result result =
-                    defaultApi.deleteProcessInstanceByIdUsingGET(
-                            dolphinSchedulerInfoConfig.getProjectName(), processInstanceId
-                    );
+            ResultProcessInstance result = defaultApi.deleteProcessInstanceByIdUsingDELETE(processInstanceId, dolphinSchedulerInfoConfig.getProjectCode());
             DqcConstant.verification(result, "删除流程实例失败{}，");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -113,9 +124,9 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     public void deleteBulk(ProcessInstanceDeleteDTO deleteDTO) {
         try {
             Result result =
-                    defaultApi.batchDeleteProcessInstanceByIdsUsingGET(
+                    defaultApi.batchDeleteProcessInstanceByIdsUsingPOST(
                             deleteDTO.getProcessInstanceIds(),
-                            dolphinSchedulerInfoConfig.getProjectName(),
+                            dolphinSchedulerInfoConfig.getProjectCode(),
                             deleteDTO.getAlertGroup(),
                             deleteDTO.getCreateTime(),
                             deleteDTO.getEmail(),
@@ -123,9 +134,9 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             deleteDTO.getPhone(),
                             deleteDTO.getQueue(),
                             deleteDTO.getQueueName(),
+                            deleteDTO.getState(),
                             deleteDTO.getTenantCode(),
                             deleteDTO.getTenantId(),
-                            deleteDTO.getTenantName(),
                             deleteDTO.getUpdateTime(),
                             deleteDTO.getUserName(),
                             deleteDTO.getUserPassword(),
@@ -144,13 +155,14 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
         try {
             Result result =
                     defaultApi.queryTaskListPagingUsingGET(
-                            dolphinSchedulerInfoConfig.getProjectName(),
+                            TaskInstanceSearch.getPageNo(),
+                            TaskInstanceSearch.getPageSize(),
+                            dolphinSchedulerInfoConfig.getProjectCode(),
                             TaskInstanceSearch.getEndDate(),
                             TaskInstanceSearch.getExecutorName(),
                             TaskInstanceSearch.getHost(),
-                            TaskInstanceSearch.getPageNo(),
-                            TaskInstanceSearch.getPageSize(),
                             TaskInstanceSearch.getProcessInstanceId(),
+                            TaskInstanceSearch.getProcessInstanceName(),
                             TaskInstanceSearch.getSearchVal(),
                             TaskInstanceSearch.getStartDate(),
                             TaskInstanceSearch.getStateType(),
@@ -168,10 +180,10 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     @Override
     public String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum) {
         try {
-            Result result =
+            Resultstring result =
                     defaultApi.queryLogUsingGET(limit, skipLineNum, taskInstanceId);
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
-            return (String) result.getData();
+            return result.getData();
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
@@ -181,10 +193,10 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     @Override
     public String taskLogDownload(Integer taskInstanceId) {
         try {
-            Result result =
+            Resultstring result =
                     defaultApi.queryLogUsingGET(0, 100000, taskInstanceId);
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
-            return (String) result.getData();
+            return result.getData();
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }

@@ -42,4 +42,12 @@ public class DolphinRunInfoConfig {
   Integer warningGroupId;
   /** Worker分组 默认 "default" */
   String workerGroup;
+  /** dryRun 默认 0 */
+  Integer dryRun;
+  /** ENVIRONMENT_CODE 默认 null */
+  Long environmentCode;
+  /** 补数任务自定义并行度 默认 null */
+  Integer expectedParallelismNumber;
+  /** 启动参数 默认 null */
+  String startParams;
 }

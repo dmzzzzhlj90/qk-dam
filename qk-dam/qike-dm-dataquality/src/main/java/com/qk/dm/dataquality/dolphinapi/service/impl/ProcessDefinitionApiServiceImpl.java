@@ -63,13 +63,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
         if (null == queryProcessDefinition) {
             //新增
-            save(dqcSchedulerBasicInfoVO,dataSourceInfo);
+            save(dqcSchedulerBasicInfoVO, dataSourceInfo);
             ProcessDefinitionDTO saveProcessDefinition =
                     queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), dqcSchedulerBasicInfoVO.getJobId());
             processDefinitionId = saveProcessDefinition.getId();
         } else {
             //编辑
-            update(dqcSchedulerBasicInfoVO,dataSourceInfo);
+            update(dqcSchedulerBasicInfoVO, dataSourceInfo);
             processDefinitionId = queryProcessDefinition.getId();
         }
         return processDefinitionId;
@@ -88,7 +88,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             // 获取DolphinScheduler 租户信息
             TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi, dolphinSchedulerInfoConfig);
             // 构建ProcessData对象
-            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig,dataSourceInfo);
+            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig, dataSourceInfo);
             // 构建locations
             LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO, dolphinSchedulerInfoConfig);
 
@@ -109,7 +109,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     @Override
     public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo) {
         try {
-            Integer processDefinitionId = dqcSchedulerBasicInfoVO.getProcessDefinitionId();
+            Long processDefinitionId = dqcSchedulerBasicInfoVO.getProcessDefinitionId();
             // 获取DolphinScheduler 资源信息
             ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi, dolphinSchedulerInfoConfig);
             // 获取DolphinScheduler 租户信息
@@ -155,7 +155,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public void delete(String projectName, Integer processDefinitionId) {
+    public void delete(String projectName, Long processDefinitionId) {
         try {
             defaultApi.deleteProcessDefinitionByIdUsingGET(projectName, processDefinitionId);
         } catch (Exception e) {
@@ -164,7 +164,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public void deleteBulk(String projectName, List<Integer> processDefinitionIdList) {
+    public void deleteBulk(String projectName, List<Long> processDefinitionIdList) {
         try {
             String processDefinitionIds = processDefinitionIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
             defaultApi.batchDeleteProcessDefinitionByIdsUsingGETWithHttpInfo(projectName, processDefinitionIds);
@@ -176,17 +176,19 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     /****************************************************************************/
 
     /**
-     * 流程定义发布
-     *
-     * @param processDefinitionId
-     * @param releaseState        0-下线 1-上线
+     * release
+     * 发布流程定义
+     * code 流程定义编码 (required)
+     * projectCode PROJECT_CODE (required)
+     * releaseState PROCESS_DEFINITION_RELEASE (required) 0-下线 1-上线
      */
     @Override
-    public void release(Integer processDefinitionId, Integer releaseState) {
+    public void release(Long processDefinitionCode, Integer releaseState) {
         try {
             Result result =
                     defaultApi.releaseProcessDefinitionUsingPOST(
-                            processDefinitionId, dolphinSchedulerInfoConfig.getProjectName(), releaseState);
+                            processDefinitionCode, dolphinSchedulerInfoConfig.getProjectCode(), releaseState
+                    );
             DqcConstant.verification(result, "流程定义发布失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -194,64 +196,15 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     /**
-     * 删除流程
-     *
-     * @param processDefinitionId
+     * startCheckProcessDefinition
+     * 检查流程定义
+     * processDefinitionCode 流程定义编码 (required)
      */
     @Override
-    public void deleteOne(Integer processDefinitionId) {
+    public void startCheck(Long processDefinitionCode) {
         try {
             Result result =
-                    defaultApi.deleteProcessDefinitionByIdUsingGET(
-                            dolphinSchedulerInfoConfig.getProjectName(), processDefinitionId);
-            DqcConstant.verification(result, "删除流程失败{}");
-        } catch (ApiException e) {
-            DqcConstant.printException(e);
-        }
-    }
-
-    /**
-     * 验证流程定义名字
-     *
-     * @param name
-     */
-    @Override
-    public void verifyName(String name) {
-        try {
-            Result result = defaultApi.verifyProcessDefinitionNameUsingGET(name, dolphinSchedulerInfoConfig.getProjectName());
-            DqcConstant.verification(result, "验证失败{}");
-        } catch (ApiException e) {
-            DqcConstant.printException(e);
-        }
-    }
-
-    /**
-     * 复制流程
-     *
-     * @param processDefinitionId
-     */
-    @Override
-    public void copy(Integer processDefinitionId) {
-        try {
-            Result result =
-                    defaultApi.copyProcessDefinitionUsingPOST(processDefinitionId, dolphinSchedulerInfoConfig.getProjectName());
-            DqcConstant.verification(result, "复制流程失败{}");
-        } catch (ApiException e) {
-            DqcConstant.printException(e);
-        }
-    }
-
-    /**
-     * 实例-检查流程
-     *
-     * @param processDefinitionId
-     */
-    @Override
-    public void startCheck(Integer processDefinitionId) {
-        try {
-            Result result =
-                    defaultApi.startCheckProcessDefinitionUsingPOST(
-                            processDefinitionId, dolphinSchedulerInfoConfig.getProjectName());
+                    defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionCode);
             DqcConstant.verification(result, "检查流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -259,44 +212,47 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     /**
-     * 实例-运行
-     *
-     * @param processDefinitionId
+     * startProcessInstance
+     * 运行流程实例
+     * failureStrategy 失败策略 (required)
+     * processDefinitionCode 流程定义编码 (required)
+     * processInstancePriority 流程实例优先级 (required)
+     * projectCode PROJECT_CODE (required)
+     * scheduleTime 定时时间 (required)
+     * warningGroupId 发送组ID (required)
+     * warningType 发送策略 (required)
+     * dryRun dryRun (optional, default to 0)
+     * environmentCode ENVIRONMENT_CODE (optional)
+     * execType 指令类型 (optional)
+     * expectedParallelismNumber 补数任务自定义并行度 (optional)
+     * runMode 运行模式 (optional)
+     * startNodeList 开始节点列表(节点name) (optional)
+     * startParams 启动参数 (optional)
+     * taskDependType 任务依赖类型 (optional)
+     * timeout 超时时间 (optional)
+     * workerGroup worker群组 (optional)
      */
     @Override
-    public void startInstance(Integer processDefinitionId) {
+    public void startInstance(Long processDefinitionCode) {
         try {
             Result result =
                     defaultApi.startProcessInstanceUsingPOST(
-                            //失败策略
                             FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getCode(),
-                            //流程定义id
-                            processDefinitionId,
-                            //流程实例优先级
+                            processDefinitionCode,
                             ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getCode(),
-                            //项目名称
-                            dolphinSchedulerInfoConfig.getProjectName(),
-                            // 定时时间
+                            dolphinSchedulerInfoConfig.getProjectCode(),
                             dolphinRunInfoConfig.getScheduleTime(),
-                            // 发送组ID
                             dolphinRunInfoConfig.getWarningGroupId(),
-                            //发送策略
                             WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getCode(),
-                            //指令类型
+                            dolphinRunInfoConfig.getDryRun(),
+                            dolphinRunInfoConfig.getEnvironmentCode(),
                             dolphinRunInfoConfig.getExecType(),
-                            // 收件人
-                            dolphinRunInfoConfig.getReceivers(),
-                            // 收件人(抄送)
-                            dolphinRunInfoConfig.getReceiversCc(),
-                            //运行模式
+                            dolphinRunInfoConfig.getExpectedParallelismNumber(),
                             RunModeEnum.fromValue(dolphinRunInfoConfig.getRunMode()).getCode(),
-                            // 开始节点列表(节点name)
                             dolphinRunInfoConfig.getStartNodeList(),
-                            //任务依赖类型
+                            dolphinRunInfoConfig.getStartParams(),
                             TaskDependTypeEnum.fromValue(dolphinRunInfoConfig.getTaskDependType()).getCode(),
-                            // 超时时间
                             dolphinRunInfoConfig.getTimeout(),
-                            // WORKER_GROUP
                             dolphinSchedulerInfoConfig.getTaskWorkerGroup()
                     );
             DqcConstant.verification(result, "运行失败{}");

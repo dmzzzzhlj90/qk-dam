@@ -66,12 +66,12 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         return getProcessInstanceList(instanceParamsDTO, getProcessDefIdByDirId(instanceParamsDTO.getDirId()));
     }
 
-    private List<Integer> getProcessDefIdByDirId(String dirId) {
+    private List<Long> getProcessDefIdByDirId(String dirId) {
         //查询目录下所有的流程定义ID
         return dqcSchedulerBasicInfoService.getInfoByDirId(dirId).stream().map(DqcSchedulerBasicInfo::getProcessDefinitionId).collect(Collectors.toList());
     }
 
-    private List<ProcessInstanceDTO> getProcessInstanceList(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<Integer> processDefIds) {
+    private List<ProcessInstanceDTO> getProcessInstanceList(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<Long> processDefIds) {
         List<ProcessInstanceDTO> totalList = new ArrayList<>();
         processDefIds.forEach(pdId ->
                 totalList.addAll(
@@ -83,12 +83,12 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         return totalList;
     }
 
-    private ProcessInstanceSearchDTO getProcessInstanceSearch(DqcSchedulerInstanceParamsDTO instanceParams, Integer pdId) {
+    private ProcessInstanceSearchDTO getProcessInstanceSearch(DqcSchedulerInstanceParamsDTO instanceParams, Long pdId) {
         //封装查询参数
         ProcessInstanceSearchDTO instanceSearchDTO = getProcessInstanceSearch(instanceParams);
         instanceSearchDTO.setPageNo(1);
         instanceSearchDTO.setPageSize(instanceParams.getPagination().getPage() * instanceParams.getPagination().getSize());
-        instanceSearchDTO.setProcessDefinitionId(pdId);
+        instanceSearchDTO.setProcessDefineCode(pdId);
         return instanceSearchDTO;
     }
 

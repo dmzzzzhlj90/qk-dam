@@ -18,9 +18,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class DqcSchedulerDTO {
 
-  /** 流程定义ID */
+  /** 流程定义code */
   @NotNull(message = "流程定义ID不能为空！")
-  Integer processDefinitionId;
+  Long processDefinitionCode;
 
   /** 作业ID */
   @NotNull(message = "作业ID不能为空！")

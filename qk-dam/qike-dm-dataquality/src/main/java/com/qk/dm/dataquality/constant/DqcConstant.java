@@ -7,6 +7,8 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
+import com.qk.datacenter.model.ResultProcessInstance;
+import com.qk.datacenter.model.Resultstring;
 import org.springframework.util.ObjectUtils;
 
 import java.util.*;
@@ -105,6 +107,18 @@ public class DqcConstant {
         }
     }
 
+    public static void verification(Resultstring result, String output) {
+        if (result.getCode() != null && !result.getCode().equals(DqcConstant.RESULT_CODE)) {
+            throw new BizException(output + result.getMsg());
+        }
+    }
+
+    public static void verification(ResultProcessInstance result, String output) {
+        if (result.getCode() != null && !result.getCode().equals(DqcConstant.RESULT_CODE)) {
+            throw new BizException(output + result.getMsg());
+        }
+    }
+
     public static void printException(ApiException e) {
         System.err.println("Exception when calling DefaultApi");
         System.err.println("Status code: " + e.getCode());
@@ -119,6 +133,7 @@ public class DqcConstant {
         object.put(SCHEDULE_TIME_START, DateUtil.format(effectiveTimeStart, format));
         object.put(SCHEDULE_TIME_END, DateUtil.format(effectiveTimeEnt, format));
         object.put(SCHEDULE_CRON, cron);
+        object.put("timezoneId", "Asia/Shanghai");
         return object.toJSONString();
     }
 

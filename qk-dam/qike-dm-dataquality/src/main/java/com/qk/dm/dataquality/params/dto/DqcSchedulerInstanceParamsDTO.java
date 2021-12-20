@@ -20,9 +20,9 @@ public class DqcSchedulerInstanceParamsDTO {
     Pagination pagination;
 
     /**
-     * 流程定义ID
+     * 流程定义code
      */
-    Integer processDefinitionId;
+    Long processDefineCode;
 
     /**
      * 开始时间
@@ -35,7 +35,7 @@ public class DqcSchedulerInstanceParamsDTO {
     String endDate;
 
     /**
-     * 搜索值(名称)
+     * 搜索值
      */
     String searchVal;
 
@@ -45,7 +45,7 @@ public class DqcSchedulerInstanceParamsDTO {
     String stateType;
 
     /**
-     * 执行用户
+     * 流程名称
      */
     String executorName;
 

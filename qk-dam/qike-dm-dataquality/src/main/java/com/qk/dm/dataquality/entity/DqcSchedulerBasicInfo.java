@@ -45,7 +45,7 @@ public class DqcSchedulerBasicInfo implements Serializable {
      * 调度流程实例ID
      */
     @Column(name = "process_definition_Id", nullable = false)
-    private Integer processDefinitionId;
+    private Long processDefinitionId;
 
     /**
      * 提示级别 "HINT":"提示","GENERAL":"一般","SERIOUS":"严重","FATAL":"致命";

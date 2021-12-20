@@ -51,7 +51,7 @@ public class DqcSchedulerBasicInfoVO {
      * 调度流程实例ID
      */
     @NotNull(message = "调度流程实例ID不能为空！")
-    private Integer processDefinitionId;
+    private Long processDefinitionId;
 
     /**
      * 提示级别 "HINT":"提示","GENERAL":"一般","SERIOUS":"严重","FATAL":"致命";
