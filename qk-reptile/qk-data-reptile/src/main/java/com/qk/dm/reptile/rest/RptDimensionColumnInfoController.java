@@ -77,7 +77,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
 }
 
   /**
-   * 数据采集-根据维度目录查询唯独字段
+   * 数据采集-根据维度目录查询维度字段
    * @param rptDimensionInfoColumnScreenParamsDTO
    * @return DefaultCommonResult<Map<String,String>>
    */
