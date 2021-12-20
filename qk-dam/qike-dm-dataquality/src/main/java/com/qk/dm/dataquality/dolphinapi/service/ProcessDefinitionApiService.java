@@ -26,20 +26,14 @@ public interface ProcessDefinitionApiService {
 
     ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId);
 
-    void delete(String projectName, Integer processDefinitionId);
+    void delete(String projectName, Long processDefinitionId);
 
-    void deleteBulk(String projectName, List<Integer> processDefinitionIds);
+    void deleteBulk(String projectName, List<Long> processDefinitionIds);
 
-    void release(Integer processDefinitionId, Integer releaseState);
+    void release(Long processDefinitionCode, Integer releaseState);
 
-    void deleteOne(Integer processDefinitionId);
+    void startCheck(Long processDefinitionCode);
 
-    void verifyName(String name);
-
-    void copy(Integer processDefinitionId);
-
-    void startCheck(Integer processDefinitionId);
-
-    void startInstance(Integer processDefinitionId);
+    void startInstance(Long processDefinitionCode);
 
 }

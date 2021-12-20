@@ -36,29 +36,29 @@ public class DolphinScheduler {
     /**
      * 流程定义上线
      *
-     * @param processDefinitionId
+     * @param processDefinitionCode
      */
-    public void online(Integer processDefinitionId) {
-        processDefinitionApiService.release(processDefinitionId, SchedulerStateEnum.ONLINE.getState());
+    public void online(Long processDefinitionCode) {
+        processDefinitionApiService.release(processDefinitionCode, SchedulerStateEnum.ONLINE.getState());
     }
 
     /**
      * 流程定义下线
      *
-     * @param processDefinitionId
+     * @param processDefinitionCode
      */
-    public void offline(Integer processDefinitionId) {
-        processDefinitionApiService.release(processDefinitionId, SchedulerStateEnum.OFFLINE.getState());
+    public void offline(Long processDefinitionCode) {
+        processDefinitionApiService.release(processDefinitionCode, SchedulerStateEnum.OFFLINE.getState());
     }
 
     /**
      * 运行
      *
-     * @param processDefinitionId
+     * @param processDefinitionCode
      */
-    public void startInstance(Integer processDefinitionId) {
-        processDefinitionApiService.startCheck(processDefinitionId);
-        processDefinitionApiService.startInstance(processDefinitionId);
+    public void startInstance(Long processDefinitionCode) {
+        processDefinitionApiService.startCheck(processDefinitionCode);
+        processDefinitionApiService.startInstance(processDefinitionCode);
     }
 
     /*****************************流程实例**开始*************************************************/
@@ -132,20 +132,19 @@ public class DolphinScheduler {
     /**
      * 新增定时器
      *
-     * @param processDefinitionId
+     * @param processDefinitionCode
      * @param effectiveTimeStart
      * @param effectiveTimeEnt
      * @param cron
      * @return
      */
-    public Integer createSchedule(
-            Integer processDefinitionId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+    public Integer createSchedule(Long processDefinitionCode, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
         // 创建定时
-        scheduleApiService.create(processDefinitionId, effectiveTimeStart, effectiveTimeEnt, cron);
+        scheduleApiService.create(processDefinitionCode, effectiveTimeStart, effectiveTimeEnt, cron);
         // 查询定时
         ScheduleSearchDTO scheduleSearchDTO =
                 ScheduleSearchDTO.builder()
-                        .processDefinitionId(processDefinitionId)
+                        .processDefinitionCode(processDefinitionCode)
                         .pageNo(SchedulerConstant.PAGE_NO)
                         .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
                         .build();
@@ -196,13 +195,13 @@ public class DolphinScheduler {
     /**
      * 查询定时器
      *
-     * @param processDefinitionId
+     * @param processDefinitionCode
      */
-    public ScheduleDTO searchSchedule(Integer processDefinitionId) {
+    public ScheduleDTO searchSchedule(Long processDefinitionCode) {
         // 查询定时
         ScheduleSearchDTO scheduleSearchDTO =
                 ScheduleSearchDTO.builder()
-                        .processDefinitionId(processDefinitionId)
+                        .processDefinitionCode(processDefinitionCode)
                         .pageNo(SchedulerConstant.PAGE_NO)
                         .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
                         .build();

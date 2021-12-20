@@ -40,32 +40,32 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     }
 
     /**
-     * createSchedule 创建定时
+     * createSchedule
+     * 创建定时
+     * processDefinitionCode 流程定义编码 (required)
+     * projectCode PROJECT_CODE (required)
+     * environmentCode ENVIRONMENT_CODE (optional)
+     * failureStrategy 失败策略 (optional)
+     * processInstancePriority 流程实例优先级 (optional)
+     * schedule 定时 (optional)
+     * warningGroupId 发送组ID (optional)
+     * warningType 发送策略 (optional)
+     * workerGroup workerGroup (optional, default to default)
      */
     @Override
-    public void create(Integer processDefinitionId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+    public void create(Long processDefinitionCode, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
         try {
             Result result =
                     defaultApi.createScheduleUsingPOST(
-                            // 流程定义Id
-                            processDefinitionId,
-                            // 项目名称
-                            dolphinSchedulerInfoConfig.getProjectName(),
-                            // 失败策略
+                            processDefinitionCode,
+                            dolphinSchedulerInfoConfig.getProjectCode(),
+                            dolphinRunInfoConfig.getEnvironmentCode(),
                             FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getCode(),
-                            // 流程实例优先级
                             ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getCode(),
-                            // 收件人
-                            dolphinRunInfoConfig.getReceivers(),
-                            // 收件人(抄送)
-                            dolphinRunInfoConfig.getReceiversCc(),
                             // 拼接定时时间
                             DqcConstant.schedule(effectiveTimeStart, effectiveTimeEnt, cron),
-                            // 发送组ID
                             dolphinRunInfoConfig.getWarningGroupId(),
-                            // 发送策略
                             WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getCode(),
-                            // WORKER_GROUP
                             dolphinSchedulerInfoConfig.getTaskWorkerGroup());
             DqcConstant.verification(result, "创建定时失败{},");
         } catch (ApiException e) {
@@ -73,31 +73,32 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
         }
     }
 
+    /**
+     * updateSchedule
+     * 更新定时
+     * id 定时ID (required)
+     * projectCode PROJECT_CODE (required)
+     * environmentCode ENVIRONMENT_CODE (optional)
+     * failureStrategy 失败策略 (optional)
+     * processInstancePriority 流程实例优先级 (optional)
+     * schedule 定时 (optional)
+     * warningGroupId 发送组ID (optional)
+     * warningType 发送策略 (optional)
+     * workerGroup worker群组 (optional)
+     */
     @Override
-    public void update(
-            Integer scheduleId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+    public void update(Integer scheduleId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
         try {
             Result result =
-                    defaultApi.updateScheduleUsingPOST(
-                            // 定时id
+                    defaultApi.updateScheduleUsingPUT(
                             scheduleId,
-                            // 项目名称
-                            dolphinSchedulerInfoConfig.getProjectName(),
-                            // 失败策略
+                            dolphinSchedulerInfoConfig.getProjectCode(),
+                            dolphinRunInfoConfig.getEnvironmentCode(),
                             FailureStrategyEnum.fromValue(dolphinRunInfoConfig.getFailureStrategy()).getCode(),
-                            // 流程实例优先级
                             ProcessInstancePriorityEnum.fromValue(dolphinRunInfoConfig.getProcessInstancePriority()).getCode(),
-                            // 收件人
-                            dolphinRunInfoConfig.getReceivers(),
-                            // 收件人(抄送)
-                            dolphinRunInfoConfig.getReceiversCc(),
-                            // 拼接定时时间
                             DqcConstant.schedule(effectiveTimeStart, effectiveTimeEnt, cron),
-                            // 发送组ID
                             dolphinRunInfoConfig.getWarningGroupId(),
-                            // 发送策略
                             WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getCode(),
-                            // WORKER_GROUP
                             dolphinSchedulerInfoConfig.getTaskWorkerGroup());
             DqcConstant.verification(result, "修改定时失败{},");
         } catch (ApiException e) {
@@ -108,7 +109,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     @Override
     public void online(Integer scheduleId) {
         try {
-            Result result = defaultApi.onlineUsingPOST(scheduleId, dolphinSchedulerInfoConfig.getProjectName());
+            Result result = defaultApi.onlineUsingPOST(scheduleId, dolphinSchedulerInfoConfig.getProjectCode());
             DqcConstant.verification(result, "定时上线失败{},");
         } catch (ApiException e) {
             DqcConstant.printException(e);
@@ -118,30 +119,30 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     @Override
     public void offline(Integer scheduleId) {
         try {
-            Result result = defaultApi.offlineUsingPOST(scheduleId, dolphinSchedulerInfoConfig.getProjectName());
+            Result result = defaultApi.offlineUsingPOST(scheduleId, dolphinSchedulerInfoConfig.getProjectCode());
             DqcConstant.verification(result, "定时下线失败{},");
         } catch (ApiException e) {
             DqcConstant.printException(e);
         }
     }
 
+
     @Override
     public void deleteOne(ScheduleDeleteDTO scheduleDeleteDTO) {
         try {
             Result result =
-                    defaultApi.deleteScheduleByIdUsingGET(
-                            dolphinSchedulerInfoConfig.getProjectName(),
+                    defaultApi.deleteScheduleByIdUsingDELETE(
                             scheduleDeleteDTO.getScheduleId(),
+                            dolphinSchedulerInfoConfig.getProjectCode(),
                             scheduleDeleteDTO.getAlertGroup(),
                             scheduleDeleteDTO.getCreateTime(),
                             scheduleDeleteDTO.getEmail(),
-                            scheduleDeleteDTO.getId(),
                             scheduleDeleteDTO.getPhone(),
                             scheduleDeleteDTO.getQueue(),
                             scheduleDeleteDTO.getQueueName(),
+                            scheduleDeleteDTO.getState(),
                             scheduleDeleteDTO.getTenantCode(),
                             scheduleDeleteDTO.getTenantId(),
-                            scheduleDeleteDTO.getTenantName(),
                             scheduleDeleteDTO.getUpdateTime(),
                             scheduleDeleteDTO.getUserName(),
                             scheduleDeleteDTO.getUserPassword(),
@@ -152,14 +153,23 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
         }
     }
 
+    /**
+     * queryScheduleListPaging
+     * 分页查询定时
+     * processDefinitionCode processDefinitionCode (required)
+     * projectCode PROJECT_CODE (required)
+     * pageNo 页码号 (optional)
+     * pageSize 页大小 (optional)
+     * searchVal 搜索值 (optional)
+     */
     @Override
     public ScheduleResultDTO search(ScheduleSearchDTO scheduleSearchDTO) {
         ScheduleResultDTO scheduleResultDTO = new ScheduleResultDTO();
         try {
             Result result =
                     defaultApi.queryScheduleListPagingUsingGET(
-                            scheduleSearchDTO.getProcessDefinitionId(),
-                            dolphinSchedulerInfoConfig.getProjectName(),
+                            scheduleSearchDTO.getProcessDefinitionCode(),
+                            dolphinSchedulerInfoConfig.getProjectCode(),
                             scheduleSearchDTO.getPageNo(),
                             scheduleSearchDTO.getPageSize(),
                             scheduleSearchDTO.getSearchVal());

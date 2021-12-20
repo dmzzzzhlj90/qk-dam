@@ -3,9 +3,6 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataquality.constant.SchedulerStateEnum;
 import com.qk.dm.dataquality.constant.SchedulerTypeEnum;
-import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
-import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceSearchDTO;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerDTO;
@@ -13,7 +10,6 @@ import com.qk.dm.dataquality.params.dto.DqcSchedulerReleaseDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.service.DqcSchedulerConfigService;
 import com.qk.dm.dataquality.service.DqcSchedulerExecutorsService;
-import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -42,32 +38,73 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
     public void release(DqcSchedulerReleaseDTO infoReleaseDto) {
         DqcSchedulerBasicInfo basicInfo =
                 schedulerBasicInfoService.getBasicInfo(infoReleaseDto.getId());
-        Integer processDefinitionId = basicInfo.getProcessDefinitionId();
+        Long processDefinitionId = basicInfo.getProcessDefinitionId();
         if (infoReleaseDto.getSchedulerState().equals(SchedulerStateEnum.ONLINE.getCode())) {
-            dolphinScheduler.online(processDefinitionId);
+            dolphinScheduler.online(Long.valueOf(processDefinitionId));
             // 处理定时
-            doScheduler(processDefinitionId, basicInfo.getJobId());
+            doScheduler(Long.valueOf(processDefinitionId), basicInfo.getJobId());
         } else {
-            dolphinScheduler.offline(processDefinitionId);
+            dolphinScheduler.offline(Long.valueOf(processDefinitionId));
         }
         //TODO 调度状态
         basicInfo.setSchedulerState(infoReleaseDto.getSchedulerState());
         schedulerBasicInfoService.update(basicInfo);
     }
 
-    private void doScheduler(Integer processDefinitionId, String jobId) {
+    private void doScheduler(Long processDefinitionCode, String jobId) {
         DqcSchedulerConfig config = dqcSchedulerConfigService.getConfig(jobId);
-        // 如果之前存在定时，并且是周期调度，修改，否则删除调度
-        if (config.getSchedulerId() != null) {
-            if (Objects.equals(config.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
-                dolphinScheduler.updateSchedule(config.getSchedulerId(), config.getEffectiveTimeStart(), config.getEffectiveTimeEnt(), config.getCron());
-                online(config.getSchedulerId());
+        Integer scheduleId = config.getSchedulerId();
+        if (Objects.equals(config.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
+            if (scheduleId != null) {
+                updataSchedule(config, scheduleId);
             } else {
-                deleteSchedule(config, config.getSchedulerId());
+                scheduleId = createScheduleAndFlush(processDefinitionCode, config);
             }
-        } else {
-            createSchedule(processDefinitionId, config);
+            online(scheduleId);
+        } else if (scheduleId != null) {
+            deleteSchedule(config, scheduleId);
         }
+    }
+
+    /**
+     * 修改定时
+     * @param config
+     * @param schedulerId
+     */
+    private void updataSchedule(DqcSchedulerConfig config, Integer schedulerId) {
+        dolphinScheduler.updateSchedule(schedulerId, config.getEffectiveTimeStart(), config.getEffectiveTimeEnt(), config.getCron());
+    }
+
+    /**
+     * 创建定时
+     * @param processDefinitionCode
+     * @param config
+     * @return
+     */
+    private Integer createScheduleAndFlush(Long processDefinitionCode, DqcSchedulerConfig config) {
+        Integer scheduleId = dolphinScheduler.createSchedule(processDefinitionCode, config.getEffectiveTimeStart(), config.getEffectiveTimeEnt(), config.getCron());
+        updateConfig(scheduleId, config);
+        return scheduleId;
+    }
+
+    /**
+     * 删除定时
+     * @param config
+     * @param schedulerId
+     */
+    private void deleteSchedule(DqcSchedulerConfig config, Integer schedulerId) {
+        dolphinScheduler.deleteSchedule(schedulerId);
+        updateConfig(null, config);
+    }
+
+    /**
+     * 更改本地存储定时id
+     * @param scheduleId
+     * @param config
+     */
+    public void updateConfig(Integer scheduleId, DqcSchedulerConfig config) {
+        config.setSchedulerId(scheduleId);
+        dqcSchedulerConfigService.update(config);
     }
 
     @Override
@@ -76,66 +113,15 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
         if (!basicInfo.getSchedulerState().equals(SchedulerStateEnum.ONLINE.getCode())) {
             throw new BizException("请先启动调度！");
         }
-        dolphinScheduler.startInstance(basicInfo.getProcessDefinitionId());
-        basicInfo.setRunInstanceState(1);
-        schedulerBasicInfoService.update(basicInfo);
-    }
-
-//    @Override
-//    public DqcProcessInstanceVO instanceDetailByList(Long id) {
-//        DqcSchedulerBasicInfo basicInfo = schedulerBasicInfoService.getBasicInfo(id);
-//
-//        ProcessInstanceSearchDTO instanceSearchDTO =
-//                ProcessInstanceSearchDTO.builder()
-//                        .processDefinitionId(basicInfo.getProcessDefinitionId())
-//                        .pageNo(SchedulerConstant.PAGE_NO)
-//                        .pageSize(SchedulerConstant.SCHEDULER_PAGE_SIZE)
-//                        .build();
-//
-//        // 获取到最近运行实例
-//        DqcProcessInstanceVO instanceData = dolphinScheduler.detailByList(instanceSearchDTO).get(0);
-//        // 保存状态
-//        InstanceStateTypeEnum instanceStateTypeEnum = InstanceStateTypeEnum.fromValue(instanceData.getState());
-//        instanceData.setStateName(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getValue());
-//        basicInfo.setRunInstanceState(instanceStateTypeEnum.getSchedulerInstanceStateEnum().getCode());
-//        schedulerBasicInfoService.update(basicInfo);
-//        return instanceData;
-//    }
-
-    public void createSchedule(Integer processDefinitionId, DqcSchedulerConfig config) {
-        if (Objects.equals(config.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
-            Integer scheduleId = createScheduleAndFlush(processDefinitionId, config);
-            online(scheduleId);
-        }
-    }
-
-    private Integer createScheduleAndFlush(Integer processDefinitionId, DqcSchedulerConfig config) {
-        Integer scheduleId = dolphinScheduler.createSchedule(processDefinitionId, config.getEffectiveTimeStart(), config.getEffectiveTimeEnt(), config.getCron());
-        updateConfig(scheduleId, config);
-        return scheduleId;
-    }
-
-    private void deleteSchedule(DqcSchedulerConfig config, Integer schedulerId) {
-        dolphinScheduler.deleteSchedule(schedulerId);
-        updateConfig(null, config);
-    }
-
-    public void updateConfig(Integer scheduleId, DqcSchedulerConfig config) {
-        config.setSchedulerId(scheduleId);
-        dqcSchedulerConfigService.update(config);
+        dolphinScheduler.startInstance(Long.valueOf(basicInfo.getProcessDefinitionId()));
     }
 
     /*********************定时单个操作*************************************************************/
 
     @Override
-    public void createSchedule(DqcSchedulerDTO dqcSchedulerDTO) {
-        createScheduleAndFlush(dqcSchedulerDTO.getProcessDefinitionId(), dqcSchedulerConfigService.getConfig(dqcSchedulerDTO.getJobId()));
-    }
-
-    @Override
     public void update(Integer scheduleId, DqcSchedulerDTO dqcSchedulerDTO) {
         DqcSchedulerConfig config = dqcSchedulerConfigService.getConfig(dqcSchedulerDTO.getJobId());
-        dolphinScheduler.updateSchedule(scheduleId, config.getEffectiveTimeStart(), config.getEffectiveTimeEnt(), config.getCron());
+        updataSchedule(config, scheduleId);
     }
 
     @Override
@@ -155,7 +141,7 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
     }
 
     @Override
-    public Object search(Integer processDefinitionId) {
-        return dolphinScheduler.searchSchedule(processDefinitionId);
+    public Object search(Long processDefinitionCode) {
+        return dolphinScheduler.searchSchedule(processDefinitionCode);
     }
 }

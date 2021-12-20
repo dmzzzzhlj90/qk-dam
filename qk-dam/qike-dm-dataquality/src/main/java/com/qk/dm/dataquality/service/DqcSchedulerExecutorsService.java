@@ -13,10 +13,6 @@ public interface DqcSchedulerExecutorsService {
 
     void runing(Long id);
 
-//    DqcProcessInstanceVO instanceDetailByList(Long id);
-
-    void createSchedule(DqcSchedulerDTO dqcSchedulerDTO);
-
     void update(Integer scheduleId, DqcSchedulerDTO dqcSchedulerDTO);
 
     void online(Integer scheduleId);
@@ -25,5 +21,5 @@ public interface DqcSchedulerExecutorsService {
 
     void deleteOne(Integer scheduleId, DqcSchedulerDTO dqcSchedulerDTO);
 
-    Object search(Integer processDefinitionId);
+    Object search(Long processDefinitionCode);
 }

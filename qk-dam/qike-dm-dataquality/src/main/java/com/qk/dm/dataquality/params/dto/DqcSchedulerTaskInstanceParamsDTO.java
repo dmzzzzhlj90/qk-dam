@@ -25,6 +25,11 @@ public class DqcSchedulerTaskInstanceParamsDTO {
     Integer processInstanceId;
 
     /**
+     * 流程实例名称
+     */
+    String processInstanceName;
+
+    /**
      * 开始时间
      */
     String startDate;
@@ -35,7 +40,7 @@ public class DqcSchedulerTaskInstanceParamsDTO {
     String endDate;
 
     /**
-     * 搜索值(名称：模糊搜索)
+     * 搜索值
      */
     String searchVal;
 
@@ -45,7 +50,7 @@ public class DqcSchedulerTaskInstanceParamsDTO {
     String stateType;
 
     /**
-     * 执行用户
+     * 流程名称
      */
     String executorName;
 

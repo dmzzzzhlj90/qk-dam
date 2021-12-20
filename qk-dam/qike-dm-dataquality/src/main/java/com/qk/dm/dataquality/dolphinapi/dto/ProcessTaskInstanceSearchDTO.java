@@ -34,13 +34,29 @@ public class ProcessTaskInstanceSearchDTO implements Serializable {
      * @param taskName 任务实例名 (optional)
      * @return Result
      */
-    String projectName;
+    /**
+     * queryTaskListPaging
+     * 分页查询任务实例列表
+     * @param pageNo 页码号 (required)
+     * @param pageSize 页大小 (required)
+     * @param projectCode PROJECT_CODE (required)
+     * @param endDate 结束时间 (optional)
+     * @param executorName 流程名称 (optional)
+     * @param host 运行任务的主机IP地址 (optional)
+     * @param processInstanceId 流程实例ID (optional)
+     * @param processInstanceName 流程实例名称 (optional)
+     * @param searchVal 搜索值 (optional)
+     * @param startDate 开始时间 (optional)
+     * @param stateType 工作流和任务节点的运行状态 (optional)
+     * @param taskName 任务实例名 (optional)
+     */
+    Integer pageNo;
+    Integer pageSize;
     String endDate;
     String executorName;
     String host;
-    Integer pageNo;
-    Integer pageSize;
     Integer processInstanceId;
+    String processInstanceName;
     String searchVal;
     String startDate;
     String stateType;
