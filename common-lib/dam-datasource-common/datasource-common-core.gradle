@@ -6,15 +6,18 @@ version "${commonLibVersion}"
 group "com.qk.dam.datasource.common"
 dependencies {
     compile group: 'org.projectlombok', name: 'lombok'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8',version: '2.12.1'
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
     annotationProcessor 'org.projectlombok:lombok'
 }
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     }
 }

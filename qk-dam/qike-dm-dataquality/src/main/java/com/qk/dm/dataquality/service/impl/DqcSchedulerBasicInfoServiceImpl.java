@@ -7,6 +7,7 @@ import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.SchedulerInstanceStateEnum;
 import com.qk.dm.dataquality.constant.SchedulerStateEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
+import com.qk.dm.dataquality.entity.QDqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerBasicInfoMapper;
 import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoService {
     private final DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository;
+    private final QDqcSchedulerBasicInfo qDqcSchedulerBasicInfo = QDqcSchedulerBasicInfo.dqcSchedulerBasicInfo;
 
     public DqcSchedulerBasicInfoServiceImpl(DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository) {
         this.dqcSchedulerBasicInfoRepository = dqcSchedulerBasicInfoRepository;
@@ -102,6 +104,11 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         return info;
     }
 
+    @Override
+    public List<DqcSchedulerBasicInfo> getInfoByDirId(String dirId) {
+        return (List<DqcSchedulerBasicInfo>) dqcSchedulerBasicInfoRepository.findAll(qDqcSchedulerBasicInfo.dirId.eq(dirId));
+    }
+
     private void checkState(DqcSchedulerBasicInfo info) {
         if (info.getSchedulerState().equals(SchedulerStateEnum.ONLINE.getCode())) {
             throw new BizException("启动调度后不可进行此操作！");
@@ -136,4 +143,6 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
             throw new BizException("任务名称不能更改！");
         }
     }
+
+
 }

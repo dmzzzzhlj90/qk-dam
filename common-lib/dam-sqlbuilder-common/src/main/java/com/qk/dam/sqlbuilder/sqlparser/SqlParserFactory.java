@@ -2,13 +2,18 @@ package com.qk.dam.sqlbuilder.sqlparser;
 
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.SQLUtils;
+import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.dialect.blink.parser.BlinkStatementParser;
 import com.alibaba.druid.sql.dialect.clickhouse.parser.ClickhouseStatementParser;
 import com.alibaba.druid.sql.dialect.db2.parser.DB2StatementParser;
 import com.alibaba.druid.sql.dialect.h2.parser.H2StatementParser;
 import com.alibaba.druid.sql.dialect.hive.parser.HiveStatementParser;
+import com.alibaba.druid.sql.parser.ParserException;
 import com.alibaba.druid.sql.parser.SQLParserFeature;
+import com.alibaba.druid.sql.parser.SQLParserUtils;
 import com.alibaba.druid.sql.parser.SQLStatementParser;
+
+import java.util.List;
 
 /**
  * SQL校验工厂
@@ -79,6 +84,25 @@ public class SqlParserFactory {
   }
 
   public static void main(String[] args) {
-    System.out.println(parseStatements("SELECT sum() FROM gvcup4 WHERE ()name234", DbType.hive));
+      System.out.println(parseStatements("SELECT sum() FROM gvcup4 WHERE ()name234", DbType.hive));
   }
+
+    /**
+     * 摘取源码中格式化前对sql检验的方法
+     * @param sql
+     * @param dbType
+     * @return
+     */
+    public static String sqlFormat(String sql,DbType dbType) {
+        List<SQLStatement> statementList = null;
+        SQLStatementParser parser = null;
+        try {
+            parser = SQLParserUtils.createSQLStatementParser(sql, dbType);
+            statementList = parser.parseStatementList();
+        } catch (ParserException e) {
+            System.out.println(dbType+" SQL转换中发生了错误：" + e.getMessage());
+            throw e;
+        }
+        return SQLUtils.toSQLString(statementList, dbType);
+    }
 }

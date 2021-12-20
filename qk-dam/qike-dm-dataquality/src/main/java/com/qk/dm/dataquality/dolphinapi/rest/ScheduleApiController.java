@@ -2,8 +2,8 @@
 //
 //import com.qk.dam.commons.enums.ResultCodeEnum;
 //import com.qk.dam.commons.http.result.DefaultCommonResult;
-//import com.qk.dm.dataquality.dolphinapi.dto.ScheduleDeleteDTO;
-//import com.qk.dm.dataquality.dolphinapi.dto.ScheduleSearchDTO;
+//import com.qk.dm.dataquality.dolphinapi.com.qk.dm.groovy.dto.ScheduleDeleteDTO;
+//import com.qk.dm.dataquality.dolphinapi.com.qk.dm.groovy.dto.ScheduleSearchDTO;
 //import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
 //import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
 //import lombok.extern.slf4j.Slf4j;

@@ -1,0 +1,5124 @@
+{
+  "components": {
+    "schemas": {
+      "_rule_template_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_db_connect__type_Request": {},
+      "_rule_template_bulkRequest": {},
+      "_scheduler_info_page_listRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "jobId": {
+            "format": "string",
+            "description": "作业id",
+            "type": "string"
+          },
+          "jobName": {
+            "format": "string",
+            "description": "作业名称",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          },
+          "beginDay": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDay": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          }
+        }
+      },
+      "_scheduler_executors_releaseResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_template_releaseResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_executors_runing__id_Request": {},
+      "_scheduler_info_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_instance__processInstanceId_Request": {},
+      "_scheduler_executors_releaseRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "schedulerState": {
+            "format": "string",
+            "description": "调度状态 \"OFFLINE\":\"下线\",\"ONLINE\":\"上线\"",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "schedulerState"
+        ]
+      },
+      "_rule_template_page_listResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int32",
+                      "description": "No comments found.",
+                      "type": "integer"
+                    },
+                    "tempName": {
+                      "format": "string",
+                      "description": "模板名称",
+                      "type": "string"
+                    },
+                    "tempType": {
+                      "format": "string",
+                      "description": "模板类型 BUILT_IN_SYSTEM_系统内置 CUSTOM_自定义",
+                      "type": "string"
+                    },
+                    "dirId": {
+                      "format": "string",
+                      "description": "分类目录",
+                      "type": "string"
+                    },
+                    "dimensionType": {
+                      "format": "string",
+                      "description": "质量纬度id",
+                      "type": "string"
+                    },
+                    "engineTypeList": {
+                      "description": "适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔",
+                      "type": "array",
+                      "items": {}
+                    },
+                    "description": {
+                      "format": "string",
+                      "description": "描述",
+                      "type": "string"
+                    },
+                    "tempSql": {
+                      "format": "string",
+                      "description": "模板sql",
+                      "type": "string"
+                    },
+                    "tempResult": {
+                      "format": "string",
+                      "description": "结果定义",
+                      "type": "string"
+                    },
+                    "ruleType": {
+                      "format": "string",
+                      "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\"",
+                      "type": "string"
+                    },
+                    "publishState": {
+                      "format": "string",
+                      "description": "发布状态 \"OFFLINE\":\"下线\",\"OUTLINE\":\"草稿\",\"RELEASE\":\"发布\";",
+                      "type": "string"
+                    },
+                    "createUserid": {
+                      "format": "string",
+                      "description": "创建人",
+                      "type": "string"
+                    },
+                    "gmtModified": {
+                      "format": "string",
+                      "description": "修改时间",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_process_startCheckRequest": {},
+      "_rule_dir_listResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "No comments found.",
+                  "type": "integer"
+                },
+                "dirId": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "title": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "value": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "parentId": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "children": {
+                  "description": "No comments found.",
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "_process_releaseRequest": {},
+      "_scheduler_instance_task_listResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int32",
+                      "description": "No comments found.",
+                      "type": "integer"
+                    },
+                    "processDefinitionId": {
+                      "format": "int32",
+                      "description": "流程id",
+                      "type": "integer"
+                    },
+                    "processInstanceId": {
+                      "format": "int32",
+                      "description": "实例id",
+                      "type": "integer"
+                    },
+                    "processInstanceName": {
+                      "format": "string",
+                      "description": "工作流名称",
+                      "type": "string"
+                    },
+                    "name": {
+                      "format": "string",
+                      "description": "任务实例名称",
+                      "type": "string"
+                    },
+                    "executorName": {
+                      "format": "string",
+                      "description": "执行用户",
+                      "type": "string"
+                    },
+                    "taskType": {
+                      "format": "string",
+                      "description": "节点类型",
+                      "type": "string"
+                    },
+                    "state": {
+                      "format": "string",
+                      "description": "状态",
+                      "type": "string"
+                    },
+                    "submitTime": {
+                      "format": "string",
+                      "description": "提交时间",
+                      "type": "string"
+                    },
+                    "startTime": {
+                      "format": "string",
+                      "description": "开始时间",
+                      "type": "string"
+                    },
+                    "endTime": {
+                      "format": "string",
+                      "description": "结束时间",
+                      "type": "string"
+                    },
+                    "host": {
+                      "format": "string",
+                      "description": "机器地址",
+                      "type": "string"
+                    },
+                    "duration": {
+                      "format": "string",
+                      "description": "运行时长",
+                      "type": "string"
+                    },
+                    "retryTimes": {
+                      "format": "int32",
+                      "description": "重试次数",
+                      "type": "integer"
+                    },
+                    "stateName": {
+                      "format": "string",
+                      "description": "状态名称",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_scheduler_instance_task_logRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "taskInstanceId": {
+            "format": "int32",
+            "description": "任务实例id",
+            "type": "integer"
+          }
+        }
+      },
+      "_rule_db_connect__type_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "_process_definition_infoResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "name": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "version": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "releaseState": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "projectId": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "processDefinitionJson": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "description": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "globalParams": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "globalParamList": {
+                "description": "No comments found.",
+                "type": "array",
+                "items": {}
+              },
+              "globalParamMap": {
+                "description": "No comments found.(map data)",
+                "type": "object"
+              },
+              "createTime": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "updateTime": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "flag": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "userId": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "userName": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "projectName": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "locations": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "connects": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "receivers": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "receiversCc": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "scheduleReleaseState": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "timeout": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "tenantId": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "modifyBy": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "resourceIds": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_process_Request": {},
+      "_scheduler_executors_runing__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_info_page_listResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int64",
+                      "description": "主键ID",
+                      "type": "integer"
+                    },
+                    "jobId": {
+                      "format": "string",
+                      "description": "作业id",
+                      "type": "string"
+                    },
+                    "jobName": {
+                      "format": "string",
+                      "description": "作业名称",
+                      "type": "string"
+                    },
+                    "dirId": {
+                      "format": "string",
+                      "description": "分类目录",
+                      "type": "string"
+                    },
+                    "processDefinitionId": {
+                      "format": "int32",
+                      "description": "调度流程实例ID",
+                      "type": "integer"
+                    },
+                    "notifyLevel": {
+                      "format": "string",
+                      "description": "提示级别 \"HINT\":\"提示\",\"GENERAL\":\"一般\",\"SERIOUS\":\"严重\",\"FATAL\":\"致命\";",
+                      "type": "string"
+                    },
+                    "notifyState": {
+                      "format": "boolean",
+                      "description": "通知状态 \"CLOSE\":\"关\",\"OPEN\":\"开\";",
+                      "type": "boolean"
+                    },
+                    "notifyType": {
+                      "format": "string",
+                      "description": "通知类型 \"TRIGGER_ALARM\":\"触发告警\", \"RUN_SUCCESS\":\"运行成功\";",
+                      "type": "string"
+                    },
+                    "notifyThemeIdList": {
+                      "description": "主题，多个以逗号分隔",
+                      "type": "array",
+                      "items": {}
+                    },
+                    "schedulerState": {
+                      "format": "string",
+                      "description": "调度状态 \"OFFLINE\":\"下线\",\"ONLINE\":\"上线\"",
+                      "type": "string"
+                    },
+                    "runInstanceState": {
+                      "format": "int32",
+                      "description": "运行实例状态 0-初始状态 1-运行中 2-停止 3-成功 4-失败",
+                      "type": "integer"
+                    },
+                    "createUserid": {
+                      "format": "string",
+                      "description": "创建人",
+                      "type": "string"
+                    },
+                    "updateUserid": {
+                      "format": "string",
+                      "description": "修改人",
+                      "type": "string"
+                    },
+                    "gmtCreate": {
+                      "format": "string",
+                      "description": "创建时间",
+                      "type": "string"
+                    },
+                    "gmtModified": {
+                      "format": "string",
+                      "description": "修改时间",
+                      "type": "string"
+                    },
+                    "dqcSchedulerRulesVOList": {
+                      "description": "数据质量_规则调度_规则信息VO",
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "format": "int64",
+                            "description": "主键ID",
+                            "type": "integer"
+                          },
+                          "ruleId": {
+                            "format": "string",
+                            "description": "规则id",
+                            "type": "string"
+                          },
+                          "ruleName": {
+                            "format": "string",
+                            "description": "规则名称",
+                            "type": "string"
+                          },
+                          "jobId": {
+                            "format": "string",
+                            "description": "作业id",
+                            "type": "string"
+                          },
+                          "ruleTempId": {
+                            "format": "int64",
+                            "description": "规则模版id",
+                            "type": "integer"
+                          },
+                          "ruleType": {
+                            "format": "string",
+                            "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\";",
+                            "type": "string"
+                          },
+                          "engineType": {
+                            "format": "string",
+                            "description": "适用引擎 MYSQL HIVE ORACLE",
+                            "type": "string"
+                          },
+                          "dataSourceName": {
+                            "format": "string",
+                            "description": "数据连接",
+                            "type": "string"
+                          },
+                          "databaseName": {
+                            "format": "string",
+                            "description": "数据库名称",
+                            "type": "string"
+                          },
+                          "tableList": {
+                            "description": "表名称",
+                            "type": "array",
+                            "items": {}
+                          },
+                          "fieldList": {
+                            "description": "字段名称",
+                            "type": "array",
+                            "items": {}
+                          },
+                          "scanType": {
+                            "format": "string",
+                            "description": "扫描范围 \"FULL_TABLE\":\"全表\", \"CONDITION\":\"条件\";",
+                            "type": "string"
+                          },
+                          "scanSql": {
+                            "format": "string",
+                            "description": "扫描条件SQL",
+                            "type": "string"
+                          },
+                          "executeSql": {
+                            "format": "string",
+                            "description": "执行sql",
+                            "type": "string"
+                          },
+                          "warnExpression": {
+                            "format": "string",
+                            "description": "告警表达式",
+                            "type": "string"
+                          },
+                          "createUserid": {
+                            "format": "string",
+                            "description": "创建人",
+                            "type": "string"
+                          },
+                          "updateUserid": {
+                            "format": "string",
+                            "description": "修改人",
+                            "type": "string"
+                          },
+                          "delFlag": {
+                            "format": "int32",
+                            "description": "删除标识(0-保留 1-删除)",
+                            "type": "integer"
+                          },
+                          "gmtCreate": {
+                            "format": "string",
+                            "description": "创建时间",
+                            "type": "string"
+                          },
+                          "gmtModified": {
+                            "format": "string",
+                            "description": "修改时间",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "dqcSchedulerConfigVO": {
+                      "description": "数据质量_规则调度_配置信息(object)",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "format": "int64",
+                          "description": "主键ID",
+                          "type": "integer"
+                        },
+                        "jobId": {
+                          "format": "string",
+                          "description": "作业id",
+                          "type": "string"
+                        },
+                        "schedulerType": {
+                          "format": "string",
+                          "description": "调度执行方式 \"SCHEDULER_TYPE_SINGLE\":\"单次调度\" \"SCHEDULER_TYPE_CYCLE\":周期调度;",
+                          "type": "string"
+                        },
+                        "effectiveTimeStart": {
+                          "format": "string",
+                          "description": "有效日期开始",
+                          "type": "string"
+                        },
+                        "effectiveTimeEnt": {
+                          "format": "string",
+                          "description": "有效日期结束",
+                          "type": "string"
+                        },
+                        "schedulerCycle": {
+                          "format": "string",
+                          "description": "调度周期 1-分钟 2-小时 3-天 4-周",
+                          "type": "string"
+                        },
+                        "schedulerIntervalTime": {
+                          "format": "string",
+                          "description": "间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日",
+                          "type": "string"
+                        },
+                        "schedulerTime": {
+                          "format": "string",
+                          "description": "调度时间",
+                          "type": "string"
+                        },
+                        "cron": {
+                          "format": "string",
+                          "description": "调度执行cron表达式",
+                          "type": "string"
+                        },
+                        "schedulerId": {
+                          "format": "int32",
+                          "description": "调度定时id",
+                          "type": "integer"
+                        },
+                        "createUserid": {
+                          "format": "string",
+                          "description": "创建人",
+                          "type": "string"
+                        },
+                        "updateUserid": {
+                          "format": "string",
+                          "description": "修改人",
+                          "type": "string"
+                        },
+                        "gmtCreate": {
+                          "format": "string",
+                          "description": "创建时间",
+                          "type": "string"
+                        },
+                        "gmtModified": {
+                          "format": "string",
+                          "description": "修改时间",
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_scheduler_instance_constantsRequest": {},
+      "_rule_template_constantsResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "engineTypeEnum": {
+                "description": "计算引擎类型(map data)",
+                "type": "object"
+              },
+              "dimensionTypeEnum": {
+                "description": "数据质量类别(map data)",
+                "type": "object"
+              },
+              "publishStateEnum": {
+                "description": "发布状态(map data)",
+                "type": "object"
+              },
+              "tempTypeEnum": {
+                "description": "模版类型(map data)",
+                "type": "object"
+              },
+              "ruleTypeEnum": {
+                "description": "规则类型(map data)",
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "_sql_build_executeResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_info_scheduler_rule_constantsRequest": {},
+      "_rule_template_Request": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "tempName": {
+            "format": "string",
+            "description": "模板名称",
+            "type": "string"
+          },
+          "tempType": {
+            "format": "string",
+            "description": "模板类型 BUILT_IN_SYSTEM_系统内置 CUSTOM_自定义",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          },
+          "dimensionType": {
+            "format": "string",
+            "description": "质量维度 1-完整性 2-唯一性 3-及时性 4-有效性 5-准确性 6-一致性",
+            "type": "string"
+          },
+          "engineTypeList": {
+            "description": "适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔",
+            "type": "array",
+            "items": {}
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          },
+          "tempSql": {
+            "format": "string",
+            "description": "模板sql",
+            "type": "string"
+          },
+          "tempResult": {
+            "format": "string",
+            "description": "结果定义",
+            "type": "string"
+          },
+          "ruleType": {
+            "format": "string",
+            "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\"",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tempName",
+          "tempType",
+          "dirId",
+          "dimensionType",
+          "engineTypeList",
+          "description",
+          "tempSql",
+          "tempResult"
+        ]
+      },
+      "_process_definition_infoRequest": {},
+      "_process_startInstanceRequest": {},
+      "_scheduler_result_page_listResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "jobId": {
+                      "format": "string",
+                      "description": "作业名称",
+                      "type": "string"
+                    },
+                    "jobName": {
+                      "format": "string",
+                      "description": "作业名称",
+                      "type": "string"
+                    },
+                    "ruleId": {
+                      "format": "string",
+                      "description": "规则id",
+                      "type": "string"
+                    },
+                    "ruleName": {
+                      "format": "string",
+                      "description": "规则id",
+                      "type": "string"
+                    },
+                    "gmtModified": {
+                      "format": "string",
+                      "description": "更新时间",
+                      "type": "string"
+                    },
+                    "resultTitleList": {
+                      "description": "数据质量_调度结果集_定义结果(表头)",
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "title": {
+                            "format": "string",
+                            "description": "No comments found.",
+                            "type": "string"
+                          },
+                          "dataIndex": {
+                            "format": "string",
+                            "description": "No comments found.",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "resultDataList": {
+                      "description": "数据质量_调度结果集信息(列表)",
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "any object": {
+                            "description": "any object.(object)",
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_rule_db_columnRequest": {},
+      "_rule_dir_Request": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "规则分类目录ID",
+            "type": "string"
+          },
+          "title": {
+            "format": "string",
+            "description": "规则分类目录名称 title",
+            "type": "string"
+          },
+          "value": {
+            "format": "string",
+            "description": "规则分类目录名称 value",
+            "type": "string"
+          },
+          "parentId": {
+            "format": "string",
+            "description": "父级id",
+            "type": "string"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "创建时间",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "是否删除；0逻辑删除，1物理删除；",
+            "type": "integer"
+          }
+        }
+      },
+      "_scheduler_instance_task_listRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "processInstanceId": {
+            "format": "int32",
+            "description": "流程实例ID",
+            "type": "integer"
+          },
+          "startDate": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDate": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          },
+          "searchVal": {
+            "format": "string",
+            "description": "搜索值(名称：模糊搜索)",
+            "type": "string"
+          },
+          "stateType": {
+            "format": "string",
+            "description": "工作流和任务节点的运行状态",
+            "type": "string"
+          },
+          "executorName": {
+            "format": "string",
+            "description": "执行用户",
+            "type": "string"
+          },
+          "taskName": {
+            "format": "string",
+            "description": "任务实例名(名称：精确搜索)",
+            "type": "string"
+          }
+        }
+      },
+      "_scheduler_instance_task_log_downloadRequest": {},
+      "_rule_template__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "tempName": {
+                "format": "string",
+                "description": "模板名称",
+                "type": "string"
+              },
+              "tempType": {
+                "format": "string",
+                "description": "模板类型 BUILT_IN_SYSTEM_系统内置 CUSTOM_自定义",
+                "type": "string"
+              },
+              "dirId": {
+                "format": "string",
+                "description": "分类目录",
+                "type": "string"
+              },
+              "dimensionType": {
+                "format": "string",
+                "description": "质量纬度id",
+                "type": "string"
+              },
+              "engineTypeList": {
+                "description": "适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔",
+                "type": "array",
+                "items": {}
+              },
+              "description": {
+                "format": "string",
+                "description": "描述",
+                "type": "string"
+              },
+              "tempSql": {
+                "format": "string",
+                "description": "模板sql",
+                "type": "string"
+              },
+              "tempResult": {
+                "format": "string",
+                "description": "结果定义",
+                "type": "string"
+              },
+              "ruleType": {
+                "format": "string",
+                "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\"",
+                "type": "string"
+              },
+              "publishState": {
+                "format": "string",
+                "description": "发布状态 \"OFFLINE\":\"下线\",\"OUTLINE\":\"草稿\",\"RELEASE\":\"发布\";",
+                "type": "string"
+              },
+              "createUserid": {
+                "format": "string",
+                "description": "创建人",
+                "type": "string"
+              },
+              "gmtModified": {
+                "format": "string",
+                "description": "修改时间",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_process_saveResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_db_tableResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "_sql_build_executeRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "ruleId": {
+            "format": "string",
+            "description": "规则id",
+            "type": "string"
+          },
+          "ruleName": {
+            "format": "string",
+            "description": "规则名称",
+            "type": "string"
+          },
+          "jobId": {
+            "format": "string",
+            "description": "作业id",
+            "type": "string"
+          },
+          "ruleTempId": {
+            "format": "int64",
+            "description": "规则模版id",
+            "type": "integer"
+          },
+          "ruleType": {
+            "format": "string",
+            "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\";",
+            "type": "string"
+          },
+          "engineType": {
+            "format": "string",
+            "description": "适用引擎 MYSQL HIVE ORACLE",
+            "type": "string"
+          },
+          "dataSourceName": {
+            "format": "string",
+            "description": "数据连接",
+            "type": "string"
+          },
+          "databaseName": {
+            "format": "string",
+            "description": "数据库名称",
+            "type": "string"
+          },
+          "tableList": {
+            "description": "表名称",
+            "type": "array",
+            "items": {}
+          },
+          "fieldList": {
+            "description": "字段名称",
+            "type": "array",
+            "items": {}
+          },
+          "scanType": {
+            "format": "string",
+            "description": "扫描范围 \"FULL_TABLE\":\"全表\", \"CONDITION\":\"条件\";",
+            "type": "string"
+          },
+          "scanSql": {
+            "format": "string",
+            "description": "扫描条件SQL",
+            "type": "string"
+          },
+          "executeSql": {
+            "format": "string",
+            "description": "执行sql",
+            "type": "string"
+          },
+          "warnExpression": {
+            "format": "string",
+            "description": "告警表达式",
+            "type": "string"
+          },
+          "createUserid": {
+            "format": "string",
+            "description": "创建人",
+            "type": "string"
+          },
+          "updateUserid": {
+            "format": "string",
+            "description": "修改人",
+            "type": "string"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "删除标识(0-保留 1-删除)",
+            "type": "integer"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "创建时间",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ruleId",
+          "ruleName",
+          "jobId",
+          "ruleTempId",
+          "ruleType",
+          "engineType",
+          "dataSourceName",
+          "databaseName",
+          "scanType"
+        ]
+      },
+      "_rule_db_connect_typesRequest": {},
+      "_rule_template_page_listRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "tempName": {
+            "format": "string",
+            "description": "模板名称",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          },
+          "dimensionType": {
+            "format": "string",
+            "description": "质量维度",
+            "type": "string"
+          },
+          "engineType": {
+            "format": "string",
+            "description": "适用引擎 MYSQL,HIVE,ORACLE",
+            "type": "string"
+          },
+          "ruleType": {
+            "format": "string",
+            "description": "规则类型 \"RULE_TYPE_FIELD\", \"字段级别规则\",\"RULE_TYPE_TABLE\", \"表级别规则\",\"RULE_TYPE_DB\", \"库级别规则\";",
+            "type": "string"
+          }
+        }
+      },
+      "_scheduler_instance_executeRequest": {
+        "properties": {
+          "executeType": {
+            "format": "string",
+            "description": "执行类型，可用值:NONE,REPEAT_RUNNING,RECOVER_SUSPENDED_PROCESS,START_FAILURE_TASK_PROCESS,STOP,PAUSE",
+            "type": "string"
+          },
+          "processInstanceId": {
+            "format": "int32",
+            "description": "流程实例ID",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "executeType",
+          "processInstanceId"
+        ]
+      },
+      "_scheduler_instance_listResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int32",
+                      "description": "No comments found.",
+                      "type": "integer"
+                    },
+                    "processDefinitionId": {
+                      "format": "int32",
+                      "description": "流程id",
+                      "type": "integer"
+                    },
+                    "state": {
+                      "format": "string",
+                      "description": "状态",
+                      "type": "string"
+                    },
+                    "recovery": {
+                      "format": "string",
+                      "description": "容错标示",
+                      "type": "string"
+                    },
+                    "startTime": {
+                      "format": "string",
+                      "description": "开始时间",
+                      "type": "string"
+                    },
+                    "endTime": {
+                      "format": "string",
+                      "description": "结束时间",
+                      "type": "string"
+                    },
+                    "runTimes": {
+                      "format": "int32",
+                      "description": "运行次数",
+                      "type": "integer"
+                    },
+                    "name": {
+                      "format": "string",
+                      "description": "工作流名称",
+                      "type": "string"
+                    },
+                    "host": {
+                      "format": "string",
+                      "description": "机器地址",
+                      "type": "string"
+                    },
+                    "commandType": {
+                      "format": "string",
+                      "description": "运行类型",
+                      "type": "string"
+                    },
+                    "executorName": {
+                      "format": "string",
+                      "description": "执行用户",
+                      "type": "string"
+                    },
+                    "duration": {
+                      "format": "string",
+                      "description": "运行时长",
+                      "type": "string"
+                    },
+                    "stateName": {
+                      "format": "string",
+                      "description": "状态名称",
+                      "type": "string"
+                    },
+                    "dependenceScheduleTimes": {
+                      "format": "string",
+                      "description": "No comments found.",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_scheduler_instance_listRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "processDefinitionId": {
+            "format": "int32",
+            "description": "流程定义ID",
+            "type": "integer"
+          },
+          "startDate": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDate": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          },
+          "searchVal": {
+            "format": "string",
+            "description": "搜索值(名称)",
+            "type": "string"
+          },
+          "stateType": {
+            "format": "string",
+            "description": "工作流和任务节点的运行状态",
+            "type": "string"
+          },
+          "executorName": {
+            "format": "string",
+            "description": "执行用户",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          }
+        }
+      },
+      "_process_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_info__id_Request": {},
+      "_scheduler_info_bulkRequest": {},
+      "_process_startCheckResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_db_tableRequest": {},
+      "_rule_db_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "_scheduler_info_bulkResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_dir_listRequest": {},
+      "_process_startInstanceResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_dir_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_instance__processInstanceId_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_instance_task_logResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "any object": {
+                "description": "any object.(object)",
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "_rule_template_bulkResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_template_listRequest": {},
+      "_scheduler_instance_executeResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_instance_task_log_downloadResponse": {},
+      "_scheduler_result_page_listRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "jobId": {
+            "format": "string",
+            "description": "作业名称",
+            "type": "string"
+          },
+          "jobName": {
+            "format": "string",
+            "description": "作业名称",
+            "type": "string"
+          },
+          "ruleId": {
+            "format": "string",
+            "description": "规则id",
+            "type": "string"
+          },
+          "beginDay": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDay": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          }
+        }
+      },
+      "_rule_db_columnResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "_process_saveRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "jobId": {
+            "format": "string",
+            "description": "作业id",
+            "type": "string"
+          },
+          "jobName": {
+            "format": "string",
+            "description": "作业名称",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          },
+          "processDefinitionId": {
+            "format": "int32",
+            "description": "调度流程实例ID",
+            "type": "integer"
+          },
+          "notifyLevel": {
+            "format": "string",
+            "description": "提示级别 \"HINT\":\"提示\",\"GENERAL\":\"一般\",\"SERIOUS\":\"严重\",\"FATAL\":\"致命\";",
+            "type": "string"
+          },
+          "notifyState": {
+            "format": "boolean",
+            "description": "通知状态 \"CLOSE\":\"关\",\"OPEN\":\"开\";",
+            "type": "boolean"
+          },
+          "notifyType": {
+            "format": "string",
+            "description": "通知类型 \"TRIGGER_ALARM\":\"触发告警\", \"RUN_SUCCESS\":\"运行成功\";",
+            "type": "string"
+          },
+          "notifyThemeIdList": {
+            "description": "主题，多个以逗号分隔",
+            "type": "array",
+            "items": {}
+          },
+          "schedulerState": {
+            "format": "string",
+            "description": "调度状态 \"OFFLINE\":\"下线\",\"ONLINE\":\"上线\"",
+            "type": "string"
+          },
+          "runInstanceState": {
+            "format": "int32",
+            "description": "运行实例状态 0-初始状态 1-运行中 2-停止 3-成功 4-失败",
+            "type": "integer"
+          },
+          "createUserid": {
+            "format": "string",
+            "description": "创建人",
+            "type": "string"
+          },
+          "updateUserid": {
+            "format": "string",
+            "description": "修改人",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "创建时间",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          },
+          "dqcSchedulerRulesVOList": {
+            "description": "数据质量_规则调度_规则信息VO",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "主键ID",
+                  "type": "integer"
+                },
+                "ruleId": {
+                  "format": "string",
+                  "description": "规则id",
+                  "type": "string"
+                },
+                "ruleName": {
+                  "format": "string",
+                  "description": "规则名称",
+                  "type": "string"
+                },
+                "jobId": {
+                  "format": "string",
+                  "description": "作业id",
+                  "type": "string"
+                },
+                "ruleTempId": {
+                  "format": "int64",
+                  "description": "规则模版id",
+                  "type": "integer"
+                },
+                "ruleType": {
+                  "format": "string",
+                  "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\";",
+                  "type": "string"
+                },
+                "engineType": {
+                  "format": "string",
+                  "description": "适用引擎 MYSQL HIVE ORACLE",
+                  "type": "string"
+                },
+                "dataSourceName": {
+                  "format": "string",
+                  "description": "数据连接",
+                  "type": "string"
+                },
+                "databaseName": {
+                  "format": "string",
+                  "description": "数据库名称",
+                  "type": "string"
+                },
+                "tableList": {
+                  "description": "表名称",
+                  "type": "array",
+                  "items": {}
+                },
+                "fieldList": {
+                  "description": "字段名称",
+                  "type": "array",
+                  "items": {}
+                },
+                "scanType": {
+                  "format": "string",
+                  "description": "扫描范围 \"FULL_TABLE\":\"全表\", \"CONDITION\":\"条件\";",
+                  "type": "string"
+                },
+                "scanSql": {
+                  "format": "string",
+                  "description": "扫描条件SQL",
+                  "type": "string"
+                },
+                "executeSql": {
+                  "format": "string",
+                  "description": "执行sql",
+                  "type": "string"
+                },
+                "warnExpression": {
+                  "format": "string",
+                  "description": "告警表达式",
+                  "type": "string"
+                },
+                "createUserid": {
+                  "format": "string",
+                  "description": "创建人",
+                  "type": "string"
+                },
+                "updateUserid": {
+                  "format": "string",
+                  "description": "修改人",
+                  "type": "string"
+                },
+                "delFlag": {
+                  "format": "int32",
+                  "description": "删除标识(0-保留 1-删除)",
+                  "type": "integer"
+                },
+                "gmtCreate": {
+                  "format": "string",
+                  "description": "创建时间",
+                  "type": "string"
+                },
+                "gmtModified": {
+                  "format": "string",
+                  "description": "修改时间",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "ruleId",
+                "ruleName",
+                "jobId",
+                "ruleTempId",
+                "ruleType",
+                "engineType",
+                "dataSourceName",
+                "databaseName",
+                "scanType"
+              ]
+            }
+          },
+          "dqcSchedulerConfigVO": {
+            "description": "数据质量_规则调度_配置信息(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "主键ID",
+                "type": "integer"
+              },
+              "jobId": {
+                "format": "string",
+                "description": "作业id",
+                "type": "string"
+              },
+              "schedulerType": {
+                "format": "string",
+                "description": "调度执行方式 \"SCHEDULER_TYPE_SINGLE\":\"单次调度\" \"SCHEDULER_TYPE_CYCLE\":周期调度;",
+                "type": "string"
+              },
+              "effectiveTimeStart": {
+                "format": "string",
+                "description": "有效日期开始",
+                "type": "string"
+              },
+              "effectiveTimeEnt": {
+                "format": "string",
+                "description": "有效日期结束",
+                "type": "string"
+              },
+              "schedulerCycle": {
+                "format": "string",
+                "description": "调度周期 1-分钟 2-小时 3-天 4-周",
+                "type": "string"
+              },
+              "schedulerIntervalTime": {
+                "format": "string",
+                "description": "间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日",
+                "type": "string"
+              },
+              "schedulerTime": {
+                "format": "string",
+                "description": "调度时间",
+                "type": "string"
+              },
+              "cron": {
+                "format": "string",
+                "description": "调度执行cron表达式",
+                "type": "string"
+              },
+              "schedulerId": {
+                "format": "int32",
+                "description": "调度定时id",
+                "type": "integer"
+              },
+              "createUserid": {
+                "format": "string",
+                "description": "创建人",
+                "type": "string"
+              },
+              "updateUserid": {
+                "format": "string",
+                "description": "修改人",
+                "type": "string"
+              },
+              "gmtCreate": {
+                "format": "string",
+                "description": "创建时间",
+                "type": "string"
+              },
+              "gmtModified": {
+                "format": "string",
+                "description": "修改时间",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "jobName",
+          "dirId",
+          "processDefinitionId",
+          "notifyLevel",
+          "notifyState",
+          "notifyType",
+          "notifyThemeIdList"
+        ]
+      },
+      "_rule_template_listResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int32",
+                  "description": "No comments found.",
+                  "type": "integer"
+                },
+                "tempName": {
+                  "format": "string",
+                  "description": "模板名称",
+                  "type": "string"
+                },
+                "tempType": {
+                  "format": "string",
+                  "description": "模板类型 BUILT_IN_SYSTEM_系统内置 CUSTOM_自定义",
+                  "type": "string"
+                },
+                "dirId": {
+                  "format": "string",
+                  "description": "分类目录",
+                  "type": "string"
+                },
+                "dimensionType": {
+                  "format": "string",
+                  "description": "质量纬度id",
+                  "type": "string"
+                },
+                "engineTypeList": {
+                  "description": "适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔",
+                  "type": "array",
+                  "items": {}
+                },
+                "description": {
+                  "format": "string",
+                  "description": "描述",
+                  "type": "string"
+                },
+                "tempSql": {
+                  "format": "string",
+                  "description": "模板sql",
+                  "type": "string"
+                },
+                "tempResult": {
+                  "format": "string",
+                  "description": "结果定义",
+                  "type": "string"
+                },
+                "ruleType": {
+                  "format": "string",
+                  "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\"",
+                  "type": "string"
+                },
+                "publishState": {
+                  "format": "string",
+                  "description": "发布状态 \"OFFLINE\":\"下线\",\"OUTLINE\":\"草稿\",\"RELEASE\":\"发布\";",
+                  "type": "string"
+                },
+                "createUserid": {
+                  "format": "string",
+                  "description": "创建人",
+                  "type": "string"
+                },
+                "gmtModified": {
+                  "format": "string",
+                  "description": "修改时间",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_scheduler_info_Request": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "jobId": {
+            "format": "string",
+            "description": "作业id",
+            "type": "string"
+          },
+          "jobName": {
+            "format": "string",
+            "description": "作业名称",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          },
+          "processDefinitionId": {
+            "format": "int32",
+            "description": "调度流程实例ID",
+            "type": "integer"
+          },
+          "notifyLevel": {
+            "format": "string",
+            "description": "提示级别 \"HINT\":\"提示\",\"GENERAL\":\"一般\",\"SERIOUS\":\"严重\",\"FATAL\":\"致命\";",
+            "type": "string"
+          },
+          "notifyState": {
+            "format": "boolean",
+            "description": "通知状态 \"CLOSE\":\"关\",\"OPEN\":\"开\";",
+            "type": "boolean"
+          },
+          "notifyType": {
+            "format": "string",
+            "description": "通知类型 \"TRIGGER_ALARM\":\"触发告警\", \"RUN_SUCCESS\":\"运行成功\";",
+            "type": "string"
+          },
+          "notifyThemeIdList": {
+            "description": "主题，多个以逗号分隔",
+            "type": "array",
+            "items": {}
+          },
+          "schedulerState": {
+            "format": "string",
+            "description": "调度状态 \"OFFLINE\":\"下线\",\"ONLINE\":\"上线\"",
+            "type": "string"
+          },
+          "runInstanceState": {
+            "format": "int32",
+            "description": "运行实例状态 0-初始状态 1-运行中 2-停止 3-成功 4-失败",
+            "type": "integer"
+          },
+          "createUserid": {
+            "format": "string",
+            "description": "创建人",
+            "type": "string"
+          },
+          "updateUserid": {
+            "format": "string",
+            "description": "修改人",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "创建时间",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          },
+          "dqcSchedulerRulesVOList": {
+            "description": "数据质量_规则调度_规则信息VO",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "主键ID",
+                  "type": "integer"
+                },
+                "ruleId": {
+                  "format": "string",
+                  "description": "规则id",
+                  "type": "string"
+                },
+                "ruleName": {
+                  "format": "string",
+                  "description": "规则名称",
+                  "type": "string"
+                },
+                "jobId": {
+                  "format": "string",
+                  "description": "作业id",
+                  "type": "string"
+                },
+                "ruleTempId": {
+                  "format": "int64",
+                  "description": "规则模版id",
+                  "type": "integer"
+                },
+                "ruleType": {
+                  "format": "string",
+                  "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\";",
+                  "type": "string"
+                },
+                "engineType": {
+                  "format": "string",
+                  "description": "适用引擎 MYSQL HIVE ORACLE",
+                  "type": "string"
+                },
+                "dataSourceName": {
+                  "format": "string",
+                  "description": "数据连接",
+                  "type": "string"
+                },
+                "databaseName": {
+                  "format": "string",
+                  "description": "数据库名称",
+                  "type": "string"
+                },
+                "tableList": {
+                  "description": "表名称",
+                  "type": "array",
+                  "items": {}
+                },
+                "fieldList": {
+                  "description": "字段名称",
+                  "type": "array",
+                  "items": {}
+                },
+                "scanType": {
+                  "format": "string",
+                  "description": "扫描范围 \"FULL_TABLE\":\"全表\", \"CONDITION\":\"条件\";",
+                  "type": "string"
+                },
+                "scanSql": {
+                  "format": "string",
+                  "description": "扫描条件SQL",
+                  "type": "string"
+                },
+                "executeSql": {
+                  "format": "string",
+                  "description": "执行sql",
+                  "type": "string"
+                },
+                "warnExpression": {
+                  "format": "string",
+                  "description": "告警表达式",
+                  "type": "string"
+                },
+                "createUserid": {
+                  "format": "string",
+                  "description": "创建人",
+                  "type": "string"
+                },
+                "updateUserid": {
+                  "format": "string",
+                  "description": "修改人",
+                  "type": "string"
+                },
+                "delFlag": {
+                  "format": "int32",
+                  "description": "删除标识(0-保留 1-删除)",
+                  "type": "integer"
+                },
+                "gmtCreate": {
+                  "format": "string",
+                  "description": "创建时间",
+                  "type": "string"
+                },
+                "gmtModified": {
+                  "format": "string",
+                  "description": "修改时间",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "ruleId",
+                "ruleName",
+                "jobId",
+                "ruleTempId",
+                "ruleType",
+                "engineType",
+                "dataSourceName",
+                "databaseName",
+                "scanType"
+              ]
+            }
+          },
+          "dqcSchedulerConfigVO": {
+            "description": "数据质量_规则调度_配置信息(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "主键ID",
+                "type": "integer"
+              },
+              "jobId": {
+                "format": "string",
+                "description": "作业id",
+                "type": "string"
+              },
+              "schedulerType": {
+                "format": "string",
+                "description": "调度执行方式 \"SCHEDULER_TYPE_SINGLE\":\"单次调度\" \"SCHEDULER_TYPE_CYCLE\":周期调度;",
+                "type": "string"
+              },
+              "effectiveTimeStart": {
+                "format": "string",
+                "description": "有效日期开始",
+                "type": "string"
+              },
+              "effectiveTimeEnt": {
+                "format": "string",
+                "description": "有效日期结束",
+                "type": "string"
+              },
+              "schedulerCycle": {
+                "format": "string",
+                "description": "调度周期 1-分钟 2-小时 3-天 4-周",
+                "type": "string"
+              },
+              "schedulerIntervalTime": {
+                "format": "string",
+                "description": "间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日",
+                "type": "string"
+              },
+              "schedulerTime": {
+                "format": "string",
+                "description": "调度时间",
+                "type": "string"
+              },
+              "cron": {
+                "format": "string",
+                "description": "调度执行cron表达式",
+                "type": "string"
+              },
+              "schedulerId": {
+                "format": "int32",
+                "description": "调度定时id",
+                "type": "integer"
+              },
+              "createUserid": {
+                "format": "string",
+                "description": "创建人",
+                "type": "string"
+              },
+              "updateUserid": {
+                "format": "string",
+                "description": "修改人",
+                "type": "string"
+              },
+              "gmtCreate": {
+                "format": "string",
+                "description": "创建时间",
+                "type": "string"
+              },
+              "gmtModified": {
+                "format": "string",
+                "description": "修改时间",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "jobName",
+          "dirId",
+          "processDefinitionId",
+          "notifyLevel",
+          "notifyState",
+          "notifyType",
+          "notifyThemeIdList"
+        ]
+      },
+      "_process_verifyNameRequest": {},
+      "_scheduler_info__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_info_scheduler_rule_constantsResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "notifyLevelEnum": {
+                "description": "提示级别(map data)",
+                "type": "object"
+              },
+              "notifyStateEnum": {
+                "description": "通知状态(map data)",
+                "type": "object"
+              },
+              "notifyTypeEnum": {
+                "description": "通知类型(map data)",
+                "type": "object"
+              },
+              "engineTypeEnum": {
+                "description": "计算引擎类型(map data)",
+                "type": "object"
+              },
+              "ruleTypeEnum": {
+                "description": "规则类型(map data)",
+                "type": "object"
+              },
+              "ScanTypeEnum": {
+                "description": "执行SQL扫描方式(map data)",
+                "type": "object"
+              },
+              "schedulerTypeEnum": {
+                "description": "调度方式(map data)",
+                "type": "object"
+              },
+              "schedulerStateEnum": {
+                "description": "调度状态(map data)",
+                "type": "object"
+              },
+              "SchedulerCycleEnum": {
+                "description": "调度周期(map data)",
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "_scheduler_instance_bulkResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_template_releaseRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "id",
+            "type": "integer"
+          },
+          "publishState": {
+            "format": "string",
+            "description": "发布状态 \"OFFLINE\":\"下线\",\"RELEASE\":\"发布",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "publishState"
+        ]
+      },
+      "_rule_template__id_Request": {},
+      "_process_releaseResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_dir_bulkResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_dir__id_Request": {},
+      "_rule_dir__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_rule_db_connect_typesResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "_rule_db_Request": {},
+      "_rule_template_constantsRequest": {},
+      "_process_verifyNameResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_scheduler_instance_constantsResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "instanceStateTypeEnum": {
+                "description": "实例状态(map data)",
+                "type": "object"
+              },
+              "executeTypeEnum": {
+                "description": "执行类型(map data)",
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "_rule_dir_bulkRequest": {},
+      "_scheduler_instance_bulkRequest": {}
+    }
+  },
+  "servers": [
+    {
+      "url": "http://172.21.32.3:7000"
+    }
+  ],
+  "openapi": "3.0.3",
+  "paths": {
+    "/process/release": {
+      "put": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "ProcessDefinitionApiController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_process_releaseRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/release --data \u0027releaseState\u003d5\u0026processDefinitionId\u003d184\u0027"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_process_releaseResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"mh2eli\",\n  \"tips\": \"wiu3vh\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "release",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "900",
+            "name": "processDefinitionId"
+          },
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "5",
+            "name": "releaseState"
+          }
+        ]
+      }
+    },
+    "/scheduler/instance/task/list": {
+      "post": {
+        "summary": "任务实例列表",
+        "deprecated": false,
+        "description": "任务实例列表",
+        "tags": [
+          "DqcSchedulerInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_instance_task_listRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"iqn8dt\"\n  },\n  \"processInstanceId\": 356,\n  \"startDate\": \"2021-12-11\",\n  \"endDate\": \"2021-12-11\",\n  \"searchVal\": \"vq3zgu\",\n  \"stateType\": \"c49od5\",\n  \"executorName\": \"ezra.hand\",\n  \"taskName\": \"ezra.hand\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_instance_task_listResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"8bnm1r\",\n  \"tips\": \"ygjhhc\",\n  \"data\": {\n    \"total\": 33,\n    \"pageNum\": 78,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 825,\n        \"processDefinitionId\": 411,\n        \"processInstanceId\": 632,\n        \"processInstanceName\": \"ezra.hand\",\n        \"name\": \"ezra.hand\",\n        \"executorName\": \"ezra.hand\",\n        \"taskType\": \"hwl2ye\",\n        \"state\": \"s7v0dc\",\n        \"submitTime\": \"2021-12-11 21:12:20\",\n        \"startTime\": \"2021-12-11 21:12:20\",\n        \"endTime\": \"2021-12-11\",\n        \"host\": \"t8t25i\",\n        \"duration\": \"x2p4oi\",\n        \"retryTimes\": 512,\n        \"stateName\": \"ezra.hand\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchTask",
+        "parameters": []
+      }
+    },
+    "/rule/db/connect/{type}": {
+      "get": {
+        "summary": "获取数据源连接",
+        "deprecated": false,
+        "description": "获取数据源连接",
+        "tags": [
+          "DqcRuleDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_db_connect__type_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"adxj3t\",\n  \"tips\": \"lr3cf0\",\n  \"data\": [\n    \"o9qil9\",\n    \"r9g9b5\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getResultDataSourceByType",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "c3nbi7",
+            "name": "type"
+          }
+        ]
+      }
+    },
+    "/scheduler/info/bulk": {
+      "delete": {
+        "summary": "//TODO 需要关联删除批量删除单个规则调度_规则调度",
+        "deprecated": false,
+        "description": "//TODO 需要关联删除\n批量删除单个规则调度_规则调度",
+        "tags": [
+          "DqcSchedulerInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_info_bulkResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"tnnoi6\",\n  \"tips\": \"c8tzqw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteBulk",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "35x8wg",
+            "name": "ids"
+          }
+        ]
+      }
+    },
+    "/scheduler/executors/runing/{id}": {
+      "put": {
+        "summary": "运行",
+        "deprecated": false,
+        "description": "运行",
+        "tags": [
+          "DqcSchedulerExecutorsController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_executors_runing__id_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X PUT -i http://172.21.32.3:7000/scheduler/executors/runing/987"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_executors_runing__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"hxn07p\",\n  \"tips\": \"5elt9t\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "runing",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "482",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/sql/build/execute": {
+      "post": {
+        "summary": "根据规则模板获取执行Sql",
+        "deprecated": false,
+        "description": "根据规则模板获取执行Sql",
+        "tags": [
+          "DqcRuleSqlBuilderController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_sql_build_executeRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 269,\n  \"ruleId\": \"15\",\n  \"ruleName\": \"ezra.hand\",\n  \"jobId\": \"15\",\n  \"ruleTempId\": 371,\n  \"ruleType\": \"s4hihk\",\n  \"engineType\": \"uetob4\",\n  \"dataSourceName\": \"ezra.hand\",\n  \"databaseName\": \"ezra.hand\",\n  \"tableList\": [\n    \"bmjwvy\"\n  ],\n  \"fieldList\": [\n    \"i66vjd\"\n  ],\n  \"scanType\": \"vrc5ga\",\n  \"scanSql\": \"x90wav\",\n  \"executeSql\": \"n99lkz\",\n  \"warnExpression\": \"cu7fta\",\n  \"createUserid\": \"15\",\n  \"updateUserid\": \"15\",\n  \"delFlag\": 2,\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_sql_build_executeResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"bx0cra\",\n  \"tips\": \"medn2i\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getExecuteSql",
+        "parameters": []
+      }
+    },
+    "/scheduler/info/": {
+      "post": {
+        "summary": "新增规则调度信息(基础信息,规则,调度配置)",
+        "deprecated": false,
+        "description": "新增规则调度信息(基础信息,规则,调度配置)",
+        "tags": [
+          "DqcSchedulerInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_info_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 198,\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"processDefinitionId\": 866,\n  \"notifyLevel\": \"u3vv4y\",\n  \"notifyState\": true,\n  \"notifyType\": \"3bxaht\",\n  \"notifyThemeIdList\": [\n    \"enq6ky\"\n  ],\n  \"schedulerState\": \"sayksr\",\n  \"runInstanceState\": 5,\n  \"createUserid\": \"15\",\n  \"updateUserid\": \"15\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 539,\n      \"ruleId\": \"15\",\n      \"ruleName\": \"ezra.hand\",\n      \"jobId\": \"15\",\n      \"ruleTempId\": 388,\n      \"ruleType\": \"240x91\",\n      \"engineType\": \"kp5mec\",\n      \"dataSourceName\": \"ezra.hand\",\n      \"databaseName\": \"ezra.hand\",\n      \"tableList\": [\n        \"bwd9a0\"\n      ],\n      \"fieldList\": [\n        \"76h7bz\"\n      ],\n      \"scanType\": \"qblcrx\",\n      \"scanSql\": \"x3878s\",\n      \"executeSql\": \"n95uc7\",\n      \"warnExpression\": \"805jfo\",\n      \"createUserid\": \"15\",\n      \"updateUserid\": \"15\",\n      \"delFlag\": 2,\n      \"gmtCreate\": \"2021-12-11 21:12:20\",\n      \"gmtModified\": \"2021-12-11 21:12:20\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 333,\n    \"jobId\": \"15\",\n    \"schedulerType\": \"5p7onq\",\n    \"effectiveTimeStart\": \"2021-12-11 21:12:20\",\n    \"effectiveTimeEnt\": \"2021-12-11 21:12:20\",\n    \"schedulerCycle\": \"qw8ate\",\n    \"schedulerIntervalTime\": \"2021-12-11 21:12:20\",\n    \"schedulerTime\": \"2021-12-11 21:12:20\",\n    \"cron\": \"h3v70x\",\n    \"schedulerId\": 931,\n    \"createUserid\": \"15\",\n    \"updateUserid\": \"15\",\n    \"gmtCreate\": \"2021-12-11 21:12:20\",\n    \"gmtModified\": \"2021-12-11 21:12:20\"\n  }\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_info_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"jwg41l\",\n  \"tips\": \"we2hal\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "insert",
+        "parameters": []
+      },
+      "put": {
+        "summary": "编辑规则调度信息(基础信息,规则,调度配置)",
+        "deprecated": false,
+        "description": "编辑规则调度信息(基础信息,规则,调度配置)",
+        "tags": [
+          "DqcSchedulerInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_info_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 153,\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"processDefinitionId\": 742,\n  \"notifyLevel\": \"jrrq6t\",\n  \"notifyState\": true,\n  \"notifyType\": \"n59trq\",\n  \"notifyThemeIdList\": [\n    \"9894cv\"\n  ],\n  \"schedulerState\": \"eu9ml9\",\n  \"runInstanceState\": 5,\n  \"createUserid\": \"15\",\n  \"updateUserid\": \"15\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 200,\n      \"ruleId\": \"15\",\n      \"ruleName\": \"ezra.hand\",\n      \"jobId\": \"15\",\n      \"ruleTempId\": 954,\n      \"ruleType\": \"kq89zp\",\n      \"engineType\": \"471ss6\",\n      \"dataSourceName\": \"ezra.hand\",\n      \"databaseName\": \"ezra.hand\",\n      \"tableList\": [\n        \"9g2ru5\"\n      ],\n      \"fieldList\": [\n        \"6gs5cn\"\n      ],\n      \"scanType\": \"kb0g46\",\n      \"scanSql\": \"6obimc\",\n      \"executeSql\": \"ujgvf6\",\n      \"warnExpression\": \"2dh869\",\n      \"createUserid\": \"15\",\n      \"updateUserid\": \"15\",\n      \"delFlag\": 2,\n      \"gmtCreate\": \"2021-12-11 21:12:20\",\n      \"gmtModified\": \"2021-12-11 21:12:20\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 748,\n    \"jobId\": \"15\",\n    \"schedulerType\": \"4br5pt\",\n    \"effectiveTimeStart\": \"2021-12-11 21:12:20\",\n    \"effectiveTimeEnt\": \"2021-12-11 21:12:20\",\n    \"schedulerCycle\": \"7zm9dl\",\n    \"schedulerIntervalTime\": \"2021-12-11 21:12:20\",\n    \"schedulerTime\": \"2021-12-11 21:12:20\",\n    \"cron\": \"3vmoxf\",\n    \"schedulerId\": 773,\n    \"createUserid\": \"15\",\n    \"updateUserid\": \"15\",\n    \"gmtCreate\": \"2021-12-11 21:12:20\",\n    \"gmtModified\": \"2021-12-11 21:12:20\"\n  }\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_info_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"xqnah7\",\n  \"tips\": \"eqguyc\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "update",
+        "parameters": []
+      }
+    },
+    "/process/": {
+      "delete": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "ProcessDefinitionApiController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_process_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"zg8svn\",\n  \"tips\": \"qy4j64\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteOne",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "234",
+            "name": "processDefinitionId"
+          }
+        ]
+      }
+    },
+    "/rule/template/bulk": {
+      "delete": {
+        "summary": "批量删除规则模版",
+        "deprecated": false,
+        "description": "批量删除规则模版",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template_bulkResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"xg0j8z\",\n  \"tips\": \"rlxveh\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteBulk",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "art9hz",
+            "name": "ids"
+          }
+        ]
+      }
+    },
+    "/scheduler/info/{id}": {
+      "delete": {
+        "summary": "删除单个规则调度_规则调度信息",
+        "deprecated": false,
+        "description": "删除单个规则调度_规则调度信息",
+        "tags": [
+          "DqcSchedulerInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_info__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"wkbi5n\",\n  \"tips\": \"1jghkb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteOne",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "15",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/rule/db/connect/types": {
+      "get": {
+        "summary": "获取数据源连接类型",
+        "deprecated": false,
+        "description": "获取数据源连接类型",
+        "tags": [
+          "DqcRuleDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_db_connect_typesResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"4vrkkt\",\n  \"tips\": \"8m1u5n\",\n  \"data\": [\n    \"6mkfbx\",\n    \"wuz1y8\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllConnType",
+        "parameters": []
+      }
+    },
+    "/rule/dir/{id}": {
+      "delete": {
+        "summary": "规则分类目录单子节点级联删除方式",
+        "deprecated": false,
+        "description": "规则分类目录单子节点级联删除方式",
+        "tags": [
+          "DqcRuleDirController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_dir__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"dkgv5d\",\n  \"tips\": \"es98fn\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "delete",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "15",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/scheduler/instance/{processInstanceId}": {
+      "delete": {
+        "summary": "实例删除",
+        "deprecated": false,
+        "description": "实例删除",
+        "tags": [
+          "DqcSchedulerInstanceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_instance__processInstanceId_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"j8uj31\",\n  \"tips\": \"agawvy\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteOne",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "854",
+            "name": "processInstanceId"
+          }
+        ]
+      }
+    },
+    "/rule/template/release": {
+      "put": {
+        "summary": "发布",
+        "deprecated": false,
+        "description": "发布",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_rule_template_releaseRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 865,\n  \"publishState\": \"kk7mc6\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template_releaseResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"8bsp1w\",\n  \"tips\": \"t4qchc\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "release",
+        "parameters": []
+      }
+    },
+    "/scheduler/executors/release": {
+      "put": {
+        "summary": "启动调度/停止调度",
+        "deprecated": false,
+        "description": "启动调度/停止调度",
+        "tags": [
+          "DqcSchedulerExecutorsController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_executors_releaseRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 737,\n  \"schedulerState\": \"ycnjmg\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_executors_releaseResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"e5jjii\",\n  \"tips\": \"pi0tmb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "release",
+        "parameters": []
+      }
+    },
+    "/scheduler/instance/execute": {
+      "put": {
+        "summary": "实例操作",
+        "deprecated": false,
+        "description": "实例操作",
+        "tags": [
+          "DqcSchedulerInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_instance_executeRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"executeType\": \"r7daue\",\n  \"processInstanceId\": 921\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_instance_executeResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"z0sjcm\",\n  \"tips\": \"82h51b\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "execute",
+        "parameters": []
+      }
+    },
+    "/rule/dir/bulk": {
+      "delete": {
+        "summary": "规则分类目录单子节点级联删除方式",
+        "deprecated": false,
+        "description": "规则分类目录单子节点级联删除方式",
+        "tags": [
+          "DqcRuleDirController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_dir_bulkResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"earc1s\",\n  \"tips\": \"dlksg2\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteBulk",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "k3u94p",
+            "name": "ids"
+          }
+        ]
+      }
+    },
+    "/process/verifyName": {
+      "get": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "ProcessDefinitionApiController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_process_verifyNameResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"zf8uv0\",\n  \"tips\": \"3z9va5\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "verifyName",
+        "parameters": []
+      }
+    },
+    "/process/save": {
+      "post": {
+        "summary": "新增规则调度_基础信息",
+        "deprecated": false,
+        "description": "新增规则调度_基础信息",
+        "tags": [
+          "ProcessDefinitionApiController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_process_saveRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 816,\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"processDefinitionId\": 743,\n  \"notifyLevel\": \"dyqdyw\",\n  \"notifyState\": true,\n  \"notifyType\": \"kqj3k4\",\n  \"notifyThemeIdList\": [\n    \"0bhcmq\"\n  ],\n  \"schedulerState\": \"knkmr5\",\n  \"runInstanceState\": 5,\n  \"createUserid\": \"15\",\n  \"updateUserid\": \"15\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 415,\n      \"ruleId\": \"15\",\n      \"ruleName\": \"ezra.hand\",\n      \"jobId\": \"15\",\n      \"ruleTempId\": 576,\n      \"ruleType\": \"2vo4eu\",\n      \"engineType\": \"e4cd1w\",\n      \"dataSourceName\": \"ezra.hand\",\n      \"databaseName\": \"ezra.hand\",\n      \"tableList\": [\n        \"gh69jc\"\n      ],\n      \"fieldList\": [\n        \"j57z7k\"\n      ],\n      \"scanType\": \"1tu2a1\",\n      \"scanSql\": \"la37px\",\n      \"executeSql\": \"gwt1t5\",\n      \"warnExpression\": \"3y3bo0\",\n      \"createUserid\": \"15\",\n      \"updateUserid\": \"15\",\n      \"delFlag\": 2,\n      \"gmtCreate\": \"2021-12-11 21:12:20\",\n      \"gmtModified\": \"2021-12-11 21:12:20\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 694,\n    \"jobId\": \"15\",\n    \"schedulerType\": \"1g3axs\",\n    \"effectiveTimeStart\": \"2021-12-11 21:12:20\",\n    \"effectiveTimeEnt\": \"2021-12-11 21:12:20\",\n    \"schedulerCycle\": \"r30oym\",\n    \"schedulerIntervalTime\": \"2021-12-11 21:12:20\",\n    \"schedulerTime\": \"2021-12-11 21:12:20\",\n    \"cron\": \"p1sfab\",\n    \"schedulerId\": 70,\n    \"createUserid\": \"15\",\n    \"updateUserid\": \"15\",\n    \"gmtCreate\": \"2021-12-11 21:12:20\",\n    \"gmtModified\": \"2021-12-11 21:12:20\"\n  }\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_process_saveResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"sctu4g\",\n  \"tips\": \"qltn8f\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "save",
+        "parameters": []
+      }
+    },
+    "/process/startInstance": {
+      "put": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "ProcessDefinitionApiController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_process_startInstanceRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/startInstance --data \u0027processDefinitionId\u003d443\u0027"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_process_startInstanceResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"d959lb\",\n  \"tips\": \"4z86g3\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "startInstance",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "960",
+            "name": "processDefinitionId"
+          }
+        ]
+      }
+    },
+    "/scheduler/info/page/list": {
+      "post": {
+        "summary": "获取规则调度_规则调度列表信息",
+        "deprecated": false,
+        "description": "获取规则调度_规则调度列表信息",
+        "tags": [
+          "DqcSchedulerInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_info_page_listRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zr2q0e\"\n  },\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"beginDay\": \"vw569j\",\n  \"endDay\": \"5acjrm\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_info_page_listResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"nhy0vy\",\n  \"tips\": \"15gqis\",\n  \"data\": {\n    \"total\": 148,\n    \"pageNum\": 299,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 202,\n        \"jobId\": \"15\",\n        \"jobName\": \"ezra.hand\",\n        \"dirId\": \"15\",\n        \"processDefinitionId\": 882,\n        \"notifyLevel\": \"ygckck\",\n        \"notifyState\": true,\n        \"notifyType\": \"4t9k33\",\n        \"notifyThemeIdList\": [\n          \"dw60qd\"\n        ],\n        \"schedulerState\": \"xq9s7w\",\n        \"runInstanceState\": 5,\n        \"createUserid\": \"15\",\n        \"updateUserid\": \"15\",\n        \"gmtCreate\": \"2021-12-11 21:12:20\",\n        \"gmtModified\": \"2021-12-11 21:12:20\",\n        \"dqcSchedulerRulesVOList\": [\n          {\n            \"id\": 17,\n            \"ruleId\": \"15\",\n            \"ruleName\": \"ezra.hand\",\n            \"jobId\": \"15\",\n            \"ruleTempId\": 758,\n            \"ruleType\": \"ad1xhd\",\n            \"engineType\": \"97tk0j\",\n            \"dataSourceName\": \"ezra.hand\",\n            \"databaseName\": \"ezra.hand\",\n            \"tableList\": [\n              \"k5ggjs\"\n            ],\n            \"fieldList\": [\n              \"nbjo3p\"\n            ],\n            \"scanType\": \"xdpln2\",\n            \"scanSql\": \"lre3vs\",\n            \"executeSql\": \"3pc0zi\",\n            \"warnExpression\": \"orm5sb\",\n            \"createUserid\": \"15\",\n            \"updateUserid\": \"15\",\n            \"delFlag\": 2,\n            \"gmtCreate\": \"2021-12-11 21:12:20\",\n            \"gmtModified\": \"2021-12-11 21:12:20\"\n          }\n        ],\n        \"dqcSchedulerConfigVO\": {\n          \"id\": 530,\n          \"jobId\": \"15\",\n          \"schedulerType\": \"kyqmyk\",\n          \"effectiveTimeStart\": \"2021-12-11 21:12:20\",\n          \"effectiveTimeEnt\": \"2021-12-11 21:12:20\",\n          \"schedulerCycle\": \"8dv6xy\",\n          \"schedulerIntervalTime\": \"2021-12-11 21:12:20\",\n          \"schedulerTime\": \"2021-12-11 21:12:20\",\n          \"cron\": \"dsb6x0\",\n          \"schedulerId\": 799,\n          \"createUserid\": \"15\",\n          \"updateUserid\": \"15\",\n          \"gmtCreate\": \"2021-12-11 21:12:20\",\n          \"gmtModified\": \"2021-12-11 21:12:20\"\n        }\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchPageList",
+        "parameters": []
+      }
+    },
+    "/rule/db/": {
+      "get": {
+        "summary": "获取db库列表",
+        "deprecated": false,
+        "description": "获取db库列表",
+        "tags": [
+          "DqcRuleDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_db_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"lcmk4f\",\n  \"tips\": \"4rucvk\",\n  \"data\": [\n    \"6g6bq0\",\n    \"4rjeg8\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllDataBase",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "s2vk1c",
+            "name": "connectType"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "ezra.hand",
+            "name": "dataSourceName"
+          }
+        ]
+      }
+    },
+    "/rule/template/": {
+      "post": {
+        "summary": "新增规则模版",
+        "deprecated": false,
+        "description": "新增规则模版",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_rule_template_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 230,\n  \"tempName\": \"ezra.hand\",\n  \"tempType\": \"3edpok\",\n  \"dirId\": \"15\",\n  \"dimensionType\": \"uw1wo2\",\n  \"engineTypeList\": [\n    \"erqvwr\"\n  ],\n  \"description\": \"liho3s\",\n  \"tempSql\": \"c2avxz\",\n  \"tempResult\": \"4dasve\",\n  \"ruleType\": \"5oq61d\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"e150pe\",\n  \"tips\": \"8b17oy\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "insert",
+        "parameters": []
+      },
+      "put": {
+        "summary": "编辑规则模版",
+        "deprecated": false,
+        "description": "编辑规则模版",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_rule_template_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 325,\n  \"tempName\": \"ezra.hand\",\n  \"tempType\": \"9fo1kw\",\n  \"dirId\": \"15\",\n  \"dimensionType\": \"r9eedo\",\n  \"engineTypeList\": [\n    \"681n2a\"\n  ],\n  \"description\": \"n47vaz\",\n  \"tempSql\": \"05ag7w\",\n  \"tempResult\": \"6o0y7c\",\n  \"ruleType\": \"dislq7\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"ald4b3\",\n  \"tips\": \"5eiz86\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "update",
+        "parameters": []
+      }
+    },
+    "/rule/template/{id}": {
+      "delete": {
+        "summary": "删除单个规则模版",
+        "deprecated": false,
+        "description": "删除单个规则模版",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"5upejj\",\n  \"tips\": \"6h92up\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteOne",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "744",
+            "name": "id"
+          }
+        ]
+      },
+      "get": {
+        "summary": "规则模版详情",
+        "deprecated": false,
+        "description": "规则模版详情",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"w10zdr\",\n  \"tips\": \"0ihvy6\",\n  \"data\": {\n    \"id\": 501,\n    \"tempName\": \"ezra.hand\",\n    \"tempType\": \"p1vhpj\",\n    \"dirId\": \"15\",\n    \"dimensionType\": \"dfwr9q\",\n    \"engineTypeList\": [\n      \"07jkq7\"\n    ],\n    \"description\": \"l05y4r\",\n    \"tempSql\": \"emwizz\",\n    \"tempResult\": \"p0x65h\",\n    \"ruleType\": \"v3eh4y\",\n    \"publishState\": \"he97t8\",\n    \"createUserid\": \"15\",\n    \"gmtModified\": \"2021-12-11 21:12:20\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "detail",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "157",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/rule/dir/list": {
+      "get": {
+        "summary": "获取规则模板分类目录树",
+        "deprecated": false,
+        "description": "获取规则模板分类目录树",
+        "tags": [
+          "DqcRuleDirController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_dir_listResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"mrhvqu\",\n  \"tips\": \"uebzg5\",\n  \"data\": [\n    {\n      \"id\": 682,\n      \"dirId\": \"15\",\n      \"title\": \"85acti\",\n      \"value\": \"ylmejs\",\n      \"parentId\": \"15\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchList",
+        "parameters": []
+      }
+    },
+    "/rule/dir/": {
+      "post": {
+        "summary": "新增规则模板分类目录",
+        "deprecated": false,
+        "description": "新增规则模板分类目录",
+        "tags": [
+          "DqcRuleDirController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_rule_dir_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 333,\n  \"dirId\": \"15\",\n  \"title\": \"p0kmed\",\n  \"value\": \"8feihf\",\n  \"parentId\": \"15\",\n  \"description\": \"i3fmm0\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"delFlag\": 2\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_dir_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"db98v6\",\n  \"tips\": \"nrqxvt\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "insert",
+        "parameters": []
+      },
+      "put": {
+        "summary": "编辑规则模板分类目录",
+        "deprecated": false,
+        "description": "编辑规则模板分类目录",
+        "tags": [
+          "DqcRuleDirController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_rule_dir_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 752,\n  \"dirId\": \"15\",\n  \"title\": \"fmd58x\",\n  \"value\": \"7a5gxu\",\n  \"parentId\": \"15\",\n  \"description\": \"h6qqvg\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"delFlag\": 2\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_dir_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"wkyrob\",\n  \"tips\": \"xf8jjq\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "update",
+        "parameters": []
+      }
+    },
+    "/scheduler/instance/task/log/download": {
+      "post": {
+        "summary": "下载任务实例日志",
+        "deprecated": false,
+        "description": "下载任务实例日志",
+        "tags": [
+          "DqcSchedulerInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_instance_task_log_downloadRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.21.32.3:7000/scheduler/instance/task/log/download --data \u0027taskInstanceId\u003d172\u0027"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_instance_task_log_downloadResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "taskLogDownload",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "859",
+            "name": "taskInstanceId"
+          }
+        ]
+      }
+    },
+    "/scheduler/instance/list": {
+      "post": {
+        "summary": "实例列表",
+        "deprecated": false,
+        "description": "实例列表",
+        "tags": [
+          "DqcSchedulerInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_instance_listRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"o98yls\"\n  },\n  \"processDefinitionId\": 59,\n  \"startDate\": \"2021-12-11\",\n  \"endDate\": \"2021-12-11\",\n  \"searchVal\": \"9b3hog\",\n  \"stateType\": \"8hrac7\",\n  \"executorName\": \"ezra.hand\",\n  \"dirId\": \"15\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_instance_listResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"uyv23u\",\n  \"tips\": \"hsq2jv\",\n  \"data\": {\n    \"total\": 45,\n    \"pageNum\": 8,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 330,\n        \"processDefinitionId\": 138,\n        \"state\": \"5efnjt\",\n        \"recovery\": \"mnv4dh\",\n        \"startTime\": \"2021-12-11 21:12:20\",\n        \"endTime\": \"2021-12-11\",\n        \"runTimes\": 958,\n        \"name\": \"ezra.hand\",\n        \"host\": \"kxd5wl\",\n        \"commandType\": \"tlzy4u\",\n        \"executorName\": \"ezra.hand\",\n        \"duration\": \"tvmccr\",\n        \"stateName\": \"ezra.hand\",\n        \"dependenceScheduleTimes\": \"13yb0h\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "search",
+        "parameters": []
+      }
+    },
+    "/scheduler/instance/task/log": {
+      "post": {
+        "summary": "任务实例日志",
+        "deprecated": false,
+        "description": "任务实例日志",
+        "tags": [
+          "DqcSchedulerInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_instance_task_logRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"4e19qb\"\n  },\n  \"taskInstanceId\": 149\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_instance_task_logResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"a23tiq\",\n  \"tips\": \"dmyvqw\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchTaskLog",
+        "parameters": []
+      }
+    },
+    "/rule/template/constants": {
+      "get": {
+        "summary": "获取规则模版常量信息",
+        "deprecated": false,
+        "description": "获取规则模版常量信息",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template_constantsResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"0zpja8\",\n  \"tips\": \"5igu0j\",\n  \"data\": {\n    \"engineTypeEnum\": {\n      \"mapKey\": \"wgde60\"\n    },\n    \"dimensionTypeEnum\": {\n      \"mapKey\": \"cg1387\"\n    },\n    \"publishStateEnum\": {\n      \"mapKey\": \"rp5num\"\n    },\n    \"tempTypeEnum\": {\n      \"mapKey\": \"4mkm90\"\n    },\n    \"ruleTypeEnum\": {\n      \"mapKey\": \"gq0gxt\"\n    }\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getRuLeTemplateConstants",
+        "parameters": []
+      }
+    },
+    "/process/startCheck": {
+      "put": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "ProcessDefinitionApiController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_process_startCheckRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/startCheck --data \u0027processDefinitionId\u003d291\u0027"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_process_startCheckResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"11gjfi\",\n  \"tips\": \"qyqigr\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "startCheck",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "173",
+            "name": "processDefinitionId"
+          }
+        ]
+      }
+    },
+    "/rule/template/page/list": {
+      "post": {
+        "summary": "规则模版分页列表",
+        "deprecated": false,
+        "description": "规则模版分页列表",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_rule_template_page_listRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"p3qre9\"\n  },\n  \"tempName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"dimensionType\": \"73nphe\",\n  \"engineType\": \"1em3pj\",\n  \"ruleType\": \"lhjje6\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template_page_listResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"q77ezb\",\n  \"tips\": \"rxlte5\",\n  \"data\": {\n    \"total\": 129,\n    \"pageNum\": 592,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 378,\n        \"tempName\": \"ezra.hand\",\n        \"tempType\": \"5whj8x\",\n        \"dirId\": \"15\",\n        \"dimensionType\": \"bb68kp\",\n        \"engineTypeList\": [\n          \"mw8w02\"\n        ],\n        \"description\": \"ysqji2\",\n        \"tempSql\": \"2pba7c\",\n        \"tempResult\": \"fcd1w5\",\n        \"ruleType\": \"mefpoh\",\n        \"publishState\": \"4qhzmz\",\n        \"createUserid\": \"15\",\n        \"gmtModified\": \"2021-12-11 21:12:20\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchPageList",
+        "parameters": []
+      }
+    },
+    "/scheduler/info/scheduler/rule/constants": {
+      "get": {
+        "summary": "获取调度规则常量信息",
+        "deprecated": false,
+        "description": "获取调度规则常量信息",
+        "tags": [
+          "DqcSchedulerInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_info_scheduler_rule_constantsResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"6inz65\",\n  \"tips\": \"zh0565\",\n  \"data\": {\n    \"notifyLevelEnum\": {\n      \"mapKey\": \"gr7grq\"\n    },\n    \"notifyStateEnum\": {\n      \"mapKey\": \"5uuk9k\"\n    },\n    \"notifyTypeEnum\": {\n      \"mapKey\": \"baq349\"\n    },\n    \"engineTypeEnum\": {\n      \"mapKey\": \"45y7kb\"\n    },\n    \"ruleTypeEnum\": {\n      \"mapKey\": \"xdwv5m\"\n    },\n    \"ScanTypeEnum\": {\n      \"mapKey\": \"4n1elw\"\n    },\n    \"schedulerTypeEnum\": {\n      \"mapKey\": \"58j9cu\"\n    },\n    \"schedulerStateEnum\": {\n      \"mapKey\": \"4so04f\"\n    },\n    \"SchedulerCycleEnum\": {\n      \"mapKey\": \"004rz4\"\n    }\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getSchedulerRuLeConstants",
+        "parameters": []
+      }
+    },
+    "/process/definition/info": {
+      "get": {
+        "summary": "新增规则调度_基础信息",
+        "deprecated": false,
+        "description": "新增规则调度_基础信息",
+        "tags": [
+          "ProcessDefinitionApiController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_process_definition_infoResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"ewibq5\",\n  \"tips\": \"ifb5zv\",\n  \"data\": {\n    \"id\": 157,\n    \"name\": \"ezra.hand\",\n    \"version\": 482,\n    \"releaseState\": \"wpnwen\",\n    \"projectId\": 563,\n    \"processDefinitionJson\": \"7n5qg6\",\n    \"description\": \"s67pgi\",\n    \"globalParams\": \"z5cyin\",\n    \"globalParamList\": [\n      \"37ccax\"\n    ],\n    \"globalParamMap\": {\n      \"mapKey\": \"s7de9v\"\n    },\n    \"createTime\": \"2021-12-11 21:12:20\",\n    \"updateTime\": \"2021-12-11 21:12:20\",\n    \"flag\": \"od4w0p\",\n    \"userId\": 670,\n    \"userName\": \"ezra.hand\",\n    \"projectName\": \"ezra.hand\",\n    \"locations\": \"3eonpk\",\n    \"connects\": \"9fde19\",\n    \"receivers\": \"65g1lg\",\n    \"receiversCc\": \"kslj6g\",\n    \"scheduleReleaseState\": \"kld2x5\",\n    \"timeout\": 933,\n    \"tenantId\": 868,\n    \"modifyBy\": \"gdkw6w\",\n    \"resourceIds\": \"iqg28z\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "queryProcessDefinitionInfo",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "ezra.hand",
+            "name": "projectName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "jaqmns",
+            "name": "searchVal"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "15",
+            "name": "jobId"
+          }
+        ]
+      }
+    },
+    "/scheduler/result/page/list": {
+      "post": {
+        "summary": "根据规则模板获取执行Sql",
+        "deprecated": false,
+        "description": "根据规则模板获取执行Sql",
+        "tags": [
+          "DqcSchedulerResultDataController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_scheduler_result_page_listRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"hnfr1b\"\n  },\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"ruleId\": \"15\",\n  \"beginDay\": \"d4wdlr\",\n  \"endDay\": \"8yumdr\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_result_page_listResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"a9mp6d\",\n  \"tips\": \"08bksn\",\n  \"data\": {\n    \"total\": 101,\n    \"pageNum\": 52,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"jobId\": \"15\",\n        \"jobName\": \"ezra.hand\",\n        \"ruleId\": \"15\",\n        \"ruleName\": \"ezra.hand\",\n        \"gmtModified\": \"2021-12-11 21:12:20\",\n        \"resultTitleList\": [\n          {\n            \"title\": \"c9ito2\",\n            \"dataIndex\": \"hazjgt\"\n          }\n        ],\n        \"resultDataList\": [\n          {}\n        ]\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchPageList",
+        "parameters": []
+      }
+    },
+    "/rule/db/column": {
+      "get": {
+        "summary": "获取column字段列表",
+        "deprecated": false,
+        "description": "获取column字段列表",
+        "tags": [
+          "DqcRuleDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_db_columnResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"cc2t6a\",\n  \"tips\": \"qbe9fv\",\n  \"data\": [\n    \"ptqw8x\",\n    \"3fo6th\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllColumn",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "fz367o",
+            "name": "connectType"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "ezra.hand",
+            "name": "dataSourceName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "ezra.hand",
+            "name": "dataBaseName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "ezra.hand",
+            "name": "tableName"
+          }
+        ]
+      }
+    },
+    "/rule/db/table": {
+      "get": {
+        "summary": "获取table表列表",
+        "deprecated": false,
+        "description": "获取table表列表",
+        "tags": [
+          "DqcRuleDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_db_tableResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"cslxk4\",\n  \"tips\": \"oabybk\",\n  \"data\": [\n    \"6vffqn\",\n    \"9c7vxg\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllTable",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "nx2114",
+            "name": "connectType"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "ezra.hand",
+            "name": "dataSourceName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "ezra.hand",
+            "name": "dataBaseName"
+          }
+        ]
+      }
+    },
+    "/scheduler/instance/constants": {
+      "get": {
+        "summary": "获取实例信息常量信息",
+        "deprecated": false,
+        "description": "获取实例信息常量信息",
+        "tags": [
+          "DqcSchedulerInstanceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_instance_constantsResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"v5otol\",\n  \"tips\": \"i6jrx6\",\n  \"data\": {\n    \"instanceStateTypeEnum\": {\n      \"mapKey\": \"4ctwps\"\n    },\n    \"executeTypeEnum\": {\n      \"mapKey\": \"w04ph0\"\n    }\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getInstanceConstants",
+        "parameters": []
+      }
+    },
+    "/scheduler/instance/bulk": {
+      "delete": {
+        "summary": "批量删除实例",
+        "deprecated": false,
+        "description": "批量删除实例",
+        "tags": [
+          "DqcSchedulerInstanceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_scheduler_instance_bulkResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"pdsd1e\",\n  \"tips\": \"eujo33\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteBulk",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "3khuqb",
+            "name": "processInstanceIds"
+          }
+        ]
+      }
+    },
+    "/rule/template/list": {
+      "get": {
+        "summary": "规则模版下拉列表",
+        "deprecated": false,
+        "description": "规则模版下拉列表",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template_listResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"4hr6p6\",\n  \"tips\": \"3hu36c\",\n  \"data\": [\n    {\n      \"id\": 596,\n      \"tempName\": \"ezra.hand\",\n      \"tempType\": \"17vl5q\",\n      \"dirId\": \"15\",\n      \"dimensionType\": \"ohxmqk\",\n      \"engineTypeList\": [\n        \"rymlp8\"\n      ],\n      \"description\": \"26w2b8\",\n      \"tempSql\": \"4vnqa2\",\n      \"tempResult\": \"713q4h\",\n      \"ruleType\": \"pvty7a\",\n      \"publishState\": \"dqwgnm\",\n      \"createUserid\": \"15\",\n      \"gmtModified\": \"2021-12-11 21:12:20\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "search",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "模板名称",
+            "required": false,
+            "example": "ezra.hand",
+            "name": "tempName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "分类目录",
+            "required": false,
+            "example": "15",
+            "name": "dirId"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "质量维度",
+            "required": false,
+            "example": "ybi6n4",
+            "name": "dimensionType"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "适用引擎 MYSQL,HIVE,ORACLE",
+            "required": false,
+            "example": "vkq0ak",
+            "name": "engineType"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "规则类型 \"RULE_TYPE_FIELD\", \"字段级别规则\",\"RULE_TYPE_TABLE\", \"表级别规则\",\"RULE_TYPE_DB\", \"库级别规则\";",
+            "required": false,
+            "example": "j8ggza",
+            "name": "ruleType"
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "dm-dataquality",
+    "version": "1.0.0"
+  }
+}

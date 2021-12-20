@@ -36,6 +36,10 @@ public class DqcConstant {
      * 调度返回code
      */
     public static final Integer RESULT_CODE = 0;
+    /**
+     * 日志分页
+     */
+    public static final int LIMIT = 100;
 
     /**
      * 拼装参数
@@ -107,6 +111,7 @@ public class DqcConstant {
         System.err.println("Reason: " + e.getResponseBody());
         System.err.println("Response headers: " + e.getResponseHeaders());
         e.printStackTrace();
+        throw new BizException("dolphin出错{},"+e.getMessage());
     }
 
     public static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
@@ -117,15 +122,15 @@ public class DqcConstant {
         return object.toJSONString();
     }
 
-    public static List<String> changeTypeToList(String fields) {
-        if (!ObjectUtils.isEmpty(fields)) {
-            return GsonUtil.fromJsonString(fields, new TypeToken<List<String>>() {}.getType());
+    public static List<String> jsonStrToList(String jsonStr) {
+        if (!ObjectUtils.isEmpty(jsonStr)) {
+            return GsonUtil.fromJsonString(jsonStr, new TypeToken<List<String>>() {}.getType());
         }
         return null;
     }
 
     public static void main(String[] args) {
         String a = "[\"MYSQL\",\"HIVE\"]";
-        changeTypeToList(a);
+        jsonStrToList(a);
     }
 }

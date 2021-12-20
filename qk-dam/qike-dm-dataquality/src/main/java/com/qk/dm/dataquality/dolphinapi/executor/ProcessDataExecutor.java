@@ -1,14 +1,14 @@
 package com.qk.dm.dataquality.dolphinapi.executor;
 
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessDataDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.TenantDTO;
-import com.qk.dm.dataquality.dolphinapi.handler.ProcessDataHandler;
 import com.qk.dm.dataquality.dolphinapi.handler.impl.DqcProcessDataHandler;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * 流程实例构建执行器
@@ -26,9 +26,10 @@ public class ProcessDataExecutor {
     public static ProcessDataDTO dqcProcessData(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO,
                                                 ResourceDTO mySqlScriptResource,
                                                 TenantDTO tenantDTO,
-                                                DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+                                                DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                                Map<String, ConnectBasicInfo> dataSourceInfo) {
         return new DqcProcessDataHandler()
-                .buildProcessDataDTO(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig);
+                .buildProcessDataDTO(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig,dataSourceInfo);
     }
 
 }

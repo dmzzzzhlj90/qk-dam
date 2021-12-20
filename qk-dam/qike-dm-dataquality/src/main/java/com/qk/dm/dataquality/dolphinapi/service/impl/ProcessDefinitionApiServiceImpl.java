@@ -2,9 +2,11 @@ package com.qk.dm.dataquality.dolphinapi.service.impl;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
+import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.schedule.*;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinRunInfoConfig;
@@ -17,10 +19,12 @@ import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.manager.TenantManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
+import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -33,12 +37,17 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
 
     private final DefaultApi defaultApi;
+    private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
     private final DolphinRunInfoConfig dolphinRunInfoConfig;
 
     @Autowired
-    public ProcessDefinitionApiServiceImpl(DefaultApi defaultApi, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig, DolphinRunInfoConfig dolphinRunInfoConfig) {
+    public ProcessDefinitionApiServiceImpl(DefaultApi defaultApi,
+                                           DataBaseInfoDefaultApi dataBaseInfoDefaultApi,
+                                           DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                           DolphinRunInfoConfig dolphinRunInfoConfig) {
         this.defaultApi = defaultApi;
+        this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
         this.dolphinSchedulerInfoConfig = dolphinSchedulerInfoConfig;
         this.dolphinRunInfoConfig = dolphinRunInfoConfig;
     }
@@ -49,29 +58,37 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         //是否存在工作流
         ProcessDefinitionDTO queryProcessDefinition =
                 queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), dqcSchedulerBasicInfoVO.getJobId());
+        //获取数据源信息
+        Map<String, ConnectBasicInfo> dataSourceInfo = getDataSourceInfo(dqcSchedulerBasicInfoVO);
+
         if (null == queryProcessDefinition) {
             //新增
-            save(dqcSchedulerBasicInfoVO);
+            save(dqcSchedulerBasicInfoVO,dataSourceInfo);
             ProcessDefinitionDTO saveProcessDefinition =
                     queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), dqcSchedulerBasicInfoVO.getJobId());
             processDefinitionId = saveProcessDefinition.getId();
         } else {
             //编辑
-            update(dqcSchedulerBasicInfoVO);
+            update(dqcSchedulerBasicInfoVO,dataSourceInfo);
             processDefinitionId = queryProcessDefinition.getId();
         }
         return processDefinitionId;
     }
 
+    private Map<String, ConnectBasicInfo> getDataSourceInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        List<String> dataSourceNames = dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList().stream().map(DqcSchedulerRulesVO::getDataSourceName).collect(Collectors.toList());
+        return dataBaseInfoDefaultApi.getDataSourceMap(dataSourceNames);
+    }
+
     @Override
-    public void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    public void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo) {
         try {
             // 获取DolphinScheduler 资源信息
             ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi, dolphinSchedulerInfoConfig);
             // 获取DolphinScheduler 租户信息
             TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi, dolphinSchedulerInfoConfig);
             // 构建ProcessData对象
-            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig);
+            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig,dataSourceInfo);
             // 构建locations
             LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO, dolphinSchedulerInfoConfig);
 
@@ -90,7 +107,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+    public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo) {
         try {
             Integer processDefinitionId = dqcSchedulerBasicInfoVO.getProcessDefinitionId();
             // 获取DolphinScheduler 资源信息
@@ -98,7 +115,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             // 获取DolphinScheduler 租户信息
             TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi, dolphinSchedulerInfoConfig);
             // 构建ProcessData对象
-            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig);
+            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig, dataSourceInfo);
             // 构建locations
             LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO, dolphinSchedulerInfoConfig);
 
@@ -266,7 +283,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                             //发送策略
                             WarningTypeEnum.fromValue(dolphinRunInfoConfig.getWarningType()).getCode(),
                             //指令类型
-                            ExecTypeEnum.fromValue(dolphinRunInfoConfig.getExecType()).getCode(),
+                            dolphinRunInfoConfig.getExecType(),
                             // 收件人
                             dolphinRunInfoConfig.getReceivers(),
                             // 收件人(抄送)

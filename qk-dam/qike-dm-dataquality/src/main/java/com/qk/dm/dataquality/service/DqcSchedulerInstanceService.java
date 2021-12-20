@@ -1,8 +1,12 @@
 package com.qk.dm.dataquality.service;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceExecuteDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceLogDTO;
+import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceParamsDTO;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
+import com.qk.dm.dataquality.vo.DqcProcessTaskInstanceVO;
 import com.qk.dm.dataquality.vo.SchedulerInstanceConstantsVO;
 
 /**
@@ -11,9 +15,19 @@ import com.qk.dm.dataquality.vo.SchedulerInstanceConstantsVO;
  * @since 1.0.0
  */
 public interface DqcSchedulerInstanceService {
-    DqcProcessInstanceVO search(DqcSchedulerInstanceParamsDTO dqcSchedulerInstanceParamsDTO);
+    PageResultVO<DqcProcessInstanceVO> search(DqcSchedulerInstanceParamsDTO dqcSchedulerInstanceParamsDTO);
 
     void execute(DqcSchedulerInstanceExecuteDTO instanceExecute);
 
+    void deleteOne(Integer processInstanceId);
+
+    void deleteBulk(String processInstanceIds);
+
     SchedulerInstanceConstantsVO getInstanceConstants();
+
+    PageResultVO<DqcProcessTaskInstanceVO> searchTask(DqcSchedulerTaskInstanceParamsDTO taskInstanceParamsDTO);
+
+    Object searchTaskLog(DqcSchedulerTaskInstanceLogDTO taskInstanceLogDTO);
+
+    Object taskLogDownload(Integer taskInstanceId);
 }

@@ -21,24 +21,96 @@ public class GenerateSqlUtil {
     /**
      * Schema_Table
      */
-    public static final String SCHEMA_TABLE = "Schema_Table";
+    public static final String SCHEMA_TABLE = "t";
 
     /**
      * Column
      */
-    public static final String COLUMN = "Column";
+    public static final String COL = "col";
 
-    public static String matchReplaceWithCondition(String tempSql, String condition, String value) {
+    /**
+     * 默认序列号
+     */
+    public static final String DEFAULT_NUM = "1";
+
+    /**
+     * UNION ALL
+     */
+    public static final String UNION_ALL = " UNION ALL ";
+
+    public static final String WHERE = "where";
+    public static final String AND = " and ";
+
+    public static final String WHERE_PART = " where 1=1 ";
+    public static final String SINGLE_QUOTES = "'";
+    public static final String SINGLE_QUOTES_MARK = "<S_Q> ";
+
+    /**
+     * 根据规则模板生成执行SQL
+     *
+     * @param tempSql
+     * @param conditionMap
+     * @return
+     */
+    public static String generateSql(String tempSql, Map<String, String> conditionMap, String wherePartSql) {
+        if (conditionMap.size() > 0) {
+            for (String conditionKey : conditionMap.keySet()) {
+                String value = conditionMap.get(conditionKey);
+                // 正则规则匹配占位符位置
+                tempSql = matchReplaceWithCondition(tempSql, conditionKey, value, wherePartSql);
+            }
+        }
+        return tempSql;
+    }
+
+    /**
+     * 正则规则匹配占位符位置
+     * @param tempSql
+     * @param condition
+     * @param value
+     * @param wherePartSql
+     * @return
+     */
+    public static String matchReplaceWithCondition(String tempSql, String condition, String value, String wherePartSql) {
+        String replaceSqlStr = "";
         String pattern = "\\$\\{" + condition + "\\}";
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(tempSql);
-        StringBuffer sb = new StringBuffer();
+        StringBuffer sqlBuffer = new StringBuffer();
         while (m.find()) {
             String group = m.group();
-            m.appendReplacement(sb, group == null ? "" : value);
+            m.appendReplacement(sqlBuffer, group == null ? "" : value);
         }
-        m.appendTail(sb);
-        return sb.toString();
+        m.appendTail(sqlBuffer);
+        replaceSqlStr = setSqlWhereCondition(condition, value, sqlBuffer, wherePartSql);
+        return replaceSqlStr;
+    }
+
+    /**
+     * 匹配where条件
+     *
+     * @param condition
+     * @param value
+     * @param sqlBuffer
+     * @param wherePartSql
+     * @return
+     */
+    private static String setSqlWhereCondition(String condition, String value, StringBuffer sqlBuffer, String wherePartSql) {
+        String replaceSqlStr;
+        if (condition.contains(SCHEMA_TABLE)) {
+            String sqlStr = sqlBuffer.toString();
+            if (sqlStr.contains(WHERE)) {
+                replaceSqlStr = sqlStr.replace(WHERE, AND);
+                //wherePart "where 1=1 and code ='???' "
+                replaceSqlStr = replaceSqlStr.replace(value, " " + value + " " + wherePartSql);
+            } else {
+                //wherePart "where 1=1 and code ='???' "
+                replaceSqlStr = sqlStr.replace(value, " " + value + " " + wherePartSql);
+            }
+        } else {
+            replaceSqlStr = sqlBuffer.toString();
+        }
+        return replaceSqlStr;
     }
 
     public static String getReplaceSql(String content) {
@@ -70,7 +142,7 @@ public class GenerateSqlUtil {
         for (String e : one) {
             String value = single.get(e);
             // 先匹配现有的内容
-            content = matchReplaceWithCondition(content, e, value);
+            content = matchReplaceWithCondition(content, e, value,"");
         }
         // 匹配参数内容为空的情况
         content = getReplaceSql(content).trim();

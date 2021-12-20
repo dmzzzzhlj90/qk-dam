@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-11-09T12:28:17.177569+08:00[Asia/Shanghai]")
+@javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-18T14:27:46.433909+08:00[Asia/Shanghai]")
 public class JSON {
   private ObjectMapper mapper;
 
@@ -106,7 +106,7 @@ public class JSON {
 
     /**
      * Returns the target model class that should be used to deserialize the input data.
-     * This function can be invoked for anyOf/oneOf composed models with discriminator mappings.
+     * This com.qk.dm.groovy.function can be invoked for anyOf/oneOf composed models with discriminator mappings.
      * The discriminator mappings are used to determine the target model class.
      *
      * @param node The input data.

@@ -32,6 +32,18 @@ public class DqcSchedulerRulesVO {
     private Long id;
 
     /**
+     * 规则id
+     */
+    @NotBlank(message = "规则id不能为空！")
+    private String ruleId;
+
+    /**
+     * 规则名称
+     */
+    @NotBlank(message = "规则名称不能为空！")
+    private String ruleName;
+
+    /**
      * 作业id
      */
     @NotBlank(message = "作业id不能为空！")
@@ -70,7 +82,7 @@ public class DqcSchedulerRulesVO {
     /**
      * 表名称
      */
-    private String tableName;
+    private List<String> tableList;
 
     /**
      * 字段名称

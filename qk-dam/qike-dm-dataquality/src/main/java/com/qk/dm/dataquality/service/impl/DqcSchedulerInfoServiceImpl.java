@@ -1,8 +1,6 @@
 package com.qk.dm.dataquality.service.impl;
 
-import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.*;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
@@ -121,8 +119,9 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         dqcSchedulerBasicInfoVO.setProcessDefinitionId(0);
         //基础信息
         dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
-        //规则信息
-        dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId);
+        //TODO 规则信息
+        dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(
+                        dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId));
         //调度配置信息
         dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
         //创建流程实例ID
@@ -136,8 +135,9 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         //基础信息
         dqcSchedulerBasicInfoService.update(dqcSchedulerBasicInfoVO);
-        //规则信息
-        dqcSchedulerRulesService.updateBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(),dqcSchedulerBasicInfoVO.getJobId());
+        //TODO 规则信息
+        dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(
+                dqcSchedulerRulesService.updateBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(),dqcSchedulerBasicInfoVO.getJobId()));
         //调度配置信息
         dqcSchedulerConfigService.update(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
         //更新流程实例
@@ -207,7 +207,9 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
                         .select(qDqcSchedulerBasicInfo)
                         .from(qDqcSchedulerBasicInfo)
                         .where(booleanBuilder)
-                        .orderBy(qDqcSchedulerBasicInfo.gmtModified.asc())
+//                        .orderBy(qDqcSchedulerBasicInfo.schedulerState.desc())
+//                        .orderBy(qDqcSchedulerBasicInfo.jobName.desc())
+                        .orderBy(qDqcSchedulerBasicInfo.gmtModified.desc())
                         .offset((schedulerInfoParamsVO.getPagination().getPage() - 1) * schedulerInfoParamsVO.getPagination().getSize())
                         .limit(schedulerInfoParamsVO.getPagination().getSize())
                         .fetch();
@@ -227,6 +229,11 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         if (!ObjectUtils.isEmpty(schedulerInfoParamsVO.getJobId())) {
             booleanBuilder.and(qDqcSchedulerBasicInfo.jobId.eq(schedulerInfoParamsVO.getJobId()));
         }
+
+        if (!ObjectUtils.isEmpty(schedulerInfoParamsVO.getJobName())) {
+            booleanBuilder.and(qDqcSchedulerBasicInfo.jobName.eq(schedulerInfoParamsVO.getJobName()));
+        }
+
         if (!StringUtils.isEmpty(schedulerInfoParamsVO.getBeginDay())
                 && !StringUtils.isEmpty(schedulerInfoParamsVO.getEndDay())) {
             StringTemplate dateExpr =
@@ -247,12 +254,12 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     }
 
     private Map<String, List<DqcSchedulerRulesVO>> getSchedulerRulesMap(List<String> taskIds) {
-        Iterable<DqcSchedulerRules> dqcSchedulerRulesIterable = dqcSchedulerRulesRepository.findAll(QDqcSchedulerRules.dqcSchedulerRules.jobId.in(taskIds));
+        Iterable<DqcSchedulerRules> dqcSchedulerRulesIterable = dqcSchedulerRulesRepository.findAll(QDqcSchedulerRules.dqcSchedulerRules.jobId.in(taskIds),QDqcSchedulerRules.dqcSchedulerRules.gmtModified.desc());
         List<DqcSchedulerRulesVO> schedulerRulesVOList = new ArrayList<>();
         for (DqcSchedulerRules dqcSchedulerRules : dqcSchedulerRulesIterable) {
             DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);
-            dqcSchedulerRulesVO.setFieldList(DqcConstant.changeTypeToList(dqcSchedulerRules.getFields()));
-//            setFieldList(dqcSchedulerRulesVO, dqcSchedulerRules.getFields());
+            dqcSchedulerRulesVO.setTableList(DqcConstant.jsonStrToList(dqcSchedulerRules.getTables()));
+            dqcSchedulerRulesVO.setFieldList(DqcConstant.jsonStrToList(dqcSchedulerRules.getFields()));
             schedulerRulesVOList.add(dqcSchedulerRulesVO);
         }
         return schedulerRulesVOList.stream().collect(Collectors.groupingBy(DqcSchedulerRulesVO::getJobId));
@@ -285,13 +292,6 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
 
     private void updateProcessDefinitionIdByJobId(int processDefinitionId, String jobId) {
         dqcSchedulerBasicInfoRepository.updateProcessDefinitionIdByJobId(processDefinitionId, jobId);
-    }
-
-    private void setFieldList(DqcSchedulerRulesVO dqcSchedulerRulesVO, String fields) {
-        if (!ObjectUtils.isEmpty(fields)) {
-            dqcSchedulerRulesVO.setFieldList(GsonUtil.fromJsonString(GsonUtil.toJsonString(fields), new TypeToken<List<String>>() {
-            }.getType()));
-        }
     }
 
 }
