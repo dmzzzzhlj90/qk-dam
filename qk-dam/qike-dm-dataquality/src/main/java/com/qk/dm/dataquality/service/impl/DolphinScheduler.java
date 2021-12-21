@@ -1,6 +1,5 @@
 package com.qk.dm.dataquality.service.impl;
 
-import com.qk.dm.dataquality.constant.SchedulerStateEnum;
 import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
@@ -33,22 +32,31 @@ public class DolphinScheduler {
 
     /*****************************流程定义**开始*************************************************/
 
-    /**
-     * 流程定义上线
-     *
-     * @param processDefinitionCode
-     */
-    public void online(Long processDefinitionCode) {
-        processDefinitionApiService.release(processDefinitionCode, SchedulerStateEnum.ONLINE.getState());
-    }
+//    /**
+//     * 流程定义上线
+//     *
+//     * @param processDefinitionCode
+//     */
+//    public void online(Long processDefinitionCode) {
+//        processDefinitionApiService.release(processDefinitionCode, SchedulerStateEnum.ONLINE.getCode());
+//    }
+//
+//    /**
+//     * 流程定义下线
+//     *
+//     * @param processDefinitionCode
+//     */
+//    public void offline(Long processDefinitionCode) {
+//        processDefinitionApiService.release(processDefinitionCode, SchedulerStateEnum.OFFLINE.getCode());
+//    }
 
     /**
-     * 流程定义下线
+     * 流程定义上下线
      *
      * @param processDefinitionCode
      */
-    public void offline(Long processDefinitionCode) {
-        processDefinitionApiService.release(processDefinitionCode, SchedulerStateEnum.OFFLINE.getState());
+    public void release(Long processDefinitionCode,String releaseState) {
+        processDefinitionApiService.release(processDefinitionCode, releaseState);
     }
 
     /**

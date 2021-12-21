@@ -40,7 +40,7 @@ public class DqcSchedulerTaskInstanceParamsDTO {
     String endDate;
 
     /**
-     * 搜索值
+     * 名称
      */
     String searchVal;
 
@@ -50,12 +50,12 @@ public class DqcSchedulerTaskInstanceParamsDTO {
     String stateType;
 
     /**
-     * 流程名称
+     * 执行用户
      */
     String executorName;
 
     /**
-     * 任务实例名(名称：精确搜索)
+     * 任务实例名称
      */
     String taskName;
 }

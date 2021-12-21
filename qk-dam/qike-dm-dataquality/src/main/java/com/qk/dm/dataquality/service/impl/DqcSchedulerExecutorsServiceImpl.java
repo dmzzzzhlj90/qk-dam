@@ -39,12 +39,11 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
         DqcSchedulerBasicInfo basicInfo =
                 schedulerBasicInfoService.getBasicInfo(infoReleaseDto.getId());
         Long processDefinitionId = basicInfo.getProcessDefinitionId();
-        if (infoReleaseDto.getSchedulerState().equals(SchedulerStateEnum.ONLINE.getCode())) {
-            dolphinScheduler.online(Long.valueOf(processDefinitionId));
+        SchedulerStateEnum schedulerStateEnum = SchedulerStateEnum.fromValue(infoReleaseDto.getSchedulerState());
+        dolphinScheduler.release(processDefinitionId,schedulerStateEnum.getCode());
+        if (schedulerStateEnum == SchedulerStateEnum.ONLINE) {
             // 处理定时
-            doScheduler(Long.valueOf(processDefinitionId), basicInfo.getJobId());
-        } else {
-            dolphinScheduler.offline(Long.valueOf(processDefinitionId));
+            doScheduler(processDefinitionId, basicInfo.getJobId());
         }
         //TODO 调度状态
         basicInfo.setSchedulerState(infoReleaseDto.getSchedulerState());

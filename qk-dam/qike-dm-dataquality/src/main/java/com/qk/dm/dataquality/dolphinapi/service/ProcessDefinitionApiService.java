@@ -30,7 +30,7 @@ public interface ProcessDefinitionApiService {
 
     void deleteBulk(String projectName, List<Long> processDefinitionIds);
 
-    void release(Long processDefinitionCode, Integer releaseState);
+    void release(Long processDefinitionCode, String releaseState);
 
     void startCheck(Long processDefinitionCode);
 
