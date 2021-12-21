@@ -24,8 +24,7 @@ public class DolphinSchedulerInfoConfig {
     /**
      * 项目code
      */
-//    private Long projectCode = 3908935396896L;
-    private Long projectCode = 3908755011744L;
+    private Long projectCode;
 
     /**
      * 流程图DAG节点连接信息,默认[]
