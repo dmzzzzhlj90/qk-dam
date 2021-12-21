@@ -1,13 +1,17 @@
 package com.qk.dm.reptile.service.impl;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptDimensionColumnInfo;
 import com.qk.dm.reptile.entity.QRptDimensionInfo;
 import com.qk.dm.reptile.entity.RptDimensionColumnInfo;
+import com.qk.dm.reptile.entity.RptDimensionInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptDimensionInfoColumnMapper;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnDTO;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnParamDTO;
+import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnScreenParamsDTO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import com.qk.dm.reptile.repositories.RptDimensionColumnInfoRepository;
 import com.qk.dm.reptile.repositories.RptDimensionInfoRepository;
@@ -126,18 +130,38 @@ public class RptDimensionInfoColumnServiceImpl implements
 
   /**
    * 根据目录id返回字段信息
-   * @param id
+   * @param rptDimensionInfoColumnScreenParamsDTO
    * @return
    */
   @Override
-  public Map<String,String> queryColumnByDirName(Long id) {
-    BooleanExpression eq = qRptDimensionColumnInfo.dimensionId.eq(id);
+  public Map<String,String> queryColumnByDirName(
+      RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
+    RptDimensionInfo rptDimensionInfo = rptDimensionInfoRepository.findById(rptDimensionInfoColumnScreenParamsDTO.getId()).orElse(null);
+    if (Objects.isNull(rptDimensionInfo)){
+      throw new BizException("id为"+rptDimensionInfoColumnScreenParamsDTO.getId()+"的目录查询为空");
+    }
+    BooleanExpression eq = qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnScreenParamsDTO.getId());
     Iterable<RptDimensionColumnInfo> rptDimensionColumnInfoList = rptDimensionColumnInfoRepository.findAll(eq);
     Map<String,String> map  = new HashMap<>();
     rptDimensionColumnInfoList.forEach(rptDimensionColumnInfo -> {
-      map.put(rptDimensionColumnInfo.getDimensionColumnName(),rptDimensionColumnInfo.getDimensionColumnCode());
+      Boolean handleData = handleData(rptDimensionColumnInfo,rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList());
+      if (handleData){
+        map.put(rptDimensionColumnInfo.getDimensionColumnName(),rptDimensionColumnInfo.getDimensionColumnCode());
+      }
     });
     return map;
+  }
+
+  private Boolean handleData(RptDimensionColumnInfo rptDimensionColumnInfo, List<String> dimensionColumnCodeList) {
+    Boolean boolea = true;
+    if (Objects.isNull(rptDimensionColumnInfo)){
+      return boolea=false;
+    }
+    if (CollectionUtils.isNotEmpty(dimensionColumnCodeList) && !Objects.isNull(rptDimensionColumnInfo) && StringUtils.isNotBlank(rptDimensionColumnInfo.getDimensionColumnCode())&& !rptDimensionColumnInfo.getDimensionColumnCode().equals(
+        RptConstant.NEXTURL) && dimensionColumnCodeList.contains(rptDimensionColumnInfo.getDimensionColumnCode())){
+        boolea=false;
+    }
+    return boolea;
   }
 
   private Map<String,Object> queryByParams(RptDimensionInfoColumnParamDTO rptDimensionInfoColumnParamDTO) {

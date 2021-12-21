@@ -31,4 +31,9 @@ public class RptConstant {
      */
     public static final String JOBID = "jobid";
 
+    /**
+     * 维度字段,下一步链接的编码
+     */
+    public static final String NEXTURL="more_url";
+
 }
