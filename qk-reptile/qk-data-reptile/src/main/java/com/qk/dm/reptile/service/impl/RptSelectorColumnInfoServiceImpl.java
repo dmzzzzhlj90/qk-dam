@@ -96,4 +96,10 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
         }
         return null;
     }
+
+    @Override
+    public void copyConfig(Long sourceId, Long targetId) {
+        List<RptSelectorColumnInfo> list = rptSelectorColumnInfoRepository.findAllByConfigId(sourceId);
+        rptSelectorColumnInfoRepository.saveAll(list.stream().peek(e -> e.setConfigId(targetId)).collect(Collectors.toList()));
+    }
 }

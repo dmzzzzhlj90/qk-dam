@@ -171,26 +171,22 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
     @Override
     public void copyConfig(Long sourceId, Long targetId) {
-
+       rptConfigInfoService.copyConfig(sourceId,targetId);
     }
 
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptBaseInfoDTO);
         Map<String, Object> result = new HashMap<>();
-        long count =
-                jpaQueryFactory.select(qRptBaseInfo.count()).from(qRptBaseInfo).where(booleanBuilder).fetchOne();
-        List<RptBaseInfo> mtdLabelsList =
-                jpaQueryFactory
+        long count = jpaQueryFactory.select(qRptBaseInfo.count()).from(qRptBaseInfo).where(booleanBuilder).fetchOne();
+        List<RptBaseInfo> mtdLabelsList = jpaQueryFactory
                         .select(qRptBaseInfo)
                         .from(qRptBaseInfo)
                         .where(booleanBuilder)
                         .orderBy(qRptBaseInfo.id.desc())
-                        .offset(
-                                (long) (rptBaseInfoDTO.getPagination().getPage() - 1)
+                        .offset((long) (rptBaseInfoDTO.getPagination().getPage() - 1)
                                         * rptBaseInfoDTO.getPagination().getSize())
-                        .limit(rptBaseInfoDTO.getPagination().getSize())
-                        .fetch();
+                        .limit(rptBaseInfoDTO.getPagination().getSize()).fetch();
         result.put("list", mtdLabelsList);
         result.put("total", count);
         return result;

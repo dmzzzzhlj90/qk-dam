@@ -165,6 +165,17 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public void copyConfig(Long sourceId, Long targetId) {
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(sourceId);
+        list.forEach(e->{
+            e.setBaseInfoId(targetId);
+            RptConfigInfo rptConfigInfo = rptConfigInfoRepository.save(e);
+            rptSelectorColumnInfoService.copyConfig(e.getId(),rptConfigInfo.getId());
+        });
+
+    }
+
     private void transRptConfigInfo(RptConfigInfo rptConfigInfo, RptConfigInfoDTO rptConfigInfoDTO){
         if(Objects.nonNull(rptConfigInfoDTO.getCookies())){
             rptConfigInfo.setCookies(GsonUtil.toJsonString(rptConfigInfoDTO.getCookies()));

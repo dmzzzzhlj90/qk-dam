@@ -26,4 +26,9 @@ public interface RptConfigInfoService {
      * @return
      */
     List<RptConfigInfoVO> rptList(Long baseId);
+
+    /**
+     * 复制配置项
+     */
+    void copyConfig(Long sourceId,Long targetId);
 }
