@@ -26,4 +26,9 @@ public interface RptBaseInfoService {
     void timedExecution();
 
     void execution(Long id);
+
+    /**
+     * 复制配置项
+     */
+    void copyConfig(Long sourceId,Long targetId);
 }

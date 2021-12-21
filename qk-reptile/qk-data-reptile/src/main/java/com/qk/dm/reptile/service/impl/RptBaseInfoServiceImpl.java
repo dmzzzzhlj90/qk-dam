@@ -12,13 +12,13 @@ import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
 import com.qk.dm.reptile.params.builder.RptParaBuilder;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
+import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
@@ -167,6 +167,11 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if (!StringUtils.isBlank(result)) {
              updateBaseInfo(rptBaseInfo, result);
         }
+    }
+
+    @Override
+    public void copyConfig(Long sourceId, Long targetId) {
+
     }
 
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO) {

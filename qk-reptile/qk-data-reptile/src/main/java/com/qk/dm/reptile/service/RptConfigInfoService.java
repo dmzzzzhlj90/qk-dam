@@ -1,13 +1,14 @@
 package com.qk.dm.reptile.service;
 
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
+import com.qk.dm.reptile.params.vo.RptAddConfigVO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
 
 import java.util.List;
 
 public interface RptConfigInfoService {
 
-    Long insert(RptConfigInfoDTO rptConfigInfoDTO);
+    RptAddConfigVO insert(RptConfigInfoDTO rptConfigInfoDTO);
 
     Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO);
 

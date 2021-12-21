@@ -113,5 +113,50 @@ public class RptBaseInfo implements Serializable {
      */
     @Column(name = "job_id")
     private String jobId;
+    /**
+     * 分配日期
+     */
+    @Column(name = "distribution_date")
+    private Date distributionDate;
+    /**
+     * 交付日期
+     */
+    @Column(name = "delivery_date")
+    private Date deliveryDate;
+    /**
+     * 二期站点类型
+     */
+    @Column(name = "second_site_type")
+    private String secondSiteType;
+    /**
+     * 列表页地址
+     */
+    @Column(name = "list_page_address")
+    private String listPageAddress;
+    /**
+     * 不同类型混合
+     */
+    @Column(name = "different_type_mixed")
+    private String differentTypeMixed;
+    /**
+     * 信息发布级别
+     */
+    @Column(name = "info_release_level")
+    private String infoReleaseLevel;
+    /**
+     * 省编码
+     */
+    @Column(name = "province_code")
+    private String provinceCode;
+    /**
+     * 市编码
+     */
+    @Column(name = "city_code")
+    private String cityCode;
+    /**
+     * 区编码
+     */
+    @Column(name = "area_code")
+    private String areaCode;
 
 }

@@ -10,7 +10,9 @@ import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
 import com.qk.dm.reptile.params.builder.RptParaBuilder;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
+import com.qk.dm.reptile.params.vo.RptAddConfigVO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
+import com.qk.dm.reptile.params.vo.RptSelectorColumnInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
 import com.qk.dm.reptile.service.RptConfigInfoService;
@@ -47,11 +49,11 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     }
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long insert(RptConfigInfoDTO rptConfigInfoDTO) {
+    public RptAddConfigVO insert(RptConfigInfoDTO rptConfigInfoDTO) {
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
         //修改基础信息表状态为爬虫
         updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
-        return config.getId();
+        return buildRptAddConfigVO(config);
     }
 
     @Override
@@ -89,7 +91,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }
        if (!Objects.equals(rptBaseInfo.getStatus(), RptConstant.REPTILE)) {
           rptBaseInfo.setStatus(RptConstant.REPTILE);
-              rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+          rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
         }
     }
 
@@ -155,16 +157,12 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Override
     public List<RptConfigInfoVO> rptList(Long baseId) {
         List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(baseId);
-        List<RptConfigInfoVO> rptConfigInfoVOList = new ArrayList<>();
-        if(!CollectionUtils.isEmpty(list)){
-            list.forEach(e->{
-                RptConfigInfoVO rptConfigVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(e);
-                transRptConfigInfoVO(e,rptConfigVO);
-                rptConfigVO.setSelectorList(rptSelectorColumnInfoService.list(rptConfigVO.getId()));
-                rptConfigInfoVOList.add(rptConfigVO);
-            });
-        }
-        return rptConfigInfoVOList;
+        return list.stream().map(e->{
+            RptConfigInfoVO rptConfigVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(e);
+            transRptConfigInfoVO(e,rptConfigVO);
+            rptConfigVO.setSelectorList(rptSelectorColumnInfoService.list(rptConfigVO.getId()));
+            return rptConfigVO;
+        }).collect(Collectors.toList());
     }
 
     private void transRptConfigInfo(RptConfigInfo rptConfigInfo, RptConfigInfoDTO rptConfigInfoDTO){
@@ -202,6 +200,21 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
             rptConfigInfoVO.setRaw(GsonUtil.fromJsonString(rptConfigInfo.getRaw(),Map.class));
         }
         return rptConfigInfoVO;
+    }
+
+    private RptAddConfigVO buildRptAddConfigVO(RptConfigInfo config){
+        return RptAddConfigVO.builder()
+                .configId(config.getId())
+                .dimensionId(config.getDimensionId())
+                .columnCodeList(getColumnCodeList(config.getId())).build();
+    }
+
+    private List<String> getColumnCodeList(Long configId){
+        List<RptSelectorColumnInfoVO> rptSelectorColumnInfoList = rptSelectorColumnInfoService.list(configId);
+        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){
+            return null;
+        }
+        return rptSelectorColumnInfoList.stream().map(RptSelectorColumnInfoVO::getColumnCode).collect(Collectors.toList());
     }
 
 }
