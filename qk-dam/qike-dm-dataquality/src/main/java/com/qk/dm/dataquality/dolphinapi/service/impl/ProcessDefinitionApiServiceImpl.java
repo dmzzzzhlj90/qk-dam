@@ -1,5 +1,6 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
+import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.datacenter.api.DefaultApi;
@@ -99,7 +100,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             String projectName = dolphinSchedulerInfoConfig.getProjectName();
             String description = dqcSchedulerBasicInfoVO.getJobId();
 
-//            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
+            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,7 +127,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             String projectName = dolphinSchedulerInfoConfig.getProjectName();
             String description = dqcSchedulerBasicInfoVO.getJobId();
 
-//            defaultApi.updateProcessDefinitionUsingPOST(connects, processDefinitionId, locations, name, processDefinitionJson, projectName, description);
+            defaultApi.updateProcessDefinitionUsingPOST(connects, processDefinitionId, locations, name, processDefinitionJson, projectName, description);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,28 +136,28 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     @Override
     public ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId) {
         ProcessDefinitionDTO processDefinitionDTO = null;
-//        try {
-//            Result result = defaultApi.queryProcessDefinitionListPagingUsingGET(SchedulerConstant.PAGE_NO, SchedulerConstant.PAGE_SIZE, projectName, searchVal, null);
-//            Object data = result.getData();
-//            ProcessResultDataDTO processResultDataDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(data), new TypeToken<ProcessResultDataDTO>() {
-//            }.getType());
-//            List<ProcessDefinitionDTO> totalList = processResultDataDTO.getTotalList();
-//
-//            List<ProcessDefinitionDTO> processDefinitions = totalList.stream()
-//                    .filter(processDefinition -> processDefinition.getName().equals(searchVal) && processDefinition.getDescription().equals(jobId))
-//                    .collect(Collectors.toList());
-//            processDefinitionDTO = processDefinitions.get(0);
-//        } catch (Exception e) {
-////            e.printStackTrace();
-////            throw new BizException("未获取到实例ID!!!");
-//        }
+        try {
+            Result result = defaultApi.queryProcessDefinitionListPagingUsingGET(SchedulerConstant.PAGE_NO, SchedulerConstant.PAGE_SIZE, projectName, searchVal, null);
+            Object data = result.getData();
+            ProcessResultDataDTO processResultDataDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(data), new TypeToken<ProcessResultDataDTO>() {
+            }.getType());
+            List<ProcessDefinitionDTO> totalList = processResultDataDTO.getTotalList();
+
+            List<ProcessDefinitionDTO> processDefinitions = totalList.stream()
+                    .filter(processDefinition -> processDefinition.getName().equals(searchVal) && processDefinition.getDescription().equals(jobId))
+                    .collect(Collectors.toList());
+            processDefinitionDTO = processDefinitions.get(0);
+        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new BizException("未获取到实例ID!!!");
+        }
         return processDefinitionDTO;
     }
 
     @Override
     public void delete(String projectName, Long processDefinitionId) {
         try {
-//            defaultApi.deleteProcessDefinitionByIdUsingGET(projectName, processDefinitionId);
+            defaultApi.deleteProcessDefinitionByIdUsingGET(projectName, processDefinitionId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -166,7 +167,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public void deleteBulk(String projectName, List<Long> processDefinitionIdList) {
         try {
             String processDefinitionIds = processDefinitionIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
-//            defaultApi.batchDeleteProcessDefinitionByIdsUsingGETWithHttpInfo(projectName, processDefinitionIds);
+            defaultApi.batchDeleteProcessDefinitionByIdsUsingGETWithHttpInfo(projectName, processDefinitionIds);
         } catch (Exception e) {
             e.printStackTrace();
         }
