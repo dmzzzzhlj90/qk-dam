@@ -46,4 +46,9 @@ public class SchedulerConstant {
      */
     public static final int SCHEDULER_PAGE_SIZE = 1;
 
+    /**
+     * 0值
+     */
+    public static final Integer ZERO_VALUE = 0;
+
 }

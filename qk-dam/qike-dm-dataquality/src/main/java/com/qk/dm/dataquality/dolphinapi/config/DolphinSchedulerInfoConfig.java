@@ -62,12 +62,12 @@ public class DolphinSchedulerInfoConfig {
     /**
      * 失败重试次数 默认 0
      */
-    private Integer taskMaxRetryTimes;
+    private Integer failRetryTimes;
 
     /**
      * 失败重试间隔 默认 1
      */
-    private Integer taskRetryInterval;
+    private Integer failRetryInterval;
 
     /**
      * Worker分组 默认 "default"
@@ -83,6 +83,11 @@ public class DolphinSchedulerInfoConfig {
      * 任务节点类型
      */
     private String typeShell;
+
+    /**
+     * 运行环境Code
+     */
+    private Integer environmentCode;
 
     //##LocationsHandler
     /**

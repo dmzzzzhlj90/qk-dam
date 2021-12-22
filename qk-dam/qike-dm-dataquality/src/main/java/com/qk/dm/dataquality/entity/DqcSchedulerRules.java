@@ -54,6 +54,12 @@ public class DqcSchedulerRules implements Serializable {
     private String ruleType;
 
     /**
+     * 流程实例节点taskCode
+     */
+    @Column(name = "task_code", nullable = false)
+    private Long taskCode;
+
+    /**
      * 适用引擎 MYSQL HIVE ORACLE
      */
     @Column(name = "engine_type", nullable = false)

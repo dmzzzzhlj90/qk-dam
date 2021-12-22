@@ -68,7 +68,7 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
 
     private List<Long> getProcessDefIdByDirId(String dirId) {
         //查询目录下所有的流程定义ID
-        return dqcSchedulerBasicInfoService.getInfoByDirId(dirId).stream().map(DqcSchedulerBasicInfo::getProcessDefinitionId).collect(Collectors.toList());
+        return dqcSchedulerBasicInfoService.getInfoByDirId(dirId).stream().map(DqcSchedulerBasicInfo::getProcessDefinitionCode).collect(Collectors.toList());
     }
 
     private List<ProcessInstanceDTO> getProcessInstanceList(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<Long> processDefIds) {
