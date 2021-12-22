@@ -159,4 +159,34 @@ public class RptBaseInfo implements Serializable {
     @Column(name = "area_code")
     private String areaCode;
 
+    /**
+     * 站点官网（修正）
+     */
+    @Column(name = "website_name_correction")
+    private String websiteNameCorrection;
+
+    /**
+     * 站点官网（修正）
+     */
+    @Column(name = "website_url_correction")
+    private String websiteUrlCorrection;
+
+    /**
+     * 区域编码
+     */
+    @Column(name = "region_code")
+    private String regionCode;
+
+    /**
+     * 执行人
+     */
+    @Column(name = "executor")
+    private String executor;
+
+    /**
+     * 执行人id
+     */
+    @Column(name = "executor_id")
+    private Long executorId;
+
 }

@@ -129,5 +129,28 @@ public class RptBaseInfoDTO {
    */
   private String areaCode;
 
+  /**
+   * 站点官网（修正）
+   */
+  private String websiteNameCorrection;
 
+  /**
+   * 站点官网（修正）
+   */
+  private String websiteUrlCorrection;
+
+  /**
+   * 区域编码
+   */
+  private String regionCode;
+
+  /**
+   * 执行人
+   */
+  private String executor;
+
+  /**
+   * 执行人id
+   */
+  private Long executorId;
 }

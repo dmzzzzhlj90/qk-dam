@@ -26,6 +26,8 @@ public class RptConstant {
      * 主目录名称
      */
     public static final String DIRNAME = "全部维度分类";
+
+
     /**
      * 爬虫接口返回的jobid
      */
@@ -35,5 +37,7 @@ public class RptConstant {
      * 维度字段,下一步链接的编码
      */
     public static final String NEXTURL="more_url";
+
+
 
 }
