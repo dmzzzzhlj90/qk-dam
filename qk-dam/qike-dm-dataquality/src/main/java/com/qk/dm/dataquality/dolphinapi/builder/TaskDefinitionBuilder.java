@@ -226,7 +226,8 @@ public class TaskDefinitionBuilder {
                 .job_name(basicInfoVO.getJobName())
                 .rule_id(rulesVO.getRuleId())
                 .rule_name(rulesVO.getRuleName())
-                .rule_temp_id(rulesVO.getRuleTempId());
+                .rule_temp_id(rulesVO.getRuleTempId())
+                .task_code(rulesVO.getTaskCode());
 
         MysqlRawScript mysqlRawScript = scriptBuilder.build();
         String mysqlRawScriptJson = GsonUtil.toJsonString(mysqlRawScript);
