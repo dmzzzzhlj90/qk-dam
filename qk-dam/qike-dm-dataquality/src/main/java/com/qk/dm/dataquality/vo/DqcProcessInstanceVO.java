@@ -9,8 +9,8 @@ import java.util.Objects;
 @Data
 public class DqcProcessInstanceVO {
   private int id;
-  /** 流程id */
-  private int processDefinitionId;
+  /** 流程code */
+  private Long processDefinitionCode;
   /** 状态 */
   private String state;
   /** 容错标示 */

@@ -8,6 +8,7 @@ import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceParamsDTO;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.DqcProcessTaskInstanceVO;
+import com.qk.dm.dataquality.vo.TaskInstanceVO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -40,4 +41,6 @@ public interface DqcProcessInstanceMapper {
             @Mapping(source = "pagination.size",target = "pageSize")
     })
     ProcessInstanceSearchDTO instanceSearchDTO(DqcSchedulerInstanceParamsDTO instanceParamsDTO);
+
+    List<TaskInstanceVO> taskInstanceVO(List<TaskInstanceDTO> taskInstanceDTO);
 }
