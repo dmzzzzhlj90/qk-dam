@@ -44,6 +44,7 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
+    implementation 'com.alibaba:easyexcel'
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
             "javax.annotation:javax.annotation-api",
