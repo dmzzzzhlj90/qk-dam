@@ -49,7 +49,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
    * @return DefaultCommonResult
    */
   @DeleteMapping
-  public DefaultCommonResult deleteColumn(@NotBlank @RequestBody List<Long> ids) {
+  public DefaultCommonResult deleteColumn(@NotBlank @RequestParam List<Long> ids) {
     rptDimensionInfoColumnService.deleteRptDimensionInfoColumn(ids);
     return DefaultCommonResult.success();
   }
