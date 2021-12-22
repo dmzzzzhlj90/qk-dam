@@ -171,7 +171,7 @@ public class RptDimensionInfoColumnServiceImpl implements
       long count = jpaQueryFactory.select(qRptDimensionColumnInfo.count()).from(qRptDimensionColumnInfo).where(booleanBuilder).fetchOne();
       List<RptDimensionColumnInfo> rptDimensionColumnInfoList = jpaQueryFactory
         .select(qRptDimensionColumnInfo).from(qRptDimensionColumnInfo)
-        .where(booleanBuilder).orderBy(qRptDimensionColumnInfo.id.asc()).offset(
+        .where(booleanBuilder).orderBy(qRptDimensionColumnInfo.gmtCreate.desc()).offset(
             (long) (rptDimensionInfoColumnParamDTO.getPagination().getPage()
                 - 1) * rptDimensionInfoColumnParamDTO.getPagination().getSize())
         .limit(rptDimensionInfoColumnParamDTO.getPagination().getSize())
@@ -196,7 +196,7 @@ public class RptDimensionInfoColumnServiceImpl implements
     if (!StringUtils.isEmpty(rptDimensionInfoColumnParamDTO.getDimensionColumnName())) {
       booleanBuilder.and(qRptDimensionColumnInfo.dimensionColumnName.contains(rptDimensionInfoColumnParamDTO.getDimensionColumnName()));
     }
-    if (!Objects.isNull(rptDimensionInfoColumnParamDTO.getId())){
+    if (!Objects.isNull(rptDimensionInfoColumnParamDTO.getId()) && rptDimensionInfoColumnParamDTO.getId()!=RptConstant.DIRID){
       booleanBuilder.and(qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnParamDTO.getId()));
     }
   }
