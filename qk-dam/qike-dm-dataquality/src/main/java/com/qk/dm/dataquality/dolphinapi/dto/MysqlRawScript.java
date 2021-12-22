@@ -44,4 +44,6 @@ public class MysqlRawScript {
 
     private Long rule_temp_id;
 
+    private Long task_code;
+
 }

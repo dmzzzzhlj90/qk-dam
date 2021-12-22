@@ -37,6 +37,11 @@ public class DqcSchedulerResultParamsVO {
     private String ruleId;
 
     /**
+     * 工作流实例task_code绑定规则
+     */
+    private Long taskCode;
+
+    /**
      * 开始时间
      */
     private String beginDay;
