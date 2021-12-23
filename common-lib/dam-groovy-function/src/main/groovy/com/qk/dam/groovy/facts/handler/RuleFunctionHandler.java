@@ -1,6 +1,7 @@
 package com.qk.dam.groovy.facts.handler;
 
 
+import com.qk.dam.groovy.constant.FunctionConstant;
 import com.qk.dam.groovy.facts.base.AbstractHandler;
 import com.qk.dam.groovy.model.base.RuleFunctionInfo;
 
@@ -16,10 +17,10 @@ import java.util.function.BiFunction;
  * @since 1.0.0
  */
 public class RuleFunctionHandler extends AbstractHandler {
-    private Map<String, RuleFunctionInfo> ruleFunctionMap;
+    private final Map<String, RuleFunctionInfo> ruleFunctionMap;
 
     public RuleFunctionHandler(Map<String, RuleFunctionInfo> ruleFunctionMap, BiFunction express) {
-        super("ruleFunction", express);
+        super(FunctionConstant.RULE_FUNCTION_TYPE, express);
         this.ruleFunctionMap = ruleFunctionMap;
     }
 
