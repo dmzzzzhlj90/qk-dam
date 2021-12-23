@@ -45,7 +45,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
 
   /**
    * 数据采集-维度删除
-   * @param ids
+   * @param ids ID數組
    * @return DefaultCommonResult
    */
   @DeleteMapping

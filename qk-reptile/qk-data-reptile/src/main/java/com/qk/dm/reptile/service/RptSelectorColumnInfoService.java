@@ -26,4 +26,11 @@ public interface RptSelectorColumnInfoService {
      * 复制配置项
      */
     void copyConfig(Long sourceId,Long targetId);
+
+    /**
+     * 通过多个配置id获取配置字段编码
+     * @param configIds
+     * @return
+     */
+    List<String> findByConfigIds(List<Long> configIds);
 }
