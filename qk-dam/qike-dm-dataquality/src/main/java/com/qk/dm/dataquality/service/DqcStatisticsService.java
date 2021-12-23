@@ -1,7 +1,8 @@
 package com.qk.dm.dataquality.service;
 
-import java.math.BigDecimal;
-import java.util.Map;
+import com.qk.dm.dataquality.vo.statistics.*;
+
+import java.util.List;
 
 /**
  * @author shenpj
@@ -9,13 +10,15 @@ import java.util.Map;
  * @since 1.0.0
  */
 public interface DqcStatisticsService {
-    Map<String, Long> ruleTemplateStatistics();
+    DataSummaryVO statistics();
 
-    Map<String, Long> basicInfoStatistics();
+    RuleTemplateVO ruleTemplateStatistics();
 
-    Map<String, Integer> instanceStatistics();
+    JobInfoVO basicInfoStatistics();
 
-    Map<String, Map<String, Integer>> dimensionStatistics();
+    InstanceVO instanceStatistics();
 
-    Map<String, BigDecimal> dirStatistics();
+    List<DimensionVO> dimensionStatistics();
+
+    List<RuleDirVO> dirStatistics();
 }

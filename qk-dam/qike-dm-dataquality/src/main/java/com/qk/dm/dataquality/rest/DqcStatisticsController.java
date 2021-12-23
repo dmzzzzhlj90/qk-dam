@@ -24,27 +24,17 @@ public class DqcStatisticsController {
         this.dqcStatisticsService = dqcStatisticsService;
     }
 
-    @GetMapping("/ruleTemplateStatistics")
-    public DefaultCommonResult ruleTemplateStatistics() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.ruleTemplateStatistics());
+    @GetMapping("/summary")
+    public DefaultCommonResult statistics() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.statistics());
     }
 
-    @GetMapping("/basicInfoStatistics")
-    public DefaultCommonResult basicInfoStatistics() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.basicInfoStatistics());
-    }
-
-    @GetMapping("/instanceStatistics")
-    public DefaultCommonResult instanceStatistics() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.instanceStatistics());
-    }
-
-    @GetMapping("/dimensionStatistics")
+    @GetMapping("/dimension")
     public DefaultCommonResult dimensionStatistics() {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.dimensionStatistics());
     }
 
-    @GetMapping("/dirStatistics")
+    @GetMapping("/dir")
     public DefaultCommonResult dirStatistics() {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.dirStatistics());
     }

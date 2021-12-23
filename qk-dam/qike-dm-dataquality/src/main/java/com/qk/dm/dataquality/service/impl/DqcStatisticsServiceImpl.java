@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.service.impl;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
 import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.constant.ruletemplate.DimensionTypeEnum;
 import com.qk.dm.dataquality.constant.ruletemplate.TempTypeEnum;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
@@ -11,16 +12,18 @@ import com.qk.dm.dataquality.dolphinapi.dto.ProcessTaskInstanceResultDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessTaskInstanceSearchDTO;
 import com.qk.dm.dataquality.entity.*;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
+import com.qk.dm.dataquality.repositories.DqcRuleDirRepository;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerBasicInfoRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcStatisticsService;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.TaskInstanceVO;
+import com.qk.dm.dataquality.vo.statistics.*;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -34,23 +37,35 @@ public class DqcStatisticsServiceImpl implements DqcStatisticsService {
     private final DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository;
     private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
     private final DolphinScheduler dolphinScheduler;
+    private final DqcRuleDirRepository dqcRuleDirRepository;
+
     private final QDqcRuleTemplate qDqcRuleTemplate = QDqcRuleTemplate.dqcRuleTemplate;
     private final QDqcSchedulerBasicInfo qDqcSchedulerBasicInfo = QDqcSchedulerBasicInfo.dqcSchedulerBasicInfo;
     private final QDqcSchedulerRules qDqcSchedulerRules = QDqcSchedulerRules.dqcSchedulerRules;
-
+    private final QDqcRuleDir qDqcRuleDir = QDqcRuleDir.dqcRuleDir;
 
     public DqcStatisticsServiceImpl(DqcRuleTemplateRepository dqcRuleTemplateRepository,
                                     DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository,
-                                    DqcSchedulerRulesRepository dqcSchedulerRulesRepository, DolphinScheduler dolphinScheduler) {
+                                    DqcSchedulerRulesRepository dqcSchedulerRulesRepository, DolphinScheduler dolphinScheduler, DqcRuleDirRepository dqcRuleDirRepository) {
         this.dqcRuleTemplateRepository = dqcRuleTemplateRepository;
         this.dqcSchedulerBasicInfoRepository = dqcSchedulerBasicInfoRepository;
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
         this.dolphinScheduler = dolphinScheduler;
+        this.dqcRuleDirRepository = dqcRuleDirRepository;
     }
 
-    public void statistics() {
-
-
+    @Override
+    public DataSummaryVO statistics() {
+        return DataSummaryVO.builder()
+                //规则模版统计数据
+                .ruleTemplate(ruleTemplateStatistics())
+                //作业统计数据
+                .jobInfo(basicInfoStatistics())
+                //实例统计数据
+                .instance(instanceStatistics())
+                .successsState(instanceStateStatistics(InstanceStateTypeEnum.SUCCESS.getCode()))
+                .failureState(instanceStateStatistics(InstanceStateTypeEnum.FAILURE.getCode()))
+                .build();
     }
 
     /**
@@ -59,19 +74,15 @@ public class DqcStatisticsServiceImpl implements DqcStatisticsService {
      * @return
      */
     @Override
-    public Map<String, Long> ruleTemplateStatistics() {
-        //规则模版总数
-        long rule_temple_count = dqcRuleTemplateRepository.count();
-        //规则模版内置模版数
-        long rule_temple_system_count = dqcRuleTemplateRepository.count(qDqcRuleTemplate.tempType.eq(TempTypeEnum.BUILT_IN_SYSTEM.getCode()));
-        //规则模版自定义模版数
-        long rule_temple_custom_count = dqcRuleTemplateRepository.count(qDqcRuleTemplate.tempType.eq(TempTypeEnum.CUSTOM.getCode()));
-
-        Map<String, Long> map = new HashMap<>(4);
-        map.put("rule_temple_count", rule_temple_count);
-        map.put("rule_temple_system_count", rule_temple_system_count);
-        map.put("rule_temple_custom_count", rule_temple_custom_count);
-        return map;
+    public RuleTemplateVO ruleTemplateStatistics() {
+        return RuleTemplateVO.builder()
+                //规则模版总数
+                .count(dqcRuleTemplateRepository.count())
+                //规则模版内置模版数
+                .systemCount(dqcRuleTemplateRepository.count(qDqcRuleTemplate.tempType.eq(TempTypeEnum.BUILT_IN_SYSTEM.getCode())))
+                //规则模版自定义模版数
+                .customCount(dqcRuleTemplateRepository.count(qDqcRuleTemplate.tempType.eq(TempTypeEnum.CUSTOM.getCode())))
+                .build();
     }
 
     /**
@@ -80,81 +91,164 @@ public class DqcStatisticsServiceImpl implements DqcStatisticsService {
      * @return
      */
     @Override
-    public Map<String, Long> basicInfoStatistics() {
-        //作业总数
-        long count = dqcSchedulerBasicInfoRepository.count();
-        //所有表信息
-        List<String> allByTables = dqcSchedulerRulesRepository.findAllByTables();
+    public JobInfoVO basicInfoStatistics() {
+        //检测表数
+        List<String> allByTables = dqcSchedulerRulesRepository.findAllTables();
         Set<String> tables = allByTables.stream().flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream()).collect(Collectors.toSet());
-        //所有字段信息
-        List<String> allByFields = dqcSchedulerRulesRepository.findAllByFields();
+        //检测字段数
+        List<String> allByFields = dqcSchedulerRulesRepository.findAllFields();
         Set<String> fields = allByFields.stream().flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream()).collect(Collectors.toSet());
-        Map<String, Long> map = new HashMap<>(4);
-        map.put("basic_info_count", count);
-        map.put("basic_info_tables_count", (long) tables.size());
-        map.put("basic_info_fields_count", (long) fields.size());
-        return map;
+        return JobInfoVO.builder()
+                //作业数
+                .count(dqcSchedulerBasicInfoRepository.count())
+                .tableCount(tables.size())
+                .fieldCount(fields.size())
+                .build();
     }
 
+    /**
+     * 实例统计数据
+     *
+     * @return
+     */
     @Override
-    public Map<String, Integer> instanceStatistics() {
+    public InstanceVO instanceStatistics() {
         String failure = null;
-        //总数
+        //实例数
         ProcessInstanceResultDTO processInstance = dolphinScheduler.instanceList(getInstanceSearchDTO(1, 1, failure));
-        //执行成功
+        //执行成功数
         ProcessInstanceResultDTO processInstanceSuccess = dolphinScheduler.instanceList(getInstanceSearchDTO(1, 1, InstanceStateTypeEnum.SUCCESS.getCode()));
-        //执行失败
+        //执行失败数
         ProcessInstanceResultDTO processInstanceFailure = dolphinScheduler.instanceList(getInstanceSearchDTO(1, 1, InstanceStateTypeEnum.FAILURE.getCode()));
-        Map<String, Integer> map = new HashMap<>(4);
-        map.put("instance_count", processInstance.getTotal());
-        map.put("instance_success_count", processInstanceSuccess.getTotal());
-        map.put("instance_failure_count", processInstanceFailure.getTotal());
-        return map;
+        return InstanceVO.builder()
+                .count(processInstance.getTotal())
+                .successCount(processInstanceSuccess.getTotal())
+                .failureCount(processInstanceFailure.getTotal())
+                .build();
     }
 
     private ProcessInstanceSearchDTO getInstanceSearchDTO(int pageNo, int pageSize, String failure) {
-        return ProcessInstanceSearchDTO.builder().pageNo(pageNo).pageSize(pageSize).stateType(failure).build();
+        return ProcessInstanceSearchDTO.builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .stateType(failure)
+                .build();
     }
 
+    /**
+     * 实例状态统计
+     * @param stateType
+     * @return
+     */
+    public JobInfoVO instanceStateStatistics(String stateType) {
+        //调度查询当日所有任务实例
+        List<TaskInstanceVO> totalList = getDolphinTaskInstanceList(null,stateType);
+        Set<Long> taskCodeSet = totalList.stream().map(TaskInstanceVO::getTaskCode).collect(Collectors.toSet());
+        //检测表数
+        List<String> allByTables = dqcSchedulerRulesRepository.findAllTablesByTaskCode(taskCodeSet);
+        Set<String> tables = allByTables.stream().flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream()).collect(Collectors.toSet());
+        //检测字段数
+        List<String> allByFields = dqcSchedulerRulesRepository.findAllFieldsByTaskCode(taskCodeSet);
+        Set<String> fields = allByFields.stream().flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream()).collect(Collectors.toSet());
+        return JobInfoVO.builder()
+                //作业数
+                .count((long) totalList.size())
+                .tableCount(tables.size())
+                .fieldCount(fields.size())
+                .build();
+    }
 
     @Override
-    public Map<String,Map<String,Integer>> dimensionStatistics() {
-        ProcessTaskInstanceSearchDTO taskInstanceSearchDTO = getProcessTaskInstanceSearchDTO(1, 10, new Date());
-        List<TaskInstanceVO> totalList = new ArrayList<>();
-        //查询所有的任务实例
-        getTaskInstanceList(taskInstanceSearchDTO,totalList);
+    public List<DimensionVO> dimensionStatistics() {
+        //调度查询当日所有任务实例
+        List<TaskInstanceVO> totalList = getDolphinTaskInstanceList(new Date(), null);
+        //success TaskCode->count
+        Map<Long, Long> successTaskCodeCountMap = totalList.stream()
+                .filter(item -> item.getState().equals(InstanceStateTypeEnum.SUCCESS.getCode()))
+                .collect(Collectors.groupingBy(TaskInstanceVO::getTaskCode, Collectors.counting()));
+        //failure TaskCode->count
+        Map<Long, Long> failureTaskCodeCountMap = totalList.stream()
+                .filter(item -> item.getState().equals(InstanceStateTypeEnum.FAILURE.getCode()))
+                .collect(Collectors.groupingBy(TaskInstanceVO::getTaskCode, Collectors.counting()));
+        //获取dimensionType -> 流程实例中的taskCode
+        Map<String, String> dimensionTypeAndtaskCode = getTaskCodeAndDimensionType(totalList);
+        //处理封装
+        return getDimensionList(successTaskCodeCountMap, failureTaskCodeCountMap, dimensionTypeAndtaskCode);
+    }
 
+    private List<DimensionVO> getDimensionList(Map<Long, Long> successTaskCodeCountMap, Map<Long, Long> failureTaskCodeCountMap, Map<String, String> dimensionTypeAndtaskCode) {
+        List<DimensionVO> dimensionList = new ArrayList<>();
+        for (Map.Entry<String, String> dimTypeMap : dimensionTypeAndtaskCode.entrySet()) {
+            AtomicReference<Long> successNumber = new AtomicReference<>(0L);
+            AtomicReference<Long> failureNumber = new AtomicReference<>(0L);
+            Arrays.asList(dimTypeMap.getValue().split(",")).forEach(item -> {
+                Long taskCode = Long.valueOf(item);
+                if (successTaskCodeCountMap.get(taskCode) != null) {
+                    successNumber.updateAndGet(v -> v + successTaskCodeCountMap.get(taskCode));
+                }
+                if (failureTaskCodeCountMap.get(taskCode) != null) {
+                    failureNumber.updateAndGet(v -> v + failureTaskCodeCountMap.get(taskCode));
+                }
+            });
+
+            DimensionVO dimensionVO;
+            if (successNumber.get() > 0) {
+                dimensionVO = new DimensionVO();
+                dimensionVO.setDqcDimType(Objects.requireNonNull(DimensionTypeEnum.fromValue(dimTypeMap.getKey())).getName());
+                dimensionVO.setExecCount(successNumber.get());
+                dimensionVO.setDqcState(InstanceStateTypeEnum.SUCCESS.getValue());
+                dimensionList.add(dimensionVO);
+            }
+            if (failureNumber.get() > 0) {
+                dimensionVO = new DimensionVO();
+                dimensionVO.setDqcDimType(Objects.requireNonNull(DimensionTypeEnum.fromValue(dimTypeMap.getKey())).getName());
+                dimensionVO.setExecCount(failureNumber.get());
+                dimensionVO.setDqcState(InstanceStateTypeEnum.FAILURE.getValue());
+                dimensionList.add(dimensionVO);
+            }
+        }
+        return dimensionList;
+    }
+
+    /**********************************************************************************/
+
+    private Map<String, String> getTaskCodeAndDimensionType(List<TaskInstanceVO> totalList) {
         //获取所有taskCode->模版id
+        Map<Long, Long> rulesMap = getTaskCodeAndRuleTempId(totalList);
+        //获取所有的模版id->纬度
+        Map<Long, String> dimensionTypeMap = getRuleTempIdAndDimensionType();
+        //更改taskCode->模版id->纬度 为 纬度 -> taskCodeList
+        return getTaskCodeAndDimensionType(rulesMap, dimensionTypeMap);
+    }
+
+    private Map<String, String> getTaskCodeAndDimensionType(Map<Long, Long> rulesMap, Map<Long, String> dimensionTypeMap) {
+        Map<String, String> rulesDimensionTypeMap = new HashMap<>(8);
+        for (Map.Entry<Long, Long> map : rulesMap.entrySet()) {
+            rulesDimensionTypeMap.put(dimensionTypeMap.get(map.getValue()), rulesDimensionTypeMap.get(dimensionTypeMap.get(map.getValue())) != null
+                    ? rulesDimensionTypeMap.get(dimensionTypeMap.get(map.getValue())) + "," + map.getKey() : map.getKey().toString());
+        }
+        return rulesDimensionTypeMap;
+    }
+
+    private Map<Long, String> getRuleTempIdAndDimensionType() {
+        List<DqcRuleTemplate> templateList = dqcRuleTemplateRepository.findAll();
+        return templateList.stream().collect(Collectors.toMap(DqcRuleTemplate::getId, DqcRuleTemplate::getDimensionType));
+    }
+
+    private Map<Long, Long> getTaskCodeAndRuleTempId(List<TaskInstanceVO> totalList) {
         Set<Long> taskCodeSet = totalList.stream().map(TaskInstanceVO::getTaskCode).collect(Collectors.toSet());
         List<DqcSchedulerRules> schedulerRulesList = (List<DqcSchedulerRules>) dqcSchedulerRulesRepository.findAll(qDqcSchedulerRules.taskCode.in(taskCodeSet));
-        Map<Long, Long> rulesMap = schedulerRulesList.stream().collect(Collectors.toMap(DqcSchedulerRules::getTaskCode, DqcSchedulerRules::getRuleTempId));
+        return schedulerRulesList.stream().collect(Collectors.toMap(DqcSchedulerRules::getTaskCode, DqcSchedulerRules::getRuleTempId));
+    }
 
-        //获取所有的模版id->纬度
-        List<DqcRuleTemplate> templateList = dqcRuleTemplateRepository.findAll();
-        Map<Long, String> dimensionTypeMap = templateList.stream().collect(Collectors.toMap(DqcRuleTemplate::getId, DqcRuleTemplate::getDimensionType));
+    /**************************本日任务实例列表开始********************************************************/
 
-        //更改taskCode->模版id->纬度 为 taskCode->纬度
-        Map<Long,String> rulesDimensionTypeMap = new HashMap<>();
-        for(Map.Entry<Long, Long> map : rulesMap.entrySet()){
-            rulesDimensionTypeMap.put(map.getKey(),dimensionTypeMap.get(map.getValue()));
-        }
-
-        //区分质量纬度成功失败状态数量
-        Map<String,Integer> successMap = new HashMap<>();
-        Map<String,Integer> failureMap = new HashMap<>();
-
-        totalList.forEach(item->{
-            if(item.getState().equals(InstanceStateTypeEnum.SUCCESS.getCode())){
-                successMap.put(item.getState(),successMap.get(item.getState()) != null ? successMap.get(item.getState()) + 1 : 1);
-            }else if(item.getState().equals(InstanceStateTypeEnum.FAILURE.getCode())){
-                failureMap.put(item.getState(),failureMap.get(item.getState()) != null ? failureMap.get(item.getState()) + 1 : 1);
-            }
-        });
-
-        Map<String,Map<String,Integer>> resultMap = new HashMap<>();
-        resultMap.put("success",successMap);
-        resultMap.put("failure",failureMap);
-        return resultMap;
+    private List<TaskInstanceVO> getDolphinTaskInstanceList(Date date, String stateType) {
+        ProcessTaskInstanceSearchDTO taskInstanceSearchDTO = getProcessTaskInstanceSearchDTO(1, 10, date, stateType);
+        List<TaskInstanceVO> totalList = new ArrayList<>();
+        //查询所有的任务实例
+        getTaskInstanceList(taskInstanceSearchDTO, totalList);
+        return totalList;
     }
 
     private void getTaskInstanceList(ProcessTaskInstanceSearchDTO taskInstanceSearchDTO, List<TaskInstanceVO> totalList) {
@@ -166,45 +260,81 @@ public class DqcStatisticsServiceImpl implements DqcStatisticsService {
         }
     }
 
-    private ProcessTaskInstanceSearchDTO getProcessTaskInstanceSearchDTO(int pageNo, int pageSize, Date date) {
-        return ProcessTaskInstanceSearchDTO.builder().
-                pageNo(pageNo).
-                pageSize(pageSize).
-                startDate(DateUtil.formatDateTime(DateUtil.beginOfDay(date))).
-                endDate(DateUtil.formatDateTime(DateUtil.endOfDay(date)))
+    private ProcessTaskInstanceSearchDTO getProcessTaskInstanceSearchDTO(int pageNo, int pageSize, Date date, String stateType) {
+        return ProcessTaskInstanceSearchDTO.builder()
+                .pageNo(pageNo)
+                .pageSize(pageSize)
+                .startDate(date != null ? DateUtil.formatDateTime(DateUtil.beginOfDay(date)) : null)
+                .endDate(date != null ? DateUtil.formatDateTime(DateUtil.endOfDay(date)) : null)
+                .stateType(stateType)
                 .build();
     }
 
+    /**************************本日任务实例列表结束********************************************************/
+
     @Override
-    public Map<String,BigDecimal> dirStatistics() {
-        List<DqcProcessInstanceVO> totalList = new ArrayList<>();
-        ProcessInstanceSearchDTO instanceSearchDTO = getInstanceSearchDTO(1, 10, new Date());
-        //查询出今天所有实例
-        getInstanceList(instanceSearchDTO, totalList);
+    public List<RuleDirVO> dirStatistics() {
+        //查询当日所有实例
+        List<DqcProcessInstanceVO> totalList = getInstanceList();
+        //从所有实例中结合本地数据查询各dir运行次数 dir->count
+        Map<String, Long> dirCount = getDirCount(totalList);
+        //获取所有分类目录 dirId->dirName
+        Map<String, String> dqcRuleDirMap = getDqcRuleDirMap();
+        //当天执行总数量,直接缩小100倍算出百分比
+        Integer count = totalList.size() / 100;
+        List<RuleDirVO> ruleDirList = new ArrayList<>();
+        //计算百分比
+        dirCount.entrySet().stream().peek(item ->
+                ruleDirList.add(
+                        RuleDirVO.builder()
+                                .type(dqcRuleDirMap.get(item.getKey()))
+                                .value(NumberUtil.div(item.getValue(), count, 2))
+                                .build()
+                )
+        ).collect(Collectors.toList());
+        return ruleDirList;
+    }
+
+    private Map<String, String> getDqcRuleDirMap() {
+        List<DqcRuleDir> dqcRuleDirs = dqcRuleDirRepository.findAll();
+        Map<String, String> dqcRuleDirMap = dqcRuleDirs.stream().collect(Collectors.toMap(DqcRuleDir::getRuleDirId, DqcRuleDir::getRuleDirName));
+        return dqcRuleDirMap;
+    }
+
+    private Map<String, Long> getDirCount(List<DqcProcessInstanceVO> totalList) {
+        //获取code->dir
+        Map<Long, String> codeDirMap = getCodeDirMap(totalList);
         //各code运行次数 code->count
         Map<Long, Long> codeCount = totalList.stream().collect(Collectors.groupingBy(DqcProcessInstanceVO::getProcessDefinitionCode, Collectors.counting()));
+        //各dir运行次数 dir->count
+        return getDirCount(codeDirMap, codeCount);
+    }
 
-        //当天执行总数量
-        Integer count = totalList.size();
+    private Map<String, Long> getDirCount(Map<Long, String> codeDirMap, Map<Long, Long> codeCount) {
+        Map<String, Long> dirCount = new HashMap<>();
+        for (Map.Entry<Long, String> map : codeDirMap.entrySet()) {
+            dirCount.put(map.getValue(), dirCount.get(map.getValue()) != null ? dirCount.get(map.getValue()) + codeCount.get(map.getKey()) : codeCount.get(map.getKey()));
+        }
+        return dirCount;
+    }
 
+    private Map<Long, String> getCodeDirMap(List<DqcProcessInstanceVO> totalList) {
         //拿到所有的code
         Set<Long> codeSet = totalList.stream().map(DqcProcessInstanceVO::getProcessDefinitionCode).collect(Collectors.toSet());
         //查询到所有的任务定义
         List<DqcSchedulerBasicInfo> basicInfoList = (List<DqcSchedulerBasicInfo>) dqcSchedulerBasicInfoRepository.findAll(qDqcSchedulerBasicInfo.processDefinitionCode.in(codeSet));
         //获取code->dir
-//        basicInfoList.stream().collect(Collectors.toMap(DqcSchedulerBasicInfo::getProcessDefinitionCode,DqcSchedulerBasicInfo::getDirId));
+        return basicInfoList.stream().collect(Collectors.toMap(DqcSchedulerBasicInfo::getProcessDefinitionCode, DqcSchedulerBasicInfo::getDirId));
+    }
 
-        Map<String, Long> dirCount = new HashMap<>();
-        //直接循环basicInfoList计算保存dir->count   dir->结果+count
-        for (int i = 0; i < basicInfoList.size(); i++) {
-            String dirId = basicInfoList.get(i).getDirId();
-            Long code = basicInfoList.get(i).getProcessDefinitionCode();
-            dirCount.put(dirId,dirCount.get(dirId) != null ? dirCount.get(dirId) + codeCount.get(code) : codeCount.get(code));
-        }
+    /**************************本日流程实例列表开始********************************************************/
 
-        Map<String, BigDecimal> map = dirCount.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, item -> NumberUtil.div(item.getValue(), count, 2)));
-
-        return map;
+    private List<DqcProcessInstanceVO> getInstanceList() {
+        List<DqcProcessInstanceVO> totalList = new ArrayList<>();
+        ProcessInstanceSearchDTO instanceSearchDTO = getInstanceSearchDTO(1, 10, new Date());
+        //查询出今天所有实例
+        getInstanceList(instanceSearchDTO, totalList);
+        return totalList;
     }
 
     private void getInstanceList(ProcessInstanceSearchDTO instanceSearchDTO, List<DqcProcessInstanceVO> totalList) {
