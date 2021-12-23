@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import org.apache.commons.logging.Log;
@@ -34,6 +35,11 @@ public class RptExcelBatchService {
     deal(prtBasicInfoList);
     for (RptBaseInfo rptBaseInfo : prtBasicInfoList) {
       //todo 加入操作人员id
+      //状态
+      rptBaseInfo.setStatus(RptConstant.WAITING);
+      //运行状态
+      rptBaseInfo.setRunStatus(RptConstant.OFF_STARTED);
+
       entityManager.persist(rptBaseInfo); // insert插入操作
     }
     entityManager.flush();
