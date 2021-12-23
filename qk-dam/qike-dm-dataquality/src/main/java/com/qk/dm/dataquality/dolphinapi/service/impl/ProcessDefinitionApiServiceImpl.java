@@ -14,9 +14,9 @@ import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.executor.LocationsExecutor;
-import com.qk.dm.dataquality.dolphinapi.executor.ProcessDataExecutor;
+import com.qk.dm.dataquality.dolphinapi.executor.TaskDefinitionExecutor;
+import com.qk.dm.dataquality.dolphinapi.executor.TaskRelationExecutor;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
-import com.qk.dm.dataquality.dolphinapi.manager.TenantManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
@@ -53,26 +53,34 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public int saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        int processDefinitionId = 0;
+    public Long saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        Long processDefinitionCode = 0L;
         //是否存在工作流
         ProcessDefinitionDTO queryProcessDefinition =
-                queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), dqcSchedulerBasicInfoVO.getJobId());
+                queryProcessDefinitionInfo(
+                        dolphinSchedulerInfoConfig.getProjectCode(),
+                        dqcSchedulerBasicInfoVO.getJobName(),
+                        dqcSchedulerBasicInfoVO.getJobId());
         //获取数据源信息
         Map<String, ConnectBasicInfo> dataSourceInfo = getDataSourceInfo(dqcSchedulerBasicInfoVO);
 
         if (null == queryProcessDefinition) {
             //新增
-            save(dqcSchedulerBasicInfoVO, dataSourceInfo);
+            Integer version = SchedulerConstant.ZERO_VALUE;
+            save(dqcSchedulerBasicInfoVO, dataSourceInfo, version);
             ProcessDefinitionDTO saveProcessDefinition =
-                    queryProcessDefinitionInfo(dolphinSchedulerInfoConfig.getProjectName(), dqcSchedulerBasicInfoVO.getJobName(), dqcSchedulerBasicInfoVO.getJobId());
-            processDefinitionId = saveProcessDefinition.getId();
+                    queryProcessDefinitionInfo(
+                            dolphinSchedulerInfoConfig.getProjectCode(),
+                            dqcSchedulerBasicInfoVO.getJobName(),
+                            dqcSchedulerBasicInfoVO.getJobId());
+            processDefinitionCode = saveProcessDefinition.getCode();
         } else {
             //编辑
-            update(dqcSchedulerBasicInfoVO, dataSourceInfo);
-            processDefinitionId = queryProcessDefinition.getId();
+            processDefinitionCode = queryProcessDefinition.getCode();
+            update(dqcSchedulerBasicInfoVO, dataSourceInfo, queryProcessDefinition);
+
         }
-        return processDefinitionId;
+        return processDefinitionCode;
     }
 
     private Map<String, ConnectBasicInfo> getDataSourceInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
@@ -81,72 +89,91 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo) {
+    public void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo, Integer version) {
         try {
-            // 获取DolphinScheduler 资源信息
-            ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi, dolphinSchedulerInfoConfig);
-            // 获取DolphinScheduler 租户信息
-            TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi, dolphinSchedulerInfoConfig);
-            // 构建ProcessData对象
-            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig, dataSourceInfo);
             // 构建locations
-            LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO, dolphinSchedulerInfoConfig);
-
-            // 创建工作流实例
-            String connects = SchedulerConstant.EMPTY_ARRAY;
-            String locations = GsonUtil.toJsonString(locationsDTO.getTaskNodeLocationMap());
+            String locations = getLocations(dqcSchedulerBasicInfoVO);
+            // 构建TaskDefinition对象
+            String taskDefinitionJson = getTaskDefinitionJson(dqcSchedulerBasicInfoVO, dataSourceInfo, null);
+            //构建流程定义节点关联集合
+            String taskRelationJson = getTaskRelationJson(dqcSchedulerBasicInfoVO, null);
+            //基础信息
             String name = dqcSchedulerBasicInfoVO.getJobName();
-            String processDefinitionJson = GsonUtil.toJsonString(processDataDTO);
-            String projectName = dolphinSchedulerInfoConfig.getProjectName();
+            Long projectCode = dolphinSchedulerInfoConfig.getProjectCode();
+            String tenantCode = dolphinSchedulerInfoConfig.getTenantRoot();
             String description = dqcSchedulerBasicInfoVO.getJobId();
-
-            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(connects, locations, name, processDefinitionJson, projectName, description);
+            String globalParams = SchedulerConstant.EMPTY_ARRAY;
+            Integer timeout = SchedulerConstant.ZERO_VALUE;
+            //执行创建
+            defaultApi.createProcessDefinitionUsingPOSTWithHttpInfo(
+                    locations, name, projectCode, taskDefinitionJson, taskRelationJson, tenantCode, description, globalParams, timeout);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * @param dqcSchedulerBasicInfoVO
+     * @param dataSourceInfo
+     * @param processDefinitionDTO
+     */
     @Override
-    public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo) {
+    public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo, ProcessDefinitionDTO processDefinitionDTO) {
         try {
-            Long processDefinitionId = dqcSchedulerBasicInfoVO.getProcessDefinitionId();
-            // 获取DolphinScheduler 资源信息
-            ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi, dolphinSchedulerInfoConfig);
-            // 获取DolphinScheduler 租户信息
-            TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi, dolphinSchedulerInfoConfig);
-            // 构建ProcessData对象
-            ProcessDataDTO processDataDTO = ProcessDataExecutor.dqcProcessData(dqcSchedulerBasicInfoVO, mySqlScriptResource, tenantDTO, dolphinSchedulerInfoConfig, dataSourceInfo);
             // 构建locations
-            LocationsDTO locationsDTO = LocationsExecutor.dqcLocations(dqcSchedulerBasicInfoVO, dolphinSchedulerInfoConfig);
-
-            // 创建工作流实例
-            String connects = SchedulerConstant.EMPTY_ARRAY;
-            String locations = GsonUtil.toJsonString(locationsDTO.getTaskNodeLocationMap());
+            String locations = getLocations(dqcSchedulerBasicInfoVO);
+            // 构建TaskDefinition对象
+            int version = processDefinitionDTO.getVersion();
+            String taskDefinitionJson = getTaskDefinitionJson(dqcSchedulerBasicInfoVO, dataSourceInfo, version);
+            //构建流程定义节点关联集合
+            String taskRelationJson = getTaskRelationJson(dqcSchedulerBasicInfoVO, version);
+            //基础信息
             String name = dqcSchedulerBasicInfoVO.getJobName();
-            String processDefinitionJson = GsonUtil.toJsonString(processDataDTO);
-            String projectName = dolphinSchedulerInfoConfig.getProjectName();
+            Long projectCode = dolphinSchedulerInfoConfig.getProjectCode();
+            String tenantCode = dolphinSchedulerInfoConfig.getTenantRoot();
             String description = dqcSchedulerBasicInfoVO.getJobId();
-
-            defaultApi.updateProcessDefinitionUsingPOST(connects, processDefinitionId, locations, name, processDefinitionJson, projectName, description);
+            String globalParams = SchedulerConstant.EMPTY_ARRAY;
+            Integer timeout = SchedulerConstant.ZERO_VALUE;
+            Long processDefinitionCode = processDefinitionDTO.getCode();
+            //执行更新
+            defaultApi.updateProcessDefinitionUsingPUT(
+                    processDefinitionCode, locations, name, projectCode, taskDefinitionJson, taskRelationJson, tenantCode, description, globalParams, "OFFLINE", timeout);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * 查询工作流实例是否存在
+     *
+     * @param projectCode
+     * @param searchVal
+     * @param jobId
+     * @return ProcessDefinitionDTO
+     */
     @Override
-    public ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId) {
+    public ProcessDefinitionDTO queryProcessDefinitionInfo(Long projectCode, String searchVal, String jobId) {
         ProcessDefinitionDTO processDefinitionDTO = null;
         try {
-            Result result = defaultApi.queryProcessDefinitionListPagingUsingGET(SchedulerConstant.PAGE_NO, SchedulerConstant.PAGE_SIZE, projectName, searchVal, null);
+            Result result = defaultApi.
+                    queryProcessDefinitionListPagingUsingGET(
+                            SchedulerConstant.PAGE_NO,
+                            SchedulerConstant.PAGE_SIZE,
+                            projectCode,
+                            searchVal,
+                            null);
             Object data = result.getData();
-            ProcessResultDataDTO processResultDataDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(data), new TypeToken<ProcessResultDataDTO>() {
-            }.getType());
-            List<ProcessDefinitionDTO> totalList = processResultDataDTO.getTotalList();
+            ProcessResultDataDTO processResultDataDTO =
+                    GsonUtil.fromJsonString(GsonUtil.toJsonString(data), new TypeToken<ProcessResultDataDTO>() {
+                    }.getType());
+            if (processResultDataDTO.getTotal() != 0) {
+                List<ProcessDefinitionDTO> totalList = processResultDataDTO.getTotalList();
 
-            List<ProcessDefinitionDTO> processDefinitions = totalList.stream()
-                    .filter(processDefinition -> processDefinition.getName().equals(searchVal) && processDefinition.getDescription().equals(jobId))
-                    .collect(Collectors.toList());
-            processDefinitionDTO = processDefinitions.get(0);
+                List<ProcessDefinitionDTO> processDefinitions = totalList.stream()
+                        .filter(processDefinition -> processDefinition.getName().equals(searchVal) && processDefinition.getDescription().equals(jobId))
+                        .collect(Collectors.toList());
+                processDefinitionDTO = processDefinitions.get(0);
+            }
         } catch (Exception e) {
 //            e.printStackTrace();
 //            throw new BizException("未获取到实例ID!!!");
@@ -155,23 +182,68 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public void delete(String projectName, Long processDefinitionId) {
+    public void delete(Long projectCode, Long processDefinitionCode) {
         try {
-            defaultApi.deleteProcessDefinitionByIdUsingGET(projectName, processDefinitionId);
+            defaultApi.deleteProcessDefinitionByCodeUsingDELETE(Integer.parseInt(String.valueOf(projectCode)), processDefinitionCode);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void deleteBulk(String projectName, List<Long> processDefinitionIdList) {
+    public void deleteBulk(List<Long> processDefinitionIdList,Long projectCode) {
         try {
             String processDefinitionIds = processDefinitionIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
-            defaultApi.batchDeleteProcessDefinitionByIdsUsingGETWithHttpInfo(projectName, processDefinitionIds);
+            defaultApi.batchDeleteProcessDefinitionByCodesUsingPOST(processDefinitionIds, projectCode);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 构建locations
+     */
+    private String getLocations(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
+        List<TaskNodeLocation> locationList =
+                LocationsExecutor
+                        .dqcLocations(
+                                dqcSchedulerBasicInfoVO,
+                                dolphinSchedulerInfoConfig);
+        return GsonUtil.toJsonString(locationList);
+    }
+
+    /**
+     * 构建TaskDefinition对象
+     */
+    private String getTaskDefinitionJson(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo, Integer version) {
+        // 获取DolphinScheduler 资源信息
+        ResourceDTO mySqlScriptResource = ResourceFileManager.queryMySqlScriptResource(defaultApi, dolphinSchedulerInfoConfig);
+//        // 获取DolphinScheduler 租户信息
+//        TenantDTO tenantDTO = TenantManager.queryTenantInfo(defaultApi, dolphinSchedulerInfoConfig);
+        // 构建taskDefinitionDTOList
+        List<TaskDefinitionDTO> taskDefinitionDTOList =
+                TaskDefinitionExecutor
+                        .dqcTaskDefinitionData(
+                                dqcSchedulerBasicInfoVO,
+                                mySqlScriptResource,
+                                dolphinSchedulerInfoConfig,
+                                dataSourceInfo,
+                                version);
+        return GsonUtil.toJsonString(taskDefinitionDTOList);
+    }
+
+    /**
+     * 构建流程定义节点关联集合
+     */
+    private String getTaskRelationJson(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Integer version) {
+        List<TaskRelationDTO> taskRelationList =
+                TaskRelationExecutor
+                        .dqcTaskRelations(
+                                dqcSchedulerBasicInfoVO,
+                                version);
+        return GsonUtil.toJsonString(taskRelationList);
+    }
+
 
     /****************************************************************************/
 
@@ -180,10 +252,10 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
      * 发布流程定义
      * code 流程定义编码 (required)
      * projectCode PROJECT_CODE (required)
-     * releaseState PROCESS_DEFINITION_RELEASE (required) 0-下线 1-上线
+     * releaseState PROCESS_DEFINITION_RELEASE (required)
      */
     @Override
-    public void release(Long processDefinitionCode, Integer releaseState) {
+    public void release(Long processDefinitionCode, String releaseState) {
         try {
             Result result =
                     defaultApi.releaseProcessDefinitionUsingPOST(
@@ -204,7 +276,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public void startCheck(Long processDefinitionCode) {
         try {
             Result result =
-                    defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionCode);
+                    defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionCode,dolphinSchedulerInfoConfig.getProjectCode());
             DqcConstant.verification(result, "检查流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);

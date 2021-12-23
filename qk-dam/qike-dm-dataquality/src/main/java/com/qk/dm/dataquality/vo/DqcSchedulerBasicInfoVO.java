@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -48,10 +49,10 @@ public class DqcSchedulerBasicInfoVO {
     private String dirId;
 
     /**
-     * 调度流程实例ID
+     * 调度流程实例code
      */
-    @NotNull(message = "调度流程实例ID不能为空！")
-    private Long processDefinitionId;
+    @NotNull(message = "调度流程实例code不能为空！")
+    private Long processDefinitionCode;
 
     /**
      * 提示级别 "HINT":"提示","GENERAL":"一般","SERIOUS":"严重","FATAL":"致命";

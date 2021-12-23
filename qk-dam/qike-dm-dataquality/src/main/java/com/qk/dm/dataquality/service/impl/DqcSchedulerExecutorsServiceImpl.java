@@ -38,13 +38,12 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
     public void release(DqcSchedulerReleaseDTO infoReleaseDto) {
         DqcSchedulerBasicInfo basicInfo =
                 schedulerBasicInfoService.getBasicInfo(infoReleaseDto.getId());
-        Long processDefinitionId = basicInfo.getProcessDefinitionId();
-        if (infoReleaseDto.getSchedulerState().equals(SchedulerStateEnum.ONLINE.getCode())) {
-            dolphinScheduler.online(Long.valueOf(processDefinitionId));
+        Long processDefinitionId = basicInfo.getProcessDefinitionCode();
+        SchedulerStateEnum schedulerStateEnum = SchedulerStateEnum.fromValue(infoReleaseDto.getSchedulerState());
+        dolphinScheduler.release(processDefinitionId,schedulerStateEnum.getCode());
+        if (schedulerStateEnum == SchedulerStateEnum.ONLINE) {
             // 处理定时
-            doScheduler(Long.valueOf(processDefinitionId), basicInfo.getJobId());
-        } else {
-            dolphinScheduler.offline(Long.valueOf(processDefinitionId));
+            doScheduler(processDefinitionId, basicInfo.getJobId());
         }
         //TODO 调度状态
         basicInfo.setSchedulerState(infoReleaseDto.getSchedulerState());
@@ -113,7 +112,7 @@ public class DqcSchedulerExecutorsServiceImpl implements DqcSchedulerExecutorsSe
         if (!basicInfo.getSchedulerState().equals(SchedulerStateEnum.ONLINE.getCode())) {
             throw new BizException("请先启动调度！");
         }
-        dolphinScheduler.startInstance(Long.valueOf(basicInfo.getProcessDefinitionId()));
+        dolphinScheduler.startInstance(basicInfo.getProcessDefinitionCode());
     }
 
     /*********************定时单个操作*************************************************************/

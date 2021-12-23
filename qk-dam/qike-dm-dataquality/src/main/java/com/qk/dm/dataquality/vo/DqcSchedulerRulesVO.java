@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
@@ -60,6 +61,12 @@ public class DqcSchedulerRulesVO {
      */
     @NotBlank(message = "规则类型不能为空！")
     private String ruleType;
+
+    /**
+     * 流程实例节点taskCode
+     */
+    @NotBlank(message = "流程实例节点taskCode不能为空！")
+    private Long taskCode;
 
     /**
      * 适用引擎 MYSQL HIVE ORACLE

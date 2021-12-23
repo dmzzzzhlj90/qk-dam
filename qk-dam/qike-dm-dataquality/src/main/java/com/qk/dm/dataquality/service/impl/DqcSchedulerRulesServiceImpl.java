@@ -10,6 +10,7 @@ import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerRulesMapper;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcRuleSqlBuilderService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
+import com.qk.dm.dataquality.utils.CodeGenerateUtils;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import com.querydsl.core.BooleanBuilder;
@@ -102,6 +103,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
             dqcSchedulerRulesVO.setJobId(jobId);
             //规则名称
             dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO));
+            //设置规则信息关联流程任务节点taskCode
+            setTaskCode(dqcSchedulerRulesVO);
             //生成执行Sql;
             String executorSql = getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
@@ -112,6 +115,15 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         return executorRuleList;
     }
 
+    private void setTaskCode(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        try {
+            dqcSchedulerRulesVO.setTaskCode(CodeGenerateUtils.getInstance().genCode());
+        } catch (CodeGenerateUtils.CodeGenerateException e) {
+            e.printStackTrace();
+            throw new BizException("生成taskCode失败!");
+        }
+    }
+
     @Override
     public void update(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
@@ -120,7 +132,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
         // todo 修改人
         dqcSchedulerRules.setUpdateUserid("admin");
-        if(dqcSchedulerRules.getId() == null){
+        if (dqcSchedulerRules.getId() == null) {
             // todo 创建人
             dqcSchedulerRules.setCreateUserid("admin");
         }

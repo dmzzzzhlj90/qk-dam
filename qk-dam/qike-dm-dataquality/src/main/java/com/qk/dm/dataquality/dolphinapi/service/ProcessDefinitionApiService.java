@@ -18,19 +18,19 @@ import java.util.Map;
 @Service
 public interface ProcessDefinitionApiService {
 
-    int saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+    Long saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
-    void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo);
+    void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo, Integer version);
 
-    void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo);
+    void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo, ProcessDefinitionDTO processDefinitionCode);
 
-    ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId);
+    ProcessDefinitionDTO queryProcessDefinitionInfo(Long projectCode, String searchVal, String jobId);
 
-    void delete(String projectName, Long processDefinitionId);
+    void delete(Long projectCode, Long processDefinitionCode);
 
-    void deleteBulk(String projectName, List<Long> processDefinitionIds);
+    void deleteBulk(List<Long> processDefinitionIdList,Long projectCode);
 
-    void release(Long processDefinitionCode, Integer releaseState);
+    void release(Long processDefinitionCode, String releaseState);
 
     void startCheck(Long processDefinitionCode);
 
