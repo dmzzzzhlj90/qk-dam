@@ -6,11 +6,16 @@ import com.qk.dam.groovy.constant.FunctionConstant;
 import com.qk.dam.groovy.facts.RuleFunctionGenerator;
 import com.qk.dam.groovy.model.RuleFunctionModel;
 import com.qk.dam.groovy.model.base.RuleFunctionInfo;
+import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.constant.ScanTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
+import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
+import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
+import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerRulesMapper;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
+import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcRuleSqlBuilderService;
 import com.qk.dm.dataquality.utils.GenerateSqlUtil;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
@@ -35,10 +40,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
     private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
+    private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
+
 
     @Autowired
-    public DqcRuleSqlBuilderServiceImpl(DqcRuleTemplateRepository dqcRuleTemplateRepository) {
+    public DqcRuleSqlBuilderServiceImpl(DqcRuleTemplateRepository dqcRuleTemplateRepository,
+                                        DqcSchedulerRulesRepository dqcSchedulerRulesRepository) {
         this.dqcRuleTemplateRepository = dqcRuleTemplateRepository;
+        this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
     }
 
 
@@ -59,6 +68,24 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
             throw new BizException("未匹配到对应的规则模板信息!!!");
         }
         return executeSql;
+    }
+
+    @Override
+    public String getRealTimeSql(String ruleId) {
+        String realTimeSql = null;
+        //查询规则调度信息
+        Optional<DqcSchedulerRules> schedulerRulesOptional =
+                dqcSchedulerRulesRepository.findOne(QDqcSchedulerRules.dqcSchedulerRules.ruleId.eq(ruleId));
+        if (schedulerRulesOptional.isPresent()) {
+            //转换规则调度对象VO
+            DqcSchedulerRules dqcSchedulerRules = schedulerRulesOptional.get();
+            DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);
+            dqcSchedulerRulesVO.setTableList(DqcConstant.jsonStrToList(dqcSchedulerRules.getTables()));
+            dqcSchedulerRulesVO.setFieldList(DqcConstant.jsonStrToList(dqcSchedulerRules.getFields()));
+
+            realTimeSql = getExecuteSql(dqcSchedulerRulesVO);
+        }
+        return realTimeSql;
     }
 
     /**
@@ -199,6 +226,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
 
     /**
      * 执行Groovy函数生成sql片段
+     *
      * @param scanSql
      * @return String
      */

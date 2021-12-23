@@ -38,4 +38,16 @@ public class DqcRuleSqlBuilderController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleSqlBuilderService.getExecuteSql(dqcSchedulerRulesVO));
     }
 
+    /**
+     * 动态实时获取执行sql(python执行脚本回调接口)
+     *
+     * @param ruleId
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/realtime/python")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult getRealTimeSql(@RequestParam("ruleId") String ruleId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleSqlBuilderService.getRealTimeSql(ruleId));
+    }
+
 }
