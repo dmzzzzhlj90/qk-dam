@@ -59,8 +59,7 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
         rptSelectorColumnInfoRepository.deleteAllByConfigId(configId);
         if(!CollectionUtils.isEmpty(rptSelectorColumnInfoDTOList)){
             List<RptSelectorColumnInfo> list = RptSelectorColumnInfoMapper.INSTANCE.ofList(rptSelectorColumnInfoDTOList);
-            list.forEach(e->e.setConfigId(configId));
-            rptSelectorColumnInfoRepository.saveAll(list);
+            rptSelectorColumnInfoRepository.saveAll(list.stream().peek(e->e.setConfigId(configId)).collect(Collectors.toList()));
         }
     }
 
@@ -101,5 +100,14 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
     public void copyConfig(Long sourceId, Long targetId) {
         List<RptSelectorColumnInfo> list = rptSelectorColumnInfoRepository.findAllByConfigId(sourceId);
         rptSelectorColumnInfoRepository.saveAll(list.stream().peek(e -> e.setConfigId(targetId)).collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<String> findByConfigIds(List<Long> configIds) {
+        List<RptSelectorColumnInfo> rptSelectorColumnInfoList = rptSelectorColumnInfoRepository.findAllByConfigIdIn(configIds);
+        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){
+            return null;
+        }
+        return rptSelectorColumnInfoList.stream().map(RptSelectorColumnInfo::getColumnCode).collect(Collectors.toList());
     }
 }

@@ -6,6 +6,7 @@ import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.entity.RptConfigInfo;
+import com.qk.dm.reptile.entity.RptSelectorColumnInfo;
 import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
 import com.qk.dm.reptile.params.builder.RptParaBuilder;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
@@ -53,16 +54,15 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
         //修改基础信息表状态为爬虫
         updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
-        return buildRptAddConfigVO(config);
+        return buildRptAddConfigVO(config,rptConfigInfoDTO.getBaseInfoId());
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO) {
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
-        String result = RptParaBuilder.rptConfigInfoList(rptList(config.getBaseInfoId()));
         //修改基础信息表状态为爬虫
-        start(rptConfigInfoDTO.getBaseInfoId(),result);
+        start(rptConfigInfoDTO.getBaseInfoId(),RptParaBuilder.rptConfigInfoList(rptList(config.getBaseInfoId())));
         return config.getId();
     }
 
@@ -78,8 +78,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         RptConfigInfo config = rptConfigInfoRepository.save(rptConfigInfo);
         //添加选择器
         if(!CollectionUtils.isEmpty(selectorList)){
-            selectorList.forEach(e->e.setConfigId(config.getId()));
-            rptSelectorColumnInfoService.batchInset(selectorList);
+            rptSelectorColumnInfoService.batchInset(selectorList.stream().peek(e -> e.setConfigId(config.getId())).collect(Collectors.toList()));
         }
         return config;
     }
@@ -118,10 +117,9 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }
         RptConfigInfoMapper.INSTANCE.of(rptConfigInfoDTO, rptConfigInfo);
         transRptConfigInfo(rptConfigInfo, rptConfigInfoDTO);
-        List<RptSelectorColumnInfoDTO> selectorList = rptConfigInfoDTO.getSelectorList();
         rptConfigInfoRepository.saveAndFlush(rptConfigInfo);
         //修改选择器
-        rptSelectorColumnInfoService.batchUpdate(id,selectorList);
+        rptSelectorColumnInfoService.batchUpdate(id,rptConfigInfoDTO.getSelectorList());
     }
 
     @Override
@@ -173,7 +171,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
             RptConfigInfo rptConfigInfo = rptConfigInfoRepository.save(e);
             rptSelectorColumnInfoService.copyConfig(e.getId(),rptConfigInfo.getId());
         });
-
+        //修改基础信息表状态为爬虫
+        updateBaseInfoStatus(targetId);
     }
 
     private void transRptConfigInfo(RptConfigInfo rptConfigInfo, RptConfigInfoDTO rptConfigInfoDTO){
@@ -213,19 +212,19 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         return rptConfigInfoVO;
     }
 
-    private RptAddConfigVO buildRptAddConfigVO(RptConfigInfo config){
+    private RptAddConfigVO buildRptAddConfigVO(RptConfigInfo config,Long baseInfoId){
         return RptAddConfigVO.builder()
                 .configId(config.getId())
                 .dimensionId(config.getDimensionId())
-                .columnCodeList(getColumnCodeList(config.getId())).build();
+                .columnCodeList(getColumnCodeList(baseInfoId)).build();
     }
 
-    private List<String> getColumnCodeList(Long configId){
-        List<RptSelectorColumnInfoVO> rptSelectorColumnInfoList = rptSelectorColumnInfoService.list(configId);
-        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){
+    private List<String> getColumnCodeList(Long baseInfoId){
+        List<RptConfigInfo> configInfoList = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdDesc(baseInfoId);
+        if(CollectionUtils.isEmpty(configInfoList)){
             return null;
         }
-        return rptSelectorColumnInfoList.stream().map(RptSelectorColumnInfoVO::getColumnCode).collect(Collectors.toList());
+        return rptSelectorColumnInfoService.findByConfigIds(configInfoList.stream().map(RptConfigInfo::getId).collect(Collectors.toList()));
     }
 
 }

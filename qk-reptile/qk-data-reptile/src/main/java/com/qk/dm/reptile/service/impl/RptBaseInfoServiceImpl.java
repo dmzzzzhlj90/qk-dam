@@ -12,7 +12,6 @@ import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
 import com.qk.dm.reptile.params.builder.RptParaBuilder;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
-import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
@@ -97,8 +96,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(rptBaseInfoList.isEmpty()){
             throw new BizException("当前要删除的基础信息id为：" + ids + " 的数据不存在！！！");
         }
-        rptBaseInfoList.forEach(e->e.setStatus(RptConstant.HISTORY));
-        rptBaseInfoRepository.saveAllAndFlush(rptBaseInfoList);
+        rptBaseInfoRepository.saveAllAndFlush(rptBaseInfoList.stream().peek(e->e.setStatus(RptConstant.HISTORY)).collect(Collectors.toList()));
 
     }
 
