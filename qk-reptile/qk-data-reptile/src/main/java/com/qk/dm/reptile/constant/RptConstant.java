@@ -38,6 +38,9 @@ public class RptConstant {
      */
     public static final String NEXTURL="more_url";
 
-
+    /**
+     * 运行状态—未启动
+     */
+    public static final Integer OFF_STARTED = 1;
 
 }
