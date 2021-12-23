@@ -20,7 +20,7 @@ class FactsJg {
 
 
         RuleFunctionInfo functionInfo = new RuleFunctionInfo("format('20211215','yyyyMMdd')", Maps.newHashMap())
-        RuleFunctionInfo functionInfo2 = new RuleFunctionInfo("format('20211216','yyyyMMdd')", Maps.newHashMap())
+        RuleFunctionInfo functionInfo2 = new RuleFunctionInfo("format3('20211216','yyyyMMdd')", Maps.newHashMap())
         List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList()
         ruleFunctionInfos.add(functionInfo)
         ruleFunctionInfos.add(functionInfo2)

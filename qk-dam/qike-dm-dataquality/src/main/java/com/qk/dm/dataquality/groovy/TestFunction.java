@@ -19,7 +19,7 @@ public class TestFunction {
     public static void main(String[] args) {
         RuleFunctionModel model = new RuleFunctionModel();
 
-        RuleFunctionInfo functionInfo = new RuleFunctionInfo("format('20211215','yyyyMMdd')", Maps.newHashMap());
+        RuleFunctionInfo functionInfo = new RuleFunctionInfo("format3('20211215','yyyyMMdd')", Maps.newHashMap());
         RuleFunctionInfo functionInfo2 = new RuleFunctionInfo("format('20211216','yyyyMMdd')", Maps.newHashMap());
         List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
         ruleFunctionInfos.add(functionInfo);

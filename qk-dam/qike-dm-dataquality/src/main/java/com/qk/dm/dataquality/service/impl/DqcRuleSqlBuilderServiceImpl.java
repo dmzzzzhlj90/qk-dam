@@ -1,6 +1,11 @@
 package com.qk.dm.dataquality.service.impl;
 
+import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.groovy.constant.FunctionConstant;
+import com.qk.dam.groovy.facts.RuleFunctionGenerator;
+import com.qk.dam.groovy.model.RuleFunctionModel;
+import com.qk.dam.groovy.model.base.RuleFunctionInfo;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.constant.ScanTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
@@ -9,8 +14,10 @@ import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.service.DqcRuleSqlBuilderService;
 import com.qk.dm.dataquality.utils.GenerateSqlUtil;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,18 +44,34 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
 
     @Override
     public String getExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        String executeSql = null;
+        //获取规则模板
         Optional<DqcRuleTemplate> dqcRuleTemplate = dqcRuleTemplateRepository.findOne(QDqcRuleTemplate.dqcRuleTemplate.id.eq(dqcSchedulerRulesVO.getRuleTempId()));
 
-        StringBuilder sqlBuffer = new StringBuilder();
-        //解析替换参数信息
-        dqcRuleTemplate.ifPresent(ruleTemplate -> buildExecuteSql(dqcSchedulerRulesVO, ruleTemplate, sqlBuffer));
-        String executeSql = sqlBuffer.toString();
-        executeSql = executeSql.replaceAll(GenerateSqlUtil.SINGLE_QUOTES, GenerateSqlUtil.SINGLE_QUOTES_MARK);
+        if (dqcRuleTemplate.isPresent()) {
+            StringBuilder sqlBuffer = new StringBuilder();
+            //解析替换参数信息生成SQL
+            dqcRuleTemplate.ifPresent(ruleTemplate -> buildExecuteSql(dqcSchedulerRulesVO, ruleTemplate, sqlBuffer));
+            executeSql = sqlBuffer.toString();
+            //sql特殊字符替换操作(todo 目前只有单引号)
+            executeSql = executeSql.replaceAll(GenerateSqlUtil.SINGLE_QUOTES, GenerateSqlUtil.SINGLE_QUOTES_MARK);
+        } else {
+            throw new BizException("未匹配到对应的规则模板信息!!!");
+        }
         return executeSql;
     }
 
+    /**
+     * 解析替换参数信息生成SQL
+     *
+     * @param dqcSchedulerRulesVO
+     * @param dqcRuleTemplate
+     * @param sqlBuffer
+     */
     private void buildExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO, DqcRuleTemplate dqcRuleTemplate, StringBuilder sqlBuffer) {
+        //规则类型
         String ruleType = dqcSchedulerRulesVO.getRuleType();
+        //模板sql
         String tempSql = dqcRuleTemplate.getTempSql();
 
         //库级别规则
@@ -71,14 +94,29 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
 
     }
 
+    /**
+     * 生成库级规则sql
+     *
+     * @param dqcSchedulerRulesVO
+     * @param sqlBuffer
+     * @param tempSql
+     */
     private void ruleTypeDB(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
         ruleTypeTable(dqcSchedulerRulesVO, sqlBuffer, tempSql);
     }
 
+    /**
+     * 生成表级规则sql
+     *
+     * @param dqcSchedulerRulesVO
+     * @param sqlBuffer
+     * @param tempSql
+     */
     private void ruleTypeTable(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
+        //表信息
         List<String> tableList = dqcSchedulerRulesVO.getTableList();
 
-        //扫描方式
+        //扫描方式(全部/条件)
         String wherePartSql = getScanSql(dqcSchedulerRulesVO);
 
         if (tableList != null) {
@@ -98,21 +136,30 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         }
     }
 
+    /**
+     * 生成字段级规则sql
+     *
+     * @param dqcSchedulerRulesVO
+     * @param sqlBuffer
+     * @param tempSql
+     */
     private void ruleTypeField(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
+        //表信息
         List<String> tableList = dqcSchedulerRulesVO.getTableList();
         String tableName = tableList.get(0);
+        //字段信息
         List<String> fieldList = dqcSchedulerRulesVO.getFieldList();
-
-        //扫描方式
+        //扫描方式(全部/条件)
         String wherePartSql = getScanSql(dqcSchedulerRulesVO);
 
         AtomicInteger index = new AtomicInteger(0);
-
         if (fieldList != null) {
             for (String field : fieldList) {
+                //元数据查询参数
                 Map<String, String> conditionMap = new HashMap<>(16);
                 conditionMap.put(GenerateSqlUtil.SCHEMA_TABLE + GenerateSqlUtil.DEFAULT_NUM, tableName);
                 conditionMap.put(GenerateSqlUtil.COL + GenerateSqlUtil.DEFAULT_NUM, field);
+                //生成执行sql
                 String generateSql = GenerateSqlUtil.generateSql(tempSql, conditionMap, wherePartSql);
                 sqlBuffer.append(generateSql);
                 if (index.get() != fieldList.size() - 1) {
@@ -125,10 +172,16 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         }
     }
 
+    /**
+     * 扫描方式(全部/条件)
+     *
+     * @param dqcSchedulerRulesVO
+     * @return String
+     */
     private String getScanSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         StringBuilder wherePartSqlBuilder = new StringBuilder();
         String scanType = dqcSchedulerRulesVO.getScanType();
-        //and day = tradeDay(20211215,1) and day2 = tradeDay(20211215,1)
+        //and day = tradeDay1(20211215,1) and day2 = tradeDay2(20211215,2)
         String scanSql = dqcSchedulerRulesVO.getScanSql();
 
         if (ScanTypeEnum.FULL_TABLE.getCode().equalsIgnoreCase(scanType)) {
@@ -137,13 +190,78 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         } else if (ScanTypeEnum.CONDITION.getCode().equalsIgnoreCase(scanType)) {
             //条件
             wherePartSqlBuilder.append(GenerateSqlUtil.WHERE_PART);
-            wherePartSqlBuilder.append(GenerateSqlUtil.AND);
-            //TODO
-//            scanSqlFunction();
-            wherePartSqlBuilder.append(scanSql);
+            //执行Groovy函数生成sql片段
+            wherePartSqlBuilder.append(scanSqlByGroovyFunction(scanSql));
         }
 
         return wherePartSqlBuilder.toString();
+    }
+
+    /**
+     * 执行Groovy函数生成sql片段
+     * @param scanSql
+     * @return String
+     */
+    private String scanSqlByGroovyFunction(String scanSql) {
+        String realScanSql = "";
+        //Groovy函数集合
+        List<String> functionNameList = Lists.newArrayList();
+        //and
+        String trimStartScanSql = GenerateSqlUtil.trimStart(scanSql);
+        String[] andPartArr = trimStartScanSql.split(GenerateSqlUtil.AND);
+
+        //and day = tradeDay1(20211215,1) and day2 = tradeDay2(20211215,2) and name ='a'
+        for (int i = 0; i < andPartArr.length - 1; i++) {
+            //and day = tradeDay(20211215,1)
+            String[] fieldPartArr = andPartArr[i].split(GenerateSqlUtil.EQUAL_SIGN.trim());
+            //Groovy函数名称
+            functionNameList.add(fieldPartArr[fieldPartArr.length - 1].trim());
+        }
+        //执行Groovy函数
+        Map<String, Object> groovyFunctionMap = executeGroovyFunction(functionNameList);
+
+        //替换函数sql参数
+        realScanSql = getRealScanSql(scanSql, realScanSql, functionNameList, groovyFunctionMap);
+        return realScanSql;
+    }
+
+    /**
+     * 执行Groovy函数
+     *
+     * @param functionNameList
+     * @return Map<String, Object>
+     */
+    private Map<String, Object> executeGroovyFunction(List<String> functionNameList) {
+        RuleFunctionModel model = new RuleFunctionModel();
+        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
+
+        for (String functionName : functionNameList) {
+            RuleFunctionInfo functionInfo = new RuleFunctionInfo(functionName, Maps.newHashMap());
+            ruleFunctionInfos.add(functionInfo);
+        }
+        model.setRuleFunctionInfos(ruleFunctionInfos);
+        RuleFunctionGenerator ruleFunctionGenerator = new RuleFunctionGenerator(model);
+        return ruleFunctionGenerator.generateFunction();
+    }
+
+    /**
+     * 替换函数sql参数
+     *
+     * @param scanSql
+     * @param realScanSql
+     * @param functionNameList
+     * @param groovyFunctionMap
+     * @return String
+     */
+    private String getRealScanSql(String scanSql, String realScanSql, List<String> functionNameList, Map<String, Object> groovyFunctionMap) {
+        for (String functionName : functionNameList) {
+            Map<String, String> groovySqlResultMap = (Map<String, String>) groovyFunctionMap.get(FunctionConstant.RULE_FUNCTION_TYPE);
+            String groovySql = groovySqlResultMap.get(functionName);
+            if (!ObjectUtils.isEmpty(groovySql)) {
+                realScanSql = scanSql.replace(functionName, groovySql);
+            }
+        }
+        return realScanSql;
     }
 
 }
