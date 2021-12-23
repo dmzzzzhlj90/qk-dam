@@ -191,24 +191,25 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     private List<Map<String, Object>> buildResultDataVOList(List<DqcSchedulerResultTitleVO> resultTitleVOList, String ruleResultStr, String ruleId) {
         List<Map<String, Object>> resultDataVOList = new ArrayList<>();
         //获取规则信息
-
         Optional<DqcSchedulerRules> schedulerRulesOptional = dqcSchedulerRulesRepository.findOne(QDqcSchedulerRules.dqcSchedulerRules.ruleId.eq(ruleId));
 
-        //获取规则参数位置信息
-        Map<String, Object> locationMap = getLocationMap(schedulerRulesOptional);
-        String dataIndexNamePrefix = (String) locationMap.get(DATA_INDEX_NAME_PREFIX);
-        List<String> locations = (List<String>) locationMap.get(LOCATIONS);
+        if (schedulerRulesOptional.isPresent()) {
+            //获取规则参数位置信息
+            Map<String, Object> locationMap = getLocationMap(schedulerRulesOptional);
+            String dataIndexNamePrefix = (String) locationMap.get(DATA_INDEX_NAME_PREFIX);
+            List<String> locations = (List<String>) locationMap.get(LOCATIONS);
 
-        //获取列 dataIndexList
-        Map<String, Boolean> dataIndexMap = new LinkedHashMap<>();
-        getDataIndexMap(resultTitleVOList, dataIndexMap);
+            //获取列 dataIndexList
+            Map<String, Boolean> dataIndexMap = new LinkedHashMap<>();
+            getDataIndexMap(resultTitleVOList, dataIndexMap);
 
-        //转换结果集
-        List<List<Object>> resultDataList = GsonUtil.fromJsonString(ruleResultStr, new TypeToken<List<List<Object>>>() {
-        }.getType());
+            //转换结果集
+            List<List<Object>> resultDataList = GsonUtil.fromJsonString(ruleResultStr, new TypeToken<List<List<Object>>>() {
+            }.getType());
 
-        //构建ResultData
-        buildResultData(resultDataVOList, dataIndexNamePrefix, locations, dataIndexMap, resultDataList);
+            //构建ResultData
+            buildResultData(resultDataVOList, dataIndexNamePrefix, locations, dataIndexMap, resultDataList);
+        }
         return resultDataVOList;
     }
 
