@@ -30,7 +30,7 @@ public class RptDictController {
     /**
      * 获取省市区级联列表
      * @param pid 父id,初次请求为0
-     * @return
+     * @return DefaultCommonResult<List<RptDictVO>>
      */
     @GetMapping("/list/{pid}")
     public DefaultCommonResult<List<RptDictVO>> getDictList(@PathVariable("pid") Long pid){
