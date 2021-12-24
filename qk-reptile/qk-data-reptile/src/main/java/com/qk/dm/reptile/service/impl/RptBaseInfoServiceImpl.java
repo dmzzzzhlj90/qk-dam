@@ -181,7 +181,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
                         .select(qRptBaseInfo)
                         .from(qRptBaseInfo)
                         .where(booleanBuilder)
-                        .orderBy(qRptBaseInfo.id.desc())
+                        .orderBy(qRptBaseInfo.gmtModified.desc())
                         .offset((long) (rptBaseInfoDTO.getPagination().getPage() - 1)
                                         * rptBaseInfoDTO.getPagination().getSize())
                         .limit(rptBaseInfoDTO.getPagination().getSize()).fetch();
