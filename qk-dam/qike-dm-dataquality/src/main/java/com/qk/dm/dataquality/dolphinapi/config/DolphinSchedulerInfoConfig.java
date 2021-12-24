@@ -131,4 +131,9 @@ public class DolphinSchedulerInfoConfig {
      */
     private String resultDataDbDatabase;
 
+    /**
+     * 动态实时sql获取url
+     */
+    private String sqlRpcUrl;
+
 }

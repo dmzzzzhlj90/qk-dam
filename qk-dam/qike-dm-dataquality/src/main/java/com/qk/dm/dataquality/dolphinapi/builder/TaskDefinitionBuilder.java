@@ -207,20 +207,24 @@ public class TaskDefinitionBuilder {
 
         //数据源连接信息规则调度里设置
         ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(rulesVO.getDataSourceName());
+
+        //来源数据源
         scriptBuilder
                 .from_host(connectBasicInfo.getServer())
                 .from_user(connectBasicInfo.getUserName())
                 .from_password(connectBasicInfo.getPassword())
                 .from_database(rulesVO.getDatabaseName());
 
-        scriptBuilder.search_sql(rulesVO.getExecuteSql());
+//        scriptBuilder.search_sql(rulesVO.getExecuteSql());
 
+        //目标数据源
         scriptBuilder
                 .to_host(dolphinSchedulerInfoConfig.getResultDataDbHost())
                 .to_user(dolphinSchedulerInfoConfig.getResultDataDbUser())
                 .to_password(dolphinSchedulerInfoConfig.getResultDataDbPassword())
                 .to_database(dolphinSchedulerInfoConfig.getResultDataDbDatabase());
 
+        //基础参数信息
         scriptBuilder
                 .job_id(basicInfoVO.getJobId())
                 .job_name(basicInfoVO.getJobName())
@@ -228,6 +232,9 @@ public class TaskDefinitionBuilder {
                 .rule_name(rulesVO.getRuleName())
                 .rule_temp_id(rulesVO.getRuleTempId())
                 .task_code(rulesVO.getTaskCode());
+
+        //动态实时sql请求地址
+        scriptBuilder.sql_rpc_url(getSqlRpcUrl(rulesVO, dolphinSchedulerInfoConfig));
 
         MysqlRawScript mysqlRawScript = scriptBuilder.build();
         String mysqlRawScriptJson = GsonUtil.toJsonString(mysqlRawScript);
@@ -237,6 +244,12 @@ public class TaskDefinitionBuilder {
                 + SchedulerConstant.SPACE_PLACEHOLDER + SchedulerConstant.SINGLE_QUOTE
                 + mysqlRawScriptJson
                 + SchedulerConstant.SINGLE_QUOTE;
+    }
+
+    private String getSqlRpcUrl(DqcSchedulerRulesVO rulesVO, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+        String sqlRpcUrl = dolphinSchedulerInfoConfig.getSqlRpcUrl();
+        sqlRpcUrl = sqlRpcUrl + SchedulerConstant.SQL_RPC_URL_PART + rulesVO.getRuleId();
+        return sqlRpcUrl;
     }
 
     public List<TaskDefinitionDTO> getTaskDefinitions() {

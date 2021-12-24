@@ -32,24 +32,6 @@ public class DolphinScheduler {
 
     /*****************************流程定义**开始*************************************************/
 
-//    /**
-//     * 流程定义上线
-//     *
-//     * @param processDefinitionCode
-//     */
-//    public void online(Long processDefinitionCode) {
-//        processDefinitionApiService.release(processDefinitionCode, SchedulerStateEnum.ONLINE.getCode());
-//    }
-//
-//    /**
-//     * 流程定义下线
-//     *
-//     * @param processDefinitionCode
-//     */
-//    public void offline(Long processDefinitionCode) {
-//        processDefinitionApiService.release(processDefinitionCode, SchedulerStateEnum.OFFLINE.getCode());
-//    }
-
     /**
      * 流程定义上下线
      *
