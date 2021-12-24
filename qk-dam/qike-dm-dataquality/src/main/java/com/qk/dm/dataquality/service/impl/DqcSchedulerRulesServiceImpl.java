@@ -24,6 +24,7 @@ import org.springframework.util.ObjectUtils;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 数据质量_规则调度_规则信息
@@ -262,4 +263,49 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         return rulesVO.getRuleType() + "/" + rulesVO.getDatabaseName() + "/" + tableStr + "/" + fieldStr;
     }
 
+
+    @Override
+    public Integer getTableSet(Set<Long> taskCodeSet) {
+        //检测表数
+        return dqcSchedulerRulesRepository.findAllTablesByTaskCode(taskCodeSet)
+                .stream()
+                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .collect(Collectors.toSet())
+                .size();
+    }
+
+    @Override
+    public Integer getFieldSet(Set<Long> taskCodeSet) {
+        //检测字段数
+        return dqcSchedulerRulesRepository.findAllFieldsByTaskCode(taskCodeSet)
+                .stream()
+                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .collect(Collectors.toSet())
+                .size();
+    }
+
+    @Override
+    public Integer getTableSet() {
+        //检测表数
+        return dqcSchedulerRulesRepository.findAllTables()
+                .stream()
+                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .collect(Collectors.toSet())
+                .size();
+    }
+
+    @Override
+    public Integer getFieldSet() {
+        //检测字段数
+        return dqcSchedulerRulesRepository.findAllFields()
+                .stream()
+                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .collect(Collectors.toSet())
+                .size();
+    }
+
+    @Override
+    public List<DqcSchedulerRules> getSchedulerRulesListByTaskCode(Set<Long> taskCodeSet){
+        return (List<DqcSchedulerRules>) dqcSchedulerRulesRepository.findAll(qDqcSchedulerRules.taskCode.in(taskCodeSet));
+    }
 }

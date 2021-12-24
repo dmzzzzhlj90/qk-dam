@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class JobInfoVO {
-    Long count;
+    Object count;
     Integer tableCount;
     Integer fieldCount;
 }

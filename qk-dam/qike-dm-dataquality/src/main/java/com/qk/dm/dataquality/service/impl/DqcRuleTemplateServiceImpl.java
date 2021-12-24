@@ -133,7 +133,6 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
 
 
-
     @Override
     public List<DqcRuleTemplateInfoVO> search(DqcRuleTemplateParamsDTO dqcRuleTemplateParamsDto) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -277,5 +276,26 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
         if (publishState.equals(PublishStateEnum.OFFLINE.getCode()) && dqcSchedulerRulesService.checkRuleTemp(id)) {
             throw new BizException("有规则引用不允许下线!");
         }
+    }
+
+    @Override
+    public Long getCount() {
+        return dqcRuleTemplateRepository.count();
+    }
+
+    @Override
+    public Long getSystemCount() {
+        return dqcRuleTemplateRepository.count(qDqcRuleTemplate.tempType.eq(TempTypeEnum.BUILT_IN_SYSTEM.getCode()));
+    }
+
+    @Override
+    public Long getCustomCount() {
+        return dqcRuleTemplateRepository.count(qDqcRuleTemplate.tempType.eq(TempTypeEnum.CUSTOM.getCode()));
+    }
+
+
+    @Override
+    public List<DqcRuleTemplate> getTemplateListByRuleTemId(Set<Long> ids){
+        return (List<DqcRuleTemplate>) dqcRuleTemplateRepository.findAll(qDqcRuleTemplate.id.in(ids));
     }
 }
