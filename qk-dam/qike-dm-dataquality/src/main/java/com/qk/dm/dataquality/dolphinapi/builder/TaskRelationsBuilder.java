@@ -29,7 +29,7 @@ public class TaskRelationsBuilder {
 
 
     public TaskRelationsBuilder info(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Integer version) {
-        buildTaskRelations(dqcSchedulerBasicInfoVO,version);
+        buildTaskRelations(dqcSchedulerBasicInfoVO, version);
         return this;
     }
 
@@ -46,7 +46,7 @@ public class TaskRelationsBuilder {
 
         AtomicInteger index = new AtomicInteger();
         for (DqcSchedulerRulesVO rulesVO : dqcSchedulerRulesVOList) {
-            TaskRelationDTO taskRelationDTO = setTaskRelation(rulesVO,version);
+            TaskRelationDTO taskRelationDTO = setTaskRelation(rulesVO, version);
             taskRelations.add(taskRelationDTO);
             index.incrementAndGet();
         }
@@ -78,8 +78,8 @@ public class TaskRelationsBuilder {
         return taskRelation;
     }
 
-
     public List<TaskRelationDTO> getTaskRelationList() {
         return taskRelations;
     }
+
 }

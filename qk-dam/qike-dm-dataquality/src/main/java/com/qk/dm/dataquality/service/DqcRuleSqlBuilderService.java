@@ -15,4 +15,7 @@ public interface DqcRuleSqlBuilderService {
 
     String getExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO);
 
+    String getRealTimeSql(String ruleId);
+
+
 }
