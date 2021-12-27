@@ -298,4 +298,10 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     public List<DqcRuleTemplate> getTemplateListByRuleTemId(Set<Long> ids){
         return (List<DqcRuleTemplate>) dqcRuleTemplateRepository.findAll(qDqcRuleTemplate.id.in(ids));
     }
+
+    @Override
+    public String getTempResultByTempId(Long tempId) {
+        Optional<DqcRuleTemplate> ruleTemplateOptional = dqcRuleTemplateRepository.findById(tempId);
+        return ruleTemplateOptional.map(DqcRuleTemplate::getTempResult).orElse(null);
+    }
 }

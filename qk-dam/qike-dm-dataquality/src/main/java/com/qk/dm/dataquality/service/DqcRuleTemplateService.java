@@ -43,4 +43,7 @@ public interface DqcRuleTemplateService {
   Long getCustomCount();
 
   List<DqcRuleTemplate> getTemplateListByRuleTemId(Set<Long> ids);
+
+  String getTempResultByTempId(Long tempId);
+
 }
