@@ -8,8 +8,8 @@ import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.QRptBaseInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
+import com.qk.dm.reptile.factory.ReptileServerFactory;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
-import com.qk.dm.reptile.params.builder.RptParaBuilder;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
@@ -132,12 +132,12 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     public void timedExecution() {
     List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatus(RptRunStatusConstant.START,RptConstant.REPTILE);
         if(!CollectionUtils.isEmpty(list)){
-            list.forEach(e->{
-                String result = RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(e.getId()));
-                if(!StringUtils.isBlank(result)){
-                    updateBaseInfo(e,result);
+            list.forEach(e -> {
+                String result = ReptileServerFactory.requestServer(rptConfigInfoService.rptList(e.getId()));
+                if (!StringUtils.isBlank(result)) {
+                  updateBaseInfo(e, result);
                 }
-            });
+          });
         }
     }
 
@@ -161,7 +161,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        String result = RptParaBuilder.rptConfigInfoList(rptConfigInfoService.rptList(rptBaseInfo.getId()));
+        String result = ReptileServerFactory.requestServer(rptConfigInfoService.rptList(rptBaseInfo.getId()));
         if (!StringUtils.isBlank(result)) {
              updateBaseInfo(rptBaseInfo, result);
         }

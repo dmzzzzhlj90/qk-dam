@@ -6,8 +6,8 @@ import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.entity.RptConfigInfo;
+import com.qk.dm.reptile.factory.ReptileServerFactory;
 import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
-import com.qk.dm.reptile.params.builder.RptParaBuilder;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import com.qk.dm.reptile.params.vo.RptAddConfigVO;
@@ -59,8 +59,9 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Transactional(rollbackFor = Exception.class)
     public Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO) {
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
-        //修改基础信息表状态为爬虫
-        start(rptConfigInfoDTO.getBaseInfoId(),RptParaBuilder.rptConfigInfoList(rptList(config.getBaseInfoId())));
+       // 修改基础信息表状态为爬虫
+        start(rptConfigInfoDTO.getBaseInfoId(),
+        ReptileServerFactory.requestServer(rptList(config.getBaseInfoId())));
         return config.getId();
     }
 
