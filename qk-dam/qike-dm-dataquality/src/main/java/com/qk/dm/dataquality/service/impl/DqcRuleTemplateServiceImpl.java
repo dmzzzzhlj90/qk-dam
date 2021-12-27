@@ -300,7 +300,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
 
     @Override
-    public String getTempResultByTempId(Long tempId) {
+    public Object getTempResultByTempId(Long tempId) {
         Optional<DqcRuleTemplate> ruleTemplateOptional = dqcRuleTemplateRepository.findById(tempId);
         return ruleTemplateOptional.map(DqcRuleTemplate::getTempResult).orElse(null);
     }

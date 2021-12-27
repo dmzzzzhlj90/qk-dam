@@ -157,8 +157,8 @@ public class DqcRuleTemplateController {
      * @return DefaultCommonResult<RuleTemplateConstantsVO>
      */
     @GetMapping("/result/info")
-    public DefaultCommonResult<String> getTempResultByTempId(@RequestParam("tempId") Long tempId) {
-      return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleTemplateService.getTempResultByTempId(tempId));
+    public DefaultCommonResult getTempResultByTempId(@RequestParam("tempId") Long tempId) {
+      return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleTemplateService.getTempResultByTempId(tempId),"查询结果模板定义");
     }
 
 }
