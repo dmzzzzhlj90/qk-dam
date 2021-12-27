@@ -148,7 +148,7 @@ public class RptDimensionInfoColumnServiceImpl implements
     }
     return rptDimensionColumnInfoList.stream().filter(
         e -> e.getDimensionColumnCode().equals(RptConstant.NEXTURL)
-          || !rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList().contains(e.getDimensionColumnCode()))
+          ||CollectionUtils.isEmpty(rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList())||!rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList().contains(e.getDimensionColumnCode()))
         .collect(Collectors
             .toMap(RptDimensionColumnInfo::getDimensionColumnName,
                 RptDimensionColumnInfo::getDimensionColumnCode));
