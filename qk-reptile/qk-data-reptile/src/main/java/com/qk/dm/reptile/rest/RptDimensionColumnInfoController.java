@@ -5,6 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnDTO;
 import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnParamDTO;
+import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnScreenParamsDTO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import com.qk.dm.reptile.service.RptDimensionInfoColumnService;
 import lombok.extern.slf4j.Slf4j;
@@ -44,11 +45,11 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
 
   /**
    * 数据采集-维度删除
-   * @param ids
+   * @param ids ID數組
    * @return DefaultCommonResult
    */
   @DeleteMapping
-  public DefaultCommonResult deleteColumn(@NotBlank @RequestBody List<Long> ids) {
+  public DefaultCommonResult deleteColumn(@NotBlank @RequestParam List<Long> ids) {
     rptDimensionInfoColumnService.deleteRptDimensionInfoColumn(ids);
     return DefaultCommonResult.success();
   }
@@ -76,12 +77,12 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
 }
 
   /**
-   * 数据采集-根据维度名称查询维度信息
-   * @param id
+   * 数据采集-根据维度目录查询维度字段
+   * @param rptDimensionInfoColumnScreenParamsDTO
    * @return DefaultCommonResult<Map<String,String>>
    */
-  @GetMapping("/{id}")
-  public DefaultCommonResult<Map<String,String>> queryColumnByDirName(@NotBlank @PathVariable("id")Long id) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.queryColumnByDirName(id));
+  @PostMapping("/commons")
+  public DefaultCommonResult<Map<String,String>> queryColumnByDirName(@RequestBody RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.queryColumnByDirName(rptDimensionInfoColumnScreenParamsDTO));
   }
 }

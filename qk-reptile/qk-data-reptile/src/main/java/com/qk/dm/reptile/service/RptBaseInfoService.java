@@ -25,5 +25,16 @@ public interface RptBaseInfoService {
      */
     void timedExecution();
 
+    /**
+     * 手动执行调用爬虫接口
+     * @param id
+     */
     void execution(Long id);
+
+    /**
+     * 复制配置
+     * @param sourceId
+     * @param targetId
+     */
+    void copyConfig(Long sourceId,Long targetId);
 }
