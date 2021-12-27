@@ -76,9 +76,6 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
     if (!CollectionUtils.isEmpty(rptDimensionInfoVOList)){
       rptDimensionInfoVOList.forEach(rptDimensionInfoVO1 -> {
         if (rptDimensionInfoVO.getId().equals(rptDimensionInfoVO1.getFid())){
-          if (rptDimensionInfoVO.getChildrenList() == null) {
-            rptDimensionInfoVO.setChildrenList(new ArrayList<>());
-          }
           rptDimensionInfoVO.getChildrenList().add(findChildren(rptDimensionInfoVO1,rptDimensionInfoVOList));
         }
       });
