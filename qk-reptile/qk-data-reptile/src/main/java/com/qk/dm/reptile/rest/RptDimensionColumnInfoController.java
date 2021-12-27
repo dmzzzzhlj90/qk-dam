@@ -9,6 +9,7 @@ import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnScreenParamsDTO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import com.qk.dm.reptile.service.RptDimensionInfoColumnService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -82,7 +83,7 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
    * @return DefaultCommonResult<Map<String,String>>
    */
   @PostMapping("/commons")
-  public DefaultCommonResult<Map<String,String>> queryColumnByDirName(@RequestBody RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
+  public DefaultCommonResult<Map<String,String>> queryColumnByDirName(@Validated @RequestBody RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.queryColumnByDirName(rptDimensionInfoColumnScreenParamsDTO));
   }
 }
