@@ -2,35 +2,26 @@ package com.qk.dm.reptile.params.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RptDictVO {
-    /**
-     * 区划信息id
-     */
+
     private Long id;
-
-    /**
-     * 父级挂接id
-     */
-    private Long pid;
-
     /**
      * 区划编码
      */
-    private String code;
+    private String value;
 
     /**
      * 区划名称
      */
-    private String name;
-
+    private String label;
     /**
-     * 备注
+     * 父id
      */
-    private String remark;
+    private Long pid;
 
-    /**
-     * 级次id 0:省/自治区/直辖市 1:市级 2:区
-     */
-    private Boolean level;
+
+    private List<RptDictVO> children;
 }
