@@ -28,6 +28,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -219,19 +220,19 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
 
     public void checkCondition(DqcRuleTemplateParamsDTO dqcRuleTemplateVo, BooleanBuilder booleanBuilder) {
-        if (dqcRuleTemplateVo.getDirId() != null) {
+        if (!ObjectUtils.isEmpty(dqcRuleTemplateVo.getDirId())) {
             booleanBuilder.and(qDqcRuleTemplate.dirId.eq(dqcRuleTemplateVo.getDirId()));
         }
-        if (dqcRuleTemplateVo.getTempName() != null) {
+        if (!ObjectUtils.isEmpty(dqcRuleTemplateVo.getTempName())) {
             booleanBuilder.and(qDqcRuleTemplate.tempName.contains(dqcRuleTemplateVo.getTempName()));
         }
-        if (dqcRuleTemplateVo.getDimensionType() != null) {
+        if (!ObjectUtils.isEmpty(dqcRuleTemplateVo.getDimensionType())) {
             booleanBuilder.and(qDqcRuleTemplate.dimensionType.eq(dqcRuleTemplateVo.getDimensionType()));
         }
-        if (dqcRuleTemplateVo.getEngineType() != null) {
+        if (!ObjectUtils.isEmpty(dqcRuleTemplateVo.getEngineType())) {
             booleanBuilder.and(qDqcRuleTemplate.engineType.contains(dqcRuleTemplateVo.getEngineType()));
         }
-        if (dqcRuleTemplateVo.getRuleType() != null) {
+        if (!ObjectUtils.isEmpty(dqcRuleTemplateVo.getRuleType())) {
             booleanBuilder.and(qDqcRuleTemplate.ruleType.contains(dqcRuleTemplateVo.getRuleType()));
         }
     }
@@ -295,7 +296,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
 
     @Override
-    public List<DqcRuleTemplate> getTemplateListByRuleTemId(Set<Long> ids){
+    public List<DqcRuleTemplate> getTemplateListByRuleTemId(Set<Long> ids) {
         return (List<DqcRuleTemplate>) dqcRuleTemplateRepository.findAll(qDqcRuleTemplate.id.in(ids));
     }
 
