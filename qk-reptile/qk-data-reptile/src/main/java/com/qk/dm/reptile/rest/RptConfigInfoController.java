@@ -3,6 +3,7 @@ package com.qk.dm.reptile.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
+import com.qk.dm.reptile.params.vo.RptAddConfigVO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +31,10 @@ public class RptConfigInfoController {
     /**
      * 添加配置信息
      * @param rptConfigInfoDTO
-     * @return DefaultCommonResult<Long> 返回id
+     * @return DefaultCommonResult<RptAddConfigVO> 返回id
      */
     @PostMapping("")
-    public DefaultCommonResult<Long> insert(@RequestBody @Validated RptConfigInfoDTO rptConfigInfoDTO){
+    public DefaultCommonResult<RptAddConfigVO> insert(@RequestBody @Validated RptConfigInfoDTO rptConfigInfoDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,rptConfigInfoService.insert(rptConfigInfoDTO));
     }
     /**
@@ -50,7 +51,7 @@ public class RptConfigInfoController {
      * 修改配置信息
      * @param id
      * @param rptConfigInfoDTO
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping("/{id}")
     public DefaultCommonResult update(

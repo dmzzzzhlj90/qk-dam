@@ -18,6 +18,9 @@ import java.util.Objects;
 
 import static com.google.common.base.Charsets.UTF_8;
 
+/**
+ * @author zhudaoming
+ */
 @Slf4j
 public class HiveMain {
 

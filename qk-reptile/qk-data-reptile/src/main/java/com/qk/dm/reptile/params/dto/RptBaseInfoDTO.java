@@ -88,5 +88,69 @@ public class RptBaseInfoDTO {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtCreate;
 
+  /**
+   * 分配日期
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date distributionDate;
+  /**
+   * 交付日期
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date deliveryDate;
+  /**
+   * 二期站点类型
+   */
+  private String secondSiteType;
+  /**
+   * 列表页地址
+   */
+  private String listPageAddress;
+  /**
+   * 不同类型混合
+   */
+  private String differentTypeMixed;
+  /**
+   * 信息发布级别
+   */
+  private String infoReleaseLevel;
+  /**
+   * 省编码
+   */
+  private String provinceCode;
+  /**
+   * 市编码
+   */
+  private String cityCode;
+  /**
+   * 区编码
+   */
+  private String areaCode;
 
+  /**
+   * 站点官网（修正）
+   */
+  private String websiteNameCorrection;
+
+  /**
+   * 站点官网（修正）
+   */
+  private String websiteUrlCorrection;
+
+  /**
+   * 区域编码
+   */
+  private String regionCode;
+
+  /**
+   * 执行人
+   */
+  private String executor;
+
+  /**
+   * 执行人id
+   */
+  private Long executorId;
 }
