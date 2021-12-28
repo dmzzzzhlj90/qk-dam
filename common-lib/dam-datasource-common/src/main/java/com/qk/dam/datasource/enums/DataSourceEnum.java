@@ -11,7 +11,7 @@ public enum DataSourceEnum {
   /*数据连接枚举信息*/
   MYSQL("mysql","com.mysql.cj.jdbc.Driver","jdbc:mysql://"),
   ORACLE("oracle","oracle.jdbc.driver.OracleDriver","jdbc:oracle:thin:"),
-  HIVE("hive","org.apache.hive.jdbc.HiveDriver","jdbc:hive://"),
+  HIVE("hive","org.apache.hive.jdbc.HiveDriver","jdbc:hive2://"),
   POSTGRESQL("postgresql","org.postgresql.Driver","jdbc:postgresql://");
 
   private String name;

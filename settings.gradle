@@ -2,7 +2,7 @@ pluginManagement {
     buildscript {
         repositories {
             maven {
-                url = 'http://172.20.0.22:8081/repository/qkdam/'
+                url = 'http://git.qk.com:8081/repository/qkdam/'
                 credentials {
                     username = 'admin'
                     password = 'admin123'
@@ -28,7 +28,7 @@ pluginManagement {
         mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven {
-            url = 'http://172.20.0.22:8081/repository/qkdam/'
+            url = 'http://git.qk.com:8081/repository/qkdam/'
             credentials {
                 username = 'admin'
                 password = 'admin123'
