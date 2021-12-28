@@ -75,9 +75,7 @@ public class MtdSearchServiceImpl implements MtdSearchService {
     }
 
     private List<MtdTables> builderMtdTables(List<AtlasEntityHeader> atlasEntityHeaderList) {
-        if (CollectionUtils.isEmpty(atlasEntityHeaderList)) {
-            return null;
-        }
+        if (CollectionUtils.isEmpty(atlasEntityHeaderList)) { return null; }
         return atlasEntityHeaderList.stream().map(e -> MtdTables.builder()
                 .displayText(e.getDisplayText())
                 .guid(e.getGuid())
@@ -88,9 +86,7 @@ public class MtdSearchServiceImpl implements MtdSearchService {
     }
 
     private List<MtdAttributes> builderMtdAttributes(List<AtlasEntityHeader> atlasEntityHeaderList) {
-        if (CollectionUtils.isEmpty(atlasEntityHeaderList)) {
-            return null;
-        }
+        if (CollectionUtils.isEmpty(atlasEntityHeaderList)) { return null; }
         return atlasEntityHeaderList.stream().map(e -> MtdAttributes.builder()
                 .type(e.getTypeName())
                 .owner(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER)))
