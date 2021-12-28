@@ -147,6 +147,7 @@
         }
       },
       "_scheduler_instance__processInstanceId_Request": {},
+      "_statistics_dirRequest": {},
       "_scheduler_executors_releaseRequest": {
         "properties": {
           "id": {
@@ -540,6 +541,11 @@
                 "description": "No comments found.",
                 "type": "integer"
               },
+              "code": {
+                "format": "int64",
+                "description": "No comments found.",
+                "type": "integer"
+              },
               "name": {
                 "format": "string",
                 "description": "No comments found.",
@@ -555,15 +561,10 @@
                 "description": "No comments found.",
                 "type": "string"
               },
-              "projectId": {
-                "format": "int32",
+              "projectCode": {
+                "format": "int64",
                 "description": "No comments found.",
                 "type": "integer"
-              },
-              "processDefinitionJson": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
               },
               "description": {
                 "format": "string",
@@ -583,16 +584,6 @@
               "globalParamMap": {
                 "description": "No comments found.(map data)",
                 "type": "object"
-              },
-              "createTime": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "updateTime": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
               },
               "flag": {
                 "format": "string",
@@ -619,21 +610,6 @@
                 "description": "No comments found.",
                 "type": "string"
               },
-              "connects": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "receivers": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "receiversCc": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
               "scheduleReleaseState": {
                 "format": "string",
                 "description": "No comments found.",
@@ -649,21 +625,25 @@
                 "description": "No comments found.",
                 "type": "integer"
               },
+              "tenantCode": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
               "modifyBy": {
                 "format": "string",
                 "description": "No comments found.",
                 "type": "string"
               },
-              "resourceIds": {
-                "format": "string",
+              "warningGroupId": {
+                "format": "int32",
                 "description": "No comments found.",
-                "type": "string"
+                "type": "integer"
               }
             }
           }
         }
       },
-      "_process_Request": {},
       "_scheduler_executors_runing__id_Response": {
         "properties": {
           "retCode": {
@@ -748,9 +728,9 @@
                       "description": "分类目录",
                       "type": "string"
                     },
-                    "processDefinitionId": {
-                      "format": "int32",
-                      "description": "调度流程实例ID",
+                    "processDefinitionCode": {
+                      "format": "int64",
+                      "description": "调度流程实例code",
                       "type": "integer"
                     },
                     "notifyLevel": {
@@ -837,6 +817,11 @@
                             "format": "string",
                             "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\";",
                             "type": "string"
+                          },
+                          "taskCode": {
+                            "format": "int64",
+                            "description": "流程实例节点taskCode",
+                            "type": "integer"
                           },
                           "engineType": {
                             "format": "string",
@@ -1191,6 +1176,11 @@
                       "description": "规则id",
                       "type": "string"
                     },
+                    "taskCode": {
+                      "format": "int64",
+                      "description": "工作流实例task_code绑定规则",
+                      "type": "integer"
+                    },
                     "gmtModified": {
                       "format": "string",
                       "description": "更新时间",
@@ -1311,6 +1301,11 @@
             "description": "流程实例ID",
             "type": "integer"
           },
+          "processInstanceName": {
+            "format": "string",
+            "description": "流程实例名称",
+            "type": "string"
+          },
           "startDate": {
             "format": "string",
             "description": "开始时间",
@@ -1323,7 +1318,7 @@
           },
           "searchVal": {
             "format": "string",
-            "description": "搜索值(名称：模糊搜索)",
+            "description": "名称",
             "type": "string"
           },
           "stateType": {
@@ -1338,7 +1333,7 @@
           },
           "taskName": {
             "format": "string",
-            "description": "任务实例名(名称：精确搜索)",
+            "description": "任务实例名称",
             "type": "string"
           }
         }
@@ -1477,7 +1472,50 @@
           "data": {
             "description": "返回数据",
             "type": "array",
-            "items": {}
+            "items": {
+              "properties": {
+                "guid": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "typeName": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "entityStatus": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "displayText": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "relationshipType": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "relationshipGuid": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "relationshipStatus": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "comment": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -1512,6 +1550,11 @@
             "format": "string",
             "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\";",
             "type": "string"
+          },
+          "taskCode": {
+            "format": "int64",
+            "description": "流程实例节点taskCode",
+            "type": "integer"
           },
           "engineType": {
             "format": "string",
@@ -1590,6 +1633,7 @@
           "jobId",
           "ruleTempId",
           "ruleType",
+          "taskCode",
           "engineType",
           "dataSourceName",
           "databaseName",
@@ -1711,9 +1755,9 @@
                       "description": "No comments found.",
                       "type": "integer"
                     },
-                    "processDefinitionId": {
-                      "format": "int32",
-                      "description": "流程id",
+                    "processDefinitionCode": {
+                      "format": "int64",
+                      "description": "流程code",
                       "type": "integer"
                     },
                     "state": {
@@ -1806,9 +1850,9 @@
               }
             }
           },
-          "processDefinitionId": {
-            "format": "int32",
-            "description": "流程定义ID",
+          "processDefineCode": {
+            "format": "int64",
+            "description": "流程定义code",
             "type": "integer"
           },
           "startDate": {
@@ -1823,7 +1867,7 @@
           },
           "searchVal": {
             "format": "string",
-            "description": "搜索值(名称)",
+            "description": "名称",
             "type": "string"
           },
           "stateType": {
@@ -1840,29 +1884,6 @@
             "format": "string",
             "description": "分类目录",
             "type": "string"
-          }
-        }
-      },
-      "_process_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
           }
         }
       },
@@ -1912,10 +1933,34 @@
           "data": {
             "description": "返回数据",
             "type": "array",
-            "items": {}
+            "items": {
+              "properties": {
+                "guid": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "displayText": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "typeName": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "description": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
+      "_sql_build_realtime_pythonRequest": {},
       "_scheduler_info_bulkResponse": {
         "properties": {
           "retCode": {
@@ -2062,6 +2107,29 @@
         }
       },
       "_rule_template_listRequest": {},
+      "_statistics_dimensionResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
       "_scheduler_instance_executeResponse": {
         "properties": {
           "retCode": {
@@ -2124,6 +2192,11 @@
             "description": "规则id",
             "type": "string"
           },
+          "taskCode": {
+            "format": "int64",
+            "description": "工作流实例task_code绑定规则",
+            "type": "integer"
+          },
           "beginDay": {
             "format": "string",
             "description": "开始时间",
@@ -2182,9 +2255,9 @@
             "description": "分类目录",
             "type": "string"
           },
-          "processDefinitionId": {
-            "format": "int32",
-            "description": "调度流程实例ID",
+          "processDefinitionCode": {
+            "format": "int64",
+            "description": "调度流程实例code",
             "type": "integer"
           },
           "notifyLevel": {
@@ -2272,6 +2345,11 @@
                   "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\";",
                   "type": "string"
                 },
+                "taskCode": {
+                  "format": "int64",
+                  "description": "流程实例节点taskCode",
+                  "type": "integer"
+                },
                 "engineType": {
                   "format": "string",
                   "description": "适用引擎 MYSQL HIVE ORACLE",
@@ -2349,6 +2427,7 @@
                 "jobId",
                 "ruleTempId",
                 "ruleType",
+                "taskCode",
                 "engineType",
                 "dataSourceName",
                 "databaseName",
@@ -2436,7 +2515,7 @@
         "required": [
           "jobName",
           "dirId",
-          "processDefinitionId",
+          "processDefinitionCode",
           "notifyLevel",
           "notifyState",
           "notifyType",
@@ -2557,9 +2636,9 @@
             "description": "分类目录",
             "type": "string"
           },
-          "processDefinitionId": {
-            "format": "int32",
-            "description": "调度流程实例ID",
+          "processDefinitionCode": {
+            "format": "int64",
+            "description": "调度流程实例code",
             "type": "integer"
           },
           "notifyLevel": {
@@ -2647,6 +2726,11 @@
                   "description": "规则类型 \"RULE_TYPE_FIELD\":\"字段级别规则\",\"RULE_TYPE_TABLE\":\"表级别规则\",\"RULE_TYPE_DB\":\"库级别规则\";",
                   "type": "string"
                 },
+                "taskCode": {
+                  "format": "int64",
+                  "description": "流程实例节点taskCode",
+                  "type": "integer"
+                },
                 "engineType": {
                   "format": "string",
                   "description": "适用引擎 MYSQL HIVE ORACLE",
@@ -2724,6 +2808,7 @@
                 "jobId",
                 "ruleTempId",
                 "ruleType",
+                "taskCode",
                 "engineType",
                 "dataSourceName",
                 "databaseName",
@@ -2811,14 +2896,37 @@
         "required": [
           "jobName",
           "dirId",
-          "processDefinitionId",
+          "processDefinitionCode",
           "notifyLevel",
           "notifyState",
           "notifyType",
           "notifyThemeIdList"
         ]
       },
-      "_process_verifyNameRequest": {},
+      "_statistics_summaryResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_statistics_dimensionRequest": {},
       "_scheduler_info__id_Response": {
         "properties": {
           "retCode": {
@@ -2842,6 +2950,7 @@
           }
         }
       },
+      "_rule_template_result_infoRequest": {},
       "_scheduler_info_scheduler_rule_constantsResponse": {
         "properties": {
           "retCode": {
@@ -2944,8 +3053,54 @@
           "publishState"
         ]
       },
+      "_statistics_dirResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
       "_rule_template__id_Request": {},
       "_process_releaseResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_sql_build_realtime_pythonResponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -3041,7 +3196,7 @@
       },
       "_rule_db_Request": {},
       "_rule_template_constantsRequest": {},
-      "_process_verifyNameResponse": {
+      "_rule_template_result_infoResponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -3097,6 +3252,7 @@
           }
         }
       },
+      "_statistics_summaryRequest": {},
       "_rule_dir_bulkRequest": {},
       "_scheduler_instance_bulkRequest": {}
     }
@@ -3124,7 +3280,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/release --data \u0027releaseState\u003d5\u0026processDefinitionId\u003d184\u0027"
+                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/release --data \u0027processDefinitionId\u003d19\u0026releaseState\u003dqgz4pu\u0027"
                 }
               }
             }
@@ -3141,7 +3297,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"mh2eli\",\n  \"tips\": \"wiu3vh\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"rtq04h\",\n  \"tips\": \"27lmi5\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3152,24 +3308,23 @@
         "parameters": [
           {
             "schema": {
-              "format": "int32",
+              "format": "int64",
               "type": "integer"
             },
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "900",
+            "example": "879",
             "name": "processDefinitionId"
           },
           {
             "schema": {
-              "format": "int32",
-              "type": "integer"
+              "type": "string"
             },
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "5",
+            "example": "x4t9wa",
             "name": "releaseState"
           }
         ]
@@ -3192,7 +3347,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"iqn8dt\"\n  },\n  \"processInstanceId\": 356,\n  \"startDate\": \"2021-12-11\",\n  \"endDate\": \"2021-12-11\",\n  \"searchVal\": \"vq3zgu\",\n  \"stateType\": \"c49od5\",\n  \"executorName\": \"ezra.hand\",\n  \"taskName\": \"ezra.hand\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"nmf762\"\n  },\n  \"processInstanceId\": 825,\n  \"processInstanceName\": \"zoe.oconnell\",\n  \"startDate\": \"2021-12-28\",\n  \"endDate\": \"2021-12-28\",\n  \"searchVal\": \"gft8n4\",\n  \"stateType\": \"51dma6\",\n  \"executorName\": \"zoe.oconnell\",\n  \"taskName\": \"zoe.oconnell\"\n}"
                 }
               }
             }
@@ -3209,7 +3364,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"8bnm1r\",\n  \"tips\": \"ygjhhc\",\n  \"data\": {\n    \"total\": 33,\n    \"pageNum\": 78,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 825,\n        \"processDefinitionId\": 411,\n        \"processInstanceId\": 632,\n        \"processInstanceName\": \"ezra.hand\",\n        \"name\": \"ezra.hand\",\n        \"executorName\": \"ezra.hand\",\n        \"taskType\": \"hwl2ye\",\n        \"state\": \"s7v0dc\",\n        \"submitTime\": \"2021-12-11 21:12:20\",\n        \"startTime\": \"2021-12-11 21:12:20\",\n        \"endTime\": \"2021-12-11\",\n        \"host\": \"t8t25i\",\n        \"duration\": \"x2p4oi\",\n        \"retryTimes\": 512,\n        \"stateName\": \"ezra.hand\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"1kek60\",\n  \"tips\": \"b7m52x\",\n  \"data\": {\n    \"total\": 374,\n    \"pageNum\": 523,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 879,\n        \"processDefinitionId\": 737,\n        \"processInstanceId\": 594,\n        \"processInstanceName\": \"zoe.oconnell\",\n        \"name\": \"zoe.oconnell\",\n        \"executorName\": \"zoe.oconnell\",\n        \"taskType\": \"p1dtnm\",\n        \"state\": \"x2k1da\",\n        \"submitTime\": \"2021-12-28 17:40:36\",\n        \"startTime\": \"2021-12-28 17:40:36\",\n        \"endTime\": \"2021-12-28\",\n        \"host\": \"8bvd3k\",\n        \"duration\": \"fjuzln\",\n        \"retryTimes\": 37,\n        \"stateName\": \"zoe.oconnell\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -3239,7 +3394,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"adxj3t\",\n  \"tips\": \"lr3cf0\",\n  \"data\": [\n    \"o9qil9\",\n    \"r9g9b5\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"yeozqj\",\n  \"tips\": \"cudhf3\",\n  \"data\": [\n    \"kktaqs\",\n    \"udgmc6\"\n  ]\n}"
                   }
                 }
               }
@@ -3255,7 +3410,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "c3nbi7",
+            "example": "qict18",
             "name": "type"
           }
         ]
@@ -3280,7 +3435,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"tnnoi6\",\n  \"tips\": \"c8tzqw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"j876e4\",\n  \"tips\": \"jrwk3p\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3296,7 +3451,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "35x8wg",
+            "example": "m59gfw",
             "name": "ids"
           }
         ]
@@ -3319,7 +3474,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.21.32.3:7000/scheduler/executors/runing/987"
+                  "value": "curl -X PUT -i http://172.21.32.3:7000/scheduler/executors/runing/169"
                 }
               }
             }
@@ -3336,7 +3491,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"hxn07p\",\n  \"tips\": \"5elt9t\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"f7t38m\",\n  \"tips\": \"zjglzw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3353,7 +3508,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "482",
+            "example": "186",
             "name": "id"
           }
         ]
@@ -3376,7 +3531,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 269,\n  \"ruleId\": \"15\",\n  \"ruleName\": \"ezra.hand\",\n  \"jobId\": \"15\",\n  \"ruleTempId\": 371,\n  \"ruleType\": \"s4hihk\",\n  \"engineType\": \"uetob4\",\n  \"dataSourceName\": \"ezra.hand\",\n  \"databaseName\": \"ezra.hand\",\n  \"tableList\": [\n    \"bmjwvy\"\n  ],\n  \"fieldList\": [\n    \"i66vjd\"\n  ],\n  \"scanType\": \"vrc5ga\",\n  \"scanSql\": \"x90wav\",\n  \"executeSql\": \"n99lkz\",\n  \"warnExpression\": \"cu7fta\",\n  \"createUserid\": \"15\",\n  \"updateUserid\": \"15\",\n  \"delFlag\": 2,\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\"\n}"
+                  "value": "{\n  \"id\": 858,\n  \"ruleId\": \"156\",\n  \"ruleName\": \"zoe.oconnell\",\n  \"jobId\": \"156\",\n  \"ruleTempId\": 946,\n  \"ruleType\": \"fsk6ol\",\n  \"taskCode\": 518,\n  \"engineType\": \"724cuz\",\n  \"dataSourceName\": \"zoe.oconnell\",\n  \"databaseName\": \"zoe.oconnell\",\n  \"tableList\": [\n    \"l2li98\"\n  ],\n  \"fieldList\": [\n    \"uw2n3m\"\n  ],\n  \"scanType\": \"y763zw\",\n  \"scanSql\": \"n1dxn8\",\n  \"executeSql\": \"dj7elx\",\n  \"warnExpression\": \"79x3lv\",\n  \"createUserid\": \"156\",\n  \"updateUserid\": \"156\",\n  \"delFlag\": 4,\n  \"gmtCreate\": \"2021-12-28 17:40:36\",\n  \"gmtModified\": \"2021-12-28 17:40:36\"\n}"
                 }
               }
             }
@@ -3393,7 +3548,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"bx0cra\",\n  \"tips\": \"medn2i\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"kxn95q\",\n  \"tips\": \"489ez4\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3421,7 +3576,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 198,\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"processDefinitionId\": 866,\n  \"notifyLevel\": \"u3vv4y\",\n  \"notifyState\": true,\n  \"notifyType\": \"3bxaht\",\n  \"notifyThemeIdList\": [\n    \"enq6ky\"\n  ],\n  \"schedulerState\": \"sayksr\",\n  \"runInstanceState\": 5,\n  \"createUserid\": \"15\",\n  \"updateUserid\": \"15\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 539,\n      \"ruleId\": \"15\",\n      \"ruleName\": \"ezra.hand\",\n      \"jobId\": \"15\",\n      \"ruleTempId\": 388,\n      \"ruleType\": \"240x91\",\n      \"engineType\": \"kp5mec\",\n      \"dataSourceName\": \"ezra.hand\",\n      \"databaseName\": \"ezra.hand\",\n      \"tableList\": [\n        \"bwd9a0\"\n      ],\n      \"fieldList\": [\n        \"76h7bz\"\n      ],\n      \"scanType\": \"qblcrx\",\n      \"scanSql\": \"x3878s\",\n      \"executeSql\": \"n95uc7\",\n      \"warnExpression\": \"805jfo\",\n      \"createUserid\": \"15\",\n      \"updateUserid\": \"15\",\n      \"delFlag\": 2,\n      \"gmtCreate\": \"2021-12-11 21:12:20\",\n      \"gmtModified\": \"2021-12-11 21:12:20\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 333,\n    \"jobId\": \"15\",\n    \"schedulerType\": \"5p7onq\",\n    \"effectiveTimeStart\": \"2021-12-11 21:12:20\",\n    \"effectiveTimeEnt\": \"2021-12-11 21:12:20\",\n    \"schedulerCycle\": \"qw8ate\",\n    \"schedulerIntervalTime\": \"2021-12-11 21:12:20\",\n    \"schedulerTime\": \"2021-12-11 21:12:20\",\n    \"cron\": \"h3v70x\",\n    \"schedulerId\": 931,\n    \"createUserid\": \"15\",\n    \"updateUserid\": \"15\",\n    \"gmtCreate\": \"2021-12-11 21:12:20\",\n    \"gmtModified\": \"2021-12-11 21:12:20\"\n  }\n}"
+                  "value": "{\n  \"id\": 630,\n  \"jobId\": \"156\",\n  \"jobName\": \"zoe.oconnell\",\n  \"dirId\": \"156\",\n  \"processDefinitionCode\": 141,\n  \"notifyLevel\": \"dx0ard\",\n  \"notifyState\": true,\n  \"notifyType\": \"v09my5\",\n  \"notifyThemeIdList\": [\n    \"jytcq3\"\n  ],\n  \"schedulerState\": \"b4i4lf\",\n  \"runInstanceState\": 9,\n  \"createUserid\": \"156\",\n  \"updateUserid\": \"156\",\n  \"gmtCreate\": \"2021-12-28 17:40:36\",\n  \"gmtModified\": \"2021-12-28 17:40:36\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 891,\n      \"ruleId\": \"156\",\n      \"ruleName\": \"zoe.oconnell\",\n      \"jobId\": \"156\",\n      \"ruleTempId\": 438,\n      \"ruleType\": \"pu5z3o\",\n      \"taskCode\": 283,\n      \"engineType\": \"4jtgm7\",\n      \"dataSourceName\": \"zoe.oconnell\",\n      \"databaseName\": \"zoe.oconnell\",\n      \"tableList\": [\n        \"vsst4v\"\n      ],\n      \"fieldList\": [\n        \"tsgx00\"\n      ],\n      \"scanType\": \"utdk91\",\n      \"scanSql\": \"88w5w4\",\n      \"executeSql\": \"rrokef\",\n      \"warnExpression\": \"pi9uj2\",\n      \"createUserid\": \"156\",\n      \"updateUserid\": \"156\",\n      \"delFlag\": 4,\n      \"gmtCreate\": \"2021-12-28 17:40:36\",\n      \"gmtModified\": \"2021-12-28 17:40:36\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 496,\n    \"jobId\": \"156\",\n    \"schedulerType\": \"1f9v8j\",\n    \"effectiveTimeStart\": \"2021-12-28 17:40:36\",\n    \"effectiveTimeEnt\": \"2021-12-28 17:40:36\",\n    \"schedulerCycle\": \"xb0rgc\",\n    \"schedulerIntervalTime\": \"2021-12-28 15:00:02\",\n    \"schedulerTime\": \"2021-12-28 15:00:02\",\n    \"cron\": \"mzszag\",\n    \"schedulerId\": 722,\n    \"createUserid\": \"156\",\n    \"updateUserid\": \"156\",\n    \"gmtCreate\": \"2021-12-28 17:40:36\",\n    \"gmtModified\": \"2021-12-28 17:40:36\"\n  }\n}"
                 }
               }
             }
@@ -3438,7 +3593,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"jwg41l\",\n  \"tips\": \"we2hal\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"z9welj\",\n  \"tips\": \"y1yogx\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3464,7 +3619,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 153,\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"processDefinitionId\": 742,\n  \"notifyLevel\": \"jrrq6t\",\n  \"notifyState\": true,\n  \"notifyType\": \"n59trq\",\n  \"notifyThemeIdList\": [\n    \"9894cv\"\n  ],\n  \"schedulerState\": \"eu9ml9\",\n  \"runInstanceState\": 5,\n  \"createUserid\": \"15\",\n  \"updateUserid\": \"15\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 200,\n      \"ruleId\": \"15\",\n      \"ruleName\": \"ezra.hand\",\n      \"jobId\": \"15\",\n      \"ruleTempId\": 954,\n      \"ruleType\": \"kq89zp\",\n      \"engineType\": \"471ss6\",\n      \"dataSourceName\": \"ezra.hand\",\n      \"databaseName\": \"ezra.hand\",\n      \"tableList\": [\n        \"9g2ru5\"\n      ],\n      \"fieldList\": [\n        \"6gs5cn\"\n      ],\n      \"scanType\": \"kb0g46\",\n      \"scanSql\": \"6obimc\",\n      \"executeSql\": \"ujgvf6\",\n      \"warnExpression\": \"2dh869\",\n      \"createUserid\": \"15\",\n      \"updateUserid\": \"15\",\n      \"delFlag\": 2,\n      \"gmtCreate\": \"2021-12-11 21:12:20\",\n      \"gmtModified\": \"2021-12-11 21:12:20\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 748,\n    \"jobId\": \"15\",\n    \"schedulerType\": \"4br5pt\",\n    \"effectiveTimeStart\": \"2021-12-11 21:12:20\",\n    \"effectiveTimeEnt\": \"2021-12-11 21:12:20\",\n    \"schedulerCycle\": \"7zm9dl\",\n    \"schedulerIntervalTime\": \"2021-12-11 21:12:20\",\n    \"schedulerTime\": \"2021-12-11 21:12:20\",\n    \"cron\": \"3vmoxf\",\n    \"schedulerId\": 773,\n    \"createUserid\": \"15\",\n    \"updateUserid\": \"15\",\n    \"gmtCreate\": \"2021-12-11 21:12:20\",\n    \"gmtModified\": \"2021-12-11 21:12:20\"\n  }\n}"
+                  "value": "{\n  \"id\": 599,\n  \"jobId\": \"156\",\n  \"jobName\": \"zoe.oconnell\",\n  \"dirId\": \"156\",\n  \"processDefinitionCode\": 88,\n  \"notifyLevel\": \"xq47zu\",\n  \"notifyState\": true,\n  \"notifyType\": \"2n6ps5\",\n  \"notifyThemeIdList\": [\n    \"8fyepz\"\n  ],\n  \"schedulerState\": \"ow796n\",\n  \"runInstanceState\": 9,\n  \"createUserid\": \"156\",\n  \"updateUserid\": \"156\",\n  \"gmtCreate\": \"2021-12-28 17:40:36\",\n  \"gmtModified\": \"2021-12-28 17:40:36\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 487,\n      \"ruleId\": \"156\",\n      \"ruleName\": \"zoe.oconnell\",\n      \"jobId\": \"156\",\n      \"ruleTempId\": 716,\n      \"ruleType\": \"i9m13v\",\n      \"taskCode\": 207,\n      \"engineType\": \"i8bwm9\",\n      \"dataSourceName\": \"zoe.oconnell\",\n      \"databaseName\": \"zoe.oconnell\",\n      \"tableList\": [\n        \"deim21\"\n      ],\n      \"fieldList\": [\n        \"dro8xc\"\n      ],\n      \"scanType\": \"d2yvy2\",\n      \"scanSql\": \"2zdktn\",\n      \"executeSql\": \"yg0xb1\",\n      \"warnExpression\": \"lcrwi6\",\n      \"createUserid\": \"156\",\n      \"updateUserid\": \"156\",\n      \"delFlag\": 4,\n      \"gmtCreate\": \"2021-12-28 17:40:36\",\n      \"gmtModified\": \"2021-12-28 17:40:36\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 151,\n    \"jobId\": \"156\",\n    \"schedulerType\": \"4rku0z\",\n    \"effectiveTimeStart\": \"2021-12-28 17:40:36\",\n    \"effectiveTimeEnt\": \"2021-12-28 17:40:36\",\n    \"schedulerCycle\": \"f8wg1f\",\n    \"schedulerIntervalTime\": \"2021-12-28 15:00:02\",\n    \"schedulerTime\": \"2021-12-28 15:00:02\",\n    \"cron\": \"sb3n1y\",\n    \"schedulerId\": 736,\n    \"createUserid\": \"156\",\n    \"updateUserid\": \"156\",\n    \"gmtCreate\": \"2021-12-28 17:40:36\",\n    \"gmtModified\": \"2021-12-28 17:40:36\"\n  }\n}"
                 }
               }
             }
@@ -3481,7 +3636,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"xqnah7\",\n  \"tips\": \"eqguyc\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"s6o6y8\",\n  \"tips\": \"nrtm5k\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3490,47 +3645,6 @@
         },
         "operationId": "update",
         "parameters": []
-      }
-    },
-    "/process/": {
-      "delete": {
-        "summary": "",
-        "deprecated": false,
-        "tags": [
-          "ProcessDefinitionApiController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_process_Response"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"zg8svn\",\n  \"tips\": \"qy4j64\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "deleteOne",
-        "parameters": [
-          {
-            "schema": {
-              "format": "int32",
-              "type": "integer"
-            },
-            "in": "query",
-            "description": "No comments found.",
-            "required": false,
-            "example": "234",
-            "name": "processDefinitionId"
-          }
-        ]
       }
     },
     "/rule/template/bulk": {
@@ -3552,7 +3666,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"xg0j8z\",\n  \"tips\": \"rlxveh\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"52bjeg\",\n  \"tips\": \"ixb0xu\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3568,10 +3682,39 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "art9hz",
+            "example": "19r4oy",
             "name": "ids"
           }
         ]
+      }
+    },
+    "/statistics/dir": {
+      "get": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "DqcStatisticsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_statistics_dirResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"goqilr\",\n  \"tips\": \"tfxldb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "dirStatistics",
+        "parameters": []
       }
     },
     "/scheduler/info/{id}": {
@@ -3593,7 +3736,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"wkbi5n\",\n  \"tips\": \"1jghkb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"bz1fjv\",\n  \"tips\": \"a7262w\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3609,8 +3752,50 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "15",
+            "example": "156",
             "name": "id"
+          }
+        ]
+      }
+    },
+    "/rule/template/result/info": {
+      "get": {
+        "summary": "根据模板ID获取结果模板定义",
+        "deprecated": false,
+        "description": "根据模板ID获取结果模板定义",
+        "tags": [
+          "DqcRuleTemplateController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_rule_template_result_infoResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"er5wku\",\n  \"tips\": \"k2od8t\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getTempResultByTempId",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "668",
+            "name": "tempId"
           }
         ]
       }
@@ -3634,7 +3819,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"4vrkkt\",\n  \"tips\": \"8m1u5n\",\n  \"data\": [\n    \"6mkfbx\",\n    \"wuz1y8\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"nqz6f6\",\n  \"tips\": \"61fgx3\",\n  \"data\": [\n    \"4tg0n6\",\n    \"8oo1lg\"\n  ]\n}"
                   }
                 }
               }
@@ -3664,7 +3849,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"dkgv5d\",\n  \"tips\": \"es98fn\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"vfqwzu\",\n  \"tips\": \"a0fo8w\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3680,7 +3865,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "15",
+            "example": "156",
             "name": "id"
           }
         ]
@@ -3705,7 +3890,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"j8uj31\",\n  \"tips\": \"agawvy\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"udcl6y\",\n  \"tips\": \"soiyw3\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3722,10 +3907,39 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "854",
+            "example": "159",
             "name": "processInstanceId"
           }
         ]
+      }
+    },
+    "/statistics/dimension": {
+      "get": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "DqcStatisticsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_statistics_dimensionResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"kwy8jo\",\n  \"tips\": \"8hg7fu\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "dimensionStatistics",
+        "parameters": []
       }
     },
     "/rule/template/release": {
@@ -3745,7 +3959,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 865,\n  \"publishState\": \"kk7mc6\"\n}"
+                  "value": "{\n  \"id\": 474,\n  \"publishState\": \"qq8hmw\"\n}"
                 }
               }
             }
@@ -3762,7 +3976,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"8bsp1w\",\n  \"tips\": \"t4qchc\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"2js3lz\",\n  \"tips\": \"rasceo\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3790,7 +4004,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 737,\n  \"schedulerState\": \"ycnjmg\"\n}"
+                  "value": "{\n  \"id\": 426,\n  \"schedulerState\": \"ky46mp\"\n}"
                 }
               }
             }
@@ -3807,7 +4021,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"e5jjii\",\n  \"tips\": \"pi0tmb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"l5vmaf\",\n  \"tips\": \"yvfh9j\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3835,7 +4049,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"executeType\": \"r7daue\",\n  \"processInstanceId\": 921\n}"
+                  "value": "{\n  \"executeType\": \"rzq3sb\",\n  \"processInstanceId\": 960\n}"
                 }
               }
             }
@@ -3852,7 +4066,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"z0sjcm\",\n  \"tips\": \"82h51b\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"jextha\",\n  \"tips\": \"p3f248\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3882,7 +4096,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"earc1s\",\n  \"tips\": \"dlksg2\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"jiglvm\",\n  \"tips\": \"uc0lim\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3898,39 +4112,10 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "k3u94p",
+            "example": "s3bssk",
             "name": "ids"
           }
         ]
-      }
-    },
-    "/process/verifyName": {
-      "get": {
-        "summary": "",
-        "deprecated": false,
-        "tags": [
-          "ProcessDefinitionApiController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_process_verifyNameResponse"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"zf8uv0\",\n  \"tips\": \"3z9va5\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "verifyName",
-        "parameters": []
       }
     },
     "/process/save": {
@@ -3950,7 +4135,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 816,\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"processDefinitionId\": 743,\n  \"notifyLevel\": \"dyqdyw\",\n  \"notifyState\": true,\n  \"notifyType\": \"kqj3k4\",\n  \"notifyThemeIdList\": [\n    \"0bhcmq\"\n  ],\n  \"schedulerState\": \"knkmr5\",\n  \"runInstanceState\": 5,\n  \"createUserid\": \"15\",\n  \"updateUserid\": \"15\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 415,\n      \"ruleId\": \"15\",\n      \"ruleName\": \"ezra.hand\",\n      \"jobId\": \"15\",\n      \"ruleTempId\": 576,\n      \"ruleType\": \"2vo4eu\",\n      \"engineType\": \"e4cd1w\",\n      \"dataSourceName\": \"ezra.hand\",\n      \"databaseName\": \"ezra.hand\",\n      \"tableList\": [\n        \"gh69jc\"\n      ],\n      \"fieldList\": [\n        \"j57z7k\"\n      ],\n      \"scanType\": \"1tu2a1\",\n      \"scanSql\": \"la37px\",\n      \"executeSql\": \"gwt1t5\",\n      \"warnExpression\": \"3y3bo0\",\n      \"createUserid\": \"15\",\n      \"updateUserid\": \"15\",\n      \"delFlag\": 2,\n      \"gmtCreate\": \"2021-12-11 21:12:20\",\n      \"gmtModified\": \"2021-12-11 21:12:20\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 694,\n    \"jobId\": \"15\",\n    \"schedulerType\": \"1g3axs\",\n    \"effectiveTimeStart\": \"2021-12-11 21:12:20\",\n    \"effectiveTimeEnt\": \"2021-12-11 21:12:20\",\n    \"schedulerCycle\": \"r30oym\",\n    \"schedulerIntervalTime\": \"2021-12-11 21:12:20\",\n    \"schedulerTime\": \"2021-12-11 21:12:20\",\n    \"cron\": \"p1sfab\",\n    \"schedulerId\": 70,\n    \"createUserid\": \"15\",\n    \"updateUserid\": \"15\",\n    \"gmtCreate\": \"2021-12-11 21:12:20\",\n    \"gmtModified\": \"2021-12-11 21:12:20\"\n  }\n}"
+                  "value": "{\n  \"id\": 888,\n  \"jobId\": \"156\",\n  \"jobName\": \"zoe.oconnell\",\n  \"dirId\": \"156\",\n  \"processDefinitionCode\": 697,\n  \"notifyLevel\": \"k61ngn\",\n  \"notifyState\": true,\n  \"notifyType\": \"j1qerf\",\n  \"notifyThemeIdList\": [\n    \"ln5jpa\"\n  ],\n  \"schedulerState\": \"42mxg9\",\n  \"runInstanceState\": 9,\n  \"createUserid\": \"156\",\n  \"updateUserid\": \"156\",\n  \"gmtCreate\": \"2021-12-28 17:40:37\",\n  \"gmtModified\": \"2021-12-28 17:40:37\",\n  \"dqcSchedulerRulesVOList\": [\n    {\n      \"id\": 860,\n      \"ruleId\": \"156\",\n      \"ruleName\": \"zoe.oconnell\",\n      \"jobId\": \"156\",\n      \"ruleTempId\": 845,\n      \"ruleType\": \"8zvntl\",\n      \"taskCode\": 756,\n      \"engineType\": \"ohx57g\",\n      \"dataSourceName\": \"zoe.oconnell\",\n      \"databaseName\": \"zoe.oconnell\",\n      \"tableList\": [\n        \"we3pux\"\n      ],\n      \"fieldList\": [\n        \"ipl6cg\"\n      ],\n      \"scanType\": \"2x1sd1\",\n      \"scanSql\": \"kwdvjb\",\n      \"executeSql\": \"j5kust\",\n      \"warnExpression\": \"xgxwzh\",\n      \"createUserid\": \"156\",\n      \"updateUserid\": \"156\",\n      \"delFlag\": 4,\n      \"gmtCreate\": \"2021-12-28 17:40:37\",\n      \"gmtModified\": \"2021-12-28 17:40:37\"\n    }\n  ],\n  \"dqcSchedulerConfigVO\": {\n    \"id\": 350,\n    \"jobId\": \"156\",\n    \"schedulerType\": \"i89pn2\",\n    \"effectiveTimeStart\": \"2021-12-28 17:40:37\",\n    \"effectiveTimeEnt\": \"2021-12-28 17:40:37\",\n    \"schedulerCycle\": \"3qhiq5\",\n    \"schedulerIntervalTime\": \"2021-12-28 15:00:02\",\n    \"schedulerTime\": \"2021-12-28 15:00:02\",\n    \"cron\": \"4bpjup\",\n    \"schedulerId\": 157,\n    \"createUserid\": \"156\",\n    \"updateUserid\": \"156\",\n    \"gmtCreate\": \"2021-12-28 17:40:37\",\n    \"gmtModified\": \"2021-12-28 17:40:37\"\n  }\n}"
                 }
               }
             }
@@ -3967,7 +4152,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"sctu4g\",\n  \"tips\": \"qltn8f\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"ept9tq\",\n  \"tips\": \"xdgda7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3994,7 +4179,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/startInstance --data \u0027processDefinitionId\u003d443\u0027"
+                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/startInstance --data \u0027processDefinitionCode\u003d471\u0027"
                 }
               }
             }
@@ -4011,7 +4196,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"d959lb\",\n  \"tips\": \"4z86g3\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"y5ge3l\",\n  \"tips\": \"n0ebr7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4022,14 +4207,14 @@
         "parameters": [
           {
             "schema": {
-              "format": "int32",
+              "format": "int64",
               "type": "integer"
             },
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "960",
-            "name": "processDefinitionId"
+            "example": "612",
+            "name": "processDefinitionCode"
           }
         ]
       }
@@ -4051,7 +4236,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zr2q0e\"\n  },\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"beginDay\": \"vw569j\",\n  \"endDay\": \"5acjrm\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ickp95\"\n  },\n  \"jobId\": \"156\",\n  \"jobName\": \"zoe.oconnell\",\n  \"dirId\": \"156\",\n  \"beginDay\": \"pmhnl9\",\n  \"endDay\": \"2wkj3s\"\n}"
                 }
               }
             }
@@ -4068,7 +4253,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"nhy0vy\",\n  \"tips\": \"15gqis\",\n  \"data\": {\n    \"total\": 148,\n    \"pageNum\": 299,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 202,\n        \"jobId\": \"15\",\n        \"jobName\": \"ezra.hand\",\n        \"dirId\": \"15\",\n        \"processDefinitionId\": 882,\n        \"notifyLevel\": \"ygckck\",\n        \"notifyState\": true,\n        \"notifyType\": \"4t9k33\",\n        \"notifyThemeIdList\": [\n          \"dw60qd\"\n        ],\n        \"schedulerState\": \"xq9s7w\",\n        \"runInstanceState\": 5,\n        \"createUserid\": \"15\",\n        \"updateUserid\": \"15\",\n        \"gmtCreate\": \"2021-12-11 21:12:20\",\n        \"gmtModified\": \"2021-12-11 21:12:20\",\n        \"dqcSchedulerRulesVOList\": [\n          {\n            \"id\": 17,\n            \"ruleId\": \"15\",\n            \"ruleName\": \"ezra.hand\",\n            \"jobId\": \"15\",\n            \"ruleTempId\": 758,\n            \"ruleType\": \"ad1xhd\",\n            \"engineType\": \"97tk0j\",\n            \"dataSourceName\": \"ezra.hand\",\n            \"databaseName\": \"ezra.hand\",\n            \"tableList\": [\n              \"k5ggjs\"\n            ],\n            \"fieldList\": [\n              \"nbjo3p\"\n            ],\n            \"scanType\": \"xdpln2\",\n            \"scanSql\": \"lre3vs\",\n            \"executeSql\": \"3pc0zi\",\n            \"warnExpression\": \"orm5sb\",\n            \"createUserid\": \"15\",\n            \"updateUserid\": \"15\",\n            \"delFlag\": 2,\n            \"gmtCreate\": \"2021-12-11 21:12:20\",\n            \"gmtModified\": \"2021-12-11 21:12:20\"\n          }\n        ],\n        \"dqcSchedulerConfigVO\": {\n          \"id\": 530,\n          \"jobId\": \"15\",\n          \"schedulerType\": \"kyqmyk\",\n          \"effectiveTimeStart\": \"2021-12-11 21:12:20\",\n          \"effectiveTimeEnt\": \"2021-12-11 21:12:20\",\n          \"schedulerCycle\": \"8dv6xy\",\n          \"schedulerIntervalTime\": \"2021-12-11 21:12:20\",\n          \"schedulerTime\": \"2021-12-11 21:12:20\",\n          \"cron\": \"dsb6x0\",\n          \"schedulerId\": 799,\n          \"createUserid\": \"15\",\n          \"updateUserid\": \"15\",\n          \"gmtCreate\": \"2021-12-11 21:12:20\",\n          \"gmtModified\": \"2021-12-11 21:12:20\"\n        }\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"lm7h2u\",\n  \"tips\": \"rb3xf6\",\n  \"data\": {\n    \"total\": 201,\n    \"pageNum\": 947,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 37,\n        \"jobId\": \"156\",\n        \"jobName\": \"zoe.oconnell\",\n        \"dirId\": \"156\",\n        \"processDefinitionCode\": 751,\n        \"notifyLevel\": \"r4d52m\",\n        \"notifyState\": true,\n        \"notifyType\": \"s7acxj\",\n        \"notifyThemeIdList\": [\n          \"s8y2uq\"\n        ],\n        \"schedulerState\": \"snem1u\",\n        \"runInstanceState\": 9,\n        \"createUserid\": \"156\",\n        \"updateUserid\": \"156\",\n        \"gmtCreate\": \"2021-12-28 17:40:36\",\n        \"gmtModified\": \"2021-12-28 17:40:36\",\n        \"dqcSchedulerRulesVOList\": [\n          {\n            \"id\": 398,\n            \"ruleId\": \"156\",\n            \"ruleName\": \"zoe.oconnell\",\n            \"jobId\": \"156\",\n            \"ruleTempId\": 101,\n            \"ruleType\": \"r5v4d1\",\n            \"taskCode\": 566,\n            \"engineType\": \"ezdr32\",\n            \"dataSourceName\": \"zoe.oconnell\",\n            \"databaseName\": \"zoe.oconnell\",\n            \"tableList\": [\n              \"23abo0\"\n            ],\n            \"fieldList\": [\n              \"3swx2t\"\n            ],\n            \"scanType\": \"r4soyn\",\n            \"scanSql\": \"u00p7c\",\n            \"executeSql\": \"uhlou7\",\n            \"warnExpression\": \"ofkkf3\",\n            \"createUserid\": \"156\",\n            \"updateUserid\": \"156\",\n            \"delFlag\": 4,\n            \"gmtCreate\": \"2021-12-28 17:40:36\",\n            \"gmtModified\": \"2021-12-28 17:40:36\"\n          }\n        ],\n        \"dqcSchedulerConfigVO\": {\n          \"id\": 436,\n          \"jobId\": \"156\",\n          \"schedulerType\": \"toi6p2\",\n          \"effectiveTimeStart\": \"2021-12-28 17:40:36\",\n          \"effectiveTimeEnt\": \"2021-12-28 17:40:36\",\n          \"schedulerCycle\": \"iecx87\",\n          \"schedulerIntervalTime\": \"2021-12-28 15:00:02\",\n          \"schedulerTime\": \"2021-12-28 15:00:02\",\n          \"cron\": \"3fuj1r\",\n          \"schedulerId\": 744,\n          \"createUserid\": \"156\",\n          \"updateUserid\": \"156\",\n          \"gmtCreate\": \"2021-12-28 17:40:36\",\n          \"gmtModified\": \"2021-12-28 17:40:36\"\n        }\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -4098,7 +4283,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"lcmk4f\",\n  \"tips\": \"4rucvk\",\n  \"data\": [\n    \"6g6bq0\",\n    \"4rjeg8\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"uz7xfu\",\n  \"tips\": \"gbz2gv\",\n  \"data\": [\n    {\n      \"guid\": \"156\",\n      \"displayText\": \"4a0ajm\",\n      \"typeName\": \"zoe.oconnell\",\n      \"description\": \"a500i5\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -4114,7 +4299,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "s2vk1c",
+            "example": "amp6v5",
             "name": "connectType"
           },
           {
@@ -4124,7 +4309,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "ezra.hand",
+            "example": "zoe.oconnell",
             "name": "dataSourceName"
           }
         ]
@@ -4147,7 +4332,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 230,\n  \"tempName\": \"ezra.hand\",\n  \"tempType\": \"3edpok\",\n  \"dirId\": \"15\",\n  \"dimensionType\": \"uw1wo2\",\n  \"engineTypeList\": [\n    \"erqvwr\"\n  ],\n  \"description\": \"liho3s\",\n  \"tempSql\": \"c2avxz\",\n  \"tempResult\": \"4dasve\",\n  \"ruleType\": \"5oq61d\"\n}"
+                  "value": "{\n  \"id\": 548,\n  \"tempName\": \"zoe.oconnell\",\n  \"tempType\": \"zqz93w\",\n  \"dirId\": \"156\",\n  \"dimensionType\": \"yu5ngu\",\n  \"engineTypeList\": [\n    \"it22q1\"\n  ],\n  \"description\": \"ftr16o\",\n  \"tempSql\": \"dvwr6a\",\n  \"tempResult\": \"w7bkno\",\n  \"ruleType\": \"4hkoe6\"\n}"
                 }
               }
             }
@@ -4164,7 +4349,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"e150pe\",\n  \"tips\": \"8b17oy\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"cpyfo0\",\n  \"tips\": \"v2rzxu\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4190,7 +4375,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 325,\n  \"tempName\": \"ezra.hand\",\n  \"tempType\": \"9fo1kw\",\n  \"dirId\": \"15\",\n  \"dimensionType\": \"r9eedo\",\n  \"engineTypeList\": [\n    \"681n2a\"\n  ],\n  \"description\": \"n47vaz\",\n  \"tempSql\": \"05ag7w\",\n  \"tempResult\": \"6o0y7c\",\n  \"ruleType\": \"dislq7\"\n}"
+                  "value": "{\n  \"id\": 401,\n  \"tempName\": \"zoe.oconnell\",\n  \"tempType\": \"0lra7b\",\n  \"dirId\": \"156\",\n  \"dimensionType\": \"xixyrn\",\n  \"engineTypeList\": [\n    \"suqylu\"\n  ],\n  \"description\": \"ixhtxo\",\n  \"tempSql\": \"zctpyq\",\n  \"tempResult\": \"rhx7d7\",\n  \"ruleType\": \"7ppl1i\"\n}"
                 }
               }
             }
@@ -4207,7 +4392,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"ald4b3\",\n  \"tips\": \"5eiz86\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"4b7rdy\",\n  \"tips\": \"e5my5s\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4216,6 +4401,47 @@
         },
         "operationId": "update",
         "parameters": []
+      }
+    },
+    "/sql/build/realtime/python": {
+      "get": {
+        "summary": "动态实时获取执行sql(python执行脚本回调接口)",
+        "deprecated": false,
+        "description": "动态实时获取执行sql(python执行脚本回调接口)",
+        "tags": [
+          "DqcRuleSqlBuilderController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_sql_build_realtime_pythonResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"omy7ob\",\n  \"tips\": \"fy2k6y\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getRealTimeSql",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": true,
+            "example": "156",
+            "name": "ruleId"
+          }
+        ]
       }
     },
     "/rule/template/{id}": {
@@ -4237,7 +4463,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"5upejj\",\n  \"tips\": \"6h92up\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"hdke1c\",\n  \"tips\": \"dccdcc\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4254,7 +4480,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "744",
+            "example": "385",
             "name": "id"
           }
         ]
@@ -4277,7 +4503,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"w10zdr\",\n  \"tips\": \"0ihvy6\",\n  \"data\": {\n    \"id\": 501,\n    \"tempName\": \"ezra.hand\",\n    \"tempType\": \"p1vhpj\",\n    \"dirId\": \"15\",\n    \"dimensionType\": \"dfwr9q\",\n    \"engineTypeList\": [\n      \"07jkq7\"\n    ],\n    \"description\": \"l05y4r\",\n    \"tempSql\": \"emwizz\",\n    \"tempResult\": \"p0x65h\",\n    \"ruleType\": \"v3eh4y\",\n    \"publishState\": \"he97t8\",\n    \"createUserid\": \"15\",\n    \"gmtModified\": \"2021-12-11 21:12:20\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"dp4anp\",\n  \"tips\": \"ge5ofr\",\n  \"data\": {\n    \"id\": 242,\n    \"tempName\": \"zoe.oconnell\",\n    \"tempType\": \"wyoikd\",\n    \"dirId\": \"156\",\n    \"dimensionType\": \"utvbal\",\n    \"engineTypeList\": [\n      \"68006a\"\n    ],\n    \"description\": \"vrcn0y\",\n    \"tempSql\": \"2cspvy\",\n    \"tempResult\": \"7qjjjq\",\n    \"ruleType\": \"9o7rqa\",\n    \"publishState\": \"psu0ul\",\n    \"createUserid\": \"156\",\n    \"gmtModified\": \"2021-12-28 17:40:36\"\n  }\n}"
                   }
                 }
               }
@@ -4294,7 +4520,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "157",
+            "example": "660",
             "name": "id"
           }
         ]
@@ -4319,7 +4545,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"mrhvqu\",\n  \"tips\": \"uebzg5\",\n  \"data\": [\n    {\n      \"id\": 682,\n      \"dirId\": \"15\",\n      \"title\": \"85acti\",\n      \"value\": \"ylmejs\",\n      \"parentId\": \"15\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"kqxlx7\",\n  \"tips\": \"0hso3q\",\n  \"data\": [\n    {\n      \"id\": 180,\n      \"dirId\": \"156\",\n      \"title\": \"lajjz6\",\n      \"value\": \"5340w0\",\n      \"parentId\": \"156\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
@@ -4347,7 +4573,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 333,\n  \"dirId\": \"15\",\n  \"title\": \"p0kmed\",\n  \"value\": \"8feihf\",\n  \"parentId\": \"15\",\n  \"description\": \"i3fmm0\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"delFlag\": 2\n}"
+                  "value": "{\n  \"id\": 213,\n  \"dirId\": \"156\",\n  \"title\": \"moehc4\",\n  \"value\": \"byn8uo\",\n  \"parentId\": \"156\",\n  \"description\": \"aa2zv4\",\n  \"gmtCreate\": \"2021-12-28 17:40:36\",\n  \"gmtModified\": \"2021-12-28 17:40:36\",\n  \"delFlag\": 4\n}"
                 }
               }
             }
@@ -4364,7 +4590,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"db98v6\",\n  \"tips\": \"nrqxvt\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"1ihioy\",\n  \"tips\": \"9tdrq2\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4390,7 +4616,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 752,\n  \"dirId\": \"15\",\n  \"title\": \"fmd58x\",\n  \"value\": \"7a5gxu\",\n  \"parentId\": \"15\",\n  \"description\": \"h6qqvg\",\n  \"gmtCreate\": \"2021-12-11 21:12:20\",\n  \"gmtModified\": \"2021-12-11 21:12:20\",\n  \"delFlag\": 2\n}"
+                  "value": "{\n  \"id\": 525,\n  \"dirId\": \"156\",\n  \"title\": \"g73zww\",\n  \"value\": \"5hmy2p\",\n  \"parentId\": \"156\",\n  \"description\": \"aqg9uu\",\n  \"gmtCreate\": \"2021-12-28 17:40:36\",\n  \"gmtModified\": \"2021-12-28 17:40:36\",\n  \"delFlag\": 4\n}"
                 }
               }
             }
@@ -4407,7 +4633,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"wkyrob\",\n  \"tips\": \"xf8jjq\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"xpduky\",\n  \"tips\": \"umew70\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4435,7 +4661,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://172.21.32.3:7000/scheduler/instance/task/log/download --data \u0027taskInstanceId\u003d172\u0027"
+                  "value": "curl -X POST -i http://172.21.32.3:7000/scheduler/instance/task/log/download --data \u0027taskInstanceId\u003d946\u0027"
                 }
               }
             }
@@ -4469,7 +4695,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "859",
+            "example": "387",
             "name": "taskInstanceId"
           }
         ]
@@ -4492,7 +4718,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"o98yls\"\n  },\n  \"processDefinitionId\": 59,\n  \"startDate\": \"2021-12-11\",\n  \"endDate\": \"2021-12-11\",\n  \"searchVal\": \"9b3hog\",\n  \"stateType\": \"8hrac7\",\n  \"executorName\": \"ezra.hand\",\n  \"dirId\": \"15\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"fkeecg\"\n  },\n  \"processDefineCode\": 192,\n  \"startDate\": \"2021-12-28\",\n  \"endDate\": \"2021-12-28\",\n  \"searchVal\": \"zga4x1\",\n  \"stateType\": \"mnhar8\",\n  \"executorName\": \"zoe.oconnell\",\n  \"dirId\": \"156\"\n}"
                 }
               }
             }
@@ -4509,7 +4735,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"uyv23u\",\n  \"tips\": \"hsq2jv\",\n  \"data\": {\n    \"total\": 45,\n    \"pageNum\": 8,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 330,\n        \"processDefinitionId\": 138,\n        \"state\": \"5efnjt\",\n        \"recovery\": \"mnv4dh\",\n        \"startTime\": \"2021-12-11 21:12:20\",\n        \"endTime\": \"2021-12-11\",\n        \"runTimes\": 958,\n        \"name\": \"ezra.hand\",\n        \"host\": \"kxd5wl\",\n        \"commandType\": \"tlzy4u\",\n        \"executorName\": \"ezra.hand\",\n        \"duration\": \"tvmccr\",\n        \"stateName\": \"ezra.hand\",\n        \"dependenceScheduleTimes\": \"13yb0h\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"tv03yd\",\n  \"tips\": \"hwcuna\",\n  \"data\": {\n    \"total\": 669,\n    \"pageNum\": 531,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 208,\n        \"processDefinitionCode\": 650,\n        \"state\": \"c7oznb\",\n        \"recovery\": \"qcbn3y\",\n        \"startTime\": \"2021-12-28 15:00:02\",\n        \"endTime\": \"2021-12-28 15:00:02\",\n        \"runTimes\": 914,\n        \"name\": \"zoe.oconnell\",\n        \"host\": \"89zjrp\",\n        \"commandType\": \"x1yz07\",\n        \"executorName\": \"zoe.oconnell\",\n        \"duration\": \"ca56ki\",\n        \"stateName\": \"zoe.oconnell\",\n        \"dependenceScheduleTimes\": \"i85nfh\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -4537,7 +4763,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"4e19qb\"\n  },\n  \"taskInstanceId\": 149\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ehc07o\"\n  },\n  \"taskInstanceId\": 816\n}"
                 }
               }
             }
@@ -4554,7 +4780,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"a23tiq\",\n  \"tips\": \"dmyvqw\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"0dhy4g\",\n  \"tips\": \"osq19d\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -4562,6 +4788,35 @@
           }
         },
         "operationId": "searchTaskLog",
+        "parameters": []
+      }
+    },
+    "/statistics/summary": {
+      "get": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "DqcStatisticsController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_statistics_summaryResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"bu4r54\",\n  \"tips\": \"ouabay\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "statistics",
         "parameters": []
       }
     },
@@ -4584,7 +4839,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"0zpja8\",\n  \"tips\": \"5igu0j\",\n  \"data\": {\n    \"engineTypeEnum\": {\n      \"mapKey\": \"wgde60\"\n    },\n    \"dimensionTypeEnum\": {\n      \"mapKey\": \"cg1387\"\n    },\n    \"publishStateEnum\": {\n      \"mapKey\": \"rp5num\"\n    },\n    \"tempTypeEnum\": {\n      \"mapKey\": \"4mkm90\"\n    },\n    \"ruleTypeEnum\": {\n      \"mapKey\": \"gq0gxt\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"vqpte7\",\n  \"tips\": \"aurxoi\",\n  \"data\": {\n    \"engineTypeEnum\": {\n      \"mapKey\": \"1xb5gz\"\n    },\n    \"dimensionTypeEnum\": {\n      \"mapKey\": \"ykheat\"\n    },\n    \"publishStateEnum\": {\n      \"mapKey\": \"yp11ao\"\n    },\n    \"tempTypeEnum\": {\n      \"mapKey\": \"5q86ro\"\n    },\n    \"ruleTypeEnum\": {\n      \"mapKey\": \"bj785y\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -4611,7 +4866,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/startCheck --data \u0027processDefinitionId\u003d291\u0027"
+                  "value": "curl -X PUT -i http://172.21.32.3:7000/process/startCheck --data \u0027processDefinitionCode\u003d631\u0027"
                 }
               }
             }
@@ -4628,7 +4883,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"11gjfi\",\n  \"tips\": \"qyqigr\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"k23582\",\n  \"tips\": \"7frkwp\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4639,14 +4894,14 @@
         "parameters": [
           {
             "schema": {
-              "format": "int32",
+              "format": "int64",
               "type": "integer"
             },
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "173",
-            "name": "processDefinitionId"
+            "example": "456",
+            "name": "processDefinitionCode"
           }
         ]
       }
@@ -4668,7 +4923,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"p3qre9\"\n  },\n  \"tempName\": \"ezra.hand\",\n  \"dirId\": \"15\",\n  \"dimensionType\": \"73nphe\",\n  \"engineType\": \"1em3pj\",\n  \"ruleType\": \"lhjje6\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"j81zfu\"\n  },\n  \"tempName\": \"zoe.oconnell\",\n  \"dirId\": \"156\",\n  \"dimensionType\": \"n59qd0\",\n  \"engineType\": \"ucvzk4\",\n  \"ruleType\": \"q1i6yl\"\n}"
                 }
               }
             }
@@ -4685,7 +4940,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"q77ezb\",\n  \"tips\": \"rxlte5\",\n  \"data\": {\n    \"total\": 129,\n    \"pageNum\": 592,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 378,\n        \"tempName\": \"ezra.hand\",\n        \"tempType\": \"5whj8x\",\n        \"dirId\": \"15\",\n        \"dimensionType\": \"bb68kp\",\n        \"engineTypeList\": [\n          \"mw8w02\"\n        ],\n        \"description\": \"ysqji2\",\n        \"tempSql\": \"2pba7c\",\n        \"tempResult\": \"fcd1w5\",\n        \"ruleType\": \"mefpoh\",\n        \"publishState\": \"4qhzmz\",\n        \"createUserid\": \"15\",\n        \"gmtModified\": \"2021-12-11 21:12:20\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"jhtzzu\",\n  \"tips\": \"ng5kre\",\n  \"data\": {\n    \"total\": 850,\n    \"pageNum\": 964,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 62,\n        \"tempName\": \"zoe.oconnell\",\n        \"tempType\": \"kdm2dt\",\n        \"dirId\": \"156\",\n        \"dimensionType\": \"lfg189\",\n        \"engineTypeList\": [\n          \"1mqyu8\"\n        ],\n        \"description\": \"3n96ef\",\n        \"tempSql\": \"272b98\",\n        \"tempResult\": \"go6mlp\",\n        \"ruleType\": \"llhnw0\",\n        \"publishState\": \"d4kopy\",\n        \"createUserid\": \"156\",\n        \"gmtModified\": \"2021-12-28 17:40:36\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -4715,7 +4970,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"6inz65\",\n  \"tips\": \"zh0565\",\n  \"data\": {\n    \"notifyLevelEnum\": {\n      \"mapKey\": \"gr7grq\"\n    },\n    \"notifyStateEnum\": {\n      \"mapKey\": \"5uuk9k\"\n    },\n    \"notifyTypeEnum\": {\n      \"mapKey\": \"baq349\"\n    },\n    \"engineTypeEnum\": {\n      \"mapKey\": \"45y7kb\"\n    },\n    \"ruleTypeEnum\": {\n      \"mapKey\": \"xdwv5m\"\n    },\n    \"ScanTypeEnum\": {\n      \"mapKey\": \"4n1elw\"\n    },\n    \"schedulerTypeEnum\": {\n      \"mapKey\": \"58j9cu\"\n    },\n    \"schedulerStateEnum\": {\n      \"mapKey\": \"4so04f\"\n    },\n    \"SchedulerCycleEnum\": {\n      \"mapKey\": \"004rz4\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"bqeizm\",\n  \"tips\": \"ea4dif\",\n  \"data\": {\n    \"notifyLevelEnum\": {\n      \"mapKey\": \"qd66td\"\n    },\n    \"notifyStateEnum\": {\n      \"mapKey\": \"d4yqbj\"\n    },\n    \"notifyTypeEnum\": {\n      \"mapKey\": \"3g2x2r\"\n    },\n    \"engineTypeEnum\": {\n      \"mapKey\": \"848cfh\"\n    },\n    \"ruleTypeEnum\": {\n      \"mapKey\": \"h6wiw7\"\n    },\n    \"ScanTypeEnum\": {\n      \"mapKey\": \"uekkn6\"\n    },\n    \"schedulerTypeEnum\": {\n      \"mapKey\": \"botj4t\"\n    },\n    \"schedulerStateEnum\": {\n      \"mapKey\": \"700cnr\"\n    },\n    \"SchedulerCycleEnum\": {\n      \"mapKey\": \"ulcofo\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -4745,7 +5000,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"ewibq5\",\n  \"tips\": \"ifb5zv\",\n  \"data\": {\n    \"id\": 157,\n    \"name\": \"ezra.hand\",\n    \"version\": 482,\n    \"releaseState\": \"wpnwen\",\n    \"projectId\": 563,\n    \"processDefinitionJson\": \"7n5qg6\",\n    \"description\": \"s67pgi\",\n    \"globalParams\": \"z5cyin\",\n    \"globalParamList\": [\n      \"37ccax\"\n    ],\n    \"globalParamMap\": {\n      \"mapKey\": \"s7de9v\"\n    },\n    \"createTime\": \"2021-12-11 21:12:20\",\n    \"updateTime\": \"2021-12-11 21:12:20\",\n    \"flag\": \"od4w0p\",\n    \"userId\": 670,\n    \"userName\": \"ezra.hand\",\n    \"projectName\": \"ezra.hand\",\n    \"locations\": \"3eonpk\",\n    \"connects\": \"9fde19\",\n    \"receivers\": \"65g1lg\",\n    \"receiversCc\": \"kslj6g\",\n    \"scheduleReleaseState\": \"kld2x5\",\n    \"timeout\": 933,\n    \"tenantId\": 868,\n    \"modifyBy\": \"gdkw6w\",\n    \"resourceIds\": \"iqg28z\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"4tt3gk\",\n  \"tips\": \"9dz1yz\",\n  \"data\": {\n    \"id\": 69,\n    \"code\": 559,\n    \"name\": \"zoe.oconnell\",\n    \"version\": 48,\n    \"releaseState\": \"mxwzig\",\n    \"projectCode\": 521,\n    \"description\": \"ffk938\",\n    \"globalParams\": \"fvd9xu\",\n    \"globalParamList\": [\n      \"8c0rpk\"\n    ],\n    \"globalParamMap\": {\n      \"mapKey\": \"ohypp7\"\n    },\n    \"flag\": \"sbrcmd\",\n    \"userId\": 928,\n    \"userName\": \"zoe.oconnell\",\n    \"projectName\": \"zoe.oconnell\",\n    \"locations\": \"xu52qc\",\n    \"scheduleReleaseState\": \"ke6ach\",\n    \"timeout\": 484,\n    \"tenantId\": 638,\n    \"tenantCode\": \"29578\",\n    \"modifyBy\": \"fkhvbo\",\n    \"warningGroupId\": 119\n  }\n}"
                   }
                 }
               }
@@ -4756,13 +5011,14 @@
         "parameters": [
           {
             "schema": {
-              "type": "string"
+              "format": "int64",
+              "type": "integer"
             },
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "ezra.hand",
-            "name": "projectName"
+            "example": "826",
+            "name": "projectCode"
           },
           {
             "schema": {
@@ -4771,7 +5027,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "jaqmns",
+            "example": "bbqdz3",
             "name": "searchVal"
           },
           {
@@ -4781,7 +5037,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "15",
+            "example": "156",
             "name": "jobId"
           }
         ]
@@ -4804,7 +5060,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"hnfr1b\"\n  },\n  \"jobId\": \"15\",\n  \"jobName\": \"ezra.hand\",\n  \"ruleId\": \"15\",\n  \"beginDay\": \"d4wdlr\",\n  \"endDay\": \"8yumdr\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"r76dd5\"\n  },\n  \"jobId\": \"156\",\n  \"jobName\": \"zoe.oconnell\",\n  \"ruleId\": \"156\",\n  \"taskCode\": 466,\n  \"beginDay\": \"4agwiy\",\n  \"endDay\": \"jd3erk\"\n}"
                 }
               }
             }
@@ -4821,7 +5077,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"a9mp6d\",\n  \"tips\": \"08bksn\",\n  \"data\": {\n    \"total\": 101,\n    \"pageNum\": 52,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"jobId\": \"15\",\n        \"jobName\": \"ezra.hand\",\n        \"ruleId\": \"15\",\n        \"ruleName\": \"ezra.hand\",\n        \"gmtModified\": \"2021-12-11 21:12:20\",\n        \"resultTitleList\": [\n          {\n            \"title\": \"c9ito2\",\n            \"dataIndex\": \"hazjgt\"\n          }\n        ],\n        \"resultDataList\": [\n          {}\n        ]\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"gkneln\",\n  \"tips\": \"rgj816\",\n  \"data\": {\n    \"total\": 674,\n    \"pageNum\": 592,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"jobId\": \"156\",\n        \"jobName\": \"zoe.oconnell\",\n        \"ruleId\": \"156\",\n        \"ruleName\": \"zoe.oconnell\",\n        \"taskCode\": 528,\n        \"gmtModified\": \"2021-12-28 17:40:36\",\n        \"resultTitleList\": [\n          {\n            \"title\": \"gobq1x\",\n            \"dataIndex\": \"rb5vaj\"\n          }\n        ],\n        \"resultDataList\": [\n          {}\n        ]\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -4851,7 +5107,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"cc2t6a\",\n  \"tips\": \"qbe9fv\",\n  \"data\": [\n    \"ptqw8x\",\n    \"3fo6th\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"kx19hp\",\n  \"tips\": \"5k8any\",\n  \"data\": [\n    \"4rxphm\",\n    \"0bdz5d\"\n  ]\n}"
                   }
                 }
               }
@@ -4867,7 +5123,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "fz367o",
+            "example": "etc39l",
             "name": "connectType"
           },
           {
@@ -4877,7 +5133,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "ezra.hand",
+            "example": "zoe.oconnell",
             "name": "dataSourceName"
           },
           {
@@ -4887,7 +5143,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "ezra.hand",
+            "example": "zoe.oconnell",
             "name": "dataBaseName"
           },
           {
@@ -4897,7 +5153,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "ezra.hand",
+            "example": "zoe.oconnell",
             "name": "tableName"
           }
         ]
@@ -4922,7 +5178,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"cslxk4\",\n  \"tips\": \"oabybk\",\n  \"data\": [\n    \"6vffqn\",\n    \"9c7vxg\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"14pgsv\",\n  \"tips\": \"14bbdm\",\n  \"data\": [\n    {\n      \"guid\": \"156\",\n      \"typeName\": \"zoe.oconnell\",\n      \"entityStatus\": \"thnem4\",\n      \"displayText\": \"yoi4mi\",\n      \"relationshipType\": \"1iwefy\",\n      \"relationshipGuid\": \"156\",\n      \"relationshipStatus\": \"9cpg9y\",\n      \"comment\": \"iznm9o\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -4938,7 +5194,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "nx2114",
+            "example": "et5bnw",
             "name": "connectType"
           },
           {
@@ -4948,7 +5204,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "ezra.hand",
+            "example": "zoe.oconnell",
             "name": "dataSourceName"
           },
           {
@@ -4958,7 +5214,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "ezra.hand",
+            "example": "zoe.oconnell",
             "name": "dataBaseName"
           }
         ]
@@ -4983,7 +5239,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"v5otol\",\n  \"tips\": \"i6jrx6\",\n  \"data\": {\n    \"instanceStateTypeEnum\": {\n      \"mapKey\": \"4ctwps\"\n    },\n    \"executeTypeEnum\": {\n      \"mapKey\": \"w04ph0\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"i7r7ac\",\n  \"tips\": \"yp9qde\",\n  \"data\": {\n    \"instanceStateTypeEnum\": {\n      \"mapKey\": \"84co7l\"\n    },\n    \"executeTypeEnum\": {\n      \"mapKey\": \"hjuv1k\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -5013,7 +5269,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"pdsd1e\",\n  \"tips\": \"eujo33\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"5r8n0j\",\n  \"tips\": \"k24oaw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5029,7 +5285,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "3khuqb",
+            "example": "dc9q4c",
             "name": "processInstanceIds"
           }
         ]
@@ -5054,7 +5310,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"80944\",\n  \"retMsg\": \"4hr6p6\",\n  \"tips\": \"3hu36c\",\n  \"data\": [\n    {\n      \"id\": 596,\n      \"tempName\": \"ezra.hand\",\n      \"tempType\": \"17vl5q\",\n      \"dirId\": \"15\",\n      \"dimensionType\": \"ohxmqk\",\n      \"engineTypeList\": [\n        \"rymlp8\"\n      ],\n      \"description\": \"26w2b8\",\n      \"tempSql\": \"4vnqa2\",\n      \"tempResult\": \"713q4h\",\n      \"ruleType\": \"pvty7a\",\n      \"publishState\": \"dqwgnm\",\n      \"createUserid\": \"15\",\n      \"gmtModified\": \"2021-12-11 21:12:20\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"l0yslc\",\n  \"tips\": \"ia3wpr\",\n  \"data\": [\n    {\n      \"id\": 338,\n      \"tempName\": \"zoe.oconnell\",\n      \"tempType\": \"w6hox2\",\n      \"dirId\": \"156\",\n      \"dimensionType\": \"shvn17\",\n      \"engineTypeList\": [\n        \"680vp2\"\n      ],\n      \"description\": \"i5repm\",\n      \"tempSql\": \"snagy7\",\n      \"tempResult\": \"a4xqpi\",\n      \"ruleType\": \"05j30y\",\n      \"publishState\": \"gmw50l\",\n      \"createUserid\": \"156\",\n      \"gmtModified\": \"2021-12-28 17:40:36\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -5070,7 +5326,7 @@
             "in": "query",
             "description": "模板名称",
             "required": false,
-            "example": "ezra.hand",
+            "example": "zoe.oconnell",
             "name": "tempName"
           },
           {
@@ -5080,7 +5336,7 @@
             "in": "query",
             "description": "分类目录",
             "required": false,
-            "example": "15",
+            "example": "156",
             "name": "dirId"
           },
           {
@@ -5090,7 +5346,7 @@
             "in": "query",
             "description": "质量维度",
             "required": false,
-            "example": "ybi6n4",
+            "example": "3l45tu",
             "name": "dimensionType"
           },
           {
@@ -5100,7 +5356,7 @@
             "in": "query",
             "description": "适用引擎 MYSQL,HIVE,ORACLE",
             "required": false,
-            "example": "vkq0ak",
+            "example": "c7ngot",
             "name": "engineType"
           },
           {
@@ -5110,7 +5366,7 @@
             "in": "query",
             "description": "规则类型 \"RULE_TYPE_FIELD\", \"字段级别规则\",\"RULE_TYPE_TABLE\", \"表级别规则\",\"RULE_TYPE_DB\", \"库级别规则\";",
             "required": false,
-            "example": "j8ggza",
+            "example": "mcp94j",
             "name": "ruleType"
           }
         ]
