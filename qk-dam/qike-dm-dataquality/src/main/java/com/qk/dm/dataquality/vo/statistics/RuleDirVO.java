@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 /**
  * @author shenpj
  * @date 2021/12/23 11:39 上午
@@ -18,5 +16,5 @@ import java.math.BigDecimal;
 @Builder
 public class RuleDirVO {
     String type;
-    BigDecimal value;
+    Double value;
 }

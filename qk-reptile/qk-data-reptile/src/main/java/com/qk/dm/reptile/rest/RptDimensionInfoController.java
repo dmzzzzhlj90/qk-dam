@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
- * 可视化_维度信息
+ * 可视化_维度目录
  * @author zys
  * @date 2021/12/8 12:14
  * @since 1.0.0

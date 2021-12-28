@@ -26,4 +26,6 @@ public interface RptBaseInfoMapper {
   void of(RptBaseInfoDTO rtpBaseInfoDTO, @MappingTarget RptBaseInfo rptBaseInfo);
 
   List<RptBaseInfoVO> of(List<RptBaseInfo> rptBaseInfoList);
+
+  RptBaseInfo userVoToRtpBaseInfo(RptBaseInfoVO rptBaseInfoVO);
 }

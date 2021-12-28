@@ -12,12 +12,6 @@ import java.util.List;
 public interface DqcStatisticsService {
     DataSummaryVO statistics();
 
-    RuleTemplateVO ruleTemplateStatistics();
-
-    JobInfoVO basicInfoStatistics();
-
-    InstanceVO instanceStatistics();
-
     List<DimensionVO> dimensionStatistics();
 
     List<RuleDirVO> dirStatistics();

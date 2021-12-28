@@ -5,6 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
+import com.qk.dm.reptile.params.dto.RptCopyConfigDTO;
 import com.qk.dm.reptile.params.dto.RptRunStatusDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.service.RptBaseInfoService;
@@ -56,6 +57,7 @@ public class RptBaseInfoController {
 
     /**
      * 修改运行状态(启动或关闭)
+     * @param rptRunStatusDTO
      * @return DefaultCommonResult
      */
     @PutMapping("/run/status")
@@ -125,7 +127,7 @@ public class RptBaseInfoController {
     /**
      * 手动执行调用爬虫接口
      * @param id
-     * @return
+     * @return DefaultCommonResult
      */
     @GetMapping("/execution/{id}")
     public DefaultCommonResult execution(@PathVariable("id") Long id){
@@ -135,11 +137,22 @@ public class RptBaseInfoController {
 
     /**
      * 定时执行调用爬虫接口
-     * @return
+     * @return DefaultCommonResult
      */
     @GetMapping("/timed/execution")
     public DefaultCommonResult timedExecution(){
         rptBaseInfoService.timedExecution();
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 配置复制
+     * @param rptCopyConfig
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/copy/config")
+    public DefaultCommonResult copyConfig(@RequestBody @Validated RptCopyConfigDTO rptCopyConfig){
+        rptBaseInfoService.copyConfig(rptCopyConfig.getSourceId(),rptCopyConfig.getTargetId());
         return DefaultCommonResult.success();
     }
 

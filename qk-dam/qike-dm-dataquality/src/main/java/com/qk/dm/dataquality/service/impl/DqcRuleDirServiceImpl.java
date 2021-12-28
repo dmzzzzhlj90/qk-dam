@@ -202,4 +202,8 @@ public class DqcRuleDirServiceImpl implements DqcRuleDirService {
         }
     }
 
+    @Override
+    public List<DqcRuleDir> getListByDirIds(Set<String> dirIds) {
+        return (List<DqcRuleDir>) dqcRuleDirRepository.findAll(qDqcRuleDir.ruleDirId.in(dirIds));
+    }
 }
