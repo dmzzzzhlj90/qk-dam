@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         maven {
-            url = 'http://git.qk.com:8081/repository/qkdam/'
+            url = 'http://172.21.128.2:8081/repository/qkdam/'
             credentials {
                 username = 'admin'
                 password = 'admin123'
@@ -43,7 +43,7 @@ subprojects {
     apply plugin: 'org.openapi.generator'
     repositories {
         maven {
-            url = 'http://git.qk.com:8081/repository/qkdam/'
+            url = 'http://172.21.128.2:8081/repository/qkdam/'
             credentials {
                 username = 'admin'
                 password = 'admin123'
@@ -115,8 +115,8 @@ subprojects {
     uploadArchives {
         repositories {
             mavenDeployer {
-                def releasesRepoUrl = "http://git.qk.com:8081/repository/dm-release/"
-                def snapshotsRepoUrl = "http://git.qk.com:8081/repository/dm-snapshot/"
+                def releasesRepoUrl = "http://172.21.128.2:8081/repository/dm-release/"
+                def snapshotsRepoUrl = "http://172.21.128.2:8081/repository/dm-snapshot/"
                 def url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
                 repository(url: url) {
                     authentication(userName: "admin", password: "admin123")
