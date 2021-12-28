@@ -11,9 +11,10 @@ configurations {
         it.outgoing.artifact(bootJar)
     }
 }
-processResources {
-    expand(project.properties)
+configure(tasks.processResources) {
 }
+
+
 docker {
     springBootApplication {
         baseImage = "${jre11Image}"
@@ -64,40 +65,6 @@ dependencyManagement {
     }
 }
 
-openApiGenerate {
-    generatorName = "java"
-    inputSpec = "$rootDir/docs/dolphinscheduler/openapi.yaml".toString()
-    outputDir = "/Users/zhudaoming/Documents/openapigener".toString()
-    apiPackage = "com.qk.datacenter.api"
-    invokerPackage = "com.qk.datacenter.client"
-    modelPackage = "com.qk.datacenter.model"
-    configOptions = [
-            artifactId:"dolphinscheduler-java-client",
-            artifactUrl:"qk.com",
-            artifactVersion:"1.0.0",
-            dateLibrary: "java8",
-            library:"native",
-            serializationLibrary:"gson",
-            bigDecimalAsString:"true",
-            interfaceOnly        : "true",
-            useTags      : "true",
-            ignoreAnyOfInEnum      : "true",
-            useBeanValidation    : "false",
-            performBeanValidation: "false",
-            useOptional          : "true",
-            serviceImplementation: "true",
-            serviceInterface     : "true",
-            java8                : "true",
-    ]
-    verbose=false
-    validateSpec=false
-    skipValidateSpec=true
-    globalProperties = [
-            modelDocs: "false",
-            apiTests: "true",
-            modelTests:"false"
-    ]
-}
 test {
     useTestNG {
         suites(file('src/test/resources/testng.xml'));
