@@ -30,7 +30,7 @@ import java.util.Objects;
 @Slf4j
 public class HiveMain {
 
-    private static final String jsonconfig = "{\"from_host\":\"172.21.32.4\",\"from_user\":\"root\",\"from_password\":\"\",\"from_database\":\"hd_company\",\"to_host\":\"172.21.33.141\",\"to_user\":\"root\",\"to_password\":\"JMFIuOx2\",\"to_database\":\"qkdam\",\"job_id\":\"a01dd381ccb84a2daea73b40d4c38718\",\"job_name\":\"测试动态实时sql生成1\",\"rule_id\":\"f7eb729b37894434af8701b040a7c635\",\"rule_name\":\"RULE_TYPE_FIELD/hd_company/qk_dqc_sql_test/code\",\"rule_temp_id\":1,\"task_code\":3955850086112,\"sql_rpc_url\":\"http://main-dev.dam.qk.com:31352/dqc/sql/build/realtime/python?ruleId=bc032b997d044f6b8b2454654f6ed90a\"}";
+    private static final String jsonconfig = "{\"from_host\":\"172.21.32.4\",\"from_user\":\"root\",\"from_password\":\"root\",\"from_database\":\"hd_company\",\"to_host\":\"172.21.33.141\",\"to_user\":\"root\",\"to_password\":\"JMFIuOx2\",\"to_database\":\"qkdam\",\"job_id\":\"4e384bad7ca74ec78d24d7a6d9806b2f\",\"job_name\":\"sad\",\"rule_id\":\"88d9dcc2ce7148deb3e7a19755c931a7\",\"rule_name\":\"RULE_TYPE_FIELD/hd_company/company/entid&uniscid&entname&nacaoid&regno\",\"rule_temp_id\":20,\"task_code\":4001766725664,\"sql_rpc_url\":\"http://main-dev.dam.qk.com:31352/dqc/sql/build/realtime/python?ruleId=88d9dcc2ce7148deb3e7a19755c931a7\"}";
     private static final String FILE_PATH_SQL="sql.file";
     private static final List<String> QUERY_VAR_LIST= List.of("select","SELECT","show","SHOW");
     private static Db DB;
@@ -51,7 +51,7 @@ public class HiveMain {
         String fromDatabase = mysqlRawScript.getFrom_database();
         DB = getDb(fromDatabase, fromHost, fromUser, fromPassword, DbTypeEnum.HIVE);
         String sqlScript = generateSqlScript(sqlRpcUrl);
-        List<Entity> entities = runSqL("select count(nacaoid) as n_count from company where nacaoid is null or nacaoid=''");
+        List<Entity> entities = runSqL(sqlScript);
 
         System.out.println(new Gson().toJson(entities));
 
