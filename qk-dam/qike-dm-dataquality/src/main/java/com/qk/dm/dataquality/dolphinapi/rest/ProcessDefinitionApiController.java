@@ -2,6 +2,7 @@ package com.qk.dm.dataquality.dolphinapi.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessDefinitionDTO;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
@@ -38,52 +39,52 @@ public class ProcessDefinitionApiController {
      */
     @PostMapping("/save")
     public DefaultCommonResult save(@RequestBody @Validated DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        processDefinitionApiService.save(dqcSchedulerBasicInfoVO, new HashMap<>());
+        processDefinitionApiService.save(dqcSchedulerBasicInfoVO, new HashMap<>(16), SchedulerConstant.ZERO_VALUE);
         return DefaultCommonResult.success();
     }
 
     /**
      * 新增规则调度_基础信息
      *
-     * @param projectName,searchVal,jobId
+     * @param projectCode,searchVal,jobId
      * @return DefaultCommonResult
      */
     @GetMapping("/definition/info")
-    public DefaultCommonResult<ProcessDefinitionDTO> queryProcessDefinitionInfo(@RequestParam("projectName") String projectName,
+    public DefaultCommonResult<ProcessDefinitionDTO> queryProcessDefinitionInfo(@RequestParam("projectCode") Long projectCode,
                                                                                 @RequestParam("searchVal") String searchVal,
                                                                                 @RequestParam("jobId") String jobId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                processDefinitionApiService.queryProcessDefinitionInfo(projectName, searchVal, jobId));
+                processDefinitionApiService.queryProcessDefinitionInfo(projectCode, searchVal, jobId));
     }
 
     @PutMapping("/release")
-    public DefaultCommonResult release(Integer processDefinitionId, Integer releaseState) {
+    public DefaultCommonResult release(Long processDefinitionId, String releaseState) {
         processDefinitionApiService.release(processDefinitionId, releaseState);
         return DefaultCommonResult.success();
     }
 
     @PutMapping("/startInstance")
-    public DefaultCommonResult startInstance(Integer processDefinitionId) {
-        processDefinitionApiService.startInstance(processDefinitionId);
+    public DefaultCommonResult startInstance(Long processDefinitionCode) {
+        processDefinitionApiService.startInstance(processDefinitionCode);
         return DefaultCommonResult.success();
     }
 
     @PutMapping("/startCheck")
-    public DefaultCommonResult startCheck(Integer processDefinitionId) {
-        processDefinitionApiService.startCheck(processDefinitionId);
+    public DefaultCommonResult startCheck(Long processDefinitionCode) {
+        processDefinitionApiService.startCheck(processDefinitionCode);
         return DefaultCommonResult.success();
     }
 
-    @DeleteMapping("")
-    public DefaultCommonResult deleteOne(Integer processDefinitionId) {
-        processDefinitionApiService.deleteOne(processDefinitionId);
-        return DefaultCommonResult.success();
-    }
-
-    @GetMapping("/verifyName")
-    public DefaultCommonResult verifyName() {
-        processDefinitionApiService.verifyName("test");
-        return DefaultCommonResult.success();
-    }
+//    @DeleteMapping("")
+//    public DefaultCommonResult deleteOne(Integer processDefinitionId) {
+//        processDefinitionApiService.deleteOne(processDefinitionId);
+//        return DefaultCommonResult.success();
+//    }
+//
+//    @GetMapping("/verifyName")
+//    public DefaultCommonResult verifyName() {
+//        processDefinitionApiService.verifyName("test");
+//        return DefaultCommonResult.success();
+//    }
 
 }

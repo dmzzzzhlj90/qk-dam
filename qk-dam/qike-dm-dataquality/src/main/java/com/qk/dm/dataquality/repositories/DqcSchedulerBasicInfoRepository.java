@@ -8,9 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface DqcSchedulerBasicInfoRepository extends BaseRepository<DqcSchedulerBasicInfo, Long> {
 
-
     @Modifying
-    @Query(" UPDATE DqcSchedulerBasicInfo set processDefinitionId = :processDefinitionId where jobId = :jobId ")
-    void updateProcessDefinitionIdByJobId(@Param("processDefinitionId") Integer processDefinitionId, @Param("jobId") String jobId);
+    @Query(" UPDATE DqcSchedulerBasicInfo set processDefinitionCode = :processDefinitionCode where jobId = :jobId ")
+    void updateProcessDefinitionIdByJobId(@Param("processDefinitionCode") Long processDefinitionCode, @Param("jobId") String jobId);
 
 }

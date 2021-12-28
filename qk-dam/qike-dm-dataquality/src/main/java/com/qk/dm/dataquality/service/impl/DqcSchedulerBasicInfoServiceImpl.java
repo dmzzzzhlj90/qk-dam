@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -144,5 +145,14 @@ public class DqcSchedulerBasicInfoServiceImpl implements DqcSchedulerBasicInfoSe
         }
     }
 
+    @Override
+    public Long getCount(){
+        return dqcSchedulerBasicInfoRepository.count();
+    }
+
+    @Override
+    public List<DqcSchedulerBasicInfo> getBasicInfoList(Set<Long> codeSet){
+        return (List<DqcSchedulerBasicInfo>) dqcSchedulerBasicInfoRepository.findAll(qDqcSchedulerBasicInfo.processDefinitionCode.in(codeSet));
+    }
 
 }

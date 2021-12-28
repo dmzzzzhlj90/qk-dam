@@ -40,10 +40,14 @@ public class GenerateSqlUtil {
 
     public static final String WHERE = "where";
     public static final String AND = " and ";
+    public static final String EQUAL_SIGN = " = ";
 
     public static final String WHERE_PART = " where 1=1 ";
     public static final String SINGLE_QUOTES = "'";
     public static final String SINGLE_QUOTES_MARK = "<S_Q> ";
+
+    private static final String START_SPACES_REGEX = "^\\s+";
+    public static final String EMPTY_STRING = "";
 
     /**
      * 根据规则模板生成执行SQL
@@ -111,6 +115,10 @@ public class GenerateSqlUtil {
             replaceSqlStr = sqlBuffer.toString();
         }
         return replaceSqlStr;
+    }
+
+    public static String trimStart(String value) {
+        return value.replaceFirst(START_SPACES_REGEX, EMPTY_STRING);
     }
 
     public static String getReplaceSql(String content) {

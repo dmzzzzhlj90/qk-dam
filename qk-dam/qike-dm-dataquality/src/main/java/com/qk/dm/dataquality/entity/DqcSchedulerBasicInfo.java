@@ -42,33 +42,33 @@ public class DqcSchedulerBasicInfo implements Serializable {
     private String dirId;
 
     /**
-     * 调度流程实例ID
+     * 调度流程实例code
      */
-    @Column(name = "process_definition_Id", nullable = false)
-    private Integer processDefinitionId;
+    @Column(name = "process_definition_code", nullable = false)
+    private Long processDefinitionCode;
 
     /**
      * 提示级别 "HINT":"提示","GENERAL":"一般","SERIOUS":"严重","FATAL":"致命";
      */
-    @Column(name = "notify_level", nullable = false)
+    @Column(name = "notify_level")
     private String notifyLevel;
 
     /**
      * 通知状态 "CLOSE":"关","OPEN":"开";
      */
-    @Column(name = "notify_state", nullable = false)
+    @Column(name = "notify_state")
     private String notifyState;
 
     /**
      * 通知类型 "TRIGGER_ALARM":"触发告警", "RUN_SUCCESS":"运行成功";
      */
-    @Column(name = "notify_type", nullable = false)
+    @Column(name = "notify_type")
     private String notifyType;
 
     /**
      * 主题，多个以逗号分隔
      */
-    @Column(name = "notify_theme_id", nullable = false)
+    @Column(name = "notify_theme_id")
     private String notifyThemeId;
 
     /**

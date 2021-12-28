@@ -1,6 +1,8 @@
 package com.qk.dm.dataquality.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -52,6 +54,12 @@ public class DqcSchedulerResult implements Serializable {
     private String ruleTempId;
 
     /**
+     * 工作流实例task_code绑定规则
+     */
+    @Column(name = "task_code", nullable = false)
+    private Long taskCode;
+
+    /**
      * 创建人
      */
     @Column(name = "create_userid", nullable = false)
@@ -73,12 +81,14 @@ public class DqcSchedulerResult implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create")
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
 
     /**

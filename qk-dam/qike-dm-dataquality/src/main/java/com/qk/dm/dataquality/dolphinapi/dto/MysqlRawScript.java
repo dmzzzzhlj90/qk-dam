@@ -24,7 +24,7 @@ public class MysqlRawScript {
 
     private String from_database;
 
-    private String search_sql;
+//    private String search_sql;
 
     private String to_host;
 
@@ -43,5 +43,9 @@ public class MysqlRawScript {
     private String rule_name;
 
     private Long rule_temp_id;
+
+    private Long task_code;
+
+    private String sql_rpc_url;
 
 }

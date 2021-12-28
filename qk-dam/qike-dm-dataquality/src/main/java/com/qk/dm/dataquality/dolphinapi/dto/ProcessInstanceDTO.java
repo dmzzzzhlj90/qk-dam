@@ -19,7 +19,6 @@ package com.qk.dm.dataquality.dolphinapi.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 流程实例
@@ -28,11 +27,12 @@ import java.util.Date;
 @Data
 public class ProcessInstanceDTO implements Serializable {
   private int id;
-  private int processDefinitionId;
+  private long processDefinitionCode;
+  private int processDefinitionVersion;
   private String state;
   private String recovery;
-  private Date startTime;
-  private Date endTime;
+  private String startTime;
+  private String endTime;
   private int runTimes;
   private String name;
   private String host;
@@ -47,23 +47,23 @@ public class ProcessInstanceDTO implements Serializable {
   private String scheduleTime;
   private String commandStartTime;
   private String globalParams;
-  private String processInstanceJson;
+  private String dagData;
   private int executorId;
   private String executorName;
   private String tenantCode;
   private String queue;
   private String isSubProcess;
   private String locations;
-  private String connects;
   private String historyCmd;
   private String dependenceScheduleTimes;
   private String duration;
   private String processInstancePriority;
   private String workerGroup;
+  private String environmentCode;
   private int timeout;
   private int tenantId;
-  private String receivers;
-  private String receiversCc;
+  private String varPool;
+  private int dryRun;
   private String cmdTypeIfComplement;
   private boolean complementData;
   private boolean processInstanceStop;

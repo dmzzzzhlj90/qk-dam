@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public interface ScheduleApiService {
 
-  void create(Integer processDefinitionId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron);
+  void create(Long processDefinitionCode, Date effectiveTimeStart, Date effectiveTimeEnt, String cron);
 
   void update(Integer scheduleId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron);
 

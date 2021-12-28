@@ -22,6 +22,11 @@ public class DolphinSchedulerInfoConfig {
     private String projectName;
 
     /**
+     * 项目code
+     */
+    private Long projectCode;
+
+    /**
      * 流程图DAG节点连接信息,默认[]
      */
     private String connects;
@@ -57,12 +62,12 @@ public class DolphinSchedulerInfoConfig {
     /**
      * 失败重试次数 默认 0
      */
-    private Integer taskMaxRetryTimes;
+    private Integer failRetryTimes;
 
     /**
      * 失败重试间隔 默认 1
      */
-    private Integer taskRetryInterval;
+    private Integer failRetryInterval;
 
     /**
      * Worker分组 默认 "default"
@@ -78,6 +83,11 @@ public class DolphinSchedulerInfoConfig {
      * 任务节点类型
      */
     private String typeShell;
+
+    /**
+     * 运行环境Code
+     */
+    private Integer environmentCode;
 
     //##LocationsHandler
     /**
@@ -120,5 +130,10 @@ public class DolphinSchedulerInfoConfig {
      * 结果集存储 to_database
      */
     private String resultDataDbDatabase;
+
+    /**
+     * 动态实时sql获取url
+     */
+    private String sqlRpcUrl;
 
 }

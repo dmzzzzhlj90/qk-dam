@@ -3,7 +3,6 @@ package com.qk.dm.dataquality.dolphinapi.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 定时信息
@@ -18,13 +17,13 @@ public class ScheduleDTO implements Serializable {
     private String processDefinitionName;
     private String projectName;
     private String definitionDescription;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private String crontab;
     private String failureStrategy;
     private String warningType;
-    private Date createTime;
-    private Date updateTime;
+    private String createTime;
+    private String updateTime;
     private int userId;
     private String userName;
     private String releaseState;

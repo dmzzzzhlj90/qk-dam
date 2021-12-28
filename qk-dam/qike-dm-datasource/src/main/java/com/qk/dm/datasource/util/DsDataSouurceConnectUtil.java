@@ -66,7 +66,8 @@ public class DsDataSouurceConnectUtil {
     ObjectMapper objectMapper = new ObjectMapper();
     PostgresqlInfo postgetsqlInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), PostgresqlInfo.class);
-    String driver=DataSourceEnum.fromValue(postgetsqlInfo.getType()).getDriver(); // 获取postgetsql数据驱动类
+    // 获取postgetsql数据驱动类
+    String driver=DataSourceEnum.fromValue(postgetsqlInfo.getType()).getDriver();
     String url =
         DataSourceEnum.fromValue(postgetsqlInfo.getType()).getCold()
             + postgetsqlInfo.getServer()
@@ -91,7 +92,8 @@ public class DsDataSouurceConnectUtil {
     Connection connection = null;
     try {
       Class.forName(driver);
-      connection = DriverManager.getConnection(url, user, password); // 获取连接
+      // 获取连接
+      connection = DriverManager.getConnection(url, user, password);
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     } catch (SQLException throwables) {

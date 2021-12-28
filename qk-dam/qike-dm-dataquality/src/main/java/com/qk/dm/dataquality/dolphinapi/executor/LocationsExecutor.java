@@ -1,13 +1,11 @@
 package com.qk.dm.dataquality.dolphinapi.executor;
 
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
-import com.qk.dm.dataquality.dolphinapi.dto.LocationsDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessDataDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.TenantDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.TaskNodeLocation;
 import com.qk.dm.dataquality.dolphinapi.handler.impl.DqcLocationsHandler;
-import com.qk.dm.dataquality.dolphinapi.handler.impl.DqcProcessDataHandler;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
+
+import java.util.List;
 
 /**
  * DAG流程图_位置信息_构建执行器
@@ -22,8 +20,12 @@ public class LocationsExecutor {
         throw new IllegalStateException("Utility class");
     }
 
-    public static LocationsDTO dqcLocations(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
-        return new DqcLocationsHandler().buildLocationsDTO(dqcSchedulerBasicInfoVO,dolphinSchedulerInfoConfig);
+    public static List<TaskNodeLocation> dqcLocations(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO,
+                                                      DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+        return new DqcLocationsHandler()
+                .buildLocations(
+                        dqcSchedulerBasicInfoVO,
+                        dolphinSchedulerInfoConfig);
     }
 
 }

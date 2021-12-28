@@ -46,4 +46,14 @@ public class SchedulerConstant {
      */
     public static final int SCHEDULER_PAGE_SIZE = 1;
 
+    /**
+     * 0值
+     */
+    public static final Integer ZERO_VALUE = 0;
+
+    /**
+     * 动态sql请求URL参数片段
+     */
+    public static final String SQL_RPC_URL_PART = "?ruleId=";
+
 }

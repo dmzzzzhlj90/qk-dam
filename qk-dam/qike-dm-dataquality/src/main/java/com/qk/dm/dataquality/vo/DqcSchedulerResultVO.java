@@ -47,6 +47,11 @@ public class DqcSchedulerResultVO {
     private String ruleName;
 
     /**
+     * 工作流实例task_code绑定规则
+     */
+    private Long taskCode;
+
+    /**
      * 更新时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

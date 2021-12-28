@@ -15,8 +15,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Data
 public class ResourceDTO {
-    private int id;
+
+    /**
+     * resource id
+     */
+    private Integer id;
+
+    /**
+     * resource id
+     */
     private String name;
+
+    /**
+     * resource id
+     */
     private String res;
 
 }

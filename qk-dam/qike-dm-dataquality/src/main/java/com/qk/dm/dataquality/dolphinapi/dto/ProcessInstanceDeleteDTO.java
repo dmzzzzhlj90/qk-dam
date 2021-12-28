@@ -38,6 +38,23 @@ public class ProcessInstanceDeleteDTO {
      * @param userType  (optional)
      */
 
+       /** @param processInstanceIds 流程实例ID集合 (required)
+   * @param projectCode projectCode (required)
+   * @param alertGroup  (optional)
+   * @param createTime  (optional)
+   * @param email  (optional)
+   * @param id  (optional)
+   * @param phone  (optional)
+   * @param queue  (optional)
+   * @param queueName  (optional)
+   * @param state  (optional)
+   * @param tenantCode  (optional)
+   * @param tenantId  (optional)
+   * @param updateTime  (optional)
+   * @param userName  (optional)
+   * @param userPassword  (optional)
+   * @param userType  (optional)
+   */
     String processInstanceIds;
     String alertGroup;
     OffsetDateTime createTime;
@@ -46,9 +63,10 @@ public class ProcessInstanceDeleteDTO {
     String phone;
     String queue;
     String queueName;
+    Integer state;
     String tenantCode;
     Integer tenantId;
-    String tenantName;
+//    String tenantName;
     OffsetDateTime updateTime;
     String userName;
     String userPassword;

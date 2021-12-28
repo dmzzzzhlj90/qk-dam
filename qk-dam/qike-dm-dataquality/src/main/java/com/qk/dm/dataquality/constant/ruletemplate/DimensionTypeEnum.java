@@ -22,7 +22,7 @@ public enum DimensionTypeEnum {
     this.name = name;
   }
 
-  public static DimensionTypeEnum fromValue(Integer code) {
+  public static DimensionTypeEnum fromValue(String code) {
     for (DimensionTypeEnum b : DimensionTypeEnum.values()) {
       if (b.code.equals(code)) {
         return b;
