@@ -70,25 +70,27 @@ public class MtdSearchServiceImpl implements MtdSearchService {
                 .guid(e.getGuid())
                 .typeName(e.getTypeName())
                 .displayText(e.getDisplayText())
-                .description(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION)))
+                .description(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),"").toString())
                 .build()).collect(Collectors.toList());
     }
 
     private List<MtdTables> builderMtdTables(List<AtlasEntityHeader> atlasEntityHeaderList) {
+        if (CollectionUtils.isEmpty(atlasEntityHeaderList)) { return null; }
         return atlasEntityHeaderList.stream().map(e -> MtdTables.builder()
                 .displayText(e.getDisplayText())
                 .guid(e.getGuid())
                 .typeName(e.getTypeName())
-                .comment(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION)))
-                .entityStatus(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.STATUS)))
+                .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),"").toString())
+                .entityStatus(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.STATUS),"").toString())
                 .build()).collect(Collectors.toList());
     }
 
     private List<MtdAttributes> builderMtdAttributes(List<AtlasEntityHeader> atlasEntityHeaderList) {
+        if (CollectionUtils.isEmpty(atlasEntityHeaderList)) { return null; }
         return atlasEntityHeaderList.stream().map(e -> MtdAttributes.builder()
                 .type(e.getTypeName())
-                .owner(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER)))
-                .comment(String.valueOf(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION)))
+                .owner(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER),"").toString())
+                .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),"").toString())
                 .name(e.getDisplayText())
                 .build()).collect(Collectors.toList());
     }

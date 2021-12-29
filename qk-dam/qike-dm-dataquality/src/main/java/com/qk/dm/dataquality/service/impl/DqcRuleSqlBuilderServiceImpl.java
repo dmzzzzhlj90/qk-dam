@@ -63,7 +63,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
             dqcRuleTemplate.ifPresent(ruleTemplate -> buildExecuteSql(dqcSchedulerRulesVO, ruleTemplate, sqlBuffer));
             executeSql = sqlBuffer.toString();
             //sql特殊字符替换操作(todo 目前只有单引号)
-            executeSql = executeSql.replaceAll(GenerateSqlUtil.SINGLE_QUOTES, GenerateSqlUtil.SINGLE_QUOTES_MARK);
+//            executeSql = executeSql.replaceAll(GenerateSqlUtil.SINGLE_QUOTES, GenerateSqlUtil.SINGLE_QUOTES_MARK);
         } else {
             throw new BizException("未匹配到对应的规则模板信息!!!");
         }
