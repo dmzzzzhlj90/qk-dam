@@ -231,7 +231,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         }
 
         if (!ObjectUtils.isEmpty(schedulerInfoParamsVO.getJobName())) {
-            booleanBuilder.and(qDqcSchedulerBasicInfo.jobName.eq(schedulerInfoParamsVO.getJobName()));
+            booleanBuilder.and(qDqcSchedulerBasicInfo.jobName.contains(schedulerInfoParamsVO.getJobName()));
         }
 
         if (!StringUtils.isEmpty(schedulerInfoParamsVO.getBeginDay())

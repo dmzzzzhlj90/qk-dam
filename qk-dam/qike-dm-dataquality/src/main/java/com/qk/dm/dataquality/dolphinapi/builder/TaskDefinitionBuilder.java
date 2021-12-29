@@ -2,13 +2,14 @@ package com.qk.dm.dataquality.dolphinapi.builder;
 
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dm.dataquality.constant.EngineTypeEnum;
+import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.constant.Flag;
 import com.qk.dm.dataquality.dolphinapi.constant.Priority;
 import com.qk.dm.dataquality.dolphinapi.constant.SchedulerConstant;
 import com.qk.dm.dataquality.dolphinapi.constant.TimeoutFlag;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
-import com.qk.dm.dataquality.utils.CodeGenerateUtils;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import lombok.Builder;
@@ -170,7 +171,7 @@ public class TaskDefinitionBuilder {
                         .resourceList(resourceList)
                         .localParams(new ArrayList<>())
                         .rawScript(
-                                setMysqlRuleScript(basicInfoVO, rulesVO, mySqlScriptResource, dolphinSchedulerInfoConfig, dataSourceInfo))
+                                setRuleScript(basicInfoVO, rulesVO, mySqlScriptResource, dolphinSchedulerInfoConfig, dataSourceInfo))
                         .dependence(new HashMap<>(16))
                         .conditionResult(
                                 setConditionResult())
@@ -189,7 +190,7 @@ public class TaskDefinitionBuilder {
 
 
     /**
-     * 设置mysql执行脚本信息(后期可做策略匹配)
+     * 设置执行脚本信息(后期可做策略匹配)
      *
      * @param basicInfoVO
      * @param rulesVO
@@ -198,11 +199,31 @@ public class TaskDefinitionBuilder {
      * @param dataSourceInfo
      * @return String
      */
-    private String setMysqlRuleScript(DqcSchedulerBasicInfoVO basicInfoVO,
+    private String setRuleScript(DqcSchedulerBasicInfoVO basicInfoVO,
                                       DqcSchedulerRulesVO rulesVO,
                                       ResourceDTO mySqlScriptResource,
                                       DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
                                       Map<String, ConnectBasicInfo> dataSourceInfo) {
+        String ruleScript = null;
+        if (EngineTypeEnum.MYSQL.getCode().equalsIgnoreCase(rulesVO.getEngineType())) {
+            ruleScript = getMysqlRuleScript(basicInfoVO, rulesVO, mySqlScriptResource, dolphinSchedulerInfoConfig, dataSourceInfo);
+        } else if ((EngineTypeEnum.HIVE.getCode().equalsIgnoreCase(rulesVO.getEngineType()))) {
+            ruleScript = getHiveRuleScript(basicInfoVO, rulesVO, mySqlScriptResource, dolphinSchedulerInfoConfig, dataSourceInfo);
+        }
+        return ruleScript;
+    }
+
+    /**
+     * mysql设置执行脚本信息(后期可做策略匹配)
+     *
+     * @param basicInfoVO
+     * @param rulesVO
+     * @param mySqlScriptResource
+     * @param dolphinSchedulerInfoConfig
+     * @param dataSourceInfo
+     * @return String
+     */
+    private String getMysqlRuleScript(DqcSchedulerBasicInfoVO basicInfoVO, DqcSchedulerRulesVO rulesVO, ResourceDTO mySqlScriptResource, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig, Map<String, ConnectBasicInfo> dataSourceInfo) {
         MysqlRawScript.MysqlRawScriptBuilder scriptBuilder = MysqlRawScript.builder();
 
         //数据源连接信息规则调度里设置
@@ -239,13 +260,77 @@ public class TaskDefinitionBuilder {
         MysqlRawScript mysqlRawScript = scriptBuilder.build();
         String mysqlRawScriptJson = GsonUtil.toJsonString(mysqlRawScript);
 
-        return dolphinSchedulerInfoConfig.getPython3ExecuteCommand() + SchedulerConstant.SPACE_PLACEHOLDER
+        return dolphinSchedulerInfoConfig.getMysqlExecuteCommand() + SchedulerConstant.SPACE_PLACEHOLDER
                 + mySqlScriptResource.getRes()
                 + SchedulerConstant.SPACE_PLACEHOLDER + SchedulerConstant.SINGLE_QUOTE
                 + mysqlRawScriptJson
                 + SchedulerConstant.SINGLE_QUOTE;
     }
 
+    /**
+     * mysql设置执行脚本信息(后期可做策略匹配)
+     *
+     * @param basicInfoVO
+     * @param rulesVO
+     * @param mySqlScriptResource
+     * @param dolphinSchedulerInfoConfig
+     * @param dataSourceInfo
+     * @return String
+     */
+    private String getHiveRuleScript(DqcSchedulerBasicInfoVO basicInfoVO,
+                                     DqcSchedulerRulesVO rulesVO,
+                                     ResourceDTO mySqlScriptResource,
+                                     DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                     Map<String, ConnectBasicInfo> dataSourceInfo) {
+        HiveRawScript.HiveRawScriptBuilder scriptBuilder = HiveRawScript.builder();
+
+        //数据源连接信息规则调度里设置
+        ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(rulesVO.getDataSourceName());
+
+        //来源数据源
+        scriptBuilder
+                .from_host(connectBasicInfo.getServer())
+                .from_user(connectBasicInfo.getUserName())
+                .from_password(connectBasicInfo.getPassword())
+                .from_database(rulesVO.getDatabaseName());
+
+//        scriptBuilder.search_sql(rulesVO.getExecuteSql());
+
+        //目标数据源
+        scriptBuilder
+                .to_host(dolphinSchedulerInfoConfig.getResultDataDbHost())
+                .to_user(dolphinSchedulerInfoConfig.getResultDataDbUser())
+                .to_password(dolphinSchedulerInfoConfig.getResultDataDbPassword())
+                .to_database(dolphinSchedulerInfoConfig.getResultDataDbDatabase());
+
+        //基础参数信息
+        scriptBuilder
+                .job_id(basicInfoVO.getJobId())
+                .job_name(basicInfoVO.getJobName())
+                .rule_id(rulesVO.getRuleId())
+                .rule_name(rulesVO.getRuleName())
+                .rule_temp_id(rulesVO.getRuleTempId())
+                .task_code(rulesVO.getTaskCode());
+
+        //动态实时sql请求地址
+        scriptBuilder.sql_rpc_url(getSqlRpcUrl(rulesVO, dolphinSchedulerInfoConfig));
+
+        HiveRawScript hiveRawScript = scriptBuilder.build();
+        String hiveRawScriptJson = GsonUtil.toJsonString(hiveRawScript);
+
+        return dolphinSchedulerInfoConfig.getHiveExecuteCommand()
+                + SchedulerConstant.SPACE_PLACEHOLDER + SchedulerConstant.SINGLE_QUOTE
+                + hiveRawScriptJson
+                + SchedulerConstant.SINGLE_QUOTE;
+    }
+
+    /**
+     * 动态实时sql请求地址
+     *
+     * @param rulesVO
+     * @param dolphinSchedulerInfoConfig
+     * @return
+     */
     private String getSqlRpcUrl(DqcSchedulerRulesVO rulesVO, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         String sqlRpcUrl = dolphinSchedulerInfoConfig.getSqlRpcUrl();
         sqlRpcUrl = sqlRpcUrl + SchedulerConstant.SQL_RPC_URL_PART + rulesVO.getRuleId();
