@@ -45,6 +45,7 @@ dependencies {
     implementation project(":dolphinscheduler-client")
     implementation project(":datasource-common-core")
     implementation project(":metadata-common-core")
+    implementation project(":qk-data-redis")
 //    implementation group: 'org.apache.dolphinscheduler', name: 'dolphinscheduler-common', version: '1.3.9'
 //    implementation group: 'org.apache.dolphinscheduler', name: 'dolphinscheduler-dao', version: '1.3.9'
     implementation group: 'com.baomidou', name: 'mybatis-plus-annotation', version: '3.4.3.4'

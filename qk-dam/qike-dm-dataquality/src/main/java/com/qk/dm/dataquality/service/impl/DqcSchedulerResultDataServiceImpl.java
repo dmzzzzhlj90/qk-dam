@@ -3,11 +3,13 @@ package com.qk.dm.dataquality.service.impl;
 import com.google.common.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.groovy.engine.shell.FactsScriptShell;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.NumberIndexEnum;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.entity.*;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
+import com.qk.dm.dataquality.repositories.DqcSchedulerResultRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcSchedulerResultDataService;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultParamsVO;
@@ -53,6 +55,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
     private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
     private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
+    private final DqcSchedulerResultRepository dqcSchedulerResultRepository;
 
     private final EntityManager entityManager;
     private JPAQueryFactory jpaQueryFactory;
@@ -60,9 +63,11 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     @Autowired
     public DqcSchedulerResultDataServiceImpl(DqcRuleTemplateRepository dqcRuleTemplateRepository,
                                              DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
+                                             DqcSchedulerResultRepository dqcSchedulerResultRepository,
                                              EntityManager entityManager) {
         this.dqcRuleTemplateRepository = dqcRuleTemplateRepository;
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
+        this.dqcSchedulerResultRepository = dqcSchedulerResultRepository;
         this.entityManager = entityManager;
     }
 
@@ -95,11 +100,65 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
                 schedulerResultVOList);
     }
 
+    @Override
+    public Object getWarnResultInfo(String ruleId) {
+        //获取执行规则信息
+        Optional<DqcSchedulerRules> schedulerRulesOptional =
+                dqcSchedulerRulesRepository.findOne(QDqcSchedulerRules.dqcSchedulerRules.ruleId.eq(ruleId));
+
+        if (schedulerRulesOptional.isPresent()) {
+            DqcSchedulerRules dqcSchedulerRules = schedulerRulesOptional.get();
+            //获取规则参数位置信息
+            Map<String, Object> locationMap = getLocationMap(schedulerRulesOptional);
+            String dataIndexNamePrefix = (String) locationMap.get(DATA_INDEX_NAME_PREFIX);
+            List<String> locations = (List<String>) locationMap.get(LOCATIONS);
+
+            //字段列表信息
+            String fieldStr = dqcSchedulerRules.getFields();
+            List<String> fieldList = GsonUtil.fromJsonString(fieldStr, new TypeToken<List<String>>() {
+            }.getType());
+
+            //todo 模板结果定义
+            //告警表达式
+            String warnExpression = dqcSchedulerRules.getWarnExpression();
+            if (!ObjectUtils.isEmpty(warnExpression)) {
+                //todo ${1} >0
+                //TODO 最近时间的记录 获取执行结果集
+                Optional<DqcSchedulerResult> schedulerResultOptional =
+                        dqcSchedulerResultRepository.findOne(QDqcSchedulerResult.dqcSchedulerResult.taskCode.eq(dqcSchedulerRules.getTaskCode()));
+                if (schedulerResultOptional.isPresent()) {
+                    DqcSchedulerResult dqcSchedulerResult = schedulerResultOptional.get();
+                    String ruleResultStr = dqcSchedulerResult.getRuleResult();
+                    //转换结果集
+                    List<List<Object>> resultDataList = GsonUtil.fromJsonString(ruleResultStr, new TypeToken<List<List<Object>>>() {
+                    }.getType());
+
+                    for (int i = 0; i < fieldList.size(); i++) {
+                        //每一列的执行结果
+                        String fieldWarnExpression=warnExpression;
+                        List<Object> fieldResult = resultDataList.get(i);
+                        for (int j = 0; j < fieldResult.size(); j++) {
+                            //${1} >0 && ${2}>10 ==>>10>0 && 5>10
+                            fieldWarnExpression = fieldWarnExpression.replace("${" + j + 1 + "}", fieldResult.get(j).toString());
+                        }
+                        //执行表达式
+                        boolean flag = false;
+//                        if (dataIndexNamePrefix) {
+//
+//                        }
+                    }
+
+
+                }
+            }
+        }
+        return null;
+    }
+
+
+
     /**
      * 构建调度结果集
-     *
-     * @param schedulerResultVOList
-     * @param dqcSchedulerResultList
      */
     private void buildDqcSchedulerResults(List<DqcSchedulerResultVO> schedulerResultVOList, List<DqcSchedulerResult> dqcSchedulerResultList) {
         //解析模板结果定义参数信息
@@ -213,6 +272,9 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         return resultDataVOList;
     }
 
+    /**
+     * 数值类型
+     */
     private void getDataIndexMap(List<DqcSchedulerResultTitleVO> resultTitleVOList, Map<String, Boolean> dataIndexMap) {
         for (DqcSchedulerResultTitleVO resultTitleVO : resultTitleVOList) {
             if (resultTitleVO.getTitle().contains(NUMERICAL_VALUE) || NumberIndexEnum.getAllValue().contains(resultTitleVO.getTitle())) {

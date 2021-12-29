@@ -17,4 +17,5 @@ public interface DqcSchedulerResultDataService {
 
     PageResultVO<DqcSchedulerResultVO> getResultDataList(DqcSchedulerResultParamsVO schedulerResultDataParamsVO);
 
+    Object getWarnResultInfo(String ruleId);
 }

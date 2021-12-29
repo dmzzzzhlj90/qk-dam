@@ -21,5 +21,8 @@ spring:
           - dataId: qkdam-dataquality-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
+          - dataId: qkdam-redis-\${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
   profiles:
     active: ${damProfilesActive}
