@@ -34,13 +34,15 @@ public class TaskInstanceHandler {
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
     private final DqcRuleTemplateService dqcRuleTemplateService;
 
-    public TaskInstanceHandler(DolphinScheduler dolphinScheduler, DqcSchedulerRulesService dqcSchedulerRulesService, DqcRuleTemplateService dqcRuleTemplateService) {
+    public TaskInstanceHandler(DolphinScheduler dolphinScheduler,
+                               DqcSchedulerRulesService dqcSchedulerRulesService,
+                               DqcRuleTemplateService dqcRuleTemplateService) {
         this.dolphinScheduler = dolphinScheduler;
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
         this.dqcRuleTemplateService = dqcRuleTemplateService;
     }
 
-    private ProcessTaskInstanceSearchDTO getProcessTaskInstanceSearchDTO(int pageNo, int pageSize, Date date, String stateType) {
+    private ProcessTaskInstanceSearchDTO getProcessTaskInstanceSearchDTO(Date date, String stateType) {
         return ProcessTaskInstanceSearchDTO.builder()
                 .pageNo(pageNo)
                 .pageSize(pageSize)
@@ -64,7 +66,7 @@ public class TaskInstanceHandler {
     }
 
     private List<TaskInstanceVO> getDolphinTaskInstanceList(Date date, String stateType) {
-        ProcessTaskInstanceSearchDTO taskInstanceSearchDTO = getProcessTaskInstanceSearchDTO(pageNo, pageSize, date, stateType);
+        ProcessTaskInstanceSearchDTO taskInstanceSearchDTO = getProcessTaskInstanceSearchDTO(date, stateType);
         List<TaskInstanceVO> totalList = new ArrayList<>();
         //查询所有的任务实例
         getTaskInstanceList(taskInstanceSearchDTO, totalList);
@@ -106,7 +108,7 @@ public class TaskInstanceHandler {
     }
 
     private Map<String, String> getTaskCodeAndDimensionType(Map<Long, Long> codeAndRulesMap, Map<Long, String> ruleAndDimensionTypeMap) {
-        Map<String, String> rulesDimensionTypeMap = new HashMap<>(8);
+        Map<String, String> rulesDimensionTypeMap = new HashMap<>(16);
         for (Map.Entry<Long, Long> codeAndRule : codeAndRulesMap.entrySet()) {
             String ruleTempId = ruleAndDimensionTypeMap.get(codeAndRule.getValue());
             rulesDimensionTypeMap.put(ruleTempId, rulesDimensionTypeMap.get(ruleTempId) != null
@@ -135,7 +137,7 @@ public class TaskInstanceHandler {
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        item -> item.getKey(), item -> {
+                        Map.Entry::getKey, item -> {
                             AtomicReference<Long> number = new AtomicReference<>(0L);
                             Arrays.asList(item.getValue().split(",")).forEach(it -> {
                                 Long taskCode = Long.valueOf(it);
@@ -151,7 +153,7 @@ public class TaskInstanceHandler {
     private void packagingDimensionList(Map<String, Long> dimensionTypeAndCountByFailure, List<DimensionVO> dimensionList, InstanceStateTypeEnum failure) {
         DimensionVO dimensionVO;
         for (Map.Entry<String, Long> dimTypeMap : dimensionTypeAndCountByFailure.entrySet()) {
-            if(dimTypeMap.getValue() > 0) {
+            if (dimTypeMap.getValue() > 0) {
                 dimensionVO = new DimensionVO();
                 dimensionVO.setDqcDimType(Objects.requireNonNull(DimensionTypeEnum.fromValue(dimTypeMap.getKey())).getName());
                 dimensionVO.setExecCount(dimTypeMap.getValue());
@@ -161,8 +163,8 @@ public class TaskInstanceHandler {
         }
     }
 
-    private List<DimensionVO> getDimensionList(Map<String, Long> dimensionTypeAndCountBySuccess,Map<String, Long> dimensionTypeAndCountByFailure) {
-        List<DimensionVO> dimensionList = new ArrayList<>();
+    private List<DimensionVO> getDimensionList(Map<String, Long> dimensionTypeAndCountBySuccess, Map<String, Long> dimensionTypeAndCountByFailure) {
+        List<DimensionVO> dimensionList = new ArrayList<>(16);
         packagingDimensionList(dimensionTypeAndCountBySuccess, dimensionList, InstanceStateTypeEnum.SUCCESS);
         packagingDimensionList(dimensionTypeAndCountByFailure, dimensionList, InstanceStateTypeEnum.FAILURE);
         return dimensionList;

@@ -34,13 +34,15 @@ public class InstanceHandler {
     private final DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService;
     private final DqcRuleDirService dqcRuleDirService;
 
-    public InstanceHandler(DolphinScheduler dolphinScheduler, DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService, DqcRuleDirService dqcRuleDirService) {
+    public InstanceHandler(DolphinScheduler dolphinScheduler,
+                           DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService,
+                           DqcRuleDirService dqcRuleDirService) {
         this.dolphinScheduler = dolphinScheduler;
         this.dqcSchedulerBasicInfoService = dqcSchedulerBasicInfoService;
         this.dqcRuleDirService = dqcRuleDirService;
     }
 
-    private ProcessInstanceSearchDTO getInstanceSearchDTO(int pageNo, int pageSize, String failure, Date date) {
+    private ProcessInstanceSearchDTO getInstanceSearchDTO(int pageSize, String failure, Date date) {
         return ProcessInstanceSearchDTO.builder()
                 .pageNo(pageNo)
                 .pageSize(pageSize)
@@ -56,7 +58,7 @@ public class InstanceHandler {
     }
 
     private ProcessInstanceResultDTO getProcessInstance(String failure) {
-        return getProcessInstanceResult(getInstanceSearchDTO(pageNo, pageSize, failure, null));
+        return getProcessInstanceResult(getInstanceSearchDTO(pageSize, failure, null));
     }
 
     public InstanceVO instanceStatistics() {
@@ -79,7 +81,7 @@ public class InstanceHandler {
     }
 
     public List<DqcProcessInstanceVO> getInstanceList(Date date) {
-        ProcessInstanceSearchDTO instanceSearchDTO = getInstanceSearchDTO(pageNo, listPageSize, null, date);
+        ProcessInstanceSearchDTO instanceSearchDTO = getInstanceSearchDTO(listPageSize, null, date);
         //查询出今天所有实例
         List<DqcProcessInstanceVO> totalList = new ArrayList<>();
         getInstanceList(instanceSearchDTO, totalList);
@@ -102,7 +104,7 @@ public class InstanceHandler {
 
     private Map<String, Long> getDirCount(Map<Long, String> codeDirMap, Map<Long, Long> codeCount) {
         //各dir运行次数 dir->count
-        Map<String, Long> dirCount = new HashMap<>();
+        Map<String, Long> dirCount = new HashMap<>(32);
         for (Map.Entry<Long, String> map : codeDirMap.entrySet()) {
             dirCount.put(map.getValue(), dirCount.get(map.getValue()) != null ? dirCount.get(map.getValue()) + codeCount.get(map.getKey()) : codeCount.get(map.getKey()));
         }
@@ -124,14 +126,14 @@ public class InstanceHandler {
             //当天执行总数量,直接缩小100倍算出百分比
             double count = NumberUtil.div(sum, 100, 2);
             //计算百分比
-            dirCount.entrySet().stream().peek(item ->
-                    ruleDirList.add(
-                            RuleDirVO.builder()
-                                    .type(dqcRuleDirMap.get(item.getKey()))
-                                    .value(NumberUtil.div(item.getValue().doubleValue(), count, 2))
-                                    .build()
-                    )
-            ).collect(Collectors.toList());
+            for (Map.Entry<String, Long> item : dirCount.entrySet()) {
+                ruleDirList.add(
+                        RuleDirVO.builder()
+                                .type(dqcRuleDirMap.get(item.getKey()))
+                                .value(NumberUtil.div(item.getValue().doubleValue(), count, 2))
+                                .build()
+                );
+            }
         }
         return ruleDirList;
     }
