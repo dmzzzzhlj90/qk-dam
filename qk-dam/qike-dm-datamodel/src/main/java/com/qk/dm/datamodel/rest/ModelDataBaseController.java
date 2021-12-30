@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 获取数据源和元数据相关接口
@@ -44,8 +45,8 @@ public class ModelDataBaseController {
      * @return DefaultCommonResult<List < ResultDatasourceInfo>>
      */
     @GetMapping("/connect/{type}")
-    public DefaultCommonResult<List<String>> getResultDataSourceByType(@PathVariable("type") String connectType) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSource(connectType));
+    public DefaultCommonResult<Map<String,Integer>> getResultDataSourceByType(@PathVariable("type") String connectType) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSources(connectType));
     }
 
     /**

@@ -45,13 +45,17 @@ public class ModelPhysicalTable implements Serializable {
      */
     @Column(name="data_source_name",nullable = false)
     private String dataSourceName;
+    /**
+     * 数据源连接id
+     */
+    @Column(name = "data_source_id", nullable = false)
+    private Integer dataSourceId;
 
     /**
      * 数据库名称
      */
     @Column(name = "database_name", nullable = false)
     private String databaseName;
-
     /**
      * 描述
      */

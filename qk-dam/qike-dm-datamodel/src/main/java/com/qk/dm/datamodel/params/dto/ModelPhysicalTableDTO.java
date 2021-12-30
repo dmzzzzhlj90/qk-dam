@@ -57,6 +57,12 @@ public class ModelPhysicalTableDTO implements Serializable {
     private String dataSourceName;
 
     /**
+     * 数据源连接id
+     */
+    @NotBlank(message = "数据源连接id")
+    private Integer dataSourceId;
+
+    /**
      * 描述
      */
     private String description;
