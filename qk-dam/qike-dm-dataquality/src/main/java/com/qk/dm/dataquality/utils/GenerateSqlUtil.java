@@ -117,6 +117,11 @@ public class GenerateSqlUtil {
         return replaceSqlStr;
     }
 
+    /**
+     * 去除sql片段首位置空格
+     * @param value
+     * @return
+     */
     public static String trimStart(String value) {
         return value.replaceFirst(START_SPACES_REGEX, EMPTY_STRING);
     }

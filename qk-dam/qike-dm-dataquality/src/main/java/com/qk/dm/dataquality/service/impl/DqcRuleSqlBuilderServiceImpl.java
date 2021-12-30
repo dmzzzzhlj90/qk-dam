@@ -24,10 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -217,6 +214,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         } else if (ScanTypeEnum.CONDITION.getCode().equalsIgnoreCase(scanType)) {
             //条件
             wherePartSqlBuilder.append(GenerateSqlUtil.WHERE_PART);
+            wherePartSqlBuilder.append(GenerateSqlUtil.AND);
             //执行Groovy函数生成sql片段
             wherePartSqlBuilder.append(scanSqlByGroovyFunction(scanSql));
         }
@@ -232,32 +230,47 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
      */
     private String scanSqlByGroovyFunction(String scanSql) {
         String realScanSql = "";
-        //Groovy函数集合
-        List<String> functionNameList = Lists.newArrayList();
-        //and
-        String trimStartScanSql = GenerateSqlUtil.trimStart(scanSql);
-        String[] andPartArr = trimStartScanSql.split(GenerateSqlUtil.AND);
-
-        //and day = tradeDay1(20211215,1) and day2 = tradeDay2(20211215,2) and name ='a'
-        for (int i = 0; i < andPartArr.length - 1; i++) {
-            //and day = tradeDay(20211215,1)
-            String[] fieldPartArr = andPartArr[i].split(GenerateSqlUtil.EQUAL_SIGN.trim());
-            //Groovy函数名称
-            functionNameList.add(fieldPartArr[fieldPartArr.length - 1].trim());
+        List<String> functions = FunctionConstant.isExistFunction(scanSql);
+        if (functions.size() > 0) {
+            //存在特殊函数
+            //真正需要被执行的函数带有参数信息等
+            List<String> functionNameList = getFunctionNameList(scanSql, functions);
+            //执行Groovy函数
+            Map<String, Object> groovyFunctionMap = executeGroovyFunction(functionNameList);
+            //替换函数sql参数
+            realScanSql = getRealScanSql(scanSql, realScanSql, functionNameList, groovyFunctionMap);
+        } else {
+            //存在特殊函数
+            realScanSql = scanSql;
         }
-        //执行Groovy函数
-        Map<String, Object> groovyFunctionMap = executeGroovyFunction(functionNameList);
-
-        //替换函数sql参数
-        realScanSql = getRealScanSql(scanSql, realScanSql, functionNameList, groovyFunctionMap);
         return realScanSql;
     }
 
     /**
+     * 真正需要被执行的函数带有参数信息等
+     */
+    private List<String> getFunctionNameList(String scanSql, List<String> functions) {
+        List<String> functionNameList = new ArrayList<>();
+        //and
+        String trimStartScanSql = GenerateSqlUtil.trimStart(scanSql);
+        String[] andPartArr = trimStartScanSql.split(GenerateSqlUtil.AND);
+        //获取需要执行函数的sql片段
+        for (String sqlPart : andPartArr) {
+            String functionName = "";
+            for (String function : functions) {
+                if (sqlPart.contains(function)) {
+                    String[] sqlPartArr = sqlPart.split(function);
+                    functionName = function + sqlPartArr[sqlPartArr.length - 1];
+                }
+            }
+            //Groovy函数名称
+            functionNameList.add(functionName);
+        }
+        return functionNameList;
+    }
+
+    /**
      * 执行Groovy函数
-     *
-     * @param functionNameList
-     * @return Map<String, Object>
      */
     private Map<String, Object> executeGroovyFunction(List<String> functionNameList) {
         RuleFunctionModel model = new RuleFunctionModel();
@@ -274,12 +287,6 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
 
     /**
      * 替换函数sql参数
-     *
-     * @param scanSql
-     * @param realScanSql
-     * @param functionNameList
-     * @param groovyFunctionMap
-     * @return String
      */
     private String getRealScanSql(String scanSql, String realScanSql, List<String> functionNameList, Map<String, Object> groovyFunctionMap) {
         for (String functionName : functionNameList) {
@@ -287,6 +294,8 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
             String groovySql = groovySqlResultMap.get(functionName);
             if (!ObjectUtils.isEmpty(groovySql)) {
                 realScanSql = scanSql.replace(functionName, groovySql);
+            } else {
+                realScanSql=scanSql;
             }
         }
         return realScanSql;
