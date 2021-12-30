@@ -15,7 +15,7 @@ public abstract class DamVoter {
   /** 资源权限 */
   private static final String RESOURCE_ACCESS = "resource_access";
   /** 资源客户端ID */
-  private static final String RESOURCE_CLIENT_ID = "qk-dam";
+  private static final String RESOURCE_CLIENT_ID = "reptile";
   /** 资源角色KEY */
   private static final String ROLES = "roles";
 

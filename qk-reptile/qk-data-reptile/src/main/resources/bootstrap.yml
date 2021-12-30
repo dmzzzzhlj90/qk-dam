@@ -1,7 +1,4 @@
 spring:
-  mvc:
-    view:
-      prefix: /rpt/
   application:
     name: dm-reptile
   logging:
@@ -22,4 +19,4 @@ spring:
             group: DAM
             refresh: true
   profiles:
-    active: test
+    active: prod
