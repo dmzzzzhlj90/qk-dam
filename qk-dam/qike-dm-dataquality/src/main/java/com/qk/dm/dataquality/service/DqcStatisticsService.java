@@ -12,9 +12,9 @@ import java.util.List;
 public interface DqcStatisticsService {
     void timeToReis();
 
-    DataSummaryVO statistics();
+    DataSummaryVO summary();
 
-    List<DimensionVO> dimensionStatistics();
+    List<DimensionVO> dimension();
 
-    List<RuleDirVO> dirStatistics();
+    List<RuleDirVO> dir();
 }

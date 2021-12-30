@@ -3,7 +3,6 @@ package com.qk.dm.dataquality.dolphinapi.builder;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dm.dataquality.constant.EngineTypeEnum;
-import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.constant.Flag;
 import com.qk.dm.dataquality.dolphinapi.constant.Priority;
@@ -21,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * 构建TaskDefinition对象
@@ -42,14 +42,15 @@ public class TaskDefinitionBuilder {
                                       Map<String, ConnectBasicInfo> dataSourceInfo,
                                       Integer version) {
         //工作流定义节点信息
-        taskNodes(dqcSchedulerBasicInfoVO, mySqlScriptResource, dolphinSchedulerInfoConfig, dataSourceInfo,version);
+        taskNodes(dqcSchedulerBasicInfoVO, mySqlScriptResource, dolphinSchedulerInfoConfig, dataSourceInfo, version);
         return this;
     }
 
 
     /**
      * 构建任务实例执行节点信息集合
-     *  @param dqcSchedulerBasicInfoVO
+     *
+     * @param dqcSchedulerBasicInfoVO
      * @param mySqlScriptResource
      * @param dolphinSchedulerInfoConfig
      * @param dataSourceInfo
@@ -72,7 +73,7 @@ public class TaskDefinitionBuilder {
                             dolphinSchedulerInfoConfig,
                             dataSourceInfo,
                             version
-                            ));
+                    ));
             index.incrementAndGet();
         }
     }
@@ -119,7 +120,8 @@ public class TaskDefinitionBuilder {
 
     /**
      * 设置节点基础信息
-     *  @param rulesVO
+     *
+     * @param rulesVO
      * @param taskNode
      * @param dolphinSchedulerInfoConfig
      * @param version
@@ -200,10 +202,10 @@ public class TaskDefinitionBuilder {
      * @return String
      */
     private String setRuleScript(DqcSchedulerBasicInfoVO basicInfoVO,
-                                      DqcSchedulerRulesVO rulesVO,
-                                      ResourceDTO mySqlScriptResource,
-                                      DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
-                                      Map<String, ConnectBasicInfo> dataSourceInfo) {
+                                 DqcSchedulerRulesVO rulesVO,
+                                 ResourceDTO mySqlScriptResource,
+                                 DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig,
+                                 Map<String, ConnectBasicInfo> dataSourceInfo) {
         String ruleScript = null;
         if (EngineTypeEnum.MYSQL.getCode().equalsIgnoreCase(rulesVO.getEngineType())) {
             ruleScript = getMysqlRuleScript(basicInfoVO, rulesVO, mySqlScriptResource, dolphinSchedulerInfoConfig, dataSourceInfo);
@@ -252,7 +254,8 @@ public class TaskDefinitionBuilder {
                 .rule_id(rulesVO.getRuleId())
                 .rule_name(rulesVO.getRuleName())
                 .rule_temp_id(rulesVO.getRuleTempId())
-                .task_code(rulesVO.getTaskCode());
+                .task_code(rulesVO.getTaskCode())
+                .rule_meta_data(getRuleMetaData(rulesVO.getFieldList()));
 
         //动态实时sql请求地址
         scriptBuilder.sql_rpc_url(getSqlRpcUrl(rulesVO, dolphinSchedulerInfoConfig));
@@ -310,7 +313,8 @@ public class TaskDefinitionBuilder {
                 .rule_id(rulesVO.getRuleId())
                 .rule_name(rulesVO.getRuleName())
                 .rule_temp_id(rulesVO.getRuleTempId())
-                .task_code(rulesVO.getTaskCode());
+                .task_code(rulesVO.getTaskCode())
+                .rule_meta_data(getRuleMetaData(rulesVO.getFieldList()));
 
         //动态实时sql请求地址
         scriptBuilder.sql_rpc_url(getSqlRpcUrl(rulesVO, dolphinSchedulerInfoConfig));
@@ -335,6 +339,11 @@ public class TaskDefinitionBuilder {
         String sqlRpcUrl = dolphinSchedulerInfoConfig.getSqlRpcUrl();
         sqlRpcUrl = sqlRpcUrl + SchedulerConstant.SQL_RPC_URL_PART + rulesVO.getRuleId();
         return sqlRpcUrl;
+    }
+
+    private String getRuleMetaData(List<String> fieldList) {
+        return fieldList.stream()
+                .collect(Collectors.joining(","));
     }
 
     public List<TaskDefinitionDTO> getTaskDefinitions() {
