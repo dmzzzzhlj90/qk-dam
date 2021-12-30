@@ -47,7 +47,7 @@ public class DqcSchedulerResultDataController {
      * @param ruleId
      * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
      */
-    @PostMapping("/warn/result/info")
+    @GetMapping("/warn/result/info")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<Object> getWarnResultInfo(@RequestParam("ruleId") String ruleId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.getWarnResultInfo(ruleId));

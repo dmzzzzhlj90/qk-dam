@@ -35,8 +35,8 @@ public class DqcStatisticsController {
      * @return DefaultCommonResult<DataSummaryVO>
      */
     @GetMapping("/summary")
-    public DefaultCommonResult<DataSummaryVO> statistics() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.statistics());
+    public DefaultCommonResult<DataSummaryVO> summary() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.summary());
     }
 
     /**
@@ -44,8 +44,8 @@ public class DqcStatisticsController {
      * @return DefaultCommonResult<List<DimensionVO>>
      */
     @GetMapping("/dimension")
-    public DefaultCommonResult<List<DimensionVO>> dimensionStatistics() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.dimensionStatistics());
+    public DefaultCommonResult<List<DimensionVO>> dimension() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.dimension());
     }
 
     /**
@@ -53,13 +53,7 @@ public class DqcStatisticsController {
      * @return DefaultCommonResult<List<RuleDirVO>>
      */
     @GetMapping("/dir")
-    public DefaultCommonResult<List<RuleDirVO>> dirStatistics() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.dirStatistics());
+    public DefaultCommonResult<List<RuleDirVO>> dir() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.dir());
     }
-
-    //    @GetMapping("/timeToReis")
-//    public DefaultCommonResult timeToReis() {
-//        dqcStatisticsService.timeToReis();
-//        return DefaultCommonResult.success();
-//    }
 }
