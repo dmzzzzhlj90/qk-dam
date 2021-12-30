@@ -1,7 +1,9 @@
 package com.qk.dam.groovy.constant;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 规则函数名称
@@ -20,7 +22,8 @@ public class FunctionConstant {
     private FunctionConstant() {
         throw new UnsupportedOperationException(" Construct Constants FunctionConstant ");
     }
-    public static final String[] DEFINITION_FUNCTION_NAME_ARR = new String[] {
+
+    public static final String[] DEFINITION_FUNCTION_NAME_ARR = new String[]{
             "format"
     };
 
@@ -28,6 +31,13 @@ public class FunctionConstant {
         return Arrays.asList(DEFINITION_FUNCTION_NAME_ARR).contains(functionName.split("\\(")[0]);
     }
 
-
-
+    public static List<String> isExistFunction(String sqlPartStr) {
+        List<String> functionNames = new ArrayList<>();
+        for (String functionName : DEFINITION_FUNCTION_NAME_ARR) {
+            if (sqlPartStr.contains(functionName)) {
+                functionNames.add(functionName);
+            }
+        }
+        return functionNames;
+    }
 }
