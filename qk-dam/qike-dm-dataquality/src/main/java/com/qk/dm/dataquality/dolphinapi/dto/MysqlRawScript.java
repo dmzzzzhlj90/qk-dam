@@ -46,6 +46,8 @@ public class MysqlRawScript {
 
     private Long task_code;
 
+    private String rule_meta_data;
+
     private String sql_rpc_url;
 
 }
