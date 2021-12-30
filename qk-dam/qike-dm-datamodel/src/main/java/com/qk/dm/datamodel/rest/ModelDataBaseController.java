@@ -2,6 +2,8 @@ package com.qk.dm.datamodel.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.metedata.entity.MtdApiDb;
+import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.service.DataBaseService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +55,7 @@ public class ModelDataBaseController {
      * @return DefaultCommonResult<List < String>>
      */
     @GetMapping("")
-    public DefaultCommonResult<List<String>> getAllDataBase(String connectType, String dataSourceName) {
+    public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(String connectType, String dataSourceName) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataBase(connectType, dataSourceName));
     }
 
@@ -64,7 +66,7 @@ public class ModelDataBaseController {
      * @return DefaultCommonResult
      */
     @GetMapping("/table")
-    public DefaultCommonResult<List<String>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
+    public DefaultCommonResult<List<MtdTables>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllTable(connectType, dataSourceName, dataBaseName));
     }
 

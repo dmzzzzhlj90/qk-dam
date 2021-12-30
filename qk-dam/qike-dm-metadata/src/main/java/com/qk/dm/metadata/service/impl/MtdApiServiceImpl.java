@@ -19,7 +19,6 @@ import org.apache.atlas.model.instance.AtlasStruct;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -129,7 +128,6 @@ public class MtdApiServiceImpl implements MtdApiService {
     return mtdApi;
   }
 
-<<<<<<< HEAD
   public Integer getExistData(String typeName, String dbName, String tableName, String server){
     List<Map<String, String>> uniqAttributesList = new ArrayList<>();
     Map<String, String> map = new HashMap<>();
@@ -165,8 +163,6 @@ public class MtdApiServiceImpl implements MtdApiService {
     return mtdApi;
   }
 
-=======
->>>>>>> dev
   private List<MtdApiDb> buildMataDataList(List<AtlasEntityHeader> entities) {
     List<MtdApiDb> mtdApiDbVOList = new ArrayList<>();
     entities.forEach(
