@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 数据质量_规则调度_结果表
+ */
 @Data
 @Entity
 @Table(name = "qk_dqc_scheduler_result")
@@ -60,9 +63,15 @@ public class DqcSchedulerResult implements Serializable {
     private Long taskCode;
 
     /**
+     * 执行规则元数据信息
+     */
+    @Column(name = "rule_meta_data", nullable = false)
+    private String ruleMetaData;
+
+    /**
      * 创建人
      */
-    @Column(name = "create_userid", nullable = false)
+    @Column(name = "create_userid")
     private String createUserid;
 
     /**
@@ -94,7 +103,7 @@ public class DqcSchedulerResult implements Serializable {
     /**
      * 执行参数
      */
-    @Column(name = "rule_params")
+    @Column(name = "rule_params", nullable = false)
     private String ruleParams;
 
     /**
