@@ -4,6 +4,7 @@ import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author shenpj
@@ -60,4 +61,9 @@ public interface DataBaseService {
      * @return
      */
     Integer getExistData(String connectType, String dataSourceName, String dataBaseName, String tableName);
+    /**
+     * 获取数据源连接名称，id
+     * @return
+     */
+  Map<String,Integer> getAllDataSources(String connectType);
 }
