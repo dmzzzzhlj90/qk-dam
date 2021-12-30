@@ -38,22 +38,23 @@ dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
+    implementation project(":qk-authorization")
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
-    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
-    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
     implementation 'com.alibaba:easyexcel'
     implementation 'org.mapstruct:mapstruct'
+    implementation 'org.aspectj:aspectjrt:1.9.7'
+    implementation 'org.aspectj:aspectjweaver:1.9.7'
     annotationProcessor(
             "javax.annotation:javax.annotation-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
-    testImplementation 'org.testng:testng'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    annotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
