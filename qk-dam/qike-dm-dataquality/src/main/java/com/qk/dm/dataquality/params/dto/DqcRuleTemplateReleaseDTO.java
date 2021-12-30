@@ -16,7 +16,7 @@ public class DqcRuleTemplateReleaseDTO {
   @NotNull(message = "id不能为空！")
   private Long id;
 
-  /** 发布状态 0-下线 1-发布 */
+  /** 发布状态 "OFFLINE":"下线","RELEASE":"发布 */
   @NotNull(message = "发布状态不能为空！")
-  private Integer publishState;
+  private String publishState;
 }

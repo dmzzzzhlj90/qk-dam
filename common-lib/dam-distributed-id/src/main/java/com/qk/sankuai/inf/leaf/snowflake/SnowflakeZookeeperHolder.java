@@ -31,12 +31,12 @@ public class SnowflakeZookeeperHolder {
   private String listenAddress = null; // 保存自身的key ip:port
   private int workerID;
   private static final String PREFIX_ZK_PATH =
-      "/snowflake/" + PropertyFactory.getProperties().getProperty("com.sankuai.inf.leaf.name");
+          "/snowflake/" + PropertyFactory.getProperties().getProperty("com.sankuai.inf.leaf.name");
   private static final String PROP_PATH =
-      System.getProperty("java.io.tmpdir")
-          + File.separator
-          + PropertyFactory.getProperties().getProperty("com.sankuai.inf.leaf.name")
-          + "/leafconf/{port}/workerID.properties";
+          System.getProperty("java.io.tmpdir")
+                  + File.separator
+                  + PropertyFactory.getProperties().getProperty("com.sankuai.inf.leaf.name")
+                  + "/leafconf/{port}/workerID.properties";
   private static final String PATH_FOREVER = PREFIX_ZK_PATH + "/forever"; // 保存所有数据持久的节点
   private String ip;
   private String port;
@@ -53,7 +53,7 @@ public class SnowflakeZookeeperHolder {
   public boolean init() {
     try {
       CuratorFramework curator =
-          createWithOptions(connectionString, new RetryUntilElapsed(1000, 4), 10000, 6000);
+              createWithOptions(connectionString, new RetryUntilElapsed(1000, 4), 10000, 6000);
       curator.start();
       Stat stat = curator.checkExists().forPath(PATH_FOREVER);
       if (stat == null) {
@@ -81,16 +81,16 @@ public class SnowflakeZookeeperHolder {
           workerID = workerid; // 启动worder时使用会使用
           if (!checkInitTimeStamp(curator, zk_AddressNode)) {
             throw new CheckLastTimeException(
-                "init timestamp check error,forever node timestamp gt this node time");
+                    "init timestamp check error,forever node timestamp gt this node time");
           }
           // 准备创建临时节点
           doService(curator);
           updateLocalWorkerID(workerID);
           LOGGER.info(
-              "[Old NODE]find forever node have this endpoint ip-{} port-{} workid-{} childnode and start SUCCESS",
-              ip,
-              port,
-              workerID);
+                  "[Old NODE]find forever node have this endpoint ip-{} port-{} workid-{} childnode and start SUCCESS",
+                  ip,
+                  port,
+                  workerID);
         } else {
           // 表示新启动的节点,创建持久节点 ,不用check时间
           String newNode = createNode(curator);
@@ -100,10 +100,10 @@ public class SnowflakeZookeeperHolder {
           doService(curator);
           updateLocalWorkerID(workerID);
           LOGGER.info(
-              "[New NODE]can not find node on forever node that endpoint ip-{} port-{} workid-{},create own node on forever node and start SUCCESS ",
-              ip,
-              port,
-              workerID);
+                  "[New NODE]can not find node on forever node that endpoint ip-{} port-{} workid-{},create own node on forever node and start SUCCESS ",
+                  ip,
+                  port,
+                  workerID);
         }
       }
     } catch (Exception e) {
@@ -135,20 +135,20 @@ public class SnowflakeZookeeperHolder {
                 return thread;
               }
             })
-        .scheduleWithFixedDelay(
-            new Runnable() {
-              @Override
-              public void run() {
-                updateNewData(curator, zk_AddressNode);
-              }
-            },
-            1L,
-            3L,
-            TimeUnit.SECONDS); // 每3s上报数据
+            .scheduleWithFixedDelay(
+                    new Runnable() {
+                      @Override
+                      public void run() {
+                        updateNewData(curator, zk_AddressNode);
+                      }
+                    },
+                    1L,
+                    3L,
+                    TimeUnit.SECONDS); // 每3s上报数据
   }
 
   private boolean checkInitTimeStamp(CuratorFramework curator, String zk_AddressNode)
-      throws Exception {
+          throws Exception {
     byte[] bytes = curator.getData().forPath(zk_AddressNode);
     Endpoint endPoint = deBuildData(new String(bytes));
     // 该节点的时间不能小于最后一次上报的时间
@@ -165,10 +165,10 @@ public class SnowflakeZookeeperHolder {
   private String createNode(CuratorFramework curator) throws Exception {
     try {
       return curator
-          .create()
-          .creatingParentsIfNeeded()
-          .withMode(CreateMode.PERSISTENT_SEQUENTIAL)
-          .forPath(PATH_FOREVER + "/" + listenAddress + "-", buildData().getBytes());
+              .create()
+              .creatingParentsIfNeeded()
+              .withMode(CreateMode.PERSISTENT_SEQUENTIAL)
+              .forPath(PATH_FOREVER + "/" + listenAddress + "-", buildData().getBytes());
     } catch (Exception e) {
       LOGGER.error("create node error msg {} ", e.getMessage());
       throw e;
@@ -226,9 +226,9 @@ public class SnowflakeZookeeperHolder {
       try {
         boolean mkdirs = leafConfFile.getParentFile().mkdirs();
         LOGGER.info(
-            "init local file cache create parent dis status is {}, worker id is {}",
-            mkdirs,
-            workerID);
+                "init local file cache create parent dis status is {}, worker id is {}",
+                mkdirs,
+                workerID);
         if (mkdirs) {
           if (leafConfFile.createNewFile()) {
             FileUtils.writeStringToFile(leafConfFile, "workerID=" + workerID, false);
@@ -244,16 +244,16 @@ public class SnowflakeZookeeperHolder {
   }
 
   private CuratorFramework createWithOptions(
-      String connectionString,
-      RetryPolicy retryPolicy,
-      int connectionTimeoutMs,
-      int sessionTimeoutMs) {
+          String connectionString,
+          RetryPolicy retryPolicy,
+          int connectionTimeoutMs,
+          int sessionTimeoutMs) {
     return CuratorFrameworkFactory.builder()
-        .connectString(connectionString)
-        .retryPolicy(retryPolicy)
-        .connectionTimeoutMs(connectionTimeoutMs)
-        .sessionTimeoutMs(sessionTimeoutMs)
-        .build();
+            .connectString(connectionString)
+            .retryPolicy(retryPolicy)
+            .connectionTimeoutMs(connectionTimeoutMs)
+            .sessionTimeoutMs(sessionTimeoutMs)
+            .build();
   }
 
   /** 上报数据结构 */

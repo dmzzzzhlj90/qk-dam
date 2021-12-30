@@ -28,13 +28,13 @@ public class SegmentIDGenImpl implements IDGen {
   private static final long SEGMENT_DURATION = 15 * 60 * 1000L;
 
   private ExecutorService service =
-      new ThreadPoolExecutor(
-          5,
-          Integer.MAX_VALUE,
-          60L,
-          TimeUnit.SECONDS,
-          new SynchronousQueue<Runnable>(),
-          new UpdateThreadFactory());
+          new ThreadPoolExecutor(
+                  5,
+                  Integer.MAX_VALUE,
+                  60L,
+                  TimeUnit.SECONDS,
+                  new SynchronousQueue<Runnable>(),
+                  new UpdateThreadFactory());
   private volatile boolean initOK = false;
   private Map<String, SegmentBuffer> cache = new ConcurrentHashMap<String, SegmentBuffer>();
   private IDAllocDao dao;
@@ -65,26 +65,26 @@ public class SegmentIDGenImpl implements IDGen {
 
   private void updateCacheFromDbAtEveryMinute() {
     ScheduledExecutorService service =
-        Executors.newSingleThreadScheduledExecutor(
-            new ThreadFactory() {
-              @Override
-              public Thread newThread(Runnable r) {
-                Thread t = new Thread(r);
-                t.setName("check-idCache-thread");
-                t.setDaemon(true);
-                return t;
-              }
-            });
+            Executors.newSingleThreadScheduledExecutor(
+                    new ThreadFactory() {
+                      @Override
+                      public Thread newThread(Runnable r) {
+                        Thread t = new Thread(r);
+                        t.setName("check-idCache-thread");
+                        t.setDaemon(true);
+                        return t;
+                      }
+                    });
     service.scheduleWithFixedDelay(
-        new Runnable() {
-          @Override
-          public void run() {
-            updateCacheFromDb();
-          }
-        },
-        60,
-        60,
-        TimeUnit.SECONDS);
+            new Runnable() {
+              @Override
+              public void run() {
+                updateCacheFromDb();
+              }
+            },
+            60,
+            60,
+            TimeUnit.SECONDS);
   }
 
   private void updateCacheFromDb() {
@@ -181,11 +181,11 @@ public class SegmentIDGenImpl implements IDGen {
         nextStep = nextStep / 2 >= buffer.getMinStep() ? nextStep / 2 : nextStep;
       }
       logger.info(
-          "leafKey[{}], step[{}], duration[{}mins], nextStep[{}]",
-          key,
-          buffer.getStep(),
-          String.format("%.2f", ((double) duration / (1000 * 60))),
-          nextStep);
+              "leafKey[{}], step[{}], duration[{}mins], nextStep[{}]",
+              key,
+              buffer.getStep(),
+              String.format("%.2f", ((double) duration / (1000 * 60))),
+              nextStep);
       LeafAlloc temp = new LeafAlloc();
       temp.setKey(key);
       temp.setStep(nextStep);
@@ -207,32 +207,32 @@ public class SegmentIDGenImpl implements IDGen {
       try {
         final Segment segment = buffer.getCurrent();
         if (!buffer.isNextReady()
-            && (segment.getIdle() < 0.9 * segment.getStep())
-            && buffer.getThreadRunning().compareAndSet(false, true)) {
+                && (segment.getIdle() < 0.9 * segment.getStep())
+                && buffer.getThreadRunning().compareAndSet(false, true)) {
           service.execute(
-              new Runnable() {
-                @Override
-                public void run() {
-                  Segment next = buffer.getSegments()[buffer.nextPos()];
-                  boolean updateOk = false;
-                  try {
-                    updateSegmentFromDb(buffer.getKey(), next);
-                    updateOk = true;
-                    logger.info("update segment {} from db {}", buffer.getKey(), next);
-                  } catch (Exception e) {
-                    logger.warn(buffer.getKey() + " updateSegmentFromDb exception", e);
-                  } finally {
-                    if (updateOk) {
-                      buffer.wLock().lock();
-                      buffer.setNextReady(true);
-                      buffer.getThreadRunning().set(false);
-                      buffer.wLock().unlock();
-                    } else {
-                      buffer.getThreadRunning().set(false);
+                  new Runnable() {
+                    @Override
+                    public void run() {
+                      Segment next = buffer.getSegments()[buffer.nextPos()];
+                      boolean updateOk = false;
+                      try {
+                        updateSegmentFromDb(buffer.getKey(), next);
+                        updateOk = true;
+                        logger.info("update segment {} from db {}", buffer.getKey(), next);
+                      } catch (Exception e) {
+                        logger.warn(buffer.getKey() + " updateSegmentFromDb exception", e);
+                      } finally {
+                        if (updateOk) {
+                          buffer.wLock().lock();
+                          buffer.setNextReady(true);
+                          buffer.getThreadRunning().set(false);
+                          buffer.wLock().unlock();
+                        } else {
+                          buffer.getThreadRunning().set(false);
+                        }
+                      }
                     }
-                  }
-                }
-              });
+                  });
         }
         long value = segment.getValue().getAndIncrement();
         if (value < segment.getMax()) {

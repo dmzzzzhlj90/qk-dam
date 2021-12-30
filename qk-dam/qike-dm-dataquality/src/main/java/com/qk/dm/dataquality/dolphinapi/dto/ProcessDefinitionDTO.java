@@ -17,17 +17,17 @@ import java.util.Map;
 @Data
 public class ProcessDefinitionDTO implements Serializable {
 
-    private int id;
+    private Integer id;
+
+    private Long code;
 
     private String name;
 
-    private int version;
+    private Integer version;
 
     private String releaseState;
 
-    private int projectId;
-
-    private String processDefinitionJson;
+    private Long projectCode;
 
     private String description;
 
@@ -37,13 +37,13 @@ public class ProcessDefinitionDTO implements Serializable {
 
     private Map<String, String> globalParamMap;
 
-    private Date createTime;
-
-    private Date updateTime;
+//    private Date createTime;
+//
+//    private Date updateTime;
 
     private String flag;
 
-    private int userId;
+    private Integer userId;
 
     private String userName;
 
@@ -51,20 +51,16 @@ public class ProcessDefinitionDTO implements Serializable {
 
     private String locations;
 
-    private String connects;
-
-    private String receivers;
-
-    private String receiversCc;
-
     private String scheduleReleaseState;
 
-    private int timeout;
+    private Integer timeout;
 
-    private int tenantId;
+    private Integer tenantId;
+
+    private String tenantCode;
 
     private String modifyBy;
 
-    private String resourceIds;
+    private Integer warningGroupId;
 
 }

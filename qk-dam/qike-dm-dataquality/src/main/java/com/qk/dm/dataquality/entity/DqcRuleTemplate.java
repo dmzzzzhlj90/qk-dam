@@ -28,19 +28,19 @@ public class DqcRuleTemplate implements Serializable {
   @Column(name = "temp_name", nullable = false)
   private String tempName;
 
-  /** 模板类型1-系统内置 2-自定义 */
+  /** 模板类型 "BUILT_IN_SYSTEM":"系统内置","CUSTOM":"自定义" */
   @Column(name = "temp_type", nullable = false)
-  private Integer tempType;
+  private String tempType;
 
   /** 分类目录 */
   @Column(name = "dir_id", nullable = false)
   private String dirId;
 
   /** 质量维度 */
-  @Column(name = "dimension_id", nullable = false)
-  private Integer dimensionId;
+  @Column(name = "dimension_type", nullable = false)
+  private String dimensionType;
 
-  /** 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔 */
+  /** 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔 */
   @Column(name = "engine_type", nullable = false)
   private String engineType;
 
@@ -56,11 +56,11 @@ public class DqcRuleTemplate implements Serializable {
   @Column(name = "temp_result", nullable = false)
   private String tempResult;
 
-  /** 发布状态 -1-下线 0-草稿 1-发布 */
+  /** 发布状态 "OFFLINE":"下线","OUTLINE":"草稿","RELEASE":"发布"; */
   @Column(name = "publish_state", nullable = false)
-  private Integer publishState;
+  private String publishState;
 
-  /** 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则"; */
+  /** 规则类型 "RULE_TYPE_FIELD":"字段级别规则","RULE_TYPE_TABLE":"表级别规则","RULE_TYPE_DB":"库级别规则" */
   @Column(name = "rule_type", nullable = false)
   private String ruleType;
 

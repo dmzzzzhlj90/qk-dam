@@ -1,8 +1,9 @@
 package com.qk.dm.datasource.service;
 
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 数据服务对外提供API接口
@@ -14,10 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DataSourceApiService {
 
-  // ========================API调用=============================
-  List<String> getAllConnType();
+    // ========================API调用=============================
+    List<String> getAllConnType();
 
-  List<ResultDatasourceInfo> getResultDataSourceByType(String type);
+    List<ResultDatasourceInfo> getResultDataSourceByType(String type);
 
-  ResultDatasourceInfo getResultDataSourceByConnectName(String connectName);
+    ResultDatasourceInfo getDataSource(String dataSourceName);
+
+    List<ResultDatasourceInfo> getDataSourceList(List<String> dataSourceNames);
+
 }

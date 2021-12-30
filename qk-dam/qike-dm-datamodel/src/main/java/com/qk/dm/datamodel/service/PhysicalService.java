@@ -39,4 +39,6 @@ public interface PhysicalService {
   void push(List<Long> idList);
 
   void reverseBase(ModelReverseBaseDTO modelReverseBaseDTO);
+
+  List<String> queryDataType();
 }

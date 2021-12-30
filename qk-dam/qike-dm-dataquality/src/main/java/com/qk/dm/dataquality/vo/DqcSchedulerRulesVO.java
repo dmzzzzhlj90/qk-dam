@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 数据质量_规则调度_规则信息VO
@@ -30,54 +33,84 @@ public class DqcSchedulerRulesVO {
     private Long id;
 
     /**
+     * 规则id
+     */
+    @NotBlank(message = "规则id不能为空！")
+    private String ruleId;
+
+    /**
+     * 规则名称
+     */
+    @NotBlank(message = "规则名称不能为空！")
+    private String ruleName;
+
+    /**
      * 作业id
      */
+    @NotBlank(message = "作业id不能为空！")
     private String jobId;
 
     /**
      * 规则模版id
      */
+    @NotBlank(message = "规则模版id不能为空！")
     private Long ruleTempId;
 
     /**
-     * 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则";
+     * 规则类型 "RULE_TYPE_FIELD":"字段级别规则","RULE_TYPE_TABLE":"表级别规则","RULE_TYPE_DB":"库级别规则";
      */
+    @NotBlank(message = "规则类型不能为空！")
     private String ruleType;
 
     /**
-     * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔
+     * 流程实例节点taskCode
      */
+    @NotBlank(message = "流程实例节点taskCode不能为空！")
+    private Long taskCode;
+
+    /**
+     * 适用引擎 MYSQL HIVE ORACLE
+     */
+    @NotBlank(message = "适用引擎不能为空！")
     private String engineType;
 
     /**
-     * 数据连接地址
+     * 数据连接
      */
-    private String databaseUrl;
+    @NotBlank(message = "数据连接不能为空！")
+    private String dataSourceName;
 
     /**
      * 数据库名称
      */
+    @NotBlank(message = "数据库名称不能为空！")
     private String databaseName;
 
     /**
      * 表名称
      */
-    private String tableName;
+    private List<String> tableList;
 
     /**
      * 字段名称
      */
-    private String fieldName;
+    private List<String> fieldList;
 
     /**
-     * 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则";
+     * 扫描范围 "FULL_TABLE":"全表", "CONDITION":"条件";
      */
+    @NotBlank(message = "主题不能为空！")
     private String scanType;
 
     /**
      * 扫描条件SQL
      */
     private String scanSql;
+
+    /**
+     * 执行sql
+     */
+    private String executeSql;
 
     /**
      * 告警表达式

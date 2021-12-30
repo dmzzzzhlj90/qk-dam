@@ -14,4 +14,6 @@ public class MtdApiParams {
   private String dbName;
   private String tableName;
   private String server;
+  private Integer limit;
+  private Integer offset;
 }

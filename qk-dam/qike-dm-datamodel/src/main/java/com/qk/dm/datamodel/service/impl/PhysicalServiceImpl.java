@@ -8,6 +8,7 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdAttributes;
 import com.qk.dam.model.constant.ModelStatus;
 import com.qk.dam.model.constant.ModelType;
+import com.qk.dam.model.enums.DataTypeEnum;
 import com.qk.dam.sqlbuilder.SqlBuilderFactory;
 import com.qk.dam.sqlbuilder.model.Column;
 import com.qk.dam.sqlbuilder.model.Table;
@@ -29,6 +30,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
@@ -578,6 +580,15 @@ public class PhysicalServiceImpl implements PhysicalService {
           handelReverseBase(tableName,modelReverseBaseDTO);
         }
     );
+  }
+
+  /**
+   * 查询数据格式
+   * @return
+   */
+  @Override
+  public List<String> queryDataType() {
+    return DataTypeEnum.getDataTypeName();
   }
 
   /**

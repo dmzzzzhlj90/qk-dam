@@ -1,7 +1,9 @@
 package com.qk.dm.dataquality.dolphinapi.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -12,26 +14,12 @@ import java.io.Serializable;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ScheduleSearchDTO implements Serializable {
-    Integer processDefinitionId;
+    Long processDefinitionCode;
     Integer pageNo;
     Integer pageSize;
     /** 搜索值 */
     String searchVal;
-
-    public ScheduleSearchDTO() {
-    }
-
-    public ScheduleSearchDTO(Integer processDefinitionId, Integer pageNo, Integer pageSize) {
-        this.processDefinitionId = processDefinitionId;
-        this.pageNo = pageNo;
-        this.pageSize = pageSize;
-    }
-
-    public ScheduleSearchDTO(Integer processDefinitionId, Integer pageNo, Integer pageSize, String searchVal) {
-        this.processDefinitionId = processDefinitionId;
-        this.pageNo = pageNo;
-        this.pageSize = pageSize;
-        this.searchVal = searchVal;
-    }
 }

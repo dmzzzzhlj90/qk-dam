@@ -9,7 +9,9 @@ import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
-import com.qk.dm.datamodel.service.*;
+import com.qk.dm.datamodel.service.ModelPhysicalColumnService;
+import com.qk.dm.datamodel.service.ModelPhysicalTableService;
+import com.qk.dm.datamodel.service.PhysicalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -71,8 +73,9 @@ public class ModelPhysicalController {
 
   /**
    * 修改——关系建模
+   * @param modelPhysicalDTO
+   * @return
    */
-
   @PutMapping
   public DefaultCommonResult update(
       @RequestBody @Validated ModelPhysicalDTO modelPhysicalDTO) {
@@ -82,8 +85,8 @@ public class ModelPhysicalController {
 
   /**
    * 查询——关系建模
-   *
-   * @return
+   * @param queryModelPhysicalDTO
+   * @return DefaultCommonResult<PageResultVO<ModelPhysicalVO>>
    */
   @PostMapping("/query")
   public DefaultCommonResult<PageResultVO<ModelPhysicalVO>> query(
@@ -92,8 +95,11 @@ public class ModelPhysicalController {
     return DefaultCommonResult.success(ResultCodeEnum.OK, pageList);
   }
 
+
   /**
    * 详情——关系建模
+   * @param id
+   * @return DefaultCommonResult<ModelPhysicalTableVO>
    */
   @GetMapping("/{id}")
   public DefaultCommonResult<ModelPhysicalTableVO> getModelPhysical(
@@ -106,7 +112,7 @@ public class ModelPhysicalController {
    * 统计信息——关系建模
    *
    * @param queryModelPhysicalDTO
-   * @return
+   * @return DefaultCommonResult<CensusDataVO>
    */
   @PostMapping("/census")
   public DefaultCommonResult<CensusDataVO> getCensusData(
@@ -118,7 +124,7 @@ public class ModelPhysicalController {
   /**
    * 数据类型下拉列表——关系建模
    *
-   * @return0 DefaultCommonResult
+   * @return DefaultCommonResult<List<Map<String,String>>>
    */
   @GetMapping("/data/types")
   public DefaultCommonResult<List<Map<String,String>>> getDataTypes() {
@@ -129,7 +135,7 @@ public class ModelPhysicalController {
    * 预览sql——关系建模
    * @param tableId 基础信息id
    * @param type  sql类型
-   * @return
+   * @return DefaultCommonResult<String>
    */
   @GetMapping("/query/sql")
   public DefaultCommonResult<String> getSql(@NotNull @RequestParam("tableId") Long tableId,@NotNull @RequestParam("type") int type){
@@ -171,7 +177,7 @@ public class ModelPhysicalController {
 
   /**
    * 新建关系获取表名称（上线表的表名称）
-   * @return
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/tables")
   public DefaultCommonResult<List<String>> queryTables(){
@@ -181,11 +187,20 @@ public class ModelPhysicalController {
   /**
    * 根据表名称查询表字段名称
    * @param tableName
-   * @return
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/column")
   public DefaultCommonResult<List<String>> queryColumn(@NotNull @RequestParam("tableName") String tableName){
     return DefaultCommonResult.success(ResultCodeEnum.OK,modelPhysicalColumnService.queryColumn(tableName));
+  }
+
+  /**
+   * 基础信息—查询数据格式
+   * @return DefaultCommonResult<List<String>>
+   */
+  @GetMapping("/data/fromat")
+  public DefaultCommonResult<List<String>> queryDataType(){
+    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.queryDataType());
   }
   //============================数据连接调用=========================================>
 

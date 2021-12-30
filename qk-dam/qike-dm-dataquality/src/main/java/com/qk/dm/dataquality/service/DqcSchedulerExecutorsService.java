@@ -2,8 +2,6 @@ package com.qk.dm.dataquality.service;
 
 import com.qk.dm.dataquality.params.dto.DqcSchedulerDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerReleaseDTO;
-import com.qk.dm.dataquality.params.dto.DqcSchedulerRuningDTO;
-import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 
 /**
  * @author shenpj
@@ -13,11 +11,7 @@ import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 public interface DqcSchedulerExecutorsService {
     void release(DqcSchedulerReleaseDTO dqcSchedulerReleaseDto);
 
-    void runing(DqcSchedulerRuningDTO dqcSchedulerRuningDTO);
-
-    DqcProcessInstanceVO instanceDetailByList(Long id);
-
-    void createSchedule(DqcSchedulerDTO dqcSchedulerDTO);
+    void runing(Long id);
 
     void update(Integer scheduleId, DqcSchedulerDTO dqcSchedulerDTO);
 
@@ -27,5 +21,5 @@ public interface DqcSchedulerExecutorsService {
 
     void deleteOne(Integer scheduleId, DqcSchedulerDTO dqcSchedulerDTO);
 
-    Object search(Integer processDefinitionId);
+    Object search(Long processDefinitionCode);
 }

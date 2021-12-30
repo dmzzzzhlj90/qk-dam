@@ -1,10 +1,12 @@
 package com.qk.dm.dataquality.dolphinapi.service;
 
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessDefinitionDTO;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 调度引擎Dolphin Scheduler 流程定义相关操作
@@ -16,28 +18,22 @@ import java.util.List;
 @Service
 public interface ProcessDefinitionApiService {
 
-    int saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+    Long saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
 
-    void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+    void save(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo, Integer version);
 
-    void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO);
+    void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Map<String, ConnectBasicInfo> dataSourceInfo, ProcessDefinitionDTO processDefinitionCode);
 
-    ProcessDefinitionDTO queryProcessDefinitionInfo(String projectName, String searchVal, String jobId);
+    ProcessDefinitionDTO queryProcessDefinitionInfo(Long projectCode, String searchVal, String jobId);
 
-    void delete(String projectName, Integer processDefinitionId);
+    void delete(Long projectCode, Long processDefinitionCode);
 
-    void deleteBulk(String projectName, List<Integer> processDefinitionIds);
+    void deleteBulk(List<Long> processDefinitionIdList,Long projectCode);
 
-    void release(Integer processDefinitionId, Integer releaseState);
+    void release(Long processDefinitionCode, String releaseState);
 
-    void deleteOne(Integer processDefinitionId);
+    void startCheck(Long processDefinitionCode);
 
-    void verifyName(String name);
-
-    void copy(Integer processDefinitionId);
-
-    void startCheck(Integer processDefinitionId);
-
-    void startInstance(Integer processDefinitionId);
+    void startInstance(Long processDefinitionCode);
 
 }

@@ -5,12 +5,17 @@ import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
 import com.qk.dam.metedata.entity.*;
-
+import com.qk.dam.metedata.vo.AtlasPagination;
+import com.qk.dam.metedata.vo.MtdColumnSearchVO;
+import com.qk.dam.metedata.vo.MtdDbSearchVO;
+import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.feign.DataSourceFeign;
 import com.qk.dm.feign.MetaDataFeign;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -56,16 +61,33 @@ public class DataBaseInfoDefaultApi {
      *
      * @return DefaultCommonResult
      */
-    public ResultDatasourceInfo getResultDataSourceByConnectName(String connectName) {
+    public ResultDatasourceInfo getDataSource(String connectName) {
         ResultDatasourceInfo resultDatasourceInfo =
-                dataSourceFeign.getResultDataSourceByConnectName(connectName).getData();
+                dataSourceFeign.getDataSource(connectName).getData();
         //todo feign 加判断null
         if (resultDatasourceInfo != null) {
-          ConnectBasicInfo connectInfo =
-              ConnectInfoConvertUtils.getConnectInfo(
-                  resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
+            ConnectBasicInfo connectInfo =
+                    ConnectInfoConvertUtils.getConnectInfo(
+                            resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
         }
-      return resultDatasourceInfo;
+        return resultDatasourceInfo;
+    }
+
+    /**
+     * 获取数据源集合
+     *
+     * @return DefaultCommonResult
+     */
+    public Map<String, ConnectBasicInfo> getDataSourceMap(List<String> dataSourceNames) {
+        Map<String, ConnectBasicInfo> dataSourceMap = new HashMap<>(16);
+        List<ResultDatasourceInfo> datasourceInfoList = dataSourceFeign.getDataSourceList(dataSourceNames).getData();
+
+        for (ResultDatasourceInfo resultDatasourceInfo : datasourceInfoList) {
+            ConnectBasicInfo connectInfo = ConnectInfoConvertUtils
+                    .getConnectInfo(resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
+            dataSourceMap.put(resultDatasourceInfo.getDataSourceName(), connectInfo);
+        }
+        return dataSourceMap;
     }
 
     // ========================元数据服务_API调用=====================================
@@ -89,66 +111,49 @@ public class DataBaseInfoDefaultApi {
         return metaDataFeign.mtdDetail(mtdApiParams).getData();
     }
 
-    /**
-     * 新建API__获取db库信息下拉列表
-     *
-     * @param dbType
-     * @return DefaultCommonResult<List < String>>
-     */
-    public List<String> getAllDataBase(String dbType) {
-        String type = dbType.split("-")[1];
-        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.mtdDetail(MtdApiParams.builder().typeName(type + "_db").build());
-        List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
-        return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
-    }
 
     /**
      * 新建API__获取db库信息下拉列表
-     * @param dbType
+     *
+     * @param type
      * @param server
      * @return
      */
-    public List<String> getAllDataBase(String dbType,String server) {
-        String type = dbType.split("-")[1];
-        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.getDbs(type + "_db",server);
-        List<MtdApiDb> mtdApiDbs = mtdApiDefaultCommonResult.getData().getEntities();
-        return mtdApiDbs.stream().map(MtdApiDb::getDisplayText).collect(Collectors.toList());
+    public List<MtdApiDb> getAllDataBase(String type, String server) {
+        DefaultCommonResult<List<MtdApiDb>> dataBaseList = metaDataFeign.getDataBaseList(
+                new MtdDbSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
+                        type + "_db", server));
+        return dataBaseList.getData();
+
     }
 
     /**
      * 新建API__获取table表信息下拉列表
      *
-     * @param dbType,server,dbName
+     * @param type,server,dbName
      * @return DefaultCommonResult
      */
-    public List<String> getAllTable(String dbType, String server, String dbName) {
-        String type = dbType.split("-")[1];
-        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.mtdDetail(
-                        MtdApiParams.builder().typeName(type + "_db").server(server).dbName(dbName).build());
-        List<MtdTables> mtdTablesList = mtdApiDefaultCommonResult.getData().getTables();
-        return mtdTablesList.stream().map(MtdTables::getDisplayText).collect(Collectors.toList());
+    public List<MtdTables> getAllTable(String type, String server, String dbName) {
+        DefaultCommonResult<List<MtdTables>> tableList = metaDataFeign.getTableList(
+                new MtdTableSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
+                        type + "_table", dbName, server));
+
+        return tableList.getData();
     }
 
     /**
      * 新建API__获取column字段信息下拉列表
      *
-     * @param dbType,server,dbName
+     * @param type,server,dbName
      * @return DefaultCommonResult
      */
-    public List getAllColumn(String dbType, String server, String dbName, String tableName) {
-        String type = dbType.split("-")[1];
-        DefaultCommonResult<MtdApi> mtdApiDefaultCommonResult =
-                metaDataFeign.mtdDetail(
-                        MtdApiParams.builder()
-                                .typeName(type + "_table")
-                                .server(server)
-                                .dbName(dbName)
-                                .tableName(tableName)
-                                .build());
-        return mtdApiDefaultCommonResult.getData().getColumns();
+    public List getAllColumn(String type, String server, String dbName, String tableName) {
+
+        DefaultCommonResult<List<MtdAttributes>> columnList = metaDataFeign.getColumnList(
+                new MtdColumnSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
+                        type + "_column", dbName, server, tableName));
+
+        return columnList.getData();
     }
 
     /**

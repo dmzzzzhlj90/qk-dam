@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.constant;
 
-import org.springframework.util.ObjectUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +12,8 @@ import java.util.Map;
  */
 public enum SchedulerTypeEnum {
 
-    SCHEDULER_TYPE_SINGLE("SCHEDULER_TYPE_SINGLE", "单次调度"),
-    SCHEDULER_TYPE_CYCLE("SCHEDULER_TYPE_CYCLE", "周期调度");
+    SINGLE("SINGLE", "单次调度"),
+    CYCLE("CYCLE", "周期调度");
 
     private String code;
     private String name;
@@ -23,18 +21,6 @@ public enum SchedulerTypeEnum {
     SchedulerTypeEnum(String code, String name) {
         this.code = code;
         this.name = name;
-    }
-
-    public static SchedulerTypeEnum getVal(String name) {
-        if (ObjectUtils.isEmpty(name)) {
-            return null;
-        }
-        for (SchedulerTypeEnum enums : SchedulerTypeEnum.values()) {
-            if (name.equals(enums.name)) {
-                return enums;
-            }
-        }
-        return null;
     }
 
     public static Map<String, String> getAllValue() {

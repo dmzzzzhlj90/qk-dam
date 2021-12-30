@@ -42,40 +42,40 @@ public class DqcSchedulerBasicInfo implements Serializable {
     private String dirId;
 
     /**
-     * 调度流程实例ID
+     * 调度流程实例code
      */
-    @Column(name = "process_definition_Id", nullable = false)
-    private Integer processDefinitionId;
+    @Column(name = "process_definition_code", nullable = false)
+    private Long processDefinitionCode;
 
     /**
-     * 提示级别 1-严重
+     * 提示级别 "HINT":"提示","GENERAL":"一般","SERIOUS":"严重","FATAL":"致命";
      */
-    @Column(name = "notify_level", nullable = false)
-    private Integer notifyLevel;
+    @Column(name = "notify_level")
+    private String notifyLevel;
 
     /**
-     * 通知状态 0-关 1-开
+     * 通知状态 "CLOSE":"关","OPEN":"开";
      */
-    @Column(name = "notify_state", nullable = false)
-    private Integer notifyState;
+    @Column(name = "notify_state")
+    private String notifyState;
 
     /**
-     * 通知类型 1-触发告警 2-运行成功
+     * 通知类型 "TRIGGER_ALARM":"触发告警", "RUN_SUCCESS":"运行成功";
      */
-    @Column(name = "notify_type", nullable = false)
-    private Integer notifyType;
+    @Column(name = "notify_type")
+    private String notifyType;
 
     /**
      * 主题，多个以逗号分隔
      */
-    @Column(name = "notify_theme_id", nullable = false)
+    @Column(name = "notify_theme_id")
     private String notifyThemeId;
 
     /**
-     * 调度状态 0-未启动 1-调度中
+     * 调度状态 "OFFLINE":"下线","ONLINE":"上线"
      */
     @Column(name = "scheduler_state")
-    private Integer schedulerState;
+    private String schedulerState;
 
     /**
      * 运行实例状态 0-初始状态 1-运行中 2-停止 3-成功 4-失败

@@ -1,0 +1,116 @@
+{
+  "factSqlDataSets": [
+    {
+      "db": "local",
+      "param": {
+        "id2": "报表通用列3"
+      },
+      "sqlExpress": "select t.* from TP_REP_BASIC_PARAM t where param_name = :id2",
+      "cache": 1,
+      "type": "List",
+      "field":"tests",
+      "fieldName": "测试数据集"
+    },
+    {
+      "db": "local",
+      "param": {
+        "id2": "报表通用列3"
+      },
+      "sqlExpress": "select t.* from TP_REP_BASIC_PARAM t where param_name = :id2",
+      "cache": 1,
+      "type": "List",
+      "field":"tests11",
+      "fieldName": "测试数据集1"
+    }
+  ],
+  "factField": [
+    {
+      "type": "String",
+      "field":"name",
+      "fieldName": "姓名",
+      "defaultVal": ""
+    },
+    {
+      "type": "Integer",
+      "field":"age",
+      "fieldName": "年龄",
+      "defaultVal": ""
+    },
+    {
+      "type": "Date",
+      "field":"birthday",
+      "fieldName": "生日"
+    },
+    {
+      "type": "String",
+      "field":"attr",
+      "fieldName": "地址"
+    }
+  ],
+  "factCompute": [
+    {
+      "type": "String",
+      "field":"birthdayYYYYMMDD",
+      "fieldName": "生日(YYYY-MM-DD)",
+      "expression":"format('birthday','yyyyMMdd')"
+    },
+    {
+      "type": "String",
+      "field":"isAdult",
+      "fieldName": "是否成年",
+      "expression":"age>17?true:false"
+    },
+    {
+      "type": "String",
+      "field":"PARAM_NAME",
+      "fieldName": "sql数据字段",
+      "expression":"tests[0].PARAM_NAME"
+    }
+  ],
+  "factFilterField": [
+    {
+      "type": "Object",
+      "field":"newField",
+      "filterExpress": "name == 'dmz20'"
+    },
+    {
+      "type": "Object",
+      "field":"acccc",
+      "filterExpress": "age == 37"
+    },
+    {
+      "type": "Object",
+      "field":"acccc1",
+      "filterExpress": "age == 38"
+    },
+    {
+      "type": "Object",
+      "field":"acccc2",
+      "fieldName": "ssss",
+      "filterExpress": "age == 39"
+    }
+  ],
+  "factFieldFilterAgg": [
+    {
+      "aggFunc": "SUM",
+      "aggField": "age",
+      "field":"ageSum",
+      "fieldName": "成年求和",
+      "filterExpress": "name !=null && age >=22"
+    },
+    {
+      "aggFunc": "COUNT",
+      "aggField": "age",
+      "field":"ageCount",
+      "fieldName": "成年求和",
+      "filterExpress": "name !=null && age >=22"
+    },
+    {
+      "aggFunc": "AVG",
+      "aggField": "age",
+      "field":"ageAvg",
+      "fieldName": "成年求和",
+      "filterExpress": "name !=null && age <=22"
+    }
+  ]
+}

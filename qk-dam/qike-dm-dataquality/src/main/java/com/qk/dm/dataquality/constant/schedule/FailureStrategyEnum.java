@@ -7,19 +7,18 @@ package com.qk.dm.dataquality.constant.schedule;
  */
 public enum FailureStrategyEnum {
   // 失败策略
-  CONTINUE(0,"CONTINUE"),
-  END(1,"END");
+  CONTINUE("CONTINUE","继续"),
+  END("END","结束");
 
-  Integer code;
-  String value;
+  String code;
+  String name;
 
-
-  FailureStrategyEnum(Integer code, String value) {
+  FailureStrategyEnum(String code, String name) {
     this.code = code;
-    this.value = value;
+    this.name = name;
   }
 
-  public static FailureStrategyEnum fromValue(Integer code) {
+  public static FailureStrategyEnum fromValue(String code) {
     for (FailureStrategyEnum b : FailureStrategyEnum.values()) {
       if (b.code.equals(code)) {
         return b;
@@ -28,7 +27,7 @@ public enum FailureStrategyEnum {
     throw new IllegalArgumentException("Unexpected id '" + code + "'");
   }
 
-  public String getValue() {
-    return value;
+  public String getCode() {
+    return code;
   }
 }

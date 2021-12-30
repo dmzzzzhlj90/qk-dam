@@ -28,7 +28,7 @@ import com.qk.dam.jpa.base.BaseRepository
 import $importClass;
 #end
 #if(!$importClassList.isEmpty())
-## add new empty line
+    ## add new empty line
 
 #end
 public interface $simpleName extends BaseRepository<$entitySimpleName, $primaryKeyDataType> {

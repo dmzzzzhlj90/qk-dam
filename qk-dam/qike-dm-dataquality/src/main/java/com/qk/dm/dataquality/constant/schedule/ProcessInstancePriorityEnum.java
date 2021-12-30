@@ -7,21 +7,21 @@ package com.qk.dm.dataquality.constant.schedule;
  */
 public enum ProcessInstancePriorityEnum {
   // 优先级
-  HIGHEST(1,"HIGHEST"),
-  HIGH(2,"HIGH"),
-  MEDIUM(3,"MEDIUM"),
-  LOW(4,"LOW"),
-  LOWEST(5,"LOWEST");
+  HIGHEST("HIGHEST","最高"),
+  HIGH("HIGH","高"),
+  MEDIUM("MEDIUM","中等"),
+  LOW("LOW","低"),
+  LOWEST("LOWEST","最低");
 
-  Integer code;
-  String value;
+  String code;
+  String name;
 
-  ProcessInstancePriorityEnum(Integer code, String value) {
+  ProcessInstancePriorityEnum(String code, String name) {
     this.code = code;
-    this.value = value;
+    this.name = name;
   }
 
-  public static ProcessInstancePriorityEnum fromValue(Integer code) {
+  public static ProcessInstancePriorityEnum fromValue(String code) {
     for (ProcessInstancePriorityEnum b : ProcessInstancePriorityEnum.values()) {
       if (b.code.equals(code)) {
         return b;
@@ -30,7 +30,7 @@ public enum ProcessInstancePriorityEnum {
     throw new IllegalArgumentException("Unexpected id '" + code + "'");
   }
 
-  public String getValue() {
-    return value;
+  public String getCode() {
+    return code;
   }
 }

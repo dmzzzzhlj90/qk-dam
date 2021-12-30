@@ -1,8 +1,6 @@
 package com.qk.dm.dataquality.dolphinapi.service;
 
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceSearchDTO;
+import com.qk.dm.dataquality.dolphinapi.dto.*;
 
 /**
  * @author shenpj
@@ -16,4 +14,14 @@ public interface ProcessInstanceService {
     ProcessInstanceResultDTO search(ProcessInstanceSearchDTO instanceSearchDTO);
 
     ProcessInstanceDTO detail(Integer processInstanceId);
+
+    void deleteOne(Integer processInstanceId);
+
+    void deleteBulk(ProcessInstanceDeleteDTO deleteDTO);
+
+    ProcessTaskInstanceResultDTO searchTask(ProcessTaskInstanceSearchDTO TaskInstanceSearch);
+
+    String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum);
+
+    String taskLogDownload(Integer taskInstanceId);
 }

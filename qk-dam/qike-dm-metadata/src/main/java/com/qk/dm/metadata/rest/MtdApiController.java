@@ -3,15 +3,16 @@ package com.qk.dm.metadata.rest;
 //import com.qk.dam.authorization.Auth;
 //import com.qk.dam.authorization.BizResource;
 //import com.qk.dam.authorization.RestActionType;
+
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.metedata.entity.*;
 import com.qk.dm.metadata.service.MtdApiService;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 其它服务调用的元数据接口（数据服务）

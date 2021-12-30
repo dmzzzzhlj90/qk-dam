@@ -14,38 +14,54 @@ import java.util.Map;
  */
 public enum NotifyStateEnum {
 
-    NOTIFY_STATE_CLOSE(0, "关"),
-    NOTIFY_STATE_OPEN(1, "开");
+    /**
+     * 通知状态 "CLOSE":"关","OPEN":"开";
+     */
+    CLOSE("CLOSE", "关",false),
+    OPEN("OPEN", "开",true);
 
-    private Integer code;
+    private String code;
     private String name;
+    private Boolean state;
 
-    NotifyStateEnum(Integer code, String name) {
+    NotifyStateEnum(String code, String name, Boolean state) {
         this.code = code;
         this.name = name;
+        this.state = state;
     }
 
-    public static NotifyStateEnum getVal(String name) {
-        if (ObjectUtils.isEmpty(name)) {
-            return null;
-        }
-        for (NotifyStateEnum enums : NotifyStateEnum.values()) {
-            if (name.equals(enums.name)) {
-                return enums;
-            }
-        }
-        return null;
-    }
-
-    public static Map<Integer, String> getAllValue() {
-        Map<Integer, String> val = new HashMap<>();
+    public static Map<String, String> getAllValue() {
+        Map<String, String> val = new HashMap<>();
         for (NotifyStateEnum enums : NotifyStateEnum.values()) {
             val.put(enums.code, enums.name);
         }
         return val;
     }
 
-    public Integer getCode() {
+    /**
+     * 数据库转换类型
+     * @param state
+     * @return
+     */
+    public static String conversionType(Boolean state){
+        for (NotifyStateEnum enums : NotifyStateEnum.values()) {
+            if (state.equals(enums.state)) {
+                return enums.code;
+            }
+        }
+        throw new IllegalArgumentException("Unexpected id '" + state + "'");
+    }
+
+    public static Boolean conversionType(String code){
+        for (NotifyStateEnum enums : NotifyStateEnum.values()) {
+            if (code.equals(enums.code)) {
+                return enums.state;
+            }
+        }
+        throw new IllegalArgumentException("Unexpected id '" + code + "'");
+    }
+
+    public String getCode() {
         return code;
     }
 
