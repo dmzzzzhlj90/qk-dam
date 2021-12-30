@@ -22,6 +22,11 @@ public class DolphinSchedulerInfoConfig {
     private String projectName;
 
     /**
+     * 项目code
+     */
+    private Long projectCode;
+
+    /**
      * 流程图DAG节点连接信息,默认[]
      */
     private String connects;
@@ -57,12 +62,12 @@ public class DolphinSchedulerInfoConfig {
     /**
      * 失败重试次数 默认 0
      */
-    private Integer taskMaxRetryTimes;
+    private Integer failRetryTimes;
 
     /**
      * 失败重试间隔 默认 1
      */
-    private Integer taskRetryInterval;
+    private Integer failRetryInterval;
 
     /**
      * Worker分组 默认 "default"
@@ -70,14 +75,24 @@ public class DolphinSchedulerInfoConfig {
     private String taskWorkerGroup;
 
     /**
-     * python脚本执行命令
+     * mysql脚本执行命令
      */
-    private String python3ExecuteCommand;
+    private String mysqlExecuteCommand;
+
+    /**
+     * hive脚本执行命令
+     */
+    private String hiveExecuteCommand;
 
     /**
      * 任务节点类型
      */
     private String typeShell;
+
+    /**
+     * 运行环境Code
+     */
+    private Integer environmentCode;
 
     //##LocationsHandler
     /**
@@ -99,5 +114,31 @@ public class DolphinSchedulerInfoConfig {
      * 节点位置增量值 默认150
      */
     private Integer locationIncrement;
+
+    //##结果集存储目标数据库
+    /**
+     * 结果集存储 to_host
+     */
+    private String resultDataDbHost;
+
+    /**
+     * 结果集存储 to_user
+     */
+    private String resultDataDbUser;
+
+    /**
+     * 结果集存储 to_password
+     */
+    private String resultDataDbPassword;
+
+    /**
+     * 结果集存储 to_database
+     */
+    private String resultDataDbDatabase;
+
+    /**
+     * 动态实时sql获取url
+     */
+    private String sqlRpcUrl;
 
 }

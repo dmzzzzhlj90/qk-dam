@@ -35,17 +35,17 @@ public class DqcSchedulerBasicInfoDTO {
   @NotNull(message = "分类目录不能为空！")
   private String dirId;
 
-  /** 提示级别 0-提示 1-一般 2-严重 3-致命 */
+  /** 提示级别 */
   @NotNull(message = "提示级别不能为空！")
-  private Integer notifyLevel;
+  private String notifyLevel;
 
-  /** 通知状态 0-关 1-开 */
+  /** 通知状态 */
   @NotNull(message = "通知状态不能为空！")
-  private Integer notifyState;
+  private Boolean notifyState;
 
-  /** 通知类型 1-触发告警 2-运行成功 */
+  /** 通知类型 */
   @NotNull(message = "通知类型不能为空！")
-  private Integer notifyType;
+  private String notifyType;
 
   /** 主题，多个以逗号分隔 */
   @NotBlank(message = "主题不能为空！")

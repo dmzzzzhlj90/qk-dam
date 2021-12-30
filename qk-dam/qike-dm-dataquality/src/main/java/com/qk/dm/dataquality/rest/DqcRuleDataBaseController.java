@@ -2,6 +2,8 @@ package com.qk.dm.dataquality.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.metedata.entity.MtdApiDb;
+import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.service.DataBaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +41,8 @@ public class DqcRuleDataBaseController {
 
   /**
    * 获取数据源连接
-   *
    * @param connectType
-   * @return DefaultCommonResult<List < ResultDatasourceInfo>>
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/connect/{type}")
   public DefaultCommonResult<List<String>> getResultDataSourceByType(@PathVariable("type") String connectType) {
@@ -50,31 +51,34 @@ public class DqcRuleDataBaseController {
 
   /**
    * 获取db库列表
-   *
    * @param connectType
-   * @return DefaultCommonResult<List < String>>
+   * @param dataSourceName
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("")
-  public DefaultCommonResult<List<String>> getAllDataBase(String connectType, String dataSourceName) {
+  public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(String connectType, String dataSourceName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataBase(connectType, dataSourceName));
   }
 
   /**
    * 获取table表列表
-   *
-   * @param connectType,server,dataBaseName
-   * @return DefaultCommonResult
+   * @param connectType
+   * @param dataSourceName
+   * @param dataBaseName
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/table")
-  public DefaultCommonResult<List<String>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
+  public DefaultCommonResult<List<MtdTables>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllTable(connectType, dataSourceName, dataBaseName));
   }
 
   /**
    * 获取column字段列表
-   *
-   * @param connectType,server,dataBaseName,tableName
-   * @return DefaultCommonResult
+   * @param connectType
+   * @param dataSourceName
+   * @param dataBaseName
+   * @param tableName
+   * @return DefaultCommonResult<List<String>>
    */
   @GetMapping("/column")
   public DefaultCommonResult<List<String>> getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {

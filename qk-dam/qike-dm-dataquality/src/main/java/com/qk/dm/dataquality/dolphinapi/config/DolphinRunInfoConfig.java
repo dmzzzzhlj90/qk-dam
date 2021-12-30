@@ -15,18 +15,18 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "dolphin-run-info", ignoreInvalidFields = true)
 @Component
 public class DolphinRunInfoConfig {
-  /** 失败策略，默认 0-继续 */
-  Integer failureStrategy;
-  /** 流程实例优先级，默认 3-MEDIUM */
-  Integer processInstancePriority;
-  /** 发送策略，默认 1 都不发 */
-  Integer warningType;
-  /** 指令类型，默认 0-null */
-  Integer execType;
-  /** 执行方式，默认 1-串行 */
-  Integer runMode;
-  /** 任务依赖类型，默认 3-TASK_POST */
-  Integer taskDependType;
+  /** 失败策略，默认 CONTINUE */
+  String failureStrategy;
+  /** 流程实例优先级，默认 MEDIUM */
+  String processInstancePriority;
+  /** 发送策略，默认 NONE */
+  String warningType;
+  /** 指令类型，默认 NULL */
+  String execType;
+  /** 执行方式，默认 RUN_MODE_SERIAL */
+  String runMode;
+  /** 任务依赖类型，默认 TASK_POST */
+  String taskDependType;
 
   /** 定时时间 */
   String scheduleTime;
@@ -39,7 +39,15 @@ public class DolphinRunInfoConfig {
   /** 超时时间，默认 null */
   Integer timeout;
   /** 发送组ID,默认 0 */
-  Integer warningGroupId = 0;
+  Integer warningGroupId;
   /** Worker分组 默认 "default" */
   String workerGroup;
+  /** dryRun 默认 0 */
+  Integer dryRun;
+  /** ENVIRONMENT_CODE 默认 null */
+  Long environmentCode;
+  /** 补数任务自定义并行度 默认 null */
+  Integer expectedParallelismNumber;
+  /** 启动参数 默认 null */
+  String startParams;
 }

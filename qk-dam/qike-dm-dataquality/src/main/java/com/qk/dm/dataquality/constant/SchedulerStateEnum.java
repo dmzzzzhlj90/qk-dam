@@ -1,33 +1,54 @@
 package com.qk.dm.dataquality.constant;
 
-/** @author shenpengjie */
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 调度状态
+ *
+ * @author shenpengjie
+ */
 public enum SchedulerStateEnum {
-  // 处理默认状态-未启动
-  NOT_STARTED(0, "未启动"),
-  SCHEDULING(1, "调度中");
 
-  Integer code;
-  String value;
+    OFFLINE(0,"OFFLINE", "下线"),
+    ONLINE(1,"ONLINE", "上线");
 
-  SchedulerStateEnum(Integer code, String value) {
-    this.code = code;
-    this.value = value;
-  }
+    Integer state;
+    String code;
+    String name;
 
-  public static SchedulerStateEnum fromValue(Integer code) {
-    for (SchedulerStateEnum b : SchedulerStateEnum.values()) {
-      if (b.code.equals(code)) {
-        return b;
-      }
+    SchedulerStateEnum(Integer state, String code, String name) {
+        this.state = state;
+        this.code = code;
+        this.name = name;
     }
-    throw new IllegalArgumentException("Unexpected id '" + code + "'");
-  }
 
-  public Integer getCode() {
-    return code;
-  }
+    public static SchedulerStateEnum fromValue(String code) {
+        for (SchedulerStateEnum b : SchedulerStateEnum.values()) {
+            if (b.code.equals(code)) {
+                return b;
+            }
+        }
+        throw new IllegalArgumentException("Unexpected id '" + code + "'");
+    }
 
-  public String getValue() {
-    return value;
-  }
+    public static Map<String, String> getAllValue() {
+        Map<String, String> val = new HashMap<>();
+        for (SchedulerStateEnum enums : SchedulerStateEnum.values()) {
+            val.put(enums.code, enums.name);
+        }
+        return val;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

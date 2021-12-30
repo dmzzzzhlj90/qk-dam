@@ -12,11 +12,7 @@ import lombok.Data;
 @Data
 public class TaskNodeLocation {
 
-    private String name;
-
-    private String targetarr;
-
-    private String nodenumber;
+    private Long taskCode;
 
     private int x;
 

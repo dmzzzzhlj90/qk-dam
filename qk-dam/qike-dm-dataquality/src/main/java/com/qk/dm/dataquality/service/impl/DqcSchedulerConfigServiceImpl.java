@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.constant.SchedulerTypeEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.entity.QDqcSchedulerConfig;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerConfigMapper;
@@ -39,8 +40,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   @Override
   public void insert(DqcSchedulerConfigVO dqcSchedulerConfigVO, String jobId) {
     dqcSchedulerConfigVO.setJobId(jobId);
-    DqcSchedulerConfig config =
-        DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
+    DqcSchedulerConfig config = DqcSchedulerConfigMapper.INSTANCE.userDqcSchedulerConfig(dqcSchedulerConfigVO);
     String cron = generateCron(dqcSchedulerConfigVO);
     config.setCron(cron);
     dqcSchedulerConfigVO.setCron(cron);
@@ -122,13 +122,13 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
 
   private void checkConfig(Long id, DqcSchedulerConfig info) {
     if (info == null) {
-      throw new BizException("id为：" + id + " 的配置，不存在！！！");
+      throw new BizException("id为：" + id + " 的配置，不存在！");
     }
   }
 
   private void checkConfig(String jobId, DqcSchedulerConfig schedulerConfig) {
     if (schedulerConfig == null) {
-      throw new BizException("任务id为：" + jobId + " 的配置，不存在！！！");
+      throw new BizException("任务id为：" + jobId + " 的配置，不存在！");
     }
   }
 
@@ -142,7 +142,7 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
   }
 
   private String generateCron(DqcSchedulerConfigVO dqcSchedulerConfigVO) {
-    if (Objects.equals(dqcSchedulerConfigVO.getRunType(), DqcConstant.RUN_TYPE)) {
+    if (Objects.equals(dqcSchedulerConfigVO.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
       return CronUtil.createCron(dqcSchedulerConfigVO);
     }
     return null;

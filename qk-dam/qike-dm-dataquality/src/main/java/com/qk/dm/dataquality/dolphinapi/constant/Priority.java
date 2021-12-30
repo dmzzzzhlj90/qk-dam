@@ -1,6 +1,5 @@
 package com.qk.dm.dataquality.dolphinapi.constant;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 
 /**
  * 流程全局参数信息_预警级别
@@ -23,20 +22,19 @@ public enum Priority {
     LOW(3, "LOW"),
     LOWEST(4, "LOWEST");
 
-    Priority(int code, String descp){
+    Priority(int code, String desc) {
         this.code = code;
-        this.descp = descp;
+        this.desc = desc;
     }
 
-    @EnumValue
     private final int code;
-    private final String descp;
+    private final String desc;
 
     public int getCode() {
         return code;
     }
 
-    public String getDescp() {
-        return descp;
+    public String getDesc() {
+        return desc;
     }
 }

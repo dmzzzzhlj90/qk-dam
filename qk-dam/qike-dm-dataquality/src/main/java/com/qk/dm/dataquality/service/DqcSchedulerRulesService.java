@@ -1,11 +1,13 @@
 package com.qk.dm.dataquality.service;//package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 数据质量_规则调度_规则信息
@@ -21,11 +23,11 @@ public interface DqcSchedulerRulesService {
 
     void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO);
 
-    void insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId);
+    List<DqcSchedulerRulesVO> insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId);
 
     void update(DqcSchedulerRulesVO dqcSchedulerRulesVO);
 
-    void updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList);
+    List<DqcSchedulerRulesVO> updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList,String jobId);
 
     void deleteOne(Long id);
 
@@ -37,4 +39,13 @@ public interface DqcSchedulerRulesService {
 
     void deleteBulkByJobIds(List<String> jobIds);
 
+    Integer getTableSet(Set<Long> taskCodeSet);
+
+    Integer getFieldSet(Set<Long> taskCodeSet);
+
+    Integer getTableSet();
+
+    Integer getFieldSet();
+
+    List<DqcSchedulerRules> getSchedulerRulesListByTaskCode(Set<Long> taskCodeSet);
 }

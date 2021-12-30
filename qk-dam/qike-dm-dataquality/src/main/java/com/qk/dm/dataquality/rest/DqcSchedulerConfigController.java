@@ -11,7 +11,7 @@
 //import org.springframework.validation.annotation.Validated;
 //import org.springframework.web.bind.annotation.*;
 //
-//import java.util.UUID;
+//import java.com.qk.dm.groovy.util.UUID;
 //
 ///**
 // * 数据质量_规则调度_配置信息

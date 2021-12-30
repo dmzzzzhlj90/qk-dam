@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author shenpengjie
@@ -17,8 +18,9 @@ public class DqcRuleTemplateVO {
   @NotBlank(message = "模板名称不能为空！")
   private String tempName;
 
-  /** 模板类型1-系统内置 2-自定义 */
-  private Integer tempType;
+  /** 模板类型 BUILT_IN_SYSTEM_系统内置 CUSTOM_自定义 */
+  @NotBlank(message = "模板类型不能为空！")
+  private String tempType;
 
   /** 分类目录 */
   @NotNull(message = "分类目录不能为空！")
@@ -26,11 +28,11 @@ public class DqcRuleTemplateVO {
 
   /** 质量维度 1-完整性 2-唯一性 3-及时性 4-有效性 5-准确性 6-一致性*/
   @NotNull(message = "质量维度不能为空！")
-  private Integer dimensionId;
+  private String dimensionType;
 
-  /** 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔 */
+  /** 适用引擎 MYSQL,HIVE,ORACLE,适用多个以逗号分隔 */
   @NotNull(message = "适用引擎不能为空！")
-  private String engineType;
+  private List<String> engineTypeList;
 
   /** 描述 */
   @NotBlank(message = "描述不能为空！")
@@ -44,6 +46,6 @@ public class DqcRuleTemplateVO {
   @NotBlank(message = "结果定义不能为空！")
   private String tempResult;
 
-  /** 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则"; */
+  /** 规则类型 "RULE_TYPE_FIELD":"字段级别规则","RULE_TYPE_TABLE":"表级别规则","RULE_TYPE_DB":"库级别规则" */
   private String ruleType;
 }

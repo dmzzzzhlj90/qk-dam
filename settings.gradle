@@ -2,7 +2,7 @@ pluginManagement {
     buildscript {
         repositories {
             maven {
-                url = 'http://172.20.0.22:8081/repository/qkdam/'
+                url = 'http://172.21.128.2:8081/repository/qkdam/'
                 credentials {
                     username = 'admin'
                     password = 'admin123'
@@ -20,7 +20,7 @@ pluginManagement {
         }
         dependencies {
             classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.3.6'
-            classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.2.7'
+            classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.3.4'
         }
 
     }
@@ -28,7 +28,7 @@ pluginManagement {
         mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven {
-            url = 'http://172.20.0.22:8081/repository/qkdam/'
+            url = 'http://172.21.128.2:8081/repository/qkdam/'
             credentials {
                 username = 'admin'
                 password = 'admin123'

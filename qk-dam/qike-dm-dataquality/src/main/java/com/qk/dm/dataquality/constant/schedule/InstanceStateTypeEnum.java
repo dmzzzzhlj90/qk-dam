@@ -2,6 +2,9 @@ package com.qk.dm.dataquality.constant.schedule;
 
 import com.qk.dm.dataquality.constant.SchedulerInstanceStateEnum;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /** @author shenpengjie */
 public enum InstanceStateTypeEnum {
   // 调度运行状态
@@ -35,7 +38,15 @@ public enum InstanceStateTypeEnum {
         return b;
       }
     }
-    return null;
+    throw new IllegalArgumentException("Unexpected id '" + code + "'");
+  }
+
+  public static Map<String, String> getAllValue() {
+    Map<String, String> val = new HashMap<>();
+    for (InstanceStateTypeEnum enums : InstanceStateTypeEnum.values()) {
+      val.put(enums.code, enums.value);
+    }
+    return val;
   }
 
   public String getCode() {

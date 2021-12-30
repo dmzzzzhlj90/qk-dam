@@ -1,6 +1,8 @@
 package com.qk.dm.dataquality.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +24,18 @@ public class DqcSchedulerRules implements Serializable {
     private Long id;
 
     /**
+     * 规则id
+     */
+    @Column(name = "rule_id", nullable = false)
+    private String ruleId;
+
+    /**
+     * 规则名称
+     */
+    @Column(name = "rule_name", nullable = false)
+    private String ruleName;
+
+    /**
      * 作业id
      */
     @Column(name = "job_id", nullable = false)
@@ -34,22 +48,28 @@ public class DqcSchedulerRules implements Serializable {
     private Long ruleTempId;
 
     /**
-     * 规则类型 "RULE_TYPE_FIELD", "字段级别规则","RULE_TYPE_TABLE", "表级别规则","RULE_TYPE_DB", "库级别规则";
+     * 规则类型 "RULE_TYPE_FIELD":"字段级别规则","RULE_TYPE_TABLE":"表级别规则","RULE_TYPE_DB":"库级别规则";
      */
     @Column(name = "rule_type", nullable = false)
     private String ruleType;
 
     /**
-     * 适用引擎 1-hive, 2-mysql, 适用多个以逗号分隔
+     * 流程实例节点taskCode
+     */
+    @Column(name = "task_code", nullable = false)
+    private Long taskCode;
+
+    /**
+     * 适用引擎 MYSQL HIVE ORACLE
      */
     @Column(name = "engine_type", nullable = false)
     private String engineType;
 
     /**
-     * 数据连接地址
+     * 数据连接
      */
-    @Column(name = "database_url", nullable = false)
-    private String databaseUrl;
+    @Column(name = "data_source_name", nullable = false)
+    private String dataSourceName;
 
     /**
      * 数据库名称
@@ -60,31 +80,25 @@ public class DqcSchedulerRules implements Serializable {
     /**
      * 表名称
      */
-    @Column(name = "table_name")
-    private String tableName;
+    @Column(name = "tables")
+    private String tables;
 
     /**
      * 字段名称
      */
-    @Column(name = "field_name")
-    private String fieldName;
+    @Column(name = "fields")
+    private String fields;
 
     /**
-     * 扫描范围 0-全表 1-条件
+     * 扫描范围 "FULL_TABLE":"全表", "CONDITION":"条件";
      */
     @Column(name = "scan_type", nullable = false)
-    private Integer scanType;
-
-    /**
-     * 扫描条件SQL
-     */
-    @Column(name = "scan_sql")
-    private String scanSql;
+    private String scanType;
 
     /**
      * 告警表达式
      */
-    @Column(name = "warn_expression", nullable = false)
+    @Column(name = "warn_expression")
     private String warnExpression;
 
     /**
@@ -109,12 +123,26 @@ public class DqcSchedulerRules implements Serializable {
      * 创建时间
      */
     @Column(name = "gmt_create", nullable = false)
+    @CreationTimestamp
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_modified")
+    @UpdateTimestamp
     private Date gmtModified;
+
+    /**
+     * 扫描条件SQL
+     */
+    @Column(name = "scan_sql")
+    private String scanSql;
+
+    /**
+     * 执行sql
+     */
+    @Column(name = "execute_sql")
+    private String executeSql;
 
 }

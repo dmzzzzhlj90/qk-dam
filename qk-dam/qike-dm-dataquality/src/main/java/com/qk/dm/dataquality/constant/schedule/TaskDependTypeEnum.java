@@ -6,19 +6,19 @@ package com.qk.dm.dataquality.constant.schedule;
  * @author shenpengjie
  */
 public enum TaskDependTypeEnum {
-  TASK_ONLY(1,"TASK_ONLY"),
-  TASK_PRE(2,"TASK_PRE"),
-  TASK_POST(3,"TASK_POST");
+  TASK_ONLY("TASK_ONLY",""),
+  TASK_PRE("TASK_PRE",""),
+  TASK_POST("TASK_POST","");
 
-  Integer code;
+  String code;
   String value;
 
-  TaskDependTypeEnum(Integer code, String value) {
+  TaskDependTypeEnum(String code, String value) {
     this.code = code;
     this.value = value;
   }
 
-  public static TaskDependTypeEnum fromValue(Integer code) {
+  public static TaskDependTypeEnum fromValue(String code) {
     for (TaskDependTypeEnum b : TaskDependTypeEnum.values()) {
       if (b.code.equals(code)) {
         return b;
@@ -27,7 +27,7 @@ public enum TaskDependTypeEnum {
     throw new IllegalArgumentException("Unexpected id '" + code + "'");
   }
 
-  public String getValue() {
-    return value;
+  public String getCode() {
+    return code;
   }
 }

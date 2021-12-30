@@ -18,4 +18,5 @@ public class MtdTables {
   private String relationshipType;
   private String relationshipGuid;
   private String relationshipStatus;
+  private String comment;
 }
