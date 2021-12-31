@@ -23,12 +23,13 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.*;
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import java.util.*;
 
 /**
  * 数据源连接实现接口
@@ -244,7 +245,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   public List<DsDatasourceVO> getDataSourceByDsname(Integer id) {
     List<DsDatasourceVO> resultDataList = new ArrayList<>();
     Optional<DsDatasource> datasourceList = dsDatasourceRepository.findById(id);
-    if (datasourceList != null) {
+    if (!datasourceList.isEmpty()) {
       DsDatasource dsDatasource = datasourceList.get();
       DsDatasourceVO dsDatasourceVO = DSDatasourceMapper.INSTANCE.useDsDatasourceVO(dsDatasource);
       ConnectBasicInfo dsConnectBasicInfo =
