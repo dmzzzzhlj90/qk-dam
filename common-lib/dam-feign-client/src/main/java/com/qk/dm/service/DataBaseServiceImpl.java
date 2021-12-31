@@ -2,6 +2,7 @@ package com.qk.dm.service;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.datasource.entity.DsDatasourceVO;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -63,6 +65,12 @@ public class DataBaseServiceImpl implements DataBaseService {
   public Map<String,Integer> getAllDataSources(String connectType) {
     List<ResultDatasourceInfo> resultDataSourceByType = dataBaseInfoDefaultApi.getResultDataSourceByType(connectType);
     return resultDataSourceByType.stream().collect(Collectors.toMap(ResultDatasourceInfo::getDataSourceName,ResultDatasourceInfo::getId));
+  }
+
+  @Override
+  public String getResultDataSourceByid(int id) {
+    List<DsDatasourceVO> resultDataSourceById = dataBaseInfoDefaultApi.getResultDataSourceById(id);
+    return resultDataSourceById.stream().filter(Objects::nonNull).findFirst().map(DsDatasourceVO::getConnectBasicInfo).orElse(null).toString();
   }
 
   private String getServer(String dataSourceName) {

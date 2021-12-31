@@ -2,6 +2,7 @@ package com.qk.dm.client;
 
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dam.datasource.entity.DsDatasourceVO;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
 import com.qk.dam.metedata.entity.*;
@@ -10,13 +11,13 @@ import com.qk.dam.metedata.vo.MtdColumnSearchVO;
 import com.qk.dam.metedata.vo.MtdDbSearchVO;
 import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.feign.DataSourceFeign;
+import com.qk.dm.feign.DataSourceV2Feign;
 import com.qk.dm.feign.MetaDataFeign;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 数据库信息统一Client API
@@ -30,10 +31,13 @@ public class DataBaseInfoDefaultApi {
 
     private final DataSourceFeign dataSourceFeign;
     private final MetaDataFeign metaDataFeign;
+    private final DataSourceV2Feign dataSourceV2Feign;
 
-    public DataBaseInfoDefaultApi(DataSourceFeign dataSourceFeign, MetaDataFeign metaDataFeign) {
+    public DataBaseInfoDefaultApi(DataSourceFeign dataSourceFeign, MetaDataFeign metaDataFeign,
+        DataSourceV2Feign dataSourceV2Feign) {
         this.dataSourceFeign = dataSourceFeign;
         this.metaDataFeign = metaDataFeign;
+        this.dataSourceV2Feign = dataSourceV2Feign;
     }
 
     // ========================数据源服务_API调用=====================================
@@ -174,5 +178,9 @@ public class DataBaseInfoDefaultApi {
                         .tableName(tableName)
                         .build());
         return existData.getData();
+    }
+
+    public List<DsDatasourceVO> getResultDataSourceById(int id) {
+        return dataSourceV2Feign.getDataSourceByDsname(id).getData();
     }
 }

@@ -66,4 +66,11 @@ public interface DataBaseService {
      * @return
      */
   Map<String,Integer> getAllDataSources(String connectType);
+
+    /**
+     * 根据id获取数据源连接
+     * @param id
+     * @return
+     */
+    String getResultDataSourceByid(int id);
 }
