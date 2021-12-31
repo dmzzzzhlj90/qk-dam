@@ -65,7 +65,7 @@ public interface DataBaseService {
      * 获取数据源连接名称，id
      * @return
      */
-  Map<String,Integer> getAllDataSources(String connectType);
+  Map<Integer,String> getAllDataSources(String connectType);
 
     /**
      * 根据id获取数据源连接
