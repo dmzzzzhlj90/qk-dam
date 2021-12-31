@@ -141,4 +141,9 @@ public class DolphinSchedulerInfoConfig {
      */
     private String sqlRpcUrl;
 
+    /**
+     * 告警表达结果获取url
+     */
+    private String warnRpcUrl;
+
 }

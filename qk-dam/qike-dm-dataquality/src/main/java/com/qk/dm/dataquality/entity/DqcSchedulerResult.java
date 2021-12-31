@@ -69,6 +69,12 @@ public class DqcSchedulerResult implements Serializable {
     private String ruleMetaData;
 
     /**
+     * 告警表达式结果
+     */
+    @Column(name = "warn_result")
+    private String warnResult;
+
+    /**
      * 创建人
      */
     @Column(name = "create_userid")
