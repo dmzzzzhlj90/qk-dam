@@ -260,6 +260,9 @@ public class TaskDefinitionBuilder {
         //动态实时sql请求地址
         scriptBuilder.sql_rpc_url(getSqlRpcUrl(rulesVO, dolphinSchedulerInfoConfig));
 
+        //告警表达式结果获取url
+        scriptBuilder.warn_rpc_url(getWarnRpcUrl(rulesVO, dolphinSchedulerInfoConfig));
+
         MysqlRawScript mysqlRawScript = scriptBuilder.build();
         String mysqlRawScriptJson = GsonUtil.toJsonString(mysqlRawScript);
 
@@ -319,6 +322,9 @@ public class TaskDefinitionBuilder {
         //动态实时sql请求地址
         scriptBuilder.sql_rpc_url(getSqlRpcUrl(rulesVO, dolphinSchedulerInfoConfig));
 
+        //告警表达式结果获取url
+        scriptBuilder.warn_rpc_url(getWarnRpcUrl(rulesVO, dolphinSchedulerInfoConfig));
+
         HiveRawScript hiveRawScript = scriptBuilder.build();
         String hiveRawScriptJson = GsonUtil.toJsonString(hiveRawScript);
 
@@ -330,15 +336,20 @@ public class TaskDefinitionBuilder {
 
     /**
      * 动态实时sql请求地址
-     *
-     * @param rulesVO
-     * @param dolphinSchedulerInfoConfig
-     * @return
      */
     private String getSqlRpcUrl(DqcSchedulerRulesVO rulesVO, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
         String sqlRpcUrl = dolphinSchedulerInfoConfig.getSqlRpcUrl();
         sqlRpcUrl = sqlRpcUrl + SchedulerConstant.SQL_RPC_URL_PART + rulesVO.getRuleId();
         return sqlRpcUrl;
+    }
+
+    /**
+     * 告警表达式结果获取url
+     */
+    private String getWarnRpcUrl(DqcSchedulerRulesVO rulesVO, DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig) {
+        String warnRpcUrl = dolphinSchedulerInfoConfig.getWarnRpcUrl();
+        warnRpcUrl = warnRpcUrl + SchedulerConstant.WARN_RPC_URL_PART + rulesVO.getRuleId();
+        return warnRpcUrl;
     }
 
     private String getRuleMetaData(List<String> fieldList) {
