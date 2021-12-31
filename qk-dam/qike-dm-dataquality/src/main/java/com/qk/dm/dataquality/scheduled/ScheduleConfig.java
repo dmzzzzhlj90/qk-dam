@@ -21,6 +21,6 @@ public class ScheduleConfig {
     @PostConstruct
 //    @Scheduled(cron = "0 0/15 * * * ?")
     public void schedule(){
-        dqcStatisticsService.timeToReis();
+//        dqcStatisticsService.timeToReis();
     }
 }
