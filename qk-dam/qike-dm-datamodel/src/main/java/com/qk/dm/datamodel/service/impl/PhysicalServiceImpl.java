@@ -296,19 +296,23 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   @Override
   public void delete(List<Long> ids) {
+    List<ModelPhysicalTable> modelPhysicalTableList = new ArrayList<>();
    ids.forEach(
        id->{
         //根据id判断当前需要删除的数据是否存在
          Optional<ModelPhysicalTable> modelPhysicalTable = modelPhysicalTableRepository.findById(id);
          if (modelPhysicalTable.isEmpty()){
            throw new BizException("当前需要下线的，id为"+id+"的数据不存在");
-         }else{
-           ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTable.get();
-           modelPhysicalTable1.setStatus(ModelStatus.OFFLINE);
-           modelPhysicalTableRepository.save(modelPhysicalTable1);
          }
+           ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTable.get();
+         if (!modelPhysicalTable1.getStatus().equals(ModelStatus.PUBLISH)){
+          throw  new BizException("表名称为:"+modelPhysicalTable1.getTableName()+"不是发布状态，不能进行下线操作");
+         }
+           modelPhysicalTable1.setStatus(ModelStatus.OFFLINE);
+           modelPhysicalTableList.add(modelPhysicalTable1);
        }
    );
+    modelPhysicalTableRepository.saveAllAndFlush(modelPhysicalTableList);
   }
 
   /**
