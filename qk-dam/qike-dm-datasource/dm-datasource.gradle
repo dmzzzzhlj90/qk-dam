@@ -62,6 +62,7 @@ dependencies {
 
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
+            "javax.persistence:javax.persistence-api",
             "javax.annotation:javax.annotation-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "org.projectlombok:lombok",
