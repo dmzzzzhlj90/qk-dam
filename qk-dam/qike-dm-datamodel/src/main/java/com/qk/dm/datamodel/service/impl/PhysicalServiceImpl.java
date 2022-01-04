@@ -529,6 +529,7 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   @Override
   public void push(List<Long> idList) {
+    checkStatus(idList);
     idList.forEach(
         id->{
           //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
@@ -545,6 +546,22 @@ public class PhysicalServiceImpl implements PhysicalService {
           dealPushData(tables,modelPhysicalTable,id);
         }
     );
+  }
+
+  /**
+   * 校验发布数据是否存在已发布数据
+   * @param idList
+   */
+  private void checkStatus(List<Long> idList) {
+    List<ModelPhysicalTable> modelPhysicalTableList = modelPhysicalTableRepository.findAllById(idList);
+    if (CollectionUtils.isEmpty(modelPhysicalTableList)){
+      throw new BizException("当前发布数据不存在");
+    }
+    modelPhysicalTableList.forEach(modelPhysicalTable -> {
+      if (modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)){
+        throw new BizException("存在已发布数据请去除后重新发布");
+      }
+    });
   }
 
   /**
