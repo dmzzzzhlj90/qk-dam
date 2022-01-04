@@ -50,4 +50,6 @@ public class MysqlRawScript {
 
     private String sql_rpc_url;
 
+    private String warn_rpc_url;
+
 }
