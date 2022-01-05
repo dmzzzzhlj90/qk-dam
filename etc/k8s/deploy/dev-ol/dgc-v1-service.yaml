@@ -1,49 +1,21 @@
-kind: Deployment
-apiVersion: apps/v1
+kind: Service
+apiVersion: v1
 metadata:
-  name: dgc-deploy
+  name: dqc
   namespace: backend-dam
   labels:
-    app: dgc-deploy
-    version: v1
+    app: dqc
   annotations:
-    deployment.kubernetes.io/revision: '1'
+    kubesphere.io/alias-name: 数据质量后端服务
+    kubesphere.io/creator: admin
 spec:
-  replicas: 1
+  ports:
+    - name: http-80
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
-    matchLabels:
-      app: dgc-deploy
-      version: v1
-  template:
-    metadata:
-      labels:
-        app: dgc-deploy
-        version: v1
-    spec:
-      containers:
-        - name: $BUILD_NUMBER-dgc$BRANCH_NAME
-          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER
-          ports:
-            - name: tcp-8789
-              containerPort: 8789
-              protocol: TCP
-          resources: {}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-          imagePullPolicy: Always
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
-      serviceAccountName: default
-      securityContext: {}
-      imagePullSecrets:
-        - name: harbor
-      affinity: {}
-      schedulerName: default-scheduler
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
-  revisionHistoryLimit: 10
-  progressDeadlineSeconds: 600
+    app: dqc-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None
