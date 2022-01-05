@@ -20,8 +20,6 @@ dependencies {
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
-    compile 'org.glassfish.jersey.bundles:jaxrs-ri:2.35'
-    compile 'com.sun.jersey:jersey-core'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
