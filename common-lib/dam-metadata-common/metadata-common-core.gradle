@@ -22,7 +22,6 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
-    compile 'org.glassfish.jersey.bundles:jaxrs-ri'
     annotationProcessor 'org.projectlombok:lombok'
 }
 dependencyManagement {
