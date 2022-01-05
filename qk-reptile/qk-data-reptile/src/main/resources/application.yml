@@ -1,6 +1,9 @@
 server:
   port: 8885
 spring:
+  servlet:
+    multipart:
+      max-file-size: 2MB
   messages:
     basename: i18n/messages
   mvc:
