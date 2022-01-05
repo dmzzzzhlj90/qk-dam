@@ -4,11 +4,20 @@ plugins {
 }
 version "${commonLibVersion}"
 group "com.qk.dam.mysql2atlas"
+configurations.all {
+    exclude group: 'org.springframework',module: 'spring'
+    exclude group: 'org.springframework',module: 'spring-core'
+    exclude group: 'org.springframework',module: 'spring-web'
+    exclude group: 'org.springframework',module: 'spring-beans'
+    exclude group: 'org.springframework',module: 'spring-aop'
+    exclude group: 'org.springframework',module: 'spring-context'
+    exclude group: 'org.springframework',module: 'spring-expression'
+}
 dependencies {
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ch.qos.logback:logback-core:1.2.3'
-    implementation 'org.apache.atlas:atlas-client-v2:3.0.0-SNAPSHOT'
+    implementation 'org.apache.atlas:atlas-client-v2:2.2.0'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
