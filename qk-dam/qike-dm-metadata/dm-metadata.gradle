@@ -45,7 +45,8 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
-    compile 'org.glassfish.jersey.bundles:jaxrs-ri:2.35'
+    implementation 'org.glassfish.jersey.bundles:jaxrs-ri:2.35'
+    implementation 'com.sun.jersey:jersey-core'
 
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
