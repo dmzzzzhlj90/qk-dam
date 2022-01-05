@@ -31,21 +31,28 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.1.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.0")
 }
-jar {
-    archiveVersion = "${commonLibVersion}" //版本
-    manifest { //配置jar文件的manifest
-        attributes(
-                "Manifest-Version": 1.0,
-                'Main-Class': 'com.qk.dam.rdbmsl2atlas.QuickStart'
-        )
-    }
-    //打包依赖包
-    from {
-        (configurations.runtimeClasspath).collect {
-            it.isDirectory() ? it : zipTree(it)
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources"]
         }
     }
 }
+jar {
+    archiveVersion = "${commonLibVersion}"
+    String someString = ''
+    configurations.runtimeClasspath.each {someString = someString + " lib//"+it.name}
+    manifest {
+        attributes 'Main-Class': 'com.qk.dam.rdbmsl2atlas.QuickStart'
+        attributes 'Class-Path': someString
+    }
+    task copyJar(type:Copy){
+        from configurations.runtimeClasspath
+        into ('build/libs/lib')
+    }
+}
+
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
