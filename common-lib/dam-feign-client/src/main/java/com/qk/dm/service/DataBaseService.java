@@ -1,5 +1,9 @@
 package com.qk.dm.service;
 
+import com.qk.dam.entity.DataStandardTreeVO;
+import com.qk.dam.entity.DsdBasicInfoParamsDTO;
+import com.qk.dam.entity.DsdBasicinfoParamsVO;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
 
@@ -73,4 +77,13 @@ public interface DataBaseService {
      * @return
      */
     String getResultDataSourceByid(int id);
+
+  /**
+   * 根据条件查询数据标准
+   * @param dsdBasicInfoParamsDTO
+   * @return
+   */
+  PageResultVO<DsdBasicinfoParamsVO> getStandard(DsdBasicInfoParamsDTO dsdBasicInfoParamsDTO);
+
+  List<DataStandardTreeVO> getTree();
 }
