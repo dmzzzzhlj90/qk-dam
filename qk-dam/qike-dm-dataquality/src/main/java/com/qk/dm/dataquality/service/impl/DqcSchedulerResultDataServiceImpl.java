@@ -422,4 +422,9 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
                     dateExpr.between(schedulerResultParamsVO.getBeginDay(), schedulerResultParamsVO.getEndDay()));
         }
     }
+
+    @Override
+    public List<DqcSchedulerResult> getSchedulerResultList(Set<String> jobIds){
+        return (List<DqcSchedulerResult>) dqcSchedulerResultRepository.findAll(qDqcSchedulerResult.jobId.in(jobIds));
+    }
 }

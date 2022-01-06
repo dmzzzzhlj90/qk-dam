@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.scheduled;
 
 import com.qk.dm.dataquality.service.DqcStatisticsService;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,9 +19,10 @@ public class ScheduleConfig {
         this.dqcStatisticsService = dqcStatisticsService;
     }
 
+
     @PostConstruct
-//    @Scheduled(cron = "0 0/15 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void schedule(){
-//        dqcStatisticsService.timeToReis();
+        dqcStatisticsService.timeToReis();
     }
 }
