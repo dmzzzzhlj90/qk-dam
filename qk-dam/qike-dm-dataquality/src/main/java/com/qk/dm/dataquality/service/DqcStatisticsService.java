@@ -10,9 +10,11 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface DqcStatisticsService {
-    DataSummaryVO statistics();
+    void timeToReis();
 
-    List<DimensionVO> dimensionStatistics();
+    DataSummaryVO summary();
 
-    List<RuleDirVO> dirStatistics();
+    List<DimensionVO> dimension();
+
+    List<RuleDirVO> dir();
 }

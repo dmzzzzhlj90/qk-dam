@@ -75,9 +75,14 @@ public class DolphinSchedulerInfoConfig {
     private String taskWorkerGroup;
 
     /**
-     * python脚本执行命令
+     * mysql脚本执行命令
      */
-    private String python3ExecuteCommand;
+    private String mysqlExecuteCommand;
+
+    /**
+     * hive脚本执行命令
+     */
+    private String hiveExecuteCommand;
 
     /**
      * 任务节点类型
@@ -135,5 +140,10 @@ public class DolphinSchedulerInfoConfig {
      * 动态实时sql获取url
      */
     private String sqlRpcUrl;
+
+    /**
+     * 告警表达结果获取url
+     */
+    private String warnRpcUrl;
 
 }

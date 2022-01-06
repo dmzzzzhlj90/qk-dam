@@ -52,6 +52,11 @@ public class DqcSchedulerResultVO {
     private Long taskCode;
 
     /**
+     * 规则告警表达式执行结果
+     */
+    private String warnResult;
+
+    /**
      * 更新时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

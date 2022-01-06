@@ -36,6 +36,13 @@ compileJava {
     }
 }
 
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    exclude group: 'org.eclipse.jetty.aggregate', module: 'jetty-all'
+    exclude group: 'org.eclipse.jetty.orbit', module: 'javax.servlet'
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+}
+
 dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
@@ -55,6 +62,7 @@ dependencies {
 
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
+            "javax.persistence:javax.persistence-api",
             "javax.annotation:javax.annotation-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "org.projectlombok:lombok",

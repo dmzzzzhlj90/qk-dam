@@ -1,0 +1,1848 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "4d5ed2cc-2a7b-4d34-8825-e727d41c3297",
+    "name": "dm-datamodel"
+  },
+  "item": [
+    {
+      "name": "关系建模",
+      "item": [
+        {
+          "name": "新增——关系建模(创建结束时的保存\\发布)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 944,\n    \"tableName\": \"hwa.willms\",\n    \"theme\": \"ff64pz\",\n    \"dataConnection\": \"c2wchn\",\n    \"databaseName\": \"hwa.willms\",\n    \"dataSourceName\": \"hwa.willms\",\n    \"dataSourceId\": 343,\n    \"description\": \"5vuhdn\",\n    \"status\": 490,\n    \"gmtCreate\": \"2022-01-05 12:01:01\",\n    \"gmtModified\": \"2022-01-05 12:01:01\",\n    \"tableType\": 156,\n    \"responsibleBy\": \"27wq79\",\n    \"dataFormat\": \"4yhb8p\",\n    \"themeId\": 65,\n    \"modelId\": 521,\n    \"hftsRoute\": \"0knxon\",\n    \"syncStatus\": 696\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 901,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"0djhe5\",\n      \"standardsId\": 679,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": \"bil0kp\",\n      \"itsPartition\": \"cponp1\",\n      \"itsNull\": \"yro79d\",\n      \"description\": \"ckq7y8\",\n      \"gmtCreate\": \"2022-01-05 12:01:01\",\n      \"gmtModified\": \"2022-01-05 12:01:01\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 190,\n      \"tableId\": 319,\n      \"columnName\": \"hwa.willms\",\n      \"childTableName\": \"hwa.willms\",\n      \"childTableColumn\": \"8zb8b6\",\n      \"childConnectionWay\": \"x38r7k\",\n      \"fatherTableName\": \"hwa.willms\",\n      \"fatherTableColumn\": \"hl8x1t\",\n      \"fatherConnectionWay\": \"5i5ex7\",\n      \"gmtCreate\": \"2022-01-05 12:01:01\",\n      \"gmtModified\": \"2022-01-05 12:01:01\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增——关系建模(创建结束时的保存\\发布)",
+            "header": []
+          },
+          "description": "新增——关系建模(创建结束时的保存\\发布)"
+        },
+        {
+          "name": "删除——关系建模（下线操作）",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  989,\n  361\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/delete",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "delete"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "删除——关系建模（下线操作）",
+            "header": []
+          },
+          "description": "删除——关系建模（下线操作）"
+        },
+        {
+          "name": "修改——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 93,\n    \"tableName\": \"hwa.willms\",\n    \"theme\": \"kpcobb\",\n    \"dataConnection\": \"kvvu4p\",\n    \"databaseName\": \"hwa.willms\",\n    \"dataSourceName\": \"hwa.willms\",\n    \"dataSourceId\": 46,\n    \"description\": \"a1jt6c\",\n    \"status\": 502,\n    \"gmtCreate\": \"2022-01-05 12:01:01\",\n    \"gmtModified\": \"2022-01-05 12:01:01\",\n    \"tableType\": 185,\n    \"responsibleBy\": \"bqg12n\",\n    \"dataFormat\": \"9w5och\",\n    \"themeId\": 613,\n    \"modelId\": 632,\n    \"hftsRoute\": \"66dtxy\",\n    \"syncStatus\": 42\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 461,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"38lejr\",\n      \"standardsId\": 355,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": \"c41f8e\",\n      \"itsPartition\": \"d4ough\",\n      \"itsNull\": \"r2osxg\",\n      \"description\": \"8pet0v\",\n      \"gmtCreate\": \"2022-01-05 12:01:01\",\n      \"gmtModified\": \"2022-01-05 12:01:01\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 88,\n      \"tableId\": 359,\n      \"columnName\": \"hwa.willms\",\n      \"childTableName\": \"hwa.willms\",\n      \"childTableColumn\": \"dcopo9\",\n      \"childConnectionWay\": \"agwj64\",\n      \"fatherTableName\": \"hwa.willms\",\n      \"fatherTableColumn\": \"3wbbfj\",\n      \"fatherConnectionWay\": \"lqlz0s\",\n      \"gmtCreate\": \"2022-01-05 12:01:01\",\n      \"gmtModified\": \"2022-01-05 12:01:01\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "修改——关系建模",
+            "header": []
+          },
+          "description": "修改——关系建模"
+        },
+        {
+          "name": "查询——关系建模",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"u9megc\"\n  },\n  \"themeId\": 406,\n  \"modelID\": 929\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/query",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "query"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "查询——关系建模",
+            "header": []
+          },
+          "description": "查询——关系建模"
+        },
+        {
+          "name": "详情——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/706",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "378",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "详情——关系建模",
+            "header": []
+          },
+          "description": "详情——关系建模"
+        },
+        {
+          "name": "统计信息——关系建模",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ir8gg3\"\n  },\n  \"themeId\": 700,\n  \"modelID\": 398\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/census",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "census"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "统计信息——关系建模",
+            "header": []
+          },
+          "description": "统计信息——关系建模"
+        },
+        {
+          "name": "数据类型下拉列表——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/data/types",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "data",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据类型下拉列表——关系建模",
+            "header": []
+          },
+          "description": "数据类型下拉列表——关系建模"
+        },
+        {
+          "name": "预览sql——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "tableId",
+                  "type": "text",
+                  "description": "基础信息id",
+                  "value": "151"
+                },
+                {
+                  "key": "type",
+                  "type": "text",
+                  "description": " sql类型",
+                  "value": "608"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/query/sql?tableId\u003d151\u0026type\u003d608",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "query",
+                "sql"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "tableId",
+                  "value": "362",
+                  "description": "基础信息id"
+                },
+                {
+                  "key": "type",
+                  "value": "327",
+                  "description": " sql类型"
+                }
+              ],
+              "variable": []
+            },
+            "description": "预览sql——关系建模",
+            "header": []
+          },
+          "description": "预览sql——关系建模"
+        },
+        {
+          "name": "手动同步——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  631,\n  81\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/synchronization",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "synchronization"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "手动同步——关系建模",
+            "header": []
+          },
+          "description": "手动同步——关系建模"
+        },
+        {
+          "name": "批量发布——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  375,\n  781\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/push",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "push"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "批量发布——关系建模",
+            "header": []
+          },
+          "description": "批量发布——关系建模"
+        },
+        {
+          "name": "逆向数据库",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelId\": 874,\n  \"themeId\": 376,\n  \"theme\": \"huyigb\",\n  \"dataConnection\": \"5cc17g\",\n  \"dataConnectionName\": \"hwa.willms\",\n  \"databaseName\": \"hwa.willms\",\n  \"replace\": 913,\n  \"tableList\": [\n    \"6cljtf\"\n  ],\n  \"status\": 462,\n  \"syncStatus\": 209\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/reverse/base",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "reverse",
+                "base"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "逆向数据库",
+            "header": []
+          },
+          "description": "逆向数据库"
+        },
+        {
+          "name": "新建关系获取表名称（上线表的表名称）",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/tables",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "tables"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新建关系获取表名称（上线表的表名称）",
+            "header": []
+          },
+          "description": "新建关系获取表名称（上线表的表名称）"
+        },
+        {
+          "name": "根据表名称查询表字段名称",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "tableName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "hwa.willms"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/column?tableName\u003dhwa.willms",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "column"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "tableName",
+                  "value": "hwa.willms",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "根据表名称查询表字段名称",
+            "header": []
+          },
+          "description": "根据表名称查询表字段名称"
+        },
+        {
+          "name": "基础信息—查询数据格式",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/data/fromat",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "data",
+                "fromat"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "基础信息—查询数据格式",
+            "header": []
+          },
+          "description": "基础信息—查询数据格式"
+        }
+      ]
+    },
+    {
+      "name": "数据模型物理表",
+      "item": [
+        {
+          "name": "添加事实表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"8r9aty\"\n  },\n  \"id\": 99,\n  \"themeId\": 295,\n  \"themeName\": \"hwa.willms\",\n  \"factName\": \"hwa.willms\",\n  \"description\": \"2vq0m8\",\n  \"status\": 723,\n  \"connectionType\": 34,\n  \"dataConnection\": \"hgef2s\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 866,\n      \"factId\": 131,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"mvdwhy\",\n      \"standardsId\": 590,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": 177,\n      \"itsPartition\": 2,\n      \"itsNull\": 244,\n      \"description\": \"2ahz7d\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/fact/",
+              "protocol": "http",
+              "path": [
+                "fact",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加事实表",
+            "header": []
+          },
+          "description": "添加事实表"
+        },
+        {
+          "name": "修改事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"tx45iu\"\n  },\n  \"id\": 741,\n  \"themeId\": 864,\n  \"themeName\": \"hwa.willms\",\n  \"factName\": \"hwa.willms\",\n  \"description\": \"ifl7yv\",\n  \"status\": 442,\n  \"connectionType\": 940,\n  \"dataConnection\": \"3gtowz\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 118,\n      \"factId\": 935,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"mr60b7\",\n      \"standardsId\": 545,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": 665,\n      \"itsPartition\": 871,\n      \"itsNull\": 920,\n      \"description\": \"2ouz00\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/fact/996",
+              "protocol": "http",
+              "path": [
+                "fact",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "433",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "修改事实表",
+            "header": []
+          },
+          "description": "修改事实表"
+        },
+        {
+          "name": "事实表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/fact/315",
+              "protocol": "http",
+              "path": [
+                "fact",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "432",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "事实表详情",
+            "header": []
+          },
+          "description": "事实表详情"
+        },
+        {
+          "name": "事实表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"pvoo0s\"\n  },\n  \"id\": 133,\n  \"themeId\": 889,\n  \"themeName\": \"hwa.willms\",\n  \"factName\": \"hwa.willms\",\n  \"description\": \"rvyflg\",\n  \"status\": 469,\n  \"connectionType\": 472,\n  \"dataConnection\": \"53rra1\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 832,\n      \"factId\": 853,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"pk82ec\",\n      \"standardsId\": 689,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": 175,\n      \"itsPartition\": 711,\n      \"itsNull\": 616,\n      \"description\": \"ojc89e\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/fact/list",
+              "protocol": "http",
+              "path": [
+                "fact",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "事实表列表",
+            "header": []
+          },
+          "description": "事实表列表"
+        },
+        {
+          "name": "发布事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/fact/publish/wn58p5",
+              "protocol": "http",
+              "path": [
+                "fact",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "gqa4af",
+                  "description": "事实表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布事实表",
+            "header": []
+          },
+          "description": "发布事实表"
+        },
+        {
+          "name": "下线事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/fact/offline/i6hxsl",
+              "protocol": "http",
+              "path": [
+                "fact",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "8jqh4u",
+                  "description": "事实表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线事实表",
+            "header": []
+          },
+          "description": "下线事实表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/fact/preview/sql/750",
+              "protocol": "http",
+              "path": [
+                "fact",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "77",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "数据模型物理表",
+      "item": [
+        {
+          "name": "添加物理表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 593,\n  \"tableName\": \"hwa.willms\",\n  \"theme\": \"6zidro\",\n  \"dataConnection\": \"s3lc81\",\n  \"databaseName\": \"hwa.willms\",\n  \"dataSourceName\": \"hwa.willms\",\n  \"dataSourceId\": 850,\n  \"description\": \"azre60\",\n  \"status\": 206,\n  \"gmtCreate\": \"2022-01-05 12:01:01\",\n  \"gmtModified\": \"2022-01-05 12:01:01\",\n  \"tableType\": 376,\n  \"responsibleBy\": \"mncddx\",\n  \"dataFormat\": \"1null8\",\n  \"themeId\": 660,\n  \"modelId\": 862,\n  \"hftsRoute\": \"nnl2f9\",\n  \"syncStatus\": 597\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/physical/",
+              "protocol": "http",
+              "path": [
+                "physical",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加物理表",
+            "header": []
+          },
+          "description": "添加物理表"
+        },
+        {
+          "name": "修改物理表信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 591,\n  \"tableName\": \"hwa.willms\",\n  \"theme\": \"5evdwe\",\n  \"dataConnection\": \"d8ln0n\",\n  \"databaseName\": \"hwa.willms\",\n  \"dataSourceName\": \"hwa.willms\",\n  \"dataSourceId\": 802,\n  \"description\": \"k30ssf\",\n  \"status\": 886,\n  \"gmtCreate\": \"2022-01-05 12:01:01\",\n  \"gmtModified\": \"2022-01-05 12:01:01\",\n  \"tableType\": 608,\n  \"responsibleBy\": \"66fvg9\",\n  \"dataFormat\": \"lbet7d\",\n  \"themeId\": 321,\n  \"modelId\": 115,\n  \"hftsRoute\": \"zrt7he\",\n  \"syncStatus\": 85\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/physical/402",
+              "protocol": "http",
+              "path": [
+                "physical",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "123",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "修改物理表信息",
+            "header": []
+          },
+          "description": "修改物理表信息"
+        },
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/physical/aywbo7",
+              "protocol": "http",
+              "path": [
+                "physical",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "jz0h2z",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "",
+            "header": []
+          },
+          "description": ""
+        },
+        {
+          "name": "获取物理表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/physical/26",
+              "protocol": "http",
+              "path": [
+                "physical",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "340",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "获取物理表详情",
+            "header": []
+          },
+          "description": "获取物理表详情"
+        },
+        {
+          "name": "获取物理表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 321,\n  \"tableName\": \"hwa.willms\",\n  \"theme\": \"8xvwy0\",\n  \"dataConnection\": \"xwvux6\",\n  \"databaseName\": \"hwa.willms\",\n  \"dataSourceName\": \"hwa.willms\",\n  \"dataSourceId\": 959,\n  \"description\": \"hmdf8e\",\n  \"status\": 463,\n  \"gmtCreate\": \"2022-01-05 12:01:01\",\n  \"gmtModified\": \"2022-01-05 12:01:01\",\n  \"tableType\": 499,\n  \"responsibleBy\": \"e1gvh8\",\n  \"dataFormat\": \"dwydc8\",\n  \"themeId\": 302,\n  \"modelId\": 133,\n  \"hftsRoute\": \"6m7afl\",\n  \"syncStatus\": 546\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/physical/list",
+              "protocol": "http",
+              "path": [
+                "physical",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取物理表列表",
+            "header": []
+          },
+          "description": "获取物理表列表"
+        }
+      ]
+    },
+    {
+      "name": "数据模型（物理模型）",
+      "item": [
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelName\": \"hwa.willms\",\n  \"layeredName\": \"hwa.willms\",\n  \"description\": \"4xi5ck\",\n  \"modelType\": 835\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/model/",
+              "protocol": "http",
+              "path": [
+                "model",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "",
+            "header": []
+          }
+        },
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/model/",
+              "protocol": "http",
+              "path": [
+                "model",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "",
+            "header": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "汇总表",
+      "item": [
+        {
+          "name": "添加汇总表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"niujfb\"\n  },\n  \"id\": 442,\n  \"themeId\": 433,\n  \"themeName\": \"hwa.willms\",\n  \"tableName\": \"hwa.willms\",\n  \"dimId\": 213,\n  \"dimName\": \"hwa.willms\",\n  \"dataConnection\": \"daunij\",\n  \"databaseName\": \"hwa.willms\",\n  \"description\": \"8i52jq\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 427,\n      \"summaryId\": 23,\n      \"indicatorsType\": 119,\n      \"indicatorsName\": \"hwa.willms\",\n      \"indicatorsCode\": \"90348\",\n      \"dataType\": \"ky6zb4\",\n      \"itsNull\": \"diskma\",\n      \"description\": \"n9fhpg\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/summary/",
+              "protocol": "http",
+              "path": [
+                "summary",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加汇总表",
+            "header": []
+          },
+          "description": "添加汇总表"
+        },
+        {
+          "name": "修改汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"aw47zh\"\n  },\n  \"id\": 1,\n  \"themeId\": 426,\n  \"themeName\": \"hwa.willms\",\n  \"tableName\": \"hwa.willms\",\n  \"dimId\": 956,\n  \"dimName\": \"hwa.willms\",\n  \"dataConnection\": \"zlmry6\",\n  \"databaseName\": \"hwa.willms\",\n  \"description\": \"skm4i9\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 182,\n      \"summaryId\": 942,\n      \"indicatorsType\": 99,\n      \"indicatorsName\": \"hwa.willms\",\n      \"indicatorsCode\": \"90348\",\n      \"dataType\": \"cufr30\",\n      \"itsNull\": \"gxenbn\",\n      \"description\": \"jv4uw8\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/summary/450",
+              "protocol": "http",
+              "path": [
+                "summary",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "966",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "修改汇总表",
+            "header": []
+          },
+          "description": "修改汇总表"
+        },
+        {
+          "name": "汇总表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/summary/14",
+              "protocol": "http",
+              "path": [
+                "summary",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "112",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "汇总表详情",
+            "header": []
+          },
+          "description": "汇总表详情"
+        },
+        {
+          "name": "汇总表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"cdaqre\"\n  },\n  \"id\": 693,\n  \"themeId\": 746,\n  \"themeName\": \"hwa.willms\",\n  \"tableName\": \"hwa.willms\",\n  \"dimId\": 730,\n  \"dimName\": \"hwa.willms\",\n  \"dataConnection\": \"huy1xn\",\n  \"databaseName\": \"hwa.willms\",\n  \"description\": \"an0c7q\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 654,\n      \"summaryId\": 64,\n      \"indicatorsType\": 40,\n      \"indicatorsName\": \"hwa.willms\",\n      \"indicatorsCode\": \"90348\",\n      \"dataType\": \"r4rplc\",\n      \"itsNull\": \"drbkwq\",\n      \"description\": \"m5itbj\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/summary/list",
+              "protocol": "http",
+              "path": [
+                "summary",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "汇总表列表",
+            "header": []
+          },
+          "description": "汇总表列表"
+        },
+        {
+          "name": "发布汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/summary/publish/qoedh5",
+              "protocol": "http",
+              "path": [
+                "summary",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "iney0c",
+                  "description": "汇总表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布汇总表",
+            "header": []
+          },
+          "description": "发布汇总表"
+        },
+        {
+          "name": "下线汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/summary/offline/0a6fjo",
+              "protocol": "http",
+              "path": [
+                "summary",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "epn316",
+                  "description": "汇总表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线汇总表",
+            "header": []
+          },
+          "description": "下线汇总表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/summary/preview/sql/548",
+              "protocol": "http",
+              "path": [
+                "summary",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "739",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "维度",
+      "item": [
+        {
+          "name": "添加维度信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"bdrkfv\"\n  },\n  \"id\": 573,\n  \"themeId\": 303,\n  \"themeName\": \"hwa.willms\",\n  \"dimName\": \"hwa.willms\",\n  \"dimCode\": \"90348\",\n  \"dimType\": \"xg9qlv\",\n  \"description\": \"vmy71k\",\n  \"status\": 805,\n  \"connectionType\": \"qt2iud\",\n  \"dataConnection\": \"4h2pvv\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 121,\n      \"dimId\": 483,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"d25wvf\",\n      \"standardsId\": 67,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": \"790gp3\",\n      \"itsPartition\": \"exsi80\",\n      \"itsNull\": \"ij37y8\",\n      \"description\": \"kv5so8\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/",
+              "protocol": "http",
+              "path": [
+                "dim",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加维度信息",
+            "header": []
+          },
+          "description": "添加维度信息"
+        },
+        {
+          "name": "修改维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"60m35j\"\n  },\n  \"id\": 434,\n  \"themeId\": 170,\n  \"themeName\": \"hwa.willms\",\n  \"dimName\": \"hwa.willms\",\n  \"dimCode\": \"90348\",\n  \"dimType\": \"4ez0ki\",\n  \"description\": \"9ewe04\",\n  \"status\": 25,\n  \"connectionType\": \"ue0qej\",\n  \"dataConnection\": \"s4dv9n\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 850,\n      \"dimId\": 602,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"wj7jch\",\n      \"standardsId\": 848,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": \"hxryse\",\n      \"itsPartition\": \"86ojsl\",\n      \"itsNull\": \"4u1uez\",\n      \"description\": \"o4cbj1\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/316",
+              "protocol": "http",
+              "path": [
+                "dim",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "442",
+                  "description": "维度id"
+                }
+              ]
+            },
+            "description": "修改维度",
+            "header": []
+          },
+          "description": "修改维度"
+        },
+        {
+          "name": "维度详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/613",
+              "protocol": "http",
+              "path": [
+                "dim",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "536",
+                  "description": "维度id"
+                }
+              ]
+            },
+            "description": "维度详情",
+            "header": []
+          },
+          "description": "维度详情"
+        },
+        {
+          "name": "维度列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7nbl66\"\n  },\n  \"id\": 962,\n  \"themeId\": 182,\n  \"themeName\": \"hwa.willms\",\n  \"dimName\": \"hwa.willms\",\n  \"dimCode\": \"90348\",\n  \"dimType\": \"90eo6v\",\n  \"description\": \"ogxi3i\",\n  \"status\": 455,\n  \"connectionType\": \"kvwy5z\",\n  \"dataConnection\": \"egq286\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 604,\n      \"dimId\": 528,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"xbxii9\",\n      \"standardsId\": 527,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": \"rcdh70\",\n      \"itsPartition\": \"vufapq\",\n      \"itsNull\": \"7ajr0v\",\n      \"description\": \"c89pk7\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/list",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "维度列表",
+            "header": []
+          },
+          "description": "维度列表"
+        },
+        {
+          "name": "发布维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/publish/9m0flp",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "naqdxw",
+                  "description": "维度id,如果多个，使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布维度",
+            "header": []
+          },
+          "description": "发布维度"
+        },
+        {
+          "name": "下线维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/offline/li2jiv",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "sss5o8",
+                  "description": "维度id,如果多个，使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线维度",
+            "header": []
+          },
+          "description": "下线维度"
+        }
+      ]
+    },
+    {
+      "name": "维度表",
+      "item": [
+        {
+          "name": "添加维度表信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"2mj2df\"\n  },\n  \"id\": 884,\n  \"themeId\": 524,\n  \"themeName\": \"hwa.willms\",\n  \"dimName\": \"hwa.willms\",\n  \"dimCode\": \"90348\",\n  \"dimType\": \"5h6rfj\",\n  \"description\": \"eprp01\",\n  \"status\": 726,\n  \"connectionType\": \"9mc9st\",\n  \"dataConnection\": \"6051wg\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelDimId\": 237,\n  \"columnList\": [\n    {\n      \"id\": 573,\n      \"dimTableId\": 282,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"6y6mgs\",\n      \"standardsId\": 595,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": \"wlw0a6\",\n      \"itsPartition\": \"fz1yko\",\n      \"itsNull\": \"byj848\",\n      \"description\": \"e8jpk6\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/table/",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加维度表信息",
+            "header": []
+          },
+          "description": "添加维度表信息"
+        },
+        {
+          "name": "修改维度表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ubbol1\"\n  },\n  \"id\": 812,\n  \"themeId\": 202,\n  \"themeName\": \"hwa.willms\",\n  \"dimName\": \"hwa.willms\",\n  \"dimCode\": \"90348\",\n  \"dimType\": \"mlu5pt\",\n  \"description\": \"4720sb\",\n  \"status\": 450,\n  \"connectionType\": \"xir17f\",\n  \"dataConnection\": \"klychz\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelDimId\": 879,\n  \"columnList\": [\n    {\n      \"id\": 906,\n      \"dimTableId\": 736,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"g9uorr\",\n      \"standardsId\": 480,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": \"f3t5n3\",\n      \"itsPartition\": \"hapjnw\",\n      \"itsNull\": \"lxetir\",\n      \"description\": \"jh4t7n\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/table/954",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "129",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "修改维度表",
+            "header": []
+          },
+          "description": "修改维度表"
+        },
+        {
+          "name": "维度表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/table/787",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "938",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "维度表详情",
+            "header": []
+          },
+          "description": "维度表详情"
+        },
+        {
+          "name": "维度表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"0qo49h\"\n  },\n  \"id\": 104,\n  \"themeId\": 788,\n  \"themeName\": \"hwa.willms\",\n  \"dimName\": \"hwa.willms\",\n  \"dimCode\": \"90348\",\n  \"dimType\": \"f0qzs9\",\n  \"description\": \"e212ft\",\n  \"status\": 268,\n  \"connectionType\": \"ccwh5h\",\n  \"dataConnection\": \"b49r4b\",\n  \"databaseName\": \"hwa.willms\",\n  \"modelDimId\": 479,\n  \"columnList\": [\n    {\n      \"id\": 441,\n      \"dimTableId\": 261,\n      \"columnName\": \"hwa.willms\",\n      \"columnType\": \"wlesrh\",\n      \"standardsId\": 981,\n      \"standardsName\": \"hwa.willms\",\n      \"itsPrimaryKey\": \"fq7ptm\",\n      \"itsPartition\": \"f1uwrk\",\n      \"itsNull\": \"zuax4j\",\n      \"description\": \"xt8a2d\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/table/list",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "维度表列表",
+            "header": []
+          },
+          "description": "维度表列表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/table/preview/sql/659",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "73",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "获取数据源和元数据相关接口",
+      "item": [
+        {
+          "name": "获取数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/model/db/connect/types",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "connect",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接类型",
+            "header": []
+          },
+          "description": "获取数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/model/db/connect/7ik9kk",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "connect",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "type",
+                  "value": "5ivgp9",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "获取数据源连接",
+            "header": []
+          },
+          "description": "获取数据源连接"
+        },
+        {
+          "name": "获取db库列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "0tpjrt"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "hwa.willms"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/model/db/?connectType\u003d0tpjrt\u0026dataSourceName\u003dhwa.willms",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "tpvp6c",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "hwa.willms",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取db库列表",
+            "header": []
+          },
+          "description": "获取db库列表"
+        },
+        {
+          "name": "获取table表列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "k4fxlt"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "hwa.willms"
+                },
+                {
+                  "key": "dataBaseName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "hwa.willms"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/model/db/table?connectType\u003dk4fxlt\u0026dataSourceName\u003dhwa.willms\u0026dataBaseName\u003dhwa.willms",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "nvhqce",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "hwa.willms",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataBaseName",
+                  "value": "hwa.willms",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取table表列表",
+            "header": []
+          },
+          "description": "获取table表列表"
+        },
+        {
+          "name": "获取column字段列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "st4qm6"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "hwa.willms"
+                },
+                {
+                  "key": "dataBaseName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "hwa.willms"
+                },
+                {
+                  "key": "tableName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "hwa.willms"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/model/db/column?tableName\u003dhwa.willms\u0026dataSourceName\u003dhwa.willms\u0026dataBaseName\u003dhwa.willms\u0026connectType\u003dst4qm6",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "column"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "nt5x5m",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "hwa.willms",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataBaseName",
+                  "value": "hwa.willms",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "tableName",
+                  "value": "hwa.willms",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取column字段列表",
+            "header": []
+          },
+          "description": "获取column字段列表"
+        },
+        {
+          "name": "获取数据标准",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"169e5h\"\n  },\n  \"dsdName\": \"hwa.willms\",\n  \"dsdCode\": \"90348\",\n  \"dsdLevel\": \"uw712w\",\n  \"dsdLevelId\": \"179\",\n  \"beginDay\": \"1ll029\",\n  \"endDay\": \"ejpyyc\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/model/db/standard",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "standard"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据标准",
+            "header": []
+          },
+          "description": "获取数据标准"
+        },
+        {
+          "name": "获取数据标准分类目录树",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/model/db/theme",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "theme"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据标准分类目录树",
+            "header": []
+          },
+          "description": "获取数据标准分类目录树"
+        }
+      ]
+    }
+  ]
+}

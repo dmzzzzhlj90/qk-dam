@@ -56,4 +56,9 @@ public class SchedulerConstant {
      */
     public static final String SQL_RPC_URL_PART = "?ruleId=";
 
+    /**
+     * 告警表达式结果请求URL参数片段
+     */
+    public static final String WARN_RPC_URL_PART = "?ruleId=";
+
 }

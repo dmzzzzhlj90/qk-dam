@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * MYSQL脚本执行参数信息
+ * HIVE脚本执行参数信息
  *
  * @author wjq
  * @date 2021/11/19
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class MysqlRawScript {
+public class HiveRawScript {
 
     private String from_host;
 

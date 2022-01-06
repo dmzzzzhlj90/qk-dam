@@ -8,10 +8,7 @@ import com.qk.dm.dataquality.vo.DqcSchedulerResultParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 调度结果集
@@ -42,6 +39,18 @@ public class DqcSchedulerResultDataController {
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<PageResultVO<DqcSchedulerResultVO>> searchPageList(@RequestBody DqcSchedulerResultParamsVO schedulerResultDataParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.getResultDataList(schedulerResultDataParamsVO));
+    }
+
+    /**
+     * 根据规则ID获取告警结果
+     *
+     * @param ruleId
+     * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
+     */
+    @GetMapping("/warn/result/info")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult<Object> getWarnResultInfo(@RequestParam("ruleId") String ruleId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.getWarnResultInfo(ruleId));
     }
 
 }
