@@ -5,6 +5,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.reptile.listener.RptBasicInfoUploadDataListener;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.service.RptExcelService;
+import com.qk.dm.reptile.utils.MultipartFileUtil;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class RptExcelServiceImpl implements RptExcelService {
    */
   @Override
   public void basicInfoUpload(MultipartFile file) {
+    MultipartFileUtil.upload(file);
     LOG.info("======开始导入待配数据!======");
     try {
       EasyExcel.read(
