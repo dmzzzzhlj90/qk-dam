@@ -16,7 +16,9 @@ public class ResultTable {
     private String rule_name;
     private Long rule_temp_id;
     private Long task_code;
+    private String rule_meta_data;
     private String rule_result;
+    private String warn_result;
     private String del_flag;
     private Date gmt_create;
     private Date gmt_modified;
