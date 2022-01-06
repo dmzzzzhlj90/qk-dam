@@ -1,16 +1,15 @@
 package com.qk.dm.dataquality.vo.statistics.handler;
 
 import cn.hutool.core.date.DateUtil;
+import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.ruletemplate.DimensionTypeEnum;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessTaskInstanceResultDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessTaskInstanceSearchDTO;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
+import com.qk.dm.dataquality.entity.DqcSchedulerResult;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
-import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
-import com.qk.dm.dataquality.service.impl.DolphinScheduler;
 import com.qk.dm.dataquality.vo.TaskInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.JobInfoVO;
@@ -27,71 +26,55 @@ import java.util.stream.Collectors;
  */
 @Component
 public class TaskInstanceHandler {
-    private static final int pageNo = 1;
-    private static final int pageSize = 10;
-
-    private final DolphinScheduler dolphinScheduler;
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
     private final DqcRuleTemplateService dqcRuleTemplateService;
+    private final RedisHandler redisHandler;
+    private final WarnHandler warnHandler;
 
-    public TaskInstanceHandler(DolphinScheduler dolphinScheduler,
-                               DqcSchedulerRulesService dqcSchedulerRulesService,
-                               DqcRuleTemplateService dqcRuleTemplateService) {
-        this.dolphinScheduler = dolphinScheduler;
+    public TaskInstanceHandler(DqcSchedulerRulesService dqcSchedulerRulesService,
+                               DqcRuleTemplateService dqcRuleTemplateService,
+                               RedisHandler redisHandler,
+                               WarnHandler warnHandler) {
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
         this.dqcRuleTemplateService = dqcRuleTemplateService;
+        this.redisHandler = redisHandler;
+        this.warnHandler = warnHandler;
     }
 
-    private ProcessTaskInstanceSearchDTO getProcessTaskInstanceSearchDTO(Date date, String stateType) {
-        return ProcessTaskInstanceSearchDTO.builder()
-                .pageNo(pageNo)
-                .pageSize(pageSize)
-                .startDate(date != null ? DateUtil.formatDateTime(DateUtil.beginOfDay(date)) : null)
-                .endDate(date != null ? DateUtil.formatDateTime(DateUtil.endOfDay(date)) : null)
-                .stateType(stateType)
-                .build();
-    }
-
-    private ProcessTaskInstanceResultDTO getTaskInstanceResult(ProcessTaskInstanceSearchDTO taskInstanceSearchDTO) {
-        return dolphinScheduler.taskInstanceList(taskInstanceSearchDTO);
-    }
-
-    private void getTaskInstanceList(ProcessTaskInstanceSearchDTO taskInstanceSearchDTO, List<TaskInstanceVO> totalList) {
-        ProcessTaskInstanceResultDTO taskInstanceResultDTO = getTaskInstanceResult(taskInstanceSearchDTO);
-        totalList.addAll(DqcProcessInstanceMapper.INSTANCE.taskInstanceVO(taskInstanceResultDTO.getTotalList()));
-        if (taskInstanceResultDTO.getTotalPage() > taskInstanceResultDTO.getCurrentPage()) {
-            taskInstanceSearchDTO.setPageNo(taskInstanceSearchDTO.getPageNo() + 1);
-            getTaskInstanceList(taskInstanceSearchDTO, totalList);
-        }
-    }
-
-    private List<TaskInstanceVO> getDolphinTaskInstanceList(Date date, String stateType) {
-        ProcessTaskInstanceSearchDTO taskInstanceSearchDTO = getProcessTaskInstanceSearchDTO(date, stateType);
-        List<TaskInstanceVO> totalList = new ArrayList<>();
-        //查询所有的任务实例
-        getTaskInstanceList(taskInstanceSearchDTO, totalList);
-        return totalList;
+    /**
+     * 根据条件查询所有任务实例
+     * @return
+     */
+    public List<TaskInstanceVO> getDolphinTaskInstanceList() {
+        return GsonUtil.fromJsonString(redisHandler.redisTaskInstanceList(null, null), new TypeToken<List<TaskInstanceVO>>() {}.getType());
     }
 
     /************************数据总揽*****************************/
 
-    private Set<Long> getTaskCodeSet(List<TaskInstanceVO> totalList) {
-        return totalList.stream().map(TaskInstanceVO::getTaskCode).collect(Collectors.toSet());
+    private List<TaskInstanceVO> getTaskInstanceListByStateType(String stateType) {
+        //在所有任务实例中筛选
+        return getDolphinTaskInstanceList().stream().filter(it -> stateType.equals(it.getState())).collect(Collectors.toList());
     }
 
-    public JobInfoVO instanceStateStatistics(String stateType) {
-        //调度查询当日所有任务实例
-        List<TaskInstanceVO> totalList = getDolphinTaskInstanceList(null, stateType);
-        Set<Long> taskCodeSet = getTaskCodeSet(totalList);
+    public JobInfoVO taskStateTypeStatistics(String stateType) {
+        //根据状态查询所有任务实例
+        List<TaskInstanceVO> list = getTaskInstanceListByStateType(stateType);
+        Set<Long> taskCodeSet = list.stream().map(TaskInstanceVO::getTaskCode).collect(Collectors.toSet());
         return JobInfoVO.builder()
-                //作业数
-                .count(totalList.size())
+                .count(list.size())
                 .tableCount(dqcSchedulerRulesService.getTableSet(taskCodeSet))
                 .fieldCount(dqcSchedulerRulesService.getFieldSet(taskCodeSet))
                 .build();
     }
 
     /************************任务纬度统计*****************************/
+
+    private List<TaskInstanceVO> taskInstanceListByDate(Date date){
+        List<TaskInstanceVO> list = getDolphinTaskInstanceList();
+        Date startTime = DateUtil.beginOfDay(date);
+        Date endTime = DateUtil.endOfDay(date);
+        return list.stream().filter(it -> it.getStartTime().compareTo(startTime) >= 0 && it.getEndTime().compareTo(endTime) <= 0).collect(Collectors.toList());
+    }
 
     private Map<Long, Long> getTaskCodeAndRuleTempId(List<TaskInstanceVO> totalList) {
         Set<Long> taskCodeSet = totalList.stream().map(TaskInstanceVO::getTaskCode).collect(Collectors.toSet());
@@ -132,6 +115,12 @@ public class TaskInstanceHandler {
                 .collect(Collectors.groupingBy(TaskInstanceVO::getTaskCode, Collectors.counting()));
     }
 
+    private Map<Long, Long> getTaskCodeCountMap(Date date){
+        return warnHandler.warnResultList(date)
+                .stream()
+                .collect(Collectors.groupingBy(DqcSchedulerResult::getTaskCode, Collectors.counting()));
+    }
+
     private Map<String, Long> getDimensionTypeAndCount(Map<Long, Long> taskCodeCountMap, Map<String, String> dimensionTypeAndtaskCode) {
         return dimensionTypeAndtaskCode
                 .entrySet()
@@ -163,27 +152,29 @@ public class TaskInstanceHandler {
         }
     }
 
-    private List<DimensionVO> getDimensionList(Map<String, Long> dimensionTypeAndCountBySuccess, Map<String, Long> dimensionTypeAndCountByFailure) {
-        List<DimensionVO> dimensionList = new ArrayList<>(16);
-        packagingDimensionList(dimensionTypeAndCountBySuccess, dimensionList, InstanceStateTypeEnum.SUCCESS);
-        packagingDimensionList(dimensionTypeAndCountByFailure, dimensionList, InstanceStateTypeEnum.FAILURE);
-        return dimensionList;
-    }
-
     public List<DimensionVO> dimensionStatistics(Date date) {
         //调度查询当日所有任务实例
-        List<TaskInstanceVO> totalList = getDolphinTaskInstanceList(date, null);
+        List<TaskInstanceVO> totalList = taskInstanceListByDate(date);
         //success TaskCode->count
         Map<Long, Long> successTaskCodeCountMap = getTaskCodeCountMap(totalList, InstanceStateTypeEnum.SUCCESS);
         //failure TaskCode->count
         Map<Long, Long> failureTaskCodeCountMap = getTaskCodeCountMap(totalList, InstanceStateTypeEnum.FAILURE);
+        //warn TaskCode->count
+        Map<Long, Long> warnTaskCodeCountMap = getTaskCodeCountMap(date);
         //获取 dimensionType->taskCodeList
         Map<String, String> dimensionTypeAndtaskCode = getTaskCodeAndDimensionType(totalList);
         //dimensionTypeAndtaskCode 分化成功数量 dimensionType->successCount
         Map<String, Long> dimensionTypeAndCountBySuccess = getDimensionTypeAndCount(successTaskCodeCountMap, dimensionTypeAndtaskCode);
         //dimensionTypeAndtaskCode 分化失败数量 dimensionType->failureCount
         Map<String, Long> dimensionTypeAndCountByFailure = getDimensionTypeAndCount(failureTaskCodeCountMap, dimensionTypeAndtaskCode);
+        //dimensionTypeAndtaskCode 分化警告数量 dimensionType->WarnCount
+        Map<String, Long> dimensionTypeAndCountByWarn = getDimensionTypeAndCount(warnTaskCodeCountMap, dimensionTypeAndtaskCode);
         //处理封装
-        return getDimensionList(dimensionTypeAndCountBySuccess, dimensionTypeAndCountByFailure);
+        List<DimensionVO> dimensionList = new ArrayList<>(16);
+        packagingDimensionList(dimensionTypeAndCountBySuccess, dimensionList, InstanceStateTypeEnum.SUCCESS);
+        packagingDimensionList(dimensionTypeAndCountByFailure, dimensionList, InstanceStateTypeEnum.FAILURE);
+        packagingDimensionList(dimensionTypeAndCountByWarn, dimensionList, InstanceStateTypeEnum.WARN);
+        return dimensionList;
     }
+
 }

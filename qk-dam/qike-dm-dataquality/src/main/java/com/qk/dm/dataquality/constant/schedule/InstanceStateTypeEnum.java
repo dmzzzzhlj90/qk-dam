@@ -19,7 +19,8 @@ public enum InstanceStateTypeEnum {
   NEED_FAULT_TOLERANCE("NEED_FAULT_TOLERANCE", "需要容错", SchedulerInstanceStateEnum.RUNING),
   KILL("KILL", "kill", SchedulerInstanceStateEnum.STOP),
   WAITTING_THREAD("WAITTING_THREAD", "等待线程", SchedulerInstanceStateEnum.RUNING),
-  WAITTING_DEPEND("WAITTING_DEPEND", "等待依赖完成", SchedulerInstanceStateEnum.RUNING);
+  WAITTING_DEPEND("WAITTING_DEPEND", "等待依赖完成", SchedulerInstanceStateEnum.RUNING),
+  WARN("WARN","告警", SchedulerInstanceStateEnum.RUN_SUCCEED);
 
   String code;
   String value;

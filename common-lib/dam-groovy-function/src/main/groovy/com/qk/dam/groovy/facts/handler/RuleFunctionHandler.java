@@ -3,9 +3,10 @@ package com.qk.dam.groovy.facts.handler;
 
 import com.qk.dam.groovy.constant.FunctionConstant;
 import com.qk.dam.groovy.facts.base.AbstractHandler;
-import com.qk.dam.groovy.model.base.RuleFunctionInfo;
+import com.qk.dam.groovy.model.RuleFunctionInfo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -18,19 +19,19 @@ import java.util.function.BiFunction;
  */
 public class RuleFunctionHandler extends AbstractHandler {
     private final Map<String, RuleFunctionInfo> ruleFunctionMap;
+    private List<Map<String,Object>> param;
 
-    public RuleFunctionHandler(Map<String, RuleFunctionInfo> ruleFunctionMap, BiFunction express) {
+    public RuleFunctionHandler(Map<String, RuleFunctionInfo> functionInfoMap, List<Map<String,Object>> param, BiFunction express) {
         super(FunctionConstant.RULE_FUNCTION_TYPE, express);
-        this.ruleFunctionMap = ruleFunctionMap;
+        this.ruleFunctionMap = functionInfoMap;
+        this.param = param;
     }
 
     @Override
     public void doHandler() {
-        Map<String, Object> resultMap = new HashMap<>(16);
-        ruleFunctionMap.forEach(
-                (k, v) -> resultMap.put(k,
-                        getExpressCall().apply(k, v)));
-
-        super.result = resultMap;
+        param.forEach(sm->
+                ruleFunctionMap.forEach((k,v)-> sm.put(k,getExpressCall().apply(sm,v)))
+        );
+        super.result = param;
     }
 }
