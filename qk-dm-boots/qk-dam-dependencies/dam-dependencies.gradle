@@ -33,7 +33,7 @@ dependencies {
         api 'com.baomidou:mybatis-plus:3.4.3'
         api "com.querydsl:querydsl-core:5.0.0"
         api "com.querydsl:querydsl-jpa:5.0.0"
-        api "com.querydsl:querydsl-apt:4.4.0"
+        api "com.querydsl:querydsl-apt:5.0.0"
         api group: 'com.alibaba', name: 'easyexcel', version: '2.2.10'
         api 'commons-io:commons-io:2.9.0'
         api 'org.apache.curator:curator-recipes:5.1.0'
@@ -55,9 +55,9 @@ dependencies {
         api group: 'org.antlr', name: 'antlr4-runtime', version: '4.8'
         api group: 'org.antlr', name: 'antlr4-runtime-testsuite', version: '4.8'
 
-        api 'org.apache.atlas:atlas-client-v2:3.0.0-SNAPSHOT'
-        api 'org.apache.atlas:atlas-notification:3.0.0-SNAPSHOT'
-        api 'org.apache.atlas:atlas-common:3.0.0-SNAPSHOT'
+        api 'org.apache.atlas:atlas-client-v2:2.2.0'
+        api 'org.apache.atlas:atlas-notification:2.2.0'
+        api 'org.apache.atlas:atlas-common:2.2.0'
 
         api group: 'org.tsugi', name: 'tsugi-util', version: '21.0.0'
 

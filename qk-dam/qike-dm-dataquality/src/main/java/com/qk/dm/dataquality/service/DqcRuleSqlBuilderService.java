@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DqcRuleSqlBuilderService {
 
-    String getExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO);
+    Object getExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO);
 
-    String getRealTimeSql(String ruleId);
+    Object getRealTimeSql(String ruleId);
 
 
 }

@@ -2,15 +2,13 @@ package com.qk.dm.dataquality.vo.statistics.handler;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
+import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceSearchDTO;
 import com.qk.dm.dataquality.entity.DqcRuleDir;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
-import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
 import com.qk.dm.dataquality.service.DqcRuleDirService;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
-import com.qk.dm.dataquality.service.impl.DolphinScheduler;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.InstanceVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
@@ -26,72 +24,69 @@ import java.util.stream.Collectors;
  */
 @Component
 public class InstanceHandler {
-    private static final int pageNo = 1;
-    private static final int pageSize = 1;
-    private static final int listPageSize = 10;
-
-    private final DolphinScheduler dolphinScheduler;
     private final DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService;
     private final DqcRuleDirService dqcRuleDirService;
+    private final RedisHandler redisHandler;
+    private final WarnHandler warnHandler;
 
-    public InstanceHandler(DolphinScheduler dolphinScheduler,
-                           DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService,
-                           DqcRuleDirService dqcRuleDirService) {
-        this.dolphinScheduler = dolphinScheduler;
+    public InstanceHandler(DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService,
+                           DqcRuleDirService dqcRuleDirService,
+                           RedisHandler redisHandler,
+                           WarnHandler warnHandler) {
         this.dqcSchedulerBasicInfoService = dqcSchedulerBasicInfoService;
         this.dqcRuleDirService = dqcRuleDirService;
+        this.redisHandler = redisHandler;
+        this.warnHandler = warnHandler;
     }
 
-    private ProcessInstanceSearchDTO getInstanceSearchDTO(int pageSize, String failure, Date date) {
-        return ProcessInstanceSearchDTO.builder()
-                .pageNo(pageNo)
-                .pageSize(pageSize)
-                .stateType(failure)
-                .startDate(date != null ? DateUtil.formatDateTime(DateUtil.beginOfDay(date)) : null)
-                .endDate(date != null ? DateUtil.formatDateTime(DateUtil.endOfDay(date)) : null)
-                .build();
+    /**
+     * 实例列表
+     *
+     * @return
+     */
+    public List<DqcProcessInstanceVO> getDolphinInstanceList() {
+        return GsonUtil.fromJsonString(redisHandler.redisInstanceList(null, null), new TypeToken<List<DqcProcessInstanceVO>>() {
+        }.getType());
     }
 
-    private ProcessInstanceResultDTO getProcessInstanceResult(ProcessInstanceSearchDTO processInstanceSearchDTO) {
-        //实例数
-        return dolphinScheduler.instanceList(processInstanceSearchDTO);
-    }
+    /**********************实例统计数据************************************************************/
 
-    private ProcessInstanceResultDTO getProcessInstance(String failure) {
-        return getProcessInstanceResult(getInstanceSearchDTO(pageSize, failure, null));
+    private List<DqcProcessInstanceVO> getInstanceGroupByStateType(List<DqcProcessInstanceVO> dolphinInstanceList, InstanceStateTypeEnum stateType) {
+        //根据状态筛选实例列表
+        return dolphinInstanceList.stream().filter(it -> stateType.getCode().equals(it.getState())).collect(Collectors.toList());
     }
 
     public InstanceVO instanceStatistics() {
+        List<DqcProcessInstanceVO> dolphinInstanceList = getDolphinInstanceList();
         return InstanceVO.builder()
-                .count(getProcessInstance(null).getTotal())
-                .successCount(getProcessInstance(InstanceStateTypeEnum.SUCCESS.getCode()).getTotal())
-                .failureCount(getProcessInstance(InstanceStateTypeEnum.FAILURE.getCode()).getTotal())
+                .count(dolphinInstanceList.size())
+                //获取成功列表
+                .successCount(getInstanceGroupByStateType(dolphinInstanceList, InstanceStateTypeEnum.SUCCESS).size())
+                //获取失败列表
+                .failureCount(getInstanceGroupByStateType(dolphinInstanceList, InstanceStateTypeEnum.FAILURE).size())
+                .warnCount(warnHandler.warnResultList().size())
                 .build();
     }
 
-    /**************************流程实例列表********************************************************/
+    /**********************分类统计************************************************************/
 
-    private void getInstanceList(ProcessInstanceSearchDTO instanceSearchDTO, List<DqcProcessInstanceVO> totalList) {
-        ProcessInstanceResultDTO instanceResultDTO = dolphinScheduler.instanceList(instanceSearchDTO);
-        totalList.addAll(DqcProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(instanceResultDTO.getTotalList()));
-        if (instanceResultDTO.getTotalPage() > instanceResultDTO.getCurrentPage()) {
-            instanceSearchDTO.setPageNo(instanceSearchDTO.getPageNo() + 1);
-            getInstanceList(instanceSearchDTO, totalList);
-        }
+    private List<DqcProcessInstanceVO> instanceListByDate(Date date) {
+        String startTime = DateUtil.formatDateTime(DateUtil.beginOfDay(date));
+        String endTime = DateUtil.formatDateTime(DateUtil.endOfDay(date));
+        return getDolphinInstanceList()
+                .stream()
+                .filter(it -> it.getStartTime().compareTo(startTime) >= 0 && it.getEndTime().compareTo(endTime) <= 0)
+                .collect(Collectors.toList());
     }
 
-    public List<DqcProcessInstanceVO> getInstanceList(Date date) {
-        ProcessInstanceSearchDTO instanceSearchDTO = getInstanceSearchDTO(listPageSize, null, date);
-        //查询出今天所有实例
-        List<DqcProcessInstanceVO> totalList = new ArrayList<>();
-        getInstanceList(instanceSearchDTO, totalList);
-        return totalList;
+    private Set<Long> getCodeSet(List<DqcProcessInstanceVO> successList) {
+        return successList.stream()
+                .map(DqcProcessInstanceVO::getProcessDefinitionCode)
+                .collect(Collectors.toSet());
     }
-
-    /****************************************************************************************************/
 
     private Map<Long, String> getCodeDirMap(List<DqcProcessInstanceVO> totalList) {
-        Set<Long> codeSet = totalList.stream().map(DqcProcessInstanceVO::getProcessDefinitionCode).collect(Collectors.toSet());
+        Set<Long> codeSet = getCodeSet(totalList);
         //获取code->dir
         return dqcSchedulerBasicInfoService.getBasicInfoList(codeSet)
                 .stream()
@@ -99,7 +94,8 @@ public class InstanceHandler {
     }
 
     private Map<Long, Long> getCodeCount(List<DqcProcessInstanceVO> totalList) {
-        return totalList.stream().collect(Collectors.groupingBy(DqcProcessInstanceVO::getProcessDefinitionCode, Collectors.counting()));
+        return totalList.stream()
+                .collect(Collectors.groupingBy(DqcProcessInstanceVO::getProcessDefinitionCode, Collectors.counting()));
     }
 
     private Map<String, Long> getDirCount(Map<Long, String> codeDirMap, Map<Long, Long> codeCount) {
@@ -140,16 +136,16 @@ public class InstanceHandler {
 
     public List<RuleDirVO> dirStatistics(Date date) {
         //查询当日所有实例
-        List<DqcProcessInstanceVO> totalList = getInstanceList(date);
+        List<DqcProcessInstanceVO> totalList = instanceListByDate(date);
         //获取code->dir
         Map<Long, String> codeDirMap = getCodeDirMap(totalList);
         //各code运行次数 code->count
         Map<Long, Long> codeCount = getCodeCount(totalList);
-        //从所有实例中结合本地数据查询各dir运行次数 dir->count
+        //各dir运行次数code->dir\code->count 转  dir->count
         Map<String, Long> dirCount = getDirCount(codeDirMap, codeCount);
-        //获取所有分类目录 dirId->dirName
+        //根据dir获取目录 dirId->dirName
         Map<String, String> dqcRuleDirMap = getDqcRuleDirMap(new HashSet<>(dirCount.keySet()));
-        //封装类
+        //封装计算百分比
         return getRuleDirList(totalList, dirCount, dqcRuleDirMap);
     }
 }

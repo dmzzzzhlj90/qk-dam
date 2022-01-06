@@ -17,10 +17,18 @@ class RuleFun {
 
     FactsScriptShell factsScriptShell = new FactsScriptShell(binding)
 
-    BiFunction computeFunc = {ruleName,functionInfos ->
-        Script script = ObjectCache.getIfNull(ruleName,{ -> factsScriptShell.parse(ruleName) })
+//    BiFunction dateFunction = {ruleName,source ->
+//        Script script = ObjectCache.getIfNull(ruleName,{ -> factsScriptShell.parse(ruleName) })
 //        source.forEach({k,v->script.setProperty(k,v)});
 //        script.setProperty("source",source);
+//        def computeField = script.run()
+//        computeField
+//    }
+
+    BiFunction ruleFunction = { source, allField ->
+        Script script = ObjectCache.getIfNull(allField.expression,{ -> factsScriptShell.parse(allField.expression) })
+        source.forEach({k,v->script.setProperty(k,v)});
+        script.setProperty("source",source);
         def computeField = script.run()
         computeField
     }

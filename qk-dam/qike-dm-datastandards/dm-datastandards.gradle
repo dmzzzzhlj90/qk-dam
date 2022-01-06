@@ -50,8 +50,9 @@ dependencies {
     implementation 'com.alibaba:easyexcel'
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
+            "javax.persistence:javax.persistence-api",
+            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "javax.annotation:javax.annotation-api",
-            "com.querydsl:querydsl-apt:4.4.0:jpa",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
     implementation group: 'cn.hutool', name: 'hutool-db'
