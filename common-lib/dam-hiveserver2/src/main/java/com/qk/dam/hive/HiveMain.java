@@ -1,14 +1,14 @@
 package com.qk.dam.hive;
 
-import cn.hutool.core.io.resource.ResourceUtil;
-import cn.hutool.db.*;
+import cn.hutool.db.Db;
+import cn.hutool.db.DbUtil;
+import cn.hutool.db.Entity;
 import cn.hutool.db.ds.simple.SimpleDataSource;
 import cn.hutool.db.handler.EntityListHandler;
 import cn.hutool.db.sql.SqlExecutor;
 import com.beust.jcommander.internal.Lists;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
@@ -18,9 +18,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 
@@ -51,7 +51,7 @@ public class HiveMain {
         String ruleName = mysqlRawScript.getRule_name();
         Long ruleTempId = mysqlRawScript.getRule_temp_id();
         Long taskCode = mysqlRawScript.getTask_code();
-        ResultTable resultTable = new ResultTable(jobId, jobName, ruleId, ruleName, ruleTempId, taskCode, null, "0", new Date(), new Date());
+        ResultTable resultTable = new ResultTable(jobId, jobName, ruleId, ruleName, ruleTempId, taskCode,mysqlRawScript.getRule_meta_data(),null, null, "0", new Date(), new Date());
 
         // 查询库
         String fromHost = mysqlRawScript.getFrom_host();
@@ -67,6 +67,7 @@ public class HiveMain {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("请求生产校验SQL错误:【{}】",e.getLocalizedMessage());
+            System.exit(-1);
         }
         List<Entity> entities = null;
         try {
@@ -78,6 +79,7 @@ public class HiveMain {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("执行质量校验SQL发生错误:【{}】",e.getLocalizedMessage());
+            System.exit(-1);
         }
 
         // 结果库
@@ -88,10 +90,14 @@ public class HiveMain {
         log.info("质量规则执行结果存储到【toHost:{}】【toUser:{}】【toDatabase:{}】",toHost,toUser,toDatabase);
         DB = getDb(toDatabase, toHost, toUser, toPassword, DbTypeEnum.MYSQL);
         try {
+            String warnRst = generateWarnRst(mysqlRawScript.getWarn_rpc_url());
+            resultTable.setWarn_result(warnRst);
+            log.info("插入结果数据入库【{}】",new Gson().toJson(resultTable));
             DB.insert(Entity.create(RST_TABLE).parseBean(resultTable));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("执行添加结果数据失败:【{}】",e.getLocalizedMessage());
+            System.exit(-1);
         }
 
 
@@ -106,8 +112,21 @@ public class HiveMain {
         }
         InputStream body = localVarResponse.body();
         Map<String,Object> jsonMap = new Gson().fromJson(new String(body.readAllBytes()), HashMap.class);
-        log.info("请求执行规则查询sql:【{}】",jsonMap.get("tips"));
-        return String.valueOf(jsonMap.get("tips"));
+        log.info("请求执行规则查询sql:【{}】",jsonMap.get("data"));
+        return String.valueOf(jsonMap.get("data"));
+    }
+
+    static String generateWarnRst(String warnRpcUrl) throws Exception {
+        HttpClient httpClient = new ApiClient().getHttpClient();
+        HttpResponse<InputStream> localVarResponse = httpClient.send(generateSqlCall(warnRpcUrl),
+                HttpResponse.BodyHandlers.ofInputStream());
+        if (localVarResponse.statusCode()/ 100 != 2) {
+            throw new Exception("请求返回错误");
+        }
+        InputStream body = localVarResponse.body();
+        Map<String,Object> jsonMap = new Gson().fromJson(new String(body.readAllBytes()), HashMap.class);
+        log.info("请求执行规则查询sql:【{}】",jsonMap.get("data"));
+        return String.valueOf(jsonMap.get("data"));
     }
 
     static Db getDb(String database,
