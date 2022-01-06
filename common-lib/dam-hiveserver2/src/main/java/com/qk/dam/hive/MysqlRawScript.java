@@ -38,10 +38,14 @@ public class MysqlRawScript {
 
     private String rule_name;
 
+    private String rule_meta_data;
+
     private Long rule_temp_id;
 
     private Long task_code;
 
     private String sql_rpc_url;
+
+    private String warn_rpc_url;
 
 }
