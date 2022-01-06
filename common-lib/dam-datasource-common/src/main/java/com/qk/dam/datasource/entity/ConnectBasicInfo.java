@@ -13,6 +13,9 @@ public class ConnectBasicInfo {
   /** 数据源连接服务地址 */
   private String server;
 
+  /** 数据源连接服务地址 */
+  private String hiveServer2;
+
   /** 端口 */
   private String port;
 
