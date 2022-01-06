@@ -50,4 +50,9 @@ public class DqcSchedulerResultParamsVO {
      * 结束时间
      */
     private String endDay;
+
+    /**
+     * 结果集
+     */
+    private String warnResult;
 }

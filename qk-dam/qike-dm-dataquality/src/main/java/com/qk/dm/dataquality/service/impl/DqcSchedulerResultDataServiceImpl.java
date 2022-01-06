@@ -414,6 +414,10 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             booleanBuilder.and(qDqcSchedulerResult.taskCode.eq(schedulerResultParamsVO.getTaskCode()));
         }
 
+        if (!ObjectUtils.isEmpty(schedulerResultParamsVO.getWarnResult())) {
+            booleanBuilder.and(qDqcSchedulerResult.warnResult.eq(schedulerResultParamsVO.getWarnResult()));
+        }
+
         if (!StringUtils.isEmpty(schedulerResultParamsVO.getBeginDay())
                 && !StringUtils.isEmpty(schedulerResultParamsVO.getEndDay())) {
             StringTemplate dateExpr =
@@ -426,5 +430,10 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     @Override
     public List<DqcSchedulerResult> getSchedulerResultList(Set<String> jobIds){
         return (List<DqcSchedulerResult>) dqcSchedulerResultRepository.findAll(qDqcSchedulerResult.jobId.in(jobIds));
+    }
+
+    @Override
+    public List<DqcSchedulerResult> getSchedulerResultListByWarn(){
+        return (List<DqcSchedulerResult>) dqcSchedulerResultRepository.findAll(qDqcSchedulerResult.warnResult.eq("True"));
     }
 }
