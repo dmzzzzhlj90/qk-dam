@@ -18,4 +18,5 @@ public class InstanceVO {
     Integer count;
     Integer successCount;
     Integer failureCount;
+    Integer warnCount;
 }

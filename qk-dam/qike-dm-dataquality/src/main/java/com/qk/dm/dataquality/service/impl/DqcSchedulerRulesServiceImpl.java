@@ -107,7 +107,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
             //设置规则信息关联流程任务节点taskCode
             setTaskCode(dqcSchedulerRulesVO);
             //生成执行Sql;
-            String executorSql = getExecutorSql(dqcSchedulerRulesVO);
+            String executorSql = (String) getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
             //回填basicVo进行实例生成;
             executorRuleList.add(dqcSchedulerRulesVO);
@@ -151,7 +151,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
             //规则名称
             dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO));
             //生成执行Sql;
-            String executorSql = getExecutorSql(dqcSchedulerRulesVO);
+            String executorSql =(String) getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
             //回填basicVo进行实例生成;
             executorRuleList.add(dqcSchedulerRulesVO);
@@ -245,7 +245,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         dqcSchedulerRulesRepository.deleteAllInBatch(dqcSchedulerRules);
     }
 
-    private String getExecutorSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+    private Object getExecutorSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         return dqcRuleSqlBuilderService.getExecuteSql(dqcSchedulerRulesVO);
     }
 

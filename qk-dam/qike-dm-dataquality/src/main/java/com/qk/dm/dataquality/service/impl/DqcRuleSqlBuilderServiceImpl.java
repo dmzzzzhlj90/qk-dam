@@ -4,8 +4,8 @@ import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.groovy.constant.FunctionConstant;
 import com.qk.dam.groovy.facts.RuleFunctionGenerator;
-import com.qk.dam.groovy.model.RuleFunctionModel;
-import com.qk.dam.groovy.model.base.RuleFunctionInfo;
+import com.qk.dam.groovy.model.FactModel;
+import com.qk.dam.groovy.model.RuleFunctionInfo;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.constant.ScanTypeEnum;
@@ -49,7 +49,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
 
 
     @Override
-    public String getExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+    public Object getExecuteSql(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         String executeSql = null;
         //获取规则模板
         Optional<DqcRuleTemplate> dqcRuleTemplate = dqcRuleTemplateRepository.findOne(QDqcRuleTemplate.dqcRuleTemplate.id.eq(dqcSchedulerRulesVO.getRuleTempId()));
@@ -68,7 +68,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
     }
 
     @Override
-    public String getRealTimeSql(String ruleId) {
+    public Object getRealTimeSql(String ruleId) {
         String realTimeSql = null;
         //查询规则调度信息
         Optional<DqcSchedulerRules> schedulerRulesOptional =
@@ -80,7 +80,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
             dqcSchedulerRulesVO.setTableList(DqcConstant.jsonStrToList(dqcSchedulerRules.getTables()));
             dqcSchedulerRulesVO.setFieldList(DqcConstant.jsonStrToList(dqcSchedulerRules.getFields()));
 
-            realTimeSql = getExecuteSql(dqcSchedulerRulesVO);
+            realTimeSql = (String) getExecuteSql(dqcSchedulerRulesVO);
         }
         return realTimeSql;
     }
@@ -232,13 +232,13 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         String realScanSql = "";
         List<String> functions = FunctionConstant.isExistFunction(scanSql);
         if (functions.size() > 0) {
-            //存在特殊函数
-            //真正需要被执行的函数带有参数信息等
-            List<String> functionNameList = getFunctionNameList(scanSql, functions);
-            //执行Groovy函数
-            Map<String, Object> groovyFunctionMap = executeGroovyFunction(functionNameList);
-            //替换函数sql参数
-            realScanSql = getRealScanSql(scanSql, realScanSql, functionNameList, groovyFunctionMap);
+//            //存在特殊函数
+//            //真正需要被执行的函数带有参数信息等
+//            List<String> functionNameList = getFunctionNameList(scanSql, functions);
+//            //执行Groovy函数
+//            Map<String, Object> groovyFunctionMap = executeGroovyFunction(functionNameList);
+//            //替换函数sql参数
+//            realScanSql = getRealScanSql(scanSql, realScanSql, functionNameList, groovyFunctionMap);
         } else {
             //存在特殊函数
             realScanSql = scanSql;
@@ -272,18 +272,18 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
     /**
      * 执行Groovy函数
      */
-    private Map<String, Object> executeGroovyFunction(List<String> functionNameList) {
-        RuleFunctionModel model = new RuleFunctionModel();
-        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
-
-        for (String functionName : functionNameList) {
-            RuleFunctionInfo functionInfo = new RuleFunctionInfo(functionName, Maps.newHashMap());
-            ruleFunctionInfos.add(functionInfo);
-        }
-        model.setRuleFunctionInfos(ruleFunctionInfos);
-        RuleFunctionGenerator ruleFunctionGenerator = new RuleFunctionGenerator(model);
-        return ruleFunctionGenerator.generateFunction();
-    }
+//    private Map<String, Object> executeGroovyFunction(List<String> functionNameList) {
+//        FactModel model = new FactModel();
+//        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
+//
+//        for (String functionName : functionNameList) {
+//            RuleFunctionInfo functionInfo = new RuleFunctionInfo(functionName, Maps.newHashMap());
+//            ruleFunctionInfos.add(functionInfo);
+//        }
+//        model.setRuleFunctionInfos(ruleFunctionInfos);
+//        RuleFunctionGenerator ruleFunctionGenerator = new RuleFunctionGenerator(model);
+//        return ruleFunctionGenerator.generateFunction();
+//    }
 
     /**
      * 替换函数sql参数
