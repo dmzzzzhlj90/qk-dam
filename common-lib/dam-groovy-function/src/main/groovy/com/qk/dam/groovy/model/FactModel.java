@@ -1,6 +1,6 @@
 package com.qk.dam.groovy.model;
 
-import com.qk.dam.groovy.model.base.RuleFunctionInfo;
+import com.qk.dam.groovy.model.base.FactField;
 import lombok.Data;
 
 import java.util.List;
@@ -13,7 +13,8 @@ import java.util.List;
  * @since 1.0.0
  */
 @Data
-public class RuleFunctionModel {
-    private List<RuleFunctionInfo> ruleFunctionInfos;
+public class FactModel {
+    private List<FactField> factField;
+    private List<RuleFunctionInfo> ruleFunctionInfo;
     private List<Object> data;
 }

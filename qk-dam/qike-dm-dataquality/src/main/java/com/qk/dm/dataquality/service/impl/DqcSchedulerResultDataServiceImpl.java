@@ -284,28 +284,36 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
     @Override
     public Object getWarnResultInfo(String ruleId) {
-        Object warnResult = null;
         //获取执行规则信息
-        Optional<DqcSchedulerRules> schedulerRulesOptional =
-                dqcSchedulerRulesRepository.findOne(QDqcSchedulerRules.dqcSchedulerRules.ruleId.eq(ruleId));
+        Optional<DqcSchedulerRules> schedulerRulesOptional = dqcSchedulerRulesRepository.findOne(QDqcSchedulerRules.dqcSchedulerRules.ruleId.eq(ruleId));
 
         if (schedulerRulesOptional.isPresent()) {
             DqcSchedulerRules dqcSchedulerRules = schedulerRulesOptional.get();
             //获取告警表达式结果
-            warnResult = getWarnResult(warnResult, dqcSchedulerRules);
+            return executeWarnExpression(dqcSchedulerRules);
         }
-        return warnResult;
+        return null;
     }
 
     /**
      * 获取告警表达式结果
      */
-    private Object getWarnResult(Object warnResult, DqcSchedulerRules dqcSchedulerRules) {
+    private Object executeWarnExpression(DqcSchedulerRules dqcSchedulerRules) {
         //告警表达式
         String warnExpression = dqcSchedulerRules.getWarnExpression();
         if (!ObjectUtils.isEmpty(warnExpression)) {
-            //获取执行结果集,最新时间的记录
-            DqcSchedulerResult dqcSchedulerResult = dqcSchedulerResultRepository.findOneByLastTime(dqcSchedulerRules.getTaskCode());
+            return executeWarnExpression(dqcSchedulerRules, warnExpression);
+        }
+        return null;
+    }
+
+    /**
+     * 执行告警表达式
+     */
+    private Object executeWarnExpression(DqcSchedulerRules dqcSchedulerRules, String warnExpression) {
+        //获取执行结果集,最新时间的记录
+        DqcSchedulerResult dqcSchedulerResult = dqcSchedulerResultRepository.findOneByLastTime(dqcSchedulerRules.getTaskCode());
+        if (dqcSchedulerResult != null) {
             Map<String, List<Object>> dataMap = new HashMap<>(16);
             //获取结果集元数据信息
             List<String> metaDataList = getMetaDataList(dqcSchedulerResult);
@@ -318,13 +326,13 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             }
             //执行告警表达式
             try {
-                warnResult = GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, warnExpression);
+                return GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, warnExpression);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new BizException("告警表达式执行失败!!!");
             }
         }
-        return warnResult;
+        return null;
     }
 
     /**
