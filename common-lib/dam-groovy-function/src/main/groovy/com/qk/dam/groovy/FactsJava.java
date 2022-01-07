@@ -19,7 +19,7 @@ import java.util.Map;
 public class FactsJava {
     public static void main(String[] args) {
 
-        FactModel factModel = new FactModel();
+//        FactModel factModel = new FactModel();
         //factField
 //        List<FactField> factFields = Lists.newArrayList();
 //        FactField factField = new FactField();
@@ -30,36 +30,9 @@ public class FactsJava {
 //        factModel.setFactField(factFields);
 
         //ruleFunctionInfo
-        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
-        RuleFunctionInfo ruleFunctionInfo = new RuleFunctionInfo("date", "date", "String", LocalDateTime.now());
-        ruleFunctionInfo.setExpression("format('date','yyyyMMdd')");
-        ruleFunctionInfos.add(ruleFunctionInfo);
-        factModel.setRuleFunctionInfo(ruleFunctionInfos);
-
-        //data
-        List<Object> uu = Lists.newArrayList();
-        for (int i = 0; i < 1; i++) {
-            Map<String, Object> dataMap = Maps.newHashMap();
-            dataMap.put("date", LocalDateTime.now());
-            uu.add(dataMap);
-        }
-        factModel.setData(uu);
-
-        //直接表达式
-//        FactModel factModel = new FactModel();
-//        //factField
-//        List<FactField> factFields = Lists.newArrayList();
-//        FactField factField = new FactField();
-//        factField.setField("tradeDay");
-//        factField.setFieldName("tradeDay");
-//        factField.setType("String");
-//        factFields.add(factField);
-//        factModel.setFactField(factFields);
-//
-//        //ruleFunctionInfo
 //        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
-//        RuleFunctionInfo ruleFunctionInfo = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
-//        ruleFunctionInfo.setExpression("tradeDay('20220106')");
+//        RuleFunctionInfo ruleFunctionInfo = new RuleFunctionInfo("date", "date", "String", LocalDateTime.now());
+//        ruleFunctionInfo.setExpression("format('date','yyyyMMdd')");
 //        ruleFunctionInfos.add(ruleFunctionInfo);
 //        factModel.setRuleFunctionInfo(ruleFunctionInfos);
 //
@@ -67,10 +40,37 @@ public class FactsJava {
 //        List<Object> uu = Lists.newArrayList();
 //        for (int i = 0; i < 1; i++) {
 //            Map<String, Object> dataMap = Maps.newHashMap();
-//            dataMap.put("tradeDay", LocalDateTime.now());
+//            dataMap.put("date", LocalDateTime.now());
 //            uu.add(dataMap);
 //        }
 //        factModel.setData(uu);
+
+        //直接表达式
+        FactModel factModel = new FactModel();
+        //factField
+//        List<FactField> factFields = Lists.newArrayList();
+//        FactField factField = new FactField();
+//        factField.setField("tradeDay");
+//        factField.setFieldName("tradeDay");
+//        factField.setType("String");
+//        factFields.add(factField);
+//        factModel.setFactField(factFields);
+
+        //ruleFunctionInfo
+        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
+        RuleFunctionInfo ruleFunctionInfo = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
+        ruleFunctionInfo.setExpression("tradeDay('20220106')");
+        ruleFunctionInfos.add(ruleFunctionInfo);
+        factModel.setRuleFunctionInfo(ruleFunctionInfos);
+
+        //data
+        List<Object> uu = Lists.newArrayList();
+        for (int i = 0; i < 1; i++) {
+            Map<String, Object> dataMap = Maps.newHashMap();
+            dataMap.put("tradeDay", LocalDateTime.now());
+            uu.add(dataMap);
+        }
+        factModel.setData(uu);
 
         for (int i = 0; i < 1; i++) {
             RuleFunctionGenerator generater = new RuleFunctionGenerator(factModel);

@@ -1,7 +1,12 @@
 package com.qk.dm.dataquality.service.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.groovy.constant.FunctionConstant;
+import com.qk.dam.groovy.facts.RuleFunctionGenerator;
+import com.qk.dam.groovy.model.FactModel;
+import com.qk.dam.groovy.model.RuleFunctionInfo;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.constant.ScanTypeEnum;
@@ -19,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -164,29 +170,35 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
     private void ruleTypeFieldSql(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
         //表信息
         List<String> tableList = dqcSchedulerRulesVO.getTableList();
-        String tableName = tableList.get(0);
-        //字段信息
-        List<String> fieldList = dqcSchedulerRulesVO.getFieldList();
-        //扫描方式(全部/条件)
-        String wherePartSql = getScanSql(dqcSchedulerRulesVO);
+        if (tableList != null) {
+            String tableName = tableList.get(0);
+            //字段信息
+            List<String> fieldList = dqcSchedulerRulesVO.getFieldList();
+            //扫描方式(全部/条件)
+            String wherePartSql = getScanSql(dqcSchedulerRulesVO);
 
-        AtomicInteger index = new AtomicInteger(0);
-        if (fieldList != null) {
-            for (String field : fieldList) {
-                //元数据查询参数
-                Map<String, String> conditionMap = new HashMap<>(16);
-                conditionMap.put(GenerateSqlUtil.SCHEMA_TABLE + GenerateSqlUtil.DEFAULT_NUM, tableName);
-                conditionMap.put(GenerateSqlUtil.COL + GenerateSqlUtil.DEFAULT_NUM, field);
-                //生成执行sql
-                String generateSql = GenerateSqlUtil.generateSql(tempSql, conditionMap, wherePartSql);
-                sqlBuffer.append(generateSql);
-                if (index.get() != fieldList.size() - 1) {
-                    sqlBuffer.append(GenerateSqlUtil.UNION_ALL);
+            AtomicInteger index = new AtomicInteger(0);
+            if (fieldList != null) {
+                for (String field : fieldList) {
+                    //元数据查询参数
+                    Map<String, String> conditionMap = new HashMap<>(16);
+                    conditionMap.put(GenerateSqlUtil.SCHEMA_TABLE + GenerateSqlUtil.DEFAULT_NUM, tableName);
+                    conditionMap.put(GenerateSqlUtil.COL + GenerateSqlUtil.DEFAULT_NUM, field);
+                    //生成执行sql
+                    String generateSql = GenerateSqlUtil.generateSql(tempSql, conditionMap, wherePartSql);
+                    sqlBuffer.append(generateSql);
+                    if (index.get() != fieldList.size() - 1) {
+                        sqlBuffer.append(GenerateSqlUtil.UNION_ALL);
+                    }
+                    index.getAndIncrement();
                 }
-                index.getAndIncrement();
+            } else {
+                //TODO 直接读取使用模板SQL,暂时不支持扫描条件SQL
+                sqlBuffer.append(tempSql);
             }
         } else {
-            throw new BizException("规则信息生成SQL,规则类型为: " + dqcSchedulerRulesVO.getRuleType() + ",字段为空!");
+            //TODO 直接读取使用模板SQL,暂时不支持扫描条件SQL
+            sqlBuffer.append(tempSql);
         }
     }
 
@@ -239,42 +251,43 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         }
         return realScanSql;
     }
-
-    /**
-     * 真正需要被执行的函数带有参数信息等
-     */
-    private List<String> getFunctionNameList(String scanSql, List<String> functions) {
-        List<String> functionNameList = new ArrayList<>();
-        //and
-        String trimStartScanSql = GenerateSqlUtil.trimStart(scanSql);
-        String[] andPartArr = trimStartScanSql.split(GenerateSqlUtil.AND);
-        //获取需要执行函数的sql片段
-        for (String sqlPart : andPartArr) {
-            String functionName = "";
-            for (String function : functions) {
-                if (sqlPart.contains(function)) {
-                    String[] sqlPartArr = sqlPart.split(function);
-                    functionName = function + sqlPartArr[sqlPartArr.length - 1];
-                }
-            }
-            //Groovy函数名称
-            functionNameList.add(functionName);
-        }
-        return functionNameList;
-    }
-
-    /**
-     * 执行Groovy函数
-     */
+//
+//    /**
+//     * 真正需要被执行的函数带有参数信息等
+//     */
+//    private List<String> getFunctionNameList(String scanSql, List<String> functions) {
+//        List<String> functionNameList = new ArrayList<>();
+//        //and
+//        String trimStartScanSql = GenerateSqlUtil.trimStart(scanSql);
+//        String[] andPartArr = trimStartScanSql.split(GenerateSqlUtil.AND);
+//        //获取需要执行函数的sql片段
+//        for (String sqlPart : andPartArr) {
+//            String functionName = "";
+//            for (String function : functions) {
+//                if (sqlPart.contains(function)) {
+//                    String[] sqlPartArr = sqlPart.split(function);
+//                    functionName = function + sqlPartArr[sqlPartArr.length - 1];
+//                }
+//            }
+//            //Groovy函数名称
+//            functionNameList.add(functionName);
+//        }
+//        return functionNameList;
+//    }
+//
+//    /**
+//     * 执行Groovy函数
+//     */
 //    private Map<String, Object> executeGroovyFunction(List<String> functionNameList) {
 //        FactModel model = new FactModel();
 //        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
 //
 //        for (String functionName : functionNameList) {
-//            RuleFunctionInfo functionInfo = new RuleFunctionInfo(functionName, Maps.newHashMap());
-//            ruleFunctionInfos.add(functionInfo);
+//            RuleFunctionInfo ruleFunctionInfo = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
+//            ruleFunctionInfo.setExpression("tradeDay('20220106')");
+//            ruleFunctionInfos.add(ruleFunctionInfo);
 //        }
-//        model.setRuleFunctionInfos(ruleFunctionInfos);
+//        model.setRuleFunctionInfo(ruleFunctionInfos);
 //        RuleFunctionGenerator ruleFunctionGenerator = new RuleFunctionGenerator(model);
 //        return ruleFunctionGenerator.generateFunction();
 //    }
