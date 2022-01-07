@@ -1,11 +1,7 @@
 package com.qk.dm.dataquality.service.impl;
 
-import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.groovy.constant.FunctionConstant;
-import com.qk.dam.groovy.facts.RuleFunctionGenerator;
-import com.qk.dam.groovy.model.FactModel;
-import com.qk.dam.groovy.model.RuleFunctionInfo;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.constant.ScanTypeEnum;
@@ -19,7 +15,6 @@ import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
 import com.qk.dm.dataquality.service.DqcRuleSqlBuilderService;
 import com.qk.dm.dataquality.utils.GenerateSqlUtil;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
-import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -100,21 +95,20 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
 
         //库级别规则
         if (RuleTypeEnum.RULE_TYPE_DB.getCode().equalsIgnoreCase(ruleType)) {
-            ruleTypeDB(dqcSchedulerRulesVO, sqlBuffer, tempSql);
+            ruleTypeDBSql(dqcSchedulerRulesVO, sqlBuffer, tempSql);
         }
 
         //表级别规则
         if (RuleTypeEnum.RULE_TYPE_TABLE.getCode().equalsIgnoreCase(ruleType)) {
-            ruleTypeTable(dqcSchedulerRulesVO, sqlBuffer, tempSql);
+            ruleTypeTableSql(dqcSchedulerRulesVO, sqlBuffer, tempSql);
         }
 
         //字段级别规则
         if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(ruleType)) {
-            ruleTypeField(dqcSchedulerRulesVO, sqlBuffer, tempSql);
+            ruleTypeFieldSql(dqcSchedulerRulesVO, sqlBuffer, tempSql);
         }
 
         //TODO 获取模板SQL;需要考虑自定义模式的模板信息
-
 
     }
 
@@ -125,8 +119,8 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
      * @param sqlBuffer
      * @param tempSql
      */
-    private void ruleTypeDB(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
-        ruleTypeTable(dqcSchedulerRulesVO, sqlBuffer, tempSql);
+    private void ruleTypeDBSql(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
+        ruleTypeTableSql(dqcSchedulerRulesVO, sqlBuffer, tempSql);
     }
 
     /**
@@ -136,7 +130,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
      * @param sqlBuffer
      * @param tempSql
      */
-    private void ruleTypeTable(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
+    private void ruleTypeTableSql(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
         //表信息
         List<String> tableList = dqcSchedulerRulesVO.getTableList();
 
@@ -167,7 +161,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
      * @param sqlBuffer
      * @param tempSql
      */
-    private void ruleTypeField(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
+    private void ruleTypeFieldSql(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
         //表信息
         List<String> tableList = dqcSchedulerRulesVO.getTableList();
         String tableName = tableList.get(0);

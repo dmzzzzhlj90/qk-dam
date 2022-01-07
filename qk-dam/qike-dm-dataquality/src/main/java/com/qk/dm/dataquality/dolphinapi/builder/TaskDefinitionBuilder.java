@@ -234,6 +234,7 @@ public class TaskDefinitionBuilder {
         //来源数据源
         scriptBuilder
                 .from_host(connectBasicInfo.getServer())
+                .from_port(Integer.valueOf(connectBasicInfo.getPort()))
                 .from_user(connectBasicInfo.getUserName())
                 .from_password(connectBasicInfo.getPassword())
                 .from_database(rulesVO.getDatabaseName());
@@ -243,6 +244,7 @@ public class TaskDefinitionBuilder {
         //目标数据源
         scriptBuilder
                 .to_host(dolphinSchedulerInfoConfig.getResultDataDbHost())
+                .to_port(dolphinSchedulerInfoConfig.getResultDataDbPort())
                 .to_user(dolphinSchedulerInfoConfig.getResultDataDbUser())
                 .to_password(dolphinSchedulerInfoConfig.getResultDataDbPassword())
                 .to_database(dolphinSchedulerInfoConfig.getResultDataDbDatabase());
@@ -296,6 +298,7 @@ public class TaskDefinitionBuilder {
         //来源数据源
         scriptBuilder
                 .from_host(connectBasicInfo.getHiveServer2())
+                .from_port(Integer.valueOf(connectBasicInfo.getPort()))
                 .from_user(connectBasicInfo.getUserName())
                 .from_password(connectBasicInfo.getPassword())
                 .from_database(rulesVO.getDatabaseName());
@@ -305,6 +308,7 @@ public class TaskDefinitionBuilder {
         //目标数据源
         scriptBuilder
                 .to_host(dolphinSchedulerInfoConfig.getResultDataDbHost())
+                .to_port(dolphinSchedulerInfoConfig.getResultDataDbPort())
                 .to_user(dolphinSchedulerInfoConfig.getResultDataDbUser())
                 .to_password(dolphinSchedulerInfoConfig.getResultDataDbPassword())
                 .to_database(dolphinSchedulerInfoConfig.getResultDataDbDatabase());
