@@ -9,6 +9,8 @@ dependencies {
     implementation project(":commons-core")
     implementation project(":metadata-common-core")
     implementation project(":datasource-common-core")
+    implementation project(":datastandards-common-core")
+    implementation project(":qk-data-jpa")
 
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"

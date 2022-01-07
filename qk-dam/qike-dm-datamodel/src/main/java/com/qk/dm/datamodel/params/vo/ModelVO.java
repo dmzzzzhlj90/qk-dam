@@ -7,6 +7,10 @@ import java.util.Date;
 
 @Data
 public class ModelVO implements Serializable {
+    /**
+     * 层级id
+     */
+    private Long id;
 
     /**
      * 模型名称

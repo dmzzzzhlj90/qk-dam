@@ -30,9 +30,13 @@ public class DataSummaryVO {
     /**
      * 成功数
      */
-    JobInfoVO successsState;
+    JobInfoVO successs;
     /**
      * 失败数
      */
-    JobInfoVO failureState;
+    JobInfoVO failure;
+    /**
+     * 警告数
+     */
+    JobInfoVO warn;
 }

@@ -4,6 +4,8 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.MapUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.entity.DataStandardInfoVO;
+import com.qk.dam.entity.DataStandardTreeVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdAttributes;
 import com.qk.dam.model.constant.ModelStatus;
@@ -13,6 +15,7 @@ import com.qk.dam.sqlbuilder.SqlBuilderFactory;
 import com.qk.dam.sqlbuilder.model.Column;
 import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dm.datamodel.entity.*;
+import com.qk.dm.datamodel.mapstruct.mapper.ModelDirMapper;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelPhysicalColumnMapper;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelPhysicalRelationMapper;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelPhysicalTableMapper;
@@ -52,7 +55,7 @@ public class PhysicalServiceImpl implements PhysicalService {
   private final ModelSqlRepository modelSqlRepository;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
-    private final DataBaseService dataBaseService;
+  private final DataBaseService dataBaseService;
   @PostConstruct
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
@@ -296,19 +299,23 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   @Override
   public void delete(List<Long> ids) {
+    List<ModelPhysicalTable> modelPhysicalTableList = new ArrayList<>();
    ids.forEach(
        id->{
         //根据id判断当前需要删除的数据是否存在
          Optional<ModelPhysicalTable> modelPhysicalTable = modelPhysicalTableRepository.findById(id);
          if (modelPhysicalTable.isEmpty()){
            throw new BizException("当前需要下线的，id为"+id+"的数据不存在");
-         }else{
-           ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTable.get();
-           modelPhysicalTable1.setStatus(ModelStatus.OFFLINE);
-           modelPhysicalTableRepository.save(modelPhysicalTable1);
          }
+           ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTable.get();
+         if (!modelPhysicalTable1.getStatus().equals(ModelStatus.PUBLISH)){
+          throw  new BizException("表名称为:"+modelPhysicalTable1.getTableName()+"不是发布状态，不能进行下线操作");
+         }
+           modelPhysicalTable1.setStatus(ModelStatus.OFFLINE);
+           modelPhysicalTableList.add(modelPhysicalTable1);
        }
    );
+    modelPhysicalTableRepository.saveAllAndFlush(modelPhysicalTableList);
   }
 
   /**
@@ -606,6 +613,18 @@ public class PhysicalServiceImpl implements PhysicalService {
   @Override
   public List<String> queryDataType() {
     return DataTypeEnum.getDataTypeName();
+  }
+
+  @Override
+  public List<DataStandardInfoVO> getTree() {
+    List<DataStandardTreeVO> tree = dataBaseService.getTree();
+    tree.forEach(dataStandardTreeVO -> {
+          if (StringUtils.isEmpty(dataStandardTreeVO.getParentId())) {
+            dataStandardTreeVO.setDirDsdName(ModelStatus.DIRNAME);
+          }
+        });
+    List<DataStandardInfoVO> list = ModelDirMapper.INSTANCE.list(tree);
+    return list;
   }
 
   /**

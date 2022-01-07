@@ -2,13 +2,15 @@ package com.qk.dm.datamodel.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.entity.DataStandardInfoVO;
+import com.qk.dam.entity.DsdBasicInfoParamsDTO;
+import com.qk.dam.entity.DsdBasicinfoParamsVO;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
+import com.qk.dm.datamodel.service.PhysicalService;
 import com.qk.dm.service.DataBaseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -25,8 +27,12 @@ public class ModelDataBaseController {
 
     private final DataBaseService dataBaseService;
 
-    public ModelDataBaseController(DataBaseService dataBaseService){
+    private final PhysicalService physicalService;
+
+    public ModelDataBaseController(DataBaseService dataBaseService,
+        PhysicalService physicalService){
         this.dataBaseService = dataBaseService;
+        this.physicalService = physicalService;
     }
     /**
      * 获取数据源连接类型
@@ -80,5 +86,28 @@ public class ModelDataBaseController {
     @GetMapping("/column")
     public DefaultCommonResult<List<String>> getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllColumn(connectType, dataSourceName, dataBaseName, tableName));
+    }
+
+    //--------------------------------------------数据标准-------------------------------------------------------->
+
+    /**
+     * 获取数据标准
+     * @param dsdBasicInfoParamsDTO
+     * @return
+     */
+    @PostMapping("/standard")
+    public DefaultCommonResult<PageResultVO<DsdBasicinfoParamsVO>>getStandard(@RequestBody DsdBasicInfoParamsDTO dsdBasicInfoParamsDTO){
+        return DefaultCommonResult.success(
+            ResultCodeEnum.OK, dataBaseService.getStandard(dsdBasicInfoParamsDTO));
+    }
+
+    /**
+     * 获取数据标准分类目录树
+     *
+     * @return DefaultCommonResult<List < DataStandardTreeVO>>
+     */
+    @GetMapping("/theme")
+    public DefaultCommonResult<List<DataStandardInfoVO>> searchList() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getTree());
     }
 }
