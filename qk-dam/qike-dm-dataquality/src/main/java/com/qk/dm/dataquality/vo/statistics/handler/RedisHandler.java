@@ -78,7 +78,7 @@ public class RedisHandler {
         return totalList;
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == null")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisInstanceList(String failure, Date date) {
         //根据条件缓存所有实例
         return GsonUtil.toJsonString(getInstanceList(failure, date));
@@ -107,7 +107,7 @@ public class RedisHandler {
                 .collect(Collectors.toList());
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == null")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisWarnResultList(List<DqcProcessInstanceVO> dqcProcessInstanceVOS){
         return GsonUtil.toJsonString(warnResultList(dqcProcessInstanceVOS));
     }
@@ -145,7 +145,7 @@ public class RedisHandler {
         return totalList;
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == null")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisTaskInstanceList(Date date, String stateType) {
         return GsonUtil.toJsonString(getTaskInstanceList(date,stateType));
     }

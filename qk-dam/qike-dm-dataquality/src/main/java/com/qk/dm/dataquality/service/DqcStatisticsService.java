@@ -1,6 +1,9 @@
 package com.qk.dm.dataquality.service;
 
-import com.qk.dm.dataquality.vo.statistics.*;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
+import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
+import com.qk.dm.dataquality.vo.statistics.DimensionVO;
+import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
 
 import java.util.List;
 
@@ -15,4 +18,6 @@ public interface DqcStatisticsService {
     List<DimensionVO> dimension();
 
     List<RuleDirVO> dir();
+
+    List<DqcProcessInstanceVO> instanceList();
 }
