@@ -1,5 +1,6 @@
 package com.qk.dm.datamodel.service;
 
+import com.qk.dam.entity.DataStandardInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
 import com.qk.dm.datamodel.params.dto.ModelReverseBaseDTO;
@@ -41,4 +42,6 @@ public interface PhysicalService {
   void reverseBase(ModelReverseBaseDTO modelReverseBaseDTO);
 
   List<String> queryDataType();
+
+  List<DataStandardInfoVO> getTree();
 }

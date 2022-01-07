@@ -2,12 +2,13 @@ package com.qk.dm.datamodel.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.entity.DataStandardTreeVO;
+import com.qk.dam.entity.DataStandardInfoVO;
 import com.qk.dam.entity.DsdBasicInfoParamsDTO;
 import com.qk.dam.entity.DsdBasicinfoParamsVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
+import com.qk.dm.datamodel.service.PhysicalService;
 import com.qk.dm.service.DataBaseService;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,12 @@ public class ModelDataBaseController {
 
     private final DataBaseService dataBaseService;
 
-    public ModelDataBaseController(DataBaseService dataBaseService){
+    private final PhysicalService physicalService;
+
+    public ModelDataBaseController(DataBaseService dataBaseService,
+        PhysicalService physicalService){
         this.dataBaseService = dataBaseService;
+        this.physicalService = physicalService;
     }
     /**
      * 获取数据源连接类型
@@ -102,7 +107,7 @@ public class ModelDataBaseController {
      * @return DefaultCommonResult<List < DataStandardTreeVO>>
      */
     @GetMapping("/theme")
-    public DefaultCommonResult<List<DataStandardTreeVO>> searchList() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getTree());
+    public DefaultCommonResult<List<DataStandardInfoVO>> searchList() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getTree());
     }
 }
