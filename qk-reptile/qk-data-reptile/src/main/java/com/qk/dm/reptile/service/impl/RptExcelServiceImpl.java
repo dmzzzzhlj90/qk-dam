@@ -59,7 +59,7 @@ public class RptExcelServiceImpl implements RptExcelService {
    */
   @Override
   public void basicInfoUpload(MultipartFile file) {
-    MultipartFileUtil.upload(file);
+    MultipartFileUtil.checkFile(file);
     LOG.info("======开始导入待配数据!======");
     try {
       EasyExcel.read(
@@ -70,7 +70,7 @@ public class RptExcelServiceImpl implements RptExcelService {
           .doRead();
     } catch (Exception e) {
       LOG.info("======导入待配数据失败!======");
-      throw new BizException("导入失败: " + e.getMessage());
+      throw new BizException("导入失败,请检验数据格式后再导入: " + e.getMessage());
     }
     LOG.info("======成功导入待配数据!======");
 
