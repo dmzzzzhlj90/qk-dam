@@ -232,7 +232,8 @@ public class PhysicalServiceImpl implements PhysicalService {
           column.setAutoIncrement(
               transFormation(modelPhysicalColumn.getItsPrimaryKey()));
           //是否不为空
-          column.setEmpty(transFormation(modelPhysicalColumn.getItsNull()));
+          column.setEmpty(
+              transFormation(modelPhysicalColumn.getItsNull()));
           //字段注释
           column.setComments(modelPhysicalColumn.getDescription());
           return column;
@@ -247,7 +248,7 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @return
    */
   private Boolean transFormation(String itsPrimaryKey) {
-    return StringUtils.isNotBlank(itsPrimaryKey) && itsPrimaryKey.equals("1");
+    return StringUtils.isNotBlank(itsPrimaryKey) && itsPrimaryKey.equals(ModelStatus.CHECK);
 
   }
 
@@ -618,12 +619,12 @@ public class PhysicalServiceImpl implements PhysicalService {
   @Override
   public List<DataStandardInfoVO> getTree() {
     List<DataStandardTreeVO> tree = dataBaseService.getTree();
-    tree.forEach(dataStandardTreeVO -> {
+    List<DataStandardTreeVO> dealList = tree.stream().peek(dataStandardTreeVO -> {
           if (StringUtils.isEmpty(dataStandardTreeVO.getParentId())) {
             dataStandardTreeVO.setDirDsdName(ModelStatus.DIRNAME);
           }
-        });
-    List<DataStandardInfoVO> list = ModelDirMapper.INSTANCE.list(tree);
+        }).collect(Collectors.toList());
+    List<DataStandardInfoVO> list = ModelDirMapper.INSTANCE.list(dealList);
     return list;
   }
 
