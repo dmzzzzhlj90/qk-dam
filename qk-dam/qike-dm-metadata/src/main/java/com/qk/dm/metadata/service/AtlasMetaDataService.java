@@ -1,6 +1,8 @@
 package com.qk.dm.metadata.service;
 
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dam.metedata.entity.MtdTables;
+import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.metadata.vo.*;
 import java.util.List;
 import java.util.Map;
@@ -31,13 +33,6 @@ public interface AtlasMetaDataService {
   List<MtdAtlasBaseVO> searchList(
       MtdAtlasBaseSearchVO mtdAtlasBaseSearchVO, Boolean excludeDeletedEntities);
 
-  /** 获取元数据详情 */
-  AtlasEntity getDetailByQName(String qualifiedName, String typename);
-
-  /** 获取操作元数据详情 */
-  List<EntityAuditEventV2> getAuditByGuid(String guid, String startKey);
-
-  MtdCommonDetailVO getDetailByGuid(String guid, String typeName);
 
   /**
    * 获取列的元数据详情
@@ -63,12 +58,11 @@ public interface AtlasMetaDataService {
   MtdTableDetailVO getTableDetailByGuid(String guid);
 
   /**
-   * 根据guid 元数据详情
-   *
-   * @param guid
-   * @return
+   * 获取表
+   * @param mtdTableParaVO
+   * @return List<MtdTables>
    */
-  MtdCommonDetailVO getDetailByGuid(String guid);
+  List<MtdTableVO> getTableList(MtdTableParaVO mtdTableParaVO);
 
   /**
    * 获取所有的基础类型

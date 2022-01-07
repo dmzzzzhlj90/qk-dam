@@ -3,11 +3,10 @@ package com.qk.dm.metadata.rest;
 //import com.qk.dam.authorization.Auth;
 //import com.qk.dam.authorization.BizResource;
 //import com.qk.dam.authorization.RestActionType;
+
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dam.metedata.entity.*;
 import com.qk.dm.metadata.service.MtdApiService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -51,24 +50,26 @@ public class MtdApiController {
   @PostMapping("/entity/detail")
 //  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<MtdApi> mtdDetail(@RequestBody @Validated MtdApiParams mtdApiParams) {
-    MtdApi mtdApi =
-        mtdApiService.mtdDetail(
+    MtdApi mtdApi = mtdApiService.mtdDetail(
             mtdApiParams.getTypeName(),
             mtdApiParams.getDbName(),
             mtdApiParams.getTableName(),
             mtdApiParams.getServer());
     return DefaultCommonResult.success(ResultCodeEnum.OK, mtdApi);
   }
+
   /**
-   * 根据数据库类型和属性获取数据库信息
-   * @param typeName
-   * @param attrValue
+   * 查询表中是否存在数据
+   * @param mtdApiParams
    * @return
    */
-  @GetMapping("/dbs/{typeName}/{attrValue}")
-  public DefaultCommonResult<MtdApi> getDbs(@PathVariable("typeName") String typeName,@PathVariable("attrValue") String attrValue){
-    MtdApi dbs = mtdApiService.getDbs(typeName, attrValue);
-    return DefaultCommonResult.success(ResultCodeEnum.OK,dbs);
+  @PostMapping("/entity/exist/data")
+  public DefaultCommonResult<Integer> getDataLength(@RequestBody @Validated MtdApiParams mtdApiParams){
+    Integer exist = mtdApiService.getExistData(mtdApiParams.getTypeName(),
+            mtdApiParams.getDbName(),
+            mtdApiParams.getTableName(),
+            mtdApiParams.getServer());
+    return DefaultCommonResult.success(ResultCodeEnum.OK,exist);
   }
 
 }
