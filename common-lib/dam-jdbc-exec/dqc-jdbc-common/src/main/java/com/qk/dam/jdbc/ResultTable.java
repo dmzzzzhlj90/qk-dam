@@ -1,4 +1,4 @@
-package com.qk.dam.hive;
+package com.qk.dam.jdbc;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

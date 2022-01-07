@@ -1,39 +1,32 @@
 package com.qk.dam.hive;
 
-import cn.hutool.db.Db;
 import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
-import cn.hutool.db.ds.simple.SimpleDataSource;
 import cn.hutool.db.handler.EntityListHandler;
 import cn.hutool.db.sql.SqlExecutor;
-import com.beust.jcommander.internal.Lists;
 import com.google.gson.Gson;
+import com.qk.dam.jdbc.DbTypeEnum;
+import com.qk.dam.jdbc.MysqlRawScript;
+import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
 
-import java.io.InputStream;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.qk.dam.jdbc.util.DbUtil.*;
 
 /**
  * @author zhudaoming
  */
 @Slf4j
 public class HiveMain {
-
-    private static final String RST_TABLE="qk_dqc_scheduler_result";
-    private static final List<String> QUERY_VAR_LIST= List.of("select","SELECT","show","SHOW");
-    private static Db DB;
-
 
     /**
      * 入口
@@ -71,7 +64,7 @@ public class HiveMain {
         }
         List<Entity> entities = null;
         try {
-            entities = runSqL(sqlScript);
+            entities = runHiveSqL(sqlScript);
             List<Object[]> rst = entities.stream()
                     .map(entity -> entity.values().toArray())
                     .collect(Collectors.toList());
@@ -103,82 +96,24 @@ public class HiveMain {
 
     }
 
-    static String generateSqlScript(String sqlRpcUrl) throws Exception {
-        HttpClient httpClient = new ApiClient().getHttpClient();
-        HttpResponse<InputStream> localVarResponse = httpClient.send(generateSqlCall(sqlRpcUrl),
-                HttpResponse.BodyHandlers.ofInputStream());
-        if (localVarResponse.statusCode()/ 100 != 2) {
-            throw new Exception("请求返回错误");
-        }
-        InputStream body = localVarResponse.body();
-        Map<String,Object> jsonMap = new Gson().fromJson(new String(body.readAllBytes()), HashMap.class);
-        log.info("请求执行规则查询sql:【{}】",jsonMap.get("data"));
-        return String.valueOf(jsonMap.get("data"));
-    }
-
-    static String generateWarnRst(String warnRpcUrl) throws Exception {
-        HttpClient httpClient = new ApiClient().getHttpClient();
-        HttpResponse<InputStream> localVarResponse = httpClient.send(generateSqlCall(warnRpcUrl),
-                HttpResponse.BodyHandlers.ofInputStream());
-        if (localVarResponse.statusCode()/ 100 != 2) {
-            throw new Exception("请求返回错误");
-        }
-        InputStream body = localVarResponse.body();
-        Map<String,Object> jsonMap = new Gson().fromJson(new String(body.readAllBytes()), HashMap.class);
-        log.info("请求执行规则查询sql:【{}】",jsonMap.get("data"));
-        return String.valueOf(jsonMap.get("data"));
-    }
-
-    static Db getDb(String database,
-                    String host,
-                    String user,
-                    String password,
-                    DbTypeEnum dbTypeEnum) {
-        return Db.use(
-                        new SimpleDataSource(
-                                "jdbc:"+dbTypeEnum.getSchema()+"://"
-                                        + host
-                                        + ":"
-                                        + dbTypeEnum.getPort()
-                                        + "/"+database
-                                ,
-                                Objects.requireNonNullElse(user,"default"),
-                                password,dbTypeEnum.getDriverName()));
-    }
-
-    private static HttpRequest generateSqlCall(String sqlRpcUrl)  {
-        HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
-
-        localVarRequestBuilder.uri(URI.create(sqlRpcUrl));
-
-        localVarRequestBuilder.header("Accept", "application/json");
-
-//        localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
-
-        return localVarRequestBuilder.build();
-    }
-
-
-
-    private static List<Entity> runSqL(String sql) throws Exception {
+    public static List<Entity> runHiveSqL(String sql) throws Exception {
         if (containsStartsWith(sql)){
-            List<Entity> entities = execSql(sql);
+            List<Entity> entities = execHiveSql(sql);
             log.info("SQL结果数据[{}]",new Gson().toJson(entities));
             return entities;
         }else {
             log.info("非查询类语句:{}",sql);
             submitSql(sql);
-            return Lists.newArrayList();
+            return List.of();
         }
     }
-
     /**
      * 执行SQL
      * @param sql sql语句
      * @return List<Entity>
      * @throws SQLException sql异常
      */
-    static List<Entity> execSql(String sql) throws Exception {
+    static List<Entity> execHiveSql(String sql) throws Exception {
         List<Entity> entities = new ArrayList<>(100);
         Statements stmt = CCJSqlParserUtil.parseStatements(sql.toString());
         for (Statement st : stmt.getStatements()) {
@@ -197,22 +132,6 @@ public class HiveMain {
 
         return entities;
 
-    }
-
-    /**
-     * 执行SQL 无返回值
-     * @param sql sql
-     */
-    static void submitSql(String sql) throws SQLException{
-        DB.execute(sql);
-    }
-    static Boolean containsStartsWith(String sql){
-        for (String v : QUERY_VAR_LIST) {
-            if (sql.trim().startsWith(v)){
-                return true;
-            }
-        }
-        return false;
     }
 
 }
