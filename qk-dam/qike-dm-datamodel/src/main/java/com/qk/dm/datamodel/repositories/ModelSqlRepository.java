@@ -8,4 +8,6 @@ public interface ModelSqlRepository extends BaseRepository<ModelSql, Long> {
 
    void deleteByTableId(Long tableId);
 
+   ModelSql findByTableIdAndType(Long id, int type);
+
 }

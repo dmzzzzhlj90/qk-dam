@@ -202,6 +202,11 @@ public class PhysicalServiceImpl implements PhysicalService {
     Table table = getTable(modelPhysicalTable,modelPhysicalColumnList);
     String sql = SqlBuilderFactory.creatTableSQL(table);
     if (StringUtils.isNotBlank(sql)){
+      //根据表id和表状态判断sql是否已经存在
+      ModelSql byTableIdAndType = modelSqlRepository.findByTableIdAndType(id, ModelType.PHYSICAL_TABLE);
+      if (Objects.nonNull(byTableIdAndType)){
+        modelSqlRepository.delete(byTableIdAndType);
+      }
       //赋值基础数据id
       modelSql.setTableId(id);
       //1,逻辑表2物理表 3 维度表 4 汇总表
@@ -427,13 +432,12 @@ public class PhysicalServiceImpl implements PhysicalService {
   /**
    * 预览sql
    * @param tableId
-   * @param type
    * @return
    */
   @Override
-  public String getSql(Long tableId,int type) {
+  public String getSql(Long tableId) {
     String sql = null;
-    ModelSqlVO detail = modelSqlService.detail(type, tableId);
+    ModelSqlVO detail = modelSqlService.detail(ModelType.PHYSICAL_TABLE, tableId);
     if (detail!=null){
       sql=detail.getSqlSentence();
     }
