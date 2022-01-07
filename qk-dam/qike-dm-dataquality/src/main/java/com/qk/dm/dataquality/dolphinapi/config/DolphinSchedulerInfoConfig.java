@@ -122,6 +122,11 @@ public class DolphinSchedulerInfoConfig {
     private String resultDataDbHost;
 
     /**
+     * 结果集存储 to_port
+     */
+    private Integer resultDataDbPort;
+
+    /**
      * 结果集存储 to_user
      */
     private String resultDataDbUser;

@@ -31,6 +31,9 @@ public class FunctionConstant {
         return Arrays.asList(DEFINITION_FUNCTION_NAME_ARR).contains(functionName.split("\\(")[0]);
     }
 
+    /**
+     * 是否存在函数
+     */
     public static List<String> isExistFunction(String sqlPartStr) {
         List<String> functionNames = new ArrayList<>();
         for (String functionName : DEFINITION_FUNCTION_NAME_ARR) {
