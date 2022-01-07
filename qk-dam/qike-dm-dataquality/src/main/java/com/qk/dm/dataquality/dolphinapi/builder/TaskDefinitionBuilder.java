@@ -295,7 +295,7 @@ public class TaskDefinitionBuilder {
 
         //来源数据源
         scriptBuilder
-                .from_host(connectBasicInfo.getServer())
+                .from_host(connectBasicInfo.getHiveServer2())
                 .from_user(connectBasicInfo.getUserName())
                 .from_password(connectBasicInfo.getPassword())
                 .from_database(rulesVO.getDatabaseName());
