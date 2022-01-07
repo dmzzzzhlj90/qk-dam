@@ -7,47 +7,32 @@ import com.qk.dam.jdbc.MysqlRawScript;
 import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.qk.dam.jdbc.util.DbUtil.*;
+import static com.qk.dam.jdbc.util.JdbcSqlUtil.*;
 
 /**
  * @author zhudaoming
  */
 @Slf4j
 public class ElasticSearchMain {
-
+    private static final String ttsql = "{\"from_host\":\"http://pre.es.com:31851/\",\"from_user\":\"shujuzhongtai\",\"from_password\":\"QikeDC@sjzt\",\"from_database\":null,\"to_host\":\"172.20.0.24\",\"to_user\":\"root\",\"to_password\":\"Zhudao123!\",\"to_database\":\"qkdam\",\"job_id\":\"55884d435e5a45178ee19f40afa43b61\",\"job_name\":\"hive16-test\",\"rule_id\":\"85249fb423cd415ab8dac8d98c6829ec\",\"rule_name\":\"RULE_TYPE_FIELD/hd_company/company/entname&nacaoid\",\"rule_temp_id\":20,\"task_code\":4099159221728,\"rule_meta_data\":\"entname,nacaoid\",\"sql_rpc_url\":\"http://main.dam.qk.com:31851/dqc/sql/build/realtime/python?ruleId=85249fb423cd415ab8dac8d98c6829ec\",\"warn_rpc_url\":\"http://main.dam.qk.com:31851/dqc/scheduler/result/warn/result/info?ruleId=85249fb423cd415ab8dac8d98c6829ec\"}";
     /**
      * 入口
      * @param args 参数
      */
     public static void main(String[] args) {
-        String jsonconfig = args[0];
+        String jsonconfig = ttsql;
         MysqlRawScript mysqlRawScript = new Gson().fromJson(jsonconfig, MysqlRawScript.class);
         String sqlRpcUrl = mysqlRawScript.getSql_rpc_url();
+        ResultTable resultTable = getResultTable(mysqlRawScript);
 
-        // 任务基本信息
-        String jobId = mysqlRawScript.getJob_id();
-        String ruleId = mysqlRawScript.getRule_id();
-        String jobName = mysqlRawScript.getJob_name();
-        String ruleName = mysqlRawScript.getRule_name();
-        Long ruleTempId = mysqlRawScript.getRule_temp_id();
-        Long taskCode = mysqlRawScript.getTask_code();
-        ResultTable resultTable = new ResultTable(jobId, jobName, ruleId, ruleName, ruleTempId, taskCode,mysqlRawScript.getRule_meta_data(),null, null, "0", new Date(), new Date());
-
-        // 查询库
-        String fromHost = mysqlRawScript.getFrom_host();
-        String fromUser = mysqlRawScript.getFrom_user();
-        String fromPassword = mysqlRawScript.getFrom_password();
-        String fromDatabase = mysqlRawScript.getFrom_database();
-
-        log.info("质量规则执行端信息【fromHost:{}】【fromUser:{}】【fromDatabase:{}】",fromHost,fromUser,fromDatabase);
-        DB = getDb(fromDatabase, fromHost, fromUser, fromPassword, DbTypeEnum.ES);
+        DB = getFromDb(mysqlRawScript, DbTypeEnum.ES);
         String sqlScript = null;
         try {
-            sqlScript = generateSqlScript(sqlRpcUrl);
+//            sqlScript = generateSqlScript(sqlRpcUrl);
+            sqlScript= "select hive_db.* from janusgraph_vertex_index where hive_db.clusterName is not null";
         } catch (Exception e) {
             e.printStackTrace();
             log.error("请求生产校验SQL错误:【{}】",e.getLocalizedMessage());
@@ -66,13 +51,7 @@ public class ElasticSearchMain {
             System.exit(-1);
         }
 
-        // 结果库
-        String toHost = mysqlRawScript.getTo_host();
-        String toUser = mysqlRawScript.getTo_user();
-        String toPassword = mysqlRawScript.getTo_password();
-        String toDatabase = mysqlRawScript.getTo_database();
-        log.info("质量规则执行结果存储到【toHost:{}】【toUser:{}】【toDatabase:{}】",toHost,toUser,toDatabase);
-        DB = getDb(toDatabase, toHost, toUser, toPassword, DbTypeEnum.MYSQL);
+        DB = getToDb(mysqlRawScript, DbTypeEnum.MYSQL);
         try {
             String warnRst = generateWarnRst(mysqlRawScript.getWarn_rpc_url());
             resultTable.setWarn_result(warnRst);
@@ -86,5 +65,6 @@ public class ElasticSearchMain {
 
 
     }
+
 
 }

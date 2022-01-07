@@ -1,6 +1,8 @@
 package com.qk.dam.jdbc;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * MYSQL脚本执行参数信息
@@ -16,6 +18,8 @@ public class MysqlRawScript {
 
     private String from_host;
 
+    private String from_port;
+
     private String from_user;
 
     private String from_password;
@@ -23,6 +27,8 @@ public class MysqlRawScript {
     private String from_database;
 
     private String to_host;
+
+    private String to_port;
 
     private String to_user;
 

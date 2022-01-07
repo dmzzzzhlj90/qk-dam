@@ -16,11 +16,10 @@ import net.sf.jsqlparser.statement.Statements;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.qk.dam.jdbc.util.DbUtil.*;
+import static com.qk.dam.jdbc.util.JdbcSqlUtil.*;
 
 /**
  * @author zhudaoming
@@ -36,24 +35,9 @@ public class HiveMain {
         String jsonconfig = args[0];
         MysqlRawScript mysqlRawScript = new Gson().fromJson(jsonconfig, MysqlRawScript.class);
         String sqlRpcUrl = mysqlRawScript.getSql_rpc_url();
+        ResultTable resultTable = getResultTable(mysqlRawScript);
 
-        // 任务基本信息
-        String jobId = mysqlRawScript.getJob_id();
-        String ruleId = mysqlRawScript.getRule_id();
-        String jobName = mysqlRawScript.getJob_name();
-        String ruleName = mysqlRawScript.getRule_name();
-        Long ruleTempId = mysqlRawScript.getRule_temp_id();
-        Long taskCode = mysqlRawScript.getTask_code();
-        ResultTable resultTable = new ResultTable(jobId, jobName, ruleId, ruleName, ruleTempId, taskCode,mysqlRawScript.getRule_meta_data(),null, null, "0", new Date(), new Date());
-
-        // 查询库
-        String fromHost = mysqlRawScript.getFrom_host();
-        String fromUser = mysqlRawScript.getFrom_user();
-        String fromPassword = mysqlRawScript.getFrom_password();
-        String fromDatabase = mysqlRawScript.getFrom_database();
-
-        log.info("质量规则执行端信息【fromHost:{}】【fromUser:{}】【fromDatabase:{}】",fromHost,fromUser,fromDatabase);
-        DB = getDb(fromDatabase, fromHost, fromUser, fromPassword, DbTypeEnum.HIVE);
+        DB = getFromDb(mysqlRawScript, DbTypeEnum.HIVE);
         String sqlScript = null;
         try {
             sqlScript = generateSqlScript(sqlRpcUrl);
@@ -75,13 +59,7 @@ public class HiveMain {
             System.exit(-1);
         }
 
-        // 结果库
-        String toHost = mysqlRawScript.getTo_host();
-        String toUser = mysqlRawScript.getTo_user();
-        String toPassword = mysqlRawScript.getTo_password();
-        String toDatabase = mysqlRawScript.getTo_database();
-        log.info("质量规则执行结果存储到【toHost:{}】【toUser:{}】【toDatabase:{}】",toHost,toUser,toDatabase);
-        DB = getDb(toDatabase, toHost, toUser, toPassword, DbTypeEnum.MYSQL);
+        DB = getToDb(mysqlRawScript, DbTypeEnum.MYSQL);
         try {
             String warnRst = generateWarnRst(mysqlRawScript.getWarn_rpc_url());
             resultTable.setWarn_result(warnRst);
