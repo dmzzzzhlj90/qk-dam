@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.service.DqcStatisticsService;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
@@ -42,5 +43,10 @@ public class DqcStatisticsServiceImpl implements DqcStatisticsService {
     public List<RuleDirVO> dir() {
 //        log.info("===== dir定时开始执行 =====");
         return GsonUtil.fromJsonString(cacheHandler.dir(), new TypeToken<List<RuleDirVO>>() {}.getType());
+    }
+
+    @Override
+    public List<DqcProcessInstanceVO> instanceList() {
+        return cacheHandler.instanceList();
     }
 }
