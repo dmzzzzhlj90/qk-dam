@@ -10,6 +10,7 @@ public enum DbTypeEnum {
      */
     HIVE("hive2", 10000, "org.apache.hive.jdbc.HiveDriver"),
     MYSQL("mysql",3306 , "com.mysql.cj.jdbc.Driver"),
+    ES("es",9002 , "org.elasticsearch.xpack.sql.jdbc.EsDriver"),
     ;
     private String schema;
     private int port;

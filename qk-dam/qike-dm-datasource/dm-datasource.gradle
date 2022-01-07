@@ -56,6 +56,7 @@ dependencies {
     implementation 'com.alibaba:easyexcel'
 
     implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
+    implementation 'org.elasticsearch.plugin:x-pack-sql-jdbc:7.10.0'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
     implementation group: 'com.github.noraui', name: 'ojdbc8', version: '12.2.0.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

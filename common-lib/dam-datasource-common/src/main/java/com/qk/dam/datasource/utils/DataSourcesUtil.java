@@ -10,6 +10,7 @@ public final class DataSourcesUtil {
   public static final String MYSQL="mysql";
   public static final String ORACLE="oracle";
   public static final String HIVE="hive";
+  public static final String ELASTICSEARCH="elasticsearch";
   public static final String POSTGRESQL="postgresql";
 
 }
