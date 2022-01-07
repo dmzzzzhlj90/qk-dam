@@ -1,6 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.metedata.config.AtlasConfig;
+import com.qk.dam.metedata.property.AtlasBaseProperty;
 import com.qk.dm.metadata.mapstruct.mapper.MtdLineageMapper;
 import com.qk.dm.metadata.service.MetaDataLineageService;
 import com.qk.dm.metadata.vo.*;
@@ -83,17 +84,17 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
             List v = (List) r.getValue();
             if (v.size() > 0) {
               Map<String, Object> relation = new HashMap<>();
-              relation.put("displayText", r.getKey());
-              relation.put("children", r.getValue());
+              relation.put(AtlasBaseProperty.DISPLAY_TEXT, r.getKey());
+              relation.put(AtlasBaseProperty.CHILDREN, r.getValue());
               relationShipVOList.add(relation);
             }
           }
         }
       }
-      map.put("guid", guid);
-      map.put("typeName", detail.getEntity().getTypeName());
-      map.put("displayText", detail.getEntity().getAttributes().get("name"));
-      map.put("children", relationShipVOList);
+      map.put(AtlasBaseProperty.GUID, guid);
+      map.put(AtlasBaseProperty.TYPENAME, detail.getEntity().getTypeName());
+      map.put(AtlasBaseProperty.DISPLAY_TEXT, detail.getEntity().getAttributes().get(AtlasBaseProperty.NAME));
+      map.put(AtlasBaseProperty.CHILDREN, relationShipVOList);
 
     } catch (AtlasServiceException e) {
       e.printStackTrace();
