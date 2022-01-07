@@ -24,4 +24,6 @@ public interface DqcSchedulerResultDataService {
     Object getWarnResultInfo(String ruleId);
 
     List<DqcSchedulerResult> getSchedulerResultList(Set<String> jobIds);
+
+    List<DqcSchedulerResult> getSchedulerResultListByWarn();
 }

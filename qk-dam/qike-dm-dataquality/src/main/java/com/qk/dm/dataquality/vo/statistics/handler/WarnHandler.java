@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.entity.DqcSchedulerResult;
+import com.qk.dm.dataquality.service.DqcSchedulerResultDataService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.JobInfoVO;
@@ -24,10 +25,14 @@ public class WarnHandler {
 
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
     private final RedisHandler redisHandler;
+    private final DqcSchedulerResultDataService dqcSchedulerResultDataService;
 
-    public WarnHandler(DqcSchedulerRulesService dqcSchedulerRulesService, RedisHandler redisHandler) {
+    public WarnHandler(DqcSchedulerRulesService dqcSchedulerRulesService,
+                       RedisHandler redisHandler,
+                       DqcSchedulerResultDataService dqcSchedulerResultDataService) {
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
         this.redisHandler = redisHandler;
+        this.dqcSchedulerResultDataService = dqcSchedulerResultDataService;
     }
 
     /**
@@ -43,9 +48,11 @@ public class WarnHandler {
      * @return
      */
     public List<DqcSchedulerResult> warnResultList() {
-        List<DqcProcessInstanceVO> dqcProcessInstanceVOS = getDolphinInstanceList();
-        //传入实例摘取警告列表
-        return GsonUtil.fromJsonString(redisHandler.redisWarnResultList(dqcProcessInstanceVOS), new TypeToken<List<DqcSchedulerResult>>() {}.getType());
+        //todo 直接从数据库中查询所有告警数据或者从查询出的流程结果中查询
+        return dqcSchedulerResultDataService.getSchedulerResultListByWarn();
+//        List<DqcProcessInstanceVO> dqcProcessInstanceVOS = getDolphinInstanceList();
+//        //传入实例摘取警告列表
+//        return GsonUtil.fromJsonString(redisHandler.redisWarnResultList(dqcProcessInstanceVOS), new TypeToken<List<DqcSchedulerResult>>() {}.getType());
     }
 
     /**
