@@ -31,17 +31,16 @@ public class MtdApiServiceImpl implements MtdApiService {
 
   @Override
   public List<MtdAtlasEntityType> getAllEntityType() {
-    List<MtdAtlasEntityType> mtdAtlasEntityTypeVOList = new ArrayList<>();
     try {
       SearchFilter searchFilter = new SearchFilter();
       searchFilter.setParam(AtlasBaseProperty.TYPE, AtlasBaseProperty.ENTITY);
       List<AtlasTypeDefHeader> allTypeDefHeaders = atlasClientV2.getAllTypeDefHeaders(searchFilter);
-      mtdAtlasEntityTypeVOList = GsonUtil.fromJsonString(GsonUtil.toJsonString(allTypeDefHeaders),
+      return GsonUtil.fromJsonString(GsonUtil.toJsonString(allTypeDefHeaders),
               new TypeToken<List<MtdAtlasEntityType>>() {}.getType());
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return mtdAtlasEntityTypeVOList;
+    return Collections.emptyList();
   }
 
   @Override

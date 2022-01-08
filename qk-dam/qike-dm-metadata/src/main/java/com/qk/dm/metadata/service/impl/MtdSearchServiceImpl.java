@@ -1,6 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.metedata.entity.*;
+import com.qk.dam.metedata.property.AtlasBaseProperty;
 import com.qk.dam.metedata.property.AtlasSearchProperty;
 import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dam.metedata.util.AtlasSearchUtil;
@@ -70,7 +71,7 @@ public class MtdSearchServiceImpl implements MtdSearchService {
                 .guid(e.getGuid())
                 .typeName(e.getTypeName())
                 .displayText(e.getDisplayText())
-                .description(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),"").toString())
+                .description(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION), AtlasBaseProperty.EMPTY).toString())
                 .build()).collect(Collectors.toList());
     }
 
@@ -80,8 +81,8 @@ public class MtdSearchServiceImpl implements MtdSearchService {
                 .displayText(e.getDisplayText())
                 .guid(e.getGuid())
                 .typeName(e.getTypeName())
-                .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),"").toString())
-                .entityStatus(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.STATUS),"").toString())
+                .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),AtlasBaseProperty.EMPTY).toString())
+                .entityStatus(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.STATUS),AtlasBaseProperty.EMPTY).toString())
                 .build()).collect(Collectors.toList());
     }
 
@@ -89,8 +90,8 @@ public class MtdSearchServiceImpl implements MtdSearchService {
         if (CollectionUtils.isEmpty(atlasEntityHeaderList)) { return null; }
         return atlasEntityHeaderList.stream().map(e -> MtdAttributes.builder()
                 .type(e.getTypeName())
-                .owner(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER),"").toString())
-                .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),"").toString())
+                .owner(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER),AtlasBaseProperty.EMPTY).toString())
+                .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),AtlasBaseProperty.EMPTY).toString())
                 .name(e.getDisplayText())
                 .build()).collect(Collectors.toList());
     }

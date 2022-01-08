@@ -51,31 +51,29 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
   @Override
   public List<MtdAtlasBaseVO> searchList(MtdAtlasParamsVO mtdAtlasParamsVO) {
-    List<MtdAtlasBaseVO> atlasBaseMainDataVOList = null;
     try {
       AtlasSearchResult atlasSearchResult = atlasClientV2.basicSearch(mtdAtlasParamsVO.getTypeName(),
               mtdAtlasParamsVO.getClassification(), mtdAtlasParamsVO.getQuery(), true,
               mtdAtlasParamsVO.getLimit(), mtdAtlasParamsVO.getOffse());
-      atlasBaseMainDataVOList = buildMataDataList(atlasSearchResult.getEntities());
+      return buildMataDataList(atlasSearchResult.getEntities());
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return atlasBaseMainDataVOList;
+    return Collections.emptyList();
   }
 
   @Override
   public List<MtdAtlasBaseVO> searchList(MtdAtlasBaseSearchVO mtdAtlasParamsVO, Boolean excludeDeletedEntities) {
-    List<MtdAtlasBaseVO> atlasBaseMainDataVOList = null;
     try {
       AtlasSearchResult atlasSearchResult = atlasClientV2.basicSearch(mtdAtlasParamsVO.getTypeName(),
               getFilterCriteria(mtdAtlasParamsVO), mtdAtlasParamsVO.getClassification(),
               mtdAtlasParamsVO.getQuery(), true,
               mtdAtlasParamsVO.getLimit(), mtdAtlasParamsVO.getOffset());
-        atlasBaseMainDataVOList = buildMataDataList(atlasSearchResult.getEntities());
+       return buildMataDataList(atlasSearchResult.getEntities());
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return atlasBaseMainDataVOList;
+    return Collections.emptyList();
   }
 
   public SearchParameters.FilterCriteria getFilterCriteria(MtdAtlasBaseSearchVO mtdAtlasParamsVO) {
@@ -167,11 +165,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
   @Override
   public MtdColumnVO getColumnDetailByGuid(String guid) {
-    MtdColumnVO mtdColumnVO = null;
     try {
       AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
-      mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
+      MtdColumnVO  mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
       mtdColumnVO.setTypeName(detail.getEntity().getTypeName());
       mtdColumnVO.setCreateTime(detail.getEntity().getCreateTime());
       mtdColumnVO.setDataType(String.valueOf(Objects.requireNonNullElse(attributes.get(AtlasBaseProperty.DATA_TYPE),AtlasBaseProperty.EMPTY)));
@@ -181,21 +178,20 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       mtdColumnVO.setTable(mtdTableInfoVO);
       mtdColumnVO.setLabels(getLabs(guid));
       mtdColumnVO.setClassification(getClassify(guid));
-
+      return mtdColumnVO;
 
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return mtdColumnVO;
+    return null;
   }
 
   @Override
   public MtdDbDetailVO getDbDetailByGuid(String guid) {
-    MtdDbDetailVO mtdAtlasDbDetailVO = null;
     try {
       AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid,true,true);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
-      mtdAtlasDbDetailVO = GsonUtil.fromMap(attributes, MtdDbDetailVO.class);
+      MtdDbDetailVO mtdAtlasDbDetailVO = GsonUtil.fromMap(attributes, MtdDbDetailVO.class);
       mtdAtlasDbDetailVO.setTypeName(detail.getEntity().getTypeName());
       mtdAtlasDbDetailVO.setCreateTime(detail.getEntity().getCreateTime());
       mtdAtlasDbDetailVO.setServerInfo(Objects.requireNonNullElse(mtdAtlasDbDetailVO.getServerInfo(),attributes.getOrDefault(AtlasBaseProperty.CLUSTER_NAME,AtlasBaseProperty.EMPTY).toString()));
@@ -204,21 +200,20 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       mtdAtlasDbDetailVO.setTables(buildReferredEntities(detail,mtdAtlasDbDetailVO));
       mtdAtlasDbDetailVO.setLabels(getLabs(guid));
       mtdAtlasDbDetailVO.setClassification(getClassify(guid));
-
+      return mtdAtlasDbDetailVO;
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return mtdAtlasDbDetailVO;
+    return null;
   }
 
   @Override
   public MtdTableDetailVO getTableDetailByGuid(String guid) {
-    MtdTableDetailVO mtdTableDetailVO = null;
     try {
       AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
       attributes.remove(AtlasBaseProperty.CREATE_TIME);
-      mtdTableDetailVO = GsonUtil.fromMap(attributes, MtdTableDetailVO.class);
+      MtdTableDetailVO mtdTableDetailVO = GsonUtil.fromMap(attributes, MtdTableDetailVO.class);
       MtdDbInfoVO mtdDbInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(
               detail.getEntity().getRelationshipAttributes().get(AtlasBaseProperty.DB)), MtdDbInfoVO.class);
       mtdTableDetailVO.setDb(mtdDbInfoVO);
@@ -227,11 +222,11 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       mtdTableDetailVO.setColumns(buildReferredEntities(detail));
       mtdTableDetailVO.setLabels(getLabs(guid));
       mtdTableDetailVO.setClassification(getClassify(guid));
-
+      return mtdTableDetailVO;
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return mtdTableDetailVO;
+    return null;
   }
 
 
@@ -357,18 +352,17 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
   @Override
   public Map<String, List<MtdAtlasEntityType>> getAllEntityType() {
-    Map<String, List<MtdAtlasEntityType>> mtdAtlasEntityMap = new HashMap<>();
     try {
       SearchFilter searchFilter = new SearchFilter();
       searchFilter.setParam(AtlasBaseProperty.TYPE, AtlasBaseProperty.ENTITY);
       List<AtlasTypeDefHeader> allTypeDefHeaders = atlasClientV2.getAllTypeDefHeaders(searchFilter);
       List<MtdAtlasEntityType> mtdAtlasEntityTypeVOList = GsonUtil.fromJsonString(GsonUtil.toJsonString(allTypeDefHeaders),
               new TypeToken<List<MtdAtlasEntityType>>() {}.getType());
-      mtdAtlasEntityMap = mtdAtlasEntityTypeVOList.stream().collect(Collectors.groupingBy(mtd ->Objects.requireNonNullElse(mtd.getServiceType(),AtlasBaseProperty.EMPTY)));
+      return mtdAtlasEntityTypeVOList.stream().collect(Collectors.groupingBy(mtd ->Objects.requireNonNullElse(mtd.getServiceType(),AtlasBaseProperty.EMPTY)));
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return mtdAtlasEntityMap;
+    return Collections.emptyMap();
   }
 
   @Override
