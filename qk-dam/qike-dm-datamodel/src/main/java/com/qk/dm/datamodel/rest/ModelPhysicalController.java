@@ -131,15 +131,13 @@ public class ModelPhysicalController {
     return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getDataTypes());
   }
 
-  /**
-   * 预览sql——关系建模
-   * @param tableId 基础信息id
-   * @param type  sql类型
+  /**预览sql——关系建模
+   * @param tableId
    * @return DefaultCommonResult<String>
    */
-  @GetMapping("/query/sql")
-  public DefaultCommonResult<String> getSql(@NotNull @RequestParam("tableId") Long tableId,@NotNull @RequestParam("type") int type){
-    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getSql(tableId,type));
+  @GetMapping("/query/sql/{tableId}")
+  public DefaultCommonResult<String> getSql(@NotNull @PathVariable("tableId") Long tableId){
+    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getSql(tableId));
   }
 
   /**
