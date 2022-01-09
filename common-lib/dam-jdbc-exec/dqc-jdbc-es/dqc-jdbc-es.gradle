@@ -14,8 +14,10 @@ ext {
     jakarta_annotation_version = "1.3.5"
 }
 dependencies {
-    implementation project(":dqc-jdbc-common")
-    implementation 'org.elasticsearch.plugin:x-pack-sql-jdbc:7.10.0'
+    compile project(":dqc-jdbc-common")
+    implementation 'commons-logging:commons-logging:1.2'
+    implementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-client', version: '7.10.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
 sourceSets {
