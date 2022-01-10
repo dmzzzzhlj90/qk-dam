@@ -171,10 +171,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       MtdColumnVO  mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
       mtdColumnVO.setTypeName(detail.getEntity().getTypeName());
       mtdColumnVO.setCreateTime(detail.getEntity().getCreateTime());
-      mtdColumnVO.setDataType(String.valueOf(Objects.requireNonNullElse(attributes.get(AtlasBaseProperty.DATA_TYPE),AtlasBaseProperty.EMPTY)));
-      mtdColumnVO.setDefaultValue(String.valueOf(Objects.requireNonNullElse(attributes.get(AtlasBaseProperty.DEFAULT_VALUE),AtlasBaseProperty.EMPTY)));
-      MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity().getRelationshipAttributes().get(AtlasBaseProperty.TABLE)),
-              MtdTableInfoVO.class);
+      mtdColumnVO.setDataType(transformation(attributes.get(AtlasBaseProperty.DATA_TYPE)));
+      mtdColumnVO.setDefaultValue(transformation(attributes.get(AtlasBaseProperty.DEFAULT_VALUE)));
+      MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity()
+                      .getRelationshipAttributes().get(AtlasBaseProperty.TABLE)), MtdTableInfoVO.class);
       mtdColumnVO.setTable(mtdTableInfoVO);
       mtdColumnVO.setLabels(getLabs(guid));
       mtdColumnVO.setClassification(getClassify(guid));
@@ -192,11 +192,13 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid,true,true);
       Map<String, Object> attributes = detail.getEntity().getAttributes();
       MtdDbDetailVO mtdAtlasDbDetailVO = GsonUtil.fromMap(attributes, MtdDbDetailVO.class);
+
       mtdAtlasDbDetailVO.setTypeName(detail.getEntity().getTypeName());
       mtdAtlasDbDetailVO.setCreateTime(detail.getEntity().getCreateTime());
-      mtdAtlasDbDetailVO.setServerInfo(Objects.requireNonNullElse(mtdAtlasDbDetailVO.getServerInfo(),attributes.getOrDefault(AtlasBaseProperty.CLUSTER_NAME,AtlasBaseProperty.EMPTY).toString()));
+      mtdAtlasDbDetailVO.setServerInfo(Objects.requireNonNullElse(mtdAtlasDbDetailVO.getServerInfo(),
+              attributes.getOrDefault(AtlasBaseProperty.CLUSTER_NAME,AtlasBaseProperty.EMPTY).toString()));
       mtdAtlasDbDetailVO.setDisplayText(Objects.requireNonNullElse(detail.getEntity().getAttribute(AtlasBaseProperty.NAME),
-              Objects.isNull(detail.getEntity().getAttribute(AtlasBaseProperty.DISPLAY_NAME))?AtlasBaseProperty.EMPTY:detail.getEntity().getAttribute(AtlasBaseProperty.DISPLAY_NAME)).toString());
+              transformation(detail.getEntity().getAttribute(AtlasBaseProperty.DISPLAY_NAME))).toString());
       mtdAtlasDbDetailVO.setTables(buildReferredEntities(detail,mtdAtlasDbDetailVO));
       mtdAtlasDbDetailVO.setLabels(getLabs(guid));
       mtdAtlasDbDetailVO.setClassification(getClassify(guid));
@@ -232,7 +234,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
   @Override
   public List<MtdTableVO> getTableList(MtdTableParaVO mtdTableParaVO) {
-    List<AtlasEntityHeader> atlasEntityHeaderList = AtlasSearchUtil.getTableList(String.join(AtlasBaseProperty.UNDER_LINE,mtdTableParaVO.getTypeName().split(AtlasBaseProperty.UNDER_LINE)[0], AtlasBaseProperty.TABLE),
+    List<AtlasEntityHeader> atlasEntityHeaderList = AtlasSearchUtil.getTableList(transTypeName(mtdTableParaVO.getTypeName()),
             mtdTableParaVO.getDbName(), mtdTableParaVO.getServer(),
             mtdTableParaVO.getLimit(), mtdTableParaVO.getOffset());
     return builderMtdTables(atlasEntityHeaderList);
@@ -250,10 +252,10 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
             .guid(e.getGuid())
             .typeName(e.getTypeName())
             .owner(e.getAttributes().getOrDefault(AtlasBaseProperty.OWNER,AtlasBaseProperty.EMPTY).toString())
-            .createTime(e.getAttributes().get(AtlasBaseProperty.CREATE_TIME)==null?AtlasBaseProperty.EMPTY:DateFormatUtils.format((Long)e.getAttributes().get(AtlasBaseProperty.CREATE_TIME), "yyyy-MM-dd HH:mm"))
-            .qualifiedName(e.getAttributes().getOrDefault(AtlasBaseProperty.QUALIFIEDNAME,AtlasBaseProperty.EMPTY).toString())
-            .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),AtlasBaseProperty.EMPTY).toString())
-            .description(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),AtlasBaseProperty.EMPTY).toString())
+            .createTime(formatDate(e.getAttributes().get(AtlasBaseProperty.CREATE_TIME)))
+            .qualifiedName(transformation(e.getAttributes().get(AtlasBaseProperty.QUALIFIEDNAME)))
+            .comment(transformation(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION)))
+            .description(transformation(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION)))
             .classification(String.join(AtlasBaseProperty.EMPTY,e.getClassificationNames()))
             .labels(String.join(AtlasBaseProperty.EMPTY,e.getLabels()))
             .build()).collect(Collectors.toList());
@@ -269,9 +271,9 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     List<AtlasEntity> atlasEntityList = new ArrayList<>(detail.getReferredEntities().values());
     Map<String, List<MtdLabelsAtlasVO>> labsMap = getlabs(atlasEntityList);
     Map<String, List<MtdClassifyAtlasVO>> classMap = getClassification(atlasEntityList);
-      List<AtlasEntityHeader> tableList = AtlasSearchUtil.getTableList(String.join(AtlasBaseProperty.UNDER_LINE,mtdAtlasDbDetailVO.getTypeName().split(AtlasBaseProperty.UNDER_LINE)[0], AtlasBaseProperty.TABLE)
+      List<AtlasEntityHeader> tableList = AtlasSearchUtil.getTableList(transTypeName(mtdAtlasDbDetailVO.getTypeName())
               ,mtdAtlasDbDetailVO.getDisplayText(), mtdAtlasDbDetailVO.getServerInfo(), 1000, 0);
-      if(CollectionUtils.isEmpty(tableList)) return new ArrayList<>();
+      if(CollectionUtils.isEmpty(tableList)) return Collections.emptyList();
       return tableList.stream().map(e -> buildDetail(e.getAttributes(),e.getGuid(),e.getTypeName(),labsMap,classMap))
               .collect(Collectors.toList());
   }
@@ -301,22 +303,22 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
    */
   private Map<String,Object> buildColumnDetail(Map<String, Object> attr,Date createTime,String guid,String typeName,
                                          Map<String, List<MtdLabelsAtlasVO>> labsMap, Map<String, List<MtdClassifyAtlasVO>> classMap){
-    attr.put(AtlasBaseProperty.CREATE_TIME,Objects.nonNull(createTime)?DateFormatUtils.format(createTime, "yyyy-MM-dd HH:mm"):AtlasBaseProperty.EMPTY);
+    attr.put(AtlasBaseProperty.CREATE_TIME,DateFormatUtils.format(createTime,"yyyy-MM-dd HH:mm"));
     attr.put(AtlasBaseProperty.GUID, guid);
     attr.put(AtlasBaseProperty.TYPENAME, typeName);
     List<MtdLabelsAtlasVO> labList = labsMap.get(guid);
-    attr.put(AtlasBaseProperty.LABELS,CollectionUtils.isEmpty(labList)?null:labsMap.get(guid).get(0).getLabels());
-    attr.put(AtlasBaseProperty.CLASSIFICATION,CollectionUtils.isEmpty(classMap.get(guid))?null: classMap.get(guid).get(0).getClassify());
+    attr.put(AtlasBaseProperty.LABELS,CollectionUtils.isEmpty(labList)?AtlasBaseProperty.EMPTY:labsMap.get(guid).get(0).getLabels());
+    attr.put(AtlasBaseProperty.CLASSIFICATION,CollectionUtils.isEmpty(classMap.get(guid))?AtlasBaseProperty.EMPTY: classMap.get(guid).get(0).getClassify());
     return attr;
   }
 
   private Map<String,Object> buildDetail(Map<String, Object> attr,String guid,String typeName,
                                          Map<String, List<MtdLabelsAtlasVO>> labsMap, Map<String, List<MtdClassifyAtlasVO>> classMap){
-    attr.put(AtlasBaseProperty.CREATE_TIME,Objects.nonNull(attr.get(AtlasBaseProperty.CREATE_TIME))?DateFormatUtils.format((Long)attr.get(AtlasBaseProperty.CREATE_TIME), "yyyy-MM-dd HH:mm"):AtlasBaseProperty.EMPTY);
+    attr.put(AtlasBaseProperty.CREATE_TIME,formatDate(attr.get(AtlasBaseProperty.CREATE_TIME)));
     attr.put(AtlasBaseProperty.GUID, guid);
     attr.put(AtlasBaseProperty.TYPENAME, typeName);
-    attr.put(AtlasBaseProperty.LABELS,CollectionUtils.isEmpty(labsMap.get(guid))?null:labsMap.get(guid).get(0).getLabels());
-    attr.put(AtlasBaseProperty.CLASSIFICATION,CollectionUtils.isEmpty(classMap.get(guid))?null: classMap.get(guid).get(0).getClassify());
+    attr.put(AtlasBaseProperty.LABELS,CollectionUtils.isEmpty(labsMap.get(guid))?AtlasBaseProperty.EMPTY:labsMap.get(guid).get(0).getLabels());
+    attr.put(AtlasBaseProperty.CLASSIFICATION,CollectionUtils.isEmpty(classMap.get(guid))?AtlasBaseProperty.EMPTY: classMap.get(guid).get(0).getClassify());
     return attr;
   }
 
@@ -392,5 +394,17 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   private String getClassify(String guid){
     MtdClassifyAtlasVO mtdClass = mtdClassifyAtlasService.getByGuid(guid);
     return Objects.isNull(mtdClass)?null:mtdClass.getClassify();
+  }
+
+  private String transformation(Object obj){
+    return String.valueOf(Objects.requireNonNullElse(obj,AtlasBaseProperty.EMPTY));
+  }
+
+  private String formatDate(Object obj){
+    return Objects.isNull(obj)?AtlasBaseProperty.EMPTY:DateFormatUtils.format((Long)obj, "yyyy-MM-dd HH:mm");
+  }
+
+  private String transTypeName(String typeName){
+    return String.join(AtlasBaseProperty.UNDER_LINE,typeName.split(AtlasBaseProperty.UNDER_LINE)[0], AtlasBaseProperty.TABLE);
   }
 }
