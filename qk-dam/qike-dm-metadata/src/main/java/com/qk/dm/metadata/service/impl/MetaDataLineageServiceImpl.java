@@ -27,21 +27,15 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
 
   @Override
   public MtdLineageVO getLineageInfo(MtdLineageParamsVO mtdLineageParaVO) {
-    MtdLineageVO mtdLineageVO = null;
     try {
-      AtlasLineageInfo atlasLineageInfo =
-          atlasClientV2.getLineageInfo(
-              mtdLineageParaVO.getGuid(),
+      AtlasLineageInfo atlasLineageInfo = atlasClientV2.getLineageInfo(mtdLineageParaVO.getGuid(),
               getLineageDirectionEnum(mtdLineageParaVO.getDirection()),
               mtdLineageParaVO.getDepth() == null ? 3 : mtdLineageParaVO.getDepth());
 
-      List<AtlasEntityHeader> atlasEntityHeaderList =
-          new ArrayList<>(atlasLineageInfo.getGuidEntityMap().values());
-      List<MtdLineageDetailVO> mtdLineageDetailVOList =
-          MtdLineageMapper.INSTANCE.userMtdLineageDetailVO(atlasEntityHeaderList);
+      List<AtlasEntityHeader> atlasEntityHeaderList = new ArrayList<>(atlasLineageInfo.getGuidEntityMap().values());
+      List<MtdLineageDetailVO> mtdLineageDetailVOList = MtdLineageMapper.INSTANCE.userMtdLineageDetailVO(atlasEntityHeaderList);
       // 获取当前节点
-      List<MtdLineageDetailVO> currentNodeList =
-          mtdLineageDetailVOList.stream()
+      List<MtdLineageDetailVO> currentNodeList = mtdLineageDetailVOList.stream()
               .filter(e -> e.getGuid().equals(mtdLineageParaVO.getGuid()))
               .collect(Collectors.toList());
       List<ProcessVO> processVOList = new ArrayList<>();
@@ -55,20 +49,16 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
           processVOList.add(processVO);
         }
       }
-      mtdLineageVO =
-          MtdLineageVO.builder()
-              .currentNode(
-                  CollectionUtils.isEmpty(currentNodeList)
-                      ? new MtdLineageDetailVO()
-                      : currentNodeList.get(0))
-              .nodes(mtdLineageDetailVOList)
-              .edges(processVOList)
+
+         return MtdLineageVO.builder().currentNode(CollectionUtils.isEmpty(currentNodeList)
+                      ? new MtdLineageDetailVO() : currentNodeList.get(0))
+              .nodes(mtdLineageDetailVOList).edges(processVOList)
               .build();
 
     } catch (AtlasServiceException e) {
       e.printStackTrace();
     }
-    return mtdLineageVO;
+    return null;
   }
 
   @Override
