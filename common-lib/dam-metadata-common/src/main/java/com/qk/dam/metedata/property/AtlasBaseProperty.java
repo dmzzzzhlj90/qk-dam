@@ -10,6 +10,7 @@ public class AtlasBaseProperty {
     public static final String CLASSIFICATION = "classification";
     public static final String DEFAULT_VALUE = "default_value";
     public static final String DATA_TYPE = "data_type";
+    public static final String DATATYPE = "dataType";
     public static final String DB = "db";
     public static final String TABLE = "table";
     public static final String CREATE_TIME = "createTime";

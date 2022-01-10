@@ -33,7 +33,7 @@ public interface PhysicalService {
 
   List<Map<String, String>> getDataTypes();
 
-  String getSql(Long tableId,int type);
+  String getSql(Long tableId);
 
   void synchronization(List<Long> physicalIds);
 

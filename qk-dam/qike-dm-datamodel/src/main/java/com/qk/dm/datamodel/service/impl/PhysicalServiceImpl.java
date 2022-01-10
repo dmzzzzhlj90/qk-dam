@@ -232,7 +232,8 @@ public class PhysicalServiceImpl implements PhysicalService {
           column.setAutoIncrement(
               transFormation(modelPhysicalColumn.getItsPrimaryKey()));
           //是否不为空
-          column.setEmpty(transFormation(modelPhysicalColumn.getItsNull()));
+          column.setEmpty(
+              transFormation(modelPhysicalColumn.getItsNull()));
           //字段注释
           column.setComments(modelPhysicalColumn.getDescription());
           return column;
@@ -247,7 +248,7 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @return
    */
   private Boolean transFormation(String itsPrimaryKey) {
-    return StringUtils.isNotBlank(itsPrimaryKey) && itsPrimaryKey.equals("1");
+    return StringUtils.isNotBlank(itsPrimaryKey) && itsPrimaryKey.equals(ModelStatus.CHECK);
 
   }
 
@@ -426,13 +427,12 @@ public class PhysicalServiceImpl implements PhysicalService {
   /**
    * 预览sql
    * @param tableId
-   * @param type
    * @return
    */
   @Override
-  public String getSql(Long tableId,int type) {
+  public String getSql(Long tableId) {
     String sql = null;
-    ModelSqlVO detail = modelSqlService.detail(type, tableId);
+    ModelSqlVO detail = modelSqlService.detail(ModelType.PHYSICAL_TABLE, tableId);
     if (detail!=null){
       sql=detail.getSqlSentence();
     }
@@ -618,12 +618,12 @@ public class PhysicalServiceImpl implements PhysicalService {
   @Override
   public List<DataStandardInfoVO> getTree() {
     List<DataStandardTreeVO> tree = dataBaseService.getTree();
-    tree.forEach(dataStandardTreeVO -> {
+    List<DataStandardTreeVO> dealList = tree.stream().peek(dataStandardTreeVO -> {
           if (StringUtils.isEmpty(dataStandardTreeVO.getParentId())) {
             dataStandardTreeVO.setDirDsdName(ModelStatus.DIRNAME);
           }
-        });
-    List<DataStandardInfoVO> list = ModelDirMapper.INSTANCE.list(tree);
+        }).collect(Collectors.toList());
+    List<DataStandardInfoVO> list = ModelDirMapper.INSTANCE.list(dealList);
     return list;
   }
 
@@ -1051,8 +1051,8 @@ public class PhysicalServiceImpl implements PhysicalService {
       modelPhysicalRelationRepository.saveAll(relationLists);
     }
     //4创建新增语句
-    ModelSql modelSql = modelSqlRepository.findByTableId(modelPhysicalTable.getId());
-    if (modelSql!=null){
+    ModelSql modelSql = modelSqlRepository.findByTableIdAndType(modelPhysicalTable.getId(), ModelType.PHYSICAL_TABLE);
+    if (Objects.nonNull(modelSql)){
       modelSqlRepository.delete(modelSql);
     }
     //生成表的修改语句（等待调整）
