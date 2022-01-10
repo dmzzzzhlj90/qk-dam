@@ -17,5 +17,5 @@ public class ModelStatus {
     public static final int EXIST_DATA = 2;//元数据判断库中存在查询表且有数据
     public static final String DIRNAME = "主题";//数据标准第一级目录名称
     public static final String CHECK="1";//校验主键、分区、是否为空
-
+    public static final String SETDEFAULT="0";//默认不是主键不分区不为空
 }

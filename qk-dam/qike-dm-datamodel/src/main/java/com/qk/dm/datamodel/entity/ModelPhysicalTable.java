@@ -101,7 +101,7 @@ public class ModelPhysicalTable implements Serializable {
      * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
      */
     @Column(name = "table_type", nullable = false)
-    private Integer tableType;
+    private String tableType;
     /**
      * 负责人姓名
      */
