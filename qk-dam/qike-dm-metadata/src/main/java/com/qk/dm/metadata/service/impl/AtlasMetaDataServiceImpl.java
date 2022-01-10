@@ -171,7 +171,8 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       MtdColumnVO  mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
       mtdColumnVO.setTypeName(detail.getEntity().getTypeName());
       mtdColumnVO.setCreateTime(detail.getEntity().getCreateTime());
-      mtdColumnVO.setDataType(transformation(attributes.get(AtlasBaseProperty.DATA_TYPE)));
+      mtdColumnVO.setDataType(transformation(Objects.isNull(attributes.get(AtlasBaseProperty.DATA_TYPE))?
+              attributes.get(AtlasBaseProperty.TYPE):attributes.get(AtlasBaseProperty.DATA_TYPE)));
       mtdColumnVO.setDefaultValue(transformation(attributes.get(AtlasBaseProperty.DEFAULT_VALUE)));
       MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity()
                       .getRelationshipAttributes().get(AtlasBaseProperty.TABLE)), MtdTableInfoVO.class);
