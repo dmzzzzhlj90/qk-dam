@@ -999,8 +999,8 @@ public class PhysicalServiceImpl implements PhysicalService {
   }
 
   private void checkCondition(BooleanBuilder booleanBuilder, QueryModelPhysicalDTO queryModelPhysicalDTO) {
-    if (!Objects.isNull(queryModelPhysicalDTO.getModelID())) {
-      booleanBuilder.and(qModelPhysicalTable.modelId.eq(queryModelPhysicalDTO.getModelID()));
+    if (!Objects.isNull(queryModelPhysicalDTO.getModelId())) {
+      booleanBuilder.and(qModelPhysicalTable.modelId.eq(queryModelPhysicalDTO.getModelId()));
     }
     if (!Objects.isNull(queryModelPhysicalDTO.getThemeId())){
       booleanBuilder.and(qModelPhysicalTable.themeId.eq(queryModelPhysicalDTO.getThemeId()));

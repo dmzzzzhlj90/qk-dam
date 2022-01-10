@@ -33,9 +33,9 @@ public class ModelPhysicalTableDTO implements Serializable {
     private String tableName;
 
     /**
-     * 主题
+     * 主题名称
      */
-    @NotBlank(message = "主题")
+    @NotBlank(message = "主题名称")
     private String theme;
 
     /**
