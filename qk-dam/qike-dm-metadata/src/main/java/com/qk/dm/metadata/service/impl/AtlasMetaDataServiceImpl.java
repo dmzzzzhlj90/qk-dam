@@ -171,8 +171,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
       MtdColumnVO  mtdColumnVO = GsonUtil.fromMap(attributes, MtdColumnVO.class);
       mtdColumnVO.setTypeName(detail.getEntity().getTypeName());
       mtdColumnVO.setCreateTime(detail.getEntity().getCreateTime());
-      mtdColumnVO.setDataType(transformation(Objects.isNull(attributes.get(AtlasBaseProperty.DATA_TYPE))?
-              attributes.get(AtlasBaseProperty.TYPE):attributes.get(AtlasBaseProperty.DATA_TYPE)));
+      mtdColumnVO.setDataType(getColumnDataType(attributes.get(AtlasBaseProperty.DATA_TYPE),attributes.get(AtlasBaseProperty.TYPE)));
       mtdColumnVO.setDefaultValue(transformation(attributes.get(AtlasBaseProperty.DEFAULT_VALUE)));
       MtdTableInfoVO mtdTableInfoVO = GsonUtil.fromJsonString(GsonUtil.toJsonString(detail.getEntity()
                       .getRelationshipAttributes().get(AtlasBaseProperty.TABLE)), MtdTableInfoVO.class);
@@ -307,6 +306,7 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     attr.put(AtlasBaseProperty.CREATE_TIME,DateFormatUtils.format(createTime,"yyyy-MM-dd HH:mm"));
     attr.put(AtlasBaseProperty.GUID, guid);
     attr.put(AtlasBaseProperty.TYPENAME, typeName);
+    attr.put(AtlasBaseProperty.DATATYPE,getColumnDataType(attr.get(AtlasBaseProperty.DATA_TYPE),attr.get(AtlasBaseProperty.TYPE)));
     List<MtdLabelsAtlasVO> labList = labsMap.get(guid);
     attr.put(AtlasBaseProperty.LABELS,CollectionUtils.isEmpty(labList)?AtlasBaseProperty.EMPTY:labsMap.get(guid).get(0).getLabels());
     attr.put(AtlasBaseProperty.CLASSIFICATION,CollectionUtils.isEmpty(classMap.get(guid))?AtlasBaseProperty.EMPTY: classMap.get(guid).get(0).getClassify());
@@ -407,5 +407,8 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
   private String transTypeName(String typeName){
     return String.join(AtlasBaseProperty.UNDER_LINE,typeName.split(AtlasBaseProperty.UNDER_LINE)[0], AtlasBaseProperty.TABLE);
+  }
+  public String getColumnDataType(Object sourceValue,Object defaultValue){
+    return transformation(Objects.isNull(sourceValue)? defaultValue:sourceValue);
   }
 }
