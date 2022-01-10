@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.vo.statistics.handler;
+package com.qk.dm.dataquality.handler;
 
 import cn.hutool.core.date.DateUtil;
 import com.google.gson.reflect.TypeToken;

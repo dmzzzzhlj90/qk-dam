@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.vo.statistics.handler;
+package com.qk.dm.dataquality.handler;
 
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;

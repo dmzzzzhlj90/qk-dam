@@ -1,8 +1,8 @@
 package com.qk.dm.dataquality.config;
 
+import com.qk.dm.dataquality.handler.InstanceHandler;
+import com.qk.dm.dataquality.handler.TaskInstanceHandler;
 import com.qk.dm.dataquality.service.DqcStatisticsService;
-import com.qk.dm.dataquality.vo.statistics.handler.InstanceHandler;
-import com.qk.dm.dataquality.vo.statistics.handler.TaskInstanceHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;

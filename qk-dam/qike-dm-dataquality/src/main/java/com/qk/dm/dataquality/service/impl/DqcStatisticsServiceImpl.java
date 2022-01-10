@@ -7,7 +7,7 @@ import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
-import com.qk.dm.dataquality.vo.statistics.handler.CacheHandler;
+import com.qk.dm.dataquality.handler.CacheHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
