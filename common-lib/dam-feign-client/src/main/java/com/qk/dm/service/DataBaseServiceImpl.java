@@ -2,14 +2,23 @@ package com.qk.dm.service;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.datasource.entity.DsDatasourceVO;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
+import com.qk.dam.entity.DataStandardTreeVO;
+import com.qk.dam.entity.DsdBasicInfoParamsDTO;
+import com.qk.dam.entity.DsdBasicInfoVO;
+import com.qk.dam.entity.DsdBasicinfoParamsVO;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +61,47 @@ public class DataBaseServiceImpl implements DataBaseService {
   @Override
   public List getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {
     return dataBaseInfoDefaultApi.getAllColumn(connectType, getServer(dataSourceName), dataBaseName, tableName);
+  }
+
+  @Override
+  public Integer getExistData(String connectType, String dataSourceName, String dataBaseName, String tableName) {
+    return dataBaseInfoDefaultApi.getExistData(connectType, getServer(dataSourceName), dataBaseName, tableName);
+  }
+
+  @Override
+  public Map<Integer,String> getAllDataSources(String connectType) {
+    List<ResultDatasourceInfo> resultDataSourceByType = dataBaseInfoDefaultApi.getResultDataSourceByType(connectType);
+    return resultDataSourceByType.stream().collect(Collectors.toMap(ResultDatasourceInfo::getId,ResultDatasourceInfo::getDataSourceName));
+  }
+
+  @Override
+  public String getResultDataSourceByid(int id) {
+    List<DsDatasourceVO> resultDataSourceById = dataBaseInfoDefaultApi.getResultDataSourceById(id);
+    return resultDataSourceById.stream().filter(Objects::nonNull).findFirst().map(DsDatasourceVO::getConnectBasicInfo).orElse(null).toString();
+  }
+
+  @Override
+  public PageResultVO<DsdBasicinfoParamsVO> getStandard(DsdBasicInfoParamsDTO dsdBasicInfoParamsDTO){
+    PageResultVO<DsdBasicinfoParamsVO> resultPag = new PageResultVO<>();
+    PageResultVO<DsdBasicInfoVO> dsdBasicInfoVOPageResultVO = dataBaseInfoDefaultApi.getStandard(dsdBasicInfoParamsDTO);
+    if (dsdBasicInfoVOPageResultVO !=null && !CollectionUtils.isEmpty(dsdBasicInfoVOPageResultVO.getList())){
+      List<DsdBasicinfoParamsVO> collect = dsdBasicInfoVOPageResultVO.getList()
+          .stream().map(dsdBasicInfoVO -> {
+            DsdBasicinfoParamsVO dsdBasicinfoParamsVO = new DsdBasicinfoParamsVO();
+            dsdBasicinfoParamsVO.setId(dsdBasicInfoVO.getId());
+            dsdBasicinfoParamsVO.setDsdCode(dsdBasicInfoVO.getDsdCode());
+            dsdBasicinfoParamsVO.setDsdName(dsdBasicInfoVO.getDsdName());
+            return dsdBasicinfoParamsVO;
+          }).collect(Collectors.toList());
+      BeanUtils.copyProperties(dsdBasicInfoVOPageResultVO,resultPag);
+      resultPag.setList(collect);
+    }
+    return resultPag;
+  }
+
+  @Override
+  public List<DataStandardTreeVO> getTree() {
+    return dataBaseInfoDefaultApi.getTree();
   }
 
   private String getServer(String dataSourceName) {

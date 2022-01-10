@@ -238,6 +238,11 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
       connectBasicInfo =
           GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
     }
+    if (type.equalsIgnoreCase(ConnTypeEnum.ELASTICSEARCH.getName())) {
+      String dataSourceValues = dsDatasource.getDataSourceValues();
+      connectBasicInfo =
+              GsonUtil.fromJsonString(dataSourceValues, new TypeToken<ElasticSearchVO>() {}.getType());
+    }
     return connectBasicInfo;
   }
 

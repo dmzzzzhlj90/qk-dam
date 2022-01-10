@@ -29,6 +29,8 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -53,6 +55,10 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
     public static final DecimalFormat df = new DecimalFormat("########0.00");
     public static final String NUMERICAL_VALUE = "率";
+    public static final int PERCENTAGE = 100;
+    public static final int DECIMAL_PLACE = 6;
+    public static final String DECIMAL_POINT = ".";
+    public static final String SLASH = "/";
 
     private final QDqcSchedulerResult qDqcSchedulerResult = QDqcSchedulerResult.dqcSchedulerResult;
     private final QDqcSchedulerBasicInfo qDqcSchedulerBasicInfo = QDqcSchedulerBasicInfo.dqcSchedulerBasicInfo;
@@ -244,9 +250,9 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
             //获取规则参数位置信息
             if (RuleTypeEnum.RULE_TYPE_TABLE.getCode().equalsIgnoreCase(dqcSchedulerRules.getRuleType())) {
-                dataIndexNamePrefix = "/" + dqcSchedulerRules.getDatabaseName() + "/";
+                dataIndexNamePrefix = dqcSchedulerRules.getDatabaseName() + SLASH;
             } else if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(dqcSchedulerRules.getRuleType())) {
-                dataIndexNamePrefix = "/" + dqcSchedulerRules.getDatabaseName() + "/" + tablePart + "/";
+                dataIndexNamePrefix = dqcSchedulerRules.getDatabaseName() + DECIMAL_POINT + tablePart + DECIMAL_POINT;
             }
         }
         return dataIndexNamePrefix;
@@ -367,7 +373,8 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             Boolean isDouble = dataIndexMap.get(dataIndexKey);
             //是否为Double数据类型
             if (isDouble) {
-                value = df.format((Double) value * 100);
+                BigDecimal bigDecimal = BigDecimal.valueOf((Double) value);
+                value = bigDecimal.multiply(BigDecimal.valueOf(PERCENTAGE)).setScale(DECIMAL_PLACE, RoundingMode.FLOOR);
             }
             resultDataMap.put(dataIndexKey, value);
             valueIndex.getAndIncrement();

@@ -1,10 +1,10 @@
 package com.qk.dm.metadata.vo;
 
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author wangzp
@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class MtdClassifyVO implements Serializable {
 
   /** 名称 */

@@ -27,6 +27,10 @@ public class SynchStateProperty {
   public static class TypeName{
     public static final String MYSQL_DB = "mysql_db";
     public static final String HIVE_DB = "hive_db";
+    public static final String HIVE_TABLE = "hive_table";
+    public static final String DB = "db";
+    public static final String TABLE = "table";
+    public static final String COLUMN = "column";
 
   }
 }

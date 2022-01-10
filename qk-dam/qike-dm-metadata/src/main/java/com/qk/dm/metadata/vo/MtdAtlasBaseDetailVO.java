@@ -10,12 +10,18 @@ public class MtdAtlasBaseDetailVO {
   private String owner;
   /** 类型名称 */
   private String typeName;
+  /** 展示名称 */
+  private String displayText;
   /** 备注信息 */
   private String comment;
   /** 限定名 */
   private String qualifiedName;
   /** 描述信息 */
   private String description;
+  /**
+   * server地址
+   */
+  private String serverInfo;
   /** 数据类型 */
   private String dataType;
   /** 标签 */
@@ -97,5 +103,21 @@ public class MtdAtlasBaseDetailVO {
 
   public void setCreateTime(Date createTime) {
     this.createTime = createTime;
+  }
+
+  public String getServerInfo() {
+    return serverInfo;
+  }
+
+  public void setServerInfo(String serverInfo) {
+    this.serverInfo = serverInfo;
+  }
+
+  public String getDisplayText() {
+    return displayText;
+  }
+
+  public void setDisplayText(String displayText) {
+    this.displayText = displayText;
   }
 }

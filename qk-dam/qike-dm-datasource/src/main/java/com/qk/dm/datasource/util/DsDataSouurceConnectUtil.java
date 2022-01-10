@@ -3,10 +3,7 @@ package com.qk.dm.datasource.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.HiveInfo;
-import com.qk.dam.datasource.entity.MysqlInfo;
-import com.qk.dam.datasource.entity.OracleInfo;
-import com.qk.dam.datasource.entity.PostgresqlInfo;
+import com.qk.dam.datasource.entity.*;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dam.datasource.enums.DataSourceEnum;
 import com.qk.dam.datasource.utils.DataSourcesUtil;
@@ -181,15 +178,15 @@ public class DsDataSouurceConnectUtil {
   public static Map<String, String> getDataSourceType() {
     Map<String, String> map = new HashMap();
     map.put("MYSQL", ConnTypeEnum.MYSQL.getName());
-    map.put("ORACLE", ConnTypeEnum.ORACLE.getName());
-    map.put("DB2", ConnTypeEnum.DB2.getName());
-    map.put("SQLSERVER", ConnTypeEnum.SQLSERVER.getName());
+//    map.put("ORACLE", ConnTypeEnum.ORACLE.getName());
+//    map.put("DB2", ConnTypeEnum.DB2.getName());
+//    map.put("SQLSERVER", ConnTypeEnum.SQLSERVER.getName());
     map.put("HIVE", ConnTypeEnum.HIVE.getName());
-    map.put("HBASE", ConnTypeEnum.HBASE.getName());
-    map.put("REDIS", ConnTypeEnum.REDIS.getName());
-    map.put("EXCEL", ConnTypeEnum.EXCEL.getName());
-    map.put("CSV", ConnTypeEnum.CSV.getName());
-    map.put("REST", ConnTypeEnum.REST.getName());
+    map.put("ELASTICSEARCH", ConnTypeEnum.ELASTICSEARCH.getName());
+//    map.put("REDIS", ConnTypeEnum.REDIS.getName());
+//    map.put("EXCEL", ConnTypeEnum.EXCEL.getName());
+//    map.put("CSV", ConnTypeEnum.CSV.getName());
+//    map.put("REST", ConnTypeEnum.REST.getName());
     return map;
   }
 
@@ -211,10 +208,10 @@ public class DsDataSouurceConnectUtil {
         hiveInfo.setDriverInfo(DataSourceEnum.fromValue(type).getDriver());
         type = GsonUtil.toJsonString(hiveInfo);
         break;
-      case DataSourcesUtil.POSTGRESQL:
-        PostgresqlInfo postgresqlInfo = objectMapper.convertValue(baseDataSourceTypeInfo, PostgresqlInfo.class);
-        postgresqlInfo.setDriverInfo(DataSourceEnum.fromValue(type).getDriver());
-        type = GsonUtil.toJsonString(postgresqlInfo);
+      case DataSourcesUtil.ELASTICSEARCH:
+        ElasticSearchVO elasticSearchVO = objectMapper.convertValue(baseDataSourceTypeInfo, ElasticSearchVO.class);
+        elasticSearchVO.setDriverInfo(DataSourceEnum.fromValue(type).getDriver());
+        type = GsonUtil.toJsonString(elasticSearchVO);
         break;
       default:
         throw new BizException("没有匹配的数据源参数类型");

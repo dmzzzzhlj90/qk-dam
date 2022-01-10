@@ -1,0 +1,98 @@
+package com.qk.dm.datamodel.rest;
+
+import com.qk.dam.commons.enums.ResultCodeEnum;
+import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.datamodel.params.dto.ModelSummaryDTO;
+import com.qk.dm.datamodel.params.vo.ModelSummaryVO;
+import com.qk.dm.datamodel.service.ModelSummaryService;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+/**
+ * 汇总表
+ * @author wangzp
+ * @date 2021/11/12 16:26
+ * @since 1.0.0
+ */
+@RequestMapping("/summary")
+@RestController
+public class ModelSummaryController {
+
+    private final ModelSummaryService modelSummaryService;
+
+    private ModelSummaryController(ModelSummaryService modelSummaryService){
+        this.modelSummaryService = modelSummaryService;
+    }
+
+    /**
+     * 添加汇总表
+     * @param modelSummaryDTO 汇总表实体
+     * @return DefaultCommonResult
+     */
+    @PostMapping("")
+    public DefaultCommonResult add(@RequestBody @Validated ModelSummaryDTO modelSummaryDTO){
+        modelSummaryService.insert(modelSummaryDTO);
+        return DefaultCommonResult.success();
+    }
+    /**
+     * 修改汇总表
+     * @param id 汇总表id
+     * @param modelSummaryDTO 汇总表实体
+     * @return DefaultCommonResult
+     */
+    @PutMapping("/{id}")
+    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelSummaryDTO modelSummaryDTO){
+        modelSummaryService.update(id,modelSummaryDTO);
+        return  DefaultCommonResult.success();
+    }
+
+    /**
+     * 汇总表详情
+     * @param id 汇总表id
+     * @return DefaultCommonResult<ModelSummaryVO>
+     */
+    @GetMapping("/{id}")
+    public DefaultCommonResult<ModelSummaryVO> detail(@PathVariable("id") Long id){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelSummaryService.detail(id));
+    }
+
+    /**
+     * 汇总表列表
+     * @param modelSummaryDTO 汇总表实体
+     * @return DefaultCommonResult<PageResultVO<ModelSummaryVO>>
+     */
+    @PostMapping(value = "/list")
+    public DefaultCommonResult<PageResultVO<ModelSummaryVO>> list(@RequestBody ModelSummaryDTO modelSummaryDTO){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelSummaryService.list(modelSummaryDTO));
+    }
+    /**
+     * 发布汇总表
+     * @param ids 汇总表id，多个id使用英文逗号分割
+     * @return DefaultCommonResult
+     */
+    @PutMapping("/publish/{ids}")
+    public DefaultCommonResult publish(@PathVariable("ids") String ids) {
+        modelSummaryService.publish(ids);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 下线汇总表
+     * @param ids 汇总表id，多个id使用英文逗号分割
+     * @return DefaultCommonResult
+     */
+    @PutMapping("/offline/{ids}")
+    public DefaultCommonResult offline(@PathVariable("ids") String ids) {
+        modelSummaryService.offline(ids);
+        return DefaultCommonResult.success();
+    }
+    /**
+     * 预览SQL
+     * @param tableId 汇总表id
+     * @return DefaultCommonResult<String>
+     */
+    @GetMapping("/preview/sql/{tableId}")
+    public DefaultCommonResult<String> previewSql(@PathVariable("tableId") Long tableId){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelSummaryService.previewSql(tableId));
+    }
+}
