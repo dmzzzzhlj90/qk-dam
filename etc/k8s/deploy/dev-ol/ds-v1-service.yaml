@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: ds
-  namespace: backend-dam
+  namespace: java-backend
   labels:
     app: ds
   annotations:

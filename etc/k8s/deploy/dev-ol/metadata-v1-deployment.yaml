@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: metadata-deploy
-  namespace: backend-dam
+  namespace: java-backend
   labels:
     app: metadata-deploy
     version: v1

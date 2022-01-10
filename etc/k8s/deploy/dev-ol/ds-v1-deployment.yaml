@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: ds-deploy
-  namespace: backend-dam
+  namespace: java-backend
   labels:
     app: ds-deploy
     version: v1
