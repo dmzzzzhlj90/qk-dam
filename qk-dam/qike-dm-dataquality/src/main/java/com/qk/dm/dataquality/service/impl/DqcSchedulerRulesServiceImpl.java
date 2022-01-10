@@ -269,7 +269,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //检测表数
         return dqcSchedulerRulesRepository.findAllTablesByTaskCode(taskCodeSet)
                 .stream()
-                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .flatMap(item -> DqcConstant.jsonStrToList(item).stream())
                 .collect(Collectors.toSet())
                 .size();
     }
@@ -279,7 +279,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //检测字段数
         return dqcSchedulerRulesRepository.findAllFieldsByTaskCode(taskCodeSet)
                 .stream()
-                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .flatMap(item -> DqcConstant.jsonStrToList(item).stream())
                 .collect(Collectors.toSet())
                 .size();
     }
@@ -289,7 +289,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //检测表数
         return dqcSchedulerRulesRepository.findAllTables()
                 .stream()
-                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .flatMap(item -> DqcConstant.jsonStrToList(item).stream())
                 .collect(Collectors.toSet())
                 .size();
     }
@@ -299,7 +299,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //检测字段数
         return dqcSchedulerRulesRepository.findAllFields()
                 .stream()
-                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .flatMap(item -> DqcConstant.jsonStrToList(item).stream())
                 .collect(Collectors.toSet())
                 .size();
     }

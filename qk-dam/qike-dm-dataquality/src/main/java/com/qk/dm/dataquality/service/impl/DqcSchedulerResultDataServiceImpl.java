@@ -490,8 +490,8 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             //添加所涉及表字段
             DqcSchedulerRules dqcSchedulerRules = schedulerRulesMap.get(dqcSchedulerResult.getTaskCode()).get(0);
             resultBuilder.databaseName(dqcSchedulerRules.getDatabaseName());
-            resultBuilder.tableList(DqcConstant.jsonStrToList(dqcSchedulerRules.getTables()));
-            resultBuilder.fieldList(DqcConstant.jsonStrToList(dqcSchedulerRules.getFields()));
+            resultBuilder.tableList(dqcSchedulerRules.getTables() != null ? DqcConstant.jsonStrToList(dqcSchedulerRules.getTables()) : null);
+            resultBuilder.fieldList(dqcSchedulerRules.getFields() != null ? DqcConstant.jsonStrToList(dqcSchedulerRules.getFields()) : null);
             schedulerResultVOList.add(resultBuilder.build());
         }
     }
