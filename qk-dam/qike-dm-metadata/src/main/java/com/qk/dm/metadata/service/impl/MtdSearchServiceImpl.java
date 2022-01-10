@@ -93,7 +93,16 @@ public class MtdSearchServiceImpl implements MtdSearchService {
                 .owner(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER),AtlasBaseProperty.EMPTY).toString())
                 .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),AtlasBaseProperty.EMPTY).toString())
                 .name(e.getDisplayText())
+                .dataType(getColumnDataType(e.getAttribute(AtlasBaseProperty.DATA_TYPE),e.getAttribute(AtlasBaseProperty.TYPE)))
                 .build()).collect(Collectors.toList());
+    }
+
+    public String getColumnDataType(Object sourceValue,Object defaultValue){
+        return transformation(Objects.isNull(sourceValue)? defaultValue:sourceValue);
+    }
+
+    private String transformation(Object obj){
+        return String.valueOf(Objects.requireNonNullElse(obj,AtlasBaseProperty.EMPTY));
     }
 
 }
