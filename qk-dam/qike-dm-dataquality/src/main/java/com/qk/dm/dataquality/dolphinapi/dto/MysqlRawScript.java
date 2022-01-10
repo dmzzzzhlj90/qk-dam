@@ -18,6 +18,8 @@ public class MysqlRawScript {
 
     private String from_host;
 
+    private Integer from_port;
+
     private String from_user;
 
     private String from_password;
@@ -27,6 +29,8 @@ public class MysqlRawScript {
 //    private String search_sql;
 
     private String to_host;
+
+    private Integer to_port;
 
     private String to_user;
 

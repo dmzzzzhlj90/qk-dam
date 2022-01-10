@@ -2,10 +2,13 @@ package com.qk.dm.dataquality.vo.statistics.handler;
 
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
+import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author shenpj
@@ -46,18 +49,22 @@ public class CacheHandler {
                 .build();
     }
 
-//    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == null")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == null")
     public String summary() {
         return GsonUtil.toJsonString(getDataSummary());
     }
 
-//    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == null")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String dimension() {
         return GsonUtil.toJsonString(taskInstanceHandler.dimensionStatistics(new Date()));
     }
 
-//    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == null")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String dir() {
         return GsonUtil.toJsonString(instanceHandler.dirStatistics(new Date()));
+    }
+
+    public List<DqcProcessInstanceVO> instanceList() {
+        return instanceHandler.getDolphinInstanceList();
     }
 }

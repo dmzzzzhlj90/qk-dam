@@ -1,0 +1,1961 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "614e6566-a677-4975-b379-919181d29308",
+    "name": "dm-datamodel"
+  },
+  "item": [
+    {
+      "name": "关系建模",
+      "item": [
+        {
+          "name": "新增——关系建模(创建结束时的保存\\发布)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 353,\n    \"tableName\": \"debbra.schuster\",\n    \"theme\": \"zd0zj8\",\n    \"dataConnection\": \"ncooe1\",\n    \"databaseName\": \"debbra.schuster\",\n    \"dataSourceName\": \"debbra.schuster\",\n    \"dataSourceId\": 968,\n    \"description\": \"3g2a2x\",\n    \"status\": 578,\n    \"gmtCreate\": \"2022-01-07 10:42:38\",\n    \"gmtModified\": \"2022-01-07 10:42:38\",\n    \"tableType\": 805,\n    \"responsibleBy\": \"itg9jy\",\n    \"dataFormat\": \"yxqven\",\n    \"themeId\": 803,\n    \"modelId\": 951,\n    \"hftsRoute\": \"ow0ikl\",\n    \"syncStatus\": 726\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 34,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"45rsr1\",\n      \"standardsId\": 613,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"dslfh7\",\n      \"itsPartition\": \"703hbx\",\n      \"itsNull\": \"xemrxg\",\n      \"description\": \"553ftz\",\n      \"gmtCreate\": \"2022-01-07 10:42:38\",\n      \"gmtModified\": \"2022-01-07 10:42:38\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 893,\n      \"tableId\": 146,\n      \"columnName\": \"debbra.schuster\",\n      \"childTableName\": \"debbra.schuster\",\n      \"childTableColumn\": \"lan7gm\",\n      \"childConnectionWay\": \"zte51k\",\n      \"fatherTableName\": \"debbra.schuster\",\n      \"fatherTableColumn\": \"1x2lld\",\n      \"fatherConnectionWay\": \"hk92hb\",\n      \"gmtCreate\": \"2022-01-07 10:42:38\",\n      \"gmtModified\": \"2022-01-07 10:42:38\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "新增——关系建模(创建结束时的保存\\发布)",
+            "header": []
+          },
+          "description": "新增——关系建模(创建结束时的保存\\发布)"
+        },
+        {
+          "name": "删除——关系建模（下线操作）",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  420,\n  241\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/delete",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "delete"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "删除——关系建模（下线操作）",
+            "header": []
+          },
+          "description": "删除——关系建模（下线操作）"
+        },
+        {
+          "name": "修改——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 172,\n    \"tableName\": \"debbra.schuster\",\n    \"theme\": \"xvq0ru\",\n    \"dataConnection\": \"9cgc39\",\n    \"databaseName\": \"debbra.schuster\",\n    \"dataSourceName\": \"debbra.schuster\",\n    \"dataSourceId\": 516,\n    \"description\": \"o53re8\",\n    \"status\": 703,\n    \"gmtCreate\": \"2022-01-07 10:42:38\",\n    \"gmtModified\": \"2022-01-07 10:42:38\",\n    \"tableType\": 432,\n    \"responsibleBy\": \"u0rp7c\",\n    \"dataFormat\": \"gmjt9e\",\n    \"themeId\": 524,\n    \"modelId\": 546,\n    \"hftsRoute\": \"8i0rsi\",\n    \"syncStatus\": 506\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 194,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"ac412e\",\n      \"standardsId\": 241,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"pwwrlg\",\n      \"itsPartition\": \"08vdh1\",\n      \"itsNull\": \"szfaxu\",\n      \"description\": \"m6jc1f\",\n      \"gmtCreate\": \"2022-01-07 10:42:38\",\n      \"gmtModified\": \"2022-01-07 10:42:38\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 57,\n      \"tableId\": 834,\n      \"columnName\": \"debbra.schuster\",\n      \"childTableName\": \"debbra.schuster\",\n      \"childTableColumn\": \"58p1vf\",\n      \"childConnectionWay\": \"aluqu4\",\n      \"fatherTableName\": \"debbra.schuster\",\n      \"fatherTableColumn\": \"spkn9x\",\n      \"fatherConnectionWay\": \"tghvbl\",\n      \"gmtCreate\": \"2022-01-07 10:42:38\",\n      \"gmtModified\": \"2022-01-07 10:42:38\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "修改——关系建模",
+            "header": []
+          },
+          "description": "修改——关系建模"
+        },
+        {
+          "name": "查询——关系建模",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"trzzpe\"\n  },\n  \"themeId\": 845,\n  \"modelID\": 587\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/query",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "query"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "查询——关系建模",
+            "header": []
+          },
+          "description": "查询——关系建模"
+        },
+        {
+          "name": "详情——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/999",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "82",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "详情——关系建模",
+            "header": []
+          },
+          "description": "详情——关系建模"
+        },
+        {
+          "name": "统计信息——关系建模",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zl8cyg\"\n  },\n  \"themeId\": 120,\n  \"modelID\": 194\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/census",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "census"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "统计信息——关系建模",
+            "header": []
+          },
+          "description": "统计信息——关系建模"
+        },
+        {
+          "name": "数据类型下拉列表——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/data/types",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "data",
+                "types"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据类型下拉列表——关系建模",
+            "header": []
+          },
+          "description": "数据类型下拉列表——关系建模"
+        },
+        {
+          "name": "预览sql——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "tableId",
+                  "type": "text",
+                  "description": "基础信息id",
+                  "value": "355"
+                },
+                {
+                  "key": "type",
+                  "type": "text",
+                  "description": " sql类型",
+                  "value": "79"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/query/sql?type\u003d79\u0026tableId\u003d355",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "query",
+                "sql"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [
+                {
+                  "key": "tableId",
+                  "value": "234",
+                  "description": "基础信息id"
+                },
+                {
+                  "key": "type",
+                  "value": "830",
+                  "description": " sql类型"
+                }
+              ],
+              "variable": []
+            },
+            "description": "预览sql——关系建模",
+            "header": []
+          },
+          "description": "预览sql——关系建模"
+        },
+        {
+          "name": "手动同步——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  882,\n  565\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/synchronization",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "synchronization"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "手动同步——关系建模",
+            "header": []
+          },
+          "description": "手动同步——关系建模"
+        },
+        {
+          "name": "批量发布——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  649,\n  367\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/push",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "push"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "批量发布——关系建模",
+            "header": []
+          },
+          "description": "批量发布——关系建模"
+        },
+        {
+          "name": "逆向数据库",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelId\": 542,\n  \"themeId\": 218,\n  \"theme\": \"7na7ei\",\n  \"dataConnection\": \"lpasq0\",\n  \"dataConnectionName\": \"debbra.schuster\",\n  \"databaseName\": \"debbra.schuster\",\n  \"replace\": 99,\n  \"tableList\": [\n    \"s4p9cg\"\n  ],\n  \"status\": 610,\n  \"syncStatus\": 496\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/reverse/base",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "reverse",
+                "base"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "逆向数据库",
+            "header": []
+          },
+          "description": "逆向数据库"
+        },
+        {
+          "name": "新建关系获取表名称（上线表的表名称）",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/tables",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "tables"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "新建关系获取表名称（上线表的表名称）",
+            "header": []
+          },
+          "description": "新建关系获取表名称（上线表的表名称）"
+        },
+        {
+          "name": "根据表名称查询表字段名称",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "tableName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "debbra.schuster"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/column?tableName\u003ddebbra.schuster",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "column"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [
+                {
+                  "key": "tableName",
+                  "value": "debbra.schuster",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "根据表名称查询表字段名称",
+            "header": []
+          },
+          "description": "根据表名称查询表字段名称"
+        },
+        {
+          "name": "基础信息—查询数据格式",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/modelphysical/data/fromat",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "data",
+                "fromat"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "基础信息—查询数据格式",
+            "header": []
+          },
+          "description": "基础信息—查询数据格式"
+        }
+      ]
+    },
+    {
+      "name": "数据模型物理表",
+      "item": [
+        {
+          "name": "添加事实表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zlqt0b\"\n  },\n  \"id\": 227,\n  \"themeId\": 731,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"8419t1\",\n  \"status\": 883,\n  \"connectionType\": 1,\n  \"dataConnection\": \"lcxap4\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 259,\n      \"factId\": 56,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"h1gu0g\",\n      \"standardsId\": 391,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 819,\n      \"itsPartition\": 299,\n      \"itsNull\": 408,\n      \"description\": \"0wc3jz\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/fact/",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "fact",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "添加事实表",
+            "header": []
+          },
+          "description": "添加事实表"
+        },
+        {
+          "name": "修改事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lp0jhv\"\n  },\n  \"id\": 268,\n  \"themeId\": 0,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"px770q\",\n  \"status\": 758,\n  \"connectionType\": 982,\n  \"dataConnection\": \"zxs7eu\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 273,\n      \"factId\": 931,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"bvnnet\",\n      \"standardsId\": 289,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 458,\n      \"itsPartition\": 687,\n      \"itsNull\": 697,\n      \"description\": \"x647op\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/fact/830",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "fact",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "534",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "修改事实表",
+            "header": []
+          },
+          "description": "修改事实表"
+        },
+        {
+          "name": "事实表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/fact/186",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "fact",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "205",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "事实表详情",
+            "header": []
+          },
+          "description": "事实表详情"
+        },
+        {
+          "name": "事实表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xrmqjn\"\n  },\n  \"id\": 201,\n  \"themeId\": 893,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"9yz48t\",\n  \"status\": 718,\n  \"connectionType\": 840,\n  \"dataConnection\": \"nr519o\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 209,\n      \"factId\": 488,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"x8nhyf\",\n      \"standardsId\": 909,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 830,\n      \"itsPartition\": 699,\n      \"itsNull\": 329,\n      \"description\": \"jj09t0\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/fact/list",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "fact",
+                "list"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "事实表列表",
+            "header": []
+          },
+          "description": "事实表列表"
+        },
+        {
+          "name": "发布事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/fact/publish/2pa0aq",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "fact",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "dpk80y",
+                  "description": "事实表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布事实表",
+            "header": []
+          },
+          "description": "发布事实表"
+        },
+        {
+          "name": "下线事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/fact/offline/kfabsu",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "fact",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "6ud00s",
+                  "description": "事实表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线事实表",
+            "header": []
+          },
+          "description": "下线事实表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/fact/preview/sql/44",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "fact",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "358",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "数据模型物理表",
+      "item": [
+        {
+          "name": "添加物理表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 136,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"m4k9u1\",\n  \"dataConnection\": \"3lizc8\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 763,\n  \"description\": \"pm9zka\",\n  \"status\": 165,\n  \"gmtCreate\": \"2022-01-07 10:42:39\",\n  \"gmtModified\": \"2022-01-07 10:42:39\",\n  \"tableType\": 21,\n  \"responsibleBy\": \"bqhn3z\",\n  \"dataFormat\": \"nm79cq\",\n  \"themeId\": 62,\n  \"modelId\": 456,\n  \"hftsRoute\": \"x1s2hi\",\n  \"syncStatus\": 755\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/physical/",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "physical",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "添加物理表",
+            "header": []
+          },
+          "description": "添加物理表"
+        },
+        {
+          "name": "修改物理表信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 988,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"31khwi\",\n  \"dataConnection\": \"jp6awr\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 436,\n  \"description\": \"2z3tkq\",\n  \"status\": 331,\n  \"gmtCreate\": \"2022-01-07 10:42:39\",\n  \"gmtModified\": \"2022-01-07 10:42:39\",\n  \"tableType\": 513,\n  \"responsibleBy\": \"zx7z0g\",\n  \"dataFormat\": \"sk7qe4\",\n  \"themeId\": 634,\n  \"modelId\": 527,\n  \"hftsRoute\": \"r6249r\",\n  \"syncStatus\": 472\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/physical/518",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "physical",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "579",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "修改物理表信息",
+            "header": []
+          },
+          "description": "修改物理表信息"
+        },
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/physical/99i3i2",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "physical",
+                ":ids"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "55c9rr",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "",
+            "header": []
+          },
+          "description": ""
+        },
+        {
+          "name": "获取物理表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/physical/113",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "physical",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "852",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "获取物理表详情",
+            "header": []
+          },
+          "description": "获取物理表详情"
+        },
+        {
+          "name": "获取物理表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 819,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"8cssyu\",\n  \"dataConnection\": \"9c6e30\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 279,\n  \"description\": \"tanqtz\",\n  \"status\": 200,\n  \"gmtCreate\": \"2022-01-07 10:42:39\",\n  \"gmtModified\": \"2022-01-07 10:42:39\",\n  \"tableType\": 79,\n  \"responsibleBy\": \"jc3mne\",\n  \"dataFormat\": \"emejfz\",\n  \"themeId\": 550,\n  \"modelId\": 309,\n  \"hftsRoute\": \"3lsugq\",\n  \"syncStatus\": 451\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/physical/list",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "physical",
+                "list"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "获取物理表列表",
+            "header": []
+          },
+          "description": "获取物理表列表"
+        }
+      ]
+    },
+    {
+      "name": "数据模型（物理模型）",
+      "item": [
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelName\": \"debbra.schuster\",\n  \"layeredName\": \"debbra.schuster\",\n  \"description\": \"ymyyxz\",\n  \"modelType\": 171\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/",
+              "protocol": "http",
+              "path": [
+                "model",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "",
+            "header": []
+          }
+        },
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/",
+              "protocol": "http",
+              "path": [
+                "model",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "",
+            "header": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "汇总表",
+      "item": [
+        {
+          "name": "添加汇总表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"8c3yew\"\n  },\n  \"id\": 80,\n  \"themeId\": 522,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 4,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"wl9c9b\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"q8bpfq\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 897,\n      \"summaryId\": 160,\n      \"indicatorsType\": 266,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"3j4nch\",\n      \"itsNull\": \"e408x6\",\n      \"description\": \"koi5q1\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/summary/",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "summary",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "添加汇总表",
+            "header": []
+          },
+          "description": "添加汇总表"
+        },
+        {
+          "name": "修改汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ky6j54\"\n  },\n  \"id\": 33,\n  \"themeId\": 377,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 766,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"sdh4zf\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"ol915i\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 765,\n      \"summaryId\": 118,\n      \"indicatorsType\": 322,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"f8cx0t\",\n      \"itsNull\": \"bg1v4i\",\n      \"description\": \"iecea4\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/summary/617",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "summary",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "421",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "修改汇总表",
+            "header": []
+          },
+          "description": "修改汇总表"
+        },
+        {
+          "name": "汇总表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/summary/87",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "summary",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "990",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "汇总表详情",
+            "header": []
+          },
+          "description": "汇总表详情"
+        },
+        {
+          "name": "汇总表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"6bnvia\"\n  },\n  \"id\": 755,\n  \"themeId\": 742,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 676,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"088bpy\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"72v8yj\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 180,\n      \"summaryId\": 409,\n      \"indicatorsType\": 271,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"3coena\",\n      \"itsNull\": \"mi8sjy\",\n      \"description\": \"81ofng\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/summary/list",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "summary",
+                "list"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "汇总表列表",
+            "header": []
+          },
+          "description": "汇总表列表"
+        },
+        {
+          "name": "发布汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/summary/publish/k1t10m",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "summary",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "u9kc1k",
+                  "description": "汇总表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布汇总表",
+            "header": []
+          },
+          "description": "发布汇总表"
+        },
+        {
+          "name": "下线汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/summary/offline/y8deod",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "summary",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "u1vhmg",
+                  "description": "汇总表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线汇总表",
+            "header": []
+          },
+          "description": "下线汇总表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/summary/preview/sql/783",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "summary",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "525",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "维度",
+      "item": [
+        {
+          "name": "添加维度信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"k0zsvh\"\n  },\n  \"id\": 326,\n  \"themeId\": 781,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"5umqx1\",\n  \"description\": \"nx2ntn\",\n  \"status\": 270,\n  \"connectionType\": \"s46qc0\",\n  \"dataConnection\": \"npbdhi\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 343,\n      \"dimId\": 326,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"48s93f\",\n      \"standardsId\": 667,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"0vhl9f\",\n      \"itsPartition\": \"a04k3r\",\n      \"itsNull\": \"1frnmq\",\n      \"description\": \"rnrwgs\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "添加维度信息",
+            "header": []
+          },
+          "description": "添加维度信息"
+        },
+        {
+          "name": "修改维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"4el9rn\"\n  },\n  \"id\": 309,\n  \"themeId\": 466,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"k0sa1r\",\n  \"description\": \"5ymqzs\",\n  \"status\": 139,\n  \"connectionType\": \"yxss3l\",\n  \"dataConnection\": \"7wegs1\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 786,\n      \"dimId\": 838,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"42klnr\",\n      \"standardsId\": 995,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"rjymob\",\n      \"itsPartition\": \"ct2tpb\",\n      \"itsNull\": \"w92li2\",\n      \"description\": \"fub0gt\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/971",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "173",
+                  "description": "维度id"
+                }
+              ]
+            },
+            "description": "修改维度",
+            "header": []
+          },
+          "description": "修改维度"
+        },
+        {
+          "name": "维度详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/231",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "645",
+                  "description": "维度id"
+                }
+              ]
+            },
+            "description": "维度详情",
+            "header": []
+          },
+          "description": "维度详情"
+        },
+        {
+          "name": "维度列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lbztp1\"\n  },\n  \"id\": 457,\n  \"themeId\": 510,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"zxklid\",\n  \"description\": \"01oabg\",\n  \"status\": 7,\n  \"connectionType\": \"pevzuj\",\n  \"dataConnection\": \"pqoqzn\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 69,\n      \"dimId\": 105,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"wv8guv\",\n      \"standardsId\": 640,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"sj2ack\",\n      \"itsPartition\": \"r4lnd1\",\n      \"itsNull\": \"aiumq8\",\n      \"description\": \"w3rcnx\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/list",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                "list"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "维度列表",
+            "header": []
+          },
+          "description": "维度列表"
+        },
+        {
+          "name": "发布维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/publish/xqpbvm",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "r0s19b",
+                  "description": "维度id,如果多个，使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布维度",
+            "header": []
+          },
+          "description": "发布维度"
+        },
+        {
+          "name": "下线维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/offline/cryfpq",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "drf3r5",
+                  "description": "维度id,如果多个，使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线维度",
+            "header": []
+          },
+          "description": "下线维度"
+        }
+      ]
+    },
+    {
+      "name": "维度表",
+      "item": [
+        {
+          "name": "添加维度表信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"abq831\"\n  },\n  \"id\": 443,\n  \"themeId\": 754,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"ijl50u\",\n  \"description\": \"38r1g5\",\n  \"status\": 627,\n  \"connectionType\": \"gl2ev1\",\n  \"dataConnection\": \"y77j83\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 525,\n  \"columnList\": [\n    {\n      \"id\": 456,\n      \"dimTableId\": 964,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"ci0xb9\",\n      \"standardsId\": 292,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"je6mcu\",\n      \"itsPartition\": \"nwxxub\",\n      \"itsNull\": \"ciqgl4\",\n      \"description\": \"c0fufv\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/table/",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                "table",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "添加维度表信息",
+            "header": []
+          },
+          "description": "添加维度表信息"
+        },
+        {
+          "name": "修改维度表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"f2p86a\"\n  },\n  \"id\": 550,\n  \"themeId\": 541,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"6kjf35\",\n  \"description\": \"szxn01\",\n  \"status\": 460,\n  \"connectionType\": \"c5spcr\",\n  \"dataConnection\": \"xari6y\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 430,\n  \"columnList\": [\n    {\n      \"id\": 245,\n      \"dimTableId\": 162,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"s6xnea\",\n      \"standardsId\": 774,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"8uat3w\",\n      \"itsPartition\": \"1wbx01\",\n      \"itsNull\": \"jy1vu3\",\n      \"description\": \"mof38f\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/table/169",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                "table",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "605",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "修改维度表",
+            "header": []
+          },
+          "description": "修改维度表"
+        },
+        {
+          "name": "维度表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/table/675",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                "table",
+                ":id"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "711",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "维度表详情",
+            "header": []
+          },
+          "description": "维度表详情"
+        },
+        {
+          "name": "维度表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"i6jkew\"\n  },\n  \"id\": 878,\n  \"themeId\": 318,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"qds82a\",\n  \"description\": \"q5df50\",\n  \"status\": 527,\n  \"connectionType\": \"1hfafx\",\n  \"dataConnection\": \"inc736\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 510,\n  \"columnList\": [\n    {\n      \"id\": 1,\n      \"dimTableId\": 105,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"9trdhl\",\n      \"standardsId\": 258,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"8ghxk8\",\n      \"itsPartition\": \"k96yqz\",\n      \"itsNull\": \"bxo2vy\",\n      \"description\": \"7v35hr\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/table/list",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                "table",
+                "list"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "维度表列表",
+            "header": []
+          },
+          "description": "维度表列表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/dim/table/preview/sql/935",
+              "protocol": "http",
+              "path": [
+                "",
+                "model",
+                "dim",
+                "table",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "197",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "获取数据源和元数据相关接口",
+      "item": [
+        {
+          "name": "获取数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/db/connect/types",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "connect",
+                "types"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接类型",
+            "header": []
+          },
+          "description": "获取数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/db/connect/3n8j2p",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "connect",
+                ":type"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": [
+                {
+                  "key": "type",
+                  "value": "315qy4",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "获取数据源连接",
+            "header": []
+          },
+          "description": "获取数据源连接"
+        },
+        {
+          "name": "获取db库列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "163x17"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "debbra.schuster"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/db/?connectType\u003d163x17\u0026dataSourceName\u003ddebbra.schuster",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                ""
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "dtalf8",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "debbra.schuster",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取db库列表",
+            "header": []
+          },
+          "description": "获取db库列表"
+        },
+        {
+          "name": "获取table表列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "9j37lf"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "debbra.schuster"
+                },
+                {
+                  "key": "dataBaseName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "debbra.schuster"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/db/table?connectType\u003d9j37lf\u0026dataSourceName\u003ddebbra.schuster\u0026dataBaseName\u003ddebbra.schuster",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "table"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "efevsb",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "debbra.schuster",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataBaseName",
+                  "value": "debbra.schuster",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取table表列表",
+            "header": []
+          },
+          "description": "获取table表列表"
+        },
+        {
+          "name": "获取column字段列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "t0dxbb"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "debbra.schuster"
+                },
+                {
+                  "key": "dataBaseName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "debbra.schuster"
+                },
+                {
+                  "key": "tableName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "debbra.schuster"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/db/column?dataSourceName\u003ddebbra.schuster\u0026tableName\u003ddebbra.schuster\u0026dataBaseName\u003ddebbra.schuster\u0026connectType\u003dt0dxbb",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "column"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "0kxglb",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "debbra.schuster",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataBaseName",
+                  "value": "debbra.schuster",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "tableName",
+                  "value": "debbra.schuster",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取column字段列表",
+            "header": []
+          },
+          "description": "获取column字段列表"
+        },
+        {
+          "name": "获取数据标准",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"m7b877\"\n  },\n  \"dsdName\": \"debbra.schuster\",\n  \"dsdCode\": \"8072\",\n  \"dsdLevel\": \"s46dnk\",\n  \"dsdLevelId\": \"113\",\n  \"beginDay\": \"1keghx\",\n  \"endDay\": \"7lmi0m\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/db/standard",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "standard"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据标准",
+            "header": []
+          },
+          "description": "获取数据标准"
+        },
+        {
+          "name": "获取数据标准分类目录树",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.20.0.13:8782/model/model/db/theme",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "theme"
+              ],
+              "host": [
+                "172.20.0.13"
+              ],
+              "port": "8782",
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据标准分类目录树",
+            "header": []
+          },
+          "description": "获取数据标准分类目录树"
+        }
+      ]
+    }
+  ]
+}

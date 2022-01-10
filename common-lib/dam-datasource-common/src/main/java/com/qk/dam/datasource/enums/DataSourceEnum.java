@@ -12,7 +12,8 @@ public enum DataSourceEnum {
   MYSQL("mysql","com.mysql.cj.jdbc.Driver","jdbc:mysql://"),
   ORACLE("oracle","oracle.jdbc.driver.OracleDriver","jdbc:oracle:thin:"),
   HIVE("hive","org.apache.hive.jdbc.HiveDriver","jdbc:hive2://"),
-  POSTGRESQL("postgresql","org.postgresql.Driver","jdbc:postgresql://");
+  POSTGRESQL("postgresql","org.postgresql.Driver","jdbc:postgresql://"),
+  ELASTICSEARCH("elasticsearch","org.elasticsearch.xpack.sql.jdbc.EsDriver","jdbc:es://");
 
   private String name;
   private String driver;

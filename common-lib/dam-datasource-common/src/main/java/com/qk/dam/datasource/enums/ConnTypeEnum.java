@@ -17,7 +17,7 @@ public enum ConnTypeEnum {
   SQLSERVER("sqlserver"),
   HIVE("hive"),
   POSTGRESQL("postgresql"),
-  HBASE("hbase"),
+  ELASTICSEARCH("elasticsearch"),
   REDIS("redis"),
   EXCEL("excel"),
   CSV("csv"),

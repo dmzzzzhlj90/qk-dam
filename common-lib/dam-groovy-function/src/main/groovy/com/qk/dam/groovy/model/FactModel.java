@@ -14,7 +14,10 @@ import java.util.List;
  */
 @Data
 public class FactModel {
-    private List<FactField> factField;
-    private List<RuleFunctionInfo> ruleFunctionInfo;
-    private List<Object> data;
+    //    private List<FactField> factField;
+
+    public List<RuleFunctionInfo> ruleFunctionInfo;
+
+    public List<Object> data;
+
 }

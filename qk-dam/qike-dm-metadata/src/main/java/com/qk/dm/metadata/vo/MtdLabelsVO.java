@@ -1,14 +1,16 @@
 package com.qk.dm.metadata.vo;
 
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import lombok.*;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class MtdLabelsVO implements Serializable {
 
   /** 名称 label should contain alphanumeric characters, _ or - */
