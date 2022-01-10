@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.mapstruct.mapper;
 
 import com.qk.dm.datamodel.entity.ModelPhysicalTable;
 import com.qk.dm.datamodel.params.dto.ModelPhysicalTableDTO;
+import com.qk.dm.datamodel.params.dto.ModelReverseBaseDTO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -23,4 +24,7 @@ public interface ModelPhysicalTableMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void from(ModelPhysicalTableDTO modelPhysicalTableDTO, @MappingTarget ModelPhysicalTable modelPhysicalTable);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void copy(ModelReverseBaseDTO modelReverseBaseDTO, @MappingTarget ModelPhysicalTable modelPhysicalTable);
 }
