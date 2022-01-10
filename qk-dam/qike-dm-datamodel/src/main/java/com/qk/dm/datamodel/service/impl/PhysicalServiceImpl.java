@@ -585,7 +585,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     }
     //2当数据库连接是HIVE时候判断表类型、数据格式、hdfs路径是不是为空
     if (modelPhysical.getDataConnection().equals(ModelStatus.CONNECT)){
-      if (StringUtils.isEmpty(modelPhysical.getDataFormat())||modelPhysical.getTableType()==0||StringUtils.isEmpty(modelPhysical.getHftsRoute())){
+      if (StringUtils.isEmpty(modelPhysical.getDataFormat())||StringUtils.isEmpty(modelPhysical.getTableType())||StringUtils.isEmpty(modelPhysical.getHftsRoute())){
         check=false;
       }
     }
@@ -644,12 +644,14 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (CollectionUtils.isNotEmpty(modelPhysicalTableList)){
       if (modelReverseBaseDTO.getReplace()==ModelStatus.REPLACE){
         ModelPhysicalTable updateModelPhysicalTable = getUpdateModelphyTable(modelPhysicalTableList,modelReverseBaseDTO);
+        updateModelPhysicalTable.setTableName(tableName);
         ModelPhysicalDTO updateModelPhysicalDTO = getUpdateModelPhysicalDTO(tableName,updateModelPhysicalTable,modelReverseBaseDTO);
         //调用修改方法修改建模信息
         dataUpdateModelPhysical(updateModelPhysicalDTO,updateModelPhysicalTable);
       }
     }else{
       ModelPhysicalTable createModelPhysicalTable = getCreateModelphyTable(modelReverseBaseDTO);
+      createModelPhysicalTable.setTableName(tableName);
       ModelPhysicalDTO createModelPhysicalDTO = getcreateModelPhysicalDTO(tableName,modelReverseBaseDTO);
       //调用新增方法新增建模信息
       dataModelPhysical(createModelPhysicalDTO,createModelPhysicalTable);
@@ -669,7 +671,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     //根据表名称查和数据库询元数据字段信息
     ModelPhysicalDTO modelPhysicalDTO = new ModelPhysicalDTO();
     //获取表字段信息
-    List<MtdAttributes> columnList = dataBaseService.getAllColumn(modelReverseBaseDTO.getDataConnection(), modelReverseBaseDTO.getDataConnectionName(), modelReverseBaseDTO.getDatabaseName(), tableName);
+    List<MtdAttributes> columnList = dataBaseService.getAllColumn(modelReverseBaseDTO.getDataConnection(), modelReverseBaseDTO.getDataSourceName(), modelReverseBaseDTO.getDatabaseName(), tableName);
     if (CollectionUtils.isEmpty(columnList)){
       throw new BizException("表"+tableName+"字段为空");
     }
@@ -681,6 +683,13 @@ public class PhysicalServiceImpl implements PhysicalService {
       modelPhysicalColumnDTO.setColumnType(column.getType());
       //赋值字段描述
       modelPhysicalColumnDTO.setDescription(column.getComment());
+      //todo 目前是否分区、是否是主键、是否为空都默认给否
+      //是否是主键
+      modelPhysicalColumnDTO.setItsPrimaryKey(ModelStatus.SETDEFAULT);
+      //是否分区
+      modelPhysicalColumnDTO.setItsPartition(ModelStatus.SETDEFAULT);
+      //是否为空
+      modelPhysicalColumnDTO.setItsNull(ModelStatus.SETDEFAULT);
       return modelPhysicalColumnDTO;
     }).collect(Collectors.toList());
     modelPhysicalDTO.setModelColumnDtoList(modelPhysicalColumnDTOList);
@@ -710,7 +719,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     //根据表名称查和数据库询元数据字段信息
     ModelPhysicalDTO modelPhysicalDTO = new ModelPhysicalDTO();
     //获取表字段信息
-    List<MtdAttributes> columnList = dataBaseService.getAllColumn(modelReverseBaseDTO.getDataConnection(), modelReverseBaseDTO.getDataConnectionName(), modelReverseBaseDTO.getDatabaseName(), tableName);
+    List<MtdAttributes> columnList = dataBaseService.getAllColumn(modelReverseBaseDTO.getDataConnection(), modelReverseBaseDTO.getDataSourceName(), modelReverseBaseDTO.getDatabaseName(), tableName);
     if (CollectionUtils.isEmpty(columnList)){
       throw new BizException("表"+tableName+"字段为空");
     }
@@ -724,6 +733,13 @@ public class PhysicalServiceImpl implements PhysicalService {
       modelPhysicalColumnDTO.setColumnType(column.getType());
       //赋值字段描述
       modelPhysicalColumnDTO.setDescription(column.getComment());
+      //todo 目前是否分区、是否是主键、是否为空都默认给否
+      //是否是主键
+      modelPhysicalColumnDTO.setItsPrimaryKey(ModelStatus.SETDEFAULT);
+      //是否分区
+      modelPhysicalColumnDTO.setItsPartition(ModelStatus.SETDEFAULT);
+      //是否为空
+      modelPhysicalColumnDTO.setItsNull(ModelStatus.SETDEFAULT);
       return modelPhysicalColumnDTO;
     }).collect(Collectors.toList());
     modelPhysicalDTO.setModelColumnDtoList(modelPhysicalColumnDTOList);
@@ -748,16 +764,7 @@ public class PhysicalServiceImpl implements PhysicalService {
    * @param modelReverseBaseDTO
    */
   private void getModelPhysicalTable(ModelPhysicalTable modelPhysicalTable, ModelReverseBaseDTO modelReverseBaseDTO) {
-    //所属层级id
-    modelPhysicalTable.setModelId(modelReverseBaseDTO.getModelId());
-    //主题id
-    modelPhysicalTable.setThemeId(modelReverseBaseDTO.getThemeId());
-    //主题
-    modelPhysicalTable.setTheme(modelReverseBaseDTO.getTheme());
-    //数据连接
-    modelPhysicalTable.setDataConnection(modelReverseBaseDTO.getDataConnection());
-    //数据库名称
-    modelPhysicalTable.setDatabaseName(modelReverseBaseDTO.getDatabaseName());
+    ModelPhysicalTableMapper.INSTANCE.copy(modelReverseBaseDTO,modelPhysicalTable);
     //0草稿 1已发布2 已下线
     modelPhysicalTable.setStatus(ModelStatus.DRAFT);
     //数据库和系统定义的sql是否同步（0表示已经同步，1表示未同步）
@@ -927,16 +934,16 @@ public class PhysicalServiceImpl implements PhysicalService {
     voList.forEach(
         modelPhysicalTableVO -> {
         ModelPhysicalVO modelPhysicalVO = new ModelPhysicalVO();
-        modelPhysicalVO.setModelPhysicalTableVO(modelPhysicalTableVO);
+        modelPhysicalVO.setModelPhysicalTableDTO(modelPhysicalTableVO);
         //根据基础表id获取字段信息
           List<ModelPhysicalColumnVO> modelPhysicalColumnVOList = getModelPhysicalColumn(modelPhysicalTableVO.getId());
           if (CollectionUtils.isNotEmpty(modelPhysicalColumnVOList)){
-            modelPhysicalVO.setModelPhysicalColumnVOList(modelPhysicalColumnVOList);
+            modelPhysicalVO.setModelColumnDtoList(modelPhysicalColumnVOList);
           }
         //根据基础表id获取关系信息
           List<ModelPhysicalRelationVO> modelPhysicalRelationVOList = getModelPhysicalRelation(modelPhysicalTableVO.getId());
           if (CollectionUtils.isNotEmpty(modelPhysicalRelationVOList)){
-            modelPhysicalVO.setModelPhysicalRelationVOList(modelPhysicalRelationVOList);
+            modelPhysicalVO.setModelRelationDtoList(modelPhysicalRelationVOList);
           }
           modelPhysicalVOList.add(modelPhysicalVO);
         }
@@ -999,8 +1006,8 @@ public class PhysicalServiceImpl implements PhysicalService {
   }
 
   private void checkCondition(BooleanBuilder booleanBuilder, QueryModelPhysicalDTO queryModelPhysicalDTO) {
-    if (!Objects.isNull(queryModelPhysicalDTO.getModelID())) {
-      booleanBuilder.and(qModelPhysicalTable.modelId.eq(queryModelPhysicalDTO.getModelID()));
+    if (!Objects.isNull(queryModelPhysicalDTO.getModelId())) {
+      booleanBuilder.and(qModelPhysicalTable.modelId.eq(queryModelPhysicalDTO.getModelId()));
     }
     if (!Objects.isNull(queryModelPhysicalDTO.getThemeId())){
       booleanBuilder.and(qModelPhysicalTable.themeId.eq(queryModelPhysicalDTO.getThemeId()));

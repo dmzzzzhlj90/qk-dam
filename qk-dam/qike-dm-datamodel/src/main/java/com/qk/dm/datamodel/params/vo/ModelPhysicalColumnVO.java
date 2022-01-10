@@ -46,6 +46,11 @@ public class ModelPhysicalColumnVO implements Serializable {
     private String standardsName;
 
     /**
+     * 标准编码
+     */
+    private String standardsCode;
+
+    /**
      * 是否是主键 0否 1是
      */
     private String itsPrimaryKey;
