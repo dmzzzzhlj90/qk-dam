@@ -12,16 +12,16 @@ public enum ConnTypeEnum {
 
   /*数据连接枚举信息*/
   MYSQL("mysql"),
-  ORACLE("oracle"),
-  DB2("db2"),
-  SQLSERVER("sqlserver"),
+//  ORACLE("oracle"),
+//  DB2("db2"),
+//  SQLSERVER("sqlserver"),
   HIVE("hive"),
-  POSTGRESQL("postgresql"),
+//  POSTGRESQL("postgresql"),
   ELASTICSEARCH("elasticsearch"),
-  REDIS("redis"),
-  EXCEL("excel"),
-  CSV("csv"),
-  REST("rest");
+  REDIS("redis");
+//  EXCEL("excel"),
+//  CSV("csv"),
+//  REST("rest");
 
   /** 定义一个public修饰的实例变量 */
   private String name;

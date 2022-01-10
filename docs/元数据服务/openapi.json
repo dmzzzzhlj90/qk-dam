@@ -213,126 +213,6 @@
           }
         }
       },
-      "_detail__guid_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object",
-            "properties": {
-              "owner": {
-                "format": "string",
-                "description": "负责人",
-                "type": "string"
-              },
-              "typeName": {
-                "format": "string",
-                "description": "类型名称",
-                "type": "string"
-              },
-              "tableRows": {
-                "format": "string",
-                "description": "表行数",
-                "type": "string"
-              },
-              "dataLength": {
-                "format": "string",
-                "description": "数据长度",
-                "type": "string"
-              },
-              "indexLength": {
-                "format": "string",
-                "description": "索引长度",
-                "type": "string"
-              },
-              "comment": {
-                "format": "string",
-                "description": "备注信息",
-                "type": "string"
-              },
-              "qualifiedName": {
-                "format": "string",
-                "description": "限定名",
-                "type": "string"
-              },
-              "description": {
-                "format": "string",
-                "description": "描述信息",
-                "type": "string"
-              },
-              "dataType": {
-                "format": "string",
-                "description": "数据类型",
-                "type": "string"
-              },
-              "isPrimaryKey": {
-                "format": "string",
-                "description": "是否是主键",
-                "type": "string"
-              },
-              "defaultValue": {
-                "format": "string",
-                "description": "默认值",
-                "type": "string"
-              },
-              "labels": {
-                "format": "string",
-                "description": "标签",
-                "type": "string"
-              },
-              "classification": {
-                "format": "string",
-                "description": "分类",
-                "type": "string"
-              },
-              "createTime": {
-                "format": "string",
-                "description": "创建时间",
-                "type": "string"
-              },
-              "db": {
-                "description": "db信息(object)",
-                "type": "object",
-                "properties": {
-                  "guid": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "typeName": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "displayText": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  }
-                }
-              },
-              "relationshipAttributes": {
-                "description": "实体信息(map data)",
-                "type": "object"
-              }
-            }
-          }
-        }
-      },
       "_relation__guid_Response": {
         "properties": {
           "retCode": {
@@ -519,7 +399,7 @@
           "server"
         ]
       },
-      "_detail__typeName___guid_Response": {
+      "_entity_exist_dataResponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -538,104 +418,7 @@
           },
           "data": {
             "description": "返回数据(object)",
-            "type": "object",
-            "properties": {
-              "owner": {
-                "format": "string",
-                "description": "负责人",
-                "type": "string"
-              },
-              "typeName": {
-                "format": "string",
-                "description": "类型名称",
-                "type": "string"
-              },
-              "tableRows": {
-                "format": "string",
-                "description": "表行数",
-                "type": "string"
-              },
-              "dataLength": {
-                "format": "string",
-                "description": "数据长度",
-                "type": "string"
-              },
-              "indexLength": {
-                "format": "string",
-                "description": "索引长度",
-                "type": "string"
-              },
-              "comment": {
-                "format": "string",
-                "description": "备注信息",
-                "type": "string"
-              },
-              "qualifiedName": {
-                "format": "string",
-                "description": "限定名",
-                "type": "string"
-              },
-              "description": {
-                "format": "string",
-                "description": "描述信息",
-                "type": "string"
-              },
-              "dataType": {
-                "format": "string",
-                "description": "数据类型",
-                "type": "string"
-              },
-              "isPrimaryKey": {
-                "format": "string",
-                "description": "是否是主键",
-                "type": "string"
-              },
-              "defaultValue": {
-                "format": "string",
-                "description": "默认值",
-                "type": "string"
-              },
-              "labels": {
-                "format": "string",
-                "description": "标签",
-                "type": "string"
-              },
-              "classification": {
-                "format": "string",
-                "description": "分类",
-                "type": "string"
-              },
-              "createTime": {
-                "format": "string",
-                "description": "创建时间",
-                "type": "string"
-              },
-              "db": {
-                "description": "db信息(object)",
-                "type": "object",
-                "properties": {
-                  "guid": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "typeName": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  },
-                  "displayText": {
-                    "format": "string",
-                    "description": "No comments found.",
-                    "type": "string"
-                  }
-                }
-              },
-              "relationshipAttributes": {
-                "description": "实体信息(map data)",
-                "type": "object"
-              }
-            }
+            "type": "object"
           }
         }
       },
@@ -987,7 +770,6 @@
         }
       },
       "__guids_Request": {},
-      "_audit__guid_Request": {},
       "_column_listResponse": {
         "properties": {
           "retCode": {
@@ -1029,135 +811,6 @@
                   "format": "string",
                   "description": "No comments found.",
                   "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "_dbs__typeName___attrValue_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object",
-            "properties": {
-              "entities": {
-                "description": "No comments found.",
-                "type": "array",
-                "items": {
-                  "properties": {
-                    "guid": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "displayText": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "typeName": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "description": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "columns": {
-                "description": "No comments found.",
-                "type": "array",
-                "items": {
-                  "properties": {
-                    "owner": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "name": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "type": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "comment": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "tables": {
-                "description": "No comments found.",
-                "type": "array",
-                "items": {
-                  "properties": {
-                    "guid": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "typeName": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "entityStatus": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "displayText": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "relationshipType": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "relationshipGuid": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "relationshipStatus": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "comment": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    }
-                  }
                 }
               }
             }
@@ -1312,7 +965,41 @@
         }
       },
       "_labels_bind__guid_Request": {},
-      "_detail_qname__qualifiedName___typename_Response": {
+      "_entity_exist_dataRequest": {
+        "properties": {
+          "typeName": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "dbName": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "tableName": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "server": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "limit": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "offset": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          }
+        }
+      },
+      "_table_info_listResponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -1330,212 +1017,60 @@
             "type": "string"
           },
           "data": {
-            "description": "返回数据(object)",
-            "type": "object",
-            "properties": {
-              "typeName": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "attributes": {
-                "description": "No comments found.(map data)",
-                "type": "object"
-              },
-              "guid": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "homeId": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "isProxy": {
-                "format": "boolean",
-                "description": "No comments found.",
-                "type": "boolean"
-              },
-              "isIncomplete": {
-                "format": "boolean",
-                "description": "No comments found.",
-                "type": "boolean"
-              },
-              "provenanceType": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "status": {
-                "format": "enum",
-                "description": "null\u003cbr/\u003eACTIVE\u003cbr/\u003eDELETED\u003cbr/\u003ePURGED\u003cbr/\u003e",
-                "type": "string"
-              },
-              "createdBy": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "updatedBy": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "createTime": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "updateTime": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "version": {
-                "format": "int64",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "relationshipAttributes": {
-                "description": "No comments found.(map data)",
-                "type": "object"
-              },
-              "classifications": {
-                "description": "No comments found.",
-                "type": "array",
-                "items": {
-                  "properties": {
-                    "typeName": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "attributes": {
-                      "description": "No comments found.(map data)",
-                      "type": "object"
-                    },
-                    "entityGuid": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "entityStatus": {
-                      "format": "enum",
-                      "description": "null\u003cbr/\u003eACTIVE\u003cbr/\u003eDELETED\u003cbr/\u003ePURGED\u003cbr/\u003e",
-                      "type": "string"
-                    },
-                    "propagate": {
-                      "format": "boolean",
-                      "description": "No comments found.",
-                      "type": "boolean"
-                    },
-                    "validityPeriods": {
-                      "description": "No comments found.",
-                      "type": "array",
-                      "items": {
-                        "properties": {
-                          "startTime": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "endTime": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "timeZone": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    "removePropagationsOnEntityDelete": {
-                      "format": "boolean",
-                      "description": "No comments found.",
-                      "type": "boolean"
-                    }
-                  }
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "owner": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "createTime": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "qualifiedName": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "name": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "description": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "comment": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "guid": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "typeName": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "labels": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "classification": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
                 }
-              },
-              "meanings": {
-                "description": "No comments found.",
-                "type": "array",
-                "items": {
-                  "properties": {
-                    "termGuid": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "relationGuid": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "description": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "displayText": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "expression": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "createdBy": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "steward": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "source": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "confidence": {
-                      "format": "int32",
-                      "description": "No comments found.",
-                      "type": "integer"
-                    },
-                    "status": {
-                      "format": "enum",
-                      "description": "null\u003cbr/\u003eDISCOVERED -(0)\u003cbr/\u003ePROPOSED -(1)\u003cbr/\u003eIMPORTED -(2)\u003cbr/\u003eVALIDATED -(3)\u003cbr/\u003eDEPRECATED -(4)\u003cbr/\u003eOBSOLETE -(5)\u003cbr/\u003eOTHER -(6)\u003cbr/\u003e",
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "customAttributes": {
-                "description": "No comments found.(map data)",
-                "type": "object"
-              },
-              "businessAttributes": {
-                "description": "No comments found.(map data)",
-                "type": "object"
-              },
-              "labels": {
-                "description": "No comments found.",
-                "type": "array",
-                "items": {}
-              },
-              "pendingTasks": {
-                "description": "No comments found.",
-                "type": "array",
-                "items": {}
               }
             }
           }
@@ -1581,279 +1116,6 @@
           }
         }
       },
-      "_audit__guid_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据",
-            "type": "array",
-            "items": {
-              "properties": {
-                "entityId": {
-                  "format": "string",
-                  "description": "No comments found.",
-                  "type": "string"
-                },
-                "timestamp": {
-                  "format": "int64",
-                  "description": "No comments found.",
-                  "type": "integer"
-                },
-                "user": {
-                  "format": "string",
-                  "description": "No comments found.",
-                  "type": "string"
-                },
-                "action": {
-                  "format": "enum",
-                  "description": "null\u003cbr/\u003eENTITY_CREATE\u003cbr/\u003eENTITY_UPDATE\u003cbr/\u003eENTITY_DELETE\u003cbr/\u003eENTITY_IMPORT_CREATE\u003cbr/\u003eENTITY_IMPORT_UPDATE\u003cbr/\u003eENTITY_IMPORT_DELETE\u003cbr/\u003eCLASSIFICATION_ADD\u003cbr/\u003eCLASSIFICATION_DELETE\u003cbr/\u003eCLASSIFICATION_UPDATE\u003cbr/\u003ePROPAGATED_CLASSIFICATION_ADD\u003cbr/\u003ePROPAGATED_CLASSIFICATION_DELETE\u003cbr/\u003ePROPAGATED_CLASSIFICATION_UPDATE\u003cbr/\u003eTERM_ADD\u003cbr/\u003eTERM_DELETE\u003cbr/\u003eLABEL_ADD\u003cbr/\u003eLABEL_DELETE\u003cbr/\u003eENTITY_PURGE\u003cbr/\u003eBUSINESS_ATTRIBUTE_UPDATE\u003cbr/\u003eCUSTOM_ATTRIBUTE_UPDATE\u003cbr/\u003e",
-                  "type": "string"
-                },
-                "details": {
-                  "format": "string",
-                  "description": "No comments found.",
-                  "type": "string"
-                },
-                "eventKey": {
-                  "format": "string",
-                  "description": "No comments found.",
-                  "type": "string"
-                },
-                "entity": {
-                  "description": "No comments found.(object)",
-                  "type": "object",
-                  "properties": {
-                    "typeName": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "attributes": {
-                      "description": "No comments found.(map data)",
-                      "type": "object"
-                    },
-                    "guid": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "homeId": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "isProxy": {
-                      "format": "boolean",
-                      "description": "No comments found.",
-                      "type": "boolean"
-                    },
-                    "isIncomplete": {
-                      "format": "boolean",
-                      "description": "No comments found.",
-                      "type": "boolean"
-                    },
-                    "provenanceType": {
-                      "format": "int32",
-                      "description": "No comments found.",
-                      "type": "integer"
-                    },
-                    "status": {
-                      "format": "enum",
-                      "description": "null\u003cbr/\u003eACTIVE\u003cbr/\u003eDELETED\u003cbr/\u003ePURGED\u003cbr/\u003e",
-                      "type": "string"
-                    },
-                    "createdBy": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "updatedBy": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "createTime": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "updateTime": {
-                      "format": "string",
-                      "description": "No comments found.",
-                      "type": "string"
-                    },
-                    "version": {
-                      "format": "int64",
-                      "description": "No comments found.",
-                      "type": "integer"
-                    },
-                    "relationshipAttributes": {
-                      "description": "No comments found.(map data)",
-                      "type": "object"
-                    },
-                    "classifications": {
-                      "description": "No comments found.",
-                      "type": "array",
-                      "items": {
-                        "properties": {
-                          "typeName": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "attributes": {
-                            "description": "No comments found.(map data)",
-                            "type": "object"
-                          },
-                          "entityGuid": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "entityStatus": {
-                            "format": "enum",
-                            "description": "null\u003cbr/\u003eACTIVE\u003cbr/\u003eDELETED\u003cbr/\u003ePURGED\u003cbr/\u003e",
-                            "type": "string"
-                          },
-                          "propagate": {
-                            "format": "boolean",
-                            "description": "No comments found.",
-                            "type": "boolean"
-                          },
-                          "validityPeriods": {
-                            "description": "No comments found.",
-                            "type": "array",
-                            "items": {
-                              "properties": {
-                                "startTime": {
-                                  "format": "string",
-                                  "description": "No comments found.",
-                                  "type": "string"
-                                },
-                                "endTime": {
-                                  "format": "string",
-                                  "description": "No comments found.",
-                                  "type": "string"
-                                },
-                                "timeZone": {
-                                  "format": "string",
-                                  "description": "No comments found.",
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          },
-                          "removePropagationsOnEntityDelete": {
-                            "format": "boolean",
-                            "description": "No comments found.",
-                            "type": "boolean"
-                          }
-                        }
-                      }
-                    },
-                    "meanings": {
-                      "description": "No comments found.",
-                      "type": "array",
-                      "items": {
-                        "properties": {
-                          "termGuid": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "relationGuid": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "description": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "displayText": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "expression": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "createdBy": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "steward": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "source": {
-                            "format": "string",
-                            "description": "No comments found.",
-                            "type": "string"
-                          },
-                          "confidence": {
-                            "format": "int32",
-                            "description": "No comments found.",
-                            "type": "integer"
-                          },
-                          "status": {
-                            "format": "enum",
-                            "description": "null\u003cbr/\u003eDISCOVERED -(0)\u003cbr/\u003ePROPOSED -(1)\u003cbr/\u003eIMPORTED -(2)\u003cbr/\u003eVALIDATED -(3)\u003cbr/\u003eDEPRECATED -(4)\u003cbr/\u003eOBSOLETE -(5)\u003cbr/\u003eOTHER -(6)\u003cbr/\u003e",
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    "customAttributes": {
-                      "description": "No comments found.(map data)",
-                      "type": "object"
-                    },
-                    "businessAttributes": {
-                      "description": "No comments found.(map data)",
-                      "type": "object"
-                    },
-                    "labels": {
-                      "description": "No comments found.",
-                      "type": "array",
-                      "items": {}
-                    },
-                    "pendingTasks": {
-                      "description": "No comments found.",
-                      "type": "array",
-                      "items": {}
-                    }
-                  }
-                },
-                "type": {
-                  "format": "enum",
-                  "description": "null\u003cbr/\u003eENTITY_AUDIT_V1\u003cbr/\u003eENTITY_AUDIT_V2\u003cbr/\u003e",
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "_detail_qname__qualifiedName___typename_Request": {},
       "_db__guid_Response": {
         "properties": {
           "retCode": {
@@ -1885,6 +1147,11 @@
                 "description": "类型名称",
                 "type": "string"
               },
+              "displayText": {
+                "format": "string",
+                "description": "展示名称",
+                "type": "string"
+              },
               "comment": {
                 "format": "string",
                 "description": "备注信息",
@@ -1898,6 +1165,11 @@
               "description": {
                 "format": "string",
                 "description": "描述信息",
+                "type": "string"
+              },
+              "serverInfo": {
+                "format": "string",
+                "description": "server地址",
                 "type": "string"
               },
               "dataType": {
@@ -1986,7 +1258,6 @@
           "dbName"
         ]
       },
-      "_dbs__typeName___attrValue_Request": {},
       "_classify_bind__guid_Request": {},
       "_labels_Request": {},
       "_entity_detailResponse": {
@@ -2187,7 +1458,6 @@
         }
       },
       "_column__guid_Request": {},
-      "_detail__guid_Request": {},
       "_labels_pageResponse": {
         "properties": {
           "retCode": {
@@ -2402,6 +1672,42 @@
           }
         }
       },
+      "_table_info_listRequest": {
+        "properties": {
+          "typeName": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "server": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "dbName": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "limit": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "offset": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "typeName",
+          "server",
+          "dbName",
+          "limit",
+          "offset"
+        ]
+      },
       "_classify_pageRequest": {},
       "_labels_pageRequest": {},
       "_db_attr_listRequest": {
@@ -2433,7 +1739,6 @@
           }
         }
       },
-      "_detail__typeName___guid_Request": {},
       "_labels_bind_bulkRequest": {
         "properties": {
           "guids": {
@@ -2725,7 +2030,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"zoe.oconnell\",\n  \"server\": \"5m3g2t\",\n  \"dbName\": \"zoe.oconnell\"\n}"
+                  "value": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"geraldine.schuster\",\n  \"server\": \"zbsjaw\",\n  \"dbName\": \"geraldine.schuster\"\n}"
                 }
               }
             }
@@ -2742,7 +2047,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"hqmtvs\",\n  \"tips\": \"lxky1n\",\n  \"data\": [\n    {\n      \"guid\": \"156\",\n      \"typeName\": \"zoe.oconnell\",\n      \"entityStatus\": \"1jfyp9\",\n      \"displayText\": \"sep683\",\n      \"relationshipType\": \"5tr1xw\",\n      \"relationshipGuid\": \"156\",\n      \"relationshipStatus\": \"q0b68p\",\n      \"comment\": \"nh9il6\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"rf8958\",\n  \"tips\": \"exz8wd\",\n  \"data\": [\n    {\n      \"guid\": \"19\",\n      \"typeName\": \"geraldine.schuster\",\n      \"entityStatus\": \"k6zu7r\",\n      \"displayText\": \"aaprq8\",\n      \"relationshipType\": \"onbalt\",\n      \"relationshipGuid\": \"19\",\n      \"relationshipStatus\": \"5iv1wl\",\n      \"comment\": \"to2sie\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -2770,7 +2075,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"name\": \"zoe.oconnell\",\n  \"description\": \"3czh52\"\n}"
+                  "value": "{\n  \"name\": \"geraldine.schuster\",\n  \"description\": \"bsxpd8\"\n}"
                 }
               }
             }
@@ -2787,7 +2092,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"v069dn\",\n  \"tips\": \"fdmxgj\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"7aqu3i\",\n  \"tips\": \"k4ja10\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2815,7 +2120,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"j14i6q\",\n  \"tips\": \"ukpmim\",\n  \"data\": [\n    {\n      \"name\": \"zoe.oconnell\",\n      \"description\": \"85lgtr\",\n      \"id\": 567,\n      \"gmtCreate\": \"2021-12-28 17:21:52\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"nim2yf\",\n  \"tips\": \"w8sn0h\",\n  \"data\": [\n    {\n      \"name\": \"geraldine.schuster\",\n      \"description\": \"ut2hq6\",\n      \"id\": 280,\n      \"gmtCreate\": \"2022-01-10 17:49:00\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -2831,7 +2136,7 @@
             "in": "query",
             "description": "名称",
             "required": false,
-            "example": "zoe.oconnell",
+            "example": "geraldine.schuster",
             "name": "name"
           },
           {
@@ -2841,100 +2146,8 @@
             "in": "query",
             "description": "描述",
             "required": false,
-            "example": "xd29n0",
+            "example": "8gd8sb",
             "name": "description"
-          }
-        ]
-      }
-    },
-    "/detail/{typeName}/{guid}": {
-      "get": {
-        "summary": "根据guid和typeName获取数据库的元数据信息",
-        "deprecated": false,
-        "description": "根据guid和typeName获取数据库的元数据信息",
-        "tags": [
-          "MtdAtlasController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_detail__typeName___guid_Response"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"n236xq\",\n  \"tips\": \"9q2its\",\n  \"data\": {\n    \"owner\": \"uqbm1j\",\n    \"typeName\": \"zoe.oconnell\",\n    \"tableRows\": \"79nat0\",\n    \"dataLength\": \"ikwhn5\",\n    \"indexLength\": \"7w0zns\",\n    \"comment\": \"z1130o\",\n    \"qualifiedName\": \"zoe.oconnell\",\n    \"description\": \"5qh5zi\",\n    \"dataType\": \"zgy5za\",\n    \"isPrimaryKey\": \"a9ebw8\",\n    \"defaultValue\": \"tj511r\",\n    \"labels\": \"fvuic5\",\n    \"classification\": \"8bh2nv\",\n    \"createTime\": \"2021-12-28 17:21:52\",\n    \"db\": {\n      \"guid\": \"156\",\n      \"typeName\": \"zoe.oconnell\",\n      \"displayText\": \"g284bl\"\n    },\n    \"relationshipAttributes\": {\n      \"mapKey\": {}\n    }\n  }\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "getDetailByGuid",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "实体类型",
-            "required": true,
-            "example": "zoe.oconnell",
-            "name": "typeName"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "实体id",
-            "required": true,
-            "example": "156",
-            "name": "guid"
-          }
-        ]
-      }
-    },
-    "/audit/{guid}": {
-      "get": {
-        "summary": "根据guid获取数据库的技术数据操作信息",
-        "deprecated": false,
-        "description": "根据guid获取数据库的技术数据操作信息",
-        "tags": [
-          "MtdAtlasController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_audit__guid_Response"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"8ct4yv\",\n  \"tips\": \"3m4fh9\",\n  \"data\": [\n    {\n      \"entityId\": \"156\",\n      \"timestamp\": 1640674802453,\n      \"user\": \"j5quut\",\n      \"action\": \"ENTITY_CREATE\",\n      \"details\": \"znjehp\",\n      \"eventKey\": \"tf58wq\",\n      \"entity\": {\n        \"typeName\": \"zoe.oconnell\",\n        \"attributes\": {\n          \"mapKey\": {}\n        },\n        \"guid\": \"156\",\n        \"homeId\": \"156\",\n        \"isProxy\": true,\n        \"isIncomplete\": true,\n        \"provenanceType\": 15,\n        \"status\": \"ACTIVE\",\n        \"createdBy\": \"53cznr\",\n        \"updatedBy\": \"ulhoun\",\n        \"createTime\": \"2021-12-28 17:21:52\",\n        \"updateTime\": \"2021-12-28 17:21:52\",\n        \"version\": 233,\n        \"relationshipAttributes\": {\n          \"mapKey\": {}\n        },\n        \"classifications\": [\n          {\n            \"typeName\": \"zoe.oconnell\",\n            \"attributes\": {\n              \"mapKey\": {}\n            },\n            \"entityGuid\": \"156\",\n            \"entityStatus\": \"ACTIVE\",\n            \"propagate\": true,\n            \"validityPeriods\": [\n              {\n                \"startTime\": \"2021-12-28 15:00:02\",\n                \"endTime\": \"2021-12-28 15:00:02\",\n                \"timeZone\": \"pevotu\"\n              }\n            ],\n            \"removePropagationsOnEntityDelete\": true\n          }\n        ],\n        \"meanings\": [\n          {\n            \"termGuid\": \"156\",\n            \"relationGuid\": \"156\",\n            \"description\": \"ittxf4\",\n            \"displayText\": \"ejh0ny\",\n            \"expression\": \"ih0gpk\",\n            \"createdBy\": \"178uq8\",\n            \"steward\": \"jqiywg\",\n            \"source\": \"ou8f22\",\n            \"confidence\": 618,\n            \"status\": \"DISCOVERED\"\n          }\n        ],\n        \"customAttributes\": {\n          \"mapKey\": \"vr7miq\"\n        },\n        \"businessAttributes\": {\n          \"mapKey\": {}\n        },\n        \"labels\": [\n          \"gimh8o\"\n        ],\n        \"pendingTasks\": [\n          \"96z0jr\"\n        ]\n      },\n      \"type\": \"ENTITY_AUDIT_V1\"\n    }\n  ]\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "getAuditByGuid",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "实体id",
-            "required": true,
-            "example": "156",
-            "name": "guid"
           }
         ]
       }
@@ -2958,7 +2171,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"diy831\",\n  \"tips\": \"isg1gf\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"4icdov\",\n  \"tips\": \"yw751f\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -2974,7 +2187,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "5ib1hm",
+            "example": "4prnes",
             "name": "guids"
           }
         ]
@@ -2999,7 +2212,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"afugsh\",\n  \"tips\": \"qcq6zv\",\n  \"data\": {\n    \"guid\": \"156\",\n    \"classify\": \"9ht6sx\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"lquw1u\",\n  \"tips\": \"7tip7m\",\n  \"data\": {\n    \"guid\": \"19\",\n    \"classify\": \"bsea8j\"\n  }\n}"
                   }
                 }
               }
@@ -3015,7 +2228,7 @@
             "in": "path",
             "description": "元数据guid",
             "required": true,
-            "example": "156",
+            "example": "19",
             "name": "guid"
           }
         ]
@@ -3040,7 +2253,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"msdf2j\",\n  \"tips\": \"es0koy\",\n  \"data\": [\n    {\n      \"guid\": \"156\",\n      \"name\": \"zoe.oconnell\",\n      \"serviceType\": \"lcjrlv\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"bwkvcy\",\n  \"tips\": \"tymy7c\",\n  \"data\": [\n    {\n      \"guid\": \"19\",\n      \"name\": \"geraldine.schuster\",\n      \"serviceType\": \"65bg40\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -3070,7 +2283,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"c6q2i3\",\n  \"tips\": \"89zwto\",\n  \"data\": {\n    \"owner\": \"2ounkz\",\n    \"typeName\": \"zoe.oconnell\",\n    \"tableRows\": \"14ul7b\",\n    \"dataLength\": \"tcesff\",\n    \"indexLength\": \"cl5qf2\",\n    \"comment\": \"rmkq7t\",\n    \"qualifiedName\": \"zoe.oconnell\",\n    \"description\": \"j2u9ge\",\n    \"labels\": \"5b8qgr\",\n    \"classification\": \"nrydem\",\n    \"createTime\": \"2021-12-28 17:21:52\",\n    \"db\": {\n      \"guid\": \"156\",\n      \"typeName\": \"zoe.oconnell\",\n      \"displayText\": \"omjwor\"\n    },\n    \"columns\": [\n      {}\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"du36gh\",\n  \"tips\": \"ub9ton\",\n  \"data\": {\n    \"owner\": \"lu29cs\",\n    \"typeName\": \"geraldine.schuster\",\n    \"tableRows\": \"kmdm9b\",\n    \"dataLength\": \"uq0xdc\",\n    \"indexLength\": \"4p3wrk\",\n    \"comment\": \"z9hx0s\",\n    \"qualifiedName\": \"geraldine.schuster\",\n    \"description\": \"c76acp\",\n    \"labels\": \"vdxzr2\",\n    \"classification\": \"pf61li\",\n    \"createTime\": \"2022-01-10 17:49:00\",\n    \"db\": {\n      \"guid\": \"19\",\n      \"typeName\": \"geraldine.schuster\",\n      \"displayText\": \"eysmzt\"\n    },\n    \"columns\": [\n      {}\n    ]\n  }\n}"
                   }
                 }
               }
@@ -3086,7 +2299,7 @@
             "in": "path",
             "description": "元数据唯一id",
             "required": true,
-            "example": "156",
+            "example": "19",
             "name": "guid"
           }
         ]
@@ -3111,7 +2324,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"yj9cbb\",\n  \"tips\": \"z316zf\",\n  \"data\": {\n    \"owner\": \"zoh20f\",\n    \"typeName\": \"zoe.oconnell\",\n    \"comment\": \"1v5rlh\",\n    \"qualifiedName\": \"zoe.oconnell\",\n    \"description\": \"gvk3od\",\n    \"dataType\": \"oht6yt\",\n    \"labels\": \"4im9og\",\n    \"classification\": \"2gkjfn\",\n    \"createTime\": \"2021-12-28 17:21:52\",\n    \"tables\": [\n      {}\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"84vsir\",\n  \"tips\": \"tb89yp\",\n  \"data\": {\n    \"owner\": \"r3cylg\",\n    \"typeName\": \"geraldine.schuster\",\n    \"displayText\": \"gp17ki\",\n    \"comment\": \"hz2g6y\",\n    \"qualifiedName\": \"geraldine.schuster\",\n    \"description\": \"izvtem\",\n    \"serverInfo\": \"qs2wvd\",\n    \"dataType\": \"jc3suq\",\n    \"labels\": \"ibtg17\",\n    \"classification\": \"enmj8c\",\n    \"createTime\": \"2022-01-10 17:49:00\",\n    \"tables\": [\n      {}\n    ]\n  }\n}"
                   }
                 }
               }
@@ -3127,7 +2340,7 @@
             "in": "path",
             "description": "元数据唯一id",
             "required": true,
-            "example": "156",
+            "example": "19",
             "name": "guid"
           }
         ]
@@ -3150,7 +2363,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"typeName\": \"zoe.oconnell\",\n  \"dbName\": \"zoe.oconnell\",\n  \"tableName\": \"zoe.oconnell\",\n  \"server\": \"ira7vz\",\n  \"limit\": 10,\n  \"offset\": 1\n}"
+                  "value": "{\n  \"typeName\": \"geraldine.schuster\",\n  \"dbName\": \"geraldine.schuster\",\n  \"tableName\": \"geraldine.schuster\",\n  \"server\": \"tgw252\",\n  \"limit\": 10,\n  \"offset\": 1\n}"
                 }
               }
             }
@@ -3167,7 +2380,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"kxe8ug\",\n  \"tips\": \"3wvvu1\",\n  \"data\": {\n    \"entities\": [\n      {\n        \"guid\": \"156\",\n        \"displayText\": \"te5pme\",\n        \"typeName\": \"zoe.oconnell\",\n        \"description\": \"5ge6s5\"\n      }\n    ],\n    \"columns\": [\n      {\n        \"owner\": \"mmf8z6\",\n        \"name\": \"zoe.oconnell\",\n        \"type\": \"zihncc\",\n        \"comment\": \"gm7dwe\"\n      }\n    ],\n    \"tables\": [\n      {\n        \"guid\": \"156\",\n        \"typeName\": \"zoe.oconnell\",\n        \"entityStatus\": \"lld5sp\",\n        \"displayText\": \"5mkh7i\",\n        \"relationshipType\": \"gjymlh\",\n        \"relationshipGuid\": \"156\",\n        \"relationshipStatus\": \"u1k0sv\",\n        \"comment\": \"7k7eg3\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"fms582\",\n  \"tips\": \"mtrlgj\",\n  \"data\": {\n    \"entities\": [\n      {\n        \"guid\": \"19\",\n        \"displayText\": \"rpm19t\",\n        \"typeName\": \"geraldine.schuster\",\n        \"description\": \"t5iha1\"\n      }\n    ],\n    \"columns\": [\n      {\n        \"owner\": \"jfccbz\",\n        \"name\": \"geraldine.schuster\",\n        \"type\": \"aq0c9l\",\n        \"comment\": \"q75o9h\"\n      }\n    ],\n    \"tables\": [\n      {\n        \"guid\": \"19\",\n        \"typeName\": \"geraldine.schuster\",\n        \"entityStatus\": \"zte20f\",\n        \"displayText\": \"1tc8na\",\n        \"relationshipType\": \"9rjpzu\",\n        \"relationshipGuid\": \"19\",\n        \"relationshipStatus\": \"q8lvoo\",\n        \"comment\": \"z0q1pb\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -3176,57 +2389,6 @@
         },
         "operationId": "mtdDetail",
         "parameters": []
-      }
-    },
-    "/detail/qname/{qualifiedName}/{typename}": {
-      "get": {
-        "summary": "根据guid获取元数据技术数据详情",
-        "deprecated": false,
-        "description": "根据guid获取元数据技术数据详情",
-        "tags": [
-          "MtdAtlasController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_detail_qname__qualifiedName___typename_Response"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"7pzwd4\",\n  \"tips\": \"s6xoqq\",\n  \"data\": {\n    \"typeName\": \"zoe.oconnell\",\n    \"attributes\": {\n      \"mapKey\": {}\n    },\n    \"guid\": \"156\",\n    \"homeId\": \"156\",\n    \"isProxy\": true,\n    \"isIncomplete\": true,\n    \"provenanceType\": 863,\n    \"status\": \"ACTIVE\",\n    \"createdBy\": \"3ovuje\",\n    \"updatedBy\": \"t6kftv\",\n    \"createTime\": \"2021-12-28 17:21:52\",\n    \"updateTime\": \"2021-12-28 17:21:52\",\n    \"version\": 880,\n    \"relationshipAttributes\": {\n      \"mapKey\": {}\n    },\n    \"classifications\": [\n      {\n        \"typeName\": \"zoe.oconnell\",\n        \"attributes\": {\n          \"mapKey\": {}\n        },\n        \"entityGuid\": \"156\",\n        \"entityStatus\": \"ACTIVE\",\n        \"propagate\": true,\n        \"validityPeriods\": [\n          {\n            \"startTime\": \"2021-12-28 15:00:02\",\n            \"endTime\": \"2021-12-28 15:00:02\",\n            \"timeZone\": \"jat52e\"\n          }\n        ],\n        \"removePropagationsOnEntityDelete\": true\n      }\n    ],\n    \"meanings\": [\n      {\n        \"termGuid\": \"156\",\n        \"relationGuid\": \"156\",\n        \"description\": \"a2spq7\",\n        \"displayText\": \"2ktucn\",\n        \"expression\": \"1yhl1s\",\n        \"createdBy\": \"r10ese\",\n        \"steward\": \"5exrbq\",\n        \"source\": \"byg3wo\",\n        \"confidence\": 892,\n        \"status\": \"DISCOVERED\"\n      }\n    ],\n    \"customAttributes\": {\n      \"mapKey\": \"orvld8\"\n    },\n    \"businessAttributes\": {\n      \"mapKey\": {}\n    },\n    \"labels\": [\n      \"66hady\"\n    ],\n    \"pendingTasks\": [\n      \"65x4w4\"\n    ]\n  }\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "getDetailByQName",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "元数据",
-            "required": true,
-            "example": "zoe.oconnell",
-            "name": "qualifiedName"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "类型名称",
-            "required": true,
-            "example": "zoe.oconnell",
-            "name": "typename"
-          }
-        ]
       }
     },
     "/labels/{id}": {
@@ -3246,7 +2408,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"name\": \"zoe.oconnell\",\n  \"description\": \"4cpzeu\"\n}"
+                  "value": "{\n  \"name\": \"geraldine.schuster\",\n  \"description\": \"qcp97r\"\n}"
                 }
               }
             }
@@ -3263,7 +2425,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"xuv4tb\",\n  \"tips\": \"r5qtrw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"mu5rpe\",\n  \"tips\": \"no7k3e\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3280,7 +2442,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "56",
+            "example": "494",
             "name": "id"
           }
         ]
@@ -3305,7 +2467,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"ktqeds\",\n  \"tips\": \"8nfw6x\",\n  \"data\": {\n    \"owner\": \"mbfbgs\",\n    \"typeName\": \"zoe.oconnell\",\n    \"displayName\": \"zoe.oconnell\",\n    \"comment\": \"62jbcf\",\n    \"qualifiedName\": \"zoe.oconnell\",\n    \"description\": \"xuj36s\",\n    \"dataType\": \"1qzft7\",\n    \"isPrimaryKey\": \"e7zhlp\",\n    \"defaultValue\": \"vccpuj\",\n    \"createTime\": \"2021-12-28 17:21:52\",\n    \"labels\": \"neyvh9\",\n    \"classification\": \"98ga17\",\n    \"table\": {\n      \"guid\": \"156\",\n      \"typeName\": \"zoe.oconnell\",\n      \"displayText\": \"xr4kld\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"lnvsbi\",\n  \"tips\": \"25gb71\",\n  \"data\": {\n    \"owner\": \"lyz2oc\",\n    \"typeName\": \"geraldine.schuster\",\n    \"displayName\": \"geraldine.schuster\",\n    \"comment\": \"j0geg4\",\n    \"qualifiedName\": \"geraldine.schuster\",\n    \"description\": \"pzwjax\",\n    \"dataType\": \"a3x2gh\",\n    \"isPrimaryKey\": \"5d2uzu\",\n    \"defaultValue\": \"z4vwo4\",\n    \"createTime\": \"2022-01-10 17:49:00\",\n    \"labels\": \"jit7qa\",\n    \"classification\": \"1ajzif\",\n    \"table\": {\n      \"guid\": \"19\",\n      \"typeName\": \"geraldine.schuster\",\n      \"displayText\": \"ty9hjg\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -3321,7 +2483,7 @@
             "in": "path",
             "description": "元数据唯一id",
             "required": true,
-            "example": "156",
+            "example": "19",
             "name": "guid"
           }
         ]
@@ -3346,7 +2508,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"2lj3mb\",\n  \"tips\": \"fm7t6b\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"j67ck4\",\n  \"tips\": \"h8wj91\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3362,7 +2524,7 @@
             "in": "path",
             "description": "id字符串",
             "required": true,
-            "example": "gf0du2",
+            "example": "pxax63",
             "name": "ids"
           }
         ]
@@ -3387,7 +2549,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"z24zzo\",\n  \"tips\": \"xf7pk7\",\n  \"data\": {\n    \"total\": 458,\n    \"pageNum\": 726,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"name\": \"zoe.oconnell\",\n        \"description\": \"d9ul49\",\n        \"id\": 611,\n        \"gmtCreate\": \"2021-12-28 17:21:52\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"57fexk\",\n  \"tips\": \"j1906o\",\n  \"data\": {\n    \"total\": 86,\n    \"pageNum\": 928,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"name\": \"geraldine.schuster\",\n        \"description\": \"8qt343\",\n        \"id\": 581,\n        \"gmtCreate\": \"2022-01-10 17:49:00\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -3403,7 +2565,7 @@
             "in": "query",
             "description": "开始时间",
             "required": false,
-            "example": "macu01",
+            "example": "x5ak4f",
             "name": "beginDay"
           },
           {
@@ -3413,7 +2575,7 @@
             "in": "query",
             "description": "结束时间",
             "required": false,
-            "example": "46zb03",
+            "example": "vis3ib",
             "name": "endDay"
           },
           {
@@ -3423,7 +2585,7 @@
             "in": "query",
             "description": "名称",
             "required": false,
-            "example": "zoe.oconnell",
+            "example": "geraldine.schuster",
             "name": "name"
           }
         ]
@@ -3448,7 +2610,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"cuxech\",\n  \"tips\": \"dzv0yi\",\n  \"data\": {\n    \"mapKey\": {\n      \"waring\": \"You may use java.util.Object for Map value; smart-doc can\u0027t be handle.\"\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"dhs5ex\",\n  \"tips\": \"t7h8sn\",\n  \"data\": {\n    \"mapKey\": {\n      \"waring\": \"You may use java.util.Object for Map value; smart-doc can\u0027t be handle.\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -3464,59 +2626,8 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "156",
+            "example": "19",
             "name": "guid"
-          }
-        ]
-      }
-    },
-    "/dbs/{typeName}/{attrValue}": {
-      "get": {
-        "summary": "根据数据库类型和属性获取数据库信息",
-        "deprecated": false,
-        "description": "根据数据库类型和属性获取数据库信息",
-        "tags": [
-          "MtdApiController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_dbs__typeName___attrValue_Response"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"xajeoe\",\n  \"tips\": \"7gvh32\",\n  \"data\": {\n    \"entities\": [\n      {\n        \"guid\": \"156\",\n        \"displayText\": \"xeu5q8\",\n        \"typeName\": \"zoe.oconnell\",\n        \"description\": \"mw6doi\"\n      }\n    ],\n    \"columns\": [\n      {\n        \"owner\": \"0m14yo\",\n        \"name\": \"zoe.oconnell\",\n        \"type\": \"nvwf42\",\n        \"comment\": \"xyp5zi\"\n      }\n    ],\n    \"tables\": [\n      {\n        \"guid\": \"156\",\n        \"typeName\": \"zoe.oconnell\",\n        \"entityStatus\": \"yiz0m9\",\n        \"displayText\": \"hu1bai\",\n        \"relationshipType\": \"57889m\",\n        \"relationshipGuid\": \"156\",\n        \"relationshipStatus\": \"0lrxsp\",\n        \"comment\": \"y53pcb\"\n      }\n    ]\n  }\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "getDbs",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "No comments found.",
-            "required": true,
-            "example": "zoe.oconnell",
-            "name": "typeName"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "No comments found.",
-            "required": true,
-            "example": "gxlknk",
-            "name": "attrValue"
           }
         ]
       }
@@ -3538,7 +2649,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"zoe.oconnell\",\n  \"server\": \"ozg4od\",\n  \"dbName\": \"zoe.oconnell\",\n  \"tableName\": \"zoe.oconnell\"\n}"
+                  "value": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"geraldine.schuster\",\n  \"server\": \"ymeyql\",\n  \"dbName\": \"geraldine.schuster\",\n  \"tableName\": \"geraldine.schuster\"\n}"
                 }
               }
             }
@@ -3555,7 +2666,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"zqfxjk\",\n  \"tips\": \"214ebl\",\n  \"data\": [\n    {\n      \"owner\": \"hstddq\",\n      \"name\": \"zoe.oconnell\",\n      \"type\": \"dam255\",\n      \"comment\": \"htjw44\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"rm5nrw\",\n  \"tips\": \"wib97e\",\n  \"data\": [\n    {\n      \"owner\": \"swph26\",\n      \"name\": \"geraldine.schuster\",\n      \"type\": \"whii8v\",\n      \"comment\": \"c45tv1\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -3585,7 +2696,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"gpkd6v\",\n  \"tips\": \"rh9hy5\",\n  \"data\": {\n    \"mapKey\": [\n      {\n        \"guid\": \"156\",\n        \"name\": \"zoe.oconnell\",\n        \"serviceType\": \"b9ikmb\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"qeb8mg\",\n  \"tips\": \"nrzifq\",\n  \"data\": {\n    \"mapKey\": [\n      {\n        \"guid\": \"19\",\n        \"name\": \"geraldine.schuster\",\n        \"serviceType\": \"6zah1v\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -3613,7 +2724,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"guids\": [\n    \"ulh4r8\"\n  ],\n  \"labels\": \"as43ce\"\n}"
+                  "value": "{\n  \"guids\": [\n    \"sgfdn1\"\n  ],\n  \"labels\": \"f6r86e\"\n}"
                 }
               }
             }
@@ -3630,7 +2741,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"iv6p5p\",\n  \"tips\": \"qgnt2h\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"ivvepg\",\n  \"tips\": \"v07bd3\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3660,7 +2771,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"y1cudl\",\n  \"tips\": \"urgao3\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"3vqgc9\",\n  \"tips\": \"yl6na6\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3676,7 +2787,7 @@
             "in": "path",
             "description": "id集合，String类型",
             "required": true,
-            "example": "9n7qpy",
+            "example": "nk5f7g",
             "name": "ids"
           }
         ]
@@ -3699,7 +2810,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"typeName\": \"zoe.oconnell\",\n  \"attrName\": \"zoe.oconnell\",\n  \"attrValue\": \"ardk5f\",\n  \"limit\": 10,\n  \"offset\": 1\n}"
+                  "value": "{\n  \"typeName\": \"geraldine.schuster\",\n  \"attrName\": \"geraldine.schuster\",\n  \"attrValue\": \"1xhuen\",\n  \"limit\": 10,\n  \"offset\": 1\n}"
                 }
               }
             }
@@ -3716,7 +2827,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"juhx1d\",\n  \"tips\": \"bkskzm\",\n  \"data\": [\n    {\n      \"guid\": \"156\",\n      \"displayText\": \"dfjvts\",\n      \"typeName\": \"zoe.oconnell\",\n      \"description\": \"8yai0p\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"u8217w\",\n  \"tips\": \"pnmmry\",\n  \"data\": [\n    {\n      \"guid\": \"19\",\n      \"displayText\": \"f3p9ao\",\n      \"typeName\": \"geraldine.schuster\",\n      \"description\": \"zueg7e\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -3744,7 +2855,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"name\": \"zoe.oconnell\",\n  \"description\": \"90hizv\"\n}"
+                  "value": "{\n  \"name\": \"geraldine.schuster\",\n  \"description\": \"p0kn03\"\n}"
                 }
               }
             }
@@ -3761,7 +2872,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"1kwg72\",\n  \"tips\": \"uxpq8k\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"fepq1t\",\n  \"tips\": \"i6exxh\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -3778,7 +2889,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "452",
+            "example": "171",
             "name": "id"
           }
         ]
@@ -3803,7 +2914,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"gpct32\",\n  \"tips\": \"oznch7\",\n  \"data\": {\n    \"guid\": \"156\",\n    \"labels\": \"sokofe\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"8jo2ne\",\n  \"tips\": \"wodyw3\",\n  \"data\": {\n    \"guid\": \"19\",\n    \"labels\": \"mjwgfg\"\n  }\n}"
                   }
                 }
               }
@@ -3819,7 +2930,7 @@
             "in": "path",
             "description": "元数据唯一标识",
             "required": true,
-            "example": "156",
+            "example": "19",
             "name": "guid"
           }
         ]
@@ -3842,7 +2953,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"zoe.oconnell\",\n  \"server\": \"mcg7pn\"\n}"
+                  "value": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"geraldine.schuster\",\n  \"server\": \"rohscu\"\n}"
                 }
               }
             }
@@ -3859,7 +2970,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"8udgpx\",\n  \"tips\": \"fepi3y\",\n  \"data\": [\n    {\n      \"guid\": \"156\",\n      \"displayText\": \"jg5mpg\",\n      \"typeName\": \"zoe.oconnell\",\n      \"description\": \"ttk6ry\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"fcksyx\",\n  \"tips\": \"zcf2va\",\n  \"data\": [\n    {\n      \"guid\": \"19\",\n      \"displayText\": \"240cwp\",\n      \"typeName\": \"geraldine.schuster\",\n      \"description\": \"qvuen9\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -3889,7 +3000,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"v80lm7\",\n  \"tips\": \"12rhs4\",\n  \"data\": {\n    \"total\": 330,\n    \"pageNum\": 853,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"name\": \"zoe.oconnell\",\n        \"description\": \"6rftk4\",\n        \"id\": 15,\n        \"gmtCreate\": \"2021-12-28 17:21:52\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"h4auu0\",\n  \"tips\": \"tzv4vu\",\n  \"data\": {\n    \"total\": 808,\n    \"pageNum\": 138,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"name\": \"geraldine.schuster\",\n        \"description\": \"vd3r9d\",\n        \"id\": 508,\n        \"gmtCreate\": \"2022-01-10 17:49:00\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -3905,7 +3016,7 @@
             "in": "query",
             "description": "开始时间",
             "required": false,
-            "example": "1eno09",
+            "example": "vqbdyv",
             "name": "beginDay"
           },
           {
@@ -3915,7 +3026,7 @@
             "in": "query",
             "description": "结束时间",
             "required": false,
-            "example": "p6qr3m",
+            "example": "g5ycyr",
             "name": "endDay"
           },
           {
@@ -3925,10 +3036,55 @@
             "in": "query",
             "description": "名称",
             "required": false,
-            "example": "zoe.oconnell",
+            "example": "geraldine.schuster",
             "name": "name"
           }
         ]
+      }
+    },
+    "/table/info/list": {
+      "post": {
+        "summary": "获取数据库下的表",
+        "deprecated": false,
+        "description": "获取数据库下的表",
+        "tags": [
+          "MtdAtlasController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_table_info_listRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"typeName\": \"geraldine.schuster\",\n  \"server\": \"8n7ym4\",\n  \"dbName\": \"geraldine.schuster\",\n  \"limit\": 10,\n  \"offset\": 1\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_table_info_listResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"8o2bmx\",\n  \"tips\": \"c59c8j\",\n  \"data\": [\n    {\n      \"owner\": \"xr5c3l\",\n      \"createTime\": \"2022-01-10 17:49:00\",\n      \"qualifiedName\": \"geraldine.schuster\",\n      \"name\": \"geraldine.schuster\",\n      \"description\": \"jkesok\",\n      \"comment\": \"s43rgl\",\n      \"guid\": \"19\",\n      \"typeName\": \"geraldine.schuster\",\n      \"labels\": \"fks9ay\",\n      \"classification\": \"vahtpz\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getTableList",
+        "parameters": []
       }
     },
     "/list": {
@@ -3948,7 +3104,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"query\": \"vc83ua\",\n  \"typeName\": \"zoe.oconnell\",\n  \"classification\": \"rkewep\",\n  \"limit\": 10,\n  \"offse\": 106\n}"
+                  "value": "{\n  \"query\": \"88kzi8\",\n  \"typeName\": \"geraldine.schuster\",\n  \"classification\": \"fhcxun\",\n  \"limit\": 10,\n  \"offse\": 94\n}"
                 }
               }
             }
@@ -3965,7 +3121,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"fqe8jt\",\n  \"tips\": \"o1gfqe\",\n  \"data\": [\n    {\n      \"guid\": \"156\",\n      \"typeName\": \"zoe.oconnell\",\n      \"displayName\": \"zoe.oconnell\",\n      \"qualifiedName\": \"zoe.oconnell\",\n      \"createTime\": \"2021-12-28 17:21:52\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"23zmx4\",\n  \"tips\": \"rglep3\",\n  \"data\": [\n    {\n      \"guid\": \"19\",\n      \"typeName\": \"geraldine.schuster\",\n      \"displayName\": \"geraldine.schuster\",\n      \"qualifiedName\": \"geraldine.schuster\",\n      \"createTime\": \"2022-01-10 17:49:00\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -3993,7 +3149,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"name\": \"zoe.oconnell\",\n  \"description\": \"7yvr0q\"\n}"
+                  "value": "{\n  \"name\": \"geraldine.schuster\",\n  \"description\": \"pf017i\"\n}"
                 }
               }
             }
@@ -4010,7 +3166,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"j8vpp3\",\n  \"tips\": \"fifw42\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"mvz1wu\",\n  \"tips\": \"ffqrzm\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4038,7 +3194,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"iyhl4m\",\n  \"tips\": \"9s0ob0\",\n  \"data\": [\n    {\n      \"name\": \"zoe.oconnell\",\n      \"description\": \"e7irh8\",\n      \"id\": 297,\n      \"gmtCreate\": \"2021-12-28 17:21:52\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"rqq2rm\",\n  \"tips\": \"jixm14\",\n  \"data\": [\n    {\n      \"name\": \"geraldine.schuster\",\n      \"description\": \"hnkd5l\",\n      \"id\": 883,\n      \"gmtCreate\": \"2022-01-10 17:49:00\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -4054,7 +3210,7 @@
             "in": "query",
             "description": "名称 label should contain alphanumeric characters, _ or -",
             "required": true,
-            "example": "zoe.oconnell",
+            "example": "geraldine.schuster",
             "name": "name"
           },
           {
@@ -4064,7 +3220,7 @@
             "in": "query",
             "description": "描述",
             "required": false,
-            "example": "5idnqx",
+            "example": "52odl9",
             "name": "description"
           }
         ]
@@ -4087,7 +3243,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"guid\": \"156\",\n  \"direction\": \"jrvh90\",\n  \"depth\": 206\n}"
+                  "value": "{\n  \"guid\": \"19\",\n  \"direction\": \"ccz9ko\",\n  \"depth\": 5\n}"
                 }
               }
             }
@@ -4104,7 +3260,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"s0lblk\",\n  \"tips\": \"5tclnc\",\n  \"data\": {\n    \"currentNode\": {\n      \"guid\": \"156\",\n      \"displayText\": \"28cyhu\",\n      \"typeName\": \"zoe.oconnell\",\n      \"status\": \"llaocl\",\n      \"labels\": [\n        \"yrtnbm\"\n      ],\n      \"incomplete\": true\n    },\n    \"nodes\": [\n      {\n        \"guid\": \"156\",\n        \"displayText\": \"asi70l\",\n        \"typeName\": \"zoe.oconnell\",\n        \"status\": \"6u3j1y\",\n        \"labels\": [\n          \"y2oavs\"\n        ],\n        \"incomplete\": true\n      }\n    ],\n    \"edges\": [\n      {\n        \"guid\": \"156\",\n        \"sourceId\": \"156\",\n        \"targetId\": \"156\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"h0mo52\",\n  \"tips\": \"h9gnqz\",\n  \"data\": {\n    \"currentNode\": {\n      \"guid\": \"19\",\n      \"displayText\": \"rysyn4\",\n      \"typeName\": \"geraldine.schuster\",\n      \"status\": \"517fhs\",\n      \"labels\": [\n        \"qi9uvr\"\n      ],\n      \"incomplete\": true\n    },\n    \"nodes\": [\n      {\n        \"guid\": \"19\",\n        \"displayText\": \"dcamrm\",\n        \"typeName\": \"geraldine.schuster\",\n        \"status\": \"kqmj45\",\n        \"labels\": [\n          \"6747f1\"\n        ],\n        \"incomplete\": true\n      }\n    ],\n    \"edges\": [\n      {\n        \"guid\": \"19\",\n        \"sourceId\": \"19\",\n        \"targetId\": \"19\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -4115,45 +3271,49 @@
         "parameters": []
       }
     },
-    "/detail/{guid}": {
-      "get": {
-        "summary": "根据guid获取数据库的技术元数据",
+    "/entity/exist/data": {
+      "post": {
+        "summary": "查询表中是否存在数据",
         "deprecated": false,
-        "description": "根据guid获取数据库的技术元数据",
+        "description": "查询表中是否存在数据",
         "tags": [
-          "MtdAtlasController"
+          "MtdApiController"
         ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_entity_exist_dataRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"typeName\": \"geraldine.schuster\",\n  \"dbName\": \"geraldine.schuster\",\n  \"tableName\": \"geraldine.schuster\",\n  \"server\": \"469lhh\",\n  \"limit\": 10,\n  \"offset\": 1\n}"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_detail__guid_Response"
+                  "$ref": "#/components/schemas/_entity_exist_dataResponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"h2gbct\",\n  \"tips\": \"63m56r\",\n  \"data\": {\n    \"owner\": \"n0qivf\",\n    \"typeName\": \"zoe.oconnell\",\n    \"tableRows\": \"x0xbbc\",\n    \"dataLength\": \"pwvmpi\",\n    \"indexLength\": \"usx6lt\",\n    \"comment\": \"wruh3a\",\n    \"qualifiedName\": \"zoe.oconnell\",\n    \"description\": \"09szze\",\n    \"dataType\": \"nxcq1u\",\n    \"isPrimaryKey\": \"n1etkm\",\n    \"defaultValue\": \"7lkvuf\",\n    \"labels\": \"bbx3uz\",\n    \"classification\": \"x8b0bq\",\n    \"createTime\": \"2021-12-28 17:21:52\",\n    \"db\": {\n      \"guid\": \"156\",\n      \"typeName\": \"zoe.oconnell\",\n      \"displayText\": \"fs6mxo\"\n    },\n    \"relationshipAttributes\": {\n      \"mapKey\": {}\n    }\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"2t486j\",\n  \"tips\": \"lvo6dt\",\n  \"data\": 630\n}"
                   }
                 }
               }
             }
           }
         },
-        "operationId": "getDetailByGuid",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "description": "元数据id",
-            "required": true,
-            "example": "156",
-            "name": "guid"
-          }
-        ]
+        "operationId": "getDataLength",
+        "parameters": []
       }
     },
     "/labels/bind/": {
@@ -4173,7 +3333,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"guid\": \"156\",\n  \"labels\": \"ipuvpv\"\n}"
+                  "value": "{\n  \"guid\": \"19\",\n  \"labels\": \"m182p0\"\n}"
                 }
               }
             }
@@ -4190,7 +3350,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"1wcz7s\",\n  \"tips\": \"airp2o\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"ermmsu\",\n  \"tips\": \"w2vzy8\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4216,7 +3376,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"guid\": \"156\",\n  \"labels\": \"gi3lu9\"\n}"
+                  "value": "{\n  \"guid\": \"19\",\n  \"labels\": \"axoe4k\"\n}"
                 }
               }
             }
@@ -4233,7 +3393,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"slx2w4\",\n  \"tips\": \"b8shqx\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"ssgkiw\",\n  \"tips\": \"1jhs2t\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4261,7 +3421,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"query\": \"3avekj\",\n  \"typeName\": \"zoe.oconnell\",\n  \"classification\": \"kc57h6\",\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeNameValue\": [\n    \"nl9z4u\"\n  ],\n  \"nameValue\": [\n    \"yr9c7c\"\n  ],\n  \"labelsValue\": [\n    \"zdq3p1\"\n  ]\n}"
+                  "value": "{\n  \"query\": \"8zf6cy\",\n  \"typeName\": \"geraldine.schuster\",\n  \"classification\": \"cytwp3\",\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeNameValue\": [\n    \"g4l1x9\"\n  ],\n  \"nameValue\": [\n    \"9t84o5\"\n  ],\n  \"labelsValue\": [\n    \"cac3yw\"\n  ]\n}"
                 }
               }
             }
@@ -4278,7 +3438,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"dnbpkq\",\n  \"tips\": \"eqa5rm\",\n  \"data\": [\n    {\n      \"guid\": \"156\",\n      \"typeName\": \"zoe.oconnell\",\n      \"displayName\": \"zoe.oconnell\",\n      \"qualifiedName\": \"zoe.oconnell\",\n      \"createTime\": \"2021-12-28 17:21:52\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"0c7prh\",\n  \"tips\": \"rsmals\",\n  \"data\": [\n    {\n      \"guid\": \"19\",\n      \"typeName\": \"geraldine.schuster\",\n      \"displayName\": \"geraldine.schuster\",\n      \"qualifiedName\": \"geraldine.schuster\",\n      \"createTime\": \"2022-01-10 17:49:00\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -4306,7 +3466,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"guid\": \"156\",\n  \"classify\": \"u2wbze\"\n}"
+                  "value": "{\n  \"guid\": \"19\",\n  \"classify\": \"a3fmkc\"\n}"
                 }
               }
             }
@@ -4323,7 +3483,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"89d9f8\",\n  \"tips\": \"5j8gfw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"1v9m9f\",\n  \"tips\": \"cxq34u\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4349,7 +3509,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"guid\": \"156\",\n  \"classify\": \"cs720s\"\n}"
+                  "value": "{\n  \"guid\": \"19\",\n  \"classify\": \"dcgvau\"\n}"
                 }
               }
             }
@@ -4366,7 +3526,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"29578\",\n  \"retMsg\": \"6w7tab\",\n  \"tips\": \"rkvrsw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"82344\",\n  \"retMsg\": \"afr93k\",\n  \"tips\": \"k667ey\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
