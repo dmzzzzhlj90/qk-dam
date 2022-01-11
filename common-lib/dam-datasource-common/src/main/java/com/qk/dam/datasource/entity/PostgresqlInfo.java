@@ -12,7 +12,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 public class PostgresqlInfo extends ConnectBasicInfo {
   /** 数据源类型 */
-  private final String type = ConnTypeEnum.POSTGRESQL.getName();
+//  private final String type = ConnTypeEnum.POSTGRESQL.getName();
 
   /** 连接驱动 */
   private String driverInfo;

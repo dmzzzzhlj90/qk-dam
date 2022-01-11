@@ -24,12 +24,12 @@ public class ConnectInfoConvertUtils {
         if (type.equalsIgnoreCase(ConnTypeEnum.HIVE.getName())) {
           return objectMapper.readValue(connectBasicInfoJson, HiveInfo.class);
         }
-        if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
-          return objectMapper.readValue(connectBasicInfoJson, OracleInfo.class);
-        }
-        if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
-          return objectMapper.readValue(connectBasicInfoJson, PostgresqlInfo.class);
-        }
+//        if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
+//          return objectMapper.readValue(connectBasicInfoJson, OracleInfo.class);
+//        }
+//        if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
+//          return objectMapper.readValue(connectBasicInfoJson, PostgresqlInfo.class);
+//        }
       }
     } catch (JsonProcessingException e) {
       e.printStackTrace();
