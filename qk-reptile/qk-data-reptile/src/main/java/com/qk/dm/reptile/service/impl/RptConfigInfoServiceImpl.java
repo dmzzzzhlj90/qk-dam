@@ -16,6 +16,7 @@ import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
+import com.qk.dm.reptile.utils.UserInfoUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -89,6 +90,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }
        if (!Objects.equals(rptBaseInfo.getStatus(), RptConstant.REPTILE)) {
           rptBaseInfo.setStatus(RptConstant.REPTILE);
+           rptBaseInfo.setConfigName(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
           rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
         }
     }

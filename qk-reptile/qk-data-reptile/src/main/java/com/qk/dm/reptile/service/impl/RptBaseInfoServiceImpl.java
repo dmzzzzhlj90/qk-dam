@@ -1,10 +1,13 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
+import com.nimbusds.jose.shaded.json.JSONArray;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
+import com.qk.dm.reptile.constant.RptRolesConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.QRptBaseInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
@@ -15,8 +18,13 @@ import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
+import com.qk.dm.reptile.utils.UserInfoUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -39,6 +47,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private final QRptBaseInfo qRptBaseInfo = QRptBaseInfo.rptBaseInfo;
     private final RptBaseInfoRepository rptBaseInfoRepository;
     private final RptConfigInfoService rptConfigInfoService;
+    private final JwtDecoder jwtDecoder;
 
     @PostConstruct
     public void initFactory() {
@@ -47,15 +56,18 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
     public RptBaseInfoServiceImpl(RptBaseInfoRepository rptBaseInfoRepository,
                                   EntityManager entityManager,
-                                  RptConfigInfoService rptConfigInfoService){
+                                  RptConfigInfoService rptConfigInfoService,
+                                  JwtDecoder jwtDecoder){
         this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.entityManager = entityManager;
         this.rptConfigInfoService = rptConfigInfoService;
+        this.jwtDecoder = jwtDecoder;
     }
 
     @Override
     public void insert(RptBaseInfoDTO rptBaseInfoDTO) {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
+        rptBaseInfo.setCreateUsername(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
         rptBaseInfoRepository.save(rptBaseInfo);
     }
 
@@ -101,10 +113,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
-    public PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO) {
+    public PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO, OAuth2AuthorizedClient authorizedClient) {
         Map<String, Object> map;
         try {
-            map = queryByParams(rptBaseInfoDTO);
+            map = queryByParams(rptBaseInfoDTO,authorizedClient);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException("查询失败!!!");
@@ -141,6 +153,22 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
     }
 
+
+    /**
+     * 判斷角色
+     * @param authorizedClient
+     * @return
+     */
+    private Boolean judgeRoles( OAuth2AuthorizedClient authorizedClient){
+        OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
+        JSONObject resource_access = (JSONObject) jwtDecoder.decode(accessToken.getTokenValue()).getClaims().get("resource_access");
+        JSONObject reptile = (JSONObject)resource_access.get(RptRolesConstant.REPTILE);
+        if(Objects.isNull(reptile)||Objects.isNull(reptile.get(RptRolesConstant.ROLES))){
+            return false;
+        }
+        JSONArray roles = (JSONArray)reptile.get(RptRolesConstant.ROLES);
+        return roles.contains(RptRolesConstant.DAM_ADMIN);
+    }
     /**
      * 将爬虫接口返回的jobid存入数据库中
      * @param rptBaseInfo
@@ -172,10 +200,15 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
        rptConfigInfoService.copyConfig(sourceId,targetId);
     }
 
-    private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO) {
+    private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        checkCondition(booleanBuilder, rptBaseInfoDTO);
+        checkCondition(booleanBuilder, rptBaseInfoDTO,authorizedClient);
         Map<String, Object> result = new HashMap<>();
+        if(Objects.isNull(UserInfoUtil.getUserName())){
+            result.put("list", Collections.emptyList());
+            result.put("total", 0);
+            return result;
+        }
         long count = jpaQueryFactory.select(qRptBaseInfo.count()).from(qRptBaseInfo).where(booleanBuilder).fetchOne();
         List<RptBaseInfo> mtdLabelsList = jpaQueryFactory
                         .select(qRptBaseInfo)
@@ -190,7 +223,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         return result;
     }
 
-    public void checkCondition(BooleanBuilder booleanBuilder, RptBaseInfoDTO rptBaseInfoDTO) {
+    public void checkCondition(BooleanBuilder booleanBuilder, RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {
+        if(!judgeRoles(authorizedClient)){
+           booleanBuilder.and(qRptBaseInfo.createUsername.contains(String.valueOf(UserInfoUtil.getUserName())));
+        }
         if (!StringUtils.isEmpty(rptBaseInfoDTO.getWebsiteName())) {
             booleanBuilder.and(qRptBaseInfo.websiteName.contains(rptBaseInfoDTO.getWebsiteName()));
         }
@@ -206,5 +242,6 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.nonNull(rptBaseInfoDTO.getStatus())){
             booleanBuilder.and(qRptBaseInfo.status.eq(rptBaseInfoDTO.getStatus()));
         }
+
     }
 }
