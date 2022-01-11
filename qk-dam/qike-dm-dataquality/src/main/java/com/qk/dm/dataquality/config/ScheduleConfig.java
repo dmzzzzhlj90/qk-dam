@@ -1,7 +1,7 @@
 package com.qk.dm.dataquality.config;
 
-import com.qk.dm.dataquality.handler.InstanceHandler;
-import com.qk.dm.dataquality.handler.TaskInstanceHandler;
+import com.qk.dm.dataquality.biz.InstanceBiz;
+import com.qk.dm.dataquality.biz.TaskInstanceBiz;
 import com.qk.dm.dataquality.service.DqcStatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -18,21 +18,21 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ScheduleConfig {
     private final DqcStatisticsService dqcStatisticsService;
-    private final InstanceHandler instanceHandler;
-    private final TaskInstanceHandler taskInstanceHandler;
+    private final InstanceBiz instanceBiz;
+    private final TaskInstanceBiz taskInstanceBiz;
 
-    public ScheduleConfig(DqcStatisticsService dqcStatisticsService, InstanceHandler instanceHandler, TaskInstanceHandler taskInstanceHandler) {
+    public ScheduleConfig(DqcStatisticsService dqcStatisticsService, InstanceBiz instanceBiz, TaskInstanceBiz taskInstanceBiz) {
         this.dqcStatisticsService = dqcStatisticsService;
-        this.instanceHandler = instanceHandler;
-        this.taskInstanceHandler = taskInstanceHandler;
+        this.instanceBiz = instanceBiz;
+        this.taskInstanceBiz = taskInstanceBiz;
     }
 
     @Scheduled(cron = "0 0/5 * * * ?")
     public void scheduleStatistics(){
         long startTime = System.currentTimeMillis();
         log.info("===== 定时开始执行,{} =====",startTime);
-        instanceHandler.getDolphinInstanceList();
-        taskInstanceHandler.getDolphinTaskInstanceList();
+        instanceBiz.getDolphinInstanceList();
+        taskInstanceBiz.getDolphinTaskInstanceList();
         dqcStatisticsService.summary();
         dqcStatisticsService.dimension();
         dqcStatisticsService.dir();

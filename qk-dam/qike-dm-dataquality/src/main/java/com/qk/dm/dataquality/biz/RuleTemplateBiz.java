@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.handler;
+package com.qk.dm.dataquality.biz;
 
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.statistics.RuleTemplateVO;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
  * @since 1.0.0
  */
 @Component
-public class RuleTemplateHandler {
+public class RuleTemplateBiz {
     private DqcRuleTemplateService dqcRuleTemplateService;
 
-    public RuleTemplateHandler(DqcRuleTemplateService dqcRuleTemplateService) {
+    public RuleTemplateBiz(DqcRuleTemplateService dqcRuleTemplateService) {
         this.dqcRuleTemplateService = dqcRuleTemplateService;
     }
 

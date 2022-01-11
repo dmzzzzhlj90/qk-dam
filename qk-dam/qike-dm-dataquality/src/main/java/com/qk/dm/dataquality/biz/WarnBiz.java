@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.handler;
+package com.qk.dm.dataquality.biz;
 
 import cn.hutool.core.date.DateUtil;
 import com.google.gson.reflect.TypeToken;
@@ -21,17 +21,17 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Component
-public class WarnHandler {
+public class WarnBiz {
 
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
-    private final RedisHandler redisHandler;
+    private final RedisBiz redisBiz;
     private final DqcSchedulerResultDataService dqcSchedulerResultDataService;
 
-    public WarnHandler(DqcSchedulerRulesService dqcSchedulerRulesService,
-                       RedisHandler redisHandler,
-                       DqcSchedulerResultDataService dqcSchedulerResultDataService) {
+    public WarnBiz(DqcSchedulerRulesService dqcSchedulerRulesService,
+                   RedisBiz redisBiz,
+                   DqcSchedulerResultDataService dqcSchedulerResultDataService) {
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
-        this.redisHandler = redisHandler;
+        this.redisBiz = redisBiz;
         this.dqcSchedulerResultDataService = dqcSchedulerResultDataService;
     }
 
@@ -40,7 +40,7 @@ public class WarnHandler {
      * @return
      */
     private List<DqcProcessInstanceVO> getDolphinInstanceList() {
-        return GsonUtil.fromJsonString(redisHandler.redisInstanceList(null, null), new TypeToken<List<DqcProcessInstanceVO>>() {}.getType());
+        return GsonUtil.fromJsonString(redisBiz.redisInstanceList(null, null), new TypeToken<List<DqcProcessInstanceVO>>() {}.getType());
     }
 
     /**

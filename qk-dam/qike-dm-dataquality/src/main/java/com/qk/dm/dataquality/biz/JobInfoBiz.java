@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.handler;
+package com.qk.dm.dataquality.biz;
 
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
  * @since 1.0.0
  */
 @Component
-public class JobInfoHandler {
+public class JobInfoBiz {
     private final DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService;
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
 
-    public JobInfoHandler(DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService, DqcSchedulerRulesService dqcSchedulerRulesService) {
+    public JobInfoBiz(DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService, DqcSchedulerRulesService dqcSchedulerRulesService) {
         this.dqcSchedulerBasicInfoService = dqcSchedulerBasicInfoService;
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
     }

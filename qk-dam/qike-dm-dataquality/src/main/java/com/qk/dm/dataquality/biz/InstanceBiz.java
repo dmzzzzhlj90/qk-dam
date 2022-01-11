@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.handler;
+package com.qk.dm.dataquality.biz;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
@@ -23,20 +23,20 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Component
-public class InstanceHandler {
+public class InstanceBiz {
     private final DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService;
     private final DqcRuleDirService dqcRuleDirService;
-    private final RedisHandler redisHandler;
-    private final WarnHandler warnHandler;
+    private final RedisBiz redisBiz;
+    private final WarnBiz warnBiz;
 
-    public InstanceHandler(DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService,
-                           DqcRuleDirService dqcRuleDirService,
-                           RedisHandler redisHandler,
-                           WarnHandler warnHandler) {
+    public InstanceBiz(DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService,
+                       DqcRuleDirService dqcRuleDirService,
+                       RedisBiz redisBiz,
+                       WarnBiz warnBiz) {
         this.dqcSchedulerBasicInfoService = dqcSchedulerBasicInfoService;
         this.dqcRuleDirService = dqcRuleDirService;
-        this.redisHandler = redisHandler;
-        this.warnHandler = warnHandler;
+        this.redisBiz = redisBiz;
+        this.warnBiz = warnBiz;
     }
 
     /**
@@ -45,7 +45,7 @@ public class InstanceHandler {
      * @return
      */
     public List<DqcProcessInstanceVO> getDolphinInstanceList() {
-        return GsonUtil.fromJsonString(redisHandler.redisInstanceList(null, null), new TypeToken<List<DqcProcessInstanceVO>>() {
+        return GsonUtil.fromJsonString(redisBiz.redisInstanceList(null, null), new TypeToken<List<DqcProcessInstanceVO>>() {
         }.getType());
     }
 
@@ -64,7 +64,7 @@ public class InstanceHandler {
                 .successCount(getInstanceGroupByStateType(dolphinInstanceList, InstanceStateTypeEnum.SUCCESS).size())
                 //获取失败列表
                 .failureCount(getInstanceGroupByStateType(dolphinInstanceList, InstanceStateTypeEnum.FAILURE).size())
-                .warnCount(warnHandler.warnResultList().size())
+                .warnCount(warnBiz.warnResultList().size())
                 .build();
     }
 
