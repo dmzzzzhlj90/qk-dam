@@ -7,10 +7,9 @@ import com.qk.dam.metedata.vo.MtdColumnSearchVO;
 import com.qk.dam.metedata.vo.MtdDbSearchVO;
 import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.metadata.service.MtdSearchService;
+import com.qk.dm.metadata.vo.MtdTableDetailVO;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -67,6 +66,13 @@ public class MtdSearchController {
     @PostMapping("/db/attr/list")
     public DefaultCommonResult<List<MtdApiDb>> getDataBaseListByAttr(@RequestBody @Validated MtdApiAttrParams mtdApiAttrParams){
         return DefaultCommonResult.success(ResultCodeEnum.OK,mtdSearchService.getDataBaseListByAttr(mtdApiAttrParams));
+    }
+
+    @GetMapping("/column/list/{guid}")
+    public DefaultCommonResult< List<MtdAttributes>> getColumnListByTableGuid(
+            @PathVariable("guid") String guid) {
+        List<MtdAttributes> mtdAttributesList = mtdSearchService.getColumnListByTableGuid(guid);
+        return DefaultCommonResult.success(ResultCodeEnum.OK, mtdAttributesList);
     }
 
 }

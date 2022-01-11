@@ -76,4 +76,13 @@ public interface MetaDataFeign {
    */
   @PostMapping("/entity/exist/data")
   DefaultCommonResult<Integer> getExistData(@RequestBody @Validated MtdApiParams mtdApiParams);
+
+  /**
+   * 根据表的guid获取表的字段信息
+   * @param guid
+   * @return
+   */
+  @GetMapping("/column/list/{guid}")
+  DefaultCommonResult< List<MtdAttributes>> getColumnListByTableGuid(@PathVariable("guid") String guid);
+
 }
