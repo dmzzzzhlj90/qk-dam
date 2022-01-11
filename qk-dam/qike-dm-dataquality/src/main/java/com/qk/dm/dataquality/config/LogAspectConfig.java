@@ -19,7 +19,7 @@ public class LogAspectConfig {
      * @return
      * @throws Throwable
      */
-    @Around("execution(* com.qk.dm.dataquality.vo.statistics.handler.*.*(..))")
+    @Around("execution(* com.qk.dm.dataquality.handler.*.*(..))")
     public Object recordTimeLog(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("===== 开始执行{}.{} =====",joinPoint.getTarget(),joinPoint.getSignature().getName());
         //开始时间

@@ -2,6 +2,7 @@ package com.qk.dm.dataquality.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.entity.DqcSchedulerResult;
+import com.qk.dm.dataquality.vo.DqcSchedulerResultPageVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,6 @@ public interface DqcSchedulerResultDataService {
     List<DqcSchedulerResult> getSchedulerResultList(Set<String> jobIds);
 
     List<DqcSchedulerResult> getSchedulerResultListByWarn();
+
+    PageResultVO<DqcSchedulerResultVO> searchResultPageList(DqcSchedulerResultPageVO schedulerResultDataParamsVO);
 }

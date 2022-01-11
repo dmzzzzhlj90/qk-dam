@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.vo.statistics.handler;
+package com.qk.dm.dataquality.handler;
 
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.vo.statistics.RuleTemplateVO;

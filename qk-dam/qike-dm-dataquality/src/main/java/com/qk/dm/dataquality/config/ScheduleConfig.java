@@ -1,8 +1,8 @@
 package com.qk.dm.dataquality.config;
 
+import com.qk.dm.dataquality.handler.InstanceHandler;
+import com.qk.dm.dataquality.handler.TaskInstanceHandler;
 import com.qk.dm.dataquality.service.DqcStatisticsService;
-import com.qk.dm.dataquality.vo.statistics.handler.InstanceHandler;
-import com.qk.dm.dataquality.vo.statistics.handler.TaskInstanceHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,12 +29,13 @@ public class ScheduleConfig {
 
     @Scheduled(cron = "0 0/5 * * * ?")
     public void scheduleStatistics(){
-        log.info("===== 定时开始执行 =====");
+        long startTime = System.currentTimeMillis();
+        log.info("===== 定时开始执行,{} =====",startTime);
         instanceHandler.getDolphinInstanceList();
         taskInstanceHandler.getDolphinTaskInstanceList();
         dqcStatisticsService.summary();
         dqcStatisticsService.dimension();
         dqcStatisticsService.dir();
-        log.info("===== 定时结束执行 =====");
+        log.info("===== 定时结束执行,{} =====",System.currentTimeMillis() - startTime);
     }
 }

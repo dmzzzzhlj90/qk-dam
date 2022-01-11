@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -72,5 +71,9 @@ public class DqcSchedulerResultVO {
      * 数据质量_调度结果集信息(列表)
      */
     private List<Map<String, Object>> resultDataList;
+
+    private String databaseName;
+    private List<String> tableList;
+    private List<String> fieldList;
 
 }
