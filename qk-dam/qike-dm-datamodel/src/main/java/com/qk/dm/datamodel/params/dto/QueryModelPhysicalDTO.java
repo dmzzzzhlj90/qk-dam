@@ -24,6 +24,6 @@ public class QueryModelPhysicalDTO implements Serializable {
   /**所属主题id*/
   private Long themeId;
   /**所属层级id*/
-  private Long modelID;
+  private Long modelId;
 
 }

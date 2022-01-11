@@ -35,4 +35,11 @@ public interface MtdSearchService {
      * @return
      */
     List<MtdApiDb> getDataBaseListByAttr(MtdApiAttrParams mtdApiAttrParams);
+
+    /**
+     * 根据表guid获取字段列表
+     * @param guid
+     * @return
+     */
+    List<MtdAttributes> getColumnListByTableGuid(String guid);
 }

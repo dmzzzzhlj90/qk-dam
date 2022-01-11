@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -33,9 +34,9 @@ public class ModelPhysicalTableDTO implements Serializable {
     private String tableName;
 
     /**
-     * 主题
+     * 主题名称
      */
-    @NotBlank(message = "主题")
+    @NotBlank(message = "主题名称")
     private String theme;
 
     /**
@@ -59,7 +60,7 @@ public class ModelPhysicalTableDTO implements Serializable {
     /**
      * 数据源连接id
      */
-    @NotBlank(message = "数据源连接id")
+    @NotNull(message = "数据源连接id")
     private Integer dataSourceId;
 
     /**
@@ -70,7 +71,7 @@ public class ModelPhysicalTableDTO implements Serializable {
     /**
      * 0草稿 1已发布2 已下线
      */
-    @NotBlank(message = "状态")
+    @NotNull(message = "状态")
     private Integer status;
 
 
@@ -91,7 +92,7 @@ public class ModelPhysicalTableDTO implements Serializable {
     /**
      * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
      */
-    private Integer tableType ;
+    private String tableType ;
 
     /**
      * 责任人（如果没有输入默认给创建人）
@@ -106,12 +107,12 @@ public class ModelPhysicalTableDTO implements Serializable {
     /**
      * 所属主题id
      */
-    @NotBlank(message = "所属主题id")
+    @NotNull(message = "所属主题id")
     private Long themeId;
     /**
      * 所属层级id
      */
-    @NotBlank(message = "所属层级id")
+    @NotNull(message = "所属层级id")
     private Long modelId;
 
     /**
@@ -122,6 +123,6 @@ public class ModelPhysicalTableDTO implements Serializable {
     /**
      * 数据库和系统定义的sql是否同步，0表示为同步，1表示不同步
      */
-    @NotBlank(message = "数据库和系统定义的sql是否同步")
+    @NotNull(message = "数据库和系统定义的sql是否同步")
     private Integer syncStatus;
 }
