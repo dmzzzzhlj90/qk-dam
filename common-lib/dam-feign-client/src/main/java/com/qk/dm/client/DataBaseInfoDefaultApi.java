@@ -212,4 +212,13 @@ public class DataBaseInfoDefaultApi {
     public List<DataStandardTreeVO> getTree() {
        return datastandardsFeign.searchList().getData();
     }
+
+    /**
+     * 根据表的guid获取表的字段信息
+     * @param guid
+     * @return
+     */
+    public List getColumnListByTableGuid(String guid){
+        return metaDataFeign.getColumnListByTableGuid(guid).getData();
+    }
 }

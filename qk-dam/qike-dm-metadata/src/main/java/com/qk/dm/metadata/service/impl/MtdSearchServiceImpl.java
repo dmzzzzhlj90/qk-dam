@@ -9,13 +9,16 @@ import com.qk.dam.metedata.vo.MtdColumnSearchVO;
 import com.qk.dam.metedata.vo.MtdDbSearchVO;
 import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.metadata.service.MtdSearchService;
+import com.qk.dm.metadata.vo.MtdClassifyAtlasVO;
+import com.qk.dm.metadata.vo.MtdLabelsAtlasVO;
 import org.apache.atlas.model.discovery.SearchParameters;
+import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -61,6 +64,23 @@ public class MtdSearchServiceImpl implements MtdSearchService {
                         SearchParameters.Operator.EQ),
                 mtdApiAttrParams.getLimit(), mtdApiAttrParams.getOffset());
         return buildMataDataList(atlasEntityHeaderList);
+    }
+
+    @Override
+    public List<MtdAttributes> getColumnListByTableGuid(String guid) {
+        AtlasEntity.AtlasEntityWithExtInfo atlasEntity = AtlasSearchUtil.getAtlasEntity(guid);
+        List<AtlasEntity> atlasEntityList = new ArrayList<>(atlasEntity.getReferredEntities().values());
+        return atlasEntityList.stream().map(e -> buildColumnDetail(e.getAttributes(),e.getTypeName()))
+                .collect(Collectors.toList());
+    }
+
+    private MtdAttributes buildColumnDetail(Map<String, Object> attr, String typeName){
+        return MtdAttributes.builder().dataType(getColumnDataType(attr.get(AtlasBaseProperty.DATA_TYPE),attr.get(AtlasBaseProperty.TYPE)))
+                .name(transformation(attr.get(AtlasBaseProperty.NAME)))
+                .owner(transformation(attr.get(AtlasBaseProperty.OWNER)))
+                .type(typeName)
+                .comment(transformation(attr.get(AtlasSearchProperty.AttributeName.DESCRIPTION)))
+                .build();
     }
 
     private List<MtdApiDb> buildMataDataList(List<AtlasEntityHeader> entities) {
