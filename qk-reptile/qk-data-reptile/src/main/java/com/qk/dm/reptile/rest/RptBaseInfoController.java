@@ -10,6 +10,8 @@ import com.qk.dm.reptile.params.dto.RptRunStatusDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,9 +76,9 @@ public class RptBaseInfoController {
      */
     @PostMapping("/waiting")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> waitingList(
-            @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
+            @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         rptBaseInfoDTO.setStatus(RptConstant.WAITING);
-        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
 
 
@@ -87,9 +89,9 @@ public class RptBaseInfoController {
      */
     @PostMapping("/reptile")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> reptileList(
-            @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
+            @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         rptBaseInfoDTO.setStatus(RptConstant.REPTILE);
-        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
 
     /**
@@ -99,9 +101,9 @@ public class RptBaseInfoController {
      */
     @PostMapping("/history")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> historyList(
-            @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
+            @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         rptBaseInfoDTO.setStatus(RptConstant.HISTORY);
-        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
     /**
      * 详情

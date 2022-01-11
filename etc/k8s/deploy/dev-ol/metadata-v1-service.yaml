@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: metadata
+  namespace: java-backend
+  labels:
+    app: metadata
+  annotations:
+    kubesphere.io/alias-name: 元数据后端服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8782
+      protocol: TCP
+      port: 8782
+      targetPort: 8782
+  selector:
+    app: metadata-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None

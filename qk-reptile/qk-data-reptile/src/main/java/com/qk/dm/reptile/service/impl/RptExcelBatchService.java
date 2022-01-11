@@ -4,6 +4,7 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
+import com.qk.dm.reptile.utils.UserInfoUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +39,8 @@ public class RptExcelBatchService {
     deal(prtBasicInfoList);
     for (RptBaseInfo rptBaseInfo : prtBasicInfoList) {
       //todo 加入操作人员id
+      //创建人名称
+      rptBaseInfo.setCreateUsername(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
       //状态
       rptBaseInfo.setStatus(RptConstant.WAITING);
       //运行状态

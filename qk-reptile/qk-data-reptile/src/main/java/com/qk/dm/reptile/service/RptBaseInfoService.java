@@ -3,6 +3,7 @@ package com.qk.dm.reptile.service;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 
 public interface RptBaseInfoService {
 
@@ -16,7 +17,7 @@ public interface RptBaseInfoService {
 
     void delete(String ids);
 
-    PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO);
+    PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO, OAuth2AuthorizedClient authorizedClient);
 
     void updateStatus(Long id,Integer status);
 
