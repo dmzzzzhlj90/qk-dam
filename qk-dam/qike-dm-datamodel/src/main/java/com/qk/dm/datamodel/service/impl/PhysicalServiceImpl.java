@@ -680,7 +680,7 @@ public class PhysicalServiceImpl implements PhysicalService {
       //赋值字段名称
       modelPhysicalColumnDTO.setColumnName(column.getName());
       //赋值字段类型
-      modelPhysicalColumnDTO.setColumnType(column.getType());
+      modelPhysicalColumnDTO.setColumnType(column.getDataType());
       //赋值字段描述
       modelPhysicalColumnDTO.setDescription(column.getComment());
       //todo 目前是否分区、是否是主键、是否为空都默认给否
@@ -730,7 +730,7 @@ public class PhysicalServiceImpl implements PhysicalService {
       //赋值字段名称
       modelPhysicalColumnDTO.setColumnName(column.getName());
       //赋值字段类型
-      modelPhysicalColumnDTO.setColumnType(column.getType());
+      modelPhysicalColumnDTO.setColumnType(column.getDataType());
       //赋值字段描述
       modelPhysicalColumnDTO.setDescription(column.getComment());
       //todo 目前是否分区、是否是主键、是否为空都默认给否

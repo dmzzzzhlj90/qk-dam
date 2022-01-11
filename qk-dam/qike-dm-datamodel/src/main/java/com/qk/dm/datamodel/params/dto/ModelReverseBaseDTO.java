@@ -52,35 +52,16 @@ public class ModelReverseBaseDTO {
   private Integer dataSourceId;
 
   /**
-   * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
-   */
-  private String tableType ;
-
-  /**
-   * 责任人（如果没有输入默认给创建人）
-   */
-  private String responsibleBy;
-
-  /**
-   * HIVE类型表需要选择数据格式
-   */
-  private String dataFormat;
-
-  /**
    * 所属主题id
    */
   @NotNull(message = "所属主题id")
   private Long themeId;
+
   /**
    * 所属层级id
    */
   @NotNull(message = "所属层级id")
   private Long modelId;
-
-  /**
-   * HIVE类型表需要给ftfs路径
-   */
-  private String hftsRoute;
 
   /**
    * 更新已有表（0表示更新，1表示不更新）
