@@ -100,7 +100,7 @@ public class ModelPhysicalTableVO implements Serializable {
     /**
      * 所属层级id
      */
-    private Long modelID;
+    private Long modelId;
 
     /**
      * HIVE类型表需要给ftfs路径
