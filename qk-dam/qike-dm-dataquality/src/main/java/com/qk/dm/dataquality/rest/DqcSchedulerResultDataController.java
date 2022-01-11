@@ -4,6 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.service.DqcSchedulerResultDataService;
+import com.qk.dm.dataquality.vo.DqcSchedulerResultPageVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -53,4 +54,14 @@ public class DqcSchedulerResultDataController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.getWarnResultInfo(ruleId));
     }
 
+    /**
+     * 根据分类目录获取告警结果
+     * @param schedulerResultDataParamsVO
+     * @return
+     */
+    @PostMapping("/page/list/dir")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult<PageResultVO<DqcSchedulerResultVO>> searchResultPageList(@RequestBody DqcSchedulerResultPageVO schedulerResultDataParamsVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.searchResultPageList(schedulerResultDataParamsVO));
+    }
 }

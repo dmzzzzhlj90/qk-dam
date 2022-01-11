@@ -93,7 +93,7 @@ public class HiveMain {
      */
     static List<Entity> execHiveSql(String sql) throws Exception {
         List<Entity> entities = new ArrayList<>(100);
-        Statements stmt = CCJSqlParserUtil.parseStatements(sql.toString());
+        Statements stmt = CCJSqlParserUtil.parseStatements(sql);
         for (Statement st : stmt.getStatements()) {
             java.sql.Statement statement = null;
             try {

@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.vo.statistics.handler;
+package com.qk.dm.dataquality.biz;
 
 import cn.hutool.core.date.DateUtil;
 import com.qk.dam.commons.util.GsonUtil;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Component
-public class RedisHandler {
+public class RedisBiz {
     private static final int pageNo = 1;
     private static final int listPageSize = 10;
     private static final String warnResult = "True";
@@ -39,7 +39,7 @@ public class RedisHandler {
     private final DqcSchedulerResultDataService dqcSchedulerResultDataService;
     private final DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService;
 
-    public RedisHandler(DolphinScheduler dolphinScheduler, DqcSchedulerResultDataService dqcSchedulerResultDataService, DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService) {
+    public RedisBiz(DolphinScheduler dolphinScheduler, DqcSchedulerResultDataService dqcSchedulerResultDataService, DqcSchedulerBasicInfoService dqcSchedulerBasicInfoService) {
         this.dolphinScheduler = dolphinScheduler;
         this.dqcSchedulerResultDataService = dqcSchedulerResultDataService;
         this.dqcSchedulerBasicInfoService = dqcSchedulerBasicInfoService;

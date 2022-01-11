@@ -1,0 +1,24 @@
+version: 1.0.0
+name: pachong
+desc: 爬虫数据采集系统
+namespace: default
+roles:
+  DAM_ADMIN:
+    desc: 系统管理员
+    action:
+      - 'base:**'
+      - 'config:**'
+      - 'dict:**'
+      - 'dimension:**'
+      - 'dir:**'
+      - 'excel:**'
+      - 'selector:**'
+userRoles:
+  admin:
+    - DAM_ADMIN
+  dev:
+    - DATA_STEWARD
+groupRoles:
+  dataMe:
+    - DATA_SCIENTIST
+    - DATA_STEWARD

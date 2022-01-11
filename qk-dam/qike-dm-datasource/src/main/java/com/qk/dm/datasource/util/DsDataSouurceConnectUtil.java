@@ -38,14 +38,8 @@ public class DsDataSouurceConnectUtil {
       case DataSourcesUtil.MYSQL:
         connect = connectMySQL(dsDatasourceVO);
         break;
-      case DataSourcesUtil.ORACLE:
-        connect = connectOracle(dsDatasourceVO);
-        break;
       case DataSourcesUtil.HIVE:
         connect = connectHive(dsDatasourceVO);
-        break;
-      case DataSourcesUtil.POSTGRESQL:
-        connect = connectPostSql(dsDatasourceVO);
         break;
       default:
         throw new BizException("没有匹配的数据源参数类型");
@@ -53,28 +47,6 @@ public class DsDataSouurceConnectUtil {
     return connect;
   }
 
-  /**
-   * postgetsql做数据库连接测试
-   *
-   * @param dsDatasourceVO
-   * @return
-   */
-  private static Boolean connectPostSql(DsDatasourceVO dsDatasourceVO) {
-    ObjectMapper objectMapper = new ObjectMapper();
-    PostgresqlInfo postgetsqlInfo =
-        objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), PostgresqlInfo.class);
-    // 获取postgetsql数据驱动类
-    String driver=DataSourceEnum.fromValue(postgetsqlInfo.getType()).getDriver();
-    String url =
-        DataSourceEnum.fromValue(postgetsqlInfo.getType()).getCold()
-            + postgetsqlInfo.getServer()
-            + DataSourcesUtil.DOUHAO
-            + postgetsqlInfo.getPort(); // 127.0.0.1是本机地址，
-    String user = postgetsqlInfo.getUserName();
-    String password = postgetsqlInfo.getPassword();
-    Boolean connect = getConnect(url, user, password, driver);
-    return connect;
-  }
 
   /**
    * 连接数据库
@@ -130,27 +102,6 @@ public class DsDataSouurceConnectUtil {
     return connect;
   }
 
-  /**
-   * oracle做数据库连接测试
-   *
-   * @param dsDatasourceVO
-   * @return
-   */
-  private static Boolean connectOracle(DsDatasourceVO dsDatasourceVO) {
-    ObjectMapper objectMapper = new ObjectMapper();
-    OracleInfo oracleInfo =
-        objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), OracleInfo.class);
-    String driver=DataSourceEnum.fromValue(oracleInfo.getType()).getDriver(); // 获取oracle数据驱动类 // 获取oracle数据驱动类
-    String url =
-        DataSourceEnum.fromValue(oracleInfo.getType()).getCold()
-            + oracleInfo.getServer()
-            + DataSourcesUtil.DOUHAO
-            + oracleInfo.getPort(); // 127.0.0.1是本机地址，
-    String user = oracleInfo.getUserName();
-    String password = oracleInfo.getPassword();
-    Boolean connect = getConnect(url, user, password, driver);
-    return connect;
-  }
 
   /**
    * mysql做数据库连接测试

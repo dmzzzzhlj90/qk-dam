@@ -81,7 +81,7 @@ public class ModelPhysicalTableVO implements Serializable {
     /**
      * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
      */
-    private Integer tableType ;
+    private String tableType ;
 
     /**
      * 责任人（如果没有输入默认给创建人）

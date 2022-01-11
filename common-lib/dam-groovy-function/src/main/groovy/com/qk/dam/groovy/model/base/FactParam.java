@@ -2,6 +2,8 @@ package com.qk.dam.groovy.model.base;
 
 import lombok.*;
 
+import java.util.List;
+
 /**
  * 事实条件函数
  *
@@ -12,9 +14,9 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FactField {
-    private String field;
-    private String fieldName;
+public class FactParam {
+    private List<String> params;
+    private String description;
     private String type;
     private Object defaultVal;
 }

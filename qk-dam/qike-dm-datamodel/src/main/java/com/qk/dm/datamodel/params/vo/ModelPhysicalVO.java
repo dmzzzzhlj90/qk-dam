@@ -21,13 +21,13 @@ public class ModelPhysicalVO {
   /**
    * 基础信息
    */
-  private ModelPhysicalTableVO modelPhysicalTableVO;
+  private ModelPhysicalTableVO modelPhysicalTableDTO;
   /**
    * 字段信息
    */
-  private List<ModelPhysicalColumnVO> modelPhysicalColumnVOList;
+  private List<ModelPhysicalColumnVO> modelColumnDtoList;
   /**
    * 关系信息
    */
-  private List<ModelPhysicalRelationVO> modelPhysicalRelationVOList;
+  private List<ModelPhysicalRelationVO> modelRelationDtoList;
 }

@@ -208,16 +208,16 @@ public class DsDirServiceImpl implements DsDirService {
       connectBasicInfo =
           GsonUtil.fromJsonString(dataSourceValues, new TypeToken<HiveInfo>() {}.getType());
     }
-    if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
-      String dataSourceValues = dsDatasource.getDataSourceValues();
-      connectBasicInfo =
-          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
-    }
-    if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
-      String dataSourceValues = dsDatasource.getDataSourceValues();
-      connectBasicInfo =
-          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
-    }
+//    if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
+//      String dataSourceValues = dsDatasource.getDataSourceValues();
+//      connectBasicInfo =
+//          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
+//    }
+//    if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
+//      String dataSourceValues = dsDatasource.getDataSourceValues();
+//      connectBasicInfo =
+//          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
+//    }
     return connectBasicInfo;
   }
 

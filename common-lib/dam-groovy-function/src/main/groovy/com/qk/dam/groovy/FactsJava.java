@@ -1,13 +1,12 @@
 package com.qk.dam.groovy;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.qk.dam.groovy.facts.RuleFunctionGenerator;
 import com.qk.dam.groovy.model.FactModel;
 import com.qk.dam.groovy.model.RuleFunctionInfo;
-import com.qk.dam.groovy.model.base.FactField;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,19 +57,26 @@ public class FactsJava {
 
         //ruleFunctionInfo
         List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
-        RuleFunctionInfo ruleFunctionInfo = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
-        ruleFunctionInfo.setExpression("tradeDay('20220106')");
-        ruleFunctionInfos.add(ruleFunctionInfo);
+        List<String> params = new ArrayList<>();
+        params.add("date");
+        RuleFunctionInfo ruleFunctionInfo1 = new RuleFunctionInfo(params, "date", "String", LocalDateTime.now());
+        ruleFunctionInfo1.setExpression("format('date','yyyy/MM/dd')");
+        ruleFunctionInfos.add(ruleFunctionInfo1);
+
+//        RuleFunctionInfo ruleFunctionInfo2 = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
+//        ruleFunctionInfo2.setExpression("tradeDay('20220106')");
+//        ruleFunctionInfos.add(ruleFunctionInfo2);
+
         factModel.setRuleFunctionInfo(ruleFunctionInfos);
 
         //data
-        List<Object> uu = Lists.newArrayList();
-        for (int i = 0; i < 1; i++) {
-            Map<String, Object> dataMap = Maps.newHashMap();
-            dataMap.put("tradeDay", LocalDateTime.now());
-            uu.add(dataMap);
-        }
-        factModel.setData(uu);
+//        List<Object> uu = Lists.newArrayList();
+//        for (int i = 0; i < 1; i++) {
+//            Map<String, Object> dataMap = Maps.newHashMap();
+//            dataMap.put("tradeDay", LocalDateTime.now());
+//            uu.add(dataMap);
+//        }
+//        factModel.setData(uu);
 
         for (int i = 0; i < 1; i++) {
             RuleFunctionGenerator generater = new RuleFunctionGenerator(factModel);
@@ -81,4 +87,5 @@ public class FactsJava {
             System.out.println(cc);
         }
     }
+
 }

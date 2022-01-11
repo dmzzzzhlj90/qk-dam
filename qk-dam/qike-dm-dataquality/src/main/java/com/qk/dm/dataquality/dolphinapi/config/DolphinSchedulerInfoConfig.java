@@ -85,6 +85,11 @@ public class DolphinSchedulerInfoConfig {
     private String hiveExecuteCommand;
 
     /**
+     * es脚本执行命令
+     */
+    private String esExecuteCommand;
+
+    /**
      * 任务节点类型
      */
     private String typeShell;

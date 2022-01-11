@@ -182,9 +182,9 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public void delete(Long projectCode, Long processDefinitionCode) {
+    public void delete(Long processDefinitionCode,Long projectCode) {
         try {
-            defaultApi.deleteProcessDefinitionByCodeUsingDELETE(Integer.parseInt(String.valueOf(projectCode)), processDefinitionCode);
+            defaultApi.deleteProcessDefinitionByCodeUsingDELETE(processDefinitionCode.intValue(),projectCode);
         } catch (Exception e) {
             e.printStackTrace();
         }

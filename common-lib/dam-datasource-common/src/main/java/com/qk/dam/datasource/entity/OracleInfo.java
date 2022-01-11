@@ -12,7 +12,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 public class OracleInfo extends ConnectBasicInfo {
   /** 数据源类型 */
-  private final String type = ConnTypeEnum.ORACLE.getName();
+//  private final String type = ConnTypeEnum.ORACLE.getName();
 
   /** 连接驱动 */
   private String driverInfo;

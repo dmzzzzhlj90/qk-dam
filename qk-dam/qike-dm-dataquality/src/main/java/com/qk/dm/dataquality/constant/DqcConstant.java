@@ -138,10 +138,11 @@ public class DqcConstant {
     }
 
     public static List<String> jsonStrToList(String jsonStr) {
-        if (!ObjectUtils.isEmpty(jsonStr)) {
-            return GsonUtil.fromJsonString(jsonStr, new TypeToken<List<String>>() {}.getType());
+        List<String> list = new ArrayList<>();
+        if (!"null".equals(jsonStr) && !ObjectUtils.isEmpty(jsonStr)) {
+            list = GsonUtil.fromJsonString(jsonStr, new TypeToken<List<String>>() {}.getType());
         }
-        return null;
+        return list;
     }
 
     public static void main(String[] args) {

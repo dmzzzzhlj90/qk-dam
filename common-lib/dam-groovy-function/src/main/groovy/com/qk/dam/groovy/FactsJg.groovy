@@ -4,7 +4,7 @@ import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import com.qk.dam.groovy.facts.RuleFunctionGenerator
 import com.qk.dam.groovy.model.FactModel
-import com.qk.dam.groovy.model.base.FactField
+import com.qk.dam.groovy.model.base.FactParam
 
 import java.time.LocalDateTime
 
@@ -41,8 +41,8 @@ class FactsJg {
         FactModel factModel = new FactModel()
 
         //factField
-        List<FactField> factFields = Lists.newArrayList()
-        def factField = new FactField()
+        List<FactParam> factFields = Lists.newArrayList()
+        def factField = new FactParam()
         factField.field
 
         //ruleFunctionInfo

@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.vo.statistics.handler;
+package com.qk.dm.dataquality.biz;
 
 import cn.hutool.core.date.DateUtil;
 import com.google.gson.reflect.TypeToken;
@@ -25,20 +25,20 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Component
-public class TaskInstanceHandler {
+public class TaskInstanceBiz {
     private final DqcSchedulerRulesService dqcSchedulerRulesService;
     private final DqcRuleTemplateService dqcRuleTemplateService;
-    private final RedisHandler redisHandler;
-    private final WarnHandler warnHandler;
+    private final RedisBiz redisBiz;
+    private final WarnBiz warnBiz;
 
-    public TaskInstanceHandler(DqcSchedulerRulesService dqcSchedulerRulesService,
-                               DqcRuleTemplateService dqcRuleTemplateService,
-                               RedisHandler redisHandler,
-                               WarnHandler warnHandler) {
+    public TaskInstanceBiz(DqcSchedulerRulesService dqcSchedulerRulesService,
+                           DqcRuleTemplateService dqcRuleTemplateService,
+                           RedisBiz redisBiz,
+                           WarnBiz warnBiz) {
         this.dqcSchedulerRulesService = dqcSchedulerRulesService;
         this.dqcRuleTemplateService = dqcRuleTemplateService;
-        this.redisHandler = redisHandler;
-        this.warnHandler = warnHandler;
+        this.redisBiz = redisBiz;
+        this.warnBiz = warnBiz;
     }
 
     /**
@@ -46,7 +46,7 @@ public class TaskInstanceHandler {
      * @return
      */
     public List<TaskInstanceVO> getDolphinTaskInstanceList() {
-        return GsonUtil.fromJsonString(redisHandler.redisTaskInstanceList(null, null), new TypeToken<List<TaskInstanceVO>>() {}.getType());
+        return GsonUtil.fromJsonString(redisBiz.redisTaskInstanceList(null, null), new TypeToken<List<TaskInstanceVO>>() {}.getType());
     }
 
     /************************数据总揽*****************************/
@@ -116,7 +116,7 @@ public class TaskInstanceHandler {
     }
 
     private Map<Long, Long> getTaskCodeCountMap(Date date){
-        return warnHandler.warnResultList(date)
+        return warnBiz.warnResultList(date)
                 .stream()
                 .collect(Collectors.groupingBy(DqcSchedulerResult::getTaskCode, Collectors.counting()));
     }

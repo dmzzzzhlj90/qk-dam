@@ -2,8 +2,10 @@ package com.qk.dam.metedata.util;
 
 import com.qk.dam.metedata.config.AtlasConfig;
 import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
+import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 
 import java.util.ArrayList;
@@ -121,6 +123,15 @@ public class AtlasSearchUtil {
     }
   }
 
+  public static AtlasEntity.AtlasEntityWithExtInfo getAtlasEntity(String guid){
+
+    try {
+       return  atlasClientV2.getEntityByGuid(guid, true, false);
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+    return new AtlasEntity.AtlasEntityWithExtInfo();
+  }
   /**
    * atlas根据属性查询（分页）
    * @param typeName

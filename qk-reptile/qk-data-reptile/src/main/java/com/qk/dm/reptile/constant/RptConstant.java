@@ -43,4 +43,18 @@ public class RptConstant {
      */
     public static final Integer OFF_STARTED = 1;
 
+    /**
+     * 导入文件名称包含内同
+     */
+    public static  final String EXCEL_NAME="待配列基本信息";
+    /**
+     * 文件上传限制大小
+     */
+    public final static Integer FILE_SIZE = 10;
+
+    /**
+     * 文件上传限制单位（B,K,M,G）
+     */
+    public final static String FILE_UNIT = "M";
+
 }
