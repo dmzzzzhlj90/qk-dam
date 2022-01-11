@@ -173,7 +173,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
     private void ruleTypeFieldSql(DqcSchedulerRulesVO dqcSchedulerRulesVO, StringBuilder sqlBuffer, String tempSql) {
         //表信息
         List<String> tableList = dqcSchedulerRulesVO.getTableList();
-        if (tableList != null) {
+        if (tableList != null && tableList.size() > 0) {
             String tableName = tableList.get(0);
             //字段信息
             List<String> fieldList = dqcSchedulerRulesVO.getFieldList();
@@ -277,9 +277,9 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         return functionNameList;
     }
 
-//    /**
-//     * 执行Groovy函数
-//     */
+    /**
+     * 执行Groovy函数
+     */
 //    private Map<String, Object> executeGroovyFunction(Map<String, RuleFunctionInfo> existFunctionMap) {
 //        FactModel model = new FactModel();
 //        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();

@@ -28,7 +28,7 @@ public class RuleFunctionGenerator {
                 .initHandler(handlers -> {
                     RuleFun ruleFun = new RuleFun();
                     handlers.add(new RuleFunctionHandler(
-                            factModel.getRuleFunctionInfo().stream().collect(Collectors.toMap(RuleFunctionInfo::getField, v -> v, (o, n) -> n, HashMap::new)),
+                            factModel.getRuleFunctionInfo().stream().collect(Collectors.toMap(RuleFunctionInfo::getDescription, v -> v, (o, n) -> n, HashMap::new)),
                             ruleFun.getRuleFunction()));
                 });
     }
@@ -39,7 +39,7 @@ public class RuleFunctionGenerator {
         List<RuleFunctionInfo> ruleFunctionInfos = factModel.getRuleFunctionInfo();
         for (RuleFunctionInfo ruleFunctionInfo : ruleFunctionInfos) {
             Map<String, Object> sourceDataMap = new HashMap<>(16);
-            sourceDataMap.put(ruleFunctionInfo.getField(),ruleFunctionInfo.getDefaultVal());
+            sourceDataMap.put(ruleFunctionInfo.getDescription(),ruleFunctionInfo.getDefaultVal());
             sourceDataList.add(sourceDataMap);
         }
         return sourceDataList;

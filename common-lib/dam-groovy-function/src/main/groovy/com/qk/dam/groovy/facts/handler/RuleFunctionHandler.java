@@ -34,7 +34,9 @@ public class RuleFunctionHandler extends AbstractHandler {
         for (String key : ruleFunctionMap.keySet()) {
             RuleFunctionInfo ruleFunctionInfo = ruleFunctionMap.get(key);
             Map<String, Object> sm = Maps.newHashMap();
-            sm.put(ruleFunctionInfo.getField(),ruleFunctionInfo.getDefaultVal());
+            //todo 多个参数
+//            sm.put(ruleFunctionInfo.getField(),ruleFunctionInfo.getDefaultVal());
+
             result.put(key, getExpressCall().apply(sm,ruleFunctionInfo));
         }
         super.result = result;

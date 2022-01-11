@@ -1,6 +1,5 @@
 package com.qk.dam.groovy.model;
 
-import com.qk.dam.groovy.model.base.FactField;
 import lombok.Data;
 
 import java.util.List;
