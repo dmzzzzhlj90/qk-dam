@@ -28,7 +28,7 @@ public class RuleFunctionGenerator {
                 .initHandler(handlers -> {
                     RuleFun ruleFun = new RuleFun();
                     handlers.add(new RuleFunctionHandler(
-                            factModel.getRuleFunctionInfo().stream().collect(Collectors.toMap(RuleFunctionInfo::getDescription, v -> v, (o, n) -> n, HashMap::new)),
+                            factModel.getRuleFunctionInfo().stream().collect(Collectors.toMap(RuleFunctionInfo::getFunctionName, v -> v, (o, n) -> n, HashMap::new)),
                             ruleFun.getRuleFunction()));
                 });
     }

@@ -16,6 +16,8 @@ dependencies {
     compile group: 'org.projectlombok', name: 'lombok'
     implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
     implementation 'org.codehaus.groovy:groovy-all:3.0.5'
+    implementation group: 'org.codehaus.groovy', name: 'groovy-dateutil', version: '3.0.5'
+
 
     annotationProcessor 'org.projectlombok:lombok'
 }
