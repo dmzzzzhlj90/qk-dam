@@ -1,13 +1,38 @@
 server:
-  port: 8881
+  port: 8885
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
   messages:
     basename: i18n/messages
   mvc:
     message-codes-resolver-format: postfix_error_code
-    servlet:
-      path: /rpt
   main:
     allow-bean-definition-overriding: true
   jpa:
     show-sql: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://172.20.0.9:8080/auth/realms/pachong
+      client:
+        provider:
+          reptile:
+            issuer-uri: http://172.20.0.9:8080/auth/realms/pachong
+        registration:
+          reptile:
+            client-id: reptile
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://10.31.0.66:8885/login/oauth2/code/{registrationId}"
+            scope:
+              - openid
+              - roles
+              - profile
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG

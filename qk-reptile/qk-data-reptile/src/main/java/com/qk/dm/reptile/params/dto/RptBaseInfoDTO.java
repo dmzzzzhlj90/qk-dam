@@ -81,7 +81,6 @@ public class RptBaseInfoDTO {
   /**
    * 创建人姓名
    */
-  @NotBlank(message = "添加人不能为空")
   private String createUsername;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
