@@ -57,6 +57,18 @@ public class ProcessDefinitionApiController {
                 processDefinitionApiService.queryProcessDefinitionInfo(projectCode, searchVal, jobId));
     }
 
+    /**
+     * 删除规则调度_基础信息
+     *
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("/definition/info")
+    public DefaultCommonResult deleteProcessDefinitionInfo(@RequestParam("processDefinitionCode") Long processDefinitionCode,
+                                                           @RequestParam("projectCode") Long projectCode) {
+        processDefinitionApiService.delete(processDefinitionCode, projectCode);
+        return DefaultCommonResult.success();
+    }
+
     @PutMapping("/release")
     public DefaultCommonResult release(Long processDefinitionId, String releaseState) {
         processDefinitionApiService.release(processDefinitionId, releaseState);

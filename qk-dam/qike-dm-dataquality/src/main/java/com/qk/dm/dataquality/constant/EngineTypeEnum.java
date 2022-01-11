@@ -16,7 +16,8 @@ import java.util.Map;
 public enum EngineTypeEnum {
     MYSQL( "MYSQL", DbType.mysql),
     HIVE( "HIVE", DbType.hive),
-    ORACLE( "ORACLE", DbType.oracle);
+    ORACLE( "ORACLE", DbType.oracle),
+    ELASTICSEARCH( "ELASTICSEARCH", DbType.elastic_search);
 
     private String code;
     private DbType dbType;

@@ -25,8 +25,8 @@ class RuleFun {
 //        computeField
 //    }
 
-    BiFunction ruleFunction = { source, allField ->
-        Script script = ObjectCache.getIfNull(allField.expression,{ -> factsScriptShell.parse(allField.expression) })
+    BiFunction ruleFunction = { source, entity ->
+        Script script = ObjectCache.getIfNull(entity.expression,{ -> factsScriptShell.parse(entity.expression) })
         source.forEach({k,v->script.setProperty(k,v)});
         script.setProperty("source",source);
         def computeField = script.run()

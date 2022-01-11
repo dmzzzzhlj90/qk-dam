@@ -23,15 +23,12 @@ public class RuleFunctionGenerator {
     private final RuleFunctionContext ruleFunctionContext = new RuleFunctionContext();
 
     public RuleFunctionGenerator(FactModel factModel) {
-        final List<Map<String, Object>> sourceDataList = getSourceDataList(factModel);
-
         ruleFunctionContext
                 .option()
                 .initHandler(handlers -> {
                     RuleFun ruleFun = new RuleFun();
                     handlers.add(new RuleFunctionHandler(
                             factModel.getRuleFunctionInfo().stream().collect(Collectors.toMap(RuleFunctionInfo::getField, v -> v, (o, n) -> n, HashMap::new)),
-                            sourceDataList,
                             ruleFun.getRuleFunction()));
                 });
     }
