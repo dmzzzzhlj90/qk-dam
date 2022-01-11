@@ -86,14 +86,20 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     @Override
     public void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
-
-        //todo null值
-        dqcSchedulerRules.setTables(GsonUtil.toJsonString(dqcSchedulerRulesVO.getTableList()));
-        dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
+        setMetaDataInfo(dqcSchedulerRulesVO, dqcSchedulerRules);
         // todo 创建人
         dqcSchedulerRules.setCreateUserid("admin");
         dqcSchedulerRules.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
         dqcSchedulerRulesRepository.save(dqcSchedulerRules);
+    }
+
+    private void setMetaDataInfo(DqcSchedulerRulesVO dqcSchedulerRulesVO, DqcSchedulerRules dqcSchedulerRules) {
+        if (dqcSchedulerRulesVO.getTableList() != null && dqcSchedulerRulesVO.getTableList().size() > 0) {
+            dqcSchedulerRules.setTables(GsonUtil.toJsonString(dqcSchedulerRulesVO.getTableList()));
+        }
+        if (dqcSchedulerRulesVO.getFieldList() != null && dqcSchedulerRulesVO.getFieldList().size() > 0) {
+            dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
+        }
     }
 
     @Override
@@ -133,8 +139,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public void update(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
 
-        dqcSchedulerRules.setTables(GsonUtil.toJsonString(dqcSchedulerRulesVO.getTableList()));
-        dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
+        setMetaDataInfo(dqcSchedulerRulesVO, dqcSchedulerRules);
         // todo 修改人
         dqcSchedulerRules.setUpdateUserid("admin");
         if (dqcSchedulerRules.getId() == null) {
