@@ -6,6 +6,11 @@ import com.qk.dam.jdbc.DbTypeEnum;
 import com.qk.dam.jdbc.MysqlRawScript;
 import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.Statements;
+import net.sf.jsqlparser.util.validation.Validation;
+import net.sf.jsqlparser.util.validation.feature.DatabaseType;
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
@@ -20,6 +25,7 @@ import org.elasticsearch.client.RestClient;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +48,7 @@ public class ElasticSearchMain {
      *
      * @param args 参数
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         log.info("开始查询");
         String jsonconfig = ttsql;
         MysqlRawScript mysqlRawScript = new Gson().fromJson(jsonconfig, MysqlRawScript.class);
@@ -51,16 +57,43 @@ public class ElasticSearchMain {
         String authBase64 = Base64.getEncoder().encodeToString((mysqlRawScript.getFrom_user() + ":" + mysqlRawScript.getFrom_password()).getBytes(StandardCharsets.UTF_8));
 
         String sqlRpcUrl = mysqlRawScript.getSql_rpc_url();
+
+        String script = null;
+        try {
+            script = generateSqlScript(sqlRpcUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("请求生产校验SQL错误:【{}】",e.getLocalizedMessage());
+            System.exit(-1);
+        }
         try (RestClient restClient = getRestClient(mysqlRawScript, authBase64)) {
-            // 开始执行es sql
-            Request rq = fromEsSql(test_sql);
-            Response response = restClient.performRequest(rq);
-            String responseBody = EntityUtils.toString(response.getEntity());
-            String rstStr = p.matcher(responseBody).replaceAll("");
-            Object o = new Gson().fromJson(rstStr, Object.class);
 
-            overTableData(mysqlRawScript, resultTable, (Map<String, Object>) o);
+            Validation validation = new Validation(List.of(DatabaseType.ANSI_SQL), script);
+            if(validation.validate().size()>0){
+                // 当为sql api
+                Statements stmt = CCJSqlParserUtil.parseStatements(script);
+                for (Statement st : stmt.getStatements()) {
+                    Request rq = fromEsSql(st.toString());
+                    Response response = restClient.performRequest(rq);
+                    String responseBody = EntityUtils.toString(response.getEntity());
+                    String rstStr = p.matcher(responseBody).replaceAll("");
+                    Object o = new Gson().fromJson(rstStr, Object.class);
 
+                    overTableData(mysqlRawScript, resultTable, (Map<String, Object>) o);
+                }
+            }else {
+                //当为rest api
+                //==>/xx/xx/x
+                //{}
+                String[] lines = script.split("\\r?\\n");
+                String prePath = lines[0].trim();
+                Request request = fromEsDsl(script, prePath);
+                Response response = restClient.performRequest(request);
+                String responseBody = EntityUtils.toString(response.getEntity());
+                Object o = new Gson().fromJson(responseBody, Object.class);
+
+                overTableData(mysqlRawScript, resultTable, (Map<String, Object>) o);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,12 +166,10 @@ public class ElasticSearchMain {
         return rq;
     }
 
-    private static Request fromEsDsl(final String esScript) {
-        Request rq = new Request("GET", "/_search");
+    private static Request fromEsDsl(final String jsonScript,final String endpoint) {
+        Request rq = new Request("GET", endpoint);
         rq.addParameter("pretty", "true");
-        rq.setEntity(new NStringEntity(
-                "{\"query\":\""+esScript+"\"}",
-                ContentType.APPLICATION_JSON));
+        rq.setJsonEntity(jsonScript);
         return rq;
     }
 
