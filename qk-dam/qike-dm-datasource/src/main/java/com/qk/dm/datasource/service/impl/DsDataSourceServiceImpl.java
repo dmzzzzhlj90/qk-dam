@@ -228,16 +228,16 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
       connectBasicInfo =
           GsonUtil.fromJsonString(dataSourceValues, new TypeToken<HiveInfo>() {}.getType());
     }
-    if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
-      String dataSourceValues = dsDatasource.getDataSourceValues();
-      connectBasicInfo =
-          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
-    }
-    if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
-      String dataSourceValues = dsDatasource.getDataSourceValues();
-      connectBasicInfo =
-          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
-    }
+//    if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
+//      String dataSourceValues = dsDatasource.getDataSourceValues();
+//      connectBasicInfo =
+//          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
+//    }
+//    if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
+//      String dataSourceValues = dsDatasource.getDataSourceValues();
+//      connectBasicInfo =
+//          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
+//    }
     if (type.equalsIgnoreCase(ConnTypeEnum.ELASTICSEARCH.getName())) {
       String dataSourceValues = dsDatasource.getDataSourceValues();
       connectBasicInfo =
