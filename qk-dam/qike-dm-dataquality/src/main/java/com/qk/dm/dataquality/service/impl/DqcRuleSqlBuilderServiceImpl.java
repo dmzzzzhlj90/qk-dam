@@ -1,11 +1,6 @@
 package com.qk.dm.dataquality.service.impl;
 
-import com.google.common.collect.Lists;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.groovy.constant.FunctionConstant;
-import com.qk.dam.groovy.facts.RuleFunctionGenerator;
-import com.qk.dam.groovy.model.FactModel;
-import com.qk.dam.groovy.model.RuleFunctionInfo;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.constant.ScanTypeEnum;
@@ -13,7 +8,7 @@ import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
-import com.qk.dm.dataquality.groovy.RuleFunctionModelBuilder;
+import com.qk.dm.dataquality.groovy.RuleFunctionModelComponent;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerRulesMapper;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
@@ -22,9 +17,7 @@ import com.qk.dm.dataquality.utils.GenerateSqlUtil;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -39,16 +32,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
     private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
     private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
-    private final RuleFunctionModelBuilder ruleFunctionModelBuilder;
+    private final RuleFunctionModelComponent ruleFunctionModelComponent;
 
 
     @Autowired
     public DqcRuleSqlBuilderServiceImpl(DqcRuleTemplateRepository dqcRuleTemplateRepository,
                                         DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
-                                        RuleFunctionModelBuilder ruleFunctionModelBuilder) {
+                                        RuleFunctionModelComponent ruleFunctionModelComponent) {
         this.dqcRuleTemplateRepository = dqcRuleTemplateRepository;
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
-        this.ruleFunctionModelBuilder = ruleFunctionModelBuilder;
+        this.ruleFunctionModelComponent = ruleFunctionModelComponent;
     }
 
 
@@ -225,89 +218,9 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
             wherePartSqlBuilder.append(GenerateSqlUtil.WHERE_PART);
             wherePartSqlBuilder.append(GenerateSqlUtil.AND);
             //执行Groovy函数生成sql片段
-            wherePartSqlBuilder.append(scanSqlByGroovyFunction(scanSql));
+            wherePartSqlBuilder.append(ruleFunctionModelComponent.scanSqlByGroovyFunction(scanSql));
         }
-
         return wherePartSqlBuilder.toString();
-    }
-
-    /**
-     * 执行Groovy函数生成sql片段
-     *
-     * @param scanSql
-     * @return String
-     */
-    private String scanSqlByGroovyFunction(String scanSql) {
-        String realScanSql = "";
-        //是否存在函数
-        Map<String, RuleFunctionInfo> existFunctionMap = ruleFunctionModelBuilder.isExistFunction(scanSql);
-
-        if (existFunctionMap.size() > 0) {
-            //执行Groovy函数
-//            Map<String, Object> groovyFunctionMap = executeGroovyFunction(existFunctionMap);
-            //替换函数sql参数
-//            realScanSql = getRealScanSql(scanSql, realScanSql, functionNameList, groovyFunctionMap);
-        } else {
-            //存在特殊函数
-            realScanSql = scanSql;
-        }
-        return realScanSql;
-    }
-
-    /**
-     * 真正需要被执行的函数带有参数信息等
-     */
-    private List<String> getFunctionNameList(String scanSql, List<String> functions) {
-        List<String> functionNameList = new ArrayList<>();
-        //and
-        String trimStartScanSql = GenerateSqlUtil.trimStart(scanSql);
-        String[] andPartArr = trimStartScanSql.split(GenerateSqlUtil.AND);
-        //获取需要执行函数的sql片段
-        for (String sqlPart : andPartArr) {
-            String functionName = "";
-            for (String function : functions) {
-                if (sqlPart.contains(function)) {
-                    String[] sqlPartArr = sqlPart.split(function);
-                    functionName = function + sqlPartArr[sqlPartArr.length - 1];
-                }
-            }
-            //Groovy函数名称
-            functionNameList.add(functionName);
-        }
-        return functionNameList;
-    }
-
-    /**
-     * 执行Groovy函数
-     */
-//    private Map<String, Object> executeGroovyFunction(Map<String, RuleFunctionInfo> existFunctionMap) {
-//        FactModel model = new FactModel();
-//        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
-//
-//        for (String functionName : functionNameList) {
-//            RuleFunctionInfo ruleFunctionInfo = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
-//            ruleFunctionInfo.setExpression("tradeDay('20220106')");
-//            ruleFunctionInfos.add(ruleFunctionInfo);
-//        }
-//        model.setRuleFunctionInfo(ruleFunctionInfos);
-//        RuleFunctionGenerator ruleFunctionGenerator = new RuleFunctionGenerator(model);
-//        return ruleFunctionGenerator.generateFunction();
-//    }
-
-    /**
-     * 替换函数sql参数
-     */
-    private String getRealScanSql(String scanSql, String realScanSql, List<String> functionNameList, Map<String, Object> groovyFunctionMap) {
-        for (String functionName : functionNameList) {
-            Map<String, String> groovySqlResultMap = (Map<String, String>) groovyFunctionMap.get(FunctionConstant.RULE_FUNCTION_TYPE);
-            String groovySql = groovySqlResultMap.get(functionName);
-            if (!ObjectUtils.isEmpty(groovySql)) {
-                realScanSql = scanSql.replace(functionName, groovySql);
-            } else {
-                realScanSql = scanSql;
-            }
-        }
-        return realScanSql;
     }
 
 }

@@ -3,6 +3,7 @@ package com.qk.dam.groovy.model.base;
 import lombok.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 事实条件函数
@@ -15,10 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FactParam {
+    private String functionName;
     private List<String> params;
     private String description;
     private String type;
-    private Object defaultVal;
+    private Map<String, Object> defaultVal;
 }
 
 
