@@ -1,13 +1,12 @@
 package com.qk.dam.groovy;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.qk.dam.groovy.facts.RuleFunctionGenerator;
 import com.qk.dam.groovy.model.FactModel;
 import com.qk.dam.groovy.model.RuleFunctionInfo;
-import com.qk.dam.groovy.model.base.FactField;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,16 +57,16 @@ public class FactsJava {
 
         //ruleFunctionInfo
         List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
-
-        RuleFunctionInfo ruleFunctionInfo1 = new RuleFunctionInfo("date", "date", "String", LocalDateTime.now());
+        List<String> params = new ArrayList<>();
+        params.add("date");
+        RuleFunctionInfo ruleFunctionInfo1 = new RuleFunctionInfo(params, "date", "String", LocalDateTime.now());
         ruleFunctionInfo1.setExpression("format('date','yyyy/MM/dd')");
         ruleFunctionInfos.add(ruleFunctionInfo1);
 
-        RuleFunctionInfo ruleFunctionInfo2 = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
-        ruleFunctionInfo2.setExpression("tradeDay('20220106')");
+//        RuleFunctionInfo ruleFunctionInfo2 = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
+//        ruleFunctionInfo2.setExpression("tradeDay('20220106')");
+//        ruleFunctionInfos.add(ruleFunctionInfo2);
 
-
-        ruleFunctionInfos.add(ruleFunctionInfo2);
         factModel.setRuleFunctionInfo(ruleFunctionInfos);
 
         //data
@@ -88,4 +87,5 @@ public class FactsJava {
             System.out.println(cc);
         }
     }
+
 }

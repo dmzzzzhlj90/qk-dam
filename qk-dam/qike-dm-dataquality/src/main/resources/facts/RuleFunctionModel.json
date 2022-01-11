@@ -1,15 +1,19 @@
 {
   "format": {
     "type": "String",
-    "field": "format",
-    "fieldName": "格式化日期",
+    "params": [
+      "date"
+    ],
+    "description": "格式化日期",
     "defaultVal": "",
     "expression": "format('date','yyyyMMdd')"
   },
   "tradeDay": {
     "type": "String",
-    "field": "tradeDay",
-    "fieldName": "交易日",
+    "params": [
+      "tradeDay"
+    ],
+    "description": "交易日",
     "defaultVal": "",
     "expression": ""
   }

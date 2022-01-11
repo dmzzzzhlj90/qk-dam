@@ -1,9 +1,8 @@
 package com.qk.dam.groovy.model;
 
-import com.qk.dam.groovy.model.base.FactField;
-import lombok.*;
+import com.qk.dam.groovy.model.base.FactParam;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * 规则函数信息
@@ -12,10 +11,10 @@ import java.util.Map;
  * @date 2021/12/17
  * @since 1.0.0
  */
-public class RuleFunctionInfo extends FactField {
+public class RuleFunctionInfo extends FactParam {
     private String expression;
-    public RuleFunctionInfo(String field, String fieldName, String type, Object defaultVal) {
-        super(field, fieldName, type, defaultVal);
+    public RuleFunctionInfo(List<String> params, String description, String type, Object defaultVal) {
+        super(params, description, type, defaultVal);
     }
 
     public String getExpression() {
