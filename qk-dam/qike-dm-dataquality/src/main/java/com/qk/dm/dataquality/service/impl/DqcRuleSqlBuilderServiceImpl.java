@@ -1,7 +1,6 @@
 package com.qk.dm.dataquality.service.impl;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.groovy.constant.FunctionConstant;
 import com.qk.dam.groovy.facts.RuleFunctionGenerator;
@@ -14,6 +13,7 @@ import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
+import com.qk.dm.dataquality.groovy.RuleFunctionModelBuilder;
 import com.qk.dm.dataquality.mapstruct.mapper.DqcSchedulerRulesMapper;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
@@ -39,13 +39,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
     private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
     private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
+    private final RuleFunctionModelBuilder ruleFunctionModelBuilder;
 
 
     @Autowired
     public DqcRuleSqlBuilderServiceImpl(DqcRuleTemplateRepository dqcRuleTemplateRepository,
-                                        DqcSchedulerRulesRepository dqcSchedulerRulesRepository) {
+                                        DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
+                                        RuleFunctionModelBuilder ruleFunctionModelBuilder) {
         this.dqcRuleTemplateRepository = dqcRuleTemplateRepository;
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
+        this.ruleFunctionModelBuilder = ruleFunctionModelBuilder;
     }
 
 
@@ -236,14 +239,13 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
      */
     private String scanSqlByGroovyFunction(String scanSql) {
         String realScanSql = "";
-        List<String> functions = FunctionConstant.isExistFunction(scanSql);
-        if (functions.size() > 0) {
-//            //存在特殊函数
-//            //真正需要被执行的函数带有参数信息等
-//            List<String> functionNameList = getFunctionNameList(scanSql, functions);
-//            //执行Groovy函数
-//            Map<String, Object> groovyFunctionMap = executeGroovyFunction(functionNameList);
-//            //替换函数sql参数
+        //是否存在函数
+        Map<String, RuleFunctionInfo> existFunctionMap = ruleFunctionModelBuilder.isExistFunction(scanSql);
+
+        if (existFunctionMap.size() > 0) {
+            //执行Groovy函数
+//            Map<String, Object> groovyFunctionMap = executeGroovyFunction(existFunctionMap);
+            //替换函数sql参数
 //            realScanSql = getRealScanSql(scanSql, realScanSql, functionNameList, groovyFunctionMap);
         } else {
             //存在特殊函数
@@ -251,34 +253,34 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         }
         return realScanSql;
     }
-//
-//    /**
-//     * 真正需要被执行的函数带有参数信息等
-//     */
-//    private List<String> getFunctionNameList(String scanSql, List<String> functions) {
-//        List<String> functionNameList = new ArrayList<>();
-//        //and
-//        String trimStartScanSql = GenerateSqlUtil.trimStart(scanSql);
-//        String[] andPartArr = trimStartScanSql.split(GenerateSqlUtil.AND);
-//        //获取需要执行函数的sql片段
-//        for (String sqlPart : andPartArr) {
-//            String functionName = "";
-//            for (String function : functions) {
-//                if (sqlPart.contains(function)) {
-//                    String[] sqlPartArr = sqlPart.split(function);
-//                    functionName = function + sqlPartArr[sqlPartArr.length - 1];
-//                }
-//            }
-//            //Groovy函数名称
-//            functionNameList.add(functionName);
-//        }
-//        return functionNameList;
-//    }
-//
+
+    /**
+     * 真正需要被执行的函数带有参数信息等
+     */
+    private List<String> getFunctionNameList(String scanSql, List<String> functions) {
+        List<String> functionNameList = new ArrayList<>();
+        //and
+        String trimStartScanSql = GenerateSqlUtil.trimStart(scanSql);
+        String[] andPartArr = trimStartScanSql.split(GenerateSqlUtil.AND);
+        //获取需要执行函数的sql片段
+        for (String sqlPart : andPartArr) {
+            String functionName = "";
+            for (String function : functions) {
+                if (sqlPart.contains(function)) {
+                    String[] sqlPartArr = sqlPart.split(function);
+                    functionName = function + sqlPartArr[sqlPartArr.length - 1];
+                }
+            }
+            //Groovy函数名称
+            functionNameList.add(functionName);
+        }
+        return functionNameList;
+    }
+
 //    /**
 //     * 执行Groovy函数
 //     */
-//    private Map<String, Object> executeGroovyFunction(List<String> functionNameList) {
+//    private Map<String, Object> executeGroovyFunction(Map<String, RuleFunctionInfo> existFunctionMap) {
 //        FactModel model = new FactModel();
 //        List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
 //
@@ -302,7 +304,7 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
             if (!ObjectUtils.isEmpty(groovySql)) {
                 realScanSql = scanSql.replace(functionName, groovySql);
             } else {
-                realScanSql=scanSql;
+                realScanSql = scanSql;
             }
         }
         return realScanSql;

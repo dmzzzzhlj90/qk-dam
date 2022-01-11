@@ -1,11 +1,13 @@
 package com.qk.dm.dataquality.groovy;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.qk.dam.groovy.model.RuleFunctionInfo;
-import com.qk.dm.dataquality.utils.FileUtil;
+import com.qk.dm.dataquality.groovy.pojo.RuleFunctionModelInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 规则函数模型构建器
@@ -14,18 +16,27 @@ import java.util.Map;
  * @date 2022/1/7
  * @since 1.0.0
  */
+@Component
 public class RuleFunctionModelBuilder {
 
-    public static void main(String[] args) {
-        Map<String, RuleFunctionInfo> functionInfoMap = buildRuleFunctionModel();
-        System.out.println(functionInfoMap);
+    private RuleFunctionModelInfo ruleFunctionModelInfo;
+
+    @Autowired
+    public RuleFunctionModelBuilder(RuleFunctionModelInfo ruleFunctionModelInfo) {
+        this.ruleFunctionModelInfo = ruleFunctionModelInfo;
     }
 
-    public static Map<String, RuleFunctionInfo> buildRuleFunctionModel() {
-        String result = FileUtil.readFileContent("facts/RuleFunctionModel.json");
+    public Map<String, RuleFunctionInfo> isExistFunction(String scanSql) {
+        Map<String, RuleFunctionInfo> existFunctionMap = new HashMap<>(16);
+        Map<String, RuleFunctionInfo> ruleFunctionInfoMap = ruleFunctionModelInfo.getRuleFunctionInfoMap();
 
-        return new Gson().fromJson(result, new TypeToken<Map<String, RuleFunctionInfo>>() {
-        }.getType());
+        Set<String> ruleFunctionKeySet = ruleFunctionInfoMap.keySet();
+        for (String functionName : ruleFunctionKeySet) {
+            if (scanSql.contains(functionName)) {
+                existFunctionMap.put(functionName, ruleFunctionInfoMap.get(functionName));
+            }
+        }
+        return existFunctionMap;
     }
 
 }
