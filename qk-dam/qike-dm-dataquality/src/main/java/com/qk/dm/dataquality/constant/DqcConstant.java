@@ -139,7 +139,7 @@ public class DqcConstant {
 
     public static List<String> jsonStrToList(String jsonStr) {
         List<String> list = new ArrayList<>();
-        if (!ObjectUtils.isEmpty(jsonStr)) {
+        if (!"null".equals(jsonStr) && !ObjectUtils.isEmpty(jsonStr)) {
             list = GsonUtil.fromJsonString(jsonStr, new TypeToken<List<String>>() {}.getType());
         }
         return list;
