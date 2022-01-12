@@ -73,8 +73,8 @@ public class ModelDataBaseController {
      * @return DefaultCommonResult
      */
     @GetMapping("/table")
-    public DefaultCommonResult<List<MtdTables>> getAllTable(String connectType, String dataSourceName, String dataBaseName,Integer limit,Integer offset) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllTable(connectType, dataSourceName, dataBaseName,limit,offset));
+    public DefaultCommonResult<List<MtdTables>> getAllTable(String connectType, String dataSourceName, String dataBaseName) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllTable(connectType, dataSourceName, dataBaseName));
     }
 
     /**

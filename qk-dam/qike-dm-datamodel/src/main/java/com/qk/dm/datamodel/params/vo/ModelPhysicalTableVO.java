@@ -41,7 +41,7 @@ public class ModelPhysicalTableVO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      *数据源连接名称
