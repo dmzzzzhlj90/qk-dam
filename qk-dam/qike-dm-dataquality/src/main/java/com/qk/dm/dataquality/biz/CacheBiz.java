@@ -4,6 +4,7 @@ import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
+import com.qk.dm.dataquality.vo.statistics.WarnTrendVO;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -66,5 +67,9 @@ public class CacheBiz {
 
     public List<DqcProcessInstanceVO> instanceList() {
         return instanceBiz.getDolphinInstanceList();
+    }
+
+    public List<WarnTrendVO> warnTrend() {
+        return warnBiz.warnTrendStatistics();
     }
 }

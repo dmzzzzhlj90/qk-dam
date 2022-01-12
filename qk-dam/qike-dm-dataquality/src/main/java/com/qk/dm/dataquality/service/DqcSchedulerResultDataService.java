@@ -7,6 +7,7 @@ import com.qk.dm.dataquality.vo.DqcSchedulerResultParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +27,9 @@ public interface DqcSchedulerResultDataService {
 
     List<DqcSchedulerResult> getSchedulerResultList(Set<String> jobIds);
 
-    List<DqcSchedulerResult> getSchedulerResultListByWarn();
+    List<DqcSchedulerResult> getSchedulerResultListByWarn(String warnResult);
+
+    List<DqcSchedulerResult> getSchedulerResultListByWarnTrend(String warnResult, Date startDate, Date endDate);
 
     PageResultVO<DqcSchedulerResultVO> searchResultPageList(DqcSchedulerResultPageVO schedulerResultDataParamsVO);
 }
