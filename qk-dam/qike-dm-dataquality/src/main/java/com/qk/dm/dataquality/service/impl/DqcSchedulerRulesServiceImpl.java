@@ -85,6 +85,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
 
     @Override
     public void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        String ruleId = UUID.randomUUID().toString().replaceAll("-", "");
+        dqcSchedulerRulesVO.setRuleId(ruleId);
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
         setMetaDataInfo(dqcSchedulerRulesVO, dqcSchedulerRules);
         // todo 创建人
@@ -108,8 +110,6 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
         AtomicInteger index = new AtomicInteger(1);
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
-            String ruleId = UUID.randomUUID().toString().replaceAll("-", "");
-            dqcSchedulerRulesVO.setRuleId(ruleId);
             dqcSchedulerRulesVO.setJobId(jobId);
             //规则名称
             dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO, index.get()));
@@ -120,7 +120,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
             //回填basicVo进行实例生成;
             executorRuleList.add(dqcSchedulerRulesVO);
-            insert(dqcSchedulerRulesVO);
+            //插入or更新
+            saveOrUpdateByRuleId(dqcSchedulerRulesVO);
             index.getAndIncrement();
         }
         return executorRuleList;
@@ -165,10 +166,24 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
             //回填basicVo进行实例生成;
             executorRuleList.add(dqcSchedulerRulesVO);
-            update(dqcSchedulerRulesVO);
+            //插入or更新
+            saveOrUpdateByRuleId(dqcSchedulerRulesVO);
             index.getAndIncrement();
         }
         return executorRuleList;
+    }
+
+    /**
+     * 插入or更新
+     */
+    private void saveOrUpdateByRuleId(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        if (ObjectUtils.isEmpty(dqcSchedulerRulesVO.getRuleId())) {
+            //不存在,新增
+            insert(dqcSchedulerRulesVO);
+        } else {
+            //存在更新
+            update(dqcSchedulerRulesVO);
+        }
     }
 
     @Override
