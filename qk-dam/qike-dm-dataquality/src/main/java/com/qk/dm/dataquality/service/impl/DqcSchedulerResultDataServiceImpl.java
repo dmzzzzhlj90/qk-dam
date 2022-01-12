@@ -241,18 +241,22 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         String dataIndexNamePrefix = "";
         if (schedulerRulesOptional.isPresent()) {
             DqcSchedulerRules dqcSchedulerRules = schedulerRulesOptional.get();
-
             //表列表信息
             String tableStr = dqcSchedulerRules.getTables();
-            List<String> tableList = GsonUtil.fromJsonString(tableStr, new TypeToken<List<String>>() {
-            }.getType());
-            String tablePart = String.join("&", tableList);
+            if (!ObjectUtils.isEmpty(tableStr)) {
+                List<String> tableList = GsonUtil.fromJsonString(tableStr, new TypeToken<List<String>>() {
+                }.getType());
+                String tablePart = String.join("&", tableList);
 
-            //获取规则参数位置信息
-            if (RuleTypeEnum.RULE_TYPE_TABLE.getCode().equalsIgnoreCase(dqcSchedulerRules.getRuleType())) {
-                dataIndexNamePrefix = dqcSchedulerRules.getDatabaseName() + SLASH;
-            } else if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(dqcSchedulerRules.getRuleType())) {
-                dataIndexNamePrefix = dqcSchedulerRules.getDatabaseName() + DECIMAL_POINT + tablePart + DECIMAL_POINT;
+                //获取规则参数位置信息
+                if (RuleTypeEnum.RULE_TYPE_TABLE.getCode().equalsIgnoreCase(dqcSchedulerRules.getRuleType())) {
+                    dataIndexNamePrefix = dqcSchedulerRules.getDatabaseName() + SLASH;
+                } else if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(dqcSchedulerRules.getRuleType())) {
+                    dataIndexNamePrefix = dqcSchedulerRules.getDatabaseName() + DECIMAL_POINT + tablePart + DECIMAL_POINT;
+                }
+            } else {
+                //规则信息不设置元数据信息
+                dataIndexNamePrefix = SLASH;
             }
         }
         return dataIndexNamePrefix;

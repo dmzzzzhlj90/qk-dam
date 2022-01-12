@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 规则函数模型构建器
@@ -56,6 +58,22 @@ public class RuleFunctionModelComponent {
             realScanSql = scanSql;
         }
         return realScanSql;
+    }
+
+    public List<String> matcherFunction() {
+        String sql = " date =${tradeDay('2022/01/11',1,'yyyy/MM/dd')} ";
+
+
+        String pattern = "/(\\$\\{.+})/";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(sql);
+        StringBuffer sqlBuffer = new StringBuffer();
+        while (m.find()) {
+            String group = m.group();
+            System.out.println(group);
+        }
+
+        return null;
     }
 
     /**
