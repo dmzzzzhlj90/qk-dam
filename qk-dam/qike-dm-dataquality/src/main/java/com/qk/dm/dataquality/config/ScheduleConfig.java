@@ -28,14 +28,18 @@ public class ScheduleConfig {
     }
 
     @Scheduled(cron = "0 0/5 * * * ?")
-    public void scheduleStatistics(){
-        long startTime = System.currentTimeMillis();
-        log.info("===== 定时开始执行,{} =====",startTime);
-        instanceBiz.getDolphinInstanceList();
-        taskInstanceBiz.getDolphinTaskInstanceList();
-        dqcStatisticsService.summary();
-        dqcStatisticsService.dimension();
-        dqcStatisticsService.dir();
-        log.info("===== 定时结束执行,{} =====",System.currentTimeMillis() - startTime);
+    public void scheduleStatistics() {
+        try {
+            long startTime = System.currentTimeMillis();
+            log.info("===== 定时开始执行,{} =====", startTime);
+            instanceBiz.getDolphinInstanceList();
+            taskInstanceBiz.getDolphinTaskInstanceList();
+            dqcStatisticsService.summary();
+            dqcStatisticsService.dimension();
+            dqcStatisticsService.dir();
+            log.info("===== 定时结束执行,{} =====", System.currentTimeMillis() - startTime);
+        } catch (Exception e) {
+            log.error("===== 定时执行出错,{} =====", e.getMessage());
+        }
     }
 }

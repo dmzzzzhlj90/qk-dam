@@ -45,8 +45,7 @@ public class InstanceBiz {
      * @return
      */
     public List<DqcProcessInstanceVO> getDolphinInstanceList() {
-        return GsonUtil.fromJsonString(redisBiz.redisInstanceList(null, null), new TypeToken<List<DqcProcessInstanceVO>>() {
-        }.getType());
+        return GsonUtil.fromJsonString(redisBiz.redisInstanceList(null, null), new TypeToken<List<DqcProcessInstanceVO>>() {}.getType());
     }
 
     /**********************实例统计数据************************************************************/
@@ -109,9 +108,11 @@ public class InstanceBiz {
 
     private Map<String, String> getDqcRuleDirMap(Set<String> dirIds) {
         //根据dirid 查询所有分类
-        return dqcRuleDirService.getListByDirIds(dirIds)
+        Map<String, String> map = dqcRuleDirService.getListByDirIds(dirIds)
                 .stream()
                 .collect(Collectors.toMap(DqcRuleDir::getRuleDirId, DqcRuleDir::getRuleDirName));
+        map.put("-1","默认分类");
+        return map;
     }
 
     private List<RuleDirVO> getRuleDirList(List<DqcProcessInstanceVO> totalList, Map<String, Long> dirCount, Map<String, String> dqcRuleDirMap) {

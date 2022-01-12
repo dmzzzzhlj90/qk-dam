@@ -57,7 +57,7 @@ public class DqcSchedulerResultDataController {
     /**
      * 根据分类目录获取告警结果
      * @param schedulerResultDataParamsVO
-     * @return
+     * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
      */
     @PostMapping("/page/list/dir")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
