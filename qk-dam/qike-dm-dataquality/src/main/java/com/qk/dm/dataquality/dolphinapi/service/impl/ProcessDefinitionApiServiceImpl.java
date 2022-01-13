@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
 import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.datacenter.api.DefaultApi;
@@ -35,7 +36,9 @@ import java.util.stream.Collectors;
 @Service
 public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiService {
 
-
+    public static final int poll_count = 5;
+    public static final int poll_time = 1000;
+    public static final long DEFINITION_CODE = 0L;
     private final DefaultApi defaultApi;
     private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
@@ -54,7 +57,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
     @Override
     public Long saveAndFlush(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
-        Long processDefinitionCode = 0L;
+        Long processDefinitionCode = DEFINITION_CODE;
         //是否存在工作流
         ProcessDefinitionDTO queryProcessDefinition =
                 queryProcessDefinitionInfo(
@@ -68,17 +71,40 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             //新增
             Integer version = SchedulerConstant.ZERO_VALUE;
             save(dqcSchedulerBasicInfoVO, dataSourceInfo, version);
-            ProcessDefinitionDTO saveProcessDefinition =
-                    queryProcessDefinitionInfo(
-                            dolphinSchedulerInfoConfig.getProjectCode(),
-                            dqcSchedulerBasicInfoVO.getJobName(),
-                            dqcSchedulerBasicInfoVO.getJobId());
-            processDefinitionCode = saveProcessDefinition.getCode();
+            //轮询查看是否创建工作流成功
+            processDefinitionCode = getDefinitionCode(dqcSchedulerBasicInfoVO, processDefinitionCode);
+            if (processDefinitionCode == 0L) {
+                throw new BizException("创建工作流失败!!!");
+            }
         } else {
             //编辑
             processDefinitionCode = queryProcessDefinition.getCode();
             update(dqcSchedulerBasicInfoVO, dataSourceInfo, queryProcessDefinition);
 
+        }
+        return processDefinitionCode;
+    }
+
+    /**
+     * 轮询查看是否创建工作流成功
+     */
+    private Long getDefinitionCode(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO, Long processDefinitionCode) {
+        for (int i = 0; i < poll_count; i++) {
+            try {
+                ProcessDefinitionDTO saveProcessDefinition =
+                        queryProcessDefinitionInfo(
+                                dolphinSchedulerInfoConfig.getProjectCode(),
+                                dqcSchedulerBasicInfoVO.getJobName(),
+                                dqcSchedulerBasicInfoVO.getJobId());
+                processDefinitionCode = saveProcessDefinition.getCode();
+                if (processDefinitionCode != 0L && saveProcessDefinition.getCode() != null) {
+                    break;
+                }
+                Thread.sleep(poll_time);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new BizException("创建工作流失败!!!");
+            }
         }
         return processDefinitionCode;
     }
