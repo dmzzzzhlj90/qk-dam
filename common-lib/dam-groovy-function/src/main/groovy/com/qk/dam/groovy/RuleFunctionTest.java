@@ -11,7 +11,9 @@ import java.util.regex.Pattern;
 public class RuleFunctionTest {
 
     public static void main(String[] args) {
+
         String sql = " date =${tradeDay('2022/01/11',1,'yyyy/MM/dd')} and date2 =date =${tradeDay2('2022/01/11',1,'yyyy/MM/dd')} ";
+
 
         // 匹配方式
         Pattern p = Pattern.compile("\\$\\{(.*?)}");
@@ -20,6 +22,14 @@ public class RuleFunctionTest {
         // 处理匹配到的值
         while (matcher.find()) {
             System.out.println("waaa: " + matcher.group());
+        }
+
+        String sss = "${tradeDay('2022/01/11',1,'yyyy/MM/dd')}";
+
+        Pattern regex = Pattern.compile("\\$\\{([^}]*)\\}");
+        Matcher matcher2 = regex.matcher(sss);
+        while(matcher2.find()) {
+            System.out.println(matcher2.group(1));
         }
     }
 
