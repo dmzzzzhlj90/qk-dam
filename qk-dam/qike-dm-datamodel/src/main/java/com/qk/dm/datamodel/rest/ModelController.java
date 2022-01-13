@@ -26,11 +26,21 @@ public class ModelController {
         this.modelService = modelService;
     }
 
+    /**
+     * 新增—关系建模层级
+     * @param modelDTO
+     * @return
+     */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated ModelDTO modelDTO){
         modelService.insert(modelDTO);
         return DefaultCommonResult.success();
     }
+
+    /**
+     * 获取-关系建模层级
+     * @return
+     */
     @GetMapping("")
     public DefaultCommonResult<List<ModelVO>> getList(){
        return DefaultCommonResult.success(ResultCodeEnum.OK, modelService.list());

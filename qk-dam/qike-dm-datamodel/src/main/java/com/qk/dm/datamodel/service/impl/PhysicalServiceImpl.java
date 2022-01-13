@@ -816,7 +816,7 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   private int getTables(String dataConnection, String dataSourceName,
       String databaseName, String tableName) {
-     int resultTable = 3;
+     int resultTable = ModelStatus.EXIST_DEFAULT_DATA;
     if (StringUtils.isNotBlank(tableName) && StringUtils.isNotBlank(databaseName)
         && StringUtils.isNotBlank(dataSourceName) && StringUtils.isNotBlank(dataConnection)){
       resultTable = dataBaseService.getExistData(dataConnection, dataSourceName, databaseName,tableName);
@@ -1038,7 +1038,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (!Objects.isNull(queryModelPhysicalDTO.getModelId())) {
       booleanBuilder.and(qModelPhysicalTable.modelId.eq(queryModelPhysicalDTO.getModelId()));
     }
-    if (!Objects.isNull(queryModelPhysicalDTO.getThemeId())){
+    if (!Objects.isNull(queryModelPhysicalDTO.getThemeId()) && queryModelPhysicalDTO.getThemeId()!=ModelStatus.DIRNAMEID){
       booleanBuilder.and(qModelPhysicalTable.themeId.eq(queryModelPhysicalDTO.getThemeId()));
     }
   }
