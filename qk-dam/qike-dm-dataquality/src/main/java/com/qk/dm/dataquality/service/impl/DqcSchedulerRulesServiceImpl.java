@@ -87,6 +87,8 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         //设置规则信息关联流程任务节点taskCode
         setTaskCode(dqcSchedulerRulesVO);
+        //规则名称
+        dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO));
         //设置规则id
         String ruleId = UUID.randomUUID().toString().replaceAll("-", "");
         dqcSchedulerRulesVO.setRuleId(ruleId);
@@ -114,8 +116,6 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         AtomicInteger index = new AtomicInteger(1);
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
             dqcSchedulerRulesVO.setJobId(jobId);
-            //规则名称
-            dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO, index.get()));
             //生成执行Sql;
             String executorSql = (String) getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
@@ -163,7 +163,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
             dqcSchedulerRulesVO.setJobId(jobId);
             //规则名称
-            dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO, index.get()));
+            dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO));
             //生成执行Sql;
             String executorSql =(String) getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
@@ -278,30 +278,25 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         return dqcRuleSqlBuilderService.getExecuteSql(dqcSchedulerRulesVO);
     }
 
-    private String getRuleName(DqcSchedulerRulesVO rulesVO, int index) {
-        String dbStr = "";
-        String tableStr = "";
-        String fieldStr = "";
+    private String getRuleName(DqcSchedulerRulesVO rulesVO) {
+        String ruleMame = rulesVO.getTaskCode() +"/"+ rulesVO.getRuleType();
 
-        if (ObjectUtils.isEmpty(rulesVO.getDatabaseName())) {
-            dbStr = String.valueOf(index);
-        } else {
-            dbStr = rulesVO.getDatabaseName();
+        if (!ObjectUtils.isEmpty(rulesVO.getDatabaseName())) {
+            String dbStr = rulesVO.getDatabaseName();
+            ruleMame += "/" + dbStr;
         }
 
         if (rulesVO.getTableList() != null) {
-            tableStr = String.join("&", rulesVO.getTableList());
-        } else {
-            tableStr = String.valueOf(index);
+           String tableStr = String.join("&", rulesVO.getTableList());
+            ruleMame += "/" + tableStr;
         }
 
         if (rulesVO.getFieldList() != null) {
-            fieldStr = String.join("&", rulesVO.getFieldList());
-        } else {
-            fieldStr = String.valueOf(index);
+            String fieldStr = String.join("&", rulesVO.getFieldList());
+            ruleMame += "/" + fieldStr;
         }
 
-        return rulesVO.getRuleType() + "/" + dbStr + "/" + tableStr + "/" + fieldStr;
+        return ruleMame;
     }
 
 
