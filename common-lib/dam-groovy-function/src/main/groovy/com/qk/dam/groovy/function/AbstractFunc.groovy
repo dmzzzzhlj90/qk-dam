@@ -40,4 +40,19 @@ abstract class AbstractFunc extends Script {
         return date.format(fmt)
     }
 
+    /**
+     * 交易日处理函数
+     *
+     * @param tradeDay T日
+     * @param num N
+     * @param pattern 格式化
+     * @return
+     */
+    def tradeDay2(String tradeDay, int num, String pattern) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern)
+        def date = LocalDate.parse(tradeDay, pattern)
+        date = date.minusDays(num)
+        return date.format(fmt)
+    }
+
 }

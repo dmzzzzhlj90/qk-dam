@@ -85,6 +85,9 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
 
     @Override
     public void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        //设置规则信息关联流程任务节点taskCode
+        setTaskCode(dqcSchedulerRulesVO);
+        //设置规则id
         String ruleId = UUID.randomUUID().toString().replaceAll("-", "");
         dqcSchedulerRulesVO.setRuleId(ruleId);
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
@@ -113,8 +116,6 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
             dqcSchedulerRulesVO.setJobId(jobId);
             //规则名称
             dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO, index.get()));
-            //设置规则信息关联流程任务节点taskCode
-            setTaskCode(dqcSchedulerRulesVO);
             //生成执行Sql;
             String executorSql = (String) getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
@@ -127,6 +128,9 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         return executorRuleList;
     }
 
+    /**
+     * 设置规则信息关联流程任务节点taskCode
+     */
     private void setTaskCode(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         try {
             dqcSchedulerRulesVO.setTaskCode(CodeGenerateUtils.getInstance().genCode());
@@ -139,7 +143,6 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     @Override
     public void update(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
-
         setMetaDataInfo(dqcSchedulerRulesVO, dqcSchedulerRules);
         // todo 修改人
         dqcSchedulerRules.setUpdateUserid("admin");

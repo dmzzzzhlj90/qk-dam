@@ -340,7 +340,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             }
             //执行告警表达式
             try {
-                return GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, warnExpression);
+                return String.valueOf(GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, warnExpression)).toLowerCase();
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new BizException("告警表达式执行失败!!!");
@@ -456,8 +456,13 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     }
 
     @Override
-    public List<DqcSchedulerResult> getSchedulerResultListByWarn() {
-        return (List<DqcSchedulerResult>) dqcSchedulerResultRepository.findAll(qDqcSchedulerResult.warnResult.eq("True"));
+    public List<DqcSchedulerResult> getSchedulerResultListByWarn(String warnResult) {
+        return (List<DqcSchedulerResult>) dqcSchedulerResultRepository.findAll(qDqcSchedulerResult.warnResult.eq(warnResult));
+    }
+
+    @Override
+    public List<DqcSchedulerResult> getSchedulerResultListByWarnTrend(String warnResult, Date startDate, Date endDate) {
+        return (List<DqcSchedulerResult>) dqcSchedulerResultRepository.findAll(qDqcSchedulerResult.warnResult.eq(warnResult).and(qDqcSchedulerResult.gmtCreate.between(startDate, endDate)));
     }
 
     @Override

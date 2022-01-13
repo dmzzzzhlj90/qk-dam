@@ -35,7 +35,11 @@ public class RuleFunctionHandler extends AbstractHandler {
             RuleFunctionInfo ruleFunctionInfo = ruleFunctionMap.get(key);
             //设置函数多个参数
             Map<String, Object> defaultVal = ruleFunctionInfo.getDefaultVal();
-            result.put(key, getExpressCall().apply(defaultVal,ruleFunctionInfo));
+            try {
+                result.put(key, getExpressCall().apply(defaultVal,ruleFunctionInfo));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         super.result = result;
     }

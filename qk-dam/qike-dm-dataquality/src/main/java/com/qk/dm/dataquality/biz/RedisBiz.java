@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class RedisBiz {
     private static final int pageNo = 1;
     private static final int listPageSize = 10;
-    private static final String warnResult = "True";
+    public static final String warnResult = "true";
 
     private final DolphinScheduler dolphinScheduler;
     private final DqcSchedulerResultDataService dqcSchedulerResultDataService;

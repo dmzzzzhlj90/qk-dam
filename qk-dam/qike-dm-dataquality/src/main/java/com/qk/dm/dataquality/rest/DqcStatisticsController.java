@@ -6,6 +6,7 @@ import com.qk.dm.dataquality.service.DqcStatisticsService;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
+import com.qk.dm.dataquality.vo.statistics.WarnTrendVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,5 +56,14 @@ public class DqcStatisticsController {
     @GetMapping("/dir")
     public DefaultCommonResult<List<RuleDirVO>> dir() {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.dir());
+    }
+
+    /**
+     * 七天内告警趋势
+     * @return DefaultCommonResult<List<WarnTrendVO>>
+     */
+    @GetMapping("/warn/trend")
+    public DefaultCommonResult<List<WarnTrendVO>> warnTrend() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.warnTrend());
     }
 }

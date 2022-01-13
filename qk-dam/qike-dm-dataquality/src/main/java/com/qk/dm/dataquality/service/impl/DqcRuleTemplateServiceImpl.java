@@ -65,7 +65,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     @Override
     public void insert(DqcRuleTemplateVO dqcRuleTemplateVo) {
         //判断sql是否适用与引擎
-        checkEngine(dqcRuleTemplateVo.getEngineTypeList(), dqcRuleTemplateVo.getTempSql());
+//        checkEngine(dqcRuleTemplateVo.getEngineTypeList(), dqcRuleTemplateVo.getTempSql());
         DqcRuleTemplate dqcRuleTemplate = DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
         //todo 转换类型
         dqcRuleTemplate.setEngineType(GsonUtil.toJsonString(dqcRuleTemplateVo.getEngineTypeList()));
@@ -81,6 +81,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
     @Override
     public void update(DqcRuleTemplateVO dqcRuleTemplateVo) {
+        //todo 暂无修改情况，直接删除再添加
         DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
         checkPublishState(dqcRuleTemplate, "上线规则模版不支持修改！！！");
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo, dqcRuleTemplate);

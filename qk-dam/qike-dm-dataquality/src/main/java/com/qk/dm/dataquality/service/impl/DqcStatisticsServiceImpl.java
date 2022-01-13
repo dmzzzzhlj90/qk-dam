@@ -8,6 +8,7 @@ import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
 import com.qk.dm.dataquality.biz.CacheBiz;
+import com.qk.dm.dataquality.vo.statistics.WarnTrendVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -46,4 +47,11 @@ public class DqcStatisticsServiceImpl implements DqcStatisticsService {
     public List<DqcProcessInstanceVO> instanceList() {
         return cacheBiz.instanceList();
     }
+
+    @Override
+    public List<WarnTrendVO> warnTrend() {
+        return cacheBiz.warnTrend();
+    }
+
+
 }

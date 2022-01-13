@@ -1,6 +1,7 @@
 package com.qk.dam.groovy.model;
 
 import com.qk.dam.groovy.model.base.FactParam;
+import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class RuleFunctionInfo extends FactParam {
     private String expression;
 
     public RuleFunctionInfo(String functionName, List<String> params, String description, String type, Map<String, Object> defaultVal) {
-        super(functionName,params, description, type, defaultVal);
+        super(functionName, params, description, type, defaultVal);
     }
 
     public String getExpression() {
