@@ -72,8 +72,4 @@ public class CodeGenerateUtils {
         }
     }
 
-    public static void main(String[] args) throws CodeGenerateException {
-        long code = CodeGenerateUtils.getInstance().genCode();
-        System.out.println("code: " + code);
-    }
 }
