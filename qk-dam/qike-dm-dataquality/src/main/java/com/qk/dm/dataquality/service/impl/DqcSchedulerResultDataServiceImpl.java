@@ -340,7 +340,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             }
             //执行告警表达式
             try {
-                return GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, warnExpression);
+                return String.valueOf(GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, warnExpression)).toLowerCase();
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new BizException("告警表达式执行失败!!!");
