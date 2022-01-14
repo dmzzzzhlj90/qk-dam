@@ -18,5 +18,8 @@ spring:
           - dataId: qkreptile-mysql-test.yml
             group: DAM
             refresh: true
+          - dataId: qkreptile-oauth2-test.yml
+            group: DAM
+            refresh: true
   profiles:
-    active: prod
+    active: test
