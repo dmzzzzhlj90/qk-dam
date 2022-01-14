@@ -7,9 +7,11 @@ import com.qk.dam.jdbc.DbTypeEnum;
 import com.qk.dam.jdbc.MysqlRawScript;
 import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
+import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.util.validation.Validation;
 import net.sf.jsqlparser.util.validation.feature.DatabaseType;
 import org.apache.http.Header;
@@ -64,24 +66,26 @@ public class ElasticSearchMain {
             System.exit(-1);
         }
         try (RestClient restClient = getRestClient(mysqlRawScript, authBase64)) {
+            Boolean sqlFl = false;
+            Statements stmts = null;
+            try {
+                stmts = CCJSqlParserUtil.parseStatements(script);
+                sqlFl=true;
+                for (Statement stmt : stmts.getStatements()) {
+                    if(stmt instanceof Select) {
+                        Request rq = fromEsSql(stmt.toString());
+                        Response response = restClient.performRequest(rq);
+                        String responseBody = EntityUtils.toString(response.getEntity());
+                        String rstStr = p.matcher(responseBody).replaceAll("");
+                        Object o = new Gson().fromJson(rstStr, Object.class);
 
-            Validation validation = new Validation(List.of(DatabaseType.ANSI_SQL), script);
-            if (validation.validate().size() == 0) {
-                // 当为sql api
-                Statements stmt = CCJSqlParserUtil.parseStatements(script);
-                for (Statement st : stmt.getStatements()) {
-                    Request rq = fromEsSql(st.toString());
-                    Response response = restClient.performRequest(rq);
-                    String responseBody = EntityUtils.toString(response.getEntity());
-                    String rstStr = p.matcher(responseBody).replaceAll("");
-                    Object o = new Gson().fromJson(rstStr, Object.class);
-
-                    overSqlData(mysqlRawScript, resultTable, (Map<String, Object>) o);
+                        overSqlData(mysqlRawScript, resultTable, (Map<String, Object>) o);
+                    }
                 }
-            } else {
-                //当为rest api
-                //==>/xx/xx/x
-                //{}
+            } catch (JSQLParserException e) {
+                e.printStackTrace();
+            }
+            if (!sqlFl){
                 String[] lines = script.split("\\r?\\n");
                 String prePath = lines[0].trim();
                 Request request = fromEsDsl(script, prePath);
@@ -90,7 +94,6 @@ public class ElasticSearchMain {
                 Object o = new Gson().fromJson(responseBody, Object.class);
                 log.info("rest api 返回结果数据信息：【{}】", o);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
