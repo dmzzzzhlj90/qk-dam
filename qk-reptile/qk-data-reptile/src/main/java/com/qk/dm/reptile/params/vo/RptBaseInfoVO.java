@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
@@ -48,6 +49,7 @@ public class RptBaseInfoVO {
    * 连接
    */
   @ExcelProperty(value = "链接",order = 6)
+  @NotBlank(message = "连接不能为空")
   private String websiteUrl;
 
   /**
@@ -133,11 +135,13 @@ public class RptBaseInfoVO {
    * 二期站点类型
    */
   @ExcelProperty(value = "二期站点类型",order = 7)
+  @NotBlank(message = "连接不能为空")
   private String secondSiteType;
   /**
    * 列表页地址
    */
   @ExcelProperty(value = "列表页地址",order = 8)
+  @NotBlank(message = "连接不能为空")
   private String listPageAddress;
   /**
    * 不同类型混合
