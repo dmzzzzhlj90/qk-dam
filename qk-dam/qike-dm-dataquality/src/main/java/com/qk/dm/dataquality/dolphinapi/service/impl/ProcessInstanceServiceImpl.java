@@ -12,7 +12,11 @@ import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import static com.qk.dam.datasource.utils.ConnectInfoConvertUtils.objectMapper;
 
 /**
  * @author shenpj
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProcessInstanceServiceImpl implements ProcessInstanceService {
+    private final static Logger LOGGER= LoggerFactory.getLogger(ProcessInstanceServiceImpl.class);
     private final DefaultApi defaultApi;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
 
@@ -152,8 +157,9 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     @Override
     public ProcessTaskInstanceResultDTO searchTask(ProcessTaskInstanceSearchDTO TaskInstanceSearch) {
         ProcessTaskInstanceResultDTO processTaskInstanceResultDTO = new ProcessTaskInstanceResultDTO();
+        Result result = null;
         try {
-            Result result =
+            result =
                     defaultApi.queryTaskListPagingUsingGET(
                             TaskInstanceSearch.getPageNo(),
                             TaskInstanceSearch.getPageSize(),
@@ -169,9 +175,16 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             TaskInstanceSearch.getTaskName()
                     );
             DqcConstant.verification(result, "查询任务实例列表失败{}，");
-            processTaskInstanceResultDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessTaskInstanceResultDTO>() {
-            }.getType());
         } catch (ApiException e) {
+            LOGGER.info("=============接口入参：{}==============",TaskInstanceSearch);
+            LOGGER.info("=============接口结果：{}==============",result);
+            DqcConstant.printException(e);
+        }
+        try {
+            processTaskInstanceResultDTO = objectMapper.readValue(objectMapper.writeValueAsString(result.getData()), ProcessTaskInstanceResultDTO.class);
+        } catch (Exception e) {
+            LOGGER.info("=============接口结果：{}==============",result);
+            LOGGER.info("=============数据转换出错：{}==============",processTaskInstanceResultDTO);
             DqcConstant.printException(e);
         }
         return processTaskInstanceResultDTO;

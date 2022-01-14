@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class WarnTrendVO {
-    String Date;
+    String date;
     Integer scales;
 }

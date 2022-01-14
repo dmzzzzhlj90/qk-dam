@@ -81,7 +81,9 @@ public class RedisBiz {
     @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisInstanceList(String failure, Date date) {
         //根据条件缓存所有实例
-        return GsonUtil.toJsonString(getInstanceList(failure, date));
+        return GsonUtil.toJsonString(
+                getInstanceList(failure, date)
+        );
     }
 
     /*********************所有警告列表*************************************************/
@@ -109,7 +111,9 @@ public class RedisBiz {
 
     @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisWarnResultList(List<DqcProcessInstanceVO> dqcProcessInstanceVOS){
-        return GsonUtil.toJsonString(warnResultList(dqcProcessInstanceVOS));
+        return GsonUtil.toJsonString(
+                warnResultList(dqcProcessInstanceVOS)
+        );
     }
 
     /*********************所有任务实例列表*************************************************/
@@ -130,7 +134,11 @@ public class RedisBiz {
 
     private void getTaskInstanceList(ProcessTaskInstanceSearchDTO taskInstanceSearchDTO, List<TaskInstanceVO> totalList) {
         ProcessTaskInstanceResultDTO taskInstanceResultDTO = getTaskInstanceResult(taskInstanceSearchDTO);
-        totalList.addAll(DqcProcessInstanceMapper.INSTANCE.taskInstanceVO(taskInstanceResultDTO.getTotalList()));
+        totalList.addAll(
+                DqcProcessInstanceMapper.INSTANCE.taskInstanceVO(
+                        taskInstanceResultDTO.getTotalList()
+                )
+        );
         if (taskInstanceResultDTO.getTotalPage() > taskInstanceResultDTO.getCurrentPage()) {
             taskInstanceSearchDTO.setPageNo(taskInstanceSearchDTO.getPageNo() + 1);
             getTaskInstanceList(taskInstanceSearchDTO, totalList);
