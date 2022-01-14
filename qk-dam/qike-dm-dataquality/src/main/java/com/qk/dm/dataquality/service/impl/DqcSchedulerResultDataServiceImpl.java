@@ -303,30 +303,63 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
         if (schedulerRulesOptional.isPresent()) {
             DqcSchedulerRules dqcSchedulerRules = schedulerRulesOptional.get();
-            //获取告警表达式结果
-            return executeWarnExpression(dqcSchedulerRules);
+            //告警表达式
+            String warnExpression = dqcSchedulerRules.getWarnExpression();
+            if (!ObjectUtils.isEmpty(warnExpression)) {
+                return getExecuteWarnResult(dqcSchedulerRules);
+            }else {
+                throw new BizException("未配置告警表达式!!!");
+            }
         }
         return null;
     }
 
     /**
-     * 获取告警表达式结果
+     * 执行告警表达式,获取告警表达式结果
      */
-    private Object executeWarnExpression(DqcSchedulerRules dqcSchedulerRules) {
-        //告警表达式
-        String warnExpression = dqcSchedulerRules.getWarnExpression();
-        if (!ObjectUtils.isEmpty(warnExpression)) {
-            return executeWarnExpression(dqcSchedulerRules, warnExpression);
-        }
-        return null;
-    }
-
-    /**
-     * 执行告警表达式
-     */
-    private Object executeWarnExpression(DqcSchedulerRules dqcSchedulerRules, String warnExpression) {
+    private Object getExecuteWarnResult(DqcSchedulerRules dqcSchedulerRules) {
+        String executeWarnResult = "";
         //获取执行结果集,最新时间的记录
         DqcSchedulerResult dqcSchedulerResult = dqcSchedulerResultRepository.findOneByLastTime(dqcSchedulerRules.getTaskCode());
+        if (ObjectUtils.isEmpty(dqcSchedulerRules.getTables()) || ObjectUtils.isEmpty(dqcSchedulerRules.getFields())) {
+            //自定义模板规则不带有元数据信息,执行告警表达式
+            executeWarnResult = executeWarnExpressionNoMetaData(dqcSchedulerRules, dqcSchedulerResult);
+        } else {
+            //规则带有元数据信息,执行告警表达式
+            executeWarnResult = executeWarnExpression(dqcSchedulerRules, dqcSchedulerResult);
+        }
+        return executeWarnResult;
+    }
+
+    /**
+     * 自定义模板规则不带有元数据信息,执行告警表达式
+     */
+    private String executeWarnExpressionNoMetaData(DqcSchedulerRules dqcSchedulerRules, DqcSchedulerResult dqcSchedulerResult) {
+        if (dqcSchedulerResult != null) {
+            Map<String, List<Object>> dataMap = new HashMap<>(16);
+            //获取结果集元数据信息
+            List<String> metaDataList = getMetaDataList(dqcSchedulerResult);
+            //获取结果集数据
+            List<List<Object>> resultDataList = getResultDataList(dqcSchedulerResult);
+            for (String metaData : metaDataList) {
+                dataMap.put(metaData, resultDataList.get(0));
+            }
+            //执行告警表达式
+            try {
+                return String.valueOf(GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, dqcSchedulerRules.getWarnExpression())).toLowerCase();
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new BizException("告警表达式执行失败!!!");
+            }
+        } else {
+            throw new BizException("规则结果集不存在!!!");
+        }
+    }
+
+    /**
+     * 规则带有元数据信息,执行告警表达式
+     */
+    private String executeWarnExpression(DqcSchedulerRules dqcSchedulerRules,DqcSchedulerResult dqcSchedulerResult) {
         if (dqcSchedulerResult != null) {
             Map<String, List<Object>> dataMap = new HashMap<>(16);
             //获取结果集元数据信息
@@ -335,18 +368,20 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             AtomicInteger index = new AtomicInteger(0);
             List<List<Object>> resultDataList = getResultDataList(dqcSchedulerResult);
             for (String metaData : metaDataList) {
+                //设置告警表达式字段,及其关联结果集
                 dataMap.put(metaData, resultDataList.get(index.get()));
                 index.getAndIncrement();
             }
             //执行告警表达式
             try {
-                return String.valueOf(GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, warnExpression)).toLowerCase();
+                return String.valueOf(GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, dqcSchedulerRules.getWarnExpression())).toLowerCase();
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new BizException("告警表达式执行失败!!!");
             }
+        }else {
+            throw new BizException("规则结果集不存在!!!");
         }
-        return null;
     }
 
     /**
