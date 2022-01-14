@@ -101,7 +101,7 @@ public class WarnBiz {
         return getDatesByDay(beginOfDay, endOfDay).keySet().stream().map(integer -> {
             return WarnTrendVO
                     .builder()
-                    .Date(integer)
+                    .date(integer)
                     .scales(warnTrendCountMap.get(integer) != null ? warnTrendCountMap.get(integer).intValue() : 0)
                     .build();
         }).collect(Collectors.toList());

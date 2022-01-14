@@ -42,5 +42,5 @@ public interface DqcProcessInstanceMapper {
     })
     ProcessInstanceSearchDTO instanceSearchDTO(DqcSchedulerInstanceParamsDTO instanceParamsDTO);
 
-    List<TaskInstanceVO> taskInstanceVO(List<TaskInstanceDTO> taskInstanceDTO);
+    List<TaskInstanceVO> taskInstanceVO(List<TaskInstanceDTO> taskInstanceDTOs);
 }
