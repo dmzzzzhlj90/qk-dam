@@ -2963,7 +2963,7 @@ public class DefaultApi {
    * @return Result
    * @throws ApiException if fails to make API call
    */
-  public Result deleteProcessDefinitionByCodeUsingDELETE(Integer code, Long projectCode) throws ApiException {
+  public Result deleteProcessDefinitionByCodeUsingDELETE(Long code, Long projectCode) throws ApiException {
     ApiResponse<Result> localVarResponse = deleteProcessDefinitionByCodeUsingDELETEWithHttpInfo(code, projectCode);
     return localVarResponse.getData();
   }
@@ -2976,7 +2976,7 @@ public class DefaultApi {
    * @return ApiResponse&lt;Result&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Result> deleteProcessDefinitionByCodeUsingDELETEWithHttpInfo(Integer code, Long projectCode) throws ApiException {
+  public ApiResponse<Result> deleteProcessDefinitionByCodeUsingDELETEWithHttpInfo(Long code, Long projectCode) throws ApiException {
     HttpRequest.Builder localVarRequestBuilder = deleteProcessDefinitionByCodeUsingDELETERequestBuilder(code, projectCode);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
@@ -3002,7 +3002,7 @@ public class DefaultApi {
     }
   }
 
-  private HttpRequest.Builder deleteProcessDefinitionByCodeUsingDELETERequestBuilder(Integer code, Long projectCode) throws ApiException {
+  private HttpRequest.Builder deleteProcessDefinitionByCodeUsingDELETERequestBuilder(Long code, Long projectCode) throws ApiException {
     // verify the required parameter 'code' is set
     if (code == null) {
       throw new ApiException(400, "Missing the required parameter 'code' when calling deleteProcessDefinitionByCodeUsingDELETE");

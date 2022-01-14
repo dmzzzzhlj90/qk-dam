@@ -155,7 +155,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         //删除调度配置信息
         dqcSchedulerConfigService.deleteByJobId(schedulerBasicInfo.getJobId());
         //删除工作流信息
-        processDefinitionApiService.delete(dolphinSchedulerInfoConfig.getProjectCode(), schedulerBasicInfo.getProcessDefinitionCode());
+        processDefinitionApiService.delete(schedulerBasicInfo.getProcessDefinitionCode(),dolphinSchedulerInfoConfig.getProjectCode());
     }
 
     @Override

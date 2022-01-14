@@ -208,16 +208,16 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     }
 
     @Override
-    public void delete(Long processDefinitionCode,Long projectCode) {
+    public void delete(Long processDefinitionCode, Long projectCode) {
         try {
-            defaultApi.deleteProcessDefinitionByCodeUsingDELETE(processDefinitionCode.intValue(),projectCode);
+            defaultApi.deleteProcessDefinitionByCodeUsingDELETE(processDefinitionCode, projectCode);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void deleteBulk(List<Long> processDefinitionIdList,Long projectCode) {
+    public void deleteBulk(List<Long> processDefinitionIdList, Long projectCode) {
         try {
             String processDefinitionIds = processDefinitionIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
             defaultApi.batchDeleteProcessDefinitionByCodesUsingPOST(processDefinitionIds, projectCode);
@@ -302,7 +302,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
     public void startCheck(Long processDefinitionCode) {
         try {
             Result result =
-                    defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionCode,dolphinSchedulerInfoConfig.getProjectCode());
+                    defaultApi.startCheckProcessDefinitionUsingPOST(processDefinitionCode, dolphinSchedulerInfoConfig.getProjectCode());
             DqcConstant.verification(result, "检查流程失败{}");
         } catch (ApiException e) {
             DqcConstant.printException(e);
