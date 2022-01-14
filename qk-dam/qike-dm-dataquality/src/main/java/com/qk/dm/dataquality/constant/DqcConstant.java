@@ -128,6 +128,11 @@ public class DqcConstant {
         throw new BizException("dolphin出错{},"+e.getMessage());
     }
 
+    public static void printException(Exception e) {
+        e.printStackTrace();
+        throw new BizException("数据转换出错{},"+e.getMessage());
+    }
+
     public static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
         JSONObject object = new JSONObject();
         object.put(SCHEDULE_TIME_START, DateUtil.format(effectiveTimeStart, format));
