@@ -119,7 +119,20 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
 
     private Map<String, ConnectBasicInfo> getDataSourceInfo(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         List<String> dataSourceNames = dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList().stream().map(DqcSchedulerRulesVO::getDataSourceName).collect(Collectors.toList());
-        return dataBaseInfoDefaultApi.getDataSourceMap(dataSourceNames);
+        Map<String, ConnectBasicInfo> dataSourceMap = null;
+        try {
+            dataSourceMap = dataBaseInfoDefaultApi.getDataSourceMap(dataSourceNames);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOG.info("数据源连接名称: 【{}】,连接数据源服务失败!!!",dataSourceNames);
+            throw new BizException("连接数据源服务失败!!!");
+        }
+        if (dataSourceMap.size() > 0) {
+            return dataSourceMap;
+        } else {
+            LOG.info("数据源连接名称: 【{}】,未获取到对应数据源连接信息!!!",dataSourceNames);
+            throw new BizException("未获取到对应数据源连接信息!!!");
+        }
     }
 
     @Override
@@ -144,7 +157,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         } catch (Exception e) {
             e.printStackTrace();
             LOG.info("JobId:【{}】,新增工作流失败!!!", dqcSchedulerBasicInfoVO.getJobId());
-            throw new BizException("创建工作流失败!!!");
+            throw new BizException(e.getMessage());
         }
     }
 
