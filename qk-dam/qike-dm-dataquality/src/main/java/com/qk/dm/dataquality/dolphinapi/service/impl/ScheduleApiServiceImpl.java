@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
-import com.google.gson.reflect.TypeToken;
-import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
@@ -15,6 +13,7 @@ import com.qk.dm.dataquality.dolphinapi.dto.ScheduleDeleteDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ScheduleResultDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ScheduleSearchDTO;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -25,6 +24,7 @@ import java.util.Date;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class ScheduleApiServiceImpl implements ScheduleApiService {
     private final DefaultApi defaultApi;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
@@ -54,8 +54,9 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
      */
     @Override
     public void create(Long processDefinitionCode, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+        Result result = null;
         try {
-            Result result =
+            result =
                     defaultApi.createScheduleUsingPOST(
                             processDefinitionCode,
                             dolphinSchedulerInfoConfig.getProjectCode(),
@@ -69,6 +70,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
                             dolphinSchedulerInfoConfig.getTaskWorkerGroup());
             DqcConstant.verification(result, "创建定时失败{},");
         } catch (ApiException e) {
+            log.error("=============接口入参：{},{},{},{}==============", processDefinitionCode, effectiveTimeStart, effectiveTimeEnt, cron);
             DqcConstant.printException(e);
         }
     }
@@ -88,8 +90,9 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
      */
     @Override
     public void update(Integer scheduleId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+        Result result = null;
         try {
-            Result result =
+            result =
                     defaultApi.updateScheduleUsingPUT(
                             scheduleId,
                             dolphinSchedulerInfoConfig.getProjectCode(),
@@ -102,6 +105,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
                             dolphinSchedulerInfoConfig.getTaskWorkerGroup());
             DqcConstant.verification(result, "修改定时失败{},");
         } catch (ApiException e) {
+            log.error("=============接口入参：{},{},{},{}==============", scheduleId, effectiveTimeStart, effectiveTimeEnt, cron);
             DqcConstant.printException(e);
         }
     }
@@ -165,8 +169,9 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
     @Override
     public ScheduleResultDTO search(ScheduleSearchDTO scheduleSearchDTO) {
         ScheduleResultDTO scheduleResultDTO = new ScheduleResultDTO();
+        Result result = null;
         try {
-            Result result =
+            result =
                     defaultApi.queryScheduleListPagingUsingGET(
                             scheduleSearchDTO.getProcessDefinitionCode(),
                             dolphinSchedulerInfoConfig.getProjectCode(),
@@ -174,9 +179,12 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
                             scheduleSearchDTO.getPageSize(),
                             scheduleSearchDTO.getSearchVal());
             DqcConstant.verification(result, "获取定时列表失败{},");
-            scheduleResultDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ScheduleResultDTO>() {
-            }.getType());
-        } catch (ApiException e) {
+            if (result.getData() != null) {
+                scheduleResultDTO = DqcConstant.changeObjectToClass(result.getData(), ScheduleResultDTO.class);
+            }
+        } catch (Exception e) {
+            log.error("=============接口入参：{}==============", scheduleSearchDTO);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return scheduleResultDTO;

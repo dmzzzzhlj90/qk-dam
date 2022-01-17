@@ -1,12 +1,9 @@
 package com.qk.dm.dataquality.service.impl;
 
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
-import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.EngineTypeEnum;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
@@ -26,6 +23,7 @@ import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
 import com.qk.dm.dataquality.vo.RuleTemplateConstantsVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -41,8 +39,8 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
-    private static final Log LOG = LogFactory.get("规则模版操作");
     private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
     private JPAQueryFactory jpaQueryFactory;
     private final EntityManager entityManager;
@@ -198,7 +196,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
                     .where(booleanBuilder)
                     .fetchOne();
         } catch (Exception e) {
-            LOG.debug("查询总数量出错{}", e.getMessage());
+            log.error("查询总数量出错{}", e.getMessage());
             throw new BizException("查询失败");
         }
     }
@@ -215,7 +213,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
                     .limit(pagination.getSize())
                     .fetch();
         } catch (Exception e) {
-            LOG.debug("查询列表出错{}", e.getMessage());
+            log.error("查询列表出错{}", e.getMessage());
             throw new BizException("查询失败!!!");
         }
     }

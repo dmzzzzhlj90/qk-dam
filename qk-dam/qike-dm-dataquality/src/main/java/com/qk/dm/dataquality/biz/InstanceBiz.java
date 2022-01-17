@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.biz;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.NumberUtil;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
@@ -9,6 +7,8 @@ import com.qk.dm.dataquality.entity.DqcRuleDir;
 import com.qk.dm.dataquality.entity.DqcSchedulerBasicInfo;
 import com.qk.dm.dataquality.service.DqcRuleDirService;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
+import com.qk.dm.dataquality.utils.DateUtil;
+import com.qk.dm.dataquality.utils.XmathUtil;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.InstanceVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
@@ -70,8 +70,11 @@ public class InstanceBiz {
     /**********************分类统计************************************************************/
 
     private List<DqcProcessInstanceVO> instanceListByDate(Date date) {
-        String startTime = DateUtil.formatDateTime(DateUtil.beginOfDay(date));
-        String endTime = DateUtil.formatDateTime(DateUtil.endOfDay(date));
+        //todo hutool 转 自定义工具类
+        String startTime = DateUtil.toStr(DateUtil.beginOfDay(date));
+        String endTime = DateUtil.toStr(DateUtil.endOfDay(date));
+//        String startTime = DateUtil.formatDateTime(DateUtil.beginOfDay(date));
+//        String endTime = DateUtil.formatDateTime(DateUtil.endOfDay(date));
         return getDolphinInstanceList()
                 .stream()
                 .filter(it -> it.getStartTime().compareTo(startTime) >= 0 && it.getEndTime().compareTo(endTime) <= 0)
@@ -121,13 +124,13 @@ public class InstanceBiz {
         long sum = dirCount.values().stream().mapToLong(l -> l).sum();
         if (sum > 0) {
             //当天执行总数量,直接缩小100倍算出百分比
-            double count = NumberUtil.div(sum, 100, 2);
+            double count = XmathUtil.divide(sum, 100);
             //计算百分比
             for (Map.Entry<String, Long> item : dirCount.entrySet()) {
                 ruleDirList.add(
                         RuleDirVO.builder()
                                 .type(dqcRuleDirMap.get(item.getKey()))
-                                .value(NumberUtil.div(item.getValue().doubleValue(), count, 2))
+                                .value(XmathUtil.divide(item.getValue().doubleValue(), count))
                                 .build()
                 );
             }

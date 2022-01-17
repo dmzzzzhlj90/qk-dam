@@ -1,18 +1,19 @@
 package com.qk.dm.dataquality.constant;
 
-import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
 import com.qk.datacenter.model.ResultProcessInstance;
 import com.qk.datacenter.model.Resultstring;
+import com.qk.dm.dataquality.utils.DateUtil;
 import org.springframework.util.ObjectUtils;
 
 import java.util.*;
+
+import static com.qk.dam.datasource.utils.ConnectInfoConvertUtils.objectMapper;
 
 /**
  * 数据质量_规则分类目录
@@ -22,7 +23,6 @@ import java.util.*;
  * @since 1.0.0
  */
 public class DqcConstant {
-    public static final String format = "yyyy-MM-dd HH:mm:ss";
     /**
      * 目录顶级层级父级id
      */
@@ -120,24 +120,19 @@ public class DqcConstant {
         }
     }
 
-    public static void printException(ApiException e) {
-        System.err.println("Exception when calling DefaultApi");
-        System.err.println("Status code: " + e.getCode());
-        System.err.println("Reason: " + e.getResponseBody());
-        System.err.println("Response headers: " + e.getResponseHeaders());
-        e.printStackTrace();
-        throw new BizException("dolphin出错{},"+e.getMessage());
-    }
-
     public static void printException(Exception e) {
         e.printStackTrace();
-        throw new BizException("数据转换出错{},"+e.getMessage());
+        throw new BizException("dolphin出错{}," + e.getMessage());
+    }
+
+    public static <T> T changeObjectToClass(Object data, Class<T> clazz) throws JsonProcessingException {
+        return objectMapper.readValue(objectMapper.writeValueAsString(data), clazz);
     }
 
     public static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, String> m = Map.of(SCHEDULE_TIME_START, DateUtil.format(effectiveTimeStart, format),
-                SCHEDULE_TIME_END, DateUtil.format(effectiveTimeEnt, format),
+        Map<String, String> m = Map.of(SCHEDULE_TIME_START, DateUtil.toStr(effectiveTimeStart),
+                SCHEDULE_TIME_END, DateUtil.toStr(effectiveTimeEnt),
                 SCHEDULE_CRON, cron,
                 "timezoneId", "Asia/Shanghai");
         try {
@@ -152,7 +147,8 @@ public class DqcConstant {
         List<String> list = new ArrayList<>();
         //todo 临时加null 此处需要优化
         if (!"null".equals(jsonStr) && !ObjectUtils.isEmpty(jsonStr)) {
-            list = GsonUtil.fromJsonString(jsonStr, new TypeToken<List<String>>() {}.getType());
+            list = GsonUtil.fromJsonString(jsonStr, new TypeToken<List<String>>() {
+            }.getType());
         }
         return list;
     }

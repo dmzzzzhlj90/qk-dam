@@ -1,12 +1,11 @@
 package com.qk.dm.dataquality.biz;
 
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUtil;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.entity.DqcSchedulerResult;
 import com.qk.dm.dataquality.service.DqcSchedulerResultDataService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
+import com.qk.dm.dataquality.utils.DateUtil;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.JobInfoVO;
 import com.qk.dm.dataquality.vo.statistics.WarnTrendVO;
@@ -93,12 +92,12 @@ public class WarnBiz {
     public List<WarnTrendVO> warnTrendStatistics() {
         Date date = new Date();
         //查询一周内的所有告警
-        DateTime beginOfDay = DateUtil.offsetDay(DateUtil.beginOfDay(date), -6);
-        DateTime endOfDay = DateUtil.endOfDay(date);
+        Date beginOfDay = DateUtil.beginOfDay(DateUtil.getDateReductionDay(date,-6));
+        Date endOfDay = DateUtil.endOfDay(date);
         List<DqcSchedulerResult> schedulerResultListByWarnTrend = dqcSchedulerResultDataService.getSchedulerResultListByWarnTrend(RedisBiz.warnResult, beginOfDay, endOfDay);
         //获取最近七天数据
         Map<String, Long> warnTrendCountMap = schedulerResultListByWarnTrend.stream().collect(Collectors.groupingBy(item -> sdf.format(item.getGmtCreate()), Collectors.counting()));
-        return getDatesByDay(beginOfDay, endOfDay).keySet().stream().map(integer -> {
+        return DateUtil.getDatesByDay(beginOfDay, endOfDay).keySet().stream().map(integer -> {
             return WarnTrendVO
                     .builder()
                     .date(integer)
@@ -107,23 +106,5 @@ public class WarnBiz {
         }).collect(Collectors.toList());
     }
 
-    /**
-     * 获取两个日期之间的所有日期
-     *
-     * @return
-     */
-    public static Map<String, Integer> getDatesByDay(Date date, Date dateEnd) {
-        //保存日期的集合 
-        Map<String, Integer> map = new LinkedHashMap<>();
-        //用Calendar 进行日期比较判断
-        Calendar cd = Calendar.getInstance();
-        while (date.getTime() <= dateEnd.getTime()) {
-            map.put(sdf.format(date), 0);
-            cd.setTime(date);
-            //增加一天 放入集合
-            cd.add(Calendar.DATE, 1);
-            date = cd.getTime();
-        }
-        return map;
-    }
+
 }

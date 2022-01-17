@@ -63,7 +63,6 @@ dependencies {
             "javax.annotation:javax.annotation-api",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
-    implementation group: 'cn.hutool', name: 'hutool-db'
     implementation 'org.aspectj:aspectjweaver'
     annotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')

@@ -1,6 +1,5 @@
 package com.qk.dm.dataquality.biz;
 
-import cn.hutool.core.date.DateUtil;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.ruletemplate.DimensionTypeEnum;
@@ -10,6 +9,7 @@ import com.qk.dm.dataquality.entity.DqcSchedulerResult;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.service.DqcRuleTemplateService;
 import com.qk.dm.dataquality.service.DqcSchedulerRulesService;
+import com.qk.dm.dataquality.utils.DateUtil;
 import com.qk.dm.dataquality.vo.TaskInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.JobInfoVO;
@@ -51,12 +51,12 @@ public class TaskInstanceBiz {
 
     /************************数据总揽*****************************/
 
-    private List<TaskInstanceVO> getTaskInstanceListByStateType(String stateType) {
+    private List<TaskInstanceVO> getTaskInstanceListByStateType(InstanceStateTypeEnum stateType) {
         //在所有任务实例中筛选
-        return getDolphinTaskInstanceList().stream().filter(it -> stateType.equals(it.getState())).collect(Collectors.toList());
+        return getDolphinTaskInstanceList().stream().filter(it -> stateType.getCode().equals(it.getState())).collect(Collectors.toList());
     }
 
-    public JobInfoVO taskStateTypeStatistics(String stateType) {
+    public JobInfoVO taskStateTypeStatistics(InstanceStateTypeEnum stateType) {
         //根据状态查询所有任务实例
         List<TaskInstanceVO> list = getTaskInstanceListByStateType(stateType);
         Set<Long> taskCodeSet = list.stream().map(TaskInstanceVO::getTaskCode).collect(Collectors.toSet());

@@ -42,9 +42,9 @@ public class CacheBiz {
                 //实例统计数据
                 .instance(instanceBiz.instanceStatistics())
                 //实例状态统计
-                .successs(taskInstanceBiz.taskStateTypeStatistics(InstanceStateTypeEnum.SUCCESS.getCode()))
+                .successs(taskInstanceBiz.taskStateTypeStatistics(InstanceStateTypeEnum.SUCCESS))
                 //实例状态统计
-                .failure(taskInstanceBiz.taskStateTypeStatistics(InstanceStateTypeEnum.FAILURE.getCode()))
+                .failure(taskInstanceBiz.taskStateTypeStatistics(InstanceStateTypeEnum.FAILURE))
                 //告警统计
                 .warn(warnBiz.warnStatistics())
                 .build();
