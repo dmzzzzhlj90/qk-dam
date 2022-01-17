@@ -13,8 +13,7 @@ import com.qk.dm.dataquality.dolphinapi.dto.ScheduleDeleteDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ScheduleResultDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ScheduleSearchDTO;
 import com.qk.dm.dataquality.dolphinapi.service.ScheduleApiService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -25,8 +24,8 @@ import java.util.Date;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class ScheduleApiServiceImpl implements ScheduleApiService {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ScheduleApiServiceImpl.class);
     private final DefaultApi defaultApi;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
     private final DolphinRunInfoConfig dolphinRunInfoConfig;
@@ -71,7 +70,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
                             dolphinSchedulerInfoConfig.getTaskWorkerGroup());
             DqcConstant.verification(result, "创建定时失败{},");
         } catch (ApiException e) {
-            LOGGER.info("=============接口入参：{},{},{},{}==============", processDefinitionCode, effectiveTimeStart, effectiveTimeEnt, cron);
+            log.error("=============接口入参：{},{},{},{}==============", processDefinitionCode, effectiveTimeStart, effectiveTimeEnt, cron);
             DqcConstant.printException(e);
         }
     }
@@ -106,7 +105,7 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
                             dolphinSchedulerInfoConfig.getTaskWorkerGroup());
             DqcConstant.verification(result, "修改定时失败{},");
         } catch (ApiException e) {
-            LOGGER.info("=============接口入参：{},{},{},{}==============", scheduleId, effectiveTimeStart, effectiveTimeEnt, cron);
+            log.error("=============接口入参：{},{},{},{}==============", scheduleId, effectiveTimeStart, effectiveTimeEnt, cron);
             DqcConstant.printException(e);
         }
     }
@@ -184,8 +183,8 @@ public class ScheduleApiServiceImpl implements ScheduleApiService {
                 scheduleResultDTO = DqcConstant.changeObjectToClass(result.getData(), ScheduleResultDTO.class);
             }
         } catch (Exception e) {
-            LOGGER.info("=============接口入参：{}==============", scheduleSearchDTO);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{}==============", scheduleSearchDTO);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return scheduleResultDTO;

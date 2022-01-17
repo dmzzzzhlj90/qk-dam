@@ -15,5 +15,7 @@ public class ProcessInstanceResultDTO implements Serializable {
     private int total;
     private int currentPage;
     private int totalPage;
+    private Integer pageSize;
+    private Integer start;
     private List<ProcessInstanceDTO> totalList;
 }

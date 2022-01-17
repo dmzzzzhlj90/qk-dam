@@ -1,10 +1,10 @@
 package com.qk.dm.dataquality.utils;
 
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUtil;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataquality.constant.SchedulerCycleEnum;
 import com.qk.dm.dataquality.vo.DqcSchedulerConfigVO;
+
+import java.util.Date;
 
 /**
  * @author shenpj
@@ -65,10 +65,10 @@ public class CronUtil {
     }
 
     private static void day(String time, StringBuffer cronExp) {
-        DateTime parse = DateUtil.parse(time, "HH:mm");
+        Date parse = DateUtil.parseDate(time, "HH:mm");
         cronExp.append("0 ");
-        cronExp.append(DateUtil.minute(parse)).append(" ");
-        cronExp.append(DateUtil.hour(parse, true)).append(" ");
+        cronExp.append(DateUtil.toStr(parse,"mm")).append(" ");
+        cronExp.append(DateUtil.toStr(parse,"HH")).append(" ");
         cronExp.append("* ");
         cronExp.append("* ");
         cronExp.append("?");
@@ -76,10 +76,10 @@ public class CronUtil {
 
     private static void weeks(String interval, String time, StringBuffer cronExp) {
         //MON TUE WED THU FRI SAT SUN
-        DateTime parse = DateUtil.parse(time, "HH:mm");
+        Date parse = DateUtil.parseDate(time, "HH:mm");
         cronExp.append("0 ");
-        cronExp.append(DateUtil.minute(parse)).append(" ");
-        cronExp.append(DateUtil.hour(parse, true)).append(" ");
+        cronExp.append(DateUtil.toStr(parse,"mm")).append(" ");
+        cronExp.append(DateUtil.toStr(parse,"HH")).append(" ");
         cronExp.append("? ");
         cronExp.append("* ");
         if (interval.split(",").length == 7) {

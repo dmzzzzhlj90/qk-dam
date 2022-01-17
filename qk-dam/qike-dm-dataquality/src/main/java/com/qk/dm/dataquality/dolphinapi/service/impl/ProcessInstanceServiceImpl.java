@@ -10,8 +10,7 @@ import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,8 +19,8 @@ import org.springframework.stereotype.Service;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class ProcessInstanceServiceImpl implements ProcessInstanceService {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ProcessInstanceServiceImpl.class);
     private final DefaultApi defaultApi;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
 
@@ -50,8 +49,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                     );
             DqcConstant.verification(result, "执行流程实例操作失败{}，");
         } catch (ApiException e) {
-            LOGGER.info("=============接口入参：{},{}==============", processInstanceId, executeType);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{},{}==============", processInstanceId, executeType);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
     }
@@ -93,8 +92,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                 processInstanceResultDTO = DqcConstant.changeObjectToClass(result.getData(), ProcessInstanceResultDTO.class);
             }
         } catch (Exception e) {
-            LOGGER.info("=============接口入参：{}==============", instanceSearchDTO);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{}==============", instanceSearchDTO);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return processInstanceResultDTO;
@@ -120,8 +119,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                 processInstanceDTO = DqcConstant.changeObjectToClass(result.getData(), ProcessInstanceDTO.class);
             }
         } catch (Exception e) {
-            LOGGER.info("=============接口入参：{}==============", processInstanceId);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{}==============", processInstanceId);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return processInstanceDTO;
@@ -137,8 +136,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
             );
             DqcConstant.verification(result, "删除流程实例失败{}，");
         } catch (ApiException e) {
-            LOGGER.info("=============接口入参：{}==============", processInstanceId);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{}==============", processInstanceId);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
     }
@@ -168,8 +167,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                     );
             DqcConstant.verification(result, "批量删除流程实例失败{}，");
         } catch (ApiException e) {
-            LOGGER.info("=============接口入参：{}==============", deleteDTO);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{}==============", deleteDTO);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
     }
@@ -200,8 +199,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                 processTaskInstanceResultDTO = DqcConstant.changeObjectToClass(result.getData(), ProcessTaskInstanceResultDTO.class);
             }
         } catch (Exception e) {
-            LOGGER.info("=============接口入参：{}==============", TaskInstanceSearch);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{}==============", TaskInstanceSearch);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return processTaskInstanceResultDTO;
@@ -220,8 +219,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
             return result.getData();
         } catch (ApiException e) {
-            LOGGER.info("=============接口入参：{},{},{}==============", taskInstanceId, limit, skipLineNum);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{},{},{}==============", taskInstanceId, limit, skipLineNum);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return null;
@@ -240,8 +239,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
             return result.getData();
         } catch (ApiException e) {
-            LOGGER.info("=============接口入参：{},{},{}==============", taskInstanceId);
-            LOGGER.info("=============接口结果：{}==============", result);
+            log.error("=============接口入参：{},{},{}==============", taskInstanceId);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return null;

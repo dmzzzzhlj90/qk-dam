@@ -1,14 +1,14 @@
 package com.qk.dm.dataquality.constant;
 
-import cn.hutool.core.date.DateUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.model.Result;
 import com.qk.datacenter.model.ResultProcessInstance;
 import com.qk.datacenter.model.Resultstring;
+import com.qk.dm.dataquality.utils.DateUtil;
 import org.springframework.util.ObjectUtils;
 
 import java.util.*;
@@ -23,7 +23,6 @@ import static com.qk.dam.datasource.utils.ConnectInfoConvertUtils.objectMapper;
  * @since 1.0.0
  */
 public class DqcConstant {
-    public static final String format = "yyyy-MM-dd HH:mm:ss";
     /**
      * 目录顶级层级父级id
      */
@@ -131,12 +130,17 @@ public class DqcConstant {
     }
 
     public static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
-        JSONObject object = new JSONObject();
-        object.put(SCHEDULE_TIME_START, DateUtil.format(effectiveTimeStart, format));
-        object.put(SCHEDULE_TIME_END, DateUtil.format(effectiveTimeEnt, format));
-        object.put(SCHEDULE_CRON, cron);
-        object.put("timezoneId", "Asia/Shanghai");
-        return object.toJSONString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, String> m = Map.of(SCHEDULE_TIME_START, DateUtil.toStr(effectiveTimeStart),
+                SCHEDULE_TIME_END, DateUtil.toStr(effectiveTimeEnt),
+                SCHEDULE_CRON, cron,
+                "timezoneId", "Asia/Shanghai");
+        try {
+            return objectMapper.writeValueAsString(m);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static List<String> jsonStrToList(String jsonStr) {
