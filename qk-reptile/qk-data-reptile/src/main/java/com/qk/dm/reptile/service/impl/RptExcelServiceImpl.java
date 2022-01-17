@@ -1,7 +1,9 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.listener.RptBasicInfoUploadDataListener;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.service.RptExcelService;
@@ -58,23 +60,29 @@ public class RptExcelServiceImpl implements RptExcelService {
    * @param file
    */
   @Override
-  public void basicInfoUpload(MultipartFile file) {
+  public Boolean basicInfoUpload(MultipartFile file) {
     MultipartFileUtil.checkFile(file);
+    List<RptBaseInfo> list = new ArrayList<>();
     LOG.info("======开始导入待配数据!======");
     try {
+      RptBasicInfoUploadDataListener rptBasicInfoUploadDataListener = new RptBasicInfoUploadDataListener(rptExcelBatchService);
       EasyExcel.read(
           file.getInputStream(),
           RptBaseInfoVO.class,
-          new RptBasicInfoUploadDataListener(rptExcelBatchService))
+          rptBasicInfoUploadDataListener)
           .sheet()
           .doRead();
+      list = rptBasicInfoUploadDataListener.getList();
     } catch (Exception e) {
       LOG.info("======导入待配数据失败!======");
       throw new BizException("导入失败,请检验数据格式后再导入: " + e.getMessage());
     }
     LOG.info("======成功导入待配数据!======");
 
-
+    if (CollectionUtils.isNotEmpty(list)){
+      return true;
+    }
+    return false;
   }
 
   private List<RptBaseInfoVO> prtBaseInfoSampleData() {

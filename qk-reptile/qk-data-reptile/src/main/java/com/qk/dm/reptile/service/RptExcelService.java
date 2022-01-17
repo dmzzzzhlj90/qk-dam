@@ -11,5 +11,5 @@ public interface RptExcelService {
   void basicInfoDownloadTemplate(HttpServletResponse response)
       throws IOException;
 
-  void basicInfoUpload(MultipartFile file);
+  Boolean basicInfoUpload(MultipartFile file);
 }
