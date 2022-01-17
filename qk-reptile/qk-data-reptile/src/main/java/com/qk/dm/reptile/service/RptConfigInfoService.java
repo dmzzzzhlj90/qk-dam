@@ -1,8 +1,10 @@
 package com.qk.dm.reptile.service;
 
+import com.qk.dm.reptile.params.dto.RptConfigDetailDTO;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.vo.RptAddConfigVO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
+import com.qk.dm.reptile.params.vo.RptSelectorVO;
 
 import java.util.List;
 
@@ -15,6 +17,10 @@ public interface RptConfigInfoService {
     void update(Long id, RptConfigInfoDTO rptConfigInfoDTO);
 
     RptConfigInfoVO detail(Long id);
+
+    RptConfigInfoVO getDetailByBaseInfo(RptConfigDetailDTO rptConfigDetailDTO);
+
+    RptSelectorVO getSelectorInfo(Long configId);
 
     void delete(String ids);
 

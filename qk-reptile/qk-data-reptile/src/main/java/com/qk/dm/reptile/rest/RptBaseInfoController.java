@@ -4,16 +4,21 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
+import com.qk.dm.reptile.enums.TimeIntervalEnum;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.dto.RptCopyConfigDTO;
 import com.qk.dm.reptile.params.dto.RptRunStatusDTO;
+import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
+import com.qk.dm.reptile.params.vo.TimeIntervalVO;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 爬虫数据采集基础配置信息
@@ -143,7 +148,7 @@ public class RptBaseInfoController {
      */
     @GetMapping("/timed/execution")
     public DefaultCommonResult timedExecution(){
-        rptBaseInfoService.timedExecution();
+        rptBaseInfoService.timedExecution(null);
         return DefaultCommonResult.success();
     }
 
@@ -155,6 +160,26 @@ public class RptBaseInfoController {
     @PostMapping("/copy/config")
     public DefaultCommonResult copyConfig(@RequestBody @Validated RptCopyConfigDTO rptCopyConfig){
         rptBaseInfoService.copyConfig(rptCopyConfig.getSourceId(),rptCopyConfig.getTargetId());
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 获取定时时间间隔
+     * @return
+     */
+    @GetMapping("/time/interval")
+    public DefaultCommonResult<List<TimeIntervalVO>> getTimeInterval(){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,TimeIntervalEnum.enumToList());
+    }
+
+    /**
+     * 修改定时时间间隔
+     * @param timeIntervalDTO
+     * @return
+     */
+    @PostMapping("/time/interval")
+    public DefaultCommonResult updateTimeInterval(@RequestBody @Validated TimeIntervalDTO timeIntervalDTO) {
+        rptBaseInfoService.updateTimeInterval(timeIntervalDTO);
         return DefaultCommonResult.success();
     }
 

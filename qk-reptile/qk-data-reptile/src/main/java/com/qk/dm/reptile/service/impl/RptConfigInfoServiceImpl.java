@@ -8,10 +8,12 @@ import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.factory.ReptileServerFactory;
 import com.qk.dm.reptile.mapstruct.mapper.RptConfigInfoMapper;
+import com.qk.dm.reptile.params.dto.RptConfigDetailDTO;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import com.qk.dm.reptile.params.vo.RptAddConfigVO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
+import com.qk.dm.reptile.params.vo.RptSelectorVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
 import com.qk.dm.reptile.service.RptConfigInfoService;
@@ -78,6 +80,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         RptConfigInfo config = rptConfigInfoRepository.save(rptConfigInfo);
         //添加选择器
         if(!CollectionUtils.isEmpty(selectorList)){
+            rptSelectorColumnInfoService.deleteByConfigId(config.getId());
             rptSelectorColumnInfoService.batchInset(selectorList.stream().peek(e -> e.setConfigId(config.getId())).collect(Collectors.toList()));
         }
         return config;
@@ -120,7 +123,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         transRptConfigInfo(rptConfigInfo, rptConfigInfoDTO);
         rptConfigInfoRepository.saveAndFlush(rptConfigInfo);
         //修改选择器
-        rptSelectorColumnInfoService.batchUpdate(id,rptConfigInfoDTO.getSelectorList());
+//        rptSelectorColumnInfoService.batchUpdate(id,rptConfigInfoDTO.getSelectorList());
     }
 
     @Override
@@ -131,6 +134,39 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }
         RptConfigInfoVO rptConfigInfoVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(rptConfigInfo.get());
         return transRptConfigInfoVO(rptConfigInfo.get(),rptConfigInfoVO);
+    }
+
+    private RptConfigInfoVO getDetailByParentId(Long parentId){
+        RptConfigInfo rptConfigInfo = rptConfigInfoRepository.findByParentId(parentId);
+        if(Objects.isNull(rptConfigInfo)){
+            throw new BizException("当前要查询的配置信息parentId为：" + parentId + " 的数据不存在！！！");
+        }
+        RptConfigInfoVO rptConfigInfoVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(rptConfigInfo);
+        return transRptConfigInfoVO(rptConfigInfo,rptConfigInfoVO);
+    }
+
+    @Override
+    public RptConfigInfoVO getDetailByBaseInfo(RptConfigDetailDTO rptConfigDetailDTO) {
+        if(Objects.nonNull(rptConfigDetailDTO.getFirstFloor())){
+            return getDetailByParentId(rptConfigDetailDTO.getId());
+        }else {
+            List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(rptConfigDetailDTO.getId());
+            if (!CollectionUtils.isEmpty(list)) {
+                RptConfigInfoVO rptConfigVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(list.get(0));
+                transRptConfigInfoVO(list.get(0), rptConfigVO);
+                return rptConfigVO;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public RptSelectorVO getSelectorInfo(Long configId) {
+        RptConfigInfo configIdInfo = rptConfigInfoRepository.findByParentId(configId);
+        return RptSelectorVO.builder().configId(configId)
+                .selectorList(rptSelectorColumnInfoService.list(configId))
+                .next(Objects.nonNull(configIdInfo))
+                .build();
     }
 
     @Override
@@ -165,15 +201,37 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void copyConfig(Long sourceId, Long targetId) {
         List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(sourceId);
-        list.forEach(e->{
-            e.setBaseInfoId(targetId);
-            RptConfigInfo rptConfigInfo = rptConfigInfoRepository.save(e);
-            rptSelectorColumnInfoService.copyConfig(e.getId(),rptConfigInfo.getId());
-        });
+        if(!CollectionUtils.isEmpty(list)) {
+            //删除目标原有配置
+            deleteTargetConfig(targetId);
+            list.forEach(e -> {
+                RptConfigInfo info = new RptConfigInfo();
+                RptConfigInfoMapper.INSTANCE.of(e, info);
+                info.setBaseInfoId(targetId);
+                RptConfigInfo rptConfigInfo = rptConfigInfoRepository.save(info);
+                rptSelectorColumnInfoService.copyConfig(e.getId(), rptConfigInfo.getId());
+            });
+        }
+
+
         //修改基础信息表状态为爬虫
-        updateBaseInfoStatus(targetId);
+       // updateBaseInfoStatus(targetId);
+    }
+
+    /**
+     * 删除原有的配置和字段
+     * @param targetId
+     */
+    private void deleteTargetConfig(Long targetId){
+        List<RptConfigInfo> targetList = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(targetId);
+        if(!CollectionUtils.isEmpty(targetList)){
+            List<Long> targetIdList = targetList.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
+            rptSelectorColumnInfoService.deleteByConfigId(targetIdList);
+        }
+        rptConfigInfoRepository.deleteAllByBaseInfoId(targetId);
     }
 
     private void transRptConfigInfo(RptConfigInfo rptConfigInfo, RptConfigInfoDTO rptConfigInfoDTO){

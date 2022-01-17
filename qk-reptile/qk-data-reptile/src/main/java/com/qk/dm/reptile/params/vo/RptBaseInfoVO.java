@@ -194,4 +194,14 @@ public class RptBaseInfoVO {
    */
   @ExcelIgnore
   private Long executorId;
+  /**
+   * 是否已经添加了配置
+   */
+  @ExcelIgnore
+  private Boolean configStatus;
+  /**
+   * 定时间隔
+   */
+  @ExcelIgnore
+  private String timeInterval;
 }

@@ -11,4 +11,6 @@ public interface RptSelectorColumnInfoRepository extends BaseRepository<RptSelec
     void deleteAllByConfigId(Long configId);
 
     List<RptSelectorColumnInfo> findAllByConfigIdIn(List<Long> configIdList);
+
+    void deleteAllByConfigIdIn(List<Long> configIdList);
 }

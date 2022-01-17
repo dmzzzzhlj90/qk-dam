@@ -2,6 +2,7 @@ package com.qk.dm.reptile.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
+import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 
@@ -24,7 +25,7 @@ public interface RptBaseInfoService {
     /**
      * 定时调用爬虫接口
      */
-    void timedExecution();
+    void timedExecution(String timeInterval);
 
     /**
      * 手动执行调用爬虫接口
@@ -38,4 +39,10 @@ public interface RptBaseInfoService {
      * @param targetId
      */
     void copyConfig(Long sourceId,Long targetId);
+
+    /**
+     * 修改定时时间间隔
+     * @param timeIntervalDTO
+     */
+    void updateTimeInterval(TimeIntervalDTO timeIntervalDTO);
 }

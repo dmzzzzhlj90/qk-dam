@@ -1,0 +1,5199 @@
+{
+  "components": {
+    "schemas": {
+      "_dimension_commonsRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "目录id",
+            "type": "integer"
+          },
+          "dimensionColumnCodeList": {
+            "description": "目录字段编码集合",
+            "type": "array",
+            "items": {}
+          }
+        },
+        "required": [
+          "id",
+          "dimensionColumnCodeList"
+        ]
+      },
+      "_base_info_reptileRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "id": {
+            "format": "int64",
+            "description": "主键id",
+            "type": "integer"
+          },
+          "websiteName": {
+            "format": "string",
+            "description": "网站名",
+            "type": "string"
+          },
+          "websiteUrl": {
+            "format": "string",
+            "description": "连接",
+            "type": "string"
+          },
+          "runPeriod": {
+            "format": "string",
+            "description": "执行周期",
+            "type": "string"
+          },
+          "status": {
+            "format": "int32",
+            "description": "数据状态（0表示待配、1表示爬虫、2表示历史）",
+            "type": "integer"
+          },
+          "runStatus": {
+            "format": "int32",
+            "description": "数据启动状态（0表示启动、1表示未启动）",
+            "type": "integer"
+          },
+          "configId": {
+            "format": "int64",
+            "description": "配置人id",
+            "type": "integer"
+          },
+          "configName": {
+            "format": "string",
+            "description": "配置人名称",
+            "type": "string"
+          },
+          "jobId": {
+            "format": "string",
+            "description": "爬虫接口返回，用于查看日志",
+            "type": "string"
+          },
+          "gmtFunction": {
+            "format": "string",
+            "description": "最后运行时间",
+            "type": "string"
+          },
+          "createUsername": {
+            "format": "string",
+            "description": "创建人姓名",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "distributionDate": {
+            "format": "string",
+            "description": "分配日期",
+            "type": "string"
+          },
+          "deliveryDate": {
+            "format": "string",
+            "description": "交付日期",
+            "type": "string"
+          },
+          "secondSiteType": {
+            "format": "string",
+            "description": "二期站点类型",
+            "type": "string"
+          },
+          "listPageAddress": {
+            "format": "string",
+            "description": "列表页地址",
+            "type": "string"
+          },
+          "differentTypeMixed": {
+            "format": "string",
+            "description": "不同类型混合",
+            "type": "string"
+          },
+          "infoReleaseLevel": {
+            "format": "string",
+            "description": "信息发布级别",
+            "type": "string"
+          },
+          "provinceCode": {
+            "format": "string",
+            "description": "省编码",
+            "type": "string"
+          },
+          "cityCode": {
+            "format": "string",
+            "description": "市编码",
+            "type": "string"
+          },
+          "areaCode": {
+            "format": "string",
+            "description": "区编码",
+            "type": "string"
+          },
+          "websiteNameCorrection": {
+            "format": "string",
+            "description": "站点官网（修正）",
+            "type": "string"
+          },
+          "websiteUrlCorrection": {
+            "format": "string",
+            "description": "站点官网（修正）",
+            "type": "string"
+          },
+          "regionCode": {
+            "format": "string",
+            "description": "区域编码",
+            "type": "string"
+          },
+          "executor": {
+            "format": "string",
+            "description": "执行人",
+            "type": "string"
+          },
+          "executorId": {
+            "format": "int64",
+            "description": "执行人id",
+            "type": "integer"
+          },
+          "timeInterval": {
+            "format": "string",
+            "description": "定时间隔",
+            "type": "string"
+          }
+        },
+        "required": [
+          "websiteName",
+          "websiteUrl"
+        ]
+      },
+      "_base_info_time_intervalResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_selector_list__configId_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "主键id",
+                  "type": "integer"
+                },
+                "configId": {
+                  "format": "int64",
+                  "description": "配置表id",
+                  "type": "integer"
+                },
+                "columnName": {
+                  "format": "string",
+                  "description": "维度字段名称",
+                  "type": "string"
+                },
+                "columnCode": {
+                  "format": "string",
+                  "description": "维度字段编码",
+                  "type": "string"
+                },
+                "selector": {
+                  "format": "int32",
+                  "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+                  "type": "integer"
+                },
+                "selectorVal": {
+                  "format": "string",
+                  "description": "选择器字段值",
+                  "type": "string"
+                },
+                "elementType": {
+                  "format": "int32",
+                  "description": "元素类型 0代表单元素 1代表多元素",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_config_selector__configId_Request": {},
+      "_dir_Request": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键id（修改接口为必填项）",
+            "type": "integer"
+          },
+          "dimensionName": {
+            "format": "string",
+            "description": "维度目录名称",
+            "type": "string"
+          },
+          "fid": {
+            "format": "int64",
+            "description": "目录父类id",
+            "type": "integer"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "创建时间",
+            "type": "string"
+          },
+          "createUserid": {
+            "format": "int64",
+            "description": "创建人id",
+            "type": "integer"
+          },
+          "updateUserid": {
+            "format": "int64",
+            "description": "修改人id",
+            "type": "integer"
+          },
+          "createUsername": {
+            "format": "string",
+            "description": "创建人姓名",
+            "type": "string"
+          },
+          "updateUsername": {
+            "format": "string",
+            "description": "修改人姓名",
+            "type": "string"
+          },
+          "dimensionCode": {
+            "format": "string",
+            "description": "目录编码",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dimensionName",
+          "dimensionCode"
+        ]
+      },
+      "_base_info_waitingResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "pagination": {
+                      "description": "No comments found.(object)",
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "format": "int32",
+                          "description": "No comments found.",
+                          "type": "integer"
+                        },
+                        "size": {
+                          "format": "int32",
+                          "description": "No comments found.",
+                          "type": "integer"
+                        },
+                        "sortField": {
+                          "format": "string",
+                          "description": "No comments found.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "id": {
+                      "format": "int64",
+                      "description": "主键id",
+                      "type": "integer"
+                    },
+                    "websiteName": {
+                      "format": "string",
+                      "description": "网站名",
+                      "type": "string"
+                    },
+                    "websiteUrl": {
+                      "format": "string",
+                      "description": "连接",
+                      "type": "string"
+                    },
+                    "runPeriod": {
+                      "format": "string",
+                      "description": "执行周期",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "数据状态（0表示待配、1表示爬虫、2表示历史）",
+                      "type": "integer"
+                    },
+                    "runStatus": {
+                      "format": "int32",
+                      "description": "数据启动状态（0表示启动、1表示未启动）",
+                      "type": "integer"
+                    },
+                    "configId": {
+                      "format": "int64",
+                      "description": "配置人id",
+                      "type": "integer"
+                    },
+                    "configName": {
+                      "format": "string",
+                      "description": "配置人名称",
+                      "type": "string"
+                    },
+                    "jobId": {
+                      "format": "string",
+                      "description": "爬虫接口返回，用于查看日志",
+                      "type": "string"
+                    },
+                    "gmtFunction": {
+                      "format": "string",
+                      "description": "最后运行时间",
+                      "type": "string"
+                    },
+                    "createUsername": {
+                      "format": "string",
+                      "description": "创建人姓名",
+                      "type": "string"
+                    },
+                    "gmtCreate": {
+                      "format": "string",
+                      "description": "创建时间",
+                      "type": "string"
+                    },
+                    "distributionDate": {
+                      "format": "string",
+                      "description": "分配日期",
+                      "type": "string"
+                    },
+                    "deliveryDate": {
+                      "format": "string",
+                      "description": "交付日期",
+                      "type": "string"
+                    },
+                    "secondSiteType": {
+                      "format": "string",
+                      "description": "二期站点类型",
+                      "type": "string"
+                    },
+                    "listPageAddress": {
+                      "format": "string",
+                      "description": "列表页地址",
+                      "type": "string"
+                    },
+                    "differentTypeMixed": {
+                      "format": "string",
+                      "description": "不同类型混合",
+                      "type": "string"
+                    },
+                    "infoReleaseLevel": {
+                      "format": "string",
+                      "description": "信息发布级别",
+                      "type": "string"
+                    },
+                    "provinceCode": {
+                      "format": "string",
+                      "description": "省编码",
+                      "type": "string"
+                    },
+                    "cityCode": {
+                      "format": "string",
+                      "description": "市编码",
+                      "type": "string"
+                    },
+                    "areaCode": {
+                      "format": "string",
+                      "description": "区编码",
+                      "type": "string"
+                    },
+                    "websiteNameCorrection": {
+                      "format": "string",
+                      "description": "站点名称（修正）",
+                      "type": "string"
+                    },
+                    "websiteUrlCorrection": {
+                      "format": "string",
+                      "description": "站点官网（修正）",
+                      "type": "string"
+                    },
+                    "regionCode": {
+                      "format": "string",
+                      "description": "区域编码",
+                      "type": "string"
+                    },
+                    "executor": {
+                      "format": "string",
+                      "description": "执行人",
+                      "type": "string"
+                    },
+                    "executorId": {
+                      "format": "int64",
+                      "description": "执行人id",
+                      "type": "integer"
+                    },
+                    "configStatus": {
+                      "format": "boolean",
+                      "description": "是否已经添加了配置",
+                      "type": "boolean"
+                    },
+                    "timeInterval": {
+                      "format": "string",
+                      "description": "定时间隔",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_config_complete_startRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键id",
+            "type": "integer"
+          },
+          "baseInfoId": {
+            "format": "int64",
+            "description": "基础信息表id",
+            "type": "integer"
+          },
+          "parentId": {
+            "format": "int64",
+            "description": "父id",
+            "type": "integer"
+          },
+          "raw": {
+            "description": "raw参数(map data)",
+            "type": "object"
+          },
+          "formUrlencoded": {
+            "description": "x-www-form-urlencoded参数(map data)",
+            "type": "object"
+          },
+          "fromData": {
+            "description": "from-data参数(map data)",
+            "type": "object"
+          },
+          "cookies": {
+            "description": "cookies参数(map data)",
+            "type": "object"
+          },
+          "headers": {
+            "description": "headers参数(map data)",
+            "type": "object"
+          },
+          "dimensionId": {
+            "format": "int64",
+            "description": "维度目录id",
+            "type": "integer"
+          },
+          "dimensionName": {
+            "format": "string",
+            "description": "维度目录名称",
+            "type": "string"
+          },
+          "dimensionCode": {
+            "format": "string",
+            "description": "维度目录编码",
+            "type": "string"
+          },
+          "startoverJs": {
+            "format": "int32",
+            "description": "是否启动动态加载js(0表示未启动、1表示启动)",
+            "type": "integer"
+          },
+          "startoverIp": {
+            "format": "int32",
+            "description": "是否启动代理IP(0表示未启动、1表示启动)",
+            "type": "integer"
+          },
+          "requestUrl": {
+            "format": "string",
+            "description": "请求路径",
+            "type": "string"
+          },
+          "requestType": {
+            "format": "string",
+            "description": "请求方式",
+            "type": "string"
+          },
+          "selectorList": {
+            "description": "选择器列表",
+            "type": "array",
+            "items": {
+              "properties": {
+                "configId": {
+                  "format": "int64",
+                  "description": "配置表id",
+                  "type": "integer"
+                },
+                "columnName": {
+                  "format": "string",
+                  "description": "维度字段名称",
+                  "type": "string"
+                },
+                "columnCode": {
+                  "format": "string",
+                  "description": "维度字段编码",
+                  "type": "string"
+                },
+                "selector": {
+                  "format": "int32",
+                  "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+                  "type": "integer"
+                },
+                "selectorVal": {
+                  "format": "string",
+                  "description": "选择器字段值",
+                  "type": "string"
+                },
+                "elementType": {
+                  "format": "int32",
+                  "description": "元素类型 0代表单元素 1代表多元素",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "baseInfoId",
+          "parentId"
+        ]
+      },
+      "_excel_basic_info_uploadResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_selector__ids_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dir_dirnameResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "主键id（修改接口为必填项）",
+                  "type": "integer"
+                },
+                "dimensionName": {
+                  "format": "string",
+                  "description": "维度目录名称",
+                  "type": "string"
+                },
+                "dimensionCode": {
+                  "format": "string",
+                  "description": "目录编码",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_selector_detail__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "主键id",
+                "type": "integer"
+              },
+              "configId": {
+                "format": "int64",
+                "description": "配置表id",
+                "type": "integer"
+              },
+              "columnName": {
+                "format": "string",
+                "description": "维度字段名称",
+                "type": "string"
+              },
+              "columnCode": {
+                "format": "string",
+                "description": "维度字段编码",
+                "type": "string"
+              },
+              "selector": {
+                "format": "int32",
+                "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+                "type": "integer"
+              },
+              "selectorVal": {
+                "format": "string",
+                "description": "选择器字段值",
+                "type": "string"
+              },
+              "elementType": {
+                "format": "int32",
+                "description": "元素类型 0代表单元素 1代表多元素",
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "_selector_batch__configId_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dir__id_Request": {},
+      "_base_info_time_intervalRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "timeInterval": {
+            "format": "string",
+            "description": "定时间隔",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "timeInterval"
+        ]
+      },
+      "_base_info__id_Request": {},
+      "_base_info__ids_Request": {},
+      "_base_info_reptileResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "pagination": {
+                      "description": "No comments found.(object)",
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "format": "int32",
+                          "description": "No comments found.",
+                          "type": "integer"
+                        },
+                        "size": {
+                          "format": "int32",
+                          "description": "No comments found.",
+                          "type": "integer"
+                        },
+                        "sortField": {
+                          "format": "string",
+                          "description": "No comments found.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "id": {
+                      "format": "int64",
+                      "description": "主键id",
+                      "type": "integer"
+                    },
+                    "websiteName": {
+                      "format": "string",
+                      "description": "网站名",
+                      "type": "string"
+                    },
+                    "websiteUrl": {
+                      "format": "string",
+                      "description": "连接",
+                      "type": "string"
+                    },
+                    "runPeriod": {
+                      "format": "string",
+                      "description": "执行周期",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "数据状态（0表示待配、1表示爬虫、2表示历史）",
+                      "type": "integer"
+                    },
+                    "runStatus": {
+                      "format": "int32",
+                      "description": "数据启动状态（0表示启动、1表示未启动）",
+                      "type": "integer"
+                    },
+                    "configId": {
+                      "format": "int64",
+                      "description": "配置人id",
+                      "type": "integer"
+                    },
+                    "configName": {
+                      "format": "string",
+                      "description": "配置人名称",
+                      "type": "string"
+                    },
+                    "jobId": {
+                      "format": "string",
+                      "description": "爬虫接口返回，用于查看日志",
+                      "type": "string"
+                    },
+                    "gmtFunction": {
+                      "format": "string",
+                      "description": "最后运行时间",
+                      "type": "string"
+                    },
+                    "createUsername": {
+                      "format": "string",
+                      "description": "创建人姓名",
+                      "type": "string"
+                    },
+                    "gmtCreate": {
+                      "format": "string",
+                      "description": "创建时间",
+                      "type": "string"
+                    },
+                    "distributionDate": {
+                      "format": "string",
+                      "description": "分配日期",
+                      "type": "string"
+                    },
+                    "deliveryDate": {
+                      "format": "string",
+                      "description": "交付日期",
+                      "type": "string"
+                    },
+                    "secondSiteType": {
+                      "format": "string",
+                      "description": "二期站点类型",
+                      "type": "string"
+                    },
+                    "listPageAddress": {
+                      "format": "string",
+                      "description": "列表页地址",
+                      "type": "string"
+                    },
+                    "differentTypeMixed": {
+                      "format": "string",
+                      "description": "不同类型混合",
+                      "type": "string"
+                    },
+                    "infoReleaseLevel": {
+                      "format": "string",
+                      "description": "信息发布级别",
+                      "type": "string"
+                    },
+                    "provinceCode": {
+                      "format": "string",
+                      "description": "省编码",
+                      "type": "string"
+                    },
+                    "cityCode": {
+                      "format": "string",
+                      "description": "市编码",
+                      "type": "string"
+                    },
+                    "areaCode": {
+                      "format": "string",
+                      "description": "区编码",
+                      "type": "string"
+                    },
+                    "websiteNameCorrection": {
+                      "format": "string",
+                      "description": "站点名称（修正）",
+                      "type": "string"
+                    },
+                    "websiteUrlCorrection": {
+                      "format": "string",
+                      "description": "站点官网（修正）",
+                      "type": "string"
+                    },
+                    "regionCode": {
+                      "format": "string",
+                      "description": "区域编码",
+                      "type": "string"
+                    },
+                    "executor": {
+                      "format": "string",
+                      "description": "执行人",
+                      "type": "string"
+                    },
+                    "executorId": {
+                      "format": "int64",
+                      "description": "执行人id",
+                      "type": "integer"
+                    },
+                    "configStatus": {
+                      "format": "boolean",
+                      "description": "是否已经添加了配置",
+                      "type": "boolean"
+                    },
+                    "timeInterval": {
+                      "format": "string",
+                      "description": "定时间隔",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_selector__ids_Request": {},
+      "_config_Request": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键id",
+            "type": "integer"
+          },
+          "baseInfoId": {
+            "format": "int64",
+            "description": "基础信息表id",
+            "type": "integer"
+          },
+          "parentId": {
+            "format": "int64",
+            "description": "父id",
+            "type": "integer"
+          },
+          "raw": {
+            "description": "raw参数(map data)",
+            "type": "object"
+          },
+          "formUrlencoded": {
+            "description": "x-www-form-urlencoded参数(map data)",
+            "type": "object"
+          },
+          "fromData": {
+            "description": "from-data参数(map data)",
+            "type": "object"
+          },
+          "cookies": {
+            "description": "cookies参数(map data)",
+            "type": "object"
+          },
+          "headers": {
+            "description": "headers参数(map data)",
+            "type": "object"
+          },
+          "dimensionId": {
+            "format": "int64",
+            "description": "维度目录id",
+            "type": "integer"
+          },
+          "dimensionName": {
+            "format": "string",
+            "description": "维度目录名称",
+            "type": "string"
+          },
+          "dimensionCode": {
+            "format": "string",
+            "description": "维度目录编码",
+            "type": "string"
+          },
+          "startoverJs": {
+            "format": "int32",
+            "description": "是否启动动态加载js(0表示未启动、1表示启动)",
+            "type": "integer"
+          },
+          "startoverIp": {
+            "format": "int32",
+            "description": "是否启动代理IP(0表示未启动、1表示启动)",
+            "type": "integer"
+          },
+          "requestUrl": {
+            "format": "string",
+            "description": "请求路径",
+            "type": "string"
+          },
+          "requestType": {
+            "format": "string",
+            "description": "请求方式",
+            "type": "string"
+          },
+          "selectorList": {
+            "description": "选择器列表",
+            "type": "array",
+            "items": {
+              "properties": {
+                "configId": {
+                  "format": "int64",
+                  "description": "配置表id",
+                  "type": "integer"
+                },
+                "columnName": {
+                  "format": "string",
+                  "description": "维度字段名称",
+                  "type": "string"
+                },
+                "columnCode": {
+                  "format": "string",
+                  "description": "维度字段编码",
+                  "type": "string"
+                },
+                "selector": {
+                  "format": "int32",
+                  "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+                  "type": "integer"
+                },
+                "selectorVal": {
+                  "format": "string",
+                  "description": "选择器字段值",
+                  "type": "string"
+                },
+                "elementType": {
+                  "format": "int32",
+                  "description": "元素类型 0代表单元素 1代表多元素",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "baseInfoId",
+          "parentId"
+        ]
+      },
+      "_Request": {},
+      "_base_info__ids_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_base_info_execution__id_Request": {},
+      "_config__ids_Request": {},
+      "_selector_batch__configId_Request": {
+        "properties": {
+          "configId": {
+            "format": "int64",
+            "description": "配置表id",
+            "type": "integer"
+          },
+          "columnName": {
+            "format": "string",
+            "description": "维度字段名称",
+            "type": "string"
+          },
+          "columnCode": {
+            "format": "string",
+            "description": "维度字段编码",
+            "type": "string"
+          },
+          "selector": {
+            "format": "int32",
+            "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+            "type": "integer"
+          },
+          "selectorVal": {
+            "format": "string",
+            "description": "选择器字段值",
+            "type": "string"
+          },
+          "elementType": {
+            "format": "int32",
+            "description": "元素类型 0代表单元素 1代表多元素",
+            "type": "integer"
+          }
+        }
+      },
+      "_dir_dirnameRequest": {},
+      "_Response": {},
+      "_dimension_queryResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int64",
+                      "description": "主键id",
+                      "type": "integer"
+                    },
+                    "dimensionId": {
+                      "format": "int64",
+                      "description": "维度目录id",
+                      "type": "integer"
+                    },
+                    "description": {
+                      "format": "string",
+                      "description": "描述",
+                      "type": "string"
+                    },
+                    "dimensionColumnName": {
+                      "format": "string",
+                      "description": "维度字段名称",
+                      "type": "string"
+                    },
+                    "gmtModified": {
+                      "format": "string",
+                      "description": "修改时间",
+                      "type": "string"
+                    },
+                    "gmtCreate": {
+                      "format": "string",
+                      "description": "创建时间",
+                      "type": "string"
+                    },
+                    "createUserid": {
+                      "format": "int64",
+                      "description": "创建人id",
+                      "type": "integer"
+                    },
+                    "updateUserid": {
+                      "format": "int64",
+                      "description": "修改人id",
+                      "type": "integer"
+                    },
+                    "createUsername": {
+                      "format": "string",
+                      "description": "创建人姓名",
+                      "type": "string"
+                    },
+                    "updateUsername": {
+                      "format": "string",
+                      "description": "修改人姓名",
+                      "type": "string"
+                    },
+                    "dimensionColumnCode": {
+                      "format": "string",
+                      "description": "维度字段编码",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_dict_list__pid_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "No comments found.",
+                  "type": "integer"
+                },
+                "value": {
+                  "format": "string",
+                  "description": "区划编码",
+                  "type": "string"
+                },
+                "label": {
+                  "format": "string",
+                  "description": "区划名称",
+                  "type": "string"
+                },
+                "pid": {
+                  "format": "int64",
+                  "description": "父id",
+                  "type": "integer"
+                },
+                "children": {
+                  "description": "No comments found.",
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "_selector__id_Request": {
+        "properties": {
+          "configId": {
+            "format": "int64",
+            "description": "配置表id",
+            "type": "integer"
+          },
+          "columnName": {
+            "format": "string",
+            "description": "维度字段名称",
+            "type": "string"
+          },
+          "columnCode": {
+            "format": "string",
+            "description": "维度字段编码",
+            "type": "string"
+          },
+          "selector": {
+            "format": "int32",
+            "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+            "type": "integer"
+          },
+          "selectorVal": {
+            "format": "string",
+            "description": "选择器字段值",
+            "type": "string"
+          },
+          "elementType": {
+            "format": "int32",
+            "description": "元素类型 0代表单元素 1代表多元素",
+            "type": "integer"
+          }
+        }
+      },
+      "_dict_list__pid_Request": {},
+      "_base_info_waitingRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "id": {
+            "format": "int64",
+            "description": "主键id",
+            "type": "integer"
+          },
+          "websiteName": {
+            "format": "string",
+            "description": "网站名",
+            "type": "string"
+          },
+          "websiteUrl": {
+            "format": "string",
+            "description": "连接",
+            "type": "string"
+          },
+          "runPeriod": {
+            "format": "string",
+            "description": "执行周期",
+            "type": "string"
+          },
+          "status": {
+            "format": "int32",
+            "description": "数据状态（0表示待配、1表示爬虫、2表示历史）",
+            "type": "integer"
+          },
+          "runStatus": {
+            "format": "int32",
+            "description": "数据启动状态（0表示启动、1表示未启动）",
+            "type": "integer"
+          },
+          "configId": {
+            "format": "int64",
+            "description": "配置人id",
+            "type": "integer"
+          },
+          "configName": {
+            "format": "string",
+            "description": "配置人名称",
+            "type": "string"
+          },
+          "jobId": {
+            "format": "string",
+            "description": "爬虫接口返回，用于查看日志",
+            "type": "string"
+          },
+          "gmtFunction": {
+            "format": "string",
+            "description": "最后运行时间",
+            "type": "string"
+          },
+          "createUsername": {
+            "format": "string",
+            "description": "创建人姓名",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "distributionDate": {
+            "format": "string",
+            "description": "分配日期",
+            "type": "string"
+          },
+          "deliveryDate": {
+            "format": "string",
+            "description": "交付日期",
+            "type": "string"
+          },
+          "secondSiteType": {
+            "format": "string",
+            "description": "二期站点类型",
+            "type": "string"
+          },
+          "listPageAddress": {
+            "format": "string",
+            "description": "列表页地址",
+            "type": "string"
+          },
+          "differentTypeMixed": {
+            "format": "string",
+            "description": "不同类型混合",
+            "type": "string"
+          },
+          "infoReleaseLevel": {
+            "format": "string",
+            "description": "信息发布级别",
+            "type": "string"
+          },
+          "provinceCode": {
+            "format": "string",
+            "description": "省编码",
+            "type": "string"
+          },
+          "cityCode": {
+            "format": "string",
+            "description": "市编码",
+            "type": "string"
+          },
+          "areaCode": {
+            "format": "string",
+            "description": "区编码",
+            "type": "string"
+          },
+          "websiteNameCorrection": {
+            "format": "string",
+            "description": "站点官网（修正）",
+            "type": "string"
+          },
+          "websiteUrlCorrection": {
+            "format": "string",
+            "description": "站点官网（修正）",
+            "type": "string"
+          },
+          "regionCode": {
+            "format": "string",
+            "description": "区域编码",
+            "type": "string"
+          },
+          "executor": {
+            "format": "string",
+            "description": "执行人",
+            "type": "string"
+          },
+          "executorId": {
+            "format": "int64",
+            "description": "执行人id",
+            "type": "integer"
+          },
+          "timeInterval": {
+            "format": "string",
+            "description": "定时间隔",
+            "type": "string"
+          }
+        },
+        "required": [
+          "websiteName",
+          "websiteUrl"
+        ]
+      },
+      "_base_info_historyRequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "id": {
+            "format": "int64",
+            "description": "主键id",
+            "type": "integer"
+          },
+          "websiteName": {
+            "format": "string",
+            "description": "网站名",
+            "type": "string"
+          },
+          "websiteUrl": {
+            "format": "string",
+            "description": "连接",
+            "type": "string"
+          },
+          "runPeriod": {
+            "format": "string",
+            "description": "执行周期",
+            "type": "string"
+          },
+          "status": {
+            "format": "int32",
+            "description": "数据状态（0表示待配、1表示爬虫、2表示历史）",
+            "type": "integer"
+          },
+          "runStatus": {
+            "format": "int32",
+            "description": "数据启动状态（0表示启动、1表示未启动）",
+            "type": "integer"
+          },
+          "configId": {
+            "format": "int64",
+            "description": "配置人id",
+            "type": "integer"
+          },
+          "configName": {
+            "format": "string",
+            "description": "配置人名称",
+            "type": "string"
+          },
+          "jobId": {
+            "format": "string",
+            "description": "爬虫接口返回，用于查看日志",
+            "type": "string"
+          },
+          "gmtFunction": {
+            "format": "string",
+            "description": "最后运行时间",
+            "type": "string"
+          },
+          "createUsername": {
+            "format": "string",
+            "description": "创建人姓名",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "distributionDate": {
+            "format": "string",
+            "description": "分配日期",
+            "type": "string"
+          },
+          "deliveryDate": {
+            "format": "string",
+            "description": "交付日期",
+            "type": "string"
+          },
+          "secondSiteType": {
+            "format": "string",
+            "description": "二期站点类型",
+            "type": "string"
+          },
+          "listPageAddress": {
+            "format": "string",
+            "description": "列表页地址",
+            "type": "string"
+          },
+          "differentTypeMixed": {
+            "format": "string",
+            "description": "不同类型混合",
+            "type": "string"
+          },
+          "infoReleaseLevel": {
+            "format": "string",
+            "description": "信息发布级别",
+            "type": "string"
+          },
+          "provinceCode": {
+            "format": "string",
+            "description": "省编码",
+            "type": "string"
+          },
+          "cityCode": {
+            "format": "string",
+            "description": "市编码",
+            "type": "string"
+          },
+          "areaCode": {
+            "format": "string",
+            "description": "区编码",
+            "type": "string"
+          },
+          "websiteNameCorrection": {
+            "format": "string",
+            "description": "站点官网（修正）",
+            "type": "string"
+          },
+          "websiteUrlCorrection": {
+            "format": "string",
+            "description": "站点官网（修正）",
+            "type": "string"
+          },
+          "regionCode": {
+            "format": "string",
+            "description": "区域编码",
+            "type": "string"
+          },
+          "executor": {
+            "format": "string",
+            "description": "执行人",
+            "type": "string"
+          },
+          "executorId": {
+            "format": "int64",
+            "description": "执行人id",
+            "type": "integer"
+          },
+          "timeInterval": {
+            "format": "string",
+            "description": "定时间隔",
+            "type": "string"
+          }
+        },
+        "required": [
+          "websiteName",
+          "websiteUrl"
+        ]
+      },
+      "_dimension_commonsResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dimension_queryRequest": {
+        "properties": {
+          "pagination": {
+            "description": "分页信息(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "id": {
+            "format": "int64",
+            "description": "主键id（维度目录id）",
+            "type": "integer"
+          },
+          "createUsername": {
+            "format": "string",
+            "description": "创建人姓名",
+            "type": "string"
+          },
+          "dimensionColumnCode": {
+            "format": "string",
+            "description": "维度字段编码",
+            "type": "string"
+          },
+          "dimensionColumnName": {
+            "format": "string",
+            "description": "维度字段名称",
+            "type": "string"
+          }
+        }
+      },
+      "_base_info_run_statusRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "runStatus": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "runStatus"
+        ]
+      },
+      "_selector_detail__id_Request": {},
+      "_base_info_Request": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "id": {
+            "format": "int64",
+            "description": "主键id",
+            "type": "integer"
+          },
+          "websiteName": {
+            "format": "string",
+            "description": "网站名",
+            "type": "string"
+          },
+          "websiteUrl": {
+            "format": "string",
+            "description": "连接",
+            "type": "string"
+          },
+          "runPeriod": {
+            "format": "string",
+            "description": "执行周期",
+            "type": "string"
+          },
+          "status": {
+            "format": "int32",
+            "description": "数据状态（0表示待配、1表示爬虫、2表示历史）",
+            "type": "integer"
+          },
+          "runStatus": {
+            "format": "int32",
+            "description": "数据启动状态（0表示启动、1表示未启动）",
+            "type": "integer"
+          },
+          "configId": {
+            "format": "int64",
+            "description": "配置人id",
+            "type": "integer"
+          },
+          "configName": {
+            "format": "string",
+            "description": "配置人名称",
+            "type": "string"
+          },
+          "jobId": {
+            "format": "string",
+            "description": "爬虫接口返回，用于查看日志",
+            "type": "string"
+          },
+          "gmtFunction": {
+            "format": "string",
+            "description": "最后运行时间",
+            "type": "string"
+          },
+          "createUsername": {
+            "format": "string",
+            "description": "创建人姓名",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "distributionDate": {
+            "format": "string",
+            "description": "分配日期",
+            "type": "string"
+          },
+          "deliveryDate": {
+            "format": "string",
+            "description": "交付日期",
+            "type": "string"
+          },
+          "secondSiteType": {
+            "format": "string",
+            "description": "二期站点类型",
+            "type": "string"
+          },
+          "listPageAddress": {
+            "format": "string",
+            "description": "列表页地址",
+            "type": "string"
+          },
+          "differentTypeMixed": {
+            "format": "string",
+            "description": "不同类型混合",
+            "type": "string"
+          },
+          "infoReleaseLevel": {
+            "format": "string",
+            "description": "信息发布级别",
+            "type": "string"
+          },
+          "provinceCode": {
+            "format": "string",
+            "description": "省编码",
+            "type": "string"
+          },
+          "cityCode": {
+            "format": "string",
+            "description": "市编码",
+            "type": "string"
+          },
+          "areaCode": {
+            "format": "string",
+            "description": "区编码",
+            "type": "string"
+          },
+          "websiteNameCorrection": {
+            "format": "string",
+            "description": "站点官网（修正）",
+            "type": "string"
+          },
+          "websiteUrlCorrection": {
+            "format": "string",
+            "description": "站点官网（修正）",
+            "type": "string"
+          },
+          "regionCode": {
+            "format": "string",
+            "description": "区域编码",
+            "type": "string"
+          },
+          "executor": {
+            "format": "string",
+            "description": "执行人",
+            "type": "string"
+          },
+          "executorId": {
+            "format": "int64",
+            "description": "执行人id",
+            "type": "integer"
+          },
+          "timeInterval": {
+            "format": "string",
+            "description": "定时间隔",
+            "type": "string"
+          }
+        },
+        "required": [
+          "websiteName",
+          "websiteUrl"
+        ]
+      },
+      "_selector_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_config_detailResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "主键id",
+                "type": "integer"
+              },
+              "baseInfoId": {
+                "format": "int64",
+                "description": "基础信息表id",
+                "type": "integer"
+              },
+              "parentId": {
+                "format": "int64",
+                "description": "父id",
+                "type": "integer"
+              },
+              "raw": {
+                "description": "raw参数(map data)",
+                "type": "object"
+              },
+              "formUrlencoded": {
+                "description": "x-www-form-urlencoded参数(map data)",
+                "type": "object"
+              },
+              "fromData": {
+                "description": "from-data参数(map data)",
+                "type": "object"
+              },
+              "cookies": {
+                "description": "cookies参数(map data)",
+                "type": "object"
+              },
+              "headers": {
+                "description": "headers参数(map data)",
+                "type": "object"
+              },
+              "dimensionId": {
+                "format": "int64",
+                "description": "维度目录id",
+                "type": "integer"
+              },
+              "dimensionName": {
+                "format": "string",
+                "description": "维度目录名称",
+                "type": "string"
+              },
+              "dimensionCode": {
+                "format": "string",
+                "description": "维度目录编码",
+                "type": "string"
+              },
+              "startoverJs": {
+                "format": "int32",
+                "description": "是否启动动态加载js(0表示未启动、1表示启动)",
+                "type": "integer"
+              },
+              "startoverIp": {
+                "format": "int32",
+                "description": "是否启动代理IP(0表示未启动、1表示启动)",
+                "type": "integer"
+              },
+              "requestUrl": {
+                "format": "string",
+                "description": "请求路径",
+                "type": "string"
+              },
+              "requestType": {
+                "format": "string",
+                "description": "请求方式",
+                "type": "string"
+              },
+              "selectorList": {
+                "description": "选择器列表",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int64",
+                      "description": "主键id",
+                      "type": "integer"
+                    },
+                    "configId": {
+                      "format": "int64",
+                      "description": "配置表id",
+                      "type": "integer"
+                    },
+                    "columnName": {
+                      "format": "string",
+                      "description": "维度字段名称",
+                      "type": "string"
+                    },
+                    "columnCode": {
+                      "format": "string",
+                      "description": "维度字段编码",
+                      "type": "string"
+                    },
+                    "selector": {
+                      "format": "int32",
+                      "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+                      "type": "integer"
+                    },
+                    "selectorVal": {
+                      "format": "string",
+                      "description": "选择器字段值",
+                      "type": "string"
+                    },
+                    "elementType": {
+                      "format": "int32",
+                      "description": "元素类型 0代表单元素 1代表多元素",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_base_info_timed_executionRequest": {},
+      "_dir_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_selector_Request": {
+        "properties": {
+          "configId": {
+            "format": "int64",
+            "description": "配置表id",
+            "type": "integer"
+          },
+          "columnName": {
+            "format": "string",
+            "description": "维度字段名称",
+            "type": "string"
+          },
+          "columnCode": {
+            "format": "string",
+            "description": "维度字段编码",
+            "type": "string"
+          },
+          "selector": {
+            "format": "int32",
+            "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+            "type": "integer"
+          },
+          "selectorVal": {
+            "format": "string",
+            "description": "选择器字段值",
+            "type": "string"
+          },
+          "elementType": {
+            "format": "int32",
+            "description": "元素类型 0代表单元素 1代表多元素",
+            "type": "integer"
+          }
+        }
+      },
+      "_config__ids_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dir__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_excel_basic_info_upload_templateResponse": {},
+      "_base_info_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_base_info_historyResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "pagination": {
+                      "description": "No comments found.(object)",
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "format": "int32",
+                          "description": "No comments found.",
+                          "type": "integer"
+                        },
+                        "size": {
+                          "format": "int32",
+                          "description": "No comments found.",
+                          "type": "integer"
+                        },
+                        "sortField": {
+                          "format": "string",
+                          "description": "No comments found.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "id": {
+                      "format": "int64",
+                      "description": "主键id",
+                      "type": "integer"
+                    },
+                    "websiteName": {
+                      "format": "string",
+                      "description": "网站名",
+                      "type": "string"
+                    },
+                    "websiteUrl": {
+                      "format": "string",
+                      "description": "连接",
+                      "type": "string"
+                    },
+                    "runPeriod": {
+                      "format": "string",
+                      "description": "执行周期",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "数据状态（0表示待配、1表示爬虫、2表示历史）",
+                      "type": "integer"
+                    },
+                    "runStatus": {
+                      "format": "int32",
+                      "description": "数据启动状态（0表示启动、1表示未启动）",
+                      "type": "integer"
+                    },
+                    "configId": {
+                      "format": "int64",
+                      "description": "配置人id",
+                      "type": "integer"
+                    },
+                    "configName": {
+                      "format": "string",
+                      "description": "配置人名称",
+                      "type": "string"
+                    },
+                    "jobId": {
+                      "format": "string",
+                      "description": "爬虫接口返回，用于查看日志",
+                      "type": "string"
+                    },
+                    "gmtFunction": {
+                      "format": "string",
+                      "description": "最后运行时间",
+                      "type": "string"
+                    },
+                    "createUsername": {
+                      "format": "string",
+                      "description": "创建人姓名",
+                      "type": "string"
+                    },
+                    "gmtCreate": {
+                      "format": "string",
+                      "description": "创建时间",
+                      "type": "string"
+                    },
+                    "distributionDate": {
+                      "format": "string",
+                      "description": "分配日期",
+                      "type": "string"
+                    },
+                    "deliveryDate": {
+                      "format": "string",
+                      "description": "交付日期",
+                      "type": "string"
+                    },
+                    "secondSiteType": {
+                      "format": "string",
+                      "description": "二期站点类型",
+                      "type": "string"
+                    },
+                    "listPageAddress": {
+                      "format": "string",
+                      "description": "列表页地址",
+                      "type": "string"
+                    },
+                    "differentTypeMixed": {
+                      "format": "string",
+                      "description": "不同类型混合",
+                      "type": "string"
+                    },
+                    "infoReleaseLevel": {
+                      "format": "string",
+                      "description": "信息发布级别",
+                      "type": "string"
+                    },
+                    "provinceCode": {
+                      "format": "string",
+                      "description": "省编码",
+                      "type": "string"
+                    },
+                    "cityCode": {
+                      "format": "string",
+                      "description": "市编码",
+                      "type": "string"
+                    },
+                    "areaCode": {
+                      "format": "string",
+                      "description": "区编码",
+                      "type": "string"
+                    },
+                    "websiteNameCorrection": {
+                      "format": "string",
+                      "description": "站点名称（修正）",
+                      "type": "string"
+                    },
+                    "websiteUrlCorrection": {
+                      "format": "string",
+                      "description": "站点官网（修正）",
+                      "type": "string"
+                    },
+                    "regionCode": {
+                      "format": "string",
+                      "description": "区域编码",
+                      "type": "string"
+                    },
+                    "executor": {
+                      "format": "string",
+                      "description": "执行人",
+                      "type": "string"
+                    },
+                    "executorId": {
+                      "format": "int64",
+                      "description": "执行人id",
+                      "type": "integer"
+                    },
+                    "configStatus": {
+                      "format": "boolean",
+                      "description": "是否已经添加了配置",
+                      "type": "boolean"
+                    },
+                    "timeInterval": {
+                      "format": "string",
+                      "description": "定时间隔",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_config_list__baseInfoId_Request": {},
+      "_base_info_copy_configRequest": {
+        "properties": {
+          "sourceId": {
+            "format": "int64",
+            "description": "来源id(爬虫id)",
+            "type": "integer"
+          },
+          "targetId": {
+            "format": "int64",
+            "description": "目标id(待配id)",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "sourceId",
+          "targetId"
+        ]
+      },
+      "_excel_basic_info_upload_templateRequest": {},
+      "_selector_list__configId_Request": {},
+      "_base_info_execution__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_config__id_Request": {},
+      "_base_info__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "pagination": {
+                "description": "No comments found.(object)",
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "format": "int32",
+                    "description": "No comments found.",
+                    "type": "integer"
+                  },
+                  "size": {
+                    "format": "int32",
+                    "description": "No comments found.",
+                    "type": "integer"
+                  },
+                  "sortField": {
+                    "format": "string",
+                    "description": "No comments found.",
+                    "type": "string"
+                  }
+                }
+              },
+              "id": {
+                "format": "int64",
+                "description": "主键id",
+                "type": "integer"
+              },
+              "websiteName": {
+                "format": "string",
+                "description": "网站名",
+                "type": "string"
+              },
+              "websiteUrl": {
+                "format": "string",
+                "description": "连接",
+                "type": "string"
+              },
+              "runPeriod": {
+                "format": "string",
+                "description": "执行周期",
+                "type": "string"
+              },
+              "status": {
+                "format": "int32",
+                "description": "数据状态（0表示待配、1表示爬虫、2表示历史）",
+                "type": "integer"
+              },
+              "runStatus": {
+                "format": "int32",
+                "description": "数据启动状态（0表示启动、1表示未启动）",
+                "type": "integer"
+              },
+              "configId": {
+                "format": "int64",
+                "description": "配置人id",
+                "type": "integer"
+              },
+              "configName": {
+                "format": "string",
+                "description": "配置人名称",
+                "type": "string"
+              },
+              "jobId": {
+                "format": "string",
+                "description": "爬虫接口返回，用于查看日志",
+                "type": "string"
+              },
+              "gmtFunction": {
+                "format": "string",
+                "description": "最后运行时间",
+                "type": "string"
+              },
+              "createUsername": {
+                "format": "string",
+                "description": "创建人姓名",
+                "type": "string"
+              },
+              "gmtCreate": {
+                "format": "string",
+                "description": "创建时间",
+                "type": "string"
+              },
+              "distributionDate": {
+                "format": "string",
+                "description": "分配日期",
+                "type": "string"
+              },
+              "deliveryDate": {
+                "format": "string",
+                "description": "交付日期",
+                "type": "string"
+              },
+              "secondSiteType": {
+                "format": "string",
+                "description": "二期站点类型",
+                "type": "string"
+              },
+              "listPageAddress": {
+                "format": "string",
+                "description": "列表页地址",
+                "type": "string"
+              },
+              "differentTypeMixed": {
+                "format": "string",
+                "description": "不同类型混合",
+                "type": "string"
+              },
+              "infoReleaseLevel": {
+                "format": "string",
+                "description": "信息发布级别",
+                "type": "string"
+              },
+              "provinceCode": {
+                "format": "string",
+                "description": "省编码",
+                "type": "string"
+              },
+              "cityCode": {
+                "format": "string",
+                "description": "市编码",
+                "type": "string"
+              },
+              "areaCode": {
+                "format": "string",
+                "description": "区编码",
+                "type": "string"
+              },
+              "websiteNameCorrection": {
+                "format": "string",
+                "description": "站点名称（修正）",
+                "type": "string"
+              },
+              "websiteUrlCorrection": {
+                "format": "string",
+                "description": "站点官网（修正）",
+                "type": "string"
+              },
+              "regionCode": {
+                "format": "string",
+                "description": "区域编码",
+                "type": "string"
+              },
+              "executor": {
+                "format": "string",
+                "description": "执行人",
+                "type": "string"
+              },
+              "executorId": {
+                "format": "int64",
+                "description": "执行人id",
+                "type": "integer"
+              },
+              "configStatus": {
+                "format": "boolean",
+                "description": "是否已经添加了配置",
+                "type": "boolean"
+              },
+              "timeInterval": {
+                "format": "string",
+                "description": "定时间隔",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_base_info_run_statusResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_selector__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_base_info_timed_executionResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dimension_Request": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键id（修改接口为必填项）",
+            "type": "integer"
+          },
+          "dimensionId": {
+            "format": "int64",
+            "description": "维度目录id",
+            "type": "integer"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          },
+          "dimensionColumnName": {
+            "format": "string",
+            "description": "维度字段名称",
+            "type": "string"
+          },
+          "gmtModified": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "format": "string",
+            "description": "创建时间",
+            "type": "string"
+          },
+          "createUserid": {
+            "format": "int64",
+            "description": "创建人id",
+            "type": "integer"
+          },
+          "updateUserid": {
+            "format": "int64",
+            "description": "修改人id",
+            "type": "integer"
+          },
+          "createUsername": {
+            "format": "string",
+            "description": "创建人姓名",
+            "type": "string"
+          },
+          "updateUsername": {
+            "format": "string",
+            "description": "修改人姓名",
+            "type": "string"
+          },
+          "dimensionColumnCode": {
+            "format": "string",
+            "description": "维度字段编码",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dimensionId",
+          "dimensionColumnName",
+          "dimensionColumnCode"
+        ]
+      },
+      "_config__id_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "主键id",
+                "type": "integer"
+              },
+              "baseInfoId": {
+                "format": "int64",
+                "description": "基础信息表id",
+                "type": "integer"
+              },
+              "parentId": {
+                "format": "int64",
+                "description": "父id",
+                "type": "integer"
+              },
+              "raw": {
+                "description": "raw参数(map data)",
+                "type": "object"
+              },
+              "formUrlencoded": {
+                "description": "x-www-form-urlencoded参数(map data)",
+                "type": "object"
+              },
+              "fromData": {
+                "description": "from-data参数(map data)",
+                "type": "object"
+              },
+              "cookies": {
+                "description": "cookies参数(map data)",
+                "type": "object"
+              },
+              "headers": {
+                "description": "headers参数(map data)",
+                "type": "object"
+              },
+              "dimensionId": {
+                "format": "int64",
+                "description": "维度目录id",
+                "type": "integer"
+              },
+              "dimensionName": {
+                "format": "string",
+                "description": "维度目录名称",
+                "type": "string"
+              },
+              "dimensionCode": {
+                "format": "string",
+                "description": "维度目录编码",
+                "type": "string"
+              },
+              "startoverJs": {
+                "format": "int32",
+                "description": "是否启动动态加载js(0表示未启动、1表示启动)",
+                "type": "integer"
+              },
+              "startoverIp": {
+                "format": "int32",
+                "description": "是否启动代理IP(0表示未启动、1表示启动)",
+                "type": "integer"
+              },
+              "requestUrl": {
+                "format": "string",
+                "description": "请求路径",
+                "type": "string"
+              },
+              "requestType": {
+                "format": "string",
+                "description": "请求方式",
+                "type": "string"
+              },
+              "selectorList": {
+                "description": "选择器列表",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int64",
+                      "description": "主键id",
+                      "type": "integer"
+                    },
+                    "configId": {
+                      "format": "int64",
+                      "description": "配置表id",
+                      "type": "integer"
+                    },
+                    "columnName": {
+                      "format": "string",
+                      "description": "维度字段名称",
+                      "type": "string"
+                    },
+                    "columnCode": {
+                      "format": "string",
+                      "description": "维度字段编码",
+                      "type": "string"
+                    },
+                    "selector": {
+                      "format": "int32",
+                      "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+                      "type": "integer"
+                    },
+                    "selectorVal": {
+                      "format": "string",
+                      "description": "选择器字段值",
+                      "type": "string"
+                    },
+                    "elementType": {
+                      "format": "int32",
+                      "description": "元素类型 0代表单元素 1代表多元素",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_base_info_copy_configResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_config_detailRequest": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "待配id、爬虫id或配置id",
+            "type": "integer"
+          },
+          "firstFloor": {
+            "format": "boolean",
+            "description": "是否第一层，默认false",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "_excel_basic_info_uploadRequest": {},
+      "_config_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "configId": {
+                "format": "int64",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "dimensionId": {
+                "format": "int64",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "columnCodeList": {
+                "description": "No comments found.",
+                "type": "array",
+                "items": {}
+              }
+            }
+          }
+        }
+      },
+      "_config_complete_startResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_config_selector__configId_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "next": {
+                "format": "boolean",
+                "description": "是的还有下一层",
+                "type": "boolean"
+              },
+              "configId": {
+                "format": "int64",
+                "description": "下一层的配置id",
+                "type": "integer"
+              },
+              "selectorList": {
+                "description": "选择器列表",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int64",
+                      "description": "主键id",
+                      "type": "integer"
+                    },
+                    "configId": {
+                      "format": "int64",
+                      "description": "配置表id",
+                      "type": "integer"
+                    },
+                    "columnName": {
+                      "format": "string",
+                      "description": "维度字段名称",
+                      "type": "string"
+                    },
+                    "columnCode": {
+                      "format": "string",
+                      "description": "维度字段编码",
+                      "type": "string"
+                    },
+                    "selector": {
+                      "format": "int32",
+                      "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+                      "type": "integer"
+                    },
+                    "selectorVal": {
+                      "format": "string",
+                      "description": "选择器字段值",
+                      "type": "string"
+                    },
+                    "elementType": {
+                      "format": "int32",
+                      "description": "元素类型 0代表单元素 1代表多元素",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_dimension_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_auth_current_logoutRequest": {},
+      "_auth_current_logoutResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_config_list__baseInfoId_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "主键id",
+                  "type": "integer"
+                },
+                "baseInfoId": {
+                  "format": "int64",
+                  "description": "基础信息表id",
+                  "type": "integer"
+                },
+                "parentId": {
+                  "format": "int64",
+                  "description": "父id",
+                  "type": "integer"
+                },
+                "raw": {
+                  "description": "raw参数(map data)",
+                  "type": "object"
+                },
+                "formUrlencoded": {
+                  "description": "x-www-form-urlencoded参数(map data)",
+                  "type": "object"
+                },
+                "fromData": {
+                  "description": "from-data参数(map data)",
+                  "type": "object"
+                },
+                "cookies": {
+                  "description": "cookies参数(map data)",
+                  "type": "object"
+                },
+                "headers": {
+                  "description": "headers参数(map data)",
+                  "type": "object"
+                },
+                "dimensionId": {
+                  "format": "int64",
+                  "description": "维度目录id",
+                  "type": "integer"
+                },
+                "dimensionName": {
+                  "format": "string",
+                  "description": "维度目录名称",
+                  "type": "string"
+                },
+                "dimensionCode": {
+                  "format": "string",
+                  "description": "维度目录编码",
+                  "type": "string"
+                },
+                "startoverJs": {
+                  "format": "int32",
+                  "description": "是否启动动态加载js(0表示未启动、1表示启动)",
+                  "type": "integer"
+                },
+                "startoverIp": {
+                  "format": "int32",
+                  "description": "是否启动代理IP(0表示未启动、1表示启动)",
+                  "type": "integer"
+                },
+                "requestUrl": {
+                  "format": "string",
+                  "description": "请求路径",
+                  "type": "string"
+                },
+                "requestType": {
+                  "format": "string",
+                  "description": "请求方式",
+                  "type": "string"
+                },
+                "selectorList": {
+                  "description": "选择器列表",
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "format": "int64",
+                        "description": "主键id",
+                        "type": "integer"
+                      },
+                      "configId": {
+                        "format": "int64",
+                        "description": "配置表id",
+                        "type": "integer"
+                      },
+                      "columnName": {
+                        "format": "string",
+                        "description": "维度字段名称",
+                        "type": "string"
+                      },
+                      "columnCode": {
+                        "format": "string",
+                        "description": "维度字段编码",
+                        "type": "string"
+                      },
+                      "selector": {
+                        "format": "int32",
+                        "description": "选择器类型 0代表xpath、1代表正则 ，99代表手动指定",
+                        "type": "integer"
+                      },
+                      "selectorVal": {
+                        "format": "string",
+                        "description": "选择器字段值",
+                        "type": "string"
+                      },
+                      "elementType": {
+                        "format": "int32",
+                        "description": "元素类型 0代表单元素 1代表多元素",
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://172.21.32.3:8885/rpt"
+    }
+  ],
+  "openapi": "3.0.3",
+  "paths": {
+    "/selector/{id}": {
+      "put": {
+        "summary": "修改选择器信息",
+        "deprecated": false,
+        "description": "修改选择器信息",
+        "tags": [
+          "RptSelectorColumnInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_selector__id_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"configId\": 329,\n  \"columnName\": \"gabrielle.stroman\",\n  \"columnCode\": \"8079\",\n  \"selector\": 290,\n  \"selectorVal\": \"vcyx9k\",\n  \"elementType\": 822\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_selector__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"zw90vu\",\n  \"tips\": \"un5j2c\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "update",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "204",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/config/list/{baseInfoId}": {
+      "get": {
+        "summary": "配置列表",
+        "deprecated": false,
+        "description": "配置列表",
+        "tags": [
+          "RptConfigInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_config_list__baseInfoId_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"sbpfb2\",\n  \"tips\": \"9ra9yl\",\n  \"data\": [\n    {\n      \"id\": 387,\n      \"baseInfoId\": 403,\n      \"parentId\": 193,\n      \"raw\": {\n        \"mapKey\": {}\n      },\n      \"formUrlencoded\": {\n        \"mapKey\": {}\n      },\n      \"fromData\": {\n        \"mapKey\": {}\n      },\n      \"cookies\": {\n        \"mapKey\": {}\n      },\n      \"headers\": {\n        \"mapKey\": {}\n      },\n      \"dimensionId\": 623,\n      \"dimensionName\": \"gabrielle.stroman\",\n      \"dimensionCode\": \"8079\",\n      \"startoverJs\": 351,\n      \"startoverIp\": 43,\n      \"requestUrl\": \"www.laura-swift.co\",\n      \"requestType\": \"rkz3hi\",\n      \"selectorList\": [\n        {\n          \"id\": 890,\n          \"configId\": 307,\n          \"columnName\": \"gabrielle.stroman\",\n          \"columnCode\": \"8079\",\n          \"selector\": 121,\n          \"selectorVal\": \"dw4r1j\",\n          \"elementType\": 904\n        }\n      ]\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "list",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "715",
+            "name": "baseInfoId"
+          }
+        ]
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "",
+        "deprecated": false,
+        "tags": [
+          "IndexController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "index",
+        "parameters": []
+      }
+    },
+    "/base/info/waiting": {
+      "post": {
+        "summary": "待配列表",
+        "deprecated": false,
+        "description": "待配列表",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_base_info_waitingRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"g4gclv\"\n  },\n  \"id\": 354,\n  \"websiteName\": \"gabrielle.stroman\",\n  \"websiteUrl\": \"www.laura-swift.co\",\n  \"runPeriod\": \"ca0mpy\",\n  \"status\": 130,\n  \"runStatus\": 319,\n  \"configId\": 33,\n  \"configName\": \"gabrielle.stroman\",\n  \"jobId\": \"91\",\n  \"gmtFunction\": \"2022-01-17 11:58:23\",\n  \"createUsername\": \"gabrielle.stroman\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"distributionDate\": \"2022-01-17\",\n  \"deliveryDate\": \"2022-01-17\",\n  \"secondSiteType\": \"kl201r\",\n  \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n  \"differentTypeMixed\": \"44in15\",\n  \"infoReleaseLevel\": \"4ekrf2\",\n  \"provinceCode\": \"8079\",\n  \"cityCode\": \"8079\",\n  \"areaCode\": \"8079\",\n  \"websiteNameCorrection\": \"95u8q4\",\n  \"websiteUrlCorrection\": \"5y405b\",\n  \"regionCode\": \"8079\",\n  \"executor\": \"zwl2fa\",\n  \"executorId\": 248,\n  \"timeInterval\": \"g6xsbj\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_waitingResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"o8n28e\",\n  \"tips\": \"fsp46m\",\n  \"data\": {\n    \"total\": 72,\n    \"pageNum\": 856,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"pagination\": {\n          \"page\": 1,\n          \"size\": 10,\n          \"sortField\": \"w4fa9f\"\n        },\n        \"id\": 334,\n        \"websiteName\": \"gabrielle.stroman\",\n        \"websiteUrl\": \"www.laura-swift.co\",\n        \"runPeriod\": \"3o0h20\",\n        \"status\": 223,\n        \"runStatus\": 811,\n        \"configId\": 519,\n        \"configName\": \"gabrielle.stroman\",\n        \"jobId\": \"91\",\n        \"gmtFunction\": \"2022-01-17 11:58:23\",\n        \"createUsername\": \"gabrielle.stroman\",\n        \"gmtCreate\": \"2022-01-17 11:58:23\",\n        \"distributionDate\": \"2022-01-17\",\n        \"deliveryDate\": \"2022-01-17\",\n        \"secondSiteType\": \"g3wj9y\",\n        \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n        \"differentTypeMixed\": \"hmjc8j\",\n        \"infoReleaseLevel\": \"hcpgtv\",\n        \"provinceCode\": \"8079\",\n        \"cityCode\": \"8079\",\n        \"areaCode\": \"8079\",\n        \"websiteNameCorrection\": \"940nbt\",\n        \"websiteUrlCorrection\": \"ag4gzg\",\n        \"regionCode\": \"8079\",\n        \"executor\": \"whvzu6\",\n        \"executorId\": 934,\n        \"configStatus\": true,\n        \"timeInterval\": \"ym9ll9\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "waitingList",
+        "parameters": []
+      }
+    },
+    "/base/info/reptile": {
+      "post": {
+        "summary": "爬虫列表",
+        "deprecated": false,
+        "description": "爬虫列表",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_base_info_reptileRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"27d5g2\"\n  },\n  \"id\": 551,\n  \"websiteName\": \"gabrielle.stroman\",\n  \"websiteUrl\": \"www.laura-swift.co\",\n  \"runPeriod\": \"fsdfwb\",\n  \"status\": 201,\n  \"runStatus\": 812,\n  \"configId\": 373,\n  \"configName\": \"gabrielle.stroman\",\n  \"jobId\": \"91\",\n  \"gmtFunction\": \"2022-01-17 11:58:23\",\n  \"createUsername\": \"gabrielle.stroman\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"distributionDate\": \"2022-01-17\",\n  \"deliveryDate\": \"2022-01-17\",\n  \"secondSiteType\": \"4pa4ax\",\n  \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n  \"differentTypeMixed\": \"86w081\",\n  \"infoReleaseLevel\": \"wot04z\",\n  \"provinceCode\": \"8079\",\n  \"cityCode\": \"8079\",\n  \"areaCode\": \"8079\",\n  \"websiteNameCorrection\": \"r71374\",\n  \"websiteUrlCorrection\": \"nzsxz1\",\n  \"regionCode\": \"8079\",\n  \"executor\": \"t78q1u\",\n  \"executorId\": 581,\n  \"timeInterval\": \"sitifz\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_reptileResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"sk3xxf\",\n  \"tips\": \"io94hf\",\n  \"data\": {\n    \"total\": 374,\n    \"pageNum\": 382,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"pagination\": {\n          \"page\": 1,\n          \"size\": 10,\n          \"sortField\": \"al796c\"\n        },\n        \"id\": 988,\n        \"websiteName\": \"gabrielle.stroman\",\n        \"websiteUrl\": \"www.laura-swift.co\",\n        \"runPeriod\": \"zw81xz\",\n        \"status\": 68,\n        \"runStatus\": 407,\n        \"configId\": 41,\n        \"configName\": \"gabrielle.stroman\",\n        \"jobId\": \"91\",\n        \"gmtFunction\": \"2022-01-17 11:58:23\",\n        \"createUsername\": \"gabrielle.stroman\",\n        \"gmtCreate\": \"2022-01-17 11:58:23\",\n        \"distributionDate\": \"2022-01-17\",\n        \"deliveryDate\": \"2022-01-17\",\n        \"secondSiteType\": \"8f69k8\",\n        \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n        \"differentTypeMixed\": \"7gcv25\",\n        \"infoReleaseLevel\": \"evlgym\",\n        \"provinceCode\": \"8079\",\n        \"cityCode\": \"8079\",\n        \"areaCode\": \"8079\",\n        \"websiteNameCorrection\": \"aivfcd\",\n        \"websiteUrlCorrection\": \"kcbiaf\",\n        \"regionCode\": \"8079\",\n        \"executor\": \"y93dfv\",\n        \"executorId\": 351,\n        \"configStatus\": true,\n        \"timeInterval\": \"s71bpc\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "reptileList",
+        "parameters": []
+      }
+    },
+    "/dimension/": {
+      "post": {
+        "summary": "数据采集-维度新增",
+        "deprecated": false,
+        "description": "数据采集-维度新增",
+        "tags": [
+          "RptDimensionColumnInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dimension_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 293,\n  \"dimensionId\": 533,\n  \"description\": \"kx027l\",\n  \"dimensionColumnName\": \"gabrielle.stroman\",\n  \"gmtModified\": \"2022-01-17 11:58:23\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"createUserid\": 137,\n  \"updateUserid\": 269,\n  \"createUsername\": \"gabrielle.stroman\",\n  \"updateUsername\": \"gabrielle.stroman\",\n  \"dimensionColumnCode\": \"8079\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dimension_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"i3z1gh\",\n  \"tips\": \"zoofi9\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "addColumn",
+        "parameters": []
+      },
+      "delete": {
+        "summary": "数据采集-维度删除",
+        "deprecated": false,
+        "description": "数据采集-维度删除",
+        "tags": [
+          "RptDimensionColumnInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/_dimension_Response"
+                  }
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"djzlog\",\n  \"tips\": \"ba1dkr\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteColumn",
+        "parameters": [
+          {
+            "schema": {
+              "type": "object"
+            },
+            "in": "query",
+            "description": "ID數組,[array of int64]",
+            "required": true,
+            "example": "475",
+            "name": "ids"
+          }
+        ]
+      },
+      "put": {
+        "summary": "数据采集-维度修改",
+        "deprecated": false,
+        "description": "数据采集-维度修改",
+        "tags": [
+          "RptDimensionColumnInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dimension_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 774,\n  \"dimensionId\": 633,\n  \"description\": \"es1qqr\",\n  \"dimensionColumnName\": \"gabrielle.stroman\",\n  \"gmtModified\": \"2022-01-17 11:58:23\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"createUserid\": 965,\n  \"updateUserid\": 407,\n  \"createUsername\": \"gabrielle.stroman\",\n  \"updateUsername\": \"gabrielle.stroman\",\n  \"dimensionColumnCode\": \"8079\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dimension_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"kcaait\",\n  \"tips\": \"rkkjwk\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateColumn",
+        "parameters": []
+      }
+    },
+    "/selector/detail/{id}": {
+      "get": {
+        "summary": "详情",
+        "deprecated": false,
+        "description": "详情",
+        "tags": [
+          "RptSelectorColumnInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_selector_detail__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"3nwad4\",\n  \"tips\": \"ph84yn\",\n  \"data\": {\n    \"id\": 48,\n    \"configId\": 987,\n    \"columnName\": \"gabrielle.stroman\",\n    \"columnCode\": \"8079\",\n    \"selector\": 376,\n    \"selectorVal\": \"7jki0r\",\n    \"elementType\": 759\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "detail",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "65",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/excel/basic/info/upload": {
+      "post": {
+        "summary": "待配列基本信息excel__导入数据",
+        "deprecated": false,
+        "description": "待配列基本信息excel__导入数据",
+        "tags": [
+          "RptExcelController"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "description": "No comments found.",
+                    "type": "file",
+                    "example": "\"\""
+                  }
+                }
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -H \u0027Content-Type: multipart/form-data\u0027 -i http://172.21.32.3:8885/rpt/excel/basic/info/upload"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_excel_basic_info_uploadResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"fs13y6\",\n  \"tips\": \"cmita2\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "basicInfoUpload",
+        "parameters": []
+      }
+    },
+    "/excel/basic/info/upload/template": {
+      "post": {
+        "summary": "待配列基本信息excel__模板下载",
+        "deprecated": false,
+        "description": "待配列基本信息excel__模板下载",
+        "tags": [
+          "RptExcelController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_excel_basic_info_upload_templateRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.21.32.3:8885/rpt/excel/basic/info/upload/template"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_excel_basic_info_upload_templateResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "basicInfoDownloadTemplate",
+        "parameters": []
+      }
+    },
+    "/base/info/{id}": {
+      "put": {
+        "summary": "修改基础信息",
+        "deprecated": false,
+        "description": "修改基础信息",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_base_info__id_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ce85f8\"\n  },\n  \"id\": 185,\n  \"websiteName\": \"gabrielle.stroman\",\n  \"websiteUrl\": \"www.laura-swift.co\",\n  \"runPeriod\": \"mva60u\",\n  \"status\": 909,\n  \"runStatus\": 696,\n  \"configId\": 414,\n  \"configName\": \"gabrielle.stroman\",\n  \"jobId\": \"91\",\n  \"gmtFunction\": \"2022-01-17 11:58:23\",\n  \"createUsername\": \"gabrielle.stroman\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"distributionDate\": \"2022-01-17\",\n  \"deliveryDate\": \"2022-01-17\",\n  \"secondSiteType\": \"f0z8u2\",\n  \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n  \"differentTypeMixed\": \"looiw1\",\n  \"infoReleaseLevel\": \"so52bi\",\n  \"provinceCode\": \"8079\",\n  \"cityCode\": \"8079\",\n  \"areaCode\": \"8079\",\n  \"websiteNameCorrection\": \"uvv3o3\",\n  \"websiteUrlCorrection\": \"g4b14p\",\n  \"regionCode\": \"8079\",\n  \"executor\": \"gzf14o\",\n  \"executorId\": 333,\n  \"timeInterval\": \"1bda41\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"j8awn5\",\n  \"tips\": \"5o2z4g\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "update",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "基础信息id",
+            "required": true,
+            "example": "673",
+            "name": "id"
+          }
+        ]
+      },
+      "get": {
+        "summary": "详情",
+        "deprecated": false,
+        "description": "详情",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"5eea0a\",\n  \"tips\": \"a8gs6k\",\n  \"data\": {\n    \"pagination\": {\n      \"page\": 1,\n      \"size\": 10,\n      \"sortField\": \"1u47mi\"\n    },\n    \"id\": 28,\n    \"websiteName\": \"gabrielle.stroman\",\n    \"websiteUrl\": \"www.laura-swift.co\",\n    \"runPeriod\": \"koqmif\",\n    \"status\": 726,\n    \"runStatus\": 740,\n    \"configId\": 529,\n    \"configName\": \"gabrielle.stroman\",\n    \"jobId\": \"91\",\n    \"gmtFunction\": \"2022-01-17 11:58:23\",\n    \"createUsername\": \"gabrielle.stroman\",\n    \"gmtCreate\": \"2022-01-17 11:58:23\",\n    \"distributionDate\": \"2022-01-17\",\n    \"deliveryDate\": \"2022-01-17\",\n    \"secondSiteType\": \"3cnrfr\",\n    \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n    \"differentTypeMixed\": \"dqgy2p\",\n    \"infoReleaseLevel\": \"o984iu\",\n    \"provinceCode\": \"8079\",\n    \"cityCode\": \"8079\",\n    \"areaCode\": \"8079\",\n    \"websiteNameCorrection\": \"l6rbuu\",\n    \"websiteUrlCorrection\": \"rrc62t\",\n    \"regionCode\": \"8079\",\n    \"executor\": \"365m4l\",\n    \"executorId\": 246,\n    \"configStatus\": true,\n    \"timeInterval\": \"tbk7yy\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "detail",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "216",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/config/{ids}": {
+      "delete": {
+        "summary": "删除",
+        "deprecated": false,
+        "description": "删除",
+        "tags": [
+          "RptConfigInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_config__ids_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"etmpsy\",\n  \"tips\": \"exsjti\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "delete",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "lw9oxo",
+            "name": "ids"
+          }
+        ]
+      }
+    },
+    "/base/info/execution/{id}": {
+      "get": {
+        "summary": "手动执行调用爬虫接口",
+        "deprecated": false,
+        "description": "手动执行调用爬虫接口",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_execution__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"z71cvf\",\n  \"tips\": \"2fk2v0\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "execution",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "403",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/base/info/history": {
+      "post": {
+        "summary": "历史列表",
+        "deprecated": false,
+        "description": "历史列表",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_base_info_historyRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"3ype00\"\n  },\n  \"id\": 141,\n  \"websiteName\": \"gabrielle.stroman\",\n  \"websiteUrl\": \"www.laura-swift.co\",\n  \"runPeriod\": \"znx5yl\",\n  \"status\": 31,\n  \"runStatus\": 387,\n  \"configId\": 460,\n  \"configName\": \"gabrielle.stroman\",\n  \"jobId\": \"91\",\n  \"gmtFunction\": \"2022-01-17 11:58:23\",\n  \"createUsername\": \"gabrielle.stroman\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"distributionDate\": \"2022-01-17\",\n  \"deliveryDate\": \"2022-01-17\",\n  \"secondSiteType\": \"bpxz4u\",\n  \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n  \"differentTypeMixed\": \"pa5h07\",\n  \"infoReleaseLevel\": \"kkkmcy\",\n  \"provinceCode\": \"8079\",\n  \"cityCode\": \"8079\",\n  \"areaCode\": \"8079\",\n  \"websiteNameCorrection\": \"7j2cye\",\n  \"websiteUrlCorrection\": \"yn869q\",\n  \"regionCode\": \"8079\",\n  \"executor\": \"09nwk9\",\n  \"executorId\": 984,\n  \"timeInterval\": \"zmaaex\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_historyResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"th81pn\",\n  \"tips\": \"qtsuqu\",\n  \"data\": {\n    \"total\": 767,\n    \"pageNum\": 717,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"pagination\": {\n          \"page\": 1,\n          \"size\": 10,\n          \"sortField\": \"r01kqo\"\n        },\n        \"id\": 566,\n        \"websiteName\": \"gabrielle.stroman\",\n        \"websiteUrl\": \"www.laura-swift.co\",\n        \"runPeriod\": \"fila9s\",\n        \"status\": 875,\n        \"runStatus\": 966,\n        \"configId\": 911,\n        \"configName\": \"gabrielle.stroman\",\n        \"jobId\": \"91\",\n        \"gmtFunction\": \"2022-01-17 11:58:23\",\n        \"createUsername\": \"gabrielle.stroman\",\n        \"gmtCreate\": \"2022-01-17 11:58:23\",\n        \"distributionDate\": \"2022-01-17\",\n        \"deliveryDate\": \"2022-01-17\",\n        \"secondSiteType\": \"uga0i5\",\n        \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n        \"differentTypeMixed\": \"usv9u1\",\n        \"infoReleaseLevel\": \"c1600o\",\n        \"provinceCode\": \"8079\",\n        \"cityCode\": \"8079\",\n        \"areaCode\": \"8079\",\n        \"websiteNameCorrection\": \"ps79cf\",\n        \"websiteUrlCorrection\": \"bzmuf6\",\n        \"regionCode\": \"8079\",\n        \"executor\": \"3p5vb9\",\n        \"executorId\": 876,\n        \"configStatus\": true,\n        \"timeInterval\": \"sl8xql\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "historyList",
+        "parameters": []
+      }
+    },
+    "/base/info/": {
+      "post": {
+        "summary": "添加基础信息",
+        "deprecated": false,
+        "description": "添加基础信息",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_base_info_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"9j4o9k\"\n  },\n  \"id\": 739,\n  \"websiteName\": \"gabrielle.stroman\",\n  \"websiteUrl\": \"www.laura-swift.co\",\n  \"runPeriod\": \"2rm8pv\",\n  \"status\": 5,\n  \"runStatus\": 348,\n  \"configId\": 74,\n  \"configName\": \"gabrielle.stroman\",\n  \"jobId\": \"91\",\n  \"gmtFunction\": \"2022-01-17 11:58:23\",\n  \"createUsername\": \"gabrielle.stroman\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"distributionDate\": \"2022-01-17\",\n  \"deliveryDate\": \"2022-01-17\",\n  \"secondSiteType\": \"ys58yk\",\n  \"listPageAddress\": \"Apt. 750 632 Bernadette Club， Donnettafort， LA 43118-6790\",\n  \"differentTypeMixed\": \"2kdmz2\",\n  \"infoReleaseLevel\": \"oflk71\",\n  \"provinceCode\": \"8079\",\n  \"cityCode\": \"8079\",\n  \"areaCode\": \"8079\",\n  \"websiteNameCorrection\": \"ztu03g\",\n  \"websiteUrlCorrection\": \"igy0dk\",\n  \"regionCode\": \"8079\",\n  \"executor\": \"ol1een\",\n  \"executorId\": 586,\n  \"timeInterval\": \"n0spaj\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"xf9fu7\",\n  \"tips\": \"17zhw6\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "insert",
+        "parameters": []
+      }
+    },
+    "/auth/current/logout": {
+      "get": {
+        "summary": "退出",
+        "deprecated": false,
+        "description": "退出",
+        "tags": [
+          "OAuth2ClientController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_auth_current_logoutResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"az7jte\",\n  \"tips\": \"d92w4n\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "logout",
+        "parameters": []
+      }
+    },
+    "/dir/dirname": {
+      "get": {
+        "summary": "数据采集-获取维度目录名称",
+        "deprecated": false,
+        "description": "数据采集-获取维度目录名称",
+        "tags": [
+          "RptDimensionInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir_dirnameResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"qtoxzm\",\n  \"tips\": \"8o9vrw\",\n  \"data\": [\n    {\n      \"id\": 386,\n      \"dimensionName\": \"gabrielle.stroman\",\n      \"dimensionCode\": \"8079\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateDirName",
+        "parameters": []
+      }
+    },
+    "/dimension/query": {
+      "post": {
+        "summary": "数据采集-维度查询",
+        "deprecated": false,
+        "description": "数据采集-维度查询",
+        "tags": [
+          "RptDimensionColumnInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dimension_queryRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"8asteu\"\n  },\n  \"id\": 596,\n  \"createUsername\": \"gabrielle.stroman\",\n  \"dimensionColumnCode\": \"8079\",\n  \"dimensionColumnName\": \"gabrielle.stroman\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dimension_queryResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"q2aygl\",\n  \"tips\": \"fd7uks\",\n  \"data\": {\n    \"total\": 913,\n    \"pageNum\": 578,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 522,\n        \"dimensionId\": 72,\n        \"description\": \"dda01d\",\n        \"dimensionColumnName\": \"gabrielle.stroman\",\n        \"gmtModified\": \"2022-01-17 11:58:23\",\n        \"gmtCreate\": \"2022-01-17 11:58:23\",\n        \"createUserid\": 601,\n        \"updateUserid\": 57,\n        \"createUsername\": \"gabrielle.stroman\",\n        \"updateUsername\": \"gabrielle.stroman\",\n        \"dimensionColumnCode\": \"8079\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "queryColumn",
+        "parameters": []
+      }
+    },
+    "/config/complete/start": {
+      "post": {
+        "summary": "结束并启动",
+        "deprecated": false,
+        "description": "结束并启动",
+        "tags": [
+          "RptConfigInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_config_complete_startRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 523,\n  \"baseInfoId\": 578,\n  \"parentId\": 134,\n  \"raw\": {\n    \"mapKey\": {}\n  },\n  \"formUrlencoded\": {\n    \"mapKey\": {}\n  },\n  \"fromData\": {\n    \"mapKey\": {}\n  },\n  \"cookies\": {\n    \"mapKey\": {}\n  },\n  \"headers\": {\n    \"mapKey\": {}\n  },\n  \"dimensionId\": 425,\n  \"dimensionName\": \"gabrielle.stroman\",\n  \"dimensionCode\": \"8079\",\n  \"startoverJs\": 493,\n  \"startoverIp\": 236,\n  \"requestUrl\": \"www.laura-swift.co\",\n  \"requestType\": \"u5b83n\",\n  \"selectorList\": [\n    {\n      \"configId\": 794,\n      \"columnName\": \"gabrielle.stroman\",\n      \"columnCode\": \"8079\",\n      \"selector\": 583,\n      \"selectorVal\": \"23m7oa\",\n      \"elementType\": 455\n    }\n  ]\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_config_complete_startResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"pooyvn\",\n  \"tips\": \"9kwqel\",\n  \"data\": 357\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "endAndStart",
+        "parameters": []
+      }
+    },
+    "/config/": {
+      "post": {
+        "summary": "添加配置信息",
+        "deprecated": false,
+        "description": "添加配置信息",
+        "tags": [
+          "RptConfigInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_config_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 48,\n  \"baseInfoId\": 420,\n  \"parentId\": 450,\n  \"raw\": {\n    \"mapKey\": {}\n  },\n  \"formUrlencoded\": {\n    \"mapKey\": {}\n  },\n  \"fromData\": {\n    \"mapKey\": {}\n  },\n  \"cookies\": {\n    \"mapKey\": {}\n  },\n  \"headers\": {\n    \"mapKey\": {}\n  },\n  \"dimensionId\": 279,\n  \"dimensionName\": \"gabrielle.stroman\",\n  \"dimensionCode\": \"8079\",\n  \"startoverJs\": 767,\n  \"startoverIp\": 587,\n  \"requestUrl\": \"www.laura-swift.co\",\n  \"requestType\": \"woi3u7\",\n  \"selectorList\": [\n    {\n      \"configId\": 628,\n      \"columnName\": \"gabrielle.stroman\",\n      \"columnCode\": \"8079\",\n      \"selector\": 769,\n      \"selectorVal\": \"4k8dad\",\n      \"elementType\": 183\n    }\n  ]\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_config_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"omkmoa\",\n  \"tips\": \"y5iybf\",\n  \"data\": {\n    \"configId\": 34,\n    \"dimensionId\": 959,\n    \"columnCodeList\": [\n      \"6ilgwi\"\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "insert",
+        "parameters": []
+      }
+    },
+    "/config/selector/{configId}": {
+      "get": {
+        "summary": "根据配置id获取选择器信息",
+        "deprecated": false,
+        "description": "根据配置id获取选择器信息",
+        "tags": [
+          "RptConfigInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_config_selector__configId_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"jngs81\",\n  \"tips\": \"u1uv34\",\n  \"data\": {\n    \"next\": true,\n    \"configId\": 649,\n    \"selectorList\": [\n      {\n        \"id\": 178,\n        \"configId\": 250,\n        \"columnName\": \"gabrielle.stroman\",\n        \"columnCode\": \"8079\",\n        \"selector\": 248,\n        \"selectorVal\": \"6f9yol\",\n        \"elementType\": 448\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getSelectorInfo",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "347",
+            "name": "configId"
+          }
+        ]
+      }
+    },
+    "/base/info/copy/config": {
+      "post": {
+        "summary": "配置复制",
+        "deprecated": false,
+        "description": "配置复制",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_base_info_copy_configRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"sourceId\": 645,\n  \"targetId\": 159\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_copy_configResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"x3qbbg\",\n  \"tips\": \"jonhhr\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "copyConfig",
+        "parameters": []
+      }
+    },
+    "/dir/": {
+      "post": {
+        "summary": "数据采集-目录新增",
+        "deprecated": false,
+        "description": "数据采集-目录新增",
+        "tags": [
+          "RptDimensionInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dir_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 270,\n  \"dimensionName\": \"gabrielle.stroman\",\n  \"fid\": 79,\n  \"description\": \"ned1jj\",\n  \"gmtModified\": \"2022-01-17 11:58:23\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"createUserid\": 959,\n  \"updateUserid\": 956,\n  \"createUsername\": \"gabrielle.stroman\",\n  \"updateUsername\": \"gabrielle.stroman\",\n  \"dimensionCode\": \"8079\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"0vcann\",\n  \"tips\": \"96qfkb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "addDsDir",
+        "parameters": []
+      },
+      "put": {
+        "summary": "数据采集-目录修改",
+        "deprecated": false,
+        "description": "数据采集-目录修改",
+        "tags": [
+          "RptDimensionInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dir_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 952,\n  \"dimensionName\": \"gabrielle.stroman\",\n  \"fid\": 951,\n  \"description\": \"wrul5o\",\n  \"gmtModified\": \"2022-01-17 11:58:23\",\n  \"gmtCreate\": \"2022-01-17 11:58:23\",\n  \"createUserid\": 933,\n  \"updateUserid\": 662,\n  \"createUsername\": \"gabrielle.stroman\",\n  \"updateUsername\": \"gabrielle.stroman\",\n  \"dimensionCode\": \"8079\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"h6lkb3\",\n  \"tips\": \"9kagyl\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateDsDir",
+        "parameters": []
+      },
+      "get": {
+        "summary": "数据采集-目录查询",
+        "deprecated": false,
+        "description": "数据采集-目录查询",
+        "tags": [
+          "RptDimensionInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"93imwx\",\n  \"tips\": \"dypvtx\",\n  \"data\": [\n    {\n      \"id\": 839,\n      \"dimensionName\": \"gabrielle.stroman\",\n      \"fid\": 791,\n      \"description\": \"wcqi2p\",\n      \"gmtModified\": \"2022-01-17 11:58:23\",\n      \"gmtCreate\": \"2022-01-17 11:58:23\",\n      \"createUserid\": 420,\n      \"updateUserid\": 323,\n      \"createUsername\": \"gabrielle.stroman\",\n      \"updateUsername\": \"gabrielle.stroman\",\n      \"childrenList\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ],\n      \"dimensionCode\": \"8079\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "queryDsDir",
+        "parameters": []
+      }
+    },
+    "/base/info/timed/execution": {
+      "get": {
+        "summary": "定时执行调用爬虫接口",
+        "deprecated": false,
+        "description": "定时执行调用爬虫接口",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_timed_executionResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"zp97wa\",\n  \"tips\": \"5wq6fr\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "timedExecution",
+        "parameters": []
+      }
+    },
+    "/base/info/run/status": {
+      "put": {
+        "summary": "修改运行状态(启动或关闭)",
+        "deprecated": false,
+        "description": "修改运行状态(启动或关闭)",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_base_info_run_statusRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 58,\n  \"runStatus\": 869\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_run_statusResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"b8w4hr\",\n  \"tips\": \"kmj0c8\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateRunStatus",
+        "parameters": []
+      }
+    },
+    "/selector/list/{configId}": {
+      "get": {
+        "summary": "选择器列表",
+        "deprecated": false,
+        "description": "选择器列表",
+        "tags": [
+          "RptSelectorColumnInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_selector_list__configId_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"4lvv8a\",\n  \"tips\": \"0muxix\",\n  \"data\": [\n    {\n      \"id\": 183,\n      \"configId\": 434,\n      \"columnName\": \"gabrielle.stroman\",\n      \"columnCode\": \"8079\",\n      \"selector\": 389,\n      \"selectorVal\": \"6apefr\",\n      \"elementType\": 927\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "list",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "839",
+            "name": "configId"
+          }
+        ]
+      }
+    },
+    "/config/{id}": {
+      "put": {
+        "summary": "修改配置信息",
+        "deprecated": false,
+        "description": "修改配置信息",
+        "tags": [
+          "RptConfigInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_config__id_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 8,\n  \"baseInfoId\": 83,\n  \"parentId\": 374,\n  \"raw\": {\n    \"mapKey\": {}\n  },\n  \"formUrlencoded\": {\n    \"mapKey\": {}\n  },\n  \"fromData\": {\n    \"mapKey\": {}\n  },\n  \"cookies\": {\n    \"mapKey\": {}\n  },\n  \"headers\": {\n    \"mapKey\": {}\n  },\n  \"dimensionId\": 677,\n  \"dimensionName\": \"gabrielle.stroman\",\n  \"dimensionCode\": \"8079\",\n  \"startoverJs\": 237,\n  \"startoverIp\": 827,\n  \"requestUrl\": \"www.laura-swift.co\",\n  \"requestType\": \"7dlf8f\",\n  \"selectorList\": [\n    {\n      \"configId\": 547,\n      \"columnName\": \"gabrielle.stroman\",\n      \"columnCode\": \"8079\",\n      \"selector\": 921,\n      \"selectorVal\": \"oz808w\",\n      \"elementType\": 340\n    }\n  ]\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_config__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"ccv0p9\",\n  \"tips\": \"l7dpmo\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "update",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "926",
+            "name": "id"
+          }
+        ]
+      },
+      "get": {
+        "summary": "详情",
+        "deprecated": false,
+        "description": "详情",
+        "tags": [
+          "RptConfigInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_config__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"bb3yqq\",\n  \"tips\": \"5x8ee0\",\n  \"data\": {\n    \"id\": 310,\n    \"baseInfoId\": 294,\n    \"parentId\": 129,\n    \"raw\": {\n      \"mapKey\": {}\n    },\n    \"formUrlencoded\": {\n      \"mapKey\": {}\n    },\n    \"fromData\": {\n      \"mapKey\": {}\n    },\n    \"cookies\": {\n      \"mapKey\": {}\n    },\n    \"headers\": {\n      \"mapKey\": {}\n    },\n    \"dimensionId\": 766,\n    \"dimensionName\": \"gabrielle.stroman\",\n    \"dimensionCode\": \"8079\",\n    \"startoverJs\": 117,\n    \"startoverIp\": 789,\n    \"requestUrl\": \"www.laura-swift.co\",\n    \"requestType\": \"psyq5h\",\n    \"selectorList\": [\n      {\n        \"id\": 807,\n        \"configId\": 71,\n        \"columnName\": \"gabrielle.stroman\",\n        \"columnCode\": \"8079\",\n        \"selector\": 367,\n        \"selectorVal\": \"3de03f\",\n        \"elementType\": 693\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "detail",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "154",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/dir/{id}": {
+      "delete": {
+        "summary": "数据采集-目录删除",
+        "deprecated": false,
+        "description": "数据采集-目录删除",
+        "tags": [
+          "RptDimensionInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir__id_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"affe7g\",\n  \"tips\": \"tg02qb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteDsDir",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "986",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/config/detail": {
+      "post": {
+        "summary": "根据待配列表或爬虫列表id获取配置信息",
+        "deprecated": false,
+        "description": "根据待配列表或爬虫列表id获取配置信息",
+        "tags": [
+          "RptConfigInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_config_detailRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 610,\n  \"firstFloor\": true\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_config_detailResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"d0ui52\",\n  \"tips\": \"w9f492\",\n  \"data\": {\n    \"id\": 954,\n    \"baseInfoId\": 524,\n    \"parentId\": 251,\n    \"raw\": {\n      \"mapKey\": {}\n    },\n    \"formUrlencoded\": {\n      \"mapKey\": {}\n    },\n    \"fromData\": {\n      \"mapKey\": {}\n    },\n    \"cookies\": {\n      \"mapKey\": {}\n    },\n    \"headers\": {\n      \"mapKey\": {}\n    },\n    \"dimensionId\": 951,\n    \"dimensionName\": \"gabrielle.stroman\",\n    \"dimensionCode\": \"8079\",\n    \"startoverJs\": 208,\n    \"startoverIp\": 794,\n    \"requestUrl\": \"www.laura-swift.co\",\n    \"requestType\": \"w7t9ak\",\n    \"selectorList\": [\n      {\n        \"id\": 1,\n        \"configId\": 81,\n        \"columnName\": \"gabrielle.stroman\",\n        \"columnCode\": \"8079\",\n        \"selector\": 5,\n        \"selectorVal\": \"3edc0l\",\n        \"elementType\": 976\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDetailByBaseInfo",
+        "parameters": []
+      }
+    },
+    "/base/info/time/interval": {
+      "post": {
+        "summary": "修改定时时间间隔",
+        "deprecated": false,
+        "description": "修改定时时间间隔",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_base_info_time_intervalRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 419,\n  \"timeInterval\": \"jmdw1h\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_time_intervalResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"4x53xi\",\n  \"tips\": \"uh3cah\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateTimeInterval",
+        "parameters": []
+      },
+      "get": {
+        "summary": "获取定时时间间隔",
+        "deprecated": false,
+        "description": "获取定时时间间隔",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info_time_intervalResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"z177gq\",\n  \"tips\": \"6d3xy5\",\n  \"data\": [\n    {\n      \"name\": \"gabrielle.stroman\",\n      \"desc\": \"30z9xi\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getTimeInterval",
+        "parameters": []
+      }
+    },
+    "/selector/batch/{configId}": {
+      "put": {
+        "summary": "根据配置id 批量修改选择器信息",
+        "deprecated": false,
+        "description": "根据配置id 批量修改选择器信息",
+        "tags": [
+          "RptSelectorColumnInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/_selector_batch__configId_Request"
+                }
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "[\n  {\n    \"configId\": 341,\n    \"columnName\": \"gabrielle.stroman\",\n    \"columnCode\": \"8079\",\n    \"selector\": 268,\n    \"selectorVal\": \"v5189d\",\n    \"elementType\": 298\n  }\n]"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/_selector_batch__configId_Response"
+                  }
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"g2w6ph\",\n  \"tips\": \"zb3jiw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "batchUpdate",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "607",
+            "name": "configId"
+          }
+        ]
+      }
+    },
+    "/selector/": {
+      "post": {
+        "summary": "添加选择器信息",
+        "deprecated": false,
+        "description": "添加选择器信息",
+        "tags": [
+          "RptSelectorColumnInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_selector_Request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"configId\": 162,\n  \"columnName\": \"gabrielle.stroman\",\n  \"columnCode\": \"8079\",\n  \"selector\": 452,\n  \"selectorVal\": \"s7ijcp\",\n  \"elementType\": 738\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_selector_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"mti2qo\",\n  \"tips\": \"1xew8q\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "insert",
+        "parameters": []
+      }
+    },
+    "/dict/list/{pid}": {
+      "get": {
+        "summary": "获取省市区级联列表",
+        "deprecated": false,
+        "description": "获取省市区级联列表",
+        "tags": [
+          "RptDictController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dict_list__pid_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"9awddf\",\n  \"tips\": \"ipiolg\",\n  \"data\": [\n    {\n      \"id\": 21,\n      \"value\": \"ewf5ml\",\n      \"label\": \"6rkejb\",\n      \"pid\": 467,\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDictList",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "父id,初次请求为0",
+            "required": true,
+            "example": "674",
+            "name": "pid"
+          }
+        ]
+      }
+    },
+    "/base/info/{ids}": {
+      "delete": {
+        "summary": "删除",
+        "deprecated": false,
+        "description": "删除",
+        "tags": [
+          "RptBaseInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_base_info__ids_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"eaqg9m\",\n  \"tips\": \"0v5r0q\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "delete",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "cycn3v",
+            "name": "ids"
+          }
+        ]
+      }
+    },
+    "/dimension/commons": {
+      "post": {
+        "summary": "数据采集-根据维度目录查询维度字段",
+        "deprecated": false,
+        "description": "数据采集-根据维度目录查询维度字段",
+        "tags": [
+          "RptDimensionColumnInfoController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dimension_commonsRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 41,\n  \"dimensionColumnCodeList\": [\n    \"2vcvl6\"\n  ]\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dimension_commonsResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"24asy9\",\n  \"tips\": \"5a4tbi\",\n  \"data\": {\n    \"mapKey1\": \"jqqi2o\",\n    \"mapKey2\": \"g1u59z\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "queryColumnByDirName",
+        "parameters": []
+      }
+    },
+    "/selector/{ids}": {
+      "delete": {
+        "summary": "删除选择器",
+        "deprecated": false,
+        "description": "删除选择器",
+        "tags": [
+          "RptSelectorColumnInfoController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_selector__ids_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"8079\",\n  \"retMsg\": \"th4esq\",\n  \"tips\": \"auf5fc\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "delete",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "fct96l",
+            "name": "ids"
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "dm-reptile",
+    "version": "1.0.0"
+  }
+}
