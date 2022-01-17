@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
-import com.google.gson.reflect.TypeToken;
-import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.api.DefaultApi;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
@@ -12,11 +10,8 @@ import com.qk.dm.dataquality.constant.schedule.ExecuteTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.*;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessInstanceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import static com.qk.dam.datasource.utils.ConnectInfoConvertUtils.objectMapper;
 
 /**
  * @author shenpj
@@ -24,8 +19,8 @@ import static com.qk.dam.datasource.utils.ConnectInfoConvertUtils.objectMapper;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class ProcessInstanceServiceImpl implements ProcessInstanceService {
-    private final static Logger LOGGER= LoggerFactory.getLogger(ProcessInstanceServiceImpl.class);
     private final DefaultApi defaultApi;
     private final DolphinSchedulerInfoConfig dolphinSchedulerInfoConfig;
 
@@ -44,13 +39,18 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
      */
     @Override
     public void execute(Integer processInstanceId, String executeType) {
+        Result result = null;
         try {
-            Result result =
+            result =
                     defaultApi.executeUsingPOST(
-                            ExecuteTypeEnum.fromValue(executeType).getCode(), processInstanceId, dolphinSchedulerInfoConfig.getProjectCode()
+                            ExecuteTypeEnum.fromValue(executeType).getCode(),
+                            processInstanceId,
+                            dolphinSchedulerInfoConfig.getProjectCode()
                     );
             DqcConstant.verification(result, "执行流程实例操作失败{}，");
         } catch (ApiException e) {
+            log.error("=============接口入参：{},{}==============", processInstanceId, executeType);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
     }
@@ -72,8 +72,9 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     @Override
     public ProcessInstanceResultDTO search(ProcessInstanceSearchDTO instanceSearchDTO) {
         ProcessInstanceResultDTO processInstanceResultDTO = new ProcessInstanceResultDTO();
+        Result result = null;
         try {
-            Result result =
+            result =
                     defaultApi.queryProcessInstanceListUsingGET(
                             instanceSearchDTO.getPageNo(),
                             instanceSearchDTO.getPageSize(),
@@ -87,9 +88,12 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             instanceSearchDTO.getStateType()
                     );
             DqcConstant.verification(result, "查询流程实例列表失败{}，");
-            processInstanceResultDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceResultDTO>() {
-            }.getType());
-        } catch (ApiException e) {
+            if (result.getData() != null) {
+                processInstanceResultDTO = DqcConstant.changeObjectToClass(result.getData(), ProcessInstanceResultDTO.class);
+            }
+        } catch (Exception e) {
+            log.error("=============接口入参：{}==============", instanceSearchDTO);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return processInstanceResultDTO;
@@ -104,12 +108,19 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     @Override
     public ProcessInstanceDTO detail(Integer processInstanceId) {
         ProcessInstanceDTO processInstanceDTO = new ProcessInstanceDTO();
+        Result result = null;
         try {
-            Result result = defaultApi.queryProcessInstanceByIdUsingGET(processInstanceId, dolphinSchedulerInfoConfig.getProjectCode());
+            result = defaultApi.queryProcessInstanceByIdUsingGET(
+                    processInstanceId,
+                    dolphinSchedulerInfoConfig.getProjectCode()
+            );
             DqcConstant.verification(result, "查询流程实例通过流程实例ID失败{}，");
-            processInstanceDTO = GsonUtil.fromJsonString(GsonUtil.toJsonString(result.getData()), new TypeToken<ProcessInstanceDTO>() {
-            }.getType());
-        } catch (ApiException e) {
+            if (result.getData() != null) {
+                processInstanceDTO = DqcConstant.changeObjectToClass(result.getData(), ProcessInstanceDTO.class);
+            }
+        } catch (Exception e) {
+            log.error("=============接口入参：{}==============", processInstanceId);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return processInstanceDTO;
@@ -117,18 +128,25 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
 
     @Override
     public void deleteOne(Integer processInstanceId) {
+        ResultProcessInstance result = null;
         try {
-            ResultProcessInstance result = defaultApi.deleteProcessInstanceByIdUsingDELETE(processInstanceId, dolphinSchedulerInfoConfig.getProjectCode());
+            result = defaultApi.deleteProcessInstanceByIdUsingDELETE(
+                    processInstanceId,
+                    dolphinSchedulerInfoConfig.getProjectCode()
+            );
             DqcConstant.verification(result, "删除流程实例失败{}，");
         } catch (ApiException e) {
+            log.error("=============接口入参：{}==============", processInstanceId);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
     }
 
     @Override
     public void deleteBulk(ProcessInstanceDeleteDTO deleteDTO) {
+        Result result = null;
         try {
-            Result result =
+            result =
                     defaultApi.batchDeleteProcessInstanceByIdsUsingPOST(
                             deleteDTO.getProcessInstanceIds(),
                             dolphinSchedulerInfoConfig.getProjectCode(),
@@ -149,6 +167,8 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                     );
             DqcConstant.verification(result, "批量删除流程实例失败{}，");
         } catch (ApiException e) {
+            log.error("=============接口入参：{}==============", deleteDTO);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
     }
@@ -175,16 +195,12 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
                             TaskInstanceSearch.getTaskName()
                     );
             DqcConstant.verification(result, "查询任务实例列表失败{}，");
-        } catch (ApiException e) {
-            LOGGER.info("=============接口入参：{}==============",TaskInstanceSearch);
-            LOGGER.info("=============接口结果：{}==============",result);
-            DqcConstant.printException(e);
-        }
-        try {
-            processTaskInstanceResultDTO = objectMapper.readValue(objectMapper.writeValueAsString(result.getData()), ProcessTaskInstanceResultDTO.class);
+            if (result.getData() != null) {
+                processTaskInstanceResultDTO = DqcConstant.changeObjectToClass(result.getData(), ProcessTaskInstanceResultDTO.class);
+            }
         } catch (Exception e) {
-            LOGGER.info("=============接口结果：{}==============",result);
-            LOGGER.info("=============数据转换出错：{}==============",processTaskInstanceResultDTO);
+            log.error("=============接口入参：{}==============", TaskInstanceSearch);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return processTaskInstanceResultDTO;
@@ -192,12 +208,19 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
 
     @Override
     public String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum) {
+        Resultstring result = null;
         try {
-            Resultstring result =
-                    defaultApi.queryLogUsingGET(limit, skipLineNum, taskInstanceId);
+            result =
+                    defaultApi.queryLogUsingGET(
+                            limit,
+                            skipLineNum,
+                            taskInstanceId
+                    );
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
             return result.getData();
         } catch (ApiException e) {
+            log.error("=============接口入参：{},{},{}==============", taskInstanceId, limit, skipLineNum);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return null;
@@ -205,12 +228,19 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
 
     @Override
     public String taskLogDownload(Integer taskInstanceId) {
+        Resultstring result = null;
         try {
-            Resultstring result =
-                    defaultApi.queryLogUsingGET(0, 100000, taskInstanceId);
+            result =
+                    defaultApi.queryLogUsingGET(
+                            0,
+                            100000,
+                            taskInstanceId
+                    );
             DqcConstant.verification(result, "查询任务实例日志失败{}，");
             return result.getData();
         } catch (ApiException e) {
+            log.error("=============接口入参：{},{},{}==============", taskInstanceId);
+            log.error("=============接口结果：{}==============", result);
             DqcConstant.printException(e);
         }
         return null;

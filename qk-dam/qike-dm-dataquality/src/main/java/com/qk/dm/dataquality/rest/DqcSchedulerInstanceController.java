@@ -1,6 +1,5 @@
 package com.qk.dm.dataquality.rest;
 
-import cn.hutool.core.date.DateUtil;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
@@ -9,6 +8,7 @@ import com.qk.dm.dataquality.params.dto.DqcSchedulerInstanceParamsDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceLogDTO;
 import com.qk.dm.dataquality.params.dto.DqcSchedulerTaskInstanceParamsDTO;
 import com.qk.dm.dataquality.service.DqcSchedulerInstanceService;
+import com.qk.dm.dataquality.utils.DateUtil;
 import com.qk.dm.dataquality.utils.ExportTextUtil;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.DqcProcessTaskInstanceVO;
@@ -132,7 +132,7 @@ public class DqcSchedulerInstanceController {
     @ResponseBody
     public void taskLogDownload(HttpServletResponse response, Integer taskInstanceId) {
         Object log = dqcSchedulerInstanceService.taskLogDownload(taskInstanceId);
-        ExportTextUtil.writeToTxt(response, log.toString(), "任务实例日志_" + taskInstanceId + "_" + DateUtil.format(new Date(), "yyyyMMddHHmm"));
+        ExportTextUtil.writeToTxt(response, log.toString(), "任务实例日志_" + taskInstanceId + "_" + DateUtil.toStr(new Date(), "yyyyMMddHHmm"));
     }
 
 

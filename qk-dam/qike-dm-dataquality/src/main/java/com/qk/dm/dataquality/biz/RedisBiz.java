@@ -1,6 +1,5 @@
 package com.qk.dm.dataquality.biz;
 
-import cn.hutool.core.date.DateUtil;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.dolphinapi.dto.ProcessInstanceResultDTO;
@@ -13,6 +12,7 @@ import com.qk.dm.dataquality.mapstruct.mapper.DqcProcessInstanceMapper;
 import com.qk.dm.dataquality.service.DqcSchedulerBasicInfoService;
 import com.qk.dm.dataquality.service.DqcSchedulerResultDataService;
 import com.qk.dm.dataquality.service.impl.DolphinScheduler;
+import com.qk.dm.dataquality.utils.DateUtil;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.TaskInstanceVO;
 import org.springframework.cache.annotation.Cacheable;
@@ -52,8 +52,8 @@ public class RedisBiz {
                 .pageNo(pageNo)
                 .pageSize(pageSize)
                 .stateType(failure)
-                .startDate(date != null ? DateUtil.formatDateTime(DateUtil.beginOfDay(date)) : null)
-                .endDate(date != null ? DateUtil.formatDateTime(DateUtil.endOfDay(date)) : null)
+                .startDate(DateUtil.toStr(DateUtil.beginOfDay(date)))
+                .endDate(DateUtil.toStr(DateUtil.endOfDay(date)))
                 .build();
     }
 
@@ -122,8 +122,8 @@ public class RedisBiz {
         return ProcessTaskInstanceSearchDTO.builder()
                 .pageNo(pageNo)
                 .pageSize(listPageSize)
-                .startDate(date != null ? DateUtil.formatDateTime(DateUtil.beginOfDay(date)) : null)
-                .endDate(date != null ? DateUtil.formatDateTime(DateUtil.endOfDay(date)) : null)
+                .startDate(DateUtil.toStr(DateUtil.beginOfDay(date)))
+                .endDate(DateUtil.toStr(DateUtil.endOfDay(date)))
                 .stateType(stateType)
                 .build();
     }

@@ -40,17 +40,11 @@ dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
     implementation project(":dm-feign-client")
-    implementation project(":dam-log")
     implementation project(":qk-sqlbuilder")
     implementation project(":dolphinscheduler-client")
     implementation project(":datasource-common-core")
     implementation project(":metadata-common-core")
     implementation project(":qk-data-redis")
-//    implementation group: 'org.apache.dolphinscheduler', name: 'dolphinscheduler-common', version: '1.3.9'
-//    implementation group: 'org.apache.dolphinscheduler', name: 'dolphinscheduler-dao', version: '1.3.9'
-    implementation group: 'com.baomidou', name: 'mybatis-plus-annotation', version: '3.4.3.4'
-    implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.78'
-
     implementation project(":groovy-function-core")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -60,16 +54,15 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "com.github.ben-manes.caffeine:caffeine"
-    implementation group: 'com.alibaba', name: 'druid', version: '1.2.8'
-
     implementation 'org.mapstruct:mapstruct'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus'
     annotationProcessor(
             "javax.persistence:javax.persistence-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "javax.annotation:javax.annotation-api",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
-    implementation group: 'cn.hutool', name: 'hutool-db'
     implementation 'org.aspectj:aspectjweaver'
     annotationProcessor 'org.projectlombok:lombok'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')

@@ -24,5 +24,8 @@ spring:
           - dataId: qkdam-redis-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
+          - dataId: qkdam-actuator-prometheus-\${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
   profiles:
     active: ${damProfilesActive}
