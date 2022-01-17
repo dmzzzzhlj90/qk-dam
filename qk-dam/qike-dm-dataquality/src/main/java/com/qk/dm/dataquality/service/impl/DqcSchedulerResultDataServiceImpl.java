@@ -23,6 +23,8 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -45,6 +47,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultDataService {
+    private final static Logger LOG= LoggerFactory.getLogger(DqcSchedulerResultDataServiceImpl.class);
+
     public static final String COMMA = ",";
     public static final String COLON = ":";
     public static final String DEFAULT_TITLE = "目标对象";
@@ -91,6 +95,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
     @Override
     public PageResultVO<DqcSchedulerResultVO> getResultDataList(DqcSchedulerResultParamsVO schedulerResultDataParamsVO) {
+        LOG.info("分页查询规则结果集列表信息,参数信息:【{}】", schedulerResultDataParamsVO);
         List<DqcSchedulerResultVO> schedulerResultVOList = new ArrayList<>();
         long total;
         //基础信息查询
@@ -100,9 +105,13 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             resultDataMap = queryResultDataByParams(schedulerResultDataParamsVO);
             List<DqcSchedulerResult> dqcSchedulerResultList = (List<DqcSchedulerResult>) resultDataMap.get("list");
             total = (long) resultDataMap.get("total");
+            LOG.info("查询结果集表成功");
             //构建调度结果集
+            LOG.info("开始构建调度结果集");
             buildDqcSchedulerResults(schedulerResultVOList, dqcSchedulerResultList);
+            LOG.info("成功构建调度结果集");
         } catch (Exception e) {
+            LOG.info("分页查询规则结果集列表信息失败!!！");
             e.printStackTrace();
             throw new BizException("查询失败!!!");
         }
@@ -119,6 +128,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     private void buildDqcSchedulerResults(List<DqcSchedulerResultVO> schedulerResultVOList, List<DqcSchedulerResult> dqcSchedulerResultList) {
         //解析模板结果定义参数信息
         Map<Long, List<DqcRuleTemplate>> ruleTemplateInfoMap = getRuleTemplateInfoMap(dqcSchedulerResultList);
+        LOG.info("成功获取规则模板信息,模板ID集合:【{}】", ruleTemplateInfoMap.keySet());
         for (DqcSchedulerResult dqcSchedulerResult : dqcSchedulerResultList) {
             DqcSchedulerResultVO.DqcSchedulerResultVOBuilder resultBuilder = getDqcSchedulerResultVOBuilder(ruleTemplateInfoMap, dqcSchedulerResult);
             DqcSchedulerResultVO dqcSchedulerResultVO = resultBuilder.build();
@@ -298,35 +308,79 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
     @Override
     public Object getWarnResultInfo(String ruleId) {
+        LOG.info("开始获取告警表达式执行结果,ruleId: 【{}】", ruleId);
         //获取执行规则信息
         Optional<DqcSchedulerRules> schedulerRulesOptional = dqcSchedulerRulesRepository.findOne(QDqcSchedulerRules.dqcSchedulerRules.ruleId.eq(ruleId));
 
         if (schedulerRulesOptional.isPresent()) {
+            LOG.info("ruleId: 【{}】,查询到对应的规则信息", ruleId);
             DqcSchedulerRules dqcSchedulerRules = schedulerRulesOptional.get();
-            //获取告警表达式结果
-            return executeWarnExpression(dqcSchedulerRules);
+            //告警表达式
+            String warnExpression = dqcSchedulerRules.getWarnExpression();
+            LOG.info("ruleId: 【{}】,所对应的告警表达式: 【{}】 ", ruleId, warnExpression);
+            if (!ObjectUtils.isEmpty(warnExpression)) {
+                return getExecuteWarnResult(dqcSchedulerRules);
+            }else {
+                throw new BizException("未配置告警表达式!!!");
+            }
         }
         return null;
     }
 
     /**
-     * 获取告警表达式结果
+     * 执行告警表达式,获取告警表达式结果
      */
-    private Object executeWarnExpression(DqcSchedulerRules dqcSchedulerRules) {
-        //告警表达式
-        String warnExpression = dqcSchedulerRules.getWarnExpression();
-        if (!ObjectUtils.isEmpty(warnExpression)) {
-            return executeWarnExpression(dqcSchedulerRules, warnExpression);
-        }
-        return null;
-    }
-
-    /**
-     * 执行告警表达式
-     */
-    private Object executeWarnExpression(DqcSchedulerRules dqcSchedulerRules, String warnExpression) {
+    private Object getExecuteWarnResult(DqcSchedulerRules dqcSchedulerRules) {
+        LOG.info("开始执行告警表达式:【{}】 ,获取告警表达式结果 ", dqcSchedulerRules.getWarnExpression());
+        String executeWarnResult = "";
         //获取执行结果集,最新时间的记录
         DqcSchedulerResult dqcSchedulerResult = dqcSchedulerResultRepository.findOneByLastTime(dqcSchedulerRules.getTaskCode());
+        LOG.info("查询到taskCode:【{}】 ,最新时间记录的结果信息 ", dqcSchedulerRules.getTaskCode());
+        if (ObjectUtils.isEmpty(dqcSchedulerRules.getTables()) || ObjectUtils.isEmpty(dqcSchedulerRules.getFields())) {
+            //自定义模板规则不带有元数据信息,执行告警表达式
+            LOG.info("自定义模板规则不带有元数据信息,执行告警表达式");
+            executeWarnResult = executeWarnExpressionNoMetaData(dqcSchedulerRules, dqcSchedulerResult);
+        } else {
+            //规则带有元数据信息,执行告警表达式
+            LOG.info("规则带有元数据信息,执行告警表达式");
+            executeWarnResult = executeWarnExpression(dqcSchedulerRules, dqcSchedulerResult);
+        }
+        LOG.info("成功执行告警表达式,获取告警表达式结果,executeWarnResult: 【{}】", executeWarnResult);
+        return executeWarnResult;
+    }
+
+    /**
+     * 自定义模板规则不带有元数据信息,执行告警表达式
+     */
+    private String executeWarnExpressionNoMetaData(DqcSchedulerRules dqcSchedulerRules, DqcSchedulerResult dqcSchedulerResult) {
+        if (dqcSchedulerResult != null) {
+            Map<String, List<Object>> dataMap = new HashMap<>(16);
+            //获取结果集元数据信息
+            List<String> metaDataList = getMetaDataList(dqcSchedulerResult);
+            //获取结果集数据
+            List<List<Object>> resultDataList = getResultDataList(dqcSchedulerResult);
+            for (String metaData : metaDataList) {
+                dataMap.put(metaData, resultDataList.get(0));
+            }
+            //执行告警表达式
+            try {
+                LOG.info("自定义模板,执行告警表达式,字段信息: 【{}】", metaDataList);
+                return String.valueOf(GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, dqcSchedulerRules.getWarnExpression())).toLowerCase();
+            } catch (Exception e) {
+                e.printStackTrace();
+                LOG.info("自定义模板,告警表达式执行失败,ruleId: 【{}】", dqcSchedulerRules.getRuleId());
+                throw new BizException("告警表达式执行失败!!!");
+            }
+        } else {
+            LOG.info("自定义模板,告警表达式执行失败,ruleId: 【{}】", dqcSchedulerRules.getRuleId());
+            throw new BizException("规则结果集不存在!!!");
+        }
+    }
+
+    /**
+     * 规则带有元数据信息,执行告警表达式
+     */
+    private String executeWarnExpression(DqcSchedulerRules dqcSchedulerRules,DqcSchedulerResult dqcSchedulerResult) {
         if (dqcSchedulerResult != null) {
             Map<String, List<Object>> dataMap = new HashMap<>(16);
             //获取结果集元数据信息
@@ -335,18 +389,23 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             AtomicInteger index = new AtomicInteger(0);
             List<List<Object>> resultDataList = getResultDataList(dqcSchedulerResult);
             for (String metaData : metaDataList) {
+                //设置告警表达式字段,及其关联结果集
                 dataMap.put(metaData, resultDataList.get(index.get()));
                 index.getAndIncrement();
             }
             //执行告警表达式
             try {
-                return String.valueOf(GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, warnExpression)).toLowerCase();
+                LOG.info("执行告警表达式,字段信息: 【{}】", metaDataList);
+                return String.valueOf(GroovyShellExecutor.evaluateBinding(metaDataList, dataMap, dqcSchedulerRules.getWarnExpression())).toLowerCase();
             } catch (Exception e) {
+                LOG.info("告警表达式执行失败,ruleId: 【{}】", dqcSchedulerRules.getRuleId());
                 e.printStackTrace();
                 throw new BizException("告警表达式执行失败!!!");
             }
+        }else {
+            LOG.info("告警表达式执行失败,ruleId: 【{}】", dqcSchedulerRules.getRuleId());
+            throw new BizException("规则结果集不存在!!!");
         }
-        return null;
     }
 
     /**

@@ -31,7 +31,7 @@ public class DqcSchedulerResultDataController {
 
 
     /**
-     * 根据规则模板获取执行Sql
+     * 分页查询规则结果集列表信息
      *
      * @param schedulerResultDataParamsVO
      * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
