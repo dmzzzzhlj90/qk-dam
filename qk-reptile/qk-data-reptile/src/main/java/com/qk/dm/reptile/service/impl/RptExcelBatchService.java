@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,8 +32,8 @@ public class RptExcelBatchService {
   }
 
   @Transactional(rollbackFor = Exception.class)
-  public void saveRptBasicInfo(List<RptBaseInfo> prtBasicInfoList) {
-    deal(prtBasicInfoList);
+  public List<RptBaseInfo> saveRptBasicInfo(List<RptBaseInfo> prtBasicInfoList) {
+    List<RptBaseInfo> lsit = deal(prtBasicInfoList);
     for (RptBaseInfo rptBaseInfo : prtBasicInfoList) {
       //todo 加入操作人员id
       //创建人名称
@@ -51,9 +48,11 @@ public class RptExcelBatchService {
     entityManager.flush();
     entityManager.clear();
     LOG.info(prtBasicInfoList.size()+"成功保存待配信息个数 【{}】");
+    return lsit;
   }
 
-  private void deal(List<RptBaseInfo> prtBasicInfoList) {
+  private List<RptBaseInfo> deal(List<RptBaseInfo> prtBasicInfoList) {
+    List<RptBaseInfo> list = new ArrayList<>();
     if (CollectionUtils.isNotEmpty(prtBasicInfoList)){
       List<RptBaseInfo> allList = rptBaseInfoRepository.findAll();
       if (CollectionUtils.isNotEmpty(allList)){
@@ -66,10 +65,12 @@ public class RptExcelBatchService {
           String s = rptBaseInfo.getWebsiteUrl() +"->"+rptBaseInfo.getSecondSiteType()+"->"+ rptBaseInfo.getListPageAddress();
           RptBaseInfo rptBaseInfo1 = collect.get(s);
           if (!Objects.isNull(rptBaseInfo1)){
+            list.add(rptBaseInfo);
             iterator.remove();
           }
         }
       }
     }
+    return list;
   }
 }
