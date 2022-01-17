@@ -21,6 +21,8 @@ import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +31,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * 工作流流程实例操作
+ *
  * @author wjq
  * @date 2021/11/16
  * @since 1.0.0
  */
 @Service
 public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiService {
+    private final static Logger LOG = LoggerFactory.getLogger(ProcessDefinitionApiServiceImpl.class);
 
     public static final int poll_count = 5;
     public static final int poll_time = 1000;
@@ -66,6 +71,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                         dqcSchedulerBasicInfoVO.getJobId());
         //获取数据源信息
         Map<String, ConnectBasicInfo> dataSourceInfo = getDataSourceInfo(dqcSchedulerBasicInfoVO);
+        LOG.info("成功获取到数据源信息!!!");
 
         if (null == queryProcessDefinition) {
             //新增
@@ -74,13 +80,15 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             //轮询查看是否创建工作流成功
             processDefinitionCode = getDefinitionCode(dqcSchedulerBasicInfoVO, processDefinitionCode);
             if (processDefinitionCode == 0L) {
+                LOG.info("JobId:【{}】,未查询到processDefinitionCode,新增工作流失败!!!", dqcSchedulerBasicInfoVO.getJobId());
                 throw new BizException("创建工作流失败!!!");
             }
+            LOG.info("新增工作流成功!!!");
         } else {
             //编辑
             processDefinitionCode = queryProcessDefinition.getCode();
             update(dqcSchedulerBasicInfoVO, dataSourceInfo, queryProcessDefinition);
-
+            LOG.info("编辑工作流成功!!!");
         }
         return processDefinitionCode;
     }
@@ -103,7 +111,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                 Thread.sleep(poll_time);
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new BizException("创建工作流失败!!!");
+                throw new BizException("轮询查看是否创建工作流成功,查询失败!!!");
             }
         }
         return processDefinitionCode;
@@ -135,6 +143,8 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                     locations, name, projectCode, taskDefinitionJson, taskRelationJson, tenantCode, description, globalParams, timeout);
         } catch (Exception e) {
             e.printStackTrace();
+            LOG.info("JobId:【{}】,新增工作流失败!!!", dqcSchedulerBasicInfoVO.getJobId());
+            throw new BizException("创建工作流失败!!!");
         }
     }
 
@@ -166,6 +176,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                     processDefinitionCode, locations, name, projectCode, taskDefinitionJson, taskRelationJson, tenantCode, description, globalParams, "OFFLINE", timeout);
         } catch (Exception e) {
             e.printStackTrace();
+            LOG.info("JobId:【{}】,编辑工作流失败!!!", dqcSchedulerBasicInfoVO.getJobId());
         }
     }
 
@@ -202,7 +213,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             }
         } catch (Exception e) {
 //            e.printStackTrace();
-//            throw new BizException("未获取到实例ID!!!");
+            LOG.info("JobId:【{}】,未获取到实例ID!!!", jobId);
         }
         return processDefinitionDTO;
     }
@@ -212,6 +223,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
         try {
             defaultApi.deleteProcessDefinitionByCodeUsingDELETE(processDefinitionCode, projectCode);
         } catch (Exception e) {
+            LOG.info("processDefinitionCode:【{}】,projectCode: 【{}】,删除工作流失败!!!", processDefinitionCode, projectCode);
             e.printStackTrace();
         }
     }
@@ -222,6 +234,7 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             String processDefinitionIds = processDefinitionIdList.stream().map(String::valueOf).collect(Collectors.joining(","));
             defaultApi.batchDeleteProcessDefinitionByCodesUsingPOST(processDefinitionIds, projectCode);
         } catch (Exception e) {
+            LOG.info("processDefinitionIdList:【{}】,projectCode: 【{}】,批量删除工作流失败!!!", processDefinitionIdList, projectCode);
             e.printStackTrace();
         }
     }
