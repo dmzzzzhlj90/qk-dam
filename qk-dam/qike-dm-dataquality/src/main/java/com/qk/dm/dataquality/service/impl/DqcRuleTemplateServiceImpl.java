@@ -269,9 +269,9 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
 
     private void checkSql(String sql, EngineTypeEnum dataSourceEnums) {
-        if (!SqlParserFactory.parseStatements(sql, dataSourceEnums.getDbType())) {
-            throw new BizException("本sql " + dataSourceEnums.getCode() + " 不适用!");
-        }
+//        if (!SqlParserFactory.parseStatements(sql, dataSourceEnums.getDbType())) {
+//            throw new BizException("本sql " + dataSourceEnums.getCode() + " 不适用!");
+//        }
     }
 
     private void checkRulesIsQuote(String publishState, Long id) {
