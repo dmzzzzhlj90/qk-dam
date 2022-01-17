@@ -33,7 +33,7 @@ public class RuleMeterConf {
         return (registry) ->
         {
             Gauge.builder(metricName("task.instance"),taskInstanceBiz,
-                            (t)->t.taskStateTypeStatistics(InstanceStateTypeEnum.SUCCESS.getCode()).getFieldCount())
+                            (t)->t.taskStateTypeStatistics(InstanceStateTypeEnum.SUCCESS).getFieldCount())
                     .description("检查任务实例")
                     .tag("state","SUCCESS")
                     .tag("type","FIELD")
@@ -41,13 +41,13 @@ public class RuleMeterConf {
 
             Gauge.builder(metricName("task.instance"),
                             taskInstanceBiz,
-                            (t)->t.taskStateTypeStatistics(InstanceStateTypeEnum.FAILURE.getCode()).getFieldCount())
+                            (t)->t.taskStateTypeStatistics(InstanceStateTypeEnum.FAILURE).getFieldCount())
                     .description("检查任务实例")
                     .tag("state","FAILURE")
                     .tag("type","FIELD")
                     .register(registry);
             Gauge.builder(metricName("task.instance"),taskInstanceBiz,
-                            (t)->t.taskStateTypeStatistics(InstanceStateTypeEnum.SUCCESS.getCode()).getTableCount())
+                            (t)->t.taskStateTypeStatistics(InstanceStateTypeEnum.SUCCESS).getTableCount())
                     .description("检查任务实例")
                     .tag("state","SUCCESS")
                     .tag("type","TABLE")
@@ -55,7 +55,7 @@ public class RuleMeterConf {
 
             Gauge.builder(metricName("task.instance"),
                             taskInstanceBiz,
-                            (t)->t.taskStateTypeStatistics(InstanceStateTypeEnum.FAILURE.getCode()).getTableCount())
+                            (t)->t.taskStateTypeStatistics(InstanceStateTypeEnum.FAILURE).getTableCount())
                     .description("检查任务实例")
                     .tag("state","FAILURE")
                     .tag("type","TABLE")
