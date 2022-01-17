@@ -135,13 +135,13 @@ public class RptBaseInfoVO {
    * 二期站点类型
    */
   @ExcelProperty(value = "二期站点类型",order = 7)
-  @NotBlank(message = "连接不能为空")
+  @NotBlank(message = "二期站点类型不能为空")
   private String secondSiteType;
   /**
    * 列表页地址
    */
   @ExcelProperty(value = "列表页地址",order = 8)
-  @NotBlank(message = "连接不能为空")
+  @NotBlank(message = "列表页地址不能为空")
   private String listPageAddress;
   /**
    * 不同类型混合
