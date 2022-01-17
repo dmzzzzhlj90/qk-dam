@@ -78,7 +78,7 @@ public class RedisBiz {
         return totalList;
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisInstanceList(String failure, Date date) {
         //根据条件缓存所有实例
         return GsonUtil.toJsonString(
@@ -102,15 +102,15 @@ public class RedisBiz {
         return dqcSchedulerResultDataService.getSchedulerResultList(jobIdSet);
     }
 
-    private List<DqcSchedulerResult> warnResultList(List<DqcProcessInstanceVO> dqcProcessInstanceVOS){
+    private List<DqcSchedulerResult> warnResultList(List<DqcProcessInstanceVO> dqcProcessInstanceVOS) {
         return getSchedulerList(dqcProcessInstanceVOS)
                 .stream()
                 .filter(it -> warnResult.equals(it.getWarnResult()))
                 .collect(Collectors.toList());
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
-    public String redisWarnResultList(List<DqcProcessInstanceVO> dqcProcessInstanceVOS){
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    public String redisWarnResultList(List<DqcProcessInstanceVO> dqcProcessInstanceVOS) {
         return GsonUtil.toJsonString(
                 warnResultList(dqcProcessInstanceVOS)
         );
@@ -153,8 +153,8 @@ public class RedisBiz {
         return totalList;
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisTaskInstanceList(Date date, String stateType) {
-        return GsonUtil.toJsonString(getTaskInstanceList(date,stateType));
+        return GsonUtil.toJsonString(getTaskInstanceList(date, stateType));
     }
 }
