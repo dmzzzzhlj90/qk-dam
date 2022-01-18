@@ -1,5 +1,7 @@
 package com.qk.dm.dataquality.meter;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.qk.dm.dataquality.biz.TaskInstanceBiz;
 import com.qk.dm.dataquality.biz.WarnBiz;
 import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
@@ -9,9 +11,18 @@ import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.binder.MeterBinder;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.repository.CrudRepository;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 监控数据质量规则指标
@@ -25,7 +36,7 @@ public class RuleMeterConf {
     @Bean
     public MeterBinder ruleTemplateSize(final DqcRuleTemplateRepository dqcRuleTemplateRepository) {
         return (registry) ->
-                Gauge.builder(metricName("template"), dqcRuleTemplateRepository::count)
+                Gauge.builder(metricName("template"), dqcRuleTemplateRepository, CrudRepository::count)
                         .description("规则模板个数")
                         .tag("name", "template")
                         .tag("rrr", "xxx")
@@ -89,28 +100,12 @@ public class RuleMeterConf {
         };
     }
 
-    @Bean
-    public MeterBinder sssInstance(final JPAQueryFactory jpaQueryFactory) {
 
-        return (registry) ->
-        {
-            JPAQuery<DqcSchedulerResult> schedulerResultJPAQuery = jpaQueryFactory.selectFrom(QDqcSchedulerResult.dqcSchedulerResult)
-                    .where(QDqcSchedulerResult.dqcSchedulerResult.
-                            gmtCreate.eq(jpaQueryFactory.
-                                    select(QDqcSchedulerResult.dqcSchedulerResult.gmtCreate.max()).
-                                    from(QDqcSchedulerResult.dqcSchedulerResult)
-                            ));
-            Gauge register = Gauge.builder(metricName("task.sss"), () -> 11)
-                    .description("检查任务实例")
-                    .tag("state", "WARING")
-                    .tag("type", "TABLE")
-                    .register(registry);
-        };
-    }
-
-
-    private static String metricName(String name) {
-        return String.join(".", NAME_RULE, name);
+    public static String metricName(String... names) {
+        Joiner joiner = Joiner.on(",");
+        ArrayList<String> ts = Lists.newArrayList(NAME_RULE);
+        ts.addAll(List.of(names));
+        return  joiner.join(ts);
     }
 
 }
