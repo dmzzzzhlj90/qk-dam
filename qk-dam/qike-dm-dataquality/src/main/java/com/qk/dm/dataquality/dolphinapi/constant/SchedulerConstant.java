@@ -61,4 +61,9 @@ public class SchedulerConstant {
      */
     public static final String WARN_RPC_URL_PART = "?ruleId=";
 
+    /**
+     * 查询获取工作流实例ID,结果集KEY
+     */
+    public static final String PROCESS_RESULT_DATA_TOTAL_LIST_KEY = "totalList";
+
 }

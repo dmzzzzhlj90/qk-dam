@@ -1,6 +1,5 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
-import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
@@ -19,6 +18,7 @@ import com.qk.dm.dataquality.dolphinapi.executor.TaskDefinitionExecutor;
 import com.qk.dm.dataquality.dolphinapi.executor.TaskRelationExecutor;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
+import com.qk.dm.dataquality.utils.BeanMapUtils;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.slf4j.Logger;
@@ -124,13 +124,13 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
             dataSourceMap = dataBaseInfoDefaultApi.getDataSourceMap(dataSourceNames);
         } catch (Exception e) {
             e.printStackTrace();
-            LOG.info("数据源连接名称: 【{}】,连接数据源服务失败!!!",dataSourceNames);
+            LOG.info("数据源连接名称: 【{}】,连接数据源服务失败!!!", dataSourceNames);
             throw new BizException("连接数据源服务失败!!!");
         }
         if (dataSourceMap.size() > 0) {
             return dataSourceMap;
         } else {
-            LOG.info("数据源连接名称: 【{}】,未获取到对应数据源连接信息!!!",dataSourceNames);
+            LOG.info("数据源连接名称: 【{}】,未获取到对应数据源连接信息!!!", dataSourceNames);
             throw new BizException("未获取到对应数据源连接信息!!!");
         }
     }
@@ -212,14 +212,12 @@ public class ProcessDefinitionApiServiceImpl implements ProcessDefinitionApiServ
                             projectCode,
                             searchVal,
                             null);
-            Object data = result.getData();
-            ProcessResultDataDTO processResultDataDTO =
-                    GsonUtil.fromJsonString(GsonUtil.toJsonString(data), new TypeToken<ProcessResultDataDTO>() {
-                    }.getType());
-            if (processResultDataDTO.getTotal() != 0) {
-                List<ProcessDefinitionDTO> totalList = processResultDataDTO.getTotalList();
+            Map<String, Object> data = (Map<String, Object>) result.getData();
+            List<Map<String, Object>> totalList = (List<Map<String, Object>>) data.get(SchedulerConstant.PROCESS_RESULT_DATA_TOTAL_LIST_KEY);
+            List<ProcessDefinitionDTO> processDefinitionDTOList = BeanMapUtils.changeListToBeans(totalList, ProcessDefinitionDTO.class);
 
-                List<ProcessDefinitionDTO> processDefinitions = totalList.stream()
+            if (processDefinitionDTOList.size() > 0) {
+                List<ProcessDefinitionDTO> processDefinitions = processDefinitionDTOList.stream()
                         .filter(processDefinition -> processDefinition.getName().equals(searchVal) && processDefinition.getDescription().equals(jobId))
                         .collect(Collectors.toList());
                 processDefinitionDTO = processDefinitions.get(0);
