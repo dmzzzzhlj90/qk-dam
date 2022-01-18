@@ -72,8 +72,12 @@ public class RuleMeterAspect {
 
                 if (BigDecimalValidator.getInstance().isValid(v.toString())){
                     meterRegistry.gauge(
-                            RuleMeterConf.metricName(dqcSchedulerResultTitleVO.getTitle()),
-                            Tags.of("DATAINDEX",dqcSchedulerResultTitleVO.getDataIndex()),
+                            RuleMeterConf.metricName("result","info"),
+                            Tags.of(
+                                    "DATAINDEX",dqcSchedulerResultTitleVO.getDataIndex(),
+                                    "JOBID",dqcSchedulerRules.getJobId(),
+                                    "RULEID",dqcSchedulerRules.getRuleId(),
+                                    "TITLE",dqcSchedulerResultTitleVO.getTitle()),
                             new BigDecimal(v.toString()).doubleValue());
                 }
             }));
