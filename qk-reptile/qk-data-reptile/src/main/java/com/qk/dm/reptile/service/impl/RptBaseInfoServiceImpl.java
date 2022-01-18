@@ -11,9 +11,11 @@ import com.qk.dm.reptile.constant.RptRolesConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.QRptBaseInfo;
 import com.qk.dm.reptile.entity.RptBaseInfo;
+import com.qk.dm.reptile.enums.TimeIntervalEnum;
 import com.qk.dm.reptile.factory.ReptileServerFactory;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
+import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
@@ -123,6 +125,9 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
         List<RptBaseInfo> list = (List<RptBaseInfo>) map.get("list");
         List<RptBaseInfoVO> voList = RptBaseInfoMapper.INSTANCE.of(list);
+        if(RptConstant.WAITING.equals(rptBaseInfoDTO.getStatus())){
+            voList = checkConfig(voList);
+        }
         return new PageResultVO<>(
                 (long) map.get("total"),
                 rptBaseInfoDTO.getPagination().getPage(),
@@ -141,8 +146,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
-    public void timedExecution() {
-    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatus(RptRunStatusConstant.START,RptConstant.REPTILE);
+    public void timedExecution(String timeInterval) {
+    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatusAndTimeInterval(RptRunStatusConstant.START,RptConstant.REPTILE,timeInterval);
         if(!CollectionUtils.isEmpty(list)){
             list.forEach(e -> {
                 String result = ReptileServerFactory.requestServer(rptConfigInfoService.rptList(e.getId()));
@@ -200,6 +205,17 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
        rptConfigInfoService.copyConfig(sourceId,targetId);
     }
 
+    @Override
+    public void updateTimeInterval(TimeIntervalDTO timeIntervalDTO) {
+        RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(timeIntervalDTO.getId()).orElse(null);
+        if(Objects.isNull(rptBaseInfo)){
+            throw new BizException("当前要修改的基础信息id为：" + timeIntervalDTO.getId() + " 的数据不存在！！！");
+        }
+        rptBaseInfo.setTimeInterval(timeIntervalDTO.getTimeInterval());
+        rptBaseInfo.setRunPeriod(TimeIntervalEnum.of(timeIntervalDTO.getTimeInterval()));
+        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+    }
+
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptBaseInfoDTO,authorizedClient);
@@ -210,7 +226,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             return result;
         }
         long count = jpaQueryFactory.select(qRptBaseInfo.count()).from(qRptBaseInfo).where(booleanBuilder).fetchOne();
-        List<RptBaseInfo> mtdLabelsList = jpaQueryFactory
+        List<RptBaseInfo> rptBaseInfoList = jpaQueryFactory
                         .select(qRptBaseInfo)
                         .from(qRptBaseInfo)
                         .where(booleanBuilder)
@@ -218,7 +234,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
                         .offset((long) (rptBaseInfoDTO.getPagination().getPage() - 1)
                                         * rptBaseInfoDTO.getPagination().getSize())
                         .limit(rptBaseInfoDTO.getPagination().getSize()).fetch();
-        result.put("list", mtdLabelsList);
+        result.put("list", rptBaseInfoList);
         result.put("total", count);
         return result;
     }
@@ -243,5 +259,17 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             booleanBuilder.and(qRptBaseInfo.status.eq(rptBaseInfoDTO.getStatus()));
         }
 
+    }
+
+    /**
+     * 是否添加了配置信息
+     * @param rptBaseInfoList
+     */
+    private List<RptBaseInfoVO> checkConfig(List<RptBaseInfoVO> rptBaseInfoList){
+        if(CollectionUtils.isEmpty(rptBaseInfoList)){return Collections.emptyList();}
+        rptBaseInfoList.forEach(e->{
+            e.setConfigStatus(!CollectionUtils.isEmpty(rptConfigInfoService.rptList(e.getId())));
+        });
+        return rptBaseInfoList;
     }
 }

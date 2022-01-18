@@ -10,6 +10,7 @@ import com.qk.dm.reptile.service.impl.RptExcelBatchService;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
  * @date 2021/12/22 11:44
  * @since 1.0.0
  */
+@Component
 public class RptBasicInfoUploadDataListener extends AnalysisEventListener<RptBaseInfoVO> {
   private static final Log LOG = LogFactory.getLog("rptBasicInfoUploadDataListener.saveData()");
   private final RptExcelBatchService rptExcelBatchService;
@@ -26,7 +28,7 @@ public class RptBasicInfoUploadDataListener extends AnalysisEventListener<RptBas
   private static final int BATCH_COUNT = 1000;
 
   List<RptBaseInfoVO> list = new ArrayList<>();
-
+  List<RptBaseInfo> returnList = new ArrayList<>();
   public RptBasicInfoUploadDataListener(RptExcelBatchService rptExcelBatchService) {
     this.rptExcelBatchService = rptExcelBatchService;
   }
@@ -53,7 +55,8 @@ public class RptBasicInfoUploadDataListener extends AnalysisEventListener<RptBas
     LOG.info("======结束校验excel中的待配数据!======");
     // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM
     if (list.size() >= BATCH_COUNT) {
-      saveData();
+      List<RptBaseInfo> rptBaseInfos = saveData();
+      returnList.addAll(rptBaseInfos);
       // 存储完成清理 list
       list.clear();
     }
@@ -66,16 +69,17 @@ public class RptBasicInfoUploadDataListener extends AnalysisEventListener<RptBas
   @Override
   public void doAfterAllAnalysed(AnalysisContext context) {
     // 这里也要保存数据，确保最后遗留的数据也存储到数据库
-    saveData();
+    List<RptBaseInfo> rptBaseInfos = saveData();
+    returnList.addAll(rptBaseInfos);
   }
 
-  private void saveData() {
+  private List<RptBaseInfo> saveData() {
     LOG.info(list.size()+"解析excel待配数据个数 【{}】,开始导入");
     List<RptBaseInfo> prtBasicInfoList = new ArrayList<>();
       LOG.info("======匹配excel待配数据导入======");
       getBasicInfoDataAll(prtBasicInfoList);
       LOG.info("======成功获取到待配数据======");
-    rptExcelBatchService.saveRptBasicInfo(prtBasicInfoList);
+    return  rptExcelBatchService.saveRptBasicInfo(prtBasicInfoList);
   }
 
   private void getBasicInfoDataAll(List<RptBaseInfo> rptBasicInfoList) {
@@ -87,5 +91,7 @@ public class RptBasicInfoUploadDataListener extends AnalysisEventListener<RptBas
             });
       }
   }
-
+ public List<RptBaseInfo> getList(){
+    return returnList;
+ }
 }

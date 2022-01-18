@@ -2,9 +2,11 @@ package com.qk.dm.reptile.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dm.reptile.params.dto.RptConfigDetailDTO;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.vo.RptAddConfigVO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
+import com.qk.dm.reptile.params.vo.RptSelectorVO;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -80,6 +82,26 @@ public class RptConfigInfoController {
     @GetMapping("/{id}")
     public DefaultCommonResult<RptConfigInfoVO> detail(@PathVariable("id") Long id) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, rptConfigInfoService.detail(id));
+    }
+
+    /**
+     * 根据待配列表或爬虫列表id获取配置信息
+     * @param rptConfigDetailDTO
+     * @return
+     */
+    @PostMapping("/detail")
+    public DefaultCommonResult<RptConfigInfoVO> getDetailByBaseInfo(@RequestBody @Validated RptConfigDetailDTO rptConfigDetailDTO){
+       return DefaultCommonResult.success(ResultCodeEnum.OK, rptConfigInfoService.getDetailByBaseInfo(rptConfigDetailDTO));
+    }
+
+    /**
+     * 根据配置id获取选择器信息
+     * @param configId
+     * @return
+     */
+    @GetMapping("/selector/{configId}")
+    public DefaultCommonResult<RptSelectorVO> getSelectorInfo(@PathVariable("configId") Long configId){
+        return DefaultCommonResult.success(ResultCodeEnum.OK, rptConfigInfoService.getSelectorInfo(configId));
     }
 
     /**

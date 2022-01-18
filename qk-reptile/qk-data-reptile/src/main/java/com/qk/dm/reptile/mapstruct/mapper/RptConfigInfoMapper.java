@@ -3,6 +3,7 @@ package com.qk.dm.reptile.mapstruct.mapper;
 import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
+import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -42,5 +43,11 @@ public interface RptConfigInfoMapper {
     void of(RptConfigInfoDTO rptConfigInfoDTO, @MappingTarget RptConfigInfo rptConfigInfo);
 
     List<RptConfigInfoVO> of(List<RptConfigInfo> rptConfigInfoList);
+
+    @Mapping(target = "id",ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void of(RptConfigInfo info, @MappingTarget RptConfigInfo rptConfigInfo);
+
+
 
 }
