@@ -1,7 +1,5 @@
 package com.qk.dm.dataquality.meter;
 
-import com.google.common.math.BigDecimalMath;
-import com.google.common.primitives.Doubles;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
@@ -11,12 +9,12 @@ import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -33,12 +31,16 @@ public class RuleMeterAspect {
     final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
     final DqcSchedulerResultDataService dqcSchedulerResultDataService;
     final MeterRegistry meterRegistry;
+    final CacheManager cacheManager;
+    private Cache cache;
 
     public RuleMeterAspect(DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
-                           DqcSchedulerResultDataService dqcSchedulerResultDataService, MeterRegistry meterRegistry) {
+                           DqcSchedulerResultDataService dqcSchedulerResultDataService, MeterRegistry meterRegistry, CacheManager cacheManager) {
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
         this.dqcSchedulerResultDataService = dqcSchedulerResultDataService;
         this.meterRegistry = meterRegistry;
+        this.cacheManager = cacheManager;
+        this.cache= cacheManager.getCache("RuleMeter");
     }
 
     @Around("execution(* com.qk.dm.dataquality.service.*.getWarnResultInfo(..))")
@@ -71,14 +73,26 @@ public class RuleMeterAspect {
                 log.info("执行结果【{}:{}】",k,v);
 
                 if (BigDecimalValidator.getInstance().isValid(v.toString())){
-                    meterRegistry.gauge(
-                            RuleMeterConf.metricName("result","info"),
-                            Tags.of(
-                                    "DATAINDEX",dqcSchedulerResultTitleVO.getDataIndex(),
-                                    "JOBID",dqcSchedulerRules.getJobId(),
-                                    "RULEID",dqcSchedulerRules.getRuleId(),
-                                    "TITLE",dqcSchedulerResultTitleVO.getTitle()),
-                            new BigDecimal(v.toString()).doubleValue());
+                    BigDecimal b = new BigDecimal(v.toString());
+                    String metricName = RuleMeterConf.metricName("result", "info");
+                    Tags tags = Tags.of(
+                            "JOBID", dqcSchedulerRules.getJobId(),
+                            "RULEID", dqcSchedulerRules.getRuleId(),
+                            "DATAINDEX", dqcSchedulerResultTitleVO.getDataIndex(),
+                            "TITLE", dqcSchedulerResultTitleVO.getTitle());
+                    String cacheKey = tags.toString();
+                    cache.put(cacheKey,b);
+                    if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
+                        meterRegistry.gauge(
+                                metricName,
+                                tags,
+                                cache,
+                                c->
+                                        new BigDecimal(
+                                                String.valueOf(c.get(cacheKey,Object.class))
+                                        ).doubleValue());
+                    }
+
                 }
             }));
         }
