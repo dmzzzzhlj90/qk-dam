@@ -20,11 +20,11 @@ public class TaskInstanceDTO implements Serializable {
     private Boolean taskComplete;
     private String taskDefine;
     private Boolean firstRun;
-    private Integer dryRun;
+    private Long dryRun;
     private String flag;
-    private Integer environmentCode;
+    private Long environmentCode;
     private String processInstance;
-    private Integer pid;
+    private Long pid;
     private String taskParams;
     private String duration;
     private String processDefine;
@@ -39,14 +39,14 @@ public class TaskInstanceDTO implements Serializable {
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
     private String environmentConfig;
-    private Integer id;
+    private Long id;
     private String state;
     private String workerGroup;
     private Boolean conditionsTask;
     private String processInstancePriority;
-    private Integer processInstanceId;
+    private Long processInstanceId;
     private TaskDependency dependency;
-    private Integer executorId;
+    private Long executorId;
     private String alertFlag;
     private String dependentResult;
     private String executePath;
@@ -55,8 +55,8 @@ public class TaskInstanceDTO implements Serializable {
     private Date firstSubmitTime;
     private TaskSwitchDependency switchDependency;
     private String resources;
-    private Integer maxRetryTimes;
-    private Integer retryTimes;
+    private Long maxRetryTimes;
+    private Long retryTimes;
     private String executorName;
     private Boolean subProcess;
     private String varPool;
@@ -65,9 +65,9 @@ public class TaskInstanceDTO implements Serializable {
     private Date submitTime;
     private Boolean dependTask;
     private String name;
-    private Integer taskDefinitionVersion;
-    private Integer delayTime;
-    private Integer retryInterval;
+    private Long taskDefinitionVersion;
+    private Long delayTime;
+    private Long retryInterval;
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date endTime;

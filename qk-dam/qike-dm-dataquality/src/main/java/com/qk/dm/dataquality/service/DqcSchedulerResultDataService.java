@@ -23,6 +23,8 @@ public interface DqcSchedulerResultDataService {
 
     PageResultVO<DqcSchedulerResultVO> getResultDataList(DqcSchedulerResultParamsVO schedulerResultDataParamsVO);
 
+    List<DqcSchedulerResultVO> searchResultByTaskCode(Long taskCode);
+
     Object getWarnResultInfo(String ruleId);
 
     List<DqcSchedulerResult> getSchedulerResultList(Set<String> jobIds);
@@ -32,4 +34,5 @@ public interface DqcSchedulerResultDataService {
     List<DqcSchedulerResult> getSchedulerResultListByWarnTrend(String warnResult, Date startDate, Date endDate);
 
     PageResultVO<DqcSchedulerResultVO> searchResultPageList(DqcSchedulerResultPageVO schedulerResultDataParamsVO);
+
 }

@@ -11,13 +11,11 @@ import java.util.Objects;
 /** @author shenpengjie */
 @Data
 public class DqcProcessTaskInstanceVO {
-  private int id;
+  private Long id;
   /** 流程id */
-  private int processDefinitionId;
-  /**
-   * 实例id
-   */
-  private int processInstanceId;
+  private Long processDefinitionId;
+  /** 实例id */
+  private Long processInstanceId;
   /** 工作流名称 */
   private String processInstanceName;
   /** 任务实例名称 */

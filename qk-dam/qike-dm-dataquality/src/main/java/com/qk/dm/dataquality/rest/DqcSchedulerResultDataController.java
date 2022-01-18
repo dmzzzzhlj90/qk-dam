@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 调度结果集
  *
@@ -40,6 +42,18 @@ public class DqcSchedulerResultDataController {
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<PageResultVO<DqcSchedulerResultVO>> searchPageList(@RequestBody DqcSchedulerResultParamsVO schedulerResultDataParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.getResultDataList(schedulerResultDataParamsVO));
+    }
+
+    /**
+     * 根据规则查询最新的执行结果集信息
+     *
+     * @param taskCode
+     * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
+     */
+    @GetMapping("/latest")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult<List<DqcSchedulerResultVO>> searchResultByTaskCode(@RequestParam("taskCode") Long taskCode) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.searchResultByTaskCode(taskCode));
     }
 
     /**
