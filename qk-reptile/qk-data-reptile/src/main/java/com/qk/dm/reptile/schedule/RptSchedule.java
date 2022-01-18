@@ -29,7 +29,7 @@ public class RptSchedule {
     @Scheduled(fixedDelay = 1000*60*20)
     public void twentySyncRpt(){
         LOG.info("二十分钟间隔定时任务开始执行");
-        rptBaseInfoService.timedExecution(TimeIntervalEnum.ONE_DAY.getName());
+        rptBaseInfoService.timedExecution(TimeIntervalEnum.TWENTY.getName());
         LOG.info("二十分钟间隔定时任务执行结束");
     }
 
