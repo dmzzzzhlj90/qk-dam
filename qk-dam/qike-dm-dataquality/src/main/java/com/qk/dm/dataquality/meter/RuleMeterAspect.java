@@ -1,5 +1,7 @@
 package com.qk.dm.dataquality.meter;
 
+import com.google.common.math.BigDecimalMath;
+import com.google.common.primitives.Doubles;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
@@ -10,6 +12,8 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -65,7 +69,8 @@ public class RuleMeterAspect {
                 DqcSchedulerResultTitleVO dqcSchedulerResultTitleVO = resultTitleList.get(i);
                 log.info("执行标题【{}:{}】",dqcSchedulerResultTitleVO.getTitle(),dqcSchedulerResultTitleVO.getDataIndex());
                 log.info("执行结果【{}:{}】",k,v);
-                if (StringUtils.isNumeric(v.toString())){
+
+                if (BigDecimalValidator.getInstance().isValid(v.toString())){
                     meterRegistry.gauge(
                             RuleMeterConf.metricName(dqcSchedulerResultTitleVO.getTitle()),
                             Tags.of("DATAINDEX",dqcSchedulerResultTitleVO.getDataIndex()),
@@ -79,6 +84,7 @@ public class RuleMeterAspect {
         log.info("返回值数据[{}]",retVal);
         return retVal;
     }
+
     //    @Pointcut("within(com.qk.dm.dataquality.service..*)")
     //    public void inServiceLayer() {}
     //
