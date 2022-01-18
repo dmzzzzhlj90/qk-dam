@@ -50,17 +50,17 @@ public class CacheBiz {
                 .build();
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == null")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", value = "statistics", key = "#root.methodName", unless = "#result == null")
     public String summary() {
         return GsonUtil.toJsonString(getDataSummary());
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String dimension() {
         return GsonUtil.toJsonString(taskInstanceBiz.dimensionStatistics(new Date()));
     }
 
-    @Cacheable(cacheManager = "dynamicTtlCacheManager", cacheNames = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(cacheManager = "dynamicTtlCacheManager", value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String dir() {
         return GsonUtil.toJsonString(instanceBiz.dirStatistics(new Date()));
     }
