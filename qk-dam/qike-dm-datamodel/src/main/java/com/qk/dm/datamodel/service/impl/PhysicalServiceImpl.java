@@ -447,9 +447,14 @@ public class PhysicalServiceImpl implements PhysicalService {
    */
   @Override
   public void synchronization(List<Long> physicalIds) {
+    Map<Long,ModelPhysicalTable> map = new HashMap<>();
+    Boolean checkSynchroniZtion = checkSynchroniZtion(physicalIds,map);
+    if (checkSynchroniZtion){
+      throw new BizException("已发布的数据才能手动同步");
+    }
       physicalIds.forEach(id->{
         //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
-        ModelPhysicalTable modelPhysicalTable = modelPhysicalTableRepository.findById(id).orElse(null);
+        ModelPhysicalTable modelPhysicalTable = map.get(id);
         //2如果存在就不用同步如果不存在就查询创建sql调用sdk发布建表任务
         if (modelPhysicalTable==null){
           throw new BizException("当前需要同步的表id为"+id+"不存在");
@@ -459,6 +464,17 @@ public class PhysicalServiceImpl implements PhysicalService {
             modelPhysicalTable.getTableName());
         dealSynzData(tables,modelPhysicalTable,id);
       });
+  }
+
+  private Boolean checkSynchroniZtion(List<Long> physicalIds,Map<Long,ModelPhysicalTable> map) {
+    Boolean check =false;
+    List<ModelPhysicalTable> physicalTableList = modelPhysicalTableRepository.findAllById(physicalIds);
+    check = physicalTableList.stream().filter(modelPhysicalTable -> !modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)).findAny().isPresent();
+    Map<Long,ModelPhysicalTable> tableMap = physicalTableList.stream().collect(
+        Collectors.toMap(ModelPhysicalTable::getId,
+            modelPhysicalTable -> modelPhysicalTable));
+    map.putAll(tableMap);
+    return check;
   }
 
   /**
