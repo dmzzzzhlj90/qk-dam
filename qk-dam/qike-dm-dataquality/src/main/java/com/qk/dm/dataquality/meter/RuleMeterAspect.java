@@ -66,35 +66,39 @@ public class RuleMeterAspect {
             List<DqcSchedulerResultTitleVO> resultTitleList = Objects.requireNonNull(dqcSchedulerResultVO).getResultTitleList();
             List<Map<String, Object>> resultDataList = Objects.requireNonNull(dqcSchedulerResultVO).getResultDataList();
             AtomicInteger ii = new AtomicInteger(-1);
-            resultDataList.forEach(it->it.forEach((k,v)->{
-                int i = ii.incrementAndGet();
-                DqcSchedulerResultTitleVO dqcSchedulerResultTitleVO = resultTitleList.get(i);
-                log.info("执行标题【{}:{}】",dqcSchedulerResultTitleVO.getTitle(),dqcSchedulerResultTitleVO.getDataIndex());
-                log.info("执行结果【{}:{}】",k,v);
+            resultDataList.forEach(it->{
+                Object targetObj = it.entrySet().stream().filter(t -> "targetObj".equals(t.getKey())).map(Map.Entry::getValue).findFirst().orElse("");
+                it.forEach((k,v)->{
+                    int i = ii.incrementAndGet();
+                    DqcSchedulerResultTitleVO dqcSchedulerResultTitleVO = resultTitleList.get(i);
+                    log.info("执行标题【{}:{}】",dqcSchedulerResultTitleVO.getTitle(),dqcSchedulerResultTitleVO.getDataIndex());
+                    log.info("执行结果【{}:{}】",k,v);
 
-                if (BigDecimalValidator.getInstance().isValid(v.toString())){
-                    BigDecimal b = new BigDecimal(v.toString());
-                    String metricName = RuleMeterConf.metricName("result", "info");
-                    Tags tags = Tags.of(
-                            "JOBID", dqcSchedulerRules.getJobId(),
-                            "RULEID", dqcSchedulerRules.getRuleId(),
-                            "DATAINDEX", dqcSchedulerResultTitleVO.getDataIndex(),
-                            "TITLE", dqcSchedulerResultTitleVO.getTitle());
-                    String cacheKey = tags.toString();
-                    cache.put(cacheKey,b);
-                    if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
-                        meterRegistry.gauge(
-                                metricName,
-                                tags,
-                                cache,
-                                c->
-                                        new BigDecimal(
-                                                String.valueOf(c.get(cacheKey,Object.class))
-                                        ).doubleValue());
+                    if (BigDecimalValidator.getInstance().isValid(v.toString())){
+                        BigDecimal b = new BigDecimal(v.toString());
+                        String metricName = RuleMeterConf.metricName("result", "info");
+                        Tags tags = Tags.of(
+                                "JOBID", dqcSchedulerRules.getJobId(),
+                                "RULEID", dqcSchedulerRules.getRuleId(),
+                                "TARGETOBJ", targetObj.toString(),
+                                "DATAINDEX", dqcSchedulerResultTitleVO.getDataIndex(),
+                                "TITLE", dqcSchedulerResultTitleVO.getTitle());
+                        String cacheKey = tags.toString();
+                        cache.put(cacheKey,b);
+                        if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
+                            meterRegistry.gauge(
+                                    metricName,
+                                    tags,
+                                    cache,
+                                    c->
+                                            new BigDecimal(
+                                                    String.valueOf(c.get(cacheKey,Object.class))
+                                            ).doubleValue());
+                        }
+
                     }
-
-                }
-            }));
+                });
+            });
         }
         // start stopwatch
         Object retVal = pjp.proceed();
