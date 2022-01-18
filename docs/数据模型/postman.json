@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "614e6566-a677-4975-b379-919181d29308",
+    "_postman_id": "4d1b448f-9507-44f6-b862-fb5aa83787d3",
     "name": "dm-datamodel"
   },
   "item": [
@@ -14,7 +14,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 353,\n    \"tableName\": \"debbra.schuster\",\n    \"theme\": \"zd0zj8\",\n    \"dataConnection\": \"ncooe1\",\n    \"databaseName\": \"debbra.schuster\",\n    \"dataSourceName\": \"debbra.schuster\",\n    \"dataSourceId\": 968,\n    \"description\": \"3g2a2x\",\n    \"status\": 578,\n    \"gmtCreate\": \"2022-01-07 10:42:38\",\n    \"gmtModified\": \"2022-01-07 10:42:38\",\n    \"tableType\": 805,\n    \"responsibleBy\": \"itg9jy\",\n    \"dataFormat\": \"yxqven\",\n    \"themeId\": 803,\n    \"modelId\": 951,\n    \"hftsRoute\": \"ow0ikl\",\n    \"syncStatus\": 726\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 34,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"45rsr1\",\n      \"standardsId\": 613,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"dslfh7\",\n      \"itsPartition\": \"703hbx\",\n      \"itsNull\": \"xemrxg\",\n      \"description\": \"553ftz\",\n      \"gmtCreate\": \"2022-01-07 10:42:38\",\n      \"gmtModified\": \"2022-01-07 10:42:38\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 893,\n      \"tableId\": 146,\n      \"columnName\": \"debbra.schuster\",\n      \"childTableName\": \"debbra.schuster\",\n      \"childTableColumn\": \"lan7gm\",\n      \"childConnectionWay\": \"zte51k\",\n      \"fatherTableName\": \"debbra.schuster\",\n      \"fatherTableColumn\": \"1x2lld\",\n      \"fatherConnectionWay\": \"hk92hb\",\n      \"gmtCreate\": \"2022-01-07 10:42:38\",\n      \"gmtModified\": \"2022-01-07 10:42:38\"\n    }\n  ]\n}",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 4,\n    \"tableName\": \"albert.kassulke\",\n    \"theme\": \"oyspgd\",\n    \"dataConnection\": \"bo894t\",\n    \"dataBaseName\": \"albert.kassulke\",\n    \"dataSourceName\": \"albert.kassulke\",\n    \"dataSourceId\": 549,\n    \"description\": \"0k9wba\",\n    \"status\": 192,\n    \"gmtCreate\": \"2022-01-11 20:44:56\",\n    \"gmtModified\": \"2022-01-11 20:44:56\",\n    \"tableType\": \"fxqgs0\",\n    \"responsibleBy\": \"4d9g6w\",\n    \"dataFormat\": \"q23m0b\",\n    \"themeId\": 190,\n    \"modelId\": 142,\n    \"hftsRoute\": \"8bt9np\",\n    \"syncStatus\": 287\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 413,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"xp0ft5\",\n      \"standardsId\": 451,\n      \"standardsName\": \"albert.kassulke\",\n      \"standardsCode\": \"37307\",\n      \"itsPrimaryKey\": \"mkhs73\",\n      \"itsPartition\": \"uuy5ek\",\n      \"itsNull\": \"7q2zt9\",\n      \"description\": \"8ducc5\",\n      \"gmtCreate\": \"2022-01-11 20:44:56\",\n      \"gmtModified\": \"2022-01-11 20:44:56\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 341,\n      \"tableId\": 603,\n      \"columnName\": \"albert.kassulke\",\n      \"childTableName\": \"albert.kassulke\",\n      \"childTableColumn\": \"j5470t\",\n      \"childConnectionWay\": \"3n7dz1\",\n      \"fatherTableName\": \"albert.kassulke\",\n      \"fatherTableColumn\": \"bzhbsr\",\n      \"fatherConnectionWay\": \"2ousfv\",\n      \"gmtCreate\": \"2022-01-11 20:44:56\",\n      \"gmtModified\": \"2022-01-11 20:44:56\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -22,16 +22,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/",
+              "raw": "http://::server/modelphysical/",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -46,7 +45,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  420,\n  241\n]",
+              "raw": "[\n  640,\n  62\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -54,16 +53,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/delete",
+              "raw": "http://::server/modelphysical/delete",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 "delete"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -78,7 +76,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 172,\n    \"tableName\": \"debbra.schuster\",\n    \"theme\": \"xvq0ru\",\n    \"dataConnection\": \"9cgc39\",\n    \"databaseName\": \"debbra.schuster\",\n    \"dataSourceName\": \"debbra.schuster\",\n    \"dataSourceId\": 516,\n    \"description\": \"o53re8\",\n    \"status\": 703,\n    \"gmtCreate\": \"2022-01-07 10:42:38\",\n    \"gmtModified\": \"2022-01-07 10:42:38\",\n    \"tableType\": 432,\n    \"responsibleBy\": \"u0rp7c\",\n    \"dataFormat\": \"gmjt9e\",\n    \"themeId\": 524,\n    \"modelId\": 546,\n    \"hftsRoute\": \"8i0rsi\",\n    \"syncStatus\": 506\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 194,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"ac412e\",\n      \"standardsId\": 241,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"pwwrlg\",\n      \"itsPartition\": \"08vdh1\",\n      \"itsNull\": \"szfaxu\",\n      \"description\": \"m6jc1f\",\n      \"gmtCreate\": \"2022-01-07 10:42:38\",\n      \"gmtModified\": \"2022-01-07 10:42:38\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 57,\n      \"tableId\": 834,\n      \"columnName\": \"debbra.schuster\",\n      \"childTableName\": \"debbra.schuster\",\n      \"childTableColumn\": \"58p1vf\",\n      \"childConnectionWay\": \"aluqu4\",\n      \"fatherTableName\": \"debbra.schuster\",\n      \"fatherTableColumn\": \"spkn9x\",\n      \"fatherConnectionWay\": \"tghvbl\",\n      \"gmtCreate\": \"2022-01-07 10:42:38\",\n      \"gmtModified\": \"2022-01-07 10:42:38\"\n    }\n  ]\n}",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 829,\n    \"tableName\": \"albert.kassulke\",\n    \"theme\": \"39c16q\",\n    \"dataConnection\": \"ty7829\",\n    \"dataBaseName\": \"albert.kassulke\",\n    \"dataSourceName\": \"albert.kassulke\",\n    \"dataSourceId\": 670,\n    \"description\": \"qsfcm5\",\n    \"status\": 249,\n    \"gmtCreate\": \"2022-01-11 20:44:56\",\n    \"gmtModified\": \"2022-01-11 20:44:56\",\n    \"tableType\": \"e7qo7o\",\n    \"responsibleBy\": \"w1br39\",\n    \"dataFormat\": \"97je5r\",\n    \"themeId\": 858,\n    \"modelId\": 69,\n    \"hftsRoute\": \"gcd7nf\",\n    \"syncStatus\": 151\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 792,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"dobzfv\",\n      \"standardsId\": 83,\n      \"standardsName\": \"albert.kassulke\",\n      \"standardsCode\": \"37307\",\n      \"itsPrimaryKey\": \"gpcwy3\",\n      \"itsPartition\": \"ankd2t\",\n      \"itsNull\": \"f9nov0\",\n      \"description\": \"ah9km1\",\n      \"gmtCreate\": \"2022-01-11 20:44:56\",\n      \"gmtModified\": \"2022-01-11 20:44:56\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 884,\n      \"tableId\": 243,\n      \"columnName\": \"albert.kassulke\",\n      \"childTableName\": \"albert.kassulke\",\n      \"childTableColumn\": \"qbcmzo\",\n      \"childConnectionWay\": \"93dckq\",\n      \"fatherTableName\": \"albert.kassulke\",\n      \"fatherTableColumn\": \"j8xbf3\",\n      \"fatherConnectionWay\": \"5c0j7q\",\n      \"gmtCreate\": \"2022-01-11 20:44:56\",\n      \"gmtModified\": \"2022-01-11 20:44:56\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -86,16 +84,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/",
+              "raw": "http://::server/modelphysical/",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -110,7 +107,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"trzzpe\"\n  },\n  \"themeId\": 845,\n  \"modelID\": 587\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xtq8y7\"\n  },\n  \"themeId\": 4,\n  \"modelId\": 533\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -118,16 +115,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/query",
+              "raw": "http://::server/modelphysical/query",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 "query"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -145,21 +141,20 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/999",
+              "raw": "http://::server/modelphysical/310",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "82",
+                  "value": "324",
                   "description": "No comments found."
                 }
               ]
@@ -175,7 +170,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zl8cyg\"\n  },\n  \"themeId\": 120,\n  \"modelID\": 194\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"gm7lfi\"\n  },\n  \"themeId\": 572,\n  \"modelId\": 287\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -183,16 +178,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/census",
+              "raw": "http://::server/modelphysical/census",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 "census"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -209,7 +203,7 @@
               "mode": "formdata"
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/data/types",
+              "raw": "http://::server/modelphysical/data/types",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -217,9 +211,8 @@
                 "types"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -234,46 +227,28 @@
             "method": "GET",
             "body": {
               "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "tableId",
-                  "type": "text",
-                  "description": "基础信息id",
-                  "value": "355"
-                },
-                {
-                  "key": "type",
-                  "type": "text",
-                  "description": " sql类型",
-                  "value": "79"
-                }
-              ]
+              "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/query/sql?type\u003d79\u0026tableId\u003d355",
+              "raw": "http://::server/modelphysical/query/sql/517",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 "query",
-                "sql"
+                "sql",
+                ":tableId"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
-              "query": [
+              "query": [],
+              "variable": [
                 {
                   "key": "tableId",
-                  "value": "234",
-                  "description": "基础信息id"
-                },
-                {
-                  "key": "type",
-                  "value": "830",
-                  "description": " sql类型"
+                  "value": "772",
+                  "description": "No comments found."
                 }
-              ],
-              "variable": []
+              ]
             },
             "description": "预览sql——关系建模",
             "header": []
@@ -286,7 +261,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  882,\n  565\n]",
+              "raw": "[\n  349,\n  918\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -294,16 +269,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/synchronization",
+              "raw": "http://::server/modelphysical/synchronization",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 "synchronization"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -318,7 +292,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  649,\n  367\n]",
+              "raw": "[\n  445,\n  14\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -326,16 +300,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/push",
+              "raw": "http://::server/modelphysical/push",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 "push"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -350,7 +323,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelId\": 542,\n  \"themeId\": 218,\n  \"theme\": \"7na7ei\",\n  \"dataConnection\": \"lpasq0\",\n  \"dataConnectionName\": \"debbra.schuster\",\n  \"databaseName\": \"debbra.schuster\",\n  \"replace\": 99,\n  \"tableList\": [\n    \"s4p9cg\"\n  ],\n  \"status\": 610,\n  \"syncStatus\": 496\n}",
+              "raw": "{\n  \"theme\": \"wvsptm\",\n  \"dataConnection\": \"daml1g\",\n  \"dataBaseName\": \"albert.kassulke\",\n  \"dataSourceName\": \"albert.kassulke\",\n  \"dataSourceId\": 452,\n  \"themeId\": 876,\n  \"modelId\": 248,\n  \"replace\": \"c05d4w\",\n  \"tableList\": [\n    \"a7d4jp\"\n  ],\n  \"allChoice\": \"sqsa6f\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -358,7 +331,7 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/reverse/base",
+              "raw": "http://::server/modelphysical/reverse/base",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -366,9 +339,8 @@
                 "base"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -385,16 +357,15 @@
               "mode": "formdata"
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/tables",
+              "raw": "http://::server/modelphysical/tables",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 "tables"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -414,25 +385,24 @@
                   "key": "tableName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "debbra.schuster"
+                  "value": "albert.kassulke"
                 }
               ]
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/column?tableName\u003ddebbra.schuster",
+              "raw": "http://::server/modelphysical/column?tableName\u003dalbert.kassulke",
               "protocol": "http",
               "path": [
                 "modelphysical",
                 "column"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [
                 {
                   "key": "tableName",
-                  "value": "debbra.schuster",
+                  "value": "albert.kassulke",
                   "description": "No comments found."
                 }
               ],
@@ -451,7 +421,7 @@
               "mode": "formdata"
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/modelphysical/data/fromat",
+              "raw": "http://::server/modelphysical/data/fromat",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -459,9 +429,8 @@
                 "fromat"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -481,7 +450,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zlqt0b\"\n  },\n  \"id\": 227,\n  \"themeId\": 731,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"8419t1\",\n  \"status\": 883,\n  \"connectionType\": 1,\n  \"dataConnection\": \"lcxap4\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 259,\n      \"factId\": 56,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"h1gu0g\",\n      \"standardsId\": 391,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 819,\n      \"itsPartition\": 299,\n      \"itsNull\": 408,\n      \"description\": \"0wc3jz\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"s2ojrl\"\n  },\n  \"id\": 293,\n  \"themeId\": 392,\n  \"themeName\": \"albert.kassulke\",\n  \"factName\": \"albert.kassulke\",\n  \"description\": \"ke4fy4\",\n  \"status\": 198,\n  \"connectionType\": 367,\n  \"dataConnection\": \"xlike8\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 186,\n      \"factId\": 121,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"lfp6qz\",\n      \"standardsId\": 299,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": 878,\n      \"itsPartition\": 122,\n      \"itsNull\": 946,\n      \"description\": \"5a7a5k\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -489,18 +458,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/fact/",
+              "raw": "http://::server/fact/",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "fact",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -515,7 +481,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lp0jhv\"\n  },\n  \"id\": 268,\n  \"themeId\": 0,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"px770q\",\n  \"status\": 758,\n  \"connectionType\": 982,\n  \"dataConnection\": \"zxs7eu\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 273,\n      \"factId\": 931,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"bvnnet\",\n      \"standardsId\": 289,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 458,\n      \"itsPartition\": 687,\n      \"itsNull\": 697,\n      \"description\": \"x647op\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"rt0mhv\"\n  },\n  \"id\": 800,\n  \"themeId\": 20,\n  \"themeName\": \"albert.kassulke\",\n  \"factName\": \"albert.kassulke\",\n  \"description\": \"bmocvs\",\n  \"status\": 724,\n  \"connectionType\": 846,\n  \"dataConnection\": \"ztdvem\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 872,\n      \"factId\": 954,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"ro50b7\",\n      \"standardsId\": 27,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": 993,\n      \"itsPartition\": 25,\n      \"itsNull\": 644,\n      \"description\": \"7jz9np\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -523,23 +489,20 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/fact/830",
+              "raw": "http://::server/fact/980",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "fact",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "534",
+                  "value": "935",
                   "description": "事实表id"
                 }
               ]
@@ -558,23 +521,20 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/fact/186",
+              "raw": "http://::server/fact/327",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "fact",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "205",
+                  "value": "67",
                   "description": "事实表id"
                 }
               ]
@@ -590,7 +550,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xrmqjn\"\n  },\n  \"id\": 201,\n  \"themeId\": 893,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"9yz48t\",\n  \"status\": 718,\n  \"connectionType\": 840,\n  \"dataConnection\": \"nr519o\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 209,\n      \"factId\": 488,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"x8nhyf\",\n      \"standardsId\": 909,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 830,\n      \"itsPartition\": 699,\n      \"itsNull\": 329,\n      \"description\": \"jj09t0\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"vcnlck\"\n  },\n  \"id\": 599,\n  \"themeId\": 249,\n  \"themeName\": \"albert.kassulke\",\n  \"factName\": \"albert.kassulke\",\n  \"description\": \"kw4z7i\",\n  \"status\": 958,\n  \"connectionType\": 15,\n  \"dataConnection\": \"jff9g1\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 649,\n      \"factId\": 603,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"9c4fnh\",\n      \"standardsId\": 346,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": 116,\n      \"itsPartition\": 337,\n      \"itsNull\": 763,\n      \"description\": \"t4ug58\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -598,18 +558,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/fact/list",
+              "raw": "http://::server/fact/list",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "fact",
                 "list"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -627,24 +584,21 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/fact/publish/2pa0aq",
+              "raw": "http://::server/fact/publish/w6nu5u",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "fact",
                 "publish",
                 ":ids"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "ids",
-                  "value": "dpk80y",
+                  "value": "858tje",
                   "description": "事实表id，多个id使用英文逗号分割"
                 }
               ]
@@ -663,24 +617,21 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/fact/offline/kfabsu",
+              "raw": "http://::server/fact/offline/2jqna9",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "fact",
                 "offline",
                 ":ids"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "ids",
-                  "value": "6ud00s",
+                  "value": "s3ux91",
                   "description": "事实表id，多个id使用英文逗号分割"
                 }
               ]
@@ -699,25 +650,22 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/fact/preview/sql/44",
+              "raw": "http://::server/fact/preview/sql/555",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "fact",
                 "preview",
                 "sql",
                 ":tableId"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "358",
+                  "value": "244",
                   "description": "事实表id"
                 }
               ]
@@ -738,7 +686,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 136,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"m4k9u1\",\n  \"dataConnection\": \"3lizc8\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 763,\n  \"description\": \"pm9zka\",\n  \"status\": 165,\n  \"gmtCreate\": \"2022-01-07 10:42:39\",\n  \"gmtModified\": \"2022-01-07 10:42:39\",\n  \"tableType\": 21,\n  \"responsibleBy\": \"bqhn3z\",\n  \"dataFormat\": \"nm79cq\",\n  \"themeId\": 62,\n  \"modelId\": 456,\n  \"hftsRoute\": \"x1s2hi\",\n  \"syncStatus\": 755\n}",
+              "raw": "{\n  \"id\": 759,\n  \"tableName\": \"albert.kassulke\",\n  \"theme\": \"soulzz\",\n  \"dataConnection\": \"ko8qv4\",\n  \"dataBaseName\": \"albert.kassulke\",\n  \"dataSourceName\": \"albert.kassulke\",\n  \"dataSourceId\": 635,\n  \"description\": \"lz10s8\",\n  \"status\": 789,\n  \"gmtCreate\": \"2022-01-11 20:44:56\",\n  \"gmtModified\": \"2022-01-11 20:44:56\",\n  \"tableType\": \"m07zv5\",\n  \"responsibleBy\": \"ef077m\",\n  \"dataFormat\": \"x59y9n\",\n  \"themeId\": 639,\n  \"modelId\": 340,\n  \"hftsRoute\": \"jwd8re\",\n  \"syncStatus\": 541\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -746,18 +694,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/physical/",
+              "raw": "http://::server/physical/",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "physical",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -772,7 +717,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 988,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"31khwi\",\n  \"dataConnection\": \"jp6awr\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 436,\n  \"description\": \"2z3tkq\",\n  \"status\": 331,\n  \"gmtCreate\": \"2022-01-07 10:42:39\",\n  \"gmtModified\": \"2022-01-07 10:42:39\",\n  \"tableType\": 513,\n  \"responsibleBy\": \"zx7z0g\",\n  \"dataFormat\": \"sk7qe4\",\n  \"themeId\": 634,\n  \"modelId\": 527,\n  \"hftsRoute\": \"r6249r\",\n  \"syncStatus\": 472\n}",
+              "raw": "{\n  \"id\": 169,\n  \"tableName\": \"albert.kassulke\",\n  \"theme\": \"53ut7z\",\n  \"dataConnection\": \"1zwdlx\",\n  \"dataBaseName\": \"albert.kassulke\",\n  \"dataSourceName\": \"albert.kassulke\",\n  \"dataSourceId\": 27,\n  \"description\": \"aatosk\",\n  \"status\": 750,\n  \"gmtCreate\": \"2022-01-11 20:44:56\",\n  \"gmtModified\": \"2022-01-11 20:44:56\",\n  \"tableType\": \"dcpdzs\",\n  \"responsibleBy\": \"2xq3c1\",\n  \"dataFormat\": \"huev4o\",\n  \"themeId\": 621,\n  \"modelId\": 254,\n  \"hftsRoute\": \"aoqn9j\",\n  \"syncStatus\": 329\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -780,23 +725,20 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/physical/518",
+              "raw": "http://::server/physical/233",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "physical",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "579",
+                  "value": "350",
                   "description": "No comments found."
                 }
               ]
@@ -815,23 +757,20 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/physical/99i3i2",
+              "raw": "http://::server/physical/0fznfv",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "physical",
                 ":ids"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "ids",
-                  "value": "55c9rr",
+                  "value": "5u589n",
                   "description": "No comments found."
                 }
               ]
@@ -850,23 +789,20 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/physical/113",
+              "raw": "http://::server/physical/737",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "physical",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "852",
+                  "value": "658",
                   "description": "No comments found."
                 }
               ]
@@ -882,7 +818,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 819,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"8cssyu\",\n  \"dataConnection\": \"9c6e30\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 279,\n  \"description\": \"tanqtz\",\n  \"status\": 200,\n  \"gmtCreate\": \"2022-01-07 10:42:39\",\n  \"gmtModified\": \"2022-01-07 10:42:39\",\n  \"tableType\": 79,\n  \"responsibleBy\": \"jc3mne\",\n  \"dataFormat\": \"emejfz\",\n  \"themeId\": 550,\n  \"modelId\": 309,\n  \"hftsRoute\": \"3lsugq\",\n  \"syncStatus\": 451\n}",
+              "raw": "{\n  \"id\": 248,\n  \"tableName\": \"albert.kassulke\",\n  \"theme\": \"o8q3dk\",\n  \"dataConnection\": \"vgm5oh\",\n  \"dataBaseName\": \"albert.kassulke\",\n  \"dataSourceName\": \"albert.kassulke\",\n  \"dataSourceId\": 316,\n  \"description\": \"pemuzu\",\n  \"status\": 778,\n  \"gmtCreate\": \"2022-01-11 20:44:56\",\n  \"gmtModified\": \"2022-01-11 20:44:56\",\n  \"tableType\": \"gla3dc\",\n  \"responsibleBy\": \"fhini6\",\n  \"dataFormat\": \"obcnl0\",\n  \"themeId\": 753,\n  \"modelId\": 174,\n  \"hftsRoute\": \"3yuso7\",\n  \"syncStatus\": 962\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -890,18 +826,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/physical/list",
+              "raw": "http://::server/physical/list",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "physical",
                 "list"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -921,7 +854,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelName\": \"debbra.schuster\",\n  \"layeredName\": \"debbra.schuster\",\n  \"description\": \"ymyyxz\",\n  \"modelType\": 171\n}",
+              "raw": "{\n  \"modelName\": \"albert.kassulke\",\n  \"layeredName\": \"albert.kassulke\",\n  \"description\": \"p4bvub\",\n  \"modelType\": 694\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -929,16 +862,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/",
+              "raw": "http://::server/model/",
               "protocol": "http",
               "path": [
                 "model",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -954,16 +886,15 @@
               "mode": "formdata"
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/",
+              "raw": "http://::server/model/",
               "protocol": "http",
               "path": [
                 "model",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -982,7 +913,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"8c3yew\"\n  },\n  \"id\": 80,\n  \"themeId\": 522,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 4,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"wl9c9b\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"q8bpfq\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 897,\n      \"summaryId\": 160,\n      \"indicatorsType\": 266,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"3j4nch\",\n      \"itsNull\": \"e408x6\",\n      \"description\": \"koi5q1\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"km6xe6\"\n  },\n  \"id\": 793,\n  \"themeId\": 993,\n  \"themeName\": \"albert.kassulke\",\n  \"tableName\": \"albert.kassulke\",\n  \"dimId\": 544,\n  \"dimName\": \"albert.kassulke\",\n  \"dataConnection\": \"s1p97w\",\n  \"databaseName\": \"albert.kassulke\",\n  \"description\": \"8sv1ay\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 267,\n      \"summaryId\": 188,\n      \"indicatorsType\": 242,\n      \"indicatorsName\": \"albert.kassulke\",\n      \"indicatorsCode\": \"37307\",\n      \"dataType\": \"macgr4\",\n      \"itsNull\": \"842v0z\",\n      \"description\": \"v7hjt7\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -990,18 +921,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/summary/",
+              "raw": "http://::server/summary/",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "summary",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -1016,7 +944,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ky6j54\"\n  },\n  \"id\": 33,\n  \"themeId\": 377,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 766,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"sdh4zf\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"ol915i\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 765,\n      \"summaryId\": 118,\n      \"indicatorsType\": 322,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"f8cx0t\",\n      \"itsNull\": \"bg1v4i\",\n      \"description\": \"iecea4\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ah94ah\"\n  },\n  \"id\": 586,\n  \"themeId\": 267,\n  \"themeName\": \"albert.kassulke\",\n  \"tableName\": \"albert.kassulke\",\n  \"dimId\": 858,\n  \"dimName\": \"albert.kassulke\",\n  \"dataConnection\": \"zppswr\",\n  \"databaseName\": \"albert.kassulke\",\n  \"description\": \"aujv4w\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 606,\n      \"summaryId\": 181,\n      \"indicatorsType\": 420,\n      \"indicatorsName\": \"albert.kassulke\",\n      \"indicatorsCode\": \"37307\",\n      \"dataType\": \"lrqbfb\",\n      \"itsNull\": \"0l26a3\",\n      \"description\": \"o37j2s\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1024,23 +952,20 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/summary/617",
+              "raw": "http://::server/summary/20",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "summary",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "421",
+                  "value": "939",
                   "description": "汇总表id"
                 }
               ]
@@ -1059,23 +984,20 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/summary/87",
+              "raw": "http://::server/summary/776",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "summary",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "990",
+                  "value": "544",
                   "description": "汇总表id"
                 }
               ]
@@ -1091,7 +1013,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"6bnvia\"\n  },\n  \"id\": 755,\n  \"themeId\": 742,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 676,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"088bpy\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"72v8yj\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 180,\n      \"summaryId\": 409,\n      \"indicatorsType\": 271,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"3coena\",\n      \"itsNull\": \"mi8sjy\",\n      \"description\": \"81ofng\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"8vewre\"\n  },\n  \"id\": 697,\n  \"themeId\": 859,\n  \"themeName\": \"albert.kassulke\",\n  \"tableName\": \"albert.kassulke\",\n  \"dimId\": 53,\n  \"dimName\": \"albert.kassulke\",\n  \"dataConnection\": \"2rxap0\",\n  \"databaseName\": \"albert.kassulke\",\n  \"description\": \"4eh48r\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 790,\n      \"summaryId\": 18,\n      \"indicatorsType\": 840,\n      \"indicatorsName\": \"albert.kassulke\",\n      \"indicatorsCode\": \"37307\",\n      \"dataType\": \"pz1dcp\",\n      \"itsNull\": \"qsfkwu\",\n      \"description\": \"huuoz7\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1099,18 +1021,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/summary/list",
+              "raw": "http://::server/summary/list",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "summary",
                 "list"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -1128,24 +1047,21 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/summary/publish/k1t10m",
+              "raw": "http://::server/summary/publish/no771b",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "summary",
                 "publish",
                 ":ids"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "ids",
-                  "value": "u9kc1k",
+                  "value": "vtzyma",
                   "description": "汇总表id，多个id使用英文逗号分割"
                 }
               ]
@@ -1164,24 +1080,21 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/summary/offline/y8deod",
+              "raw": "http://::server/summary/offline/db7lf2",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "summary",
                 "offline",
                 ":ids"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "ids",
-                  "value": "u1vhmg",
+                  "value": "p8pyu1",
                   "description": "汇总表id，多个id使用英文逗号分割"
                 }
               ]
@@ -1200,25 +1113,22 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/summary/preview/sql/783",
+              "raw": "http://::server/summary/preview/sql/578",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "summary",
                 "preview",
                 "sql",
                 ":tableId"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "525",
+                  "value": "854",
                   "description": "汇总表id"
                 }
               ]
@@ -1239,7 +1149,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"k0zsvh\"\n  },\n  \"id\": 326,\n  \"themeId\": 781,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"5umqx1\",\n  \"description\": \"nx2ntn\",\n  \"status\": 270,\n  \"connectionType\": \"s46qc0\",\n  \"dataConnection\": \"npbdhi\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 343,\n      \"dimId\": 326,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"48s93f\",\n      \"standardsId\": 667,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"0vhl9f\",\n      \"itsPartition\": \"a04k3r\",\n      \"itsNull\": \"1frnmq\",\n      \"description\": \"rnrwgs\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"eolep0\"\n  },\n  \"id\": 447,\n  \"themeId\": 789,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"8eicz9\",\n  \"description\": \"004i82\",\n  \"status\": 184,\n  \"connectionType\": \"75ajta\",\n  \"dataConnection\": \"upzllp\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 548,\n      \"dimId\": 234,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"ycyqe9\",\n      \"standardsId\": 564,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"xzr3am\",\n      \"itsPartition\": \"8b6tc1\",\n      \"itsNull\": \"d69tgo\",\n      \"description\": \"715cvf\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1247,18 +1157,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/",
+              "raw": "http://::server/dim/",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -1273,7 +1180,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"4el9rn\"\n  },\n  \"id\": 309,\n  \"themeId\": 466,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"k0sa1r\",\n  \"description\": \"5ymqzs\",\n  \"status\": 139,\n  \"connectionType\": \"yxss3l\",\n  \"dataConnection\": \"7wegs1\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 786,\n      \"dimId\": 838,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"42klnr\",\n      \"standardsId\": 995,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"rjymob\",\n      \"itsPartition\": \"ct2tpb\",\n      \"itsNull\": \"w92li2\",\n      \"description\": \"fub0gt\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7mkk91\"\n  },\n  \"id\": 479,\n  \"themeId\": 271,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"9qcwa1\",\n  \"description\": \"mefaei\",\n  \"status\": 22,\n  \"connectionType\": \"o9q5nh\",\n  \"dataConnection\": \"arccth\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 356,\n      \"dimId\": 419,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"zgub7v\",\n      \"standardsId\": 112,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"p33jb6\",\n      \"itsPartition\": \"ft8y4e\",\n      \"itsNull\": \"llou56\",\n      \"description\": \"9vdygd\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1281,23 +1188,20 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/971",
+              "raw": "http://::server/dim/708",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "173",
+                  "value": "504",
                   "description": "维度id"
                 }
               ]
@@ -1316,23 +1220,20 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/231",
+              "raw": "http://::server/dim/192",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "645",
+                  "value": "230",
                   "description": "维度id"
                 }
               ]
@@ -1348,7 +1249,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lbztp1\"\n  },\n  \"id\": 457,\n  \"themeId\": 510,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"zxklid\",\n  \"description\": \"01oabg\",\n  \"status\": 7,\n  \"connectionType\": \"pevzuj\",\n  \"dataConnection\": \"pqoqzn\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 69,\n      \"dimId\": 105,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"wv8guv\",\n      \"standardsId\": 640,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"sj2ack\",\n      \"itsPartition\": \"r4lnd1\",\n      \"itsNull\": \"aiumq8\",\n      \"description\": \"w3rcnx\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"5uxwlv\"\n  },\n  \"id\": 369,\n  \"themeId\": 456,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"typjyb\",\n  \"description\": \"2nwlvm\",\n  \"status\": 8,\n  \"connectionType\": \"nap84z\",\n  \"dataConnection\": \"wylk58\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 21,\n      \"dimId\": 213,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"mcsjxa\",\n      \"standardsId\": 128,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"8trj4d\",\n      \"itsPartition\": \"opm93x\",\n      \"itsNull\": \"thmgqm\",\n      \"description\": \"4az4gv\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1356,18 +1257,15 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/list",
+              "raw": "http://::server/dim/list",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 "list"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -1385,24 +1283,21 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/publish/xqpbvm",
+              "raw": "http://::server/dim/publish/k8sqq9",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 "publish",
                 ":ids"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "ids",
-                  "value": "r0s19b",
+                  "value": "oyxhpc",
                   "description": "维度id,如果多个，使用英文逗号分割"
                 }
               ]
@@ -1421,24 +1316,21 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/offline/cryfpq",
+              "raw": "http://::server/dim/offline/ge0u1z",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 "offline",
                 ":ids"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "ids",
-                  "value": "drf3r5",
+                  "value": "7zgfj5",
                   "description": "维度id,如果多个，使用英文逗号分割"
                 }
               ]
@@ -1459,7 +1351,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"abq831\"\n  },\n  \"id\": 443,\n  \"themeId\": 754,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"ijl50u\",\n  \"description\": \"38r1g5\",\n  \"status\": 627,\n  \"connectionType\": \"gl2ev1\",\n  \"dataConnection\": \"y77j83\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 525,\n  \"columnList\": [\n    {\n      \"id\": 456,\n      \"dimTableId\": 964,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"ci0xb9\",\n      \"standardsId\": 292,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"je6mcu\",\n      \"itsPartition\": \"nwxxub\",\n      \"itsNull\": \"ciqgl4\",\n      \"description\": \"c0fufv\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1fmrhm\"\n  },\n  \"id\": 854,\n  \"themeId\": 72,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"nayxqc\",\n  \"description\": \"8db886\",\n  \"status\": 945,\n  \"connectionType\": \"z6yxiz\",\n  \"dataConnection\": \"okqxfk\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimId\": 201,\n  \"columnList\": [\n    {\n      \"id\": 879,\n      \"dimTableId\": 476,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"99f24y\",\n      \"standardsId\": 815,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"myafvs\",\n      \"itsPartition\": \"wbupmh\",\n      \"itsNull\": \"zwc8ne\",\n      \"description\": \"28pcov\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1467,19 +1359,16 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/table/",
+              "raw": "http://::server/dim/table/",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 "table",
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -1494,7 +1383,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"f2p86a\"\n  },\n  \"id\": 550,\n  \"themeId\": 541,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"6kjf35\",\n  \"description\": \"szxn01\",\n  \"status\": 460,\n  \"connectionType\": \"c5spcr\",\n  \"dataConnection\": \"xari6y\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 430,\n  \"columnList\": [\n    {\n      \"id\": 245,\n      \"dimTableId\": 162,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"s6xnea\",\n      \"standardsId\": 774,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"8uat3w\",\n      \"itsPartition\": \"1wbx01\",\n      \"itsNull\": \"jy1vu3\",\n      \"description\": \"mof38f\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7ct23o\"\n  },\n  \"id\": 61,\n  \"themeId\": 145,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"zf5hdz\",\n  \"description\": \"oui7ps\",\n  \"status\": 573,\n  \"connectionType\": \"fccx9c\",\n  \"dataConnection\": \"zng1dd\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimId\": 911,\n  \"columnList\": [\n    {\n      \"id\": 288,\n      \"dimTableId\": 921,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"kkrwg9\",\n      \"standardsId\": 742,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"1vodrk\",\n      \"itsPartition\": \"a2us22\",\n      \"itsNull\": \"0ycbqq\",\n      \"description\": \"hcnjkv\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1502,24 +1391,21 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/table/169",
+              "raw": "http://::server/dim/table/74",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 "table",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "605",
+                  "value": "85",
                   "description": "维度表id"
                 }
               ]
@@ -1538,24 +1424,21 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/table/675",
+              "raw": "http://::server/dim/table/474",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 "table",
                 ":id"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "id",
-                  "value": "711",
+                  "value": "883",
                   "description": "维度表id"
                 }
               ]
@@ -1571,7 +1454,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"i6jkew\"\n  },\n  \"id\": 878,\n  \"themeId\": 318,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"qds82a\",\n  \"description\": \"q5df50\",\n  \"status\": 527,\n  \"connectionType\": \"1hfafx\",\n  \"dataConnection\": \"inc736\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 510,\n  \"columnList\": [\n    {\n      \"id\": 1,\n      \"dimTableId\": 105,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"9trdhl\",\n      \"standardsId\": 258,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"8ghxk8\",\n      \"itsPartition\": \"k96yqz\",\n      \"itsNull\": \"bxo2vy\",\n      \"description\": \"7v35hr\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"stn9sr\"\n  },\n  \"id\": 937,\n  \"themeId\": 389,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"sh2je2\",\n  \"description\": \"pou79m\",\n  \"status\": 556,\n  \"connectionType\": \"agloy0\",\n  \"dataConnection\": \"2n2am6\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimId\": 702,\n  \"columnList\": [\n    {\n      \"id\": 473,\n      \"dimTableId\": 234,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"90d6ax\",\n      \"standardsId\": 962,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"0944dd\",\n      \"itsPartition\": \"dk2xgl\",\n      \"itsNull\": \"1f1h34\",\n      \"description\": \"nki6ix\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1579,19 +1462,16 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/table/list",
+              "raw": "http://::server/dim/table/list",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 "table",
                 "list"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -1609,11 +1489,9 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/dim/table/preview/sql/935",
+              "raw": "http://::server/dim/table/preview/sql/390",
               "protocol": "http",
               "path": [
-                "",
-                "model",
                 "dim",
                 "table",
                 "preview",
@@ -1621,14 +1499,13 @@
                 ":tableId"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "197",
+                  "value": "180",
                   "description": "维度表id"
                 }
               ]
@@ -1651,7 +1528,7 @@
               "mode": "formdata"
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/db/connect/types",
+              "raw": "http://::server/model/db/connect/types",
               "protocol": "http",
               "path": [
                 "model",
@@ -1660,9 +1537,8 @@
                 "types"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -1680,7 +1556,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/db/connect/3n8j2p",
+              "raw": "http://::server/model/db/connect/tzhyix",
               "protocol": "http",
               "path": [
                 "model",
@@ -1689,14 +1565,13 @@
                 ":type"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": [
                 {
                   "key": "type",
-                  "value": "315qy4",
+                  "value": "2ie9nn",
                   "description": "No comments found."
                 }
               ]
@@ -1717,18 +1592,18 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "163x17"
+                  "value": "oo8jkp"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "debbra.schuster"
+                  "value": "albert.kassulke"
                 }
               ]
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/db/?connectType\u003d163x17\u0026dataSourceName\u003ddebbra.schuster",
+              "raw": "http://::server/model/db/?connectType\u003doo8jkp\u0026dataSourceName\u003dalbert.kassulke",
               "protocol": "http",
               "path": [
                 "model",
@@ -1736,18 +1611,17 @@
                 ""
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [
                 {
                   "key": "connectType",
-                  "value": "dtalf8",
+                  "value": "l70dsa",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "debbra.schuster",
+                  "value": "albert.kassulke",
                   "description": "No comments found."
                 }
               ],
@@ -1769,24 +1643,24 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "9j37lf"
+                  "value": "at1b8h"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "debbra.schuster"
+                  "value": "albert.kassulke"
                 },
                 {
                   "key": "dataBaseName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "debbra.schuster"
+                  "value": "albert.kassulke"
                 }
               ]
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/db/table?connectType\u003d9j37lf\u0026dataSourceName\u003ddebbra.schuster\u0026dataBaseName\u003ddebbra.schuster",
+              "raw": "http://::server/model/db/table?dataSourceName\u003dalbert.kassulke\u0026dataBaseName\u003dalbert.kassulke\u0026connectType\u003dat1b8h",
               "protocol": "http",
               "path": [
                 "model",
@@ -1794,23 +1668,22 @@
                 "table"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [
                 {
                   "key": "connectType",
-                  "value": "efevsb",
+                  "value": "7wrtd5",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "debbra.schuster",
+                  "value": "albert.kassulke",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataBaseName",
-                  "value": "debbra.schuster",
+                  "value": "albert.kassulke",
                   "description": "No comments found."
                 }
               ],
@@ -1832,30 +1705,30 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "t0dxbb"
+                  "value": "cfcco1"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "debbra.schuster"
+                  "value": "albert.kassulke"
                 },
                 {
                   "key": "dataBaseName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "debbra.schuster"
+                  "value": "albert.kassulke"
                 },
                 {
                   "key": "tableName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "debbra.schuster"
+                  "value": "albert.kassulke"
                 }
               ]
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/db/column?dataSourceName\u003ddebbra.schuster\u0026tableName\u003ddebbra.schuster\u0026dataBaseName\u003ddebbra.schuster\u0026connectType\u003dt0dxbb",
+              "raw": "http://::server/model/db/column?dataSourceName\u003dalbert.kassulke\u0026tableName\u003dalbert.kassulke\u0026dataBaseName\u003dalbert.kassulke\u0026connectType\u003dcfcco1",
               "protocol": "http",
               "path": [
                 "model",
@@ -1863,28 +1736,27 @@
                 "column"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [
                 {
                   "key": "connectType",
-                  "value": "0kxglb",
+                  "value": "qsf10x",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "debbra.schuster",
+                  "value": "albert.kassulke",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataBaseName",
-                  "value": "debbra.schuster",
+                  "value": "albert.kassulke",
                   "description": "No comments found."
                 },
                 {
                   "key": "tableName",
-                  "value": "debbra.schuster",
+                  "value": "albert.kassulke",
                   "description": "No comments found."
                 }
               ],
@@ -1901,7 +1773,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"m7b877\"\n  },\n  \"dsdName\": \"debbra.schuster\",\n  \"dsdCode\": \"8072\",\n  \"dsdLevel\": \"s46dnk\",\n  \"dsdLevelId\": \"113\",\n  \"beginDay\": \"1keghx\",\n  \"endDay\": \"7lmi0m\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"olhidc\"\n  },\n  \"dsdName\": \"albert.kassulke\",\n  \"dsdCode\": \"37307\",\n  \"dsdLevel\": \"395z9p\",\n  \"dsdLevelId\": \"168\",\n  \"beginDay\": \"k5gpi2\",\n  \"endDay\": \"5l1pvl\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1909,7 +1781,7 @@
               }
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/db/standard",
+              "raw": "http://::server/model/db/standard",
               "protocol": "http",
               "path": [
                 "model",
@@ -1917,9 +1789,8 @@
                 "standard"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },
@@ -1936,7 +1807,7 @@
               "mode": "formdata"
             },
             "url": {
-              "raw": "http://172.20.0.13:8782/model/model/db/theme",
+              "raw": "http://::server/model/db/theme",
               "protocol": "http",
               "path": [
                 "model",
@@ -1944,9 +1815,8 @@
                 "theme"
               ],
               "host": [
-                "172.20.0.13"
+                "{{server}}"
               ],
-              "port": "8782",
               "query": [],
               "variable": []
             },

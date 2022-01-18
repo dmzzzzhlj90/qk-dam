@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class ModelReverseBaseDTO {
    * 数据库名称
    */
   @NotBlank(message = "数据库名称")
-  private String databaseName;
+  private String dataBaseName;
 
   /**
    *数据源连接名称
@@ -67,11 +66,16 @@ public class ModelReverseBaseDTO {
    * 更新已有表（0表示更新，1表示不更新）
    */
   @NotNull(message = "更新已有表")
-  private Integer replace;
+  private String replace;
 
   /**
    * 需要逆向的表名集合
    */
-  @NotEmpty(message = "逆向表明集合不能为空")
   private List<String> tableList;
+
+  /**
+   * 是否全选,1表示部分选择，0表示全选
+   */
+  @NotBlank(message = "是否全选")
+  private String allChoice;
 }

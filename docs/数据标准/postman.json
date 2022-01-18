@@ -1,0 +1,1552 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "a3513801-3582-4276-a0ef-818c9e39d243",
+    "name": "dm-datastandards"
+  },
+  "item": [
+    {
+      "name": "数据标准__标准基本信息接口",
+      "item": [
+        {
+          "name": "统一查询标准信息入口",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"aa6zlf\"\n  },\n  \"dsdName\": \"seymour.mayert\",\n  \"dsdCode\": \"20055\",\n  \"dsdLevel\": \"ebhhje\",\n  \"dsdLevelId\": \"109\",\n  \"beginDay\": \"mw1vtz\",\n  \"endDay\": \"yak20n\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/basic/info/list",
+              "protocol": "http",
+              "path": [
+                "basic",
+                "info",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "统一查询标准信息入口",
+            "header": []
+          },
+          "description": "统一查询标准信息入口"
+        },
+        {
+          "name": "新增标准信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 509,\n  \"dsdName\": \"seymour.mayert\",\n  \"dsdCode\": \"20055\",\n  \"colName\": \"seymour.mayert\",\n  \"dataType\": \"cftlzm\",\n  \"dataCapacity\": \"os461k\",\n  \"codeDirId\": \"109\",\n  \"useCodeLevel\": \"amnrfy\",\n  \"codeCol\": \"5ak1h7\",\n  \"dsdLevel\": \"15y7x7\",\n  \"dsdLevelId\": \"109\",\n  \"dsdLevelName\": \"seymour.mayert\",\n  \"sortField\": 73,\n  \"description\": \"7h6zi1\",\n  \"gmtModified\": \"2022-01-06 17:59:27\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/basic/info/",
+              "protocol": "http",
+              "path": [
+                "basic",
+                "info",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增标准信息",
+            "header": []
+          },
+          "description": "新增标准信息"
+        },
+        {
+          "name": "编辑标准信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 167,\n  \"dsdName\": \"seymour.mayert\",\n  \"dsdCode\": \"20055\",\n  \"colName\": \"seymour.mayert\",\n  \"dataType\": \"7eqgtx\",\n  \"dataCapacity\": \"3hiu9a\",\n  \"codeDirId\": \"109\",\n  \"useCodeLevel\": \"h5mxzd\",\n  \"codeCol\": \"7qeyzb\",\n  \"dsdLevel\": \"t3esp7\",\n  \"dsdLevelId\": \"109\",\n  \"dsdLevelName\": \"seymour.mayert\",\n  \"sortField\": 658,\n  \"description\": \"kqzu0r\",\n  \"gmtModified\": \"2022-01-06 17:59:27\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/basic/info/",
+              "protocol": "http",
+              "path": [
+                "basic",
+                "info",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑标准信息",
+            "header": []
+          },
+          "description": "编辑标准信息"
+        },
+        {
+          "name": "删除标准信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/basic/info/55",
+              "protocol": "http",
+              "path": [
+                "basic",
+                "info",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "188",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除标准信息",
+            "header": []
+          },
+          "description": "删除标准信息"
+        },
+        {
+          "name": "批量删除标准信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/basic/info/bulk/xok6j5",
+              "protocol": "http",
+              "path": [
+                "basic",
+                "info",
+                "bulk",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "04igxy",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "批量删除标准信息",
+            "header": []
+          },
+          "description": "批量删除标准信息"
+        },
+        {
+          "name": "引用码表字段",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/basic/info/search/code/field/109",
+              "protocol": "http",
+              "path": [
+                "basic",
+                "info",
+                "search",
+                "code",
+                "field",
+                ":codeDirId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "codeDirId",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "引用码表字段",
+            "header": []
+          },
+          "description": "引用码表字段"
+        }
+      ]
+    },
+    {
+      "name": "数据标准__码表目录接口",
+      "item": [
+        {
+          "name": "获取数据标准码表分类目录树",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/code/dir/list",
+              "protocol": "http",
+              "path": [
+                "code",
+                "dir",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据标准码表分类目录树",
+            "header": []
+          },
+          "description": "获取数据标准码表分类目录树"
+        },
+        {
+          "name": "新增码表分类目录",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 198,\n  \"codeDirId\": \"109\",\n  \"codeDirName\": \"seymour.mayert\",\n  \"parentId\": \"109\",\n  \"codeDirLevel\": \"ecilbz\",\n  \"description\": \"akbahu\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/dir/",
+              "protocol": "http",
+              "path": [
+                "code",
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增码表分类目录",
+            "header": []
+          },
+          "description": "新增码表分类目录"
+        },
+        {
+          "name": "编辑码表分类目录",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 677,\n  \"codeDirId\": \"109\",\n  \"codeDirName\": \"seymour.mayert\",\n  \"parentId\": \"109\",\n  \"codeDirLevel\": \"b81tos\",\n  \"description\": \"6g632z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/dir/",
+              "protocol": "http",
+              "path": [
+                "code",
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑码表分类目录",
+            "header": []
+          },
+          "description": "编辑码表分类目录"
+        },
+        {
+          "name": "码表目录单叶子节点删除方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/code/dir/410",
+              "protocol": "http",
+              "path": [
+                "code",
+                "dir",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "444",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "码表目录单叶子节点删除方式",
+            "header": []
+          },
+          "description": "码表目录单叶子节点删除方式"
+        },
+        {
+          "name": "码表目录支持根节点删除关联删除叶子节点方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/code/dir/root/315",
+              "protocol": "http",
+              "path": [
+                "code",
+                "dir",
+                "root",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "823",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "码表目录支持根节点删除关联删除叶子节点方式",
+            "header": []
+          },
+          "description": "码表目录支持根节点删除关联删除叶子节点方式"
+        }
+      ]
+    },
+    {
+      "name": "数据标准__码表管理接口",
+      "item": [
+        {
+          "name": "高级筛选_查询码表基础信息列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"wa6b6l\"\n  },\n  \"beginDay\": \"ddqgs9\",\n  \"endDay\": \"pzfp31\",\n  \"codeDirId\": \"109\",\n  \"codeDirLevel\": \"3ec4xx\",\n  \"tableName\": \"seymour.mayert\",\n  \"tableCode\": \"20055\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/info/list",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "高级筛选_查询码表基础信息列表",
+            "header": []
+          },
+          "description": "高级筛选_查询码表基础信息列表"
+        },
+        {
+          "name": "获取所有码表基础信息列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/code/info/all/list",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "all",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取所有码表基础信息列表",
+            "header": []
+          },
+          "description": "获取所有码表基础信息列表"
+        },
+        {
+          "name": "新增码表基础信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 187,\n  \"codeDirId\": \"109\",\n  \"codeDirLevel\": \"bs1e84\",\n  \"tableName\": \"seymour.mayert\",\n  \"tableCode\": \"20055\",\n  \"tableDesc\": \"pxn2xp\",\n  \"gmtModified\": \"2022-01-06 17:59:27\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"109\",\n      \"name_ch\": \"rh43ep\",\n      \"name_en\": \"irn5z4\",\n      \"data_type\": \"n7gwg2\"\n    }\n  ],\n  \"codeTableId\": \"109\",\n  \"nameCh\": \"fwbzxb\",\n  \"nameEn\": \"65j7gv\",\n  \"dataType\": \"f42154\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/info/basic",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "basic"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增码表基础信息",
+            "header": []
+          },
+          "description": "新增码表基础信息"
+        },
+        {
+          "name": "根据id获取码表信息列表详情信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/code/info/basic/query/109",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "basic",
+                "query",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "根据id获取码表信息列表详情信息",
+            "header": []
+          },
+          "description": "根据id获取码表信息列表详情信息"
+        },
+        {
+          "name": "根据tableCode(表编码)获取码表基础详情信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "tableCode",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "20055"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/code/info/basic/query/tableCode?tableCode\u003d20055",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "basic",
+                "query",
+                "tableCode"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "tableCode",
+                  "value": "20055",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "根据tableCode(表编码)获取码表基础详情信息",
+            "header": []
+          },
+          "description": "根据tableCode(表编码)获取码表基础详情信息"
+        },
+        {
+          "name": "编辑码表信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 709,\n  \"codeDirId\": \"109\",\n  \"codeDirLevel\": \"g2ybwt\",\n  \"tableName\": \"seymour.mayert\",\n  \"tableCode\": \"20055\",\n  \"tableDesc\": \"bd7knm\",\n  \"gmtModified\": \"2022-01-06 17:59:27\",\n  \"codeTableFieldsList\": [\n    {\n      \"code_table_id\": \"109\",\n      \"name_ch\": \"e2c90b\",\n      \"name_en\": \"s8qa5y\",\n      \"data_type\": \"wgk7ik\"\n    }\n  ],\n  \"codeTableId\": \"109\",\n  \"nameCh\": \"ry8iyh\",\n  \"nameEn\": \"fihnmy\",\n  \"dataType\": \"tms949\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/info/basic",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "basic"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑码表信息",
+            "header": []
+          },
+          "description": "编辑码表信息"
+        },
+        {
+          "name": "删除码表信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/code/info/basic/933",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "basic",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "367",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除码表信息",
+            "header": []
+          },
+          "description": "删除码表信息"
+        },
+        {
+          "name": "批量删除码表信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/code/info/basic/bulk/u7a11k",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "basic",
+                "bulk",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "lrcw7u",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "批量删除码表信息",
+            "header": []
+          },
+          "description": "批量删除码表信息"
+        },
+        {
+          "name": "数据类型下拉列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/code/info/data/types",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "data",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据类型下拉列表",
+            "header": []
+          },
+          "description": "数据类型下拉列表"
+        },
+        {
+          "name": "高级筛选_查询码表数值以及扩展信息列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"gmggib\"\n  },\n  \"beginDay\": \"uyy5ak\",\n  \"endDay\": \"3j0enn\",\n  \"dsdCodeInfoId\": \"109\",\n  \"searchCode\": \"20055\",\n  \"searchValue\": \"ov0b9m\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/info/ext/list",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "ext",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "高级筛选_查询码表数值以及扩展信息列表",
+            "header": []
+          },
+          "description": "高级筛选_查询码表数值以及扩展信息列表"
+        },
+        {
+          "name": "新增码表数值信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 755,\n  \"dsdCodeInfoId\": \"109\",\n  \"searchCode\": \"20055\",\n  \"searchValue\": \"aqyg7q\",\n  \"gmtModified\": \"2022-01-06 17:59:27\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"rsk6ht\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/info/ext",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "ext"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增码表数值信息",
+            "header": []
+          },
+          "description": "新增码表数值信息"
+        },
+        {
+          "name": "根据Id获取码表数值列表详情信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/code/info/ext/query/109",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "ext",
+                "query",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "根据Id获取码表数值列表详情信息",
+            "header": []
+          },
+          "description": "根据Id获取码表数值列表详情信息"
+        },
+        {
+          "name": "编辑码表数值信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 839,\n  \"dsdCodeInfoId\": \"109\",\n  \"searchCode\": \"20055\",\n  \"searchValue\": \"7cmd8v\",\n  \"gmtModified\": \"2022-01-06 17:59:27\",\n  \"codeTableFieldExtValues\": {\n    \"mapKey\": \"392n8k\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/info/ext",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "ext"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑码表数值信息",
+            "header": []
+          },
+          "description": "编辑码表数值信息"
+        },
+        {
+          "name": "删除码表数值信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/code/info/ext/151",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "ext",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "863",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除码表数值信息",
+            "header": []
+          },
+          "description": "删除码表数值信息"
+        },
+        {
+          "name": "批量删除码表数值信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/code/info/ext/bulk/s6qnsw",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "ext",
+                "bulk",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "pucsdz",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "批量删除码表数值信息",
+            "header": []
+          },
+          "description": "批量删除码表数值信息"
+        },
+        {
+          "name": "码表数据逆向数据库功能",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codeDirId\": \"109\",\n  \"codeDirLevel\": \"pogltw\",\n  \"isUpdate\": \"2022-01-06\",\n  \"isReverseData\": \"z9xrgl\",\n  \"dataSourceJobVO\": {\n    \"name\": \"seymour.mayert\",\n    \"dataConnectType\": \"t2natu\",\n    \"mysqlDataConnect\": {\n      \"db\": \"14u37z\",\n      \"table\": \"luoj9g\",\n      \"host\": \"0043o8\",\n      \"port\": \"9z4u1v\",\n      \"username\": \"seymour.mayert\",\n      \"password\": \"y9d0gh\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/code/info/reverse/db",
+              "protocol": "http",
+              "path": [
+                "code",
+                "info",
+                "reverse",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "码表数据逆向数据库功能",
+            "header": []
+          },
+          "description": "码表数据逆向数据库功能"
+        }
+      ]
+    },
+    {
+      "name": "数据标准__目录接口",
+      "item": [
+        {
+          "name": "获取数据标准分类目录树",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/dir/list",
+              "protocol": "http",
+              "path": [
+                "dir",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据标准分类目录树",
+            "header": []
+          },
+          "description": "获取数据标准分类目录树"
+        },
+        {
+          "name": "测试",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/dir/test",
+              "protocol": "http",
+              "path": [
+                "dir",
+                "test"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "测试",
+            "header": []
+          },
+          "description": "测试"
+        },
+        {
+          "name": "新增数据标准分类目录",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 888,\n  \"dirDsdId\": \"109\",\n  \"dirDsdName\": \"seymour.mayert\",\n  \"parentId\": \"109\",\n  \"dsdDirLevel\": \"uvmbxc\",\n  \"description\": \"18om5l\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增数据标准分类目录",
+            "header": []
+          },
+          "description": "新增数据标准分类目录"
+        },
+        {
+          "name": "编辑数据标准分类目录",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 120,\n  \"dirDsdId\": \"109\",\n  \"dirDsdName\": \"seymour.mayert\",\n  \"parentId\": \"109\",\n  \"dsdDirLevel\": \"niuy3t\",\n  \"description\": \"ezsscy\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑数据标准分类目录",
+            "header": []
+          },
+          "description": "编辑数据标准分类目录"
+        },
+        {
+          "name": "标准目录单子节点删除方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dir/222",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "308",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "标准目录单子节点删除方式",
+            "header": []
+          },
+          "description": "标准目录单子节点删除方式"
+        },
+        {
+          "name": "标准目录支持根节点关联删除子节点方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dir/root/13",
+              "protocol": "http",
+              "path": [
+                "dir",
+                "root",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "805",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "标准目录支持根节点关联删除子节点方式",
+            "header": []
+          },
+          "description": "标准目录支持根节点关联删除子节点方式"
+        }
+      ]
+    },
+    {
+      "name": "数据标准__excel导入导出功能接口",
+      "item": [
+        {
+          "name": "标准基本信息excel__导入数据(默认根据Excel中选择的层级进行导入)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "No comments found.",
+                  "value": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/excel/basic/info/upload",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "basic",
+                "info",
+                "upload"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "file",
+                  "value": "",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "标准基本信息excel__导入数据(默认根据Excel中选择的层级进行导入)",
+            "header": []
+          },
+          "description": "标准基本信息excel__导入数据(默认根据Excel中选择的层级进行导入)"
+        },
+        {
+          "name": "标准基本信息excel__导入数据 (根据标准分类目录Id)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "No comments found.",
+                  "value": ""
+                },
+                {
+                  "key": "dirDsdId",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "109"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/excel/basic/info/upload/dirDsdId",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "basic",
+                "info",
+                "upload",
+                "dirDsdId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "file",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dirDsdId",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "标准基本信息excel__导入数据 (根据标准分类目录Id)",
+            "header": []
+          },
+          "description": "标准基本信息excel__导入数据 (根据标准分类目录Id)"
+        },
+        {
+          "name": "标准基本信息excel__全部导出数据",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/excel/basic/info/download/all",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "basic",
+                "info",
+                "download",
+                "all"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "标准基本信息excel__全部导出数据",
+            "header": []
+          },
+          "description": "标准基本信息excel__全部导出数据"
+        },
+        {
+          "name": "标准基本信息excel__导出数据 (根据标准分类目录Id)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "dirDsdId",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "109"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/excel/basic/info/download/dirDsdId",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "basic",
+                "info",
+                "download",
+                "dirDsdId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dirDsdId",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "标准基本信息excel__导出数据 (根据标准分类目录Id)",
+            "header": []
+          },
+          "description": "标准基本信息excel__导出数据 (根据标准分类目录Id)"
+        },
+        {
+          "name": "标准基本信息excel__模板下载",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/excel/basic/info/upload/template",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "basic",
+                "info",
+                "upload",
+                "template"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "标准基本信息excel__模板下载",
+            "header": []
+          },
+          "description": "标准基本信息excel__模板下载"
+        },
+        {
+          "name": "码表基本信息列表__导入excel数据(全量)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "No comments found.",
+                  "value": ""
+                },
+                {
+                  "key": "codeDirId",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "109"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/excel/code/info/all/upload",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "code",
+                "info",
+                "all",
+                "upload"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "file",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "codeDirId",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "码表基本信息列表__导入excel数据(全量)",
+            "header": []
+          },
+          "description": "码表基本信息列表__导入excel数据(全量)"
+        },
+        {
+          "name": "码表基本信息列表__导出excel数据(全量)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "codeDirId",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "109"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/excel/code/info/all/download",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "code",
+                "info",
+                "all",
+                "download"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "codeDirId",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "码表基本信息列表__导出excel数据(全量)",
+            "header": []
+          },
+          "description": "码表基本信息列表__导出excel数据(全量)"
+        },
+        {
+          "name": "码表基本信息excel__模板下载",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/excel/code/info/upload/template",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "code",
+                "info",
+                "upload",
+                "template"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "码表基本信息excel__模板下载",
+            "header": []
+          },
+          "description": "码表基本信息excel__模板下载"
+        },
+        {
+          "name": "码表数值信息列表__导入excel数据(根据dsdCodeInfoId表级数据)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "No comments found.",
+                  "value": ""
+                },
+                {
+                  "key": "dsdCodeInfoId",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "109"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/excel/code/values/dsdCodeInfoId/upload",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "code",
+                "values",
+                "dsdCodeInfoId",
+                "upload"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "file",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dsdCodeInfoId",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "码表数值信息列表__导入excel数据(根据dsdCodeInfoId表级数据)",
+            "header": []
+          },
+          "description": "码表数值信息列表__导入excel数据(根据dsdCodeInfoId表级数据)"
+        },
+        {
+          "name": "码表数值信息列表__导出excel数据(根据dsdCodeInfoId表级数据)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "dsdCodeInfoId",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "109"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/excel/code/values/dsdCodeInfoId/download",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "code",
+                "values",
+                "dsdCodeInfoId",
+                "download"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dsdCodeInfoId",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "码表数值信息列表__导出excel数据(根据dsdCodeInfoId表级数据)",
+            "header": []
+          },
+          "description": "码表数值信息列表__导出excel数据(根据dsdCodeInfoId表级数据)"
+        },
+        {
+          "name": "码表数值信息excel__模板下载",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "dsdCodeInfoId",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "109"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/excel/code/values/download/template",
+              "protocol": "http",
+              "path": [
+                "excel",
+                "code",
+                "values",
+                "download",
+                "template"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dsdCodeInfoId",
+                  "value": "109",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "码表数值信息excel__模板下载",
+            "header": []
+          },
+          "description": "码表数值信息excel__模板下载"
+        }
+      ]
+    }
+  ]
+}

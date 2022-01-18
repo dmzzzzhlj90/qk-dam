@@ -56,6 +56,40 @@ public interface DataBaseService {
      * @return
      */
     List getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName);
+
+
+    /**
+     * 获取db库列表
+     * @param connectType
+     * @param dataSourceName
+     * @param limit
+     * @param offset
+     * @return
+     */
+    List<MtdApiDb> getAllDataBase(String connectType, String dataSourceName,Integer limit,Integer offset);
+
+    /**
+     * 获取table表列表
+     * @param connectType
+     * @param dataSourceName
+     * @param dataBaseName
+     * @param limit
+     * @param offset
+     * @return
+     */
+    List<MtdTables> getAllTable(String connectType, String dataSourceName, String dataBaseName,Integer limit,Integer offset);
+
+    /**
+     * 获取column字段列表
+     * @param connectType
+     * @param dataSourceName
+     * @param dataBaseName
+     * @param tableName
+     * @param limit
+     * @param offset
+     * @return
+     */
+    List getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName,Integer limit,Integer offset);
     /**
      * 通过元数据获取表是否存在和表中是否存在数据
      * @param connectType
@@ -69,7 +103,7 @@ public interface DataBaseService {
      * 获取数据源连接名称，id
      * @return
      */
-  Map<Integer,String> getAllDataSources(String connectType);
+    Map<Integer,String> getAllDataSources(String connectType);
 
     /**
      * 根据id获取数据源连接
