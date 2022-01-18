@@ -17,6 +17,10 @@ processResources {
     expand(project.properties)
 }
 docker {
+    dockerCreateDockerfile {
+        environmentVariable 'TimeZone', 'Asia/Shanghai'
+        instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
+    }
     springBootApplication {
         baseImage = "${jre11Image}"
         ports = [8782]
@@ -55,6 +59,8 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "com.github.ben-manes.caffeine:caffeine"
     implementation 'org.mapstruct:mapstruct'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus'
     annotationProcessor(
             "javax.persistence:javax.persistence-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
