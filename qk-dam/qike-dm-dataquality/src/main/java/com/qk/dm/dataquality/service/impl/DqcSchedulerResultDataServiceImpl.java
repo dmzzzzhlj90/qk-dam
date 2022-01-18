@@ -307,18 +307,13 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         Set<String> dataIndexSet = dataIndexMap.keySet();
         List<String> dataIndexList = new ArrayList<>(dataIndexSet);
         if (metaDataList != null) {
-            //设置元数据信息
-            for (String metaData : metaDataList) {
-                //设置列具体名称
-                String dataIndexName = dataIndexNamePrefix + metaData;
-                bulkResultData(resultDataVOList, dataIndexName, dataIndexMap, resultDataList, dataIndexList);
-            }
+            //解析批量获取指标值,设置元数据信息
+            bulkResultDataWithMetaData(resultDataVOList, dataIndexNamePrefix, dataIndexMap, resultDataList, metaDataList, dataIndexList);
         } else {
-            //未设置元数据信息
-            bulkResultData(resultDataVOList, UNDEFINED, dataIndexMap, resultDataList, dataIndexList);
+            //解析批量获取指标值,未设置元数据信息
+            bulkResultDataNoMetaData(resultDataVOList, UNDEFINED, dataIndexMap, resultDataList, dataIndexList);
         }
     }
-
 
     /**
      * 获取结果集数据
@@ -342,17 +337,48 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     }
 
     /**
-     * 解析批量获取指标值
+     * 解析批量获取指标值,设置元数据信息
      */
-    private void bulkResultData(List<Map<String, Object>> resultDataVOList,
-                                String dataIndexName,
-                                Map<String, Boolean> dataIndexMap,
-                                List<List<Object>> resultDataList,
-                                List<String> dataIndexList) {
+    private void bulkResultDataWithMetaData(List<Map<String, Object>> resultDataVOList, String dataIndexNamePrefix, Map<String, Boolean> dataIndexMap, List<List<Object>> resultDataList, List<String> metaDataList, List<String> dataIndexList) {
+        //设置元数据信息
+        AtomicInteger fieldAtomic = new AtomicInteger(0);
+        for (String metaData : metaDataList) {
+            int fieldIndex = fieldAtomic.getAndIncrement();
+            //设置列具体名称
+            String dataIndexName = dataIndexNamePrefix + metaData;
+            //获取字段对应的结果集
+            List<Object> resultData = null;
+            if (fieldIndex > resultDataList.size() - 1) {
+                //未能准备匹配.默认取首位数据
+                resultData = resultDataList.get(0);
+            } else {
+                //正确匹配
+                resultData = resultDataList.get(fieldIndex);
+            }
+            //数据存储
+            Map<String, Object> resultDataMap = new LinkedHashMap<>();
+            resultDataMap.put(dataIndexList.get(0), dataIndexName);
+            //获取指标数值
+            getDataValue(dataIndexMap, dataIndexList, resultData, resultDataMap);
+
+            resultDataVOList.add(resultDataMap);
+            fieldAtomic.getAndIncrement();
+        }
+    }
+
+    /**
+     * 解析批量获取指标值,未设置元数据信息
+     */
+    private void bulkResultDataNoMetaData(List<Map<String, Object>> resultDataVOList,
+                                          String dataIndexName,
+                                          Map<String, Boolean> dataIndexMap,
+                                          List<List<Object>> resultDataList,
+                                          List<String> dataIndexList) {
         AtomicInteger dataIndex = new AtomicInteger(0);
         for (List data : resultDataList) {
             //数据存储
             Map<String, Object> resultDataMap = new LinkedHashMap<>();
+            //指标名称
             resultDataMap.put(dataIndexList.get(0), dataIndexName);
 
             //获取指标数值
