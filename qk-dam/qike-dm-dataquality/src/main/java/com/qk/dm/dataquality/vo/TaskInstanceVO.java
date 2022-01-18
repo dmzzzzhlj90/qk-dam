@@ -20,9 +20,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class TaskInstanceVO implements Serializable {
-    private Integer id;
+    private Long id;
     private String state;
-    private Integer processInstanceId;
+    private Long processInstanceId;
     private Long taskCode;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

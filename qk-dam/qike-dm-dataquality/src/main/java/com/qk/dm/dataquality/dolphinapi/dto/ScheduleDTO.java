@@ -12,8 +12,8 @@ import java.io.Serializable;
  */
 @Data
 public class ScheduleDTO implements Serializable {
-    private int id;
-    private int processDefinitionId;
+    private Integer id;
+    private Long processDefinitionId;
     private String processDefinitionName;
     private String projectName;
     private String definitionDescription;
@@ -24,10 +24,10 @@ public class ScheduleDTO implements Serializable {
     private String warningType;
     private String createTime;
     private String updateTime;
-    private int userId;
+    private Long userId;
     private String userName;
     private String releaseState;
-    private int warningGroupId;
+    private Long warningGroupId;
     private String processInstancePriority;
     private String workerGroup;
 }

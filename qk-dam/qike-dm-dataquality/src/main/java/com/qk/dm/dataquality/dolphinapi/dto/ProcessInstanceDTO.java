@@ -26,21 +26,21 @@ import java.io.Serializable;
  */
 @Data
 public class ProcessInstanceDTO implements Serializable {
-  private int id;
-  private long processDefinitionCode;
-  private int processDefinitionVersion;
+  private Long id;
+  private Long processDefinitionCode;
+  private Long processDefinitionVersion;
   private String state;
   private String recovery;
   private String startTime;
   private String endTime;
-  private int runTimes;
+  private Long runTimes;
   private String name;
   private String host;
   private String processDefinition;
   private String commandType;
   private String commandParam;
   private String taskDependType;
-  private int maxTryTimes;
+  private Long maxTryTimes;
   private String failureStrategy;
   private String warningType;
   private String warningGroupId;
@@ -48,7 +48,7 @@ public class ProcessInstanceDTO implements Serializable {
   private String commandStartTime;
   private String globalParams;
   private String dagData;
-  private int executorId;
+  private Long executorId;
   private String executorName;
   private String tenantCode;
   private String queue;
@@ -60,11 +60,11 @@ public class ProcessInstanceDTO implements Serializable {
   private String processInstancePriority;
   private String workerGroup;
   private String environmentCode;
-  private int timeout;
-  private int tenantId;
+  private Long timeout;
+  private Long tenantId;
   private String varPool;
-  private int dryRun;
+  private Long dryRun;
   private String cmdTypeIfComplement;
-  private boolean complementData;
-  private boolean processInstanceStop;
+  private Boolean complementData;
+  private Boolean processInstanceStop;
 }
