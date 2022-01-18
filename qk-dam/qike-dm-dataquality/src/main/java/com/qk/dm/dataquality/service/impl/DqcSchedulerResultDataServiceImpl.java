@@ -124,6 +124,21 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
                 schedulerResultVOList);
     }
 
+    @Override
+    public List<DqcSchedulerResultVO> searchResultByTaskCode(Long taskCode) {
+        List<DqcSchedulerResultVO> schedulerResultVOList = new ArrayList<>();
+        List<DqcSchedulerResult> dqcSchedulerResultList = new ArrayList<>();
+        //根据规则查询最新的执行结果集信息
+        DqcSchedulerResult dqcSchedulerResult = dqcSchedulerResultRepository.findOneByLastTime(taskCode);
+        dqcSchedulerResultList.add(dqcSchedulerResult);
+        //构建调度结果集
+        LOG.info("开始构建调度结果集");
+        buildDqcSchedulerResults(schedulerResultVOList, dqcSchedulerResultList);
+        LOG.info("成功构建调度结果集");
+        return schedulerResultVOList;
+    }
+
+
     /**
      * 构建调度结果集
      */
