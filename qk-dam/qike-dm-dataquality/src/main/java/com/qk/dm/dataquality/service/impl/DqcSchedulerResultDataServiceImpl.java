@@ -94,6 +94,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
 
+    /*************************************************分页查询规则结果集列表信息*********************************************************/
     @Override
     public PageResultVO<DqcSchedulerResultVO> getResultDataList(DqcSchedulerResultParamsVO schedulerResultDataParamsVO) {
         LOG.info("分页查询规则结果集列表信息,参数信息:【{}】", schedulerResultDataParamsVO);
@@ -131,16 +132,18 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         Map<Long, List<DqcRuleTemplate>> ruleTemplateInfoMap = getRuleTemplateInfoMap(dqcSchedulerResultList);
         LOG.info("成功获取规则模板信息,模板ID集合:【{}】", ruleTemplateInfoMap.keySet());
         for (DqcSchedulerResult dqcSchedulerResult : dqcSchedulerResultList) {
-            DqcSchedulerResultVO.DqcSchedulerResultVOBuilder resultBuilder = getDqcSchedulerResultVOBuilder(ruleTemplateInfoMap, dqcSchedulerResult);
-            DqcSchedulerResultVO dqcSchedulerResultVO = resultBuilder.build();
+            DqcSchedulerResultVO dqcSchedulerResultVO = getDqcSchedulerResultVO(ruleTemplateInfoMap, dqcSchedulerResult);
             schedulerResultVOList.add(dqcSchedulerResultVO);
         }
     }
 
-    private DqcSchedulerResultVO.DqcSchedulerResultVOBuilder getDqcSchedulerResultVOBuilder(Map<Long, List<DqcRuleTemplate>> ruleTemplateInfoMap, DqcSchedulerResult dqcSchedulerResult) {
+    /**
+     * 获取调度执行结果集
+     */
+    private DqcSchedulerResultVO getDqcSchedulerResultVO(Map<Long, List<DqcRuleTemplate>> ruleTemplateInfoMap, DqcSchedulerResult dqcSchedulerResult) {
         DqcRuleTemplate dqcRuleTemplate = ruleTemplateInfoMap.get(Long.valueOf(dqcSchedulerResult.getRuleTempId())).get(0);
         //模板定义信息 空值行数 : ${1}, 总行数 : ${2}, 空值率 : ${3}
-        List<String> goalList = getGoalList(dqcRuleTemplate);
+        List<String> tempResultList = getTempResultList(dqcRuleTemplate);
         //结果集基础信息
         DqcSchedulerResultVO.DqcSchedulerResultVOBuilder resultBuilder = DqcSchedulerResultVO.builder();
         resultBuilder.jobId(dqcSchedulerResult.getJobId());
@@ -151,12 +154,12 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         resultBuilder.warnResult(dqcSchedulerResult.getWarnResult());
         resultBuilder.gmtModified(dqcSchedulerResult.getGmtModified());
         //设置列的schema
-        List<DqcSchedulerResultTitleVO> resultTitleVOList = buildResultTitleVOList(goalList);
+        List<DqcSchedulerResultTitleVO> resultTitleVOList = buildResultTitleVOList(tempResultList);
         resultBuilder.resultTitleList(resultTitleVOList);
         //设置列的信息
         resultBuilder.resultDataList(
                 buildResultDataVOList(resultTitleVOList, dqcSchedulerResult, dqcSchedulerResult.getRuleId()));
-        return resultBuilder;
+        return resultBuilder.build();
     }
 
     /**
@@ -172,17 +175,17 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     /**
      * 模板定义信息
      */
-    private List<String> getGoalList(DqcRuleTemplate dqcRuleTemplate) {
-        List<String> goalList = new LinkedList<>();
+    private List<String> getTempResultList(DqcRuleTemplate dqcRuleTemplate) {
+        List<String> tempResultList = new LinkedList<>();
         String tempResult = dqcRuleTemplate.getTempResult();
         String[] tempResultArr = tempResult.split(COMMA);
         for (String tempResultStr : tempResultArr) {
             //空值行数 : ${1}
             String[] goalArr = tempResultStr.split(COLON);
             String goalStr = goalArr[0].trim();
-            goalList.add(goalStr);
+            tempResultList.add(goalStr);
         }
-        return goalList;
+        return tempResultList;
     }
 
     /**
@@ -291,11 +294,13 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         if (metaDataList != null) {
             //设置元数据信息
             for (String metaData : metaDataList) {
-                bulkResultData(resultDataVOList, dataIndexNamePrefix, dataIndexMap, resultDataList, dataIndexList, metaData);
+                //设置列具体名称
+                String dataIndexName = dataIndexNamePrefix + metaData;
+                bulkResultData(resultDataVOList, dataIndexName, dataIndexMap, resultDataList, dataIndexList);
             }
         } else {
             //未设置元数据信息
-            bulkResultData(resultDataVOList, dataIndexNamePrefix, dataIndexMap, resultDataList, dataIndexList, UNDEFINED);
+            bulkResultData(resultDataVOList, UNDEFINED, dataIndexMap, resultDataList, dataIndexList);
         }
     }
 
@@ -325,16 +330,12 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
      * 解析批量获取指标值
      */
     private void bulkResultData(List<Map<String, Object>> resultDataVOList,
-                                String dataIndexNamePrefix,
+                                String dataIndexName,
                                 Map<String, Boolean> dataIndexMap,
                                 List<List<Object>> resultDataList,
-                                List<String> dataIndexList,
-                                String metaData) {
+                                List<String> dataIndexList) {
         AtomicInteger dataIndex = new AtomicInteger(0);
         for (List data : resultDataList) {
-            //设置列具体名称
-            String dataIndexName = dataIndexNamePrefix + metaData + SLASH + (dataIndex.get() + 1);
-
             //数据存储
             Map<String, Object> resultDataMap = new LinkedHashMap<>();
             resultDataMap.put(dataIndexList.get(0), dataIndexName);
@@ -430,7 +431,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         }
     }
 
-    /*************************************************####告警表达式执行####*********************************************************/
+    /*************************************************告警表达式执行*********************************************************/
     @Override
     public Object getWarnResultInfo(String ruleId) {
         LOG.info("开始获取告警表达式执行结果,ruleId: 【{}】", ruleId);
@@ -533,7 +534,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         }
     }
 
-    /*****************************************************************************************************************************/
+    /****************************************************根据分类目录获取告警结果*****************************************************/
 
     @Override
     public List<DqcSchedulerResult> getSchedulerResultList(Set<String> jobIds) {
@@ -580,13 +581,13 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         //获取所涉及规则
         Map<Long, List<DqcSchedulerRules>> schedulerRulesMap = getSchedulerRulesMap(dqcSchedulerResultList);
         for (DqcSchedulerResult dqcSchedulerResult : dqcSchedulerResultList) {
-            DqcSchedulerResultVO.DqcSchedulerResultVOBuilder resultBuilder = getDqcSchedulerResultVOBuilder(ruleTemplateInfoMap, dqcSchedulerResult);
+            DqcSchedulerResultVO dqcSchedulerResultVO = getDqcSchedulerResultVO(ruleTemplateInfoMap, dqcSchedulerResult);
             //添加所涉及表字段
             DqcSchedulerRules dqcSchedulerRules = schedulerRulesMap.get(dqcSchedulerResult.getTaskCode()).get(0);
-            resultBuilder.databaseName(dqcSchedulerRules.getDatabaseName());
-            resultBuilder.tableList(dqcSchedulerRules.getTables() != null ? DqcConstant.jsonStrToList(dqcSchedulerRules.getTables()) : null);
-            resultBuilder.fieldList(dqcSchedulerRules.getFields() != null ? DqcConstant.jsonStrToList(dqcSchedulerRules.getFields()) : null);
-            schedulerResultVOList.add(resultBuilder.build());
+            dqcSchedulerResultVO.setDatabaseName(dqcSchedulerRules.getDatabaseName());
+            dqcSchedulerResultVO.setTableList(dqcSchedulerRules.getTables() != null ? DqcConstant.jsonStrToList(dqcSchedulerRules.getTables()) : null);
+            dqcSchedulerResultVO.setFieldList(dqcSchedulerRules.getFields() != null ? DqcConstant.jsonStrToList(dqcSchedulerRules.getFields()) : null);
+            schedulerResultVOList.add(dqcSchedulerResultVO);
         }
     }
 
