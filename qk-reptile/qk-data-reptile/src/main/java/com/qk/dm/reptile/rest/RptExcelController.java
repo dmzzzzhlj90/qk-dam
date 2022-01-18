@@ -1,5 +1,6 @@
 package com.qk.dm.reptile.rest;
 
+import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.reptile.service.RptExcelService;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,6 @@ public class RptExcelController {
   @PostMapping("/basic/info/upload")
   @ResponseBody
   public DefaultCommonResult basicInfoUpload(MultipartFile file) {
-    rptExcelService.basicInfoUpload(file);
-    return DefaultCommonResult.success();
+    return DefaultCommonResult.success(ResultCodeEnum.OK,rptExcelService.basicInfoUpload(file));
   }
 }

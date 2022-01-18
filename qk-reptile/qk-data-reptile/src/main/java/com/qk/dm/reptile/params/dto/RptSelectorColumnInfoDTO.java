@@ -18,10 +18,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RptSelectorColumnInfoDTO {
 
-    /**
-     * 主键id
-     */
-    private Long id;
 
     /**
      * 配置表id

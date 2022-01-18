@@ -152,4 +152,8 @@ public class RptBaseInfoDTO {
    * 执行人id
    */
   private Long executorId;
+  /**
+   * 定时间隔
+   */
+  private String timeInterval;
 }

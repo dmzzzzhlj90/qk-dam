@@ -3,10 +3,7 @@ package com.qk.dm.reptile.mapstruct.mapper;
 import com.qk.dm.reptile.entity.RptSelectorColumnInfo;
 import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import com.qk.dm.reptile.params.vo.RptSelectorColumnInfoVO;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -24,4 +21,8 @@ public interface RptSelectorColumnInfoMapper {
     List<RptSelectorColumnInfoVO> of(List<RptSelectorColumnInfo> rptSelectorColumnInfoList);
 
     List<RptSelectorColumnInfo> ofList(List<RptSelectorColumnInfoDTO> rptSelectorColumnInfoDTOList);
+
+    @Mapping(target = "id",ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void of(RptSelectorColumnInfo source, @MappingTarget RptSelectorColumnInfo target);
 }

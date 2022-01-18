@@ -188,5 +188,10 @@ public class RptBaseInfo implements Serializable {
      */
     @Column(name = "executor_id")
     private Long executorId;
+    /**
+     * 执行间隔
+     */
+    @Column(name = "time_interval")
+    private String timeInterval;
 
 }
