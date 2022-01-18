@@ -13,6 +13,7 @@ import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.dto.RptSelectorColumnInfoDTO;
 import com.qk.dm.reptile.params.vo.RptAddConfigVO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
+import com.qk.dm.reptile.params.vo.RptSelectorColumnInfoVO;
 import com.qk.dm.reptile.params.vo.RptSelectorVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
@@ -107,6 +108,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         rptBaseInfo.setJobId(map.get(RptConstant.JOBID));
         rptBaseInfo.setStatus(RptConstant.REPTILE);
         rptBaseInfo.setRunStatus(RptRunStatusConstant.START);
+        rptBaseInfo.setConfigName(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
         rptBaseInfo.setGmtFunction(new Date());
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
 
@@ -163,9 +165,13 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Override
     public RptSelectorVO getSelectorInfo(Long configId) {
         RptConfigInfo configIdInfo = rptConfigInfoRepository.findByParentId(configId);
+        List<RptSelectorColumnInfoVO> configInfoList = rptSelectorColumnInfoService.list(configId);
         return RptSelectorVO.builder().configId(configId)
-                .selectorList(rptSelectorColumnInfoService.list(configId))
+                .selectorList(configInfoList)
                 .next(Objects.nonNull(configIdInfo))
+                .columnCodeList(CollectionUtils.isEmpty(configInfoList)?Collections.EMPTY_LIST:
+                        rptSelectorColumnInfoService.findByConfigIds(configInfoList.stream()
+                         .map(RptSelectorColumnInfoVO::getId).collect(Collectors.toList())))
                 .build();
     }
 

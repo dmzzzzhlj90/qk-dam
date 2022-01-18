@@ -266,7 +266,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
      * @param rptBaseInfoList
      */
     private List<RptBaseInfoVO> checkConfig(List<RptBaseInfoVO> rptBaseInfoList){
-        if(CollectionUtils.isEmpty(rptBaseInfoList)){return null;}
+        if(CollectionUtils.isEmpty(rptBaseInfoList)){return Collections.emptyList();}
         rptBaseInfoList.forEach(e->{
             e.setConfigStatus(!CollectionUtils.isEmpty(rptConfigInfoService.rptList(e.getId())));
         });

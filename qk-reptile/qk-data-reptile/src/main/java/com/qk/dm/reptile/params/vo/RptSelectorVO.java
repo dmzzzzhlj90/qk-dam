@@ -20,4 +20,6 @@ public class RptSelectorVO {
      * 选择器列表
      */
     private List<RptSelectorColumnInfoVO> selectorList;
+
+    private List<String> columnCodeList;
 }
