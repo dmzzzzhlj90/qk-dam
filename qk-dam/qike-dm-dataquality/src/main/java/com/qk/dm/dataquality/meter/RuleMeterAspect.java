@@ -97,9 +97,8 @@ public class RuleMeterAspect {
                             BigDecimal b = new BigDecimal(v.toString());
                             String metricName = RuleMeterConf.metricName("result", "info");
                             Tags tags = Tags.of(
-                                    TITLE, dqcSchedulerResultTitleVO.getTitle(),
+                                    TITLE, dqcSchedulerResultTitleVO.getTitle()+":"+targetObj.toString(),
                                     DATAINDEX, dqcSchedulerResultTitleVO.getDataIndex(),
-                                    TARGETOBJ, targetObj.toString(),
                                     JOBID, dqcSchedulerRules.getJobId(),
                                     RULEID, dqcSchedulerRules.getRuleId()
                                     );
