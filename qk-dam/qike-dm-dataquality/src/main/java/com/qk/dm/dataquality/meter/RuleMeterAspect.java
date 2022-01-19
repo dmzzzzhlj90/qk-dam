@@ -67,7 +67,6 @@ public class RuleMeterAspect {
 
             List<DqcSchedulerResultTitleVO> resultTitleList = Objects.requireNonNull(dqcSchedulerResultVO).getResultTitleList();
             List<Map<String, Object>> resultDataList = Objects.requireNonNull(dqcSchedulerResultVO).getResultDataList();
-            AtomicInteger ii = new AtomicInteger(-1);
 
             Map<Object, List<Map<String, Object>>> objectListMap = resultDataList.stream()
                     .collect(
@@ -76,6 +75,7 @@ public class RuleMeterAspect {
             objectListMap.forEach((targetObj,rtList)->{
                 rtList.forEach(it->{
                     //需要按照target分组
+                    AtomicInteger ii = new AtomicInteger(-1);
                     it.forEach((k,v)->{
                         int i = ii.incrementAndGet();
                         DqcSchedulerResultTitleVO dqcSchedulerResultTitleVO = resultTitleList.get(i);
