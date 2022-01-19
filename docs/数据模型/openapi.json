@@ -53,7 +53,7 @@
             "description": "所属主题id",
             "type": "integer"
           },
-          "modelID": {
+          "modelId": {
             "format": "int64",
             "description": "所属层级id",
             "type": "integer"
@@ -88,7 +88,7 @@
             "description": "所属主题id",
             "type": "integer"
           },
-          "modelID": {
+          "modelId": {
             "format": "int64",
             "description": "所属层级id",
             "type": "integer"
@@ -98,19 +98,9 @@
       "_modelphysical_data_fromatRequest": {},
       "_modelphysical_reverse_baseRequest": {
         "properties": {
-          "modelId": {
-            "format": "int64",
-            "description": "所属层级id",
-            "type": "integer"
-          },
-          "themeId": {
-            "format": "int64",
-            "description": "所属主题id",
-            "type": "integer"
-          },
           "theme": {
             "format": "string",
-            "description": "主题",
+            "description": "主题名称",
             "type": "string"
           },
           "dataConnection": {
@@ -118,48 +108,57 @@
             "description": "数据连接",
             "type": "string"
           },
-          "dataConnectionName": {
-            "format": "string",
-            "description": "数据源连接名称",
-            "type": "string"
-          },
-          "databaseName": {
+          "dataBaseName": {
             "format": "string",
             "description": "数据库名称",
             "type": "string"
           },
-          "replace": {
+          "dataSourceName": {
+            "format": "string",
+            "description": "数据源连接名称",
+            "type": "string"
+          },
+          "dataSourceId": {
             "format": "int32",
-            "description": "更新已有表（0表示更新，1表示不更新）",
+            "description": "数据源连接id",
             "type": "integer"
+          },
+          "themeId": {
+            "format": "int64",
+            "description": "所属主题id",
+            "type": "integer"
+          },
+          "modelId": {
+            "format": "int64",
+            "description": "所属层级id",
+            "type": "integer"
+          },
+          "replace": {
+            "format": "string",
+            "description": "更新已有表（0表示更新，1表示不更新）",
+            "type": "string"
           },
           "tableList": {
             "description": "需要逆向的表名集合",
             "type": "array",
             "items": {}
           },
-          "status": {
-            "format": "int32",
-            "description": "0草稿 1已发布2 已下线",
-            "type": "integer"
-          },
-          "syncStatus": {
-            "format": "int32",
-            "description": "数据库和系统定义的sql是否同步，0表示为同步，1表示同步",
-            "type": "integer"
+          "allChoice": {
+            "format": "string",
+            "description": "是否全选,1表示部分选择，0表示全选",
+            "type": "string"
           }
         },
         "required": [
-          "modelId",
-          "themeId",
           "theme",
           "dataConnection",
-          "dataConnectionName",
-          "databaseName",
+          "dataBaseName",
+          "dataSourceName",
+          "dataSourceId",
+          "themeId",
+          "modelId",
           "replace",
-          "tableList",
-          "status",
-          "syncStatus"
+          "allChoice"
         ]
       },
       "_modelphysical_synchronizationRequest": {
@@ -295,7 +294,7 @@
                 "description": "数据连接",
                 "type": "string"
               },
-              "databaseName": {
+              "dataBaseName": {
                 "format": "string",
                 "description": "数据库名称",
                 "type": "string"
@@ -331,9 +330,9 @@
                 "type": "string"
               },
               "tableType": {
-                "format": "int32",
+                "format": "string",
                 "description": "HIVE类型表分为内部表和外部表(1表示内部，2表示外部)",
-                "type": "integer"
+                "type": "string"
               },
               "responsibleBy": {
                 "format": "string",
@@ -350,7 +349,7 @@
                 "description": "所属主题id",
                 "type": "integer"
               },
-              "modelID": {
+              "modelId": {
                 "format": "int64",
                 "description": "所属层级id",
                 "type": "integer"
@@ -674,7 +673,6 @@
         }
       },
       "_summary_preview_sql__tableId_Request": {},
-      "_modelphysical_query_sqlRequest": {},
       "_physical__ids_Response": {
         "properties": {
           "retCode": {
@@ -763,7 +761,7 @@
                 "type": "array",
                 "items": {
                   "properties": {
-                    "modelPhysicalTableVO": {
+                    "modelPhysicalTableDTO": {
                       "description": "基础信息(object)",
                       "type": "object",
                       "properties": {
@@ -787,7 +785,7 @@
                           "description": "数据连接",
                           "type": "string"
                         },
-                        "databaseName": {
+                        "dataBaseName": {
                           "format": "string",
                           "description": "数据库名称",
                           "type": "string"
@@ -823,9 +821,9 @@
                           "type": "string"
                         },
                         "tableType": {
-                          "format": "int32",
+                          "format": "string",
                           "description": "HIVE类型表分为内部表和外部表(1表示内部，2表示外部)",
-                          "type": "integer"
+                          "type": "string"
                         },
                         "responsibleBy": {
                           "format": "string",
@@ -842,7 +840,7 @@
                           "description": "所属主题id",
                           "type": "integer"
                         },
-                        "modelID": {
+                        "modelId": {
                           "format": "int64",
                           "description": "所属层级id",
                           "type": "integer"
@@ -859,7 +857,7 @@
                         }
                       }
                     },
-                    "modelPhysicalColumnVOList": {
+                    "modelColumnDtoList": {
                       "description": "字段信息",
                       "type": "array",
                       "items": {
@@ -892,6 +890,11 @@
                           "standardsName": {
                             "format": "string",
                             "description": "标准名称",
+                            "type": "string"
+                          },
+                          "standardsCode": {
+                            "format": "string",
+                            "description": "标准编码",
                             "type": "string"
                           },
                           "itsPrimaryKey": {
@@ -927,7 +930,7 @@
                         }
                       }
                     },
-                    "modelPhysicalRelationVOList": {
+                    "modelRelationDtoList": {
                       "description": "关系信息",
                       "type": "array",
                       "items": {
@@ -1104,7 +1107,7 @@
           },
           "theme": {
             "format": "string",
-            "description": "主题",
+            "description": "主题名称",
             "type": "string"
           },
           "dataConnection": {
@@ -1112,7 +1115,7 @@
             "description": "数据连接",
             "type": "string"
           },
-          "databaseName": {
+          "dataBaseName": {
             "format": "string",
             "description": "数据库名称",
             "type": "string"
@@ -1148,9 +1151,9 @@
             "type": "string"
           },
           "tableType": {
-            "format": "int32",
+            "format": "string",
             "description": "HIVE类型表分为内部表和外部表(1表示内部，2表示外部)",
-            "type": "integer"
+            "type": "string"
           },
           "responsibleBy": {
             "format": "string",
@@ -1187,7 +1190,7 @@
           "tableName",
           "theme",
           "dataConnection",
-          "databaseName",
+          "dataBaseName",
           "dataSourceName",
           "dataSourceId",
           "status",
@@ -1196,6 +1199,7 @@
           "syncStatus"
         ]
       },
+      "_modelphysical_query_sql__tableId_Request": {},
       "_physical__id_Request": {},
       "_dim_table__id_Request": {},
       "_dim_table_preview_sql__tableId_Request": {},
@@ -1495,6 +1499,29 @@
           }
         }
       },
+      "_modelphysical_query_sql__tableId_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
       "_dim_publish__ids_Response": {
         "properties": {
           "retCode": {
@@ -1545,29 +1572,6 @@
       "_model_Request": {},
       "_modelphysical__id_Request": {},
       "_modelphysical_Response": {
-        "properties": {
-          "retCode": {
-            "format": "string",
-            "description": "返回码",
-            "type": "string"
-          },
-          "retMsg": {
-            "format": "string",
-            "description": "返回说明",
-            "type": "string"
-          },
-          "tips": {
-            "format": "string",
-            "description": "提示",
-            "type": "string"
-          },
-          "data": {
-            "description": "返回数据(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_modelphysical_query_sqlResponse": {
         "properties": {
           "retCode": {
             "format": "string",
@@ -2288,7 +2292,7 @@
           },
           "theme": {
             "format": "string",
-            "description": "主题",
+            "description": "主题名称",
             "type": "string"
           },
           "dataConnection": {
@@ -2296,7 +2300,7 @@
             "description": "数据连接",
             "type": "string"
           },
-          "databaseName": {
+          "dataBaseName": {
             "format": "string",
             "description": "数据库名称",
             "type": "string"
@@ -2332,9 +2336,9 @@
             "type": "string"
           },
           "tableType": {
-            "format": "int32",
+            "format": "string",
             "description": "HIVE类型表分为内部表和外部表(1表示内部，2表示外部)",
-            "type": "integer"
+            "type": "string"
           },
           "responsibleBy": {
             "format": "string",
@@ -2371,7 +2375,7 @@
           "tableName",
           "theme",
           "dataConnection",
-          "databaseName",
+          "dataBaseName",
           "dataSourceName",
           "dataSourceId",
           "status",
@@ -2449,7 +2453,7 @@
               },
               "theme": {
                 "format": "string",
-                "description": "主题",
+                "description": "主题名称",
                 "type": "string"
               },
               "dataConnection": {
@@ -2457,7 +2461,7 @@
                 "description": "数据连接",
                 "type": "string"
               },
-              "databaseName": {
+              "dataBaseName": {
                 "format": "string",
                 "description": "数据库名称",
                 "type": "string"
@@ -2493,9 +2497,9 @@
                 "type": "string"
               },
               "tableType": {
-                "format": "int32",
+                "format": "string",
                 "description": "HIVE类型表分为内部表和外部表(1表示内部，2表示外部)",
-                "type": "integer"
+                "type": "string"
               },
               "responsibleBy": {
                 "format": "string",
@@ -2557,6 +2561,11 @@
                 "standardsName": {
                   "format": "string",
                   "description": "标准名称",
+                  "type": "string"
+                },
+                "standardsCode": {
+                  "format": "string",
+                  "description": "标准编码",
                   "type": "string"
                 },
                 "itsPrimaryKey": {
@@ -3559,7 +3568,7 @@
                 "description": "数据连接",
                 "type": "string"
               },
-              "databaseName": {
+              "dataBaseName": {
                 "format": "string",
                 "description": "数据库名称",
                 "type": "string"
@@ -3595,9 +3604,9 @@
                 "type": "string"
               },
               "tableType": {
-                "format": "int32",
+                "format": "string",
                 "description": "HIVE类型表分为内部表和外部表(1表示内部，2表示外部)",
-                "type": "integer"
+                "type": "string"
               },
               "responsibleBy": {
                 "format": "string",
@@ -3614,7 +3623,7 @@
                 "description": "所属主题id",
                 "type": "integer"
               },
-              "modelID": {
+              "modelId": {
                 "format": "int64",
                 "description": "所属层级id",
                 "type": "integer"
@@ -4064,7 +4073,7 @@
                       "description": "数据连接",
                       "type": "string"
                     },
-                    "databaseName": {
+                    "dataBaseName": {
                       "format": "string",
                       "description": "数据库名称",
                       "type": "string"
@@ -4100,9 +4109,9 @@
                       "type": "string"
                     },
                     "tableType": {
-                      "format": "int32",
+                      "format": "string",
                       "description": "HIVE类型表分为内部表和外部表(1表示内部，2表示外部)",
-                      "type": "integer"
+                      "type": "string"
                     },
                     "responsibleBy": {
                       "format": "string",
@@ -4119,7 +4128,7 @@
                       "description": "所属主题id",
                       "type": "integer"
                     },
-                    "modelID": {
+                    "modelId": {
                       "format": "int64",
                       "description": "所属层级id",
                       "type": "integer"
@@ -4216,7 +4225,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"xzyilt\",\n  \"tips\": \"zlk4ur\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"st1ypj\",\n  \"tips\": \"ys1tfp\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4232,7 +4241,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "i197k2",
+            "example": "je2b14",
             "name": "ids"
           }
         ]
@@ -4255,7 +4264,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"fr5qdl\"\n  },\n  \"id\": 941,\n  \"themeId\": 969,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"x3iyu2\",\n  \"status\": 272,\n  \"connectionType\": 577,\n  \"dataConnection\": \"u7eagz\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 427,\n      \"factId\": 644,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"wd6uqw\",\n      \"standardsId\": 129,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 38,\n      \"itsPartition\": 907,\n      \"itsNull\": 432,\n      \"description\": \"0q0tib\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"0tzpqh\"\n  },\n  \"id\": 379,\n  \"themeId\": 164,\n  \"themeName\": \"cristopher.herman\",\n  \"factName\": \"cristopher.herman\",\n  \"description\": \"fkvb7g\",\n  \"status\": 121,\n  \"connectionType\": 672,\n  \"dataConnection\": \"a2aubj\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 343,\n      \"factId\": 186,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"oi47cs\",\n      \"standardsId\": 491,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": 694,\n      \"itsPartition\": 981,\n      \"itsNull\": 978,\n      \"description\": \"t9jfb8\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -4272,7 +4281,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"bxj6pz\",\n  \"tips\": \"r5rkht\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"whh1ru\",\n  \"tips\": \"q6kcuj\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4289,7 +4298,7 @@
             "in": "path",
             "description": "事实表id",
             "required": true,
-            "example": "288",
+            "example": "301",
             "name": "id"
           }
         ]
@@ -4312,7 +4321,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"galunw\",\n  \"tips\": \"xh2i3k\",\n  \"data\": {\n    \"id\": 34,\n    \"themeId\": 65,\n    \"themeName\": \"debbra.schuster\",\n    \"dimName\": \"debbra.schuster\",\n    \"dimCode\": \"8072\",\n    \"dimType\": \"0ywi3d\",\n    \"description\": \"fjvb18\",\n    \"status\": 33,\n    \"connectionType\": 246,\n    \"dataConnection\": \"tsnqx9\",\n    \"databaseName\": \"debbra.schuster\",\n    \"gmtCreate\": \"2022-01-07 10:42:59\",\n    \"gmtModified\": \"2022-01-07 10:42:59\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"wnbd9v\",\n  \"tips\": \"spg2vm\",\n  \"data\": {\n    \"id\": 270,\n    \"themeId\": 985,\n    \"themeName\": \"cristopher.herman\",\n    \"dimName\": \"cristopher.herman\",\n    \"dimCode\": \"86537\",\n    \"dimType\": \"rxoc58\",\n    \"description\": \"svai8a\",\n    \"status\": 131,\n    \"connectionType\": 790,\n    \"dataConnection\": \"53b1v0\",\n    \"databaseName\": \"cristopher.herman\",\n    \"gmtCreate\": \"2022-01-13 12:04:24\",\n    \"gmtModified\": \"2022-01-13 12:04:24\"\n  }\n}"
                   }
                 }
               }
@@ -4329,7 +4338,7 @@
             "in": "path",
             "description": "事实表id",
             "required": true,
-            "example": "443",
+            "example": "519",
             "name": "id"
           }
         ]
@@ -4355,7 +4364,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "[\n  162,\n  463\n]"
+                  "value": "[\n  363,\n  361\n]"
                 }
               }
             }
@@ -4375,7 +4384,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"jqpiyj\",\n  \"tips\": \"wnb3cg\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"uvybr8\",\n  \"tips\": \"uttedt\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4405,7 +4414,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"2vw960\",\n  \"tips\": \"uzv1co\",\n  \"data\": [\n    \"f9x0si\",\n    \"bwamg2\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"le4h1g\",\n  \"tips\": \"5v3c32\",\n  \"data\": [\n    \"3bu2js\",\n    \"19bf3o\"\n  ]\n}"
                   }
                 }
               }
@@ -4421,7 +4430,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "debbra.schuster",
+            "example": "cristopher.herman",
             "name": "tableName"
           }
         ]
@@ -4444,7 +4453,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 11,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"oy8ggc\",\n  \"dataConnection\": \"af4uge\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 410,\n  \"description\": \"bmnc5h\",\n  \"status\": 977,\n  \"gmtCreate\": \"2022-01-07 10:42:59\",\n  \"gmtModified\": \"2022-01-07 10:42:59\",\n  \"tableType\": 520,\n  \"responsibleBy\": \"nyg7i7\",\n  \"dataFormat\": \"x08fj9\",\n  \"themeId\": 289,\n  \"modelId\": 255,\n  \"hftsRoute\": \"kpkvu8\",\n  \"syncStatus\": 878\n}"
+                  "value": "{\n  \"id\": 774,\n  \"tableName\": \"cristopher.herman\",\n  \"theme\": \"jveagw\",\n  \"dataConnection\": \"evd27b\",\n  \"dataBaseName\": \"cristopher.herman\",\n  \"dataSourceName\": \"cristopher.herman\",\n  \"dataSourceId\": 217,\n  \"description\": \"cj9c59\",\n  \"status\": 235,\n  \"gmtCreate\": \"2022-01-13 12:04:24\",\n  \"gmtModified\": \"2022-01-13 12:04:24\",\n  \"tableType\": \"c1a0xv\",\n  \"responsibleBy\": \"irjb5g\",\n  \"dataFormat\": \"pp2b07\",\n  \"themeId\": 53,\n  \"modelId\": 863,\n  \"hftsRoute\": \"1ikz7c\",\n  \"syncStatus\": 333\n}"
                 }
               }
             }
@@ -4461,7 +4470,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"5jx160\",\n  \"tips\": \"6ic1m4\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"9brlpc\",\n  \"tips\": \"ai372n\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4478,7 +4487,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "750",
+            "example": "466",
             "name": "id"
           }
         ]
@@ -4501,7 +4510,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"22n5xw\",\n  \"tips\": \"o3gdcc\",\n  \"data\": {\n    \"id\": 942,\n    \"tableName\": \"debbra.schuster\",\n    \"theme\": \"51kwq1\",\n    \"dataConnection\": \"h0pxqb\",\n    \"databaseName\": \"debbra.schuster\",\n    \"dataSourceName\": \"debbra.schuster\",\n    \"dataSourceId\": 299,\n    \"description\": \"948w27\",\n    \"status\": 779,\n    \"gmtCreate\": \"2022-01-07 10:42:59\",\n    \"gmtModified\": \"2022-01-07 10:42:59\",\n    \"tableType\": 136,\n    \"responsibleBy\": \"5jppkx\",\n    \"dataFormat\": \"t42pa0\",\n    \"themeId\": 416,\n    \"modelID\": 246,\n    \"hftsRoute\": \"9c4e31\",\n    \"syncStatus\": 748\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"07xlfl\",\n  \"tips\": \"wcuoq6\",\n  \"data\": {\n    \"id\": 181,\n    \"tableName\": \"cristopher.herman\",\n    \"theme\": \"pgfx8r\",\n    \"dataConnection\": \"rta135\",\n    \"dataBaseName\": \"cristopher.herman\",\n    \"dataSourceName\": \"cristopher.herman\",\n    \"dataSourceId\": 336,\n    \"description\": \"wosp3r\",\n    \"status\": 58,\n    \"gmtCreate\": \"2022-01-13 12:04:24\",\n    \"gmtModified\": \"2022-01-13 12:04:24\",\n    \"tableType\": \"x1gs9v\",\n    \"responsibleBy\": \"ppigjx\",\n    \"dataFormat\": \"wjbf4i\",\n    \"themeId\": 404,\n    \"modelId\": 392,\n    \"hftsRoute\": \"lyzwfg\",\n    \"syncStatus\": 728\n  }\n}"
                   }
                 }
               }
@@ -4518,7 +4527,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "410",
+            "example": "381",
             "name": "id"
           }
         ]
@@ -4541,7 +4550,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"90376y\"\n  },\n  \"id\": 459,\n  \"themeId\": 559,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"9gbeef\",\n  \"description\": \"90bjwj\",\n  \"status\": 996,\n  \"connectionType\": \"n94umb\",\n  \"dataConnection\": \"0s9ktt\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 705,\n  \"columnList\": [\n    {\n      \"id\": 425,\n      \"dimTableId\": 929,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"b2x137\",\n      \"standardsId\": 529,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"3rikk8\",\n      \"itsPartition\": \"lk1ezl\",\n      \"itsNull\": \"5n9xoq\",\n      \"description\": \"z1ryu1\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"fbezx3\"\n  },\n  \"id\": 116,\n  \"themeId\": 353,\n  \"themeName\": \"cristopher.herman\",\n  \"dimName\": \"cristopher.herman\",\n  \"dimCode\": \"86537\",\n  \"dimType\": \"u3yae9\",\n  \"description\": \"53jz7e\",\n  \"status\": 584,\n  \"connectionType\": \"vzvw5u\",\n  \"dataConnection\": \"jbrtj0\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelDimId\": 714,\n  \"columnList\": [\n    {\n      \"id\": 901,\n      \"dimTableId\": 568,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"keftc1\",\n      \"standardsId\": 115,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": \"gx4voo\",\n      \"itsPartition\": \"qu7ib3\",\n      \"itsNull\": \"coi9vr\",\n      \"description\": \"75vxiy\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -4558,7 +4567,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"6kq9om\",\n  \"tips\": \"wx4s20\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"zgev6f\",\n  \"tips\": \"tioqdu\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4575,7 +4584,7 @@
             "in": "path",
             "description": "维度表id",
             "required": true,
-            "example": "331",
+            "example": "139",
             "name": "id"
           }
         ]
@@ -4598,7 +4607,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"x4nv43\",\n  \"tips\": \"zbnlfa\",\n  \"data\": {\n    \"id\": 758,\n    \"themeId\": 194,\n    \"themeName\": \"debbra.schuster\",\n    \"dimName\": \"debbra.schuster\",\n    \"dimCode\": \"8072\",\n    \"dimType\": \"h6rwm0\",\n    \"description\": \"ru9ypk\",\n    \"status\": 513,\n    \"connectionType\": \"ps9fye\",\n    \"dataConnection\": \"yipeaj\",\n    \"databaseName\": \"debbra.schuster\",\n    \"gmtCreate\": \"2022-01-07 10:42:59\",\n    \"gmtModified\": \"2022-01-07 10:42:59\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"bososh\",\n  \"tips\": \"yt4uxh\",\n  \"data\": {\n    \"id\": 152,\n    \"themeId\": 959,\n    \"themeName\": \"cristopher.herman\",\n    \"dimName\": \"cristopher.herman\",\n    \"dimCode\": \"86537\",\n    \"dimType\": \"f28pjc\",\n    \"description\": \"4meinn\",\n    \"status\": 529,\n    \"connectionType\": \"yywjgf\",\n    \"dataConnection\": \"1778yf\",\n    \"databaseName\": \"cristopher.herman\",\n    \"gmtCreate\": \"2022-01-13 12:04:24\",\n    \"gmtModified\": \"2022-01-13 12:04:24\"\n  }\n}"
                   }
                 }
               }
@@ -4615,7 +4624,7 @@
             "in": "path",
             "description": "维度表id",
             "required": true,
-            "example": "549",
+            "example": "323",
             "name": "id"
           }
         ]
@@ -4638,7 +4647,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/dim/publish/grr9yb"
+                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/dim/publish/3te2i5"
                 }
               }
             }
@@ -4655,7 +4664,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"acqlmy\",\n  \"tips\": \"t8euey\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"f1s6pt\",\n  \"tips\": \"tmh5db\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4671,8 +4680,50 @@
             "in": "path",
             "description": "维度id,如果多个，使用英文逗号分割",
             "required": true,
-            "example": "m27yib",
+            "example": "cvi5ps",
             "name": "ids"
+          }
+        ]
+      }
+    },
+    "/modelphysical/query/sql/{tableId}": {
+      "get": {
+        "summary": "预览sql——关系建模",
+        "deprecated": false,
+        "description": "预览sql——关系建模",
+        "tags": [
+          "ModelPhysicalController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_modelphysical_query_sql__tableId_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"831rd2\",\n  \"tips\": \"uubgir\",\n  \"data\": \"nmimrx\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getSql",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "462",
+            "name": "tableId"
           }
         ]
       }
@@ -4696,7 +4747,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"x5qsyd\",\n  \"tips\": \"dvatud\",\n  \"data\": \"0qqrzv\"\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"zu2jw8\",\n  \"tips\": \"wjn49c\",\n  \"data\": \"y4i2rr\"\n}"
                   }
                 }
               }
@@ -4713,7 +4764,7 @@
             "in": "path",
             "description": "汇总表id",
             "required": true,
-            "example": "921",
+            "example": "121",
             "name": "tableId"
           }
         ]
@@ -4736,7 +4787,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1psyo9\"\n  },\n  \"dsdName\": \"debbra.schuster\",\n  \"dsdCode\": \"8072\",\n  \"dsdLevel\": \"syhih0\",\n  \"dsdLevelId\": \"113\",\n  \"beginDay\": \"upfzal\",\n  \"endDay\": \"szfqsd\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1r13d9\"\n  },\n  \"dsdName\": \"cristopher.herman\",\n  \"dsdCode\": \"86537\",\n  \"dsdLevel\": \"kptggd\",\n  \"dsdLevelId\": \"11\",\n  \"beginDay\": \"hr5bj1\",\n  \"endDay\": \"0yx3w4\"\n}"
                 }
               }
             }
@@ -4753,7 +4804,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"rg2vni\",\n  \"tips\": \"m3zjnn\",\n  \"data\": {\n    \"total\": 995,\n    \"pageNum\": 903,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 932,\n        \"dsdName\": \"debbra.schuster\",\n        \"dsdCode\": \"8072\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"ndyac4\",\n  \"tips\": \"tq34oz\",\n  \"data\": {\n    \"total\": 37,\n    \"pageNum\": 618,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 571,\n        \"dsdName\": \"cristopher.herman\",\n        \"dsdCode\": \"86537\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -4781,7 +4832,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/dim/offline/tpd4xu"
+                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/dim/offline/uhlglw"
                 }
               }
             }
@@ -4798,7 +4849,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"askb1p\",\n  \"tips\": \"5ep4rc\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"8cwi35\",\n  \"tips\": \"bsfeju\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4814,7 +4865,7 @@
             "in": "path",
             "description": "维度id,如果多个，使用英文逗号分割",
             "required": true,
-            "example": "o2j4r2",
+            "example": "8yxgjg",
             "name": "ids"
           }
         ]
@@ -4839,7 +4890,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"cniwui\",\n  \"tips\": \"xoc4zn\",\n  \"data\": {\n    \"mapKey1\": \"z3ftt7\",\n    \"mapKey2\": \"nrh37e\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"bku53t\",\n  \"tips\": \"arb98u\",\n  \"data\": {\n    \"mapKey1\": \"8riiec\",\n    \"mapKey2\": \"ftme2k\"\n  }\n}"
                   }
                 }
               }
@@ -4855,7 +4906,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "axk0io",
+            "example": "ldcxc5",
             "name": "type"
           }
         ]
@@ -4878,7 +4929,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7z5t96\"\n  },\n  \"id\": 753,\n  \"themeId\": 198,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 790,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"kyud6h\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"960xki\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 193,\n      \"summaryId\": 776,\n      \"indicatorsType\": 641,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"vjh3r7\",\n      \"itsNull\": \"stndic\",\n      \"description\": \"trlqkg\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"sageoa\"\n  },\n  \"id\": 131,\n  \"themeId\": 942,\n  \"themeName\": \"cristopher.herman\",\n  \"tableName\": \"cristopher.herman\",\n  \"dimId\": 907,\n  \"dimName\": \"cristopher.herman\",\n  \"dataConnection\": \"hcexww\",\n  \"databaseName\": \"cristopher.herman\",\n  \"description\": \"s9aaxx\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 419,\n      \"summaryId\": 493,\n      \"indicatorsType\": 544,\n      \"indicatorsName\": \"cristopher.herman\",\n      \"indicatorsCode\": \"86537\",\n      \"dataType\": \"cduwc2\",\n      \"itsNull\": \"jsfpdc\",\n      \"description\": \"uce6jr\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -4895,7 +4946,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"i0ytg6\",\n  \"tips\": \"izyi7h\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"t88od7\",\n  \"tips\": \"nc1xog\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4923,7 +4974,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"olvtwb\"\n  },\n  \"themeId\": 902,\n  \"modelID\": 174\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7e77hm\"\n  },\n  \"themeId\": 656,\n  \"modelId\": 985\n}"
                 }
               }
             }
@@ -4940,7 +4991,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"3y8n1e\",\n  \"tips\": \"vfp59g\",\n  \"data\": {\n    \"coverage\": \"q0xfvk\",\n    \"pushnums\": 716,\n    \"totlenums\": 29,\n    \"fieldnums\": 71\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"dqrk1c\",\n  \"tips\": \"onbrku\",\n  \"data\": {\n    \"coverage\": \"zcyrqv\",\n    \"pushnums\": 747,\n    \"totlenums\": 680,\n    \"fieldnums\": 986\n  }\n}"
                   }
                 }
               }
@@ -4970,7 +5021,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"digylz\",\n  \"tips\": \"h1jl8o\",\n  \"data\": [\n    \"vmjgx6\",\n    \"m1prll\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"ioxlew\",\n  \"tips\": \"judcgc\",\n  \"data\": [\n    \"m3aopb\",\n    \"f2h25g\"\n  ]\n}"
                   }
                 }
               }
@@ -4998,7 +5049,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/fact/publish/jzhn0w"
+                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/fact/publish/d9tc9m"
                 }
               }
             }
@@ -5015,7 +5066,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"vg2df4\",\n  \"tips\": \"qd0mn7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"mexuj3\",\n  \"tips\": \"fgzf2n\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5031,7 +5082,7 @@
             "in": "path",
             "description": "事实表id，多个id使用英文逗号分割",
             "required": true,
-            "example": "zisuxo",
+            "example": "qjtqx9",
             "name": "ids"
           }
         ]
@@ -5056,7 +5107,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"jsvny1\",\n  \"tips\": \"kok1sa\",\n  \"data\": [\n    {\n      \"guid\": \"113\",\n      \"typeName\": \"debbra.schuster\",\n      \"entityStatus\": \"a91mku\",\n      \"displayText\": \"uc4wga\",\n      \"relationshipType\": \"nrfogr\",\n      \"relationshipGuid\": \"113\",\n      \"relationshipStatus\": \"5ah9x0\",\n      \"comment\": \"z5am2v\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"8ovd4d\",\n  \"tips\": \"gutquc\",\n  \"data\": [\n    {\n      \"guid\": \"11\",\n      \"typeName\": \"cristopher.herman\",\n      \"entityStatus\": \"a19vs9\",\n      \"displayText\": \"i7aull\",\n      \"relationshipType\": \"p4jwc9\",\n      \"relationshipGuid\": \"11\",\n      \"relationshipStatus\": \"alsrb0\",\n      \"comment\": \"17do9b\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -5072,7 +5123,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "dq62va",
+            "example": "ah5v11",
             "name": "connectType"
           },
           {
@@ -5082,7 +5133,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "debbra.schuster",
+            "example": "cristopher.herman",
             "name": "dataSourceName"
           },
           {
@@ -5092,7 +5143,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "debbra.schuster",
+            "example": "cristopher.herman",
             "name": "dataBaseName"
           }
         ]
@@ -5117,7 +5168,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"q5b7c1\",\n  \"tips\": \"3v6ku6\",\n  \"data\": [\n    {\n      \"id\": 73,\n      \"dirId\": \"113\",\n      \"title\": \"34b0mh\",\n      \"parentId\": \"113\",\n      \"value\": \"wjhyng\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"wzn0yo\",\n  \"tips\": \"bo8ujm\",\n  \"data\": [\n    {\n      \"id\": 721,\n      \"dirId\": \"11\",\n      \"title\": \"vw1lod\",\n      \"parentId\": \"11\",\n      \"value\": \"n8p8ch\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
@@ -5147,7 +5198,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"lfnf6d\",\n  \"tips\": \"xu9u5y\",\n  \"data\": [\n    \"rkthm4\",\n    \"x8p4zc\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"p6o7vs\",\n  \"tips\": \"lpeb67\",\n  \"data\": [\n    \"yff7y0\",\n    \"evsfaj\"\n  ]\n}"
                   }
                 }
               }
@@ -5163,7 +5214,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "uv37lo",
+            "example": "9jm57x",
             "name": "connectType"
           },
           {
@@ -5173,7 +5224,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "debbra.schuster",
+            "example": "cristopher.herman",
             "name": "dataSourceName"
           },
           {
@@ -5183,7 +5234,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "debbra.schuster",
+            "example": "cristopher.herman",
             "name": "dataBaseName"
           },
           {
@@ -5193,7 +5244,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "debbra.schuster",
+            "example": "cristopher.herman",
             "name": "tableName"
           }
         ]
@@ -5216,7 +5267,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"jvji4q\"\n  },\n  \"id\": 623,\n  \"themeId\": 274,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 9,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"ypon97\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"1ep9oz\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 250,\n      \"summaryId\": 657,\n      \"indicatorsType\": 35,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"ykerbl\",\n      \"itsNull\": \"6fr3qs\",\n      \"description\": \"9q1959\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"uwrdbk\"\n  },\n  \"id\": 509,\n  \"themeId\": 734,\n  \"themeName\": \"cristopher.herman\",\n  \"tableName\": \"cristopher.herman\",\n  \"dimId\": 784,\n  \"dimName\": \"cristopher.herman\",\n  \"dataConnection\": \"4l92zm\",\n  \"databaseName\": \"cristopher.herman\",\n  \"description\": \"abb9po\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 935,\n      \"summaryId\": 383,\n      \"indicatorsType\": 60,\n      \"indicatorsName\": \"cristopher.herman\",\n      \"indicatorsCode\": \"86537\",\n      \"dataType\": \"ysfxr8\",\n      \"itsNull\": \"yn3dxq\",\n      \"description\": \"g55rdi\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5233,7 +5284,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"fw0epq\",\n  \"tips\": \"7bq0te\",\n  \"data\": {\n    \"total\": 753,\n    \"pageNum\": 746,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 949,\n        \"themeId\": 533,\n        \"themeName\": \"debbra.schuster\",\n        \"tableName\": \"debbra.schuster\",\n        \"dimId\": 339,\n        \"dimName\": \"debbra.schuster\",\n        \"dataConnection\": \"arwy63\",\n        \"databaseName\": \"debbra.schuster\",\n        \"description\": \"62fk7d\",\n        \"gmtCreate\": \"2022-01-07 10:42:59\",\n        \"gmtModified\": \"2022-01-07 10:42:59\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"tdzp0w\",\n  \"tips\": \"j33jqa\",\n  \"data\": {\n    \"total\": 564,\n    \"pageNum\": 858,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 292,\n        \"themeId\": 759,\n        \"themeName\": \"cristopher.herman\",\n        \"tableName\": \"cristopher.herman\",\n        \"dimId\": 235,\n        \"dimName\": \"cristopher.herman\",\n        \"dataConnection\": \"emawhb\",\n        \"databaseName\": \"cristopher.herman\",\n        \"description\": \"tj24aa\",\n        \"gmtCreate\": \"2022-01-13 12:04:24\",\n        \"gmtModified\": \"2022-01-13 12:04:24\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -5264,7 +5315,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "[\n  853,\n  13\n]"
+                  "value": "[\n  955,\n  814\n]"
                 }
               }
             }
@@ -5284,7 +5335,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"x3yv02\",\n  \"tips\": \"zka3ia\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"es3bi5\",\n  \"tips\": \"c7nfje\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5314,7 +5365,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"98qies\",\n  \"tips\": \"0yjhj6\",\n  \"data\": [\n    {\n      \"mapKey1\": \"imjjb4\",\n      \"mapKey2\": \"xc86on\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"co3pvt\",\n  \"tips\": \"aosl5d\",\n  \"data\": [\n    {\n      \"mapKey1\": \"kjp9p3\",\n      \"mapKey2\": \"ql9qm0\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -5342,7 +5393,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 976,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"lno4h2\",\n  \"dataConnection\": \"5cst58\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 854,\n  \"description\": \"j6kk58\",\n  \"status\": 245,\n  \"gmtCreate\": \"2022-01-07 10:42:59\",\n  \"gmtModified\": \"2022-01-07 10:42:59\",\n  \"tableType\": 734,\n  \"responsibleBy\": \"bqr056\",\n  \"dataFormat\": \"17dr8z\",\n  \"themeId\": 470,\n  \"modelId\": 511,\n  \"hftsRoute\": \"dmpgon\",\n  \"syncStatus\": 193\n}"
+                  "value": "{\n  \"id\": 579,\n  \"tableName\": \"cristopher.herman\",\n  \"theme\": \"bkmubh\",\n  \"dataConnection\": \"gr7rs7\",\n  \"dataBaseName\": \"cristopher.herman\",\n  \"dataSourceName\": \"cristopher.herman\",\n  \"dataSourceId\": 468,\n  \"description\": \"ikpym3\",\n  \"status\": 989,\n  \"gmtCreate\": \"2022-01-13 12:04:24\",\n  \"gmtModified\": \"2022-01-13 12:04:24\",\n  \"tableType\": \"g6ky66\",\n  \"responsibleBy\": \"xj8qac\",\n  \"dataFormat\": \"vc5wxl\",\n  \"themeId\": 343,\n  \"modelId\": 217,\n  \"hftsRoute\": \"yxejcu\",\n  \"syncStatus\": 274\n}"
                 }
               }
             }
@@ -5359,7 +5410,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"oysolq\",\n  \"tips\": \"4b07ab\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"578c8f\",\n  \"tips\": \"n1l2o5\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5389,7 +5440,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"ldnpbt\",\n  \"tips\": \"qqjnl9\",\n  \"data\": [\n    \"3txbps\",\n    \"wxc4zp\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"r3047h\",\n  \"tips\": \"05r7pg\",\n  \"data\": [\n    \"m35w95\",\n    \"i7fog9\"\n  ]\n}"
                   }
                 }
               }
@@ -5419,7 +5470,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"ea8szs\",\n  \"tips\": \"n4sisv\",\n  \"data\": \"jj274q\"\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"gfq1ig\",\n  \"tips\": \"9lkh3v\",\n  \"data\": \"sz8hmd\"\n}"
                   }
                 }
               }
@@ -5436,7 +5487,7 @@
             "in": "path",
             "description": "事实表id",
             "required": true,
-            "example": "818",
+            "example": "297",
             "name": "tableId"
           }
         ]
@@ -5459,7 +5510,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"2ejty2\"\n  },\n  \"id\": 429,\n  \"themeId\": 697,\n  \"themeName\": \"debbra.schuster\",\n  \"tableName\": \"debbra.schuster\",\n  \"dimId\": 290,\n  \"dimName\": \"debbra.schuster\",\n  \"dataConnection\": \"1kov2m\",\n  \"databaseName\": \"debbra.schuster\",\n  \"description\": \"f8gxos\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 852,\n      \"summaryId\": 853,\n      \"indicatorsType\": 80,\n      \"indicatorsName\": \"debbra.schuster\",\n      \"indicatorsCode\": \"8072\",\n      \"dataType\": \"fqd45h\",\n      \"itsNull\": \"thsgoo\",\n      \"description\": \"xqp28q\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"eiejiu\"\n  },\n  \"id\": 127,\n  \"themeId\": 92,\n  \"themeName\": \"cristopher.herman\",\n  \"tableName\": \"cristopher.herman\",\n  \"dimId\": 160,\n  \"dimName\": \"cristopher.herman\",\n  \"dataConnection\": \"ity7yu\",\n  \"databaseName\": \"cristopher.herman\",\n  \"description\": \"a0xrxl\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 431,\n      \"summaryId\": 691,\n      \"indicatorsType\": 141,\n      \"indicatorsName\": \"cristopher.herman\",\n      \"indicatorsCode\": \"86537\",\n      \"dataType\": \"079tl0\",\n      \"itsNull\": \"1zlbf5\",\n      \"description\": \"ryfz4l\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5476,7 +5527,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"33zw7j\",\n  \"tips\": \"2h27je\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"yi9ibb\",\n  \"tips\": \"j32vbf\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5493,7 +5544,7 @@
             "in": "path",
             "description": "汇总表id",
             "required": true,
-            "example": "278",
+            "example": "970",
             "name": "id"
           }
         ]
@@ -5516,7 +5567,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"3wlqdo\",\n  \"tips\": \"6gbe2p\",\n  \"data\": {\n    \"id\": 377,\n    \"themeId\": 929,\n    \"themeName\": \"debbra.schuster\",\n    \"tableName\": \"debbra.schuster\",\n    \"dimId\": 753,\n    \"dimName\": \"debbra.schuster\",\n    \"dataConnection\": \"jeson3\",\n    \"databaseName\": \"debbra.schuster\",\n    \"description\": \"d9zji5\",\n    \"gmtCreate\": \"2022-01-07 10:42:59\",\n    \"gmtModified\": \"2022-01-07 10:42:59\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"nv0un4\",\n  \"tips\": \"ly7r1p\",\n  \"data\": {\n    \"id\": 275,\n    \"themeId\": 45,\n    \"themeName\": \"cristopher.herman\",\n    \"tableName\": \"cristopher.herman\",\n    \"dimId\": 186,\n    \"dimName\": \"cristopher.herman\",\n    \"dataConnection\": \"fqjofj\",\n    \"databaseName\": \"cristopher.herman\",\n    \"description\": \"ihu6ny\",\n    \"gmtCreate\": \"2022-01-13 12:04:24\",\n    \"gmtModified\": \"2022-01-13 12:04:24\"\n  }\n}"
                   }
                 }
               }
@@ -5533,7 +5584,7 @@
             "in": "path",
             "description": "汇总表id",
             "required": true,
-            "example": "758",
+            "example": "79",
             "name": "id"
           }
         ]
@@ -5556,7 +5607,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/summary/offline/yknsar"
+                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/summary/offline/m817gh"
                 }
               }
             }
@@ -5573,7 +5624,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"cqqun1\",\n  \"tips\": \"2mjxes\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"zcue4f\",\n  \"tips\": \"zmcell\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5589,7 +5640,7 @@
             "in": "path",
             "description": "汇总表id，多个id使用英文逗号分割",
             "required": true,
-            "example": "mcp1vl",
+            "example": "iny4w8",
             "name": "ids"
           }
         ]
@@ -5615,7 +5666,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "[\n  599,\n  806\n]"
+                  "value": "[\n  138,\n  801\n]"
                 }
               }
             }
@@ -5635,7 +5686,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"73fxqq\",\n  \"tips\": \"b9k7az\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"6x3z51\",\n  \"tips\": \"ldqktz\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5663,7 +5714,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lsy0rw\"\n  },\n  \"id\": 728,\n  \"themeId\": 155,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"ru32kj\",\n  \"description\": \"cc57rz\",\n  \"status\": 715,\n  \"connectionType\": \"hj32dv\",\n  \"dataConnection\": \"s70wl7\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 837,\n      \"dimId\": 137,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"peh4nb\",\n      \"standardsId\": 741,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"jxwx00\",\n      \"itsPartition\": \"qvizkt\",\n      \"itsNull\": \"mpzhno\",\n      \"description\": \"n4qhtc\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"wf3xyv\"\n  },\n  \"id\": 264,\n  \"themeId\": 617,\n  \"themeName\": \"cristopher.herman\",\n  \"dimName\": \"cristopher.herman\",\n  \"dimCode\": \"86537\",\n  \"dimType\": \"2ly4ey\",\n  \"description\": \"o5otdt\",\n  \"status\": 313,\n  \"connectionType\": \"4d8h2j\",\n  \"dataConnection\": \"yhfzgy\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 79,\n      \"dimId\": 800,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"4ropbj\",\n      \"standardsId\": 815,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": \"h1dv7l\",\n      \"itsPartition\": \"scmqk8\",\n      \"itsNull\": \"65skwk\",\n      \"description\": \"9yi4pj\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5680,7 +5731,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"m96t2z\",\n  \"tips\": \"wyzwp3\",\n  \"data\": {\n    \"total\": 183,\n    \"pageNum\": 166,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 94,\n        \"themeId\": 292,\n        \"themeName\": \"debbra.schuster\",\n        \"dimName\": \"debbra.schuster\",\n        \"dimCode\": \"8072\",\n        \"dimType\": \"fo9bf3\",\n        \"description\": \"9og7fi\",\n        \"status\": 96,\n        \"connectionType\": \"x961p2\",\n        \"dataConnection\": \"w612vf\",\n        \"databaseName\": \"debbra.schuster\",\n        \"gmtCreate\": \"2022-01-07 10:42:59\",\n        \"gmtModified\": \"2022-01-07 10:42:59\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"a1mx2b\",\n  \"tips\": \"a4qtu1\",\n  \"data\": {\n    \"total\": 895,\n    \"pageNum\": 743,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 945,\n        \"themeId\": 77,\n        \"themeName\": \"cristopher.herman\",\n        \"dimName\": \"cristopher.herman\",\n        \"dimCode\": \"86537\",\n        \"dimType\": \"z2p6gs\",\n        \"description\": \"o5jfp7\",\n        \"status\": 376,\n        \"connectionType\": \"jdmtyq\",\n        \"dataConnection\": \"pyj6hn\",\n        \"databaseName\": \"cristopher.herman\",\n        \"gmtCreate\": \"2022-01-13 12:04:24\",\n        \"gmtModified\": \"2022-01-13 12:04:24\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -5708,7 +5759,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/fact/offline/50l6x6"
+                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/fact/offline/c0tifi"
                 }
               }
             }
@@ -5725,7 +5776,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"yunqks\",\n  \"tips\": \"1mfd8j\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"l3t6an\",\n  \"tips\": \"w0qvro\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5741,7 +5792,7 @@
             "in": "path",
             "description": "事实表id，多个id使用英文逗号分割",
             "required": true,
-            "example": "rh83gy",
+            "example": "zr31ry",
             "name": "ids"
           }
         ]
@@ -5764,7 +5815,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"c0ovhx\"\n  },\n  \"id\": 993,\n  \"themeId\": 39,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"lfl5sj\",\n  \"description\": \"9lhqs5\",\n  \"status\": 238,\n  \"connectionType\": \"7jam2t\",\n  \"dataConnection\": \"akviyj\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 223,\n      \"dimId\": 587,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"ox28kp\",\n      \"standardsId\": 489,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"hjdwjc\",\n      \"itsPartition\": \"17f3xf\",\n      \"itsNull\": \"13ftrs\",\n      \"description\": \"3mgao3\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"rcrtpa\"\n  },\n  \"id\": 125,\n  \"themeId\": 527,\n  \"themeName\": \"cristopher.herman\",\n  \"dimName\": \"cristopher.herman\",\n  \"dimCode\": \"86537\",\n  \"dimType\": \"mf89i7\",\n  \"description\": \"n96fh9\",\n  \"status\": 646,\n  \"connectionType\": \"tcm8xh\",\n  \"dataConnection\": \"mxa7py\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 902,\n      \"dimId\": 515,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"bfyggv\",\n      \"standardsId\": 611,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": \"y2rcvu\",\n      \"itsPartition\": \"v6mi1e\",\n      \"itsNull\": \"2bnt0j\",\n      \"description\": \"9k0qks\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5781,7 +5832,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"r1jaj6\",\n  \"tips\": \"wmbe5e\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"vvkair\",\n  \"tips\": \"ph2lsv\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5798,7 +5849,7 @@
             "in": "path",
             "description": "维度id",
             "required": true,
-            "example": "724",
+            "example": "373",
             "name": "id"
           }
         ]
@@ -5821,7 +5872,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"m0rjni\",\n  \"tips\": \"3ekmst\",\n  \"data\": {\n    \"id\": 724,\n    \"themeId\": 781,\n    \"themeName\": \"debbra.schuster\",\n    \"dimName\": \"debbra.schuster\",\n    \"dimCode\": \"8072\",\n    \"dimType\": \"42qmq4\",\n    \"description\": \"4bvpf4\",\n    \"status\": 430,\n    \"connectionType\": \"o0498s\",\n    \"dataConnection\": \"tvuw7z\",\n    \"databaseName\": \"debbra.schuster\",\n    \"gmtCreate\": \"2022-01-07 10:42:59\",\n    \"gmtModified\": \"2022-01-07 10:42:59\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"1c17mv\",\n  \"tips\": \"l5cjqi\",\n  \"data\": {\n    \"id\": 877,\n    \"themeId\": 466,\n    \"themeName\": \"cristopher.herman\",\n    \"dimName\": \"cristopher.herman\",\n    \"dimCode\": \"86537\",\n    \"dimType\": \"b03qaw\",\n    \"description\": \"zs4bzs\",\n    \"status\": 696,\n    \"connectionType\": \"j50z1z\",\n    \"dataConnection\": \"f9zf30\",\n    \"databaseName\": \"cristopher.herman\",\n    \"gmtCreate\": \"2022-01-13 12:04:24\",\n    \"gmtModified\": \"2022-01-13 12:04:24\"\n  }\n}"
                   }
                 }
               }
@@ -5838,7 +5889,7 @@
             "in": "path",
             "description": "维度id",
             "required": true,
-            "example": "156",
+            "example": "543",
             "name": "id"
           }
         ]
@@ -5861,7 +5912,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"modelId\": 584,\n  \"themeId\": 726,\n  \"theme\": \"zwl2xb\",\n  \"dataConnection\": \"lydbb2\",\n  \"dataConnectionName\": \"debbra.schuster\",\n  \"databaseName\": \"debbra.schuster\",\n  \"replace\": 542,\n  \"tableList\": [\n    \"577ix8\"\n  ],\n  \"status\": 740,\n  \"syncStatus\": 581\n}"
+                  "value": "{\n  \"theme\": \"2nso6m\",\n  \"dataConnection\": \"lxw0h4\",\n  \"dataBaseName\": \"cristopher.herman\",\n  \"dataSourceName\": \"cristopher.herman\",\n  \"dataSourceId\": 625,\n  \"themeId\": 243,\n  \"modelId\": 375,\n  \"replace\": \"njdkju\",\n  \"tableList\": [\n    \"bj0g19\"\n  ],\n  \"allChoice\": \"y4vyeb\"\n}"
                 }
               }
             }
@@ -5878,7 +5929,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"4zs22y\",\n  \"tips\": \"evs4z7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"p4cqb8\",\n  \"tips\": \"idcrec\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5891,8 +5942,9 @@
     },
     "/model/": {
       "post": {
-        "summary": "",
+        "summary": "新增—关系建模层级",
         "deprecated": false,
+        "description": "新增—关系建模层级",
         "tags": [
           "ModelController"
         ],
@@ -5905,7 +5957,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"modelName\": \"debbra.schuster\",\n  \"layeredName\": \"debbra.schuster\",\n  \"description\": \"j14xj0\",\n  \"modelType\": 526\n}"
+                  "value": "{\n  \"modelName\": \"cristopher.herman\",\n  \"layeredName\": \"cristopher.herman\",\n  \"description\": \"bjdxmh\",\n  \"modelType\": 364\n}"
                 }
               }
             }
@@ -5922,7 +5974,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"vfcim3\",\n  \"tips\": \"sew7ua\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"33x133\",\n  \"tips\": \"hnpbjw\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5933,8 +5985,9 @@
         "parameters": []
       },
       "get": {
-        "summary": "",
+        "summary": "获取-关系建模层级",
         "deprecated": false,
+        "description": "获取-关系建模层级",
         "tags": [
           "ModelController"
         ],
@@ -5949,7 +6002,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"php907\",\n  \"tips\": \"lal1lz\",\n  \"data\": [\n    {\n      \"id\": 184,\n      \"modelName\": \"debbra.schuster\",\n      \"layeredName\": \"debbra.schuster\",\n      \"description\": \"hiyiyj\",\n      \"modelType\": 360,\n      \"gmtCreate\": \"2022-01-07 10:42:59\",\n      \"gmtModified\": \"2022-01-07 10:42:59\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"hh0qm6\",\n  \"tips\": \"mleu3t\",\n  \"data\": [\n    {\n      \"id\": 415,\n      \"modelName\": \"cristopher.herman\",\n      \"layeredName\": \"cristopher.herman\",\n      \"description\": \"74wweb\",\n      \"modelType\": 499,\n      \"gmtCreate\": \"2022-01-13 12:04:24\",\n      \"gmtModified\": \"2022-01-13 12:04:24\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -5977,7 +6030,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"a4kmvm\"\n  },\n  \"id\": 475,\n  \"themeId\": 240,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"0vo4od\",\n  \"status\": 147,\n  \"connectionType\": 892,\n  \"dataConnection\": \"xq8r5e\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 1,\n      \"factId\": 911,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"t88a9j\",\n      \"standardsId\": 937,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 338,\n      \"itsPartition\": 66,\n      \"itsNull\": 218,\n      \"description\": \"6jotlf\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"17ik70\"\n  },\n  \"id\": 593,\n  \"themeId\": 321,\n  \"themeName\": \"cristopher.herman\",\n  \"factName\": \"cristopher.herman\",\n  \"description\": \"xm7g1z\",\n  \"status\": 233,\n  \"connectionType\": 738,\n  \"dataConnection\": \"us80ve\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 548,\n      \"factId\": 342,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"s7nyev\",\n      \"standardsId\": 374,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": 349,\n      \"itsPartition\": 215,\n      \"itsNull\": 885,\n      \"description\": \"13hxdi\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5994,7 +6047,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"lgkw36\",\n  \"tips\": \"oj7vlm\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"7yk6ph\",\n  \"tips\": \"4p9uv1\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6024,7 +6077,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"ebhyrz\",\n  \"tips\": \"tut9n4\",\n  \"data\": \"m57u62\"\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"4ehvga\",\n  \"tips\": \"ns73qk\",\n  \"data\": \"bddfmz\"\n}"
                   }
                 }
               }
@@ -6041,7 +6094,7 @@
             "in": "path",
             "description": "维度表id",
             "required": true,
-            "example": "651",
+            "example": "450",
             "name": "tableId"
           }
         ]
@@ -6064,7 +6117,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 790,\n    \"tableName\": \"debbra.schuster\",\n    \"theme\": \"v5i6hb\",\n    \"dataConnection\": \"k3ffk6\",\n    \"databaseName\": \"debbra.schuster\",\n    \"dataSourceName\": \"debbra.schuster\",\n    \"dataSourceId\": 795,\n    \"description\": \"5ulxg1\",\n    \"status\": 861,\n    \"gmtCreate\": \"2022-01-07 10:42:59\",\n    \"gmtModified\": \"2022-01-07 10:42:59\",\n    \"tableType\": 376,\n    \"responsibleBy\": \"d9yhgy\",\n    \"dataFormat\": \"0fkduy\",\n    \"themeId\": 685,\n    \"modelId\": 964,\n    \"hftsRoute\": \"n2g8n4\",\n    \"syncStatus\": 208\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 460,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"16eb7a\",\n      \"standardsId\": 574,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"d5x3s8\",\n      \"itsPartition\": \"s39amx\",\n      \"itsNull\": \"u0a2o8\",\n      \"description\": \"z4o86z\",\n      \"gmtCreate\": \"2022-01-07 10:42:59\",\n      \"gmtModified\": \"2022-01-07 10:42:59\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 382,\n      \"tableId\": 517,\n      \"columnName\": \"debbra.schuster\",\n      \"childTableName\": \"debbra.schuster\",\n      \"childTableColumn\": \"n75nl7\",\n      \"childConnectionWay\": \"6lyb5e\",\n      \"fatherTableName\": \"debbra.schuster\",\n      \"fatherTableColumn\": \"qqi24k\",\n      \"fatherConnectionWay\": \"eb4y5r\",\n      \"gmtCreate\": \"2022-01-07 10:42:59\",\n      \"gmtModified\": \"2022-01-07 10:42:59\"\n    }\n  ]\n}"
+                  "value": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 978,\n    \"tableName\": \"cristopher.herman\",\n    \"theme\": \"8tqlaq\",\n    \"dataConnection\": \"zomn5l\",\n    \"dataBaseName\": \"cristopher.herman\",\n    \"dataSourceName\": \"cristopher.herman\",\n    \"dataSourceId\": 502,\n    \"description\": \"ykmr3x\",\n    \"status\": 745,\n    \"gmtCreate\": \"2022-01-13 12:04:24\",\n    \"gmtModified\": \"2022-01-13 12:04:24\",\n    \"tableType\": \"tqwcqj\",\n    \"responsibleBy\": \"pxqys2\",\n    \"dataFormat\": \"1yaaof\",\n    \"themeId\": 215,\n    \"modelId\": 677,\n    \"hftsRoute\": \"90c4sl\",\n    \"syncStatus\": 111\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 323,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"he0op5\",\n      \"standardsId\": 291,\n      \"standardsName\": \"cristopher.herman\",\n      \"standardsCode\": \"86537\",\n      \"itsPrimaryKey\": \"hix5tf\",\n      \"itsPartition\": \"6ig1fp\",\n      \"itsNull\": \"5o3yzq\",\n      \"description\": \"xb9j3i\",\n      \"gmtCreate\": \"2022-01-13 12:04:24\",\n      \"gmtModified\": \"2022-01-13 12:04:24\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 674,\n      \"tableId\": 871,\n      \"columnName\": \"cristopher.herman\",\n      \"childTableName\": \"cristopher.herman\",\n      \"childTableColumn\": \"thd6k7\",\n      \"childConnectionWay\": \"6whphp\",\n      \"fatherTableName\": \"cristopher.herman\",\n      \"fatherTableColumn\": \"gewath\",\n      \"fatherConnectionWay\": \"9emq27\",\n      \"gmtCreate\": \"2022-01-13 12:04:24\",\n      \"gmtModified\": \"2022-01-13 12:04:24\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6081,7 +6134,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"xo3f4h\",\n  \"tips\": \"9yutcy\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"lwmlei\",\n  \"tips\": \"aycnir\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6107,7 +6160,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 441,\n    \"tableName\": \"debbra.schuster\",\n    \"theme\": \"nigzpx\",\n    \"dataConnection\": \"pce6ls\",\n    \"databaseName\": \"debbra.schuster\",\n    \"dataSourceName\": \"debbra.schuster\",\n    \"dataSourceId\": 556,\n    \"description\": \"mdokjk\",\n    \"status\": 822,\n    \"gmtCreate\": \"2022-01-07 10:42:59\",\n    \"gmtModified\": \"2022-01-07 10:42:59\",\n    \"tableType\": 394,\n    \"responsibleBy\": \"2fp1z6\",\n    \"dataFormat\": \"xnegjw\",\n    \"themeId\": 149,\n    \"modelId\": 645,\n    \"hftsRoute\": \"v3mkxq\",\n    \"syncStatus\": 614\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 768,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"acqla8\",\n      \"standardsId\": 293,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"6ynl7o\",\n      \"itsPartition\": \"ahawhc\",\n      \"itsNull\": \"z6cbyv\",\n      \"description\": \"xzav1e\",\n      \"gmtCreate\": \"2022-01-07 10:42:59\",\n      \"gmtModified\": \"2022-01-07 10:42:59\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 247,\n      \"tableId\": 98,\n      \"columnName\": \"debbra.schuster\",\n      \"childTableName\": \"debbra.schuster\",\n      \"childTableColumn\": \"gu94sr\",\n      \"childConnectionWay\": \"8wydbx\",\n      \"fatherTableName\": \"debbra.schuster\",\n      \"fatherTableColumn\": \"lgde4j\",\n      \"fatherConnectionWay\": \"osqty6\",\n      \"gmtCreate\": \"2022-01-07 10:42:59\",\n      \"gmtModified\": \"2022-01-07 10:42:59\"\n    }\n  ]\n}"
+                  "value": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 948,\n    \"tableName\": \"cristopher.herman\",\n    \"theme\": \"7fqjdq\",\n    \"dataConnection\": \"rkdbei\",\n    \"dataBaseName\": \"cristopher.herman\",\n    \"dataSourceName\": \"cristopher.herman\",\n    \"dataSourceId\": 388,\n    \"description\": \"lkonu8\",\n    \"status\": 405,\n    \"gmtCreate\": \"2022-01-13 12:04:24\",\n    \"gmtModified\": \"2022-01-13 12:04:24\",\n    \"tableType\": \"ddv6zz\",\n    \"responsibleBy\": \"rjhltb\",\n    \"dataFormat\": \"v40djb\",\n    \"themeId\": 924,\n    \"modelId\": 835,\n    \"hftsRoute\": \"nmtki7\",\n    \"syncStatus\": 540\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 619,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"ibqqbv\",\n      \"standardsId\": 949,\n      \"standardsName\": \"cristopher.herman\",\n      \"standardsCode\": \"86537\",\n      \"itsPrimaryKey\": \"0bt411\",\n      \"itsPartition\": \"uln2a4\",\n      \"itsNull\": \"suf8xg\",\n      \"description\": \"3kol9q\",\n      \"gmtCreate\": \"2022-01-13 12:04:24\",\n      \"gmtModified\": \"2022-01-13 12:04:24\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 40,\n      \"tableId\": 608,\n      \"columnName\": \"cristopher.herman\",\n      \"childTableName\": \"cristopher.herman\",\n      \"childTableColumn\": \"napiyp\",\n      \"childConnectionWay\": \"zq3zwo\",\n      \"fatherTableName\": \"cristopher.herman\",\n      \"fatherTableColumn\": \"ihmrd5\",\n      \"fatherConnectionWay\": \"gxqjo4\",\n      \"gmtCreate\": \"2022-01-13 12:04:24\",\n      \"gmtModified\": \"2022-01-13 12:04:24\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6124,7 +6177,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"gfvgoj\",\n  \"tips\": \"dem943\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"icak3a\",\n  \"tips\": \"3ahw3d\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6152,7 +6205,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"bc86fh\"\n  },\n  \"id\": 648,\n  \"themeId\": 800,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"08bxci\",\n  \"description\": \"8c2555\",\n  \"status\": 637,\n  \"connectionType\": \"fzqkfz\",\n  \"dataConnection\": \"dib0bl\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 41,\n      \"dimId\": 481,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"jrpnq5\",\n      \"standardsId\": 957,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"v63lz8\",\n      \"itsPartition\": \"przjy4\",\n      \"itsNull\": \"7ah0am\",\n      \"description\": \"hpjuh1\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ljg5jp\"\n  },\n  \"id\": 573,\n  \"themeId\": 621,\n  \"themeName\": \"cristopher.herman\",\n  \"dimName\": \"cristopher.herman\",\n  \"dimCode\": \"86537\",\n  \"dimType\": \"5pib05\",\n  \"description\": \"h8qd89\",\n  \"status\": 681,\n  \"connectionType\": \"gfsfbz\",\n  \"dataConnection\": \"wr2wpw\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 438,\n      \"dimId\": 240,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"obqjbj\",\n      \"standardsId\": 805,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": \"nyyfft\",\n      \"itsPartition\": \"u2ospx\",\n      \"itsNull\": \"fizoy5\",\n      \"description\": \"4u65j6\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6169,7 +6222,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"xclkbp\",\n  \"tips\": \"jqu8u7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"obxz3a\",\n  \"tips\": \"r0k3ue\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6197,7 +6250,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"n5m6jl\"\n  },\n  \"id\": 748,\n  \"themeId\": 577,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"k991qk\",\n  \"description\": \"iqlhh5\",\n  \"status\": 863,\n  \"connectionType\": \"rcqci2\",\n  \"dataConnection\": \"wekqhk\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 456,\n  \"columnList\": [\n    {\n      \"id\": 492,\n      \"dimTableId\": 58,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"hhdele\",\n      \"standardsId\": 125,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"rn2jxa\",\n      \"itsPartition\": \"wnrwh4\",\n      \"itsNull\": \"4kx982\",\n      \"description\": \"3zk13f\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"h8crur\"\n  },\n  \"id\": 470,\n  \"themeId\": 664,\n  \"themeName\": \"cristopher.herman\",\n  \"dimName\": \"cristopher.herman\",\n  \"dimCode\": \"86537\",\n  \"dimType\": \"zwkrbs\",\n  \"description\": \"7qh5of\",\n  \"status\": 107,\n  \"connectionType\": \"566dgj\",\n  \"dataConnection\": \"2jl07d\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelDimId\": 776,\n  \"columnList\": [\n    {\n      \"id\": 182,\n      \"dimTableId\": 570,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"hjif2p\",\n      \"standardsId\": 250,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": \"9ure1y\",\n      \"itsPartition\": \"6o1t3q\",\n      \"itsNull\": \"wr6i5l\",\n      \"description\": \"znfbkk\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6214,7 +6267,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"cxa4lj\",\n  \"tips\": \"ob5jld\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"umps0h\",\n  \"tips\": \"gm9nl2\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6244,7 +6297,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"m4rrlv\",\n  \"tips\": \"icicru\",\n  \"data\": [\n    \"g0thxu\",\n    \"gukkv9\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"wu93j4\",\n  \"tips\": \"nzsod1\",\n  \"data\": [\n    \"vbokwq\",\n    \"wem21a\"\n  ]\n}"
                   }
                 }
               }
@@ -6274,7 +6327,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"vipyce\",\n  \"tips\": \"83ab54\",\n  \"data\": [\n    {\n      \"guid\": \"113\",\n      \"displayText\": \"a9buab\",\n      \"typeName\": \"debbra.schuster\",\n      \"description\": \"2ccjou\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"id7h73\",\n  \"tips\": \"t806kt\",\n  \"data\": [\n    {\n      \"guid\": \"11\",\n      \"displayText\": \"ctxrog\",\n      \"typeName\": \"cristopher.herman\",\n      \"description\": \"7pb48n\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -6290,7 +6343,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "l9b3hv",
+            "example": "2x9l7d",
             "name": "connectType"
           },
           {
@@ -6300,7 +6353,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "debbra.schuster",
+            "example": "cristopher.herman",
             "name": "dataSourceName"
           }
         ]
@@ -6325,7 +6378,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"bqhc2o\",\n  \"tips\": \"4u5gvo\",\n  \"data\": {\n    \"id\": 724,\n    \"tableName\": \"debbra.schuster\",\n    \"theme\": \"146974\",\n    \"dataConnection\": \"ks14ha\",\n    \"databaseName\": \"debbra.schuster\",\n    \"dataSourceName\": \"debbra.schuster\",\n    \"dataSourceId\": 232,\n    \"description\": \"wxsdmj\",\n    \"status\": 730,\n    \"gmtCreate\": \"2022-01-07 10:42:59\",\n    \"gmtModified\": \"2022-01-07 10:42:59\",\n    \"tableType\": 425,\n    \"responsibleBy\": \"6nebeb\",\n    \"dataFormat\": \"0sdllz\",\n    \"themeId\": 155,\n    \"modelID\": 76,\n    \"hftsRoute\": \"mdl2p1\",\n    \"syncStatus\": 543\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"xm2v1j\",\n  \"tips\": \"alqw44\",\n  \"data\": {\n    \"id\": 244,\n    \"tableName\": \"cristopher.herman\",\n    \"theme\": \"bs4d8q\",\n    \"dataConnection\": \"meto4g\",\n    \"dataBaseName\": \"cristopher.herman\",\n    \"dataSourceName\": \"cristopher.herman\",\n    \"dataSourceId\": 631,\n    \"description\": \"bv9a2h\",\n    \"status\": 442,\n    \"gmtCreate\": \"2022-01-13 12:04:24\",\n    \"gmtModified\": \"2022-01-13 12:04:24\",\n    \"tableType\": \"pns5or\",\n    \"responsibleBy\": \"2lr1f7\",\n    \"dataFormat\": \"8jostg\",\n    \"themeId\": 476,\n    \"modelId\": 170,\n    \"hftsRoute\": \"geuvqk\",\n    \"syncStatus\": 812\n  }\n}"
                   }
                 }
               }
@@ -6342,7 +6395,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "953",
+            "example": "380",
             "name": "id"
           }
         ]
@@ -6365,7 +6418,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"flym6q\"\n  },\n  \"id\": 894,\n  \"themeId\": 291,\n  \"themeName\": \"debbra.schuster\",\n  \"factName\": \"debbra.schuster\",\n  \"description\": \"d0tj05\",\n  \"status\": 793,\n  \"connectionType\": 747,\n  \"dataConnection\": \"jibdlw\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 8,\n      \"factId\": 229,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"f05n17\",\n      \"standardsId\": 766,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": 938,\n      \"itsPartition\": 225,\n      \"itsNull\": 605,\n      \"description\": \"f9mmst\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"4vt4mm\"\n  },\n  \"id\": 190,\n  \"themeId\": 682,\n  \"themeName\": \"cristopher.herman\",\n  \"factName\": \"cristopher.herman\",\n  \"description\": \"2jb3wd\",\n  \"status\": 767,\n  \"connectionType\": 659,\n  \"dataConnection\": \"b4n4fs\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 293,\n      \"factId\": 978,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"63aror\",\n      \"standardsId\": 105,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": 241,\n      \"itsPartition\": 712,\n      \"itsNull\": 380,\n      \"description\": \"6d32vt\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6382,7 +6435,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"1pj0v4\",\n  \"tips\": \"tgjkll\",\n  \"data\": {\n    \"total\": 222,\n    \"pageNum\": 460,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 410,\n        \"themeId\": 877,\n        \"themeName\": \"debbra.schuster\",\n        \"dimName\": \"debbra.schuster\",\n        \"dimCode\": \"8072\",\n        \"dimType\": \"kopcbi\",\n        \"description\": \"0qxsw7\",\n        \"status\": 938,\n        \"connectionType\": 353,\n        \"dataConnection\": \"gudaz1\",\n        \"databaseName\": \"debbra.schuster\",\n        \"gmtCreate\": \"2022-01-07 10:42:59\",\n        \"gmtModified\": \"2022-01-07 10:42:59\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"5amclu\",\n  \"tips\": \"klxful\",\n  \"data\": {\n    \"total\": 67,\n    \"pageNum\": 562,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 332,\n        \"themeId\": 937,\n        \"themeName\": \"cristopher.herman\",\n        \"dimName\": \"cristopher.herman\",\n        \"dimCode\": \"86537\",\n        \"dimType\": \"iskob6\",\n        \"description\": \"ugau0h\",\n        \"status\": 956,\n        \"connectionType\": 397,\n        \"dataConnection\": \"fvi6c2\",\n        \"databaseName\": \"cristopher.herman\",\n        \"gmtCreate\": \"2022-01-13 12:04:24\",\n        \"gmtModified\": \"2022-01-13 12:04:24\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -6410,7 +6463,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 46,\n  \"tableName\": \"debbra.schuster\",\n  \"theme\": \"pdvs14\",\n  \"dataConnection\": \"57bk1g\",\n  \"databaseName\": \"debbra.schuster\",\n  \"dataSourceName\": \"debbra.schuster\",\n  \"dataSourceId\": 694,\n  \"description\": \"fgrkxs\",\n  \"status\": 940,\n  \"gmtCreate\": \"2022-01-07 10:42:59\",\n  \"gmtModified\": \"2022-01-07 10:42:59\",\n  \"tableType\": 454,\n  \"responsibleBy\": \"wtzwhg\",\n  \"dataFormat\": \"7oqm5l\",\n  \"themeId\": 446,\n  \"modelId\": 995,\n  \"hftsRoute\": \"p5m6tv\",\n  \"syncStatus\": 610\n}"
+                  "value": "{\n  \"id\": 732,\n  \"tableName\": \"cristopher.herman\",\n  \"theme\": \"yjhlzm\",\n  \"dataConnection\": \"npg93e\",\n  \"dataBaseName\": \"cristopher.herman\",\n  \"dataSourceName\": \"cristopher.herman\",\n  \"dataSourceId\": 878,\n  \"description\": \"gu4flv\",\n  \"status\": 5,\n  \"gmtCreate\": \"2022-01-13 12:04:24\",\n  \"gmtModified\": \"2022-01-13 12:04:24\",\n  \"tableType\": \"wlx7y7\",\n  \"responsibleBy\": \"6ql2lc\",\n  \"dataFormat\": \"j2uu5u\",\n  \"themeId\": 830,\n  \"modelId\": 297,\n  \"hftsRoute\": \"khnnp3\",\n  \"syncStatus\": 238\n}"
                 }
               }
             }
@@ -6427,7 +6480,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"7iqy7w\",\n  \"tips\": \"ylxnmh\",\n  \"data\": {\n    \"total\": 152,\n    \"pageNum\": 456,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 538,\n        \"tableName\": \"debbra.schuster\",\n        \"theme\": \"2kaa5b\",\n        \"dataConnection\": \"81nawt\",\n        \"databaseName\": \"debbra.schuster\",\n        \"dataSourceName\": \"debbra.schuster\",\n        \"dataSourceId\": 634,\n        \"description\": \"8dpd5y\",\n        \"status\": 551,\n        \"gmtCreate\": \"2022-01-07 10:42:59\",\n        \"gmtModified\": \"2022-01-07 10:42:59\",\n        \"tableType\": 913,\n        \"responsibleBy\": \"t8ygvk\",\n        \"dataFormat\": \"5168k3\",\n        \"themeId\": 671,\n        \"modelID\": 519,\n        \"hftsRoute\": \"ilxf26\",\n        \"syncStatus\": 308\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"0l7iwn\",\n  \"tips\": \"vsi405\",\n  \"data\": {\n    \"total\": 267,\n    \"pageNum\": 94,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 943,\n        \"tableName\": \"cristopher.herman\",\n        \"theme\": \"gsmjo7\",\n        \"dataConnection\": \"2r574w\",\n        \"dataBaseName\": \"cristopher.herman\",\n        \"dataSourceName\": \"cristopher.herman\",\n        \"dataSourceId\": 256,\n        \"description\": \"lqzexj\",\n        \"status\": 827,\n        \"gmtCreate\": \"2022-01-13 12:04:24\",\n        \"gmtModified\": \"2022-01-13 12:04:24\",\n        \"tableType\": \"x3rssp\",\n        \"responsibleBy\": \"3294dj\",\n        \"dataFormat\": \"midexd\",\n        \"themeId\": 497,\n        \"modelId\": 595,\n        \"hftsRoute\": \"tvoeoy\",\n        \"syncStatus\": 914\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -6455,7 +6508,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/summary/publish/f8auh9"
+                  "value": "curl -X PUT -i http://172.20.0.13:8782/model/summary/publish/d87xor"
                 }
               }
             }
@@ -6472,7 +6525,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"exf73z\",\n  \"tips\": \"o7u415\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"i167q3\",\n  \"tips\": \"pux126\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6488,7 +6541,7 @@
             "in": "path",
             "description": "汇总表id，多个id使用英文逗号分割",
             "required": true,
-            "example": "56e9ic",
+            "example": "hktt73",
             "name": "ids"
           }
         ]
@@ -6511,7 +6564,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"il7wwa\"\n  },\n  \"id\": 970,\n  \"themeId\": 934,\n  \"themeName\": \"debbra.schuster\",\n  \"dimName\": \"debbra.schuster\",\n  \"dimCode\": \"8072\",\n  \"dimType\": \"4qmvp9\",\n  \"description\": \"c06j4k\",\n  \"status\": 106,\n  \"connectionType\": \"c4001i\",\n  \"dataConnection\": \"g317ys\",\n  \"databaseName\": \"debbra.schuster\",\n  \"modelDimId\": 905,\n  \"columnList\": [\n    {\n      \"id\": 14,\n      \"dimTableId\": 363,\n      \"columnName\": \"debbra.schuster\",\n      \"columnType\": \"pmd22t\",\n      \"standardsId\": 479,\n      \"standardsName\": \"debbra.schuster\",\n      \"itsPrimaryKey\": \"oa2i4w\",\n      \"itsPartition\": \"xhk0y3\",\n      \"itsNull\": \"h0318e\",\n      \"description\": \"o66na7\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"qtbnth\"\n  },\n  \"id\": 56,\n  \"themeId\": 461,\n  \"themeName\": \"cristopher.herman\",\n  \"dimName\": \"cristopher.herman\",\n  \"dimCode\": \"86537\",\n  \"dimType\": \"rphg5e\",\n  \"description\": \"uqdxam\",\n  \"status\": 467,\n  \"connectionType\": \"zlzfko\",\n  \"dataConnection\": \"hpwpdh\",\n  \"databaseName\": \"cristopher.herman\",\n  \"modelDimId\": 584,\n  \"columnList\": [\n    {\n      \"id\": 304,\n      \"dimTableId\": 603,\n      \"columnName\": \"cristopher.herman\",\n      \"columnType\": \"763925\",\n      \"standardsId\": 200,\n      \"standardsName\": \"cristopher.herman\",\n      \"itsPrimaryKey\": \"eplw44\",\n      \"itsPartition\": \"wfdgj3\",\n      \"itsNull\": \"g82exh\",\n      \"description\": \"17upru\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6528,7 +6581,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"c072ap\",\n  \"tips\": \"0cwc1a\",\n  \"data\": {\n    \"total\": 49,\n    \"pageNum\": 747,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 703,\n        \"themeId\": 773,\n        \"themeName\": \"debbra.schuster\",\n        \"dimName\": \"debbra.schuster\",\n        \"dimCode\": \"8072\",\n        \"dimType\": \"n4z9x3\",\n        \"description\": \"01dzws\",\n        \"status\": 60,\n        \"connectionType\": \"q5osbl\",\n        \"dataConnection\": \"5g5lmq\",\n        \"databaseName\": \"debbra.schuster\",\n        \"gmtCreate\": \"2022-01-07 10:42:59\",\n        \"gmtModified\": \"2022-01-07 10:42:59\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"7s036z\",\n  \"tips\": \"ulxed7\",\n  \"data\": {\n    \"total\": 176,\n    \"pageNum\": 507,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 322,\n        \"themeId\": 177,\n        \"themeName\": \"cristopher.herman\",\n        \"dimName\": \"cristopher.herman\",\n        \"dimCode\": \"86537\",\n        \"dimType\": \"2ogin9\",\n        \"description\": \"v8vzls\",\n        \"status\": 195,\n        \"connectionType\": \"xjfb3u\",\n        \"dataConnection\": \"2r10fn\",\n        \"databaseName\": \"cristopher.herman\",\n        \"gmtCreate\": \"2022-01-13 12:04:24\",\n        \"gmtModified\": \"2022-01-13 12:04:24\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -6537,59 +6590,6 @@
         },
         "operationId": "list",
         "parameters": []
-      }
-    },
-    "/modelphysical/query/sql": {
-      "get": {
-        "summary": "预览sql——关系建模",
-        "deprecated": false,
-        "description": "预览sql——关系建模",
-        "tags": [
-          "ModelPhysicalController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_modelphysical_query_sqlResponse"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"03ph3l\",\n  \"tips\": \"lftuw9\",\n  \"data\": \"n9xj3y\"\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "getSql",
-        "parameters": [
-          {
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            },
-            "in": "query",
-            "description": "基础信息id",
-            "required": true,
-            "example": "850",
-            "name": "tableId"
-          },
-          {
-            "schema": {
-              "format": "int32",
-              "type": "integer"
-            },
-            "in": "query",
-            "description": " sql类型",
-            "required": true,
-            "example": "926",
-            "name": "type"
-          }
-        ]
       }
     },
     "/modelphysical/query": {
@@ -6609,7 +6609,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lhranz\"\n  },\n  \"themeId\": 297,\n  \"modelID\": 379\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"2xyre4\"\n  },\n  \"themeId\": 750,\n  \"modelId\": 648\n}"
                 }
               }
             }
@@ -6626,7 +6626,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"8072\",\n  \"retMsg\": \"q1cfac\",\n  \"tips\": \"3vketl\",\n  \"data\": {\n    \"total\": 461,\n    \"pageNum\": 960,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"modelPhysicalTableVO\": {\n          \"id\": 292,\n          \"tableName\": \"debbra.schuster\",\n          \"theme\": \"p0jptu\",\n          \"dataConnection\": \"rxjumi\",\n          \"databaseName\": \"debbra.schuster\",\n          \"dataSourceName\": \"debbra.schuster\",\n          \"dataSourceId\": 489,\n          \"description\": \"ojb5vc\",\n          \"status\": 879,\n          \"gmtCreate\": \"2022-01-07 10:42:59\",\n          \"gmtModified\": \"2022-01-07 10:42:59\",\n          \"tableType\": 510,\n          \"responsibleBy\": \"gh4ab4\",\n          \"dataFormat\": \"t0a8ca\",\n          \"themeId\": 708,\n          \"modelID\": 278,\n          \"hftsRoute\": \"1l38jg\",\n          \"syncStatus\": 234\n        },\n        \"modelPhysicalColumnVOList\": [\n          {\n            \"id\": 847,\n            \"tableId\": 82,\n            \"columnName\": \"debbra.schuster\",\n            \"columnType\": \"la2lhb\",\n            \"standardsId\": 593,\n            \"standardsName\": \"debbra.schuster\",\n            \"itsPrimaryKey\": \"hz6nwv\",\n            \"itsPartition\": \"1fzlm8\",\n            \"itsNull\": \"yi47nz\",\n            \"description\": \"zniajo\",\n            \"gmtCreate\": \"2022-01-07 10:42:59\",\n            \"gmtModified\": \"2022-01-07 10:42:59\"\n          }\n        ],\n        \"modelPhysicalRelationVOList\": [\n          {\n            \"id\": 964,\n            \"tableId\": 389,\n            \"columnName\": \"debbra.schuster\",\n            \"childTableName\": \"debbra.schuster\",\n            \"childTableColumn\": \"ykc6gq\",\n            \"childConnectionWay\": \"p6d4rd\",\n            \"fatherTableName\": \"debbra.schuster\",\n            \"fatherTableColumn\": \"m2xp8m\",\n            \"fatherConnectionWay\": \"0t23bs\",\n            \"gmtCreate\": \"2022-01-07 10:42:59\",\n            \"gmtModified\": \"2022-01-07 10:42:59\"\n          }\n        ]\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"86537\",\n  \"retMsg\": \"e37670\",\n  \"tips\": \"xmk1hr\",\n  \"data\": {\n    \"total\": 118,\n    \"pageNum\": 551,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"modelPhysicalTableDTO\": {\n          \"id\": 600,\n          \"tableName\": \"cristopher.herman\",\n          \"theme\": \"gc4276\",\n          \"dataConnection\": \"1gncp4\",\n          \"dataBaseName\": \"cristopher.herman\",\n          \"dataSourceName\": \"cristopher.herman\",\n          \"dataSourceId\": 783,\n          \"description\": \"wqiii8\",\n          \"status\": 193,\n          \"gmtCreate\": \"2022-01-13 12:04:24\",\n          \"gmtModified\": \"2022-01-13 12:04:24\",\n          \"tableType\": \"jmkoox\",\n          \"responsibleBy\": \"znn6l8\",\n          \"dataFormat\": \"cwzc2b\",\n          \"themeId\": 234,\n          \"modelId\": 208,\n          \"hftsRoute\": \"1cbkvf\",\n          \"syncStatus\": 80\n        },\n        \"modelColumnDtoList\": [\n          {\n            \"id\": 551,\n            \"tableId\": 409,\n            \"columnName\": \"cristopher.herman\",\n            \"columnType\": \"cel5a7\",\n            \"standardsId\": 287,\n            \"standardsName\": \"cristopher.herman\",\n            \"standardsCode\": \"86537\",\n            \"itsPrimaryKey\": \"3d15gu\",\n            \"itsPartition\": \"xgq9d8\",\n            \"itsNull\": \"0aj7i6\",\n            \"description\": \"x9i12c\",\n            \"gmtCreate\": \"2022-01-13 12:04:24\",\n            \"gmtModified\": \"2022-01-13 12:04:24\"\n          }\n        ],\n        \"modelRelationDtoList\": [\n          {\n            \"id\": 365,\n            \"tableId\": 591,\n            \"columnName\": \"cristopher.herman\",\n            \"childTableName\": \"cristopher.herman\",\n            \"childTableColumn\": \"y2vv7r\",\n            \"childConnectionWay\": \"klkz04\",\n            \"fatherTableName\": \"cristopher.herman\",\n            \"fatherTableColumn\": \"32nj7g\",\n            \"fatherConnectionWay\": \"wtuzn5\",\n            \"gmtCreate\": \"2022-01-13 12:04:24\",\n            \"gmtModified\": \"2022-01-13 12:04:24\"\n          }\n        ]\n      }\n    ]\n  }\n}"
                   }
                 }
               }

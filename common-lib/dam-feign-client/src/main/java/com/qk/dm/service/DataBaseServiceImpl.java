@@ -33,6 +33,7 @@ public class DataBaseServiceImpl implements DataBaseService {
 
   private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
 
+
   public DataBaseServiceImpl(DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
     this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
   }
@@ -61,6 +62,20 @@ public class DataBaseServiceImpl implements DataBaseService {
   @Override
   public List getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {
     return dataBaseInfoDefaultApi.getAllColumn(connectType, getServer(dataSourceName), dataBaseName, tableName);
+  }
+  @Override
+  public List<MtdApiDb> getAllDataBase(String connectType, String dataSourceName, Integer limit, Integer offset) {
+    return dataBaseInfoDefaultApi.getAllDataBase(connectType,getServer(dataSourceName),limit,offset);
+  }
+
+  @Override
+  public List<MtdTables> getAllTable(String connectType, String dataSourceName, String dataBaseName, Integer limit, Integer offset) {
+    return dataBaseInfoDefaultApi.getAllTable(connectType, getServer(dataSourceName), dataBaseName,limit,offset);
+  }
+
+  @Override
+  public List getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName, Integer limit, Integer offset) {
+    return dataBaseInfoDefaultApi.getAllColumn(connectType, getServer(dataSourceName), dataBaseName, tableName,limit,offset);
   }
 
   @Override

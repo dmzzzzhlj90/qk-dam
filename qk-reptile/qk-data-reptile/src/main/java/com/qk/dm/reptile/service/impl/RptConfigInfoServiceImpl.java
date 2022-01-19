@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 
@@ -212,11 +213,14 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(!CollectionUtils.isEmpty(list)) {
             //删除目标原有配置
             deleteTargetConfig(targetId);
+            AtomicReference<Long> parentId = new AtomicReference<>(Long.parseLong("0"));
             list.forEach(e -> {
                 RptConfigInfo info = new RptConfigInfo();
                 RptConfigInfoMapper.INSTANCE.of(e, info);
                 info.setBaseInfoId(targetId);
+                info.setParentId(parentId.get());
                 RptConfigInfo rptConfigInfo = rptConfigInfoRepository.save(info);
+                parentId.set(rptConfigInfo.getId());
                 rptSelectorColumnInfoService.copyConfig(e.getId(), rptConfigInfo.getId());
             });
         }

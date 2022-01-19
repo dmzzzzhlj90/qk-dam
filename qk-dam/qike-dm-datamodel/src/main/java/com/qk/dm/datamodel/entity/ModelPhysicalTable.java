@@ -55,7 +55,7 @@ public class ModelPhysicalTable implements Serializable {
      * 数据库名称
      */
     @Column(name = "database_name", nullable = false)
-    private String databaseName;
+    private String dataBaseName;
     /**
      * 描述
      */

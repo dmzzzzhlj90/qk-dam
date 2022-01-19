@@ -41,7 +41,7 @@ public class ModelPhysicalTableVO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      *数据源连接名称
@@ -100,7 +100,7 @@ public class ModelPhysicalTableVO implements Serializable {
     /**
      * 所属层级id
      */
-    private Long modelID;
+    private Long modelId;
 
     /**
      * HIVE类型表需要给ftfs路径

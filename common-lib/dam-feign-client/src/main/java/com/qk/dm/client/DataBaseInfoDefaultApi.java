@@ -132,10 +132,7 @@ public class DataBaseInfoDefaultApi {
      * @return
      */
     public List<MtdApiDb> getAllDataBase(String type, String server) {
-        DefaultCommonResult<List<MtdApiDb>> dataBaseList = metaDataFeign.getDataBaseList(
-                new MtdDbSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
-                        type + "_db", server));
-        return dataBaseList.getData();
+        return getAllDataBase(type,server, AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
 
     }
 
@@ -146,11 +143,8 @@ public class DataBaseInfoDefaultApi {
      * @return DefaultCommonResult
      */
     public List<MtdTables> getAllTable(String type, String server, String dbName) {
-        DefaultCommonResult<List<MtdTables>> tableList = metaDataFeign.getTableList(
-                new MtdTableSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
-                        type + "_table", dbName, server));
+       return  getAllTable(type,server,dbName,AtlasPagination.DEF_LIMIT,AtlasPagination.DEF_OFFSET);
 
-        return tableList.getData();
     }
 
     /**
@@ -160,12 +154,7 @@ public class DataBaseInfoDefaultApi {
      * @return DefaultCommonResult
      */
     public List getAllColumn(String type, String server, String dbName, String tableName) {
-
-        DefaultCommonResult<List<MtdAttributes>> columnList = metaDataFeign.getColumnList(
-                new MtdColumnSearchVO(AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET,
-                        type + "_column", dbName, server, tableName));
-
-        return columnList.getData();
+        return getAllColumn(type,server,dbName,tableName,AtlasPagination.DEF_LIMIT,AtlasPagination.DEF_OFFSET);
     }
 
     /**
@@ -221,4 +210,57 @@ public class DataBaseInfoDefaultApi {
     public List getColumnListByTableGuid(String guid){
         return metaDataFeign.getColumnListByTableGuid(guid).getData();
     }
+
+    /**
+     * 新建API__获取db库信息下拉列表
+     * @param type
+     * @param server
+     * @param limit
+     * @param offset
+     * @return
+     */
+    public List<MtdApiDb> getAllDataBase(String type, String server,Integer limit,Integer offset) {
+        DefaultCommonResult<List<MtdApiDb>> dataBaseList = metaDataFeign.getDataBaseList(
+                new MtdDbSearchVO(limit, offset,
+                        type + "_db", server));
+        return dataBaseList.getData();
+
+    }
+
+    /**
+     * 新建API__获取table表信息下拉列表
+     * @param type
+     * @param server
+     * @param dbName
+     * @param limit
+     * @param offset
+     * @return
+     */
+    public List<MtdTables> getAllTable(String type, String server, String dbName,Integer limit,Integer offset) {
+        DefaultCommonResult<List<MtdTables>> tableList = metaDataFeign.getTableList(
+                new MtdTableSearchVO(limit, offset,
+                        type + "_table", dbName, server));
+
+        return tableList.getData();
+    }
+
+    /**
+     * 新建API__获取column字段信息下拉列表
+     * @param type
+     * @param server
+     * @param dbName
+     * @param tableName
+     * @param limit
+     * @param offset
+     * @return
+     */
+    public List getAllColumn(String type, String server, String dbName, String tableName,Integer limit,Integer offset) {
+
+        DefaultCommonResult<List<MtdAttributes>> columnList = metaDataFeign.getColumnList(
+                new MtdColumnSearchVO(limit, offset,
+                        type + "_column", dbName, server, tableName));
+
+        return columnList.getData();
+    }
+
 }
