@@ -1,5 +1,7 @@
 package com.qk.dm.dataquality.meter;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
@@ -9,7 +11,6 @@ import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class RuleMeterAspect {
+    private static final String NAME_RULE = "dqc.rule";
     /** 规则job id*/
     public static final String JOBID = "JOBID";
     /** 规则id rule io*/
@@ -95,10 +97,11 @@ public class RuleMeterAspect {
 
                         if (BigDecimalValidator.getInstance().isValid(v.toString())){
                             BigDecimal b = new BigDecimal(v.toString());
-                            String metricName = RuleMeterConf.metricName("result", "info");
+                            String metricName = metricName("result", "info");
                             Tags tags = Tags.of(
                                     TITLE, dqcSchedulerResultTitleVO.getTitle()+":"+targetObj.toString(),
                                     DATAINDEX, dqcSchedulerResultTitleVO.getDataIndex(),
+                                    TARGETOBJ, targetObj.toString(),
                                     JOBID, dqcSchedulerRules.getJobId(),
                                     RULEID, dqcSchedulerRules.getRuleId()
                                     );
@@ -125,5 +128,11 @@ public class RuleMeterAspect {
         // stop stopwatch
         log.info("返回值数据[{}]",retVal);
         return retVal;
+    }
+    public static String metricName(String... names) {
+        Joiner joiner = Joiner.on(",");
+        ArrayList<String> ts = Lists.newArrayList(NAME_RULE);
+        ts.addAll(List.of(names));
+        return  joiner.join(ts);
     }
 }
