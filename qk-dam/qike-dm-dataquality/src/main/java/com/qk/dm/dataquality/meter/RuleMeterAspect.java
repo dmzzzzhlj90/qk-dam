@@ -9,6 +9,7 @@ import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @author zhudaoming
@@ -66,38 +68,45 @@ public class RuleMeterAspect {
             List<DqcSchedulerResultTitleVO> resultTitleList = Objects.requireNonNull(dqcSchedulerResultVO).getResultTitleList();
             List<Map<String, Object>> resultDataList = Objects.requireNonNull(dqcSchedulerResultVO).getResultDataList();
             AtomicInteger ii = new AtomicInteger(-1);
-            resultDataList.forEach(it->{
-                Object targetObj = it.entrySet().stream().filter(t -> "targetObj".equals(t.getKey())).map(Map.Entry::getValue).findFirst().orElse("");
-                it.forEach((k,v)->{
-                    int i = ii.incrementAndGet();
-                    DqcSchedulerResultTitleVO dqcSchedulerResultTitleVO = resultTitleList.get(i);
-                    log.info("执行标题【{}:{}】",dqcSchedulerResultTitleVO.getTitle(),dqcSchedulerResultTitleVO.getDataIndex());
-                    log.info("执行结果【{}:{}】",k,v);
 
-                    if (BigDecimalValidator.getInstance().isValid(v.toString())){
-                        BigDecimal b = new BigDecimal(v.toString());
-                        String metricName = RuleMeterConf.metricName("result", "info");
-                        Tags tags = Tags.of(
-                                "JOBID", dqcSchedulerRules.getJobId(),
-                                "RULEID", dqcSchedulerRules.getRuleId(),
-                                "TARGETOBJ", targetObj.toString(),
-                                "DATAINDEX", dqcSchedulerResultTitleVO.getDataIndex(),
-                                "TITLE", dqcSchedulerResultTitleVO.getTitle());
-                        String cacheKey = tags.toString();
-                        cache.put(cacheKey,b);
-                        if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
-                            meterRegistry.gauge(
-                                    metricName,
-                                    tags,
-                                    cache,
-                                    c->
-                                            new BigDecimal(
-                                                    String.valueOf(c.get(cacheKey,Object.class))
-                                            ).doubleValue());
+            Map<Object, List<Map<String, Object>>> objectListMap = resultDataList.stream()
+                    .collect(
+                            Collectors.groupingBy(it ->
+                                    Optional.ofNullable(it.get("targetObj")).orElse("")));
+            objectListMap.forEach((targetObj,rtList)->{
+                rtList.forEach(it->{
+                    //需要按照target分组
+                    it.forEach((k,v)->{
+                        int i = ii.incrementAndGet();
+                        DqcSchedulerResultTitleVO dqcSchedulerResultTitleVO = resultTitleList.get(i);
+                        log.info("执行标题【{}:{}】",dqcSchedulerResultTitleVO.getTitle(),dqcSchedulerResultTitleVO.getDataIndex());
+                        log.info("执行结果【{}:{}】",k,v);
+
+                        if (BigDecimalValidator.getInstance().isValid(v.toString())){
+                            BigDecimal b = new BigDecimal(v.toString());
+                            String metricName = RuleMeterConf.metricName("result", "info");
+                            Tags tags = Tags.of(
+                                    "JOBID", dqcSchedulerRules.getJobId(),
+                                    "RULEID", dqcSchedulerRules.getRuleId(),
+                                    "TARGETOBJ", targetObj.toString(),
+                                    "DATAINDEX", dqcSchedulerResultTitleVO.getDataIndex(),
+                                    "TITLE", dqcSchedulerResultTitleVO.getTitle());
+                            String cacheKey = tags.toString();
+                            cache.put(cacheKey,b);
+                            if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
+                                meterRegistry.gauge(
+                                        metricName,
+                                        tags,
+                                        cache,
+                                        c->
+                                                new BigDecimal(
+                                                        String.valueOf(c.get(cacheKey,Object.class))
+                                                ).doubleValue());
+                            }
+
                         }
-
-                    }
-                });
+                    });
+                })
             });
         }
         // start stopwatch
@@ -107,20 +116,24 @@ public class RuleMeterAspect {
         return retVal;
     }
 
-    //    @Pointcut("within(com.qk.dm.dataquality.service..*)")
-    //    public void inServiceLayer() {}
-    //
-    //    @Pointcut("@annotation(com.qk.dm.dataquality.meter.Meter)")
-    //    public void annotationMeter() {}
-    //
-    //    @Pointcut("inServiceLayer()&&annotationMeter()")
-    //    private void operation() {}
-    //
-    //    @Around("operation()")
-    //    public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
-    //        // start stopwatch
-    //        Object retVal = pjp.proceed();
-    //        // stop stopwatch
-    //        return retVal;
-    //    }
+    public static void main(String[] args) {
+        Map<String,Object> t1 = new HashMap<>();
+        t1.put("acc",1);
+        t1.put("vvv",453);
+        Map<String,Object> t2 = new HashMap<>();
+        t2.put("acc",2);
+        t2.put("www",333);
+        Map<String,Object> t3 = new HashMap<>();
+        t3.put("acc",2);
+        t3.put("www",333);
+        List<Map<String,Object>> tt = Lists.newArrayList();
+        tt.add(t1);
+        tt.add(t2);
+        tt.add(t3);
+
+        Map<Object, List<Map<String, Object>>> aac = tt.stream().collect(Collectors.groupingBy(it -> it.get("acc")==null?"":it.get("acc")));
+        System.out.println(aac);
+
+
+    }
 }
