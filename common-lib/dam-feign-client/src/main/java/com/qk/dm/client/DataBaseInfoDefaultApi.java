@@ -166,14 +166,9 @@ public class DataBaseInfoDefaultApi {
      * @return
      */
     public Integer getExistData(String dbType, String server, String dbName, String tableName){
-        String type = dbType.split("-")[1];
-        DefaultCommonResult<Integer> existData = metaDataFeign.getExistData(
-                MtdApiParams.builder()
-                        .typeName(type + "_table")
-                        .server(server)
-                        .dbName(dbName)
-                        .tableName(tableName)
-                        .build());
+        String type = dbType.split("-")[0];
+        MtdApiParams build = MtdApiParams.builder().typeName(type + "_table").server(server).dbName(dbName).tableName(tableName).build();
+        DefaultCommonResult<Integer> existData = metaDataFeign.getExistData(build);
         return existData.getData();
     }
 

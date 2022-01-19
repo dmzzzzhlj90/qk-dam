@@ -22,7 +22,7 @@ public class QueryModelPhysicalDTO implements Serializable {
   /**分页信息*/
   private Pagination pagination;
   /**所属主题id*/
-  private Long themeId;
+  private String themeId;
   /**所属层级id*/
   private Long modelId;
 

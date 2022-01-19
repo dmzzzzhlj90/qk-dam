@@ -116,7 +116,7 @@ public class ModelPhysicalTable implements Serializable {
      * 所属主题id
      */
     @Column(name = "theme_id", nullable = false)
-    private Long themeId;
+    private String themeId;
     /**
      * 所属层级id
      */
