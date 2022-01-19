@@ -106,7 +106,7 @@ public class RuleMeterAspect {
 
                         }
                     });
-                })
+                });
             });
         }
         // start stopwatch
@@ -114,26 +114,5 @@ public class RuleMeterAspect {
         // stop stopwatch
         log.info("返回值数据[{}]",retVal);
         return retVal;
-    }
-
-    public static void main(String[] args) {
-        Map<String,Object> t1 = new HashMap<>();
-        t1.put("acc",1);
-        t1.put("vvv",453);
-        Map<String,Object> t2 = new HashMap<>();
-        t2.put("acc",2);
-        t2.put("www",333);
-        Map<String,Object> t3 = new HashMap<>();
-        t3.put("acc",2);
-        t3.put("www",333);
-        List<Map<String,Object>> tt = Lists.newArrayList();
-        tt.add(t1);
-        tt.add(t2);
-        tt.add(t3);
-
-        Map<Object, List<Map<String, Object>>> aac = tt.stream().collect(Collectors.groupingBy(it -> it.get("acc")==null?"":it.get("acc")));
-        System.out.println(aac);
-
-
     }
 }
