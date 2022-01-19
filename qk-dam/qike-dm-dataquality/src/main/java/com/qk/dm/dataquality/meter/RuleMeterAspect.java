@@ -30,6 +30,17 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class RuleMeterAspect {
+    /** 规则job id*/
+    public static final String JOBID = "JOBID";
+    /** 规则id rule io*/
+    public static final String RULEID = "RULEID";
+    /** 规则结果标题*/
+    public static final String TITLE = "TITLE";
+    /** 规则结果数据索引*/
+    public static final String DATAINDEX = "DATAINDEX";
+    /** 规则结果检查对象*/
+    public static final String TARGETOBJ = "TARGETOBJ";
+
     final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
     final DqcSchedulerResultDataService dqcSchedulerResultDataService;
     final MeterRegistry meterRegistry;
@@ -86,11 +97,12 @@ public class RuleMeterAspect {
                             BigDecimal b = new BigDecimal(v.toString());
                             String metricName = RuleMeterConf.metricName("result", "info");
                             Tags tags = Tags.of(
-                                    "JOBID", dqcSchedulerRules.getJobId(),
-                                    "RULEID", dqcSchedulerRules.getRuleId(),
-                                    "TARGETOBJ", targetObj.toString(),
-                                    "DATAINDEX", dqcSchedulerResultTitleVO.getDataIndex(),
-                                    "TITLE", dqcSchedulerResultTitleVO.getTitle());
+                                    TITLE, dqcSchedulerResultTitleVO.getTitle(),
+                                    DATAINDEX, dqcSchedulerResultTitleVO.getDataIndex(),
+                                    TARGETOBJ, targetObj.toString(),
+                                    JOBID, dqcSchedulerRules.getJobId(),
+                                    RULEID, dqcSchedulerRules.getRuleId()
+                                    );
                             String cacheKey = tags.toString();
                             cache.put(cacheKey,b);
                             if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
