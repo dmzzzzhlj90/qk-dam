@@ -66,4 +66,28 @@ public class DqcStatisticsController {
     public DefaultCommonResult<List<WarnTrendVO>> warnTrend() {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.warnTrend());
     }
+
+//    @BeforeLogger(param = "#taskInstanceVO.id",parameters = {2},logLevel = LogLevel.INFO)
+//    @GetMapping("/warn/test1")
+//    public DefaultCommonResult test1(TaskInstanceVO taskInstanceVO,int ab) {
+//        return DefaultCommonResult.success();
+//    }
+//
+//    @BeforeLogger(param = "#ab",parameters = {2},logLevel = LogLevel.INFO)
+//    @GetMapping("/warn/test2")
+//    public DefaultCommonResult test2(TaskInstanceVO taskInstanceVO,int ab) {
+//        return DefaultCommonResult.success();
+//    }
+//
+//    @BeforeLogger(param = "#taskInstanceVO.pagination.page",parameters = {2,3},logLevel = LogLevel.INFO)
+//    @GetMapping("/warn/test3")
+//    public DefaultCommonResult test3(TaskInstanceVO taskInstanceVO,int ab,int cc) {
+//        return DefaultCommonResult.success();
+//    }
+//
+//    @BeforeLogger(param = "#taskInstanceVO",parameters = {1},logLevel = LogLevel.INFO)
+//    @GetMapping("/warn/test4")
+//    public DefaultCommonResult test4(TaskInstanceVO taskInstanceVO) {
+//        return DefaultCommonResult.success();
+//    }
 }

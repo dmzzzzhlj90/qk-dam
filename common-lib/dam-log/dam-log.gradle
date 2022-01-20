@@ -7,11 +7,18 @@ group "com.qk.dam.log"
 dependencies {
     compile 'net.logstash.logback:logstash-logback-encoder'
     implementation 'javax.servlet:javax.servlet-api'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
 }
 
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"

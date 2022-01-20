@@ -67,8 +67,8 @@ public class CronUtil {
     private static void day(String time, StringBuffer cronExp) {
         Date parse = DateUtil.parseDate(time, "HH:mm");
         cronExp.append("0 ");
-        cronExp.append(DateUtil.toStr(parse,"mm")).append(" ");
-        cronExp.append(DateUtil.toStr(parse,"HH")).append(" ");
+        cronExp.append(DateUtil.minute(parse)).append(" ");
+        cronExp.append(DateUtil.hour(parse)).append(" ");
         cronExp.append("* ");
         cronExp.append("* ");
         cronExp.append("?");
@@ -78,8 +78,8 @@ public class CronUtil {
         //MON TUE WED THU FRI SAT SUN
         Date parse = DateUtil.parseDate(time, "HH:mm");
         cronExp.append("0 ");
-        cronExp.append(DateUtil.toStr(parse,"mm")).append(" ");
-        cronExp.append(DateUtil.toStr(parse,"HH")).append(" ");
+        cronExp.append(DateUtil.minute(parse)).append(" ");
+        cronExp.append(DateUtil.hour(parse)).append(" ");
         cronExp.append("? ");
         cronExp.append("* ");
         if (interval.split(",").length == 7) {
