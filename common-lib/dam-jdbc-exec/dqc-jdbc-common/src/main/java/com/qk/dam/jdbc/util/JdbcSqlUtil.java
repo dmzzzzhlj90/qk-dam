@@ -51,7 +51,7 @@ public class JdbcSqlUtil {
         HttpResponse<InputStream> localVarResponse = httpClient.send(generateSqlCall(warnRpcUrl),
                 HttpResponse.BodyHandlers.ofInputStream());
         if (localVarResponse.statusCode() / 100 != 2) {
-            throw new Exception("请求返回错误");
+            return "";
         }
         InputStream body = localVarResponse.body();
         Map<String, Object> jsonMap = new Gson().fromJson(new String(body.readAllBytes()), HashMap.class);
