@@ -119,5 +119,9 @@ public interface DataBaseService {
    */
   PageResultVO<DsdBasicinfoParamsVO> getStandard(DsdBasicInfoParamsDTO dsdBasicInfoParamsDTO);
 
+    /**
+     * 查询主题
+     * @return
+     */
   List<DataStandardTreeVO> getTree();
 }

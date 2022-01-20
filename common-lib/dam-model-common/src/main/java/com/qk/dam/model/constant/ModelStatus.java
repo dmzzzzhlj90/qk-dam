@@ -21,4 +21,9 @@ public class ModelStatus {
     public static final String SETDEFAULT="0";//默认不是主键不分区不为空
     public static final String ALLCHOICE="0";//逆向数据库全选
     public static final String PARTCHOICE="1";//逆向数据库部分
+    public static final String DIRNAMEID = "-1";//数据标准第一级目录id
+    public static final int FIRSTDIR=0;//获取前端传入的主题id数组第一个
+    public static final String DATACONNECTION="hive";//基础信息数据源连接类型
+    public static final String DATASOURCENAME="hive测试数据源";//基础信息数据源连接名称
+
 }

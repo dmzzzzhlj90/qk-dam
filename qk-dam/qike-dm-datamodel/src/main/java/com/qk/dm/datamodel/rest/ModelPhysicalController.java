@@ -7,6 +7,7 @@ import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
 import com.qk.dm.datamodel.params.dto.ModelReverseBaseDTO;
 import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
+import com.qk.dm.datamodel.params.vo.ModelDataSourceinfoVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
 import com.qk.dm.datamodel.service.ModelPhysicalColumnService;
@@ -200,6 +201,16 @@ public class ModelPhysicalController {
   public DefaultCommonResult<List<String>> queryDataType(){
     return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.queryDataType());
   }
+
+  /**
+   * 基础信息—数据连接类型、数据源名称
+   * @return DefaultCommonResult<ModelDataSourceinfoVO>
+   */
+  @GetMapping("/data/source")
+  public DefaultCommonResult<ModelDataSourceinfoVO> getDataSourceinfo(){
+    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getDataSourceinfo());
+  }
+
   //============================数据连接调用=========================================>
 
   /**

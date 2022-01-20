@@ -60,7 +60,7 @@ public class ModelPhysicalTableDTO implements Serializable {
     /**
      * 数据源连接id
      */
-    @NotNull(message = "数据源连接id")
+    //@NotNull(message = "数据源连接id")
     private Integer dataSourceId;
 
     /**

@@ -163,12 +163,22 @@ public class PhysicalServiceImpl implements PhysicalService {
     return SqlBuilderFactory.creatTableSQL(table);
   }
 
+  /**
+   * 修改发布
+   * @param modelPhysicalDTO
+   * @param modelPhysicalTable
+   * @return
+   */
   private String dataModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
     String sqls = null;
     //1存储基本信息
     //todo 添加创建人和负责人
     ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTableRepository.save(modelPhysicalTable);
     //2存储字段信息
+    List<ModelPhysicalColumn> physicalColumnList = modelPhysicalColumnRepository.findAllByTableId(modelPhysicalTable.getId());
+    if (CollectionUtils.isNotEmpty(physicalColumnList)){
+      modelPhysicalColumnRepository.deleteAllInBatch(physicalColumnList);
+    }
     List<ModelPhysicalColumn> columnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalDTO.getModelColumnDtoList());
     List<ModelPhysicalColumn> modelPhysicalColumnList = columnList.stream()
         .map(modelPhysicalColumn -> { modelPhysicalColumn.setTableId(
@@ -177,6 +187,10 @@ public class PhysicalServiceImpl implements PhysicalService {
         }).collect(Collectors.toList());
     modelPhysicalColumnRepository.saveAll(modelPhysicalColumnList);
     //3存关系数据
+    List<ModelPhysicalRelation> modelPhysicalRelationList = modelPhysicalRelationRepository.findAllByTableId(modelPhysicalTable.getId());
+    if (CollectionUtils.isNotEmpty(modelPhysicalRelationList)){
+      modelPhysicalRelationRepository.deleteAllInBatch(modelPhysicalRelationList);
+    }
     if (modelPhysicalDTO.getModelRelationDtoList()!=null){
       List<ModelPhysicalRelation> relationLists = ModelPhysicalRelationMapper.INSTANCE.use(modelPhysicalDTO.getModelRelationDtoList());
       List<ModelPhysicalRelation> relationList = relationLists.stream()
@@ -187,6 +201,10 @@ public class PhysicalServiceImpl implements PhysicalService {
       modelPhysicalRelationRepository.saveAll(relationList);
     }
     //4生成sql并存入数据库
+    ModelSql modelSql = modelSqlRepository.findByTableIdAndType(modelPhysicalTable.getId(), ModelType.PHYSICAL_TABLE);
+    if (Objects.nonNull(modelSql)){
+      modelSqlRepository.delete(modelSql);
+    }
     sqls = createSql(modelPhysicalTable, modelPhysicalColumnList,modelPhysicalTable1.getId());
     return sqls;
   }
@@ -687,6 +705,19 @@ public class PhysicalServiceImpl implements PhysicalService {
   }
 
   /**
+   *获取基本信息，数据连接类型、数据源名称
+   * @return
+   */
+  @Override
+  public ModelDataSourceinfoVO getDataSourceinfo() {
+    ModelDataSourceinfoVO modelDataSourceinfoVO = ModelDataSourceinfoVO.builder()
+        .dataConnection(ModelStatus.DATACONNECTION)
+        .dataSourceName(ModelStatus.DATASOURCENAME).build();
+    System.out.println(modelDataSourceinfoVO);
+    return modelDataSourceinfoVO;
+  }
+
+  /**
    * 处理逆向表
    * @param tableName
    * @param modelReverseBaseDTO
@@ -703,15 +734,23 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (CollectionUtils.isNotEmpty(modelPhysicalTableList)){
       if (modelReverseBaseDTO.getReplace().equals(ModelStatus.REPLACE)){
         ModelPhysicalTable updateModelPhysicalTable = getUpdateModelphyTable(modelPhysicalTableList,modelReverseBaseDTO);
-        updateModelPhysicalTable.setTableName(tableName);
         ModelPhysicalDTO updateModelPhysicalDTO = getUpdateModelPhysicalDTO(tableName,updateModelPhysicalTable,modelReverseBaseDTO);
+        //赋值入仓类型、数据源名称、表名称、数据库名称设置为空
+        updateModelPhysicalTable.setDataConnection(ModelStatus.DATACONNECTION);
+        updateModelPhysicalTable.setDataSourceName(ModelStatus.DATASOURCENAME);
+        updateModelPhysicalTable.setTableName(tableName);
+        updateModelPhysicalTable.setDataBaseName(null);
         //调用修改方法修改建模信息
         dataUpdateModelPhysical(updateModelPhysicalDTO,updateModelPhysicalTable);
       }
     }else{
       ModelPhysicalTable createModelPhysicalTable = getCreateModelphyTable(modelReverseBaseDTO);
-      createModelPhysicalTable.setTableName(tableName);
       ModelPhysicalDTO createModelPhysicalDTO = getcreateModelPhysicalDTO(tableName,modelReverseBaseDTO);
+      //赋值入仓类型、数据源名称、表名称、数据库名称设置为空
+      createModelPhysicalTable.setDataConnection(ModelStatus.DATACONNECTION);
+      createModelPhysicalTable.setDataSourceName(ModelStatus.DATASOURCENAME);
+      createModelPhysicalTable.setTableName(tableName);
+      createModelPhysicalTable.setDataBaseName(null);
       //调用新增方法新增建模信息
       dataModelPhysical(createModelPhysicalDTO,createModelPhysicalTable);
     }
@@ -1068,7 +1107,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (!Objects.isNull(queryModelPhysicalDTO.getModelId())) {
       booleanBuilder.and(qModelPhysicalTable.modelId.eq(queryModelPhysicalDTO.getModelId()));
     }
-    if (!Objects.isNull(queryModelPhysicalDTO.getThemeIdList())){
+    if (CollectionUtils.isNotEmpty(queryModelPhysicalDTO.getThemeIdList()) && !queryModelPhysicalDTO.getThemeIdList().get(ModelStatus.FIRSTDIR).equals(ModelStatus.DIRNAMEID)){
       booleanBuilder.and(qModelPhysicalTable.themeId.in(queryModelPhysicalDTO.getThemeIdList()));
     }
   }
