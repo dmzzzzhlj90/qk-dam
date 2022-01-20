@@ -1,5 +1,6 @@
 package com.qk.dm.metadata.service.impl;
 
+import com.google.common.collect.Sets;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.config.AtlasConfig;
@@ -15,12 +16,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 import lombok.Data;
 import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
+import org.apache.atlas.model.audit.EntityAuditEventV2;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
+import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -410,5 +414,48 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
   }
   public String getColumnDataType(Object sourceValue,Object defaultValue){
     return transformation(Objects.isNull(sourceValue)? defaultValue:sourceValue);
+  }
+  @Override
+  public AtlasEntity getDetailByQName(String qualifiedName, String typename) {
+    Map<String, String> uniqAttributes = new HashMap<>();
+    uniqAttributes.put("qualifiedName", qualifiedName);
+    try {
+      AtlasEntity.AtlasEntityWithExtInfo entityHeaderByAttribute =
+              atlasClientV2.getEntityByAttribute(typename, uniqAttributes, true, true);
+      // todo 查询最上级的DB  String qfd = qualifiedName.split("\\.")[0]+qualifiedName.split("@")[1];
+      MtdLabelsAtlasVO mtdLabelsAtlasVO =
+              mtdLabelsAtlasService.getByGuid(entityHeaderByAttribute.getEntity().getGuid());
+      AtlasEntity entity = entityHeaderByAttribute.getEntity();
+      if (mtdLabelsAtlasVO != null) {
+        entity.setLabels(Sets.newHashSet(mtdLabelsAtlasVO.getLabels().split(",")));
+      }
+      return entity;
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+  @Override
+  public List<EntityAuditEventV2> getAuditByGuid(String guid, String startKey) {
+    try {
+      List<EntityAuditEventV2> tmp = Lists.newArrayList();
+      List<EntityAuditEventV2> auditEvents1 =
+              atlasClientV2.getAuditEvents(
+                      guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_CREATE, (short) 1);
+      List<EntityAuditEventV2> auditEvents2 =
+              atlasClientV2.getAuditEvents(
+                      guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_UPDATE, (short) 10);
+      List<EntityAuditEventV2> auditEvents3 =
+              atlasClientV2.getAuditEvents(
+                      guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_DELETE, (short) 10);
+      tmp.addAll(auditEvents1);
+      tmp.addAll(auditEvents2);
+      tmp.addAll(auditEvents3);
+      return tmp;
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+    return List.of();
   }
 }
