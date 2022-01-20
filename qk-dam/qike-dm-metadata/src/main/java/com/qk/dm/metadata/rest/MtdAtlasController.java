@@ -10,6 +10,8 @@ import com.qk.dm.metadata.service.AtlasMetaDataService;
 import com.qk.dm.metadata.vo.*;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.atlas.model.instance.AtlasEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,6 +74,8 @@ public class MtdAtlasController {
   }
 
 
+
+
   /**
    * 根据guid获取数据库的元数据信息
    *
@@ -132,5 +136,21 @@ public class MtdAtlasController {
   public DefaultCommonResult deleteEntitiesByGuids(@PathVariable("guids") String guids) {
     atlasMetaDataService.deleteEntitiesByGuids(guids);
     return DefaultCommonResult.success(ResultCodeEnum.OK, null);
+  }
+  /**
+   * 根据guid获取元数据技术数据详情
+   *
+   * @param qualifiedName 元数据
+   * @param typename 类型名称
+   * @return DefaultCommonResult<MtdAtlasDbDetailVO>
+   */
+  @GetMapping("/detail/qname/{qualifiedName}/{typename}")
+//  @Auth(bizType = BizResource.MTD_ENTITY, actionType = RestActionType.DETAIL)
+  public DefaultCommonResult<AtlasEntity> getDetailByQName(
+          @PathVariable("qualifiedName") String qualifiedName,
+          @PathVariable("typename") String typename) {
+    // todo 元数据详情获取接口--需要优化这个部分
+    AtlasEntity detailByQName = atlasMetaDataService.getDetailByQName(qualifiedName, typename);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, detailByQName);
   }
 }
