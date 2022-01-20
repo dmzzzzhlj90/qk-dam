@@ -21,11 +21,9 @@ public class DateUtil {
     /**
      * string 转 Date format  "yyyy-MM-dd HH:mm:ss"
      *
-     * @param format
-     * @param strDate
      * @return
      */
-    public static Date parseDate(String format, String strDate) {
+    public static Date parseDate(String strDate,String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         try {
             return sdf.parse(strDate);
