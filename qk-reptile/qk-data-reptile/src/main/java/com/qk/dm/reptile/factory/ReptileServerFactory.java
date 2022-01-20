@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 public class ReptileServerFactory {
     private static final Logger LOG = LoggerFactory.getLogger(ReptileServerFactory.class);
 
-    private static final Integer CONN_TIMEOUT = 5000;
-    private static final Integer READ_TIMEOUT = 5000;
+    private static final Integer CONN_TIMEOUT = 10000;
+    private static final Integer READ_TIMEOUT = 10000;
     private static final String PROJECT = "project";
     private static final String SPIDER = "spider";
     private static final String ORG_VALUE = "arg_value";
