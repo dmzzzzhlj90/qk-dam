@@ -63,7 +63,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     public static final int DECIMAL_PLACE = 6;
     public static final String DECIMAL_POINT = ".";
     public static final String SLASH = "/";
-    public static final String UNDEFINED = "undefined";
+    public static final String UNDEFINED = "";
 
     private final QDqcSchedulerResult qDqcSchedulerResult = QDqcSchedulerResult.dqcSchedulerResult;
     private final QDqcSchedulerBasicInfo qDqcSchedulerBasicInfo = QDqcSchedulerBasicInfo.dqcSchedulerBasicInfo;
