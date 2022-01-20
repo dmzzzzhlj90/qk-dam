@@ -4,14 +4,8 @@ plugins {
 version "${commonLibVersion}"
 group "com.qk.dam.redis"
 dependencies {
-    compile 'org.springframework.data:spring-data-redis'
-    implementation 'io.lettuce:lettuce-core'
-    implementation group: 'org.apache.commons', name: 'commons-pool2'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
-    implementation "org.springframework.boot:spring-boot-autoconfigure"
-    implementation "org.springframework.cloud:spring-cloud-context"
-
-    compile group: 'com.github.ben-manes.caffeine', name: 'caffeine'
+    implementation project(":qk-data-redis")
+    implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine'
     implementation group: 'org.springframework', name: 'spring-context-support'
 }
 

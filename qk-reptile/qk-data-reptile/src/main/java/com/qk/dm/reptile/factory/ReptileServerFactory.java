@@ -10,10 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -25,8 +22,8 @@ import java.util.stream.Collectors;
 public class ReptileServerFactory {
     private static final Logger LOG = LoggerFactory.getLogger(ReptileServerFactory.class);
 
-    private static final Integer CONN_TIMEOUT = 5000;
-    private static final Integer READ_TIMEOUT = 5000;
+    private static final Integer CONN_TIMEOUT = 10000;
+    private static final Integer READ_TIMEOUT = 10000;
     private static final String PROJECT = "project";
     private static final String SPIDER = "spider";
     private static final String ORG_VALUE = "arg_value";
@@ -71,7 +68,7 @@ public class ReptileServerFactory {
      */
     private static Map<String,Object> assembleData(List<RptConfigInfoVO> rptConfigInfoList){
         if(CollectionUtils.isEmpty(rptConfigInfoList)){
-            return null;
+            return Collections.emptyMap();
         }
         List<RptConfigBuilder> rptConfigBuilderList = rptConfigInfoList.stream().map(ReptileServerFactory::rptConfigBuilder).collect(Collectors.toList());
         Map<String,Object> map = new HashMap<>();
@@ -106,11 +103,12 @@ public class ReptileServerFactory {
         if(CollectionUtils.isEmpty(selectorList)){
             return null;
         }
+
         return selectorList.stream().collect(Collectors.toMap(RptSelectorColumnInfoVO::getColumnCode, selector-> RptSelectorBuilder.builder()
                 .method(selector.getSelector())
                 .val(Objects.isNull(selector.getSelectorVal())?EMPTY:selector.getSelectorVal())
                 .num(selector.getElementType())
-                .build()));
+                .build(),(k1,k2) ->k1));
     }
 
 }

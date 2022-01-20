@@ -11,6 +11,7 @@ import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -99,11 +100,10 @@ public class RuleMeterAspect {
                             BigDecimal b = new BigDecimal(v.toString());
                             String metricName = metricName("result", "info");
                             Tags tags = Tags.of(
-                                    TITLE, dqcSchedulerResultTitleVO.getTitle()+":"+targetObj.toString(),
+                                    TITLE, dqcSchedulerResultTitleVO.getTitle()+(StringUtils.isNotEmpty(targetObj.toString())?"":targetObj.toString()),
                                     DATAINDEX, dqcSchedulerResultTitleVO.getDataIndex(),
                                     TARGETOBJ, targetObj.toString(),
-                                    JOBID, dqcSchedulerRules.getJobId(),
-                                    RULEID, dqcSchedulerRules.getRuleId()
+                                    RULEID, String.valueOf(dqcSchedulerRules.getRuleTempId())
                                     );
                             String cacheKey = tags.toString();
                             cache.put(cacheKey,b);

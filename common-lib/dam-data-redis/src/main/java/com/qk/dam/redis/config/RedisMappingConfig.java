@@ -8,6 +8,10 @@ import org.springframework.data.redis.core.convert.MappingConfiguration;
 import org.springframework.data.redis.core.index.IndexConfiguration;
 import org.springframework.data.redis.core.mapping.RedisMappingContext;
 
+/**
+ * redis 映射上下文配置
+ * @author zhudaoming
+ */
 @Configuration
 @Order(-1)
 public class RedisMappingConfig {
