@@ -102,7 +102,7 @@ public class RuleMeterAspect {
                             Tags tags = Tags.of(
                                     TITLE, dqcSchedulerResultTitleVO.getTitle()+(StringUtils.isNotEmpty(targetObj.toString())?"":targetObj.toString()),
                                     DATAINDEX, dqcSchedulerResultTitleVO.getDataIndex(),
-                                    TARGETOBJ, dqcSchedulerRules.toString(),
+                                    TARGETOBJ, targetObj.toString(),
                                     RULEID, String.valueOf(dqcSchedulerRules.getRuleTempId())
                                     );
                             String cacheKey = tags.toString();

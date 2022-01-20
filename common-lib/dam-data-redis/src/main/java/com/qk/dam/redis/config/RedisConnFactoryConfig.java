@@ -15,6 +15,11 @@ import org.springframework.data.redis.connection.lettuce.LettuceClientConfigurat
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 
+/**
+ * 配置连接redis的连接工厂配置
+ *
+ * @author zhudaoming
+ */
 @Configuration
 @Order(-1)
 class RedisConnFactoryConfig {

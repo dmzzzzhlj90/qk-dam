@@ -18,15 +18,26 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
+/**
+ * redis template配置
+ * @author zhudaoming
+ */
 @Configuration
 @Order(-1)
 public class RedisTemplateConfig {
+  public static final String PREFIX_CACHE_NAME ="dm";
+  public static final String COMPUTE_PREFIX_WITH ="v";
   private final RedisConnectionFactory redisConnectionFactory;
 
   public RedisTemplateConfig(RedisConnectionFactory redisConnectionFactory) {
     this.redisConnectionFactory = redisConnectionFactory;
   }
 
+  /**
+   * 默认的cacheManager
+   * @param connectionFactory 连接工厂
+   * @return RedisCacheManager
+   */
   @Bean
   public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
     RedisCacheConfiguration redisCacheConfiguration =
@@ -35,9 +46,9 @@ public class RedisTemplateConfig {
             .serializeKeysWith(fromSerializer(RedisSerializer.string()))
             .serializeValuesWith(fromSerializer(valueSerializer()))
             // 静态key前缀
-            .prefixCacheNameWith("dm")
+            .prefixCacheNameWith(PREFIX_CACHE_NAME)
             // 计算key前缀
-            .computePrefixWith(cacheName -> "dm-middle" + cacheName)
+            .computePrefixWith(cacheName -> COMPUTE_PREFIX_WITH +":"+ cacheName)
             .disableCachingNullValues();
 
     return RedisCacheManager.builder(connectionFactory)
@@ -67,6 +78,11 @@ public class RedisTemplateConfig {
     return redisTemplate;
   }
 
+  /**
+   * 配置jackjson 序列化
+   * @param <V> 对象值
+   * @return 对象值
+   */
   @Bean
   public <V> RedisSerializer<V> valueSerializer() {
     // 使用Jackson2JsonRedisSerialize 替换默认序列化(默认采用的是JDK序列化)
