@@ -96,7 +96,7 @@ public class ModelPhysicalTableVO implements Serializable {
     /**
      * 所属主题id
      */
-    private Long themeId;
+    private String themeId;
     /**
      * 所属层级id
      */

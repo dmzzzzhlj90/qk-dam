@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "4d1b448f-9507-44f6-b862-fb5aa83787d3",
+    "_postman_id": "75341873-d708-47ef-b574-ba013a13f9c0",
     "name": "dm-datamodel"
   },
   "item": [
@@ -14,7 +14,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 4,\n    \"tableName\": \"albert.kassulke\",\n    \"theme\": \"oyspgd\",\n    \"dataConnection\": \"bo894t\",\n    \"dataBaseName\": \"albert.kassulke\",\n    \"dataSourceName\": \"albert.kassulke\",\n    \"dataSourceId\": 549,\n    \"description\": \"0k9wba\",\n    \"status\": 192,\n    \"gmtCreate\": \"2022-01-11 20:44:56\",\n    \"gmtModified\": \"2022-01-11 20:44:56\",\n    \"tableType\": \"fxqgs0\",\n    \"responsibleBy\": \"4d9g6w\",\n    \"dataFormat\": \"q23m0b\",\n    \"themeId\": 190,\n    \"modelId\": 142,\n    \"hftsRoute\": \"8bt9np\",\n    \"syncStatus\": 287\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 413,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"xp0ft5\",\n      \"standardsId\": 451,\n      \"standardsName\": \"albert.kassulke\",\n      \"standardsCode\": \"37307\",\n      \"itsPrimaryKey\": \"mkhs73\",\n      \"itsPartition\": \"uuy5ek\",\n      \"itsNull\": \"7q2zt9\",\n      \"description\": \"8ducc5\",\n      \"gmtCreate\": \"2022-01-11 20:44:56\",\n      \"gmtModified\": \"2022-01-11 20:44:56\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 341,\n      \"tableId\": 603,\n      \"columnName\": \"albert.kassulke\",\n      \"childTableName\": \"albert.kassulke\",\n      \"childTableColumn\": \"j5470t\",\n      \"childConnectionWay\": \"3n7dz1\",\n      \"fatherTableName\": \"albert.kassulke\",\n      \"fatherTableColumn\": \"bzhbsr\",\n      \"fatherConnectionWay\": \"2ousfv\",\n      \"gmtCreate\": \"2022-01-11 20:44:56\",\n      \"gmtModified\": \"2022-01-11 20:44:56\"\n    }\n  ]\n}",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 482,\n    \"tableName\": \"drew.bahringer\",\n    \"theme\": \"z2wvpa\",\n    \"dataConnection\": \"fc97pm\",\n    \"dataBaseName\": \"drew.bahringer\",\n    \"dataSourceName\": \"drew.bahringer\",\n    \"dataSourceId\": 380,\n    \"description\": \"6xdo3e\",\n    \"status\": 567,\n    \"gmtCreate\": \"2022-01-20 10:11:00\",\n    \"gmtModified\": \"2022-01-20 10:11:00\",\n    \"tableType\": \"0y5sou\",\n    \"responsibleBy\": \"j8u420\",\n    \"dataFormat\": \"r1nfkd\",\n    \"themeId\": \"44\",\n    \"modelId\": 148,\n    \"hftsRoute\": \"eho57n\",\n    \"syncStatus\": 285\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 200,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"i0w9d0\",\n      \"standardsId\": 214,\n      \"standardsName\": \"drew.bahringer\",\n      \"standardsCode\": \"91061\",\n      \"itsPrimaryKey\": \"j439x2\",\n      \"itsPartition\": \"68oowp\",\n      \"itsNull\": \"ervive\",\n      \"description\": \"3mf2vz\",\n      \"gmtCreate\": \"2022-01-20 10:11:00\",\n      \"gmtModified\": \"2022-01-20 10:11:00\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 625,\n      \"tableId\": 643,\n      \"columnName\": \"drew.bahringer\",\n      \"childTableName\": \"drew.bahringer\",\n      \"childTableColumn\": \"uk26hg\",\n      \"childConnectionWay\": \"lbwcjz\",\n      \"fatherTableName\": \"drew.bahringer\",\n      \"fatherTableColumn\": \"fgxfoi\",\n      \"fatherConnectionWay\": \"27rkfa\",\n      \"gmtCreate\": \"2022-01-20 10:11:00\",\n      \"gmtModified\": \"2022-01-20 10:11:00\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -45,7 +45,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  640,\n  62\n]",
+              "raw": "[\n  554,\n  312\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -76,7 +76,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 829,\n    \"tableName\": \"albert.kassulke\",\n    \"theme\": \"39c16q\",\n    \"dataConnection\": \"ty7829\",\n    \"dataBaseName\": \"albert.kassulke\",\n    \"dataSourceName\": \"albert.kassulke\",\n    \"dataSourceId\": 670,\n    \"description\": \"qsfcm5\",\n    \"status\": 249,\n    \"gmtCreate\": \"2022-01-11 20:44:56\",\n    \"gmtModified\": \"2022-01-11 20:44:56\",\n    \"tableType\": \"e7qo7o\",\n    \"responsibleBy\": \"w1br39\",\n    \"dataFormat\": \"97je5r\",\n    \"themeId\": 858,\n    \"modelId\": 69,\n    \"hftsRoute\": \"gcd7nf\",\n    \"syncStatus\": 151\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 792,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"dobzfv\",\n      \"standardsId\": 83,\n      \"standardsName\": \"albert.kassulke\",\n      \"standardsCode\": \"37307\",\n      \"itsPrimaryKey\": \"gpcwy3\",\n      \"itsPartition\": \"ankd2t\",\n      \"itsNull\": \"f9nov0\",\n      \"description\": \"ah9km1\",\n      \"gmtCreate\": \"2022-01-11 20:44:56\",\n      \"gmtModified\": \"2022-01-11 20:44:56\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 884,\n      \"tableId\": 243,\n      \"columnName\": \"albert.kassulke\",\n      \"childTableName\": \"albert.kassulke\",\n      \"childTableColumn\": \"qbcmzo\",\n      \"childConnectionWay\": \"93dckq\",\n      \"fatherTableName\": \"albert.kassulke\",\n      \"fatherTableColumn\": \"j8xbf3\",\n      \"fatherConnectionWay\": \"5c0j7q\",\n      \"gmtCreate\": \"2022-01-11 20:44:56\",\n      \"gmtModified\": \"2022-01-11 20:44:56\"\n    }\n  ]\n}",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 441,\n    \"tableName\": \"drew.bahringer\",\n    \"theme\": \"p7u56t\",\n    \"dataConnection\": \"xrxc5r\",\n    \"dataBaseName\": \"drew.bahringer\",\n    \"dataSourceName\": \"drew.bahringer\",\n    \"dataSourceId\": 929,\n    \"description\": \"a8tjlp\",\n    \"status\": 619,\n    \"gmtCreate\": \"2022-01-20 10:11:00\",\n    \"gmtModified\": \"2022-01-20 10:11:00\",\n    \"tableType\": \"9l869g\",\n    \"responsibleBy\": \"k0l8vo\",\n    \"dataFormat\": \"gpn7n4\",\n    \"themeId\": \"44\",\n    \"modelId\": 454,\n    \"hftsRoute\": \"5eg95o\",\n    \"syncStatus\": 174\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 631,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"fhdv90\",\n      \"standardsId\": 404,\n      \"standardsName\": \"drew.bahringer\",\n      \"standardsCode\": \"91061\",\n      \"itsPrimaryKey\": \"sipy6d\",\n      \"itsPartition\": \"97tn1l\",\n      \"itsNull\": \"ciudla\",\n      \"description\": \"6ces40\",\n      \"gmtCreate\": \"2022-01-20 10:11:00\",\n      \"gmtModified\": \"2022-01-20 10:11:00\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 815,\n      \"tableId\": 199,\n      \"columnName\": \"drew.bahringer\",\n      \"childTableName\": \"drew.bahringer\",\n      \"childTableColumn\": \"2nt8sj\",\n      \"childConnectionWay\": \"btuizf\",\n      \"fatherTableName\": \"drew.bahringer\",\n      \"fatherTableColumn\": \"e6bxo1\",\n      \"fatherConnectionWay\": \"u2nr7v\",\n      \"gmtCreate\": \"2022-01-20 10:11:00\",\n      \"gmtModified\": \"2022-01-20 10:11:00\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -107,7 +107,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xtq8y7\"\n  },\n  \"themeId\": 4,\n  \"modelId\": 533\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"nrbf7o\"\n  },\n  \"themeIdList\": [\n    \"jmf4th\"\n  ],\n  \"modelId\": 359\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -141,7 +141,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/modelphysical/310",
+              "raw": "http://::server/modelphysical/45",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -154,7 +154,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "324",
+                  "value": "69",
                   "description": "No comments found."
                 }
               ]
@@ -170,7 +170,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"gm7lfi\"\n  },\n  \"themeId\": 572,\n  \"modelId\": 287\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"mfpglt\"\n  },\n  \"themeIdList\": [\n    \"11gjlw\"\n  ],\n  \"modelId\": 236\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -230,7 +230,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/modelphysical/query/sql/517",
+              "raw": "http://::server/modelphysical/query/sql/999",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -245,7 +245,7 @@
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "772",
+                  "value": "587",
                   "description": "No comments found."
                 }
               ]
@@ -261,7 +261,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  349,\n  918\n]",
+              "raw": "[\n  467,\n  373\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -292,7 +292,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  445,\n  14\n]",
+              "raw": "[\n  430,\n  518\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -323,7 +323,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"theme\": \"wvsptm\",\n  \"dataConnection\": \"daml1g\",\n  \"dataBaseName\": \"albert.kassulke\",\n  \"dataSourceName\": \"albert.kassulke\",\n  \"dataSourceId\": 452,\n  \"themeId\": 876,\n  \"modelId\": 248,\n  \"replace\": \"c05d4w\",\n  \"tableList\": [\n    \"a7d4jp\"\n  ],\n  \"allChoice\": \"sqsa6f\"\n}",
+              "raw": "{\n  \"theme\": \"flypsg\",\n  \"dataConnection\": \"htfd5t\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 960,\n  \"themeId\": 168,\n  \"modelId\": 89,\n  \"replace\": \"rmydxp\",\n  \"tableList\": [\n    \"i8qiq6\"\n  ],\n  \"allChoice\": \"vkjb8z\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -385,12 +385,12 @@
                   "key": "tableName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "albert.kassulke"
+                  "value": "drew.bahringer"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/modelphysical/column?tableName\u003dalbert.kassulke",
+              "raw": "http://::server/modelphysical/column?tableName\u003ddrew.bahringer",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -402,7 +402,7 @@
               "query": [
                 {
                   "key": "tableName",
-                  "value": "albert.kassulke",
+                  "value": "drew.bahringer",
                   "description": "No comments found."
                 }
               ],
@@ -450,7 +450,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"s2ojrl\"\n  },\n  \"id\": 293,\n  \"themeId\": 392,\n  \"themeName\": \"albert.kassulke\",\n  \"factName\": \"albert.kassulke\",\n  \"description\": \"ke4fy4\",\n  \"status\": 198,\n  \"connectionType\": 367,\n  \"dataConnection\": \"xlike8\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 186,\n      \"factId\": 121,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"lfp6qz\",\n      \"standardsId\": 299,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": 878,\n      \"itsPartition\": 122,\n      \"itsNull\": 946,\n      \"description\": \"5a7a5k\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"flwb7j\"\n  },\n  \"id\": 558,\n  \"themeId\": 569,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"dugimg\",\n  \"status\": 65,\n  \"connectionType\": 555,\n  \"dataConnection\": \"d9z6j7\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 687,\n      \"factId\": 79,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"aoknql\",\n      \"standardsId\": 430,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 708,\n      \"itsPartition\": 532,\n      \"itsNull\": 251,\n      \"description\": \"2pwcvw\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -481,7 +481,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"rt0mhv\"\n  },\n  \"id\": 800,\n  \"themeId\": 20,\n  \"themeName\": \"albert.kassulke\",\n  \"factName\": \"albert.kassulke\",\n  \"description\": \"bmocvs\",\n  \"status\": 724,\n  \"connectionType\": 846,\n  \"dataConnection\": \"ztdvem\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 872,\n      \"factId\": 954,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"ro50b7\",\n      \"standardsId\": 27,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": 993,\n      \"itsPartition\": 25,\n      \"itsNull\": 644,\n      \"description\": \"7jz9np\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"f1o20y\"\n  },\n  \"id\": 94,\n  \"themeId\": 386,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"d2qyqr\",\n  \"status\": 377,\n  \"connectionType\": 189,\n  \"dataConnection\": \"p36ijh\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 747,\n      \"factId\": 978,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"k0039i\",\n      \"standardsId\": 394,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 893,\n      \"itsPartition\": 978,\n      \"itsNull\": 544,\n      \"description\": \"wpu7n0\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -489,7 +489,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/fact/980",
+              "raw": "http://::server/fact/504",
               "protocol": "http",
               "path": [
                 "fact",
@@ -502,7 +502,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "935",
+                  "value": "466",
                   "description": "事实表id"
                 }
               ]
@@ -521,7 +521,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/fact/327",
+              "raw": "http://::server/fact/907",
               "protocol": "http",
               "path": [
                 "fact",
@@ -534,7 +534,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "67",
+                  "value": "58",
                   "description": "事实表id"
                 }
               ]
@@ -550,7 +550,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"vcnlck\"\n  },\n  \"id\": 599,\n  \"themeId\": 249,\n  \"themeName\": \"albert.kassulke\",\n  \"factName\": \"albert.kassulke\",\n  \"description\": \"kw4z7i\",\n  \"status\": 958,\n  \"connectionType\": 15,\n  \"dataConnection\": \"jff9g1\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 649,\n      \"factId\": 603,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"9c4fnh\",\n      \"standardsId\": 346,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": 116,\n      \"itsPartition\": 337,\n      \"itsNull\": 763,\n      \"description\": \"t4ug58\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"nhxmmq\"\n  },\n  \"id\": 414,\n  \"themeId\": 234,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"k60rpa\",\n  \"status\": 731,\n  \"connectionType\": 565,\n  \"dataConnection\": \"4uk91y\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 879,\n      \"factId\": 62,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"ehsncm\",\n      \"standardsId\": 999,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 257,\n      \"itsPartition\": 182,\n      \"itsNull\": 5,\n      \"description\": \"nv8rls\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -584,7 +584,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/fact/publish/w6nu5u",
+              "raw": "http://::server/fact/publish/40abrk",
               "protocol": "http",
               "path": [
                 "fact",
@@ -598,7 +598,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "858tje",
+                  "value": "uqhmvq",
                   "description": "事实表id，多个id使用英文逗号分割"
                 }
               ]
@@ -617,7 +617,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/fact/offline/2jqna9",
+              "raw": "http://::server/fact/offline/37tog4",
               "protocol": "http",
               "path": [
                 "fact",
@@ -631,7 +631,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "s3ux91",
+                  "value": "p5o5pw",
                   "description": "事实表id，多个id使用英文逗号分割"
                 }
               ]
@@ -650,7 +650,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/fact/preview/sql/555",
+              "raw": "http://::server/fact/preview/sql/50",
               "protocol": "http",
               "path": [
                 "fact",
@@ -665,7 +665,7 @@
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "244",
+                  "value": "274",
                   "description": "事实表id"
                 }
               ]
@@ -686,7 +686,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 759,\n  \"tableName\": \"albert.kassulke\",\n  \"theme\": \"soulzz\",\n  \"dataConnection\": \"ko8qv4\",\n  \"dataBaseName\": \"albert.kassulke\",\n  \"dataSourceName\": \"albert.kassulke\",\n  \"dataSourceId\": 635,\n  \"description\": \"lz10s8\",\n  \"status\": 789,\n  \"gmtCreate\": \"2022-01-11 20:44:56\",\n  \"gmtModified\": \"2022-01-11 20:44:56\",\n  \"tableType\": \"m07zv5\",\n  \"responsibleBy\": \"ef077m\",\n  \"dataFormat\": \"x59y9n\",\n  \"themeId\": 639,\n  \"modelId\": 340,\n  \"hftsRoute\": \"jwd8re\",\n  \"syncStatus\": 541\n}",
+              "raw": "{\n  \"id\": 369,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"4r7cfr\",\n  \"dataConnection\": \"fd6feg\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 818,\n  \"description\": \"9xo513\",\n  \"status\": 601,\n  \"gmtCreate\": \"2022-01-20 10:11:00\",\n  \"gmtModified\": \"2022-01-20 10:11:00\",\n  \"tableType\": \"m4v9zf\",\n  \"responsibleBy\": \"csl293\",\n  \"dataFormat\": \"25413p\",\n  \"themeId\": \"44\",\n  \"modelId\": 215,\n  \"hftsRoute\": \"vtiwb0\",\n  \"syncStatus\": 982\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -717,7 +717,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 169,\n  \"tableName\": \"albert.kassulke\",\n  \"theme\": \"53ut7z\",\n  \"dataConnection\": \"1zwdlx\",\n  \"dataBaseName\": \"albert.kassulke\",\n  \"dataSourceName\": \"albert.kassulke\",\n  \"dataSourceId\": 27,\n  \"description\": \"aatosk\",\n  \"status\": 750,\n  \"gmtCreate\": \"2022-01-11 20:44:56\",\n  \"gmtModified\": \"2022-01-11 20:44:56\",\n  \"tableType\": \"dcpdzs\",\n  \"responsibleBy\": \"2xq3c1\",\n  \"dataFormat\": \"huev4o\",\n  \"themeId\": 621,\n  \"modelId\": 254,\n  \"hftsRoute\": \"aoqn9j\",\n  \"syncStatus\": 329\n}",
+              "raw": "{\n  \"id\": 480,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"n750rf\",\n  \"dataConnection\": \"zm4pu4\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 552,\n  \"description\": \"55657r\",\n  \"status\": 591,\n  \"gmtCreate\": \"2022-01-20 10:11:00\",\n  \"gmtModified\": \"2022-01-20 10:11:00\",\n  \"tableType\": \"5wh099\",\n  \"responsibleBy\": \"nmw6vh\",\n  \"dataFormat\": \"7fpxhr\",\n  \"themeId\": \"44\",\n  \"modelId\": 216,\n  \"hftsRoute\": \"40m6y6\",\n  \"syncStatus\": 83\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -725,7 +725,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/physical/233",
+              "raw": "http://::server/physical/586",
               "protocol": "http",
               "path": [
                 "physical",
@@ -738,7 +738,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "350",
+                  "value": "680",
                   "description": "No comments found."
                 }
               ]
@@ -757,7 +757,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/physical/0fznfv",
+              "raw": "http://::server/physical/x7pnr2",
               "protocol": "http",
               "path": [
                 "physical",
@@ -770,7 +770,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "5u589n",
+                  "value": "6ty8cb",
                   "description": "No comments found."
                 }
               ]
@@ -789,7 +789,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/physical/737",
+              "raw": "http://::server/physical/840",
               "protocol": "http",
               "path": [
                 "physical",
@@ -802,7 +802,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "658",
+                  "value": "34",
                   "description": "No comments found."
                 }
               ]
@@ -818,7 +818,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 248,\n  \"tableName\": \"albert.kassulke\",\n  \"theme\": \"o8q3dk\",\n  \"dataConnection\": \"vgm5oh\",\n  \"dataBaseName\": \"albert.kassulke\",\n  \"dataSourceName\": \"albert.kassulke\",\n  \"dataSourceId\": 316,\n  \"description\": \"pemuzu\",\n  \"status\": 778,\n  \"gmtCreate\": \"2022-01-11 20:44:56\",\n  \"gmtModified\": \"2022-01-11 20:44:56\",\n  \"tableType\": \"gla3dc\",\n  \"responsibleBy\": \"fhini6\",\n  \"dataFormat\": \"obcnl0\",\n  \"themeId\": 753,\n  \"modelId\": 174,\n  \"hftsRoute\": \"3yuso7\",\n  \"syncStatus\": 962\n}",
+              "raw": "{\n  \"id\": 889,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"qa3m84\",\n  \"dataConnection\": \"s0lenc\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 60,\n  \"description\": \"t0fnr7\",\n  \"status\": 472,\n  \"gmtCreate\": \"2022-01-20 10:11:00\",\n  \"gmtModified\": \"2022-01-20 10:11:00\",\n  \"tableType\": \"1uut7k\",\n  \"responsibleBy\": \"ol3xeq\",\n  \"dataFormat\": \"qnkjdm\",\n  \"themeId\": \"44\",\n  \"modelId\": 501,\n  \"hftsRoute\": \"muyevs\",\n  \"syncStatus\": 690\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -849,12 +849,12 @@
       "name": "数据模型（物理模型）",
       "item": [
         {
-          "name": "Interface name is not set.",
+          "name": "新增—关系建模层级",
           "request": {
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelName\": \"albert.kassulke\",\n  \"layeredName\": \"albert.kassulke\",\n  \"description\": \"p4bvub\",\n  \"modelType\": 694\n}",
+              "raw": "{\n  \"modelName\": \"drew.bahringer\",\n  \"layeredName\": \"drew.bahringer\",\n  \"description\": \"mtbl4t\",\n  \"modelType\": 491\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -874,12 +874,13 @@
               "query": [],
               "variable": []
             },
-            "description": "",
+            "description": "新增—关系建模层级",
             "header": []
-          }
+          },
+          "description": "新增—关系建模层级"
         },
         {
-          "name": "Interface name is not set.",
+          "name": "获取-关系建模层级",
           "request": {
             "method": "GET",
             "body": {
@@ -898,9 +899,10 @@
               "query": [],
               "variable": []
             },
-            "description": "",
+            "description": "获取-关系建模层级",
             "header": []
-          }
+          },
+          "description": "获取-关系建模层级"
         }
       ]
     },
@@ -913,7 +915,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"km6xe6\"\n  },\n  \"id\": 793,\n  \"themeId\": 993,\n  \"themeName\": \"albert.kassulke\",\n  \"tableName\": \"albert.kassulke\",\n  \"dimId\": 544,\n  \"dimName\": \"albert.kassulke\",\n  \"dataConnection\": \"s1p97w\",\n  \"databaseName\": \"albert.kassulke\",\n  \"description\": \"8sv1ay\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 267,\n      \"summaryId\": 188,\n      \"indicatorsType\": 242,\n      \"indicatorsName\": \"albert.kassulke\",\n      \"indicatorsCode\": \"37307\",\n      \"dataType\": \"macgr4\",\n      \"itsNull\": \"842v0z\",\n      \"description\": \"v7hjt7\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"jm52cq\"\n  },\n  \"id\": 713,\n  \"themeId\": 801,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 881,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"dbhrwx\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"j5e0j0\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 40,\n      \"summaryId\": 480,\n      \"indicatorsType\": 41,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"opueo2\",\n      \"itsNull\": \"c8w3b2\",\n      \"description\": \"yuu6ok\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -944,7 +946,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ah94ah\"\n  },\n  \"id\": 586,\n  \"themeId\": 267,\n  \"themeName\": \"albert.kassulke\",\n  \"tableName\": \"albert.kassulke\",\n  \"dimId\": 858,\n  \"dimName\": \"albert.kassulke\",\n  \"dataConnection\": \"zppswr\",\n  \"databaseName\": \"albert.kassulke\",\n  \"description\": \"aujv4w\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 606,\n      \"summaryId\": 181,\n      \"indicatorsType\": 420,\n      \"indicatorsName\": \"albert.kassulke\",\n      \"indicatorsCode\": \"37307\",\n      \"dataType\": \"lrqbfb\",\n      \"itsNull\": \"0l26a3\",\n      \"description\": \"o37j2s\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ikkm3a\"\n  },\n  \"id\": 170,\n  \"themeId\": 499,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 593,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"wrqabk\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"rie1cq\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 216,\n      \"summaryId\": 147,\n      \"indicatorsType\": 627,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"db3e7k\",\n      \"itsNull\": \"rttgi8\",\n      \"description\": \"217y2u\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -952,7 +954,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/summary/20",
+              "raw": "http://::server/summary/928",
               "protocol": "http",
               "path": [
                 "summary",
@@ -965,7 +967,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "939",
+                  "value": "545",
                   "description": "汇总表id"
                 }
               ]
@@ -984,7 +986,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/summary/776",
+              "raw": "http://::server/summary/68",
               "protocol": "http",
               "path": [
                 "summary",
@@ -997,7 +999,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "544",
+                  "value": "893",
                   "description": "汇总表id"
                 }
               ]
@@ -1013,7 +1015,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"8vewre\"\n  },\n  \"id\": 697,\n  \"themeId\": 859,\n  \"themeName\": \"albert.kassulke\",\n  \"tableName\": \"albert.kassulke\",\n  \"dimId\": 53,\n  \"dimName\": \"albert.kassulke\",\n  \"dataConnection\": \"2rxap0\",\n  \"databaseName\": \"albert.kassulke\",\n  \"description\": \"4eh48r\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 790,\n      \"summaryId\": 18,\n      \"indicatorsType\": 840,\n      \"indicatorsName\": \"albert.kassulke\",\n      \"indicatorsCode\": \"37307\",\n      \"dataType\": \"pz1dcp\",\n      \"itsNull\": \"qsfkwu\",\n      \"description\": \"huuoz7\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ou3xmj\"\n  },\n  \"id\": 133,\n  \"themeId\": 866,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 931,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"12ehk1\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"7pjzhx\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 112,\n      \"summaryId\": 953,\n      \"indicatorsType\": 995,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"652p7z\",\n      \"itsNull\": \"oxr924\",\n      \"description\": \"kd6yoc\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1047,7 +1049,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/summary/publish/no771b",
+              "raw": "http://::server/summary/publish/nltunq",
               "protocol": "http",
               "path": [
                 "summary",
@@ -1061,7 +1063,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "vtzyma",
+                  "value": "mfamll",
                   "description": "汇总表id，多个id使用英文逗号分割"
                 }
               ]
@@ -1080,7 +1082,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/summary/offline/db7lf2",
+              "raw": "http://::server/summary/offline/gjo47k",
               "protocol": "http",
               "path": [
                 "summary",
@@ -1094,7 +1096,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "p8pyu1",
+                  "value": "wkzktf",
                   "description": "汇总表id，多个id使用英文逗号分割"
                 }
               ]
@@ -1113,7 +1115,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/summary/preview/sql/578",
+              "raw": "http://::server/summary/preview/sql/550",
               "protocol": "http",
               "path": [
                 "summary",
@@ -1128,7 +1130,7 @@
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "854",
+                  "value": "729",
                   "description": "汇总表id"
                 }
               ]
@@ -1149,7 +1151,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"eolep0\"\n  },\n  \"id\": 447,\n  \"themeId\": 789,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"8eicz9\",\n  \"description\": \"004i82\",\n  \"status\": 184,\n  \"connectionType\": \"75ajta\",\n  \"dataConnection\": \"upzllp\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 548,\n      \"dimId\": 234,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"ycyqe9\",\n      \"standardsId\": 564,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"xzr3am\",\n      \"itsPartition\": \"8b6tc1\",\n      \"itsNull\": \"d69tgo\",\n      \"description\": \"715cvf\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"g9mnby\"\n  },\n  \"id\": 293,\n  \"themeId\": 966,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"ji5919\",\n  \"description\": \"xn6o1q\",\n  \"status\": 745,\n  \"connectionType\": \"vjjd8y\",\n  \"dataConnection\": \"qq0vhi\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 401,\n      \"dimId\": 593,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"5moo1l\",\n      \"standardsId\": 821,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"xkdmcx\",\n      \"itsPartition\": \"9zbrpc\",\n      \"itsNull\": \"c722ip\",\n      \"description\": \"dkk7mk\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1180,7 +1182,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7mkk91\"\n  },\n  \"id\": 479,\n  \"themeId\": 271,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"9qcwa1\",\n  \"description\": \"mefaei\",\n  \"status\": 22,\n  \"connectionType\": \"o9q5nh\",\n  \"dataConnection\": \"arccth\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 356,\n      \"dimId\": 419,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"zgub7v\",\n      \"standardsId\": 112,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"p33jb6\",\n      \"itsPartition\": \"ft8y4e\",\n      \"itsNull\": \"llou56\",\n      \"description\": \"9vdygd\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"73bkhu\"\n  },\n  \"id\": 553,\n  \"themeId\": 904,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"8bjynd\",\n  \"description\": \"xf2b1a\",\n  \"status\": 515,\n  \"connectionType\": \"5e5ojp\",\n  \"dataConnection\": \"u15jj4\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 143,\n      \"dimId\": 659,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"yqh69l\",\n      \"standardsId\": 174,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"6ffwjf\",\n      \"itsPartition\": \"qqmn19\",\n      \"itsNull\": \"fai6lq\",\n      \"description\": \"c2hc3e\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1188,7 +1190,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dim/708",
+              "raw": "http://::server/dim/906",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1201,7 +1203,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "504",
+                  "value": "725",
                   "description": "维度id"
                 }
               ]
@@ -1220,7 +1222,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/192",
+              "raw": "http://::server/dim/518",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1233,7 +1235,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "230",
+                  "value": "220",
                   "description": "维度id"
                 }
               ]
@@ -1249,7 +1251,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"5uxwlv\"\n  },\n  \"id\": 369,\n  \"themeId\": 456,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"typjyb\",\n  \"description\": \"2nwlvm\",\n  \"status\": 8,\n  \"connectionType\": \"nap84z\",\n  \"dataConnection\": \"wylk58\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 21,\n      \"dimId\": 213,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"mcsjxa\",\n      \"standardsId\": 128,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"8trj4d\",\n      \"itsPartition\": \"opm93x\",\n      \"itsNull\": \"thmgqm\",\n      \"description\": \"4az4gv\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lv6xtr\"\n  },\n  \"id\": 762,\n  \"themeId\": 622,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"dw5gff\",\n  \"description\": \"r6qh4s\",\n  \"status\": 651,\n  \"connectionType\": \"1w7txo\",\n  \"dataConnection\": \"nssmqp\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 775,\n      \"dimId\": 499,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"n25760\",\n      \"standardsId\": 225,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"2ed99j\",\n      \"itsPartition\": \"ezqqcs\",\n      \"itsNull\": \"l7r5e1\",\n      \"description\": \"vise3o\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1283,7 +1285,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/publish/k8sqq9",
+              "raw": "http://::server/dim/publish/sq0zv7",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1297,7 +1299,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "oyxhpc",
+                  "value": "d5k9rk",
                   "description": "维度id,如果多个，使用英文逗号分割"
                 }
               ]
@@ -1316,7 +1318,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/offline/ge0u1z",
+              "raw": "http://::server/dim/offline/fsrstn",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1330,7 +1332,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "7zgfj5",
+                  "value": "ztm779",
                   "description": "维度id,如果多个，使用英文逗号分割"
                 }
               ]
@@ -1351,7 +1353,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1fmrhm\"\n  },\n  \"id\": 854,\n  \"themeId\": 72,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"nayxqc\",\n  \"description\": \"8db886\",\n  \"status\": 945,\n  \"connectionType\": \"z6yxiz\",\n  \"dataConnection\": \"okqxfk\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimId\": 201,\n  \"columnList\": [\n    {\n      \"id\": 879,\n      \"dimTableId\": 476,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"99f24y\",\n      \"standardsId\": 815,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"myafvs\",\n      \"itsPartition\": \"wbupmh\",\n      \"itsNull\": \"zwc8ne\",\n      \"description\": \"28pcov\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"tyy21j\"\n  },\n  \"id\": 12,\n  \"themeId\": 998,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"wx2x4c\",\n  \"description\": \"ocfxnj\",\n  \"status\": 501,\n  \"connectionType\": \"uosuuq\",\n  \"dataConnection\": \"16e9wm\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 3,\n  \"columnList\": [\n    {\n      \"id\": 603,\n      \"dimTableId\": 913,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"xxtwtf\",\n      \"standardsId\": 25,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"9to8qf\",\n      \"itsPartition\": \"n3osci\",\n      \"itsNull\": \"jaapjd\",\n      \"description\": \"5flbhd\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1383,7 +1385,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7ct23o\"\n  },\n  \"id\": 61,\n  \"themeId\": 145,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"zf5hdz\",\n  \"description\": \"oui7ps\",\n  \"status\": 573,\n  \"connectionType\": \"fccx9c\",\n  \"dataConnection\": \"zng1dd\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimId\": 911,\n  \"columnList\": [\n    {\n      \"id\": 288,\n      \"dimTableId\": 921,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"kkrwg9\",\n      \"standardsId\": 742,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"1vodrk\",\n      \"itsPartition\": \"a2us22\",\n      \"itsNull\": \"0ycbqq\",\n      \"description\": \"hcnjkv\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"p537wc\"\n  },\n  \"id\": 632,\n  \"themeId\": 819,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"g0ytwe\",\n  \"description\": \"arbh82\",\n  \"status\": 615,\n  \"connectionType\": \"l77w6d\",\n  \"dataConnection\": \"sbjoar\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 627,\n  \"columnList\": [\n    {\n      \"id\": 195,\n      \"dimTableId\": 35,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"7cz3eg\",\n      \"standardsId\": 40,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"ohs4l2\",\n      \"itsPartition\": \"saub6g\",\n      \"itsNull\": \"yo4efs\",\n      \"description\": \"tusgan\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1391,7 +1393,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dim/table/74",
+              "raw": "http://::server/dim/table/690",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1405,7 +1407,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "85",
+                  "value": "325",
                   "description": "维度表id"
                 }
               ]
@@ -1424,7 +1426,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/table/474",
+              "raw": "http://::server/dim/table/113",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1438,7 +1440,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "883",
+                  "value": "5",
                   "description": "维度表id"
                 }
               ]
@@ -1454,7 +1456,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"stn9sr\"\n  },\n  \"id\": 937,\n  \"themeId\": 389,\n  \"themeName\": \"albert.kassulke\",\n  \"dimName\": \"albert.kassulke\",\n  \"dimCode\": \"37307\",\n  \"dimType\": \"sh2je2\",\n  \"description\": \"pou79m\",\n  \"status\": 556,\n  \"connectionType\": \"agloy0\",\n  \"dataConnection\": \"2n2am6\",\n  \"databaseName\": \"albert.kassulke\",\n  \"modelDimId\": 702,\n  \"columnList\": [\n    {\n      \"id\": 473,\n      \"dimTableId\": 234,\n      \"columnName\": \"albert.kassulke\",\n      \"columnType\": \"90d6ax\",\n      \"standardsId\": 962,\n      \"standardsName\": \"albert.kassulke\",\n      \"itsPrimaryKey\": \"0944dd\",\n      \"itsPartition\": \"dk2xgl\",\n      \"itsNull\": \"1f1h34\",\n      \"description\": \"nki6ix\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"t80rsi\"\n  },\n  \"id\": 502,\n  \"themeId\": 854,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"os4eo6\",\n  \"description\": \"m2oflq\",\n  \"status\": 250,\n  \"connectionType\": \"zj228b\",\n  \"dataConnection\": \"x8azdd\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 818,\n  \"columnList\": [\n    {\n      \"id\": 814,\n      \"dimTableId\": 310,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"j9fsa0\",\n      \"standardsId\": 534,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"xy4q6b\",\n      \"itsPartition\": \"55feok\",\n      \"itsNull\": \"6vlv2p\",\n      \"description\": \"vu8b9h\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1489,7 +1491,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/table/preview/sql/390",
+              "raw": "http://::server/dim/table/preview/sql/645",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1505,7 +1507,7 @@
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "180",
+                  "value": "880",
                   "description": "维度表id"
                 }
               ]
@@ -1556,7 +1558,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/model/db/connect/tzhyix",
+              "raw": "http://::server/model/db/connect/ausqeb",
               "protocol": "http",
               "path": [
                 "model",
@@ -1571,7 +1573,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "2ie9nn",
+                  "value": "6nuxa8",
                   "description": "No comments found."
                 }
               ]
@@ -1592,18 +1594,18 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "oo8jkp"
+                  "value": "uajgmn"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "albert.kassulke"
+                  "value": "drew.bahringer"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/model/db/?connectType\u003doo8jkp\u0026dataSourceName\u003dalbert.kassulke",
+              "raw": "http://::server/model/db/?connectType\u003duajgmn\u0026dataSourceName\u003ddrew.bahringer",
               "protocol": "http",
               "path": [
                 "model",
@@ -1616,12 +1618,12 @@
               "query": [
                 {
                   "key": "connectType",
-                  "value": "l70dsa",
+                  "value": "e1q99g",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "albert.kassulke",
+                  "value": "drew.bahringer",
                   "description": "No comments found."
                 }
               ],
@@ -1643,24 +1645,24 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "at1b8h"
+                  "value": "rfpzdh"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "albert.kassulke"
+                  "value": "drew.bahringer"
                 },
                 {
                   "key": "dataBaseName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "albert.kassulke"
+                  "value": "drew.bahringer"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/model/db/table?dataSourceName\u003dalbert.kassulke\u0026dataBaseName\u003dalbert.kassulke\u0026connectType\u003dat1b8h",
+              "raw": "http://::server/model/db/table?dataSourceName\u003ddrew.bahringer\u0026connectType\u003drfpzdh\u0026dataBaseName\u003ddrew.bahringer",
               "protocol": "http",
               "path": [
                 "model",
@@ -1673,17 +1675,17 @@
               "query": [
                 {
                   "key": "connectType",
-                  "value": "7wrtd5",
+                  "value": "25h9uo",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "albert.kassulke",
+                  "value": "drew.bahringer",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataBaseName",
-                  "value": "albert.kassulke",
+                  "value": "drew.bahringer",
                   "description": "No comments found."
                 }
               ],
@@ -1705,30 +1707,30 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "cfcco1"
+                  "value": "swj534"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "albert.kassulke"
+                  "value": "drew.bahringer"
                 },
                 {
                   "key": "dataBaseName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "albert.kassulke"
+                  "value": "drew.bahringer"
                 },
                 {
                   "key": "tableName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "albert.kassulke"
+                  "value": "drew.bahringer"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/model/db/column?dataSourceName\u003dalbert.kassulke\u0026tableName\u003dalbert.kassulke\u0026dataBaseName\u003dalbert.kassulke\u0026connectType\u003dcfcco1",
+              "raw": "http://::server/model/db/column?dataBaseName\u003ddrew.bahringer\u0026connectType\u003dswj534\u0026dataSourceName\u003ddrew.bahringer\u0026tableName\u003ddrew.bahringer",
               "protocol": "http",
               "path": [
                 "model",
@@ -1741,22 +1743,22 @@
               "query": [
                 {
                   "key": "connectType",
-                  "value": "qsf10x",
+                  "value": "24eh2c",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "albert.kassulke",
+                  "value": "drew.bahringer",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataBaseName",
-                  "value": "albert.kassulke",
+                  "value": "drew.bahringer",
                   "description": "No comments found."
                 },
                 {
                   "key": "tableName",
-                  "value": "albert.kassulke",
+                  "value": "drew.bahringer",
                   "description": "No comments found."
                 }
               ],
@@ -1773,7 +1775,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"olhidc\"\n  },\n  \"dsdName\": \"albert.kassulke\",\n  \"dsdCode\": \"37307\",\n  \"dsdLevel\": \"395z9p\",\n  \"dsdLevelId\": \"168\",\n  \"beginDay\": \"k5gpi2\",\n  \"endDay\": \"5l1pvl\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ykg5rh\"\n  },\n  \"dsdName\": \"drew.bahringer\",\n  \"dsdCode\": \"91061\",\n  \"dsdLevel\": \"wggwhn\",\n  \"dsdLevelId\": \"44\",\n  \"beginDay\": \"7hzk8l\",\n  \"endDay\": \"pg9xku\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

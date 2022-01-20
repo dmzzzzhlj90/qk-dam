@@ -166,6 +166,7 @@ public class PhysicalServiceImpl implements PhysicalService {
   private String dataModelPhysical(ModelPhysicalDTO modelPhysicalDTO, ModelPhysicalTable modelPhysicalTable) {
     String sqls = null;
     //1存储基本信息
+    //todo 添加创建人和负责人
     ModelPhysicalTable modelPhysicalTable1 = modelPhysicalTableRepository.save(modelPhysicalTable);
     //2存储字段信息
     List<ModelPhysicalColumn> columnList = ModelPhysicalColumnMapper.INSTANCE.use(modelPhysicalDTO.getModelColumnDtoList());
@@ -314,6 +315,7 @@ public class PhysicalServiceImpl implements PhysicalService {
           throw  new BizException("表名称为:"+modelPhysicalTable1.getTableName()+"不是发布状态，不能进行下线操作");
          }
            modelPhysicalTable1.setStatus(ModelStatus.OFFLINE);
+          //todo 添加修改人
            modelPhysicalTableList.add(modelPhysicalTable1);
        }
    );
@@ -333,6 +335,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     boolean exists = modelPhysicalTableRepository.exists(predicate);
     if (exists){
       Boolean check = checkModelPhysical(modelPhysicalDTO);
+      //todo 添加修改人
       if (check){
         updateModelPhysical(modelPhysicalDTO,modelPhysicalTable);
       }
@@ -448,10 +451,7 @@ public class PhysicalServiceImpl implements PhysicalService {
   @Override
   public void synchronization(List<Long> physicalIds) {
     Map<Long,ModelPhysicalTable> map = new HashMap<>();
-    Boolean checkSynchroniZtion = checkSynchroniZtion(physicalIds,map);
-    if (checkSynchroniZtion){
-      throw new BizException("已发布的数据才能手动同步");
-    }
+      checkSynchroniZtion(physicalIds,map);
       physicalIds.forEach(id->{
         //1根据基础表id查询基础信息，判断元数据中是否存在该表信息
         ModelPhysicalTable modelPhysicalTable = map.get(id);
@@ -466,15 +466,23 @@ public class PhysicalServiceImpl implements PhysicalService {
       });
   }
 
-  private Boolean checkSynchroniZtion(List<Long> physicalIds,Map<Long,ModelPhysicalTable> map) {
-    Boolean check =false;
+  private void checkSynchroniZtion(List<Long> physicalIds,Map<Long,ModelPhysicalTable> map) {
     List<ModelPhysicalTable> physicalTableList = modelPhysicalTableRepository.findAllById(physicalIds);
-    check = physicalTableList.stream().filter(modelPhysicalTable -> !modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)).findAny().isPresent();
+    physicalTableList.forEach(modelPhysicalTable -> {
+      if (!modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)){
+        throw new BizException("已发布的数据才能手动同步");
+      }
+      int tables = getTables(modelPhysicalTable.getDataConnection(),
+          modelPhysicalTable.getDataSourceName(), modelPhysicalTable.getDataBaseName(),
+          modelPhysicalTable.getTableName());
+      if (tables==ModelStatus.EXIST_DATA){
+        throw new BizException(modelPhysicalTable.getTableName()+"库中存在且有数据");
+      }
+    });
     Map<Long,ModelPhysicalTable> tableMap = physicalTableList.stream().collect(
         Collectors.toMap(ModelPhysicalTable::getId,
             modelPhysicalTable -> modelPhysicalTable));
     map.putAll(tableMap);
-    return check;
   }
 
   /**
@@ -585,6 +593,12 @@ public class PhysicalServiceImpl implements PhysicalService {
       if (modelPhysicalTable.getStatus().equals(ModelStatus.PUBLISH)){
         throw new BizException("存在已发布数据请去除后重新发布");
       }
+      int tables = getTables(modelPhysicalTable.getDataConnection(),
+          modelPhysicalTable.getDataSourceName(), modelPhysicalTable.getDataBaseName(),
+          modelPhysicalTable.getTableName());
+      if (tables==ModelStatus.EXIST_DATA){
+        throw new BizException(modelPhysicalTable.getTableName()+"库中存在且有数据");
+      }
     });
   }
 
@@ -596,8 +610,8 @@ public class PhysicalServiceImpl implements PhysicalService {
   private Boolean checkPhysicalTable(ModelPhysicalTable modelPhysical) {
     Boolean check = true;
     //1校验主题和主题id、表名、数据连接、数据库
-    if (StringUtils.isEmpty(modelPhysical.getTheme())||modelPhysical.getThemeId()==0||StringUtils.isEmpty(modelPhysical.getTableName())||
-        StringUtils.isEmpty(modelPhysical.getDataConnection())||StringUtils.isEmpty(modelPhysical.getDataConnection())||StringUtils.isEmpty(modelPhysical.getResponsibleBy())){
+    if (StringUtils.isEmpty(modelPhysical.getTheme())||StringUtils.isEmpty(modelPhysical.getThemeId())||StringUtils.isEmpty(modelPhysical.getTableName())||
+        StringUtils.isEmpty(modelPhysical.getDataConnection())||StringUtils.isEmpty(modelPhysical.getDataBaseName())){
       check=false;
     }
     //2当数据库连接是HIVE时候判断表类型、数据格式、hdfs路径是不是为空
@@ -941,7 +955,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (CollectionUtils.isNotEmpty(modelPhysicalColumnList)){
         //获取含有标准的字段数量
       List<ModelPhysicalColumn> columnList = modelPhysicalColumnList.stream()
-          .filter(item -> item.getStandardsId() != null)
+          .filter(item -> StringUtils.isNotBlank(item.getStandardsCode()))
           .collect(Collectors.toList());
       if (CollectionUtils.isNotEmpty(columnList)){
         coverage=CheckUtil.getCoverage(columnList.size(),modelPhysicalColumnList.size());
@@ -1054,8 +1068,8 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (!Objects.isNull(queryModelPhysicalDTO.getModelId())) {
       booleanBuilder.and(qModelPhysicalTable.modelId.eq(queryModelPhysicalDTO.getModelId()));
     }
-    if (!Objects.isNull(queryModelPhysicalDTO.getThemeId()) && queryModelPhysicalDTO.getThemeId()!=ModelStatus.DIRNAMEID){
-      booleanBuilder.and(qModelPhysicalTable.themeId.eq(queryModelPhysicalDTO.getThemeId()));
+    if (!Objects.isNull(queryModelPhysicalDTO.getThemeIdList())){
+      booleanBuilder.and(qModelPhysicalTable.themeId.in(queryModelPhysicalDTO.getThemeIdList()));
     }
   }
 

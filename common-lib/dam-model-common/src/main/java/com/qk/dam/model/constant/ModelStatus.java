@@ -17,7 +17,6 @@ public class ModelStatus {
     public static final int EXIST_DATA = 2;//元数据判断库中存在查询表且有数据
     public static final int EXIST_DEFAULT_DATA = 3;//查询元数据判断库中存在查询表默认返回值
     public static final String DIRNAME = "主题";//数据标准第一级目录名称
-    public static final Long DIRNAMEID = -1l;//数据标准第一级目录id
     public static final String CHECK="1";//校验主键、分区、是否为空
     public static final String SETDEFAULT="0";//默认不是主键不分区不为空
     public static final String ALLCHOICE="0";//逆向数据库全选
