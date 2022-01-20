@@ -1068,8 +1068,8 @@ public class PhysicalServiceImpl implements PhysicalService {
     if (!Objects.isNull(queryModelPhysicalDTO.getModelId())) {
       booleanBuilder.and(qModelPhysicalTable.modelId.eq(queryModelPhysicalDTO.getModelId()));
     }
-    if (!Objects.isNull(queryModelPhysicalDTO.getThemeId()) && !queryModelPhysicalDTO.getThemeId().equals(ModelStatus.DIRNAMEID)){
-      booleanBuilder.and(qModelPhysicalTable.themeId.eq(queryModelPhysicalDTO.getThemeId()));
+    if (!Objects.isNull(queryModelPhysicalDTO.getThemeIdList())){
+      booleanBuilder.and(qModelPhysicalTable.themeId.in(queryModelPhysicalDTO.getThemeIdList()));
     }
   }
 

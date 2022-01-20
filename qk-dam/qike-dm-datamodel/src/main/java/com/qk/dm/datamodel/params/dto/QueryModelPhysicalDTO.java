@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 查询建模信息入参DTO
@@ -21,8 +22,8 @@ import java.io.Serializable;
 public class QueryModelPhysicalDTO implements Serializable {
   /**分页信息*/
   private Pagination pagination;
-  /**所属主题id*/
-  private String themeId;
+  /**所属主题id和子级id集合*/
+  private List<String> themeIdList;
   /**所属层级id*/
   private Long modelId;
 

@@ -48,10 +48,10 @@
               }
             }
           },
-          "themeId": {
-            "format": "string",
-            "description": "所属主题id",
-            "type": "string"
+          "themeIdList": {
+            "description": "所属主题id和子级id集合",
+            "type": "array",
+            "items": {}
           },
           "modelId": {
             "format": "int64",
@@ -83,10 +83,10 @@
               }
             }
           },
-          "themeId": {
-            "format": "string",
-            "description": "所属主题id",
-            "type": "string"
+          "themeIdList": {
+            "description": "所属主题id和子级id集合",
+            "type": "array",
+            "items": {}
           },
           "modelId": {
             "format": "int64",
@@ -4225,7 +4225,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"myo12b\",\n  \"tips\": \"sw7ya6\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"xnnbxy\",\n  \"tips\": \"wipuxe\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4241,7 +4241,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "m7dn4v",
+            "example": "yf4hwt",
             "name": "ids"
           }
         ]
@@ -4264,7 +4264,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"izve04\"\n  },\n  \"id\": 730,\n  \"themeId\": 229,\n  \"themeName\": \"lonny.barrows\",\n  \"factName\": \"lonny.barrows\",\n  \"description\": \"hbknwo\",\n  \"status\": 883,\n  \"connectionType\": 263,\n  \"dataConnection\": \"8thtok\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 109,\n      \"factId\": 459,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"cwq8ld\",\n      \"standardsId\": 915,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": 889,\n      \"itsPartition\": 873,\n      \"itsNull\": 304,\n      \"description\": \"jyt92n\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"mdl5hc\"\n  },\n  \"id\": 955,\n  \"themeId\": 962,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"nk59in\",\n  \"status\": 493,\n  \"connectionType\": 80,\n  \"dataConnection\": \"kv40z0\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 809,\n      \"factId\": 886,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"3qmgkc\",\n      \"standardsId\": 477,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 480,\n      \"itsPartition\": 655,\n      \"itsNull\": 49,\n      \"description\": \"rslbz8\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -4281,7 +4281,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"nys5s4\",\n  \"tips\": \"1gsxwx\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"600u75\",\n  \"tips\": \"cuw3jr\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4298,7 +4298,7 @@
             "in": "path",
             "description": "事实表id",
             "required": true,
-            "example": "748",
+            "example": "107",
             "name": "id"
           }
         ]
@@ -4321,7 +4321,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"lrqn2k\",\n  \"tips\": \"1m1j5v\",\n  \"data\": {\n    \"id\": 494,\n    \"themeId\": 475,\n    \"themeName\": \"lonny.barrows\",\n    \"dimName\": \"lonny.barrows\",\n    \"dimCode\": \"21321\",\n    \"dimType\": \"i4ymiy\",\n    \"description\": \"tflp3g\",\n    \"status\": 764,\n    \"connectionType\": 303,\n    \"dataConnection\": \"dmuowj\",\n    \"databaseName\": \"lonny.barrows\",\n    \"gmtCreate\": \"2022-01-19 14:56:44\",\n    \"gmtModified\": \"2022-01-19 14:56:44\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"hdsici\",\n  \"tips\": \"xieo1i\",\n  \"data\": {\n    \"id\": 192,\n    \"themeId\": 454,\n    \"themeName\": \"drew.bahringer\",\n    \"dimName\": \"drew.bahringer\",\n    \"dimCode\": \"91061\",\n    \"dimType\": \"m6f0z2\",\n    \"description\": \"jwmj0v\",\n    \"status\": 951,\n    \"connectionType\": 946,\n    \"dataConnection\": \"b3at0m\",\n    \"databaseName\": \"drew.bahringer\",\n    \"gmtCreate\": \"2022-01-20 10:14:45\",\n    \"gmtModified\": \"2022-01-20 10:14:45\"\n  }\n}"
                   }
                 }
               }
@@ -4338,7 +4338,7 @@
             "in": "path",
             "description": "事实表id",
             "required": true,
-            "example": "702",
+            "example": "334",
             "name": "id"
           }
         ]
@@ -4364,7 +4364,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "[\n  604,\n  929\n]"
+                  "value": "[\n  13,\n  469\n]"
                 }
               }
             }
@@ -4384,7 +4384,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"jxmfti\",\n  \"tips\": \"ii0k4q\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"2q8m4v\",\n  \"tips\": \"eli923\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4414,7 +4414,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"khwweg\",\n  \"tips\": \"qqpx8q\",\n  \"data\": [\n    \"oktf1g\",\n    \"08kuy9\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"3gw9qs\",\n  \"tips\": \"zaiwne\",\n  \"data\": [\n    \"3wfxhe\",\n    \"eni462\"\n  ]\n}"
                   }
                 }
               }
@@ -4430,7 +4430,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": true,
-            "example": "lonny.barrows",
+            "example": "drew.bahringer",
             "name": "tableName"
           }
         ]
@@ -4453,7 +4453,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 570,\n  \"tableName\": \"lonny.barrows\",\n  \"theme\": \"iy6cj0\",\n  \"dataConnection\": \"ebib6a\",\n  \"dataBaseName\": \"lonny.barrows\",\n  \"dataSourceName\": \"lonny.barrows\",\n  \"dataSourceId\": 774,\n  \"description\": \"so34p7\",\n  \"status\": 376,\n  \"gmtCreate\": \"2022-01-19 14:56:44\",\n  \"gmtModified\": \"2022-01-19 14:56:44\",\n  \"tableType\": \"vvq9y2\",\n  \"responsibleBy\": \"47rlsv\",\n  \"dataFormat\": \"xkfamu\",\n  \"themeId\": \"146\",\n  \"modelId\": 746,\n  \"hftsRoute\": \"6oxk72\",\n  \"syncStatus\": 592\n}"
+                  "value": "{\n  \"id\": 991,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"25m7fp\",\n  \"dataConnection\": \"wwdl4q\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 674,\n  \"description\": \"c6rjgk\",\n  \"status\": 66,\n  \"gmtCreate\": \"2022-01-20 10:14:45\",\n  \"gmtModified\": \"2022-01-20 10:14:45\",\n  \"tableType\": \"7vk46r\",\n  \"responsibleBy\": \"cvpw5m\",\n  \"dataFormat\": \"zvdsqf\",\n  \"themeId\": \"44\",\n  \"modelId\": 342,\n  \"hftsRoute\": \"s3omyi\",\n  \"syncStatus\": 677\n}"
                 }
               }
             }
@@ -4470,7 +4470,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"llm3tw\",\n  \"tips\": \"0jj848\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"ks84gl\",\n  \"tips\": \"yhylf5\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4487,7 +4487,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "340",
+            "example": "735",
             "name": "id"
           }
         ]
@@ -4510,7 +4510,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"2gk814\",\n  \"tips\": \"li2i85\",\n  \"data\": {\n    \"id\": 230,\n    \"tableName\": \"lonny.barrows\",\n    \"theme\": \"b48b4y\",\n    \"dataConnection\": \"1luvfk\",\n    \"dataBaseName\": \"lonny.barrows\",\n    \"dataSourceName\": \"lonny.barrows\",\n    \"dataSourceId\": 225,\n    \"description\": \"wpf36f\",\n    \"status\": 439,\n    \"gmtCreate\": \"2022-01-19 14:56:44\",\n    \"gmtModified\": \"2022-01-19 14:56:44\",\n    \"tableType\": \"doyqiu\",\n    \"responsibleBy\": \"q7p0v2\",\n    \"dataFormat\": \"l8u8td\",\n    \"themeId\": \"146\",\n    \"modelId\": 155,\n    \"hftsRoute\": \"sj1u67\",\n    \"syncStatus\": 295\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"mf034v\",\n  \"tips\": \"wh5kvx\",\n  \"data\": {\n    \"id\": 504,\n    \"tableName\": \"drew.bahringer\",\n    \"theme\": \"h86fk8\",\n    \"dataConnection\": \"wldql0\",\n    \"dataBaseName\": \"drew.bahringer\",\n    \"dataSourceName\": \"drew.bahringer\",\n    \"dataSourceId\": 112,\n    \"description\": \"gp0nzi\",\n    \"status\": 881,\n    \"gmtCreate\": \"2022-01-20 10:14:45\",\n    \"gmtModified\": \"2022-01-20 10:14:45\",\n    \"tableType\": \"3n4nht\",\n    \"responsibleBy\": \"oa92hw\",\n    \"dataFormat\": \"3p8snu\",\n    \"themeId\": \"44\",\n    \"modelId\": 331,\n    \"hftsRoute\": \"gkob2n\",\n    \"syncStatus\": 266\n  }\n}"
                   }
                 }
               }
@@ -4527,7 +4527,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "338",
+            "example": "721",
             "name": "id"
           }
         ]
@@ -4550,7 +4550,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"p62hg5\"\n  },\n  \"id\": 170,\n  \"themeId\": 886,\n  \"themeName\": \"lonny.barrows\",\n  \"dimName\": \"lonny.barrows\",\n  \"dimCode\": \"21321\",\n  \"dimType\": \"s5bq57\",\n  \"description\": \"kk1hza\",\n  \"status\": 924,\n  \"connectionType\": \"zni2cz\",\n  \"dataConnection\": \"e2n61v\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelDimId\": 291,\n  \"columnList\": [\n    {\n      \"id\": 158,\n      \"dimTableId\": 920,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"tsa2hn\",\n      \"standardsId\": 227,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": \"8jhuzy\",\n      \"itsPartition\": \"wh5k1k\",\n      \"itsNull\": \"412b5b\",\n      \"description\": \"96gcdf\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"dg5yfq\"\n  },\n  \"id\": 755,\n  \"themeId\": 58,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"c1vnio\",\n  \"description\": \"3jdbte\",\n  \"status\": 500,\n  \"connectionType\": \"1l8xso\",\n  \"dataConnection\": \"2ozxrs\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 640,\n  \"columnList\": [\n    {\n      \"id\": 513,\n      \"dimTableId\": 512,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"u68ebe\",\n      \"standardsId\": 264,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"16bpmb\",\n      \"itsPartition\": \"f7ya0g\",\n      \"itsNull\": \"71ziof\",\n      \"description\": \"d4taqm\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -4567,7 +4567,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"rlfig7\",\n  \"tips\": \"en2sko\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"nh1zkr\",\n  \"tips\": \"kzkqcg\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4584,7 +4584,7 @@
             "in": "path",
             "description": "维度表id",
             "required": true,
-            "example": "543",
+            "example": "653",
             "name": "id"
           }
         ]
@@ -4607,7 +4607,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"6fv3g0\",\n  \"tips\": \"2288yh\",\n  \"data\": {\n    \"id\": 444,\n    \"themeId\": 716,\n    \"themeName\": \"lonny.barrows\",\n    \"dimName\": \"lonny.barrows\",\n    \"dimCode\": \"21321\",\n    \"dimType\": \"8ftguy\",\n    \"description\": \"4dhf2x\",\n    \"status\": 783,\n    \"connectionType\": \"pjpa7v\",\n    \"dataConnection\": \"op6kld\",\n    \"databaseName\": \"lonny.barrows\",\n    \"gmtCreate\": \"2022-01-19 14:56:44\",\n    \"gmtModified\": \"2022-01-19 14:56:44\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"yuzxa9\",\n  \"tips\": \"41gce0\",\n  \"data\": {\n    \"id\": 318,\n    \"themeId\": 567,\n    \"themeName\": \"drew.bahringer\",\n    \"dimName\": \"drew.bahringer\",\n    \"dimCode\": \"91061\",\n    \"dimType\": \"xmoace\",\n    \"description\": \"1t198b\",\n    \"status\": 559,\n    \"connectionType\": \"gpvawt\",\n    \"dataConnection\": \"a58g4x\",\n    \"databaseName\": \"drew.bahringer\",\n    \"gmtCreate\": \"2022-01-20 10:14:45\",\n    \"gmtModified\": \"2022-01-20 10:14:45\"\n  }\n}"
                   }
                 }
               }
@@ -4624,7 +4624,7 @@
             "in": "path",
             "description": "维度表id",
             "required": true,
-            "example": "328",
+            "example": "712",
             "name": "id"
           }
         ]
@@ -4647,7 +4647,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://{{server}}/dim/publish/25pw3y"
+                  "value": "curl -X PUT -i http://{{server}}/dim/publish/d6as0f"
                 }
               }
             }
@@ -4664,7 +4664,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"kamt68\",\n  \"tips\": \"0286km\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"4qwalp\",\n  \"tips\": \"epll7r\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4680,7 +4680,7 @@
             "in": "path",
             "description": "维度id,如果多个，使用英文逗号分割",
             "required": true,
-            "example": "alivqm",
+            "example": "urvrh6",
             "name": "ids"
           }
         ]
@@ -4705,7 +4705,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"azl82x\",\n  \"tips\": \"ogys5u\",\n  \"data\": \"pfsdf8\"\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"yj8zlv\",\n  \"tips\": \"zd8q9a\",\n  \"data\": \"onuwo2\"\n}"
                   }
                 }
               }
@@ -4722,7 +4722,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "965",
+            "example": "802",
             "name": "tableId"
           }
         ]
@@ -4747,7 +4747,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"pdddcg\",\n  \"tips\": \"1opehe\",\n  \"data\": \"wz8qik\"\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"kts6lf\",\n  \"tips\": \"7cglsj\",\n  \"data\": \"0n7ck2\"\n}"
                   }
                 }
               }
@@ -4764,7 +4764,7 @@
             "in": "path",
             "description": "汇总表id",
             "required": true,
-            "example": "144",
+            "example": "848",
             "name": "tableId"
           }
         ]
@@ -4787,7 +4787,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"gldtmo\"\n  },\n  \"dsdName\": \"lonny.barrows\",\n  \"dsdCode\": \"21321\",\n  \"dsdLevel\": \"0p7lut\",\n  \"dsdLevelId\": \"146\",\n  \"beginDay\": \"phxrzl\",\n  \"endDay\": \"25uf7m\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"k01jva\"\n  },\n  \"dsdName\": \"drew.bahringer\",\n  \"dsdCode\": \"91061\",\n  \"dsdLevel\": \"hmkf8t\",\n  \"dsdLevelId\": \"44\",\n  \"beginDay\": \"cyibur\",\n  \"endDay\": \"1zud48\"\n}"
                 }
               }
             }
@@ -4804,7 +4804,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"sy1u4c\",\n  \"tips\": \"2qx3cl\",\n  \"data\": {\n    \"total\": 874,\n    \"pageNum\": 811,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 159,\n        \"dsdName\": \"lonny.barrows\",\n        \"dsdCode\": \"21321\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"hc5llx\",\n  \"tips\": \"dn2e80\",\n  \"data\": {\n    \"total\": 521,\n    \"pageNum\": 368,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 282,\n        \"dsdName\": \"drew.bahringer\",\n        \"dsdCode\": \"91061\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -4832,7 +4832,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://{{server}}/dim/offline/fvrr57"
+                  "value": "curl -X PUT -i http://{{server}}/dim/offline/kg1sul"
                 }
               }
             }
@@ -4849,7 +4849,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"wsd61w\",\n  \"tips\": \"fowrwu\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"kecxrs\",\n  \"tips\": \"dmqh7j\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4865,7 +4865,7 @@
             "in": "path",
             "description": "维度id,如果多个，使用英文逗号分割",
             "required": true,
-            "example": "517zs3",
+            "example": "7hzxyx",
             "name": "ids"
           }
         ]
@@ -4890,7 +4890,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"hlwcjs\",\n  \"tips\": \"b0l06a\",\n  \"data\": {\n    \"mapKey1\": \"8jn6ta\",\n    \"mapKey2\": \"3ze458\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"gu8w4f\",\n  \"tips\": \"2oqbd1\",\n  \"data\": {\n    \"mapKey1\": \"cz360p\",\n    \"mapKey2\": \"cuqh7h\"\n  }\n}"
                   }
                 }
               }
@@ -4906,7 +4906,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "gfjed3",
+            "example": "5zclig",
             "name": "type"
           }
         ]
@@ -4929,7 +4929,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"2akytc\"\n  },\n  \"id\": 186,\n  \"themeId\": 760,\n  \"themeName\": \"lonny.barrows\",\n  \"tableName\": \"lonny.barrows\",\n  \"dimId\": 244,\n  \"dimName\": \"lonny.barrows\",\n  \"dataConnection\": \"gj3egz\",\n  \"databaseName\": \"lonny.barrows\",\n  \"description\": \"0h8lld\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 725,\n      \"summaryId\": 150,\n      \"indicatorsType\": 987,\n      \"indicatorsName\": \"lonny.barrows\",\n      \"indicatorsCode\": \"21321\",\n      \"dataType\": \"dng1g3\",\n      \"itsNull\": \"wy0pvc\",\n      \"description\": \"ftb6d5\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"y77sy2\"\n  },\n  \"id\": 352,\n  \"themeId\": 827,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 169,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"uf0qgp\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"m4hbdq\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 32,\n      \"summaryId\": 959,\n      \"indicatorsType\": 669,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"vqchm8\",\n      \"itsNull\": \"j3c3v5\",\n      \"description\": \"kvtyqf\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -4946,7 +4946,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"av6p64\",\n  \"tips\": \"vuomtb\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"j6am6v\",\n  \"tips\": \"47wlpr\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -4974,7 +4974,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"jydtpz\"\n  },\n  \"themeId\": \"146\",\n  \"modelId\": 372\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"igd2sa\"\n  },\n  \"themeIdList\": [\n    \"ldu9wb\"\n  ],\n  \"modelId\": 40\n}"
                 }
               }
             }
@@ -4991,7 +4991,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"m0zzht\",\n  \"tips\": \"g33jdx\",\n  \"data\": {\n    \"coverage\": \"eu5lbb\",\n    \"pushnums\": 671,\n    \"totlenums\": 379,\n    \"fieldnums\": 548\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"puc6ac\",\n  \"tips\": \"lbdma3\",\n  \"data\": {\n    \"coverage\": \"xllbep\",\n    \"pushnums\": 855,\n    \"totlenums\": 46,\n    \"fieldnums\": 2\n  }\n}"
                   }
                 }
               }
@@ -5021,7 +5021,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"gu61cg\",\n  \"tips\": \"5bzxu2\",\n  \"data\": [\n    \"74cvtv\",\n    \"yxd9q9\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"ansjfj\",\n  \"tips\": \"7ewzos\",\n  \"data\": [\n    \"w7jiup\",\n    \"vwjbo6\"\n  ]\n}"
                   }
                 }
               }
@@ -5049,7 +5049,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://{{server}}/fact/publish/3utrfj"
+                  "value": "curl -X PUT -i http://{{server}}/fact/publish/x0wjpu"
                 }
               }
             }
@@ -5066,7 +5066,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"lei35b\",\n  \"tips\": \"spc5zk\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"tqpax9\",\n  \"tips\": \"ha18s7\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5082,7 +5082,7 @@
             "in": "path",
             "description": "事实表id，多个id使用英文逗号分割",
             "required": true,
-            "example": "87hars",
+            "example": "afwei4",
             "name": "ids"
           }
         ]
@@ -5107,7 +5107,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"7803de\",\n  \"tips\": \"wbhhgm\",\n  \"data\": [\n    {\n      \"guid\": \"146\",\n      \"typeName\": \"lonny.barrows\",\n      \"entityStatus\": \"j29efw\",\n      \"displayText\": \"r7c0wq\",\n      \"relationshipType\": \"loej48\",\n      \"relationshipGuid\": \"146\",\n      \"relationshipStatus\": \"5n7qzu\",\n      \"comment\": \"auo73r\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"nuorf2\",\n  \"tips\": \"nqnnay\",\n  \"data\": [\n    {\n      \"guid\": \"44\",\n      \"typeName\": \"drew.bahringer\",\n      \"entityStatus\": \"kuvm5o\",\n      \"displayText\": \"i6a8kt\",\n      \"relationshipType\": \"tc0uvu\",\n      \"relationshipGuid\": \"44\",\n      \"relationshipStatus\": \"r90nkz\",\n      \"comment\": \"svg2du\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -5123,7 +5123,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "so56t6",
+            "example": "uskh4l",
             "name": "connectType"
           },
           {
@@ -5133,7 +5133,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "lonny.barrows",
+            "example": "drew.bahringer",
             "name": "dataSourceName"
           },
           {
@@ -5143,7 +5143,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "lonny.barrows",
+            "example": "drew.bahringer",
             "name": "dataBaseName"
           }
         ]
@@ -5168,7 +5168,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"vk7pqb\",\n  \"tips\": \"uhrenn\",\n  \"data\": [\n    {\n      \"id\": 330,\n      \"dirId\": \"146\",\n      \"title\": \"ukb4ul\",\n      \"parentId\": \"146\",\n      \"value\": \"sdza4g\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"slad6g\",\n  \"tips\": \"b4366b\",\n  \"data\": [\n    {\n      \"id\": 687,\n      \"dirId\": \"44\",\n      \"title\": \"w99d6b\",\n      \"parentId\": \"44\",\n      \"value\": \"n708as\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
@@ -5198,7 +5198,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"5ih2jq\",\n  \"tips\": \"tg0vfa\",\n  \"data\": [\n    \"snoz2v\",\n    \"aixamx\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"prexj3\",\n  \"tips\": \"ogxv6u\",\n  \"data\": [\n    \"j7m9x4\",\n    \"mmgeav\"\n  ]\n}"
                   }
                 }
               }
@@ -5214,7 +5214,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "g1ctsb",
+            "example": "rd7cxi",
             "name": "connectType"
           },
           {
@@ -5224,7 +5224,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "lonny.barrows",
+            "example": "drew.bahringer",
             "name": "dataSourceName"
           },
           {
@@ -5234,7 +5234,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "lonny.barrows",
+            "example": "drew.bahringer",
             "name": "dataBaseName"
           },
           {
@@ -5244,7 +5244,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "lonny.barrows",
+            "example": "drew.bahringer",
             "name": "tableName"
           }
         ]
@@ -5267,7 +5267,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"qbhshk\"\n  },\n  \"id\": 465,\n  \"themeId\": 545,\n  \"themeName\": \"lonny.barrows\",\n  \"tableName\": \"lonny.barrows\",\n  \"dimId\": 757,\n  \"dimName\": \"lonny.barrows\",\n  \"dataConnection\": \"yv7gil\",\n  \"databaseName\": \"lonny.barrows\",\n  \"description\": \"423yls\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 167,\n      \"summaryId\": 890,\n      \"indicatorsType\": 956,\n      \"indicatorsName\": \"lonny.barrows\",\n      \"indicatorsCode\": \"21321\",\n      \"dataType\": \"of47zk\",\n      \"itsNull\": \"aj2bca\",\n      \"description\": \"s2c579\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"5g19mx\"\n  },\n  \"id\": 506,\n  \"themeId\": 879,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 73,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"jro2qk\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"q9l97l\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 5,\n      \"summaryId\": 965,\n      \"indicatorsType\": 764,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"rx8b70\",\n      \"itsNull\": \"b17dvt\",\n      \"description\": \"4mrgk5\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5284,7 +5284,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"3klh3y\",\n  \"tips\": \"xfxi2n\",\n  \"data\": {\n    \"total\": 962,\n    \"pageNum\": 540,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 214,\n        \"themeId\": 199,\n        \"themeName\": \"lonny.barrows\",\n        \"tableName\": \"lonny.barrows\",\n        \"dimId\": 525,\n        \"dimName\": \"lonny.barrows\",\n        \"dataConnection\": \"c97dmw\",\n        \"databaseName\": \"lonny.barrows\",\n        \"description\": \"rxiu1j\",\n        \"gmtCreate\": \"2022-01-19 14:56:44\",\n        \"gmtModified\": \"2022-01-19 14:56:44\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"99ojt6\",\n  \"tips\": \"ohhtyn\",\n  \"data\": {\n    \"total\": 973,\n    \"pageNum\": 222,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 606,\n        \"themeId\": 117,\n        \"themeName\": \"drew.bahringer\",\n        \"tableName\": \"drew.bahringer\",\n        \"dimId\": 753,\n        \"dimName\": \"drew.bahringer\",\n        \"dataConnection\": \"azur9p\",\n        \"databaseName\": \"drew.bahringer\",\n        \"description\": \"a1t2ft\",\n        \"gmtCreate\": \"2022-01-20 10:14:45\",\n        \"gmtModified\": \"2022-01-20 10:14:45\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -5315,7 +5315,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "[\n  931,\n  605\n]"
+                  "value": "[\n  910,\n  899\n]"
                 }
               }
             }
@@ -5335,7 +5335,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"rg9mfl\",\n  \"tips\": \"rq1gav\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"9m1ijg\",\n  \"tips\": \"91al30\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5365,7 +5365,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"nkqv8g\",\n  \"tips\": \"ieq2fm\",\n  \"data\": [\n    {\n      \"mapKey1\": \"tevf64\",\n      \"mapKey2\": \"j9dl5q\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"q83a06\",\n  \"tips\": \"w2tvbz\",\n  \"data\": [\n    {\n      \"mapKey1\": \"n3xjtk\",\n      \"mapKey2\": \"z0byld\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -5393,7 +5393,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 220,\n  \"tableName\": \"lonny.barrows\",\n  \"theme\": \"5wlxel\",\n  \"dataConnection\": \"j8d1iv\",\n  \"dataBaseName\": \"lonny.barrows\",\n  \"dataSourceName\": \"lonny.barrows\",\n  \"dataSourceId\": 859,\n  \"description\": \"tjrkjr\",\n  \"status\": 942,\n  \"gmtCreate\": \"2022-01-19 14:56:44\",\n  \"gmtModified\": \"2022-01-19 14:56:44\",\n  \"tableType\": \"c0h5wy\",\n  \"responsibleBy\": \"0fuaaf\",\n  \"dataFormat\": \"jij2nh\",\n  \"themeId\": \"146\",\n  \"modelId\": 751,\n  \"hftsRoute\": \"svvc5p\",\n  \"syncStatus\": 378\n}"
+                  "value": "{\n  \"id\": 673,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"dzgyj9\",\n  \"dataConnection\": \"ceywwk\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 998,\n  \"description\": \"l43jzg\",\n  \"status\": 564,\n  \"gmtCreate\": \"2022-01-20 10:14:45\",\n  \"gmtModified\": \"2022-01-20 10:14:45\",\n  \"tableType\": \"5anf0q\",\n  \"responsibleBy\": \"ot1nqn\",\n  \"dataFormat\": \"l97cup\",\n  \"themeId\": \"44\",\n  \"modelId\": 823,\n  \"hftsRoute\": \"btn677\",\n  \"syncStatus\": 650\n}"
                 }
               }
             }
@@ -5410,7 +5410,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"9036oq\",\n  \"tips\": \"tmgphx\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"636nft\",\n  \"tips\": \"efdit4\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5440,7 +5440,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"tctuqr\",\n  \"tips\": \"tpmoi6\",\n  \"data\": [\n    \"moesw3\",\n    \"a518sa\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"zsw54a\",\n  \"tips\": \"r41c2e\",\n  \"data\": [\n    \"10iaxn\",\n    \"ntb6db\"\n  ]\n}"
                   }
                 }
               }
@@ -5470,7 +5470,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"ay0my8\",\n  \"tips\": \"41fyck\",\n  \"data\": \"7q8o39\"\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"8q6kv4\",\n  \"tips\": \"162pq5\",\n  \"data\": \"5312h4\"\n}"
                   }
                 }
               }
@@ -5487,7 +5487,7 @@
             "in": "path",
             "description": "事实表id",
             "required": true,
-            "example": "382",
+            "example": "60",
             "name": "tableId"
           }
         ]
@@ -5510,7 +5510,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ztd2xl\"\n  },\n  \"id\": 287,\n  \"themeId\": 896,\n  \"themeName\": \"lonny.barrows\",\n  \"tableName\": \"lonny.barrows\",\n  \"dimId\": 777,\n  \"dimName\": \"lonny.barrows\",\n  \"dataConnection\": \"ofu9jr\",\n  \"databaseName\": \"lonny.barrows\",\n  \"description\": \"bnhgra\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 189,\n      \"summaryId\": 706,\n      \"indicatorsType\": 840,\n      \"indicatorsName\": \"lonny.barrows\",\n      \"indicatorsCode\": \"21321\",\n      \"dataType\": \"omueuz\",\n      \"itsNull\": \"a0w6eb\",\n      \"description\": \"y4sxy2\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"43g0xh\"\n  },\n  \"id\": 474,\n  \"themeId\": 262,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 391,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"nk5bif\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"bdaxnw\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 393,\n      \"summaryId\": 792,\n      \"indicatorsType\": 231,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"0x88ov\",\n      \"itsNull\": \"aum6xi\",\n      \"description\": \"3o8fu4\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5527,7 +5527,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"bk8vq5\",\n  \"tips\": \"b7vefn\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"0jem3y\",\n  \"tips\": \"he3q4h\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5544,7 +5544,7 @@
             "in": "path",
             "description": "汇总表id",
             "required": true,
-            "example": "446",
+            "example": "575",
             "name": "id"
           }
         ]
@@ -5567,7 +5567,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"sinwg0\",\n  \"tips\": \"2iywza\",\n  \"data\": {\n    \"id\": 401,\n    \"themeId\": 340,\n    \"themeName\": \"lonny.barrows\",\n    \"tableName\": \"lonny.barrows\",\n    \"dimId\": 621,\n    \"dimName\": \"lonny.barrows\",\n    \"dataConnection\": \"zb958e\",\n    \"databaseName\": \"lonny.barrows\",\n    \"description\": \"v569dd\",\n    \"gmtCreate\": \"2022-01-19 14:56:44\",\n    \"gmtModified\": \"2022-01-19 14:56:44\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"ohpq2e\",\n  \"tips\": \"g3qjs2\",\n  \"data\": {\n    \"id\": 639,\n    \"themeId\": 223,\n    \"themeName\": \"drew.bahringer\",\n    \"tableName\": \"drew.bahringer\",\n    \"dimId\": 14,\n    \"dimName\": \"drew.bahringer\",\n    \"dataConnection\": \"jntws9\",\n    \"databaseName\": \"drew.bahringer\",\n    \"description\": \"ukja7t\",\n    \"gmtCreate\": \"2022-01-20 10:14:45\",\n    \"gmtModified\": \"2022-01-20 10:14:45\"\n  }\n}"
                   }
                 }
               }
@@ -5584,7 +5584,7 @@
             "in": "path",
             "description": "汇总表id",
             "required": true,
-            "example": "47",
+            "example": "190",
             "name": "id"
           }
         ]
@@ -5607,7 +5607,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://{{server}}/summary/offline/2j4opc"
+                  "value": "curl -X PUT -i http://{{server}}/summary/offline/ntg9fw"
                 }
               }
             }
@@ -5624,7 +5624,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"3xvdax\",\n  \"tips\": \"97xvp4\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"n6xoy1\",\n  \"tips\": \"jjsgwq\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5640,7 +5640,7 @@
             "in": "path",
             "description": "汇总表id，多个id使用英文逗号分割",
             "required": true,
-            "example": "l1a94o",
+            "example": "it9o5u",
             "name": "ids"
           }
         ]
@@ -5666,7 +5666,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "[\n  32,\n  329\n]"
+                  "value": "[\n  918,\n  180\n]"
                 }
               }
             }
@@ -5686,7 +5686,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"o01uzr\",\n  \"tips\": \"6rs3fq\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"786yco\",\n  \"tips\": \"2vkcus\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5714,7 +5714,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1xdsn4\"\n  },\n  \"id\": 645,\n  \"themeId\": 351,\n  \"themeName\": \"lonny.barrows\",\n  \"dimName\": \"lonny.barrows\",\n  \"dimCode\": \"21321\",\n  \"dimType\": \"cm57jw\",\n  \"description\": \"aa5wkc\",\n  \"status\": 384,\n  \"connectionType\": \"egj1gb\",\n  \"dataConnection\": \"uefjxw\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 258,\n      \"dimId\": 862,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"zzv58v\",\n      \"standardsId\": 324,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": \"mc0inn\",\n      \"itsPartition\": \"ra0blg\",\n      \"itsNull\": \"1jseu2\",\n      \"description\": \"2ew2fb\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1sjryi\"\n  },\n  \"id\": 281,\n  \"themeId\": 263,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"t9ykh5\",\n  \"description\": \"y06uv5\",\n  \"status\": 929,\n  \"connectionType\": \"bibbqh\",\n  \"dataConnection\": \"530vk9\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 899,\n      \"dimId\": 74,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"lxwt81\",\n      \"standardsId\": 583,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"up4dtn\",\n      \"itsPartition\": \"sybcct\",\n      \"itsNull\": \"ijd0d2\",\n      \"description\": \"9lxkvl\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5731,7 +5731,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"273w6z\",\n  \"tips\": \"8a4byb\",\n  \"data\": {\n    \"total\": 155,\n    \"pageNum\": 950,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 138,\n        \"themeId\": 123,\n        \"themeName\": \"lonny.barrows\",\n        \"dimName\": \"lonny.barrows\",\n        \"dimCode\": \"21321\",\n        \"dimType\": \"6l364m\",\n        \"description\": \"fyoi6q\",\n        \"status\": 645,\n        \"connectionType\": \"ha1o4r\",\n        \"dataConnection\": \"7zv6fn\",\n        \"databaseName\": \"lonny.barrows\",\n        \"gmtCreate\": \"2022-01-19 14:56:44\",\n        \"gmtModified\": \"2022-01-19 14:56:44\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"su1e4n\",\n  \"tips\": \"jevuaw\",\n  \"data\": {\n    \"total\": 16,\n    \"pageNum\": 755,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 763,\n        \"themeId\": 574,\n        \"themeName\": \"drew.bahringer\",\n        \"dimName\": \"drew.bahringer\",\n        \"dimCode\": \"91061\",\n        \"dimType\": \"d8xzsf\",\n        \"description\": \"8lw0k8\",\n        \"status\": 788,\n        \"connectionType\": \"5dyx6k\",\n        \"dataConnection\": \"bcgr8m\",\n        \"databaseName\": \"drew.bahringer\",\n        \"gmtCreate\": \"2022-01-20 10:14:45\",\n        \"gmtModified\": \"2022-01-20 10:14:45\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -5759,7 +5759,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://{{server}}/fact/offline/wy58u2"
+                  "value": "curl -X PUT -i http://{{server}}/fact/offline/8z9lvz"
                 }
               }
             }
@@ -5776,7 +5776,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"jdtb4u\",\n  \"tips\": \"kwfnm1\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"9gn4vu\",\n  \"tips\": \"zwbnr8\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5792,7 +5792,7 @@
             "in": "path",
             "description": "事实表id，多个id使用英文逗号分割",
             "required": true,
-            "example": "03c4jp",
+            "example": "1bdecy",
             "name": "ids"
           }
         ]
@@ -5815,7 +5815,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"nsqu15\"\n  },\n  \"id\": 680,\n  \"themeId\": 762,\n  \"themeName\": \"lonny.barrows\",\n  \"dimName\": \"lonny.barrows\",\n  \"dimCode\": \"21321\",\n  \"dimType\": \"ogb79z\",\n  \"description\": \"aqtxrb\",\n  \"status\": 389,\n  \"connectionType\": \"pwzg31\",\n  \"dataConnection\": \"o8bxci\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 929,\n      \"dimId\": 170,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"lg4wbx\",\n      \"standardsId\": 558,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": \"qa7jet\",\n      \"itsPartition\": \"tbihoi\",\n      \"itsNull\": \"05qpkw\",\n      \"description\": \"oot1f5\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"a694wz\"\n  },\n  \"id\": 471,\n  \"themeId\": 75,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"yk4q62\",\n  \"description\": \"5saol5\",\n  \"status\": 69,\n  \"connectionType\": \"ct2plf\",\n  \"dataConnection\": \"h5938z\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 258,\n      \"dimId\": 633,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"nvab0w\",\n      \"standardsId\": 100,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"46z7r4\",\n      \"itsPartition\": \"myqz16\",\n      \"itsNull\": \"oar6iu\",\n      \"description\": \"x1n7c8\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -5832,7 +5832,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"4jisvq\",\n  \"tips\": \"8wspih\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"suhjs9\",\n  \"tips\": \"yeyth5\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5849,7 +5849,7 @@
             "in": "path",
             "description": "维度id",
             "required": true,
-            "example": "273",
+            "example": "430",
             "name": "id"
           }
         ]
@@ -5872,7 +5872,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"qt1trg\",\n  \"tips\": \"rz88t9\",\n  \"data\": {\n    \"id\": 166,\n    \"themeId\": 532,\n    \"themeName\": \"lonny.barrows\",\n    \"dimName\": \"lonny.barrows\",\n    \"dimCode\": \"21321\",\n    \"dimType\": \"g6xzsj\",\n    \"description\": \"et3xwi\",\n    \"status\": 543,\n    \"connectionType\": \"axpmo3\",\n    \"dataConnection\": \"1z2yu3\",\n    \"databaseName\": \"lonny.barrows\",\n    \"gmtCreate\": \"2022-01-19 14:56:44\",\n    \"gmtModified\": \"2022-01-19 14:56:44\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"hi1a00\",\n  \"tips\": \"3zbhxc\",\n  \"data\": {\n    \"id\": 403,\n    \"themeId\": 458,\n    \"themeName\": \"drew.bahringer\",\n    \"dimName\": \"drew.bahringer\",\n    \"dimCode\": \"91061\",\n    \"dimType\": \"xwgblc\",\n    \"description\": \"go6v2h\",\n    \"status\": 24,\n    \"connectionType\": \"8l6oug\",\n    \"dataConnection\": \"m2m8xx\",\n    \"databaseName\": \"drew.bahringer\",\n    \"gmtCreate\": \"2022-01-20 10:14:45\",\n    \"gmtModified\": \"2022-01-20 10:14:45\"\n  }\n}"
                   }
                 }
               }
@@ -5889,7 +5889,7 @@
             "in": "path",
             "description": "维度id",
             "required": true,
-            "example": "643",
+            "example": "504",
             "name": "id"
           }
         ]
@@ -5912,7 +5912,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"theme\": \"w1sh9s\",\n  \"dataConnection\": \"389rdi\",\n  \"dataBaseName\": \"lonny.barrows\",\n  \"dataSourceName\": \"lonny.barrows\",\n  \"dataSourceId\": 65,\n  \"themeId\": 521,\n  \"modelId\": 142,\n  \"replace\": \"xkrzxh\",\n  \"tableList\": [\n    \"pocpmv\"\n  ],\n  \"allChoice\": \"9t3z8t\"\n}"
+                  "value": "{\n  \"theme\": \"dr35a7\",\n  \"dataConnection\": \"z25ye6\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 472,\n  \"themeId\": 835,\n  \"modelId\": 852,\n  \"replace\": \"lahcdo\",\n  \"tableList\": [\n    \"0cwb68\"\n  ],\n  \"allChoice\": \"i89mv8\"\n}"
                 }
               }
             }
@@ -5929,7 +5929,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"8vv2tu\",\n  \"tips\": \"jjg8p8\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"54p4wp\",\n  \"tips\": \"n5eygm\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -5957,7 +5957,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"modelName\": \"lonny.barrows\",\n  \"layeredName\": \"lonny.barrows\",\n  \"description\": \"0mhxmo\",\n  \"modelType\": 318\n}"
+                  "value": "{\n  \"modelName\": \"drew.bahringer\",\n  \"layeredName\": \"drew.bahringer\",\n  \"description\": \"ltjupf\",\n  \"modelType\": 930\n}"
                 }
               }
             }
@@ -5974,7 +5974,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"40rt5s\",\n  \"tips\": \"jwz5wz\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"1dp3cy\",\n  \"tips\": \"03zjww\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6002,7 +6002,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"9j4mvi\",\n  \"tips\": \"ahnx22\",\n  \"data\": [\n    {\n      \"id\": 807,\n      \"modelName\": \"lonny.barrows\",\n      \"layeredName\": \"lonny.barrows\",\n      \"description\": \"h64t4q\",\n      \"modelType\": 803,\n      \"gmtCreate\": \"2022-01-19 14:56:44\",\n      \"gmtModified\": \"2022-01-19 14:56:44\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"l4q3d1\",\n  \"tips\": \"j40gxl\",\n  \"data\": [\n    {\n      \"id\": 200,\n      \"modelName\": \"drew.bahringer\",\n      \"layeredName\": \"drew.bahringer\",\n      \"description\": \"yue5ro\",\n      \"modelType\": 170,\n      \"gmtCreate\": \"2022-01-20 10:14:44\",\n      \"gmtModified\": \"2022-01-20 10:14:44\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -6030,7 +6030,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"rkb12e\"\n  },\n  \"id\": 441,\n  \"themeId\": 132,\n  \"themeName\": \"lonny.barrows\",\n  \"factName\": \"lonny.barrows\",\n  \"description\": \"k9nmxk\",\n  \"status\": 691,\n  \"connectionType\": 564,\n  \"dataConnection\": \"rvos8n\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 635,\n      \"factId\": 870,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"zth7pi\",\n      \"standardsId\": 198,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": 385,\n      \"itsPartition\": 314,\n      \"itsNull\": 377,\n      \"description\": \"m91z68\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"s447c2\"\n  },\n  \"id\": 156,\n  \"themeId\": 342,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"p4vtnl\",\n  \"status\": 301,\n  \"connectionType\": 776,\n  \"dataConnection\": \"7bnvcy\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 319,\n      \"factId\": 472,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"w0smnt\",\n      \"standardsId\": 218,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 309,\n      \"itsPartition\": 362,\n      \"itsNull\": 602,\n      \"description\": \"ac9e97\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6047,7 +6047,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"oqut4t\",\n  \"tips\": \"djfts4\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"hxb0li\",\n  \"tips\": \"efji0d\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6077,7 +6077,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"snyzam\",\n  \"tips\": \"gp1jzg\",\n  \"data\": \"ujfmnz\"\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"eahs8i\",\n  \"tips\": \"g03pvo\",\n  \"data\": \"d0wepe\"\n}"
                   }
                 }
               }
@@ -6094,7 +6094,7 @@
             "in": "path",
             "description": "维度表id",
             "required": true,
-            "example": "326",
+            "example": "394",
             "name": "tableId"
           }
         ]
@@ -6117,7 +6117,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 103,\n    \"tableName\": \"lonny.barrows\",\n    \"theme\": \"sjfly2\",\n    \"dataConnection\": \"lo1i3a\",\n    \"dataBaseName\": \"lonny.barrows\",\n    \"dataSourceName\": \"lonny.barrows\",\n    \"dataSourceId\": 793,\n    \"description\": \"50iiza\",\n    \"status\": 153,\n    \"gmtCreate\": \"2022-01-19 14:56:44\",\n    \"gmtModified\": \"2022-01-19 14:56:44\",\n    \"tableType\": \"56bjlk\",\n    \"responsibleBy\": \"w3gtvi\",\n    \"dataFormat\": \"0wa4yh\",\n    \"themeId\": \"146\",\n    \"modelId\": 394,\n    \"hftsRoute\": \"m1lhll\",\n    \"syncStatus\": 583\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 323,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"18ki5f\",\n      \"standardsId\": 483,\n      \"standardsName\": \"lonny.barrows\",\n      \"standardsCode\": \"21321\",\n      \"itsPrimaryKey\": \"5hoaks\",\n      \"itsPartition\": \"l8frln\",\n      \"itsNull\": \"tyfpfi\",\n      \"description\": \"bijxxv\",\n      \"gmtCreate\": \"2022-01-19 14:56:44\",\n      \"gmtModified\": \"2022-01-19 14:56:44\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 113,\n      \"tableId\": 605,\n      \"columnName\": \"lonny.barrows\",\n      \"childTableName\": \"lonny.barrows\",\n      \"childTableColumn\": \"9u0196\",\n      \"childConnectionWay\": \"qsegmo\",\n      \"fatherTableName\": \"lonny.barrows\",\n      \"fatherTableColumn\": \"dujjzn\",\n      \"fatherConnectionWay\": \"8p9sjt\",\n      \"gmtCreate\": \"2022-01-19 14:56:44\",\n      \"gmtModified\": \"2022-01-19 14:56:44\"\n    }\n  ]\n}"
+                  "value": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 122,\n    \"tableName\": \"drew.bahringer\",\n    \"theme\": \"7lq5mv\",\n    \"dataConnection\": \"ey4h5a\",\n    \"dataBaseName\": \"drew.bahringer\",\n    \"dataSourceName\": \"drew.bahringer\",\n    \"dataSourceId\": 298,\n    \"description\": \"f9vhzc\",\n    \"status\": 264,\n    \"gmtCreate\": \"2022-01-20 10:14:45\",\n    \"gmtModified\": \"2022-01-20 10:14:45\",\n    \"tableType\": \"46x1yr\",\n    \"responsibleBy\": \"4snluo\",\n    \"dataFormat\": \"7w1xhh\",\n    \"themeId\": \"44\",\n    \"modelId\": 980,\n    \"hftsRoute\": \"rytsws\",\n    \"syncStatus\": 490\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 886,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"dprmmb\",\n      \"standardsId\": 270,\n      \"standardsName\": \"drew.bahringer\",\n      \"standardsCode\": \"91061\",\n      \"itsPrimaryKey\": \"8gpd80\",\n      \"itsPartition\": \"o94a3m\",\n      \"itsNull\": \"lnv8zn\",\n      \"description\": \"f0wvgk\",\n      \"gmtCreate\": \"2022-01-20 10:14:45\",\n      \"gmtModified\": \"2022-01-20 10:14:45\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 356,\n      \"tableId\": 894,\n      \"columnName\": \"drew.bahringer\",\n      \"childTableName\": \"drew.bahringer\",\n      \"childTableColumn\": \"rg8yfx\",\n      \"childConnectionWay\": \"hgxaiw\",\n      \"fatherTableName\": \"drew.bahringer\",\n      \"fatherTableColumn\": \"35em6g\",\n      \"fatherConnectionWay\": \"hmicic\",\n      \"gmtCreate\": \"2022-01-20 10:14:45\",\n      \"gmtModified\": \"2022-01-20 10:14:45\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6134,7 +6134,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"2uyiri\",\n  \"tips\": \"2d8v1o\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"ejjoue\",\n  \"tips\": \"2r2nwe\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6160,7 +6160,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 969,\n    \"tableName\": \"lonny.barrows\",\n    \"theme\": \"6ol2or\",\n    \"dataConnection\": \"sczl9b\",\n    \"dataBaseName\": \"lonny.barrows\",\n    \"dataSourceName\": \"lonny.barrows\",\n    \"dataSourceId\": 970,\n    \"description\": \"g03kr5\",\n    \"status\": 239,\n    \"gmtCreate\": \"2022-01-19 14:56:44\",\n    \"gmtModified\": \"2022-01-19 14:56:44\",\n    \"tableType\": \"6ry91d\",\n    \"responsibleBy\": \"bg8c68\",\n    \"dataFormat\": \"htsua3\",\n    \"themeId\": \"146\",\n    \"modelId\": 386,\n    \"hftsRoute\": \"ifg55k\",\n    \"syncStatus\": 321\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 518,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"12gtrn\",\n      \"standardsId\": 583,\n      \"standardsName\": \"lonny.barrows\",\n      \"standardsCode\": \"21321\",\n      \"itsPrimaryKey\": \"8e3sy1\",\n      \"itsPartition\": \"mxuhrj\",\n      \"itsNull\": \"tobruu\",\n      \"description\": \"4o0epz\",\n      \"gmtCreate\": \"2022-01-19 14:56:44\",\n      \"gmtModified\": \"2022-01-19 14:56:44\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 371,\n      \"tableId\": 661,\n      \"columnName\": \"lonny.barrows\",\n      \"childTableName\": \"lonny.barrows\",\n      \"childTableColumn\": \"zjmas2\",\n      \"childConnectionWay\": \"1r02r7\",\n      \"fatherTableName\": \"lonny.barrows\",\n      \"fatherTableColumn\": \"26mj3d\",\n      \"fatherConnectionWay\": \"qsap0g\",\n      \"gmtCreate\": \"2022-01-19 14:56:44\",\n      \"gmtModified\": \"2022-01-19 14:56:44\"\n    }\n  ]\n}"
+                  "value": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 744,\n    \"tableName\": \"drew.bahringer\",\n    \"theme\": \"ggg5gd\",\n    \"dataConnection\": \"09z76z\",\n    \"dataBaseName\": \"drew.bahringer\",\n    \"dataSourceName\": \"drew.bahringer\",\n    \"dataSourceId\": 653,\n    \"description\": \"058w9j\",\n    \"status\": 783,\n    \"gmtCreate\": \"2022-01-20 10:14:45\",\n    \"gmtModified\": \"2022-01-20 10:14:45\",\n    \"tableType\": \"9r2c7t\",\n    \"responsibleBy\": \"5vo45y\",\n    \"dataFormat\": \"derzjy\",\n    \"themeId\": \"44\",\n    \"modelId\": 893,\n    \"hftsRoute\": \"akkt76\",\n    \"syncStatus\": 7\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 221,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"s51683\",\n      \"standardsId\": 751,\n      \"standardsName\": \"drew.bahringer\",\n      \"standardsCode\": \"91061\",\n      \"itsPrimaryKey\": \"zqy110\",\n      \"itsPartition\": \"5q0bbm\",\n      \"itsNull\": \"d81wfh\",\n      \"description\": \"zk5yz1\",\n      \"gmtCreate\": \"2022-01-20 10:14:45\",\n      \"gmtModified\": \"2022-01-20 10:14:45\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 26,\n      \"tableId\": 410,\n      \"columnName\": \"drew.bahringer\",\n      \"childTableName\": \"drew.bahringer\",\n      \"childTableColumn\": \"t5wczi\",\n      \"childConnectionWay\": \"wlxm2j\",\n      \"fatherTableName\": \"drew.bahringer\",\n      \"fatherTableColumn\": \"2p83i7\",\n      \"fatherConnectionWay\": \"qsfdqk\",\n      \"gmtCreate\": \"2022-01-20 10:14:45\",\n      \"gmtModified\": \"2022-01-20 10:14:45\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6177,7 +6177,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"qyje9m\",\n  \"tips\": \"hrtwvr\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"sye90v\",\n  \"tips\": \"00xcn0\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6205,7 +6205,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"nx9dfq\"\n  },\n  \"id\": 590,\n  \"themeId\": 513,\n  \"themeName\": \"lonny.barrows\",\n  \"dimName\": \"lonny.barrows\",\n  \"dimCode\": \"21321\",\n  \"dimType\": \"w2jm99\",\n  \"description\": \"i4pix9\",\n  \"status\": 668,\n  \"connectionType\": \"jj3zg1\",\n  \"dataConnection\": \"m7dwdh\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 623,\n      \"dimId\": 475,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"fp5yn5\",\n      \"standardsId\": 952,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": \"61l030\",\n      \"itsPartition\": \"x4wxsk\",\n      \"itsNull\": \"5aijv4\",\n      \"description\": \"4cd4o8\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"6baul9\"\n  },\n  \"id\": 988,\n  \"themeId\": 522,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"px58l9\",\n  \"description\": \"ufiil5\",\n  \"status\": 471,\n  \"connectionType\": \"bk31yq\",\n  \"dataConnection\": \"6tx8de\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 445,\n      \"dimId\": 810,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"fu8lgi\",\n      \"standardsId\": 373,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"hou4zr\",\n      \"itsPartition\": \"6bggyw\",\n      \"itsNull\": \"5z3sbx\",\n      \"description\": \"xo8k0p\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6222,7 +6222,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"9g5hov\",\n  \"tips\": \"oocmc8\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"i8vdwy\",\n  \"tips\": \"iiiovd\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6250,7 +6250,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"p9b0pq\"\n  },\n  \"id\": 797,\n  \"themeId\": 206,\n  \"themeName\": \"lonny.barrows\",\n  \"dimName\": \"lonny.barrows\",\n  \"dimCode\": \"21321\",\n  \"dimType\": \"zmtqjt\",\n  \"description\": \"u3wga6\",\n  \"status\": 770,\n  \"connectionType\": \"37crja\",\n  \"dataConnection\": \"7r6uvf\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelDimId\": 882,\n  \"columnList\": [\n    {\n      \"id\": 327,\n      \"dimTableId\": 259,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"mq7ok7\",\n      \"standardsId\": 994,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": \"ynbyb6\",\n      \"itsPartition\": \"lxyv1o\",\n      \"itsNull\": \"twqmz5\",\n      \"description\": \"qdlswe\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"wb6l01\"\n  },\n  \"id\": 853,\n  \"themeId\": 505,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"5eo0nd\",\n  \"description\": \"aewqp1\",\n  \"status\": 448,\n  \"connectionType\": \"zfip2d\",\n  \"dataConnection\": \"5e8ug1\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 530,\n  \"columnList\": [\n    {\n      \"id\": 80,\n      \"dimTableId\": 854,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"vacs90\",\n      \"standardsId\": 438,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"sxnxtf\",\n      \"itsPartition\": \"fq53s1\",\n      \"itsNull\": \"bh55mp\",\n      \"description\": \"350zfi\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6267,7 +6267,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"ptfazd\",\n  \"tips\": \"9xbbnl\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"3wxcuv\",\n  \"tips\": \"wipbw8\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6297,7 +6297,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"xho4t9\",\n  \"tips\": \"7cnhy2\",\n  \"data\": [\n    \"3jhr01\",\n    \"lhnn1f\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"vjpaj1\",\n  \"tips\": \"n3f1ws\",\n  \"data\": [\n    \"6e8eeu\",\n    \"bhne4p\"\n  ]\n}"
                   }
                 }
               }
@@ -6327,7 +6327,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"im28q3\",\n  \"tips\": \"hifwoo\",\n  \"data\": [\n    {\n      \"guid\": \"146\",\n      \"displayText\": \"aubh9v\",\n      \"typeName\": \"lonny.barrows\",\n      \"description\": \"n263gm\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"6jg80a\",\n  \"tips\": \"6amdd5\",\n  \"data\": [\n    {\n      \"guid\": \"44\",\n      \"displayText\": \"i7fekb\",\n      \"typeName\": \"drew.bahringer\",\n      \"description\": \"hmlbko\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -6343,7 +6343,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "s25gun",
+            "example": "zu42bp",
             "name": "connectType"
           },
           {
@@ -6353,7 +6353,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "lonny.barrows",
+            "example": "drew.bahringer",
             "name": "dataSourceName"
           }
         ]
@@ -6378,7 +6378,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"thglaa\",\n  \"tips\": \"19300g\",\n  \"data\": {\n    \"id\": 891,\n    \"tableName\": \"lonny.barrows\",\n    \"theme\": \"3jo4oz\",\n    \"dataConnection\": \"n7mn8b\",\n    \"dataBaseName\": \"lonny.barrows\",\n    \"dataSourceName\": \"lonny.barrows\",\n    \"dataSourceId\": 167,\n    \"description\": \"d2vsgg\",\n    \"status\": 407,\n    \"gmtCreate\": \"2022-01-19 14:56:44\",\n    \"gmtModified\": \"2022-01-19 14:56:44\",\n    \"tableType\": \"u7w64y\",\n    \"responsibleBy\": \"bs2jpl\",\n    \"dataFormat\": \"ot6rcm\",\n    \"themeId\": \"146\",\n    \"modelId\": 706,\n    \"hftsRoute\": \"2xeqa4\",\n    \"syncStatus\": 434\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"waaxl2\",\n  \"tips\": \"uxnstv\",\n  \"data\": {\n    \"id\": 789,\n    \"tableName\": \"drew.bahringer\",\n    \"theme\": \"otl0mp\",\n    \"dataConnection\": \"o43wch\",\n    \"dataBaseName\": \"drew.bahringer\",\n    \"dataSourceName\": \"drew.bahringer\",\n    \"dataSourceId\": 281,\n    \"description\": \"oq2gf5\",\n    \"status\": 269,\n    \"gmtCreate\": \"2022-01-20 10:14:45\",\n    \"gmtModified\": \"2022-01-20 10:14:45\",\n    \"tableType\": \"szcrs2\",\n    \"responsibleBy\": \"12zay0\",\n    \"dataFormat\": \"ug0h1q\",\n    \"themeId\": \"44\",\n    \"modelId\": 518,\n    \"hftsRoute\": \"e4fb1o\",\n    \"syncStatus\": 713\n  }\n}"
                   }
                 }
               }
@@ -6395,7 +6395,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "272",
+            "example": "603",
             "name": "id"
           }
         ]
@@ -6418,7 +6418,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zmo2zs\"\n  },\n  \"id\": 623,\n  \"themeId\": 883,\n  \"themeName\": \"lonny.barrows\",\n  \"factName\": \"lonny.barrows\",\n  \"description\": \"rle8kz\",\n  \"status\": 449,\n  \"connectionType\": 877,\n  \"dataConnection\": \"06ejqw\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 745,\n      \"factId\": 916,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"m5ub1s\",\n      \"standardsId\": 691,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": 685,\n      \"itsPartition\": 285,\n      \"itsNull\": 512,\n      \"description\": \"rwddjg\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"868b4t\"\n  },\n  \"id\": 34,\n  \"themeId\": 166,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"hk6kgh\",\n  \"status\": 267,\n  \"connectionType\": 683,\n  \"dataConnection\": \"m6969n\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 516,\n      \"factId\": 69,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"ihepdz\",\n      \"standardsId\": 610,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 11,\n      \"itsPartition\": 785,\n      \"itsNull\": 712,\n      \"description\": \"strq7g\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6435,7 +6435,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"j83iai\",\n  \"tips\": \"s10kfe\",\n  \"data\": {\n    \"total\": 959,\n    \"pageNum\": 27,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 937,\n        \"themeId\": 411,\n        \"themeName\": \"lonny.barrows\",\n        \"dimName\": \"lonny.barrows\",\n        \"dimCode\": \"21321\",\n        \"dimType\": \"2hqnp6\",\n        \"description\": \"tgnr7g\",\n        \"status\": 804,\n        \"connectionType\": 792,\n        \"dataConnection\": \"uwoum6\",\n        \"databaseName\": \"lonny.barrows\",\n        \"gmtCreate\": \"2022-01-19 14:56:44\",\n        \"gmtModified\": \"2022-01-19 14:56:44\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"dhz8hp\",\n  \"tips\": \"bufyl5\",\n  \"data\": {\n    \"total\": 442,\n    \"pageNum\": 82,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 88,\n        \"themeId\": 93,\n        \"themeName\": \"drew.bahringer\",\n        \"dimName\": \"drew.bahringer\",\n        \"dimCode\": \"91061\",\n        \"dimType\": \"r20pnh\",\n        \"description\": \"n92i1v\",\n        \"status\": 713,\n        \"connectionType\": 486,\n        \"dataConnection\": \"klx1mo\",\n        \"databaseName\": \"drew.bahringer\",\n        \"gmtCreate\": \"2022-01-20 10:14:45\",\n        \"gmtModified\": \"2022-01-20 10:14:45\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -6463,7 +6463,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 918,\n  \"tableName\": \"lonny.barrows\",\n  \"theme\": \"kum3oe\",\n  \"dataConnection\": \"h1uesn\",\n  \"dataBaseName\": \"lonny.barrows\",\n  \"dataSourceName\": \"lonny.barrows\",\n  \"dataSourceId\": 542,\n  \"description\": \"4eegin\",\n  \"status\": 386,\n  \"gmtCreate\": \"2022-01-19 14:56:44\",\n  \"gmtModified\": \"2022-01-19 14:56:44\",\n  \"tableType\": \"tanz3z\",\n  \"responsibleBy\": \"5tg0f4\",\n  \"dataFormat\": \"ntf2j2\",\n  \"themeId\": \"146\",\n  \"modelId\": 552,\n  \"hftsRoute\": \"plcxsn\",\n  \"syncStatus\": 513\n}"
+                  "value": "{\n  \"id\": 972,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"igb0bv\",\n  \"dataConnection\": \"wsy2tu\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 227,\n  \"description\": \"13etz5\",\n  \"status\": 297,\n  \"gmtCreate\": \"2022-01-20 10:14:45\",\n  \"gmtModified\": \"2022-01-20 10:14:45\",\n  \"tableType\": \"38nifj\",\n  \"responsibleBy\": \"2owvic\",\n  \"dataFormat\": \"nmxsyg\",\n  \"themeId\": \"44\",\n  \"modelId\": 642,\n  \"hftsRoute\": \"oxr15t\",\n  \"syncStatus\": 514\n}"
                 }
               }
             }
@@ -6480,7 +6480,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"bine3p\",\n  \"tips\": \"wjmscq\",\n  \"data\": {\n    \"total\": 61,\n    \"pageNum\": 960,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 3,\n        \"tableName\": \"lonny.barrows\",\n        \"theme\": \"9oq9qa\",\n        \"dataConnection\": \"iuxxk8\",\n        \"dataBaseName\": \"lonny.barrows\",\n        \"dataSourceName\": \"lonny.barrows\",\n        \"dataSourceId\": 628,\n        \"description\": \"2dkb9e\",\n        \"status\": 99,\n        \"gmtCreate\": \"2022-01-19 14:56:44\",\n        \"gmtModified\": \"2022-01-19 14:56:44\",\n        \"tableType\": \"3ya5lp\",\n        \"responsibleBy\": \"6ts3wy\",\n        \"dataFormat\": \"8sldjz\",\n        \"themeId\": \"146\",\n        \"modelId\": 355,\n        \"hftsRoute\": \"asdha4\",\n        \"syncStatus\": 452\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"w7xm7h\",\n  \"tips\": \"2rjaay\",\n  \"data\": {\n    \"total\": 658,\n    \"pageNum\": 615,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 420,\n        \"tableName\": \"drew.bahringer\",\n        \"theme\": \"056qog\",\n        \"dataConnection\": \"gijdk6\",\n        \"dataBaseName\": \"drew.bahringer\",\n        \"dataSourceName\": \"drew.bahringer\",\n        \"dataSourceId\": 836,\n        \"description\": \"v4yhnq\",\n        \"status\": 326,\n        \"gmtCreate\": \"2022-01-20 10:14:45\",\n        \"gmtModified\": \"2022-01-20 10:14:45\",\n        \"tableType\": \"0e4419\",\n        \"responsibleBy\": \"omhgc3\",\n        \"dataFormat\": \"m8z6rq\",\n        \"themeId\": \"44\",\n        \"modelId\": 442,\n        \"hftsRoute\": \"2yq16i\",\n        \"syncStatus\": 943\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -6508,7 +6508,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X PUT -i http://{{server}}/summary/publish/n5nq35"
+                  "value": "curl -X PUT -i http://{{server}}/summary/publish/ifsdak"
                 }
               }
             }
@@ -6525,7 +6525,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"5j9t2h\",\n  \"tips\": \"odrbu6\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"2c0kjb\",\n  \"tips\": \"ilsn6m\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
                   }
                 }
               }
@@ -6541,7 +6541,7 @@
             "in": "path",
             "description": "汇总表id，多个id使用英文逗号分割",
             "required": true,
-            "example": "rbnt4d",
+            "example": "9vy3ha",
             "name": "ids"
           }
         ]
@@ -6564,7 +6564,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"n8lsy6\"\n  },\n  \"id\": 790,\n  \"themeId\": 169,\n  \"themeName\": \"lonny.barrows\",\n  \"dimName\": \"lonny.barrows\",\n  \"dimCode\": \"21321\",\n  \"dimType\": \"tc8qmh\",\n  \"description\": \"enze66\",\n  \"status\": 269,\n  \"connectionType\": \"2fwih8\",\n  \"dataConnection\": \"qsvwcy\",\n  \"databaseName\": \"lonny.barrows\",\n  \"modelDimId\": 51,\n  \"columnList\": [\n    {\n      \"id\": 0,\n      \"dimTableId\": 591,\n      \"columnName\": \"lonny.barrows\",\n      \"columnType\": \"6x0jty\",\n      \"standardsId\": 492,\n      \"standardsName\": \"lonny.barrows\",\n      \"itsPrimaryKey\": \"5a4oep\",\n      \"itsPartition\": \"hca5ah\",\n      \"itsNull\": \"7zhi4p\",\n      \"description\": \"vbekz0\"\n    }\n  ]\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lctyz2\"\n  },\n  \"id\": 201,\n  \"themeId\": 705,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"tfo5qm\",\n  \"description\": \"dsfj1l\",\n  \"status\": 767,\n  \"connectionType\": \"02m2nh\",\n  \"dataConnection\": \"5sbbgn\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 990,\n  \"columnList\": [\n    {\n      \"id\": 376,\n      \"dimTableId\": 454,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"yegrie\",\n      \"standardsId\": 96,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"gfvg58\",\n      \"itsPartition\": \"wpzin7\",\n      \"itsNull\": \"fsn5mu\",\n      \"description\": \"rt3ka9\"\n    }\n  ]\n}"
                 }
               }
             }
@@ -6581,7 +6581,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"wbqfil\",\n  \"tips\": \"aa0dli\",\n  \"data\": {\n    \"total\": 502,\n    \"pageNum\": 174,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 49,\n        \"themeId\": 572,\n        \"themeName\": \"lonny.barrows\",\n        \"dimName\": \"lonny.barrows\",\n        \"dimCode\": \"21321\",\n        \"dimType\": \"uyhynj\",\n        \"description\": \"ux4v3l\",\n        \"status\": 647,\n        \"connectionType\": \"5y3yqj\",\n        \"dataConnection\": \"t0cch5\",\n        \"databaseName\": \"lonny.barrows\",\n        \"gmtCreate\": \"2022-01-19 14:56:44\",\n        \"gmtModified\": \"2022-01-19 14:56:44\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"ovk1a0\",\n  \"tips\": \"n8v0kt\",\n  \"data\": {\n    \"total\": 545,\n    \"pageNum\": 573,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 34,\n        \"themeId\": 699,\n        \"themeName\": \"drew.bahringer\",\n        \"dimName\": \"drew.bahringer\",\n        \"dimCode\": \"91061\",\n        \"dimType\": \"fwme9y\",\n        \"description\": \"faw61y\",\n        \"status\": 963,\n        \"connectionType\": \"e6bk2l\",\n        \"dataConnection\": \"wdivlq\",\n        \"databaseName\": \"drew.bahringer\",\n        \"gmtCreate\": \"2022-01-20 10:14:45\",\n        \"gmtModified\": \"2022-01-20 10:14:45\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -6609,7 +6609,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xuoi0e\"\n  },\n  \"themeId\": \"146\",\n  \"modelId\": 28\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xkv7xt\"\n  },\n  \"themeIdList\": [\n    \"fyon11\"\n  ],\n  \"modelId\": 374\n}"
                 }
               }
             }
@@ -6626,7 +6626,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"21321\",\n  \"retMsg\": \"r334d5\",\n  \"tips\": \"ystotw\",\n  \"data\": {\n    \"total\": 111,\n    \"pageNum\": 138,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"modelPhysicalTableDTO\": {\n          \"id\": 998,\n          \"tableName\": \"lonny.barrows\",\n          \"theme\": \"f6n6d6\",\n          \"dataConnection\": \"smuk3z\",\n          \"dataBaseName\": \"lonny.barrows\",\n          \"dataSourceName\": \"lonny.barrows\",\n          \"dataSourceId\": 454,\n          \"description\": \"gxugb5\",\n          \"status\": 40,\n          \"gmtCreate\": \"2022-01-19 14:56:44\",\n          \"gmtModified\": \"2022-01-19 14:56:44\",\n          \"tableType\": \"i3iztf\",\n          \"responsibleBy\": \"xo8fja\",\n          \"dataFormat\": \"oz12c2\",\n          \"themeId\": \"146\",\n          \"modelId\": 418,\n          \"hftsRoute\": \"622o2u\",\n          \"syncStatus\": 613\n        },\n        \"modelColumnDtoList\": [\n          {\n            \"id\": 354,\n            \"tableId\": 380,\n            \"columnName\": \"lonny.barrows\",\n            \"columnType\": \"spv1u6\",\n            \"standardsId\": 680,\n            \"standardsName\": \"lonny.barrows\",\n            \"standardsCode\": \"21321\",\n            \"itsPrimaryKey\": \"ss9mvs\",\n            \"itsPartition\": \"ivtkcf\",\n            \"itsNull\": \"7qpmmz\",\n            \"description\": \"tiyw86\",\n            \"gmtCreate\": \"2022-01-19 14:56:44\",\n            \"gmtModified\": \"2022-01-19 14:56:44\"\n          }\n        ],\n        \"modelRelationDtoList\": [\n          {\n            \"id\": 816,\n            \"tableId\": 999,\n            \"columnName\": \"lonny.barrows\",\n            \"childTableName\": \"lonny.barrows\",\n            \"childTableColumn\": \"tz11qq\",\n            \"childConnectionWay\": \"2renxn\",\n            \"fatherTableName\": \"lonny.barrows\",\n            \"fatherTableColumn\": \"7krgln\",\n            \"fatherConnectionWay\": \"kar9kd\",\n            \"gmtCreate\": \"2022-01-19 14:56:44\",\n            \"gmtModified\": \"2022-01-19 14:56:44\"\n          }\n        ]\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"91061\",\n  \"retMsg\": \"qlgecj\",\n  \"tips\": \"ub9h9h\",\n  \"data\": {\n    \"total\": 100,\n    \"pageNum\": 879,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"modelPhysicalTableDTO\": {\n          \"id\": 709,\n          \"tableName\": \"drew.bahringer\",\n          \"theme\": \"ljl6mi\",\n          \"dataConnection\": \"opba4o\",\n          \"dataBaseName\": \"drew.bahringer\",\n          \"dataSourceName\": \"drew.bahringer\",\n          \"dataSourceId\": 145,\n          \"description\": \"0akuye\",\n          \"status\": 199,\n          \"gmtCreate\": \"2022-01-20 10:14:45\",\n          \"gmtModified\": \"2022-01-20 10:14:45\",\n          \"tableType\": \"lihvbm\",\n          \"responsibleBy\": \"qofu08\",\n          \"dataFormat\": \"dhe50l\",\n          \"themeId\": \"44\",\n          \"modelId\": 490,\n          \"hftsRoute\": \"jqvqc0\",\n          \"syncStatus\": 782\n        },\n        \"modelColumnDtoList\": [\n          {\n            \"id\": 26,\n            \"tableId\": 199,\n            \"columnName\": \"drew.bahringer\",\n            \"columnType\": \"y7gtv4\",\n            \"standardsId\": 739,\n            \"standardsName\": \"drew.bahringer\",\n            \"standardsCode\": \"91061\",\n            \"itsPrimaryKey\": \"u6wxjf\",\n            \"itsPartition\": \"zidxjq\",\n            \"itsNull\": \"z234lq\",\n            \"description\": \"gsvibe\",\n            \"gmtCreate\": \"2022-01-20 10:14:45\",\n            \"gmtModified\": \"2022-01-20 10:14:45\"\n          }\n        ],\n        \"modelRelationDtoList\": [\n          {\n            \"id\": 985,\n            \"tableId\": 238,\n            \"columnName\": \"drew.bahringer\",\n            \"childTableName\": \"drew.bahringer\",\n            \"childTableColumn\": \"yw9jh6\",\n            \"childConnectionWay\": \"w8mnrs\",\n            \"fatherTableName\": \"drew.bahringer\",\n            \"fatherTableColumn\": \"wu6y0e\",\n            \"fatherConnectionWay\": \"2hq0jb\",\n            \"gmtCreate\": \"2022-01-20 10:14:45\",\n            \"gmtModified\": \"2022-01-20 10:14:45\"\n          }\n        ]\n      }\n    ]\n  }\n}"
                   }
                 }
               }
