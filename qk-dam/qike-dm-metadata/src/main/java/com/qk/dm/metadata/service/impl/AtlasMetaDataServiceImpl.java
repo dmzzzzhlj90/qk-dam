@@ -18,11 +18,13 @@ import lombok.Data;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
+import org.apache.atlas.model.audit.EntityAuditEventV2;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
+import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -433,5 +435,27 @@ public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
     }
 
     return null;
+  }
+  @Override
+  public List<EntityAuditEventV2> getAuditByGuid(String guid, String startKey) {
+    try {
+      List<EntityAuditEventV2> tmp = Lists.newArrayList();
+      List<EntityAuditEventV2> auditEvents1 =
+              atlasClientV2.getAuditEvents(
+                      guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_CREATE, (short) 1);
+      List<EntityAuditEventV2> auditEvents2 =
+              atlasClientV2.getAuditEvents(
+                      guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_UPDATE, (short) 10);
+      List<EntityAuditEventV2> auditEvents3 =
+              atlasClientV2.getAuditEvents(
+                      guid, startKey, EntityAuditEventV2.EntityAuditActionV2.ENTITY_DELETE, (short) 10);
+      tmp.addAll(auditEvents1);
+      tmp.addAll(auditEvents2);
+      tmp.addAll(auditEvents3);
+      return tmp;
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+    }
+    return List.of();
   }
 }

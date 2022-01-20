@@ -80,4 +80,7 @@ public interface AtlasMetaDataService {
 
   /** 获取元数据详情 */
   AtlasEntity getDetailByQName(String qualifiedName, String typename);
+
+  /** 获取操作元数据详情 */
+  List<EntityAuditEventV2> getAuditByGuid(String guid, String startKey);
 }
