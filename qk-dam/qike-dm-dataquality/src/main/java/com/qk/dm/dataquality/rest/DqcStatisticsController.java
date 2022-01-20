@@ -2,7 +2,9 @@ package com.qk.dm.dataquality.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.log.annotation.beforeLogger;
 import com.qk.dm.dataquality.service.DqcStatisticsService;
+import com.qk.dm.dataquality.vo.TaskInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
@@ -65,5 +67,23 @@ public class DqcStatisticsController {
     @GetMapping("/warn/trend")
     public DefaultCommonResult<List<WarnTrendVO>> warnTrend() {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dqcStatisticsService.warnTrend());
+    }
+
+    @beforeLogger(param = "#taskInstanceVO.id")
+    @GetMapping("/warn/test1")
+    public DefaultCommonResult test1(TaskInstanceVO taskInstanceVO,int ab) {
+        return DefaultCommonResult.success();
+    }
+
+    @beforeLogger(param = "#ab")
+    @GetMapping("/warn/test2")
+    public DefaultCommonResult test2(TaskInstanceVO taskInstanceVO,int ab) {
+        return DefaultCommonResult.success();
+    }
+
+    @beforeLogger(param = "#taskInstanceVO.pagination.page")
+    @GetMapping("/warn/test3")
+    public DefaultCommonResult test3(TaskInstanceVO taskInstanceVO,int ab,int cc) {
+        return DefaultCommonResult.success();
     }
 }

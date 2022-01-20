@@ -2,6 +2,7 @@
 package com.qk.dm.dataquality.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +33,7 @@ public class TaskInstanceVO implements Serializable {
     private Date endTime;
     private String processInstanceName;
 
-
+    private Pagination pagination;
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 //    private Date firstSubmitTime;

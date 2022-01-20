@@ -50,6 +50,7 @@ dependencies {
     implementation project(":metadata-common-core")
     implementation project(":qk-data-redis")
     implementation project(":groovy-function-core")
+    implementation project(":dam-log")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
