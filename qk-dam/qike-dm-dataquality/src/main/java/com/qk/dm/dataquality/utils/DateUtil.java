@@ -2,10 +2,7 @@ package com.qk.dm.dataquality.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author shenpj
@@ -21,11 +18,9 @@ public class DateUtil {
     /**
      * string 转 Date format  "yyyy-MM-dd HH:mm:ss"
      *
-     * @param format
-     * @param strDate
      * @return
      */
-    public static Date parseDate(String format, String strDate) {
+    public static Date parseDate(String strDate,String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         try {
             return sdf.parse(strDate);
@@ -69,6 +64,29 @@ public class DateUtil {
             return null;
         }
     }
+
+    /**
+     * 获取小时
+     * @param date
+     * @return
+     */
+    public static int hour(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.HOUR_OF_DAY);
+    }
+
+    /**
+     * 获取分钟
+     * @param date
+     * @return
+     */
+    public static int minute(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.MINUTE);
+    }
+
 
     /**
      * 根据传入时间获得本天的开始时间
