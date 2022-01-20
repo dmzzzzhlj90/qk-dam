@@ -74,7 +74,7 @@ public interface MetaDataFeign {
    * @param mtdApiParams
    * @return
    */
-  @PostMapping("/entity/exist/data")
+  @PostMapping("mtd/entity/exist/data")
   DefaultCommonResult<Integer> getExistData(@RequestBody @Validated MtdApiParams mtdApiParams);
 
   /**
@@ -82,7 +82,7 @@ public interface MetaDataFeign {
    * @param guid
    * @return
    */
-  @GetMapping("/column/list/{guid}")
+  @GetMapping("mtd/column/list/{guid}")
   DefaultCommonResult< List<MtdAttributes>> getColumnListByTableGuid(@PathVariable("guid") String guid);
 
 }
