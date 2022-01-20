@@ -9,8 +9,8 @@ import org.apache.atlas.model.instance.AtlasEntityHeader;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-11-10T15:00:28+0800",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.13 (Azul Systems, Inc.)"
+    date = "2022-01-20T14:27:54+0800",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.2 (Oracle Corporation)"
 )
 public class MtdLineageMapperImpl implements MtdLineageMapper {
 
