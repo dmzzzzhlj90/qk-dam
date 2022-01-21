@@ -713,7 +713,6 @@ public class PhysicalServiceImpl implements PhysicalService {
     ModelDataSourceinfoVO modelDataSourceinfoVO = ModelDataSourceinfoVO.builder()
         .dataConnection(ModelStatus.DATACONNECTION)
         .dataSourceName(ModelStatus.DATASOURCENAME).build();
-    System.out.println(modelDataSourceinfoVO);
     return modelDataSourceinfoVO;
   }
 
