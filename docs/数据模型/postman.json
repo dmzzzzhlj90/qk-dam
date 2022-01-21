@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "75341873-d708-47ef-b574-ba013a13f9c0",
+    "_postman_id": "3c2365e6-12ef-44f8-a3c5-b472393c9828",
     "name": "dm-datamodel"
   },
   "item": [
@@ -14,7 +14,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 482,\n    \"tableName\": \"drew.bahringer\",\n    \"theme\": \"z2wvpa\",\n    \"dataConnection\": \"fc97pm\",\n    \"dataBaseName\": \"drew.bahringer\",\n    \"dataSourceName\": \"drew.bahringer\",\n    \"dataSourceId\": 380,\n    \"description\": \"6xdo3e\",\n    \"status\": 567,\n    \"gmtCreate\": \"2022-01-20 10:11:00\",\n    \"gmtModified\": \"2022-01-20 10:11:00\",\n    \"tableType\": \"0y5sou\",\n    \"responsibleBy\": \"j8u420\",\n    \"dataFormat\": \"r1nfkd\",\n    \"themeId\": \"44\",\n    \"modelId\": 148,\n    \"hftsRoute\": \"eho57n\",\n    \"syncStatus\": 285\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 200,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"i0w9d0\",\n      \"standardsId\": 214,\n      \"standardsName\": \"drew.bahringer\",\n      \"standardsCode\": \"91061\",\n      \"itsPrimaryKey\": \"j439x2\",\n      \"itsPartition\": \"68oowp\",\n      \"itsNull\": \"ervive\",\n      \"description\": \"3mf2vz\",\n      \"gmtCreate\": \"2022-01-20 10:11:00\",\n      \"gmtModified\": \"2022-01-20 10:11:00\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 625,\n      \"tableId\": 643,\n      \"columnName\": \"drew.bahringer\",\n      \"childTableName\": \"drew.bahringer\",\n      \"childTableColumn\": \"uk26hg\",\n      \"childConnectionWay\": \"lbwcjz\",\n      \"fatherTableName\": \"drew.bahringer\",\n      \"fatherTableColumn\": \"fgxfoi\",\n      \"fatherConnectionWay\": \"27rkfa\",\n      \"gmtCreate\": \"2022-01-20 10:11:00\",\n      \"gmtModified\": \"2022-01-20 10:11:00\"\n    }\n  ]\n}",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 661,\n    \"tableName\": \"leesa.gottlieb\",\n    \"theme\": \"ewohtu\",\n    \"dataConnection\": \"mafl84\",\n    \"dataBaseName\": \"leesa.gottlieb\",\n    \"dataSourceName\": \"leesa.gottlieb\",\n    \"dataSourceId\": 188,\n    \"description\": \"ii7e6m\",\n    \"status\": 464,\n    \"gmtCreate\": \"2022-01-20 17:53:27\",\n    \"gmtModified\": \"2022-01-20 17:53:27\",\n    \"tableType\": \"y3dbbv\",\n    \"responsibleBy\": \"19p6ax\",\n    \"dataFormat\": \"9w9xos\",\n    \"themeId\": \"26\",\n    \"modelId\": 191,\n    \"hftsRoute\": \"txltgm\",\n    \"syncStatus\": 658\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 533,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"gpb3d2\",\n      \"standardsId\": 827,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"standardsCode\": \"7123\",\n      \"itsPrimaryKey\": \"pwanar\",\n      \"itsPartition\": \"yny6q3\",\n      \"itsNull\": \"u19ok5\",\n      \"description\": \"llrqh0\",\n      \"gmtCreate\": \"2022-01-20 17:53:27\",\n      \"gmtModified\": \"2022-01-20 17:53:27\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 489,\n      \"tableId\": 255,\n      \"columnName\": \"leesa.gottlieb\",\n      \"childTableName\": \"leesa.gottlieb\",\n      \"childTableColumn\": \"0tqkun\",\n      \"childConnectionWay\": \"13xoe2\",\n      \"fatherTableName\": \"leesa.gottlieb\",\n      \"fatherTableColumn\": \"cgi1gd\",\n      \"fatherConnectionWay\": \"0f410g\",\n      \"gmtCreate\": \"2022-01-20 17:53:27\",\n      \"gmtModified\": \"2022-01-20 17:53:27\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -45,7 +45,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  554,\n  312\n]",
+              "raw": "[\n  684,\n  457\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -76,7 +76,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 441,\n    \"tableName\": \"drew.bahringer\",\n    \"theme\": \"p7u56t\",\n    \"dataConnection\": \"xrxc5r\",\n    \"dataBaseName\": \"drew.bahringer\",\n    \"dataSourceName\": \"drew.bahringer\",\n    \"dataSourceId\": 929,\n    \"description\": \"a8tjlp\",\n    \"status\": 619,\n    \"gmtCreate\": \"2022-01-20 10:11:00\",\n    \"gmtModified\": \"2022-01-20 10:11:00\",\n    \"tableType\": \"9l869g\",\n    \"responsibleBy\": \"k0l8vo\",\n    \"dataFormat\": \"gpn7n4\",\n    \"themeId\": \"44\",\n    \"modelId\": 454,\n    \"hftsRoute\": \"5eg95o\",\n    \"syncStatus\": 174\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 631,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"fhdv90\",\n      \"standardsId\": 404,\n      \"standardsName\": \"drew.bahringer\",\n      \"standardsCode\": \"91061\",\n      \"itsPrimaryKey\": \"sipy6d\",\n      \"itsPartition\": \"97tn1l\",\n      \"itsNull\": \"ciudla\",\n      \"description\": \"6ces40\",\n      \"gmtCreate\": \"2022-01-20 10:11:00\",\n      \"gmtModified\": \"2022-01-20 10:11:00\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 815,\n      \"tableId\": 199,\n      \"columnName\": \"drew.bahringer\",\n      \"childTableName\": \"drew.bahringer\",\n      \"childTableColumn\": \"2nt8sj\",\n      \"childConnectionWay\": \"btuizf\",\n      \"fatherTableName\": \"drew.bahringer\",\n      \"fatherTableColumn\": \"e6bxo1\",\n      \"fatherConnectionWay\": \"u2nr7v\",\n      \"gmtCreate\": \"2022-01-20 10:11:00\",\n      \"gmtModified\": \"2022-01-20 10:11:00\"\n    }\n  ]\n}",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 325,\n    \"tableName\": \"leesa.gottlieb\",\n    \"theme\": \"cfrhqy\",\n    \"dataConnection\": \"79c2ka\",\n    \"dataBaseName\": \"leesa.gottlieb\",\n    \"dataSourceName\": \"leesa.gottlieb\",\n    \"dataSourceId\": 758,\n    \"description\": \"1btjee\",\n    \"status\": 249,\n    \"gmtCreate\": \"2022-01-20 17:53:27\",\n    \"gmtModified\": \"2022-01-20 17:53:27\",\n    \"tableType\": \"41tkq3\",\n    \"responsibleBy\": \"90teeu\",\n    \"dataFormat\": \"mrg7y1\",\n    \"themeId\": \"26\",\n    \"modelId\": 11,\n    \"hftsRoute\": \"9hlymg\",\n    \"syncStatus\": 373\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 961,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"8xxdu6\",\n      \"standardsId\": 895,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"standardsCode\": \"7123\",\n      \"itsPrimaryKey\": \"1x6pv8\",\n      \"itsPartition\": \"vq8o5g\",\n      \"itsNull\": \"4kt54h\",\n      \"description\": \"xf1opx\",\n      \"gmtCreate\": \"2022-01-20 17:53:27\",\n      \"gmtModified\": \"2022-01-20 17:53:27\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 149,\n      \"tableId\": 730,\n      \"columnName\": \"leesa.gottlieb\",\n      \"childTableName\": \"leesa.gottlieb\",\n      \"childTableColumn\": \"aepajj\",\n      \"childConnectionWay\": \"xoenn7\",\n      \"fatherTableName\": \"leesa.gottlieb\",\n      \"fatherTableColumn\": \"pa3rhz\",\n      \"fatherConnectionWay\": \"df8otf\",\n      \"gmtCreate\": \"2022-01-20 17:53:27\",\n      \"gmtModified\": \"2022-01-20 17:53:27\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -107,7 +107,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"nrbf7o\"\n  },\n  \"themeIdList\": [\n    \"jmf4th\"\n  ],\n  \"modelId\": 359\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"qe5hw7\"\n  },\n  \"themeIdList\": [\n    \"wc0s99\"\n  ],\n  \"modelId\": 866\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -141,7 +141,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/modelphysical/45",
+              "raw": "http://::server/modelphysical/194",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -154,7 +154,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "69",
+                  "value": "635",
                   "description": "No comments found."
                 }
               ]
@@ -170,7 +170,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"mfpglt\"\n  },\n  \"themeIdList\": [\n    \"11gjlw\"\n  ],\n  \"modelId\": 236\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"3ungln\"\n  },\n  \"themeIdList\": [\n    \"u2z4zh\"\n  ],\n  \"modelId\": 788\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -230,7 +230,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/modelphysical/query/sql/999",
+              "raw": "http://::server/modelphysical/query/sql/56",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -245,7 +245,7 @@
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "587",
+                  "value": "957",
                   "description": "No comments found."
                 }
               ]
@@ -261,7 +261,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  467,\n  373\n]",
+              "raw": "[\n  921,\n  493\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -292,7 +292,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "[\n  430,\n  518\n]",
+              "raw": "[\n  626,\n  887\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -323,7 +323,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"theme\": \"flypsg\",\n  \"dataConnection\": \"htfd5t\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 960,\n  \"themeId\": 168,\n  \"modelId\": 89,\n  \"replace\": \"rmydxp\",\n  \"tableList\": [\n    \"i8qiq6\"\n  ],\n  \"allChoice\": \"vkjb8z\"\n}",
+              "raw": "{\n  \"theme\": \"827izg\",\n  \"dataConnection\": \"8t9ngk\",\n  \"dataBaseName\": \"leesa.gottlieb\",\n  \"dataSourceName\": \"leesa.gottlieb\",\n  \"dataSourceId\": 705,\n  \"themeId\": \"26\",\n  \"modelId\": 639,\n  \"replace\": \"ff9chz\",\n  \"tableList\": [\n    \"rafxbj\"\n  ],\n  \"allChoice\": \"lzurfy\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -385,12 +385,12 @@
                   "key": "tableName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "drew.bahringer"
+                  "value": "leesa.gottlieb"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/modelphysical/column?tableName\u003ddrew.bahringer",
+              "raw": "http://::server/modelphysical/column?tableName\u003dleesa.gottlieb",
               "protocol": "http",
               "path": [
                 "modelphysical",
@@ -402,7 +402,7 @@
               "query": [
                 {
                   "key": "tableName",
-                  "value": "drew.bahringer",
+                  "value": "leesa.gottlieb",
                   "description": "No comments found."
                 }
               ],
@@ -438,6 +438,32 @@
             "header": []
           },
           "description": "基础信息—查询数据格式"
+        },
+        {
+          "name": "基础信息—数据连接类型、数据源名称",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/data/source",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "data",
+                "source"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "基础信息—数据连接类型、数据源名称",
+            "header": []
+          },
+          "description": "基础信息—数据连接类型、数据源名称"
         }
       ]
     },
@@ -450,7 +476,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"flwb7j\"\n  },\n  \"id\": 558,\n  \"themeId\": 569,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"dugimg\",\n  \"status\": 65,\n  \"connectionType\": 555,\n  \"dataConnection\": \"d9z6j7\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 687,\n      \"factId\": 79,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"aoknql\",\n      \"standardsId\": 430,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 708,\n      \"itsPartition\": 532,\n      \"itsNull\": 251,\n      \"description\": \"2pwcvw\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"v0nt6n\"\n  },\n  \"id\": 442,\n  \"themeId\": 950,\n  \"themeName\": \"leesa.gottlieb\",\n  \"factName\": \"leesa.gottlieb\",\n  \"description\": \"tbw6g9\",\n  \"status\": 885,\n  \"connectionType\": 599,\n  \"dataConnection\": \"x0xpzv\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 454,\n      \"factId\": 955,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"b977uk\",\n      \"standardsId\": 197,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": 146,\n      \"itsPartition\": 567,\n      \"itsNull\": 616,\n      \"description\": \"di12ng\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -481,7 +507,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"f1o20y\"\n  },\n  \"id\": 94,\n  \"themeId\": 386,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"d2qyqr\",\n  \"status\": 377,\n  \"connectionType\": 189,\n  \"dataConnection\": \"p36ijh\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 747,\n      \"factId\": 978,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"k0039i\",\n      \"standardsId\": 394,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 893,\n      \"itsPartition\": 978,\n      \"itsNull\": 544,\n      \"description\": \"wpu7n0\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"n9098p\"\n  },\n  \"id\": 739,\n  \"themeId\": 884,\n  \"themeName\": \"leesa.gottlieb\",\n  \"factName\": \"leesa.gottlieb\",\n  \"description\": \"owdu8x\",\n  \"status\": 813,\n  \"connectionType\": 393,\n  \"dataConnection\": \"mrs3hb\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 200,\n      \"factId\": 525,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"qvnkl7\",\n      \"standardsId\": 128,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": 171,\n      \"itsPartition\": 84,\n      \"itsNull\": 129,\n      \"description\": \"4yzxcl\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -489,7 +515,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/fact/504",
+              "raw": "http://::server/fact/844",
               "protocol": "http",
               "path": [
                 "fact",
@@ -502,7 +528,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "466",
+                  "value": "182",
                   "description": "事实表id"
                 }
               ]
@@ -521,7 +547,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/fact/907",
+              "raw": "http://::server/fact/933",
               "protocol": "http",
               "path": [
                 "fact",
@@ -534,7 +560,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "58",
+                  "value": "46",
                   "description": "事实表id"
                 }
               ]
@@ -550,7 +576,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"nhxmmq\"\n  },\n  \"id\": 414,\n  \"themeId\": 234,\n  \"themeName\": \"drew.bahringer\",\n  \"factName\": \"drew.bahringer\",\n  \"description\": \"k60rpa\",\n  \"status\": 731,\n  \"connectionType\": 565,\n  \"dataConnection\": \"4uk91y\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 879,\n      \"factId\": 62,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"ehsncm\",\n      \"standardsId\": 999,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": 257,\n      \"itsPartition\": 182,\n      \"itsNull\": 5,\n      \"description\": \"nv8rls\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"t193wa\"\n  },\n  \"id\": 571,\n  \"themeId\": 938,\n  \"themeName\": \"leesa.gottlieb\",\n  \"factName\": \"leesa.gottlieb\",\n  \"description\": \"l939a7\",\n  \"status\": 768,\n  \"connectionType\": 486,\n  \"dataConnection\": \"yecx2r\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 921,\n      \"factId\": 790,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"kjl6gc\",\n      \"standardsId\": 830,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": 609,\n      \"itsPartition\": 604,\n      \"itsNull\": 426,\n      \"description\": \"5udikw\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -584,7 +610,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/fact/publish/40abrk",
+              "raw": "http://::server/fact/publish/2wcl7t",
               "protocol": "http",
               "path": [
                 "fact",
@@ -598,7 +624,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "uqhmvq",
+                  "value": "o7io8h",
                   "description": "事实表id，多个id使用英文逗号分割"
                 }
               ]
@@ -617,7 +643,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/fact/offline/37tog4",
+              "raw": "http://::server/fact/offline/yrzdaf",
               "protocol": "http",
               "path": [
                 "fact",
@@ -631,7 +657,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "p5o5pw",
+                  "value": "ie1zhv",
                   "description": "事实表id，多个id使用英文逗号分割"
                 }
               ]
@@ -650,7 +676,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/fact/preview/sql/50",
+              "raw": "http://::server/fact/preview/sql/400",
               "protocol": "http",
               "path": [
                 "fact",
@@ -665,7 +691,7 @@
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "274",
+                  "value": "299",
                   "description": "事实表id"
                 }
               ]
@@ -686,7 +712,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 369,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"4r7cfr\",\n  \"dataConnection\": \"fd6feg\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 818,\n  \"description\": \"9xo513\",\n  \"status\": 601,\n  \"gmtCreate\": \"2022-01-20 10:11:00\",\n  \"gmtModified\": \"2022-01-20 10:11:00\",\n  \"tableType\": \"m4v9zf\",\n  \"responsibleBy\": \"csl293\",\n  \"dataFormat\": \"25413p\",\n  \"themeId\": \"44\",\n  \"modelId\": 215,\n  \"hftsRoute\": \"vtiwb0\",\n  \"syncStatus\": 982\n}",
+              "raw": "{\n  \"id\": 941,\n  \"tableName\": \"leesa.gottlieb\",\n  \"theme\": \"mn7k84\",\n  \"dataConnection\": \"n7u2c0\",\n  \"dataBaseName\": \"leesa.gottlieb\",\n  \"dataSourceName\": \"leesa.gottlieb\",\n  \"dataSourceId\": 856,\n  \"description\": \"rgwbqb\",\n  \"status\": 693,\n  \"gmtCreate\": \"2022-01-20 17:53:27\",\n  \"gmtModified\": \"2022-01-20 17:53:27\",\n  \"tableType\": \"jv6b23\",\n  \"responsibleBy\": \"q9yp1t\",\n  \"dataFormat\": \"d0ztb9\",\n  \"themeId\": \"26\",\n  \"modelId\": 280,\n  \"hftsRoute\": \"zoxil6\",\n  \"syncStatus\": 623\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -717,7 +743,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 480,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"n750rf\",\n  \"dataConnection\": \"zm4pu4\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 552,\n  \"description\": \"55657r\",\n  \"status\": 591,\n  \"gmtCreate\": \"2022-01-20 10:11:00\",\n  \"gmtModified\": \"2022-01-20 10:11:00\",\n  \"tableType\": \"5wh099\",\n  \"responsibleBy\": \"nmw6vh\",\n  \"dataFormat\": \"7fpxhr\",\n  \"themeId\": \"44\",\n  \"modelId\": 216,\n  \"hftsRoute\": \"40m6y6\",\n  \"syncStatus\": 83\n}",
+              "raw": "{\n  \"id\": 849,\n  \"tableName\": \"leesa.gottlieb\",\n  \"theme\": \"zkv17f\",\n  \"dataConnection\": \"6ccs6x\",\n  \"dataBaseName\": \"leesa.gottlieb\",\n  \"dataSourceName\": \"leesa.gottlieb\",\n  \"dataSourceId\": 244,\n  \"description\": \"8hvj3v\",\n  \"status\": 846,\n  \"gmtCreate\": \"2022-01-20 17:53:27\",\n  \"gmtModified\": \"2022-01-20 17:53:27\",\n  \"tableType\": \"toscsr\",\n  \"responsibleBy\": \"lk9ttk\",\n  \"dataFormat\": \"crni01\",\n  \"themeId\": \"26\",\n  \"modelId\": 74,\n  \"hftsRoute\": \"wtfe1h\",\n  \"syncStatus\": 551\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -725,7 +751,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/physical/586",
+              "raw": "http://::server/physical/328",
               "protocol": "http",
               "path": [
                 "physical",
@@ -738,7 +764,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "680",
+                  "value": "59",
                   "description": "No comments found."
                 }
               ]
@@ -757,7 +783,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/physical/x7pnr2",
+              "raw": "http://::server/physical/cyf9iy",
               "protocol": "http",
               "path": [
                 "physical",
@@ -770,7 +796,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "6ty8cb",
+                  "value": "ftnp3g",
                   "description": "No comments found."
                 }
               ]
@@ -789,7 +815,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/physical/840",
+              "raw": "http://::server/physical/20",
               "protocol": "http",
               "path": [
                 "physical",
@@ -802,7 +828,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "34",
+                  "value": "6",
                   "description": "No comments found."
                 }
               ]
@@ -818,7 +844,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 889,\n  \"tableName\": \"drew.bahringer\",\n  \"theme\": \"qa3m84\",\n  \"dataConnection\": \"s0lenc\",\n  \"dataBaseName\": \"drew.bahringer\",\n  \"dataSourceName\": \"drew.bahringer\",\n  \"dataSourceId\": 60,\n  \"description\": \"t0fnr7\",\n  \"status\": 472,\n  \"gmtCreate\": \"2022-01-20 10:11:00\",\n  \"gmtModified\": \"2022-01-20 10:11:00\",\n  \"tableType\": \"1uut7k\",\n  \"responsibleBy\": \"ol3xeq\",\n  \"dataFormat\": \"qnkjdm\",\n  \"themeId\": \"44\",\n  \"modelId\": 501,\n  \"hftsRoute\": \"muyevs\",\n  \"syncStatus\": 690\n}",
+              "raw": "{\n  \"id\": 184,\n  \"tableName\": \"leesa.gottlieb\",\n  \"theme\": \"j6nmku\",\n  \"dataConnection\": \"ap3mxa\",\n  \"dataBaseName\": \"leesa.gottlieb\",\n  \"dataSourceName\": \"leesa.gottlieb\",\n  \"dataSourceId\": 212,\n  \"description\": \"j4czfn\",\n  \"status\": 822,\n  \"gmtCreate\": \"2022-01-20 17:53:27\",\n  \"gmtModified\": \"2022-01-20 17:53:27\",\n  \"tableType\": \"py1urr\",\n  \"responsibleBy\": \"l61x28\",\n  \"dataFormat\": \"g8yr97\",\n  \"themeId\": \"26\",\n  \"modelId\": 512,\n  \"hftsRoute\": \"z2jwjx\",\n  \"syncStatus\": 862\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -854,7 +880,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"modelName\": \"drew.bahringer\",\n  \"layeredName\": \"drew.bahringer\",\n  \"description\": \"mtbl4t\",\n  \"modelType\": 491\n}",
+              "raw": "{\n  \"modelName\": \"leesa.gottlieb\",\n  \"layeredName\": \"leesa.gottlieb\",\n  \"description\": \"w9tfai\",\n  \"modelType\": 130\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -915,7 +941,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"jm52cq\"\n  },\n  \"id\": 713,\n  \"themeId\": 801,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 881,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"dbhrwx\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"j5e0j0\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 40,\n      \"summaryId\": 480,\n      \"indicatorsType\": 41,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"opueo2\",\n      \"itsNull\": \"c8w3b2\",\n      \"description\": \"yuu6ok\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"n4zapw\"\n  },\n  \"id\": 635,\n  \"themeId\": 385,\n  \"themeName\": \"leesa.gottlieb\",\n  \"tableName\": \"leesa.gottlieb\",\n  \"dimId\": 405,\n  \"dimName\": \"leesa.gottlieb\",\n  \"dataConnection\": \"mmnrhk\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"description\": \"ho89dr\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 861,\n      \"summaryId\": 940,\n      \"indicatorsType\": 733,\n      \"indicatorsName\": \"leesa.gottlieb\",\n      \"indicatorsCode\": \"7123\",\n      \"dataType\": \"emwbyw\",\n      \"itsNull\": \"2ks1g3\",\n      \"description\": \"sgf51s\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -946,7 +972,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ikkm3a\"\n  },\n  \"id\": 170,\n  \"themeId\": 499,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 593,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"wrqabk\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"rie1cq\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 216,\n      \"summaryId\": 147,\n      \"indicatorsType\": 627,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"db3e7k\",\n      \"itsNull\": \"rttgi8\",\n      \"description\": \"217y2u\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"fx7zr2\"\n  },\n  \"id\": 441,\n  \"themeId\": 349,\n  \"themeName\": \"leesa.gottlieb\",\n  \"tableName\": \"leesa.gottlieb\",\n  \"dimId\": 796,\n  \"dimName\": \"leesa.gottlieb\",\n  \"dataConnection\": \"uthcf4\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"description\": \"91ykjz\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 875,\n      \"summaryId\": 738,\n      \"indicatorsType\": 123,\n      \"indicatorsName\": \"leesa.gottlieb\",\n      \"indicatorsCode\": \"7123\",\n      \"dataType\": \"xn45z9\",\n      \"itsNull\": \"lzbd3v\",\n      \"description\": \"4rutur\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -954,7 +980,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/summary/928",
+              "raw": "http://::server/summary/538",
               "protocol": "http",
               "path": [
                 "summary",
@@ -967,7 +993,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "545",
+                  "value": "638",
                   "description": "汇总表id"
                 }
               ]
@@ -986,7 +1012,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/summary/68",
+              "raw": "http://::server/summary/986",
               "protocol": "http",
               "path": [
                 "summary",
@@ -999,7 +1025,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "893",
+                  "value": "617",
                   "description": "汇总表id"
                 }
               ]
@@ -1015,7 +1041,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ou3xmj\"\n  },\n  \"id\": 133,\n  \"themeId\": 866,\n  \"themeName\": \"drew.bahringer\",\n  \"tableName\": \"drew.bahringer\",\n  \"dimId\": 931,\n  \"dimName\": \"drew.bahringer\",\n  \"dataConnection\": \"12ehk1\",\n  \"databaseName\": \"drew.bahringer\",\n  \"description\": \"7pjzhx\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 112,\n      \"summaryId\": 953,\n      \"indicatorsType\": 995,\n      \"indicatorsName\": \"drew.bahringer\",\n      \"indicatorsCode\": \"91061\",\n      \"dataType\": \"652p7z\",\n      \"itsNull\": \"oxr924\",\n      \"description\": \"kd6yoc\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"egv8cj\"\n  },\n  \"id\": 983,\n  \"themeId\": 533,\n  \"themeName\": \"leesa.gottlieb\",\n  \"tableName\": \"leesa.gottlieb\",\n  \"dimId\": 344,\n  \"dimName\": \"leesa.gottlieb\",\n  \"dataConnection\": \"b59bye\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"description\": \"6u4ajc\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 546,\n      \"summaryId\": 714,\n      \"indicatorsType\": 279,\n      \"indicatorsName\": \"leesa.gottlieb\",\n      \"indicatorsCode\": \"7123\",\n      \"dataType\": \"6b9eqj\",\n      \"itsNull\": \"9jhnj5\",\n      \"description\": \"7semm7\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1049,7 +1075,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/summary/publish/nltunq",
+              "raw": "http://::server/summary/publish/qr8bdi",
               "protocol": "http",
               "path": [
                 "summary",
@@ -1063,7 +1089,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "mfamll",
+                  "value": "l8rvwj",
                   "description": "汇总表id，多个id使用英文逗号分割"
                 }
               ]
@@ -1082,7 +1108,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/summary/offline/gjo47k",
+              "raw": "http://::server/summary/offline/8yhx2f",
               "protocol": "http",
               "path": [
                 "summary",
@@ -1096,7 +1122,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "wkzktf",
+                  "value": "hnayds",
                   "description": "汇总表id，多个id使用英文逗号分割"
                 }
               ]
@@ -1115,7 +1141,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/summary/preview/sql/550",
+              "raw": "http://::server/summary/preview/sql/821",
               "protocol": "http",
               "path": [
                 "summary",
@@ -1130,7 +1156,7 @@
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "729",
+                  "value": "296",
                   "description": "汇总表id"
                 }
               ]
@@ -1151,7 +1177,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"g9mnby\"\n  },\n  \"id\": 293,\n  \"themeId\": 966,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"ji5919\",\n  \"description\": \"xn6o1q\",\n  \"status\": 745,\n  \"connectionType\": \"vjjd8y\",\n  \"dataConnection\": \"qq0vhi\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 401,\n      \"dimId\": 593,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"5moo1l\",\n      \"standardsId\": 821,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"xkdmcx\",\n      \"itsPartition\": \"9zbrpc\",\n      \"itsNull\": \"c722ip\",\n      \"description\": \"dkk7mk\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7e067e\"\n  },\n  \"id\": 135,\n  \"themeId\": 873,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"plmhwt\",\n  \"description\": \"oakdun\",\n  \"status\": 336,\n  \"connectionType\": \"h16x16\",\n  \"dataConnection\": \"87uws1\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 871,\n      \"dimId\": 932,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"4zv88v\",\n      \"standardsId\": 636,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"ydvjtn\",\n      \"itsPartition\": \"zsqfpt\",\n      \"itsNull\": \"ecxugw\",\n      \"description\": \"lkvke2\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1182,7 +1208,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"73bkhu\"\n  },\n  \"id\": 553,\n  \"themeId\": 904,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"8bjynd\",\n  \"description\": \"xf2b1a\",\n  \"status\": 515,\n  \"connectionType\": \"5e5ojp\",\n  \"dataConnection\": \"u15jj4\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 143,\n      \"dimId\": 659,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"yqh69l\",\n      \"standardsId\": 174,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"6ffwjf\",\n      \"itsPartition\": \"qqmn19\",\n      \"itsNull\": \"fai6lq\",\n      \"description\": \"c2hc3e\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"w80ltb\"\n  },\n  \"id\": 607,\n  \"themeId\": 385,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"l8s4ua\",\n  \"description\": \"x2q6d1\",\n  \"status\": 25,\n  \"connectionType\": \"m72m5k\",\n  \"dataConnection\": \"m8g94h\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 845,\n      \"dimId\": 905,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"nzi0hq\",\n      \"standardsId\": 920,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"dmi8xx\",\n      \"itsPartition\": \"6pze91\",\n      \"itsNull\": \"gkz6oh\",\n      \"description\": \"p8396j\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1190,7 +1216,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dim/906",
+              "raw": "http://::server/dim/901",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1203,7 +1229,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "725",
+                  "value": "158",
                   "description": "维度id"
                 }
               ]
@@ -1222,7 +1248,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/518",
+              "raw": "http://::server/dim/213",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1235,7 +1261,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "220",
+                  "value": "104",
                   "description": "维度id"
                 }
               ]
@@ -1251,7 +1277,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"lv6xtr\"\n  },\n  \"id\": 762,\n  \"themeId\": 622,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"dw5gff\",\n  \"description\": \"r6qh4s\",\n  \"status\": 651,\n  \"connectionType\": \"1w7txo\",\n  \"dataConnection\": \"nssmqp\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 775,\n      \"dimId\": 499,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"n25760\",\n      \"standardsId\": 225,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"2ed99j\",\n      \"itsPartition\": \"ezqqcs\",\n      \"itsNull\": \"l7r5e1\",\n      \"description\": \"vise3o\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7to8w5\"\n  },\n  \"id\": 716,\n  \"themeId\": 403,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"o1gzbm\",\n  \"description\": \"rg8i2r\",\n  \"status\": 29,\n  \"connectionType\": \"v2xp02\",\n  \"dataConnection\": \"2bd1j3\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 961,\n      \"dimId\": 776,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"tbhuu0\",\n      \"standardsId\": 431,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"ybiqcu\",\n      \"itsPartition\": \"uqklc1\",\n      \"itsNull\": \"ws83wh\",\n      \"description\": \"lfhb4o\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1285,7 +1311,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/publish/sq0zv7",
+              "raw": "http://::server/dim/publish/ihlktx",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1299,7 +1325,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "d5k9rk",
+                  "value": "5iq1yy",
                   "description": "维度id,如果多个，使用英文逗号分割"
                 }
               ]
@@ -1318,7 +1344,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/offline/fsrstn",
+              "raw": "http://::server/dim/offline/f59qgb",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1332,7 +1358,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "ztm779",
+                  "value": "pbx3ty",
                   "description": "维度id,如果多个，使用英文逗号分割"
                 }
               ]
@@ -1353,7 +1379,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"tyy21j\"\n  },\n  \"id\": 12,\n  \"themeId\": 998,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"wx2x4c\",\n  \"description\": \"ocfxnj\",\n  \"status\": 501,\n  \"connectionType\": \"uosuuq\",\n  \"dataConnection\": \"16e9wm\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 3,\n  \"columnList\": [\n    {\n      \"id\": 603,\n      \"dimTableId\": 913,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"xxtwtf\",\n      \"standardsId\": 25,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"9to8qf\",\n      \"itsPartition\": \"n3osci\",\n      \"itsNull\": \"jaapjd\",\n      \"description\": \"5flbhd\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"tqe1mu\"\n  },\n  \"id\": 403,\n  \"themeId\": 460,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"tui3y5\",\n  \"description\": \"auo574\",\n  \"status\": 579,\n  \"connectionType\": \"x2fcul\",\n  \"dataConnection\": \"ezyqy5\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimId\": 342,\n  \"columnList\": [\n    {\n      \"id\": 280,\n      \"dimTableId\": 551,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"veb9ws\",\n      \"standardsId\": 225,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"wjv17y\",\n      \"itsPartition\": \"mtm1qs\",\n      \"itsNull\": \"pod2xt\",\n      \"description\": \"xpfmmv\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1385,7 +1411,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"p537wc\"\n  },\n  \"id\": 632,\n  \"themeId\": 819,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"g0ytwe\",\n  \"description\": \"arbh82\",\n  \"status\": 615,\n  \"connectionType\": \"l77w6d\",\n  \"dataConnection\": \"sbjoar\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 627,\n  \"columnList\": [\n    {\n      \"id\": 195,\n      \"dimTableId\": 35,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"7cz3eg\",\n      \"standardsId\": 40,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"ohs4l2\",\n      \"itsPartition\": \"saub6g\",\n      \"itsNull\": \"yo4efs\",\n      \"description\": \"tusgan\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"hax3mt\"\n  },\n  \"id\": 349,\n  \"themeId\": 951,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"qg56zv\",\n  \"description\": \"qkg53m\",\n  \"status\": 165,\n  \"connectionType\": \"ds92vx\",\n  \"dataConnection\": \"kzc81i\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimId\": 850,\n  \"columnList\": [\n    {\n      \"id\": 994,\n      \"dimTableId\": 311,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"thnsfd\",\n      \"standardsId\": 203,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"qm2x2l\",\n      \"itsPartition\": \"taoq8v\",\n      \"itsNull\": \"x1e3o5\",\n      \"description\": \"t96f8j\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1393,7 +1419,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dim/table/690",
+              "raw": "http://::server/dim/table/419",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1407,7 +1433,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "325",
+                  "value": "386",
                   "description": "维度表id"
                 }
               ]
@@ -1426,7 +1452,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/table/113",
+              "raw": "http://::server/dim/table/371",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1440,7 +1466,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "5",
+                  "value": "33",
                   "description": "维度表id"
                 }
               ]
@@ -1456,7 +1482,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"t80rsi\"\n  },\n  \"id\": 502,\n  \"themeId\": 854,\n  \"themeName\": \"drew.bahringer\",\n  \"dimName\": \"drew.bahringer\",\n  \"dimCode\": \"91061\",\n  \"dimType\": \"os4eo6\",\n  \"description\": \"m2oflq\",\n  \"status\": 250,\n  \"connectionType\": \"zj228b\",\n  \"dataConnection\": \"x8azdd\",\n  \"databaseName\": \"drew.bahringer\",\n  \"modelDimId\": 818,\n  \"columnList\": [\n    {\n      \"id\": 814,\n      \"dimTableId\": 310,\n      \"columnName\": \"drew.bahringer\",\n      \"columnType\": \"j9fsa0\",\n      \"standardsId\": 534,\n      \"standardsName\": \"drew.bahringer\",\n      \"itsPrimaryKey\": \"xy4q6b\",\n      \"itsPartition\": \"55feok\",\n      \"itsNull\": \"6vlv2p\",\n      \"description\": \"vu8b9h\"\n    }\n  ]\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"edf636\"\n  },\n  \"id\": 661,\n  \"themeId\": 428,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"t8wu7o\",\n  \"description\": \"znohal\",\n  \"status\": 712,\n  \"connectionType\": \"zgjihx\",\n  \"dataConnection\": \"6083x0\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimId\": 822,\n  \"columnList\": [\n    {\n      \"id\": 488,\n      \"dimTableId\": 70,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"urvuex\",\n      \"standardsId\": 544,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"pljdc6\",\n      \"itsPartition\": \"8x3cvr\",\n      \"itsNull\": \"fp3c33\",\n      \"description\": \"y38enw\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1491,7 +1517,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dim/table/preview/sql/645",
+              "raw": "http://::server/dim/table/preview/sql/624",
               "protocol": "http",
               "path": [
                 "dim",
@@ -1507,7 +1533,7 @@
               "variable": [
                 {
                   "key": "tableId",
-                  "value": "880",
+                  "value": "200",
                   "description": "维度表id"
                 }
               ]
@@ -1558,7 +1584,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/model/db/connect/ausqeb",
+              "raw": "http://::server/model/db/connect/25qdbe",
               "protocol": "http",
               "path": [
                 "model",
@@ -1573,7 +1599,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "6nuxa8",
+                  "value": "a1ufdl",
                   "description": "No comments found."
                 }
               ]
@@ -1594,18 +1620,18 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "uajgmn"
+                  "value": "go8xza"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "drew.bahringer"
+                  "value": "leesa.gottlieb"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/model/db/?connectType\u003duajgmn\u0026dataSourceName\u003ddrew.bahringer",
+              "raw": "http://::server/model/db/?dataSourceName\u003dleesa.gottlieb\u0026connectType\u003dgo8xza",
               "protocol": "http",
               "path": [
                 "model",
@@ -1618,12 +1644,12 @@
               "query": [
                 {
                   "key": "connectType",
-                  "value": "e1q99g",
+                  "value": "8v7ww7",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "drew.bahringer",
+                  "value": "leesa.gottlieb",
                   "description": "No comments found."
                 }
               ],
@@ -1645,24 +1671,24 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "rfpzdh"
+                  "value": "89e4q7"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "drew.bahringer"
+                  "value": "leesa.gottlieb"
                 },
                 {
                   "key": "dataBaseName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "drew.bahringer"
+                  "value": "leesa.gottlieb"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/model/db/table?dataSourceName\u003ddrew.bahringer\u0026connectType\u003drfpzdh\u0026dataBaseName\u003ddrew.bahringer",
+              "raw": "http://::server/model/db/table?connectType\u003d89e4q7\u0026dataBaseName\u003dleesa.gottlieb\u0026dataSourceName\u003dleesa.gottlieb",
               "protocol": "http",
               "path": [
                 "model",
@@ -1675,17 +1701,17 @@
               "query": [
                 {
                   "key": "connectType",
-                  "value": "25h9uo",
+                  "value": "ffol0v",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "drew.bahringer",
+                  "value": "leesa.gottlieb",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataBaseName",
-                  "value": "drew.bahringer",
+                  "value": "leesa.gottlieb",
                   "description": "No comments found."
                 }
               ],
@@ -1707,30 +1733,30 @@
                   "key": "connectType",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "swj534"
+                  "value": "1fo3ql"
                 },
                 {
                   "key": "dataSourceName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "drew.bahringer"
+                  "value": "leesa.gottlieb"
                 },
                 {
                   "key": "dataBaseName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "drew.bahringer"
+                  "value": "leesa.gottlieb"
                 },
                 {
                   "key": "tableName",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "drew.bahringer"
+                  "value": "leesa.gottlieb"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/model/db/column?dataBaseName\u003ddrew.bahringer\u0026connectType\u003dswj534\u0026dataSourceName\u003ddrew.bahringer\u0026tableName\u003ddrew.bahringer",
+              "raw": "http://::server/model/db/column?dataSourceName\u003dleesa.gottlieb\u0026tableName\u003dleesa.gottlieb\u0026connectType\u003d1fo3ql\u0026dataBaseName\u003dleesa.gottlieb",
               "protocol": "http",
               "path": [
                 "model",
@@ -1743,22 +1769,22 @@
               "query": [
                 {
                   "key": "connectType",
-                  "value": "24eh2c",
+                  "value": "e5gklr",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataSourceName",
-                  "value": "drew.bahringer",
+                  "value": "leesa.gottlieb",
                   "description": "No comments found."
                 },
                 {
                   "key": "dataBaseName",
-                  "value": "drew.bahringer",
+                  "value": "leesa.gottlieb",
                   "description": "No comments found."
                 },
                 {
                   "key": "tableName",
-                  "value": "drew.bahringer",
+                  "value": "leesa.gottlieb",
                   "description": "No comments found."
                 }
               ],
@@ -1775,7 +1801,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ykg5rh\"\n  },\n  \"dsdName\": \"drew.bahringer\",\n  \"dsdCode\": \"91061\",\n  \"dsdLevel\": \"wggwhn\",\n  \"dsdLevelId\": \"44\",\n  \"beginDay\": \"7hzk8l\",\n  \"endDay\": \"pg9xku\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zgee10\"\n  },\n  \"dsdName\": \"leesa.gottlieb\",\n  \"dsdCode\": \"7123\",\n  \"dsdLevel\": \"0vl2tv\",\n  \"dsdLevelId\": \"26\",\n  \"beginDay\": \"vusuvf\",\n  \"endDay\": \"3d86jv\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
