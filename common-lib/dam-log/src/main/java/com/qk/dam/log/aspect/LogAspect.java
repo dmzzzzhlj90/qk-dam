@@ -4,7 +4,7 @@ import com.qk.dam.log.annotation.AfterReturnLogger;
 import com.qk.dam.log.annotation.BeforeLogger;
 import com.qk.dam.log.enums.LogLevel;
 import com.qk.dam.log.utils.ObjectRestulUtil;
-import com.qk.dam.log.utils.ParameteUtil;
+import com.qk.dam.log.utils.ParameterUtil;
 import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -56,7 +56,7 @@ public class LogAspect {
             //结果集解析
             int[] parameters = beforeLogger.parameters();
             if (ArrayUtils.isNotEmpty(parameters)) {
-                Map<String, Object> nameAndValueMap = ParameteUtil.invokeParamters(joinPoint, parameters);
+                Map<String, Object> nameAndValueMap = ParameterUtil.invokeParamters(joinPoint, parameters);
                 for (Map.Entry<String, Object> entry : nameAndValueMap.entrySet()) {
                     logOutPut(logLevel, entry.getKey(), entry.getValue(), OUTPUT);
                 }
@@ -65,7 +65,7 @@ public class LogAspect {
             String lockParam = beforeLogger.param();
             if (StringUtils.isNotBlank(lockParam)) {
                 // 解析EL表达式
-                String evalAsText = ParameteUtil.evalLockParam(joinPoint, lockParam);
+                String evalAsText = ParameterUtil.evalLockParam(joinPoint, lockParam);
                 logOutPut(logLevel, lockParam, evalAsText, OUTPUT);
             }
             log.info("================前置通知方法 {} 结束================", signature);
