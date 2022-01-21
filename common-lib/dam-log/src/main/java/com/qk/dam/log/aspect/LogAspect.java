@@ -25,10 +25,10 @@ import java.util.Arrays;
 @Component
 public class LogAspect {
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
-    public static final String print_args = "参数【{}】值为【{}】";
-    public static final String print_return = "方法【{}】返回值为【{}】";
-    public static final String print_start = "方法【{}】开始执行";
-    public static final String print_ent = "方法【{}】执行结束，共耗时【{}ms】";
+    public static final String PRINT_ARGS = "参数【{}】值为【{}】";
+    public static final String PRINT_RETURN = "方法【{}】返回值为【{}】";
+    public static final String PRINT_START = "方法【{}】开始执行";
+    public static final String PRINT_ENT = "方法【{}】执行结束，共耗时【{}ms】";
 
     @Pointcut("execution(* com.qk..*.service..*.*(..))")
     public void serviceAspect() {
@@ -61,7 +61,7 @@ public class LogAspect {
         //打印日志级别
         LogLevel logLevel = printLog.logLevel();
         //方法开始时打印
-        logOutPut(logLevel, name, null, print_start);
+        logOutPut(logLevel, name, null, PRINT_START);
         //打印参数
         before(proceedingJoinPoint, printLog);
         //开始时间
@@ -72,7 +72,7 @@ public class LogAspect {
         //打印结果值
         afterEnd(proceedingJoinPoint, printLog, result);
         //共耗时
-        logOutPut(logLevel, name, entTime, print_ent);
+        logOutPut(logLevel, name, entTime, PRINT_ENT);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class LogAspect {
             Object[] args = proceedingJoinPoint.getArgs();
             Arrays.stream(printArgs).forEach(i -> {
                 if (i < args.length && i < paramNames.length) {
-                    logOutPut(logLevel, paramNames[i], args[i], print_args);
+                    logOutPut(logLevel, paramNames[i], args[i], PRINT_ARGS);
                 }
             });
         }
@@ -113,7 +113,7 @@ public class LogAspect {
         if (printLog.printReturn()) {
             //方法名称
             String name = proceedingJoinPoint.getSignature().getName();
-            logOutPut(printLog.logLevel(), name, result, print_return);
+            logOutPut(printLog.logLevel(), name, result, PRINT_RETURN);
         }
     }
 
