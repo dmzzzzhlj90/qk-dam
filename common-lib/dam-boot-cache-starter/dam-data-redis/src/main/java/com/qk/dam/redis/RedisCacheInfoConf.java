@@ -1,4 +1,4 @@
-package com.qk.dam.redis.config;
+package com.qk.dam.redis;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
  * @date 2022/1/18 7:24 下午
  * @since 1.0.0
  */
-@ConfigurationProperties(prefix = "spring.cache.info", ignoreInvalidFields = true)
-@Component(value = "cacheInfoConfig")
-public class CaCheInfoConfig {
+@ConfigurationProperties(prefix = "spring.cache.conf", ignoreInvalidFields = true)
+@Component
+public class RedisCacheInfoConf {
     Integer duration;
 
     Integer initialCapacity;
@@ -59,5 +59,16 @@ public class CaCheInfoConfig {
 
     public void setRedisMaxSecond(Integer redisMaxSecond) {
         this.redisMaxSecond = redisMaxSecond;
+    }
+
+    @Override
+    public String toString() {
+        return "CacheInfoConfVO{" +
+                "duration=" + duration +
+                ", initialCapacity=" + initialCapacity +
+                ", maximumSize=" + maximumSize +
+                ", redisMinSecond=" + redisMinSecond +
+                ", redisMaxSecond=" + redisMaxSecond +
+                '}';
     }
 }

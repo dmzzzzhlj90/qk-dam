@@ -78,7 +78,7 @@ public class RedisBiz {
         return totalList;
     }
 
-    @Cacheable(value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisInstanceList(String failure, Date date) {
         //根据条件缓存所有实例
         return GsonUtil.toJsonString(
@@ -109,7 +109,7 @@ public class RedisBiz {
                 .collect(Collectors.toList());
     }
 
-    @Cacheable(value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisWarnResultList(List<DqcProcessInstanceVO> dqcProcessInstanceVOS) {
         return GsonUtil.toJsonString(
                 warnResultList(dqcProcessInstanceVOS)
@@ -153,7 +153,7 @@ public class RedisBiz {
         return totalList;
     }
 
-    @Cacheable(value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisTaskInstanceList(Date date, String stateType) {
         return GsonUtil.toJsonString(getTaskInstanceList(date, stateType));
     }

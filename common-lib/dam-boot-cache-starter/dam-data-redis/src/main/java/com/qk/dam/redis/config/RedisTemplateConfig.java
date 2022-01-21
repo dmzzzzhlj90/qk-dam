@@ -42,13 +42,12 @@ public class RedisTemplateConfig {
   public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
     RedisCacheConfiguration redisCacheConfiguration =
         defaultCacheConfig()
-            .entryTtl(Duration.ofSeconds(1))
             .serializeKeysWith(fromSerializer(RedisSerializer.string()))
             .serializeValuesWith(fromSerializer(valueSerializer()))
             // 静态key前缀
-            .prefixCacheNameWith(PREFIX_CACHE_NAME)
+//            .prefixCacheNameWith(PREFIX_CACHE_NAME)
             // 计算key前缀
-            .computePrefixWith(cacheName -> COMPUTE_PREFIX_WITH +":"+ cacheName)
+//            .computePrefixWith(cacheName -> COMPUTE_PREFIX_WITH +":"+ cacheName)
             .disableCachingNullValues();
 
     return RedisCacheManager.builder(connectionFactory)
