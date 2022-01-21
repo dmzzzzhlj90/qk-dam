@@ -68,8 +68,8 @@ public class RptDimensionInfoColumnServiceImpl implements
    */
   @Override
   public void addRptDimensionInfoColumn(RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
-    BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnDTO.getDimensionId()).and(qRptDimensionColumnInfo.dimensionColumnName.eq(rptDimensionInfoColumnDTO.getDimensionColumnName()))
-        .and(qRptDimensionColumnInfo.dimensionColumnCode.eq(rptDimensionInfoColumnDTO.getDimensionColumnCode()));
+    BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnDTO.getDimensionId()).and((qRptDimensionColumnInfo.dimensionColumnName.eq(rptDimensionInfoColumnDTO.getDimensionColumnName()))
+        .or(qRptDimensionColumnInfo.dimensionColumnCode.eq(rptDimensionInfoColumnDTO.getDimensionColumnCode())));
     boolean exists = rptDimensionColumnInfoRepository.exists(predicate);
     if (exists){
       throw new BizException("当前新增数据已经存在请查证");
