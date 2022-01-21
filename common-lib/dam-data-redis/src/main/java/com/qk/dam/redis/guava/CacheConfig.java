@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration
 public class CacheConfig {
-    @Bean(name = "dynamicTtlCacheManager")
+    @Bean(name = "caffeineCacheManager")
     @Primary
     public CacheManager cacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager();

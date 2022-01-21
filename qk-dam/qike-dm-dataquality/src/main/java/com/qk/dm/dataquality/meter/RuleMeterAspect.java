@@ -1,5 +1,7 @@
 package com.qk.dm.dataquality.meter;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcSchedulerRules;
 import com.qk.dm.dataquality.repositories.DqcSchedulerRulesRepository;
@@ -9,7 +11,7 @@ import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -30,6 +32,18 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class RuleMeterAspect {
+    private static final String NAME_RULE = "dqc.rule";
+    /** 规则job id*/
+    public static final String JOBID = "JOBID";
+    /** 规则id rule io*/
+    public static final String RULEID = "RULEID";
+    /** 规则结果标题*/
+    public static final String TITLE = "TITLE";
+    /** 规则结果数据索引*/
+    public static final String DATAINDEX = "DATAINDEX";
+    /** 规则结果检查对象*/
+    public static final String TARGETOBJ = "TARGETOBJ";
+
     final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
     final DqcSchedulerResultDataService dqcSchedulerResultDataService;
     final MeterRegistry meterRegistry;
@@ -84,13 +98,13 @@ public class RuleMeterAspect {
 
                         if (BigDecimalValidator.getInstance().isValid(v.toString())){
                             BigDecimal b = new BigDecimal(v.toString());
-                            String metricName = RuleMeterConf.metricName("result", "info");
+                            String metricName = metricName("result", "info");
                             Tags tags = Tags.of(
-                                    "JOBID", dqcSchedulerRules.getJobId(),
-                                    "RULEID", dqcSchedulerRules.getRuleId(),
-                                    "TARGETOBJ", targetObj.toString(),
-                                    "DATAINDEX", dqcSchedulerResultTitleVO.getDataIndex(),
-                                    "TITLE", dqcSchedulerResultTitleVO.getTitle());
+                                    TITLE, dqcSchedulerResultTitleVO.getTitle()+(StringUtils.isNotEmpty(targetObj.toString())?"":targetObj.toString()),
+                                    DATAINDEX, dqcSchedulerResultTitleVO.getDataIndex(),
+                                    TARGETOBJ, dqcSchedulerRules.toString(),
+                                    RULEID, String.valueOf(dqcSchedulerRules.getRuleTempId())
+                                    );
                             String cacheKey = tags.toString();
                             cache.put(cacheKey,b);
                             if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
@@ -114,5 +128,11 @@ public class RuleMeterAspect {
         // stop stopwatch
         log.info("返回值数据[{}]",retVal);
         return retVal;
+    }
+    public static String metricName(String... names) {
+        Joiner joiner = Joiner.on(",");
+        ArrayList<String> ts = Lists.newArrayList(NAME_RULE);
+        ts.addAll(List.of(names));
+        return  joiner.join(ts);
     }
 }
