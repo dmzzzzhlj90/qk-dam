@@ -1,25 +1,20 @@
 package com.qk.dam.log.aspect;
 
-import com.qk.dam.log.annotation.AfterReturnLogger;
-import com.qk.dam.log.annotation.BeforeLogger;
+import com.qk.dam.log.annotation.PrintLog;
 import com.qk.dam.log.enums.LogLevel;
-import com.qk.dam.log.utils.ObjectRestulUtil;
-import com.qk.dam.log.utils.ParameterUtil;
 import net.logstash.logback.encoder.org.apache.commons.lang3.ArrayUtils;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Map;
+import java.util.Arrays;
 
 /**
  * @author shenpj
@@ -30,130 +25,106 @@ import java.util.Map;
 @Component
 public class LogAspect {
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
-    public static final String OUTPUT = "============【参数名称】：{}，【value值】：{}";
-    public static final String RETURNOUTPUT = "============【方法名称】：{}，【返回值】：{}";
+    public static final String print_args = "参数【{}】值为【{}】";
+    public static final String print_return = "方法【{}】返回值为【{}】";
+    public static final String print_start = "方法【{}】开始执行";
+    public static final String print_ent = "方法【{}】执行结束，共耗时【{}ms】";
 
     @Pointcut("execution(* com.qk..*.service..*.*(..))")
-    public void controllerAspect() {}
+    public void serviceAspect() {
+    }
 
-    /**
-     * 前置通知
-     *
-     * @param joinPoint
-     */
-    @Before("controllerAspect()")
-    public void before(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        //获取方法对象
-        Method targetMethod = methodSignature.getMethod();
-        if (targetMethod.isAnnotationPresent(BeforeLogger.class)) {
-            log.info("================前置通知方法 {} 开始================", signature);
-            //获取方法上注解
-            BeforeLogger beforeLogger = targetMethod.getAnnotation(BeforeLogger.class);
-            //日志级别
-            LogLevel logLevel = beforeLogger.logLevel();
-            //结果集解析
-            int[] parameters = beforeLogger.parameters();
-            if (ArrayUtils.isNotEmpty(parameters)) {
-                Map<String, Object> nameAndValueMap = ParameterUtil.invokeParamters(joinPoint, parameters);
-                for (Map.Entry<String, Object> entry : nameAndValueMap.entrySet()) {
-                    logOutPut(logLevel, entry.getKey(), entry.getValue(), OUTPUT);
-                }
-            }
-            //单个指定
-            String lockParam = beforeLogger.param();
-            if (StringUtils.isNotBlank(lockParam)) {
-                // 解析EL表达式
-                String evalAsText = ParameterUtil.evalLockParam(joinPoint, lockParam);
-                logOutPut(logLevel, lockParam, evalAsText, OUTPUT);
-            }
-            log.info("================前置通知方法 {} 结束================", signature);
-        }
+    @Pointcut("execution(* com.qk..*.rest..*.*(..))")
+    public void restAspect() {
+    }
+
+    @Pointcut("execution(* com.qk..*.controller..*.*(..))")
+    public void controllerAspect() {
+    }
+
+    @Pointcut("@annotation(com.qk.dam.log.annotation.PrintLog)")
+    public void annotationAspect() {
+    }
+
+    @Pointcut("annotationAspect()")
+    public void finalAspect() {
     }
 
 
     /**
-     * 后置返回通知
+     * 环绕通知
+     */
+    @Around("@annotation(printLog)")
+    public Object myAround(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog) throws Throwable {
+        //方法名称
+        String name = proceedingJoinPoint.getSignature().getName();
+        //打印日志级别
+        LogLevel logLevel = printLog.logLevel();
+        //方法开始时打印
+        logOutPut(logLevel, name, null, print_start);
+        //打印参数
+        before(proceedingJoinPoint, printLog);
+        //开始时间
+        long startTime = System.currentTimeMillis();
+        //todo 利用反射调用目标方法，就是method.invoke()
+        Object result = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
+        long entTime =System.currentTimeMillis() - startTime;
+        //打印结果值
+        afterEnd(proceedingJoinPoint, printLog, result);
+        //共耗时
+        logOutPut(logLevel, name, entTime, print_ent);
+        return result;
+    }
+
+    /**
+     * 前置通知打印参数
      *
-     * @param joinPoint
+     * @param proceedingJoinPoint
+     * @param printLog
+     */
+    private void before(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog) {
+        //需要打印的参数
+        int[] printArgs = printLog.printArgs();
+        //前置通知
+        if (ArrayUtils.isNotEmpty(printArgs)) {
+            //打印日志级别
+            LogLevel logLevel = printLog.logLevel();
+            //参数名称
+            String[] paramNames = ((CodeSignature) proceedingJoinPoint.getSignature()).getParameterNames();
+            //参数结果
+            Object[] args = proceedingJoinPoint.getArgs();
+            Arrays.stream(printArgs).forEach(i -> {
+                if (i < args.length && i < paramNames.length) {
+                    logOutPut(logLevel, paramNames[i], args[i], print_args);
+                }
+            });
+        }
+    }
+
+    /**
+     * 后置返回值打印
+     *
+     * @param proceedingJoinPoint
+     * @param printLog
      * @param result
      */
-    @AfterReturning(value = "controllerAspect()", returning = "result")
-    public static void afterEnd(JoinPoint joinPoint, Object result) {
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        //获取方法对象
-        Method targetMethod = methodSignature.getMethod();
-        if (targetMethod.isAnnotationPresent(AfterReturnLogger.class)) {
-            log.info("================后置返回通知方法 {} 开始================", signature);
-            //获取方法上注解
-            AfterReturnLogger beforeLogger = targetMethod.getAnnotation(AfterReturnLogger.class);
-            //日志级别
-            LogLevel logLevel = beforeLogger.logLevel();
-            //结果集解析
-            String methodName = joinPoint.getSignature().getName();
-            if (beforeLogger.returnResult()) {
-                //todo 返回值名称需要获取
-                logOutPut(logLevel, methodName, result, RETURNOUTPUT);
-            }
-            //单个指定
-            String lockParam = beforeLogger.param();
-            if (StringUtils.isNotBlank(lockParam)) {
-                //自定义解析返回值
-                Object evalAsText = ObjectRestulUtil.evalLockReturn(result, lockParam);
-                logOutPut(logLevel, lockParam, evalAsText, OUTPUT);
-            }
-            log.info("================后置返回通知方法 {} 结束================", signature);
+    private void afterEnd(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog, Object result) {
+        //是否需要打印返回结果
+        if (printLog.printReturn()) {
+            //方法名称
+            String name = proceedingJoinPoint.getSignature().getName();
+            logOutPut(printLog.logLevel(), name, result, print_return);
         }
     }
 
-
-//    // 后置通知
-//    @After("controllerAspect()")
-//    public static void after(JoinPoint joinPoint) {
-//        System.out.println("方法后");
-//    }
-//
-//    // 后置异常通知
-//    @AfterThrowing(value = "controllerAspect()",throwing="ex")
-//    public static void afterException(JoinPoint joinPoint,Exception ex) {
-//        Signature signature = joinPoint.getSignature();
-//        MethodSignature methodSignature = (MethodSignature) signature;
-//        //获取方法对象
-//        Method targetMethod = methodSignature.getMethod();
-//        if (targetMethod.isAnnotationPresent(AfterThrowLogger.class)) {
-//            log.info("================后置异常通知方法 {} 开始================", signature);
-//            //获取方法上注解
-//            AfterThrowLogger beforeLogger = targetMethod.getAnnotation(AfterThrowLogger.class);
-//            //日志级别
-//            LogLevel logLevel = beforeLogger.logLevel();
-//
-//            log.info("===============异常报告: {} ================",ex);
-//
-//            log.info("================后置异常通知方法 {} 结束================", signature);
-//        }
-//    }
-//
-//    //环绕通知
-//    @Around("@annotation(beforeLogger)")
-//    public Object myAround(ProceedingJoinPoint proceedingJoinPoint, BeforeLogger beforeLogge) {
-//        Object[] args = proceedingJoinPoint.getArgs();
-//        String name = proceedingJoinPoint.getSignature().getName();
-//        Object proceed = null;
-//        try {
-//            System.out.println("环绕前置通知:" + name + "方法开始，参数是" + Arrays.asList(args));
-//            //利用反射调用目标方法，就是method.invoke()
-//            proceed = proceedingJoinPoint.proceed(args);
-//            System.out.println("环绕返回通知:" + name + "方法返回，返回值是" + proceed);
-//        } catch (Throwable e) {
-//            System.out.println("环绕异常通知" + name + "方法出现异常，异常信息是：" + e);
-//        } finally {
-//            System.out.println("环绕后置通知" + name + "方法结束");
-//        }
-//        return proceed;
-//    }
-
+    /**
+     * 日志打印
+     *
+     * @param logLevel
+     * @param param
+     * @param value
+     * @param output
+     */
     public static void logOutPut(LogLevel logLevel, String param, Object value, String output) {
         switch (logLevel) {
             case WARN:
@@ -171,5 +142,27 @@ public class LogAspect {
             default:
                 break;
         }
+    }
+
+    /**
+     * 获取方法中声明的注解
+     *
+     * @param joinPoint
+     * @return
+     * @throws NoSuchMethodException
+     */
+    public PrintLog getDeclaredAnnotation(ProceedingJoinPoint joinPoint) throws NoSuchMethodException {
+        // 获取方法名
+        String methodName = joinPoint.getSignature().getName();
+        // 反射获取目标类
+        Class<?> targetClass = joinPoint.getTarget().getClass();
+        // 拿到方法对应的参数类型
+        Class<?>[] parameterTypes = ((MethodSignature) joinPoint.getSignature()).getParameterTypes();
+        // 根据类、方法、参数类型（重载）获取到方法的具体信息
+        Method objMethod = targetClass.getMethod(methodName, parameterTypes);
+        // 拿到方法定义的注解信息
+        PrintLog annotation = objMethod.getDeclaredAnnotation(PrintLog.class);
+        // 返回
+        return annotation;
     }
 }
