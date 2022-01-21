@@ -9,6 +9,7 @@ import com.qk.dm.dataquality.service.DqcSchedulerResultDataService;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultTitleVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -43,20 +44,21 @@ public class RuleMeterAspect {
     public static final String DATAINDEX = "DATAINDEX";
     /** 规则结果检查对象*/
     public static final String TARGETOBJ = "TARGETOBJ";
+    public static final String CACHE_NAME_DQC = "dqc:rule";
 
     final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
     final DqcSchedulerResultDataService dqcSchedulerResultDataService;
     final MeterRegistry meterRegistry;
-    final CacheManager cacheManager;
-    private Cache cache;
+    final CacheManager cm;
+    private final Cache cache;
 
     public RuleMeterAspect(DqcSchedulerRulesRepository dqcSchedulerRulesRepository,
-                           DqcSchedulerResultDataService dqcSchedulerResultDataService, MeterRegistry meterRegistry, CacheManager cacheManager) {
+                           DqcSchedulerResultDataService dqcSchedulerResultDataService, MeterRegistry meterRegistry, CacheManager cm) {
         this.dqcSchedulerRulesRepository = dqcSchedulerRulesRepository;
         this.dqcSchedulerResultDataService = dqcSchedulerResultDataService;
         this.meterRegistry = meterRegistry;
-        this.cacheManager = cacheManager;
-        this.cache= cacheManager.getCache("RuleMeter");
+        this.cm = cm;
+        this.cache= cm.getCache(CACHE_NAME_DQC);
     }
 
     @Around("execution(* com.qk.dm.dataquality.service.*.getWarnResultInfo(..))")
@@ -105,7 +107,7 @@ public class RuleMeterAspect {
                                     TARGETOBJ, targetObj.toString(),
                                     RULEID, String.valueOf(dqcSchedulerRules.getRuleTempId())
                                     );
-                            String cacheKey = tags.toString();
+                            final String cacheKey = tags.stream().map(Tag::getValue).collect(Collectors.joining(":"));
                             cache.put(cacheKey,b);
                             if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
                                 meterRegistry.gauge(

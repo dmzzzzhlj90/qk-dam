@@ -50,17 +50,17 @@ public class CacheBiz {
                 .build();
     }
 
-    @Cacheable(value = "statistics", key = "#root.methodName", unless = "#result == null")
+    @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == null")
     public String summary() {
         return GsonUtil.toJsonString(getDataSummary());
     }
 
-    @Cacheable(value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String dimension() {
         return GsonUtil.toJsonString(taskInstanceBiz.dimensionStatistics(new Date()));
     }
 
-    @Cacheable(value = "statistics", key = "#root.methodName", unless = "#result == '[]'")
+    @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String dir() {
         return GsonUtil.toJsonString(instanceBiz.dirStatistics(new Date()));
     }

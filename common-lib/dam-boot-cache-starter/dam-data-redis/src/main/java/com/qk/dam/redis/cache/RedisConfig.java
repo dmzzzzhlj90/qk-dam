@@ -1,8 +1,7 @@
 package com.qk.dam.redis.cache;
 
-import com.qk.dam.redis.config.CaCheInfoConfig;
+import com.qk.dam.redis.RedisCacheInfoConf;
 import com.qk.dam.redis.config.DynamicTtlRedisCacheManager;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,19 +17,18 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
  * @since 1.0.0
  */
 @Configuration
-@ConditionalOnProperty(prefix = "spring.cache", name = "type", havingValue = "redis")
 public class RedisConfig {
-    private final CaCheInfoConfig caCheInfoConfig;
-
-    public RedisConfig(CaCheInfoConfig caCheInfoConfig) {
-        this.caCheInfoConfig = caCheInfoConfig;
-    }
 
     @Bean
     @Primary
-    public CacheManager dynamicTtlCacheManager(RedisConnectionFactory factory) {
+    public CacheManager dynamicTtlCacheManager(final RedisCacheInfoConf redisCacheInfoConf,
+                                               final RedisConnectionFactory factory) {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.lockingRedisCacheWriter(factory);
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-        return new DynamicTtlRedisCacheManager(redisCacheWriter, config, caCheInfoConfig.getRedisMinSecond(), caCheInfoConfig.getRedisMaxSecond());
+        return new DynamicTtlRedisCacheManager(
+                redisCacheWriter,
+                config,
+                redisCacheInfoConf.getRedisMinSecond(),
+                redisCacheInfoConf.getRedisMaxSecond());
     }
 }

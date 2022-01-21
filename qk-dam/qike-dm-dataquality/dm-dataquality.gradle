@@ -48,9 +48,9 @@ dependencies {
     implementation project(":dolphinscheduler-client")
     implementation project(":datasource-common-core")
     implementation project(":metadata-common-core")
-    implementation project(":qk-data-redis")
+    implementation project(":dam-boot-cache-starter")
     implementation project(":groovy-function-core")
-//    implementation project(":dam-log")
+    implementation project(":dam-log")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
