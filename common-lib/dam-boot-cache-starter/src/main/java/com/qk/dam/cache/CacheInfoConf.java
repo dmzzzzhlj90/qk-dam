@@ -11,10 +11,19 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.cache.conf", ignoreInvalidFields = true)
 @Component(value = "cacheInfoConfig")
 public class CacheInfoConf {
+    /**
+     * 缓存过期时间 秒
+     */
     Integer duration;
 
+    /**
+     * 初始的缓存空间大小
+     */
     Integer initialCapacity;
 
+    /**
+     * 最大缓存空间大小
+     */
     Integer maximumSize;
 
     public Integer getDuration() {

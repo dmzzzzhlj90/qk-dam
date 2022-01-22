@@ -28,7 +28,7 @@ public class LogAspect {
     public static final String PRINT_ARGS = "参数【{}】值为【{}】";
     public static final String PRINT_RETURN = "方法【{}】返回值为【{}】";
     public static final String PRINT_START = "方法【{}】开始执行";
-    public static final String PRINT_ENT = "方法【{}】执行结束，共耗时【{}ms】";
+    public static final String PRINT_ENT = "方法【{}】执行结束，方法耗时【{}ms】";
 
     @Pointcut("execution(* com.qk..*.service..*.*(..))")
     public void serviceAspect() {
@@ -55,7 +55,7 @@ public class LogAspect {
      * 环绕通知
      */
     @Around("@annotation(printLog)")
-    public Object myAround(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog) throws Throwable {
+    public Object logAround(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog) throws Throwable {
         //方法名称
         String name = proceedingJoinPoint.getSignature().getName();
         //打印日志级别
@@ -63,14 +63,14 @@ public class LogAspect {
         //方法开始时打印
         logOutPut(logLevel, name, null, PRINT_START);
         //打印参数
-        before(proceedingJoinPoint, printLog);
+        printArgs(proceedingJoinPoint, printLog);
         //开始时间
         long startTime = System.currentTimeMillis();
         //todo 利用反射调用目标方法，就是method.invoke()
         Object result = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
         long entTime =System.currentTimeMillis() - startTime;
         //打印结果值
-        afterEnd(proceedingJoinPoint, printLog, result);
+        printReturn(proceedingJoinPoint, printLog, result);
         //共耗时
         logOutPut(logLevel, name, entTime, PRINT_ENT);
         return result;
@@ -82,7 +82,7 @@ public class LogAspect {
      * @param proceedingJoinPoint
      * @param printLog
      */
-    private void before(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog) {
+    private void printArgs(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog) {
         //需要打印的参数
         int[] printArgs = printLog.printArgs();
         //前置通知
@@ -108,7 +108,7 @@ public class LogAspect {
      * @param printLog
      * @param result
      */
-    private void afterEnd(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog, Object result) {
+    private void printReturn(ProceedingJoinPoint proceedingJoinPoint, PrintLog printLog, Object result) {
         //是否需要打印返回结果
         if (printLog.printReturn()) {
             //方法名称
