@@ -17,6 +17,11 @@ public class ModelFactColumnVO implements Serializable {
     private Long factId;
 
     /**
+     * 属性类型 0 维度 1度量
+     */
+    private Integer attributeType;
+
+    /**
      * 字段名称
      */
     private String columnName;

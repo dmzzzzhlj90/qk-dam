@@ -4,6 +4,8 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelDimDTO;
+import com.qk.dm.datamodel.params.dto.ModelDimQueryDTO;
+import com.qk.dm.datamodel.params.vo.ModelDimDetailVO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import com.qk.dm.datamodel.service.ModelDimService;
 import org.springframework.validation.annotation.Validated;
@@ -51,21 +53,21 @@ public class ModelDimController {
     /**
      * 维度详情
      * @param id 维度id
-     * @return DefaultCommonResult<ModelDimVO>
+     * @return DefaultCommonResult<ModelDimDetailVO>
      */
     @GetMapping("/{id}")
-    public DefaultCommonResult<ModelDimVO> detail(@PathVariable("id") Long id){
+    public DefaultCommonResult<ModelDimDetailVO> detail(@PathVariable("id") Long id){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimService.detail(id));
     }
 
     /**
      * 维度列表
-     * @param modelDimDTO 维度参数实体
+     * @param modelDimQueryDTO 维度查询参数实体
      * @return DefaultCommonResult<PageResultVO<ModelDimVO>>
      */
     @PostMapping(value = "/list")
-    public DefaultCommonResult<PageResultVO<ModelDimVO>> list(@RequestBody ModelDimDTO modelDimDTO){
-        return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimService.list(modelDimDTO));
+    public DefaultCommonResult<PageResultVO<ModelDimVO>> list(@RequestBody @Validated ModelDimQueryDTO modelDimQueryDTO){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimService.list(modelDimQueryDTO));
     }
 
     /**

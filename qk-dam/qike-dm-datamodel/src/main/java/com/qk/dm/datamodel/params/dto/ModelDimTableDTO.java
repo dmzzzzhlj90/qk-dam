@@ -1,5 +1,4 @@
 package com.qk.dm.datamodel.params.dto;
-import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +14,6 @@ import java.util.List;
 public class ModelDimTableDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Pagination pagination;
 
     private Long id;
 
@@ -35,10 +32,6 @@ public class ModelDimTableDTO implements Serializable {
      */
     private String dimName;
 
-    /**
-     * 维度编码
-     */
-    private String dimCode;
 
     /**
      * 1 普通维度 2 码表维度 3 层级维度

@@ -4,6 +4,8 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
+import com.qk.dm.datamodel.params.dto.ModelDimTableQueryDTO;
+import com.qk.dm.datamodel.params.vo.ModelDimTableDetailVO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableVO;
 import com.qk.dm.datamodel.service.ModelDimTableService;
 import org.springframework.validation.annotation.Validated;
@@ -25,16 +27,7 @@ public class ModelDimTableController {
         this.modelDimTableService = modelDimTableService;
     }
 
-    /**
-     * 添加维度表信息
-     * @param modelDimTableDTO 维度表实体
-     * @return DefaultCommonResult
-     */
-    @PostMapping("")
-    public DefaultCommonResult insert(@RequestBody @Validated ModelDimTableDTO modelDimTableDTO){
-        modelDimTableService.insert(modelDimTableDTO);
-        return DefaultCommonResult.success();
-    }
+
 
     /**
      * 修改维度表
@@ -51,21 +44,21 @@ public class ModelDimTableController {
     /**
      * 维度表详情
      * @param id 维度表id
-     * @return DefaultCommonResult<ModelDimTableVO>
+     * @return DefaultCommonResult<ModelDimTableDetailVO>
      */
     @GetMapping("/{id}")
-    public DefaultCommonResult<ModelDimTableVO> detail(@PathVariable("id") Long id){
+    public DefaultCommonResult<ModelDimTableDetailVO> detail(@PathVariable("id") Long id){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimTableService.detail(id));
     }
 
     /**
      * 维度表列表
-     * @param modelDimTableDTO 维度表实体
+     * @param modelDimTableQueryDTO 维度表列表查询实体
      * @return DefaultCommonResult<PageResultVO<ModelDimTableVO>>
      */
     @PostMapping(value = "/list")
-    public DefaultCommonResult<PageResultVO<ModelDimTableVO>> list(@RequestBody ModelDimTableDTO modelDimTableDTO){
-        return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimTableService.list(modelDimTableDTO));
+    public DefaultCommonResult<PageResultVO<ModelDimTableVO>> list(@RequestBody @Validated ModelDimTableQueryDTO modelDimTableQueryDTO){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimTableService.list(modelDimTableQueryDTO));
     }
 
     /**

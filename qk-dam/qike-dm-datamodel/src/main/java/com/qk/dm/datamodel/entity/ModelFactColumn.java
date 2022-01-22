@@ -29,6 +29,12 @@ public class ModelFactColumn implements Serializable {
     private Long factId;
 
     /**
+     * 属性类型 0 维度 1度量
+     */
+    @Column(name = "attribute_type", nullable = false)
+    private Integer attributeType;
+
+    /**
      * 字段名称
      */
     @Column(name = "column_name", nullable = false)

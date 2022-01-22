@@ -2,8 +2,8 @@ package com.qk.dm.datamodel.params.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 public class ModelDimColumnDTO implements Serializable {
@@ -12,19 +12,17 @@ public class ModelDimColumnDTO implements Serializable {
 
     private Long id;
 
-    /**
-     * 维度id
-     */
-    private Long dimId;
 
     /**
      * 字段名称
      */
+    @NotNull(message = "字段名称不能为空")
     private String columnName;
 
     /**
      * 字段类型
      */
+    @NotNull(message = "字段类型不能为空")
     private String columnType;
 
     /**
@@ -36,6 +34,10 @@ public class ModelDimColumnDTO implements Serializable {
      * 标准名称
      */
     private String standardsName;
+    /**
+     * 标准编码
+     */
+    private String standardsCode;
 
     /**
      * 是否是主键 0否 1是

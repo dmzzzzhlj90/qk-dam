@@ -83,6 +83,12 @@ public class ModelDim implements Serializable {
     private String databaseName;
 
     /**
+     * 责任人
+     */
+    @Column(name = "responsibility_person", nullable = false)
+    private String responsibilityPerson;
+
+    /**
      * 创建时间
      */
     @Column(name = "gmt_create")

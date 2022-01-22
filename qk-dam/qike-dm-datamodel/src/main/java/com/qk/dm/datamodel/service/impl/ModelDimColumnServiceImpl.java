@@ -32,8 +32,9 @@ public class ModelDimColumnServiceImpl implements ModelDimColumnService {
     }
 
     @Override
-    public void insert(List<ModelDimColumnDTO> modelDimColumnDTOList) {
+    public void insert(List<ModelDimColumnDTO> modelDimColumnDTOList,Long dimId) {
         List<ModelDimColumn> modelDimColumnList = ModelDimColumnMapper.INSTANCE.use(modelDimColumnDTOList);
+        modelDimColumnList.forEach(e->e.setDimId(dimId));
         modelDimColumnRepository.saveAll(modelDimColumnList);
     }
 

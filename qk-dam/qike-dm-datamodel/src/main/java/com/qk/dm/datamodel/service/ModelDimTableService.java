@@ -2,18 +2,22 @@ package com.qk.dm.datamodel.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
+import com.qk.dm.datamodel.params.dto.ModelDimTableQueryDTO;
+import com.qk.dm.datamodel.params.vo.ModelDimTableDetailVO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableVO;
 
 public interface ModelDimTableService {
     void insert(ModelDimTableDTO modelDimTableDTO);
 
-    ModelDimTableVO detail(Long id);
+    ModelDimTableDetailVO detail(Long id);
 
-    void update(Long modelDimId,ModelDimTableDTO modelDimTableDTO);
+    void updateDim(Long modelDimId,ModelDimTableDTO modelDimTableDTO);
+
+    void update(Long id,ModelDimTableDTO modelDimTableDTO);
 
     void delete(String ids);
 
-    PageResultVO<ModelDimTableVO> list(ModelDimTableDTO modelDimTableDTO);
+    PageResultVO<ModelDimTableVO> list(ModelDimTableQueryDTO modelDimTableQueryDTO);
 
     /**
      * 预览SQL

@@ -9,7 +9,9 @@ import com.qk.dm.datamodel.mapstruct.mapper.ModelDimColumnMapper;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelDimMapper;
 import com.qk.dm.datamodel.params.dto.ModelDimColumnDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimDTO;
+import com.qk.dm.datamodel.params.dto.ModelDimQueryDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
+import com.qk.dm.datamodel.params.vo.ModelDimDetailVO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import com.qk.dm.datamodel.repositories.ModelDimRepository;
 import com.qk.dm.datamodel.service.ModelDimColumnService;
@@ -62,7 +64,7 @@ public class ModelDimServiceImpl implements ModelDimService {
     @Transactional(rollbackFor = Exception.class)
     public void insert(ModelDimDTO modelDimDTO) {
         ModelDim modelDim = ModelDimMapper.INSTANCE.of(modelDimDTO);
-        List<ModelDimColumnDTO> modelDimColumnList = modelDimDTO.getModelDimColumnList();
+        List<ModelDimColumnDTO> modelDimColumnList = modelDimDTO.getColumnList();
         if(modelDimColumnList.isEmpty()){
             throw new BizException("维度字段不能为空！！");
         }
@@ -76,8 +78,8 @@ public class ModelDimServiceImpl implements ModelDimService {
         //保存维度基本信息
         ModelDim dim = modelDimRepository.save(modelDim);
         //保存字段信息
-        modelDimColumnList.forEach(e->e.setDimId(dim.getId()));
-        modelDimColumnSerVice.insert(modelDimColumnList);
+        //modelDimColumnList.forEach(e->e.setDimId(dim.getId()));
+        modelDimColumnSerVice.insert(modelDimColumnList,dim.getId());
         //如果是直接发布 需要保存维度表
         if(Objects.equals(ModelStatus.PUBLISH,modelDim.getStatus())){
             ModelDimTableDTO modelDimTableDTO= ModelDimMapper.INSTANCE.ofDimTable(modelDimDTO);
@@ -88,12 +90,14 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public ModelDimVO detail(Long id) {
+    public ModelDimDetailVO detail(Long id) {
         Optional<ModelDim> modelDim = modelDimRepository.findById(id);
         if(modelDim.isEmpty()){
             throw new BizException("当前要查询的维度信息 id为"+id+"的不存在！！！");
         }
-       return ModelDimMapper.INSTANCE.of(modelDim.get());
+        ModelDimDetailVO modelDimDetailVO= ModelDimMapper.INSTANCE.ofDetail(modelDim.get());
+        modelDimDetailVO.setColumnList(modelDimColumnSerVice.list(modelDimDetailVO.getId()));
+        return modelDimDetailVO;
     }
 
     @Override
@@ -108,15 +112,16 @@ public class ModelDimServiceImpl implements ModelDimService {
         }
         ModelDimMapper.INSTANCE.from(modelDimDTO,modelDim);
         modelDimRepository.saveAndFlush(modelDim);
-        List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimDTO.getModelDimColumnList();
+        List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimDTO.getColumnList();
         if(!modelDimColumnDTOList.isEmpty()){
             modelDimColumnSerVice.update(id,modelDimColumnDTOList);
         }
         //如果是直接发布 需要修改或添加维度表
         if(Objects.equals(ModelStatus.PUBLISH,modelDim.getStatus())){
             ModelDimTableDTO modelDimTableDTO= ModelDimMapper.INSTANCE.ofDimTable(modelDimDTO);
+            modelDimTableDTO.setModelDimId(modelDim.getId());
             modelDimTableDTO.setColumnList(ModelDimColumnMapper.INSTANCE.ofDimTableColumn(modelDimColumnDTOList));
-            modelDimTableService.update(modelDim.getId(),modelDimTableDTO);
+            modelDimTableService.updateDim(modelDim.getId(),modelDimTableDTO);
         }
 
     }
@@ -128,10 +133,10 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public PageResultVO<ModelDimVO> list(ModelDimDTO modelDimDTO) {
+    public PageResultVO<ModelDimVO> list(ModelDimQueryDTO modelDimQueryDTO) {
         Map<String, Object> map;
         try {
-            map = queryByParams(modelDimDTO);
+            map = queryByParams(modelDimQueryDTO);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException("查询失败!!!");
@@ -140,8 +145,8 @@ public class ModelDimServiceImpl implements ModelDimService {
         List<ModelDimVO> voList = ModelDimMapper.INSTANCE.of(list);
         return new PageResultVO<>(
                 (long) map.get("total"),
-                modelDimDTO.getPagination().getPage(),
-                modelDimDTO.getPagination().getSize(),
+                modelDimQueryDTO.getPagination().getPage(),
+                modelDimQueryDTO.getPagination().getSize(),
                 voList);
     }
 
@@ -185,9 +190,9 @@ public class ModelDimServiceImpl implements ModelDimService {
         return modelDimList;
     }
 
-    private Map<String, Object> queryByParams(ModelDimDTO modelDimDTO) {
+    private Map<String, Object> queryByParams(ModelDimQueryDTO modelDimQueryDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        checkCondition(booleanBuilder, modelDimDTO);
+        checkCondition(booleanBuilder, modelDimQueryDTO);
         Map<String, Object> result = new HashMap<>();
         long count =
                 jpaQueryFactory.select(qModelDim.count()).from(qModelDim).where(booleanBuilder).fetchOne();
@@ -197,21 +202,21 @@ public class ModelDimServiceImpl implements ModelDimService {
                 .where(booleanBuilder)
                 .orderBy(qModelDim.id.asc())
                 .offset(
-                        (long) (modelDimDTO.getPagination().getPage() - 1)
-                                * modelDimDTO.getPagination().getSize())
-                .limit(modelDimDTO.getPagination().getSize())
+                        (long) (modelDimQueryDTO.getPagination().getPage() - 1)
+                                * modelDimQueryDTO.getPagination().getSize())
+                .limit(modelDimQueryDTO.getPagination().getSize())
                 .fetch();
         result.put("list", modelDimList);
         result.put("total", count);
         return result;
     }
 
-    public void checkCondition(BooleanBuilder booleanBuilder, ModelDimDTO modelDimDTO) {
-        if (!StringUtils.isEmpty(modelDimDTO.getDimName())) {
-            booleanBuilder.and(
-                    qModelDim
-                            .dimName
-                            .contains(modelDimDTO.getDimName()));
+    public void checkCondition(BooleanBuilder booleanBuilder, ModelDimQueryDTO modelDimQueryDTO) {
+        if (!StringUtils.isEmpty(modelDimQueryDTO.getDimName())) {
+            booleanBuilder.and(qModelDim.dimName.contains(modelDimQueryDTO.getDimName()));
+        }
+        if(Objects.nonNull(modelDimQueryDTO.getStatus())){
+            booleanBuilder.and(qModelDim.status.eq(modelDimQueryDTO.getStatus()));
         }
     }
 
