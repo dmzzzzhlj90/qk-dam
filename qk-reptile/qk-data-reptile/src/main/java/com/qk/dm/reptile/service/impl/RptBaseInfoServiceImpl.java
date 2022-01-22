@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
+import com.google.common.collect.Maps;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.qk.dam.commons.exception.BizException;
@@ -25,7 +26,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -219,7 +219,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptBaseInfoDTO,authorizedClient);
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = Maps.newHashMap();
         if(Objects.isNull(UserInfoUtil.getUserName())){
             result.put("list", Collections.emptyList());
             result.put("total", 0);

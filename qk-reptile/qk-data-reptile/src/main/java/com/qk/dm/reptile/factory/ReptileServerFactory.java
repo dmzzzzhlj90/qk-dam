@@ -1,5 +1,6 @@
 package com.qk.dm.reptile.factory;
 
+import com.google.common.collect.Maps;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.params.builder.RptConfigBuilder;
 import com.qk.dm.reptile.params.builder.RptSelectorBuilder;
@@ -55,7 +56,7 @@ public class ReptileServerFactory {
      * @return
      */
     private static Map<String,String> requestPara(List<RptConfigInfoVO> rptConfigInfoList){
-        Map<String,String> requestPara = new HashMap<>();
+        Map<String,String> requestPara = Maps.newHashMap();
         requestPara.put(PROJECT,"model");
         requestPara.put(SPIDER,"mode");
         requestPara.put(ORG_VALUE, GsonUtil.toJsonString(assembleData(rptConfigInfoList)));
@@ -71,7 +72,7 @@ public class ReptileServerFactory {
             return Collections.emptyMap();
         }
         List<RptConfigBuilder> rptConfigBuilderList = rptConfigInfoList.stream().map(ReptileServerFactory::rptConfigBuilder).collect(Collectors.toList());
-        Map<String,Object> map = new HashMap<>();
+        Map<String,Object> map = Maps.newHashMap();
         map.put(MODE,0);
         map.put(START_URL,rptConfigInfoList.get(0).getRequestUrl());
         map.put(LIST, rptConfigBuilderList);
@@ -101,7 +102,7 @@ public class ReptileServerFactory {
      */
     private static Map<String, RptSelectorBuilder> selectorBuilder(List<RptSelectorColumnInfoVO> selectorList){
         if(CollectionUtils.isEmpty(selectorList)){
-            return null;
+            return Collections.emptyMap();
         }
 
         return selectorList.stream().collect(Collectors.toMap(RptSelectorColumnInfoVO::getColumnCode, selector-> RptSelectorBuilder.builder()
