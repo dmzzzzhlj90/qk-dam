@@ -188,10 +188,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Override
     public List<RptConfigInfoVO> list(Long baseInfoId) {
         List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdDesc(baseInfoId);
-        if(!CollectionUtils.isEmpty(list)){
-           return RptConfigInfoMapper.INSTANCE.of(list);
-        }
-        return null;
+        if(CollectionUtils.isEmpty(list)){return Collections.emptyList();}
+        return RptConfigInfoMapper.INSTANCE.of(list);
     }
 
     @Override
