@@ -10,10 +10,7 @@ import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -95,10 +92,8 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
     @Override
     public List<RptSelectorColumnInfoVO> list(Long configId) {
         List<RptSelectorColumnInfo> list = rptSelectorColumnInfoRepository.findAllByConfigId(configId);
-        if(!CollectionUtils.isEmpty(list)){
-           return RptSelectorColumnInfoMapper.INSTANCE.of(list);
-        }
-        return null;
+        if(CollectionUtils.isEmpty(list)){return Collections.emptyList(); }
+        return RptSelectorColumnInfoMapper.INSTANCE.of(list);
     }
 
     @Override
@@ -116,9 +111,7 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
     @Override
     public List<String> findByConfigIds(List<Long> configIds) {
         List<RptSelectorColumnInfo> rptSelectorColumnInfoList = rptSelectorColumnInfoRepository.findAllByConfigIdIn(configIds);
-        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){
-            return null;
-        }
+        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){ return Collections.emptyList(); }
         return rptSelectorColumnInfoList.stream().map(RptSelectorColumnInfo::getColumnCode).collect(Collectors.toList());
     }
 }
