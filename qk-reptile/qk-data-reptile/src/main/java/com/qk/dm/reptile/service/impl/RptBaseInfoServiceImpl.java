@@ -230,7 +230,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
                         .select(qRptBaseInfo)
                         .from(qRptBaseInfo)
                         .where(booleanBuilder)
-                        .orderBy(qRptBaseInfo.gmtModified.desc())
+                        .orderBy(qRptBaseInfo.id.desc())
                         .offset((long) (rptBaseInfoDTO.getPagination().getPage() - 1)
                                         * rptBaseInfoDTO.getPagination().getSize())
                         .limit(rptBaseInfoDTO.getPagination().getSize()).fetch();
@@ -257,6 +257,9 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
         if(Objects.nonNull(rptBaseInfoDTO.getStatus())){
             booleanBuilder.and(qRptBaseInfo.status.eq(rptBaseInfoDTO.getStatus()));
+        }
+        if(Objects.nonNull(rptBaseInfoDTO.getConfigName())){
+            booleanBuilder.and(qRptBaseInfo.configName.contains(rptBaseInfoDTO.getConfigName()));
         }
 
     }

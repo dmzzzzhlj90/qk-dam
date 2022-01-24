@@ -33,7 +33,7 @@ public class ReptileServerFactory {
     private static final String LIST = "list";
     private static final String EMPTY = "";
     //todo 目前在测试，地址暂时写此，之后提到Nacos上
-    private static final String REQUEST_URL = "http://172.21.3.202:6800/schedule.json";
+    private static final String REQUEST_URL = "http://172.21.3.206:6800/schedule.json";
 
     public static String requestServer(List<RptConfigInfoVO> rptConfigInfoList) {
         String resultInfo = null;
