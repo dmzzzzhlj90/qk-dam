@@ -7,6 +7,7 @@ import com.nimbusds.jose.shaded.json.JSONObject;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRolesConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
@@ -21,7 +22,6 @@ import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
-import com.qk.dm.reptile.utils.UserInfoUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -69,7 +69,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     @Override
     public void insert(RptBaseInfoDTO rptBaseInfoDTO) {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
-        rptBaseInfo.setCreateUsername(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
+        rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
         rptBaseInfoRepository.save(rptBaseInfo);
     }
 
@@ -220,7 +220,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptBaseInfoDTO,authorizedClient);
         Map<String, Object> result = Maps.newHashMap();
-        if(Objects.isNull(UserInfoUtil.getUserName())){
+        if(StringUtils.isBlank(ClientUserInfo.getUserName())){
             result.put("list", Collections.emptyList());
             result.put("total", 0);
             return result;
@@ -241,7 +241,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
     public void checkCondition(BooleanBuilder booleanBuilder, RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {
         if(!judgeRoles(authorizedClient)){
-           booleanBuilder.and(qRptBaseInfo.createUsername.contains(String.valueOf(UserInfoUtil.getUserName())));
+           booleanBuilder.and(qRptBaseInfo.createUsername.contains(ClientUserInfo.getUserName()));
         }
         if (!StringUtils.isEmpty(rptBaseInfoDTO.getWebsiteName())) {
             booleanBuilder.and(qRptBaseInfo.websiteName.contains(rptBaseInfoDTO.getWebsiteName()));
@@ -260,6 +260,12 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
         if(Objects.nonNull(rptBaseInfoDTO.getConfigName())){
             booleanBuilder.and(qRptBaseInfo.configName.contains(rptBaseInfoDTO.getConfigName()));
+        }
+        if(Objects.nonNull(rptBaseInfoDTO.getStartDate())){
+            booleanBuilder.and(qRptBaseInfo.configDate.after(rptBaseInfoDTO.getStartDate()));
+        }
+        if(Objects.nonNull(rptBaseInfoDTO.getEndDate())){
+            booleanBuilder.and(qRptBaseInfo.configDate.before(rptBaseInfoDTO.getEndDate()));
         }
 
     }

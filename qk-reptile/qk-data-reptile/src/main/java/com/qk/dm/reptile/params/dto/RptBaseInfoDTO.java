@@ -156,4 +156,12 @@ public class RptBaseInfoDTO {
    * 定时间隔
    */
   private String timeInterval;
+  /**
+   * 开始时间
+   */
+  private Date startDate;
+  /**
+   * 结束时间
+   */
+  private Date endDate;
 }

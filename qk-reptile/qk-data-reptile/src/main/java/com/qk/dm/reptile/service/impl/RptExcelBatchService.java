@@ -1,10 +1,10 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
-import com.qk.dm.reptile.utils.UserInfoUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class RptExcelBatchService {
     for (RptBaseInfo rptBaseInfo : prtBasicInfoList) {
       //todo 加入操作人员id
       //创建人名称
-      rptBaseInfo.setCreateUsername(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
+      rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
       //状态
       rptBaseInfo.setStatus(RptConstant.WAITING);
       //运行状态
