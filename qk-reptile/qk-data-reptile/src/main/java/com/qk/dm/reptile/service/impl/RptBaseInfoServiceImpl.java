@@ -222,7 +222,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         Map<String, Object> result = Maps.newHashMap();
         if(StringUtils.isBlank(ClientUserInfo.getUserName())){
             result.put("list", Collections.emptyList());
-            result.put("total", 0);
+            result.put("total", (long)0);
             return result;
         }
         long count = jpaQueryFactory.select(qRptBaseInfo.count()).from(qRptBaseInfo).where(booleanBuilder).fetchOne();
@@ -262,10 +262,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             booleanBuilder.and(qRptBaseInfo.configName.contains(rptBaseInfoDTO.getConfigName()));
         }
         if(Objects.nonNull(rptBaseInfoDTO.getStartDate())){
-            booleanBuilder.and(qRptBaseInfo.configDate.after(rptBaseInfoDTO.getStartDate()));
+            booleanBuilder.and(qRptBaseInfo.configDate.goe(rptBaseInfoDTO.getStartDate()));
         }
         if(Objects.nonNull(rptBaseInfoDTO.getEndDate())){
-            booleanBuilder.and(qRptBaseInfo.configDate.before(rptBaseInfoDTO.getEndDate()));
+            booleanBuilder.and(qRptBaseInfo.configDate.loe(rptBaseInfoDTO.getEndDate()));
         }
 
     }
