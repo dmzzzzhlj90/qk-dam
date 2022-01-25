@@ -105,7 +105,7 @@ public class ModelPhysicalTableVO implements Serializable {
     /**
      * HIVE类型表需要给ftfs路径
      */
-    private String hftsRoute;
+    private String hdfsRoute;
 
     /**
      * 数据库和系统定义的sql是否同步，0表示为同步，1表示不同步

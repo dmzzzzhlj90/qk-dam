@@ -634,7 +634,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     }
     //2当数据库连接是HIVE时候判断表类型、数据格式、hdfs路径是不是为空
     if (modelPhysical.getDataConnection().equals(ModelStatus.CONNECT)){
-      if (StringUtils.isEmpty(modelPhysical.getDataFormat())||StringUtils.isEmpty(modelPhysical.getTableType())||StringUtils.isEmpty(modelPhysical.getHftsRoute())){
+      if (StringUtils.isEmpty(modelPhysical.getDataFormat())||StringUtils.isEmpty(modelPhysical.getTableType())||StringUtils.isEmpty(modelPhysical.getHdfsRoute())){
         check=false;
       }
     }
