@@ -16,8 +16,7 @@ public class DsDirectory implements Serializable {
   /** 主键ID */
   @Id
   @Column(name = "id", nullable = false)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private String id;
 
   /** 应用系统名称 */
   @Column(name = "sys_name", nullable = false)
