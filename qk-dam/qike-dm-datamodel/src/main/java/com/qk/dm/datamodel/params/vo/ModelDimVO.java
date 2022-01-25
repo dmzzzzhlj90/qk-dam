@@ -49,10 +49,10 @@ public class ModelDimVO implements Serializable {
      */
     private Integer status;
 
-    /**
-     * 连接类型
-     */
-    private String connectionType;
+//    /**
+//     * 连接类型
+//     */
+//    private String connectionType;
 
     /**
      * 数据连接
@@ -60,9 +60,27 @@ public class ModelDimVO implements Serializable {
     private String dataConnection;
 
     /**
+     * 数据源连接名称
+     */
+    private String dataSourceName;
+
+    /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
+
+    /**
+     * HIVE类型表需要选择数据格式
+     */
+    private String dataFormat;
+    /**
+     * HIVE类型表需要给hdfs路径
+     */
+    private String hdfsRoute;
+    /**
+     * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
+     */
+    private String tableType;
     /**
      * 责任人
      */
