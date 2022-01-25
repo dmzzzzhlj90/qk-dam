@@ -125,8 +125,8 @@ public class ModelPhysicalTable implements Serializable {
     /**
      * HIVE类型表需要给ftfs路径
      */
-    @Column(name = "hfts_route")
-    private String hftsRoute;
+    @Column(name = "hdfs_route")
+    private String hdfsRoute;
     /**
      * 数据库和系统定义的sql是否同步（0表示已经同步，1表示未同步）
      */
