@@ -3,17 +3,24 @@ package com.qk.dm.datasource.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.*;
+import com.qk.dam.datasource.entity.ElasticSearchVO;
+import com.qk.dam.datasource.entity.HiveInfo;
+import com.qk.dam.datasource.entity.MysqlInfo;
+import com.qk.dam.datasource.entity.OracleInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dam.datasource.enums.DataSourceEnum;
+import com.qk.dam.datasource.enums.ExceptionEnum;
 import com.qk.dam.datasource.utils.DataSourcesUtil;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * 数据库测试连接
@@ -30,46 +37,42 @@ public class DsDataSouurceConnectUtil {
    * @param dsDatasourceVO
    * @return
    */
-  public static Boolean getDataSourceConnect(DsDatasourceVO dsDatasourceVO) {
-    Boolean connect = false;
+  public static void getDataSourceConnect(DsDatasourceVO dsDatasourceVO) {
     // 获取数据库连接类型
     String linkType = dsDatasourceVO.getLinkType();
     switch (linkType) {
       case DataSourcesUtil.MYSQL:
-        connect = connectMySQL(dsDatasourceVO);
+         connectMySQL(dsDatasourceVO,linkType);
         break;
       case DataSourcesUtil.HIVE:
-        connect = connectHive(dsDatasourceVO);
+         connectHive(dsDatasourceVO,linkType);
         break;
       default:
         throw new BizException("没有匹配的数据源参数类型");
     }
-    return connect;
   }
 
 
   /**
    * 连接数据库
+   *
+   * @param linkType
    * @param url
    * @param user
    * @param password
    * @param driver
    * @return
    */
-  private static Boolean getConnect(String url, String user, String password, String driver) {
-    Boolean connect = false;
+  private static void connection(String url, String user, String password, String driver,String linkType ) {
     Connection connection = null;
     try {
       Class.forName(driver);
       // 获取连接
       connection = DriverManager.getConnection(url, user, password);
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    } finally {
+    } catch (Exception exception) {
+     dealException(exception,linkType);
+    }finally {
       if (connection != null) {
-        connect = true;
         try {
           connection.close();
         } catch (SQLException throwables) {
@@ -77,16 +80,35 @@ public class DsDataSouurceConnectUtil {
         }
       }
     }
-    return connect;
+  }
+
+  private static void dealException(Exception exception, String linkType) {
+    String name = getExceptionName(exception);
+    String exceptionMessage = ExceptionEnum.fromValue(linkType, name);
+    throw  new BizException(exceptionMessage);
+  }
+
+  private static String getExceptionName(Exception exception) {
+    String exceptionName=null;
+    String name = exception.getClass().getName();
+    String[] split = name.split(Pattern.quote("."));
+    Optional<String> exception1 = Arrays.asList(split).stream()
+        .filter(s -> s.contains(DataSourcesUtil.EXCEPTION)).findFirst();
+    if (exception1.isPresent()){
+      exceptionName=exception1.get();
+    }
+    return exceptionName;
   }
 
   /**
    * hive做数据库连接测试
    *
    * @param dsDatasourceVO
+   * @param linkType
    * @return
    */
-  private static Boolean connectHive(DsDatasourceVO dsDatasourceVO) {
+  private static void connectHive(DsDatasourceVO dsDatasourceVO,
+      String linkType) {
     ObjectMapper objectMapper = new ObjectMapper();
     HiveInfo hiveInfo =
         objectMapper.convertValue(dsDatasourceVO.getConnectBasicInfo(), HiveInfo.class);
@@ -98,8 +120,7 @@ public class DsDataSouurceConnectUtil {
             + hiveInfo.getPort(); // 127.0.0.1是本机地址，
     String user = hiveInfo.getUserName();
     String password = hiveInfo.getPassword();
-    Boolean connect = getConnect(url, user, password, driver);
-    return connect;
+    connection(url, user, password, driver,linkType);
   }
 
 
@@ -108,8 +129,10 @@ public class DsDataSouurceConnectUtil {
    *
    * @return
    * @param dsDatasourceVO
+   * @param linkType
    */
-  private static Boolean connectMySQL(DsDatasourceVO dsDatasourceVO) {
+  private static void connectMySQL(DsDatasourceVO dsDatasourceVO,
+      String linkType) {
     // 获取数据源连接值
     ObjectMapper objectMapper = new ObjectMapper();
     MysqlInfo mysqlInfo =
@@ -122,8 +145,7 @@ public class DsDataSouurceConnectUtil {
             + mysqlInfo.getPort(); // 127.0.0.1是本机地址，
     String user = mysqlInfo.getUserName();
     String password = mysqlInfo.getPassword();
-    Boolean connect = getConnect(url, user, password, driver);
-    return connect;
+    connection(url, user, password, driver,linkType);
   }
 
   public static Map<String, String> getDataSourceType() {

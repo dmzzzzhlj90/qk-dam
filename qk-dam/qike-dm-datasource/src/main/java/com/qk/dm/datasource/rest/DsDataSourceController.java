@@ -124,10 +124,10 @@ public class DsDataSourceController {
    * @return DefaultCommonResult<Boolean> true:连接成功，false:连接失败
    */
   @PostMapping("/connecting")
-  public DefaultCommonResult<Boolean> dataSourceConnect(
+  public DefaultCommonResult dataSourceConnect(
       @RequestBody DsDatasourceVO dsDatasourceVO) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.dataSourceConnect(dsDatasourceVO));
+    dsDataSourceService.dataSourceConnect(dsDatasourceVO);
+    return DefaultCommonResult.success();
   }
 
   /**

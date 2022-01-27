@@ -194,14 +194,12 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
    * @return
    */
   @Override
-  public Boolean dataSourceConnect(DsDatasourceVO dsDatasourceVO) {
-    Boolean connect = false;
+  public void dataSourceConnect(DsDatasourceVO dsDatasourceVO) {
     if (dsDatasourceVO != null) {
-      connect = DsDataSouurceConnectUtil.getDataSourceConnect(dsDatasourceVO);
+      DsDataSouurceConnectUtil.getDataSourceConnect(dsDatasourceVO);
     } else {
       throw new BizException("数据链连接测试接口参数为空，请检测");
     }
-    return connect;
   }
 
   @Override
