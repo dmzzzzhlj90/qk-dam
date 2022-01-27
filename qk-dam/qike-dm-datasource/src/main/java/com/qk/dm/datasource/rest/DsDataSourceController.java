@@ -7,11 +7,12 @@ import com.qk.dm.datasource.service.DsDataSourceService;
 import com.qk.dm.datasource.util.DsDataSouurceConnectUtil;
 import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
-import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 数据管理—数据源连接
@@ -63,7 +64,7 @@ public class DsDataSourceController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/{id}")
-  public DefaultCommonResult deleteDsDataSource(@PathVariable("id") Integer id) {
+  public DefaultCommonResult deleteDsDataSource(@PathVariable("id") String id) {
     dsDataSourceService.deleteDsDataSource(id);
     return DefaultCommonResult.success();
   }
@@ -111,7 +112,7 @@ public class DsDataSourceController {
    */
   @GetMapping("/{id}")
   public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByDsname(
-      @PathVariable("id") Integer id) {
+      @PathVariable("id") String id) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDataSourceService.getDataSourceByDsname(id));
   }

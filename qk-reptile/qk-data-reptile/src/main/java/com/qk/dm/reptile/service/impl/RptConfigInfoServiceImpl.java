@@ -2,6 +2,7 @@ package com.qk.dm.reptile.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
@@ -19,7 +20,6 @@ import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
-import com.qk.dm.reptile.utils.UserInfoUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -66,7 +66,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
        // 修改基础信息表状态为爬虫
         start(rptConfigInfoDTO.getBaseInfoId(),
-        ReptileServerFactory.requestServer(rptList(config.getBaseInfoId())));
+        ReptileServerFactory.manual(rptList(config.getBaseInfoId())));
         return config.getId();
     }
 
@@ -93,11 +93,11 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-       if (!Objects.equals(rptBaseInfo.getStatus(), RptConstant.REPTILE)) {
           rptBaseInfo.setStatus(RptConstant.REPTILE);
-           rptBaseInfo.setConfigName(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
+          rptBaseInfo.setConfigName(ClientUserInfo.getUserName());
+          rptBaseInfo.setConfigDate(new Date());
           rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
-        }
+
     }
 
     private void start(Long id,String result) {
@@ -109,7 +109,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         rptBaseInfo.setJobId(map.get(RptConstant.JOBID));
         rptBaseInfo.setStatus(RptConstant.REPTILE);
         rptBaseInfo.setRunStatus(RptRunStatusConstant.START);
-        rptBaseInfo.setConfigName(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
+        rptBaseInfo.setConfigName(ClientUserInfo.getUserName());
+        rptBaseInfo.setConfigDate(new Date());
         rptBaseInfo.setGmtFunction(new Date());
         rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
 
