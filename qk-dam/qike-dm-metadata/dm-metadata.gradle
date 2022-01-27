@@ -50,6 +50,7 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
+
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
             "javax.persistence:javax.persistence-api",

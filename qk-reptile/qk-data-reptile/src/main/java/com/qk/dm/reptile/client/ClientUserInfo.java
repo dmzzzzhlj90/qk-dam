@@ -1,16 +1,18 @@
-package com.qk.dm.reptile.utils;
+package com.qk.dm.reptile.client;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 
-public class UserInfoUtil {
+import java.util.Objects;
 
+public class ClientUserInfo {
+    
     private static DefaultOidcUser getUserInfo(){
         return (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
     }
-    public static Object getUserName(){
-
-        return getUserInfo().getClaims().get("preferred_username");
+    public static String getUserName(){
+        return Objects.requireNonNullElse(getUserInfo().getClaims().get("preferred_username"),"").toString();
     }
+
 }
