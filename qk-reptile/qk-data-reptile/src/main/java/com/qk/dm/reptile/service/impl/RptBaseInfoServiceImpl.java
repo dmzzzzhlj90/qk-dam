@@ -150,7 +150,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatusAndTimeInterval(RptRunStatusConstant.START,RptConstant.REPTILE,timeInterval);
         if(!CollectionUtils.isEmpty(list)){
             list.forEach(e -> {
-                String result = ReptileServerFactory.requestServer(rptConfigInfoService.rptList(e.getId()));
+                String result = ReptileServerFactory.timing(rptConfigInfoService.rptList(e.getId()));
                 if (!StringUtils.isBlank(result)) {
                   updateBaseInfo(e, result);
                 }
@@ -194,7 +194,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        String result = ReptileServerFactory.requestServer(rptConfigInfoService.rptList(rptBaseInfo.getId()));
+        String result = ReptileServerFactory.manual(rptConfigInfoService.rptList(rptBaseInfo.getId()));
         if (!StringUtils.isBlank(result)) {
              updateBaseInfo(rptBaseInfo, result);
         }

@@ -66,7 +66,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
        // 修改基础信息表状态为爬虫
         start(rptConfigInfoDTO.getBaseInfoId(),
-        ReptileServerFactory.requestServer(rptList(config.getBaseInfoId())));
+        ReptileServerFactory.manual(rptList(config.getBaseInfoId())));
         return config.getId();
     }
 
@@ -93,12 +93,11 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-       if (!Objects.equals(rptBaseInfo.getStatus(), RptConstant.REPTILE)) {
           rptBaseInfo.setStatus(RptConstant.REPTILE);
-           rptBaseInfo.setConfigName(ClientUserInfo.getUserName());
-           rptBaseInfo.setConfigDate(new Date());
+          rptBaseInfo.setConfigName(ClientUserInfo.getUserName());
+          rptBaseInfo.setConfigDate(new Date());
           rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
-        }
+
     }
 
     private void start(Long id,String result) {

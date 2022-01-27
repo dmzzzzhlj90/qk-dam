@@ -7,6 +7,7 @@ import com.qk.dm.reptile.params.builder.RptSelectorBuilder;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
 import com.qk.dm.reptile.params.vo.RptSelectorColumnInfoVO;
 import com.qk.dm.reptile.utils.HttpClientUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -33,13 +34,32 @@ public class ReptileServerFactory {
     private static final String LIST = "list";
     private static final String EMPTY = "";
     //todo 目前在测试，地址暂时写此，之后提到Nacos上
-    private static final String REQUEST_URL = "http://172.21.3.206:6800/schedule.json";
+    private static final String TIMING_URL = "http://172.21.3.206:6800/schedule.json";
+    //手动抓取地址
+    private static final String MANUAL_URL = "http://172.21.3.191:6800/schedule.json";
 
-    public static String requestServer(List<RptConfigInfoVO> rptConfigInfoList) {
-        String resultInfo = null;
+    /**
+     * 手动执行
+     * @param rptConfigInfoList
+     * @return
+     */
+    public static String manual(List<RptConfigInfoVO> rptConfigInfoList){
+        return requestServer(rptConfigInfoList, MANUAL_URL);
+    }
+
+    /**
+     * 定时
+     * @param rptConfigInfoList
+     * @return
+     */
+    public static String timing(List<RptConfigInfoVO> rptConfigInfoList){
+        return requestServer(rptConfigInfoList, TIMING_URL);
+    }
+
+    private static String requestServer(List<RptConfigInfoVO> rptConfigInfoList,String url) {
         try {
-            resultInfo =  HttpClientUtils.postForm(
-                    REQUEST_URL,
+            return HttpClientUtils.postForm(
+                    url,
                     requestPara(rptConfigInfoList),
                     null,
                     CONN_TIMEOUT,
@@ -47,8 +67,8 @@ public class ReptileServerFactory {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LOG.info("调用爬虫接口的返回数据:{}",resultInfo);
-        return resultInfo;
+
+        return Strings.EMPTY;
     }
 
     /**
