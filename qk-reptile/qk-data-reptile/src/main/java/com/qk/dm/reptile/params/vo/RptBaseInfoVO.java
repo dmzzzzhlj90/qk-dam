@@ -208,4 +208,11 @@ public class RptBaseInfoVO {
    */
   @ExcelIgnore
   private String timeInterval;
+  /**
+   * 配置时间
+   */
+  @ExcelIgnore
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date configDate;
 }

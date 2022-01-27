@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptDimensionColumnInfo;
 import com.qk.dm.reptile.entity.QRptDimensionInfo;
@@ -12,7 +13,6 @@ import com.qk.dm.reptile.params.vo.RptDimensionInfoVO;
 import com.qk.dm.reptile.repositories.RptDimensionColumnInfoRepository;
 import com.qk.dm.reptile.repositories.RptDimensionInfoRepository;
 import com.qk.dm.reptile.service.RptDimensionInfoService;
-import com.qk.dm.reptile.utils.UserInfoUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
@@ -98,7 +98,7 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
       throw new BizException("当前需要新增的维度目录名称为"+rptDimensionInfoDTO.getDimensionName()+"的数据已经存在");
     }
     //添加用户名
-    rptDimensionInfo.setCreateUsername(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
+    rptDimensionInfo.setCreateUsername(ClientUserInfo.getUserName());
     rptDimensionInfoRepository.save(rptDimensionInfo);
   }
 
@@ -157,7 +157,7 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
     }
     RptDimensionInfoMapper.INSTANCE.of(rptDimensionInfoDTO, rptDimensionInfo);
     //修改人
-    rptDimensionInfo.setUpdateUsername(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
+    rptDimensionInfo.setUpdateUsername(ClientUserInfo.getUserName());
     rptDimensionInfoRepository.saveAndFlush(rptDimensionInfo);
   }
 
