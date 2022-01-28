@@ -13,9 +13,7 @@ import com.qk.dam.datasource.enums.ExceptionEnum;
 import com.qk.dam.datasource.utils.DataSourcesUtil;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,11 +45,34 @@ public class DsDataSouurceConnectUtil {
       case DataSourcesUtil.HIVE:
          connectHive(dsDatasourceVO,linkType);
         break;
+      case DataSourcesUtil.ELASTICSEARCH:
+        connectEs(dsDatasourceVO,linkType);
+        break;
       default:
         throw new BizException("没有匹配的数据源参数类型");
     }
   }
 
+  /**
+   * 连接es
+   * @param dsDatasourceVO
+   * @param linkType
+   */
+  private static void connectEs(DsDatasourceVO dsDatasourceVO, String linkType) {
+    ObjectMapper objectMapper = new ObjectMapper();
+    ElasticSearchVO elasticSearchVO = objectMapper
+        .convertValue(dsDatasourceVO.getConnectBasicInfo(),
+            ElasticSearchVO.class);
+    String driver=DataSourceEnum.fromValue(elasticSearchVO.getType()).getDriver(); // 获取hive数据驱动类
+    String url =
+        DataSourceEnum.fromValue(elasticSearchVO.getType()).getCold()
+            + elasticSearchVO.getServer()
+            + DataSourcesUtil.DOUHAO
+            + elasticSearchVO.getPort(); // 127.0.0.1是本机地址，
+    String user = elasticSearchVO.getUserName();
+    String password = elasticSearchVO.getPassword();
+    connection(url, user, password, driver,linkType);
+  }
 
   /**
    * 连接数据库

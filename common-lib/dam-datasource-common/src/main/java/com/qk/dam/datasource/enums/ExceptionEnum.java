@@ -9,7 +9,9 @@ public enum ExceptionEnum {
   MYSQL_COMMUNICATIONSEXCEPTION("mysql","CommunicationsException","连接超时,请检测网络和配置信息"),
   MYSQL_SQLEXCEPTION("mysql","SQLException","用户名或密码错误"),
   //HIVE
-  HIVE_SQLEXCEPTION("hive","SQLException","连接超时,请检测网络和配置信息");
+  HIVE_SQLEXCEPTION("hive","SQLException","连接超时,请检测网络和配置信息"),
+  //elasticsearch
+  ELASTICSEARCH_CLIENTEXCEPTION("elasticsearch","ClientException","连接超时,请检测网络和配置信息");
 
   private String linkType;
   private String exceptionName;
