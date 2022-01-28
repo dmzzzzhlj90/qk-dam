@@ -27,6 +27,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
+ * 质量监控prometheus指标获取
+ *
  * @author zhudaoming
  */
 @Aspect
@@ -34,8 +36,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RuleMeterAspect {
     private static final String NAME_RULE = "dqc.rule";
-    /** 规则job id*/
-    public static final String JOBID = "JOBID";
     /** 规则id rule io*/
     public static final String RULEID = "RULEID";
     /** 规则结果标题*/
@@ -88,42 +88,8 @@ public class RuleMeterAspect {
                     .collect(
                             Collectors.groupingBy(it ->
                                     Optional.ofNullable(it.get("targetObj")).orElse("")));
-            objectListMap.forEach((targetObj,rtList)->{
-                rtList.forEach(it->{
-                    //需要按照target分组
-                    AtomicInteger ii = new AtomicInteger(-1);
-                    it.forEach((k,v)->{
-                        int i = ii.incrementAndGet();
-                        DqcSchedulerResultTitleVO dqcSchedulerResultTitleVO = resultTitleList.get(i);
-                        log.info("执行标题【{}:{}】",dqcSchedulerResultTitleVO.getTitle(),dqcSchedulerResultTitleVO.getDataIndex());
-                        log.info("执行结果【{}:{}】",k,v);
-
-                        if (BigDecimalValidator.getInstance().isValid(v.toString())){
-                            BigDecimal b = new BigDecimal(v.toString());
-                            String metricName = metricName("result", "info");
-                            Tags tags = Tags.of(
-                                    TITLE, dqcSchedulerResultTitleVO.getTitle()+(StringUtils.isNotEmpty(targetObj.toString())?"":targetObj.toString()),
-                                    DATAINDEX, dqcSchedulerResultTitleVO.getDataIndex(),
-                                    TARGETOBJ, targetObj.toString(),
-                                    RULEID, String.valueOf(dqcSchedulerRules.getRuleTempId())
-                                    );
-                            final String cacheKey = tags.stream().map(Tag::getValue).collect(Collectors.joining(":"));
-                            cache.put(cacheKey,b);
-                            if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
-                                meterRegistry.gauge(
-                                        metricName,
-                                        tags,
-                                        cache,
-                                        c->
-                                                new BigDecimal(
-                                                        String.valueOf(c.get(cacheKey,Object.class))
-                                                ).doubleValue());
-                            }
-
-                        }
-                    });
-                });
-            });
+            objectListMap.forEach((targetObj,rtList)-> rtList.forEach(it->
+                    meterRegistryGauge(dqcSchedulerRules, resultTitleList, targetObj, it)));
         }
         // start stopwatch
         Object retVal = pjp.proceed();
@@ -131,6 +97,49 @@ public class RuleMeterAspect {
         log.info("返回值数据[{}]",retVal);
         return retVal;
     }
+
+    /**
+     * 添加监控指标
+     * @param dqcSchedulerRules 质量调度规则
+     * @param resultTitleList 结果数据头信息
+     * @param targetObj 目标对象
+     * @param resultMap 结果数据信息
+     */
+    private void meterRegistryGauge(DqcSchedulerRules dqcSchedulerRules, List<DqcSchedulerResultTitleVO> resultTitleList, Object targetObj, Map<String, Object> resultMap) {
+        //需要按照target分组
+        AtomicInteger ii = new AtomicInteger(-1);
+        resultMap.forEach((k, v)->{
+            int i = ii.incrementAndGet();
+            DqcSchedulerResultTitleVO dqcSchedulerResultTitleVO = resultTitleList.get(i);
+            log.info("执行标题【{}:{}】",dqcSchedulerResultTitleVO.getTitle(),dqcSchedulerResultTitleVO.getDataIndex());
+            log.info("执行结果【{}:{}】",k,v);
+
+            if (BigDecimalValidator.getInstance().isValid(v.toString())){
+                BigDecimal b = new BigDecimal(v.toString());
+                String metricName = metricName("result", "info");
+                Tags tags = Tags.of(
+                        TITLE, dqcSchedulerResultTitleVO.getTitle()+(StringUtils.isNotEmpty(targetObj.toString())?"": targetObj.toString()),
+                        DATAINDEX, dqcSchedulerResultTitleVO.getDataIndex(),
+                        TARGETOBJ, targetObj.toString(),
+                        RULEID, String.valueOf(dqcSchedulerRules.getRuleTempId())
+                        );
+                final String cacheKey = tags.stream().map(Tag::getValue).collect(Collectors.joining(":"));
+                cache.put(cacheKey,b);
+                if (meterRegistry.find(metricName).tags(tags).meters().isEmpty()){
+                    meterRegistry.gauge(
+                            metricName,
+                            tags,
+                            cache,
+                            c->
+                                    new BigDecimal(
+                                            String.valueOf(c.get(cacheKey,Object.class))
+                                    ).doubleValue());
+                }
+
+            }
+        });
+    }
+
     public static String metricName(String... names) {
         Joiner joiner = Joiner.on(",");
         ArrayList<String> ts = Lists.newArrayList(NAME_RULE);
