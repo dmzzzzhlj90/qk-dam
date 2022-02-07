@@ -15,6 +15,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -28,6 +29,7 @@ import java.util.*;
  * @since 1.0.0 数据源管理应用系统录入接口实现
  */
 @Service
+@Transactional
 public class DsDirectoryServiceImpl implements DsDirectoryService {
   private final QDsDirectory qDsDirectory = QDsDirectory.dsDirectory;
   private final QDsDir qDsDir = QDsDir.dsDir;
@@ -76,6 +78,7 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
     // 添加新增时间和修改时间
     dsDirectory.setGmtCreate(new Date());
     dsDirectory.setGmtModified(new Date());
+    dsDirectory.setId(UUID.randomUUID().toString().replaceAll("-", ""));
     // 根据应用系统名称判断数据库中是否存在，如果存在就抛出异常，否则新增
     BooleanExpression predicate = qDsDirectory.sysName.eq(dsDirectory.getSysName());
     boolean exists = dsDirectoryRepository.exists(predicate);
@@ -102,12 +105,14 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
    */
   private void getDsDir(DsDir dsdir, DsDirectory dsDirectory) {
     if (dsDirectory != null) {
+      //赋值目录id
+      dsdir.setId(UUID.randomUUID().toString().replaceAll("-", ""));
       //赋值应用id
       dsdir.setDsSystemId(dsDirectory.getId());
       // 赋值名称
       dsdir.setDicName(dsDirectory.getSysName());
       // 赋值父类编码
-      dsdir.setParentId(0);
+      dsdir.setParentId("0");
       // 创建时间
       dsdir.setGmtCreate(new Date());
       // 目录编码
@@ -118,7 +123,7 @@ public class DsDirectoryServiceImpl implements DsDirectoryService {
   }
 
   @Override
-  public void deleteDsDirectory(Integer id) {
+  public void deleteDsDirectory(String id) {
     DsDirectory dsDirectory = dsDirectoryRepository.findOne(qDsDirectory.id.eq(id)).orElse(null);
     if (!Objects.isNull(dsDirectory)) {
       chekDirDataSource(dsDirectory);

@@ -1,8 +1,17 @@
 server:
   port: 8765
 spring:
+  messages:
+    basename: i18n/messages
+  servlet:
+    multipart:
+    max-file-size: 20MB
+    max-request-size: 100MB
+  mvc:
+    message-codes-resolver-format: postfix_error_code
   main:
     allow-bean-definition-overriding: true
+
 logging:
   level:
     root: INFO

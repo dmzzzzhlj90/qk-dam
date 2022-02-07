@@ -1,19 +1,18 @@
 package com.qk.dam.auth.web;
 
 import com.google.common.collect.Maps;
-import java.util.Map;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.ReactiveSecurityContextHolder;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * 用户信息
@@ -29,14 +28,11 @@ public class UserInfoController {
    * @return Mono
    */
   @GetMapping("/auth/current/authorities")
-  public Mono getAuthorities() {
-    return ReactiveSecurityContextHolder.getContext()
-        .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
-        .map(SecurityContext::getAuthentication)
-        .filter(Authentication::isAuthenticated)
-        .map(Authentication::getAuthorities);
-    //                .map(grantedAuthorities ->
-    // grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")));
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+
+    return SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getAuthorities();
   }
 
   /**
@@ -45,41 +41,12 @@ public class UserInfoController {
    * @return OidcUserInfo
    */
   @GetMapping("/auth/current/principal/userinfo")
-  public Mono<OidcUserInfo> userinfo() {
-    return ReactiveSecurityContextHolder.getContext()
-        .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
-        .map(SecurityContext::getAuthentication)
-        .filter(Authentication::isAuthenticated)
-        .map(w -> (DefaultOidcUser) w.getPrincipal())
-        .map(DefaultOidcUser::getUserInfo);
+  public OidcUserInfo userinfo() {
+    DefaultOidcUser principal = (DefaultOidcUser)SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
+    return principal.getUserInfo();
   }
 
-  /**
-   * 查询ID token
-   *
-   * @return OidcIdToken
-   */
-  @GetMapping("/auth/current/principal/idToken")
-  public Mono<OidcIdToken> idToken() {
-    return ReactiveSecurityContextHolder.getContext()
-        .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
-        .map(SecurityContext::getAuthentication)
-        .filter(Authentication::isAuthenticated)
-        .map(w -> (DefaultOidcUser) w.getPrincipal())
-        .map(DefaultOidcUser::getIdToken);
-  }
-
-  /**
-   * 查询认证信息
-   *
-   * @return getAuthentication
-   */
-  @GetMapping("/auth/current/credentials")
-  public Mono credentials() {
-    return ReactiveSecurityContextHolder.getContext()
-        .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
-        .map(SecurityContext::getAuthentication);
-  }
 
   /**
    * 查询access token
@@ -89,19 +56,11 @@ public class UserInfoController {
    */
   @GetMapping("/auth/current/accessToken")
   @ResponseBody
-  public Mono<Map<String, Object>> accessToken(
+  public Map<String, Object> accessToken(
       @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
     Map<String, Object> objectHashMap = Maps.newHashMap();
-    return ReactiveSecurityContextHolder.getContext()
-        .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
-        .map(SecurityContext::getAuthentication)
-        .filter(Authentication::isAuthenticated)
-        .map(w -> (DefaultOidcUser) w.getPrincipal())
-        .map(
-            userinfo -> {
-              objectHashMap.put("userinfo", userinfo.getUserInfo());
-              objectHashMap.put("accessToken", authorizedClient.getAccessToken());
-              return objectHashMap;
-            });
+    objectHashMap.put("userinfo", userinfo());
+    objectHashMap.put("accessToken", authorizedClient.getAccessToken().getTokenValue());
+    return objectHashMap;
   }
 }

@@ -4,6 +4,7 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptDimensionColumnInfo;
 import com.qk.dm.reptile.entity.QRptDimensionInfo;
@@ -17,7 +18,6 @@ import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import com.qk.dm.reptile.repositories.RptDimensionColumnInfoRepository;
 import com.qk.dm.reptile.repositories.RptDimensionInfoRepository;
 import com.qk.dm.reptile.service.RptDimensionInfoColumnService;
-import com.qk.dm.reptile.utils.UserInfoUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -68,7 +68,8 @@ public class RptDimensionInfoColumnServiceImpl implements
    */
   @Override
   public void addRptDimensionInfoColumn(RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
-    BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnDTO.getDimensionId()).and(qRptDimensionColumnInfo.dimensionColumnName.eq(rptDimensionInfoColumnDTO.getDimensionColumnName()));
+    BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnDTO.getDimensionId()).and((qRptDimensionColumnInfo.dimensionColumnName.eq(rptDimensionInfoColumnDTO.getDimensionColumnName()))
+        .or(qRptDimensionColumnInfo.dimensionColumnCode.eq(rptDimensionInfoColumnDTO.getDimensionColumnCode())));
     boolean exists = rptDimensionColumnInfoRepository.exists(predicate);
     if (exists){
       throw new BizException("当前新增数据已经存在请查证");
@@ -76,8 +77,7 @@ public class RptDimensionInfoColumnServiceImpl implements
     RptDimensionColumnInfo rptDimensionColumnInfo = RptDimensionInfoColumnMapper.INSTANCE
         .userRptDimensionInfoColumnDTO(rptDimensionInfoColumnDTO);
     //赋值创建人
-    rptDimensionColumnInfo.setCreateUsername(Objects.requireNonNullElse(
-        UserInfoUtil.getUserName(),"").toString());
+    rptDimensionColumnInfo.setCreateUsername(ClientUserInfo.getUserName());
     rptDimensionColumnInfoRepository.save(rptDimensionColumnInfo);
   }
 
@@ -107,7 +107,7 @@ public class RptDimensionInfoColumnServiceImpl implements
       throw new BizException("当前需修改的维度字段名称为"+rptDimensionColumnInfo.getDimensionColumnName()+"的数据不存在");
     }
     RptDimensionInfoColumnMapper.INSTANCE.of(rptDimensionInfoColumnDTO, rptDimensionColumnInfo);
-    rptDimensionColumnInfo.setUpdateUsername(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
+    rptDimensionColumnInfo.setUpdateUsername(ClientUserInfo.getUserName());
     rptDimensionColumnInfoRepository.saveAndFlush(rptDimensionColumnInfo);
   }
 

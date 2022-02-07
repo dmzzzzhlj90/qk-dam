@@ -12,7 +12,9 @@ configurations {
     }
 }
 processResources {
-    expand(project.properties)
+    filesMatching('*.yml') {
+        expand(project.properties)
+    }
 }
 docker {
     springBootApplication {
@@ -23,19 +25,13 @@ docker {
     }
 }
 dependencies {
+    implementation project(":dam-mvc-validation")
     implementation project(":commons-core")
-    implementation project(":dam-log")
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
-    implementation 'org.springframework.data:spring-data-redis'
-    implementation 'io.lettuce:lettuce-core'
-    implementation 'org.springframework.session:spring-session-data-redis'
-
-    implementation group: 'org.keycloak', name: 'keycloak-authz-client', version: '15.0.2'
     annotationProcessor 'org.projectlombok:lombok'
 
 }

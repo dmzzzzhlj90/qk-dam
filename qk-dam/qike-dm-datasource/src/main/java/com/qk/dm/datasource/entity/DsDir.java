@@ -16,8 +16,7 @@ public class DsDir implements Serializable {
   /** 主键ID */
   @Id
   @Column(name = "id", nullable = false)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private String id;
 
   /** 目录名称 */
   @Column(name = "dic_name", nullable = false)
@@ -25,7 +24,7 @@ public class DsDir implements Serializable {
 
   /** 父级id(一级目录是0，二级目录是上级的id) */
   @Column(name = "parent_id", nullable = false)
-  private Integer parentId;
+  private String parentId;
 
   /** 创建时间(后期设计为非空) */
   @Column(name = "gmt_create")
@@ -56,5 +55,5 @@ public class DsDir implements Serializable {
 
   /** 目录编码 */
   @Column(name = "ds_system_id")
-  private Integer dsSystemId;
+  private String dsSystemId;
 }

@@ -5,10 +5,11 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datasource.service.DsDirService;
 import com.qk.dm.datasource.vo.DsDirReturnVO;
 import com.qk.dm.datasource.vo.DsDirVO;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 数据源管理—数据源连接目录
@@ -67,7 +68,7 @@ public class DsDirController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/delete/{id}")
-  public DefaultCommonResult deleteDsDir(@PathVariable("id") Integer id) {
+  public DefaultCommonResult deleteDsDir(@PathVariable("id") String id) {
     dsDirService.deleteDsDir(id);
     return DefaultCommonResult.success();
   }

@@ -1,10 +1,11 @@
 package com.qk.dm.datasource.vo;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * 目录返回值VO
@@ -19,13 +20,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DsDirReturnVO {
   /** 主键ID */
-  private Integer key;
+  private String key;
 
   /** 目录名称 */
   private String title;
 
   /** 父级id */
-  private Integer parentId;
+  private String parentId;
 
   /** 目录编码 */
   private String dsDirCode;

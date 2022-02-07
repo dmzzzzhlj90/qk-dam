@@ -3,7 +3,9 @@ package com.qk.dm.datasource.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.*;
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dam.datasource.entity.HiveInfo;
+import com.qk.dam.datasource.entity.MysqlInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.datasource.constant.DsConstant;
 import com.qk.dm.datasource.entity.DsDatasource;
@@ -18,10 +20,14 @@ import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.DsDirReturnVO;
 import com.qk.dm.datasource.vo.DsDirVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.util.*;
 
 /**
@@ -32,21 +38,32 @@ import java.util.*;
  * @since 1.0.0
  */
 @Service
+@Transactional
 public class DsDirServiceImpl implements DsDirService {
   private final QDsDir qDsDir = QDsDir.dsDir;
   private final DsDirRepository dsDirRepository;
   private final DsDatasourceRepository dsDatasourceRepository;
+  private JPAQueryFactory jpaQueryFactory;
+  private final EntityManager entityManager;
 
-  public DsDirServiceImpl(
-      DsDirRepository dsDirRepository, DsDatasourceRepository dsDatasourceRepository) {
+  public DsDirServiceImpl(DsDirRepository dsDirRepository,
+      DsDatasourceRepository dsDatasourceRepository,
+      EntityManager entityManager) {
     this.dsDirRepository = dsDirRepository;
     this.dsDatasourceRepository = dsDatasourceRepository;
+    this.entityManager = entityManager;
+  }
+
+  @PostConstruct
+  public void initFactory() {
+    jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
 
   @Override
   public void addDsDir(DsDirVO dsDirVO) {
     DsDir dsDir = DsDirMapper.INSTANCE.useDsDir(dsDirVO);
     dsDir.setGmtCreate(new Date());
+    dsDir.setId(UUID.randomUUID().toString().replaceAll("-", ""));
     BooleanExpression predicate = qDsDir.dsDirCode.eq(dsDir.getDsDirCode());
     boolean exists = dsDirRepository.exists(predicate);
     if (exists) {
@@ -61,8 +78,8 @@ public class DsDirServiceImpl implements DsDirService {
   }
 
   @Override
-  public void deleteDsDir(Integer id) {
-    ArrayList<Integer> ids = new ArrayList<>();
+  public void deleteDsDir(String id) {
+    ArrayList<String> ids = new ArrayList<>();
     // 删除父级ID
     Optional<DsDir> dsdDirIsExist = dsDirRepository.findOne(qDsDir.id.eq(id));
     if (!dsdDirIsExist.isPresent()) {
@@ -88,7 +105,8 @@ public class DsDirServiceImpl implements DsDirService {
 
   @Override
   public List<DsDirReturnVO> getDsDir() {
-    List<DsDir> dsDirList = dsDirRepository.findAll();
+    //List<DsDir> dsDirList = dsDirRepository.findAll();
+    List<DsDir> dsDirList = queryDir();
     List<DsDirReturnVO> dsDirVOList = new ArrayList<>();
     if (!CollectionUtils.isEmpty(dsDirList)) {
       dsDirList.forEach(
@@ -102,15 +120,21 @@ public class DsDirServiceImpl implements DsDirService {
     return buildByRecursive(dsDirVOList);
   }
 
+  private List<DsDir> queryDir() {
+    List<DsDir> dirList = jpaQueryFactory.select(qDsDir).from(qDsDir)
+        .orderBy(qDsDir.gmtCreate.desc()).fetch();
+    return dirList;
+
+  }
+
   private List<DsDirReturnVO> buildByRecursive(List<DsDirReturnVO> dsDirVOList) {
-    DsDirReturnVO dsDirReturnVO = DsDirReturnVO.builder().key(0).title("全部数据源").build();
+    DsDirReturnVO dsDirReturnVO = DsDirReturnVO.builder().key("0").title("全部数据源").build();
     List<DsDirReturnVO> trees = new ArrayList<>();
     trees.add(findChildren(dsDirReturnVO, dsDirVOList));
     return trees;
   }
 
   private DsDirReturnVO findChildren(DsDirReturnVO dsDirReturnVO, List<DsDirReturnVO> dsDirVOList) {
-    dsDirReturnVO.setChildren(new ArrayList<>());
     for (DsDirReturnVO DSDTV : dsDirVOList) {
       if (dsDirReturnVO.getKey().equals(DSDTV.getParentId())) {
         if (dsDirReturnVO.getChildren() == null) {
@@ -166,7 +190,7 @@ public class DsDirServiceImpl implements DsDirService {
             // 赋值目录名称
             dsDirReturnVO.setTitle(dsDatasourceVO.getDataSourceName());
             // 赋值父类名称
-            dsDirReturnVO.setParentId(Integer.valueOf(dsDatasourceVO.getDicId()));
+            dsDirReturnVO.setParentId(dsDatasourceVO.getDicId());
             // 赋值类型
             dsDirReturnVO.setDataType(DsConstant.DATASOURCE_TYPE);
             // 赋值数据源连接类型
@@ -177,10 +201,10 @@ public class DsDirServiceImpl implements DsDirService {
     return returnVOList;
   }
 
-  private List<DsDatasourceVO> getDataSourceList(Integer dicid) {
+  private List<DsDatasourceVO> getDataSourceList(String dicid) {
     List<DsDatasourceVO> dsDatasourceVOList = new ArrayList<>();
     if (!StringUtils.isEmpty(dicid)) {
-      List<DsDatasource> byDicIdList = dsDatasourceRepository.getByDicId(Integer.toString(dicid));
+      List<DsDatasource> byDicIdList = dsDatasourceRepository.getByDicId(dicid);
       if (byDicIdList != null) {
         byDicIdList.forEach(
             dsDatasource -> {
@@ -230,19 +254,20 @@ public class DsDirServiceImpl implements DsDirService {
   @Override
   public void getDsdId(Set<String> dsDicIdSet, String dicId) {
     Iterable<DsDir> sonDirList =
-        dsDirRepository.findAll(qDsDir.parentId.eq(Integer.valueOf(dicId)));
+        dsDirRepository.findAll(qDsDir.parentId.eq(dicId));
     if (sonDirList != null) {
       sonDirList.forEach(
           dsDir -> {
-            dsDicIdSet.add(Integer.toString(dsDir.getId()));
-            this.getDsdId(dsDicIdSet, Integer.toString(dsDir.getId()));
+            dsDicIdSet.add(dsDir.getId());
+            this.getDsdId(dsDicIdSet, dsDir.getId());
           });
     }
   }
 
   @Override
   public List<DsDirReturnVO> getDsDirDataSource() {
-    List<DsDir> dsDirList = dsDirRepository.findAll();
+    //List<DsDir> dsDirList = dsDirRepository.findAll();
+    List<DsDir> dsDirList = queryDir();
     List<DsDirReturnVO> dsDirVOList = new ArrayList<>();
     if (!CollectionUtils.isEmpty(dsDirList)) {
       dsDirList.forEach(
@@ -277,7 +302,7 @@ public class DsDirServiceImpl implements DsDirService {
 
   private List<DsDirReturnVO> buildByRecursives(List<DsDirReturnVO> dsDirVOList) {
     DsDirReturnVO dsDirReturnVO =
-        DsDirReturnVO.builder().key(0).title("全部数据源").dataType(DsConstant.DIR_TYPE).build();
+        DsDirReturnVO.builder().key("0").title("全部数据源").dataType(DsConstant.DIR_TYPE).build();
     List<DsDirReturnVO> trees = new ArrayList<>();
     trees.add(findDirChildren(dsDirReturnVO, dsDirVOList));
     return trees;
@@ -289,7 +314,7 @@ public class DsDirServiceImpl implements DsDirService {
    * @param ids
    * @param id
    */
-  private void getIds(ArrayList<Integer> ids, Integer id) {
+  private void getIds(ArrayList<String> ids, String id) {
     Iterable<DsDir> sonDirList = dsDirRepository.findAll(qDsDir.parentId.eq(id));
     if (sonDirList != null) {
       sonDirList.forEach(

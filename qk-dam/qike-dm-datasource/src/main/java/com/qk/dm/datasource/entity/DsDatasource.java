@@ -1,9 +1,10 @@
 package com.qk.dm.datasource.entity;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
-import lombok.Data;
 
 @Data
 @Entity
@@ -15,8 +16,7 @@ public class DsDatasource implements Serializable {
   /** 主键ID */
   @Id
   @Column(name = "id", nullable = false)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private String id;
 
   /** 连接名称 */
   @Column(name = "data_source_name", nullable = false)

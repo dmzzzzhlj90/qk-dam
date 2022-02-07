@@ -194,4 +194,11 @@ public class RptBaseInfo implements Serializable {
     @Column(name = "time_interval")
     private String timeInterval;
 
+    /**
+     * 配置时间
+     */
+    @Column(name = "config_date")
+    private Date configDate;
+
+
 }

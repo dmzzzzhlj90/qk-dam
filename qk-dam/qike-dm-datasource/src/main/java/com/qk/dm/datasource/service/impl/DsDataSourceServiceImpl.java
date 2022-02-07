@@ -26,6 +26,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -39,6 +40,7 @@ import java.util.*;
  * @since 1.0.0
  */
 @Service
+@Transactional
 public class DsDataSourceServiceImpl implements DsDataSourceService {
   private final DsDirService dsDirService;
   private final QDsDatasource qDsDatasource = QDsDatasource.dsDatasource;
@@ -102,6 +104,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   public void addDsDataSource(DsDatasourceVO dsDatasourceVO) {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
     dsDatasource.setGmtCreate(new Date());
+    dsDatasource.setId(UUID.randomUUID().toString().replaceAll("-", ""));
     // 将传入的数据源连接信息转换赋值
     setDataSourceValues(dsDatasource, dsDatasourceVO);
     // dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
@@ -124,7 +127,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
    * @param id
    */
   @Override
-  public void deleteDsDataSource(Integer id) {
+  public void deleteDsDataSource(String id) {
     BooleanExpression predicate = qDsDatasource.id.eq(id);
     boolean exists = dsDatasourceRepository.exists(predicate);
     if (exists) {
@@ -191,14 +194,12 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
    * @return
    */
   @Override
-  public Boolean dataSourceConnect(DsDatasourceVO dsDatasourceVO) {
-    Boolean connect = false;
+  public void dataSourceConnect(DsDatasourceVO dsDatasourceVO) {
     if (dsDatasourceVO != null) {
-      connect = DsDataSouurceConnectUtil.getDataSourceConnect(dsDatasourceVO);
+      DsDataSouurceConnectUtil.getDataSourceConnect(dsDatasourceVO);
     } else {
       throw new BizException("数据链连接测试接口参数为空，请检测");
     }
-    return connect;
   }
 
   @Override
@@ -247,7 +248,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   @Override
-  public List<DsDatasourceVO> getDataSourceByDsname(Integer id) {
+  public List<DsDatasourceVO> getDataSourceByDsname(String id) {
     List<DsDatasourceVO> resultDataList = new ArrayList<>();
     Optional<DsDatasource> datasourceList = dsDatasourceRepository.findById(id);
     if (!datasourceList.isEmpty()) {

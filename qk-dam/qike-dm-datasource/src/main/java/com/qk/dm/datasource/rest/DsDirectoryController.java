@@ -6,11 +6,12 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.datasource.service.DsDirectoryService;
 import com.qk.dm.datasource.vo.DsDirectoryVO;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 数据源管理__应用系统录入接口
@@ -64,7 +65,7 @@ public class DsDirectoryController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/delete/{id}")
-  public DefaultCommonResult deleteDsDirectory(@PathVariable("id") Integer id) {
+  public DefaultCommonResult deleteDsDirectory(@PathVariable("id") String id) {
     dsDirectoryService.deleteDsDirectory(id);
     return DefaultCommonResult.success();
   }

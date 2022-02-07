@@ -1,11 +1,13 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
+import com.google.common.collect.Maps;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRolesConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
@@ -20,12 +22,10 @@ import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
-import com.qk.dm.reptile.utils.UserInfoUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -69,7 +69,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     @Override
     public void insert(RptBaseInfoDTO rptBaseInfoDTO) {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
-        rptBaseInfo.setCreateUsername(Objects.requireNonNullElse(UserInfoUtil.getUserName(),"").toString());
+        rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
         rptBaseInfoRepository.save(rptBaseInfo);
     }
 
@@ -150,7 +150,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatusAndTimeInterval(RptRunStatusConstant.START,RptConstant.REPTILE,timeInterval);
         if(!CollectionUtils.isEmpty(list)){
             list.forEach(e -> {
-                String result = ReptileServerFactory.requestServer(rptConfigInfoService.rptList(e.getId()));
+                String result = ReptileServerFactory.timing(rptConfigInfoService.rptList(e.getId()));
                 if (!StringUtils.isBlank(result)) {
                   updateBaseInfo(e, result);
                 }
@@ -194,7 +194,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        String result = ReptileServerFactory.requestServer(rptConfigInfoService.rptList(rptBaseInfo.getId()));
+        String result = ReptileServerFactory.manual(rptConfigInfoService.rptList(rptBaseInfo.getId()));
         if (!StringUtils.isBlank(result)) {
              updateBaseInfo(rptBaseInfo, result);
         }
@@ -219,10 +219,10 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptBaseInfoDTO,authorizedClient);
-        Map<String, Object> result = new HashMap<>();
-        if(Objects.isNull(UserInfoUtil.getUserName())){
+        Map<String, Object> result = Maps.newHashMap();
+        if(StringUtils.isBlank(ClientUserInfo.getUserName())){
             result.put("list", Collections.emptyList());
-            result.put("total", 0);
+            result.put("total", (long)0);
             return result;
         }
         long count = jpaQueryFactory.select(qRptBaseInfo.count()).from(qRptBaseInfo).where(booleanBuilder).fetchOne();
@@ -230,7 +230,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
                         .select(qRptBaseInfo)
                         .from(qRptBaseInfo)
                         .where(booleanBuilder)
-                        .orderBy(qRptBaseInfo.gmtModified.desc())
+                        .orderBy(qRptBaseInfo.id.desc())
                         .offset((long) (rptBaseInfoDTO.getPagination().getPage() - 1)
                                         * rptBaseInfoDTO.getPagination().getSize())
                         .limit(rptBaseInfoDTO.getPagination().getSize()).fetch();
@@ -241,7 +241,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
     public void checkCondition(BooleanBuilder booleanBuilder, RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {
         if(!judgeRoles(authorizedClient)){
-           booleanBuilder.and(qRptBaseInfo.createUsername.contains(String.valueOf(UserInfoUtil.getUserName())));
+           booleanBuilder.and(qRptBaseInfo.createUsername.contains(ClientUserInfo.getUserName()));
         }
         if (!StringUtils.isEmpty(rptBaseInfoDTO.getWebsiteName())) {
             booleanBuilder.and(qRptBaseInfo.websiteName.contains(rptBaseInfoDTO.getWebsiteName()));
@@ -257,6 +257,15 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
         if(Objects.nonNull(rptBaseInfoDTO.getStatus())){
             booleanBuilder.and(qRptBaseInfo.status.eq(rptBaseInfoDTO.getStatus()));
+        }
+        if(Objects.nonNull(rptBaseInfoDTO.getConfigName())){
+            booleanBuilder.and(qRptBaseInfo.configName.contains(rptBaseInfoDTO.getConfigName()));
+        }
+        if(Objects.nonNull(rptBaseInfoDTO.getStartDate())){
+            booleanBuilder.and(qRptBaseInfo.configDate.goe(rptBaseInfoDTO.getStartDate()));
+        }
+        if(Objects.nonNull(rptBaseInfoDTO.getEndDate())){
+            booleanBuilder.and(qRptBaseInfo.configDate.loe(rptBaseInfoDTO.getEndDate()));
         }
 
     }
