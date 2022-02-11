@@ -44,11 +44,12 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
-
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.alibaba:easyexcel'
     implementation 'org.mapstruct:mapstruct'
     implementation 'org.aspectj:aspectjrt:1.9.7'
     implementation 'org.aspectj:aspectjweaver:1.9.7'
+    compile group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
     annotationProcessor(
             "javax.persistence:javax.persistence-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",

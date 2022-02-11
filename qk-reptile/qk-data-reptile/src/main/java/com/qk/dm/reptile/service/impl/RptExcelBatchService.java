@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.alibaba.nacos.common.utils.StringUtils;
 import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
@@ -57,13 +58,11 @@ public class RptExcelBatchService {
       List<RptBaseInfo> allList = rptBaseInfoRepository.findAll();
       if (CollectionUtils.isNotEmpty(allList)){
         Map<String,RptBaseInfo> collect = allList.stream().collect(Collectors
-            .toMap(k -> k.getWebsiteUrl() + "->"+k.getSecondSiteType()+"->" + k.getListPageAddress(),
-                k -> k, (k1, k2) -> k1));
+            .toMap(this::removeDuplicate, k -> k, (k1, k2) -> k1));
         Iterator<RptBaseInfo> iterator = prtBasicInfoList.iterator();
         while (iterator.hasNext()){
           RptBaseInfo rptBaseInfo = iterator.next();
-          String s = rptBaseInfo.getWebsiteUrl() +"->"+rptBaseInfo.getSecondSiteType()+"->"+ rptBaseInfo.getListPageAddress();
-          RptBaseInfo rptBaseInfo1 = collect.get(s);
+          RptBaseInfo rptBaseInfo1 = collect.get(removeDuplicate(rptBaseInfo));
           if (!Objects.isNull(rptBaseInfo1)){
             list.add(rptBaseInfo);
             iterator.remove();
@@ -72,5 +71,21 @@ public class RptExcelBatchService {
       }
     }
     return list;
+  }
+
+  /**
+   * 根据字段去重
+   * @param rptBaseInfo
+   * @return
+   */
+  private String removeDuplicate(RptBaseInfo rptBaseInfo){
+    String key = String.join("->",rptBaseInfo.getWebsiteUrl(),rptBaseInfo.getSecondSiteType(),rptBaseInfo.getListPageAddress());
+    if(StringUtils.isNotBlank(rptBaseInfo.getWebsiteNameCorrection())){
+      key = String.join("->",key, rptBaseInfo.getWebsiteNameCorrection());
+    }
+    if(StringUtils.isNotBlank(rptBaseInfo.getWebsiteUrlCorrection())){
+      key = String.join("->",key, rptBaseInfo.getWebsiteUrlCorrection());
+    }
+    return key;
   }
 }
