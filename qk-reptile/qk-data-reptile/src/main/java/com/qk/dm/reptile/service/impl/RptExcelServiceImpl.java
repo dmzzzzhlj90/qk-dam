@@ -46,8 +46,9 @@ public class RptExcelServiceImpl implements RptExcelService {
   public void basicInfoDownloadTemplate(HttpServletResponse response)
       throws IOException {
    List<RptBaseInfoVO> rptBaseInfoVOList = prtBaseInfoSampleData();
-    response.setContentType("application/vnd.ms-excel");
-    response.setCharacterEncoding("utf-8");
+//    response.setContentType("application/vnd.ms-excel");
+//    response.setCharacterEncoding("utf-8");
+    response.setContentType("application/json;charset=utf-8");
     String fileName = URLEncoder.encode("待配列基本信息", "UTF-8").replaceAll("\\+", "%20");
     response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
     EasyExcel.write(response.getOutputStream(), RptBaseInfoVO.class)

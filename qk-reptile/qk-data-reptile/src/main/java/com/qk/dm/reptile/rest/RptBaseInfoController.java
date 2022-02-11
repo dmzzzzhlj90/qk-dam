@@ -5,10 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.enums.TimeIntervalEnum;
-import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
-import com.qk.dm.reptile.params.dto.RptCopyConfigDTO;
-import com.qk.dm.reptile.params.dto.RptRunStatusDTO;
-import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
+import com.qk.dm.reptile.params.dto.*;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.params.vo.TimeIntervalVO;
 import com.qk.dm.reptile.service.RptBaseInfoService;
@@ -180,6 +177,17 @@ public class RptBaseInfoController {
     @PostMapping("/time/interval")
     public DefaultCommonResult updateTimeInterval(@RequestBody @Validated TimeIntervalDTO timeIntervalDTO) {
         rptBaseInfoService.updateTimeInterval(timeIntervalDTO);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 分配任务
+     * @param rptAssignedTaskDTO
+     * @return
+     */
+    @PostMapping("/assigned/task")
+    public DefaultCommonResult assignedTask(@RequestBody @Validated RptAssignedTaskDTO rptAssignedTaskDTO) {
+        rptBaseInfoService.assignedTasks(rptAssignedTaskDTO);
         return DefaultCommonResult.success();
     }
 

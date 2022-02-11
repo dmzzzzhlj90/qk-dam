@@ -3,7 +3,9 @@ package com.qk.dm.datasource.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.*;
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dam.datasource.entity.HiveInfo;
+import com.qk.dam.datasource.entity.MysqlInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.datasource.constant.DsConstant;
 import com.qk.dm.datasource.entity.DsDatasource;
@@ -18,11 +20,14 @@ import com.qk.dm.datasource.vo.DsDatasourceVO;
 import com.qk.dm.datasource.vo.DsDirReturnVO;
 import com.qk.dm.datasource.vo.DsDirVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.util.*;
 
 /**
@@ -38,11 +43,20 @@ public class DsDirServiceImpl implements DsDirService {
   private final QDsDir qDsDir = QDsDir.dsDir;
   private final DsDirRepository dsDirRepository;
   private final DsDatasourceRepository dsDatasourceRepository;
+  private JPAQueryFactory jpaQueryFactory;
+  private final EntityManager entityManager;
 
-  public DsDirServiceImpl(
-      DsDirRepository dsDirRepository, DsDatasourceRepository dsDatasourceRepository) {
+  public DsDirServiceImpl(DsDirRepository dsDirRepository,
+      DsDatasourceRepository dsDatasourceRepository,
+      EntityManager entityManager) {
     this.dsDirRepository = dsDirRepository;
     this.dsDatasourceRepository = dsDatasourceRepository;
+    this.entityManager = entityManager;
+  }
+
+  @PostConstruct
+  public void initFactory() {
+    jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
 
   @Override
@@ -91,7 +105,8 @@ public class DsDirServiceImpl implements DsDirService {
 
   @Override
   public List<DsDirReturnVO> getDsDir() {
-    List<DsDir> dsDirList = dsDirRepository.findAll();
+    //List<DsDir> dsDirList = dsDirRepository.findAll();
+    List<DsDir> dsDirList = queryDir();
     List<DsDirReturnVO> dsDirVOList = new ArrayList<>();
     if (!CollectionUtils.isEmpty(dsDirList)) {
       dsDirList.forEach(
@@ -103,6 +118,13 @@ public class DsDirServiceImpl implements DsDirService {
           });
     }
     return buildByRecursive(dsDirVOList);
+  }
+
+  private List<DsDir> queryDir() {
+    List<DsDir> dirList = jpaQueryFactory.select(qDsDir).from(qDsDir)
+        .orderBy(qDsDir.gmtCreate.desc()).fetch();
+    return dirList;
+
   }
 
   private List<DsDirReturnVO> buildByRecursive(List<DsDirReturnVO> dsDirVOList) {
@@ -244,7 +266,8 @@ public class DsDirServiceImpl implements DsDirService {
 
   @Override
   public List<DsDirReturnVO> getDsDirDataSource() {
-    List<DsDir> dsDirList = dsDirRepository.findAll();
+    //List<DsDir> dsDirList = dsDirRepository.findAll();
+    List<DsDir> dsDirList = queryDir();
     List<DsDirReturnVO> dsDirVOList = new ArrayList<>();
     if (!CollectionUtils.isEmpty(dsDirList)) {
       dsDirList.forEach(

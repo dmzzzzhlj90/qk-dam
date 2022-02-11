@@ -24,7 +24,7 @@ public interface DsDataSourceService {
 
   void updateDsDataSource(DsDatasourceVO dsDatasourceVO);
 
-  Boolean dataSourceConnect(DsDatasourceVO dsDatasourceVO);
+  void dataSourceConnect(DsDatasourceVO dsDatasourceVO);
 
   List<DsDatasourceVO> getDataSourceByType(String type);
 
