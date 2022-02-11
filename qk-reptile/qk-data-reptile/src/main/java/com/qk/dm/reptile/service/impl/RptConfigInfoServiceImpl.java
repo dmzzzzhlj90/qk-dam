@@ -99,6 +99,15 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
           rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
 
     }
+    private void configStatus(Long id) {
+        RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
+        if(Objects.isNull(rptBaseInfo)){
+            throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
+        }
+        rptBaseInfo.setConfigStatus(true);
+        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+
+    }
 
     private void start(Long id,String result) {
         RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
@@ -222,10 +231,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
                 rptSelectorColumnInfoService.copyConfig(e.getId(), rptConfigInfo.getId());
             });
         }
-
-
-        //修改基础信息表状态为爬虫
-       // updateBaseInfoStatus(targetId);
+        //修改配置状态为已经添加有配置
+        configStatus(targetId);
     }
 
     /**

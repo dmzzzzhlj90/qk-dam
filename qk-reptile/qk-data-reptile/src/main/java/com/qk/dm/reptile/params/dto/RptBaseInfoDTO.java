@@ -156,6 +156,21 @@ public class RptBaseInfoDTO {
    * 定时间隔
    */
   private String timeInterval;
+
+  /**
+   * 分配人
+   */
+  private String assignedPersonName;
+
+  /**
+   * 负责人
+   */
+  private String responsiblePersonName;
+
+  /**
+   * 是否已经添加了配置
+   */
+  private Boolean configStatus;
   /**
    * 开始时间
    */
