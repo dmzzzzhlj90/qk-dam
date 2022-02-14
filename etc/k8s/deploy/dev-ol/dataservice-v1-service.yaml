@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: dataservice
-  namespace: backend-dam
+  namespace: java-backend
   labels:
     app: dataservice
   annotations:
