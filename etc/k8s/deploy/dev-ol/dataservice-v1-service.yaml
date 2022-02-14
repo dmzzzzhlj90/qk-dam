@@ -10,10 +10,10 @@ metadata:
     kubesphere.io/creator: admin
 spec:
   ports:
-    - name: http-8789
+    - name: http-8786
       protocol: TCP
-      port: 8789
-      targetPort: 8789
+      port: 8786
+      targetPort: 8786
   selector:
     app: dataservice-deploy
     version: v1
