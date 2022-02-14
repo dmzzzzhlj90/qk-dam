@@ -199,6 +199,22 @@ public class RptBaseInfo implements Serializable {
      */
     @Column(name = "config_date")
     private Date configDate;
+    /**
+     * 分配人
+     */
+    @Column(name = "assigned_person_name")
+    private String assignedPersonName;
 
+    /**
+     * 负责人
+     */
+    @Column(name = "responsible_person_name")
+    private String responsiblePersonName;
+
+    /**
+     * 是否已经添加了配置
+     */
+    @Column(name = "config_status")
+    private Boolean configStatus;
 
 }

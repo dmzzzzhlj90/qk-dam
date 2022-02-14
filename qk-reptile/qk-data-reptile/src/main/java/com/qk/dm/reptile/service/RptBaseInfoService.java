@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.reptile.params.dto.RptAssignedTaskDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
@@ -45,4 +46,11 @@ public interface RptBaseInfoService {
      * @param timeIntervalDTO
      */
     void updateTimeInterval(TimeIntervalDTO timeIntervalDTO);
+
+    /**
+     * 任务分配
+     * @param rptAssignedTaskDTO
+     */
+    void assignedTasks(RptAssignedTaskDTO rptAssignedTaskDTO);
+
 }

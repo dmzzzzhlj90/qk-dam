@@ -208,6 +208,18 @@ public class RptBaseInfoVO {
    */
   @ExcelIgnore
   private String timeInterval;
+
+  /**
+   * 分配人
+   */
+  @ExcelIgnore
+  private String assignedPersonName;
+
+  /**
+   * 负责人
+   */
+  @ExcelIgnore
+  private String responsiblePersonName;
   /**
    * 配置时间
    */
