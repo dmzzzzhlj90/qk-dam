@@ -1,8 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
@@ -43,7 +43,7 @@ public class DasApiCreateConfigController {
    * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
    */
   @GetMapping(value = "/{apiId}")
-  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<DasApiCreateConfigVO> detail(@PathVariable("apiId") String apiId) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.detail(apiId));
   }
@@ -55,7 +55,7 @@ public class DasApiCreateConfigController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(
       @RequestBody @Validated DasApiCreateConfigVO dasApiCreateConfigVO) {
     dasApiCreateConfigService.insert(dasApiCreateConfigVO);
@@ -69,7 +69,7 @@ public class DasApiCreateConfigController {
    * @return DefaultCommonResult
    */
   @PutMapping("")
-  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(
       @RequestBody @Validated DasApiCreateConfigVO dasApiCreateConfigVO) {
     dasApiCreateConfigService.update(dasApiCreateConfigVO);
@@ -82,7 +82,7 @@ public class DasApiCreateConfigController {
    * @return DefaultCommonResult
    */
   @GetMapping("/request/paras/header/infos")
-  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getDasApiCreateRequestParaHeaderInfo() {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateRequestParaHeaderInfo());
@@ -94,7 +94,7 @@ public class DasApiCreateConfigController {
    * @return DefaultCommonResult
    */
   @GetMapping("/response/paras/header/infos")
-  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getDasApiCreateResponseParaHeaderInfo() {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateResponseParaHeaderInfo());
@@ -106,7 +106,7 @@ public class DasApiCreateConfigController {
    * @return DefaultCommonResult
    */
   @GetMapping("/order/paras/header/infos")
-  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getDasApiCreateOrderParaHeaderInfo() {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateOrderParaHeaderInfo());
@@ -118,7 +118,7 @@ public class DasApiCreateConfigController {
    * @return DefaultCommonResult
    */
   @GetMapping("/paras/compare/symbol")
-  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
   public DefaultCommonResult<List<String>> getDasApiCreateParasCompareSymbol() {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateParasCompareSymbol());
@@ -130,7 +130,7 @@ public class DasApiCreateConfigController {
    * @return DefaultCommonResult
    */
   @GetMapping("/paras/sort/style")
-  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getDasApiCreateParasSortStyle() {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateParasSortStyle());

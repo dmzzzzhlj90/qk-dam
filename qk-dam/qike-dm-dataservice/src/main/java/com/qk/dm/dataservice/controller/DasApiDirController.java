@@ -1,8 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasApiDirService;
@@ -37,7 +37,7 @@ public class DasApiDirController {
    * @return DefaultCommonResult<List < DaasApiTreeVO>>
    */
   @GetMapping("/list")
-  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<DasApiDirTreeVO>> searchList() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiDirService.searchList());
   }
@@ -49,7 +49,7 @@ public class DasApiDirController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(@RequestBody DasApiDirVO dasApiDirVO) {
     dasApiDirService.insert(dasApiDirVO);
     return DefaultCommonResult.success();
@@ -62,7 +62,7 @@ public class DasApiDirController {
    * @return DefaultCommonResult
    */
   @PutMapping("")
-  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(@RequestBody DasApiDirVO dasApiDirVO) {
     dasApiDirService.update(dasApiDirVO);
     return DefaultCommonResult.success();
@@ -75,7 +75,7 @@ public class DasApiDirController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/{id}")
-  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.DELETE)
+//  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.DELETE)
   public DefaultCommonResult delete(@PathVariable("id") String id) {
     dasApiDirService.delete(Long.valueOf(id));
     return DefaultCommonResult.success();
@@ -88,7 +88,7 @@ public class DasApiDirController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/root/{id}")
-  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.DELETE)
+//  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.DELETE)
   public DefaultCommonResult deleteRoot(@PathVariable("id") String id) {
     dasApiDirService.deleteRoot(Long.valueOf(id));
     return DefaultCommonResult.success();
