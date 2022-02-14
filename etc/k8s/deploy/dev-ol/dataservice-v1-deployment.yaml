@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: dataservice-deploy
-  namespace: backend-dam
+  namespace: java-backend
   labels:
     app: dataservice-deploy
     version: v1

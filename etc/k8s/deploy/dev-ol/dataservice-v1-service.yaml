@@ -2,11 +2,11 @@ kind: Service
 apiVersion: v1
 metadata:
   name: dataservice
-  namespace: backend-dam
+  namespace: java-backend
   labels:
     app: dataservice
   annotations:
-    kubesphere.io/alias-name: 数据质量后端服务
+    kubesphere.io/alias-name: 数据服务后端服务
     kubesphere.io/creator: admin
 spec:
   ports:
