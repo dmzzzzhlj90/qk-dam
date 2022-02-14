@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: dqc
+  name: dataservice
   namespace: backend-dam
   labels:
-    app: dqc
+    app: dataservice
   annotations:
     kubesphere.io/alias-name: 数据质量后端服务
     kubesphere.io/creator: admin
@@ -15,7 +15,7 @@ spec:
       port: 8789
       targetPort: 8789
   selector:
-    app: dqc-deploy
+    app: dataservice-deploy
     version: v1
   type: ClusterIP
   sessionAffinity: None

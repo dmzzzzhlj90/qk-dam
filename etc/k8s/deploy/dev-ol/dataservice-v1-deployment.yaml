@@ -1,10 +1,10 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: dqc-deploy
+  name: dataservice-deploy
   namespace: backend-dam
   labels:
-    app: dqc-deploy
+    app: dataservice-deploy
     version: v1
   annotations:
     deployment.kubernetes.io/revision: '1'
@@ -12,12 +12,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dqc-deploy
+      app: dataservice-deploy
       version: v1
   template:
     metadata:
       labels:
-        app: dqc-deploy
+        app: dataservice-deploy
         version: v1
     spec:
       containers:
