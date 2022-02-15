@@ -45,9 +45,9 @@ public class RptConfigInfoVO {
     private Map<String,Object> formUrlencoded;
 
     /**
-     * from-data参数
+     * form-data参数
      */
-    private Map<String,Object> fromData;
+    private Map<String,Object> formData;
 
     /**
      * cookies参数
