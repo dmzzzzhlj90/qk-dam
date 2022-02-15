@@ -3,6 +3,7 @@ package com.qk.dm.reptile.utils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.reptile.constant.RptConstant;
+import com.qk.dm.reptile.entity.RptBaseInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -42,5 +43,21 @@ public class MultipartFileUtil {
     if (!flag) {
       throw new BizException("上传文件大小超出限制,当前最大文件接受为:"+RptConstant.FILE_SIZE+RptConstant.FILE_UNIT);
     }
+  }
+
+  /**
+   * 根据字段去重
+   * @param rptBaseInfo
+   * @return
+   */
+  public static String removeDuplicate(RptBaseInfo rptBaseInfo){
+    String key = String.join("->",rptBaseInfo.getWebsiteUrl(),rptBaseInfo.getSecondSiteType(),rptBaseInfo.getListPageAddress());
+    if(StringUtils.isNotBlank(rptBaseInfo.getWebsiteNameCorrection())){
+      key = String.join("->",key, rptBaseInfo.getWebsiteNameCorrection());
+    }
+    if(StringUtils.isNotBlank(rptBaseInfo.getWebsiteUrlCorrection())){
+      key = String.join("->",key, rptBaseInfo.getWebsiteUrlCorrection());
+    }
+    return key;
   }
 }
