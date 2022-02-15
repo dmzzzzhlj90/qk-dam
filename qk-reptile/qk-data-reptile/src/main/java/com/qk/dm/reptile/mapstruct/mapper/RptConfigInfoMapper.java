@@ -3,7 +3,6 @@ package com.qk.dm.reptile.mapstruct.mapper;
 import com.qk.dm.reptile.entity.RptConfigInfo;
 import com.qk.dm.reptile.params.dto.RptConfigInfoDTO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
-import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -17,7 +16,7 @@ public interface RptConfigInfoMapper {
     @Mappings({
             @Mapping(target = "raw",ignore = true),
             @Mapping(target = "formUrlencoded",ignore = true),
-            @Mapping(target = "fromData",ignore = true),
+            @Mapping(target = "formData",ignore = true),
             @Mapping(target = "cookies",ignore = true),
             @Mapping(target = "headers",ignore = true)
     })
@@ -26,7 +25,7 @@ public interface RptConfigInfoMapper {
     @Mappings({
             @Mapping(target = "raw",ignore = true),
             @Mapping(target = "formUrlencoded",ignore = true),
-            @Mapping(target = "fromData",ignore = true),
+            @Mapping(target = "formData",ignore = true),
             @Mapping(target = "cookies",ignore = true),
             @Mapping(target = "headers",ignore = true)
     })
@@ -35,7 +34,7 @@ public interface RptConfigInfoMapper {
     @Mappings({
             @Mapping(target = "raw",ignore = true),
             @Mapping(target = "formUrlencoded",ignore = true),
-            @Mapping(target = "fromData",ignore = true),
+            @Mapping(target = "formData",ignore = true),
             @Mapping(target = "cookies",ignore = true),
             @Mapping(target = "headers",ignore = true)
     })
