@@ -48,10 +48,10 @@ public class RptConfigInfo implements Serializable {
     private String formUrlencoded;
 
     /**
-     * from-data参数
+     * form-data参数
      */
-    @Column(name = "from_data")
-    private String fromData;
+    @Column(name = "form_data")
+    private String formData;
 
     /**
      * cookies参数

@@ -255,8 +255,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(Objects.nonNull(rptConfigInfoDTO.getFormUrlencoded())){
             rptConfigInfo.setFormUrlencoded(GsonUtil.toJsonString(rptConfigInfoDTO.getFormUrlencoded()));
         }
-        if(Objects.nonNull(rptConfigInfoDTO.getFromData())){
-            rptConfigInfo.setFromData(GsonUtil.toJsonString(rptConfigInfoDTO.getFromData()));
+        if(Objects.nonNull(rptConfigInfoDTO.getFormData())){
+            rptConfigInfo.setFormData(GsonUtil.toJsonString(rptConfigInfoDTO.getFormData()));
         }
         if(Objects.nonNull(rptConfigInfoDTO.getHeaders())){
             rptConfigInfo.setHeaders(GsonUtil.toJsonString(rptConfigInfoDTO.getHeaders()));
@@ -273,8 +273,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(Objects.nonNull(rptConfigInfo.getFormUrlencoded())){
             rptConfigInfoVO.setFormUrlencoded(GsonUtil.fromJsonString(rptConfigInfo.getFormUrlencoded(),Map.class));
         }
-        if(Objects.nonNull(rptConfigInfo.getFromData())){
-            rptConfigInfoVO.setFromData(GsonUtil.fromJsonString(rptConfigInfo.getFromData(),Map.class));
+        if(Objects.nonNull(rptConfigInfo.getFormData())){
+            rptConfigInfoVO.setFormData(GsonUtil.fromJsonString(rptConfigInfo.getFormData(),Map.class));
         }
         if(Objects.nonNull(rptConfigInfo.getHeaders())){
             rptConfigInfoVO.setHeaders(GsonUtil.fromJsonString(rptConfigInfo.getHeaders(),Map.class));
