@@ -1,8 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasApiRouteService;
@@ -36,7 +36,7 @@ public class DasApiRouteController {
    * @return DefaultCommonResult<List < DaasApiTreeVO>>
    */
   @GetMapping("/list")
-  @Auth(bizType = BizResource.DAS_API_ROUTE, actionType = RestActionType.LIST)
+//  @Auth(bizType = BizResource.DAS_API_ROUTE, actionType = RestActionType.LIST)
   public DefaultCommonResult<List<DasApiRouteVO>> searchList() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiRouteService.searchList());
   }
@@ -48,7 +48,7 @@ public class DasApiRouteController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.DAS_API_ROUTE, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.DAS_API_ROUTE, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(@RequestBody DasApiRouteVO dasApiRouteVO) {
     dasApiRouteService.insert(dasApiRouteVO);
     return DefaultCommonResult.success();
@@ -61,7 +61,7 @@ public class DasApiRouteController {
    * @return DefaultCommonResult
    */
   @PutMapping("")
-  @Auth(bizType = BizResource.DAS_API_ROUTE, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.DAS_API_ROUTE, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(@RequestBody DasApiRouteVO dasApiRouteVO) {
     dasApiRouteService.update(dasApiRouteVO);
     return DefaultCommonResult.success();
@@ -74,7 +74,7 @@ public class DasApiRouteController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/bulk")
-  @Auth(bizType = BizResource.DAS_API_ROUTE, actionType = RestActionType.DELETE)
+//  @Auth(bizType = BizResource.DAS_API_ROUTE, actionType = RestActionType.DELETE)
   public DefaultCommonResult deleteBulk(@RequestParam("ids") List<String> ids) {
     dasApiRouteService.deleteBulk(ids);
     return DefaultCommonResult.success();

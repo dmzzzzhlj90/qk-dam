@@ -1,8 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasApiCreateSqlScriptService;
@@ -38,7 +38,7 @@ public class DasApiCreateSqlScriptController {
    * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
    */
   @GetMapping(value = "/{apiId}")
-  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.DETAIL)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<DasApiCreateSqlScriptVO> detail(@PathVariable("apiId") String apiId) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dasApiCreateSqlScriptService.detail(apiId));
@@ -51,7 +51,7 @@ public class DasApiCreateSqlScriptController {
    * @return DefaultCommonResult
    */
   @PostMapping("")
-  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.CREATE)
   public DefaultCommonResult insert(
       @RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
     dasApiCreateSqlScriptService.insert(dasApiCreateSqlScriptVO);
@@ -65,7 +65,7 @@ public class DasApiCreateSqlScriptController {
    * @return DefaultCommonResult
    */
   @PutMapping("")
-  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.UPDATE)
+//  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.UPDATE)
   public DefaultCommonResult update(
       @RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
     dasApiCreateSqlScriptService.update(dasApiCreateSqlScriptVO);

@@ -1,8 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dm.dataservice.service.DasGenerateOpenApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class DasGenerateOpenApiController {
    *
    * @return DefaultCommonResult
    */
-  @Auth(bizType = BizResource.DAS_OPEN_API, actionType = RestActionType.GET)
+//  @Auth(bizType = BizResource.DAS_OPEN_API, actionType = RestActionType.GET)
   @GetMapping(value = "/register", produces = "application/json;charset=utf-8")
   public String generateOpenApiRegister() {
     return dasGenerateOpenApiService.generateOpenApiRegister();

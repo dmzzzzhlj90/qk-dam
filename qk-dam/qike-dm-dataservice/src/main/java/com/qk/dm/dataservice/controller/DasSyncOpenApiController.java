@@ -1,8 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
-import com.qk.dam.authorization.Auth;
-import com.qk.dam.authorization.BizResource;
-import com.qk.dam.authorization.RestActionType;
+//import com.qk.dam.authorization.Auth;
+//import com.qk.dam.authorization.BizResource;
+//import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasSyncOpenApiService;
@@ -36,7 +36,7 @@ public class DasSyncOpenApiController {
    * @return DefaultCommonResult
    */
   @GetMapping("/register")
-  @Auth(bizType = BizResource.DAS_OPEN_API, actionType = RestActionType.CREATE)
+//  @Auth(bizType = BizResource.DAS_OPEN_API, actionType = RestActionType.CREATE)
   public DefaultCommonResult syncRegister() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncOpenApiService.syncRegister());
   }
