@@ -4,7 +4,7 @@ import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
 import com.google.gson.Gson;
 import com.qk.dam.jdbc.DbTypeEnum;
-import com.qk.dam.jdbc.MysqlRawScript;
+import com.qk.dam.jdbc.RawScript;
 import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.JSQLParserException;
@@ -12,8 +12,6 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.Statements;
 import net.sf.jsqlparser.statement.select.Select;
-import net.sf.jsqlparser.util.validation.Validation;
-import net.sf.jsqlparser.util.validation.feature.DatabaseType;
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
@@ -50,12 +48,12 @@ public class ElasticSearchMain {
     public static void main(String[] args) throws Exception {
         log.info("开始查询");
         String jsonconfig = args[0];
-        MysqlRawScript mysqlRawScript = new Gson().fromJson(jsonconfig, MysqlRawScript.class);
-        ResultTable resultTable = getResultTable(mysqlRawScript);
+        RawScript rawScript = new Gson().fromJson(jsonconfig, RawScript.class);
+        ResultTable resultTable = getResultTable(rawScript);
 
-        String authBase64 = Base64.getEncoder().encodeToString((mysqlRawScript.getFrom_user() + ":" + mysqlRawScript.getFrom_password()).getBytes(StandardCharsets.UTF_8));
+        String authBase64 = Base64.getEncoder().encodeToString((rawScript.getFrom_user() + ":" + rawScript.getFrom_password()).getBytes(StandardCharsets.UTF_8));
 
-        String sqlRpcUrl = mysqlRawScript.getSql_rpc_url();
+        String sqlRpcUrl = rawScript.getSql_rpc_url();
 
         String script = null;
         try {
@@ -65,7 +63,7 @@ public class ElasticSearchMain {
             log.error("请求生产校验SQL错误:【{}】", e.getLocalizedMessage());
             System.exit(-1);
         }
-        try (RestClient restClient = getRestClient(mysqlRawScript, authBase64)) {
+        try (RestClient restClient = getRestClient(rawScript, authBase64)) {
             Boolean sqlFl = false;
             Statements stmts = null;
             try {
@@ -79,7 +77,7 @@ public class ElasticSearchMain {
                         String rstStr = p.matcher(responseBody).replaceAll("");
                         Object o = new Gson().fromJson(rstStr, Object.class);
 
-                        overSqlData(mysqlRawScript, resultTable, (Map<String, Object>) o);
+                        overSqlData(rawScript, resultTable, (Map<String, Object>) o);
                     }
                 }
             } catch (JSQLParserException e) {
@@ -103,13 +101,13 @@ public class ElasticSearchMain {
     /**
      * 获取es客户端
      *
-     * @param mysqlRawScript mysql原始脚本
+     * @param rawScript mysql原始脚本
      * @param authBase64     认证信息编码
      * @return RestClient Rest Client
      */
-    private static RestClient getRestClient(MysqlRawScript mysqlRawScript, String authBase64) {
+    private static RestClient getRestClient(RawScript rawScript, String authBase64) {
         return RestClient
-                .builder(HttpHost.create(mysqlRawScript.getFrom_host()))
+                .builder(HttpHost.create(rawScript.getFrom_host()))
                 .setFailureListener(new RestClient.FailureListener() {
                     @Override
                     public void onFailure(Node node) {
@@ -129,11 +127,11 @@ public class ElasticSearchMain {
     /**
      * 处理结果数据
      *
-     * @param mysqlRawScript 数据库原始脚本
+     * @param rawScript 数据库原始脚本
      * @param resultTable    结果表数据
      * @param o              结果数据
      */
-    private static void overSqlData(MysqlRawScript mysqlRawScript, ResultTable resultTable, Map<String, Object> o) {
+    private static void overSqlData(RawScript rawScript, ResultTable resultTable, Map<String, Object> o) {
         Map<String, Object> rstMap = o;
 
         log.info("返回es结果--->字段:【{}】", rstMap.get("columns"));
@@ -145,7 +143,7 @@ public class ElasticSearchMain {
         log.info("最终数据：columns=====>{}", columns);
         log.info("最终数据：rowData=====>{}", rowData);
         // 开始写入结果
-        Db rstDb = getToDb(mysqlRawScript, DbTypeEnum.MYSQL);
+        Db rstDb = getToDb(rawScript, DbTypeEnum.MYSQL);
 
         try {
 
@@ -156,7 +154,7 @@ public class ElasticSearchMain {
 
             rstDb.update(Entity.create("qk_dqc_scheduler_rules")
                     .set("fields", new Gson().toJson(columnList)), Entity.create().set("rule_id", ruleId));
-            String warnRst = generateWarnRst(mysqlRawScript.getWarn_rpc_url());
+            String warnRst = generateWarnRst(rawScript.getWarn_rpc_url());
             resultTable.setWarn_result(warnRst);
             log.info("插入结果数据入库【{}】", new Gson().toJson(resultTable));
             rstDb.insert(Entity.create(RST_TABLE).parseBean(resultTable));

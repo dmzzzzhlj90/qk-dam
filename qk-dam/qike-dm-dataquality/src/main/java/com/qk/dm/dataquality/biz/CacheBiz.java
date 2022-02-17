@@ -5,6 +5,7 @@ import com.qk.dm.dataquality.constant.schedule.InstanceStateTypeEnum;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
 import com.qk.dm.dataquality.vo.statistics.WarnTrendVO;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -62,6 +63,21 @@ public class CacheBiz {
 
     @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String dir() {
+        return GsonUtil.toJsonString(instanceBiz.dirStatistics(new Date()));
+    }
+
+    @CachePut(value = "dqc:statistics", key = "#root.methodName", unless = "#result == null")
+    public String summary(Integer type) {
+        return GsonUtil.toJsonString(getDataSummary());
+    }
+
+    @CachePut(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
+    public String dimension(Integer type) {
+        return GsonUtil.toJsonString(taskInstanceBiz.dimensionStatistics(new Date()));
+    }
+
+    @CachePut(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
+    public String dir(Integer type) {
         return GsonUtil.toJsonString(instanceBiz.dirStatistics(new Date()));
     }
 

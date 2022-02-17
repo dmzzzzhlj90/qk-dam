@@ -4,6 +4,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
 import com.qk.dm.dataquality.constant.ScanTypeEnum;
+import com.qk.dm.dataquality.constant.ruletemplate.TempTypeEnum;
 import com.qk.dm.dataquality.entity.DqcRuleTemplate;
 import com.qk.dm.dataquality.entity.DqcSchedulerRules;
 import com.qk.dm.dataquality.entity.QDqcRuleTemplate;
@@ -18,7 +19,10 @@ import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -94,24 +98,22 @@ public class DqcRuleSqlBuilderServiceImpl implements DqcRuleSqlBuilderService {
         String ruleType = dqcSchedulerRulesVO.getRuleType();
         //模板sql
         String tempSql = dqcRuleTemplate.getTempSql();
+        //模板类型
+        String tempType = dqcRuleTemplate.getTempType();
 
-        //库级别规则
-        if (RuleTypeEnum.RULE_TYPE_DB.getCode().equalsIgnoreCase(ruleType)) {
+        if (RuleTypeEnum.RULE_TYPE_DB.getCode().equalsIgnoreCase(ruleType) && TempTypeEnum.BUILT_IN_SYSTEM.getCode().equalsIgnoreCase(tempType)) {
+            //库级别规则
             ruleTypeDBSql(dqcSchedulerRulesVO, sqlBuffer, tempSql);
-        }
-
-        //表级别规则
-        if (RuleTypeEnum.RULE_TYPE_TABLE.getCode().equalsIgnoreCase(ruleType)) {
+        } else if (RuleTypeEnum.RULE_TYPE_TABLE.getCode().equalsIgnoreCase(ruleType) && TempTypeEnum.BUILT_IN_SYSTEM.getCode().equalsIgnoreCase(tempType)) {
+            //表级别规则
             ruleTypeTableSql(dqcSchedulerRulesVO, sqlBuffer, tempSql);
-        }
-
-        //字段级别规则
-        if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(ruleType)) {
+        } else if (RuleTypeEnum.RULE_TYPE_FIELD.getCode().equalsIgnoreCase(ruleType) && TempTypeEnum.BUILT_IN_SYSTEM.getCode().equalsIgnoreCase(tempType)) {
+            //字段级别规则
             ruleTypeFieldSql(dqcSchedulerRulesVO, sqlBuffer, tempSql);
+        } else {
+            //TODO 直接读取使用模板SQL,暂时不支持扫描条件SQL
+            sqlBuffer.append(tempSql);
         }
-
-        //TODO 获取模板SQL;需要考虑自定义模式的模板信息
-
     }
 
     /**
