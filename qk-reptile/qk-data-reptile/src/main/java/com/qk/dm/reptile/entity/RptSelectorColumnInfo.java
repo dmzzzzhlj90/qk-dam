@@ -60,6 +60,18 @@ public class RptSelectorColumnInfo implements Serializable {
     private Integer elementType;
 
     /**
+     * 前缀
+     */
+    @Column(name = "before_prefix")
+    private String  beforePrefix;
+
+    /**
+     * 后缀
+     */
+    @Column(name = "after_prefix")
+    private String afterPrefix;
+
+    /**
      * 创建时间
      */
     @Column(name = "gmt_create")

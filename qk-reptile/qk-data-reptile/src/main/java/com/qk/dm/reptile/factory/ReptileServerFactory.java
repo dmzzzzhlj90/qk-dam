@@ -132,6 +132,8 @@ public class ReptileServerFactory {
                 .method(selector.getSelector())
                 .val(Objects.isNull(selector.getSelectorVal())?EMPTY:selector.getSelectorVal())
                 .num(selector.getElementType())
+                .before(selector.getBeforePrefix())
+                .after(selector.getAfterPrefix())
                 .build(),(k1,k2) ->k1));
     }
 

@@ -13,4 +13,6 @@ public class RptSelectorBuilder {
     private Integer method;
     private String val;
     private Integer num;
+    private String before;
+    private String after;
 }
