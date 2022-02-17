@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "fd6bb0a1-eca2-4e9c-8f99-67f9956433e5",
+    "_postman_id": "2cfaa8d7-a5b6-4b62-8ca7-bf7cad5c3267",
     "name": "dm-dataservice"
   },
   "item": [
@@ -14,7 +14,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7au14e\"\n  },\n  \"apiId\": \"75\",\n  \"apiName\": \"emilio.oconner\",\n  \"apiDirId\": \"75\",\n  \"beginDay\": \"iwb9kw\",\n  \"endDay\": \"m5cmuk\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"yprvf9\"\n  },\n  \"apiId\": \"8\",\n  \"apiName\": \"riva.wolf\",\n  \"apiDirId\": \"8\",\n  \"beginDay\": \"3292pn\",\n  \"endDay\": \"86kdci\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -47,7 +47,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 379,\n  \"apiId\": \"75\",\n  \"dasDirId\": \"75\",\n  \"apiDirLevel\": \"tbkk8a\",\n  \"apiName\": \"emilio.oconner\",\n  \"apiPath\": \"a7df96\",\n  \"protocolType\": \"ph99fo\",\n  \"requestType\": \"rezyh3\",\n  \"apiType\": \"ocvts4\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"paraCHNName\": \"emilio.oconner\",\n      \"paraPosition\": \"tw2n72\",\n      \"paraType\": \"mo8qi7\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"sh59x3\",\n      \"description\": \"6pl8uo\"\n    }\n  ],\n  \"description\": \"rfx27d\",\n  \"gmtModified\": \"2022-02-14 11:08:34\"\n}",
+              "raw": "{\n  \"id\": 730,\n  \"apiId\": \"8\",\n  \"dasDirId\": \"8\",\n  \"apiDirLevel\": \"68sa3u\",\n  \"apiName\": \"riva.wolf\",\n  \"apiPath\": \"66la4j\",\n  \"protocolType\": \"17geqi\",\n  \"requestType\": \"qegyq6\",\n  \"apiType\": \"nd06vl\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"paraCHNName\": \"riva.wolf\",\n      \"paraPosition\": \"uke2wq\",\n      \"paraType\": \"2uxcmo\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"v31nml\",\n      \"description\": \"y26yig\"\n    }\n  ],\n  \"description\": \"yczewe\",\n  \"gmtModified\": \"2022-02-17 20:31:42\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -80,7 +80,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 413,\n  \"apiId\": \"75\",\n  \"dasDirId\": \"75\",\n  \"apiDirLevel\": \"c8sn4q\",\n  \"apiName\": \"emilio.oconner\",\n  \"apiPath\": \"aujn05\",\n  \"protocolType\": \"1red71\",\n  \"requestType\": \"bpbbd3\",\n  \"apiType\": \"p2j7w3\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"paraCHNName\": \"emilio.oconner\",\n      \"paraPosition\": \"82ptyx\",\n      \"paraType\": \"i61iqd\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"n4p31j\",\n      \"description\": \"wz0fno\"\n    }\n  ],\n  \"description\": \"9ifaec\",\n  \"gmtModified\": \"2022-02-14 11:08:34\"\n}",
+              "raw": "{\n  \"id\": 43,\n  \"apiId\": \"8\",\n  \"dasDirId\": \"8\",\n  \"apiDirLevel\": \"n3aez5\",\n  \"apiName\": \"riva.wolf\",\n  \"apiPath\": \"uewehe\",\n  \"protocolType\": \"eekte5\",\n  \"requestType\": \"57safe\",\n  \"apiType\": \"hbprp4\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"paraCHNName\": \"riva.wolf\",\n      \"paraPosition\": \"jxjqmt\",\n      \"paraType\": \"e1l5xi\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"glpvld\",\n      \"description\": \"il9s8z\"\n    }\n  ],\n  \"description\": \"ei5gok\",\n  \"gmtModified\": \"2022-02-17 20:31:42\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -116,7 +116,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/basic/info/75",
+              "raw": "http://::server/api/basic/info/8",
               "protocol": "http",
               "path": [
                 "api",
@@ -131,7 +131,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 }
               ]
@@ -150,7 +150,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/basic/info/bulk/da11y7",
+              "raw": "http://::server/api/basic/info/bulk/o1k2mt",
               "protocol": "http",
               "path": [
                 "api",
@@ -166,7 +166,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "od86h7",
+                  "value": "ec1ssg",
                   "description": "No comments found."
                 }
               ]
@@ -310,7 +310,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/create/config/75",
+              "raw": "http://::server/api/create/config/8",
               "protocol": "http",
               "path": [
                 "api",
@@ -325,7 +325,7 @@
               "variable": [
                 {
                   "key": "apiId",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 }
               ]
@@ -341,7 +341,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 952,\n    \"apiId\": \"75\",\n    \"dasDirId\": \"75\",\n    \"apiDirLevel\": \"cm6zc7\",\n    \"apiName\": \"emilio.oconner\",\n    \"apiPath\": \"x5wtfv\",\n    \"protocolType\": \"w8q2la\",\n    \"requestType\": \"l3z050\",\n    \"apiType\": \"zmjn2s\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"emilio.oconner\",\n        \"paraCHNName\": \"emilio.oconner\",\n        \"paraPosition\": \"n9ckq8\",\n        \"paraType\": \"fbuxyz\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"yhrfey\",\n        \"description\": \"njcnxk\"\n      }\n    ],\n    \"description\": \"ugco0p\",\n    \"gmtModified\": \"2022-02-14 11:08:34\"\n  },\n  \"id\": 37,\n  \"apiId\": \"75\",\n  \"accessMethod\": \"392gdi\",\n  \"dataSourceType\": \"wxgjr4\",\n  \"dataSourceConnect\": \"ifgqoj\",\n  \"dataBase\": \"q3uykg\",\n  \"tableName\": \"emilio.oconner\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"mappingName\": \"emilio.oconner\",\n      \"conditionType\": \"yguptd\",\n      \"backendParaName\": \"emilio.oconner\",\n      \"backendParaPosition\": \"5ih5ii\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"mappingName\": \"emilio.oconner\",\n      \"paraType\": \"a3nz8j\",\n      \"exampleValue\": \"x5ld25\",\n      \"defaultValue\": \"hszqmj\",\n      \"description\": \"ytvb1y\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 734,\n      \"paraName\": \"emilio.oconner\",\n      \"columnName\": \"emilio.oconner\",\n      \"optional\": true,\n      \"orderType\": \"yezrgw\",\n      \"description\": \"3qp149\"\n    }\n  ],\n  \"description\": \"rijly8\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 432,\n    \"apiId\": \"8\",\n    \"dasDirId\": \"8\",\n    \"apiDirLevel\": \"rcdy0v\",\n    \"apiName\": \"riva.wolf\",\n    \"apiPath\": \"4ne29k\",\n    \"protocolType\": \"bl15t8\",\n    \"requestType\": \"nv9brq\",\n    \"apiType\": \"tsqz9b\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"riva.wolf\",\n        \"paraCHNName\": \"riva.wolf\",\n        \"paraPosition\": \"nv5aqb\",\n        \"paraType\": \"f1usg8\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"cu6gu5\",\n        \"description\": \"ec2ono\"\n      }\n    ],\n    \"description\": \"adoxyi\",\n    \"gmtModified\": \"2022-02-17 20:31:42\"\n  },\n  \"id\": 983,\n  \"apiId\": \"8\",\n  \"accessMethod\": \"thadir\",\n  \"dataSourceType\": \"9t2be9\",\n  \"dataSourceConnect\": \"xhr5md\",\n  \"dataBase\": \"j2dkgz\",\n  \"tableName\": \"riva.wolf\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"mappingName\": \"riva.wolf\",\n      \"conditionType\": \"ebwybm\",\n      \"backendParaName\": \"riva.wolf\",\n      \"backendParaPosition\": \"m8cpti\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"mappingName\": \"riva.wolf\",\n      \"paraType\": \"ki4blc\",\n      \"exampleValue\": \"mn1929\",\n      \"defaultValue\": \"0o0x9h\",\n      \"description\": \"j406a1\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 901,\n      \"paraName\": \"riva.wolf\",\n      \"columnName\": \"riva.wolf\",\n      \"optional\": true,\n      \"orderType\": \"iemx0x\",\n      \"description\": \"4kzls7\"\n    }\n  ],\n  \"description\": \"x8g07c\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -374,7 +374,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 411,\n    \"apiId\": \"75\",\n    \"dasDirId\": \"75\",\n    \"apiDirLevel\": \"ncguti\",\n    \"apiName\": \"emilio.oconner\",\n    \"apiPath\": \"w2qhu6\",\n    \"protocolType\": \"oswxg4\",\n    \"requestType\": \"di4avi\",\n    \"apiType\": \"sypr7h\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"emilio.oconner\",\n        \"paraCHNName\": \"emilio.oconner\",\n        \"paraPosition\": \"e44nks\",\n        \"paraType\": \"ieuz6z\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"i10uri\",\n        \"description\": \"1pc3zu\"\n      }\n    ],\n    \"description\": \"sym3i8\",\n    \"gmtModified\": \"2022-02-14 11:08:34\"\n  },\n  \"id\": 746,\n  \"apiId\": \"75\",\n  \"accessMethod\": \"nmod7q\",\n  \"dataSourceType\": \"tlb0yq\",\n  \"dataSourceConnect\": \"qk2ayy\",\n  \"dataBase\": \"v2pigq\",\n  \"tableName\": \"emilio.oconner\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"mappingName\": \"emilio.oconner\",\n      \"conditionType\": \"6suyja\",\n      \"backendParaName\": \"emilio.oconner\",\n      \"backendParaPosition\": \"3sy5ao\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"mappingName\": \"emilio.oconner\",\n      \"paraType\": \"4dbp2y\",\n      \"exampleValue\": \"gu0kfm\",\n      \"defaultValue\": \"526g4f\",\n      \"description\": \"dswhuv\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 385,\n      \"paraName\": \"emilio.oconner\",\n      \"columnName\": \"emilio.oconner\",\n      \"optional\": true,\n      \"orderType\": \"76ap69\",\n      \"description\": \"m9dcym\"\n    }\n  ],\n  \"description\": \"noq3re\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 871,\n    \"apiId\": \"8\",\n    \"dasDirId\": \"8\",\n    \"apiDirLevel\": \"t0is2h\",\n    \"apiName\": \"riva.wolf\",\n    \"apiPath\": \"34oeky\",\n    \"protocolType\": \"p6ygo6\",\n    \"requestType\": \"q7apt3\",\n    \"apiType\": \"qknixr\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"riva.wolf\",\n        \"paraCHNName\": \"riva.wolf\",\n        \"paraPosition\": \"nyue6m\",\n        \"paraType\": \"2ibags\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"sq5oo2\",\n        \"description\": \"akhzrz\"\n      }\n    ],\n    \"description\": \"8o5io3\",\n    \"gmtModified\": \"2022-02-17 20:31:42\"\n  },\n  \"id\": 185,\n  \"apiId\": \"8\",\n  \"accessMethod\": \"2gjngp\",\n  \"dataSourceType\": \"kobn5j\",\n  \"dataSourceConnect\": \"ufzv6k\",\n  \"dataBase\": \"2i6s93\",\n  \"tableName\": \"riva.wolf\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"mappingName\": \"riva.wolf\",\n      \"conditionType\": \"keby5e\",\n      \"backendParaName\": \"riva.wolf\",\n      \"backendParaPosition\": \"pb4fcf\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"mappingName\": \"riva.wolf\",\n      \"paraType\": \"1xzsn4\",\n      \"exampleValue\": \"2f0lqh\",\n      \"defaultValue\": \"xotreu\",\n      \"description\": \"2822mq\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 173,\n      \"paraName\": \"riva.wolf\",\n      \"columnName\": \"riva.wolf\",\n      \"optional\": true,\n      \"orderType\": \"gmftqt\",\n      \"description\": \"ax3mp7\"\n    }\n  ],\n  \"description\": \"crwnly\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -563,7 +563,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/create/sqlScript/75",
+              "raw": "http://::server/api/create/sqlScript/8",
               "protocol": "http",
               "path": [
                 "api",
@@ -578,7 +578,7 @@
               "variable": [
                 {
                   "key": "apiId",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 }
               ]
@@ -594,7 +594,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 474,\n    \"apiId\": \"75\",\n    \"dasDirId\": \"75\",\n    \"apiDirLevel\": \"t6a5un\",\n    \"apiName\": \"emilio.oconner\",\n    \"apiPath\": \"6cr9fa\",\n    \"protocolType\": \"jr8pj2\",\n    \"requestType\": \"3uhcp3\",\n    \"apiType\": \"v0uuqu\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"emilio.oconner\",\n        \"paraCHNName\": \"emilio.oconner\",\n        \"paraPosition\": \"rav4us\",\n        \"paraType\": \"hkpfdz\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"coichk\",\n        \"description\": \"ztlz0q\"\n      }\n    ],\n    \"description\": \"6bq334\",\n    \"gmtModified\": \"2022-02-14 11:08:35\"\n  },\n  \"id\": 130,\n  \"apiId\": \"75\",\n  \"accessMethod\": \"clizqk\",\n  \"dataSourceType\": \"hh1dw1\",\n  \"dataSourceConnect\": \"5kaf54\",\n  \"dataBase\": \"24agx1\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"mappingName\": \"emilio.oconner\",\n      \"conditionType\": \"u67u0j\",\n      \"backendParaName\": \"emilio.oconner\",\n      \"backendParaPosition\": \"uhpa4p\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"mappingName\": \"emilio.oconner\",\n      \"paraType\": \"mdp1lu\",\n      \"exampleValue\": \"0xareh\",\n      \"defaultValue\": \"faxpng\",\n      \"description\": \"o5450n\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 273,\n      \"paraName\": \"emilio.oconner\",\n      \"columnName\": \"emilio.oconner\",\n      \"optional\": true,\n      \"orderType\": \"vei94o\",\n      \"description\": \"9d8jt9\"\n    }\n  ],\n  \"sqlPara\": \"gncwm6\",\n  \"description\": \"95hvqt\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 880,\n    \"apiId\": \"8\",\n    \"dasDirId\": \"8\",\n    \"apiDirLevel\": \"grcsa7\",\n    \"apiName\": \"riva.wolf\",\n    \"apiPath\": \"6j08y3\",\n    \"protocolType\": \"4g3bwj\",\n    \"requestType\": \"hzncj6\",\n    \"apiType\": \"8oqj56\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"riva.wolf\",\n        \"paraCHNName\": \"riva.wolf\",\n        \"paraPosition\": \"n7r1g9\",\n        \"paraType\": \"94novz\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"gu643a\",\n        \"description\": \"tt7k6m\"\n      }\n    ],\n    \"description\": \"deg3sz\",\n    \"gmtModified\": \"2022-02-17 20:31:42\"\n  },\n  \"id\": 67,\n  \"apiId\": \"8\",\n  \"accessMethod\": \"jxgxcr\",\n  \"dataSourceType\": \"ayfafp\",\n  \"dataSourceConnect\": \"9in2fg\",\n  \"dataBase\": \"y7nlc9\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"mappingName\": \"riva.wolf\",\n      \"conditionType\": \"bmoxw3\",\n      \"backendParaName\": \"riva.wolf\",\n      \"backendParaPosition\": \"u5lb95\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"mappingName\": \"riva.wolf\",\n      \"paraType\": \"d99zgz\",\n      \"exampleValue\": \"nzpchj\",\n      \"defaultValue\": \"tcta8g\",\n      \"description\": \"3ntjf0\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 774,\n      \"paraName\": \"riva.wolf\",\n      \"columnName\": \"riva.wolf\",\n      \"optional\": true,\n      \"orderType\": \"lxqc5v\",\n      \"description\": \"vkytuz\"\n    }\n  ],\n  \"sqlPara\": \"occfap\",\n  \"description\": \"gf6zyh\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -627,7 +627,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 989,\n    \"apiId\": \"75\",\n    \"dasDirId\": \"75\",\n    \"apiDirLevel\": \"ghlxt1\",\n    \"apiName\": \"emilio.oconner\",\n    \"apiPath\": \"s6h79z\",\n    \"protocolType\": \"2v5mz4\",\n    \"requestType\": \"rhbnw9\",\n    \"apiType\": \"q5av7d\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"emilio.oconner\",\n        \"paraCHNName\": \"emilio.oconner\",\n        \"paraPosition\": \"epl1sa\",\n        \"paraType\": \"tzurax\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"ylpasg\",\n        \"description\": \"cglz9f\"\n      }\n    ],\n    \"description\": \"d7cwkm\",\n    \"gmtModified\": \"2022-02-14 11:08:35\"\n  },\n  \"id\": 380,\n  \"apiId\": \"75\",\n  \"accessMethod\": \"7ggmry\",\n  \"dataSourceType\": \"xnvw3n\",\n  \"dataSourceConnect\": \"eivn9m\",\n  \"dataBase\": \"uid728\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"mappingName\": \"emilio.oconner\",\n      \"conditionType\": \"4hu948\",\n      \"backendParaName\": \"emilio.oconner\",\n      \"backendParaPosition\": \"s0rpjf\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"mappingName\": \"emilio.oconner\",\n      \"paraType\": \"vikceu\",\n      \"exampleValue\": \"ihayxc\",\n      \"defaultValue\": \"a99n91\",\n      \"description\": \"1k1b3p\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 827,\n      \"paraName\": \"emilio.oconner\",\n      \"columnName\": \"emilio.oconner\",\n      \"optional\": true,\n      \"orderType\": \"4o6nfb\",\n      \"description\": \"04cezu\"\n    }\n  ],\n  \"sqlPara\": \"idf1xv\",\n  \"description\": \"pvd5d9\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 488,\n    \"apiId\": \"8\",\n    \"dasDirId\": \"8\",\n    \"apiDirLevel\": \"5bb3hq\",\n    \"apiName\": \"riva.wolf\",\n    \"apiPath\": \"y5hzen\",\n    \"protocolType\": \"78922a\",\n    \"requestType\": \"hzeqm2\",\n    \"apiType\": \"y2t0sz\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"riva.wolf\",\n        \"paraCHNName\": \"riva.wolf\",\n        \"paraPosition\": \"ywvmkc\",\n        \"paraType\": \"v21es9\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"d7lt01\",\n        \"description\": \"p35x5f\"\n      }\n    ],\n    \"description\": \"9v6qpx\",\n    \"gmtModified\": \"2022-02-17 20:31:42\"\n  },\n  \"id\": 758,\n  \"apiId\": \"8\",\n  \"accessMethod\": \"800cqo\",\n  \"dataSourceType\": \"rz412p\",\n  \"dataSourceConnect\": \"djmq7u\",\n  \"dataBase\": \"mrfdi8\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"mappingName\": \"riva.wolf\",\n      \"conditionType\": \"j7xxij\",\n      \"backendParaName\": \"riva.wolf\",\n      \"backendParaPosition\": \"6zt68v\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"mappingName\": \"riva.wolf\",\n      \"paraType\": \"enzm76\",\n      \"exampleValue\": \"nsi6vn\",\n      \"defaultValue\": \"4tzrlr\",\n      \"description\": \"609obk\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 323,\n      \"paraName\": \"riva.wolf\",\n      \"columnName\": \"riva.wolf\",\n      \"optional\": true,\n      \"orderType\": \"7wn94e\",\n      \"description\": \"xfk5wi\"\n    }\n  ],\n  \"sqlPara\": \"cf0kc7\",\n  \"description\": \"ganfxl\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -691,7 +691,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 955,\n  \"apiDirId\": \"75\",\n  \"apiDirName\": \"emilio.oconner\",\n  \"parentId\": \"75\",\n  \"apiDirLevel\": \"511k3h\",\n  \"description\": \"fmc81y\"\n}",
+              "raw": "{\n  \"id\": 102,\n  \"dirId\": \"8\",\n  \"title\": \"e7bgie\",\n  \"value\": \"wc42qm\",\n  \"parentId\": \"8\",\n  \"description\": \"kuxb03\",\n  \"gmtCreate\": \"2022-02-17 20:31:42\",\n  \"gmtModified\": \"2022-02-17 20:31:42\",\n  \"delFlag\": 2\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -723,7 +723,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 947,\n  \"apiDirId\": \"75\",\n  \"apiDirName\": \"emilio.oconner\",\n  \"parentId\": \"75\",\n  \"apiDirLevel\": \"pnc3zq\",\n  \"description\": \"4ygps0\"\n}",
+              "raw": "{\n  \"id\": 341,\n  \"dirId\": \"8\",\n  \"title\": \"3e575r\",\n  \"value\": \"8dx4bo\",\n  \"parentId\": \"8\",\n  \"description\": \"s86xfl\",\n  \"gmtCreate\": \"2022-02-17 20:31:42\",\n  \"gmtModified\": \"2022-02-17 20:31:42\",\n  \"delFlag\": 2\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -750,7 +750,7 @@
           "description": "编辑API分类目录"
         },
         {
-          "name": "标准目录单子节点删除方式",
+          "name": "API分类目录单子节点删除方式",
           "request": {
             "method": "DELETE",
             "body": {
@@ -758,7 +758,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/dir/75",
+              "raw": "http://::server/api/dir/8",
               "protocol": "http",
               "path": [
                 "api",
@@ -772,18 +772,18 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 }
               ]
             },
-            "description": "标准目录单子节点删除方式",
+            "description": "API分类目录单子节点删除方式",
             "header": []
           },
-          "description": "标准目录单子节点删除方式"
+          "description": "API分类目录单子节点删除方式"
         },
         {
-          "name": "标准目录支持根节点关联删除子节点方式",
+          "name": "API分类目录支持根节点关联删除子节点方式",
           "request": {
             "method": "DELETE",
             "body": {
@@ -791,7 +791,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/dir/root/75",
+              "raw": "http://::server/api/dir/root/7gzr4c",
               "protocol": "http",
               "path": [
                 "api",
@@ -806,15 +806,15 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "75",
+                  "value": "clup28",
                   "description": "No comments found."
                 }
               ]
             },
-            "description": "标准目录支持根节点关联删除子节点方式",
+            "description": "API分类目录支持根节点关联删除子节点方式",
             "header": []
           },
-          "description": "标准目录支持根节点关联删除子节点方式"
+          "description": "API分类目录支持根节点关联删除子节点方式"
         }
       ]
     },
@@ -830,7 +830,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/register/query/by/75",
+              "raw": "http://::server/api/register/query/by/8",
               "protocol": "http",
               "path": [
                 "api",
@@ -846,7 +846,7 @@
               "variable": [
                 {
                   "key": "apiId",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 }
               ]
@@ -862,7 +862,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 394,\n    \"apiId\": \"75\",\n    \"dasDirId\": \"75\",\n    \"apiDirLevel\": \"xazjcp\",\n    \"apiName\": \"emilio.oconner\",\n    \"apiPath\": \"1q3zn7\",\n    \"protocolType\": \"abay1j\",\n    \"requestType\": \"p874uj\",\n    \"apiType\": \"hfxvtw\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"emilio.oconner\",\n        \"paraCHNName\": \"emilio.oconner\",\n        \"paraPosition\": \"d3et7f\",\n        \"paraType\": \"ao4xwa\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"7d51zs\",\n        \"description\": \"1daabc\"\n      }\n    ],\n    \"description\": \"acssrt\",\n    \"gmtModified\": \"2022-02-14 11:08:35\"\n  },\n  \"id\": 436,\n  \"apiId\": \"75\",\n  \"apiRouteId\": \"75\",\n  \"protocolType\": \"uggign\",\n  \"requestType\": \"7guev3\",\n  \"backendHost\": \"q3p4kw\",\n  \"backendPath\": \"xlihyr\",\n  \"backendTimeout\": \"lwulcn\",\n  \"status\": \"oo15rj\",\n  \"dasApiRegisterBackendParaVO\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"paraPosition\": \"fql0sp\",\n      \"paraType\": \"lakozq\",\n      \"backendParaName\": \"emilio.oconner\",\n      \"backendParaPosition\": \"2jrxey\",\n      \"description\": \"6ogh5b\"\n    }\n  ],\n  \"dasApiRegisterConstantParaVO\": [\n    {\n      \"constantParaName\": \"emilio.oconner\",\n      \"constantParaPosition\": \"h2aonp\",\n      \"constantParaType\": \"t3gpjr\",\n      \"constantParaValue\": \"gcfkkp\",\n      \"description\": \"7lha2e\"\n    }\n  ],\n  \"description\": \"gkou0v\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 985,\n    \"apiId\": \"8\",\n    \"dasDirId\": \"8\",\n    \"apiDirLevel\": \"wqc9do\",\n    \"apiName\": \"riva.wolf\",\n    \"apiPath\": \"kjo8y2\",\n    \"protocolType\": \"5raumk\",\n    \"requestType\": \"cdntpa\",\n    \"apiType\": \"axzizj\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"riva.wolf\",\n        \"paraCHNName\": \"riva.wolf\",\n        \"paraPosition\": \"6hkyzd\",\n        \"paraType\": \"ipfr3u\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"ljxq28\",\n        \"description\": \"lba81n\"\n      }\n    ],\n    \"description\": \"88c96t\",\n    \"gmtModified\": \"2022-02-17 20:31:42\"\n  },\n  \"id\": 790,\n  \"apiId\": \"8\",\n  \"apiRouteId\": \"8\",\n  \"protocolType\": \"6b9i6i\",\n  \"requestType\": \"02gnx6\",\n  \"backendHost\": \"4m4014\",\n  \"backendPath\": \"qlgq5h\",\n  \"backendTimeout\": \"gej1mp\",\n  \"status\": \"yvpf2c\",\n  \"dasApiRegisterBackendParaVO\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"paraPosition\": \"g02u14\",\n      \"paraType\": \"99mbtg\",\n      \"backendParaName\": \"riva.wolf\",\n      \"backendParaPosition\": \"ez39dp\",\n      \"description\": \"zx9exf\"\n    }\n  ],\n  \"dasApiRegisterConstantParaVO\": [\n    {\n      \"constantParaName\": \"riva.wolf\",\n      \"constantParaPosition\": \"uy5x9a\",\n      \"constantParaType\": \"b8an0t\",\n      \"constantParaValue\": \"foe35y\",\n      \"description\": \"35pwim\"\n    }\n  ],\n  \"description\": \"o1qn9w\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -894,7 +894,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 401,\n    \"apiId\": \"75\",\n    \"dasDirId\": \"75\",\n    \"apiDirLevel\": \"i1956b\",\n    \"apiName\": \"emilio.oconner\",\n    \"apiPath\": \"t8z65v\",\n    \"protocolType\": \"argjpy\",\n    \"requestType\": \"bnt62k\",\n    \"apiType\": \"7x89ye\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"emilio.oconner\",\n        \"paraCHNName\": \"emilio.oconner\",\n        \"paraPosition\": \"d8fhmu\",\n        \"paraType\": \"jjwm2e\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"625y19\",\n        \"description\": \"t421wt\"\n      }\n    ],\n    \"description\": \"blh7sj\",\n    \"gmtModified\": \"2022-02-14 11:08:35\"\n  },\n  \"id\": 345,\n  \"apiId\": \"75\",\n  \"apiRouteId\": \"75\",\n  \"protocolType\": \"zkpsqs\",\n  \"requestType\": \"10n7zd\",\n  \"backendHost\": \"u9z1vg\",\n  \"backendPath\": \"dj9be8\",\n  \"backendTimeout\": \"jusydy\",\n  \"status\": \"tr1jpj\",\n  \"dasApiRegisterBackendParaVO\": [\n    {\n      \"paraName\": \"emilio.oconner\",\n      \"paraPosition\": \"kaqk74\",\n      \"paraType\": \"hoclkm\",\n      \"backendParaName\": \"emilio.oconner\",\n      \"backendParaPosition\": \"qcmmev\",\n      \"description\": \"wd6da8\"\n    }\n  ],\n  \"dasApiRegisterConstantParaVO\": [\n    {\n      \"constantParaName\": \"emilio.oconner\",\n      \"constantParaPosition\": \"wltup7\",\n      \"constantParaType\": \"0i4tt0\",\n      \"constantParaValue\": \"bm0j12\",\n      \"description\": \"34xflu\"\n    }\n  ],\n  \"description\": \"yaplkb\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 788,\n    \"apiId\": \"8\",\n    \"dasDirId\": \"8\",\n    \"apiDirLevel\": \"an6gwj\",\n    \"apiName\": \"riva.wolf\",\n    \"apiPath\": \"o4dc63\",\n    \"protocolType\": \"i4dbga\",\n    \"requestType\": \"tbcugr\",\n    \"apiType\": \"0do2kk\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"riva.wolf\",\n        \"paraCHNName\": \"riva.wolf\",\n        \"paraPosition\": \"6t3605\",\n        \"paraType\": \"rp3csa\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"48xam5\",\n        \"description\": \"43z647\"\n      }\n    ],\n    \"description\": \"wsmbbr\",\n    \"gmtModified\": \"2022-02-17 20:31:42\"\n  },\n  \"id\": 688,\n  \"apiId\": \"8\",\n  \"apiRouteId\": \"8\",\n  \"protocolType\": \"jrucmb\",\n  \"requestType\": \"25mkqv\",\n  \"backendHost\": \"ipyes5\",\n  \"backendPath\": \"uju872\",\n  \"backendTimeout\": \"sjl356\",\n  \"status\": \"saw8lp\",\n  \"dasApiRegisterBackendParaVO\": [\n    {\n      \"paraName\": \"riva.wolf\",\n      \"paraPosition\": \"ezbghy\",\n      \"paraType\": \"0fn0uz\",\n      \"backendParaName\": \"riva.wolf\",\n      \"backendParaPosition\": \"5a4ybs\",\n      \"description\": \"yvvqkr\"\n    }\n  ],\n  \"dasApiRegisterConstantParaVO\": [\n    {\n      \"constantParaName\": \"riva.wolf\",\n      \"constantParaPosition\": \"qqgeej\",\n      \"constantParaType\": \"qlyblr\",\n      \"constantParaValue\": \"nq085w\",\n      \"description\": \"vye210\"\n    }\n  ],\n  \"description\": \"7i4aek\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1015,7 +1015,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 244,\n  \"apiRouteId\": \"75\",\n  \"apiRoutePath\": \"rp08de\",\n  \"description\": \"1yx1tw\",\n  \"gmtModified\": \"2022-02-14 11:08:35\"\n}",
+              "raw": "{\n  \"id\": 318,\n  \"apiRouteId\": \"8\",\n  \"apiRoutePath\": \"2ez1ox\",\n  \"description\": \"d7rqpi\",\n  \"gmtModified\": \"2022-02-17 20:31:42\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1047,7 +1047,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 985,\n  \"apiRouteId\": \"75\",\n  \"apiRoutePath\": \"xjcmoz\",\n  \"description\": \"bmhazj\",\n  \"gmtModified\": \"2022-02-14 11:08:35\"\n}",
+              "raw": "{\n  \"id\": 367,\n  \"apiRouteId\": \"8\",\n  \"apiRoutePath\": \"lm0und\",\n  \"description\": \"0agvgl\",\n  \"gmtModified\": \"2022-02-17 20:31:42\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1084,12 +1084,12 @@
                   "key": "ids[]",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "c9bnmg"
+                  "value": "x2h9wt"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/api/route/bulk?ids\u003dc9bnmg\u0026ids\u003dc9bnmg",
+              "raw": "http://::server/api/route/bulk?ids\u003dx2h9wt\u0026ids\u003dx2h9wt",
               "protocol": "http",
               "path": [
                 "api",
@@ -1102,7 +1102,7 @@
               "query": [
                 {
                   "key": "ids",
-                  "value": "96tlnp",
+                  "value": "xhtype",
                   "description": "No comments found.,[array of string]"
                 }
               ],
@@ -1161,13 +1161,13 @@
                   "key": "upstreamId",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "75"
+                  "value": "8"
                 },
                 {
                   "key": "serviceId",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "75"
+                  "value": "8"
                 }
               ]
             },
@@ -1189,12 +1189,12 @@
               "query": [
                 {
                   "key": "upstreamId",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 },
                 {
                   "key": "serviceId",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 }
               ],
@@ -1216,19 +1216,19 @@
                   "key": "upstreamId",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "75"
+                  "value": "8"
                 },
                 {
                   "key": "serviceId",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "75"
+                  "value": "8"
                 },
                 {
                   "key": "apiPath",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "1xemoi"
+                  "value": "2s5pqn"
                 }
               ]
             },
@@ -1250,17 +1250,17 @@
               "query": [
                 {
                   "key": "upstreamId",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 },
                 {
                   "key": "serviceId",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 },
                 {
                   "key": "apiPath",
-                  "value": "fh9ki2",
+                  "value": "bb1ppt",
                   "description": "No comments found."
                 }
               ],
@@ -1277,7 +1277,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"emilio.oconner\",\n  \"plugins\": {\n    \"mapKey\": \"2jvzbs\"\n  }\n}",
+              "raw": "{\n  \"username\": \"riva.wolf\",\n  \"plugins\": {\n    \"mapKey\": \"u5i9dt\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1437,7 +1437,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"75\",\n  \"name\": \"emilio.oconner\",\n  \"parameter\": \"xnawr2\",\n  \"dataPushDetailList\": [\n    {\n      \"entName\": \"emilio.oconner\",\n      \"uniscId\": \"75\",\n      \"regNo\": \"e2j8m9\"\n    }\n  ]\n}",
+              "raw": "{\n  \"id\": \"8\",\n  \"name\": \"riva.wolf\",\n  \"parameter\": \"s2xok3\",\n  \"dataPushDetailList\": [\n    {\n      \"entName\": \"riva.wolf\",\n      \"uniscId\": \"8\",\n      \"regNo\": \"q2r13o\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1472,7 +1472,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 974,\n  \"apiId\": \"75\",\n  \"strategyName\": \"emilio.oconner\",\n  \"timeValue\": \"6ryuzg\",\n  \"timeUnit\": \"wpsvoy\",\n  \"apiTimes\": \"22botp\",\n  \"userTimes\": \"629xxh\",\n  \"appTimes\": \"45c15x\",\n  \"ipTimes\": \"wdw437\",\n  \"description\": \"te7q7i\",\n  \"gmtCreate\": \"2022-02-14 11:08:35\",\n  \"gmtModified\": \"2022-02-14 11:08:35\",\n  \"delFlag\": 7\n}",
+              "raw": "{\n  \"id\": 14,\n  \"apiId\": \"8\",\n  \"strategyName\": \"riva.wolf\",\n  \"timeValue\": \"l6eksj\",\n  \"timeUnit\": \"jpg0t9\",\n  \"apiTimes\": \"rcsnrx\",\n  \"userTimes\": \"56niq8\",\n  \"appTimes\": \"d4mue3\",\n  \"ipTimes\": \"zjzy9w\",\n  \"description\": \"xs24r5\",\n  \"gmtCreate\": \"2022-02-17 20:31:43\",\n  \"gmtModified\": \"2022-02-17 20:31:43\",\n  \"delFlag\": 2\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1504,7 +1504,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"11gtib\"\n  },\n  \"beginDay\": \"94c3e8\",\n  \"endDay\": \"21uowr\",\n  \"strategyName\": \"emilio.oconner\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"iyeanr\"\n  },\n  \"beginDay\": \"mkmc75\",\n  \"endDay\": \"v20h4y\",\n  \"strategyName\": \"riva.wolf\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1536,7 +1536,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 748,\n  \"apiId\": \"75\",\n  \"strategyName\": \"emilio.oconner\",\n  \"timeValue\": \"en9eqr\",\n  \"timeUnit\": \"zlyfpa\",\n  \"apiTimes\": \"85myqn\",\n  \"userTimes\": \"xxy5k9\",\n  \"appTimes\": \"zp664w\",\n  \"ipTimes\": \"90t2se\",\n  \"description\": \"ibcov8\",\n  \"gmtCreate\": \"2022-02-14 11:08:35\",\n  \"gmtModified\": \"2022-02-14 11:08:35\",\n  \"delFlag\": 7\n}",
+              "raw": "{\n  \"id\": 85,\n  \"apiId\": \"8\",\n  \"strategyName\": \"riva.wolf\",\n  \"timeValue\": \"tniaah\",\n  \"timeUnit\": \"fslbd1\",\n  \"apiTimes\": \"wrb0dv\",\n  \"userTimes\": \"6iachh\",\n  \"appTimes\": \"lfpyii\",\n  \"ipTimes\": \"udj05m\",\n  \"description\": \"n3jue7\",\n  \"gmtCreate\": \"2022-02-17 20:31:43\",\n  \"gmtModified\": \"2022-02-17 20:31:43\",\n  \"delFlag\": 2\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1571,7 +1571,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/flowstrategy/delete/75",
+              "raw": "http://::server/api/flowstrategy/delete/8",
               "protocol": "http",
               "path": [
                 "api",
@@ -1586,7 +1586,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 }
               ]
@@ -1605,7 +1605,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/flowstrategy/bulk/delete/jbt2cj",
+              "raw": "http://::server/api/flowstrategy/bulk/delete/pe5mu1",
               "protocol": "http",
               "path": [
                 "api",
@@ -1621,7 +1621,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "eiwd6q",
+                  "value": "sdlysa",
                   "description": "No comments found."
                 }
               ]
@@ -1642,7 +1642,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 687,\n  \"appId\": \"75\",\n  \"appName\": \"emilio.oconner\",\n  \"appType\": \"61e17p\",\n  \"apiId\": \"75\",\n  \"description\": \"mkhqx0\",\n  \"gmtCreate\": \"2022-02-14 11:08:35\",\n  \"gmtModified\": \"2022-02-14 11:08:35\",\n  \"delFlag\": 7\n}",
+              "raw": "{\n  \"id\": 397,\n  \"appId\": \"8\",\n  \"appName\": \"riva.wolf\",\n  \"appType\": \"a2fg7v\",\n  \"apiId\": \"8\",\n  \"description\": \"6jk499\",\n  \"gmtCreate\": \"2022-02-17 20:31:43\",\n  \"gmtModified\": \"2022-02-17 20:31:43\",\n  \"delFlag\": 2\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1674,7 +1674,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"wn93uc\"\n  },\n  \"appName\": \"emilio.oconner\",\n  \"appType\": \"pxlumm\",\n  \"beginDay\": \"vr46k2\",\n  \"endDay\": \"4ahr4t\",\n  \"id\": 265,\n  \"apiIds\": \"dtyp7q\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"2tot0d\"\n  },\n  \"appName\": \"riva.wolf\",\n  \"appType\": \"8zt9i2\",\n  \"beginDay\": \"ad9hxn\",\n  \"endDay\": \"ww0d7y\",\n  \"id\": 426,\n  \"apiIds\": \"9o13e5\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1706,7 +1706,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 799,\n  \"appId\": \"75\",\n  \"appName\": \"emilio.oconner\",\n  \"appType\": \"4o1f7d\",\n  \"apiId\": \"75\",\n  \"description\": \"wciiyp\",\n  \"gmtCreate\": \"2022-02-14 11:08:35\",\n  \"gmtModified\": \"2022-02-14 11:08:35\",\n  \"delFlag\": 7\n}",
+              "raw": "{\n  \"id\": 437,\n  \"appId\": \"8\",\n  \"appName\": \"riva.wolf\",\n  \"appType\": \"evrdmu\",\n  \"apiId\": \"8\",\n  \"description\": \"xyad8n\",\n  \"gmtCreate\": \"2022-02-17 20:31:43\",\n  \"gmtModified\": \"2022-02-17 20:31:43\",\n  \"delFlag\": 2\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1741,7 +1741,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/management/delete/75",
+              "raw": "http://::server/api/management/delete/8",
               "protocol": "http",
               "path": [
                 "api",
@@ -1756,7 +1756,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "75",
+                  "value": "8",
                   "description": "No comments found."
                 }
               ]
@@ -1775,7 +1775,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/management/bulk/delete/d4u99d",
+              "raw": "http://::server/api/management/bulk/delete/m3dzwf",
               "protocol": "http",
               "path": [
                 "api",
@@ -1791,7 +1791,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "sa7uo8",
+                  "value": "xpdi0i",
                   "description": "No comments found."
                 }
               ]
@@ -1807,7 +1807,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1hjthj\"\n  },\n  \"appName\": \"emilio.oconner\",\n  \"appType\": \"24h7dy\",\n  \"beginDay\": \"1pgddf\",\n  \"endDay\": \"nxm125\",\n  \"id\": 706,\n  \"apiIds\": \"ztg04s\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"hsfw0w\"\n  },\n  \"appName\": \"riva.wolf\",\n  \"appType\": \"qw13pv\",\n  \"beginDay\": \"8j3ugj\",\n  \"endDay\": \"3k9d48\",\n  \"id\": 720,\n  \"apiIds\": \"ct9uo3\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

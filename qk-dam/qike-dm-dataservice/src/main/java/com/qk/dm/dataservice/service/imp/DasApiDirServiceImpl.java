@@ -1,8 +1,9 @@
 package com.qk.dm.dataservice.service.imp;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.dataservice.constant.DasConstant;
+import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiDir;
+import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiDir;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiDirTreeMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
@@ -11,10 +12,11 @@ import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.vo.DasApiDirTreeVO;
 import com.qk.dm.dataservice.vo.DasApiDirVO;
 import com.querydsl.core.types.Predicate;
-import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wjq
@@ -23,183 +25,208 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class DasApiDirServiceImpl implements DasApiDirService {
-  private static final QDasApiDir qDasApiDir = QDasApiDir.dasApiDir;
+    private static final QDasApiDir qDasApiDir = QDasApiDir.dasApiDir;
+  private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
 
-  private final DasApiDirRepository dasApiDirRepository;
-  private final DasApiBasicInfoRepository dasApiBasicInfoRepository;
+    private final DasApiDirRepository dasApiDirRepository;
+    private final DasApiBasicInfoRepository dasApiBasicInfoRepository;
 
-  @Autowired
-  public DasApiDirServiceImpl(
-      DasApiDirRepository dasApiDirRepository,
-      DasApiBasicInfoRepository dasApiBasicInfoRepository) {
-    this.dasApiDirRepository = dasApiDirRepository;
-    this.dasApiBasicInfoRepository = dasApiBasicInfoRepository;
-  }
-
-  @Override
-  public List<DasApiDirTreeVO> searchList() {
-    Predicate predicate = qDasApiDir.delFlag.eq(0);
-    List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate);
-    List<DasApiDirTreeVO> respList = new ArrayList<>();
-    for (DasApiDir dasApiDir : dasApiDirList) {
-      DasApiDirTreeVO dasApiTreeVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirTreeVO(dasApiDir);
-      respList.add(dasApiTreeVO);
-    }
-    return buildByRecursive(respList);
-  }
-
-  @Override
-  public void insert(DasApiDirVO dasApiDirVO) {
-    DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
-    dasApiDir.setGmtCreate(new Date());
-    dasApiDir.setGmtModified(new Date());
-    dasApiDir.setDelFlag(0);
-    dasApiDir.setApiDirId(UUID.randomUUID().toString().replaceAll("-", ""));
-
-    Predicate predicate = qDasApiDir.apiDirLevel.eq(dasApiDirVO.getApiDirLevel());
-    boolean exists = dasApiDirRepository.exists(predicate);
-    if (exists) {
-      throw new BizException(
-          "当前要新增的API目录分类名称为:"
-              + dasApiDir.getApiDirName()
-              + " 所属的节点层级目录为:"
-              + dasApiDirVO.getApiDirLevel()
-              + " 的数据，已存在！！！");
-    }
-    dasApiDirRepository.save(dasApiDir);
-  }
-
-  @Transactional
-  @Override
-  public void update(DasApiDirVO dasApiDirVO) {
-    DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
-    dasApiDir.setGmtModified(new Date());
-    dasApiDir.setDelFlag(0);
-    Predicate predicate = qDasApiDir.apiDirId.eq(dasApiDir.getApiDirId());
-    final Optional<DasApiDir> dasApiDirOptional = dasApiDirRepository.findOne(predicate);
-    if (dasApiDirOptional.isPresent()) {
-      String dasApiDirLevel = dasApiDirOptional.get().getApiDirLevel();
-      if (dasApiDirLevel.equals(dasApiDirVO.getApiDirLevel())) {
-        throw new BizException(
-            "当前要编辑的API目录分类名称为:"
-                + dasApiDir.getApiDirLevel()
-                + " 所属的节点层级目录为:"
-                + dasApiDirVO.getApiDirLevel()
-                + ", 的数据，已存在！！！");
-      }
-      dasApiDirRepository.saveAndFlush(dasApiDir);
-      //      dsdBasicinfoRepository.updateDirLevelByDirId(
-      //          dasApiDirVO.getDasApiDirLevel(), dasApiDirVO.getDirDsdId());
-    } else {
-      throw new BizException("当前要编辑的API目录分类名称为:" + dasApiDir.getApiDirName() + " 的数据，不存在！！！");
-    }
-  }
-
-  @Override
-  public void delete(Long delId) {
-    Optional<DasApiDir> dirOptional = dasApiDirRepository.findById(delId);
-    if (!dirOptional.isPresent()) {
-      throw new BizException("参数有误,当前要删除的节点不存在！！！");
+    @Autowired
+    public DasApiDirServiceImpl(
+            DasApiDirRepository dasApiDirRepository,
+            DasApiBasicInfoRepository dasApiBasicInfoRepository) {
+        this.dasApiDirRepository = dasApiDirRepository;
+        this.dasApiBasicInfoRepository = dasApiBasicInfoRepository;
     }
 
-    Predicate predicate = QDasApiDir.dasApiDir.parentId.eq(dirOptional.get().getApiDirId());
-    long count = dasApiDirRepository.count(predicate);
-    if (count > 0) {
-      throw new BizException("当前要删除的数据下存在子节点信息，请勿删除！！！");
-    } else {
-      dasApiDirRepository.deleteById(delId);
-    }
-  }
-
-  public static List<DasApiDirTreeVO> buildByRecursive(List<DasApiDirTreeVO> respList) {
-    DasApiDirTreeVO topParent =
-        DasApiDirTreeVO.builder().apiDirId("-1").apiDirName("全部API").build();
-    List<DasApiDirTreeVO> trees = new ArrayList<>();
-    trees.add(findChildren(topParent, respList));
-
-    return trees;
-  }
-
-  /**
-   * 递归查找子节点
-   *
-   * @param treeNode,respList
-   * @return DataStandardTreeVO
-   */
-  public static DasApiDirTreeVO findChildren(
-      DasApiDirTreeVO treeNode, List<DasApiDirTreeVO> respList) {
-    treeNode.setChildren(new ArrayList<>());
-    for (DasApiDirTreeVO dasApiDirTreeVO : respList) {
-      if (treeNode.getApiDirId().equals(dasApiDirTreeVO.getParentId())) {
-        if (treeNode.getChildren() == null) {
-          treeNode.setChildren(new ArrayList<>());
+    @Override
+    public List<DasApiDirTreeVO> searchList() {
+        Predicate predicate = qDasApiDir.delFlag.eq(0);
+        List<DasApiDir> DasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate);
+        List<DasApiDirTreeVO> respList = new ArrayList<>();
+        for (DasApiDir DasApiDir : DasApiDirList) {
+            DasApiDirTreeVO dirTreeVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirTreeVO(DasApiDir);
+            respList.add(dirTreeVO);
         }
-        if (!DasConstant.TREE_DIR_TOP_PARENT_ID.equals(treeNode.getApiDirId())) {
-          dasApiDirTreeVO.setApiDirLevel(
-              treeNode.getApiDirLevel() + "/" + dasApiDirTreeVO.getApiDirName());
+        return buildByRecursive(respList);
+    }
+
+    public static List<DasApiDirTreeVO> buildByRecursive(List<DasApiDirTreeVO> respList) {
+        DasApiDirTreeVO topParent = DasApiDirTreeVO.builder().dirId("-1").title("根目录").value("根目录").parentId("-1").build();
+        List<DasApiDirTreeVO> trees = new ArrayList<>();
+        trees.add(findChildren(topParent, respList));
+
+        return trees;
+    }
+
+    /**
+     * 递归查找子节点
+     *
+     * @param treeNode,respList
+     * @return DasApiDirTreeVO
+     */
+    public static DasApiDirTreeVO findChildren(DasApiDirTreeVO treeNode, List<DasApiDirTreeVO> respList) {
+        treeNode.setChildren(new ArrayList<>());
+        for (DasApiDirTreeVO DasApiDirTreeVO : respList) {
+            if (treeNode.getDirId().equals(DasApiDirTreeVO.getParentId())) {
+                if (treeNode.getChildren() == null) {
+                    treeNode.setChildren(new ArrayList<>());
+                }
+                treeNode.getChildren().add(findChildren(DasApiDirTreeVO, respList));
+            }
         }
-        treeNode.getChildren().add(findChildren(dasApiDirTreeVO, respList));
-      }
+        return treeNode;
     }
-    return treeNode;
-  }
 
-  @Override
-  public void deleteRoot(Long delId) {
-    ArrayList<Long> ids = new ArrayList<>();
-    // 删除父级ID
-    Optional<DasApiDir> dasApiDirIsExist =
-        dasApiDirRepository.findOne(QDasApiDir.dasApiDir.id.eq(delId));
-    if (!dasApiDirIsExist.isPresent()) {
-      throw new BizException("参数有误,当前要删除的节点不存在！！！");
-    }
-    ids.add(delId);
-    getIds(ids, delId);
-    // 批量删除
-    Iterable<DasApiDir> delDirList = dasApiDirRepository.findAll(QDasApiDir.dasApiDir.id.in(ids));
-    dasApiDirRepository.deleteAll(delDirList);
-  }
+    @Override
+    public void insert(DasApiDirVO dasApiDirVO) {
+        DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
+        dasApiDir.setGmtCreate(new Date());
+        dasApiDir.setGmtModified(new Date());
+        dasApiDir.setApiDirId(UUID.randomUUID().toString().replaceAll("-", ""));
+        dasApiDir.setDelFlag(0);
 
-  /** 根据API目录id获取目录下的所有节点id */
-  @Override
-  public void getApiDirId(Set<String> apiDirIdSet, String apiDirId) {
-    Optional<DasApiDir> parentDir = dasApiDirRepository.findOne(qDasApiDir.apiDirId.eq(apiDirId));
-    if (parentDir.isPresent()) {
-      apiDirIdSet.add(parentDir.get().getApiDirId());
-      Iterable<DasApiDir> sonDirList =
-          dasApiDirRepository.findAll(qDasApiDir.parentId.eq(parentDir.get().getApiDirId()));
-      for (DasApiDir dasApiDir : sonDirList) {
-        apiDirIdSet.add(dasApiDir.getApiDirId());
-        this.getApiDirId(apiDirIdSet, dasApiDir.getApiDirId());
-      }
+        Predicate predicate = qDasApiDir.apiDirName.eq(dasApiDirVO.getTitle()).and(qDasApiDir.parentId.eq(dasApiDirVO.getParentId()));
+        boolean exists = dasApiDirRepository.exists(predicate);
+        if (exists) {
+            throw new BizException("当前要新增的API分类目录名称为:" + dasApiDirVO.getTitle() + " 的数据，在本层级下已存在！！！");
+        }
+        dasApiDirRepository.save(dasApiDir);
     }
-  }
 
-  @Override
-  public List<DasApiDirVO> getDasApiDirByDirName(String title) {
-    List<DasApiDirVO> dasApiDirVOList = new ArrayList<>();
-    Predicate predicate = qDasApiDir.apiDirName.eq(title);
-    Iterable<DasApiDir> dasApiDirs = dasApiDirRepository.findAll(predicate);
-    for (DasApiDir dasApiDir : dasApiDirs) {
-      DasApiDirVO dasApiDirVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirVO(dasApiDir);
-      dasApiDirVOList.add(dasApiDirVO);
-    }
-    return dasApiDirVOList;
-  }
+    @Override
+    public void update(DasApiDirVO dasApiDirVO) {
+        //校验目录dirId是否与ParentId相等
+        checkDirIdIsEqualParentId(dasApiDirVO);
 
-  /**
-   * 获取删除叶子节点ID
-   *
-   * @param ids,delId
-   */
-  private void getIds(ArrayList<Long> ids, Long delId) {
-    Optional<DasApiDir> parentDir = dasApiDirRepository.findOne(QDasApiDir.dasApiDir.id.eq(delId));
-    Iterable<DasApiDir> sonDirList =
-        dasApiDirRepository.findAll(
-            QDasApiDir.dasApiDir.parentId.eq(parentDir.get().getApiDirId()));
-    for (DasApiDir dasApiDir : sonDirList) {
-      ids.add(dasApiDir.getId());
-      this.getIds(ids, dasApiDir.getId());
+        //校验目录父节点是否放到其子节点层级下
+        checkParentNodeAndChildNode(dasApiDirVO);
+
+        DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
+        dasApiDir.setGmtModified(new Date());
+        dasApiDir.setDelFlag(0);
+
+        Optional<DasApiDir> dsdDirOptional = dasApiDirRepository.findById(dasApiDirVO.getId());
+        if (dsdDirOptional.isPresent()) {
+            dasApiDirRepository.saveAndFlush(dasApiDir);
+            //TODO 修改目录后影响的列表信息
+//            dsdBasicinfoRepository.updateDirLevelByDirId(dsdDirVO.getDsdDirLevel(), dsdDirVO.getDirDsdId());
+        } else {
+            throw new BizException("当前要编辑的API分类目录名称为:" + dasApiDirVO.getTitle() + " 的数据，不存在！！！");
+        }
     }
-  }
+
+    private void checkDirIdIsEqualParentId(DasApiDirVO dasApiDirVO) {
+        String dirId = dasApiDirVO.getDirId();
+        String parentId = dasApiDirVO.getParentId();
+        if (dirId.equals(parentId)) {
+            throw new BizException("当前要编辑的规则分类目录,不能选择本节点作为父节点！！！");
+        }
+    }
+
+    private void checkParentNodeAndChildNode(DasApiDirVO dasApiDirVO) {
+        Predicate predicate = qDasApiDir.delFlag.eq(0);
+        List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate);
+        List<DasApiDir> childDirList = new ArrayList<>();
+
+        getDirIdsByParentId(dasApiDirList, dasApiDirVO.getDirId(), childDirList);
+
+        List<String> childDirIds = childDirList.stream().map(DasApiDir::getApiDirId).collect(Collectors.toList());
+        if (childDirIds.contains(dasApiDirVO.getParentId())) {
+            throw new BizException("当前要编辑的规则分类目录,不能选择自身子节点作为父节点！！！");
+        }
+    }
+
+    private void getDirIdsByParentId(List<DasApiDir> dasApiDirList, String dirId, List<DasApiDir> childDirIds) {
+        for (DasApiDir dasApiDir : dasApiDirList) {
+            if (dasApiDir.getParentId() != null) {
+                if (dasApiDir.getParentId().equals(dirId)) {
+                    getDirIdsByParentId(dasApiDirList, dasApiDir.getApiDirId(), childDirIds);
+                    childDirIds.add(dasApiDir);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void delete(String id) {
+        ArrayList<Long> ids = new ArrayList<>();
+        List<DasApiDir> childDirList = new ArrayList<>();
+        List<DasApiDir> dirIsExistRulesList = new ArrayList<>();
+
+        Long delId = Long.valueOf(id);
+        // 删除父级ID
+        Predicate predicate = qDasApiDir.delFlag.eq(0);
+        List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate);
+        List<DasApiDir> dsdDirIsExist = dasApiDirList.stream().filter(dasApiDir -> dasApiDir.getId().equals(delId)).collect(Collectors.toList());
+        if (dsdDirIsExist.size() < 1) {
+            throw new BizException("参数有误,当前要删除的节点不存在！！！");
+        }
+
+        //级联所以子节点
+        DasApiDir dasApiDir = dsdDirIsExist.get(0);
+        ids.add(delId);
+        getDirIdsByParentId(dasApiDirList, dasApiDir.getApiDirId(), childDirList);
+        childDirList.forEach((ruleDir) -> ids.add(ruleDir.getId()));
+
+        //校验是否存在规则模板数据
+        Iterable<DasApiDir> delDirList = dasApiDirRepository.findAll(qDasApiDir.id.in(ids));
+        for (DasApiDir ruleDir : delDirList) {
+            dirIsExistRulesList.add(ruleDir);
+        }
+        deleteCheckIsRules(dirIsExistRulesList);
+        // 级联删除
+        dasApiDirRepository.deleteAll(delDirList);
+    }
+
+    @Override
+    public void deleteBulk(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id)));
+        List<DasApiDir> dasApiDirList = dasApiDirRepository.findAllById(idSet);
+
+        //校验是否存在规则模板数据
+        deleteCheckIsRules(dasApiDirList);
+        // 批量删除
+        dasApiDirRepository.deleteAll(dasApiDirList);
+
+    }
+
+    private void deleteCheckIsRules(List<DasApiDir> dirIsExistRulesList) {
+        List<String> dirIdList = dirIsExistRulesList.stream().map(DasApiDir::getApiDirId).collect(Collectors.toList());
+        Iterable<DasApiBasicInfo> ruleTemplates = dasApiBasicInfoRepository.findAll(qDasApiBasicInfo.apiId.in(dirIdList));
+
+        if (ruleTemplates.iterator().hasNext()) {
+            throw new BizException("当前要删除的API分类目录,存在API数据信息！！！");
+        }
+    }
+
+    /** 根据API目录id获取目录下的所有节点id */
+    @Override
+    public void getApiDirId(Set<String> apiDirIdSet, String apiDirId) {
+        Optional<DasApiDir> parentDir = dasApiDirRepository.findOne(qDasApiDir.apiDirId.eq(apiDirId));
+        if (parentDir.isPresent()) {
+            apiDirIdSet.add(parentDir.get().getApiDirId());
+            Iterable<DasApiDir> sonDirList =
+                    dasApiDirRepository.findAll(qDasApiDir.parentId.eq(parentDir.get().getApiDirId()));
+            for (DasApiDir dasApiDir : sonDirList) {
+                apiDirIdSet.add(dasApiDir.getApiDirId());
+                this.getApiDirId(apiDirIdSet, dasApiDir.getApiDirId());
+            }
+        }
+    }
+
+    @Override
+    public List<DasApiDirVO> getDasApiDirByDirName(String title) {
+        List<DasApiDirVO> dasApiDirVOList = new ArrayList<>();
+        Predicate predicate = qDasApiDir.apiDirName.eq(title);
+        Iterable<DasApiDir> dasApiDirs = dasApiDirRepository.findAll(predicate);
+        for (DasApiDir dasApiDir : dasApiDirs) {
+            DasApiDirVO dasApiDirVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirVO(dasApiDir);
+            dasApiDirVOList.add(dasApiDirVO);
+        }
+        return dasApiDirVOList;
+    }
+
 }

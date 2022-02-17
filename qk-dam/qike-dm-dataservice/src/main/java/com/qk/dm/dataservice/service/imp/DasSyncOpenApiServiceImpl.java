@@ -101,8 +101,9 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
     } else {
       dasApiDirVO =
           DasApiDirVO.builder()
-              .apiDirLevel("/" + title)
-              .apiDirName(title)
+                  //TODO Level
+              .value("/" + title)
+              .title(title)
               .parentId(DasConstant.TREE_DIR_TOP_PARENT_ID)
               .description("自动同步注册Api，根据Title自动创建目录!")
               .build();
@@ -120,8 +121,9 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
       DasApiRegisterVO.DasApiRegisterVOBuilder apiRegisterVOBuilder = DasApiRegisterVO.builder();
       // 设置目录信息
       apiBasicInfoVOBuilder
-          .dasDirId(dasApiDirVO.getApiDirId())
-          .apiDirLevel(dasApiDirVO.getApiDirLevel());
+          .dasDirId(dasApiDirVO.getDirId())
+              //TODO Level
+          .apiDirLevel(dasApiDirVO.getValue());
       // 构建注册Api对象
       DasApiRegisterVO dasApiRegisterVO =
           buildRegisterVO(apiMap, pathKey, apiBasicInfoVOBuilder, apiRegisterVOBuilder, openApi3);
