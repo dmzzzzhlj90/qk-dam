@@ -10,9 +10,6 @@ import com.qk.dam.jdbc.DbTypeEnum;
 import com.qk.dam.jdbc.RawScript;
 import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.parser.CCJSqlParserUtil;
-import net.sf.jsqlparser.statement.Statement;
-import net.sf.jsqlparser.statement.Statements;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,7 +30,7 @@ public class HiveMain {
      * @param args 参数
      */
     public static void main(String[] args) {
-        String jsonconfig = "{\"from_host\":\"172.21.32.4\",\"from_port\":10000,\"from_user\":\"root\",\"from_password\":null,\"from_database\":null,\"to_host\":\"172.20.0.24\",\"to_port\":3306,\"to_user\":\"root\",\"to_password\":\"Zhudao123!\",\"to_database\":\"qkdam\",\"job_id\":\"a00818c661ea4761bcdeeb608720125a\",\"job_name\":\"ttts\",\"rule_id\":\"4730b16e774d44a3a47fd45912883d43\",\"rule_name\":\"4554112512000/RULE_TYPE_FIELD/test_qiaosiwei/add_online/contact_source_url\",\"rule_temp_id\":39,\"task_code\":4554112512000,\"rule_meta_data\":\"contact_source_url\",\"sql_rpc_url\":\"http://dqc.qk.com:31851/dqc/sql/build/realtime?ruleId=4730b16e774d44a3a47fd45912883d43\",\"warn_rpc_url\":\"http://dqc.qk.com:31851/dqc/scheduler/result/warn/result/info?ruleId=4730b16e774d44a3a47fd45912883d43\"}";
+        String jsonconfig = args[0];
         RawScript rawScript = new Gson().fromJson(jsonconfig, RawScript.class);
         String sqlRpcUrl = rawScript.getSql_rpc_url();
         ResultTable resultTable = getResultTable(rawScript);
