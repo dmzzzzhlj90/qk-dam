@@ -15,6 +15,7 @@ import com.qk.dm.dataquality.service.impl.DolphinScheduler;
 import com.qk.dm.dataquality.utils.DateUtil;
 import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.TaskInstanceVO;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -80,6 +81,16 @@ public class RedisBiz {
 
     @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisInstanceList(String failure, Date date) {
+        //根据条件缓存所有实例
+        return GsonUtil.toJsonString(
+                getInstanceList(failure, date)
+        );
+    }
+
+    @CachePut(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
+    public String redisInstanceList() {
+        String failure = null;
+        Date date = null;
         //根据条件缓存所有实例
         return GsonUtil.toJsonString(
                 getInstanceList(failure, date)
@@ -155,6 +166,13 @@ public class RedisBiz {
 
     @Cacheable(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
     public String redisTaskInstanceList(Date date, String stateType) {
+        return GsonUtil.toJsonString(getTaskInstanceList(date, stateType));
+    }
+
+    @CachePut(value = "dqc:statistics", key = "#root.methodName", unless = "#result == '[]'")
+    public String redisTaskInstanceList() {
+        Date date = null;
+        String stateType = null;
         return GsonUtil.toJsonString(getTaskInstanceList(date, stateType));
     }
 }

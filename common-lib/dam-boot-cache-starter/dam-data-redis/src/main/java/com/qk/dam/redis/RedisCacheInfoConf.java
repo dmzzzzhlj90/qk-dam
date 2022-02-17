@@ -11,14 +11,29 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.cache.conf", ignoreInvalidFields = true)
 @Component
 public class RedisCacheInfoConf {
+    /**
+     * 缓存过期时间 秒
+     */
     Integer duration;
 
+    /**
+     * 初始的缓存空间大小
+     */
     Integer initialCapacity;
 
+    /**
+     * 最大缓存空间大小
+     */
     Integer maximumSize;
 
+    /**
+     * 随机时间 最少时间 秒
+     */
     Integer redisMinSecond;
 
+    /**
+     * 随机时间 最大时间 秒
+     */
     Integer redisMaxSecond;
 
     public Integer getDuration() {
