@@ -8,7 +8,7 @@ import cn.hutool.db.sql.SqlExecutor;
 import com.google.gson.Gson;
 import com.qk.dam.jdbc.ApiClient;
 import com.qk.dam.jdbc.DbTypeEnum;
-import com.qk.dam.jdbc.MysqlRawScript;
+import com.qk.dam.jdbc.RawScript;
 import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
@@ -58,34 +58,36 @@ public class JdbcSqlUtil {
         log.info("请求执行规则查询sql:【{}】", jsonMap.get("data"));
         return String.valueOf(jsonMap.get("data"));
     }
-    public static ResultTable getResultTable(MysqlRawScript mysqlRawScript) {
+    public static ResultTable getResultTable(RawScript rawScript) {
         // 任务基本信息
-        String jobId = mysqlRawScript.getJob_id();
-        String ruleId = mysqlRawScript.getRule_id();
-        String jobName = mysqlRawScript.getJob_name();
-        String ruleName = mysqlRawScript.getRule_name();
-        Long ruleTempId = mysqlRawScript.getRule_temp_id();
-        Long taskCode = mysqlRawScript.getTask_code();
-        return new ResultTable(jobId, jobName, ruleId, ruleName, ruleTempId, taskCode, mysqlRawScript.getRule_meta_data(),null, null, "0", new Date(), new Date());
+        String jobId = rawScript.getJob_id();
+        String ruleId = rawScript.getRule_id();
+        String jobName = rawScript.getJob_name();
+        String ruleName = rawScript.getRule_name();
+        Long ruleTempId = rawScript.getRule_temp_id();
+        Long taskCode = rawScript.getTask_code();
+        return new ResultTable(jobId, jobName, ruleId, ruleName, ruleTempId, taskCode, rawScript.getRule_meta_data(),null, null, "0", new Date(), new Date());
     }
-    public static Db getFromDb(MysqlRawScript mysqlRawScript, DbTypeEnum dbTypeEnum) {
+    public static Db getFromDb(RawScript rawScript, DbTypeEnum dbTypeEnum) {
         // 查询库
-        String fromHost = mysqlRawScript.getFrom_host();
-        String fromPort = mysqlRawScript.getFrom_port();
-        String fromUser = mysqlRawScript.getFrom_user();
-        String fromPassword = mysqlRawScript.getFrom_password();
-        String fromDatabase = mysqlRawScript.getFrom_database();
+        String fromHost = rawScript.getFrom_host();
+        String fromPort = rawScript.getFrom_port();
+        String fromUser = rawScript.getFrom_user();
+        String fromPassword = rawScript.getFrom_password();
+        String fromDatabase = rawScript.getFrom_database();
 
         String fullHost = "";
-        if (Objects.nonNull(fromPort) && Objects.nonNull(fromDatabase)) {
+        if (Objects.nonNull(fromPort)) {
             fullHost = fromHost
                     + ":"
                     + fromPort
-                    + "/" + fromDatabase;
+                    + "/" +  Objects.requireNonNullElse(fromDatabase, "default");
         } else {
             fullHost = fromHost;
         }
-        log.info("质量规则执行端信息【fromHost:{}】【fromUser:{}】【fromDatabase:{}】", fromHost, fromUser, fromDatabase);
+        log.info("质量规则执行端信息【fromHost:{}】【fromUser:{}】【fromDatabase:{}】", fromHost,
+                Objects.requireNonNullElse(fromUser, "default"),
+                Objects.requireNonNullElse(fromDatabase, "default"));
         return Db.use(
                 new SimpleDataSource(
                         "jdbc:" + dbTypeEnum.getSchema() + "://"
@@ -94,13 +96,13 @@ public class JdbcSqlUtil {
                         fromPassword, dbTypeEnum.getDriverName()));
     }
 
-    public static Db getToDb(MysqlRawScript mysqlRawScript, DbTypeEnum dbTypeEnum) {
+    public static Db getToDb(RawScript rawScript, DbTypeEnum dbTypeEnum) {
         // 结果库
-        String toHost = mysqlRawScript.getTo_host();
-        String toPort = mysqlRawScript.getTo_port();
-        String toUser = mysqlRawScript.getTo_user();
-        String toPassword = mysqlRawScript.getTo_password();
-        String toDatabase = mysqlRawScript.getTo_database();
+        String toHost = rawScript.getTo_host();
+        String toPort = rawScript.getTo_port();
+        String toUser = rawScript.getTo_user();
+        String toPassword = rawScript.getTo_password();
+        String toDatabase = rawScript.getTo_database();
         log.info("质量规则执行结果存储到【toHost:{}】【toUser:{}】【toDatabase:{}】",toHost,toUser,toDatabase);
 
         String fullHost = "";

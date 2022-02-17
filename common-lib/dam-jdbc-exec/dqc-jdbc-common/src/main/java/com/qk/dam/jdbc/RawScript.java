@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MysqlRawScript {
+public class RawScript {
 
     private String from_host;
 

@@ -1,12 +1,13 @@
 package com.qk.dam.hive;
 
+import cn.hutool.db.Db;
 import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
 import cn.hutool.db.handler.EntityListHandler;
 import cn.hutool.db.sql.SqlExecutor;
 import com.google.gson.Gson;
 import com.qk.dam.jdbc.DbTypeEnum;
-import com.qk.dam.jdbc.MysqlRawScript;
+import com.qk.dam.jdbc.RawScript;
 import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
@@ -32,12 +33,11 @@ public class HiveMain {
      * @param args 参数
      */
     public static void main(String[] args) {
-        String jsonconfig = args[0];
-        MysqlRawScript mysqlRawScript = new Gson().fromJson(jsonconfig, MysqlRawScript.class);
-        String sqlRpcUrl = mysqlRawScript.getSql_rpc_url();
-        ResultTable resultTable = getResultTable(mysqlRawScript);
+        String jsonconfig = "{\"from_host\":\"172.21.32.4\",\"from_port\":10000,\"from_user\":\"root\",\"from_password\":null,\"from_database\":null,\"to_host\":\"172.20.0.24\",\"to_port\":3306,\"to_user\":\"root\",\"to_password\":\"Zhudao123!\",\"to_database\":\"qkdam\",\"job_id\":\"a00818c661ea4761bcdeeb608720125a\",\"job_name\":\"ttts\",\"rule_id\":\"4730b16e774d44a3a47fd45912883d43\",\"rule_name\":\"4554112512000/RULE_TYPE_FIELD/test_qiaosiwei/add_online/contact_source_url\",\"rule_temp_id\":39,\"task_code\":4554112512000,\"rule_meta_data\":\"contact_source_url\",\"sql_rpc_url\":\"http://dqc.qk.com:31851/dqc/sql/build/realtime?ruleId=4730b16e774d44a3a47fd45912883d43\",\"warn_rpc_url\":\"http://dqc.qk.com:31851/dqc/scheduler/result/warn/result/info?ruleId=4730b16e774d44a3a47fd45912883d43\"}";
+        RawScript rawScript = new Gson().fromJson(jsonconfig, RawScript.class);
+        String sqlRpcUrl = rawScript.getSql_rpc_url();
+        ResultTable resultTable = getResultTable(rawScript);
 
-        DB = getFromDb(mysqlRawScript, DbTypeEnum.HIVE);
         String sqlScript = null;
         try {
             sqlScript = generateSqlScript(sqlRpcUrl);
@@ -48,7 +48,7 @@ public class HiveMain {
         }
         List<Entity> entities = null;
         try {
-            entities = runHiveSqL(sqlScript);
+            entities = runHiveSqL(rawScript,sqlScript);
             List<Object[]> rst = entities.stream()
                     .map(entity -> entity.values().toArray())
                     .collect(Collectors.toList());
@@ -59,12 +59,12 @@ public class HiveMain {
             System.exit(-1);
         }
 
-        DB = getToDb(mysqlRawScript, DbTypeEnum.MYSQL);
+        Db toDb = getToDb(rawScript, DbTypeEnum.MYSQL);
         try {
-            String warnRst = generateWarnRst(mysqlRawScript.getWarn_rpc_url());
+            String warnRst = generateWarnRst(rawScript.getWarn_rpc_url());
             resultTable.setWarn_result(warnRst);
             log.info("插入结果数据入库【{}】",new Gson().toJson(resultTable));
-            DB.insert(Entity.create(RST_TABLE).parseBean(resultTable));
+            toDb.insert(Entity.create(RST_TABLE).parseBean(resultTable));
         } catch (Exception e) {
             e.printStackTrace();
             log.error("执行添加结果数据失败:【{}】",e.getLocalizedMessage());
@@ -74,9 +74,10 @@ public class HiveMain {
 
     }
 
-    public static List<Entity> runHiveSqL(String sql) throws Exception {
+    public static List<Entity> runHiveSqL(RawScript rawScript,String sql) throws Exception {
         if (containsStartsWith(sql)){
-            List<Entity> entities = execHiveSql(sql);
+            Db fromDb = getFromDb(rawScript, DbTypeEnum.HIVE);
+            List<Entity> entities = execHiveSql(fromDb,sql);
             log.info("SQL结果数据[{}]",new Gson().toJson(entities));
             return entities;
         }else {
@@ -91,23 +92,19 @@ public class HiveMain {
      * @return List<Entity>
      * @throws SQLException sql异常
      */
-    static List<Entity> execHiveSql(String sql) throws Exception {
+    static List<Entity> execHiveSql(Db fromDb,String sql) throws Exception {
         List<Entity> entities = new ArrayList<>(100);
-        Statements stmt = CCJSqlParserUtil.parseStatements(sql);
-        for (Statement st : stmt.getStatements()) {
-            java.sql.Statement statement = null;
-            try {
-                Connection connection = DB.getConnection();
-                statement = connection.createStatement();
-                // todo 暂时支持cross join，已实现合并结果输出
-                statement.execute("set hive.mapred.mode='strict'");
-                EntityListHandler rsh = new EntityListHandler(true);
-                entities.addAll(SqlExecutor.query(connection, st.toString(), rsh));
-            } finally {
-                DbUtil.close(statement);
-            }
+        java.sql.Statement statement = null;
+        try {
+            Connection connection = fromDb.getConnection();
+            statement = connection.createStatement();
+            // todo 暂时支持cross join，已实现合并结果输出
+            statement.execute("set hive.mapred.mode='strict'");
+            EntityListHandler rsh = new EntityListHandler(true);
+            entities.addAll(SqlExecutor.query(connection, sql, rsh));
+        } finally {
+            DbUtil.close(statement);
         }
-
         return entities;
 
     }
