@@ -227,7 +227,7 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
     try {
       RouteContext routeContext = buildRouteContext();
       List<String> routeIdList =
-          apiGatewayManager.getRouteInfo(apiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeContext);
+          apiGatewayManager.getRouteInfo(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeContext);
       Iterable<DasApiRegister> dasApiRegisterIterable =
           dasApiRegisterRepository.findAll(
               QDasApiRegister.dasApiRegister
