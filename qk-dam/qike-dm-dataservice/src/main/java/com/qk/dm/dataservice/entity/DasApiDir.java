@@ -27,14 +27,14 @@ public class DasApiDir implements Serializable {
     /**
      * API目录ID
      */
-    @Column(name = "api_dir_id", nullable = false)
-    private String apiDirId;
+    @Column(name = "dir_id", nullable = false)
+    private String dirId;
 
     /**
      * API目录名称
      */
-    @Column(name = "api_dir_name", nullable = false)
-    private String apiDirName;
+    @Column(name = "dir_name", nullable = false)
+    private String dirName;
 
     /**
      * 目录父级ID
@@ -47,6 +47,18 @@ public class DasApiDir implements Serializable {
      */
     @Column(name = "description")
     private String description;
+
+    /**
+     * 创建人
+     */
+    @Column(name = "create_userid", nullable = false)
+    private String createUserid;
+
+    /**
+     * 修改人
+     */
+    @Column(name = "update_userid")
+    private String updateUserid;
 
     /**
      * 创建时间

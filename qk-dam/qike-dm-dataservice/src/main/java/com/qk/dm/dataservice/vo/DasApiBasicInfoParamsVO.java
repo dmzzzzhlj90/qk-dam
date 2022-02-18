@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author wjq
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +24,7 @@ public class DasApiBasicInfoParamsVO {
   private String apiName;
 
   /** API目录ID */
-  private String apiDirId;
+  private String dirId;
 
   /** 开始时间 */
   private String beginDay;

@@ -21,24 +21,24 @@ public interface DasApiDirTreeMapper {
 
   @Mappings({
           @Mapping(source = "id", target = "id"),
-          @Mapping(source = "apiDirId", target = "dirId"),
-          @Mapping(source = "apiDirName", target = "title"),
-          @Mapping(source = "apiDirName", target = "value"),
+          @Mapping(source = "dirId", target = "dirId"),
+          @Mapping(source = "dirName", target = "title"),
+          @Mapping(source = "dirName", target = "value"),
           @Mapping(source = "parentId", target = "parentId")
   })
   DasApiDirTreeVO useDasApiDirTreeVO(DasApiDir dasApiDir);
 
   @Mappings({
-          @Mapping(source = "dirId", target = "apiDirId"),
-          @Mapping(source = "title", target = "apiDirName"),
+          @Mapping(source = "dirId", target = "dirId"),
+          @Mapping(source = "title", target = "dirName"),
           @Mapping(source = "parentId", target = "parentId")
   })
   DasApiDir useDasApiDir(DasApiDirVO dasApiDirVO);
 
   @Mappings({
-          @Mapping(source = "apiDirId", target = "dirId"),
-          @Mapping(source = "apiDirName", target = "title"),
-          @Mapping(source = "apiDirName", target = "value"),
+          @Mapping(source = "dirId", target = "dirId"),
+          @Mapping(source = "dirName", target = "title"),
+          @Mapping(source = "dirName", target = "value"),
           @Mapping(source = "parentId", target = "parentId")
   })
   DasApiDirVO useDasApiDirVO(DasApiDir dasApiDir);

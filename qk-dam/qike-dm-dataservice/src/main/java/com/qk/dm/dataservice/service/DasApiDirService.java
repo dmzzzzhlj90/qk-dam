@@ -20,13 +20,11 @@ public interface DasApiDirService {
 
   void update(DasApiDirVO dasApiDirVO);
 
-//    void deleteOne(Long delId);
-
   void delete(String id);
 
   void deleteBulk(String ids);
 
-  void getApiDirId(Set<String> apiDirIdSet, String apiDirId);
+  void getApiDirId(Set<String> dirIdSet, String dirId);
 
   List<DasApiDirVO> getDasApiDirByDirName(String title);
 

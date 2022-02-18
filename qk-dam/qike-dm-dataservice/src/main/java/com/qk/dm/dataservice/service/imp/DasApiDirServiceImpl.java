@@ -42,10 +42,10 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     @Override
     public List<DasApiDirTreeVO> searchList() {
         Predicate predicate = qDasApiDir.delFlag.eq(0);
-        List<DasApiDir> DasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate);
+        List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate);
         List<DasApiDirTreeVO> respList = new ArrayList<>();
-        for (DasApiDir DasApiDir : DasApiDirList) {
-            DasApiDirTreeVO dirTreeVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirTreeVO(DasApiDir);
+        for (DasApiDir dasApiDir : dasApiDirList) {
+            DasApiDirTreeVO dirTreeVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirTreeVO(dasApiDir);
             respList.add(dirTreeVO);
         }
         return buildByRecursive(respList);
@@ -81,12 +81,14 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     @Override
     public void insert(DasApiDirVO dasApiDirVO) {
         DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
+        dasApiDir.setDirId(UUID.randomUUID().toString().replaceAll("-", ""));
+
         dasApiDir.setGmtCreate(new Date());
         dasApiDir.setGmtModified(new Date());
-        dasApiDir.setApiDirId(UUID.randomUUID().toString().replaceAll("-", ""));
+        dasApiDir.setCreateUserid("admin");
         dasApiDir.setDelFlag(0);
 
-        Predicate predicate = qDasApiDir.apiDirName.eq(dasApiDirVO.getTitle()).and(qDasApiDir.parentId.eq(dasApiDirVO.getParentId()));
+        Predicate predicate = qDasApiDir.dirName.eq(dasApiDirVO.getTitle()).and(qDasApiDir.parentId.eq(dasApiDirVO.getParentId()));
         boolean exists = dasApiDirRepository.exists(predicate);
         if (exists) {
             throw new BizException("当前要新增的API分类目录名称为:" + dasApiDirVO.getTitle() + " 的数据，在本层级下已存在！！！");
@@ -104,6 +106,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
 
         DasApiDir dasApiDir = DasApiDirTreeMapper.INSTANCE.useDasApiDir(dasApiDirVO);
         dasApiDir.setGmtModified(new Date());
+        dasApiDir.setCreateUserid("admin");
         dasApiDir.setDelFlag(0);
 
         Optional<DasApiDir> dsdDirOptional = dasApiDirRepository.findById(dasApiDirVO.getId());
@@ -131,7 +134,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
 
         getDirIdsByParentId(dasApiDirList, dasApiDirVO.getDirId(), childDirList);
 
-        List<String> childDirIds = childDirList.stream().map(DasApiDir::getApiDirId).collect(Collectors.toList());
+        List<String> childDirIds = childDirList.stream().map(DasApiDir::getDirId).collect(Collectors.toList());
         if (childDirIds.contains(dasApiDirVO.getParentId())) {
             throw new BizException("当前要编辑的规则分类目录,不能选择自身子节点作为父节点！！！");
         }
@@ -141,7 +144,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
         for (DasApiDir dasApiDir : dasApiDirList) {
             if (dasApiDir.getParentId() != null) {
                 if (dasApiDir.getParentId().equals(dirId)) {
-                    getDirIdsByParentId(dasApiDirList, dasApiDir.getApiDirId(), childDirIds);
+                    getDirIdsByParentId(dasApiDirList, dasApiDir.getDirId(), childDirIds);
                     childDirIds.add(dasApiDir);
                 }
             }
@@ -166,7 +169,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
         //级联所以子节点
         DasApiDir dasApiDir = dsdDirIsExist.get(0);
         ids.add(delId);
-        getDirIdsByParentId(dasApiDirList, dasApiDir.getApiDirId(), childDirList);
+        getDirIdsByParentId(dasApiDirList, dasApiDir.getDirId(), childDirList);
         childDirList.forEach((ruleDir) -> ids.add(ruleDir.getId()));
 
         //校验是否存在规则模板数据
@@ -194,7 +197,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     }
 
     private void deleteCheckIsRules(List<DasApiDir> dirIsExistRulesList) {
-        List<String> dirIdList = dirIsExistRulesList.stream().map(DasApiDir::getApiDirId).collect(Collectors.toList());
+        List<String> dirIdList = dirIsExistRulesList.stream().map(DasApiDir::getDirId).collect(Collectors.toList());
         Iterable<DasApiBasicInfo> ruleTemplates = dasApiBasicInfoRepository.findAll(qDasApiBasicInfo.apiId.in(dirIdList));
 
         if (ruleTemplates.iterator().hasNext()) {
@@ -204,15 +207,15 @@ public class DasApiDirServiceImpl implements DasApiDirService {
 
     /** 根据API目录id获取目录下的所有节点id */
     @Override
-    public void getApiDirId(Set<String> apiDirIdSet, String apiDirId) {
-        Optional<DasApiDir> parentDir = dasApiDirRepository.findOne(qDasApiDir.apiDirId.eq(apiDirId));
+    public void getApiDirId(Set<String> apiDirIdSet, String dirId) {
+        Optional<DasApiDir> parentDir = dasApiDirRepository.findOne(qDasApiDir.dirId.eq(dirId));
         if (parentDir.isPresent()) {
-            apiDirIdSet.add(parentDir.get().getApiDirId());
+            apiDirIdSet.add(parentDir.get().getDirId());
             Iterable<DasApiDir> sonDirList =
-                    dasApiDirRepository.findAll(qDasApiDir.parentId.eq(parentDir.get().getApiDirId()));
+                    dasApiDirRepository.findAll(qDasApiDir.parentId.eq(parentDir.get().getDirId()));
             for (DasApiDir dasApiDir : sonDirList) {
-                apiDirIdSet.add(dasApiDir.getApiDirId());
-                this.getApiDirId(apiDirIdSet, dasApiDir.getApiDirId());
+                apiDirIdSet.add(dasApiDir.getDirId());
+                this.getApiDirId(apiDirIdSet, dasApiDir.getDirId());
             }
         }
     }
@@ -220,7 +223,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     @Override
     public List<DasApiDirVO> getDasApiDirByDirName(String title) {
         List<DasApiDirVO> dasApiDirVOList = new ArrayList<>();
-        Predicate predicate = qDasApiDir.apiDirName.eq(title);
+        Predicate predicate = qDasApiDir.dirName.eq(title);
         Iterable<DasApiDir> dasApiDirs = dasApiDirRepository.findAll(predicate);
         for (DasApiDir dasApiDir : dasApiDirs) {
             DasApiDirVO dasApiDirVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirVO(dasApiDir);
