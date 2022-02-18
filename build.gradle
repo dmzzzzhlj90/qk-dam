@@ -1,3 +1,6 @@
+plugins {
+    id "org.sonarqube" version "3.0"
+}
 buildscript {
     repositories {
         maven {
@@ -41,6 +44,7 @@ subprojects {
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'org.openapi.generator'
+    apply plugin: 'org.sonarqube'
     repositories {
         maven {
             url = 'http://172.21.128.2:8081/repository/qkdam/'
