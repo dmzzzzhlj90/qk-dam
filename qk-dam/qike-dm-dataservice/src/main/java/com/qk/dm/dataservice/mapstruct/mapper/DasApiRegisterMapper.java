@@ -1,6 +1,7 @@
 package com.qk.dm.dataservice.mapstruct.mapper;
 
 import com.qk.dm.dataservice.entity.DasApiRegister;
+import com.qk.dm.dataservice.vo.DasApiRegisterDefinitionVO;
 import com.qk.dm.dataservice.vo.DasApiRegisterVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -14,9 +15,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DasApiRegisterMapper {
-  DasApiRegisterMapper INSTANCE = Mappers.getMapper(DasApiRegisterMapper.class);
+    DasApiRegisterMapper INSTANCE = Mappers.getMapper(DasApiRegisterMapper.class);
 
-  DasApiRegisterVO useDasApiRegisterVO(DasApiRegister dasApiRegister);
+    DasApiRegisterDefinitionVO useDasApiRegisterDefinitioVO(DasApiRegister dasApiRegister);
 
-  DasApiRegister useDasApiRegister(DasApiRegisterVO dasApiRegisterVO);
+    DasApiRegister useDasApiRegister(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO);
 }
