@@ -17,15 +17,16 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DasApiDirTreeVO {
 
-  private Integer id;
+  private Long id;
 
-  private String apiDirId;
+  private String dirId;
 
-  private String apiDirName;
+  private String title;
+
+  private String value;
 
   private String parentId;
 
-  private String apiDirLevel;
-
   private List<DasApiDirTreeVO> children;
+
 }

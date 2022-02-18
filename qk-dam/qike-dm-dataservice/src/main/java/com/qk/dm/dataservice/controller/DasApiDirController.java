@@ -69,7 +69,7 @@ public class DasApiDirController {
   }
 
   /**
-   * 标准目录单子节点删除方式
+   * API分类目录单子节点删除方式
    *
    * @param id
    * @return DefaultCommonResult
@@ -77,20 +77,20 @@ public class DasApiDirController {
   @DeleteMapping("/{id}")
 //  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.DELETE)
   public DefaultCommonResult delete(@PathVariable("id") String id) {
-    dasApiDirService.delete(Long.valueOf(id));
+    dasApiDirService.delete(id);
     return DefaultCommonResult.success();
   }
 
   /**
-   * 标准目录支持根节点关联删除子节点方式
+   * API分类目录支持根节点关联删除子节点方式
    *
-   * @param id
+   * @param ids
    * @return DefaultCommonResult
    */
   @DeleteMapping("/root/{id}")
 //  @Auth(bizType = BizResource.DAS_API_DIR, actionType = RestActionType.DELETE)
-  public DefaultCommonResult deleteRoot(@PathVariable("id") String id) {
-    dasApiDirService.deleteRoot(Long.valueOf(id));
+  public DefaultCommonResult deleteBulk(@PathVariable("id") String ids) {
+    dasApiDirService.deleteBulk(ids);
     return DefaultCommonResult.success();
   }
 }
