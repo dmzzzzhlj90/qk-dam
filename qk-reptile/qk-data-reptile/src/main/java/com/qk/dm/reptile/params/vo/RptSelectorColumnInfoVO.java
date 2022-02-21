@@ -50,4 +50,13 @@ public class RptSelectorColumnInfoVO {
      * 元素类型 0代表单元素 1代表多元素
      */
     private Integer elementType;
+
+    /**
+     * 前缀
+     */
+    private String  beforePrefix;
+    /**
+     * 后缀
+     */
+    private String afterPrefix;
 }

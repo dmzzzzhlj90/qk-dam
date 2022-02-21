@@ -7,6 +7,7 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import com.google.common.collect.Maps;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.client.ClientUserInfo;
+import com.qk.dm.reptile.client.DataSource;
 import com.qk.dm.reptile.constant.RptUserConstant;
 import com.qk.dm.reptile.params.dto.RptUserDTO;
 import com.qk.dm.reptile.params.vo.RptUserVO;
@@ -14,6 +15,8 @@ import com.qk.dm.reptile.service.RptUserService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,11 +30,13 @@ import java.util.stream.Collectors;
 @Service
 public class RptUserServiceImpl implements RptUserService {
 
-    private static final Db DB = getDb();
+    private  Db DB ;
     private final JwtDecoder jwtDecoder;
+    private final DataSource dataSource;
 
-    public RptUserServiceImpl(JwtDecoder jwtDecoder){
+    public RptUserServiceImpl(JwtDecoder jwtDecoder,DataSource dataSource){
         this.jwtDecoder = jwtDecoder;
+        this.dataSource = dataSource;
     }
 
     @Override
@@ -84,12 +89,12 @@ public class RptUserServiceImpl implements RptUserService {
         }
         return result;
     }
-
-    private static Db getDb(){
-       return Db.use(
+    @PostConstruct
+    private void getDb(){
+       DB =   Db.use(
                new SimpleDataSource(
-                       RptUserConstant.URL, RptUserConstant.USER,
-                       RptUserConstant.PASSWORD, RptUserConstant.DRIVER));
+                       dataSource.getUrl(), dataSource.getUser(),
+                       dataSource.getPassword(), dataSource.getDriver()));
     }
 
 }
