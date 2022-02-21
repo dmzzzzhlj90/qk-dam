@@ -263,6 +263,9 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.nonNull(rptBaseInfoDTO.getEndDate())){
             booleanBuilder.and(qRptBaseInfo.configDate.loe(rptBaseInfoDTO.getEndDate()));
         }
+        if(Objects.nonNull(rptBaseInfoDTO.getListPageAddress())){
+            booleanBuilder.and(qRptBaseInfo.listPageAddress.contains(rptBaseInfoDTO.getListPageAddress()));
+        }
 
     }
 

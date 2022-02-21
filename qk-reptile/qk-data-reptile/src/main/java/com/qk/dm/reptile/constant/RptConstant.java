@@ -57,4 +57,9 @@ public class RptConstant {
      */
     public final static String FILE_UNIT = "M";
 
+    /**
+     * 定义Guava存储大小
+     */
+    public final static  Integer GUAVA_CAPACITY = 10000000;
+
 }
