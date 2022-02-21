@@ -76,7 +76,7 @@ public class RptExcelServiceImpl implements RptExcelService {
       list = rptBasicInfoUploadDataListener.getList();
     } catch (Exception e) {
       LOG.info("======导入待配数据失败!======");
-      throw new BizException("导入失败,请检验数据格式后再导入: " + e.getMessage());
+      throw new BizException("导入失败,请检验数据格式后再导入," + e.getCause().getMessage());
     }
     LOG.info("======成功导入待配数据!======");
 
