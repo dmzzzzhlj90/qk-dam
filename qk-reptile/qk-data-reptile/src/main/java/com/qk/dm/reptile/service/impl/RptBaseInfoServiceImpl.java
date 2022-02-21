@@ -63,6 +63,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         this.jwtDecoder = jwtDecoder;
     }
 
+
     @Override
     public void insert(RptBaseInfoDTO rptBaseInfoDTO) {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
