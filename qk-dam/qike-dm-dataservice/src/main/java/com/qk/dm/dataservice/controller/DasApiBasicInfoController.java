@@ -156,7 +156,7 @@ public class DasApiBasicInfoController {
     }
 
     /**
-     * API基础信息__状态信息
+     * 数据类型
      *
      * @return DefaultCommonResult<Map < String, String>>
      */

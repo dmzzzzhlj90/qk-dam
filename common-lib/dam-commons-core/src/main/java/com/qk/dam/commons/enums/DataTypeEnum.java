@@ -3,6 +3,7 @@ package com.qk.dam.commons.enums;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -22,37 +23,37 @@ public enum DataTypeEnum {
     /**
      * 双精度(DOUBLE)
      */
-    DOUBLE("STRING", "双精度(DOUBLE)"),
+    DOUBLE("DOUBLE", "双精度(DOUBLE)"),
 
     /**
      * 长整型(BIGINT)
      */
-    BIGINT("STRING", "长整型(BIGINT)"),
+    BIGINT("BIGINT", "长整型(BIGINT)"),
 
     /**
      * 布尔类型(BOOLEAN)
      */
-    BOOLEAN("STRING", "布尔类型(BOOLEAN)"),
+    BOOLEAN("BOOLEAN", "布尔类型(BOOLEAN)"),
 
     /**
      * 高精度(DECIMAL)
      */
-    DECIMAL("STRING", "高精度(DECIMAL)"),
+    DECIMAL("DECIMAL", "高精度(DECIMAL)"),
 
     /**
      * 日期类型(DATE)
      */
-    DATE("STRING", "日期类型(DATE)"),
+    DATE("DATE", "日期类型(DATE)"),
 
     /**
      * 时间戳类型(TIMESTAMP)
      */
-    TIMESTAMP("STRING", "时间戳类型(TIMESTAMP)"),
+    TIMESTAMP("TIMESTAMP", "时间戳类型(TIMESTAMP)"),
 
     /**
      * 其他数据类型(OTHER_TYPE)
      */
-    OTHER_TYPE("STRING", "其他数据类型(OTHER_TYPE)");
+    OTHER_TYPE("OTHER_TYPE", "其他数据类型(OTHER_TYPE)");
 
     private String code;
     private String value;
@@ -75,7 +76,7 @@ public enum DataTypeEnum {
     }
 
     public static Map<String, String> getAllValue() {
-        Map<String, String> val = new HashMap<>();
+        Map<String, String> val = new LinkedHashMap<>();
         for (DataTypeEnum enums : DataTypeEnum.values()) {
             val.put(enums.code, enums.value);
         }

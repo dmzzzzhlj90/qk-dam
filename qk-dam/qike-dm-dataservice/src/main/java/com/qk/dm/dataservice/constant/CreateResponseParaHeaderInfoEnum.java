@@ -3,6 +3,7 @@ package com.qk.dm.dataservice.constant;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -66,7 +67,7 @@ public enum CreateResponseParaHeaderInfoEnum {
     }
 
     public static Map<String, String> getAllValue() {
-        Map<String, String> val = new HashMap<>();
+        Map<String, String> val = new LinkedHashMap<>();
         for (CreateResponseParaHeaderInfoEnum enums : CreateResponseParaHeaderInfoEnum.values()) {
             val.put(enums.code, enums.value);
         }
