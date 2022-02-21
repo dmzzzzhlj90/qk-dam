@@ -5,10 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
+ * 注册API_明细展示VO
+ *
  * @author wjq
+ * @date 20210907
+ * @since 1.0.0
  */
 @Data
 @NoArgsConstructor
@@ -18,11 +24,13 @@ public class DasApiRegisterVO {
     /**
      * API基础信息
      */
+    @Valid
     private DasApiBasicInfoVO dasApiBasicInfoVO;
 
     /**
      * 注册API定义信息
      */
+    @Valid
     private DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO;
 
 }

@@ -6,7 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * API基础信息_输入参数定义VO
+ *
  * @author wjq
+ * @date 20210907
+ * @since 1.0.0
  */
 @Data
 @NoArgsConstructor
@@ -14,30 +18,48 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DasApiBasicInfoRequestParasVO {
 
-  /** http请求参数 */
-  private String paraName;
+    /**
+     * http请求参数
+     */
+    private String paraName;
 
-  /** http请求参数中文名称 */
-  private String paraCHNName;
+    /**
+     * http请求参数中文名称
+     */
+    private String paraCHNName;
 
-  /** 入参位置 */
-  private String paraPosition;
+    /**
+     * 入参位置
+     */
+    private String paraPosition;
 
-  /** 参数类型 */
-  private String paraType;
+    /**
+     * 参数类型
+     */
+    private String paraType;
 
-  /** 是否必填 */
-  private boolean necessary;
+    /**
+     * 是否必填
+     */
+    private boolean necessary;
 
-  /** 允许空值 */
-  private boolean supportNull;
+    /**
+     * 允许空值
+     */
+    private boolean supportNull;
 
-  /** 示例值 */
-  private Object defaultValue;
+    /**
+     * 示例值
+     */
+    private Object defaultValue;
 
-  /** 默认值 */
-  private String exampleValue;
+    /**
+     * 默认值
+     */
+    private String exampleValue;
 
-  /** 描述 */
-  private String description;
+    /**
+     * 描述
+     */
+    private String description;
 }

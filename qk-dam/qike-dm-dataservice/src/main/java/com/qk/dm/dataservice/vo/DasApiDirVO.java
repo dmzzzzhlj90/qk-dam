@@ -7,8 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+/**
+ * API目录VO
+ *
+ * @author wjq
+ * @date 20210907
+ * @since 1.0.0
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +36,7 @@ public class DasApiDirVO {
   /**
    * API分类目录名称 title
    */
+  @NotBlank(message = "API分类目录名称不能为空！")
   private String title;
 
   /**

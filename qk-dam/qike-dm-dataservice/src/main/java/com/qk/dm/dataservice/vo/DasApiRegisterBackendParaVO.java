@@ -5,6 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 注册API_后端服务参数VO
+ *
+ * @author wjq
+ * @date 20210907
+ * @since 1.0.0
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
