@@ -1,12 +1,11 @@
 package com.qk.dm.dataservice.service.imp;
 
 import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.enums.DataTypeEnum;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataservice.constant.DasConstant;
-import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
-import com.qk.dm.dataservice.constant.SyncStatusEnum;
+import com.qk.dm.dataservice.constant.*;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
@@ -94,6 +93,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insert(DasApiBasicInfoVO dasApiBasicInfoVO) {
         Optional<DasApiBasicInfo> optionalDasApiBasicInfo = checkExistApiBasicInfo(dasApiBasicInfoVO);
         if (optionalDasApiBasicInfo.isPresent()) {
@@ -120,18 +120,12 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(DasApiBasicInfoVO dasApiBasicInfoVO) {
-        Optional<DasApiBasicInfo> optionalDasApiBasicInfo = checkExistApiBasicInfo(dasApiBasicInfoVO);
+        Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfoVO.getApiId());
+        Optional<DasApiBasicInfo> optionalDasApiBasicInfo = dasApiBasicinfoRepository.findOne(predicate);
         if (optionalDasApiBasicInfo.isEmpty()) {
-            DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
-            throw new BizException(
-                    "当前要新增的API标准名称为:"
-                            + dasApiBasicInfo.getApiName()
-                            + ",API目录为:"
-                            + dasApiBasicInfo.getApiPath()
-                            + ",请求方式为:"
-                            + dasApiBasicInfo.getRequestType()
-                            + " 的数据，不存在！！！");
+            throw new BizException("当前要编辑的apiId为:" + dasApiBasicInfoVO.getApiId() + " 的数据，不存在！！！");
         }
 
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
@@ -144,8 +138,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         dasApiBasicinfoRepository.saveAndFlush(dasApiBasicInfo);
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long delId) {
         Optional<DasApiBasicInfo> onDasApiBasicInfo =
                 dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.id.eq(delId));
@@ -154,10 +148,11 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
             DasApiBasicInfo dasApiBasicInfo = onDasApiBasicInfo.get();
             String apiType = dasApiBasicInfo.getApiType();
             String apiId = dasApiBasicInfo.getApiId();
-            if (DasConstant.REGISTER_API_CODE.equalsIgnoreCase(apiType)) {
+            if (ApiTypeEnum.REGISTER_API.getCode().equalsIgnoreCase(apiType)) {
                 dasApiRegisterRepository.deleteByApiId(apiId);
             }
-            if (DasConstant.DM_SOURCE_API_CODE.equalsIgnoreCase(apiType)) {
+            if (ApiTypeEnum.CREATE_API.getCode().equalsIgnoreCase(apiType)) {
+                //TODO 新建API 删除需要测试
                 dasApiCreateConfigRepository.deleteByApiId(apiId);
                 dasApiCreateSqlScriptRepository.deleteByApiId(apiId);
             }
@@ -166,8 +161,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         }
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBulk(String ids) {
         //        List<String> idList = Arrays.asList(ids.split(","));
         //        Set<Long> idSet = new HashSet<>();
@@ -177,18 +172,18 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     }
 
     @Override
-    public List<Map<String, String>> getApiType() {
-        return DasConstant.getApiType();
+    public Map<String, String> getApiType() {
+        return ApiTypeEnum.getAllValue();
     }
 
     @Override
-    public List<Map<String, String>> getDMSourceType() {
-        return DasConstant.getDMSourceType();
+    public Map<String, String> getDMSourceType() {
+        return DMSourceTypeEnum.getAllValue();
     }
 
     @Override
     public Map<String, String> getRequestParasHeaderInfos() {
-        return DasConstant.getRequestParasHeaderInfos();
+        return RequestParasHeaderInfoEnum.getAllValue();
     }
 
     @Override
@@ -216,8 +211,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
                         .apiName
                         .eq(dasApiBasicInfoVO.getApiName())
                         .and(qDasApiBasicInfo.apiPath.eq(dasApiBasicInfoVO.getApiPath()))
-                        .and(qDasApiBasicInfo.apiType.eq(dasApiBasicInfoVO.getApiType()))
-                        .and(qDasApiBasicInfo.apiType.eq(DasConstant.REGISTER_API_CODE));
+                        .and(qDasApiBasicInfo.apiType.eq(ApiTypeEnum.REGISTER_API.getCode()));
         return dasApiBasicinfoRepository.findOne(predicate);
     }
 
@@ -232,6 +226,16 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
             dasApiBasicInfoVOList.add(dasApiBasicInfoVO);
         }
         return dasApiBasicInfoVOList;
+    }
+
+    @Override
+    public Map<String, String> getStatusInfo() {
+        return SyncStatusEnum.getAllValue();
+    }
+
+    @Override
+    public Map<String, String> getDataType() {
+        return DataTypeEnum.getAllValue();
     }
 
     private DasApiBasicInfoVO transformToVO(DasApiBasicInfo dasApiBasicInfo) {

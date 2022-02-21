@@ -40,8 +40,7 @@ public class DasApiCreateSqlScriptController {
   @GetMapping(value = "/{apiId}")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<DasApiCreateSqlScriptVO> detail(@PathVariable("apiId") String apiId) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiCreateSqlScriptService.detail(apiId));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSqlScriptService.detail(apiId));
   }
 
   /**
@@ -52,8 +51,7 @@ public class DasApiCreateSqlScriptController {
    */
   @PostMapping("")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.CREATE)
-  public DefaultCommonResult insert(
-      @RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+  public DefaultCommonResult insert(@RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
     dasApiCreateSqlScriptService.insert(dasApiCreateSqlScriptVO);
     return DefaultCommonResult.success();
   }
@@ -66,8 +64,7 @@ public class DasApiCreateSqlScriptController {
    */
   @PutMapping("")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult update(
-      @RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+  public DefaultCommonResult update(@RequestBody @Validated DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
     dasApiCreateSqlScriptService.update(dasApiCreateSqlScriptVO);
     return DefaultCommonResult.success();
   }

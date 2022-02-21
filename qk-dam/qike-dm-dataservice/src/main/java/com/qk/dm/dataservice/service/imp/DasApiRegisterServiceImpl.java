@@ -6,7 +6,10 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataservice.config.ApiSixConnectInfo;
+import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.DasConstant;
+import com.qk.dm.dataservice.constant.RegisterBackendParaHeaderInfoEnum;
+import com.qk.dm.dataservice.constant.RegisterConstantParaHeaderInfoEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiRegister;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
@@ -89,7 +92,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void insert(DasApiRegisterVO dasApiRegisterVO) {
         String apiId = UUID.randomUUID().toString().replaceAll("-", "");
         // 保存API基础信息
@@ -98,6 +101,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
             throw new BizException("当前新增的API所对应的基础信息为空!!!");
         }
         dasApiBasicInfoVO.setApiId(apiId);
+        dasApiBasicInfoVO.setApiType(ApiTypeEnum.REGISTER_API.getCode());
         dasApiBasicInfoService.insert(dasApiBasicInfoVO);
         saveApiRegister(dasApiRegisterVO, apiId);
     }
@@ -121,7 +125,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
 
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void update(DasApiRegisterVO dasApiRegisterVO) {
         // 更新API基础信息
         DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
@@ -150,16 +154,16 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
 
     @Override
     public Map<String, String> getRegisterBackendParaHeaderInfo() {
-        return DasConstant.getRegisterBackendParaHeaderInfo();
+        return RegisterBackendParaHeaderInfoEnum.getAllValue();
     }
 
     @Override
     public Map<String, String> getRegisterConstantParaHeaderInfo() {
-        return DasConstant.getRegisterConstantParaHeaderInfo();
+        return RegisterConstantParaHeaderInfoEnum.getAllValue();
     }
 
-    @Transactional
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList) {
         AtomicInteger saveCount = new AtomicInteger(0);
         AtomicInteger updateCount = new AtomicInteger(0);
@@ -207,7 +211,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     public List<DasApiRegisterVO> findAll() {
         List<DasApiRegisterVO> dasApiRegisterVOList = new ArrayList<>();
         List<DasApiRegister> dasApiRegisterList = dasApiRegisterRepository.findAll();
-        List<DasApiBasicInfoVO> dasApiBasicInfoVOList = dasApiBasicInfoService.findAllByApiType(DasConstant.REGISTER_API_CODE);
+        List<DasApiBasicInfoVO> dasApiBasicInfoVOList = dasApiBasicInfoService.findAllByApiType(ApiTypeEnum.REGISTER_API.getCode());
         Map<String, List<DasApiBasicInfoVO>> apiBasicMap =
                 dasApiBasicInfoVOList.stream().collect(Collectors.groupingBy(DasApiBasicInfoVO::getApiId));
 

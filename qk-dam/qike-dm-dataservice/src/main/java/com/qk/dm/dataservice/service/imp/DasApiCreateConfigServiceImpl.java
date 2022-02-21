@@ -8,7 +8,7 @@ import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
 import com.qk.dam.metedata.entity.*;
-import com.qk.dm.dataservice.constant.DasConstant;
+import com.qk.dm.dataservice.constant.*;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateConfig;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
@@ -208,17 +208,17 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
   // ========================参数配置表头信息=====================================
   @Override
   public Map<String, String> getDasApiCreateRequestParaHeaderInfo() {
-    return DasConstant.getDasApiCreateRequestParaHeaderInfo();
+    return CreateRequestParaHeaderInfoEnum.getAllValue();
   }
 
   @Override
   public Map<String, String> getDasApiCreateResponseParaHeaderInfo() {
-    return DasConstant.getDasApiCreateResponseParaHeaderInfo();
+    return CreateResponseParaHeaderInfoEnum.getAllValue();
   }
 
   @Override
   public Map<String, String> getDasApiCreateOrderParaHeaderInfo() {
-    return DasConstant.getDasApiCreateOrderParaHeaderInfo();
+    return CreateOrderParaHeaderInfoEnum.getAllValue();
   }
 
   @Override
@@ -228,7 +228,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
 
   @Override
   public Map<String, String> getDasApiCreateParasSortStyle() {
-    return DasConstant.getDasApiCreateParasSortStyle();
+    return CreateParasSortStyleEnum.getAllValue();
   }
 
 //  // ========================数据源服务API调用=====================================

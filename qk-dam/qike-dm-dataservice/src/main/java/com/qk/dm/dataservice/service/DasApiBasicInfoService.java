@@ -26,9 +26,9 @@ public interface DasApiBasicInfoService {
 
   void deleteBulk(String ids);
 
-  List<Map<String, String>> getApiType();
+  Map<String, String> getApiType();
 
-  List<Map<String, String>> getDMSourceType();
+  Map<String, String> getDMSourceType();
 
   Map<String, String> getRequestParasHeaderInfos();
 
@@ -40,4 +40,9 @@ public interface DasApiBasicInfoService {
   Optional<DasApiBasicInfo> checkExistApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
 
   List<DasApiBasicInfoVO> findAllByApiType(String apiType);
+
+  Map<String, String> getStatusInfo();
+
+  Map<String, String> getDataType();
+
 }

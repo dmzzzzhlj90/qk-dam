@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "67dc2d9e-2276-4f68-b380-c3465a2e07ad",
+    "_postman_id": "6f9c23bd-6f4c-488b-a4b7-150a760cde0f",
     "name": "dm-dataservice"
   },
   "item": [
@@ -14,7 +14,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"u3zgij\"\n  },\n  \"apiId\": \"147\",\n  \"apiName\": \"carlene.fahey\",\n  \"dirId\": \"147\",\n  \"beginDay\": \"95dm10\",\n  \"endDay\": \"4n4wap\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ruj6q5\"\n  },\n  \"apiId\": \"25\",\n  \"apiName\": \"sal.cummings\",\n  \"dirId\": \"25\",\n  \"beginDay\": \"19gfia\",\n  \"endDay\": \"2k81oe\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -47,7 +47,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 140,\n  \"apiId\": \"147\",\n  \"dirId\": \"147\",\n  \"dirName\": \"carlene.fahey\",\n  \"apiName\": \"carlene.fahey\",\n  \"apiPath\": \"71einl\",\n  \"protocolType\": \"b2fw2r\",\n  \"requestType\": \"p5kxu2\",\n  \"apiType\": \"w19o20\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"paraCHNName\": \"carlene.fahey\",\n      \"paraPosition\": \"gfinhs\",\n      \"paraType\": \"wvcnzv\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"o3jyjp\",\n      \"description\": \"wrw4g7\"\n    }\n  ],\n  \"description\": \"gflslm\",\n  \"createUserid\": \"147\",\n  \"updateUserid\": \"147\",\n  \"gmtCreate\": \"2022-02-18 15:23:55\",\n  \"gmtModified\": \"2022-02-18 15:23:55\"\n}",
+              "raw": "{\n  \"id\": 135,\n  \"apiId\": \"25\",\n  \"dirId\": \"25\",\n  \"dirName\": \"sal.cummings\",\n  \"apiName\": \"sal.cummings\",\n  \"apiPath\": \"42bxvj\",\n  \"protocolType\": \"tvx469\",\n  \"requestType\": \"ckgkto\",\n  \"apiType\": \"ubihwa\",\n  \"status\": \"vhpbl3\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"paraCHNName\": \"sal.cummings\",\n      \"paraPosition\": \"k294lh\",\n      \"paraType\": \"0mpf24\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"m7fp3a\",\n      \"description\": \"26305v\"\n    }\n  ],\n  \"description\": \"c46a6m\",\n  \"createUserid\": \"25\",\n  \"updateUserid\": \"25\",\n  \"gmtCreate\": \"2022-02-21 14:44:21\",\n  \"gmtModified\": \"2022-02-21 14:44:21\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -80,7 +80,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 980,\n  \"apiId\": \"147\",\n  \"dirId\": \"147\",\n  \"dirName\": \"carlene.fahey\",\n  \"apiName\": \"carlene.fahey\",\n  \"apiPath\": \"6cxyh4\",\n  \"protocolType\": \"57lu4p\",\n  \"requestType\": \"gqg3ua\",\n  \"apiType\": \"nc3q7d\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"paraCHNName\": \"carlene.fahey\",\n      \"paraPosition\": \"gblzmg\",\n      \"paraType\": \"fgc4cx\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"7n5pjh\",\n      \"description\": \"dckppt\"\n    }\n  ],\n  \"description\": \"6fqrbw\",\n  \"createUserid\": \"147\",\n  \"updateUserid\": \"147\",\n  \"gmtCreate\": \"2022-02-18 15:23:55\",\n  \"gmtModified\": \"2022-02-18 15:23:55\"\n}",
+              "raw": "{\n  \"id\": 422,\n  \"apiId\": \"25\",\n  \"dirId\": \"25\",\n  \"dirName\": \"sal.cummings\",\n  \"apiName\": \"sal.cummings\",\n  \"apiPath\": \"ur5fc1\",\n  \"protocolType\": \"oqw8s6\",\n  \"requestType\": \"i8nuod\",\n  \"apiType\": \"nj44mw\",\n  \"status\": \"iurlli\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"paraCHNName\": \"sal.cummings\",\n      \"paraPosition\": \"6ak4ar\",\n      \"paraType\": \"mhryxb\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"uv9pdw\",\n      \"description\": \"lwzm86\"\n    }\n  ],\n  \"description\": \"ke14r2\",\n  \"createUserid\": \"25\",\n  \"updateUserid\": \"25\",\n  \"gmtCreate\": \"2022-02-21 14:44:21\",\n  \"gmtModified\": \"2022-02-21 14:44:21\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -116,7 +116,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/basic/info/147",
+              "raw": "http://::server/api/basic/info/25",
               "protocol": "http",
               "path": [
                 "api",
@@ -131,7 +131,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "147",
+                  "value": "25",
                   "description": "No comments found."
                 }
               ]
@@ -150,7 +150,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/basic/info/bulk/tn9r7j",
+              "raw": "http://::server/api/basic/info/bulk/43hslb",
               "protocol": "http",
               "path": [
                 "api",
@@ -166,7 +166,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "cm98jw",
+                  "value": "rwfw5l",
                   "description": "No comments found."
                 }
               ]
@@ -295,6 +295,62 @@
             "header": []
           },
           "description": "API基础信息__参数位置下拉列表"
+        },
+        {
+          "name": "API基础信息__状态信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/status/info",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "status",
+                "info"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "API基础信息__状态信息",
+            "header": []
+          },
+          "description": "API基础信息__状态信息"
+        },
+        {
+          "name": "API基础信息__状态信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/data/type",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "data",
+                "type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "API基础信息__状态信息",
+            "header": []
+          },
+          "description": "API基础信息__状态信息"
         }
       ]
     },
@@ -310,7 +366,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/create/config/147",
+              "raw": "http://::server/api/create/config/25",
               "protocol": "http",
               "path": [
                 "api",
@@ -325,7 +381,7 @@
               "variable": [
                 {
                   "key": "apiId",
-                  "value": "147",
+                  "value": "25",
                   "description": "No comments found."
                 }
               ]
@@ -341,7 +397,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 442,\n    \"apiId\": \"147\",\n    \"dirId\": \"147\",\n    \"dirName\": \"carlene.fahey\",\n    \"apiName\": \"carlene.fahey\",\n    \"apiPath\": \"0c61gp\",\n    \"protocolType\": \"dnlegh\",\n    \"requestType\": \"fjg17v\",\n    \"apiType\": \"o6ae86\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"carlene.fahey\",\n        \"paraCHNName\": \"carlene.fahey\",\n        \"paraPosition\": \"eaowlj\",\n        \"paraType\": \"1u4dq6\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"88jyx0\",\n        \"description\": \"r89xpf\"\n      }\n    ],\n    \"description\": \"8q74jx\",\n    \"createUserid\": \"147\",\n    \"updateUserid\": \"147\",\n    \"gmtCreate\": \"2022-02-18 15:23:55\",\n    \"gmtModified\": \"2022-02-18 15:23:55\"\n  },\n  \"id\": 400,\n  \"apiId\": \"147\",\n  \"accessMethod\": \"5pylrm\",\n  \"dataSourceType\": \"dw9br0\",\n  \"dataSourceConnect\": \"trtqiy\",\n  \"dataBase\": \"fuonos\",\n  \"tableName\": \"carlene.fahey\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"mappingName\": \"carlene.fahey\",\n      \"conditionType\": \"v7729l\",\n      \"backendParaName\": \"carlene.fahey\",\n      \"backendParaPosition\": \"brkwtf\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"mappingName\": \"carlene.fahey\",\n      \"paraType\": \"viyj0v\",\n      \"exampleValue\": \"8t51uj\",\n      \"defaultValue\": \"p0fp8h\",\n      \"description\": \"54n52l\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 571,\n      \"paraName\": \"carlene.fahey\",\n      \"columnName\": \"carlene.fahey\",\n      \"optional\": true,\n      \"orderType\": \"8kcnvb\",\n      \"description\": \"jvjj69\"\n    }\n  ],\n  \"description\": \"kulnez\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 649,\n    \"apiId\": \"25\",\n    \"dirId\": \"25\",\n    \"dirName\": \"sal.cummings\",\n    \"apiName\": \"sal.cummings\",\n    \"apiPath\": \"rdtwb8\",\n    \"protocolType\": \"otkqul\",\n    \"requestType\": \"3btxwy\",\n    \"apiType\": \"ziasnt\",\n    \"status\": \"6oj1ne\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"sal.cummings\",\n        \"paraCHNName\": \"sal.cummings\",\n        \"paraPosition\": \"o3hbmx\",\n        \"paraType\": \"2h3dzx\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"f9vdl9\",\n        \"description\": \"b15xyd\"\n      }\n    ],\n    \"description\": \"hpstf7\",\n    \"createUserid\": \"25\",\n    \"updateUserid\": \"25\",\n    \"gmtCreate\": \"2022-02-21 14:44:21\",\n    \"gmtModified\": \"2022-02-21 14:44:21\"\n  },\n  \"id\": 713,\n  \"apiId\": \"25\",\n  \"accessMethod\": \"puf1wp\",\n  \"dataSourceType\": \"ztp560\",\n  \"dataSourceConnect\": \"bakkji\",\n  \"dataBase\": \"v1cav0\",\n  \"tableName\": \"sal.cummings\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"mappingName\": \"sal.cummings\",\n      \"conditionType\": \"kixpar\",\n      \"backendParaName\": \"sal.cummings\",\n      \"backendParaPosition\": \"2lavki\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"mappingName\": \"sal.cummings\",\n      \"paraType\": \"etff3w\",\n      \"exampleValue\": \"lvhco9\",\n      \"defaultValue\": \"wkcu26\",\n      \"description\": \"to2wkr\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 90,\n      \"paraName\": \"sal.cummings\",\n      \"columnName\": \"sal.cummings\",\n      \"optional\": true,\n      \"orderType\": \"vtmxfi\",\n      \"description\": \"8e7317\"\n    }\n  ],\n  \"description\": \"7mwtkj\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -374,7 +430,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 362,\n    \"apiId\": \"147\",\n    \"dirId\": \"147\",\n    \"dirName\": \"carlene.fahey\",\n    \"apiName\": \"carlene.fahey\",\n    \"apiPath\": \"9nn9a9\",\n    \"protocolType\": \"mji1e3\",\n    \"requestType\": \"mr0k1p\",\n    \"apiType\": \"xs6v3a\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"carlene.fahey\",\n        \"paraCHNName\": \"carlene.fahey\",\n        \"paraPosition\": \"e3fg2u\",\n        \"paraType\": \"k7q3fa\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"6m7s62\",\n        \"description\": \"o22o90\"\n      }\n    ],\n    \"description\": \"r5z91q\",\n    \"createUserid\": \"147\",\n    \"updateUserid\": \"147\",\n    \"gmtCreate\": \"2022-02-18 15:23:55\",\n    \"gmtModified\": \"2022-02-18 15:23:55\"\n  },\n  \"id\": 283,\n  \"apiId\": \"147\",\n  \"accessMethod\": \"2uee00\",\n  \"dataSourceType\": \"u6u3ml\",\n  \"dataSourceConnect\": \"hqt8rs\",\n  \"dataBase\": \"ppnnp4\",\n  \"tableName\": \"carlene.fahey\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"mappingName\": \"carlene.fahey\",\n      \"conditionType\": \"4p0d2n\",\n      \"backendParaName\": \"carlene.fahey\",\n      \"backendParaPosition\": \"felz72\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"mappingName\": \"carlene.fahey\",\n      \"paraType\": \"4t9aqq\",\n      \"exampleValue\": \"vn9uf9\",\n      \"defaultValue\": \"gpw1vo\",\n      \"description\": \"9fmu72\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 308,\n      \"paraName\": \"carlene.fahey\",\n      \"columnName\": \"carlene.fahey\",\n      \"optional\": true,\n      \"orderType\": \"mo458d\",\n      \"description\": \"its0df\"\n    }\n  ],\n  \"description\": \"u64ql8\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 505,\n    \"apiId\": \"25\",\n    \"dirId\": \"25\",\n    \"dirName\": \"sal.cummings\",\n    \"apiName\": \"sal.cummings\",\n    \"apiPath\": \"g8j2p8\",\n    \"protocolType\": \"1c2208\",\n    \"requestType\": \"v30eu8\",\n    \"apiType\": \"cklg2n\",\n    \"status\": \"mgr86i\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"sal.cummings\",\n        \"paraCHNName\": \"sal.cummings\",\n        \"paraPosition\": \"w24lm5\",\n        \"paraType\": \"xikm5s\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"rpnei1\",\n        \"description\": \"p5b6be\"\n      }\n    ],\n    \"description\": \"nhbrah\",\n    \"createUserid\": \"25\",\n    \"updateUserid\": \"25\",\n    \"gmtCreate\": \"2022-02-21 14:44:21\",\n    \"gmtModified\": \"2022-02-21 14:44:21\"\n  },\n  \"id\": 685,\n  \"apiId\": \"25\",\n  \"accessMethod\": \"pq9c17\",\n  \"dataSourceType\": \"o247ss\",\n  \"dataSourceConnect\": \"p902rx\",\n  \"dataBase\": \"tuti7x\",\n  \"tableName\": \"sal.cummings\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"mappingName\": \"sal.cummings\",\n      \"conditionType\": \"lptfcd\",\n      \"backendParaName\": \"sal.cummings\",\n      \"backendParaPosition\": \"qe7c4v\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"mappingName\": \"sal.cummings\",\n      \"paraType\": \"85bytn\",\n      \"exampleValue\": \"kljqc4\",\n      \"defaultValue\": \"0xo4pl\",\n      \"description\": \"23ay5g\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 897,\n      \"paraName\": \"sal.cummings\",\n      \"columnName\": \"sal.cummings\",\n      \"optional\": true,\n      \"orderType\": \"4vkkor\",\n      \"description\": \"x31fzi\"\n    }\n  ],\n  \"description\": \"q1txym\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -563,7 +619,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/create/sqlScript/147",
+              "raw": "http://::server/api/create/sqlScript/25",
               "protocol": "http",
               "path": [
                 "api",
@@ -578,7 +634,7 @@
               "variable": [
                 {
                   "key": "apiId",
-                  "value": "147",
+                  "value": "25",
                   "description": "No comments found."
                 }
               ]
@@ -594,7 +650,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 858,\n    \"apiId\": \"147\",\n    \"dirId\": \"147\",\n    \"dirName\": \"carlene.fahey\",\n    \"apiName\": \"carlene.fahey\",\n    \"apiPath\": \"cy2ksz\",\n    \"protocolType\": \"cg1hym\",\n    \"requestType\": \"o5crno\",\n    \"apiType\": \"iufyrs\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"carlene.fahey\",\n        \"paraCHNName\": \"carlene.fahey\",\n        \"paraPosition\": \"8ae20w\",\n        \"paraType\": \"7cwuhp\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"4tkxa0\",\n        \"description\": \"snvj5m\"\n      }\n    ],\n    \"description\": \"yhhi6c\",\n    \"createUserid\": \"147\",\n    \"updateUserid\": \"147\",\n    \"gmtCreate\": \"2022-02-18 15:23:55\",\n    \"gmtModified\": \"2022-02-18 15:23:55\"\n  },\n  \"id\": 70,\n  \"apiId\": \"147\",\n  \"accessMethod\": \"5j6rck\",\n  \"dataSourceType\": \"y5o8pa\",\n  \"dataSourceConnect\": \"qi49ng\",\n  \"dataBase\": \"v9edm8\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"mappingName\": \"carlene.fahey\",\n      \"conditionType\": \"svollk\",\n      \"backendParaName\": \"carlene.fahey\",\n      \"backendParaPosition\": \"s84khk\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"mappingName\": \"carlene.fahey\",\n      \"paraType\": \"dprx4e\",\n      \"exampleValue\": \"8pbrid\",\n      \"defaultValue\": \"h9eoqe\",\n      \"description\": \"hwjxk8\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 356,\n      \"paraName\": \"carlene.fahey\",\n      \"columnName\": \"carlene.fahey\",\n      \"optional\": true,\n      \"orderType\": \"7tuzzi\",\n      \"description\": \"6y66l4\"\n    }\n  ],\n  \"sqlPara\": \"9qla1n\",\n  \"description\": \"6tc5ew\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 406,\n    \"apiId\": \"25\",\n    \"dirId\": \"25\",\n    \"dirName\": \"sal.cummings\",\n    \"apiName\": \"sal.cummings\",\n    \"apiPath\": \"uuzgyx\",\n    \"protocolType\": \"tmxnrf\",\n    \"requestType\": \"9obeg8\",\n    \"apiType\": \"a8dm55\",\n    \"status\": \"4btaos\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"sal.cummings\",\n        \"paraCHNName\": \"sal.cummings\",\n        \"paraPosition\": \"18smkb\",\n        \"paraType\": \"52sww1\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"f5rms2\",\n        \"description\": \"za2h6q\"\n      }\n    ],\n    \"description\": \"67uvmu\",\n    \"createUserid\": \"25\",\n    \"updateUserid\": \"25\",\n    \"gmtCreate\": \"2022-02-21 14:44:21\",\n    \"gmtModified\": \"2022-02-21 14:44:21\"\n  },\n  \"id\": 425,\n  \"apiId\": \"25\",\n  \"accessMethod\": \"hfwhfv\",\n  \"dataSourceType\": \"3tt8bm\",\n  \"dataSourceConnect\": \"daokic\",\n  \"dataBase\": \"sn4jt6\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"mappingName\": \"sal.cummings\",\n      \"conditionType\": \"uysagx\",\n      \"backendParaName\": \"sal.cummings\",\n      \"backendParaPosition\": \"aqilp4\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"mappingName\": \"sal.cummings\",\n      \"paraType\": \"dejnft\",\n      \"exampleValue\": \"01za6r\",\n      \"defaultValue\": \"tp4zko\",\n      \"description\": \"71pplk\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 836,\n      \"paraName\": \"sal.cummings\",\n      \"columnName\": \"sal.cummings\",\n      \"optional\": true,\n      \"orderType\": \"6y9wcq\",\n      \"description\": \"2xwsdu\"\n    }\n  ],\n  \"sqlPara\": \"o56wx9\",\n  \"description\": \"rgujwd\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -627,7 +683,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 756,\n    \"apiId\": \"147\",\n    \"dirId\": \"147\",\n    \"dirName\": \"carlene.fahey\",\n    \"apiName\": \"carlene.fahey\",\n    \"apiPath\": \"64lz4j\",\n    \"protocolType\": \"fb0gwt\",\n    \"requestType\": \"q2ywmx\",\n    \"apiType\": \"1mxdq9\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"carlene.fahey\",\n        \"paraCHNName\": \"carlene.fahey\",\n        \"paraPosition\": \"lcwged\",\n        \"paraType\": \"znvvjd\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"mrrwn1\",\n        \"description\": \"gski8l\"\n      }\n    ],\n    \"description\": \"pf1i3o\",\n    \"createUserid\": \"147\",\n    \"updateUserid\": \"147\",\n    \"gmtCreate\": \"2022-02-18 15:23:55\",\n    \"gmtModified\": \"2022-02-18 15:23:55\"\n  },\n  \"id\": 449,\n  \"apiId\": \"147\",\n  \"accessMethod\": \"2h0xm3\",\n  \"dataSourceType\": \"54i38p\",\n  \"dataSourceConnect\": \"1lmeju\",\n  \"dataBase\": \"6929ah\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"mappingName\": \"carlene.fahey\",\n      \"conditionType\": \"1fu6ih\",\n      \"backendParaName\": \"carlene.fahey\",\n      \"backendParaPosition\": \"wks0uv\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"carlene.fahey\",\n      \"mappingName\": \"carlene.fahey\",\n      \"paraType\": \"dx3j17\",\n      \"exampleValue\": \"0beasb\",\n      \"defaultValue\": \"9mabr9\",\n      \"description\": \"zax29h\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 768,\n      \"paraName\": \"carlene.fahey\",\n      \"columnName\": \"carlene.fahey\",\n      \"optional\": true,\n      \"orderType\": \"rlm6mm\",\n      \"description\": \"ds03fe\"\n    }\n  ],\n  \"sqlPara\": \"v7gdmx\",\n  \"description\": \"rcr6iu\"\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 215,\n    \"apiId\": \"25\",\n    \"dirId\": \"25\",\n    \"dirName\": \"sal.cummings\",\n    \"apiName\": \"sal.cummings\",\n    \"apiPath\": \"kux2ih\",\n    \"protocolType\": \"otfmhw\",\n    \"requestType\": \"01i6iz\",\n    \"apiType\": \"6pla5p\",\n    \"status\": \"2dc2e6\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"sal.cummings\",\n        \"paraCHNName\": \"sal.cummings\",\n        \"paraPosition\": \"0f9xq5\",\n        \"paraType\": \"sg3iv5\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"tzel2q\",\n        \"description\": \"fxf65f\"\n      }\n    ],\n    \"description\": \"219w3o\",\n    \"createUserid\": \"25\",\n    \"updateUserid\": \"25\",\n    \"gmtCreate\": \"2022-02-21 14:44:21\",\n    \"gmtModified\": \"2022-02-21 14:44:21\"\n  },\n  \"id\": 932,\n  \"apiId\": \"25\",\n  \"accessMethod\": \"lttfst\",\n  \"dataSourceType\": \"d4f6qd\",\n  \"dataSourceConnect\": \"9k812w\",\n  \"dataBase\": \"pjax7j\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"mappingName\": \"sal.cummings\",\n      \"conditionType\": \"a2pven\",\n      \"backendParaName\": \"sal.cummings\",\n      \"backendParaPosition\": \"qsqyhd\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"sal.cummings\",\n      \"mappingName\": \"sal.cummings\",\n      \"paraType\": \"wbbkwn\",\n      \"exampleValue\": \"khae4b\",\n      \"defaultValue\": \"t8eld8\",\n      \"description\": \"7e8hd1\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 629,\n      \"paraName\": \"sal.cummings\",\n      \"columnName\": \"sal.cummings\",\n      \"optional\": true,\n      \"orderType\": \"x4o0im\",\n      \"description\": \"go4zb9\"\n    }\n  ],\n  \"sqlPara\": \"h3a9xb\",\n  \"description\": \"merzxf\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -691,7 +747,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 257,\n  \"dirId\": \"147\",\n  \"title\": \"3t9ps0\",\n  \"value\": \"06hvhk\",\n  \"parentId\": \"147\",\n  \"description\": \"u5882y\",\n  \"gmtCreate\": \"2022-02-18 15:23:55\",\n  \"gmtModified\": \"2022-02-18 15:23:55\",\n  \"delFlag\": 5\n}",
+              "raw": "{\n  \"id\": 54,\n  \"dirId\": \"25\",\n  \"title\": \"wlarh1\",\n  \"value\": \"c6lex4\",\n  \"parentId\": \"25\",\n  \"description\": \"gwfj6m\",\n  \"gmtCreate\": \"2022-02-21 14:44:21\",\n  \"gmtModified\": \"2022-02-21 14:44:21\",\n  \"delFlag\": 9\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -723,7 +779,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 371,\n  \"dirId\": \"147\",\n  \"title\": \"ovl89u\",\n  \"value\": \"rko1tc\",\n  \"parentId\": \"147\",\n  \"description\": \"flag1s\",\n  \"gmtCreate\": \"2022-02-18 15:23:55\",\n  \"gmtModified\": \"2022-02-18 15:23:55\",\n  \"delFlag\": 5\n}",
+              "raw": "{\n  \"id\": 764,\n  \"dirId\": \"25\",\n  \"title\": \"fxzpm6\",\n  \"value\": \"pkhfi0\",\n  \"parentId\": \"25\",\n  \"description\": \"wcc1ng\",\n  \"gmtCreate\": \"2022-02-21 14:44:21\",\n  \"gmtModified\": \"2022-02-21 14:44:21\",\n  \"delFlag\": 9\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -758,7 +814,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/dir/147",
+              "raw": "http://::server/api/dir/25",
               "protocol": "http",
               "path": [
                 "api",
@@ -772,7 +828,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "147",
+                  "value": "25",
                   "description": "No comments found."
                 }
               ]
@@ -791,7 +847,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/dir/root/0n0w2a",
+              "raw": "http://::server/api/dir/root/ic5w4p",
               "protocol": "http",
               "path": [
                 "api",
@@ -806,7 +862,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "z7s3so",
+                  "value": "zdlbkv",
                   "description": "No comments found."
                 }
               ]
@@ -830,7 +886,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/register/query/by/147",
+              "raw": "http://::server/api/register/query/by/25",
               "protocol": "http",
               "path": [
                 "api",
@@ -846,7 +902,7 @@
               "variable": [
                 {
                   "key": "apiId",
-                  "value": "147",
+                  "value": "25",
                   "description": "No comments found."
                 }
               ]
@@ -862,7 +918,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 691,\n    \"apiId\": \"147\",\n    \"dirId\": \"147\",\n    \"dirName\": \"carlene.fahey\",\n    \"apiName\": \"carlene.fahey\",\n    \"apiPath\": \"6o8g22\",\n    \"protocolType\": \"2u5i5u\",\n    \"requestType\": \"gg5eym\",\n    \"apiType\": \"lqhyzu\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"carlene.fahey\",\n        \"paraCHNName\": \"carlene.fahey\",\n        \"paraPosition\": \"zm568u\",\n        \"paraType\": \"nkt0lu\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"xlirwk\",\n        \"description\": \"3x02au\"\n      }\n    ],\n    \"description\": \"gtm0tx\",\n    \"createUserid\": \"147\",\n    \"updateUserid\": \"147\",\n    \"gmtCreate\": \"2022-02-18 15:23:55\",\n    \"gmtModified\": \"2022-02-18 15:23:55\"\n  },\n  \"dasApiRegisterDefinitionVO\": {\n    \"id\": 529,\n    \"apiId\": \"147\",\n    \"apiRouteId\": \"147\",\n    \"protocolType\": \"px17ri\",\n    \"requestType\": \"mctvnq\",\n    \"backendHost\": \"se1may\",\n    \"backendPath\": \"aqdeik\",\n    \"backendTimeout\": \"gztc3y\",\n    \"dasApiRegisterBackendParaVO\": [\n      {\n        \"paraName\": \"carlene.fahey\",\n        \"paraPosition\": \"klo5js\",\n        \"paraType\": \"n7fwik\",\n        \"backendParaName\": \"carlene.fahey\",\n        \"backendParaPosition\": \"yginoz\",\n        \"description\": \"r50qu7\"\n      }\n    ],\n    \"dasApiRegisterConstantParaVO\": [\n      {\n        \"constantParaName\": \"carlene.fahey\",\n        \"constantParaPosition\": \"1r1rzt\",\n        \"constantParaType\": \"wkvhs2\",\n        \"constantParaValue\": \"i8dm58\",\n        \"description\": \"l0f97w\"\n      }\n    ],\n    \"description\": \"o4huru\"\n  }\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 603,\n    \"apiId\": \"25\",\n    \"dirId\": \"25\",\n    \"dirName\": \"sal.cummings\",\n    \"apiName\": \"sal.cummings\",\n    \"apiPath\": \"k5nuw2\",\n    \"protocolType\": \"lbhcot\",\n    \"requestType\": \"m1vqid\",\n    \"apiType\": \"12uzll\",\n    \"status\": \"0sw29h\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"sal.cummings\",\n        \"paraCHNName\": \"sal.cummings\",\n        \"paraPosition\": \"chc5v0\",\n        \"paraType\": \"csup8h\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"4w3f7l\",\n        \"description\": \"jn5ov5\"\n      }\n    ],\n    \"description\": \"0hk0sm\",\n    \"createUserid\": \"25\",\n    \"updateUserid\": \"25\",\n    \"gmtCreate\": \"2022-02-21 14:44:21\",\n    \"gmtModified\": \"2022-02-21 14:44:21\"\n  },\n  \"dasApiRegisterDefinitionVO\": {\n    \"id\": 738,\n    \"apiId\": \"25\",\n    \"apiRouteId\": \"25\",\n    \"protocolType\": \"ufgikc\",\n    \"requestType\": \"3mwpby\",\n    \"backendHost\": \"h6ossl\",\n    \"backendPath\": \"8f5bhc\",\n    \"backendTimeout\": \"g3akqs\",\n    \"dasApiRegisterBackendParaVO\": [\n      {\n        \"paraName\": \"sal.cummings\",\n        \"paraPosition\": \"38v2l1\",\n        \"paraType\": \"ipfzyo\",\n        \"backendParaName\": \"sal.cummings\",\n        \"backendParaPosition\": \"wudtqn\",\n        \"description\": \"melqwl\"\n      }\n    ],\n    \"dasApiRegisterConstantParaVO\": [\n      {\n        \"constantParaName\": \"sal.cummings\",\n        \"constantParaPosition\": \"1tpxgh\",\n        \"constantParaType\": \"l0wc1u\",\n        \"constantParaValue\": \"uqrzgl\",\n        \"description\": \"h6phpa\"\n      }\n    ],\n    \"description\": \"rak9u9\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -894,7 +950,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 49,\n    \"apiId\": \"147\",\n    \"dirId\": \"147\",\n    \"dirName\": \"carlene.fahey\",\n    \"apiName\": \"carlene.fahey\",\n    \"apiPath\": \"qj45nj\",\n    \"protocolType\": \"phpq2c\",\n    \"requestType\": \"wox6s2\",\n    \"apiType\": \"9neybm\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"carlene.fahey\",\n        \"paraCHNName\": \"carlene.fahey\",\n        \"paraPosition\": \"9g5o17\",\n        \"paraType\": \"6dzof0\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"er0cft\",\n        \"description\": \"b7bf9m\"\n      }\n    ],\n    \"description\": \"b9asdu\",\n    \"createUserid\": \"147\",\n    \"updateUserid\": \"147\",\n    \"gmtCreate\": \"2022-02-18 15:23:55\",\n    \"gmtModified\": \"2022-02-18 15:23:55\"\n  },\n  \"dasApiRegisterDefinitionVO\": {\n    \"id\": 114,\n    \"apiId\": \"147\",\n    \"apiRouteId\": \"147\",\n    \"protocolType\": \"ian1c0\",\n    \"requestType\": \"vypx3w\",\n    \"backendHost\": \"8jb0ij\",\n    \"backendPath\": \"i3hs61\",\n    \"backendTimeout\": \"g50kss\",\n    \"dasApiRegisterBackendParaVO\": [\n      {\n        \"paraName\": \"carlene.fahey\",\n        \"paraPosition\": \"jd4ez6\",\n        \"paraType\": \"cg2vd4\",\n        \"backendParaName\": \"carlene.fahey\",\n        \"backendParaPosition\": \"bz90rk\",\n        \"description\": \"todblk\"\n      }\n    ],\n    \"dasApiRegisterConstantParaVO\": [\n      {\n        \"constantParaName\": \"carlene.fahey\",\n        \"constantParaPosition\": \"hdblqx\",\n        \"constantParaType\": \"49ajsm\",\n        \"constantParaValue\": \"7pdgjq\",\n        \"description\": \"3zkokz\"\n      }\n    ],\n    \"description\": \"atnc2l\"\n  }\n}",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 688,\n    \"apiId\": \"25\",\n    \"dirId\": \"25\",\n    \"dirName\": \"sal.cummings\",\n    \"apiName\": \"sal.cummings\",\n    \"apiPath\": \"d3srnb\",\n    \"protocolType\": \"xw7v30\",\n    \"requestType\": \"bm60li\",\n    \"apiType\": \"36ef4i\",\n    \"status\": \"40nyrz\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"sal.cummings\",\n        \"paraCHNName\": \"sal.cummings\",\n        \"paraPosition\": \"4cprte\",\n        \"paraType\": \"64h140\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"hrntr8\",\n        \"description\": \"xwqg51\"\n      }\n    ],\n    \"description\": \"coq1jm\",\n    \"createUserid\": \"25\",\n    \"updateUserid\": \"25\",\n    \"gmtCreate\": \"2022-02-21 14:44:21\",\n    \"gmtModified\": \"2022-02-21 14:44:21\"\n  },\n  \"dasApiRegisterDefinitionVO\": {\n    \"id\": 474,\n    \"apiId\": \"25\",\n    \"apiRouteId\": \"25\",\n    \"protocolType\": \"xhy6sn\",\n    \"requestType\": \"jf1dcm\",\n    \"backendHost\": \"6hxil3\",\n    \"backendPath\": \"ikxwu9\",\n    \"backendTimeout\": \"di0fp3\",\n    \"dasApiRegisterBackendParaVO\": [\n      {\n        \"paraName\": \"sal.cummings\",\n        \"paraPosition\": \"baen94\",\n        \"paraType\": \"xpzq8v\",\n        \"backendParaName\": \"sal.cummings\",\n        \"backendParaPosition\": \"3jh174\",\n        \"description\": \"48aekv\"\n      }\n    ],\n    \"dasApiRegisterConstantParaVO\": [\n      {\n        \"constantParaName\": \"sal.cummings\",\n        \"constantParaPosition\": \"hz1rwk\",\n        \"constantParaType\": \"ttzhol\",\n        \"constantParaValue\": \"r77zi6\",\n        \"description\": \"u5smy7\"\n      }\n    ],\n    \"description\": \"dkvn0f\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1015,7 +1071,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 119,\n  \"apiRouteId\": \"147\",\n  \"apiRoutePath\": \"25ccpw\",\n  \"description\": \"nf9den\",\n  \"gmtModified\": \"2022-02-18 15:23:55\"\n}",
+              "raw": "{\n  \"id\": 707,\n  \"apiRouteId\": \"25\",\n  \"apiRoutePath\": \"shl2t9\",\n  \"description\": \"w9vn9u\",\n  \"gmtModified\": \"2022-02-21 14:44:21\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1047,7 +1103,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 648,\n  \"apiRouteId\": \"147\",\n  \"apiRoutePath\": \"7he2i8\",\n  \"description\": \"u7jpx9\",\n  \"gmtModified\": \"2022-02-18 15:23:55\"\n}",
+              "raw": "{\n  \"id\": 473,\n  \"apiRouteId\": \"25\",\n  \"apiRoutePath\": \"wleta3\",\n  \"description\": \"cxi05p\",\n  \"gmtModified\": \"2022-02-21 14:44:21\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1084,12 +1140,12 @@
                   "key": "ids[]",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "2rqj7f"
+                  "value": "vinc3a"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/api/route/bulk?ids\u003d2rqj7f\u0026ids\u003d2rqj7f",
+              "raw": "http://::server/api/route/bulk?ids\u003dvinc3a\u0026ids\u003dvinc3a",
               "protocol": "http",
               "path": [
                 "api",
@@ -1102,7 +1158,7 @@
               "query": [
                 {
                   "key": "ids",
-                  "value": "kl0lff",
+                  "value": "oq41po",
                   "description": "No comments found.,[array of string]"
                 }
               ],
@@ -1116,6 +1172,70 @@
       ]
     },
     {
+      "name": "根据数据服务API生成OpenApiJson",
+      "item": [
+        {
+          "name": "根据数据服务注册API,生成OpenApiJson",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/generate/open/api/register",
+              "protocol": "http",
+              "path": [
+                "generate",
+                "open",
+                "api",
+                "register"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "根据数据服务注册API,生成OpenApiJson",
+            "header": []
+          },
+          "description": "根据数据服务注册API,生成OpenApiJson"
+        }
+      ]
+    },
+    {
+      "name": "OPEN-API同步至数据服务操作",
+      "item": [
+        {
+          "name": "同步Swagger至数据服务注册API",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/sync/open/api/register",
+              "protocol": "http",
+              "path": [
+                "sync",
+                "open",
+                "api",
+                "register"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "同步Swagger至数据服务注册API",
+            "header": []
+          },
+          "description": "同步Swagger至数据服务注册API"
+        }
+      ]
+    },
+    {
       "name": "Interface name is not set.",
       "item": [
         {
@@ -1124,7 +1244,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"147\",\n  \"name\": \"carlene.fahey\",\n  \"parameter\": \"5yfolp\",\n  \"dataPushDetailList\": [\n    {\n      \"entName\": \"carlene.fahey\",\n      \"uniscId\": \"147\",\n      \"regNo\": \"7uozw2\"\n    }\n  ]\n}",
+              "raw": "{\n  \"id\": \"25\",\n  \"name\": \"sal.cummings\",\n  \"parameter\": \"hnfa5j\",\n  \"dataPushDetailList\": [\n    {\n      \"entName\": \"sal.cummings\",\n      \"uniscId\": \"25\",\n      \"regNo\": \"3k546x\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1159,7 +1279,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 363,\n  \"apiId\": \"147\",\n  \"strategyName\": \"carlene.fahey\",\n  \"timeValue\": \"ojir1e\",\n  \"timeUnit\": \"7823og\",\n  \"apiTimes\": \"kj56k6\",\n  \"userTimes\": \"9m41re\",\n  \"appTimes\": \"c0c2fu\",\n  \"ipTimes\": \"w7ltvt\",\n  \"description\": \"rmsp5y\",\n  \"gmtCreate\": \"2022-02-18 15:23:55\",\n  \"gmtModified\": \"2022-02-18 15:23:55\",\n  \"delFlag\": 5\n}",
+              "raw": "{\n  \"id\": 768,\n  \"apiId\": \"25\",\n  \"strategyName\": \"sal.cummings\",\n  \"timeValue\": \"6r4jmt\",\n  \"timeUnit\": \"is5mpf\",\n  \"apiTimes\": \"2domys\",\n  \"userTimes\": \"r5mhy1\",\n  \"appTimes\": \"wntcd4\",\n  \"ipTimes\": \"8c1cxv\",\n  \"description\": \"j9znvy\",\n  \"gmtCreate\": \"2022-02-21 14:44:21\",\n  \"gmtModified\": \"2022-02-21 14:44:21\",\n  \"delFlag\": 9\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1191,7 +1311,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"5p3492\"\n  },\n  \"beginDay\": \"wnmx44\",\n  \"endDay\": \"f8odx3\",\n  \"strategyName\": \"carlene.fahey\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"bkoigr\"\n  },\n  \"beginDay\": \"vqphkv\",\n  \"endDay\": \"v0qzwl\",\n  \"strategyName\": \"sal.cummings\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1223,7 +1343,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 586,\n  \"apiId\": \"147\",\n  \"strategyName\": \"carlene.fahey\",\n  \"timeValue\": \"tekfx5\",\n  \"timeUnit\": \"tw5sst\",\n  \"apiTimes\": \"1bpg16\",\n  \"userTimes\": \"i7j2lj\",\n  \"appTimes\": \"iwp069\",\n  \"ipTimes\": \"wml4eo\",\n  \"description\": \"v7si46\",\n  \"gmtCreate\": \"2022-02-18 15:23:55\",\n  \"gmtModified\": \"2022-02-18 15:23:55\",\n  \"delFlag\": 5\n}",
+              "raw": "{\n  \"id\": 432,\n  \"apiId\": \"25\",\n  \"strategyName\": \"sal.cummings\",\n  \"timeValue\": \"20afk7\",\n  \"timeUnit\": \"cr68pj\",\n  \"apiTimes\": \"e1o4sh\",\n  \"userTimes\": \"9aam98\",\n  \"appTimes\": \"zk0rs4\",\n  \"ipTimes\": \"yeya9u\",\n  \"description\": \"tl6zsg\",\n  \"gmtCreate\": \"2022-02-21 14:44:21\",\n  \"gmtModified\": \"2022-02-21 14:44:21\",\n  \"delFlag\": 9\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1258,7 +1378,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/flowstrategy/delete/147",
+              "raw": "http://::server/api/flowstrategy/delete/25",
               "protocol": "http",
               "path": [
                 "api",
@@ -1273,7 +1393,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "147",
+                  "value": "25",
                   "description": "No comments found."
                 }
               ]
@@ -1292,7 +1412,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/flowstrategy/bulk/delete/yi89fz",
+              "raw": "http://::server/api/flowstrategy/bulk/delete/ymkqui",
               "protocol": "http",
               "path": [
                 "api",
@@ -1308,7 +1428,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "sezo33",
+                  "value": "yzptaf",
                   "description": "No comments found."
                 }
               ]
@@ -1329,7 +1449,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 513,\n  \"appId\": \"147\",\n  \"appName\": \"carlene.fahey\",\n  \"appType\": \"gq25qd\",\n  \"apiId\": \"147\",\n  \"description\": \"huyhpm\",\n  \"gmtCreate\": \"2022-02-18 15:23:56\",\n  \"gmtModified\": \"2022-02-18 15:23:56\",\n  \"delFlag\": 5\n}",
+              "raw": "{\n  \"id\": 610,\n  \"appId\": \"25\",\n  \"appName\": \"sal.cummings\",\n  \"appType\": \"0y095q\",\n  \"apiId\": \"25\",\n  \"description\": \"przrzl\",\n  \"gmtCreate\": \"2022-02-21 14:44:21\",\n  \"gmtModified\": \"2022-02-21 14:44:21\",\n  \"delFlag\": 9\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1361,7 +1481,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"wkc1l9\"\n  },\n  \"appName\": \"carlene.fahey\",\n  \"appType\": \"i4r52y\",\n  \"beginDay\": \"72n0lc\",\n  \"endDay\": \"yjdl0a\",\n  \"id\": 282,\n  \"apiIds\": \"2jq868\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"tz82xx\"\n  },\n  \"appName\": \"sal.cummings\",\n  \"appType\": \"ucnv8j\",\n  \"beginDay\": \"6a8kle\",\n  \"endDay\": \"i16kuh\",\n  \"id\": 562,\n  \"apiIds\": \"hwh58f\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1393,7 +1513,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 704,\n  \"appId\": \"147\",\n  \"appName\": \"carlene.fahey\",\n  \"appType\": \"smt40v\",\n  \"apiId\": \"147\",\n  \"description\": \"smiptc\",\n  \"gmtCreate\": \"2022-02-18 15:23:56\",\n  \"gmtModified\": \"2022-02-18 15:23:56\",\n  \"delFlag\": 5\n}",
+              "raw": "{\n  \"id\": 206,\n  \"appId\": \"25\",\n  \"appName\": \"sal.cummings\",\n  \"appType\": \"x4wu6h\",\n  \"apiId\": \"25\",\n  \"description\": \"g0m4as\",\n  \"gmtCreate\": \"2022-02-21 14:44:21\",\n  \"gmtModified\": \"2022-02-21 14:44:21\",\n  \"delFlag\": 9\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1428,7 +1548,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/management/delete/147",
+              "raw": "http://::server/api/management/delete/25",
               "protocol": "http",
               "path": [
                 "api",
@@ -1443,7 +1563,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "147",
+                  "value": "25",
                   "description": "No comments found."
                 }
               ]
@@ -1462,7 +1582,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/api/management/bulk/delete/xky12p",
+              "raw": "http://::server/api/management/bulk/delete/pnyeun",
               "protocol": "http",
               "path": [
                 "api",
@@ -1478,7 +1598,7 @@
               "variable": [
                 {
                   "key": "ids",
-                  "value": "s9o8e0",
+                  "value": "t4eej7",
                   "description": "No comments found."
                 }
               ]
@@ -1494,7 +1614,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"jbgxoq\"\n  },\n  \"appName\": \"carlene.fahey\",\n  \"appType\": \"v2g61u\",\n  \"beginDay\": \"9tqamv\",\n  \"endDay\": \"xe4t2e\",\n  \"id\": 56,\n  \"apiIds\": \"duwfbd\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ewhmny\"\n  },\n  \"appName\": \"sal.cummings\",\n  \"appType\": \"zy3y53\",\n  \"beginDay\": \"xwos2c\",\n  \"endDay\": \"q06w5h\",\n  \"id\": 214,\n  \"apiIds\": \"p5fe0j\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

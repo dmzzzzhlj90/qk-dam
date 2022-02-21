@@ -56,8 +56,7 @@ public class DasApiCreateConfigController {
    */
   @PostMapping("")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.CREATE)
-  public DefaultCommonResult insert(
-      @RequestBody @Validated DasApiCreateConfigVO dasApiCreateConfigVO) {
+  public DefaultCommonResult insert(@RequestBody @Validated DasApiCreateConfigVO dasApiCreateConfigVO) {
     dasApiCreateConfigService.insert(dasApiCreateConfigVO);
     return DefaultCommonResult.success();
   }
@@ -70,8 +69,7 @@ public class DasApiCreateConfigController {
    */
   @PutMapping("")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.UPDATE)
-  public DefaultCommonResult update(
-      @RequestBody @Validated DasApiCreateConfigVO dasApiCreateConfigVO) {
+  public DefaultCommonResult update(@RequestBody @Validated DasApiCreateConfigVO dasApiCreateConfigVO) {
     dasApiCreateConfigService.update(dasApiCreateConfigVO);
     return DefaultCommonResult.success();
   }
@@ -84,8 +82,7 @@ public class DasApiCreateConfigController {
   @GetMapping("/request/paras/header/infos")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
   public DefaultCommonResult<Map<String, String>> getDasApiCreateRequestParaHeaderInfo() {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateRequestParaHeaderInfo());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateRequestParaHeaderInfo());
   }
 
   /**

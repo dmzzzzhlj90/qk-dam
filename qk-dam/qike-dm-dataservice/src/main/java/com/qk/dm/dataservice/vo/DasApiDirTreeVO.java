@@ -7,9 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * API目录树结构展示VO
+ *
  * @author wjq
- * @date 20210603
- * @since 1.0.0 数据标准__目录VO
+ * @date 20210907
+ * @since 1.0.0
  */
 @Data
 @NoArgsConstructor
