@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -129,7 +130,7 @@ public class DasApiBasicInfoController {
      */
     @GetMapping(value = "/query/request/paras/header/infos")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
-    public DefaultCommonResult<Map<String, String>> getRequestParasHeaderInfos() {
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getRequestParasHeaderInfos() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getRequestParasHeaderInfos());
     }
 

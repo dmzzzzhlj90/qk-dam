@@ -5,6 +5,8 @@ import com.qk.dam.metedata.entity.MtdApi;
 import com.qk.dam.metedata.entity.MtdApiParams;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -26,11 +28,11 @@ public interface DasApiCreateConfigService {
   void update(DasApiCreateConfigVO dasApiCreateConfigVO);
 
   // ========================参数配置表头信息=====================================
-  Map<String, String> getDasApiCreateRequestParaHeaderInfo();
+  LinkedList<Map<String, Object>> getDasApiCreateRequestParaHeaderInfo();
 
-  Map<String, String> getDasApiCreateResponseParaHeaderInfo();
+  LinkedList<Map<String, Object>> getDasApiCreateResponseParaHeaderInfo();
 
-  Map<String, String> getDasApiCreateOrderParaHeaderInfo();
+  LinkedList<Map<String, Object>> getDasApiCreateOrderParaHeaderInfo();
 
   List<String> getDasApiCreateParasCompareSymbol();
 

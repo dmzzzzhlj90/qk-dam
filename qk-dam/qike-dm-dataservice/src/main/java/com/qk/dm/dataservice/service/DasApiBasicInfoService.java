@@ -4,6 +4,8 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +32,7 @@ public interface DasApiBasicInfoService {
 
   Map<String, String> getDMSourceType();
 
-  Map<String, String> getRequestParasHeaderInfos();
+  LinkedList<Map<String, Object>> getRequestParasHeaderInfos();
 
   Map<String, String> getRequestParamsPositions();
 

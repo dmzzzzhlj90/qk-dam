@@ -2,8 +2,8 @@ package com.qk.dm.dataservice.constant;
 
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -18,35 +18,37 @@ public enum CreateRequestParaHeaderInfoEnum {
     /**
      * 绑定参数
      */
-    PARA_NAME("paraName", "绑定参数"),
+    PARA_NAME("paraName", "绑定参数",true),
 
     /**
      * 绑定字段
      */
-    MAPPING_NAME("mappingName", "绑定字段"),
+    MAPPING_NAME("mappingName", "绑定字段",true),
 
     /**
      * 操作符
      */
-    CONDITION_TYPE("conditionType", "操作符"),
+    CONDITION_TYPE("conditionType", "操作符",true),
 
     /**
      * 后端参数
      */
-    BACKEND_PARA_NAME("backendParaName", "后端参数"),
+    BACKEND_PARA_NAME("backendParaName", "后端参数",true),
 
     /**
      * 后端参数位置
      */
-    BACKEND_PARA_POSITION("backendParaPosition", "后端参数位置");
+    BACKEND_PARA_POSITION("backendParaPosition", "后端参数位置",true);
 
 
-    private String code;
+    private String key;
     private String value;
+    private boolean required;
 
-    CreateRequestParaHeaderInfoEnum(String code, String value) {
-        this.code = code;
+    CreateRequestParaHeaderInfoEnum(String key, String value, boolean required) {
+        this.key = key;
         this.value = value;
+        this.required = required;
     }
 
     public static CreateRequestParaHeaderInfoEnum getVal(String value) {
@@ -61,19 +63,28 @@ public enum CreateRequestParaHeaderInfoEnum {
         return null;
     }
 
-    public static Map<String, String> getAllValue() {
-        Map<String, String> val = new LinkedHashMap<>();
+    public static LinkedList<Map<String, Object>> getAllValue() {
+        LinkedList<Map<String, Object>> valList = new LinkedList<>();
+
         for (CreateRequestParaHeaderInfoEnum enums : CreateRequestParaHeaderInfoEnum.values()) {
-            val.put(enums.code, enums.value);
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put(DasConstant.PARAM_KEY, enums.key);
+            map.put(DasConstant.PARAM_VALUE, enums.value);
+            map.put(DasConstant.PARAM_REQUIRED, enums.required);
+            valList.add(map);
         }
-        return val;
+        return valList;
     }
 
-    public String getCode() {
-        return code;
+    public String getKey() {
+        return key;
     }
 
     public String getValue() {
         return value;
+    }
+
+    public boolean isRequired() {
+        return required;
     }
 }

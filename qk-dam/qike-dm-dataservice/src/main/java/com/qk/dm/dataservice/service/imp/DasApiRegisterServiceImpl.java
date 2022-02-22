@@ -153,12 +153,12 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     }
 
     @Override
-    public Map<String, String> getRegisterBackendParaHeaderInfo() {
+    public LinkedList<Map<String, Object>> getRegisterBackendParaHeaderInfo() {
         return RegisterBackendParaHeaderInfoEnum.getAllValue();
     }
 
     @Override
-    public Map<String, String> getRegisterConstantParaHeaderInfo() {
+    public LinkedList<Map<String, Object>> getRegisterConstantParaHeaderInfo() {
         return RegisterConstantParaHeaderInfoEnum.getAllValue();
     }
 
