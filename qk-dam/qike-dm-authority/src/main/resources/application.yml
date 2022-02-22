@@ -16,3 +16,12 @@ spring:
 #      resourceserver:
 #        jwt:
 #          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
+
+keycloak:
+  url: http://172.20.0.9:8080/auth/
+  master:
+    realm:
+      name: master
+      username: admin
+      password: zhudao123
+      client_id: admin-cli

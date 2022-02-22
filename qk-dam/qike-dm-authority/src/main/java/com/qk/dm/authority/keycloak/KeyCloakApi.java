@@ -2,10 +2,11 @@ package com.qk.dm.authority.keycloak;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.vo.UserVO;
-import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.core.Response;
@@ -21,12 +22,17 @@ import java.util.Map;
  */
 @Component
 public class KeyCloakApi {
-    private final RealmResource realmResource;
+    private static String TARGET_REALM = "demoRealm";
 
-    public KeyCloakApi(RealmResource realmResource) {
-        this.realmResource = realmResource;
+    @Autowired
+    private Keycloak keycloak;
+
+
+    private static Keycloak getKeycloak() {
+        Keycloak keycloak = Keycloak.getInstance("http://172.20.0.9:8080/auth/", "master", "admin", "zhudao123", "admin-cli");
+        System.out.println(keycloak.tokenManager().getAccessTokenString());
+        return keycloak;
     }
-
 
 
     /**
@@ -35,11 +41,13 @@ public class KeyCloakApi {
      * @return
      */
     public List<UserVO> getUserList() {
-        UsersResource userResource = realmResource.users();
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
         List<UserRepresentation> userList = userResource.list();
         List<UserVO> userVOS = new ArrayList<>();
         if(userList != null) {
             for (UserRepresentation user : userList) {
+
+
                 UserVO userVO = UserVO.builder()
                         .id(user.getId())
                         .username(user.getUsername())
@@ -70,7 +78,7 @@ public class KeyCloakApi {
      */
     public Map<String, Object> getUserAttribute(String userId) {
         Map<String, Object> attributeMap = new HashMap<>();
-        UsersResource userResource = realmResource.users();
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
         List<UserRepresentation> userList = userResource.list();
         for (UserRepresentation user : userList) {
             Map<String, List<String>> userAttributesList = user.getAttributes();
@@ -120,7 +128,7 @@ public class KeyCloakApi {
         user.setCredentials(credentials);
 
         //创建
-        Response response = realmResource.users().create(user);
+        Response response = keycloak.realm(TARGET_REALM).users().create(user);
 
         //判断创建用户状态；如果时创建成功
         Response.StatusType createUserStatus = response.getStatusInfo();

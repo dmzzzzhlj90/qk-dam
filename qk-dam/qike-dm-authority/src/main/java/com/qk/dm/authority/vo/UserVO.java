@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVO {
-    protected String id;
-    protected Long createdTimestamp;
-    protected String username;
-    protected Boolean enabled;
-    protected String firstName;
-    protected String lastName;
-    protected String email;
-    protected String password;
+    private String id;
+    private Long createdTimestamp;
+    private String username;
+    private Boolean enabled;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
 }
