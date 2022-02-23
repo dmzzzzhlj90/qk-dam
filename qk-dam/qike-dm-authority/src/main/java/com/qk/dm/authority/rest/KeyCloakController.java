@@ -34,6 +34,6 @@ public class KeyCloakController {
 
     @GetMapping("/group")
     public void group(){
-        keyCloakApi.groups();
+        keyCloakApi.groupList();
     }
 }

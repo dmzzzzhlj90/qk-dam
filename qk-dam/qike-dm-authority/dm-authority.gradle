@@ -59,7 +59,7 @@ dependencies {
 //    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
 //    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 //    implementation "com.github.ben-manes.caffeine:caffeine"
-//    implementation 'org.mapstruct:mapstruct'
+    implementation 'org.mapstruct:mapstruct'
 //    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 //    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus'
 

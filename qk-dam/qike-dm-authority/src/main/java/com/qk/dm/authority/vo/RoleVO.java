@@ -10,26 +10,17 @@ import java.util.Map;
 
 /**
  * @author shenpj
- * @date 2022/2/22 11:54
+ * @date 2022/2/22 16:54
  * @since 1.0.0
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfoVO {
+public class RoleVO {
     private String id;
-    private Long createdTimestamp;
-    private String username;
-    private Boolean enabled;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    //属性
+    private String name;
+    private String description;
     private Map<String, List<String>> attributes;
-    //角色
-    private List<RoleVO> roles;
-    //组
-    private List<GroupVO> groups;
+    private List<UserInfoVO> members;
 }

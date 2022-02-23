@@ -1,17 +1,18 @@
 package com.qk.dm.authority.keycloak;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.authority.vo.UserInfoVO;
-import com.qk.dm.authority.vo.UserVO;
+import com.qk.dm.authority.mapstruct.KeyCloakMapper;
+import com.qk.dm.authority.vo.*;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.*;
 import org.keycloak.representations.idm.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+
 
 import javax.ws.rs.core.Response;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author shenpj
@@ -39,62 +40,14 @@ public class KeyCloakApi {
      */
     public List<UserInfoVO> getUserList() {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
-
-        List<UserRepresentation> userList = userResource.list();
-        List<UserInfoVO> userVOS = new ArrayList<>();
-        if(userList != null) {
-            for (UserRepresentation user : userList) {
-                UserInfoVO userVO = UserInfoVO.builder()
-                        .id(user.getId())
-                        .username(user.getUsername())
-                        .firstName(user.getFirstName())
-                        .lastName(user.getLastName())
-                        .email(user.getEmail())
-                        .enabled(user.isEnabled())
-                        .createdTimestamp(user.getCreatedTimestamp())
-                        .build();
-                //属性
-                userVO.setUserAttributesList(user.getAttributes());
-                UserResource userInfo = userResource.get(user.getId());
-
-                //组
-                List<GroupRepresentation> groups = userInfo.groups();
-                if(groups != null){
-                    for (GroupRepresentation group : groups) {
-                        System.out.println(group.getName());
-                    }
-                }
-                //角色
-                RoleMappingResource roles = userInfo.roles();
-                MappingsRepresentation mappingsRepresentation = roles.getAll();
-                List<RoleRepresentation> realmMappings = mappingsRepresentation.getRealmMappings();
-                if(realmMappings != null){
-                    for (RoleRepresentation realmMapping : realmMappings) {
-                        System.out.println(realmMapping.getName());
-                    }
-                }
-                System.out.println("-----------------------------------");
-
-                userVO.setUserRealmRoles(user.getRealmRoles());
-                //组
-                userVO.setUserGroups(user.getGroups());
-                userVOS.add(userVO);
-            }
-        }
-        return userVOS;
-    }
-
-    /**
-     * 获取某用户的自定义属性值
-     *
-     * @param userId
-     * @return
-     */
-    public Map<String, List<String>> getUserAttribute(String userId) {
-        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
-        UserRepresentation user = userResource.get(userId).toRepresentation();
-        Map<String, List<String>> userAttributes = user.getAttributes();
-        return userAttributes;
+        List<UserRepresentation> userList = userResource.search("user", 0, 10);
+        return userList.stream().map(user -> {
+            UserInfoVO userInfoVO = KeyCloakMapper.INSTANCE.userInfo(user);
+            userInfoVO.setRoles(userRole(user.getId()));
+            //组
+            userInfoVO.setGroups(userGroup(user.getId()));
+            return userInfoVO;
+        }).collect(Collectors.toList());
     }
 
     /**
@@ -109,15 +62,7 @@ public class KeyCloakApi {
                 .email("email")
                 .password("123456")
                 .build();
-
-
-        UserRepresentation user = new UserRepresentation();
-        // 设置登录账号
-        user.setUsername(userVO.getUsername());
-        user.setEnabled(userVO.getEnabled());
-        user.setFirstName(userVO.getFirstName());
-        user.setLastName(userVO.getLastName());
-        user.setEmail(userVO.getEmail());
+        UserRepresentation user = KeyCloakMapper.INSTANCE.userRep(userVO);
         user.setEmailVerified(false);
         // 设置密码
         List<CredentialRepresentation> credentials = new ArrayList<>();
@@ -128,10 +73,8 @@ public class KeyCloakApi {
         cr.setTemporary(false);
         credentials.add(cr);
         user.setCredentials(credentials);
-
         //创建
         Response response = keycloak.realm(TARGET_REALM).users().create(user);
-
         //判断创建用户状态；如果时创建成功
         Response.StatusType createUserStatus = response.getStatusInfo();
         System.out.println(createUserStatus);
@@ -142,40 +85,38 @@ public class KeyCloakApi {
 
     /**
      * 修改用户信息
+     *
      * @param userVO
      */
     public void updateUserInfo(UserVO userVO) {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
-        UserRepresentation user = new UserRepresentation();
-        // 设置登录账号
-        user.setUsername(userVO.getUsername());
-        user.setEnabled(userVO.getEnabled());
-        user.setFirstName(userVO.getFirstName());
-        user.setLastName(userVO.getLastName());
-        user.setEmail(userVO.getEmail());
-        user.setEmailVerified(false);
-        userResource.get(userVO.getId()).update(user);
+        UserResource user = userResource.get(userVO.getId());
+        UserRepresentation userRepresentation = user.toRepresentation();
+        KeyCloakMapper.INSTANCE.userUpdate(userVO,userRepresentation);
+        user.update(userRepresentation);
     }
 
     /**
      * 重置密码
+     *
      * @param userVO
      */
-    public void resetUserPassword(UserVO userVO){
+    public void resetUserPassword(UserVO userVO) {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+        UserResource user = userResource.get(userVO.getId());
         CredentialRepresentation passwordCred = new CredentialRepresentation();
         passwordCred.setTemporary(false);
         passwordCred.setType(CredentialRepresentation.PASSWORD);
         passwordCred.setValue(userVO.getPassword());
-        // 重置用户密码
-        userResource.get(userVO.getId()).resetPassword(passwordCred);
+        user.resetPassword(passwordCred);
     }
 
     /**
      * 更改属性
+     *
      * @param userVO
      */
-    public void resetUserAttributes(UserVO userVO){
+    public void resetUserAttributes(UserVO userVO) {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
         UserResource user = userResource.get(userVO.getId());
         UserRepresentation userRepresentation = user.toRepresentation();
@@ -189,59 +130,70 @@ public class KeyCloakApi {
     /**
      * 查询所有分组
      */
-    public void groups(){
-        GroupsResource groups = keycloak.realm(TARGET_REALM).groups();
-
-        List<GroupRepresentation> group = groups.groups();
-        for (GroupRepresentation groupRepresentation : group) {
-            //分组类
-            System.out.println(groupRepresentation.getName());
-            //分组下用户
-            List<UserRepresentation> members = groups.group(groupRepresentation.getId()).members();
-            if(members != null){
-                for (UserRepresentation member : members) {
-                    System.out.println("member:"+member.getUsername());
-                }
-            }
-            System.out.println(groupRepresentation.getAttributes());
-            System.out.println("------------------------------------");
-        }
+    public List<GroupVO> groupList() {
+        GroupsResource groupsResource = keycloak.realm(TARGET_REALM).groups();
+        List<GroupRepresentation> groups = groupsResource.groups();
+        return groups.stream().map(group -> {
+            GroupVO groupVO = KeyCloakMapper.INSTANCE.userGroup(group);
+            List<UserRepresentation> members =groupsResource.group(group.getId()).members();
+            List<UserInfoVO> userInfos = KeyCloakMapper.INSTANCE.userInfoList(members);
+            groupVO.setMembers(userInfos);
+            return groupVO;
+        }).collect(Collectors.toList());
     }
 
     /**
      * 用户分组
+     *
      * @param userId
      */
-    public void usetGroup(String userId){
+    public List<GroupVO> userGroup(String userId) {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
-        UserResource userInfo = userResource.get(userId);
+        List<GroupRepresentation> groups = userResource.get(userId).groups();
+        return groups.stream().map(KeyCloakMapper.INSTANCE::userGroup).collect(Collectors.toList());
+    }
 
-        //组
-        List<GroupRepresentation> groups = userInfo.groups();
-        if(groups != null){
-            for (GroupRepresentation group : groups) {
-                //分组类
-                System.out.println(group.getName());
-            }
-        }
+    /**
+     * 所有角色
+     *
+     * @return
+     */
+    public List<RoleVO> roleList() {
+        RolesResource roles = keycloak.realm(TARGET_REALM).roles();
+        List<RoleRepresentation> representationList = roles.list("", 0, 10);
+        return representationList.stream().map(representation -> {
+            RoleVO roleVO = KeyCloakMapper.INSTANCE.userRole(representation);
+            RoleResource roleResource = roles.get(representation.getName());
+            Set<UserRepresentation> roleUserMembers = roleResource.getRoleUserMembers();
+            List<UserInfoVO> userInfoVOS = KeyCloakMapper.INSTANCE.userInfoList(new ArrayList<>(roleUserMembers));
+            roleVO.setMembers(userInfoVOS);
+            return roleVO;
+        }).collect(Collectors.toList());
     }
 
     /**
      * 用户角色
+     *
      * @param userId
      */
-    public void usetRole(String userId){
+    public List<RoleVO> userRole(String userId) {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
-        UserResource userInfo = userResource.get(userId);
-        //角色
-        RoleMappingResource roles = userInfo.roles();
+        RoleMappingResource roles = userResource.get(userId).roles();
         MappingsRepresentation mappingsRepresentation = roles.getAll();
         List<RoleRepresentation> realmMappings = mappingsRepresentation.getRealmMappings();
-        if(realmMappings != null){
-            for (RoleRepresentation realmMapping : realmMappings) {
-                //角色类
-                System.out.println(realmMapping.getName());
-            }
-        }
+        return realmMappings.stream().map(KeyCloakMapper.INSTANCE::userRole).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取某用户的自定义属性值
+     *
+     * @param userId
+     * @return
+     */
+    public Map<String, List<String>> getUserAttribute(String userId) {
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+        UserRepresentation user = userResource.get(userId).toRepresentation();
+        Map<String, List<String>> userAttributes = user.getAttributes();
+        return userAttributes;
     }
 }
