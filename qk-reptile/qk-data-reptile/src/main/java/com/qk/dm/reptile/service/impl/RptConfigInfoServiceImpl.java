@@ -54,6 +54,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RptAddConfigVO insert(RptConfigInfoDTO rptConfigInfoDTO) {
+        deleteConfig(rptConfigInfoDTO);
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
         //修改基础信息表状态为爬虫
         updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
@@ -63,11 +64,29 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO) {
+        deleteConfig(rptConfigInfoDTO);
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
        // 修改基础信息表状态为爬虫
         start(rptConfigInfoDTO.getBaseInfoId(),
         ReptileServerFactory.manual(rptList(config.getBaseInfoId())));
         return config.getId();
+    }
+
+    /**
+     * 配置是否已存在，存在则将之前的删除(添加，浏览器回退，重新保存会导致数据重复)
+     * @param rptConfigInfoDTO
+     */
+    private void deleteConfig(RptConfigInfoDTO rptConfigInfoDTO){
+        //id不为空则为编辑
+        if(Objects.nonNull(rptConfigInfoDTO.getId())){
+            return;
+        }
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdAndParentId(rptConfigInfoDTO.getBaseInfoId(), rptConfigInfoDTO.getParentId());
+        if(!CollectionUtils.isEmpty(list)){
+            rptConfigInfoRepository.deleteAll(list);
+            List<Long> configIdList = list.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
+            rptSelectorColumnInfoService.deleteByConfigId(configIdList);
+        }
     }
 
     /**
@@ -97,8 +116,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
           rptBaseInfo.setConfigName(ClientUserInfo.getUserName());
           rptBaseInfo.setConfigDate(new Date());
           rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
-
     }
+
     private void configStatus(Long id) {
         RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
         if(Objects.isNull(rptBaseInfo)){
