@@ -57,7 +57,7 @@ public class ModelDimDetailVO  {
     /**
      * 责任人
      */
-    private String responsibilityPerson;
+    private String responsibleBy;
 
     /**
      * 维度字段信息

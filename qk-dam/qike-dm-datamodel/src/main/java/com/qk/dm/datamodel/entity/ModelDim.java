@@ -96,11 +96,6 @@ public class ModelDim implements Serializable {
      */
     @Column(name = "table_type", nullable = false)
     private String tableType;
-    /**
-     * 责任人
-     */
-    @Column(name = "responsibility_person", nullable = false)
-    private String responsibilityPerson;
 
     /**
      * 创建时间

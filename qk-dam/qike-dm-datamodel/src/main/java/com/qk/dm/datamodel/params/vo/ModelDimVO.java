@@ -84,7 +84,7 @@ public class ModelDimVO implements Serializable {
     /**
      * 责任人
      */
-    private String responsibilityPerson;
+    private String responsibleBy;
 
     /**
      * 创建时间
