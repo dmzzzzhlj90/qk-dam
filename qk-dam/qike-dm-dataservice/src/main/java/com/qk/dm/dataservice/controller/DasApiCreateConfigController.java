@@ -78,10 +78,10 @@ public class DasApiCreateConfigController {
      *
      * @return DefaultCommonResult
      */
-    @GetMapping("/request/paras/header/infos")
+    @GetMapping("/request/paras/header/info")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<LinkedList<Map<String, Object>>> getDasApiCreateRequestParaHeaderInfo() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateRequestParaHeaderInfo());
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getRequestParaHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getRequestParaHeaderInfo());
     }
 
     /**
@@ -91,8 +91,8 @@ public class DasApiCreateConfigController {
      */
     @GetMapping("/response/paras/header/infos")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<LinkedList<Map<String, Object>>> getDasApiCreateResponseParaHeaderInfo() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateResponseParaHeaderInfo());
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getResponseParaHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getResponseParaHeaderInfo());
     }
 
     /**
@@ -100,11 +100,10 @@ public class DasApiCreateConfigController {
      *
      * @return DefaultCommonResult
      */
-    @GetMapping("/order/paras/header/infos")
+    @GetMapping("/order/paras/header/info")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<LinkedList<Map<String, Object>>> getDasApiCreateOrderParaHeaderInfo() {
-        return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateOrderParaHeaderInfo());
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getOrderParaHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getOrderParaHeaderInfo());
     }
 
     /**
@@ -114,9 +113,8 @@ public class DasApiCreateConfigController {
      */
     @GetMapping("/paras/compare/symbol")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<List<String>> getDasApiCreateParasCompareSymbol() {
-        return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateParasCompareSymbol());
+    public DefaultCommonResult<List<String>> getParasCompareSymbol() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParasCompareSymbol());
     }
 
     /**
@@ -126,123 +124,19 @@ public class DasApiCreateConfigController {
      */
     @GetMapping("/paras/sort/style")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<Map<String, String>> getDasApiCreateParasSortStyle() {
-        return DefaultCommonResult.success(
-                ResultCodeEnum.OK, dasApiCreateConfigService.getDasApiCreateParasSortStyle());
+    public DefaultCommonResult<Map<String, String>> getParasSortStyle() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParasSortStyle());
     }
 
-//  /**
-//   * 新建API__获取db库信息下拉列表
-//   *
-//   * @param dbType
-//   * @return DefaultCommonResult<List < String>>
-//   */
-//  @GetMapping("/database/all")
+    /**
+     * 新建API__配置方式__参数设置__表头信息
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/paras/header/info")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-//  public DefaultCommonResult<List<String>> getAllDataBase(@RequestParam("dbType") String dbType) {
-//    return DefaultCommonResult.success(
-//        ResultCodeEnum.OK, dasApiCreateConfigService.getAllDataBase(dbType));
-//  }
-//
-//  /**
-//   * 新建API__获取table表信息下拉列表
-//   *
-//   * @param dbType,server,dbName
-//   * @return DefaultCommonResult
-//   */
-//  @GetMapping("/table/all")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-//  public DefaultCommonResult<List<String>> getAllTable(
-//      @RequestParam("dbType") String dbType,
-//      @RequestParam("server") String server,
-//      @RequestParam("dbName") String dbName) {
-//    return DefaultCommonResult.success(
-//        ResultCodeEnum.OK, dasApiCreateConfigService.getAllTable(dbType, server, dbName));
-//  }
-//
-//  /**
-//   * 新建API__获取column字段信息下拉列表
-//   *
-//   * @param dbType,server,dbName
-//   * @return DefaultCommonResult
-//   */
-//  @GetMapping("/column/all")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-//  public DefaultCommonResult<List> getAllColumn(
-//      @RequestParam("dbType") String dbType,
-//      @RequestParam("server") String server,
-//      @RequestParam("dbName") String dbName,
-//      @RequestParam("tableName") String tableName) {
-//    return DefaultCommonResult.success(
-//        ResultCodeEnum.OK,
-//        dasApiCreateConfigService.getAllColumn(dbType, server, dbName, tableName));
-//  }
-
-    // ========================数据源服务API调用=====================================
-
-//  /**
-//   * 查询所有数据源连接类型
-//   *
-//   * @return DefaultCommonResult
-//   */
-//  @GetMapping("/datasource/api/type/all")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-//  public DefaultCommonResult<List<String>> getAllConnType() {
-//    return DefaultCommonResult.success(
-//        ResultCodeEnum.OK, dasApiCreateConfigService.getAllConnType());
-//  }
-//
-//  /**
-//   * 根据数据库类型获取数据源连接信息
-//   *
-//   * @return DefaultCommonResult
-//   */
-//  @GetMapping("/datasource/api/database/{type}")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-//  DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(
-//      @PathVariable("type") String type) {
-//    return DefaultCommonResult.success(
-//        ResultCodeEnum.OK, dasApiCreateConfigService.getResultDataSourceByType(type));
-//  }
-//
-//  /**
-//   * 根据数据源名称获取数据源连接信息
-//   *
-//   * @return DefaultCommonResult
-//   */
-//  @GetMapping("/datasource/api/name/{connectName}")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-//  public DefaultCommonResult<ResultDatasourceInfo> getResultDataSourceByConnectName(
-//      @PathVariable("connectName") String connectName) {
-//    return DefaultCommonResult.success(
-//        ResultCodeEnum.OK, dasApiCreateConfigService.getResultDataSourceByConnectName(connectName));
-//  }
-//
-//  // ========================数据源服务API调用=====================================
-//
-//  /**
-//   * 获取所有的元数据类型
-//   *
-//   * @return DefaultCommonResult<List < MtdAtlasEntityType>>
-//   */
-//  @GetMapping("/mtd/api/all/entity/type")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-//  public DefaultCommonResult<List<MtdAtlasEntityType>> getAllEntityType() {
-//    return DefaultCommonResult.success(
-//        ResultCodeEnum.OK, dasApiCreateConfigService.getAllEntityType());
-//  }
-//
-//  /**
-//   * 获取元数据详情信息
-//   *
-//   * @param mtdApiParams
-//   * @return DefaultCommonResult<MtdApi>
-//   */
-//  @PostMapping("/mtd/detail")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-//  DefaultCommonResult<MtdApi> mtdDetail(@RequestBody @Validated MtdApiParams mtdApiParams) {
-//    return DefaultCommonResult.success(
-//        ResultCodeEnum.OK, dasApiCreateConfigService.mtdDetail(mtdApiParams));
-//  }
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getParamHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParamHeaderInfo());
+    }
 
 }

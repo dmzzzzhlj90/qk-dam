@@ -207,28 +207,33 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
 
   // ========================参数配置表头信息=====================================
   @Override
-  public LinkedList<Map<String, Object>> getDasApiCreateRequestParaHeaderInfo() {
+  public LinkedList<Map<String, Object>> getRequestParaHeaderInfo() {
     return CreateRequestParaHeaderInfoEnum.getAllValue();
   }
 
   @Override
-  public LinkedList<Map<String, Object>> getDasApiCreateResponseParaHeaderInfo() {
+  public LinkedList<Map<String, Object>> getResponseParaHeaderInfo() {
     return CreateResponseParaHeaderInfoEnum.getAllValue();
   }
 
   @Override
-  public LinkedList<Map<String, Object>> getDasApiCreateOrderParaHeaderInfo() {
+  public LinkedList<Map<String, Object>> getOrderParaHeaderInfo() {
     return CreateOrderParaHeaderInfoEnum.getAllValue();
   }
 
   @Override
-  public List<String> getDasApiCreateParasCompareSymbol() {
+  public List<String> getParasCompareSymbol() {
     return DasConstant.getDasApiCreateParasCompareSymbol();
   }
 
   @Override
-  public Map<String, String> getDasApiCreateParasSortStyle() {
+  public Map<String, String> getParasSortStyle() {
     return CreateParasSortStyleEnum.getAllValue();
+  }
+
+  @Override
+  public LinkedList<Map<String, Object>> getParamHeaderInfo() {
+    return CreateConfigParamHeaderEnum.getAllValue();
   }
 
 //  // ========================数据源服务API调用=====================================

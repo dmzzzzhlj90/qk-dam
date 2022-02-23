@@ -28,15 +28,17 @@ public interface DasApiCreateConfigService {
   void update(DasApiCreateConfigVO dasApiCreateConfigVO);
 
   // ========================参数配置表头信息=====================================
-  LinkedList<Map<String, Object>> getDasApiCreateRequestParaHeaderInfo();
+  LinkedList<Map<String, Object>> getRequestParaHeaderInfo();
 
-  LinkedList<Map<String, Object>> getDasApiCreateResponseParaHeaderInfo();
+  LinkedList<Map<String, Object>> getResponseParaHeaderInfo();
 
-  LinkedList<Map<String, Object>> getDasApiCreateOrderParaHeaderInfo();
+  LinkedList<Map<String, Object>> getOrderParaHeaderInfo();
 
-  List<String> getDasApiCreateParasCompareSymbol();
+  List<String> getParasCompareSymbol();
 
-  Map<String, String> getDasApiCreateParasSortStyle();
+  Map<String, String> getParasSortStyle();
+
+  LinkedList<Map<String, Object>> getParamHeaderInfo();
 
 //  // ========================数据源服务API调用=====================================
 //  List<String> getAllConnType();
