@@ -43,7 +43,7 @@ compileJava {
 configurations.all {
     exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     exclude group: 'org.eclipse.jetty.aggregate', module: 'jetty-all'
-//    exclude group: 'org.eclipse.jetty.orbit', module: 'javax.servlet'
+    exclude group: 'org.eclipse.jetty.orbit', module: 'javax.servlet'
     exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
 }
 
@@ -58,7 +58,7 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation 'com.alibaba:easyexcel'
-    implementation 'mysql:mysql-connector-java'
+//    implementation 'mysql:mysql-connector-java'
 
     implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
     implementation 'org.elasticsearch.plugin:x-pack-sql-jdbc:7.10.0'
