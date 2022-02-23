@@ -78,10 +78,10 @@ public class DasApiCreateConfigController {
      *
      * @return DefaultCommonResult
      */
-    @GetMapping("/request/paras/header/info")
+    @GetMapping("/request/param/header/info")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<LinkedList<Map<String, Object>>> getRequestParaHeaderInfo() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getRequestParaHeaderInfo());
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getRequestParamHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getRequestParamHeaderInfo());
     }
 
     /**
@@ -89,10 +89,10 @@ public class DasApiCreateConfigController {
      *
      * @return DefaultCommonResult
      */
-    @GetMapping("/response/paras/header/infos")
+    @GetMapping("/response/param/header/infos")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<LinkedList<Map<String, Object>>> getResponseParaHeaderInfo() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getResponseParaHeaderInfo());
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getResponseParamHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getResponseParamHeaderInfo());
     }
 
     /**
@@ -100,10 +100,10 @@ public class DasApiCreateConfigController {
      *
      * @return DefaultCommonResult
      */
-    @GetMapping("/order/paras/header/info")
+    @GetMapping("/order/param/header/info")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<LinkedList<Map<String, Object>>> getOrderParaHeaderInfo() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getOrderParaHeaderInfo());
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getOrderParamHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getOrderParamHeaderInfo());
     }
 
     /**
@@ -111,10 +111,10 @@ public class DasApiCreateConfigController {
      *
      * @return DefaultCommonResult
      */
-    @GetMapping("/paras/compare/symbol")
+    @GetMapping("/param/compare/symbol")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<List<String>> getParasCompareSymbol() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParasCompareSymbol());
+    public DefaultCommonResult<List<String>> getParamCompareSymbol() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParamCompareSymbol());
     }
 
     /**
@@ -122,10 +122,10 @@ public class DasApiCreateConfigController {
      *
      * @return DefaultCommonResult
      */
-    @GetMapping("/paras/sort/style")
+    @GetMapping("/param/sort/style")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<Map<String, String>> getParasSortStyle() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParasSortStyle());
+    public DefaultCommonResult<Map<String, String>> getParamSortStyle() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParamSortStyle());
     }
 
     /**
@@ -133,7 +133,7 @@ public class DasApiCreateConfigController {
      *
      * @return DefaultCommonResult
      */
-    @GetMapping("/paras/header/info")
+    @GetMapping("/param/header/info")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
     public DefaultCommonResult<LinkedList<Map<String, Object>>> getParamHeaderInfo() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParamHeaderInfo());

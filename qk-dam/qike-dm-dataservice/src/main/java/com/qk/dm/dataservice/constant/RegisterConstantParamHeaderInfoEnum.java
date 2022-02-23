@@ -7,71 +7,56 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * API基础信息_入参定义表头信息
+ * 注册API_常量参数表头信息
  *
  * @author wjq
  * @date 20220221
  * @since 1.0.0
  */
-public enum RequestParasHeaderInfoEnum {
+public enum RegisterConstantParamHeaderInfoEnum {
 
     /**
-     * http请求参数
+     * 常量参数名称
      */
-    PARA_NAME("paraName", "http请求参数",true),
+    CONSTANT_PARA_NAME("constantParaName", "常量参数名称", true),
 
     /**
-     * 入参位置
+     * 参数位置
      */
-    PARA_POSITION("paraPosition", "入参位置",true),
+    CONSTANT_PARA_POSITION("constantParaPosition", "参数位置", true),
 
     /**
      * 参数类型
      */
-    PARA_TYPE("paraType", "参数类型",true),
+    CONSTANT_PARA_TYPE("constantParaType", "参数类型", true),
 
     /**
-     * 是否必填
+     * 参数值
      */
-    NECESSARY("necessary", "是否必填",true),
-
-    /**
-     * 允许空值
-     */
-    SUPPORT_NULL("supportNull", "允许空值",true),
-
-    /**
-     * 默认值
-     */
-    DEFAULT_VALUE("defaultValue", "默认值",false),
-
-    /**
-     * 示例值
-     */
-    EXAMPLE_VALUE("exampleValue", "示例值",false),
+    CONSTANT_PARA_VALUE("constantParaValue", "参数值", true),
 
     /**
      * 描述
      */
-    DESCRIPTION("description", "描述",false);
+    DESCRIPTION("description", "描述", false),
+    ;
 
 
     private String key;
     private String value;
     private boolean required;
 
-
-    RequestParasHeaderInfoEnum(String key, String value, boolean required) {
+    RegisterConstantParamHeaderInfoEnum(String key, String value, boolean required) {
         this.key = key;
         this.value = value;
         this.required = required;
     }
 
-    public static RequestParasHeaderInfoEnum getVal(String value) {
+    public static RegisterConstantParamHeaderInfoEnum getVal(String value) {
         if (StringUtils.isEmpty(value)) {
             return null;
         }
-        for (RequestParasHeaderInfoEnum enums : RequestParasHeaderInfoEnum.values()) {
+        for (RegisterConstantParamHeaderInfoEnum enums : RegisterConstantParamHeaderInfoEnum.values()) {
             if (value.equals(enums.value)) {
                 return enums;
             }
@@ -82,7 +67,7 @@ public enum RequestParasHeaderInfoEnum {
     public static LinkedList<Map<String, Object>> getAllValue() {
         LinkedList<Map<String, Object>> valList = new LinkedList<>();
 
-        for (RequestParasHeaderInfoEnum enums : RequestParasHeaderInfoEnum.values()) {
+        for (RegisterConstantParamHeaderInfoEnum enums : RegisterConstantParamHeaderInfoEnum.values()) {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put(DasConstant.PARAM_KEY, enums.key);
             map.put(DasConstant.PARAM_VALUE, enums.value);
@@ -100,7 +85,7 @@ public enum RequestParasHeaderInfoEnum {
         return value;
     }
 
-    public boolean getRequired() {
+    public boolean isRequired() {
         return required;
     }
 }

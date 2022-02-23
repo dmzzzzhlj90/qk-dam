@@ -7,60 +7,55 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * 新建API_排序表头信息
+ * 注册API_后端请求参数表头信息
  *
  * @author wjq
  * @date 20220221
  * @since 1.0.0
  */
-public enum CreateOrderParaHeaderInfoEnum {
+public enum RegisterBackendParamHeaderInfoEnum {
 
     /**
-     * 序号
+     * 入参名称
      */
-    ORDER_NUM("orderNum", "序号",true),
+    PARA_NAME("paraName", "入参名称",true),
 
     /**
-     * 字段名称
+     * 入参位置
      */
-    COLUMN_NAME("columnName", "字段名称",true),
+    PARA_POSITION("paraPosition", "入参位置",true),
 
     /**
-     * 参数名称
+     * 入参类型
      */
-    PARA_NAME("paraName", "参数名称",true),
+    PARA_TYPE("paraType", "入参类型",true),
 
     /**
-     * 是否可选
+     * 后端参数名称
      */
-    OPTIONAL("optional", "是否可选",true),
+    BACKEND_PARA_NAME("backendParaName", "后端参数名称",true),
 
     /**
-     * 排序方式
+     * 后端参数位置
      */
-    ORDER_TYPE("orderType", "排序方式",true),
-
-    /**
-     * 描述
-     */
-    DESCRIPTION("description", "描述",false);
+    BACKEND_PARA_POSITION("backendParaPosition", "后端参数位置",true);
 
 
     private String key;
     private String value;
     private boolean required;
 
-    CreateOrderParaHeaderInfoEnum(String key, String value, boolean required) {
+    RegisterBackendParamHeaderInfoEnum(String key, String value, boolean required) {
         this.key = key;
         this.value = value;
         this.required = required;
     }
 
-    public static CreateOrderParaHeaderInfoEnum getVal(String value) {
+    public static RegisterBackendParamHeaderInfoEnum getVal(String value) {
         if (StringUtils.isEmpty(value)) {
             return null;
         }
-        for (CreateOrderParaHeaderInfoEnum enums : CreateOrderParaHeaderInfoEnum.values()) {
+        for (RegisterBackendParamHeaderInfoEnum enums : RegisterBackendParamHeaderInfoEnum.values()) {
             if (value.equals(enums.value)) {
                 return enums;
             }
@@ -71,16 +66,16 @@ public enum CreateOrderParaHeaderInfoEnum {
     public static LinkedList<Map<String, Object>> getAllValue() {
         LinkedList<Map<String, Object>> valList = new LinkedList<>();
 
-        for (CreateOrderParaHeaderInfoEnum enums : CreateOrderParaHeaderInfoEnum.values()) {
+        for (RegisterBackendParamHeaderInfoEnum enums : RegisterBackendParamHeaderInfoEnum.values()) {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put(DasConstant.PARAM_KEY, enums.key);
             map.put(DasConstant.PARAM_VALUE, enums.value);
             map.put(DasConstant.PARAM_REQUIRED, enums.required);
             valList.add(map);
         }
-
         return valList;
     }
+
 
     public String getKey() {
         return key;

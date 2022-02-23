@@ -183,7 +183,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
     @Override
     public LinkedList<Map<String, Object>> getRequestParasHeaderInfos() {
-        return RequestParasHeaderInfoEnum.getAllValue();
+        return RequestParamHeaderInfoEnum.getAllValue();
     }
 
     @Override

@@ -7,9 +7,8 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataservice.config.ApiSixConnectInfo;
 import com.qk.dm.dataservice.constant.ApiTypeEnum;
-import com.qk.dm.dataservice.constant.DasConstant;
-import com.qk.dm.dataservice.constant.RegisterBackendParaHeaderInfoEnum;
-import com.qk.dm.dataservice.constant.RegisterConstantParaHeaderInfoEnum;
+import com.qk.dm.dataservice.constant.RegisterBackendParamHeaderInfoEnum;
+import com.qk.dm.dataservice.constant.RegisterConstantParamHeaderInfoEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiRegister;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
@@ -154,12 +153,12 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
 
     @Override
     public LinkedList<Map<String, Object>> getRegisterBackendParaHeaderInfo() {
-        return RegisterBackendParaHeaderInfoEnum.getAllValue();
+        return RegisterBackendParamHeaderInfoEnum.getAllValue();
     }
 
     @Override
     public LinkedList<Map<String, Object>> getRegisterConstantParaHeaderInfo() {
-        return RegisterConstantParaHeaderInfoEnum.getAllValue();
+        return RegisterConstantParamHeaderInfoEnum.getAllValue();
     }
 
     @Override

@@ -2,12 +2,7 @@ package com.qk.dm.dataservice.service.imp;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.ConnectBasicInfo;
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
-import com.qk.dam.metedata.entity.*;
 import com.qk.dm.dataservice.constant.*;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateConfig;
@@ -25,7 +20,6 @@ import com.qk.dm.dataservice.vo.*;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.*;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -207,28 +201,28 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
 
   // ========================参数配置表头信息=====================================
   @Override
-  public LinkedList<Map<String, Object>> getRequestParaHeaderInfo() {
-    return CreateRequestParaHeaderInfoEnum.getAllValue();
+  public LinkedList<Map<String, Object>> getRequestParamHeaderInfo() {
+    return CreateRequestParamHeaderInfoEnum.getAllValue();
   }
 
   @Override
-  public LinkedList<Map<String, Object>> getResponseParaHeaderInfo() {
-    return CreateResponseParaHeaderInfoEnum.getAllValue();
+  public LinkedList<Map<String, Object>> getResponseParamHeaderInfo() {
+    return CreateResponseParamHeaderInfoEnum.getAllValue();
   }
 
   @Override
-  public LinkedList<Map<String, Object>> getOrderParaHeaderInfo() {
-    return CreateOrderParaHeaderInfoEnum.getAllValue();
+  public LinkedList<Map<String, Object>> getOrderParamHeaderInfo() {
+    return CreateOrderParamHeaderInfoEnum.getAllValue();
   }
 
   @Override
-  public List<String> getParasCompareSymbol() {
-    return DasConstant.getDasApiCreateParasCompareSymbol();
+  public List<String> getParamCompareSymbol() {
+    return DasConstant.getDasApiCreateParamCompareSymbol();
   }
 
   @Override
-  public Map<String, String> getParasSortStyle() {
-    return CreateParasSortStyleEnum.getAllValue();
+  public Map<String, String> getParamSortStyle() {
+    return CreateParamSortStyleEnum.getAllValue();
   }
 
   @Override

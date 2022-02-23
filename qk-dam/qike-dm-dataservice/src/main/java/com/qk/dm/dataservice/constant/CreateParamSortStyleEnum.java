@@ -2,7 +2,6 @@ package com.qk.dm.dataservice.constant;
 
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import java.util.Map;
  * @date 20220221
  * @since 1.0.0
  */
-public enum CreateParasSortStyleEnum {
+public enum CreateParamSortStyleEnum {
 
     /**
      * 升序
@@ -33,16 +32,16 @@ public enum CreateParasSortStyleEnum {
     private String code;
     private String value;
 
-    CreateParasSortStyleEnum(String code, String value) {
+    CreateParamSortStyleEnum(String code, String value) {
         this.code = code;
         this.value = value;
     }
 
-    public static CreateParasSortStyleEnum getVal(String value) {
+    public static CreateParamSortStyleEnum getVal(String value) {
         if (StringUtils.isEmpty(value)) {
             return null;
         }
-        for (CreateParasSortStyleEnum enums : CreateParasSortStyleEnum.values()) {
+        for (CreateParamSortStyleEnum enums : CreateParamSortStyleEnum.values()) {
             if (value.equals(enums.value)) {
                 return enums;
             }
@@ -52,7 +51,7 @@ public enum CreateParasSortStyleEnum {
 
     public static Map<String, String> getAllValue() {
         Map<String, String> val = new LinkedHashMap<>();
-        for (CreateParasSortStyleEnum enums : CreateParasSortStyleEnum.values()) {
+        for (CreateParamSortStyleEnum enums : CreateParamSortStyleEnum.values()) {
             val.put(enums.code, enums.value);
         }
         return val;

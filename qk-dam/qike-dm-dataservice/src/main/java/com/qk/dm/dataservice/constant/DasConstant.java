@@ -21,7 +21,7 @@ public class DasConstant {
     public static final String DEFAULT_API_ROUTE_ID = "0";
 
     // 新建API_字段操作符号
-    public static List<String> getDasApiCreateParasCompareSymbol() {
+    public static List<String> getDasApiCreateParamCompareSymbol() {
         LinkedList<String> compareSymbolList = new LinkedList<>();
         compareSymbolList.add("=");
         compareSymbolList.add("<>");

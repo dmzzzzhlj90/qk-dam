@@ -7,55 +7,71 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * 新建API_请求参数表头信息
+ * API基础信息_入参定义表头信息
  *
  * @author wjq
  * @date 20220221
  * @since 1.0.0
  */
-public enum CreateRequestParaHeaderInfoEnum {
+public enum RequestParamHeaderInfoEnum {
 
     /**
-     * 绑定参数
+     * http请求参数
      */
-    PARA_NAME("paraName", "绑定参数",true),
+    PARA_NAME("paraName", "http请求参数",true),
 
     /**
-     * 绑定字段
+     * 入参位置
      */
-    MAPPING_NAME("mappingName", "绑定字段",true),
+    PARA_POSITION("paraPosition", "入参位置",true),
 
     /**
-     * 操作符
+     * 参数类型
      */
-    CONDITION_TYPE("conditionType", "操作符",true),
+    PARA_TYPE("paraType", "参数类型",true),
 
     /**
-     * 后端参数
+     * 是否必填
      */
-    BACKEND_PARA_NAME("backendParaName", "后端参数",true),
+    NECESSARY("necessary", "是否必填",true),
 
     /**
-     * 后端参数位置
+     * 允许空值
      */
-    BACKEND_PARA_POSITION("backendParaPosition", "后端参数位置",true);
+    SUPPORT_NULL("supportNull", "允许空值",true),
+
+    /**
+     * 默认值
+     */
+    DEFAULT_VALUE("defaultValue", "默认值",false),
+
+    /**
+     * 示例值
+     */
+    EXAMPLE_VALUE("exampleValue", "示例值",false),
+
+    /**
+     * 描述
+     */
+    DESCRIPTION("description", "描述",false);
 
 
     private String key;
     private String value;
     private boolean required;
 
-    CreateRequestParaHeaderInfoEnum(String key, String value, boolean required) {
+
+    RequestParamHeaderInfoEnum(String key, String value, boolean required) {
         this.key = key;
         this.value = value;
         this.required = required;
     }
 
-    public static CreateRequestParaHeaderInfoEnum getVal(String value) {
+    public static RequestParamHeaderInfoEnum getVal(String value) {
         if (StringUtils.isEmpty(value)) {
             return null;
         }
-        for (CreateRequestParaHeaderInfoEnum enums : CreateRequestParaHeaderInfoEnum.values()) {
+        for (RequestParamHeaderInfoEnum enums : RequestParamHeaderInfoEnum.values()) {
             if (value.equals(enums.value)) {
                 return enums;
             }
@@ -66,7 +82,7 @@ public enum CreateRequestParaHeaderInfoEnum {
     public static LinkedList<Map<String, Object>> getAllValue() {
         LinkedList<Map<String, Object>> valList = new LinkedList<>();
 
-        for (CreateRequestParaHeaderInfoEnum enums : CreateRequestParaHeaderInfoEnum.values()) {
+        for (RequestParamHeaderInfoEnum enums : RequestParamHeaderInfoEnum.values()) {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put(DasConstant.PARAM_KEY, enums.key);
             map.put(DasConstant.PARAM_VALUE, enums.value);
@@ -84,7 +100,7 @@ public enum CreateRequestParaHeaderInfoEnum {
         return value;
     }
 
-    public boolean isRequired() {
+    public boolean getRequired() {
         return required;
     }
 }

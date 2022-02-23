@@ -2,7 +2,6 @@ package com.qk.dm.dataservice.constant;
 
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.Map;
  * @date 20220221
  * @since 1.0.0
  */
-public enum CreateResponseParaHeaderInfoEnum {
+public enum CreateResponseParamHeaderInfoEnum {
 
     /**
      * 参数名称
@@ -51,17 +50,17 @@ public enum CreateResponseParaHeaderInfoEnum {
     private String value;
     private boolean required;
 
-    CreateResponseParaHeaderInfoEnum(String key, String value, boolean required) {
+    CreateResponseParamHeaderInfoEnum(String key, String value, boolean required) {
         this.key = key;
         this.value = value;
         this.required = required;
     }
 
-    public static CreateResponseParaHeaderInfoEnum getVal(String value) {
+    public static CreateResponseParamHeaderInfoEnum getVal(String value) {
         if (StringUtils.isEmpty(value)) {
             return null;
         }
-        for (CreateResponseParaHeaderInfoEnum enums : CreateResponseParaHeaderInfoEnum.values()) {
+        for (CreateResponseParamHeaderInfoEnum enums : CreateResponseParamHeaderInfoEnum.values()) {
             if (value.equals(enums.value)) {
                 return enums;
             }
@@ -72,7 +71,7 @@ public enum CreateResponseParaHeaderInfoEnum {
     public static LinkedList<Map<String, Object>> getAllValue() {
         LinkedList<Map<String, Object>> valList = new LinkedList<>();
 
-        for (CreateResponseParaHeaderInfoEnum enums : CreateResponseParaHeaderInfoEnum.values()) {
+        for (CreateResponseParamHeaderInfoEnum enums : CreateResponseParamHeaderInfoEnum.values()) {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put(DasConstant.PARAM_KEY, enums.key);
             map.put(DasConstant.PARAM_VALUE, enums.value);
