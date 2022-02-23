@@ -43,9 +43,9 @@ public class KeyCloakApi {
         List<UserRepresentation> userList = userResource.search("user", 0, 10);
         return userList.stream().map(user -> {
             UserInfoVO userInfoVO = KeyCloakMapper.INSTANCE.userInfo(user);
-            userInfoVO.setRoles(userRole(user.getId()));
+            userInfoVO.setRoleList(userRole(user.getId()));
             //组
-            userInfoVO.setGroups(userGroup(user.getId()));
+            userInfoVO.setGroupList(userGroup(user.getId()));
             return userInfoVO;
         }).collect(Collectors.toList());
     }
