@@ -54,12 +54,7 @@ dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":commons-core")
     implementation project(":datasource-common-core")
-<<<<<<< HEAD
-    implementation 'javax.servlet:javax.servlet-api'
-
-=======
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
->>>>>>> 510b907b (fixup! [数据源服务] 修改JAR包依赖;)
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
