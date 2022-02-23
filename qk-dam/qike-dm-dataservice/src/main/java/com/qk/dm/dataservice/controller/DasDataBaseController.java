@@ -59,6 +59,7 @@ public class DasDataBaseController {
     @GetMapping("")
     public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@RequestParam("connectType") String connectType,
                                                               @RequestParam("dataSourceName") String dataSourceName) {
+        System.out.println("111111111111111111");
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataBase(connectType, dataSourceName));
     }
 
