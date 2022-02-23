@@ -1,19 +1,17 @@
 package com.qk.dm.authority.keycloak;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.authority.vo.UserInfoVO;
 import com.qk.dm.authority.vo.UserVO;
 import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.resource.UsersResource;
-import org.keycloak.representations.idm.CredentialRepresentation;
-import org.keycloak.representations.idm.UserRepresentation;
+import org.keycloak.admin.client.resource.*;
+import org.keycloak.representations.idm.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author shenpj
@@ -34,21 +32,19 @@ public class KeyCloakApi {
         return keycloak;
     }
 
-
     /**
      * 获取用户列表
      *
      * @return
      */
-    public List<UserVO> getUserList() {
+    public List<UserInfoVO> getUserList() {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+
         List<UserRepresentation> userList = userResource.list();
-        List<UserVO> userVOS = new ArrayList<>();
+        List<UserInfoVO> userVOS = new ArrayList<>();
         if(userList != null) {
             for (UserRepresentation user : userList) {
-
-
-                UserVO userVO = UserVO.builder()
+                UserInfoVO userVO = UserInfoVO.builder()
                         .id(user.getId())
                         .username(user.getUsername())
                         .firstName(user.getFirstName())
@@ -58,12 +54,30 @@ public class KeyCloakApi {
                         .createdTimestamp(user.getCreatedTimestamp())
                         .build();
                 //属性
-                Map<String, List<String>> userAttributesList = user.getAttributes();
-                //角色
-                List<String> userRealmRoles = user.getRealmRoles();
-                //组
-                List<String> userGroups = user.getGroups();
+                userVO.setUserAttributesList(user.getAttributes());
+                UserResource userInfo = userResource.get(user.getId());
 
+                //组
+                List<GroupRepresentation> groups = userInfo.groups();
+                if(groups != null){
+                    for (GroupRepresentation group : groups) {
+                        System.out.println(group.getName());
+                    }
+                }
+                //角色
+                RoleMappingResource roles = userInfo.roles();
+                MappingsRepresentation mappingsRepresentation = roles.getAll();
+                List<RoleRepresentation> realmMappings = mappingsRepresentation.getRealmMappings();
+                if(realmMappings != null){
+                    for (RoleRepresentation realmMapping : realmMappings) {
+                        System.out.println(realmMapping.getName());
+                    }
+                }
+                System.out.println("-----------------------------------");
+
+                userVO.setUserRealmRoles(user.getRealmRoles());
+                //组
+                userVO.setUserGroups(user.getGroups());
                 userVOS.add(userVO);
             }
         }
@@ -76,23 +90,11 @@ public class KeyCloakApi {
      * @param userId
      * @return
      */
-    public Map<String, Object> getUserAttribute(String userId) {
-        Map<String, Object> attributeMap = new HashMap<>();
+    public Map<String, List<String>> getUserAttribute(String userId) {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
-        List<UserRepresentation> userList = userResource.list();
-        for (UserRepresentation user : userList) {
-            Map<String, List<String>> userAttributesList = user.getAttributes();
-            if (userAttributesList != null && userId != null && userId.equals(user.getId())) {
-                for (String key : userAttributesList.keySet()) {
-                    Object attribute = null;
-                    if (userAttributesList != null && userAttributesList.get(key) != null && userAttributesList.get(key).size() > 0) {
-                        attribute = userAttributesList.get(key);
-                    }
-                    attributeMap.put(user.getId() + "-" + key, attribute);
-                }
-            }
-        }
-        return attributeMap;
+        UserRepresentation user = userResource.get(userId).toRepresentation();
+        Map<String, List<String>> userAttributes = user.getAttributes();
+        return userAttributes;
     }
 
     /**
@@ -138,4 +140,108 @@ public class KeyCloakApi {
         }
     }
 
+    /**
+     * 修改用户信息
+     * @param userVO
+     */
+    public void updateUserInfo(UserVO userVO) {
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+        UserRepresentation user = new UserRepresentation();
+        // 设置登录账号
+        user.setUsername(userVO.getUsername());
+        user.setEnabled(userVO.getEnabled());
+        user.setFirstName(userVO.getFirstName());
+        user.setLastName(userVO.getLastName());
+        user.setEmail(userVO.getEmail());
+        user.setEmailVerified(false);
+        userResource.get(userVO.getId()).update(user);
+    }
+
+    /**
+     * 重置密码
+     * @param userVO
+     */
+    public void resetUserPassword(UserVO userVO){
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+        CredentialRepresentation passwordCred = new CredentialRepresentation();
+        passwordCred.setTemporary(false);
+        passwordCred.setType(CredentialRepresentation.PASSWORD);
+        passwordCred.setValue(userVO.getPassword());
+        // 重置用户密码
+        userResource.get(userVO.getId()).resetPassword(passwordCred);
+    }
+
+    /**
+     * 更改属性
+     * @param userVO
+     */
+    public void resetUserAttributes(UserVO userVO){
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+        UserResource user = userResource.get(userVO.getId());
+        UserRepresentation userRepresentation = user.toRepresentation();
+        //属性
+        Map<String, List<String>> attributeMap = userRepresentation.getAttributes();
+        attributeMap.put("test", Arrays.asList("123"));
+        userRepresentation.setAttributes(attributeMap);
+        user.update(userRepresentation);
+    }
+
+    /**
+     * 查询所有分组
+     */
+    public void groups(){
+        GroupsResource groups = keycloak.realm(TARGET_REALM).groups();
+
+        List<GroupRepresentation> group = groups.groups();
+        for (GroupRepresentation groupRepresentation : group) {
+            //分组类
+            System.out.println(groupRepresentation.getName());
+            //分组下用户
+            List<UserRepresentation> members = groups.group(groupRepresentation.getId()).members();
+            if(members != null){
+                for (UserRepresentation member : members) {
+                    System.out.println("member:"+member.getUsername());
+                }
+            }
+            System.out.println(groupRepresentation.getAttributes());
+            System.out.println("------------------------------------");
+        }
+    }
+
+    /**
+     * 用户分组
+     * @param userId
+     */
+    public void usetGroup(String userId){
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+        UserResource userInfo = userResource.get(userId);
+
+        //组
+        List<GroupRepresentation> groups = userInfo.groups();
+        if(groups != null){
+            for (GroupRepresentation group : groups) {
+                //分组类
+                System.out.println(group.getName());
+            }
+        }
+    }
+
+    /**
+     * 用户角色
+     * @param userId
+     */
+    public void usetRole(String userId){
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+        UserResource userInfo = userResource.get(userId);
+        //角色
+        RoleMappingResource roles = userInfo.roles();
+        MappingsRepresentation mappingsRepresentation = roles.getAll();
+        List<RoleRepresentation> realmMappings = mappingsRepresentation.getRealmMappings();
+        if(realmMappings != null){
+            for (RoleRepresentation realmMapping : realmMappings) {
+                //角色类
+                System.out.println(realmMapping.getName());
+            }
+        }
+    }
 }

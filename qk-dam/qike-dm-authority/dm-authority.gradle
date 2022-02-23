@@ -63,7 +63,7 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 //    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus'
 
-    implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '15.0.2'
+    implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '17.0.0'
     implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1.1'
 
 
