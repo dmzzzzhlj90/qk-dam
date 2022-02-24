@@ -44,22 +44,22 @@ public class DasApiCreateSqlScriptVO {
     private String accessMethod;
 
     /**
-     * 数据源类型
+     * 数据源连接类型
      */
     @NotBlank(message = "数据源类型不能为空！")
-    private String dataSourceType;
+    private String connectType;
 
     /**
-     * 数据源连接
+     * 数据源连接名称
      */
     @NotBlank(message = "数据源连接不能为空！")
-    private String dataSourceConnect;
+    private String dataSourceName;
 
     /**
      * 数据库
      */
     @NotBlank(message = "数据库不能为空！")
-    private String dataBase;
+    private String dataBaseName;
 
     /**
      * 请求参数

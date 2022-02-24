@@ -53,8 +53,7 @@ public class DasSyncApiGatewayController {
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.CREATE)
   public DefaultCommonResult apiSixRoutesRegisterAll(@RequestParam("upstreamId") String upstreamId,
                                                      @RequestParam("serviceId") String serviceId) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,
-            dasSyncApiGatewayService.apiSixRoutesRegisterAll(upstreamId, serviceId));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixRoutesRegisterAll(upstreamId, serviceId));
   }
 
   /**
@@ -68,8 +67,7 @@ public class DasSyncApiGatewayController {
   public DefaultCommonResult apiSixRoutesRegisterByPath(@RequestParam("upstreamId") String upstreamId,
                                                         @RequestParam("serviceId") String serviceId,
                                                         @RequestParam("apiPath") String apiPath) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,
-            dasSyncApiGatewayService.apiSixRoutesRegisterByPath(upstreamId, serviceId, apiPath));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixRoutesRegisterByPath(upstreamId, serviceId, apiPath));
   }
 
   //    /**
@@ -90,8 +88,7 @@ public class DasSyncApiGatewayController {
    */
   @PostMapping("/apiSix/consumers/keyAuth")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.DETAIL)
-  public DefaultCommonResult apiSixConsumersKeyAuth(
-      @RequestBody ApiSixConsumerInfo apiSixConsumerInfo) {
+  public DefaultCommonResult apiSixConsumersKeyAuth(@RequestBody ApiSixConsumerInfo apiSixConsumerInfo) {
     dasSyncApiGatewayService.apiSixConsumersKeyAuth(apiSixConsumerInfo);
     return DefaultCommonResult.success();
   }
@@ -104,8 +101,7 @@ public class DasSyncApiGatewayController {
   @GetMapping("/apiSix/upstream/info")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<List> apiSixUpstreamInfo() {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixUpstreamInfo());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixUpstreamInfo());
   }
 
   /**
@@ -116,8 +112,7 @@ public class DasSyncApiGatewayController {
   @GetMapping("/apiSix/service/info")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.DETAIL)
   public DefaultCommonResult<List> apiSixServiceInfo() {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixServiceInfo());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasSyncApiGatewayService.apiSixServiceInfo());
   }
 
   /**
