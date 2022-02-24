@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -53,6 +54,9 @@ public class RptUserServiceImpl implements RptUserService {
                 userList);
     }
 
+    public String genarte() throws SQLException {
+       return DB.queryOne("select * from users",Maps.newHashMap()).getStr("name");
+    }
     @Override
     public Boolean menuPermissions(OAuth2AuthorizedClient authorizedClient) {
         return ClientUserInfo.menuPermissions(jwtDecoder,authorizedClient);
