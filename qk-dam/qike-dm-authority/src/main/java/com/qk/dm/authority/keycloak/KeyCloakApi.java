@@ -1,8 +1,11 @@
 package com.qk.dm.authority.keycloak;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.mapstruct.KeyCloakMapper;
+import com.qk.dm.authority.util.Util;
 import com.qk.dm.authority.vo.*;
+import com.qk.dm.authority.vo.params.UserParamVO;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.*;
 import org.keycloak.representations.idm.*;
@@ -78,6 +81,26 @@ public class KeyCloakApi {
         List<UserRepresentation> userList = userResource.search("user", 0, 10);
         return userList.stream().map(KeyCloakMapper.INSTANCE::userInfo).collect(Collectors.toList());
     }
+
+    public PageResultVO<UserInfoVO> getUserList(UserParamVO userParamVO) {
+        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
+        Integer count = keycloak.realm(TARGET_REALM).users().count();
+        List<UserRepresentation> userList = userResource.search(userParamVO.getSearch(),
+                Util.dealPage(userParamVO), userParamVO.getPagination().getSize());
+        List<UserInfoVO> collect = userList.stream().map(user -> {
+            UserInfoVO userInfoVO = KeyCloakMapper.INSTANCE.userInfo(user);
+            userInfoVO.setClientRoleList(userClientRole(user.getId()));
+            //组
+            userInfoVO.setGroupList(userGroup(user.getId()));
+            return userInfoVO;
+        }).collect(Collectors.toList());
+        return new PageResultVO<>(
+                (long) count,
+                userParamVO.getPagination().getPage(),
+                userParamVO.getPagination().getSize(),
+                collect);
+    }
+
 
     /**
      * 用户详情

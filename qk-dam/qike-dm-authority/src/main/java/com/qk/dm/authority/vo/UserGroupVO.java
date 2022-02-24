@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ *用户组
  * @author shenpj
  * @date 2022/2/22 16:54
  * @since 1.0.0
