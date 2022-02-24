@@ -1,14 +1,19 @@
 package com.qk.dm.authority.keycloak;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.mapstruct.KeyCloakMapper;
-import com.qk.dm.authority.vo.*;
+import com.qk.dm.authority.util.Util;
+import com.qk.dm.authority.vo.GroupVO;
+import com.qk.dm.authority.vo.RoleVO;
+import com.qk.dm.authority.vo.UserInfoVO;
+import com.qk.dm.authority.vo.UserVO;
+import com.qk.dm.authority.vo.params.UserParamVO;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.*;
 import org.keycloak.representations.idm.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 
 import javax.ws.rs.core.Response;
 import java.util.*;
@@ -37,17 +42,25 @@ public class KeyCloakApi {
      * 获取用户列表
      *
      * @return
+     * @param userParamVO
      */
-    public List<UserInfoVO> getUserList() {
+    public PageResultVO<UserInfoVO> getUserList(UserParamVO userParamVO) {
         UsersResource userResource = keycloak.realm(TARGET_REALM).users();
-        List<UserRepresentation> userList = userResource.search("user", 0, 10);
-        return userList.stream().map(user -> {
+        Integer count = keycloak.realm(TARGET_REALM).users().count();
+        List<UserRepresentation> userList = userResource.search(userParamVO.getSearch(),
+            Util.dealPage(userParamVO),userParamVO.getPagination().getSize());
+        List<UserInfoVO> collect = userList.stream().map(user -> {
             UserInfoVO userInfoVO = KeyCloakMapper.INSTANCE.userInfo(user);
             userInfoVO.setRoleList(userRole(user.getId()));
             //组
             userInfoVO.setGroupList(userGroup(user.getId()));
             return userInfoVO;
         }).collect(Collectors.toList());
+        return new PageResultVO<>(
+            (long) count,
+            userParamVO.getPagination().getPage(),
+            userParamVO.getPagination().getSize(),
+            collect);
     }
 
     /**
@@ -55,7 +68,7 @@ public class KeyCloakApi {
      */
     public void createUser(UserVO userVO) {
         userVO = UserVO.builder()
-                .username("zhangsan")
+                .username("ceshi")
                 .enabled(true)
                 .firstName("名称")
                 .lastName("姓")
@@ -181,7 +194,10 @@ public class KeyCloakApi {
         RoleMappingResource roles = userResource.get(userId).roles();
         MappingsRepresentation mappingsRepresentation = roles.getAll();
         List<RoleRepresentation> realmMappings = mappingsRepresentation.getRealmMappings();
-        return realmMappings.stream().map(KeyCloakMapper.INSTANCE::userRole).collect(Collectors.toList());
+        List<RoleVO> collect = realmMappings.stream()
+            .map(KeyCloakMapper.INSTANCE::userRole)
+            .collect(Collectors.toList());
+        return collect;
     }
 
     /**

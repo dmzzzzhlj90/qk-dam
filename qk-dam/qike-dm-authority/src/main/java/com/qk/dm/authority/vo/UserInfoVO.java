@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 用户信息
  * @author shenpj
  * @date 2022/2/22 11:54
  * @since 1.0.0
