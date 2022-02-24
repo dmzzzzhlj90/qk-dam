@@ -38,8 +38,12 @@ public enum RegisterBackendParamHeaderInfoEnum {
     /**
      * 后端参数位置
      */
-    BACKEND_PARA_POSITION("backendParaPosition", "后端参数位置",true);
+    BACKEND_PARA_POSITION("backendParaPosition", "后端参数位置",true),
 
+    /**
+     * 描述
+     */
+    DESCRIPTION("description", "描述",false);
 
     private String key;
     private String value;

@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
+import java.util.Map;
+
 /**
  * 数据服务_新建API_脚本方式
  *
@@ -68,4 +71,16 @@ public class DasApiCreateSqlScriptController {
     dasApiCreateSqlScriptService.update(dasApiCreateSqlScriptVO);
     return DefaultCommonResult.success();
   }
+
+  /**
+   * 新建API_SQL脚本方式__参数设置__表头信息
+   *
+   * @return DefaultCommonResult
+   */
+  @GetMapping("/param/header/info")
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+  public DefaultCommonResult<LinkedList<Map<String, Object>>> getParamHeaderInfo() {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSqlScriptService.getParamHeaderInfo());
+  }
+
 }

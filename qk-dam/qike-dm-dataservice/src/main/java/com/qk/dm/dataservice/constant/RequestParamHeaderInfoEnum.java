@@ -21,6 +21,12 @@ public enum RequestParamHeaderInfoEnum {
     PARA_NAME("paraName", "http请求参数",true),
 
     /**
+     * http请求参数中文名称
+     */
+    PARA_CHN_NAME("paraCHNName", "http请求参数中文名称",false),
+
+
+    /**
      * 入参位置
      */
     PARA_POSITION("paraPosition", "入参位置",true),
@@ -41,14 +47,14 @@ public enum RequestParamHeaderInfoEnum {
     SUPPORT_NULL("supportNull", "允许空值",true),
 
     /**
-     * 默认值
-     */
-    DEFAULT_VALUE("defaultValue", "默认值",false),
-
-    /**
      * 示例值
      */
     EXAMPLE_VALUE("exampleValue", "示例值",false),
+
+    /**
+     * 默认值
+     */
+    DEFAULT_VALUE("defaultValue", "默认值",false),
 
     /**
      * 描述

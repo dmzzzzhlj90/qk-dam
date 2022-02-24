@@ -3,6 +3,9 @@ package com.qk.dm.dataservice.service;
 import com.qk.dm.dataservice.vo.DasApiCreateSqlScriptVO;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
+import java.util.Map;
+
 /**
  * 数据服务_新建API_脚本方式
  *
@@ -18,4 +21,7 @@ public interface DasApiCreateSqlScriptService {
   void insert(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 
   void update(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
+
+  LinkedList<Map<String, Object>> getParamHeaderInfo();
+
 }

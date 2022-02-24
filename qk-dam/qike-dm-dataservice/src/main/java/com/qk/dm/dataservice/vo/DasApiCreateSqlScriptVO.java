@@ -64,12 +64,12 @@ public class DasApiCreateSqlScriptVO {
     /**
      * 请求参数
      */
-    private List<DasApiCreateRequestParasVO> apiCreateRequestParasVOS;
+    private List<DasApiCreateSqlRequestParasVO> apiCreateSqlRequestParasVOS;
 
-    /**
-     * 响应参数
-     */
-    private List<DasApiCreateResponseParasVO> apiCreateResponseParasVOS;
+//    /**
+//     * 响应参数
+//     */
+//    private List<DasApiCreateResponseParasVO> apiCreateResponseParasVOS;
 
     /**
      * 排序参数

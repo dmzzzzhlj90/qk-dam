@@ -6,45 +6,46 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 注册API_后端服务参数VO
+ * 新建API_SQL脚本方式_请求参数VO
  *
  * @author wjq
- * @date 20210907
+ * @date 20220224
  * @since 1.0.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DasApiRegisterBackendParaVO {
+public class DasApiCreateSqlRequestParasVO {
 
     /**
-     * 入参名称
+     * 变量
+     */
+    private String variable;
+
+    /**
+     * 请求参数
      */
     private String paraName;
 
     /**
-     * 入参位置
-     */
-    private String paraPosition;
-
-    /**
-     * 入参类型
+     * 参数类型
      */
     private String paraType;
 
     /**
-     * 后端参数名称
+     * 是否必填
      */
-    private String backendParaName;
+    private String necessary;
 
     /**
-     * 后端参数位置
+     * 示例值
      */
-    private String backendParaPosition;
+    private String exampleValue;
 
     /**
      * 描述
      */
     private String description;
+
 }

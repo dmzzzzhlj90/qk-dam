@@ -7,55 +7,61 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * 注册API_常量参数表头信息
+ * 新建API_SQL脚本方式_请求参数表头信息
  *
  * @author wjq
  * @date 20220221
  * @since 1.0.0
  */
-public enum RegisterConstantParamHeaderInfoEnum {
+public enum CreateSqlRequestParamHeaderInfoEnum {
 
     /**
-     * 常量参数名称
+     * 变量
      */
-    CONSTANT_PARA_NAME("constantParaName", "常量参数名称", true),
+    VARIABLE("variable", "变量",true),
 
     /**
-     * 参数位置
+     * 请求参数
      */
-    CONSTANT_PARA_POSITION("constantParaPosition", "参数位置", true),
+    PARA_NAME("paraName", "请求参数",true),
 
     /**
      * 参数类型
      */
-    CONSTANT_PARA_TYPE("constantParaType", "参数类型", true),
+    PARA_TYPE("paraType", "参数类型",true),
 
     /**
-     * 参数值
+     * 是否必填
      */
-    CONSTANT_PARA_VALUE("constantParaValue", "参数值", true),
+    NECESSARY("necessary", "是否必填",true),
+
+    /**
+     * 示例值
+     */
+    EXAMPLE_VALUE("exampleValue", "是否必填",false),
+
 
     /**
      * 描述
      */
-    DESCRIPTION("description", "描述", false);
+    DESCRIPTION("description", "描述",false);
 
 
     private String key;
     private String value;
     private boolean required;
 
-    RegisterConstantParamHeaderInfoEnum(String key, String value, boolean required) {
+    CreateSqlRequestParamHeaderInfoEnum(String key, String value, boolean required) {
         this.key = key;
         this.value = value;
         this.required = required;
     }
 
-    public static RegisterConstantParamHeaderInfoEnum getVal(String value) {
+    public static CreateSqlRequestParamHeaderInfoEnum getVal(String value) {
         if (StringUtils.isEmpty(value)) {
             return null;
         }
-        for (RegisterConstantParamHeaderInfoEnum enums : RegisterConstantParamHeaderInfoEnum.values()) {
+        for (CreateSqlRequestParamHeaderInfoEnum enums : CreateSqlRequestParamHeaderInfoEnum.values()) {
             if (value.equals(enums.value)) {
                 return enums;
             }
@@ -66,7 +72,7 @@ public enum RegisterConstantParamHeaderInfoEnum {
     public static LinkedList<Map<String, Object>> getAllValue() {
         LinkedList<Map<String, Object>> valList = new LinkedList<>();
 
-        for (RegisterConstantParamHeaderInfoEnum enums : RegisterConstantParamHeaderInfoEnum.values()) {
+        for (CreateSqlRequestParamHeaderInfoEnum enums : CreateSqlRequestParamHeaderInfoEnum.values()) {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put(DasConstant.PARAM_KEY, enums.key);
             map.put(DasConstant.PARAM_VALUE, enums.value);

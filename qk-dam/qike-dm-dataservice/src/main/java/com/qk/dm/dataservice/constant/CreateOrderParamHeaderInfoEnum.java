@@ -21,14 +21,14 @@ public enum CreateOrderParamHeaderInfoEnum {
     ORDER_NUM("orderNum", "序号",true),
 
     /**
-     * 字段名称
-     */
-    COLUMN_NAME("columnName", "字段名称",true),
-
-    /**
      * 参数名称
      */
     PARA_NAME("paraName", "参数名称",true),
+
+    /**
+     * 字段名称
+     */
+    COLUMN_NAME("columnName", "字段名称",true),
 
     /**
      * 是否可选
