@@ -10,16 +10,16 @@ spring:
     nacos:
       discovery:
         server-addr: http://172.21.32.2
-        namespace: dam-test
+        namespace: dam-dev
       config:
         server-addr: http://172.21.32.2
-        namespace: dam-test
+        namespace: dam-dev
         extension-configs:
-          - dataId: qkreptile-mysql-test.yml
+          - dataId: qkreptile-mysql-dev.yml
             group: DAM
             refresh: true
-          - dataId: qkreptile-oauth2-test.yml
+          - dataId: qkreptile-oauth2-dev.yml
             group: DAM
             refresh: true
   profiles:
-    active: test
+    active: dev

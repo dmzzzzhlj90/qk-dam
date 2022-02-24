@@ -132,8 +132,10 @@ public class ReptileServerFactory {
                 .method(selector.getSelector())
                 .val(Objects.isNull(selector.getSelectorVal())?EMPTY:selector.getSelectorVal())
                 .num(selector.getElementType())
-                .before(Objects.isNull(selector.getBeforePrefix())?EMPTY:selector.getBeforePrefix())
-                .after(Objects.isNull(selector.getAfterPrefix())?EMPTY:selector.getAfterPrefix())
+                .request_before(Objects.isNull(selector.getRequestBeforePrefix())?EMPTY:selector.getRequestBeforePrefix())
+                .request_after(Objects.isNull(selector.getRequestAfterPrefix())?EMPTY:selector.getRequestAfterPrefix())
+                .source_before(Objects.isNull(selector.getSourceBeforePrefix())?EMPTY:selector.getSourceBeforePrefix())
+                .source_after(Objects.isNull(selector.getSourceAfterPrefix())?EMPTY:selector.getSourceAfterPrefix())
                 .build(),(k1,k2) ->k1));
     }
 
