@@ -29,7 +29,7 @@ public class UserInfoVO {
     //属性
     private Map<String, List<String>> attributes;
     //角色
-    private List<RoleVO> roleList;
+    private List<RoleVO> clientRoleList;
     //组
     private List<GroupVO> groupList;
 }

@@ -46,4 +46,7 @@ public class KeyCloakConfig {
 //        return Keycloak.getInstance(url, masterRealm, userName, password, clientId);
     }
 
+    public String getClientId() {
+        return clientId;
+    }
 }

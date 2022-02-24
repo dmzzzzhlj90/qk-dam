@@ -1,12 +1,7 @@
 package com.qk.dm.authority.mapstruct;
 
-import com.qk.dm.authority.vo.GroupVO;
-import com.qk.dm.authority.vo.RoleVO;
-import com.qk.dm.authority.vo.UserInfoVO;
-import com.qk.dm.authority.vo.UserVO;
-import org.keycloak.representations.idm.GroupRepresentation;
-import org.keycloak.representations.idm.RoleRepresentation;
-import org.keycloak.representations.idm.UserRepresentation;
+import com.qk.dm.authority.vo.*;
+import org.keycloak.representations.idm.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -24,13 +19,25 @@ public interface KeyCloakMapper {
 
     RoleVO userRole(RoleRepresentation roleRepresentation);
 
+    List<RoleVO> userRole(List<RoleRepresentation> roleRepresentation);
+
     GroupVO userGroup(GroupRepresentation groupRepresentation);
 
-    List<UserInfoVO> userInfoList(List<UserRepresentation> userRepresentation);
+    List<GroupVO> userGroup(List<GroupRepresentation> groupRepresentation);
+
+    UserInfoVO userInfo(UserRepresentation userRepresentation);
+
+    List<UserInfoVO> userInfo(List<UserRepresentation> userRepresentation);
+
+    UserRepresentation userInfo(UserVO userVO);
 
     void userUpdate(UserVO dqcRuleTemplateVo, @MappingTarget UserRepresentation dqcRuleTemplate);
 
-    UserRepresentation userRep(UserVO userVO);
+    RealmVO userRealm(RealmRepresentation realmRepresentation);
 
-    UserInfoVO userInfo(UserRepresentation userRepresentation);
+    List<RealmVO> userRealm(List<RealmRepresentation> realmRepresentation);
+
+    ClientVO userClient(ClientRepresentation clientRepresentation);
+
+    List<ClientVO> userClient(List<ClientRepresentation> clientRepresentation);
 }

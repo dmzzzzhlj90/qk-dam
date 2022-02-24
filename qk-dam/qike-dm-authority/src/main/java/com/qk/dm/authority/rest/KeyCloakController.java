@@ -21,19 +21,43 @@ public class KeyCloakController {
         this.keyCloakApi = keyCloakApi;
     }
 
+    @GetMapping("/realmList")
+    public Object realmList(){
+        return keyCloakApi.realmList();
+    }
+
+    @GetMapping("/clientList")
+    public Object clientList(){
+        return keyCloakApi.clientList();
+    }
+
     @GetMapping("/users")
     public Object getUsers(){
         return keyCloakApi.getUserList();
     }
 
-    @GetMapping("/resetUserAttributes")
-    public void resetUserAttributes(){
-        UserVO build = UserVO.builder().id("fabb1284-7a5b-43d4-bb8d-86ca8720d41c").build();
-        keyCloakApi.resetUserAttributes(build);
+    @GetMapping("/user")
+    public Object getUser(String userId){
+        return keyCloakApi.userDetail(userId);
+    }
+
+    @GetMapping("/groupList")
+    public Object groupList(){
+        return keyCloakApi.groupList();
     }
 
     @GetMapping("/group")
-    public void group(){
-        keyCloakApi.groupList();
+    public Object group(String groupId){
+        return keyCloakApi.groupDetail(groupId);
+    }
+
+    @GetMapping("/clientRoleList")
+    public Object clientRoleList(){
+        return keyCloakApi.clientRoleList();
+    }
+
+    @GetMapping("/clientRoleDetail")
+    public Object clientRoleDetail(String roleName){
+        return keyCloakApi.clientRoleDetail(roleName);
     }
 }
