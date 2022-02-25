@@ -130,10 +130,12 @@ public class ReptileServerFactory {
 
         return selectorList.stream().collect(Collectors.toMap(RptSelectorColumnInfoVO::getColumnCode, selector-> RptSelectorBuilder.builder()
                 .method(selector.getSelector())
-                .val(Objects.isNull(selector.getSelectorVal())?EMPTY:selector.getSelectorVal())
+                .val(Objects.requireNonNullElse(selector.getSelectorVal(),EMPTY))
                 .num(selector.getElementType())
-                .before(Objects.isNull(selector.getBeforePrefix())?EMPTY:selector.getBeforePrefix())
-                .after(Objects.isNull(selector.getAfterPrefix())?EMPTY:selector.getAfterPrefix())
+                .request_before(Objects.requireNonNullElse(selector.getRequestBeforePrefix(),EMPTY))
+                .request_after(Objects.requireNonNullElse(selector.getRequestAfterPrefix(),EMPTY))
+                .source_before(Objects.requireNonNullElse(selector.getSourceBeforePrefix(),EMPTY))
+                .source_after(Objects.requireNonNullElse(selector.getSourceAfterPrefix(),EMPTY))
                 .build(),(k1,k2) ->k1));
     }
 

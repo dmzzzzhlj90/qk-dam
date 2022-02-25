@@ -60,16 +60,28 @@ public class RptSelectorColumnInfo implements Serializable {
     private Integer elementType;
 
     /**
-     * 前缀
+     * 请求前缀
      */
-    @Column(name = "before_prefix")
-    private String  beforePrefix;
+    @Column(name = "request_before_prefix")
+    private String  requestBeforePrefix;
 
     /**
-     * 后缀
+     * 请求后缀
      */
-    @Column(name = "after_prefix")
-    private String afterPrefix;
+    @Column(name = "request_after_prefix")
+    private String requestAfterPrefix;
+
+    /**
+     * 来源前缀
+     */
+    @Column(name = "source_before_prefix")
+    private String sourceBeforePrefix;
+
+    /**
+     * 来源后缀
+     */
+    @Column(name = "source_after_prefix")
+    private String sourceAfterPrefix;
 
     /**
      * 创建时间

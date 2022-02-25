@@ -12,5 +12,7 @@ public interface RptConfigInfoRepository extends BaseRepository<RptConfigInfo, L
 
     RptConfigInfo findByParentId(Long parentId);
 
+    List<RptConfigInfo> findAllByBaseInfoIdAndParentId(Long baseInfoId,Long parentId);
+
     void deleteAllByBaseInfoId(Long baseInfoId);
 }

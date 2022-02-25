@@ -47,11 +47,22 @@ public class RptSelectorColumnInfoDTO {
      */
     private Integer elementType;
     /**
-     * 前缀
+     * 请求前缀
      */
-    private String  beforePrefix;
+    private String  requestBeforePrefix;
+
     /**
-     * 后缀
+     * 请求后缀
      */
-    private String afterPrefix;
+    private String requestAfterPrefix;
+
+    /**
+     * 来源前缀
+     */
+    private String sourceBeforePrefix;
+
+    /**
+     * 来源后缀
+     */
+    private String sourceAfterPrefix;
 }
