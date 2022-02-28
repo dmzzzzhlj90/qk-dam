@@ -5,16 +5,18 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
- * 同步数据服务API至服务网关
+ * API发布_同步数据服务API至服务网关
  *
  * @author wjq
  * @date 20210819
  * @since 1.0.0
  */
 @Service
-public interface DasSyncApiGatewayService {
+public interface DasReleaseApiService {
 
   //    void syncApiSixRoutesAll();
+
+  void syncApiSixRoutes(String nearlyApiPath, String apiSyncType, List<String> apiIds);
 
   int apiSixRoutesRegisterAll(String upstreamId, String serviceId);
 
@@ -29,4 +31,5 @@ public interface DasSyncApiGatewayService {
   List apiSixServiceInfo();
 
   void clearRouteInfo();
+
 }

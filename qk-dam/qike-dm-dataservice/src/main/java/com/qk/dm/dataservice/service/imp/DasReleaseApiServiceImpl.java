@@ -18,7 +18,7 @@ import com.qk.dm.dataservice.manager.ApiGatewayManager;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
-import com.qk.dm.dataservice.service.DasSyncApiGatewayService;
+import com.qk.dm.dataservice.service.DasReleaseApiService;
 import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
@@ -34,14 +34,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 /**
- * 同步数据服务API至服务网关
+ * API发布_同步数据服务API至服务网关
  *
  * @author wjq
  * @date 20210819
  * @since 1.0.0
  */
 @Service
-public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
+public class DasReleaseApiServiceImpl implements DasReleaseApiService {
   private static final Log LOG = LogFactory.get("同步数据服务API至服务网关下载程序");
 
   private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
@@ -61,7 +61,7 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
   private final ApiSixConnectInfo apiSixConnectInfo;
 
   @Autowired
-  public DasSyncApiGatewayServiceImpl(
+  public DasReleaseApiServiceImpl(
       ApiGatewayManager apiGatewayManager,
       DasApiBasicInfoRepository dasApiBasicInfoRepository,
       DasApiRegisterRepository dasApiRegisterRepository,
@@ -82,6 +82,12 @@ public class DasSyncApiGatewayServiceImpl implements DasSyncApiGatewayService {
   //        singleSyncCreateApi(apiBasicInfoMap);
   //        LOG.info("====================数据服务API同步已经完成!====================");
   //    }
+
+
+  @Override
+  public void syncApiSixRoutes(String nearlyApiPath, String apiSyncType, List<String> apiIds) {
+
+  }
 
   @Override
   public int apiSixRoutesRegisterAll(String upstreamId, String serviceId) {
