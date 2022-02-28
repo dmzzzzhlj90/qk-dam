@@ -128,9 +128,11 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     public void update(DasApiRegisterVO dasApiRegisterVO) {
         // 更新API基础信息
         DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        dasApiBasicInfoVO.setApiType(ApiTypeEnum.REGISTER_API.getCode());
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新注册API
         DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
+        checkUpdateParams(dasApiRegisterDefinitionVO);
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterDefinitionVO);
         //请求参数转换
         setBackendRequestParaJson(dasApiRegisterDefinitionVO, dasApiRegister);
@@ -286,6 +288,18 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
                     GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getDasApiRegisterConstantParaVO()));
         }
     }
+
+
+    private void checkUpdateParams(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO) {
+        if (ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getId())) {
+            throw new BizException("注册API信息,ID参数为空,编辑失败!!!");
+        }
+
+        if (ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getApiId())) {
+            throw new BizException("注册API信息,apiId参数为空,编辑失败!!!");
+        }
+    }
+
 
     //    @Transactional
     //    @Override
