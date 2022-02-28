@@ -239,6 +239,11 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DataTypeEnum.getAllValue();
     }
 
+    @Override
+    public Map<String, String> getSyncType() {
+        return ApiSyncTypeEnum.getAllValue();
+    }
+
     private DasApiBasicInfoVO transformToVO(DasApiBasicInfo dasApiBasicInfo) {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
     }

@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -166,4 +165,16 @@ public class DasApiBasicInfoController {
     public DefaultCommonResult<Map<String, String>> getDataType() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDataType());
     }
+
+    /**
+     * API同步方式
+     *
+     * @return DefaultCommonResult<Map < String, String>>
+     */
+    @GetMapping(value = "/sync/type")
+//  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
+    public DefaultCommonResult<Map<String, String>> getSyncType() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getSyncType());
+    }
+
 }

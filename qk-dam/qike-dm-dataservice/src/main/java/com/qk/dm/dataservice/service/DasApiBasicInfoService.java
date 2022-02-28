@@ -47,4 +47,6 @@ public interface DasApiBasicInfoService {
 
   Map<String, String> getDataType();
 
+  Map<String, String> getSyncType();
+
 }
