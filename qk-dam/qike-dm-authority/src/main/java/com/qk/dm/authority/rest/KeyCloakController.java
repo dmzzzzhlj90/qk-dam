@@ -58,13 +58,13 @@ public class KeyCloakController {
     }
 
     @GetMapping("/clientRoleList")
-    public Object clientRoleList() {
-        return keyCloakApi.clientRoleList();
+    public Object clientRoleList(String realm,String id,String search, Pagination pagination) {
+        return keyCloakApi.clientRoleList(realm,id,search,pagination);
     }
 
     @GetMapping("/clientRoleDetail")
-    public Object clientRoleDetail(String roleName) {
-        return keyCloakApi.clientRoleDetail(roleName);
+    public Object clientRoleDetail(String realm,String id,String roleName) {
+        return keyCloakApi.clientRoleDetail(realm,id,roleName);
     }
 
 //    /**
@@ -106,5 +106,19 @@ public class KeyCloakController {
     public void deleteUserGroup() {
         String id = "48340692-b6de-47d1-aee0-b0abbef54a23";
         keyCloakApi.deleteUserGroup("demoRealm",id,"c0b49540-47b7-45b0-bb40-0a19c92eee11");
+    }
+
+    @GetMapping("/addUserClientRole")
+    public void addUserClientRole() {
+        String clentId = "6fdfce20-1f50-43a2-bbbe-62337e35c3d9";
+        String userId = "48340692-b6de-47d1-aee0-b0abbef54a23";
+        keyCloakApi.addUserClientRole("demoRealm",clentId,userId,"测试角色3");
+    }
+
+    @GetMapping("/deleteUserClientRole")
+    public void deleteUserClientRole() {
+        String clentId = "6fdfce20-1f50-43a2-bbbe-62337e35c3d9";
+        String userId = "48340692-b6de-47d1-aee0-b0abbef54a23";
+        keyCloakApi.deleteUserClientRole("demoRealm",clentId,userId,"测试角色3");
     }
 }
