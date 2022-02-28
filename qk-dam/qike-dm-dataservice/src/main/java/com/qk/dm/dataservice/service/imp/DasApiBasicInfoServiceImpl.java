@@ -122,6 +122,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        checkUpdateParams(dasApiBasicInfoVO);
         Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfoVO.getApiId());
         Optional<DasApiBasicInfo> optionalDasApiBasicInfo = dasApiBasicinfoRepository.findOne(predicate);
         if (optionalDasApiBasicInfo.isEmpty()) {
@@ -261,6 +262,20 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO())) {
             dasApiBasicInfo.setDefInputParam(
                     GsonUtil.toJsonString(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO()));
+        }
+    }
+
+    private void checkUpdateParams(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        if (ObjectUtils.isEmpty(dasApiBasicInfoVO.getId())) {
+            throw new BizException("API基础信息,ID参数为空,编辑失败!!!");
+        }
+
+        if (ObjectUtils.isEmpty(dasApiBasicInfoVO.getApiId())) {
+            throw new BizException("API基础信息,apiId参数为空,编辑失败!!!");
+        }
+
+        if (ObjectUtils.isEmpty(dasApiBasicInfoVO.getStatus())) {
+            throw new BizException("API基础信息,状态status参数为空,编辑失败!!!");
         }
     }
 
