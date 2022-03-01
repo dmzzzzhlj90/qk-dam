@@ -12,6 +12,7 @@ import org.keycloak.admin.client.resource.*;
 import org.keycloak.representations.idm.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
 import javax.ws.rs.core.Response;
@@ -23,30 +24,11 @@ import java.util.stream.Collectors;
  * @date 2022/2/22 11:13
  * @since 1.0.0
  */
-@Component
+@Service
 public class KeyCloakApi {
-    private static String TARGET_REALM = "demoRealm";
-    private static String id = "6fdfce20-1f50-43a2-bbbe-62337e35c3d9";
-    private static String client_id = "demoClient";
 
     @Autowired
     private Keycloak keycloak;
-
-
-    private static Keycloak getKeycloak() {
-        Keycloak keycloak = Keycloak.getInstance("http://172.20.0.9:8080/auth/", "master", "admin", "zhudao123", "admin-cli");
-        System.out.println(keycloak.tokenManager().getAccessTokenString());
-        return keycloak;
-    }
-
-    public static void main(String[] args) {
-        Keycloak keycloak = getKeycloak();
-        RealmsResource realms = keycloak.realms();
-        List<RealmRepresentation> all = realms.findAll();
-        List<RealmVO> realmVOS = KeyCloakMapper.INSTANCE.userRealm(all);
-        System.out.println(realmVOS);
-
-    }
 
     /**
      * 所有域
@@ -63,12 +45,12 @@ public class KeyCloakApi {
      * 域下客户端列表
      *
      * @param realm
-     * @param clientId
+     * @param client_clientId
      * @return
      */
-    public List<ClientVO> clientListByRealm(String realm, String clientId) {
+    public List<ClientVO> clientListByRealm(String realm, String client_clientId) {
         ClientsResource clients = keycloak.realm(realm).clients();
-        List<ClientRepresentation> list = clients.findAll(clientId, true, true, null, null);
+        List<ClientRepresentation> list = clients.findAll(client_clientId, true, true, null, null);
         return KeyCloakMapper.INSTANCE.userClient(list);
     }
 
@@ -151,8 +133,7 @@ public class KeyCloakApi {
      * @param id
      */
     public void resetUserAttributes(String realm, String id, Map<String, List<String>> map) {
-        UsersResource userResource = keycloak.realm(realm).users();
-        UserResource user = userResource.get(id);
+        UserResource user = keycloak.realm(realm).users().get(id);
         UserRepresentation userRepresentation = user.toRepresentation();
         //属性
         Map<String, List<String>> attribute = userRepresentation.getAttributes();
@@ -164,6 +145,24 @@ public class KeyCloakApi {
 //        attributeMap.put("test", Arrays.asList("123"));
         userRepresentation.setAttributes(attributeMap);
         user.update(userRepresentation);
+    }
+
+    /**
+     * 用户详情
+     *
+     * @param realm
+     * @param userId
+     * @return
+     */
+    public UserInfoVO userDetail(String realm, String userId) {
+        UserResource resource = keycloak.realm(realm).users().get(userId);
+        UserRepresentation user = resource.toRepresentation();
+        UserInfoVO userInfoVO = KeyCloakMapper.INSTANCE.userInfo(user);
+        //角色 todo 在这里用户不传客户端id，用户角色单独查询
+//        userInfoVO.setClientRoleList(getUserClientRole(resource,client_clientId));
+        //组
+        userInfoVO.setGroupList(getGroupList(resource));
+        return userInfoVO;
     }
 
     /**
@@ -185,24 +184,6 @@ public class KeyCloakApi {
                 pagination.getPage(),
                 pagination.getSize(),
                 KeyCloakMapper.INSTANCE.userInfo(userList));
-    }
-
-    /**
-     * 用户详情
-     *
-     * @param realm
-     * @param userId
-     * @return
-     */
-    public UserInfoVO userDetail(String realm, String userId) {
-        UserResource resource = keycloak.realm(realm).users().get(userId);
-        UserRepresentation user = resource.toRepresentation();
-        UserInfoVO userInfoVO = KeyCloakMapper.INSTANCE.userInfo(user);
-        //角色
-        userInfoVO.setClientRoleList(getUserClientRole(resource));
-        //组
-        userInfoVO.setGroupList(getGroupList(resource));
-        return userInfoVO;
     }
 
 
@@ -316,12 +297,12 @@ public class KeyCloakApi {
      * 新增客户端角色
      *
      * @param realm
-     * @param clentId
+     * @param client_id
      * @param roleName
      * @param description
      */
-    public void addClientRole(String realm, String clentId, String roleName, String description) {
-        RolesResource roles = keycloak.realm(realm).clients().get(clentId).roles();
+    public void addClientRole(String realm, String client_id, String roleName, String description) {
+        RolesResource roles = keycloak.realm(realm).clients().get(client_id).roles();
         RoleRepresentation roleRepresentation = new RoleRepresentation();
         roleRepresentation.setName(roleName);
         roleRepresentation.setDescription(description);
@@ -332,12 +313,12 @@ public class KeyCloakApi {
      * 修改客户端角色
      *
      * @param realm
-     * @param clentId
+     * @param client_id
      * @param roleName
      * @param description
      */
-    public void updateClientRole(String realm, String clentId, String roleName, String description) {
-        RoleResource roleResource = keycloak.realm(realm).clients().get(clentId).roles().get(roleName);
+    public void updateClientRole(String realm, String client_id, String roleName, String description) {
+        RoleResource roleResource = keycloak.realm(realm).clients().get(client_id).roles().get(roleName);
         RoleRepresentation roleRepresentation = roleResource.toRepresentation();
         roleRepresentation.setDescription(description);
         roleResource.update(roleRepresentation);
@@ -347,11 +328,11 @@ public class KeyCloakApi {
      * 删除客户端角色
      *
      * @param realm
-     * @param clentId
+     * @param client_id
      * @param roleName
      */
-    public void deleteClientRole(String realm, String clentId, String roleName) {
-        keycloak.realm(realm).clients().get(clentId).roles().get(roleName).remove();
+    public void deleteClientRole(String realm, String client_id, String roleName) {
+        keycloak.realm(realm).clients().get(client_id).roles().get(roleName).remove();
     }
 
     /**
@@ -360,8 +341,8 @@ public class KeyCloakApi {
      * @param roleName
      * @return
      */
-    public RoleVO clientRoleDetail(String realm, String clentId, String roleName) {
-        RoleResource roleResource = keycloak.realm(realm).clients().get(clentId).roles().get(roleName);
+    public RoleVO clientRoleDetail(String realm, String client_id, String roleName) {
+        RoleResource roleResource = keycloak.realm(realm).clients().get(client_id).roles().get(roleName);
         RoleVO roleVO = KeyCloakMapper.INSTANCE.userRole(roleResource.toRepresentation());
         Set<UserRepresentation> roleUserMembers = roleResource.getRoleUserMembers();
         List<UserInfoVO> userInfoVOS = KeyCloakMapper.INSTANCE.userInfo(new ArrayList<>(roleUserMembers));
@@ -374,8 +355,8 @@ public class KeyCloakApi {
      *
      * @return
      */
-    public PageResultVO<RoleVO> clientRoleList(String realm, String clentId, String search, Pagination pagination) {
-        RolesResource roles = keycloak.realm(realm).clients().get(clentId).roles();
+    public PageResultVO<RoleVO> clientRoleList(String realm, String client_id, String search, Pagination pagination) {
+        RolesResource roles = keycloak.realm(realm).clients().get(client_id).roles();
         //todo 分页
         List<RoleRepresentation> list = roles.list(
                 search,
@@ -394,17 +375,15 @@ public class KeyCloakApi {
      *
      * @param userId
      */
-    public List<RoleVO> userClientRole(String realm, String userId) {
-        return getUserClientRole(keycloak.realm(realm).users().get(userId));
+    public List<RoleVO> userClientRole(String realm, String userId,String client_clientId) {
+        return getUserClientRole(keycloak.realm(realm).users().get(userId),client_clientId);
     }
 
-    private List<RoleVO> getUserClientRole(UserResource resource) {
-        RoleMappingResource roles = resource.roles();
-        MappingsRepresentation mappingsRepresentation = roles.getAll();
+    private List<RoleVO> getUserClientRole(UserResource resource,String client_clientId) {
         List<RoleVO> roleVOS = null;
-        Map<String, ClientMappingsRepresentation> clientMappings = mappingsRepresentation.getClientMappings();
-        if (clientMappings != null && clientMappings.get(client_id) != null) {
-            ClientMappingsRepresentation clientMappingsRepresentation = clientMappings.get(client_id);
+        Map<String, ClientMappingsRepresentation> clientMappings = resource.roles().getAll().getClientMappings();
+        if(clientMappings != null && client_clientId != null && clientMappings.get(client_clientId) != null){
+            ClientMappingsRepresentation clientMappingsRepresentation = clientMappings.get(client_clientId);
             List<RoleRepresentation> mappings = clientMappingsRepresentation.getMappings();
             roleVOS = KeyCloakMapper.INSTANCE.userRole(mappings);
         }
@@ -415,47 +394,27 @@ public class KeyCloakApi {
      * 用户添加客户端角色
      *
      * @param realm
-     * @param clentId
+     * @param client_id
      * @param userId
      * @param name
      */
-    public void addUserClientRole(String realm, String clentId, String userId, String name) {
+    public void addUserClientRole(String realm, String client_id, String userId, String name) {
         RealmResource realmResource = keycloak.realm(realm);
-        RoleRepresentation clientRoleRep = realmResource.clients().get(clentId).roles().get(name).toRepresentation();
-        realmResource.users().get(userId).roles().clientLevel(clentId).add(Arrays.asList(clientRoleRep));
+        RoleRepresentation clientRoleRep = realmResource.clients().get(client_id).roles().get(name).toRepresentation();
+        realmResource.users().get(userId).roles().clientLevel(client_id).add(Arrays.asList(clientRoleRep));
     }
 
     /**
      * 用户删除客户端角色
      *
      * @param realm
-     * @param clentId
+     * @param client_id
      * @param userId
      * @param name
      */
-    public void deleteUserClientRole(String realm, String clentId, String userId, String name) {
+    public void deleteUserClientRole(String realm, String client_id, String userId, String name) {
         RealmResource realmResource = keycloak.realm(realm);
-        RoleRepresentation clientRoleRep = realmResource.clients().get(clentId).roles().get(name).toRepresentation();
-        realmResource.users().get(userId).roles().clientLevel(clentId).remove(Arrays.asList(clientRoleRep));
-    }
-
-
-    public PageResultVO<UserInfoVO> getUserList(UserParamVO userParamVO) {
-        UsersResource userResource = keycloak.realm(TARGET_REALM).users();
-        Integer count = keycloak.realm(TARGET_REALM).users().count();
-        List<UserRepresentation> userList = userResource.search(userParamVO.getSearch(),
-                Util.dealPage(userParamVO), userParamVO.getPagination().getSize());
-        List<UserInfoVO> collect = userList.stream().map(user -> {
-            UserInfoVO userInfoVO = KeyCloakMapper.INSTANCE.userInfo(user);
-            userInfoVO.setClientRoleList(userClientRole(TARGET_REALM,user.getId()));
-            //组
-            userInfoVO.setGroupList(userGroup(TARGET_REALM,user.getId()));
-            return userInfoVO;
-        }).collect(Collectors.toList());
-        return new PageResultVO<>(
-                (long) count,
-                userParamVO.getPagination().getPage(),
-                userParamVO.getPagination().getSize(),
-                collect);
+        RoleRepresentation clientRoleRep = realmResource.clients().get(client_id).roles().get(name).toRepresentation();
+        realmResource.users().get(userId).roles().clientLevel(client_id).remove(Arrays.asList(clientRoleRep));
     }
 }

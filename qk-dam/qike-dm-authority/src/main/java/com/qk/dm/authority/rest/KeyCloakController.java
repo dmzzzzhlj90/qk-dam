@@ -33,8 +33,8 @@ public class KeyCloakController {
     }
 
     @GetMapping("/clientList")
-    public Object clientList(String realm,String clientId) {
-        return keyCloakApi.clientListByRealm(realm,clientId);
+    public Object clientList(String realm,String client_clientId) {
+        return keyCloakApi.clientListByRealm(realm,client_clientId);
     }
 
     @PostMapping("/user")
@@ -110,43 +110,43 @@ public class KeyCloakController {
     }
 
     @PostMapping("/clientRole")
-    public void addclientRole(String realm,String clentId,String roleName,String description) {
-        keyCloakApi.addClientRole(realm,clentId,roleName,description);
+    public void addclientRole(String realm,String client_id,String roleName,String description) {
+        keyCloakApi.addClientRole(realm,client_id,roleName,description);
     }
 
     @PutMapping("/clientRole")
-    public void updateClientRole(String realm,String clentId,String roleName,String description) {
-        keyCloakApi.updateClientRole(realm,clentId,roleName,description);
+    public void updateClientRole(String realm,String client_id,String roleName,String description) {
+        keyCloakApi.updateClientRole(realm,client_id,roleName,description);
     }
 
     @DeleteMapping("/clientRole")
-    public void deleteClientRole(String realm,String clentId,String roleName) {
-        keyCloakApi.deleteClientRole(realm,clentId,roleName);
+    public void deleteClientRole(String realm,String client_id,String roleName) {
+        keyCloakApi.deleteClientRole(realm,client_id,roleName);
     }
 
     @GetMapping("/clientRole")
-    public Object clientRoleDetail(String realm,String clentId,String roleName) {
-        return keyCloakApi.clientRoleDetail(realm,clentId,roleName);
+    public Object clientRoleDetail(String realm,String client_id,String roleName) {
+        return keyCloakApi.clientRoleDetail(realm,client_id,roleName);
     }
 
     @GetMapping("/clientRoleList")
-    public Object clientRoleList(String realm,String clentId,String search, Pagination pagination) {
-        return keyCloakApi.clientRoleList(realm,clentId,search,pagination);
+    public Object clientRoleList(String realm,String client_id,String search, Pagination pagination) {
+        return keyCloakApi.clientRoleList(realm,client_id,search,pagination);
     }
 
     @GetMapping("/userClientRole")
-    public Object userClientRole(String realm, String userId) {
-        return keyCloakApi.userClientRole(realm,userId);
+    public Object userClientRole(String realm, String userId,String client_clientId) {
+        return keyCloakApi.userClientRole(realm,userId,client_clientId);
     }
 
     @PostMapping("/userClientRole")
-    public void addUserClientRole(String realm,String clentId,String userId,String roleName) {
-        keyCloakApi.addUserClientRole(realm,clentId,userId,roleName);
+    public void addUserClientRole(String realm,String client_id,String userId,String roleName) {
+        keyCloakApi.addUserClientRole(realm,client_id,userId,roleName);
     }
 
     @DeleteMapping("/userClientRole")
-    public void deleteUserClientRole(String realm,String clentId,String userId,String roleName) {
-        keyCloakApi.deleteUserClientRole(realm,clentId,userId,roleName);
+    public void deleteUserClientRole(String realm,String client_id,String userId,String roleName) {
+        keyCloakApi.deleteUserClientRole(realm,client_id,userId,roleName);
     }
 
     /**
@@ -157,7 +157,7 @@ public class KeyCloakController {
      */
     @PostMapping("/query")
     public DefaultCommonResult<PageResultVO<UserInfoVO>> queryUsers(@RequestBody UserParamVO userParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, keyCloakApi.getUserList(userParamVO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, keyCloakApi.getUserList(userParamVO.getRealm(),userParamVO.getSearch(),userParamVO.getPagination()));
     }
 
 }

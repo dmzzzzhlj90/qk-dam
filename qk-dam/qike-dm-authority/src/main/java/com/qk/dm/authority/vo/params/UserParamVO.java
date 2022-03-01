@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserParamVO {
+  String realm;
   /**
    * 分页信息
    */
