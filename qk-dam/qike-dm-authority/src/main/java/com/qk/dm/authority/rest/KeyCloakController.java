@@ -37,9 +37,26 @@ public class KeyCloakController {
         return keyCloakApi.clientListByRealm(realm,clientId);
     }
 
-    @GetMapping("/users")
-    public Object getUsers(String realm, String search, Pagination pagination) {
-        return keyCloakApi.getUserList(realm,search,pagination);
+    @PostMapping("/user")
+    public void addUser(String realm,UserVO userVO) {
+        userVO = UserVO.builder().username("zhangsan").enabled(true).firstName("名称").lastName("姓").email("email").password("123456").build();
+        keyCloakApi.createUser(realm,userVO);
+    }
+
+    @PutMapping("/user")
+    public void updateUser(String realm,UserVO userVO) {
+        userVO = UserVO.builder().id(userVO.getId()).enabled(true).firstName("名称22").lastName("姓").email("286777112@qq.com").build();
+        keyCloakApi.updateUser(realm,userVO);
+    }
+
+    @DeleteMapping("/user")
+    public void deleteUser(String realm,String userId) {
+        keyCloakApi.deleteUser(realm,userId);
+    }
+
+    @PutMapping("/password")
+    public void deleteUser(String realm,String userId,String password) {
+        keyCloakApi.resetUserPassword(realm,userId,password);
     }
 
     @GetMapping("/user")
@@ -47,9 +64,24 @@ public class KeyCloakController {
         return keyCloakApi.userDetail(realm,userId);
     }
 
-    @GetMapping("/groupList")
-    public Object groupList(String realm) {
-        return keyCloakApi.groupList(realm);
+    @GetMapping("/users")
+    public Object getUsers(String realm, String search, Pagination pagination) {
+        return keyCloakApi.getUserList(realm,search,pagination);
+    }
+
+    @PostMapping("/group")
+    public void addgroup(String realm,String groupName) {
+        keyCloakApi.addGroup(realm,groupName);
+    }
+
+    @PutMapping("/group")
+    public void updategroup(String realm,String groupId,String groupName) {
+        keyCloakApi.updateGroup(realm,groupId,groupName);
+    }
+
+    @DeleteMapping("/group")
+    public void deletegroup(String realm,String groupId) {
+        keyCloakApi.deleteGroup(realm,groupId);
     }
 
     @GetMapping("/group")
@@ -57,68 +89,75 @@ public class KeyCloakController {
         return keyCloakApi.groupDetail(realm,groupId);
     }
 
+    @GetMapping("/groupList")
+    public Object groupList(String realm, String search, Pagination pagination) {
+        return keyCloakApi.groupList(realm,search,pagination);
+    }
+
+    @GetMapping("/userGroup")
+    public Object userGroup(String realm, String userId) {
+        return keyCloakApi.userGroup(realm,userId);
+    }
+
+    @PostMapping("/userGroup")
+    public void addUserGroup(String realm,String userId,String groupId) {
+        keyCloakApi.addUserGroup(realm,userId,groupId);
+    }
+
+    @DeleteMapping("/userGroup")
+    public void deleteUserGroup(String realm,String userId,String groupId) {
+        keyCloakApi.deleteUserGroup(realm,userId,groupId);
+    }
+
+    @PostMapping("/clientRole")
+    public void addclientRole(String realm,String clentId,String roleName,String description) {
+        keyCloakApi.addClientRole(realm,clentId,roleName,description);
+    }
+
+    @PutMapping("/clientRole")
+    public void updateClientRole(String realm,String clentId,String roleName,String description) {
+        keyCloakApi.updateClientRole(realm,clentId,roleName,description);
+    }
+
+    @DeleteMapping("/clientRole")
+    public void deleteClientRole(String realm,String clentId,String roleName) {
+        keyCloakApi.deleteClientRole(realm,clentId,roleName);
+    }
+
+    @GetMapping("/clientRole")
+    public Object clientRoleDetail(String realm,String clentId,String roleName) {
+        return keyCloakApi.clientRoleDetail(realm,clentId,roleName);
+    }
+
     @GetMapping("/clientRoleList")
-    public Object clientRoleList(String realm,String id,String search, Pagination pagination) {
-        return keyCloakApi.clientRoleList(realm,id,search,pagination);
+    public Object clientRoleList(String realm,String clentId,String search, Pagination pagination) {
+        return keyCloakApi.clientRoleList(realm,clentId,search,pagination);
     }
 
-    @GetMapping("/clientRoleDetail")
-    public Object clientRoleDetail(String realm,String id,String roleName) {
-        return keyCloakApi.clientRoleDetail(realm,id,roleName);
+    @GetMapping("/userClientRole")
+    public Object userClientRole(String realm, String userId) {
+        return keyCloakApi.userClientRole(realm,userId);
     }
 
-//    /**
-//     * 分页查询用户信息
-//     *
-//     * @param userParamVO
-//     * @return DefaultCommonResult<PageResultVO < UserInfoVO> >
-//     */
-//    @PostMapping("/query")
-//    public DefaultCommonResult<PageResultVO<UserInfoVO>> queryUsers(@RequestBody UserParamVO userParamVO) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, keyCloakApi.getUserList(userParamVO));
-//    }
+    @PostMapping("/userClientRole")
+    public void addUserClientRole(String realm,String clentId,String userId,String roleName) {
+        keyCloakApi.addUserClientRole(realm,clentId,userId,roleName);
+    }
+
+    @DeleteMapping("/userClientRole")
+    public void deleteUserClientRole(String realm,String clentId,String userId,String roleName) {
+        keyCloakApi.deleteUserClientRole(realm,clentId,userId,roleName);
+    }
 
     /**
-     * 新增用户信息
+     * 分页查询用户信息
      *
-     * @param userVO
+     * @param userParamVO
+     * @return DefaultCommonResult<PageResultVO < UserInfoVO> >
      */
-    @PostMapping("/add")
-    public void addUser(String realm,@RequestBody UserVO userVO) {
-        userVO = UserVO.builder()
-                .username("zhangsan")
-                .enabled(true)
-                .firstName("名称")
-                .lastName("姓")
-                .email("email")
-                .password("123456")
-                .build();
-        keyCloakApi.createUser(realm,userVO);
+    @PostMapping("/query")
+    public DefaultCommonResult<PageResultVO<UserInfoVO>> queryUsers(@RequestBody UserParamVO userParamVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, keyCloakApi.getUserList(userParamVO));
     }
 
-    @GetMapping("/addUserGroup")
-    public void addUserGroup() {
-        String id = "48340692-b6de-47d1-aee0-b0abbef54a23";
-        keyCloakApi.addUserGroup("demoRealm",id,"c0b49540-47b7-45b0-bb40-0a19c92eee11");
-    }
-
-    @GetMapping("/deleteUserGroup")
-    public void deleteUserGroup() {
-        String id = "48340692-b6de-47d1-aee0-b0abbef54a23";
-        keyCloakApi.deleteUserGroup("demoRealm",id,"c0b49540-47b7-45b0-bb40-0a19c92eee11");
-    }
-
-    @GetMapping("/addUserClientRole")
-    public void addUserClientRole() {
-        String clentId = "6fdfce20-1f50-43a2-bbbe-62337e35c3d9";
-        String userId = "48340692-b6de-47d1-aee0-b0abbef54a23";
-        keyCloakApi.addUserClientRole("demoRealm",clentId,userId,"测试角色3");
-    }
-
-    @GetMapping("/deleteUserClientRole")
-    public void deleteUserClientRole() {
-        String clentId = "6fdfce20-1f50-43a2-bbbe-62337e35c3d9";
-        String userId = "48340692-b6de-47d1-aee0-b0abbef54a23";
-        keyCloakApi.deleteUserClientRole("demoRealm",clentId,userId,"测试角色3");
-    }
 }

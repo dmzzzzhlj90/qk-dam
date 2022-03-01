@@ -31,7 +31,7 @@ public interface KeyCloakMapper {
 
     UserRepresentation userInfo(UserVO userVO);
 
-    void userUpdate(UserVO dqcRuleTemplateVo, @MappingTarget UserRepresentation dqcRuleTemplate);
+    void userUpdate(UserVO userVO, @MappingTarget UserRepresentation userRepresentation);
 
     RealmVO userRealm(RealmRepresentation realmRepresentation);
 

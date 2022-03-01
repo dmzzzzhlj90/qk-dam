@@ -17,10 +17,12 @@ import lombok.NoArgsConstructor;
 public class UserVO {
     private String id;
     private Long createdTimestamp;
+    //修改时 不让变更
     private String username;
     private Boolean enabled;
     private String firstName;
     private String lastName;
+    //修改邮箱不能重复
     private String email;
     private String password;
 }
