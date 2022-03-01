@@ -227,4 +227,18 @@ public class RptBaseInfoVO {
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date configDate;
+
+  /**
+   * 删除人
+   */
+  @ExcelIgnore
+  private String delUserName;
+
+  /**
+   * 删除时间
+   */
+  @ExcelIgnore
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date delDate;
 }

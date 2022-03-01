@@ -62,4 +62,13 @@ public class RptConstant {
      */
     public final static  Integer GUAVA_CAPACITY = 10000000;
 
+    /**
+     * 删除状态
+     */
+    public final static Integer DEL_STATUS = 1;
+    /**
+     * 还原状态
+     */
+    public final static Integer REDUCTION_STATUS = 0;
+
 }

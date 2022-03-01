@@ -65,4 +65,15 @@ public class RptSelectorColumnInfoDTO {
      * 来源后缀
      */
     private String sourceAfterPrefix;
+
+    /**
+     * 前缀
+     */
+    private String beforePrefix;
+
+    /**
+     * 后缀
+     */
+    private String afterPrefix;
+
 }
