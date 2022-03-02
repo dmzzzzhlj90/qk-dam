@@ -1,5 +1,7 @@
 package com.qk.dam.dataservice.spi.route;
 
+import com.qk.dam.dataservice.spi.pojo.RouteData;
+
 import java.util.List;
 
 public interface RoutesService {
@@ -9,7 +11,7 @@ public interface RoutesService {
     throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
   }
 
-  List getRouteInfo();
+  List<RouteData> getRouteInfo();
 
   void clearRoute();
 

@@ -4,6 +4,7 @@ import com.qk.dam.dataservice.spi.consunmer.ConsumerContext;
 import com.qk.dam.dataservice.spi.consunmer.ConsumerFactory;
 import com.qk.dam.dataservice.spi.consunmer.ConsumerService;
 import com.qk.dam.dataservice.spi.plugin.GatewayPlugin;
+import com.qk.dam.dataservice.spi.pojo.RouteData;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.dataservice.spi.route.RouteFactory;
 import com.qk.dam.dataservice.spi.route.RoutesService;
@@ -66,13 +67,13 @@ public class ApiGatewayManager {
     }
   }
 
-  public synchronized List getRouteInfo(final String type, RouteContext routeContext) {
+  public synchronized List<RouteData> getRouteInfo(final String type, RouteContext routeContext) {
     GatewayPlugin gatewayPlugin = plugins.get(type);
 
     if (gatewayPlugin != null) {
       RouteFactory routeFactory = gatewayPlugin.routeFactory(routeContext);
       this.routesService = routeFactory.getRoutesService();
-      List<String> routeIdList = routesService.getRouteInfo();
+      List<RouteData> routeIdList = routesService.getRouteInfo();
       log.info("======获取到路由信息完成！======");
       return routeIdList;
     }

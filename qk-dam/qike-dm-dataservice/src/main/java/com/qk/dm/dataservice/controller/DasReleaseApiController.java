@@ -7,6 +7,7 @@ package com.qk.dm.dataservice.controller;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasReleaseApiService;
+import com.qk.dm.dataservice.vo.DasReleaseApiParamsVO;
 import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,67 +35,28 @@ public class DasReleaseApiController {
         this.dasReleaseApiService = dasReleaseApiService;
     }
 
-    //    /**
-    //     * 同步数据服务所有的API至API_SIX
-    //     *
-    //     * @return DefaultCommonResult
-    //     */
-    //    @PostMapping("/apiSix/routes/all")
-    //    public DefaultCommonResult syncApiSixRoutesAll() {
-    //        dasSyncApiGatewayService.syncApiSixRoutesAll();
-    //        return DefaultCommonResult.success();
-    //    }
-
-//    /**
-//     * 全量同步__数据服务注册API至API_SIX (内部使用)
-//     *
-//     * @param upstreamId,serviceId
-//     * @return DefaultCommonResult
-//     */
-//    @PostMapping("/apiSix/routes/register/all")
-////  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.CREATE)
-//    public DefaultCommonResult apiSixRoutesRegisterAll(@RequestParam("upstreamId") String upstreamId,
-//                                                       @RequestParam("serviceId") String serviceId) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, dasReleaseApiService.apiSixRoutesRegisterAll(upstreamId, serviceId));
-//    }
-
     /**
      * 同步API至API_SIX
      *
-     * @param nearlyApiPath 模糊匹配路径
-     * @param apiSyncType   api同步方式
-     * @param apiIds      apiId集合
+     * @param dasReleaseApiParamsVO 发布API参数信息VO
      * @return
      */
     @PostMapping("/sync/apiSix/routes")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.CREATE)
-    public DefaultCommonResult syncApiSixRoutes(@RequestParam("nearlyApiPath") String nearlyApiPath,
-                                                @RequestParam("apiSyncType") String apiSyncType,
-                                                @RequestParam("apiIds") List<String> apiIds) {
-      dasReleaseApiService.syncApiSixRoutes(nearlyApiPath, apiSyncType, apiIds);
+    public DefaultCommonResult syncApiSixRoutes(@RequestBody DasReleaseApiParamsVO dasReleaseApiParamsVO) {
+        dasReleaseApiService.syncApiSixRoutes(dasReleaseApiParamsVO);
         return DefaultCommonResult.success();
     }
-
-    //    /**
-    //     * 同步数据服务新建API至API_SIX
-    //     *
-    //     * @return DefaultCommonResult
-    //     */
-    //    @PostMapping("/apiSix/routes/create")
-    //    public DefaultCommonResult syncApiSixRoutesCreate() {
-    //        dasSyncApiGatewayService.syncApiSixRoutesCreate();
-    //        return DefaultCommonResult.success();
-    //    }
 
     /**
      * 创建ApiSix接口认证插件key-auth
      *
      * @return DefaultCommonResult
      */
-    @PostMapping("/apiSix/consumers/keyAuth")
+    @PostMapping("/apiSix/consumer/keyAuth/plugin")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult apiSixConsumersKeyAuth(@RequestBody ApiSixConsumerInfo apiSixConsumerInfo) {
-        dasReleaseApiService.apiSixConsumersKeyAuth(apiSixConsumerInfo);
+    public DefaultCommonResult createApiSixConsumerKeyAuthPlugin(@RequestBody ApiSixConsumerInfo apiSixConsumerInfo) {
+        dasReleaseApiService.createApiSixConsumerKeyAuthPlugin(apiSixConsumerInfo);
         return DefaultCommonResult.success();
     }
 
@@ -105,8 +67,8 @@ public class DasReleaseApiController {
      */
     @GetMapping("/apiSix/upstream/info")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<List> apiSixUpstreamInfo() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasReleaseApiService.apiSixUpstreamInfo());
+    public DefaultCommonResult<List> searchApiSixUpstreamInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasReleaseApiService.searchApiSixUpstreamInfo());
     }
 
     /**
@@ -116,8 +78,8 @@ public class DasReleaseApiController {
      */
     @GetMapping("/apiSix/service/info")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<List> apiSixServiceInfo() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasReleaseApiService.apiSixServiceInfo());
+    public DefaultCommonResult<List> searchApiSixServiceInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasReleaseApiService.searchApiSixServiceInfo());
     }
 
     /**

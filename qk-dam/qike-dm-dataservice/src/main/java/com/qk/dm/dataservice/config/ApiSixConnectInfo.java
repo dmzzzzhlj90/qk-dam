@@ -39,4 +39,9 @@ public class ApiSixConnectInfo {
   private String upstreamWeight;
 
   private Integer upstreamConnectTimeOut;
+
+  private String upstreamId;
+
+  private String serviceId;
+
 }

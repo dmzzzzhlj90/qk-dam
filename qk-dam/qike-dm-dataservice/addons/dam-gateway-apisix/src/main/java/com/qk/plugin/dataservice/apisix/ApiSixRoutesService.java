@@ -3,6 +3,7 @@ package com.qk.plugin.dataservice.apisix;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.commons.util.RestTemplateUtils;
+import com.qk.dam.dataservice.spi.pojo.RouteData;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.dataservice.spi.route.RoutesService;
 import com.qk.plugin.dataservice.apisix.route.ApiSixResultVO;
@@ -12,6 +13,8 @@ import com.qk.plugin.dataservice.apisix.route.result.Nodes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.qk.plugin.dataservice.apisix.route.result.Value;
 import org.springframework.http.*;
 import org.springframework.util.ObjectUtils;
 
@@ -43,8 +46,8 @@ public class ApiSixRoutesService implements RoutesService {
   }
 
   @Override
-  public List<String> getRouteInfo() {
-    List<String> result = new ArrayList<>();
+  public List<RouteData> getRouteInfo() {
+    List<RouteData> result = new ArrayList<>();
     Map<String, String> params = routeContext.getParams();
     HttpEntity httpEntity = setHttpEntity(null, params);
     ResponseEntity<ApiSixResultVO> responseEntity =
@@ -57,10 +60,15 @@ public class ApiSixRoutesService implements RoutesService {
       Object nodes = responseEntity.getBody().getNode().get("nodes");
       if (isEmptyResponseEntityBody(nodes)) {
         List<Nodes> nodeList =
-            GsonUtil.fromJsonString(
-                GsonUtil.toJsonString(nodes), new TypeToken<List<Nodes>>() {}.getType());
+            GsonUtil.fromJsonString(GsonUtil.toJsonString(nodes), new TypeToken<List<Nodes>>() {}.getType());
         for (Nodes node : nodeList) {
-          result.add(node.getValue().getId());
+          Value value = node.getValue();
+          RouteData routeData = RouteData.builder()
+                  .id(value.getId())
+                  .name(value.getName())
+                  .uri(value.getUri())
+                  .build();
+          result.add(routeData);
         }
       }
     }
@@ -71,11 +79,12 @@ public class ApiSixRoutesService implements RoutesService {
     return !ObjectUtils.isEmpty(node);
   }
 
+  @Override
   public void clearRoute() {
-    List<String> ids = getRouteInfo();
-    if (!ObjectUtils.isEmpty(ids)) {
-      for (String routeId : ids) {
-        deleteRouteByRouteId(routeId);
+    List<RouteData> routeInfos = getRouteInfo();
+    if (!ObjectUtils.isEmpty(routeInfos)) {
+      for (RouteData routeData : routeInfos) {
+        deleteRouteByRouteId((routeData.getId()));
       }
     }
   }
