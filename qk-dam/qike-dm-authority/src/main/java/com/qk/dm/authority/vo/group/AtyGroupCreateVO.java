@@ -1,4 +1,4 @@
-package com.qk.dm.authority.vo;
+package com.qk.dm.authority.vo.group;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,16 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *用户组
  * @author shenpj
- * @date 2022/2/22 16:54
+ * @date 2022/3/2 17:56
  * @since 1.0.0
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserGroupVO {
-    private String id;
-    private String name;
+public class AtyGroupCreateVO {
+    String realm;
+    String groupName;
 }

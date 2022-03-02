@@ -1,6 +1,7 @@
 package com.qk.dm.authority.mapstruct;
 
 import com.qk.dm.authority.vo.*;
+import com.qk.dm.authority.vo.user.*;
 import org.keycloak.representations.idm.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -24,14 +25,6 @@ public interface KeyCloakMapper {
     GroupVO userGroup(GroupRepresentation groupRepresentation);
 
     List<GroupVO> userGroup(List<GroupRepresentation> groupRepresentation);
-
-    UserInfoVO userInfo(UserRepresentation userRepresentation);
-
-    List<UserInfoVO> userInfo(List<UserRepresentation> userRepresentation);
-
-    UserRepresentation userInfo(UserVO userVO);
-
-    void userUpdate(UserVO userVO, @MappingTarget UserRepresentation userRepresentation);
 
     RealmVO userRealm(RealmRepresentation realmRepresentation);
 

@@ -3,18 +3,18 @@ package com.qk.dm.authority.keycloak;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
+import com.qk.dm.authority.mapstruct.AtyUserMapper;
 import com.qk.dm.authority.mapstruct.KeyCloakMapper;
-import com.qk.dm.authority.util.Util;
 import com.qk.dm.authority.vo.*;
-import com.qk.dm.authority.vo.params.UserParamVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
+import com.qk.dm.authority.vo.user.AtyUserKeyCloakVO;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.*;
 import org.keycloak.representations.idm.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.Response;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,8 +27,12 @@ import java.util.stream.Collectors;
 @Service
 public class KeyCloakApi {
 
-    @Autowired
-    private Keycloak keycloak;
+
+    private final Keycloak keycloak;
+
+    public KeyCloakApi(Keycloak keycloak) {
+        this.keycloak = keycloak;
+    }
 
     /**
      * 所有域
@@ -36,9 +40,7 @@ public class KeyCloakApi {
      * @return
      */
     public List<RealmVO> realmList() {
-        RealmsResource realms = keycloak.realms();
-        List<RealmRepresentation> list = realms.findAll();
-        return KeyCloakMapper.INSTANCE.userRealm(list);
+        return KeyCloakMapper.INSTANCE.userRealm(keycloak.realms().findAll());
     }
 
     /**
@@ -49,8 +51,8 @@ public class KeyCloakApi {
      * @return
      */
     public List<ClientVO> clientListByRealm(String realm, String client_clientId) {
-        ClientsResource clients = keycloak.realm(realm).clients();
-        List<ClientRepresentation> list = clients.findAll(client_clientId, true, true, null, null);
+        List<ClientRepresentation> list = keycloak.realm(realm).clients()
+                .findAll(client_clientId, true, true, null, null);
         return KeyCloakMapper.INSTANCE.userClient(list);
     }
 
@@ -61,9 +63,9 @@ public class KeyCloakApi {
      * @param realm
      * @param userVO
      */
-    public void createUser(String realm, UserVO userVO) {
+    public void createUser(String realm, AtyUserKeyCloakVO userVO) {
         //todo 用户名电子邮箱不能重复
-        UserRepresentation user = KeyCloakMapper.INSTANCE.userInfo(userVO);
+        UserRepresentation user = AtyUserMapper.INSTANCE.userInfo(userVO);
         user.setEmailVerified(false);
         // 设置密码
         List<CredentialRepresentation> credentials = new ArrayList<>();
@@ -76,11 +78,9 @@ public class KeyCloakApi {
         user.setCredentials(credentials);
         //创建用户
         Response response = keycloak.realm(realm).users().create(user);
-        //判断创建用户状态；如果时创建成功
         Response.StatusType createUserStatus = response.getStatusInfo();
-        System.out.println(createUserStatus);
         if (!"Created".equals(createUserStatus.toString())) {
-            throw new BizException("账号已经存在！");
+            throw new BizException("用户名或邮箱已经存在！");
         }
     }
 
@@ -90,12 +90,16 @@ public class KeyCloakApi {
      * @param realm
      * @param userVO
      */
-    public void updateUser(String realm, UserVO userVO) {
+    public void updateUser(String realm, AtyUserKeyCloakVO userVO) {
         UsersResource userResource = keycloak.realm(realm).users();
         UserResource user = userResource.get(userVO.getId());
         UserRepresentation userRepresentation = user.toRepresentation();
-        KeyCloakMapper.INSTANCE.userUpdate(userVO, userRepresentation);
-        user.update(userRepresentation);
+        AtyUserMapper.INSTANCE.userUpdate(userVO, userRepresentation);
+        try {
+            user.update(userRepresentation);
+        } catch (ClientErrorException e) {
+            throw new BizException("邮箱已经存在！");
+        }
     }
 
     /**
@@ -127,42 +131,21 @@ public class KeyCloakApi {
     }
 
     /**
-     * 更改属性
-     *
-     * @param realm
-     * @param id
-     */
-    public void resetUserAttributes(String realm, String id, Map<String, List<String>> map) {
-        UserResource user = keycloak.realm(realm).users().get(id);
-        UserRepresentation userRepresentation = user.toRepresentation();
-        //属性
-        Map<String, List<String>> attribute = userRepresentation.getAttributes();
-        Map<String, List<String>> attributeMap = new HashMap<>();
-        if (attribute != null) {
-            attributeMap.putAll(attribute);
-        }
-        attributeMap.putAll(map);
-//        attributeMap.put("test", Arrays.asList("123"));
-        userRepresentation.setAttributes(attributeMap);
-        user.update(userRepresentation);
-    }
-
-    /**
      * 用户详情
      *
      * @param realm
      * @param userId
      * @return
      */
-    public UserInfoVO userDetail(String realm, String userId) {
+    public AtyUserInfoVO userDetail(String realm, String userId) {
         UserResource resource = keycloak.realm(realm).users().get(userId);
         UserRepresentation user = resource.toRepresentation();
-        UserInfoVO userInfoVO = KeyCloakMapper.INSTANCE.userInfo(user);
+        AtyUserInfoVO atyUserInfoVO = AtyUserMapper.INSTANCE.userInfo(user);
         //角色 todo 在这里用户不传客户端id，用户角色单独查询
 //        userInfoVO.setClientRoleList(getUserClientRole(resource,client_clientId));
         //组
-        userInfoVO.setGroupList(getGroupList(resource));
-        return userInfoVO;
+        atyUserInfoVO.setGroupList(getGroupList(resource));
+        return atyUserInfoVO;
     }
 
     /**
@@ -173,7 +156,7 @@ public class KeyCloakApi {
      * @param pagination
      * @return
      */
-    public PageResultVO<UserInfoVO> getUserList(String realm, String search, Pagination pagination) {
+    public PageResultVO<AtyUserInfoVO> getUserList(String realm, String search, Pagination pagination) {
         UsersResource userResource = keycloak.realm(realm).users();
         List<UserRepresentation> userList = userResource.search(
                 search,
@@ -183,7 +166,7 @@ public class KeyCloakApi {
                 (long) userResource.count(search),
                 pagination.getPage(),
                 pagination.getSize(),
-                KeyCloakMapper.INSTANCE.userInfo(userList));
+                AtyUserMapper.INSTANCE.userInfo(userList));
     }
 
 
@@ -236,7 +219,7 @@ public class KeyCloakApi {
         GroupResource groupResource = keycloak.realm(realm).groups().group(groupId);
         GroupVO groupVO = KeyCloakMapper.INSTANCE.userGroup(groupResource.toRepresentation());
         List<UserRepresentation> members = groupResource.members();
-        List<UserInfoVO> userInfos = KeyCloakMapper.INSTANCE.userInfo(members);
+        List<AtyUserInfoVO> userInfos = AtyUserMapper.INSTANCE.userInfo(members);
         groupVO.setMembers(userInfos);
         return groupVO;
     }
@@ -345,8 +328,8 @@ public class KeyCloakApi {
         RoleResource roleResource = keycloak.realm(realm).clients().get(client_id).roles().get(roleName);
         RoleVO roleVO = KeyCloakMapper.INSTANCE.userRole(roleResource.toRepresentation());
         Set<UserRepresentation> roleUserMembers = roleResource.getRoleUserMembers();
-        List<UserInfoVO> userInfoVOS = KeyCloakMapper.INSTANCE.userInfo(new ArrayList<>(roleUserMembers));
-        roleVO.setMembers(userInfoVOS);
+        List<AtyUserInfoVO> atyUserInfoVOS = AtyUserMapper.INSTANCE.userInfo(new ArrayList<>(roleUserMembers));
+        roleVO.setMembers(atyUserInfoVOS);
         return roleVO;
     }
 
@@ -375,14 +358,14 @@ public class KeyCloakApi {
      *
      * @param userId
      */
-    public List<RoleVO> userClientRole(String realm, String userId,String client_clientId) {
-        return getUserClientRole(keycloak.realm(realm).users().get(userId),client_clientId);
+    public List<RoleVO> userClientRole(String realm, String userId, String client_clientId) {
+        return getUserClientRole(keycloak.realm(realm).users().get(userId), client_clientId);
     }
 
-    private List<RoleVO> getUserClientRole(UserResource resource,String client_clientId) {
+    private List<RoleVO> getUserClientRole(UserResource resource, String client_clientId) {
         List<RoleVO> roleVOS = null;
         Map<String, ClientMappingsRepresentation> clientMappings = resource.roles().getAll().getClientMappings();
-        if(clientMappings != null && client_clientId != null && clientMappings.get(client_clientId) != null){
+        if (clientMappings != null && client_clientId != null && clientMappings.get(client_clientId) != null) {
             ClientMappingsRepresentation clientMappingsRepresentation = clientMappings.get(client_clientId);
             List<RoleRepresentation> mappings = clientMappingsRepresentation.getMappings();
             roleVOS = KeyCloakMapper.INSTANCE.userRole(mappings);

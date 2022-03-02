@@ -1,5 +1,6 @@
 package com.qk.dm.authority.vo;
 
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +23,5 @@ public class GroupVO {
     private String name;
     private String path;
     private Map<String, List<String>> attributes;
-    private List<UserInfoVO> members;
+    private List<AtyUserInfoVO> members;
 }

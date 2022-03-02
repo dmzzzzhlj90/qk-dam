@@ -1,36 +1,25 @@
-package com.qk.dm.authority.vo;
+package com.qk.dm.authority.vo.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Map;
-
 /**
- * 用户信息
  * @author shenpj
- * @date 2022/2/22 11:54
+ * @date 2022/3/2 15:01
  * @since 1.0.0
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfoVO {
+public class AtyUserKeyCloakVO {
     private String id;
-    private Long createdTimestamp;
     private String username;
     private Boolean enabled;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    //属性
-    private Map<String, List<String>> attributes;
-    //角色
-    private List<RoleVO> clientRoleList;
-    //组
-    private List<GroupVO> groupList;
 }

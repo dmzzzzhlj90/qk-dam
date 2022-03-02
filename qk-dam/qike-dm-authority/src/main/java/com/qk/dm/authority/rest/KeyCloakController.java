@@ -5,8 +5,8 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.authority.keycloak.KeyCloakApi;
-import com.qk.dm.authority.vo.UserInfoVO;
-import com.qk.dm.authority.vo.UserVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
+import com.qk.dm.authority.vo.user.AtyUserKeyCloakVO;
 import com.qk.dm.authority.vo.params.UserParamVO;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,14 +38,14 @@ public class KeyCloakController {
     }
 
     @PostMapping("/user")
-    public void addUser(String realm,UserVO userVO) {
-        userVO = UserVO.builder().username("zhangsan").enabled(true).firstName("名称").lastName("姓").email("email").password("123456").build();
-        keyCloakApi.createUser(realm,userVO);
+    public void addUser(String realm, AtyUserKeyCloakVO userVO) {
+        userVO = AtyUserKeyCloakVO.builder().username("zhangsan1").enabled(true).firstName("名称").lastName("姓").email("email").password("123456").build();
+        keyCloakApi.createUser(realm, userVO);
     }
 
     @PutMapping("/user")
-    public void updateUser(String realm,UserVO userVO) {
-        userVO = UserVO.builder().id(userVO.getId()).enabled(true).firstName("名称22").lastName("姓").email("286777112@qq.com").build();
+    public void updateUser(String realm, AtyUserKeyCloakVO userVO) {
+        userVO = AtyUserKeyCloakVO.builder().id(userVO.getId()).enabled(true).firstName("名称22").lastName("姓").email("286777111@qq.com").build();
         keyCloakApi.updateUser(realm,userVO);
     }
 
@@ -156,7 +156,7 @@ public class KeyCloakController {
      * @return DefaultCommonResult<PageResultVO < UserInfoVO> >
      */
     @PostMapping("/query")
-    public DefaultCommonResult<PageResultVO<UserInfoVO>> queryUsers(@RequestBody UserParamVO userParamVO) {
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> queryUsers(@RequestBody UserParamVO userParamVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, keyCloakApi.getUserList(userParamVO.getRealm(),userParamVO.getSearch(),userParamVO.getPagination()));
     }
 
