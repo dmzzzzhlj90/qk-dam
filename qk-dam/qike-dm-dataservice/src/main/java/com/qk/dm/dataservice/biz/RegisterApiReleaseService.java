@@ -16,6 +16,7 @@ import com.qk.dm.dataservice.vo.DasReleaseApiParamsVO;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -76,6 +77,7 @@ public class RegisterApiReleaseService {
             }
             LOG.info("成功发布注册Api个数:【{}】", successfulNum);
             LOG.info("失败发布注册Api个数:【{}】", failNum);
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException(e.getMessage());
