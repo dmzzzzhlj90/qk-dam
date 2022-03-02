@@ -1,9 +1,10 @@
 package com.qk.dm.dataservice.service;
 
+import com.qk.dm.dataservice.vo.DasOpenApiParamsVO;
 import org.springframework.stereotype.Service;
 
 /**
- * OPEN-API同步至数据服务操作
+ * 导入OpenApi(同步至数据服务操作)
  *
  * @author wjq
  * @date 2021/8/30 17:47
@@ -12,5 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasSyncOpenApiService {
 
-  int syncRegister();
+  int syncRegisterApi(DasOpenApiParamsVO dasOpenApiParamsVO);
+
 }

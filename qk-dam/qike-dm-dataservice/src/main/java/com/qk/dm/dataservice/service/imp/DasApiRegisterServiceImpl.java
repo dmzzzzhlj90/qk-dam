@@ -132,6 +132,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新注册API
         DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
+        //校验更新ID参数
         checkUpdateParams(dasApiRegisterDefinitionVO);
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterDefinitionVO);
         //请求参数转换
@@ -171,15 +172,15 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         if (!ObjectUtils.isEmpty(dasApiRegisterVOList)) {
             try {
                 for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterVOList) {
+                    //API基础信息
                     DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
-                    Optional<DasApiBasicInfo> optionalDasApiBasicInfo =
-                            dasApiBasicInfoService.checkExistApiBasicInfo(dasApiBasicInfoVO);
+                    //检查是否存在要同步的API信息
+                    Optional<DasApiBasicInfo> optionalDasApiBasicInfo = dasApiBasicInfoService.checkExistApiBasicInfo(dasApiBasicInfoVO);
                     if (optionalDasApiBasicInfo.isPresent()) {
                         DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
                         Long id = dasApiBasicInfo.getId();
                         String apiId = dasApiBasicInfo.getApiId();
-                        Optional<DasApiRegister> optionalDasApiRegister =
-                                dasApiRegisterRepository.findOne(qDasApiRegister.apiId.eq(apiId));
+                        Optional<DasApiRegister> optionalDasApiRegister = dasApiRegisterRepository.findOne(qDasApiRegister.apiId.eq(apiId));
                         if (optionalDasApiRegister.isPresent()) {
                             // API基础信息
                             dasApiBasicInfoVO.setId(id);
@@ -195,6 +196,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
                         }
                         updateCount.getAndIncrement();
                     } else {
+                        //TODO 考虑策略字段参数   不存在,直接插入
                         insert(dasApiRegisterVO);
                         saveCount.getAndIncrement();
                     }
@@ -289,7 +291,11 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         }
     }
 
-
+    /**
+     * 校验更新ID参数
+     *
+     * @param dasApiRegisterDefinitionVO
+     */
     private void checkUpdateParams(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO) {
         if (ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getId())) {
             throw new BizException("注册API信息,ID参数为空,编辑失败!!!");
