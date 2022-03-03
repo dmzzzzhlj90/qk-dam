@@ -44,6 +44,11 @@ public class RptConstant {
     public static final Integer OFF_STARTED = 1;
 
     /**
+     * 运行状态-启动
+     */
+    public static final Integer START = 0;
+
+    /**
      * 导入文件名称包含内同
      */
     public static  final String EXCEL_NAME="待配列基本信息";

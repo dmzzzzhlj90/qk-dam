@@ -90,7 +90,14 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
         rptBaseInfo.setRunStatus(runStatus);
-        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+        if(RptConstant.START.equals(runStatus)){
+            String result = ReptileServerFactory.timing(rptConfigInfoService.rptList(rptBaseInfo.getId()));
+            if (!StringUtils.isBlank(result)) {
+                updateBaseInfo(rptBaseInfo, result);
+            }
+        }else {
+            rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+        }
     }
 
     @Override
