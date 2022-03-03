@@ -1,4 +1,4 @@
-package com.qk.dm.authority.vo.params;
+package com.qk.dm.authority.vo.user;
 
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserParamVO {
+public class AtyUserParamVO {
   String realm;
   /**
    * 分页信息

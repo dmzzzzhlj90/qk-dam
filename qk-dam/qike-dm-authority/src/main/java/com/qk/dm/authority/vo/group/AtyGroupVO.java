@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyGroupCreateVO {
+public class AtyGroupVO {
     String realm;
     String groupName;
 }

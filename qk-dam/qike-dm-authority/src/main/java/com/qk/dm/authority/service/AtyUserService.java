@@ -1,10 +1,12 @@
 package com.qk.dm.authority.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.authority.vo.params.UserParamVO;
+import com.qk.dm.authority.vo.user.AtyUserParamVO;
 import com.qk.dm.authority.vo.user.*;
 import com.qk.dm.authority.vo.user.AtyAtyUserCreateVO;
 import com.qk.dm.authority.vo.user.AtyUserVO;
+
+import java.util.List;
 
 /**
  * @author shenpj
@@ -22,5 +24,7 @@ public interface AtyUserService {
 
     AtyUserInfoVO getUser(String realm, String userId);
 
-    PageResultVO<AtyUserInfoVO> getUsers(UserParamVO userParamVO);
+    PageResultVO<AtyUserInfoVO> getUsers(AtyUserParamVO atyUserParamVO);
+
+    List<AtyUserInfoVO> getUsers(String realm, String search);
 }

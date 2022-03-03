@@ -1,6 +1,6 @@
 package com.qk.dm.authority.util;
 
-import com.qk.dm.authority.vo.params.UserParamVO;
+import com.qk.dm.authority.vo.user.AtyUserParamVO;
 
 /**
  * @author zys
@@ -8,7 +8,7 @@ import com.qk.dm.authority.vo.params.UserParamVO;
  * @since 1.0.0
  */
 public class Util {
-  public static Integer dealPage(UserParamVO userParamVO) {
-    return  (userParamVO.getPagination().getPage()-1)*userParamVO.getPagination().getSize();
+  public static Integer dealPage(AtyUserParamVO atyUserParamVO) {
+    return  (atyUserParamVO.getPagination().getPage()-1)* atyUserParamVO.getPagination().getSize();
   }
 }

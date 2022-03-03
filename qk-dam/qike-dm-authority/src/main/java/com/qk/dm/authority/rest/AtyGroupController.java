@@ -1,67 +1,101 @@
 package com.qk.dm.authority.rest;
 
+import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyGroupService;
-import com.qk.dm.authority.vo.group.AtyGroupCreateVO;
+import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
+import com.qk.dm.authority.vo.group.AtyGroupVO;
+import com.qk.dm.authority.vo.group.AtyGroupParamVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
- * 权限管理_用户
+ * 权限管理_用户组
  *
  * @author shenpj
  * @date 2022/3/2 10:41
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/user/group")
+@RequestMapping("/group")
 public class AtyGroupController {
-    private final AtyGroupService atyUserGroupService;
+    private final AtyGroupService atyGroupService;
 
     public AtyGroupController(AtyGroupService atyUserGroupService) {
-        this.atyUserGroupService = atyUserGroupService;
+        this.atyGroupService = atyUserGroupService;
     }
 
 
+    /**
+     * 新增用户组
+     *
+     * @param groupVO
+     * @return DefaultCommonResult
+     */
     @PostMapping("")
-    public DefaultCommonResult addGroup(@RequestBody @Valid AtyGroupCreateVO groupVO) {
-        atyUserGroupService.addGroup(groupVO);
+    public DefaultCommonResult addGroup(@RequestBody @Valid AtyGroupVO groupVO) {
+        atyGroupService.addGroup(groupVO);
         return DefaultCommonResult.success();
     }
 
-
+    /**
+     * 修改用户组
+     *
+     * @param groupVO
+     * @return DefaultCommonResult
+     */
     @PutMapping("/{id}")
-    public DefaultCommonResult updateGroup(@PathVariable("id") String groupId, @RequestBody @Valid AtyGroupCreateVO groupVO) {
-        atyUserGroupService.updateGroup(groupId, groupVO);
+    public DefaultCommonResult updateGroup(@PathVariable("id") String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
+        atyGroupService.updateGroup(groupId, groupVO);
         return DefaultCommonResult.success();
     }
 
 
+    /**
+     * 删除用户组
+     *
+     * @param realm
+     * @return DefaultCommonResult
+     */
     @DeleteMapping("/{id}")
     public DefaultCommonResult deleteGroup(@PathVariable("id") String groupId, String realm) {
-        atyUserGroupService.deleteGroup(groupId,realm);
+        atyGroupService.deleteGroup(groupId, realm);
         return DefaultCommonResult.success();
     }
 
-//    /**
-//     * 用户详情
-//     * @param realm
-//     * @param userId
-//     * @return
-//     */
-//    @GetMapping("/{id}")
-//    public DefaultCommonResult<UserInfoVO> getUser(String realm, @PathVariable("id") String userId) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUser(realm, userId));
-//    }
-//
-//    /**
-//     * 用户列表
-//     * @param userParamVO
-//     * @return
-//     */
-//    @PostMapping("/list")
-//    public DefaultCommonResult<PageResultVO<UserInfoVO>> getUsers(@RequestBody UserParamVO userParamVO) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(userParamVO));
-//    }
+    /**
+     * 用户组详情
+     *
+     * @param realm
+     * @return DefaultCommonResult<AtyGroupInfoVO>
+     */
+    @GetMapping("/{id}")
+    public DefaultCommonResult<AtyGroupInfoVO> getUser(String realm, @PathVariable("id") String groupId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(realm, groupId));
+    }
+
+    /**
+     * 用户组分页列表
+     *
+     * @param groupParamVO
+     * @return DefaultCommonResult<PageResultVO < AtyGroupInfoVO>>
+     */
+    @PostMapping("/page/list")
+    public DefaultCommonResult<PageResultVO<AtyGroupInfoVO>> getUsers(@RequestBody AtyGroupParamVO groupParamVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(groupParamVO));
+    }
+
+    /**
+     * 用户组不分页列表
+     * @param realm
+     * @param search
+     * @return DefaultCommonResult<List<AtyGroupInfoVO>>
+     */
+    @GetMapping("/list")
+    public DefaultCommonResult<List<AtyGroupInfoVO>> getUsers(String realm, String search) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(realm,search));
+    }
 }

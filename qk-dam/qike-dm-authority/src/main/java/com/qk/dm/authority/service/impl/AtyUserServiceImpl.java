@@ -4,10 +4,12 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.keycloak.KeyCloakApi;
 import com.qk.dm.authority.mapstruct.AtyUserMapper;
 import com.qk.dm.authority.service.AtyUserService;
-import com.qk.dm.authority.vo.params.UserParamVO;
+import com.qk.dm.authority.vo.user.AtyUserParamVO;
 import com.qk.dm.authority.vo.user.*;
 import com.qk.dm.authority.vo.user.AtyUserResetPassWordVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author shenpj
@@ -36,22 +38,28 @@ public class AtyUserServiceImpl implements AtyUserService {
 
     @Override
     public void deleteUser(String realm, String userId) {
-        keyCloakApi.deleteUser(realm,userId);
+        keyCloakApi.deleteUser(realm, userId);
     }
 
     @Override
     public void resetPassword(String userId, AtyUserResetPassWordVO userVO) {
-        keyCloakApi.resetUserPassword(userVO.getRealm(),userId,userVO.getPassword());
+        keyCloakApi.resetUserPassword(userVO.getRealm(), userId, userVO.getPassword());
     }
 
     @Override
     public AtyUserInfoVO getUser(String realm, String userId) {
-        return keyCloakApi.userDetail(realm,userId);
+        return keyCloakApi.userDetail(realm, userId);
     }
 
     @Override
-    public PageResultVO<AtyUserInfoVO> getUsers(UserParamVO userParamVO) {
-        return keyCloakApi.getUserList(userParamVO.getRealm(), userParamVO.getSearch(), userParamVO.getPagination());
+    public PageResultVO<AtyUserInfoVO> getUsers(AtyUserParamVO atyUserParamVO) {
+        return keyCloakApi.getUserList(atyUserParamVO.getRealm(), atyUserParamVO.getSearch(), atyUserParamVO.getPagination());
     }
+
+    @Override
+    public List<AtyUserInfoVO> getUsers(String realm, String search) {
+        return keyCloakApi.getUserList(realm, search);
+    }
+
 
 }

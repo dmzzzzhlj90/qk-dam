@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * 权限管理_域
+ *
  * @author shenpj
  * @date 2022/3/2 10:41
  * @since 1.0.0
@@ -23,13 +25,25 @@ public class AtyRealmController {
         this.atyRealmService = atyRealmService;
     }
 
+    /**
+     * 域管理-域列表
+     *
+     * @return DefaultCommonResult<List < RealmVO>>
+     */
     @GetMapping("")
-    public DefaultCommonResult<List<RealmVO>> getRealmList(){
-        return DefaultCommonResult.success(ResultCodeEnum.OK,atyRealmService.getRealmList());
+    public DefaultCommonResult<List<RealmVO>> getRealmList() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRealmService.getRealmList());
     }
 
+    /**
+     * 域管理-客户端列表
+     *
+     * @param realm
+     * @param client_clientId
+     * @return DefaultCommonResult<List < ClientVO>>
+     */
     @GetMapping("/clients")
-    public DefaultCommonResult<List<ClientVO>> getClientList(String realm, String client_clientId){
-        return DefaultCommonResult.success(ResultCodeEnum.OK,atyRealmService.getClientList(realm,client_clientId));
+    public DefaultCommonResult<List<ClientVO>> getClientList(String realm, String client_clientId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRealmService.getClientList(realm, client_clientId));
     }
 }

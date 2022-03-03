@@ -1,7 +1,6 @@
 package com.qk.dm.authority.vo.user;
 
-import com.qk.dm.authority.vo.GroupVO;
-import com.qk.dm.authority.vo.RoleVO;
+import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,5 +33,5 @@ public class AtyUserInfoVO {
     //角色
 //    private List<RoleVO> clientRoleList;
     //组
-    private List<GroupVO> groupList;
+    private List<AtyGroupInfoVO> groupList;
 }

@@ -6,6 +6,7 @@ import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.authority.mapstruct.AtyUserMapper;
 import com.qk.dm.authority.mapstruct.KeyCloakMapper;
 import com.qk.dm.authority.vo.*;
+import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import com.qk.dm.authority.vo.user.AtyUserKeyCloakVO;
 import org.keycloak.admin.client.Keycloak;
@@ -169,6 +170,17 @@ public class KeyCloakApi {
                 AtyUserMapper.INSTANCE.userInfo(userList));
     }
 
+    /**
+     * 用户列表-不分页
+     *
+     * @param realm
+     * @param search
+     * @return
+     */
+    public List<AtyUserInfoVO> getUserList(String realm, String search) {
+        return AtyUserMapper.INSTANCE.userInfo(keycloak.realm(realm).users().search(search));
+    }
+
 
     /**********************************分组开始************************************/
 
@@ -215,19 +227,19 @@ public class KeyCloakApi {
      * @param groupId
      * @return
      */
-    public GroupVO groupDetail(String realm, String groupId) {
+    public AtyGroupInfoVO groupDetail(String realm, String groupId) {
         GroupResource groupResource = keycloak.realm(realm).groups().group(groupId);
-        GroupVO groupVO = KeyCloakMapper.INSTANCE.userGroup(groupResource.toRepresentation());
+        AtyGroupInfoVO atyGroupInfoVO = KeyCloakMapper.INSTANCE.userGroup(groupResource.toRepresentation());
         List<UserRepresentation> members = groupResource.members();
         List<AtyUserInfoVO> userInfos = AtyUserMapper.INSTANCE.userInfo(members);
-        groupVO.setMembers(userInfos);
-        return groupVO;
+        atyGroupInfoVO.setMembers(userInfos);
+        return atyGroupInfoVO;
     }
 
     /**
      * 查询所有分组
      */
-    public PageResultVO<GroupVO> groupList(String realm, String search, Pagination pagination) {
+    public PageResultVO<AtyGroupInfoVO> groupList(String realm, String search, Pagination pagination) {
         GroupsResource groupsResource = keycloak.realm(realm).groups();
         List<GroupRepresentation> groups = groupsResource.groups(
                 search,
@@ -240,17 +252,24 @@ public class KeyCloakApi {
                 KeyCloakMapper.INSTANCE.userGroup(groups));
     }
 
+    /**
+     * 查询所有分组
+     */
+    public List<AtyGroupInfoVO> groupList(String realm, String search) {
+        return KeyCloakMapper.INSTANCE.userGroup(keycloak.realm(realm).groups().groups(search, null, null));
+    }
+
 
     /**
      * 用户分组列表
      *
      * @param userId
      */
-    public List<GroupVO> userGroup(String realm, String userId) {
+    public List<AtyGroupInfoVO> userGroup(String realm, String userId) {
         return getGroupList(keycloak.realm(realm).users().get(userId));
     }
 
-    private List<GroupVO> getGroupList(UserResource resource) {
+    private List<AtyGroupInfoVO> getGroupList(UserResource resource) {
         return resource.groups().stream().map(KeyCloakMapper.INSTANCE::userGroup).collect(Collectors.toList());
     }
 
@@ -259,16 +278,14 @@ public class KeyCloakApi {
      * 用户添加分组
      */
     public void addUserGroup(String realm, String userId, String groupId) {
-        UserResource resource = keycloak.realm(realm).users().get(userId);
-        resource.joinGroup(groupId);
+        keycloak.realm(realm).users().get(userId).joinGroup(groupId);
     }
 
     /**
      * 用户离开分组
      */
     public void deleteUserGroup(String realm, String userId, String groupId) {
-        UserResource resource = keycloak.realm(realm).users().get(userId);
-        resource.leaveGroup(groupId);
+        keycloak.realm(realm).users().get(userId).leaveGroup(groupId);
     }
 
     /**********************************分组结束************************************/

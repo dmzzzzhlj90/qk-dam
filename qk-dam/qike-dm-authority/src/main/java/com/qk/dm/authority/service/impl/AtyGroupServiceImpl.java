@@ -1,9 +1,14 @@
 package com.qk.dm.authority.service.impl;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.keycloak.KeyCloakApi;
 import com.qk.dm.authority.service.AtyGroupService;
-import com.qk.dm.authority.vo.group.AtyGroupCreateVO;
+import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
+import com.qk.dm.authority.vo.group.AtyGroupVO;
+import com.qk.dm.authority.vo.group.AtyGroupParamVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author shenpj
@@ -20,17 +25,32 @@ public class AtyGroupServiceImpl implements AtyGroupService {
     }
 
     @Override
-    public void addGroup(AtyGroupCreateVO groupVO) {
-        keyCloakApi.addGroup(groupVO.getRealm(),groupVO.getGroupName());
+    public void addGroup(AtyGroupVO groupVO) {
+        keyCloakApi.addGroup(groupVO.getRealm(), groupVO.getGroupName());
     }
 
     @Override
-    public void updateGroup(String groupId, AtyGroupCreateVO groupVO) {
-        keyCloakApi.updateGroup(groupVO.getRealm(),groupId,groupVO.getGroupName());
+    public void updateGroup(String groupId, AtyGroupVO groupVO) {
+        keyCloakApi.updateGroup(groupVO.getRealm(), groupId, groupVO.getGroupName());
     }
 
     @Override
     public void deleteGroup(String groupId, String realm) {
-        keyCloakApi.deleteGroup(realm,groupId);
+        keyCloakApi.deleteGroup(realm, groupId);
+    }
+
+    @Override
+    public AtyGroupInfoVO getGroup(String realm, String groupId) {
+        return keyCloakApi.groupDetail(realm, groupId);
+    }
+
+    @Override
+    public PageResultVO<AtyGroupInfoVO> getUsers(AtyGroupParamVO groupParamVO) {
+        return keyCloakApi.groupList(groupParamVO.getRealm(), groupParamVO.getSearch(), groupParamVO.getPagination());
+    }
+
+    @Override
+    public List<AtyGroupInfoVO> getUsers(String realm, String search) {
+        return keyCloakApi.groupList(realm, search);
     }
 }

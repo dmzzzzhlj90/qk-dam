@@ -1,6 +1,11 @@
 package com.qk.dm.authority.service;
 
-import com.qk.dm.authority.vo.group.AtyGroupCreateVO;
+import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
+import com.qk.dm.authority.vo.group.AtyGroupVO;
+import com.qk.dm.authority.vo.group.AtyGroupParamVO;
+
+import java.util.List;
 
 /**
  * @author shenpj
@@ -8,9 +13,15 @@ import com.qk.dm.authority.vo.group.AtyGroupCreateVO;
  * @since 1.0.0
  */
 public interface AtyGroupService {
-    void addGroup(AtyGroupCreateVO groupVO);
+    void addGroup(AtyGroupVO groupVO);
 
-    void updateGroup(String groupId, AtyGroupCreateVO groupVO);
+    void updateGroup(String groupId, AtyGroupVO groupVO);
 
     void deleteGroup(String groupId, String realm);
+
+    AtyGroupInfoVO getGroup(String realm, String groupId);
+
+    PageResultVO<AtyGroupInfoVO> getUsers(AtyGroupParamVO groupParamVO);
+
+    List<AtyGroupInfoVO> getUsers(String realm, String search);
 }

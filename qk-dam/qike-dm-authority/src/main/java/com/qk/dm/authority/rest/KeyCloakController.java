@@ -7,7 +7,7 @@ import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.authority.keycloak.KeyCloakApi;
 import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import com.qk.dm.authority.vo.user.AtyUserKeyCloakVO;
-import com.qk.dm.authority.vo.params.UserParamVO;
+import com.qk.dm.authority.vo.user.AtyUserParamVO;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -152,12 +152,12 @@ public class KeyCloakController {
     /**
      * 分页查询用户信息
      *
-     * @param userParamVO
+     * @param atyUserParamVO
      * @return DefaultCommonResult<PageResultVO < UserInfoVO> >
      */
     @PostMapping("/query")
-    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> queryUsers(@RequestBody UserParamVO userParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, keyCloakApi.getUserList(userParamVO.getRealm(),userParamVO.getSearch(),userParamVO.getPagination()));
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> queryUsers(@RequestBody AtyUserParamVO atyUserParamVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, keyCloakApi.getUserList(atyUserParamVO.getRealm(), atyUserParamVO.getSearch(), atyUserParamVO.getPagination()));
     }
 
 }

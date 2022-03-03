@@ -4,7 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyUserService;
-import com.qk.dm.authority.vo.params.UserParamVO;
+import com.qk.dm.authority.vo.user.AtyUserParamVO;
 import com.qk.dm.authority.vo.user.AtyAtyUserCreateVO;
 import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import com.qk.dm.authority.vo.user.AtyUserResetPassWordVO;
@@ -12,9 +12,11 @@ import com.qk.dm.authority.vo.user.AtyUserVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 权限管理_用户
+ *
  * @author shenpj
  * @date 2022/3/2 10:41
  * @since 1.0.0
@@ -30,8 +32,9 @@ public class AtyUserController {
 
     /**
      * 新增用户
+     *
      * @param userVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult addUser(@RequestBody @Valid AtyAtyUserCreateVO userVO) {
@@ -41,58 +44,71 @@ public class AtyUserController {
 
     /**
      * 修改用户
-     * @param userId
+     *
      * @param atyUserVO
-     * @return
+     * @return DefaultCommonResult
      */
-    @PutMapping("/{id}")
-    public DefaultCommonResult updateUser(@PathVariable("id") String userId,@RequestBody @Valid AtyUserVO atyUserVO) {
+    @PutMapping("/{userId}")
+    public DefaultCommonResult updateUser(@PathVariable String userId, @RequestBody @Valid AtyUserVO atyUserVO) {
         atyUserService.updateUser(userId, atyUserVO);
         return DefaultCommonResult.success();
     }
 
     /**
      * 修改用户_密码
-     * @param userId
+     *
      * @param userVO
-     * @return
+     * @return DefaultCommonResult
      */
-    @PutMapping("/{id}/password")
-    public DefaultCommonResult resetPassword(@PathVariable("id") String userId,@RequestBody @Valid AtyUserResetPassWordVO userVO) {
-        atyUserService.resetPassword(userId,userVO);
+    @PutMapping("/{userId}/password")
+    public DefaultCommonResult resetPassword(@PathVariable String userId, @RequestBody @Valid AtyUserResetPassWordVO userVO) {
+        atyUserService.resetPassword(userId, userVO);
         return DefaultCommonResult.success();
     }
 
     /**
      * 删除用户
+     *
      * @param realm
-     * @param userId
-     * @return
+     * @return DefaultCommonResult
      */
-    @DeleteMapping("/{id}")
-    public DefaultCommonResult deleteUser(String realm, @PathVariable("id") String userId) {
+    @DeleteMapping("/{userId}")
+    public DefaultCommonResult deleteUser(String realm, @PathVariable String userId) {
         atyUserService.deleteUser(realm, userId);
         return DefaultCommonResult.success();
     }
 
     /**
      * 用户详情
+     *
      * @param realm
-     * @param userId
-     * @return
+     * @return DefaultCommonResult<AtyUserInfoVO>
      */
-    @GetMapping("/{id}")
-    public DefaultCommonResult<AtyUserInfoVO> getUser(String realm, @PathVariable("id") String userId) {
+    @GetMapping("/{userId}")
+    public DefaultCommonResult<AtyUserInfoVO> getUser(String realm, @PathVariable String userId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUser(realm, userId));
     }
 
     /**
      * 用户列表
-     * @param userParamVO
+     *
+     * @param atyUserParamVO
+     * @return DefaultCommonResult<PageResultVO < AtyUserInfoVO>>
+     */
+    @PostMapping("/page/list")
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getUsers(@RequestBody AtyUserParamVO atyUserParamVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(atyUserParamVO));
+    }
+
+    /**
+     * 用户列表-不分页
+     *
+     * @param realm
+     * @param search
      * @return
      */
-    @PostMapping("/list")
-    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getUsers(@RequestBody UserParamVO userParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(userParamVO));
+    @GetMapping("/list")
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUsers(String realm, String search) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(realm, search));
     }
 }
