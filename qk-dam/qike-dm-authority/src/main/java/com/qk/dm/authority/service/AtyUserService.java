@@ -20,7 +20,7 @@ public interface AtyUserService {
 
     void deleteUser(String realm, String userId);
 
-    void resetPassword(String userId, AtyUserResetPassWordVO userVO);
+    void resetPassword(String realm, String userId, String password);
 
     AtyUserInfoVO getUser(String realm, String userId);
 

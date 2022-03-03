@@ -3,9 +3,12 @@ package com.qk.dm.authority.keycloak;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
+import com.qk.dm.authority.mapstruct.AtyGroupMapper;
+import com.qk.dm.authority.mapstruct.AtyRoleMapper;
 import com.qk.dm.authority.mapstruct.AtyUserMapper;
 import com.qk.dm.authority.mapstruct.KeyCloakMapper;
 import com.qk.dm.authority.vo.*;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import com.qk.dm.authority.vo.user.AtyUserKeyCloakVO;
@@ -229,7 +232,7 @@ public class KeyCloakApi {
      */
     public AtyGroupInfoVO groupDetail(String realm, String groupId) {
         GroupResource groupResource = keycloak.realm(realm).groups().group(groupId);
-        AtyGroupInfoVO atyGroupInfoVO = KeyCloakMapper.INSTANCE.userGroup(groupResource.toRepresentation());
+        AtyGroupInfoVO atyGroupInfoVO = AtyGroupMapper.INSTANCE.userGroup(groupResource.toRepresentation());
         List<UserRepresentation> members = groupResource.members();
         List<AtyUserInfoVO> userInfos = AtyUserMapper.INSTANCE.userInfo(members);
         atyGroupInfoVO.setMembers(userInfos);
@@ -249,14 +252,14 @@ public class KeyCloakApi {
                 groupsResource.groups(search, null, null).size(),
                 pagination.getPage(),
                 pagination.getSize(),
-                KeyCloakMapper.INSTANCE.userGroup(groups));
+                AtyGroupMapper.INSTANCE.userGroup(groups));
     }
 
     /**
      * 查询所有分组
      */
     public List<AtyGroupInfoVO> groupList(String realm, String search) {
-        return KeyCloakMapper.INSTANCE.userGroup(keycloak.realm(realm).groups().groups(search, null, null));
+        return AtyGroupMapper.INSTANCE.userGroup(keycloak.realm(realm).groups().groups(search, null, null));
     }
 
 
@@ -270,7 +273,7 @@ public class KeyCloakApi {
     }
 
     private List<AtyGroupInfoVO> getGroupList(UserResource resource) {
-        return resource.groups().stream().map(KeyCloakMapper.INSTANCE::userGroup).collect(Collectors.toList());
+        return resource.groups().stream().map(AtyGroupMapper.INSTANCE::userGroup).collect(Collectors.toList());
     }
 
 
@@ -341,13 +344,13 @@ public class KeyCloakApi {
      * @param roleName
      * @return
      */
-    public RoleVO clientRoleDetail(String realm, String client_id, String roleName) {
+    public AtyClientRoleInfoVO clientRoleDetail(String realm, String client_id, String roleName) {
         RoleResource roleResource = keycloak.realm(realm).clients().get(client_id).roles().get(roleName);
-        RoleVO roleVO = KeyCloakMapper.INSTANCE.userRole(roleResource.toRepresentation());
+        AtyClientRoleInfoVO atyClientRoleInfoVO = AtyRoleMapper.INSTANCE.userRole(roleResource.toRepresentation());
         Set<UserRepresentation> roleUserMembers = roleResource.getRoleUserMembers();
         List<AtyUserInfoVO> atyUserInfoVOS = AtyUserMapper.INSTANCE.userInfo(new ArrayList<>(roleUserMembers));
-        roleVO.setMembers(atyUserInfoVOS);
-        return roleVO;
+        atyClientRoleInfoVO.setMembers(atyUserInfoVOS);
+        return atyClientRoleInfoVO;
     }
 
     /**
@@ -355,7 +358,7 @@ public class KeyCloakApi {
      *
      * @return
      */
-    public PageResultVO<RoleVO> clientRoleList(String realm, String client_id, String search, Pagination pagination) {
+    public PageResultVO<AtyClientRoleInfoVO> clientRoleList(String realm, String client_id, String search, Pagination pagination) {
         RolesResource roles = keycloak.realm(realm).clients().get(client_id).roles();
         //todo 分页
         List<RoleRepresentation> list = roles.list(
@@ -363,31 +366,40 @@ public class KeyCloakApi {
                 (pagination.getPage() - 1) * pagination.getSize(),
                 pagination.getSize());
         return new PageResultVO<>(
-                roles.list(search, null, null).size(),
+                roles.list(search, false).size(),
                 pagination.getPage(),
                 pagination.getSize(),
-                KeyCloakMapper.INSTANCE.userRole(list));
+                AtyRoleMapper.INSTANCE.userRole(list));
     }
 
+    /**
+     * 客户端所有角色
+     *
+     * @return
+     */
+    public List<AtyClientRoleInfoVO> clientRoleList(String realm, String client_id, String search) {
+        RolesResource roles = keycloak.realm(realm).clients().get(client_id).roles();
+        return AtyRoleMapper.INSTANCE.userRole(roles.list(search, false));
+    }
 
     /**
      * 用户客户端角色
      *
      * @param userId
      */
-    public List<RoleVO> userClientRole(String realm, String userId, String client_clientId) {
+    public List<AtyClientRoleInfoVO> userClientRole(String realm, String userId, String client_clientId) {
         return getUserClientRole(keycloak.realm(realm).users().get(userId), client_clientId);
     }
 
-    private List<RoleVO> getUserClientRole(UserResource resource, String client_clientId) {
-        List<RoleVO> roleVOS = null;
+    private List<AtyClientRoleInfoVO> getUserClientRole(UserResource resource, String client_clientId) {
+        List<AtyClientRoleInfoVO> atyClientRoleInfoVOS = null;
         Map<String, ClientMappingsRepresentation> clientMappings = resource.roles().getAll().getClientMappings();
         if (clientMappings != null && client_clientId != null && clientMappings.get(client_clientId) != null) {
             ClientMappingsRepresentation clientMappingsRepresentation = clientMappings.get(client_clientId);
             List<RoleRepresentation> mappings = clientMappingsRepresentation.getMappings();
-            roleVOS = KeyCloakMapper.INSTANCE.userRole(mappings);
+            atyClientRoleInfoVOS = AtyRoleMapper.INSTANCE.userRole(mappings);
         }
-        return roleVOS;
+        return atyClientRoleInfoVOS;
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.qk.dm.authority.vo;
+package com.qk.dm.authority.vo.clientrole;
 
 import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleVO {
+public class AtyClientRoleInfoVO {
     private String id;
     private String name;
     private String description;

@@ -4,9 +4,7 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.keycloak.KeyCloakApi;
 import com.qk.dm.authority.mapstruct.AtyUserMapper;
 import com.qk.dm.authority.service.AtyUserService;
-import com.qk.dm.authority.vo.user.AtyUserParamVO;
 import com.qk.dm.authority.vo.user.*;
-import com.qk.dm.authority.vo.user.AtyUserResetPassWordVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,8 +40,8 @@ public class AtyUserServiceImpl implements AtyUserService {
     }
 
     @Override
-    public void resetPassword(String userId, AtyUserResetPassWordVO userVO) {
-        keyCloakApi.resetUserPassword(userVO.getRealm(), userId, userVO.getPassword());
+    public void resetPassword(String realm, String userId, String password) {
+        keyCloakApi.resetUserPassword(realm, userId, password);
     }
 
     @Override

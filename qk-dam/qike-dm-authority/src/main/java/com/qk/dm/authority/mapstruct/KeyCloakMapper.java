@@ -1,9 +1,12 @@
 package com.qk.dm.authority.mapstruct;
 
-import com.qk.dm.authority.vo.*;
-import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
-import org.keycloak.representations.idm.*;
-import org.mapstruct.*;
+import com.qk.dm.authority.vo.ClientVO;
+import com.qk.dm.authority.vo.RealmVO;
+import org.keycloak.representations.idm.ClientRepresentation;
+import org.keycloak.representations.idm.RealmRepresentation;
+import org.mapstruct.Mapper;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -17,14 +20,6 @@ import java.util.List;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface KeyCloakMapper {
     KeyCloakMapper INSTANCE = Mappers.getMapper(KeyCloakMapper.class);
-
-    RoleVO userRole(RoleRepresentation roleRepresentation);
-
-    List<RoleVO> userRole(List<RoleRepresentation> roleRepresentation);
-
-    AtyGroupInfoVO userGroup(GroupRepresentation groupRepresentation);
-
-    List<AtyGroupInfoVO> userGroup(List<GroupRepresentation> groupRepresentation);
 
     RealmVO userRealm(RealmRepresentation realmRepresentation);
 

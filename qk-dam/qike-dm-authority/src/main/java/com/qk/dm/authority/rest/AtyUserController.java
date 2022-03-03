@@ -62,7 +62,7 @@ public class AtyUserController {
      */
     @PutMapping("/{userId}/password")
     public DefaultCommonResult resetPassword(@PathVariable String userId, @RequestBody @Valid AtyUserResetPassWordVO userVO) {
-        atyUserService.resetPassword(userId, userVO);
+        atyUserService.resetPassword(userVO.getRealm(),userId, userVO.getPassword());
         return DefaultCommonResult.success();
     }
 

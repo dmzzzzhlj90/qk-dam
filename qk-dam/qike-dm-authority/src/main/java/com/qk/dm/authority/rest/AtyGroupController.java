@@ -5,11 +5,12 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyGroupService;
 import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
-import com.qk.dm.authority.vo.group.AtyGroupVO;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
+import com.qk.dm.authority.vo.group.AtyGroupVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -47,8 +48,8 @@ public class AtyGroupController {
      * @param groupVO
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}")
-    public DefaultCommonResult updateGroup(@PathVariable("id") String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
+    @PutMapping("/{groupId}")
+    public DefaultCommonResult updateGroup(@PathVariable String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
         atyGroupService.updateGroup(groupId, groupVO);
         return DefaultCommonResult.success();
     }
@@ -60,8 +61,8 @@ public class AtyGroupController {
      * @param realm
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/{id}")
-    public DefaultCommonResult deleteGroup(@PathVariable("id") String groupId, String realm) {
+    @DeleteMapping("/{groupId}")
+    public DefaultCommonResult deleteGroup(@PathVariable String groupId,@Valid @NotNull String realm) {
         atyGroupService.deleteGroup(groupId, realm);
         return DefaultCommonResult.success();
     }
@@ -72,8 +73,8 @@ public class AtyGroupController {
      * @param realm
      * @return DefaultCommonResult<AtyGroupInfoVO>
      */
-    @GetMapping("/{id}")
-    public DefaultCommonResult<AtyGroupInfoVO> getUser(String realm, @PathVariable("id") String groupId) {
+    @GetMapping("/{groupId}")
+    public DefaultCommonResult<AtyGroupInfoVO> getUser(String realm, @PathVariable String groupId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(realm, groupId));
     }
 
