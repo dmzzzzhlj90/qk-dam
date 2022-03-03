@@ -22,7 +22,11 @@ public interface DasApiBasicInfoService {
 
   void insert(DasApiBasicInfoVO dasApiBasicInfoVO);
 
+  DasApiBasicInfo buildBulkSaveApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
+
   void update(DasApiBasicInfoVO dasApiBasicInfoVO);
+
+  DasApiBasicInfo buildUpdateApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
 
   void delete(Long delId);
 
@@ -35,9 +39,6 @@ public interface DasApiBasicInfoService {
   LinkedList<Map<String, Object>> getRequestParasHeaderInfos();
 
   Map<String, String> getRequestParamsPositions();
-
-  Optional<DasApiBasicInfo> searchApiBasicInfoByDelParamIsEmpty(
-      DasApiBasicInfoVO dasApiBasicInfoVO);
 
   Optional<DasApiBasicInfo> checkExistApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
 

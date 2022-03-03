@@ -5,7 +5,6 @@ import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.openapi.OpenapiBuilder;
 import com.qk.dm.dataservice.config.ApiSixConnectInfo;
-import com.qk.dm.dataservice.config.OpenApiConnectInfo;
 import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
 import com.qk.dm.dataservice.constant.SyncStatusEnum;
@@ -41,18 +40,15 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
     private final DasApiRegisterService dasApiRegisterService;
 
     private final ApiSixConnectInfo apiSixConnectInfo;
-    private final OpenApiConnectInfo openApiConnectInfo;
 
     @Autowired
     public DasSyncOpenApiServiceImpl(
             DasApiDirService dasApiDirService,
             DasApiRegisterService dasApiRegisterService,
-            ApiSixConnectInfo apiSixConnectInfo,
-            OpenApiConnectInfo openApiConnectInfo) {
+            ApiSixConnectInfo apiSixConnectInfo) {
         this.dasApiDirService = dasApiDirService;
         this.dasApiRegisterService = dasApiRegisterService;
         this.apiSixConnectInfo = apiSixConnectInfo;
-        this.openApiConnectInfo = openApiConnectInfo;
     }
 
     @Override

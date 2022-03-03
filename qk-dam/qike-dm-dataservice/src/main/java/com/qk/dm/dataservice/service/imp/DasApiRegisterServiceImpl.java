@@ -5,10 +5,12 @@ import cn.hutool.log.LogFactory;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.dataservice.biz.BulkProcessApiDataService;
 import com.qk.dm.dataservice.config.ApiSixConnectInfo;
 import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.RegisterBackendParamHeaderInfoEnum;
 import com.qk.dm.dataservice.constant.RegisterConstantParamHeaderInfoEnum;
+import com.qk.dm.dataservice.dto.ApiRegisterDTO;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiRegister;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
@@ -27,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -48,17 +49,20 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
     private final DasApiRegisterRepository dasApiRegisterRepository;
     private final ApiSixConnectInfo apiSixConnectInfo;
+    private final BulkProcessApiDataService bulkProcessApiDataService;
 
     @Autowired
     public DasApiRegisterServiceImpl(
             DasApiBasicInfoService dasApiBasicInfoService,
             DasApiBasicInfoRepository dasApiBasicinfoRepository,
             DasApiRegisterRepository dasApiRegisterRepository,
-            ApiSixConnectInfo apiSixConnectInfo) {
+            ApiSixConnectInfo apiSixConnectInfo,
+            BulkProcessApiDataService bulkProcessApiDataService) {
         this.dasApiBasicInfoService = dasApiBasicInfoService;
         this.dasApiRegisterRepository = dasApiRegisterRepository;
         this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
         this.apiSixConnectInfo = apiSixConnectInfo;
+        this.bulkProcessApiDataService = bulkProcessApiDataService;
     }
 
     @Override
@@ -102,10 +106,38 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         dasApiBasicInfoVO.setApiId(apiId);
         dasApiBasicInfoVO.setApiType(ApiTypeEnum.REGISTER_API.getCode());
         dasApiBasicInfoService.insert(dasApiBasicInfoVO);
-        saveApiRegister(dasApiRegisterVO, apiId);
+        dasApiRegisterRepository.save(buildSaveApiRegister(dasApiRegisterVO, apiId));
     }
 
-    private void saveApiRegister(DasApiRegisterVO dasApiRegisterVO, String apiId) {
+    /**
+     * 注册API_批量操作转换DTO(保存)
+     *
+     * @param dasApiRegisterVO
+     */
+    public ApiRegisterDTO buildSaveApiRegisterDTO(DasApiRegisterVO dasApiRegisterVO) {
+        String apiId = UUID.randomUUID().toString().replaceAll("-", "");
+        // API基础信息
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        if (dasApiBasicInfoVO == null) {
+            throw new BizException("当前新增的API所对应的基础信息为空!!!");
+        }
+        dasApiBasicInfoVO.setApiId(apiId);
+        dasApiBasicInfoVO.setApiType(ApiTypeEnum.REGISTER_API.getCode());
+        DasApiBasicInfo dasApiBasicInfo = dasApiBasicInfoService.buildBulkSaveApiBasicInfo(dasApiBasicInfoVO);
+        // 注册API信息
+        DasApiRegister dasApiRegister = buildSaveApiRegister(dasApiRegisterVO, apiId);
+        //构建ApiRegisterDTO
+        return ApiRegisterDTO.builder().dasApiBasicInfo(dasApiBasicInfo).dasApiRegister(dasApiRegister).build();
+    }
+
+    /**
+     * 构建保存注册Api信息
+     *
+     * @param dasApiRegisterVO
+     * @param apiId
+     * @return
+     */
+    private DasApiRegister buildSaveApiRegister(DasApiRegisterVO dasApiRegisterVO, String apiId) {
         // 保存注册API信息
         DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterDefinitionVO);
@@ -118,8 +150,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         dasApiRegister.setGmtModified(new Date());
         dasApiRegister.setCreateUserid("admin");
         dasApiRegister.setDelFlag(0);
-
-        dasApiRegisterRepository.save(dasApiRegister);
+        return dasApiRegister;
     }
 
 
@@ -130,6 +161,50 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
         dasApiBasicInfoVO.setApiType(ApiTypeEnum.REGISTER_API.getCode());
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
+        // 更新注册API
+        DasApiRegister dasApiRegister = buildUpdateDasApiRegister(dasApiRegisterVO);
+
+        Predicate predicate = qDasApiRegister.apiId.eq(dasApiRegister.getApiId());
+        boolean exists = dasApiRegisterRepository.exists(predicate);
+        if (exists) {
+            dasApiRegisterRepository.saveAndFlush(dasApiRegister);
+        } else {
+            throw new BizException("当前要更新的注册API名称为:" + dasApiBasicInfoVO.getApiName() + " 数据的配置信息，不存在！！！");
+        }
+    }
+
+    /**
+     * 注册API_批量操作转换DTO(更新)
+     *
+     * @param dasApiRegisterVO
+     * @return
+     */
+    public ApiRegisterDTO buildUpdateApiRegisterDTO(DasApiRegisterVO dasApiRegisterVO) {
+        // 更新API基础信息
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        dasApiBasicInfoVO.setApiType(ApiTypeEnum.REGISTER_API.getCode());
+        DasApiBasicInfo dasApiBasicInfo = dasApiBasicInfoService.buildUpdateApiBasicInfo(dasApiBasicInfoVO);
+
+        //更新注册API
+        DasApiRegister dasApiRegister = buildUpdateDasApiRegister(dasApiRegisterVO);
+
+        Predicate predicate = qDasApiRegister.apiId.eq(dasApiRegister.getApiId());
+        boolean exists = dasApiRegisterRepository.exists(predicate);
+        if (!exists) {
+            throw new BizException("当前要更新的注册API名称为:" + dasApiBasicInfoVO.getApiName() + " 数据的配置信息，不存在！！！");
+        }
+
+        //构建ApiRegisterDTO
+        return ApiRegisterDTO.builder().dasApiBasicInfo(dasApiBasicInfo).dasApiRegister(dasApiRegister).build();
+    }
+
+    /**
+     * 构建注册API更新对象信息
+     *
+     * @param dasApiRegisterVO
+     * @return
+     */
+    private DasApiRegister buildUpdateDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
         // 更新注册API
         DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
         //校验更新ID参数
@@ -144,14 +219,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         dasApiRegister.setGmtModified(new Date());
         dasApiRegister.setCreateUserid("admin");
         dasApiRegister.setDelFlag(0);
-
-        Predicate predicate = qDasApiRegister.apiId.eq(dasApiRegister.getApiId());
-        boolean exists = dasApiRegisterRepository.exists(predicate);
-        if (exists) {
-            dasApiRegisterRepository.saveAndFlush(dasApiRegister);
-        } else {
-            throw new BizException("当前要新增的注册API名称为:" + dasApiBasicInfoVO.getApiName() + " 数据的配置信息，不存在！！！");
-        }
+        return dasApiRegister;
     }
 
     @Override
@@ -167,8 +235,11 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList) {
-        AtomicInteger saveCount = new AtomicInteger(0);
-        AtomicInteger updateCount = new AtomicInteger(0);
+        //新增
+        List<ApiRegisterDTO> saveDataList = new ArrayList<>();
+        //更新
+        List<ApiRegisterDTO> updateDataList = new ArrayList<>();
+
         if (!ObjectUtils.isEmpty(dasApiRegisterVOList)) {
             try {
                 for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterVOList) {
@@ -190,24 +261,27 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
                             DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
                             dasApiRegisterDefinitionVO.setId(optionalDasApiRegister.get().getId());
                             dasApiRegisterDefinitionVO.setApiId(apiId);
-                            update(dasApiRegisterVO);
+                            //更新操作
+                            updateDataList.add(buildUpdateApiRegisterDTO(dasApiRegisterVO));
                         } else {
-                            saveApiRegister(dasApiRegisterVO, dasApiBasicInfo.getApiId());
+                            //TODO 更新基础信息,新增注册API,只有不直接操作数据库就不应该需要处理
+//                            buildSaveApiRegister(dasApiRegisterVO, dasApiBasicInfo.getApiId());
                         }
-                        updateCount.getAndIncrement();
                     } else {
-                        //TODO 考虑策略字段参数   不存在,直接插入
-                        insert(dasApiRegisterVO);
-                        saveCount.getAndIncrement();
+                        //保存新增
+                        saveDataList.add(buildSaveApiRegisterDTO(dasApiRegisterVO));
                     }
                 }
+                //执行新增OR更新操作
+                bulkProcessApiDataService.bulkSaveRegisterApi(saveDataList);
+                bulkProcessApiDataService.bulkModifySRegisterApi(updateDataList);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new BizException(e.getMessage());
             }
         }
-        LOG.info("同步OpenApi,新增注册API个数为: 【{}】", saveCount);
-        LOG.info("同步OpenApi,更新注册API个数为: 【{}】", updateCount);
+        LOG.info("同步OpenApi,新增注册API个数为: 【{}】", saveDataList.size());
+        LOG.info("同步OpenApi,更新注册API个数为: 【{}】", updateDataList.size());
     }
 
     @Override
