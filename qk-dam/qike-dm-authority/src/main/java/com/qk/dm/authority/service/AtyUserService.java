@@ -3,8 +3,7 @@ package com.qk.dm.authority.service;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.vo.user.AtyUserParamVO;
 import com.qk.dm.authority.vo.user.*;
-import com.qk.dm.authority.vo.user.AtyAtyUserCreateVO;
-import com.qk.dm.authority.vo.user.AtyUserVO;
+import com.qk.dm.authority.vo.user.AtyUserCreateVO;
 
 import java.util.List;
 
@@ -14,9 +13,9 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface AtyUserService {
-    void addUser(AtyAtyUserCreateVO userVO);
+    void addUser(AtyUserCreateVO userVO);
 
-    void updateUser(String userId, AtyUserVO atyUserVO);
+    void updateUser(AtyUserUpdateVO atyUserVO);
 
     void deleteUser(String realm, String userId);
 

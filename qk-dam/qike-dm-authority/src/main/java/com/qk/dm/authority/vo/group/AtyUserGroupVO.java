@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author shenpj
@@ -17,8 +16,11 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyGroupBatchVO {
+public class AtyUserGroupVO {
+    @NotNull
     String realm;
-    @NotBlank
-    List<String> userIds;
+    @NotNull
+    String userId;
+    @NotNull
+    String groupId;
 }

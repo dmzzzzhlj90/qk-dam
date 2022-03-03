@@ -408,11 +408,11 @@ public class KeyCloakApi {
      * @param realm
      * @param client_id
      * @param userId
-     * @param name
+     * @param roleName
      */
-    public void addUserClientRole(String realm, String client_id, String userId, String name) {
+    public void addUserClientRole(String realm, String client_id, String userId, String roleName) {
         RealmResource realmResource = keycloak.realm(realm);
-        RoleRepresentation clientRoleRep = realmResource.clients().get(client_id).roles().get(name).toRepresentation();
+        RoleRepresentation clientRoleRep = realmResource.clients().get(client_id).roles().get(roleName).toRepresentation();
         realmResource.users().get(userId).roles().clientLevel(client_id).add(Arrays.asList(clientRoleRep));
     }
 
@@ -422,11 +422,11 @@ public class KeyCloakApi {
      * @param realm
      * @param client_id
      * @param userId
-     * @param name
+     * @param roleName
      */
-    public void deleteUserClientRole(String realm, String client_id, String userId, String name) {
+    public void deleteUserClientRole(String realm, String client_id, String userId, String roleName) {
         RealmResource realmResource = keycloak.realm(realm);
-        RoleRepresentation clientRoleRep = realmResource.clients().get(client_id).roles().get(name).toRepresentation();
+        RoleRepresentation clientRoleRep = realmResource.clients().get(client_id).roles().get(roleName).toRepresentation();
         realmResource.users().get(userId).roles().clientLevel(client_id).remove(Arrays.asList(clientRoleRep));
     }
 }

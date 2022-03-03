@@ -17,7 +17,7 @@ public interface AtyGroupService {
 
     void updateGroup(String groupId, AtyGroupVO groupVO);
 
-    void deleteGroup(String groupId, String realm);
+    void deleteGroup(String realm, String groupId);
 
     AtyGroupInfoVO getGroup(String realm, String groupId);
 

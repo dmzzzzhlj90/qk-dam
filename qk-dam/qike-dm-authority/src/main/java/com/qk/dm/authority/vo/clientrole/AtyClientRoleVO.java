@@ -1,5 +1,6 @@
 package com.qk.dm.authority.vo.clientrole;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyClientRoleVO {
+    @NotNull
     String realm;
+    @NotNull
     String roleName;
     String description;
 }

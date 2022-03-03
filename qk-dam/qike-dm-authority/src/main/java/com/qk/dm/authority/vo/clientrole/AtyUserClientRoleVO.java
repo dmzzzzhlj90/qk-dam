@@ -1,4 +1,4 @@
-package com.qk.dm.authority.vo.group;
+package com.qk.dm.authority.vo.clientrole;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,16 +9,20 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @author shenpj
- * @date 2022/3/2 17:56
+ * @date 2022/3/3 14:54
  * @since 1.0.0
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyGroupVO {
-    String id;
+public class AtyUserClientRoleVO {
     @NotNull
     String realm;
-    String groupName;
+    @NotNull
+    String roleName;
+    @NotNull
+    String client_id;
+    @NotNull
+    String userId;
 }

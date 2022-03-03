@@ -35,7 +35,7 @@ public class AtyGroupServiceImpl implements AtyGroupService {
     }
 
     @Override
-    public void deleteGroup(String groupId, String realm) {
+    public void deleteGroup(String realm, String groupId) {
         keyCloakApi.deleteGroup(realm, groupId);
     }
 

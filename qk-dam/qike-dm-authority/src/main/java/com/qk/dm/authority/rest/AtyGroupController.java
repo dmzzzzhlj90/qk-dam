@@ -48,9 +48,9 @@ public class AtyGroupController {
      * @param groupVO
      * @return DefaultCommonResult
      */
-    @PutMapping("/{groupId}")
-    public DefaultCommonResult updateGroup(@PathVariable String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
-        atyGroupService.updateGroup(groupId, groupVO);
+    @PutMapping("")
+    public DefaultCommonResult updateGroup(@RequestBody @Valid AtyGroupVO groupVO) {
+        atyGroupService.updateGroup(groupVO.getId(), groupVO);
         return DefaultCommonResult.success();
     }
 
@@ -58,24 +58,24 @@ public class AtyGroupController {
     /**
      * 删除用户组
      *
-     * @param realm
+     * @param groupVO
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/{groupId}")
-    public DefaultCommonResult deleteGroup(@PathVariable String groupId,@Valid @NotNull String realm) {
-        atyGroupService.deleteGroup(groupId, realm);
+    @DeleteMapping("")
+    public DefaultCommonResult deleteGroup(@RequestBody @Valid AtyGroupVO groupVO) {
+        atyGroupService.deleteGroup(groupVO.getRealm(), groupVO.getId());
         return DefaultCommonResult.success();
     }
 
     /**
      * 用户组详情
-     *
      * @param realm
+     * @param id
      * @return DefaultCommonResult<AtyGroupInfoVO>
      */
-    @GetMapping("/{groupId}")
-    public DefaultCommonResult<AtyGroupInfoVO> getUser(String realm, @PathVariable String groupId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(realm, groupId));
+    @GetMapping("/{id}")
+    public DefaultCommonResult<AtyGroupInfoVO> getUser(@Valid @NotNull String realm, @PathVariable String id) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(realm, id));
     }
 
     /**
@@ -91,12 +91,13 @@ public class AtyGroupController {
 
     /**
      * 用户组不分页列表
+     *
      * @param realm
      * @param search
-     * @return DefaultCommonResult<List<AtyGroupInfoVO>>
+     * @return DefaultCommonResult<List < AtyGroupInfoVO>>
      */
     @GetMapping("/list")
-    public DefaultCommonResult<List<AtyGroupInfoVO>> getUsers(String realm, String search) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(realm,search));
+    public DefaultCommonResult<List<AtyGroupInfoVO>> getUsers(@Valid @NotNull String realm, String search) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(realm, search));
     }
 }

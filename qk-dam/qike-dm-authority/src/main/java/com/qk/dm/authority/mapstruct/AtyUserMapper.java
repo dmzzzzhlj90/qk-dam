@@ -26,9 +26,9 @@ public interface AtyUserMapper {
 
     UserRepresentation userInfo(AtyUserKeyCloakVO userVO);
 
-    AtyUserKeyCloakVO userInfo(AtyAtyUserCreateVO userVO);
+    AtyUserKeyCloakVO userInfo(AtyUserCreateVO userVO);
 
-    AtyUserKeyCloakVO userInfo(AtyUserVO atyUserVO);
+    AtyUserKeyCloakVO userInfo(AtyUserUpdateVO atyUserVO);
 
     void userUpdate(AtyUserKeyCloakVO userVO, @MappingTarget UserRepresentation userRepresentation);
 

@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * @author shenpj
  * @date 2022/3/3 14:54
@@ -17,7 +15,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyClientRoleUpdateVO {
-    @NotNull
     String realm;
-    String description;
+    String roleName;
 }
