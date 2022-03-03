@@ -47,7 +47,6 @@ public class RptExcelBatchService {
         Iterator<RptBaseInfo> iterator = prtBasicInfoList.iterator();
         while (iterator.hasNext()){
           RptBaseInfo rptBaseInfo = iterator.next();
-          //todo 加入操作人员id
           //创建人名称
           rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
           //状态

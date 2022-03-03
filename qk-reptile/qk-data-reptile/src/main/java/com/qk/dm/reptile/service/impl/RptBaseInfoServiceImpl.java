@@ -68,6 +68,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     public void insert(RptBaseInfoDTO rptBaseInfoDTO) {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
         rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
+        rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);
         rptBaseInfoRepository.save(rptBaseInfo);
     }
 
@@ -89,7 +90,14 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
         rptBaseInfo.setRunStatus(runStatus);
-        rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+        if(RptConstant.START.equals(runStatus)){
+            String result = ReptileServerFactory.timing(rptConfigInfoService.rptList(rptBaseInfo.getId()));
+            if (!StringUtils.isBlank(result)) {
+                updateBaseInfo(rptBaseInfo, result);
+            }
+        }else {
+            rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
+        }
     }
 
     @Override
@@ -108,8 +116,23 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(rptBaseInfoList.isEmpty()){
             throw new BizException("当前要删除的基础信息id为：" + ids + " 的数据不存在！！！");
         }
-        rptBaseInfoRepository.saveAllAndFlush(rptBaseInfoList.stream().peek(e->e.setStatus(RptConstant.HISTORY)).collect(Collectors.toList()));
+        rptBaseInfoRepository.saveAllAndFlush(rptBaseInfoList.stream().peek(e->{
+                e.setDelFlag(RptConstant.DEL_STATUS);
+                e.setDelDate(new Date());
+                e.setDelUserName(ClientUserInfo.getUserName());
+            }
+        ).collect(Collectors.toList()));
 
+    }
+
+    @Override
+    public void reduction(String ids) {
+        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<RptBaseInfo> rptBaseInfoList = rptBaseInfoRepository.findAllById(idSet);
+        if(rptBaseInfoList.isEmpty()){
+            throw new BizException("当前要还原的基础信息id为：" + ids + " 的数据不存在！！！");
+        }
+        rptBaseInfoRepository.saveAllAndFlush(rptBaseInfoList.stream().peek(e->e.setDelFlag(RptConstant.REDUCTION_STATUS)).collect(Collectors.toList()));
     }
 
     @Override
@@ -266,6 +289,12 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
         if(Objects.nonNull(rptBaseInfoDTO.getListPageAddress())){
             booleanBuilder.and(qRptBaseInfo.listPageAddress.contains(rptBaseInfoDTO.getListPageAddress()));
+        }
+        if(Objects.nonNull(rptBaseInfoDTO.getDelFlag())){
+            booleanBuilder.and(qRptBaseInfo.delFlag.eq(rptBaseInfoDTO.getDelFlag()));
+        }
+        if(Objects.nonNull(rptBaseInfoDTO.getDelUserName())){
+            booleanBuilder.and(qRptBaseInfo.delUserName.contains(rptBaseInfoDTO.getDelUserName()));
         }
 
     }

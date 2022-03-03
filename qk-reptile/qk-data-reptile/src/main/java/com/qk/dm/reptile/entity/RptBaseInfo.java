@@ -217,4 +217,21 @@ public class RptBaseInfo implements Serializable {
     @Column(name = "config_status")
     private Boolean configStatus;
 
+    /**
+     * 0未删除 1已删除
+     */
+    @Column(name = "del_flag", nullable = false)
+    private Integer delFlag = 0;
+
+    /**
+     * 删除人
+     */
+    @Column(name = "del_username")
+    private String delUserName;
+
+    /**
+     * 删除时间
+     */
+    @Column(name = "del_date")
+    private Date delDate;
 }

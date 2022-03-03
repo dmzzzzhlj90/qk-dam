@@ -44,6 +44,11 @@ public class RptConstant {
     public static final Integer OFF_STARTED = 1;
 
     /**
+     * 运行状态-启动
+     */
+    public static final Integer START = 0;
+
+    /**
      * 导入文件名称包含内同
      */
     public static  final String EXCEL_NAME="待配列基本信息";
@@ -61,5 +66,14 @@ public class RptConstant {
      * 定义Guava存储大小
      */
     public final static  Integer GUAVA_CAPACITY = 10000000;
+
+    /**
+     * 删除状态
+     */
+    public final static Integer DEL_STATUS = 1;
+    /**
+     * 还原状态
+     */
+    public final static Integer REDUCTION_STATUS = 0;
 
 }

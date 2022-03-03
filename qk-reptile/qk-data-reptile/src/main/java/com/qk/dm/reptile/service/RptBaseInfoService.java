@@ -19,6 +19,8 @@ public interface RptBaseInfoService {
 
     void delete(String ids);
 
+    void reduction(String ids);
+
     PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO, OAuth2AuthorizedClient authorizedClient);
 
     void updateStatus(Long id,Integer status);
