@@ -68,6 +68,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     public void insert(RptBaseInfoDTO rptBaseInfoDTO) {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
         rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
+        rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);
         rptBaseInfoRepository.save(rptBaseInfo);
     }
 

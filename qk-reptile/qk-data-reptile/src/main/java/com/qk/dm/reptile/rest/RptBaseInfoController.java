@@ -135,7 +135,7 @@ public class RptBaseInfoController {
      * @param ids
      * @return DefaultCommonResult
      */
-    @PostMapping("/reduction/{ids}")
+    @DeleteMapping("/reduction/{ids}")
     public DefaultCommonResult reduction(@PathVariable("ids") String ids){
         rptBaseInfoService.reduction(ids);
         return DefaultCommonResult.success();

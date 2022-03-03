@@ -50,7 +50,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping(path = "/current/logout")
-    public String currentLogout(
+    public String logout(
             HttpServletRequest request,
             HttpServletResponse response,
             @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {

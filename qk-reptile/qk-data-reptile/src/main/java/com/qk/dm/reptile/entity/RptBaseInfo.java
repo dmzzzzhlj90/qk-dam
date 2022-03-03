@@ -220,8 +220,8 @@ public class RptBaseInfo implements Serializable {
     /**
      * 0未删除 1已删除
      */
-    @Column(name = "del_flag")
-    private Integer delFlag;
+    @Column(name = "del_flag", nullable = false)
+    private Integer delFlag = 0;
 
     /**
      * 删除人
