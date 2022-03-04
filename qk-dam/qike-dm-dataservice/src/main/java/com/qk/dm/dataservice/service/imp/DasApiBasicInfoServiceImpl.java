@@ -262,6 +262,11 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return ApiSyncTypeEnum.getAllValue();
     }
 
+    @Override
+    public LinkedList<Map<String, Object>> getDebugParamHeaderInfo() {
+        return DebugApiParamHeaderInfoEnum.getAllValue();
+    }
+
     private DasApiBasicInfoVO transformToVO(DasApiBasicInfo dasApiBasicInfo) {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
     }
