@@ -58,5 +58,9 @@ public class AtyUserServiceImpl implements AtyUserService {
         return keyCloakApi.getUserList(realm, search);
     }
 
+    @Override
+    public void saveAllUsers(List<AtyUserInputExceVO> userlist, String relame) {
+        keyCloakApi.saveAllUsers(userlist,relame);
+    }
 
 }

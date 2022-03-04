@@ -26,4 +26,6 @@ public interface AtyUserService {
     PageResultVO<AtyUserInfoVO> getUsers(AtyUserParamVO atyUserParamVO);
 
     List<AtyUserInfoVO> getUsers(String realm, String search);
+
+    void saveAllUsers(List<AtyUserInputExceVO> userlist, String relame);
 }

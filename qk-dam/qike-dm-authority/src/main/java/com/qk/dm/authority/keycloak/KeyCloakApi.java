@@ -11,6 +11,7 @@ import com.qk.dm.authority.vo.*;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.user.AtyUserInfoVO;
+import com.qk.dm.authority.vo.user.AtyUserInputExceVO;
 import com.qk.dm.authority.vo.user.AtyUserKeyCloakVO;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.*;
@@ -428,5 +429,33 @@ public class KeyCloakApi {
         RealmResource realmResource = keycloak.realm(realm);
         RoleRepresentation clientRoleRep = realmResource.clients().get(client_id).roles().get(roleName).toRepresentation();
         realmResource.users().get(userId).roles().clientLevel(client_id).remove(Arrays.asList(clientRoleRep));
+    }
+
+    /**
+     * 导入添加用户信息
+     * @param userlist
+     * @param relame
+     */
+    public void saveAllUsers(List<AtyUserInputExceVO> userlist, String relame) {
+        userlist.forEach(atyUserInputExceVO -> {
+            //todo 用户名电子邮箱不能重复
+            UserRepresentation user = AtyUserMapper.INSTANCE.userExcelInfo(atyUserInputExceVO);
+            user.setEmailVerified(false);
+            // 设置密码
+            List<CredentialRepresentation> credentials = new ArrayList<>();
+            CredentialRepresentation cr = new CredentialRepresentation();
+            cr.setType(CredentialRepresentation.PASSWORD);
+            cr.setValue(atyUserInputExceVO.getPassword());
+            //临时密码，如果启用，用户需在下次登陆时更换密码
+            cr.setTemporary(false);
+            credentials.add(cr);
+            user.setCredentials(credentials);
+            //创建用户
+            Response response = keycloak.realm(relame).users().create(user);
+            Response.StatusType createUserStatus = response.getStatusInfo();
+            if (!"Created".equals(createUserStatus.toString())) {
+                throw new BizException("用户名或邮箱已经存在！");
+            }
+        });
     }
 }

@@ -41,6 +41,7 @@ compileJava {
 }
 
 dependencies {
+    implementation 'com.alibaba:easyexcel'
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
 //    implementation project(":dm-feign-client")

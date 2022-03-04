@@ -32,4 +32,7 @@ public interface AtyUserMapper {
 
     void userUpdate(AtyUserKeyCloakVO userVO, @MappingTarget UserRepresentation userRepresentation);
 
+    void userExcel(AtyUserInfoVO atyUserInfoVO, @MappingTarget AtyUserExcelVO atyUserExcelVO);
+
+  UserRepresentation userExcelInfo(AtyUserInputExceVO atyUserInputExceVO);
 }
