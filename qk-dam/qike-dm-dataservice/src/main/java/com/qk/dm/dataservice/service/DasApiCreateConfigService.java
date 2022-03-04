@@ -1,6 +1,7 @@
 package com.qk.dm.dataservice.service;
 
 import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
+import com.qk.dm.dataservice.vo.DebugApiResultVO;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -36,7 +37,7 @@ public interface DasApiCreateConfigService {
 
     LinkedList<Map<String, Object>> getParamHeaderInfo();
 
-    Object debugModel(DasApiCreateConfigVO dasApiCreateConfigVO);
+    DebugApiResultVO debugModel(DasApiCreateConfigVO dasApiCreateConfigVO);
 
 //  // ========================数据源服务API调用=====================================
 //  List<String> getAllConnType();

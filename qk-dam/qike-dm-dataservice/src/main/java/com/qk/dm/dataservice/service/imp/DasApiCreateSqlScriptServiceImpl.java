@@ -1,5 +1,7 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -186,8 +188,8 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     }
 
     @Override
-    public Object debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
-        return null;
+    public DebugApiResultVO debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+        return  DebugApiResultVO.builder().resultData("").build();
     }
 
 }

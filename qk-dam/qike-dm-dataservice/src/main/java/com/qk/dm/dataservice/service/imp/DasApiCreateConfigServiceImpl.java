@@ -1,5 +1,7 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -14,6 +16,7 @@ import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiCreateConfigService;
+import com.qk.dm.dataservice.utils.SqlExecuteUtils;
 import com.qk.dm.dataservice.vo.*;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 数据服务_新建API_配置方式
@@ -212,21 +216,30 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     }
 
     @Override
-    public Object debugModel(DasApiCreateConfigVO dasApiCreateConfigVO) {
+    public DebugApiResultVO debugModel(DasApiCreateConfigVO apiCreateConfigVO) {
         // 1.生成查询SQL(根据数据源类型)
         //数据源连接类型
-        String connectType = dasApiCreateConfigVO.getConnectType();
-
+        String connectType = apiCreateConfigVO.getConnectType();
         //表名称
-        String tableName = dasApiCreateConfigVO.getTableName();
-        //入参(SQL where条件)
-        List<DasApiCreateRequestParasVO> apiCreateRequestParasVOS = dasApiCreateConfigVO.getApiCreateRequestParasVOS();
+        String tableName = apiCreateConfigVO.getTableName();
+        //新建API接口定义入参(对应元数据映射关系)
+        Map<String, String> mappingParams = apiCreateConfigVO.getApiCreateRequestParasVOS().stream()
+                .collect(Collectors.toMap(DasApiCreateRequestParasVO::getParaName, DasApiCreateRequestParasVO::getMappingName));
 
+        //真实请求参数(SQL where条件,使用字段参数)
+        Map<String, String> reqParams = apiCreateConfigVO.getDebugApiParasVOS().stream()
+                .collect(Collectors.toMap(DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
+
+        //响应参数(SQL返回值映射查询数据)
+        List<String> resParams = apiCreateConfigVO.getApiCreateResponseParasVOS()
+                .stream().map(DasApiCreateResponseParasVO::getMappingName).collect(Collectors.toList());
+        //生成查询sql
+        String executeSql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParams,mappingParams);
 
         // 2.执行查询SQL(根据数据源类型)
 
 
-        return null;
+        return  DebugApiResultVO.builder().resultData("").build();
     }
 
 }
