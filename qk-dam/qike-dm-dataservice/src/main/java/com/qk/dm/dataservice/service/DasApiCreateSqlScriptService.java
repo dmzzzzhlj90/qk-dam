@@ -16,12 +16,14 @@ import java.util.Map;
 @Service
 public interface DasApiCreateSqlScriptService {
 
-  DasApiCreateSqlScriptVO detail(String apiId);
+    DasApiCreateSqlScriptVO detail(String apiId);
 
-  void insert(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
+    void insert(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 
-  void update(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
+    void update(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 
-  LinkedList<Map<String, Object>> getParamHeaderInfo();
+    LinkedList<Map<String, Object>> getParamHeaderInfo();
+
+    Object debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 
 }

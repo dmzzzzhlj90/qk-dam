@@ -1,15 +1,11 @@
 package com.qk.dm.dataservice.service;
 
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Service;
 
 /**
  * 数据服务_新建API_配置方式
@@ -21,24 +17,26 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiCreateConfigService {
 
-  DasApiCreateConfigVO detail(String apiId);
+    DasApiCreateConfigVO detail(String apiId);
 
-  void insert(DasApiCreateConfigVO dasApiCreateConfigVO);
+    void insert(DasApiCreateConfigVO dasApiCreateConfigVO);
 
-  void update(DasApiCreateConfigVO dasApiCreateConfigVO);
+    void update(DasApiCreateConfigVO dasApiCreateConfigVO);
 
-  // ========================参数配置表头信息=====================================
-  LinkedList<Map<String, Object>> getRequestParamHeaderInfo();
+    // ========================参数配置表头信息=====================================
+    LinkedList<Map<String, Object>> getRequestParamHeaderInfo();
 
-  LinkedList<Map<String, Object>> getResponseParamHeaderInfo();
+    LinkedList<Map<String, Object>> getResponseParamHeaderInfo();
 
-  LinkedList<Map<String, Object>> getOrderParamHeaderInfo();
+    LinkedList<Map<String, Object>> getOrderParamHeaderInfo();
 
-  List<String> getParamCompareSymbol();
+    List<String> getParamCompareSymbol();
 
-  Map<String, String> getParamSortStyle();
+    Map<String, String> getParamSortStyle();
 
-  LinkedList<Map<String, Object>> getParamHeaderInfo();
+    LinkedList<Map<String, Object>> getParamHeaderInfo();
+
+    Object debugModel(DasApiCreateConfigVO dasApiCreateConfigVO);
 
 //  // ========================数据源服务API调用=====================================
 //  List<String> getAllConnType();

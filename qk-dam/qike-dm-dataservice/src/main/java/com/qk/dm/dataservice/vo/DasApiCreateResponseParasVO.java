@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 新建API_配置方式_请求参数VO
+ * 新建API_配置方式_响应参数VO
  *
  * @author wjq
  * @date 20210907

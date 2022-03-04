@@ -139,4 +139,15 @@ public class DasApiCreateConfigController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.getParamHeaderInfo());
     }
 
+    /**
+     * 新建API__配置方式__调试接口功能
+     *
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/debug/model")
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+    public DefaultCommonResult debugModel(@RequestBody DasApiCreateConfigVO dasApiCreateConfigVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.debugModel(dasApiCreateConfigVO));
+    }
+
 }

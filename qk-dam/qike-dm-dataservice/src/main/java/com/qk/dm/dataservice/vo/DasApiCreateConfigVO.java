@@ -83,6 +83,11 @@ public class DasApiCreateConfigVO {
     private List<DasApiCreateOrderParasVO> apiCreateOrderParasVOS;
 
     /**
+     * DEBUG调试参数
+     */
+    private List<DebugApiParasVO> debugApiParasVOS;
+
+    /**
      * 描述
      */
     private String description;

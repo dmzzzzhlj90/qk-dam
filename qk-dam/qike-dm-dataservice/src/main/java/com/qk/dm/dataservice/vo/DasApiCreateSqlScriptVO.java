@@ -77,6 +77,11 @@ public class DasApiCreateSqlScriptVO {
     private List<DasApiCreateOrderParasVO> apiCreateOrderParasVOS;
 
     /**
+     * DEBUG调试参数
+     */
+    private List<DebugApiParasVO> debugApiParasVOS;
+
+    /**
      * 取数脚本
      */
     @NotBlank(message = "取数脚本不能为空！")

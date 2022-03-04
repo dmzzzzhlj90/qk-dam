@@ -177,4 +177,15 @@ public class DasApiBasicInfoController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getSyncType());
     }
 
+    /**
+     * API调试__请求参数表头信息
+     *
+     * @return DefaultCommonResult<Map < String, String>>
+     */
+    @GetMapping(value = "/debug/para/header/infos")
+//  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getDebugParamHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDebugParamHeaderInfo());
+    }
+
 }

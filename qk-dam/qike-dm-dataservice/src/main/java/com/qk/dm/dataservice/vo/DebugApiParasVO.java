@@ -6,40 +6,41 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 新建API_配置方式_请求参数VO
+ * API调试请求参数VO
  *
  * @author wjq
- * @date 20210907
+ * @date 2022/03/04
  * @since 1.0.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DasApiCreateRequestParasVO {
+public class DebugApiParasVO {
 
     /**
-     * 绑定参数
+     * 参数名称
      */
     private String paraName;
 
     /**
-     * 绑定字段
+     * 参数类型
      */
-    private String mappingName;
+    private String paraType;
 
     /**
-     * 操作符
+     * 是否必填
      */
-    private String conditionType;
+    private String necessary;
 
     /**
-     * 后端参数
+     * 值
      */
-    private String backendParaName;
+    private String value;
 
     /**
-     * 后端参数位置
+     * 是否传递
      */
-    private String backendParaPosition;
+    private boolean usePara;
+
 }
