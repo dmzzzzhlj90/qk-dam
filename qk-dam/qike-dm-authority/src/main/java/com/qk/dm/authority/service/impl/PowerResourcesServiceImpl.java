@@ -1,0 +1,151 @@
+package com.qk.dm.authority.service.impl;
+
+import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.authority.constant.QxConstant;
+import com.qk.dm.authority.entity.QQxResources;
+import com.qk.dm.authority.entity.QxResources;
+import com.qk.dm.authority.mapstruct.QxResourcesMapper;
+import com.qk.dm.authority.repositories.QkQxResourcesRepository;
+import com.qk.dm.authority.service.PowerResourcesService;
+import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
+import com.qk.dm.authority.vo.params.PowerResourcesParamVO;
+import com.qk.dm.authority.vo.params.ResourceParamVO;
+import com.qk.dm.authority.vo.powervo.ResourceOutVO;
+import com.qk.dm.authority.vo.powervo.ResourceVO;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**权限管理-资源
+ * @author zys
+ * @date 2022/2/24 11:24
+ * @since 1.0.0
+ */
+@Service
+public class PowerResourcesServiceImpl implements PowerResourcesService {
+  private final QkQxResourcesRepository qkQxResourcesRepository;
+  private final QQxResources qQxResources= QQxResources.qxResources;
+  private JPAQueryFactory jpaQueryFactory;
+  private final EntityManager entityManager;
+
+  public PowerResourcesServiceImpl(
+      QkQxResourcesRepository qkQxResourcesRepository,
+      EntityManager entityManager) {
+    this.qkQxResourcesRepository = qkQxResourcesRepository;
+    this.entityManager = entityManager;
+  }
+
+  @PostConstruct
+  public void initFactory() {
+    jpaQueryFactory = new JPAQueryFactory(entityManager);
+  }
+  @Override
+  public void addResource(ResourceVO resourceVO) {
+    resourceVO.setResourcesid(UUID.randomUUID().toString());
+    QxResources qxResources = QxResourcesMapper.INSTANCE.qxResources(resourceVO);
+    BooleanExpression predicate = qQxResources.name.eq(resourceVO.getName()).and(qQxResources.serviceId.eq(resourceVO.getServiceId()).and(qQxResources.powerSign.eq(resourceVO.getPowerSign())));
+    boolean exists = qkQxResourcesRepository.exists(predicate);
+    if (exists){
+      throw new BizException(
+          "当前新增名称为:"
+              + resourceVO.getName()
+              + " 的数据，已存在！！！");
+    }else {
+      qkQxResourcesRepository.save(qxResources);
+    }
+  }
+
+  @Override
+  public void updateResource(ResourceVO resourceVO) {
+    QxResources qxResources = qkQxResourcesRepository.findById(resourceVO.getId()).orElse(null);
+    if (Objects.isNull(qxResources)){
+      throw new BizException("当前需修改的名称为"+resourceVO.getName()+"的数据不存在");
+    }
+    QxResources qxResource = QxResourcesMapper.INSTANCE.qxResources(resourceVO);
+    qkQxResourcesRepository.saveAndFlush(qxResource);
+  }
+
+  @Override
+  public void deleteResource(Long id) {
+    QxResources qxResources = qkQxResourcesRepository.findById(id).orElse(null);
+    if (Objects.isNull(qxResources)) {
+      throw new BizException("当前需删除的数据不存在");
+    }
+    if (Objects.nonNull(qxResources.getPid()) && qxResources.getPid() == QxConstant.PID) {
+      qkQxResourcesRepository.deleteById(id);
+    } else {
+      List<QxResources> qxResourcesList = qkQxResourcesRepository.findByPid(qxResources.getId());
+      if (CollectionUtils.isNotEmpty(qxResourcesList)){
+        throw new BizException(
+            "存在子节点，请先删除"
+        );
+      }else{
+        qkQxResourcesRepository.deleteById(id);
+      }
+    }
+  }
+
+  @Override
+  public List<ResourceOutVO> queryResource(ResourceParamVO resourceParamVO) {
+    List<ResourceOutVO> resourceOutVOList = new ArrayList<>();
+    List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(resourceParamVO.getServiceId());
+    //筛选资源数据
+    List<QxResources> list = qxResourcesList.stream().filter(qxResources -> qxResources.getPid()!= QxConstant.PID
+    ).collect(Collectors.toList());
+    if (CollectionUtils.isNotEmpty(list)){
+      resourceOutVOList = QxResourcesMapper.INSTANCE.of(list);
+    }
+    return buildByResource(resourceOutVOList,resourceParamVO.getName());
+  }
+
+  @Override
+  public List<ResourceVO> queryResourceApi(ApiResourcesParamVO apiResourcesParamVO) {
+    List<ResourceVO> resourceVOList = new ArrayList<>();
+    List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(apiResourcesParamVO.getServiceId());
+    //筛选资源数据
+    List<QxResources> list = qxResourcesList.stream().filter(qxResources -> qxResources.getPid() == QxConstant.PID
+    ).collect(Collectors.toList());
+    if (CollectionUtils.isNotEmpty(list)){
+      resourceVOList = QxResourcesMapper.INSTANCE.qxResourcesOf(list);
+    }
+    return resourceVOList;
+  }
+
+  @Override
+  public List<ResourceVO> queryauthorized(PowerResourcesParamVO powerResourcesParamVO) {
+    List<QxResources> qxResourcesList =new ArrayList<>();
+    List<QxResources> byServiceId = qkQxResourcesRepository.findByServiceId(powerResourcesParamVO.getServiceId());
+    if (powerResourcesParamVO.getType()==QxConstant.API_TYPE){
+       qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getPowerSign()) && qxResources.getType() == QxConstant.API_TYPE).collect(Collectors.toList());
+    }else{
+      qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getPowerSign()) && qxResources.getType() == QxConstant.RESOURCE_TYPE).collect(Collectors.toList());
+    }
+    return  qxResourcesList.stream().map(QxResourcesMapper.INSTANCE::qxResourceVO).collect(Collectors.toList());
+  }
+
+  private List<ResourceOutVO> buildByResource(
+      List<ResourceOutVO> resourceOutVOList, String name) {
+    List<ResourceOutVO> trees = new ArrayList<>();
+    ResourceOutVO resourceOutVO = ResourceOutVO.builder().id(QxConstant.DIRID).name(name).build();
+    trees.add(findChildren(resourceOutVO, resourceOutVOList));
+    return trees;
+  }
+
+  private ResourceOutVO findChildren(ResourceOutVO resourceOutVO, List<ResourceOutVO> resourceOutVOList) {
+    resourceOutVO.setChildrenList(new ArrayList<>());
+    if (CollectionUtils.isNotEmpty(resourceOutVOList)){
+      resourceOutVOList.forEach(resourceOutVO1 -> {
+        if (resourceOutVO.getId().equals(resourceOutVO1.getPid())){
+          resourceOutVO.getChildrenList().add(findChildren(resourceOutVO1,resourceOutVOList));
+        }
+      });
+    }
+    return resourceOutVO;
+  }
+}

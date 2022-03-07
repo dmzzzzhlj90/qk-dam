@@ -1,9 +1,6 @@
 package com.qk.dm.authority.mapstruct;
 
-import com.qk.dm.authority.vo.user.AtyUserCreateVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
-import com.qk.dm.authority.vo.user.AtyUserKeyCloakVO;
-import com.qk.dm.authority.vo.user.AtyUserUpdateVO;
+import com.qk.dm.authority.vo.user.*;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -33,4 +30,9 @@ public interface AtyUserMapper {
     AtyUserKeyCloakVO userInfo(AtyUserUpdateVO atyUserVO);
 
     void userUpdate(AtyUserKeyCloakVO userVO, @MappingTarget UserRepresentation userRepresentation);
+
+    void userExcel(AtyUserInfoVO atyUserInfoVO, @MappingTarget AtyUserExcelVO atyUserExcelVO);
+
+    UserRepresentation userExcelInfo(AtyUserInputExceVO atyUserInputExceVO);
+
 }

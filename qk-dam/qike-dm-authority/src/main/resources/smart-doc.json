@@ -21,10 +21,10 @@
   "responseExample":"true",//是否将响应示例展示在文档中，默认为true，@since 1.9.0
   "displayActualType":false,//配置true会在注释栏自动显示泛型的真实类型短类名，@since 1.9.6
   "appKey": "20211119911314737868832768",// torna平台对接appKey,, @since 2.0.9
-  "appToken": "d0f94ac5501247fdba8542af98464c18", //torna平台appToken,@since 2.0.9
+  "appToken": "b251c4aaf8544bf6b9d77abc94eaa1a8", //torna平台appToken,@since 2.0.9
   "secret": "eHMbZ*@Blt5gZjn@km2y8gOv-koeBeM~",//torna平台secret，@since 2.0.9
   "openUrl": "http://172.20.0.24:7700/api",//torna平台地址，填写自己的私有化部署地址@since 2.0.9
   "debugEnvName":"测试环境", //torna环境名称
-  "debugEnvUrl":"http://172.20.0.13:8782/model",//推送torna配置接口服务地址
+  "debugEnvUrl":"http://172.20.0.13:8782/aty",//推送torna配置接口服务地址
   "tornaDebug":true
 }
