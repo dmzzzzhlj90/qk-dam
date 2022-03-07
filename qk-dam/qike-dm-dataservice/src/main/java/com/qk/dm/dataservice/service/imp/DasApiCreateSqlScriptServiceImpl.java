@@ -118,7 +118,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         DasApiBasicInfoVO dasApiBasicInfoVO = DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
         String defInputParam = dasApiBasicInfo.getDefInputParam();
         if (defInputParam != null && defInputParam.length() != 0) {
-            dasApiBasicInfoVO.setDasApiBasicInfoRequestParasVO(
+            dasApiBasicInfoVO.setApiBasicInfoRequestParasVOS(
                     GsonUtil.fromJsonString(dasApiBasicInfo.getDefInputParam(),
                             new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
                             }.getType()));

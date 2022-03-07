@@ -83,7 +83,7 @@ public class DasApiBasicInfoVO {
     /**
      * 入参定义
      */
-    private List<DasApiBasicInfoRequestParasVO> dasApiBasicInfoRequestParasVO;
+    private List<DasApiBasicInfoRequestParasVO> apiBasicInfoRequestParasVOS;
 
     /**
      * 描述

@@ -18,21 +18,34 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DasApiCreateResponseParasVO {
 
-  /** 参数名 */
-  private String paraName;
+    /**
+     * 参数名
+     */
+    private String paraName;
 
-  /** 绑定字段 */
-  private String mappingName;
+    /**
+     * 绑定字段
+     */
+    private String mappingName;
 
-  /** 参数类型 */
-  private String paraType;
+    /**
+     * 参数类型
+     */
+    private String paraType;
 
-  /** 示例值 */
-  private String exampleValue;
+    /**
+     * 示例值
+     */
+    private String exampleValue;
 
-  /** 默认值 */
-  private String defaultValue;
+    /**
+     * 默认值
+     */
+    private String defaultValue;
 
-  /** 描述 */
-  private String description;
+    /**
+     * 描述
+     */
+    private String description;
+
 }

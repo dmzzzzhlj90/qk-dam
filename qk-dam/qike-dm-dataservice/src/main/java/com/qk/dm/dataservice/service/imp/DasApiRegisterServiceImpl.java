@@ -315,14 +315,14 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
 
     private void setRegisterVOBackendAndConstantsParams(DasApiRegister dasApiRegister, DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO) {
         if (null != dasApiRegister.getBackendRequestParas() && dasApiRegister.getBackendRequestParas().length() > 0) {
-            dasApiRegisterDefinitionVO.setDasApiRegisterBackendParaVO(
+            dasApiRegisterDefinitionVO.setApiRegisterBackendParaVOS(
                     GsonUtil.fromJsonString(dasApiRegister.getBackendRequestParas(),
                             new TypeToken<List<DasApiRegisterBackendParaVO>>() {
                             }.getType()));
         }
 
         if (null != dasApiRegister.getBackendConstants() && dasApiRegister.getBackendConstants().length() > 0) {
-            dasApiRegisterDefinitionVO.setDasApiRegisterConstantParaVO(
+            dasApiRegisterDefinitionVO.setApiRegisterConstantParaVOS(
                     GsonUtil.fromJsonString(dasApiRegister.getBackendConstants(),
                             new TypeToken<List<DasApiRegisterConstantParaVO>>() {
                             }.getType()));
@@ -333,7 +333,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         DasApiBasicInfoVO dasApiBasicInfoVO = transformToBasicEntity(dasApiBasicInfo);
         String defInputParam = dasApiBasicInfo.getDefInputParam();
         if (defInputParam != null && defInputParam.length() != 0) {
-            dasApiBasicInfoVO.setDasApiBasicInfoRequestParasVO(
+            dasApiBasicInfoVO.setApiBasicInfoRequestParasVOS(
                     GsonUtil.fromJsonString(
                             dasApiBasicInfo.getDefInputParam(),
                             new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
@@ -352,16 +352,14 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     }
 
     private void setBackendRequestParaJson(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO, DasApiRegister dasApiRegister) {
-        if (!ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getDasApiRegisterBackendParaVO())) {
-            dasApiRegister.setBackendRequestParas(
-                    GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getDasApiRegisterBackendParaVO()));
+        if (!ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS())) {
+            dasApiRegister.setBackendRequestParas(GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS()));
         }
     }
 
     private void setBackendConstantJson(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO, DasApiRegister dasApiRegister) {
-        if (!ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getDasApiRegisterConstantParaVO())) {
-            dasApiRegister.setBackendConstants(
-                    GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getDasApiRegisterConstantParaVO()));
+        if (!ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getApiRegisterConstantParaVOS())) {
+            dasApiRegister.setBackendConstants(GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS()));
         }
     }
 

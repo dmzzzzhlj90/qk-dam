@@ -213,10 +213,10 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
                 }
                 // 构建API基础信息入参定义对象
                 buildBasicInfoRequestParasVO(paraPosition, basicInfoRequestParasVOList, properties, requiredFields);
-                apiBasicInfoVOBuilder.dasApiBasicInfoRequestParasVO(basicInfoRequestParasVOList);
+                apiBasicInfoVOBuilder.apiBasicInfoRequestParasVOS(basicInfoRequestParasVOList);
                 // 构建注册API子类定义对象,后端参数对象
                 List<DasApiRegisterBackendParaVO> dasApiRegisterBackendParaVOList = buildDasApiRegisterBackendPara(basicInfoRequestParasVOList);
-                dasApiRegisterDefinitionVOBuilder.dasApiRegisterBackendParaVO(dasApiRegisterBackendParaVOList);
+                dasApiRegisterDefinitionVOBuilder.apiRegisterBackendParaVOS(dasApiRegisterBackendParaVOList);
             }
         }
     }

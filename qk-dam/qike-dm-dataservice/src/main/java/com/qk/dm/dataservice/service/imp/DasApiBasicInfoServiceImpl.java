@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.enums.DataTypeEnum;
 import com.qk.dam.commons.exception.BizException;
@@ -142,9 +143,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(DasApiBasicInfoVO dasApiBasicInfoVO) {
-        dasApiBasicinfoRepository
-                .saveAndFlush(
-                        buildUpdateApiBasicInfo(dasApiBasicInfoVO));
+        dasApiBasicinfoRepository.saveAndFlush(buildUpdateApiBasicInfo(dasApiBasicInfoVO));
     }
 
     /**
@@ -273,9 +272,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
     private void setDelInputParamVO(DasApiBasicInfo dasApiBasicInfo, DasApiBasicInfoVO dasApiBasicinfoVO) {
         if (!ObjectUtils.isEmpty(dasApiBasicInfo.getDefInputParam())) {
-            dasApiBasicinfoVO.setDasApiBasicInfoRequestParasVO(
-                    GsonUtil.fromJsonString(
-                            dasApiBasicInfo.getDefInputParam(),
+            dasApiBasicinfoVO.setApiBasicInfoRequestParasVOS(
+                    GsonUtil.fromJsonString(dasApiBasicInfo.getDefInputParam(),
                             new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
                             }.getType()));
         }
@@ -285,11 +283,9 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfo(dasApiBasicInfoVO);
     }
 
-    private void setDedInputParamJson(
-            DasApiBasicInfoVO dasApiBasicInfoVO, DasApiBasicInfo dasApiBasicInfo) {
-        if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO())) {
-            dasApiBasicInfo.setDefInputParam(
-                    GsonUtil.toJsonString(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO()));
+    private void setDedInputParamJson(DasApiBasicInfoVO dasApiBasicInfoVO, DasApiBasicInfo dasApiBasicInfo) {
+        if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS())) {
+            dasApiBasicInfo.setDefInputParam(GsonUtil.toJsonString(dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS()));
         }
     }
 
@@ -307,9 +303,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         }
     }
 
-    public Map<String, Object> queryDasApiBasicInfoByParams(
-            DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
-        Map<String, Object> result = new HashMap<>();
+    public Map<String, Object> queryDasApiBasicInfoByParams(DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
+        Map<String, Object> result = Maps.newHashMap();
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, qDasApiBasicInfo, dasApiBasicInfoParamsVO);
         long count =

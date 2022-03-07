@@ -80,7 +80,7 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
         for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterList) {
             //注册API定义信息
             DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getApiRegisterDefinitionVO();
-            List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList = dasApiRegisterDefinitionVO.getDasApiRegisterBackendParaVO();
+            List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList = dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS();
             // registerComponentsBuilder 请求参数
             if (!ObjectUtils.isEmpty(apiRegisterBackendParaVOList)) {
                 // 获取基础信定义参数信息
@@ -160,7 +160,7 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
                             backendParaVO.getBackendParaName(),
                             basicInfoRequestParasVO.getParaCHNName(),
                             basicInfoRequestParasVO.getDefaultValue(),
-                            basicInfoRequestParasVO.isNecessary());
+                            basicInfoRequestParasVO.getNecessary());
             componentFields.add(componentField);
         }
         String backendPath = dasApiRegisterDefinitionVO.getBackendPath();
@@ -175,7 +175,7 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
         // 获取API基础信息
         DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getApiBasicInfoVO();
         // 获取基础信定义参数信息
-        List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOList = dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO();
+        List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOList = dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS();
         return basicInfoRequestParasVOList.stream()
                 .collect(Collectors.groupingBy(DasApiBasicInfoRequestParasVO::getParaName));
     }
@@ -223,7 +223,7 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
                     httpMethod.toLowerCase(),
                     OPEN_API_PARAMETER_TYPE_QUERY,
                     backendParaVO.getBackendParaName(),
-                    requestParasVO.isNecessary(),
+                    requestParasVO.getNecessary(),
                     requestParasVO.getParaType().toLowerCase());
         }
     }
