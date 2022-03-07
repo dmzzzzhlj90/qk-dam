@@ -12,8 +12,14 @@ import javax.validation.constraints.NotNull;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class AtyUserCreateVO extends AtyUserVO {
+    /**
+     * 用户名
+     */
     @NotNull(message = "用户名必填!")
     private String username;
+    /**
+     * 密码
+     */
     @NotNull(message = "密码必填!")
     private String password;
 }

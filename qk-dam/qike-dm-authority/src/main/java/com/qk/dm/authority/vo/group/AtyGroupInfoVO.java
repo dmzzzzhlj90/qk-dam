@@ -20,8 +20,20 @@ import java.util.Map;
 @AllArgsConstructor
 public class AtyGroupInfoVO {
     private String id;
+    /**
+     * 名称
+     */
     private String name;
+    /**
+     * 路径
+     */
     private String path;
+    /**
+     * 属性
+     */
     private Map<String, List<String>> attributes;
+    /**
+     * 用户列表
+     */
     private List<AtyUserInfoVO> members;
 }

@@ -15,10 +15,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientVO {
+    /**
+     * id
+     */
     private String id;
+    /**
+     * 唯一标识
+     */
     private String clientId;
+    /**
+     * 名称
+     */
     private String name;
+    /**
+     * 描述
+     */
     private String description;
+    /**
+     * 启用状态
+     */
     private Boolean enabled;
     private String baseUrl;
 }

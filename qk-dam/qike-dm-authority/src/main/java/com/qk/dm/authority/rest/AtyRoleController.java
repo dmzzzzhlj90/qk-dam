@@ -32,7 +32,7 @@ public class AtyRoleController {
     /**
      * 新增角色
      *
-     * @param client_id
+     * @param client_id 客户端ID
      * @param clientRoleVO
      * @return
      */
@@ -45,7 +45,7 @@ public class AtyRoleController {
     /**
      * 修改角色
      *
-     * @param client_id
+     * @param client_id 客户端ID
      * @param clientRoleVO
      * @return
      */
@@ -58,7 +58,7 @@ public class AtyRoleController {
     /**
      * 删除角色
      *
-     * @param client_id
+     * @param client_id 客户端ID
      * @param clientRoleVO
      * @return
      */
@@ -71,7 +71,7 @@ public class AtyRoleController {
     /**
      * 角色详情
      *
-     * @param client_id
+     * @param client_id 客户端ID
      * @param clientRoleVO
      * @return
      */
@@ -83,7 +83,7 @@ public class AtyRoleController {
     /**
      * 角色分页列表
      *
-     * @param client_id
+     * @param client_id 客户端ID
      * @param clientRoleParamVO
      * @return
      */
@@ -96,7 +96,7 @@ public class AtyRoleController {
     /**
      * 角色列表
      *
-     * @param client_id
+     * @param client_id 客户端ID
      * @param realm
      * @param search
      * @return

@@ -17,10 +17,19 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyUserGroupVO {
+    /**
+     * 域
+     */
     @NotNull
     String realm;
+    /**
+     * 用户id
+     */
     @NotNull
     String userId;
+    /**
+     * 分组id
+     */
     @NotNull
     String groupId;
 }
