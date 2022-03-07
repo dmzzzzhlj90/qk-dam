@@ -1,8 +1,14 @@
 package com.qk.dm.dataservice.service.imp;
 
+import cn.hutool.db.Entity;
+import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dam.datasource.enums.ConnTypeEnum;
+import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
 import com.qk.dm.dataservice.constant.*;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateConfig;
@@ -40,16 +46,18 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     private final DasApiBasicInfoService dasApiBasicInfoService;
     private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
     private final DasApiCreateConfigRepository dasApiCreateConfigRepository;
+    private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
 
 
     @Autowired
     public DasApiCreateConfigServiceImpl(
             DasApiBasicInfoService dasApiBasicInfoService,
             DasApiBasicInfoRepository dasApiBasicinfoRepository,
-            DasApiCreateConfigRepository dasApiCreateConfigRepository) {
+            DasApiCreateConfigRepository dasApiCreateConfigRepository, DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
         this.dasApiBasicInfoService = dasApiBasicInfoService;
         this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
         this.dasApiCreateConfigRepository = dasApiCreateConfigRepository;
+        this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
     }
 
     @Override
@@ -207,7 +215,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
 
     @Override
     public List<String> getParamCompareSymbol() {
-        return DasConstant.getDasApiCreateParamCompareSymbol();
+        return OperationSymbolEnum.getAllValue();
     }
 
     @Override
@@ -226,26 +234,61 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         //数据源连接类型
         DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = apiCreateConfigVO.getApiCreateDefinitionVO();
         String connectType = apiCreateConfigDefinitionVO.getConnectType();
+        //数据库
+        String dataBaseName = apiCreateConfigDefinitionVO.getDataBaseName();
         //表名称
         String tableName = apiCreateConfigDefinitionVO.getTableName();
-        //新建API接口定义入参(对应元数据映射关系)
-        Map<String, String> mappingParams = apiCreateConfigDefinitionVO.getApiCreateRequestParasVOS().stream()
-                .collect(Collectors.toMap(DasApiCreateRequestParasVO::getParaName, DasApiCreateRequestParasVO::getMappingName));
+        // 新建API接口定义入参(对应元数据映射关系)
+        Map<String, List<DasApiCreateRequestParasVO>> mappingParams =
+                apiCreateConfigDefinitionVO.getApiCreateRequestParasVOS().stream()
+                        .collect(Collectors.groupingBy(DasApiCreateRequestParasVO::getParaName));
 
-        //真实请求参数(SQL where条件,使用字段参数)
+        // 真实请求参数(SQL where条件,使用字段参数)
         Map<String, String> reqParams = apiCreateConfigVO.getDebugApiParasVOS().stream()
-                .collect(Collectors.toMap(DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
+                .collect(Collectors.toMap(
+                        DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
 
-        //响应参数(SQL返回值映射查询数据)
-        List<String> resParams = apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()
-                .stream().map(DasApiCreateResponseParasVO::getMappingName).collect(Collectors.toList());
-        //生成查询sql
-        String executeSql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParams, mappingParams);
+        // 响应参数(SQL返回值映射查询数据)
+        Map<String,String> resParaMap = apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()
+                .stream().collect(Collectors.toMap(
+                        DasApiCreateResponseParasVO::getMappingName,DasApiCreateResponseParasVO::getParaName));
 
         // 2.执行查询SQL(根据数据源类型)
+        // 获取数据库连接信息
+        Map<String, ConnectBasicInfo> dataSourceInfo = getDataSourceInfo(Lists.newArrayList(apiCreateConfigDefinitionVO.getDataSourceName()));
+        ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateConfigDefinitionVO.getDataSourceName());
 
+        List<Map<String, Object>> searchData = null;
+        if (ConnTypeEnum.MYSQL.getName().equalsIgnoreCase(connectType)) {
+            // mysql 执行sql获取查询结果集
+            searchData = new MysqlSqlExecutor(connectBasicInfo, dataBaseName, reqParams, resParaMap)
+                    .mysqlExecuteSQL(tableName, null, mappingParams).searchData();
+        } else if (ConnTypeEnum.HIVE.getName().equalsIgnoreCase(connectType)) {
+            // hive 执行sql获取查询结果集
+        }
 
-        return DebugApiResultVO.builder().resultData("").build();
+        return DebugApiResultVO.builder().resultData(searchData).build();
+    }
+
+    /**
+     * 获取数据源连接信息
+     *
+     * @param dataSourceNames
+     * @return
+     */
+    private Map<String, ConnectBasicInfo> getDataSourceInfo(List<String> dataSourceNames ) {
+        Map<String, ConnectBasicInfo> dataSourceMap = null;
+        try {
+            dataSourceMap = dataBaseInfoDefaultApi.getDataSourceMap(dataSourceNames);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BizException("连接数据源服务失败!!!");
+        }
+        if (dataSourceMap.size() > 0) {
+            return dataSourceMap;
+        } else {
+            throw new BizException("未获取到对应数据源连接信息!!!");
+        }
     }
 
 }
