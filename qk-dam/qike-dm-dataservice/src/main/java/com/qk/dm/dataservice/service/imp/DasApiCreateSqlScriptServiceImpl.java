@@ -76,7 +76,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
                 DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScriptDefinitionVO(onDasApiCreateSqlScript.get());
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
         setDasApiCreateSqlScriptVOParams(onDasApiCreateSqlScript.get(), apiCreateSqlScriptDefinitionVO);
-        apiCreateSqlScriptVO.setApiCreateSqlScriptDefinitionVO(apiCreateSqlScriptDefinitionVO);
+        apiCreateSqlScriptVO.setApiCreateDefinitionVO(apiCreateSqlScriptDefinitionVO);
 
         return apiCreateSqlScriptVO;
     }
@@ -139,7 +139,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         dasApiBasicInfoService.insert(dasApiBasicInfoVO);
 
         // 保存新建API信息
-        DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = dasApiCreateSqlScriptVO.getApiCreateSqlScriptDefinitionVO();
+        DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = dasApiCreateSqlScriptVO.getApiCreateDefinitionVO();
         DasApiCreateSqlScript apiCreateSqlScript = DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScript(apiCreateSqlScriptDefinitionVO);
 
         // 新建API设置配置参数
@@ -165,7 +165,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateSqlScriptVO.getApiBasicInfoVO();
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新新建API
-        DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = dasApiCreateSqlScriptVO.getApiCreateSqlScriptDefinitionVO();
+        DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = dasApiCreateSqlScriptVO.getApiCreateDefinitionVO();
         DasApiCreateSqlScript apiCreateSqlScript = DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScript(apiCreateSqlScriptDefinitionVO);
 
         // 新建API设置配置参数

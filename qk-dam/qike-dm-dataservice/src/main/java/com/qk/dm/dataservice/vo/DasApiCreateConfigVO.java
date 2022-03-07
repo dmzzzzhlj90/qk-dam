@@ -32,6 +32,12 @@ public class DasApiCreateConfigVO {
      * 新建API_配置方式_配置信息定义类
      */
     @Valid
-    private DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO;
+    private DasApiCreateConfigDefinitionVO apiCreateDefinitionVO;
+
+    /**
+     * DEBUG调试参数
+     */
+    private List<DebugApiParasVO> debugApiParasVOS;
+
 
 }

@@ -32,6 +32,12 @@ public class DasApiCreateSqlScriptVO {
      * 新建API__取数SQL方式__配置信息定义类
      */
     @Valid
-    private DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO;
+    private DasApiCreateSqlScriptDefinitionVO apiCreateDefinitionVO;
+
+    /**
+     * DEBUG调试参数
+     */
+    private List<DebugApiParasVO> debugApiParasVOS;
+
 
 }
