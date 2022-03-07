@@ -76,7 +76,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfigDefinitionVO(onDasApiCreateConfig.get());
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
         setDasApiCreateVOParams(onDasApiCreateConfig.get(), apiCreateConfigDefinitionVO);
-        dasApiCreateConfigVO.setApiCreateConfigDefinitionVO(apiCreateConfigDefinitionVO);
+        dasApiCreateConfigVO.setApiCreateDefinitionVO(apiCreateConfigDefinitionVO);
 
         return dasApiCreateConfigVO;
     }
@@ -141,7 +141,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         dasApiBasicInfoService.insert(dasApiBasicInfoVO);
 
         // 保存新建API信息
-        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = dasApiCreateConfigVO.getApiCreateConfigDefinitionVO();
+        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = dasApiCreateConfigVO.getApiCreateDefinitionVO();
         DasApiCreateConfig dasApiCreateConfig =
                 DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfig(apiCreateConfigDefinitionVO);
 
@@ -167,7 +167,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateConfigVO.getApiBasicInfoVO();
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新新建API
-        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = dasApiCreateConfigVO.getApiCreateConfigDefinitionVO();
+        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = dasApiCreateConfigVO.getApiCreateDefinitionVO();
         DasApiCreateConfig dasApiCreateConfig = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfig(apiCreateConfigDefinitionVO);
 
         // 新建API设置配置参数
@@ -224,7 +224,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     public DebugApiResultVO debugModel(DasApiCreateConfigVO apiCreateConfigVO) {
         // 1.生成查询SQL(根据数据源类型)
         //数据源连接类型
-        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = apiCreateConfigVO.getApiCreateConfigDefinitionVO();
+        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = apiCreateConfigVO.getApiCreateDefinitionVO();
         String connectType = apiCreateConfigDefinitionVO.getConnectType();
         //表名称
         String tableName = apiCreateConfigDefinitionVO.getTableName();
@@ -233,7 +233,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
                 .collect(Collectors.toMap(DasApiCreateRequestParasVO::getParaName, DasApiCreateRequestParasVO::getMappingName));
 
         //真实请求参数(SQL where条件,使用字段参数)
-        Map<String, String> reqParams = apiCreateConfigDefinitionVO.getDebugApiParasVOS().stream()
+        Map<String, String> reqParams = apiCreateConfigVO.getDebugApiParasVOS().stream()
                 .collect(Collectors.toMap(DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
 
         //响应参数(SQL返回值映射查询数据)
