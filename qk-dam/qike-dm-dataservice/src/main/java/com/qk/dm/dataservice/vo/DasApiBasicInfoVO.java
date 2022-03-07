@@ -73,6 +73,7 @@ public class DasApiBasicInfoVO {
     /**
      * API类型
      */
+    @NotBlank(message = "API类型不能为空！")
     private String apiType;
 
     /**
