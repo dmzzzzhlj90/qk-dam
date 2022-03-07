@@ -1,6 +1,7 @@
 package com.qk.dm.dataservice.service;
 
 import com.qk.dm.dataservice.vo.DasApiCreateSqlScriptVO;
+import com.qk.dm.dataservice.vo.DebugApiResultVO;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -24,6 +25,6 @@ public interface DasApiCreateSqlScriptService {
 
     LinkedList<Map<String, Object>> getParamHeaderInfo();
 
-    Object debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
+    DebugApiResultVO debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 
 }

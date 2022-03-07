@@ -79,18 +79,18 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         if (onDasApiRegister.isEmpty()) {
             DasApiBasicInfoVO dasApiBasicInfoVO =
                     setDasApiBasicInfoDelInputParam(onDasApiBasicInfo.get());
-            return DasApiRegisterVO.builder().dasApiBasicInfoVO(dasApiBasicInfoVO).build();
+            return DasApiRegisterVO.builder().apiBasicInfoVO(dasApiBasicInfoVO).build();
         }
         DasApiRegisterVO.DasApiRegisterVOBuilder dasApiRegisterVOBuilder = DasApiRegisterVO.builder();
         // API基础信息,设置入参定义VO转换对象
         DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo.get());
-        dasApiRegisterVOBuilder.dasApiBasicInfoVO(dasApiBasicInfoVO);
+        dasApiRegisterVOBuilder.apiBasicInfoVO(dasApiBasicInfoVO);
         // 注册API信息
         DasApiRegister dasApiRegister = onDasApiRegister.get();
         DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = transformToRegisterDefinitionVO(dasApiRegister);
         // 注册API配置信息,设置后端参数VO转换对象
         setRegisterVOBackendAndConstantsParams(dasApiRegister, dasApiRegisterDefinitionVO);
-        dasApiRegisterVOBuilder.dasApiRegisterDefinitionVO(dasApiRegisterDefinitionVO);
+        dasApiRegisterVOBuilder.apiRegisterDefinitionVO(dasApiRegisterDefinitionVO);
         return dasApiRegisterVOBuilder.build();
     }
 
@@ -99,7 +99,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     public void insert(DasApiRegisterVO dasApiRegisterVO) {
         String apiId = UUID.randomUUID().toString().replaceAll("-", "");
         // 保存API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getApiBasicInfoVO();
         if (dasApiBasicInfoVO == null) {
             throw new BizException("当前新增的API所对应的基础信息为空!!!");
         }
@@ -117,7 +117,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     public ApiRegisterDTO buildSaveApiRegisterDTO(DasApiRegisterVO dasApiRegisterVO) {
         String apiId = UUID.randomUUID().toString().replaceAll("-", "");
         // API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getApiBasicInfoVO();
         if (dasApiBasicInfoVO == null) {
             throw new BizException("当前新增的API所对应的基础信息为空!!!");
         }
@@ -139,7 +139,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
      */
     private DasApiRegister buildSaveApiRegister(DasApiRegisterVO dasApiRegisterVO, String apiId) {
         // 保存注册API信息
-        DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
+        DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getApiRegisterDefinitionVO();
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterDefinitionVO);
         setBackendRequestParaJson(dasApiRegisterDefinitionVO, dasApiRegister);
         setBackendConstantJson(dasApiRegisterDefinitionVO, dasApiRegister);
@@ -158,7 +158,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     @Transactional(rollbackFor = Exception.class)
     public void update(DasApiRegisterVO dasApiRegisterVO) {
         // 更新API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getApiBasicInfoVO();
         dasApiBasicInfoVO.setApiType(ApiTypeEnum.REGISTER_API.getCode());
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新注册API
@@ -181,7 +181,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
      */
     public ApiRegisterDTO buildUpdateApiRegisterDTO(DasApiRegisterVO dasApiRegisterVO) {
         // 更新API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getApiBasicInfoVO();
         dasApiBasicInfoVO.setApiType(ApiTypeEnum.REGISTER_API.getCode());
         DasApiBasicInfo dasApiBasicInfo = dasApiBasicInfoService.buildUpdateApiBasicInfo(dasApiBasicInfoVO);
 
@@ -206,7 +206,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
      */
     private DasApiRegister buildUpdateDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
         // 更新注册API
-        DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
+        DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getApiRegisterDefinitionVO();
         //校验更新ID参数
         checkUpdateParams(dasApiRegisterDefinitionVO);
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterDefinitionVO);
@@ -244,7 +244,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
             try {
                 for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterVOList) {
                     //API基础信息
-                    DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+                    DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getApiBasicInfoVO();
                     //检查是否存在要同步的API信息
                     Optional<DasApiBasicInfo> optionalDasApiBasicInfo = dasApiBasicInfoService.checkExistApiBasicInfo(dasApiBasicInfoVO);
                     if (optionalDasApiBasicInfo.isPresent()) {
@@ -256,9 +256,9 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
                             // API基础信息
                             dasApiBasicInfoVO.setId(id);
                             dasApiBasicInfoVO.setApiId(apiId);
-                            dasApiRegisterVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
+                            dasApiRegisterVO.setApiBasicInfoVO(dasApiBasicInfoVO);
                             // 注册API信息
-                            DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
+                            DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getApiRegisterDefinitionVO();
                             dasApiRegisterDefinitionVO.setId(optionalDasApiRegister.get().getId());
                             dasApiRegisterDefinitionVO.setApiId(apiId);
                             //更新操作
@@ -297,11 +297,11 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
                     DasApiRegisterVO.DasApiRegisterVOBuilder dasApiRegisterVOBuilder = DasApiRegisterVO.builder();
                     // API基础信息
                     DasApiBasicInfoVO dasApiBasicInfoVO = apiBasicMap.get(dasApiRegister.getApiId()).get(0);
-                    dasApiRegisterVOBuilder.dasApiBasicInfoVO(dasApiBasicInfoVO);
+                    dasApiRegisterVOBuilder.apiBasicInfoVO(dasApiBasicInfoVO);
                     //注册API信息
                     DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = transformToRegisterDefinitionVO(dasApiRegister);
                     setRegisterVOBackendAndConstantsParams(dasApiRegister, dasApiRegisterDefinitionVO);
-                    dasApiRegisterVOBuilder.dasApiRegisterDefinitionVO(dasApiRegisterDefinitionVO);
+                    dasApiRegisterVOBuilder.apiRegisterDefinitionVO(dasApiRegisterDefinitionVO);
 
                     dasApiRegisterVOList.add(dasApiRegisterVOBuilder.build());
                 });

@@ -62,25 +62,30 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         if (onDasApiCreateSqlScript.isEmpty()) {
             //入参定义
             DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
-            return DasApiCreateSqlScriptVO.builder().dasApiBasicInfoVO(dasApiBasicInfoVO).build();
+            return DasApiCreateSqlScriptVO.builder().apiBasicInfoVO(dasApiBasicInfoVO).build();
         }
 
-        DasApiCreateSqlScript dasApiCreateSqlScript = onDasApiCreateSqlScript.get();
-        DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO =
-                DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScriptVO(onDasApiCreateSqlScript.get());
-        // API基础信息,设置入参定义VO转换对象
+        DasApiCreateSqlScriptVO apiCreateSqlScriptVO = DasApiCreateSqlScriptVO.builder().build();
+
+        // API基础信息
         DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
-        dasApiCreateSqlScriptVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
+        apiCreateSqlScriptVO.setApiBasicInfoVO(dasApiBasicInfoVO);
+
+        // 新建API脚本方式,配置信息
+        DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO =
+                DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScriptDefinitionVO(onDasApiCreateSqlScript.get());
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
-        setDasApiCreateSqlScriptVOParams(dasApiCreateSqlScript, dasApiCreateSqlScriptVO);
-        return dasApiCreateSqlScriptVO;
+        setDasApiCreateSqlScriptVOParams(onDasApiCreateSqlScript.get(), apiCreateSqlScriptDefinitionVO);
+        apiCreateSqlScriptVO.setApiCreateSqlScriptDefinitionVO(apiCreateSqlScriptDefinitionVO);
+
+        return apiCreateSqlScriptVO;
     }
 
     private void setDasApiCreateSqlScriptVOParams(DasApiCreateSqlScript dasApiCreateSqlScript,
-                                                  DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+                                                  DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO) {
         //入参
         if (null != dasApiCreateSqlScript.getApiRequestParas() && dasApiCreateSqlScript.getApiRequestParas().length() > 0) {
-            dasApiCreateSqlScriptVO.setApiCreateSqlRequestParasVOS(
+            apiCreateSqlScriptDefinitionVO.setApiCreateSqlRequestParasVOS(
                     GsonUtil.fromJsonString(dasApiCreateSqlScript.getApiRequestParas(),
                             new TypeToken<List<DasApiCreateRequestParasVO>>() {
                             }.getType()));
@@ -95,7 +100,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
 //        }
         //排序
         if (null != dasApiCreateSqlScript.getApiOrderParas() && dasApiCreateSqlScript.getApiOrderParas().length() > 0) {
-            dasApiCreateSqlScriptVO.setApiCreateOrderParasVOS(
+            apiCreateSqlScriptDefinitionVO.setApiCreateOrderParasVOS(
                     GsonUtil.fromJsonString(dasApiCreateSqlScript.getApiResponseParas(),
                             new TypeToken<List<DasApiCreateOrderParasVO>>() {
                             }.getType()));
@@ -126,7 +131,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     public void insert(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
         String apiId = UUID.randomUUID().toString().replaceAll("-", "");
         // 保存API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateSqlScriptVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateSqlScriptVO.getApiBasicInfoVO();
         if (dasApiBasicInfoVO == null) {
             throw new BizException("当前新增的API所对应的基础信息为空!!!");
         }
@@ -134,21 +139,22 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         dasApiBasicInfoService.insert(dasApiBasicInfoVO);
 
         // 保存新建API信息
-        DasApiCreateSqlScript dasApiCreateConfig = DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScript(dasApiCreateSqlScriptVO);
+        DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = dasApiCreateSqlScriptVO.getApiCreateSqlScriptDefinitionVO();
+        DasApiCreateSqlScript apiCreateSqlScript = DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScript(apiCreateSqlScriptDefinitionVO);
 
         // 新建API设置配置参数
-        dasApiCreateConfig.setApiRequestParas(
-                GsonUtil.toJsonString(dasApiCreateSqlScriptVO.getApiCreateSqlRequestParasVOS()));
+        apiCreateSqlScript.setApiRequestParas(
+                GsonUtil.toJsonString(apiCreateSqlScriptDefinitionVO.getApiCreateSqlRequestParasVOS()));
 //        dasApiCreateConfig.setApiResponseParas(
 //                GsonUtil.toJsonString(dasApiCreateSqlScriptVO.getApiCreateResponseParasVOS()));
-        dasApiCreateConfig.setApiOrderParas(
-                GsonUtil.toJsonString(dasApiCreateSqlScriptVO.getApiCreateOrderParasVOS()));
+        apiCreateSqlScript.setApiOrderParas(
+                GsonUtil.toJsonString(apiCreateSqlScriptDefinitionVO.getApiCreateOrderParasVOS()));
 
-        dasApiCreateConfig.setApiId(apiId);
-        dasApiCreateConfig.setGmtCreate(new Date());
-        dasApiCreateConfig.setGmtModified(new Date());
-        dasApiCreateConfig.setDelFlag(0);
-        dasApiCreateSqlScriptRepository.save(dasApiCreateConfig);
+        apiCreateSqlScript.setApiId(apiId);
+        apiCreateSqlScript.setGmtCreate(new Date());
+        apiCreateSqlScript.setGmtModified(new Date());
+        apiCreateSqlScript.setDelFlag(0);
+        dasApiCreateSqlScriptRepository.save(apiCreateSqlScript);
     }
 
 
@@ -156,25 +162,26 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     @Transactional(rollbackFor = Exception.class)
     public void update(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
         // 更新API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateSqlScriptVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateSqlScriptVO.getApiBasicInfoVO();
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新新建API
-        DasApiCreateSqlScript dasApiCreate = DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScript(dasApiCreateSqlScriptVO);
+        DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = dasApiCreateSqlScriptVO.getApiCreateSqlScriptDefinitionVO();
+        DasApiCreateSqlScript apiCreateSqlScript = DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScript(apiCreateSqlScriptDefinitionVO);
 
         // 新建API设置配置参数
-        dasApiCreate.setApiRequestParas(
-                GsonUtil.toJsonString(dasApiCreateSqlScriptVO.getApiCreateSqlRequestParasVOS()));
+        apiCreateSqlScript.setApiRequestParas(
+                GsonUtil.toJsonString(apiCreateSqlScriptDefinitionVO.getApiCreateSqlRequestParasVOS()));
 //        dasApiCreate.setApiResponseParas(
 //                GsonUtil.toJsonString(dasApiCreateSqlScriptVO.getApiCreateResponseParasVOS()));
-        dasApiCreate.setApiOrderParas(
-                GsonUtil.toJsonString(dasApiCreateSqlScriptVO.getApiCreateOrderParasVOS()));
+        apiCreateSqlScript.setApiOrderParas(
+                GsonUtil.toJsonString(apiCreateSqlScriptDefinitionVO.getApiCreateOrderParasVOS()));
 
-        dasApiCreate.setGmtModified(new Date());
-        dasApiCreate.setDelFlag(0);
-        Predicate predicate = qDasApiCreateSqlScript.apiId.eq(dasApiCreate.getApiId());
+        apiCreateSqlScript.setGmtModified(new Date());
+        apiCreateSqlScript.setDelFlag(0);
+        Predicate predicate = qDasApiCreateSqlScript.apiId.eq(apiCreateSqlScript.getApiId());
         boolean exists = dasApiCreateSqlScriptRepository.exists(predicate);
         if (exists) {
-            dasApiCreateSqlScriptRepository.saveAndFlush(dasApiCreate);
+            dasApiCreateSqlScriptRepository.saveAndFlush(apiCreateSqlScript);
         } else {
             throw new BizException("当前要新增的API名称为:" + dasApiBasicInfoVO.getApiName() + " 数据的配置信息，不存在！！！");
         }
@@ -186,8 +193,8 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     }
 
     @Override
-    public Object debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
-        return null;
+    public DebugApiResultVO debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
+        return DebugApiResultVO.builder().resultData("").build();
     }
 
 }

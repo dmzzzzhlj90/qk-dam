@@ -1,6 +1,7 @@
 package com.qk.dm.dataservice.mapstruct.mapper;
 
 import com.qk.dm.dataservice.entity.DasApiCreateSqlScript;
+import com.qk.dm.dataservice.vo.DasApiCreateSqlScriptDefinitionVO;
 import com.qk.dm.dataservice.vo.DasApiCreateSqlScriptVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -14,9 +15,9 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper
 public interface DasApiCreateSqlScriptMapper {
-  DasApiCreateSqlScriptMapper INSTANCE = Mappers.getMapper(DasApiCreateSqlScriptMapper.class);
+    DasApiCreateSqlScriptMapper INSTANCE = Mappers.getMapper(DasApiCreateSqlScriptMapper.class);
 
-  DasApiCreateSqlScriptVO useDasApiCreateSqlScriptVO(DasApiCreateSqlScript dasApiCreateSqlScript);
+    DasApiCreateSqlScriptDefinitionVO useDasApiCreateSqlScriptDefinitionVO(DasApiCreateSqlScript apiCreateSqlScript);
 
-  DasApiCreateSqlScript useDasApiCreateSqlScript(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
+    DasApiCreateSqlScript useDasApiCreateSqlScript(DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO);
 }
