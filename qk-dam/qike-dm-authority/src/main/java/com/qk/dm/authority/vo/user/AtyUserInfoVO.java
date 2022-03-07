@@ -21,7 +21,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class AtyUserInfoVO {
     private String id;
-    private Long createdTimestamp;
+    private String createdTimestamp;
     private String username;
     private Boolean enabled;
     private String firstName;

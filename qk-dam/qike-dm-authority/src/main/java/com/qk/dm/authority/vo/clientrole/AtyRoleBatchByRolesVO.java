@@ -18,13 +18,25 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyUserClientRoleBatchVO {
+public class AtyRoleBatchByRolesVO {
+    /**
+     * 域
+     */
     @NotNull
     String realm;
+    /**
+     * 用户
+     */
     @NotBlank
-    List<String> userIds;
+    String userId;
+    /**
+     * 角色
+     */
     @NotNull
-    String roleName;
+    List<String> roleNames;
+    /**
+     * 客户端的id
+     */
     @NotNull
     String client_id;
 }

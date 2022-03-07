@@ -3,8 +3,9 @@ package com.qk.dm.authority.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.authority.service.AtyUserGroupService;
+import com.qk.dm.authority.vo.group.AtyGroupBatchByGroupsVO;
+import com.qk.dm.authority.vo.group.AtyGroupBatchByUsersVO;
 import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
-import com.qk.dm.authority.vo.group.AtyUserGroupBatchVO;
 import com.qk.dm.authority.vo.group.AtyUserGroupVO;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 查询已绑定用户组
+     * 查询已绑定
      *
      * @param userId
      * @param realm
@@ -41,18 +42,18 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 绑定用户组
+     * 绑定
      * @param atyUserGroupVO
      * @return
      */
     @PostMapping("")
     public DefaultCommonResult addUserGroup(@RequestBody @Valid AtyUserGroupVO atyUserGroupVO) {
-        atyUserGroupService.addUserGroup(atyUserGroupVO);
+        atyUserGroupService.addBatchByUsers(atyUserGroupVO);
         return DefaultCommonResult.success();
     }
 
     /**
-     * 解绑用户组
+     * 解绑
      * @param atyUserGroupVO
      * @return
      */
@@ -63,14 +64,26 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 批量绑定用户
+     * 批量绑定-用户
      *
-     * @param atyUserGroupBatchVO
+     * @param atyGroupBatchByUsersVO
      * @return
      */
-    @PostMapping("/batch")
-    public DefaultCommonResult addUserGroup(@RequestBody @Valid AtyUserGroupBatchVO atyUserGroupBatchVO) {
-        atyUserGroupService.addUserGroup(atyUserGroupBatchVO);
+    @PostMapping("/batch-users")
+    public DefaultCommonResult addBatchByUsers(@RequestBody @Valid AtyGroupBatchByUsersVO atyGroupBatchByUsersVO) {
+        atyUserGroupService.addBatchByUsers(atyGroupBatchByUsersVO);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 批量绑定-用户组
+     *
+     * @param batchByGroupsVO
+     * @return
+     */
+    @PostMapping("/batch-groups")
+    public DefaultCommonResult addBatchByGroups(@RequestBody @Valid AtyGroupBatchByGroupsVO batchByGroupsVO) {
+        atyUserGroupService.addBatchByGroups(batchByGroupsVO);
         return DefaultCommonResult.success();
     }
 }

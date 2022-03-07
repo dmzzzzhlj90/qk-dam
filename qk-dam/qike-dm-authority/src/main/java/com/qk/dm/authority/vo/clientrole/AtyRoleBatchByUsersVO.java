@@ -1,11 +1,11 @@
-package com.qk.dm.authority.vo.group;
+package com.qk.dm.authority.vo.clientrole;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -18,11 +18,25 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyUserGroupBatchVO {
+public class AtyRoleBatchByUsersVO {
+    /**
+     * 域
+     */
     @NotNull
     String realm;
-    @NotEmpty
+    /**
+     * 用户
+     */
+    @NotBlank
     List<String> userIds;
+    /**
+     * 角色
+     */
     @NotNull
-    String groupId;
+    String roleName;
+    /**
+     * 客户端的id
+     */
+    @NotNull
+    String client_id;
 }

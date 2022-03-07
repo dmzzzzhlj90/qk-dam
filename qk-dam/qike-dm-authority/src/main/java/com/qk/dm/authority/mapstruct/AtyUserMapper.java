@@ -1,11 +1,11 @@
 package com.qk.dm.authority.mapstruct;
 
-import com.qk.dm.authority.vo.user.*;
-import org.keycloak.representations.idm.*;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import com.qk.dm.authority.vo.user.AtyUserCreateVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
+import com.qk.dm.authority.vo.user.AtyUserKeyCloakVO;
+import com.qk.dm.authority.vo.user.AtyUserUpdateVO;
+import org.keycloak.representations.idm.UserRepresentation;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -20,8 +20,10 @@ import java.util.List;
 public interface AtyUserMapper {
     AtyUserMapper INSTANCE = Mappers.getMapper(AtyUserMapper.class);
 
+    @Mapping(target = "createdTimestamp", expression = "java(com.qk.dm.authority.util.TimeUtil.parseLong(userRepresentation.getCreatedTimestamp()))")
     AtyUserInfoVO userInfo(UserRepresentation userRepresentation);
 
+    @Mapping(target = "createdTimestamp", expression = "java(com.qk.dm.authority.util.TimeUtil.parseLong(userRepresentation.getCreatedTimestamp()))")
     List<AtyUserInfoVO> userInfo(List<UserRepresentation> userRepresentation);
 
     UserRepresentation userInfo(AtyUserKeyCloakVO userVO);
@@ -31,5 +33,4 @@ public interface AtyUserMapper {
     AtyUserKeyCloakVO userInfo(AtyUserUpdateVO atyUserVO);
 
     void userUpdate(AtyUserKeyCloakVO userVO, @MappingTarget UserRepresentation userRepresentation);
-
 }
