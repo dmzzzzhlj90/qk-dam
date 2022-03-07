@@ -395,6 +395,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     private void getDataValue(Map<String, Boolean> dataIndexMap, List<String> dataIndexList, List data, Map<String, Object> resultDataMap) {
         AtomicInteger valueIndex = new AtomicInteger(1);
         for (Object value : data) {
+            //TODO 修改模板定义展示,可以考虑根据模板修订时间进行查询
             String dataIndexKey = dataIndexList.get(valueIndex.get());
             Boolean isDouble = dataIndexMap.get(dataIndexKey);
             //是否为Double数据类型

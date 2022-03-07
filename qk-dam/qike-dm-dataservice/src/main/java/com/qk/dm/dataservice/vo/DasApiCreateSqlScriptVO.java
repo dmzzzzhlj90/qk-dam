@@ -21,74 +21,17 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class DasApiCreateSqlScriptVO {
+
     /**
      * API基础信息
      */
     @Valid
-    private DasApiBasicInfoVO dasApiBasicInfoVO;
+    private DasApiBasicInfoVO apiBasicInfoVO;
 
     /**
-     * 主键ID
+     * 新建API__取数SQL方式__配置信息定义类
      */
-    private Long id;
+    @Valid
+    private DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO;
 
-    /**
-     * API基础信息ID
-     */
-    private String apiId;
-
-    /**
-     * 取数据方式
-     */
-    @NotBlank(message = "取数据方式不能为空！")
-    private String accessMethod;
-
-    /**
-     * 数据源连接类型
-     */
-    @NotBlank(message = "数据源类型不能为空！")
-    private String connectType;
-
-    /**
-     * 数据源连接名称
-     */
-    @NotBlank(message = "数据源连接不能为空！")
-    private String dataSourceName;
-
-    /**
-     * 数据库
-     */
-    @NotBlank(message = "数据库不能为空！")
-    private String dataBaseName;
-
-    /**
-     * 请求参数
-     */
-    private List<DasApiCreateSqlRequestParasVO> apiCreateSqlRequestParasVOS;
-
-//    /**
-//     * 响应参数
-//     */
-//    private List<DasApiCreateResponseParasVO> apiCreateResponseParasVOS;
-
-    /**
-     * 排序参数
-     */
-    private List<DasApiCreateOrderParasVO> apiCreateOrderParasVOS;
-
-    /**
-     * DEBUG调试参数
-     */
-    private List<DebugApiParasVO> debugApiParasVOS;
-
-    /**
-     * 取数脚本
-     */
-    @NotBlank(message = "取数脚本不能为空！")
-    private String sqlPara;
-
-    /**
-     * 描述
-     */
-    private String description;
 }

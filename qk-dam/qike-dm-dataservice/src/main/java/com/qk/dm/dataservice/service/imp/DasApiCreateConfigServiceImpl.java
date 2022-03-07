@@ -1,7 +1,5 @@
 package com.qk.dm.dataservice.service.imp;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -66,16 +64,20 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         Optional<DasApiCreateConfig> onDasApiCreateConfig = dasApiCreateConfigRepository.findOne(qDasApiCreateConfig.apiId.eq(apiId));
         if (onDasApiCreateConfig.isEmpty()) {
             DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
-            return DasApiCreateConfigVO.builder().dasApiBasicInfoVO(dasApiBasicInfoVO).build();
+            return DasApiCreateConfigVO.builder().apiBasicInfoVO(dasApiBasicInfoVO).build();
         }
 
-        DasApiCreateConfig dasApiCreate = onDasApiCreateConfig.get();
-        DasApiCreateConfigVO dasApiCreateConfigVO = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfigVO(onDasApiCreateConfig.get());
+        DasApiCreateConfigVO dasApiCreateConfigVO = DasApiCreateConfigVO.builder().build();
+
         // API基础信息,设置入参定义VO转换对象
         DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
-        dasApiCreateConfigVO.setDasApiBasicInfoVO(dasApiBasicInfoVO);
+        dasApiCreateConfigVO.setApiBasicInfoVO(dasApiBasicInfoVO);
+        // 新建API配置方式,配置信息VO转换
+        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfigDefinitionVO(onDasApiCreateConfig.get());
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
-        setDasApiCreateVOParams(dasApiCreate, dasApiCreateConfigVO);
+        setDasApiCreateVOParams(onDasApiCreateConfig.get(), apiCreateConfigDefinitionVO);
+        dasApiCreateConfigVO.setApiCreateConfigDefinitionVO(apiCreateConfigDefinitionVO);
+
         return dasApiCreateConfigVO;
     }
 
@@ -83,23 +85,24 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
      * 新建API配置信息,设置请求/响应/排序参数VO转换对象
      *
      * @param dasApiCreateConfig
-     * @param dasApiCreateConfigVO
+     * @param apiCreateConfigDefinitionVO
      */
-    private void setDasApiCreateVOParams(DasApiCreateConfig dasApiCreateConfig, DasApiCreateConfigVO dasApiCreateConfigVO) {
+    private void setDasApiCreateVOParams(DasApiCreateConfig dasApiCreateConfig,
+                                         DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO) {
         if (null != dasApiCreateConfig.getApiRequestParas() && dasApiCreateConfig.getApiRequestParas().length() > 0) {
-            dasApiCreateConfigVO.setApiCreateRequestParasVOS(
+            apiCreateConfigDefinitionVO.setApiCreateRequestParasVOS(
                     GsonUtil.fromJsonString(dasApiCreateConfig.getApiRequestParas(),
                             new TypeToken<List<DasApiCreateRequestParasVO>>() {
                             }.getType()));
         }
         if (null != dasApiCreateConfig.getApiResponseParas() && dasApiCreateConfig.getApiResponseParas().length() > 0) {
-            dasApiCreateConfigVO.setApiCreateResponseParasVOS(
+            apiCreateConfigDefinitionVO.setApiCreateResponseParasVOS(
                     GsonUtil.fromJsonString(dasApiCreateConfig.getApiResponseParas(),
                             new TypeToken<List<DasApiCreateResponseParasVO>>() {
                             }.getType()));
         }
         if (null != dasApiCreateConfig.getApiOrderParas() && dasApiCreateConfig.getApiOrderParas().length() > 0) {
-            dasApiCreateConfigVO.setApiCreateOrderParasVOS(
+            apiCreateConfigDefinitionVO.setApiCreateOrderParasVOS(
                     GsonUtil.fromJsonString(dasApiCreateConfig.getApiResponseParas(),
                             new TypeToken<List<DasApiCreateOrderParasVO>>() {
                             }.getType()));
@@ -130,7 +133,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     public void insert(DasApiCreateConfigVO dasApiCreateConfigVO) {
         String apiId = UUID.randomUUID().toString().replaceAll("-", "");
         // 保存API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateConfigVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateConfigVO.getApiBasicInfoVO();
         if (dasApiBasicInfoVO == null) {
             throw new BizException("当前新增的API所对应的基础信息为空!!!");
         }
@@ -138,16 +141,17 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         dasApiBasicInfoService.insert(dasApiBasicInfoVO);
 
         // 保存新建API信息
+        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = dasApiCreateConfigVO.getApiCreateConfigDefinitionVO();
         DasApiCreateConfig dasApiCreateConfig =
-                DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfig(dasApiCreateConfigVO);
+                DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfig(apiCreateConfigDefinitionVO);
 
         // 新建API设置配置参数
         dasApiCreateConfig.setApiRequestParas(
-                GsonUtil.toJsonString(dasApiCreateConfigVO.getApiCreateRequestParasVOS()));
+                GsonUtil.toJsonString(apiCreateConfigDefinitionVO.getApiCreateRequestParasVOS()));
         dasApiCreateConfig.setApiResponseParas(
-                GsonUtil.toJsonString(dasApiCreateConfigVO.getApiCreateResponseParasVOS()));
+                GsonUtil.toJsonString(apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()));
         dasApiCreateConfig.setApiOrderParas(
-                GsonUtil.toJsonString(dasApiCreateConfigVO.getApiCreateOrderParasVOS()));
+                GsonUtil.toJsonString(apiCreateConfigDefinitionVO.getApiCreateOrderParasVOS()));
 
         dasApiCreateConfig.setApiId(apiId);
         dasApiCreateConfig.setGmtCreate(new Date());
@@ -160,25 +164,26 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     @Transactional(rollbackFor = Exception.class)
     public void update(DasApiCreateConfigVO dasApiCreateConfigVO) {
         // 更新API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateConfigVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateConfigVO.getApiBasicInfoVO();
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新新建API
-        DasApiCreateConfig dasApiCreate = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfig(dasApiCreateConfigVO);
+        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = dasApiCreateConfigVO.getApiCreateConfigDefinitionVO();
+        DasApiCreateConfig dasApiCreateConfig = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfig(apiCreateConfigDefinitionVO);
 
         // 新建API设置配置参数
-        dasApiCreate.setApiRequestParas(
-                GsonUtil.toJsonString(dasApiCreateConfigVO.getApiCreateRequestParasVOS()));
-        dasApiCreate.setApiResponseParas(
-                GsonUtil.toJsonString(dasApiCreateConfigVO.getApiCreateResponseParasVOS()));
-        dasApiCreate.setApiOrderParas(
-                GsonUtil.toJsonString(dasApiCreateConfigVO.getApiCreateOrderParasVOS()));
+        dasApiCreateConfig.setApiRequestParas(
+                GsonUtil.toJsonString(apiCreateConfigDefinitionVO.getApiCreateRequestParasVOS()));
+        dasApiCreateConfig.setApiResponseParas(
+                GsonUtil.toJsonString(apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()));
+        dasApiCreateConfig.setApiOrderParas(
+                GsonUtil.toJsonString(apiCreateConfigDefinitionVO.getApiCreateOrderParasVOS()));
 
-        dasApiCreate.setGmtModified(new Date());
-        dasApiCreate.setDelFlag(0);
-        Predicate predicate = qDasApiCreateConfig.apiId.eq(dasApiCreate.getApiId());
+        dasApiCreateConfig.setGmtModified(new Date());
+        dasApiCreateConfig.setDelFlag(0);
+        Predicate predicate = qDasApiCreateConfig.apiId.eq(dasApiCreateConfig.getApiId());
         boolean exists = dasApiCreateConfigRepository.exists(predicate);
         if (exists) {
-            dasApiCreateConfigRepository.saveAndFlush(dasApiCreate);
+            dasApiCreateConfigRepository.saveAndFlush(dasApiCreateConfig);
         } else {
             throw new BizException("当前要新增的API名称为:" + dasApiBasicInfoVO.getApiName() + " 数据的配置信息，不存在！！！");
         }
@@ -219,27 +224,28 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     public DebugApiResultVO debugModel(DasApiCreateConfigVO apiCreateConfigVO) {
         // 1.生成查询SQL(根据数据源类型)
         //数据源连接类型
-        String connectType = apiCreateConfigVO.getConnectType();
+        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = apiCreateConfigVO.getApiCreateConfigDefinitionVO();
+        String connectType = apiCreateConfigDefinitionVO.getConnectType();
         //表名称
-        String tableName = apiCreateConfigVO.getTableName();
+        String tableName = apiCreateConfigDefinitionVO.getTableName();
         //新建API接口定义入参(对应元数据映射关系)
-        Map<String, String> mappingParams = apiCreateConfigVO.getApiCreateRequestParasVOS().stream()
+        Map<String, String> mappingParams = apiCreateConfigDefinitionVO.getApiCreateRequestParasVOS().stream()
                 .collect(Collectors.toMap(DasApiCreateRequestParasVO::getParaName, DasApiCreateRequestParasVO::getMappingName));
 
         //真实请求参数(SQL where条件,使用字段参数)
-        Map<String, String> reqParams = apiCreateConfigVO.getDebugApiParasVOS().stream()
+        Map<String, String> reqParams = apiCreateConfigDefinitionVO.getDebugApiParasVOS().stream()
                 .collect(Collectors.toMap(DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
 
         //响应参数(SQL返回值映射查询数据)
-        List<String> resParams = apiCreateConfigVO.getApiCreateResponseParasVOS()
+        List<String> resParams = apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()
                 .stream().map(DasApiCreateResponseParasVO::getMappingName).collect(Collectors.toList());
         //生成查询sql
-        String executeSql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParams,mappingParams);
+        String executeSql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParams, mappingParams);
 
         // 2.执行查询SQL(根据数据源类型)
 
 
-        return  DebugApiResultVO.builder().resultData("").build();
+        return DebugApiResultVO.builder().resultData("").build();
     }
 
 }

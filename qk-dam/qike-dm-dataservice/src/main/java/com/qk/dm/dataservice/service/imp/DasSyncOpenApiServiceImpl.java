@@ -166,10 +166,10 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
             setRequestBody(schemaMap, apiBasicInfoBuilder, dasApiRegisterDefinitionBuilder, requestBody);
             // 构建API基础信息
             DasApiBasicInfoVO dasApiBasicInfoVO = apiBasicInfoBuilder.build();
-            apiRegisterBuilder.dasApiBasicInfoVO(dasApiBasicInfoVO);
+            apiRegisterBuilder.apiBasicInfoVO(dasApiBasicInfoVO);
             // 构建注册API
             DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterDefinitionBuilder.build();
-            apiRegisterBuilder.dasApiRegisterDefinitionVO(dasApiRegisterDefinitionVO);
+            apiRegisterBuilder.apiRegisterDefinitionVO(dasApiRegisterDefinitionVO);
             dasApiRegisterVO = apiRegisterBuilder.build();
         }
         return dasApiRegisterVO;

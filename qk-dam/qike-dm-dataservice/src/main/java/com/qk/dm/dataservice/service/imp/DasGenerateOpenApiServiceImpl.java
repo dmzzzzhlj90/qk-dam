@@ -79,7 +79,7 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
     private void openApiRegisterBuilder(List<DasApiRegisterVO> dasApiRegisterList, OpenapiBuilder openapiBuilder) {
         for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterList) {
             //注册API定义信息
-            DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getDasApiRegisterDefinitionVO();
+            DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getApiRegisterDefinitionVO();
             List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList = dasApiRegisterDefinitionVO.getDasApiRegisterBackendParaVO();
             // registerComponentsBuilder 请求参数
             if (!ObjectUtils.isEmpty(apiRegisterBackendParaVOList)) {
@@ -173,7 +173,7 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
 
     private Map<String, List<DasApiBasicInfoRequestParasVO>> getBasicRequestParas(DasApiRegisterVO dasApiRegisterVO) {
         // 获取API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getDasApiBasicInfoVO();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getApiBasicInfoVO();
         // 获取基础信定义参数信息
         List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOList = dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO();
         return basicInfoRequestParasVOList.stream()

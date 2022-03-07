@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class SqlExecuteUtils {
 
-    public static final String TAB_KEY = " ${TAB}";
+    public static final String TAB_KEY = "${TAB}";
     public static final String COL_LIST_KEY = "${COL_LIST}";
 
 
@@ -41,7 +41,6 @@ public class SqlExecuteUtils {
 
         //查询字段
         if (resParams.size() > 0) {
-            String selectStr = String.join(",", resParams);
             sql = sql.replace(COL_LIST_KEY, String.join(",", resParams));
         }
         sql = sql.replace(COL_LIST_KEY, COL_LIST_DEFAULT);

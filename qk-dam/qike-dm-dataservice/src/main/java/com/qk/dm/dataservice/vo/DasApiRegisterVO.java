@@ -25,12 +25,12 @@ public class DasApiRegisterVO {
      * API基础信息
      */
     @Valid
-    private DasApiBasicInfoVO dasApiBasicInfoVO;
+    private DasApiBasicInfoVO apiBasicInfoVO;
 
     /**
      * 注册API定义信息
      */
     @Valid
-    private DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO;
+    private DasApiRegisterDefinitionVO apiRegisterDefinitionVO;
 
 }
