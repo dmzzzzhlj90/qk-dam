@@ -41,12 +41,12 @@ public class DasApiBasicInfoRequestParasVO {
     /**
      * 是否必填
      */
-    private boolean necessary;
+    private Boolean necessary;
 
     /**
      * 允许空值
      */
-    private boolean supportNull;
+    private Boolean supportNull;
 
     /**
      * 示例值

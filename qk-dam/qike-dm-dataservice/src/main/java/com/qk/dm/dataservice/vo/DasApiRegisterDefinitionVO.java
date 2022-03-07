@@ -68,12 +68,12 @@ public class DasApiRegisterDefinitionVO {
     /**
      * 后端服务参数
      */
-    private List<DasApiRegisterBackendParaVO> dasApiRegisterBackendParaVO;
+    private List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOS;
 
     /**
      * 常量参数
      */
-    private List<DasApiRegisterConstantParaVO> dasApiRegisterConstantParaVO;
+    private List<DasApiRegisterConstantParaVO> apiRegisterConstantParaVOS;
 
     /**
      * 描述

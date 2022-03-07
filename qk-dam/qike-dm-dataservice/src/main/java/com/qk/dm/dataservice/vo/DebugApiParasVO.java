@@ -31,7 +31,7 @@ public class DebugApiParasVO {
     /**
      * 是否必填
      */
-    private String necessary;
+    private Boolean necessary;
 
     /**
      * 值
@@ -41,6 +41,6 @@ public class DebugApiParasVO {
     /**
      * 是否传递
      */
-    private boolean usePara;
+    private Boolean usePara;
 
 }
