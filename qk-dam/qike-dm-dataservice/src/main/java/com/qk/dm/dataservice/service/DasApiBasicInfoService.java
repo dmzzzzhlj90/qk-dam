@@ -53,4 +53,6 @@ public interface DasApiBasicInfoService {
 
     LinkedList<Map<String, Object>> getDebugParamHeaderInfo();
 
+    Object createDetail(String apiId);
+
 }

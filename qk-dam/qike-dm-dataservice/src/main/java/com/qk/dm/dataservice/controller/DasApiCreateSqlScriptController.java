@@ -36,17 +36,6 @@ public class DasApiCreateSqlScriptController {
         this.dasApiCreateSqlScriptService = dasApiCreateSqlScriptService;
     }
 
-    /**
-     * 新增API脚本方式_详情展示
-     *
-     * @param apiId
-     * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
-     */
-    @GetMapping(value = "/{apiId}")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_SQL_SCRIPT, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<DasApiCreateSqlScriptVO> detail(@PathVariable("apiId") String apiId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSqlScriptService.detail(apiId));
-    }
 
     /**
      * 新增API脚本方式
