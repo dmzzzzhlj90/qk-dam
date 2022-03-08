@@ -101,7 +101,7 @@ public class QxExcelController {
    * @param response
    */
   @PostMapping("/resource/download")
-  public DefaultCommonResult resourcesAllDownload(@RequestParam("serviceId") Long serviceId,HttpServletResponse response)
+  public DefaultCommonResult resourcesAllDownload(@RequestParam("serviceId") String serviceId,HttpServletResponse response)
       throws IOException {
     qxExcelService.resourcesAllDownload(serviceId,response);
     return DefaultCommonResult.success();
@@ -113,7 +113,7 @@ public class QxExcelController {
    * @param response
    */
   @PostMapping("/api/download")
-  public DefaultCommonResult apiAllDownload(@RequestParam("serviceId") Long serviceId,HttpServletResponse response)
+  public DefaultCommonResult apiAllDownload(@RequestParam("serviceId") String serviceId,HttpServletResponse response)
       throws IOException {
     qxExcelService.apiAllDownload(serviceId,response);
     return DefaultCommonResult.success();

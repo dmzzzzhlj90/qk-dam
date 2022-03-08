@@ -112,7 +112,7 @@ public class ResourceExcelVO {
    * 服务id
    */
   @ExcelProperty(value = "服务id",order = 7)
-  private Long serviceId;
+  private String serviceId;
 
   /**
    * 0表示API，1表示资源

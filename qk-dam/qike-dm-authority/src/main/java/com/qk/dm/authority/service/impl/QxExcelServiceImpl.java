@@ -85,7 +85,7 @@ public class QxExcelServiceImpl implements QxExcelService {
               .description("描述" + i)
               .createName("创建人名称" + i)
               .pidName("父级名称"+i)
-              .serviceId((long) i)
+              .serviceId(("服务UUID")+i)
               .type(1)
               .build();
       list.add(resourceExcelVO);
@@ -112,12 +112,11 @@ public class QxExcelServiceImpl implements QxExcelService {
       ResourceVO resourceVO =
           ResourceVO.builder()
               .name("资源名称" + i)
-              .powerSign("资源标识" + i)
               .path("网址路径" + i)
               .description("描述" + i)
               .createName("创建人名称" + i)
               .pid(-1l)
-              .serviceId((long) i)
+              .serviceId(("服务UUID")+i)
               .type(0)
               .build();
       list.add(resourceVO);
@@ -193,7 +192,7 @@ public class QxExcelServiceImpl implements QxExcelService {
    * @param response
    */
   @Override
-  public void resourcesAllDownload(Long serviceId, HttpServletResponse response)
+  public void resourcesAllDownload(String serviceId, HttpServletResponse response)
       throws IOException {
     List<ResourceExcelVO> dsdCodeInfoVOList = GetResourcesAll(serviceId);
     response.setContentType("application/json;charset=utf-8");
@@ -210,7 +209,7 @@ public class QxExcelServiceImpl implements QxExcelService {
    * @param response
    */
   @Override
-  public void apiAllDownload(Long serviceId, HttpServletResponse response)
+  public void apiAllDownload(String serviceId, HttpServletResponse response)
       throws IOException {
     List<ResourceVO> apiResourcesList = GetApiAll(serviceId);
     response.setContentType("application/json;charset=utf-8");
@@ -247,11 +246,10 @@ public class QxExcelServiceImpl implements QxExcelService {
 
   }
 
-  private Date getTime(Long createdTimestamp) {
-    String format = this.format.format(createdTimestamp);
+  private Date getTime(String createdTimestamp) {
     Date parse = null;
     try {
-      parse = this.format.parse(format);
+      parse = this.format.parse(createdTimestamp);
     } catch (ParseException e) {
       e.printStackTrace();
     }
@@ -331,7 +329,7 @@ public class QxExcelServiceImpl implements QxExcelService {
    * @param serviceId
    * @return
    */
-  private List<ResourceVO> GetApiAll(Long serviceId) {
+  private List<ResourceVO> GetApiAll(String serviceId) {
     List<ResourceVO> resourceVOList = new ArrayList<>();
     List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(serviceId);
     //筛选资源数据
@@ -348,7 +346,7 @@ public class QxExcelServiceImpl implements QxExcelService {
    * @param serviceId
    * @return
    */
-  private List<ResourceExcelVO> GetResourcesAll(Long serviceId) {
+  private List<ResourceExcelVO> GetResourcesAll(String serviceId) {
     List<ResourceExcelVO> resourceOutVOList = new ArrayList<>();
     List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(serviceId);
     //筛选资源数据

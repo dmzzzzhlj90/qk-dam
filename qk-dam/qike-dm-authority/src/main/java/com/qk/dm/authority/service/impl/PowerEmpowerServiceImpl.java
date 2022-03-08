@@ -6,7 +6,6 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.entity.QQxEmpower;
 import com.qk.dm.authority.entity.QxEmpower;
-import com.qk.dm.authority.keycloak.keyClocakEmpowerApi;
 import com.qk.dm.authority.mapstruct.QxEmpowerMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.service.PowerEmpowerService;
@@ -15,7 +14,6 @@ import com.qk.dm.authority.vo.powervo.EmpowerVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -33,8 +31,8 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
   private final QQxEmpower qQxEmpower = QQxEmpower.qxEmpower;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
-  @Autowired
-  private keyClocakEmpowerApi keyClocakEmpowerApi;
+  //@Autowired
+  //private keyClocakEmpowerApi keyClocakEmpowerApi;
 
 
   public PowerEmpowerServiceImpl(QkQxEmpowerRepository qkQxEmpowerRepository,EntityManager entityManager) {
@@ -57,7 +55,7 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
           empowerVO.getEmpoerName()+"已存在当前授权！！！");
     }else {
       //todo 修改keycloak被授权主体属性,根据授权主体的不同选择不同的方法修改授权主体的属性
-      keyClocakEmpowerApi.addPower(empowerVO);
+      //keyClocakEmpowerApi.addPower(empowerVO);
       qkQxEmpowerRepository.save(qxEmpower);
     }
   }
@@ -82,7 +80,7 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
     }
     QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
     //TODO 修改对应授权主体的属性
-    keyClocakEmpowerApi.addPower(empowerVO);
+    //keyClocakEmpowerApi.addPower(empowerVO);
     qkQxEmpowerRepository.saveAndFlush(qxEmpower1);
   }
 
@@ -96,7 +94,7 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
     }
     //TODO 删除授权主体中的属性
     EmpowerVO empowerVO = QxEmpowerMapper.INSTANCE.qxEmpowerVO(qxEmpower);
-    keyClocakEmpowerApi.deletePower(empowerVO);
+    //keyClocakEmpowerApi.deletePower(empowerVO);
     qkQxEmpowerRepository.delete(qxEmpower);
   }
 

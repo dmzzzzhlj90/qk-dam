@@ -32,11 +32,6 @@ public class ResourceOutVO {
   private String name;
 
   /**
-   * 标识
-   */
-  private String powerSign;
-
-  /**
    * 网址路径
    */
   private String path;
@@ -88,7 +83,7 @@ public class ResourceOutVO {
   /**
    * 服务id
    */
-  private Long sourceId;
+  private String sourceId;
 
   /**
    * 0标识API，1表示资源

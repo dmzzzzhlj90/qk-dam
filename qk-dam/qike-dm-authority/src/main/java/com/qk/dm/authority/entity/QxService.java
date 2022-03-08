@@ -79,8 +79,8 @@ public class QxService implements Serializable {
   /**
    * 服务名称
    */
-  @Column(name = "service_sign")
-  private String serviceSign;
+  //@Column(name = "service_sign")
+  //private String serviceSign;
 
   /**
    * 区域id（项目id）

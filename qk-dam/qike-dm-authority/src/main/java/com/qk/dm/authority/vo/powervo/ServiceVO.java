@@ -74,8 +74,8 @@ public class ServiceVO {
   /**
    * 服务英文标识（作为keycloak中属性key）
    */
-  @NotBlank(message = "服务英文标识（作为keycloak中属性key）不能为空")
-  private String serviceSign;
+  //@NotBlank(message = "服务英文标识（作为keycloak中属性key）不能为空")
+  //private String serviceSign;
 
   /**
    * 区域id（项目id）

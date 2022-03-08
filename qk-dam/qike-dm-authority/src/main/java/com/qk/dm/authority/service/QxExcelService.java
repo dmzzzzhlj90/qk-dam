@@ -15,9 +15,9 @@ public interface QxExcelService {
 
   Boolean apiResourceInfoUpload(MultipartFile file);
 
-  void resourcesAllDownload(Long serviceId, HttpServletResponse response) throws IOException;
+  void resourcesAllDownload(String serviceId, HttpServletResponse response) throws IOException;
 
-  void apiAllDownload(Long serviceId, HttpServletResponse response)
+  void apiAllDownload(String serviceId, HttpServletResponse response)
       throws IOException;
 
   void UserAllDownload(String realm, String search,

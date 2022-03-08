@@ -33,12 +33,6 @@ public class QxResources implements Serializable {
   private String name;
 
   /**
-   * 标识
-   */
-  @Column(name = "power_sign")
-  private String powerSign;
-
-  /**
    * 网址路径
    */
   @Column(name = "path")
@@ -98,7 +92,7 @@ public class QxResources implements Serializable {
    * 服务id
    */
   @Column(name = "service_id")
-  private Long serviceId;
+  private String serviceId;
 
   /**
    * 0标识API，1表示资源

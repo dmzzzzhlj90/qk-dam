@@ -50,12 +50,12 @@ public class MultipartFileUtil {
   }
 
   /**
-   * 根据字段去重(根据资源名称、标识、服务id、资源类型)
+   * 根据字段去重(根据资源名称、服务id、资源类型)
    * @param qQxResources
    * @return
    */
   public static String removeDuplicate(QxResources qQxResources){
-    String key = String.join("->",qQxResources.getName(),qQxResources.getPowerSign(),qQxResources.getServiceId().toString(),qQxResources.getType().toString());
+    String key = String.join("->",qQxResources.getName(),qQxResources.getServiceId(),qQxResources.getType().toString());
     return key;
   }
 
@@ -65,7 +65,7 @@ public class MultipartFileUtil {
    * @return
    */
   public static String getKey(ResourceExcelVO qxResources) {
-    String key = String.join("->",qxResources.getPidName(),qxResources.getServiceId().toString(),qxResources.getType().toString());
+    String key = String.join("->",qxResources.getPidName(),qxResources.getServiceId(),qxResources.getType().toString());
     return key;
   }
 
@@ -75,7 +75,7 @@ public class MultipartFileUtil {
    * @return
    */
   public static String getExcelKey(ResourceExcelVO qxResources) {
-    String key = String.join("->",qxResources.getName(),qxResources.getPowerSign(),qxResources.getServiceId().toString(),qxResources.getType().toString());
+    String key = String.join("->",qxResources.getName(),qxResources.getPowerSign(),qxResources.getServiceId(),qxResources.getType().toString());
     return key;
   }
 
@@ -85,7 +85,7 @@ public class MultipartFileUtil {
    * @return
    */
   public static String createKey(ResourceExcelVO resourceExcelVO) {
-    String key = String.join("->",resourceExcelVO.getName(),resourceExcelVO.getServiceId().toString(),resourceExcelVO.getType().toString());
+    String key = String.join("->",resourceExcelVO.getName(),resourceExcelVO.getServiceId(),resourceExcelVO.getType().toString());
     return key;
   }
 
@@ -95,7 +95,7 @@ public class MultipartFileUtil {
    * @return
    */
   public static String getApiExcelKey(ResourceVO resourceVO) {
-    String key = String.join("->",resourceVO.getName(),resourceVO.getPowerSign(),resourceVO.getServiceId().toString(),resourceVO.getType().toString());
+    String key = String.join("->",resourceVO.getName(),resourceVO.getServiceId(),resourceVO.getType().toString());
     return key;
   }
 

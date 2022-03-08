@@ -104,7 +104,7 @@ public class QxEmpower implements Serializable {
    * 服务id
    */
   @Column(name = "service_id")
-  private Long serviceId;
+  private String serviceId;
 
   /**
    * 授权信息uuid

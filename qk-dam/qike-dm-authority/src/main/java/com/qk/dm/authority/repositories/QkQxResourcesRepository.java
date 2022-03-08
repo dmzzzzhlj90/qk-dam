@@ -8,7 +8,5 @@ import java.util.List;
 public interface QkQxResourcesRepository extends
     BaseRepository<QxResources, Long> {
   List<QxResources> findByPid(Long id);
-  List<QxResources> findByServiceId(Long serviceId);
-
-
+  List<QxResources> findByServiceId(String serviceId);
 }

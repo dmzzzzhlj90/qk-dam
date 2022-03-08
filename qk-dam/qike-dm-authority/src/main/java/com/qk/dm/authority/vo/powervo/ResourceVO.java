@@ -42,24 +42,18 @@ public class ResourceVO {
   @NotBlank(message = "资源（API）名称不能为空")
   private String name;
 
-  /**
-   * 标识
-   */
-  @ExcelProperty(value = "资源标识",order = 2)
-  @NotBlank(message = "标识不能为空")
-  private String powerSign;
 
   /**
    * 网址路径
    */
-  @ExcelProperty(value = "网址路径",order = 3)
+  @ExcelProperty(value = "网址路径",order = 2)
   @NotBlank(message = "网址路径不能为空")
   private String path;
 
   /**
    * 描述
    */
-  @ExcelProperty(value = "描述",order = 4)
+  @ExcelProperty(value = "描述",order = 3)
   private String description;
 
   /**
@@ -77,7 +71,7 @@ public class ResourceVO {
   /**
    * 创建人名称
    */
-  @ExcelProperty(value = "创建人名称",order = 5)
+  @ExcelProperty(value = "创建人名称",order = 4)
   private String createName;
 
   /**
@@ -105,23 +99,23 @@ public class ResourceVO {
   /**
    * 父级id（API类型fid默认为-1）
    */
-  @ExcelProperty(value = "父级id(API时为-1)",order = 6)
+  @ExcelProperty(value = "父级id(API时为-1)",order = 5)
   private Long pid;
 
   /**
-   * 服务id
+   * 服务UUID
    */
-  @ExcelProperty(value = "服务id",order = 7)
-  private Long serviceId;
+  @ExcelProperty(value = "服务UUID",order = 6)
+  private String serviceId;
 
   /**
    * 0表示API，1表示资源
    */
-  @ExcelProperty(value = "资源类型（0表示API，1表示资源）",order = 8)
+  @ExcelProperty(value = "资源类型（0表示API，1表示资源）",order = 7)
   private Integer type;
 
   /**
-   * 资源uuid
+   * 资源UUID
    */
   @ExcelIgnore
   private String resourcesid;

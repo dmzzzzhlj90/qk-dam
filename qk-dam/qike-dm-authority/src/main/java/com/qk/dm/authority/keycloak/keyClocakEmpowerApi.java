@@ -1,3 +1,4 @@
+/*
 package com.qk.dm.authority.keycloak;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
@@ -18,12 +19,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+*/
 /**
  * 权限管理集成keycloak
  * @author zys
  * @date 2022/2/28 15:03
  * @since 1.0.0
- */
+ *//*
+
 @Component
 public class keyClocakEmpowerApi {
   private static String TARGET_REALM = "pachong";
@@ -36,10 +39,12 @@ public class keyClocakEmpowerApi {
     this.powerService = powerService;
   }
 
-  /**
+  */
+/**
    * 修改用户属性
    * @param empowerVO
-   */
+   *//*
+
   public void addPower(EmpowerVO empowerVO) {
     //根据授权主体类型的不同选择不同的方式修改主体属性(0表示用户，1表示角色，2表示用户组)
     switch (empowerVO.getEmpoerType()){
@@ -57,10 +62,12 @@ public class keyClocakEmpowerApi {
     }
   }
 
-  /**
+  */
+/**
    * 添加用户组授权
    * @param empowerVO
-   */
+   *//*
+
   private void dealGroup(EmpowerVO empowerVO) {
     if (!Objects.isNull(keycloak.realm(TARGET_REALM).groups())&& !Objects.isNull(keycloak.realm(TARGET_REALM).groups().group(empowerVO.getEmpoerId()))){
       GroupRepresentation groupRepresentation = keycloak.realm(TARGET_REALM).groups().group(empowerVO.getEmpoerId()).toRepresentation();
@@ -80,11 +87,13 @@ public class keyClocakEmpowerApi {
     }
   }
 
-  /**
+  */
+/**
    * 获取服务标识
    * @param serviceId
    * @return
-   */
+   *//*
+
   private ServiceVO getServiceSing(Long serviceId) {
     ServiceVO serviceVO = powerService.ServiceDetails(serviceId);
     if (Objects.isNull(serviceVO)){
@@ -93,10 +102,12 @@ public class keyClocakEmpowerApi {
     return serviceVO;
   }
 
-  /**
+  */
+/**
    * 添加授权主体为角色
    * @param empowerVO
-   */
+   *//*
+
   private void dealRole(EmpowerVO empowerVO) {
     if (!Objects.isNull(keycloak.realm(TARGET_REALM).clients())&& !Objects.isNull(keycloak.realm(TARGET_REALM).clients().get(empowerVO.getEmpoerId()))){
       ClientsResource clients = keycloak.realm(TARGET_REALM).clients();
@@ -122,12 +133,14 @@ public class keyClocakEmpowerApi {
     }
   }
 
-  /**
+  */
+/**
    * 根据授权类型生成不同的key（api的属性key为服务标识+api拼接而成）
    * @param serviceVO
    * @param powerType
    * @return
-   */
+   *//*
+
   private String getKey(ServiceVO serviceVO, Integer powerType) {
     if (powerType == QxConstant.API_TYPE){
       return  serviceVO.getServiceSign()+"_"+QxConstant.API_KEY;
@@ -136,10 +149,12 @@ public class keyClocakEmpowerApi {
     }
   }
 
-  /**
+  */
+/**
    * 添加授权主体为用户
    * @param empowerVO
-   */
+   *//*
+
   private void dealUser(EmpowerVO empowerVO) {
     if (!Objects.isNull(keycloak.realm(TARGET_REALM).users())&& !Objects.isNull(keycloak.realm(TARGET_REALM).users().get(empowerVO.getEmpoerId()))){
       UserRepresentation userRepresentation = keycloak.realm(TARGET_REALM).users().get(empowerVO.getEmpoerId()).toRepresentation();
@@ -168,10 +183,12 @@ public class keyClocakEmpowerApi {
     return list;
   }
 
-  /**
+  */
+/**
    * 删除权限
    * @param empowerVO
-   */
+   *//*
+
   public void deletePower(EmpowerVO empowerVO) {
     //根据授权主体类型的不同选择不同的方式修改主体属性(0表示用户，1表示角色，2表示用户组)
     switch (empowerVO.getEmpoerType()){
@@ -189,10 +206,12 @@ public class keyClocakEmpowerApi {
     }
   }
 
-  /**
+  */
+/**
    * 删除授权主体为分组
    * @param empowerVO
-   */
+   *//*
+
   private void deleteGroup(EmpowerVO empowerVO) {
     if (!Objects.isNull(keycloak.realm(TARGET_REALM).groups())&& !Objects.isNull(keycloak.realm(TARGET_REALM).groups().group(empowerVO.getEmpoerId()))){
       GroupRepresentation groupRepresentation = keycloak.realm(TARGET_REALM).groups().group(empowerVO.getEmpoerId()).toRepresentation();
@@ -209,10 +228,12 @@ public class keyClocakEmpowerApi {
     }
   }
 
-  /**
+  */
+/**
    * 删除授权主体为角色
    * @param empowerVO
-   */
+   *//*
+
   private void deleteRole(EmpowerVO empowerVO) {
     if (!Objects.isNull(keycloak.realm(TARGET_REALM).clients()) && !Objects.isNull(keycloak.realm(TARGET_REALM).clients().get(empowerVO.getEmpoerId()))){
       ClientsResource clients = keycloak.realm(TARGET_REALM).clients();
@@ -232,10 +253,12 @@ public class keyClocakEmpowerApi {
     }
   }
 
-  /**
+  */
+/**
    * 删除授权主体为用户
    * @param empowerVO
-   */
+   *//*
+
   private void deleteUser(EmpowerVO empowerVO) {
     if (!Objects.isNull(keycloak.realm(TARGET_REALM).users())&& !Objects.isNull(keycloak.realm(TARGET_REALM).users().get(empowerVO.getEmpoerId()))){
       UserRepresentation userRepresentation = keycloak.realm(TARGET_REALM).users().get(empowerVO.getEmpoerId()).toRepresentation();
@@ -251,4 +274,4 @@ public class keyClocakEmpowerApi {
       throw new BizException("不存在当前授权用户");
     }
   }
-}
+}*/

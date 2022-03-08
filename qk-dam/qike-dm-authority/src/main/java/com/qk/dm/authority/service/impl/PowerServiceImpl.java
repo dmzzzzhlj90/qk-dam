@@ -1,9 +1,14 @@
 package com.qk.dm.authority.service.impl;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.entity.QQxService;
+import com.qk.dm.authority.entity.QxEmpower;
+import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.entity.QxService;
 import com.qk.dm.authority.mapstruct.QxServiceMapper;
+import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
+import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.repositories.QkQxServiceRepository;
 import com.qk.dm.authority.service.PowerService;
 import com.qk.dm.authority.vo.params.ServiceParamVO;
@@ -26,13 +31,18 @@ import java.util.*;
 @Service
 public class PowerServiceImpl implements PowerService {
   private final QkQxServiceRepository qkQxServiceRepository;
+  private final QkQxResourcesRepository qkQxResourcesRepository;
+  private final QkQxEmpowerRepository qkQxEmpowerRepository;
   private final QQxService qQxService=QQxService.qxService;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
 
   public PowerServiceImpl(QkQxServiceRepository qkQxServiceRepository,
-      EntityManager entityManager) {
+      QkQxResourcesRepository qkQxResourcesRepository,
+      QkQxEmpowerRepository qkQxEmpowerRepository, EntityManager entityManager) {
     this.qkQxServiceRepository = qkQxServiceRepository;
+    this.qkQxResourcesRepository = qkQxResourcesRepository;
+    this.qkQxEmpowerRepository = qkQxEmpowerRepository;
     this.entityManager = entityManager;
   }
 
@@ -87,7 +97,25 @@ public class PowerServiceImpl implements PowerService {
           "当前需删除的数据不存在"
       );
     }
+    deleteAssociatedData(qxService);
     qkQxServiceRepository.delete(qxService);
+  }
+
+  /**
+   * 删除服务的同时删除资源和授权信息
+   * @param qxService
+   */
+  private void deleteAssociatedData(QxService qxService) {
+    //根据服务的uuid查询资源信息
+    List<QxResources> resourcesList = qkQxResourcesRepository.findByServiceId(qxService.getServiceid());
+    //根据服务的uuid查询授权信息
+    List<QxEmpower> qxEmpowerList = qkQxEmpowerRepository.findByServiceId(qxService.getServiceid());
+    if (CollectionUtils.isNotEmpty(resourcesList)){
+      qkQxResourcesRepository.deleteAll(resourcesList);
+    }
+    if (CollectionUtils.isNotEmpty(qxEmpowerList)){
+      qkQxEmpowerRepository.deleteAll(qxEmpowerList);
+    }
   }
 
   @Override

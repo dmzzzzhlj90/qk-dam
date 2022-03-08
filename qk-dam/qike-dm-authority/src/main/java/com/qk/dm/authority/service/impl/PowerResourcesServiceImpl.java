@@ -6,6 +6,7 @@ import com.qk.dm.authority.constant.QxConstant;
 import com.qk.dm.authority.entity.QQxResources;
 import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.mapstruct.QxResourcesMapper;
+import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.service.PowerResourcesService;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
@@ -19,7 +20,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**权限管理-资源
@@ -30,14 +34,17 @@ import java.util.stream.Collectors;
 @Service
 public class PowerResourcesServiceImpl implements PowerResourcesService {
   private final QkQxResourcesRepository qkQxResourcesRepository;
+  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QQxResources qQxResources= QQxResources.qxResources;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
 
   public PowerResourcesServiceImpl(
       QkQxResourcesRepository qkQxResourcesRepository,
+      QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository,
       EntityManager entityManager) {
     this.qkQxResourcesRepository = qkQxResourcesRepository;
+    this.qkQxResourcesEmpowerRepository = qkQxResourcesEmpowerRepository;
     this.entityManager = entityManager;
   }
 
@@ -49,7 +56,7 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
   public void addResource(ResourceVO resourceVO) {
     resourceVO.setResourcesid(UUID.randomUUID().toString());
     QxResources qxResources = QxResourcesMapper.INSTANCE.qxResources(resourceVO);
-    BooleanExpression predicate = qQxResources.name.eq(resourceVO.getName()).and(qQxResources.serviceId.eq(resourceVO.getServiceId()).and(qQxResources.powerSign.eq(resourceVO.getPowerSign())));
+    BooleanExpression predicate = qQxResources.name.eq(resourceVO.getName()).and(qQxResources.serviceId.eq(resourceVO.getServiceId())).and(qQxResources.type.eq(resourceVO.getType()));
     boolean exists = qkQxResourcesRepository.exists(predicate);
     if (exists){
       throw new BizException(
@@ -77,7 +84,8 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
     if (Objects.isNull(qxResources)) {
       throw new BizException("当前需删除的数据不存在");
     }
-    if (Objects.nonNull(qxResources.getPid()) && qxResources.getPid() == QxConstant.PID) {
+    if (qxResources.getType()==QxConstant.API_TYPE) {
+      deleteResourceEmpower(id);
       qkQxResourcesRepository.deleteById(id);
     } else {
       List<QxResources> qxResourcesList = qkQxResourcesRepository.findByPid(qxResources.getId());
@@ -86,9 +94,18 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
             "存在子节点，请先删除"
         );
       }else{
+        deleteResourceEmpower(id);
         qkQxResourcesRepository.deleteById(id);
       }
     }
+  }
+
+  /**
+   * 根据资源id删除资源授权关系表
+   * @param id
+   */
+  private void deleteResourceEmpower(Long id) {
+    qkQxResourcesEmpowerRepository.deleteByResourceId(id);
   }
 
   @Override
@@ -122,9 +139,9 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
     List<QxResources> qxResourcesList =new ArrayList<>();
     List<QxResources> byServiceId = qkQxResourcesRepository.findByServiceId(powerResourcesParamVO.getServiceId());
     if (powerResourcesParamVO.getType()==QxConstant.API_TYPE){
-       qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getPowerSign()) && qxResources.getType() == QxConstant.API_TYPE).collect(Collectors.toList());
+       qxResourcesList = byServiceId.stream().filter(qxResources ->qxResources.getType() == QxConstant.API_TYPE).collect(Collectors.toList());
     }else{
-      qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getPowerSign()) && qxResources.getType() == QxConstant.RESOURCE_TYPE).collect(Collectors.toList());
+      qxResourcesList = byServiceId.stream().filter(qxResources ->qxResources.getType() == QxConstant.RESOURCE_TYPE).collect(Collectors.toList());
     }
     return  qxResourcesList.stream().map(QxResourcesMapper.INSTANCE::qxResourceVO).collect(Collectors.toList());
   }

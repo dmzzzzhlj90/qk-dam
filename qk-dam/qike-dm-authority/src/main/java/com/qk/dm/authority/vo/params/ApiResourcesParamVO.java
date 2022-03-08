@@ -19,5 +19,5 @@ public class ApiResourcesParamVO {
    * 服务id
    */
   @NotBlank(message = "服务id不能为空")
-  private Long serviceId;
+  private String serviceId;
 }

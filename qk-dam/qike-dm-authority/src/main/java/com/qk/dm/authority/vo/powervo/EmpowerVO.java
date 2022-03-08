@@ -90,7 +90,7 @@ public class EmpowerVO {
   /**
    * 服务id
    */
-  private Long serviceId;
+  private String serviceId;
 
   /**
    * 授权信息uuid
