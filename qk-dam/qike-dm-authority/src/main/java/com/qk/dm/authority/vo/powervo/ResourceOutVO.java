@@ -83,7 +83,7 @@ public class ResourceOutVO {
   /**
    * 服务id
    */
-  private String sourceId;
+  private String serviceId;
 
   /**
    * 0标识API，1表示资源

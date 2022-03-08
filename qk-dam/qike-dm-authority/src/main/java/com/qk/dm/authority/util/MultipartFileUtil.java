@@ -75,7 +75,7 @@ public class MultipartFileUtil {
    * @return
    */
   public static String getExcelKey(ResourceExcelVO qxResources) {
-    String key = String.join("->",qxResources.getName(),qxResources.getPowerSign(),qxResources.getServiceId(),qxResources.getType().toString());
+    String key = String.join("->",qxResources.getName(),qxResources.getServiceId(),qxResources.getType().toString());
     return key;
   }
 
