@@ -1,8 +1,14 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dam.datasource.enums.ConnTypeEnum;
+import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
 import com.qk.dm.dataservice.constant.CreateSqlRequestParamHeaderInfoEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateSqlScript;
@@ -21,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 数据服务_新建API_脚本方式
@@ -38,15 +45,18 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     private final DasApiBasicInfoService dasApiBasicInfoService;
     private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
     private final DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository;
+    private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
 
     @Autowired
     public DasApiCreateSqlScriptServiceImpl(
             DasApiBasicInfoService dasApiBasicInfoService,
             DasApiBasicInfoRepository dasApiBasicinfoRepository,
-            DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository) {
+            DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository,
+            DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
         this.dasApiBasicInfoService = dasApiBasicInfoService;
         this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
         this.dasApiCreateSqlScriptRepository = dasApiCreateSqlScriptRepository;
+        this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
     }
 
     @Override
@@ -193,8 +203,34 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     }
 
     @Override
-    public DebugApiResultVO debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
-        return DebugApiResultVO.builder().resultData("").build();
+    public DebugApiResultVO debugModel(DasApiCreateSqlScriptVO apiCreateSqlScriptVO) {
+        // 1.生成查询SQL(根据数据源类型)
+        //数据源连接类型
+        DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = apiCreateSqlScriptVO.getApiCreateDefinitionVO();
+        String connectType = apiCreateSqlScriptDefinitionVO.getConnectType();
+        //数据库
+        String dataBaseName = apiCreateSqlScriptDefinitionVO.getDataBaseName();
+        // 真实请求参数(SQL where条件,使用字段参数)
+        Map<String, String> reqParams = apiCreateSqlScriptVO.getDebugApiParasVOS().stream()
+                .collect(Collectors.toMap(DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
+        //执行SQL片段
+        String sqlPara = apiCreateSqlScriptDefinitionVO.getSqlPara();
+
+        // 2.执行查询SQL(根据数据源类型)
+        // 获取数据库连接信息
+        Map<String, ConnectBasicInfo> dataSourceInfo = dataBaseInfoDefaultApi
+                .getDataSourceMap(Lists.newArrayList(apiCreateSqlScriptDefinitionVO.getDataSourceName()));
+        ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateSqlScriptDefinitionVO.getDataSourceName());
+
+        List<Map<String, Object>> searchData = null;
+        if (ConnTypeEnum.MYSQL.getName().equalsIgnoreCase(connectType)) {
+            // mysql 执行sql获取查询结果集
+            searchData = new MysqlSqlExecutor(connectBasicInfo, dataBaseName, reqParams, null)
+                    .mysqlExecuteSQL(null, sqlPara,null).searchDataSqlPara();
+        } else if (ConnTypeEnum.HIVE.getName().equalsIgnoreCase(connectType)) {
+            // hive 执行sql获取查询结果集
+        }
+        return DebugApiResultVO.builder().resultData(searchData).build();
     }
 
 }

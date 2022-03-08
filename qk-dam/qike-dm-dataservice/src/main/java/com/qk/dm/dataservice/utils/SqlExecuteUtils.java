@@ -112,4 +112,20 @@ public class SqlExecuteUtils {
         whereBuffer.append(AND).append(column).append(condition).append(value);
     }
 
+    /**
+     * 执行SQL片段中的参数替换
+     *
+     *
+     * @param sqlPara
+     * @param reqParams
+     * @return
+     */
+    public static String mysqlSqlPara(String sqlPara, Map<String, String> reqParams) {
+        String replaceSql = sqlPara;
+        for (String para : reqParams.keySet()) {
+            String value = reqParams.get(para);
+            replaceSql = replaceSql.replace(para, value);
+        }
+        return replaceSql;
+    }
 }

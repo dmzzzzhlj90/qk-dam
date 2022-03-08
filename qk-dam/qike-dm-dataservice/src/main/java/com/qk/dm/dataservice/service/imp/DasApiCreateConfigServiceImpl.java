@@ -255,7 +255,8 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
 
         // 2.执行查询SQL(根据数据源类型)
         // 获取数据库连接信息
-        Map<String, ConnectBasicInfo> dataSourceInfo = getDataSourceInfo(Lists.newArrayList(apiCreateConfigDefinitionVO.getDataSourceName()));
+        Map<String, ConnectBasicInfo> dataSourceInfo = dataBaseInfoDefaultApi
+                .getDataSourceMap(Lists.newArrayList(apiCreateConfigDefinitionVO.getDataSourceName()));
         ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateConfigDefinitionVO.getDataSourceName());
 
         List<Map<String, Object>> searchData = null;
@@ -270,25 +271,5 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         return DebugApiResultVO.builder().resultData(searchData).build();
     }
 
-    /**
-     * 获取数据源连接信息
-     *
-     * @param dataSourceNames
-     * @return
-     */
-    private Map<String, ConnectBasicInfo> getDataSourceInfo(List<String> dataSourceNames ) {
-        Map<String, ConnectBasicInfo> dataSourceMap = null;
-        try {
-            dataSourceMap = dataBaseInfoDefaultApi.getDataSourceMap(dataSourceNames);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BizException("连接数据源服务失败!!!");
-        }
-        if (dataSourceMap.size() > 0) {
-            return dataSourceMap;
-        } else {
-            throw new BizException("未获取到对应数据源连接信息!!!");
-        }
-    }
 
 }

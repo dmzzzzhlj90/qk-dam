@@ -1,6 +1,7 @@
 package com.qk.dm.dataquality.dolphinapi.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.BeanMapUtils;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.datacenter.api.DefaultApi;
@@ -18,7 +19,6 @@ import com.qk.dm.dataquality.dolphinapi.executor.TaskDefinitionExecutor;
 import com.qk.dm.dataquality.dolphinapi.executor.TaskRelationExecutor;
 import com.qk.dm.dataquality.dolphinapi.manager.ResourceFileManager;
 import com.qk.dm.dataquality.dolphinapi.service.ProcessDefinitionApiService;
-import com.qk.dm.dataquality.utils.BeanMapUtils;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerRulesVO;
 import org.slf4j.Logger;
