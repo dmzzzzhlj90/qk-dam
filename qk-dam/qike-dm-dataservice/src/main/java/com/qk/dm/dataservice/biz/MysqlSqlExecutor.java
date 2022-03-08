@@ -49,15 +49,15 @@ public class MysqlSqlExecutor {
      * 执行sql
      *
      * @param tableName
-     * @param frontSql
+     * @param sqlPara   取数脚本
      * @return
      */
-    public MysqlSqlExecutor mysqlExecuteSQL(String tableName, String frontSql, Map<String, List<DasApiCreateRequestParasVO>> mappingParams) {
-        if (ObjectUtils.isEmpty(frontSql)) {
+    public MysqlSqlExecutor mysqlExecuteSQL(String tableName, String sqlPara, Map<String, List<DasApiCreateRequestParasVO>> mappingParams) {
+        if (ObjectUtils.isEmpty(sqlPara)) {
             //生成查询sql
             this.sql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParaMap, mappingParams);
         } else {
-            this.sql = frontSql;
+            this.sql = SqlExecuteUtils.mysqlSqlPara(sqlPara, reqParams);
         }
         return this;
     }
@@ -101,5 +101,42 @@ public class MysqlSqlExecutor {
         }
         return resultMap;
     }
+
+    /**
+     * 执行sql片段获取查询结果集,不需要处理返回值信息
+     *
+     * @return
+     */
+    public List<Map<String, Object>> searchDataSqlPara() {
+        List<Map<String, Object>> result = null;
+        try {
+            List<Entity> searchDataList = use.query(sql);
+            result =
+                    searchDataList.stream()
+                            .map(this::buildSelectData)
+                            .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BizException("mysql查询数据失败!!!");
+        }
+        return result;
+    }
+
+    /**
+     * 根据查询字段构建查询数据信息
+     *
+     * @param entity
+     * @return
+     */
+    private Map<String, Object> buildSelectData(Entity entity) {
+        HashMap<String, Object> resultMap = Maps.newHashMap();
+
+        for (String col : entity.getFieldNames()) {
+            // key设置为响应参数信息,value通过字段获取到查询信息
+            resultMap.put(col, entity.get(col));
+        }
+        return resultMap;
+    }
+
 
 }

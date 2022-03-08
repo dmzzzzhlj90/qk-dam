@@ -1,4 +1,4 @@
-package com.qk.dm.dataquality.utils;
+package com.qk.dam.commons.util;
 
 import org.springframework.cglib.beans.BeanMap;
 

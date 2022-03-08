@@ -45,8 +45,8 @@ public class DasApiCreateSqlScript implements Serializable {
     /**
      * 数据源连接名称
      */
-    @Column(name = "data_source_connect", nullable = false)
-    private String dataSourceConnect;
+    @Column(name = "data_source_name", nullable = false)
+    private String dataSourceName;
 
     /**
      * 数据库

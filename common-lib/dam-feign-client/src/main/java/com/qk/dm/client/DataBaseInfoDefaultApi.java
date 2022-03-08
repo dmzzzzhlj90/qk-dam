@@ -1,5 +1,7 @@
 package com.qk.dm.client;
 
+import com.google.common.collect.Maps;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.entity.DsDatasourceVO;
@@ -40,8 +42,8 @@ public class DataBaseInfoDefaultApi {
     private final DatastandardsFeign datastandardsFeign;
 
     public DataBaseInfoDefaultApi(DataSourceFeign dataSourceFeign, MetaDataFeign metaDataFeign,
-        DataSourceV2Feign dataSourceV2Feign,
-        DatastandardsFeign datastandardsFeign) {
+                                  DataSourceV2Feign dataSourceV2Feign,
+                                  DatastandardsFeign datastandardsFeign) {
         this.dataSourceFeign = dataSourceFeign;
         this.metaDataFeign = metaDataFeign;
         this.dataSourceV2Feign = dataSourceV2Feign;
@@ -91,15 +93,23 @@ public class DataBaseInfoDefaultApi {
      * @return DefaultCommonResult
      */
     public Map<String, ConnectBasicInfo> getDataSourceMap(List<String> dataSourceNames) {
-        Map<String, ConnectBasicInfo> dataSourceMap = new HashMap<>(16);
-        List<ResultDatasourceInfo> datasourceInfoList = dataSourceFeign.getDataSourceList(dataSourceNames).getData();
-
-        for (ResultDatasourceInfo resultDatasourceInfo : datasourceInfoList) {
-            ConnectBasicInfo connectInfo = ConnectInfoConvertUtils
-                    .getConnectInfo(resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
-            dataSourceMap.put(resultDatasourceInfo.getDataSourceName(), connectInfo);
+        Map<String, ConnectBasicInfo> dataSourceMap = null;
+        try {
+            dataSourceMap = Maps.newHashMap();
+            List<ResultDatasourceInfo> datasourceInfoList = dataSourceFeign.getDataSourceList(dataSourceNames).getData();
+            for (ResultDatasourceInfo resultDatasourceInfo : datasourceInfoList) {
+                ConnectBasicInfo connectInfo = ConnectInfoConvertUtils
+                        .getConnectInfo(resultDatasourceInfo.getDbType(), resultDatasourceInfo.getConnectBasicInfoJson());
+                dataSourceMap.put(resultDatasourceInfo.getDataSourceName(), connectInfo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return dataSourceMap;
+        if (dataSourceMap.size() > 0) {
+            return dataSourceMap;
+        } else {
+            throw new BizException("未获取到对应数据源连接信息!!!");
+        }
     }
 
     // ========================元数据服务_API调用=====================================
@@ -132,7 +142,7 @@ public class DataBaseInfoDefaultApi {
      * @return
      */
     public List<MtdApiDb> getAllDataBase(String type, String server) {
-        return getAllDataBase(type,server, AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
+        return getAllDataBase(type, server, AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
 
     }
 
@@ -143,7 +153,7 @@ public class DataBaseInfoDefaultApi {
      * @return DefaultCommonResult
      */
     public List<MtdTables> getAllTable(String type, String server, String dbName) {
-       return  getAllTable(type,server,dbName,AtlasPagination.DEF_LIMIT,AtlasPagination.DEF_OFFSET);
+        return getAllTable(type, server, dbName, AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
 
     }
 
@@ -154,18 +164,19 @@ public class DataBaseInfoDefaultApi {
      * @return DefaultCommonResult
      */
     public List getAllColumn(String type, String server, String dbName, String tableName) {
-        return getAllColumn(type,server,dbName,tableName,AtlasPagination.DEF_LIMIT,AtlasPagination.DEF_OFFSET);
+        return getAllColumn(type, server, dbName, tableName, AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
     }
 
     /**
      * 通过元数据获取表是否存在和表中是否存在数据
+     *
      * @param dbType
      * @param server
      * @param dbName
      * @param tableName
      * @return
      */
-    public Integer getExistData(String dbType, String server, String dbName, String tableName){
+    public Integer getExistData(String dbType, String server, String dbName, String tableName) {
         String type = dbType.split("-")[0];
         MtdApiParams build = MtdApiParams.builder().typeName(type + "_table").server(server).dbName(dbName).tableName(tableName).build();
         DefaultCommonResult<Integer> existData = metaDataFeign.getExistData(build);
@@ -178,12 +189,13 @@ public class DataBaseInfoDefaultApi {
 
     /**
      * 通过条件查询数据标准
+     *
      * @param dsdBasicInfoParamsDTO
      * @return
      */
     public PageResultVO<DsdBasicInfoVO> getStandard(DsdBasicInfoParamsDTO dsdBasicInfoParamsDTO) {
         DefaultCommonResult<PageResultVO<DsdBasicInfoVO>> pageResultVODefaultCommonResult = datastandardsFeign.searchList(dsdBasicInfoParamsDTO);
-        if (pageResultVODefaultCommonResult !=null){
+        if (pageResultVODefaultCommonResult != null) {
             return pageResultVODefaultCommonResult.getData();
         }
         return null;
@@ -191,30 +203,33 @@ public class DataBaseInfoDefaultApi {
 
     /**
      * 获取主题数据
+     *
      * @return
      */
     public List<DataStandardTreeVO> getTree() {
-       return datastandardsFeign.searchList().getData();
+        return datastandardsFeign.searchList().getData();
     }
 
     /**
      * 根据表的guid获取表的字段信息
+     *
      * @param guid
      * @return
      */
-    public List getColumnListByTableGuid(String guid){
+    public List getColumnListByTableGuid(String guid) {
         return metaDataFeign.getColumnListByTableGuid(guid).getData();
     }
 
     /**
      * 新建API__获取db库信息下拉列表
+     *
      * @param type
      * @param server
      * @param limit
      * @param offset
      * @return
      */
-    public List<MtdApiDb> getAllDataBase(String type, String server,Integer limit,Integer offset) {
+    public List<MtdApiDb> getAllDataBase(String type, String server, Integer limit, Integer offset) {
         DefaultCommonResult<List<MtdApiDb>> dataBaseList = metaDataFeign.getDataBaseList(
                 new MtdDbSearchVO(limit, offset,
                         type + "_db", server));
@@ -224,6 +239,7 @@ public class DataBaseInfoDefaultApi {
 
     /**
      * 新建API__获取table表信息下拉列表
+     *
      * @param type
      * @param server
      * @param dbName
@@ -231,7 +247,7 @@ public class DataBaseInfoDefaultApi {
      * @param offset
      * @return
      */
-    public List<MtdTables> getAllTable(String type, String server, String dbName,Integer limit,Integer offset) {
+    public List<MtdTables> getAllTable(String type, String server, String dbName, Integer limit, Integer offset) {
         DefaultCommonResult<List<MtdTables>> tableList = metaDataFeign.getTableList(
                 new MtdTableSearchVO(limit, offset,
                         type + "_table", dbName, server));
@@ -241,6 +257,7 @@ public class DataBaseInfoDefaultApi {
 
     /**
      * 新建API__获取column字段信息下拉列表
+     *
      * @param type
      * @param server
      * @param dbName
@@ -249,7 +266,7 @@ public class DataBaseInfoDefaultApi {
      * @param offset
      * @return
      */
-    public List getAllColumn(String type, String server, String dbName, String tableName,Integer limit,Integer offset) {
+    public List getAllColumn(String type, String server, String dbName, String tableName, Integer limit, Integer offset) {
 
         DefaultCommonResult<List<MtdAttributes>> columnList = metaDataFeign.getColumnList(
                 new MtdColumnSearchVO(limit, offset,
