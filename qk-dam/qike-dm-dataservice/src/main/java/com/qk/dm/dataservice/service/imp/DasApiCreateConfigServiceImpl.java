@@ -146,6 +146,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
             throw new BizException("当前新增的API所对应的基础信息为空!!!");
         }
         dasApiBasicInfoVO.setApiId(apiId);
+        dasApiBasicInfoVO.setApiType(ApiTypeEnum.CREATE_API.getCode());
         dasApiBasicInfoService.insert(dasApiBasicInfoVO);
 
         // 保存新建API信息
@@ -173,6 +174,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     public void update(DasApiCreateConfigVO dasApiCreateConfigVO) {
         // 更新API基础信息
         DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateConfigVO.getApiBasicInfoVO();
+        dasApiBasicInfoVO.setApiType(ApiTypeEnum.CREATE_API.getCode());
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新新建API
         DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = dasApiCreateConfigVO.getApiCreateDefinitionVO();

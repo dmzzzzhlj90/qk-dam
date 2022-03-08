@@ -9,6 +9,7 @@ import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
+import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.CreateSqlRequestParamHeaderInfoEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateSqlScript;
@@ -146,6 +147,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
             throw new BizException("当前新增的API所对应的基础信息为空!!!");
         }
         dasApiBasicInfoVO.setApiId(apiId);
+        dasApiBasicInfoVO.setApiType(ApiTypeEnum.CREATE_API.getCode());
         dasApiBasicInfoService.insert(dasApiBasicInfoVO);
 
         // 保存新建API信息
@@ -173,6 +175,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     public void update(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO) {
         // 更新API基础信息
         DasApiBasicInfoVO dasApiBasicInfoVO = dasApiCreateSqlScriptVO.getApiBasicInfoVO();
+        dasApiBasicInfoVO.setApiType(ApiTypeEnum.CREATE_API.getCode());
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新新建API
         DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = dasApiCreateSqlScriptVO.getApiCreateDefinitionVO();
