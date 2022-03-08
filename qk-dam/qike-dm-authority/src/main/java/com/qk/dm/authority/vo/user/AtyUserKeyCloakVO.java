@@ -16,10 +16,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AtyUserKeyCloakVO {
     private String id;
+    /**
+     * 用户名
+     */
     private String username;
+    /**
+     * 开启状态
+     */
     private Boolean enabled;
+    /**
+     * 名字
+     */
     private String firstName;
+    /**
+     * 姓氏
+     */
     private String lastName;
+    /**
+     * 邮箱
+     */
     private String email;
+    /**
+     * 密码
+     */
     private String password;
 }

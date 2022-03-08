@@ -15,6 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyClientRoleUpdateVO {
+    /**
+     * 域
+     */
     String realm;
+    /**
+     * 角色名称
+     */
     String roleName;
 }

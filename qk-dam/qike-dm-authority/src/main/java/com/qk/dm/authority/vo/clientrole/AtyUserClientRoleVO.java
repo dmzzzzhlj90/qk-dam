@@ -17,12 +17,24 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyUserClientRoleVO {
+    /**
+     * 域
+     */
     @NotNull
     String realm;
+    /**
+     * 角色名称
+     */
     @NotNull
     String roleName;
+    /**
+     * 客户端id
+     */
     @NotNull
     String client_id;
+    /**
+     * 用户id
+     */
     @NotNull
     String userId;
 }

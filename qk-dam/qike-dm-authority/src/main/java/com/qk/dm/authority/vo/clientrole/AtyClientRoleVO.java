@@ -16,9 +16,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyClientRoleVO {
+    /**
+     * 域
+     */
     @NotNull
     String realm;
+    /**
+     * 角色名称
+     */
     @NotNull
     String roleName;
+    /**
+     * 描述
+     */
     String description;
 }

@@ -5,8 +5,12 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.authority.service.AtyRealmService;
 import com.qk.dm.authority.vo.ClientVO;
 import com.qk.dm.authority.vo.RealmVO;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -39,11 +43,11 @@ public class AtyRealmController {
      * 域管理-客户端列表
      *
      * @param realm
-     * @param client_clientId
+     * @param client_clientId 客户端 clientId
      * @return DefaultCommonResult<List < ClientVO>>
      */
     @GetMapping("/clients")
-    public DefaultCommonResult<List<ClientVO>> getClientList(String realm, String client_clientId) {
+    public DefaultCommonResult<List<ClientVO>> getClientList(@Valid @NotNull String realm, String client_clientId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyRealmService.getClientList(realm, client_clientId));
     }
 }

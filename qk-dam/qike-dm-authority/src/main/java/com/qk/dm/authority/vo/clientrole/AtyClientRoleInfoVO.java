@@ -20,8 +20,20 @@ import java.util.Map;
 @AllArgsConstructor
 public class AtyClientRoleInfoVO {
     private String id;
+    /**
+     * 名称
+     */
     private String name;
+    /**
+     * 描述
+     */
     private String description;
+    /**
+     * 属性
+     */
     private Map<String, List<String>> attributes;
+    /**
+     * 用户列表
+     */
     private List<AtyUserInfoVO> members;
 }

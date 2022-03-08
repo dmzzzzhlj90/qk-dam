@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyGroupParamVO {
+  /**
+   * 域
+   */
   String realm;
   /**
    * 分页信息
