@@ -1,6 +1,5 @@
 package com.qk.dm.dataservice.service.imp;
 
-import cn.hutool.db.Entity;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
@@ -8,6 +7,7 @@ import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.dataservice.biz.HiveSqlExecutor;
 import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
 import com.qk.dm.dataservice.constant.*;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
@@ -20,7 +20,6 @@ import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiCreateConfigService;
-import com.qk.dm.dataservice.utils.SqlExecuteUtils;
 import com.qk.dm.dataservice.vo.*;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -235,11 +234,6 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         // 1.生成查询SQL(根据数据源类型)
         //数据源连接类型
         DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = apiCreateConfigVO.getApiCreateDefinitionVO();
-        String connectType = apiCreateConfigDefinitionVO.getConnectType();
-        //数据库
-        String dataBaseName = apiCreateConfigDefinitionVO.getDataBaseName();
-        //表名称
-        String tableName = apiCreateConfigDefinitionVO.getTableName();
         // 新建API接口定义入参(对应元数据映射关系)
         Map<String, List<DasApiCreateRequestParasVO>> mappingParams =
                 apiCreateConfigDefinitionVO.getApiCreateRequestParasVOS().stream()
@@ -251,16 +245,40 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
                         DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
 
         // 响应参数(SQL返回值映射查询数据)
-        Map<String,String> resParaMap = apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()
+        Map<String, String> resParaMap = apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()
                 .stream().collect(Collectors.toMap(
-                        DasApiCreateResponseParasVO::getMappingName,DasApiCreateResponseParasVO::getParaName));
+                        DasApiCreateResponseParasVO::getMappingName, DasApiCreateResponseParasVO::getParaName));
 
         // 2.执行查询SQL(根据数据源类型)
         // 获取数据库连接信息
-        Map<String, ConnectBasicInfo> dataSourceInfo = dataBaseInfoDefaultApi
-                .getDataSourceMap(Lists.newArrayList(apiCreateConfigDefinitionVO.getDataSourceName()));
-        ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateConfigDefinitionVO.getDataSourceName());
+        ConnectBasicInfo connectBasicInfo = getConnectBasicInfo(apiCreateConfigDefinitionVO);
+        //执行SQL 查询数据
+        List<Map<String, Object>> searchData =
+                getSearchData(apiCreateConfigDefinitionVO,mappingParams, reqParams, resParaMap, connectBasicInfo);
 
+        return DebugApiResultVO.builder().resultData(searchData).build();
+    }
+
+    /**
+     * 执行SQL 查询数据
+     *
+     * @param apiCreateConfigDefinitionVO
+     * @param mappingParams
+     * @param reqParams
+     * @param resParaMap
+     * @param connectBasicInfo
+     * @return
+     */
+    private List<Map<String, Object>> getSearchData(DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO,
+                                                    Map<String, List<DasApiCreateRequestParasVO>> mappingParams,
+                                                    Map<String, String> reqParams, Map<String, String> resParaMap,
+                                                    ConnectBasicInfo connectBasicInfo) {
+        //schema
+        String connectType = apiCreateConfigDefinitionVO.getConnectType();
+        //数据库
+        String dataBaseName = apiCreateConfigDefinitionVO.getDataBaseName();
+        //表名称
+        String tableName = apiCreateConfigDefinitionVO.getTableName();
         List<Map<String, Object>> searchData = null;
         if (ConnTypeEnum.MYSQL.getName().equalsIgnoreCase(connectType)) {
             // mysql 执行sql获取查询结果集
@@ -268,9 +286,23 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
                     .mysqlExecuteSQL(tableName, null, mappingParams).searchData();
         } else if (ConnTypeEnum.HIVE.getName().equalsIgnoreCase(connectType)) {
             // hive 执行sql获取查询结果集
+            searchData = new HiveSqlExecutor(connectBasicInfo, dataBaseName, reqParams, resParaMap)
+                    .hiveExecuteSQL(tableName, null, mappingParams).searchData();
         }
+        return searchData;
+    }
 
-        return DebugApiResultVO.builder().resultData(searchData).build();
+    /**
+     * 获取数据库连接信息
+     *
+     * @param apiCreateConfigDefinitionVO
+     * @return
+     */
+    private ConnectBasicInfo getConnectBasicInfo(DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO) {
+        Map<String, ConnectBasicInfo> dataSourceInfo = dataBaseInfoDefaultApi
+                .getDataSourceMap(Lists.newArrayList(apiCreateConfigDefinitionVO.getDataSourceName()));
+        ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateConfigDefinitionVO.getDataSourceName());
+        return connectBasicInfo;
     }
 
 
