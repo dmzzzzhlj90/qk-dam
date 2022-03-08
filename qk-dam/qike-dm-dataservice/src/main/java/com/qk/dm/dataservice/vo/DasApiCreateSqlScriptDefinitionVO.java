@@ -69,7 +69,7 @@ public class DasApiCreateSqlScriptDefinitionVO {
     /**
      * 排序参数
      */
-    private List<DasApiCreateOrderParasVO> apiCreateOrderParasVOS;
+    private List<DasApiCreateSqlScriptOrderParasVO> apiCreateOrderParasVOS;
 
     /**
      * 取数脚本
