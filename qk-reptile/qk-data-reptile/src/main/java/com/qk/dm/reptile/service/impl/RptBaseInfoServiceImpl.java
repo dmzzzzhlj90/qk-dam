@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -14,6 +15,7 @@ import com.qk.dm.reptile.enums.TimeIntervalEnum;
 import com.qk.dm.reptile.factory.ReptileServerFactory;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
 import com.qk.dm.reptile.params.dto.RptAssignedTaskDTO;
+import com.qk.dm.reptile.params.dto.RptBaseInfoBatchDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
@@ -69,7 +71,22 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
         rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
         rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);
+        rptBaseInfo.setStatus(RptConstant.WAITING);
         rptBaseInfoRepository.save(rptBaseInfo);
+    }
+
+    @Override
+    public void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO) {
+        List<RptBaseInfo> rptBaseInfoList = Lists.newArrayList();
+        rptBaseInfoBatchDTO.getListPageAddressList().forEach(e->{
+            RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.of(rptBaseInfoBatchDTO);
+            rptBaseInfo.setListPageAddress(e);
+            rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
+            rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);
+            rptBaseInfo.setStatus(RptConstant.WAITING);
+            rptBaseInfoList.add(rptBaseInfo);
+        });
+        rptBaseInfoRepository.saveAll(rptBaseInfoList);
     }
 
     @Override
@@ -90,7 +107,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
         rptBaseInfo.setRunStatus(runStatus);
-        if(RptConstant.START.equals(runStatus)){
+        if(Objects.equals(RptConstant.START,runStatus)){
             String result = ReptileServerFactory.timing(rptConfigInfoService.rptList(rptBaseInfo.getId()));
             if (!StringUtils.isBlank(result)) {
                 updateBaseInfo(rptBaseInfo, result);

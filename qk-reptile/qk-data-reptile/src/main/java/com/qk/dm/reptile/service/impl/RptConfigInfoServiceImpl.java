@@ -78,9 +78,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
      */
     private void deleteConfig(RptConfigInfoDTO rptConfigInfoDTO){
         //id不为空则为编辑
-        if(Objects.nonNull(rptConfigInfoDTO.getId())){
-            return;
-        }
+        if(Objects.nonNull(rptConfigInfoDTO.getId())){ return; }
         List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdAndParentId(rptConfigInfoDTO.getBaseInfoId(), rptConfigInfoDTO.getParentId());
         if(!CollectionUtils.isEmpty(list)){
             rptConfigInfoRepository.deleteAll(list);
@@ -199,7 +197,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         return RptSelectorVO.builder().configId(configId)
                 .selectorList(configInfoList)
                 .next(Objects.nonNull(configIdInfo))
-                .columnCodeList(Collections.EMPTY_LIST)
+                .columnCodeList(CollectionUtils.isEmpty(configInfoList)?Collections.EMPTY_LIST:
+                        configInfoList.stream().map(RptSelectorColumnInfoVO::getColumnCode).collect(Collectors.toList()))
                 .build();
     }
 
