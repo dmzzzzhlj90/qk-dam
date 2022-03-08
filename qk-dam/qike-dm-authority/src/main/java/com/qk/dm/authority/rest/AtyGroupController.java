@@ -10,6 +10,7 @@ import com.qk.dm.authority.vo.group.AtyGroupVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/group")
+@RequestMapping("/groups")
 public class AtyGroupController {
     private final AtyGroupService atyGroupService;
 
@@ -45,12 +46,13 @@ public class AtyGroupController {
     /**
      * 修改用户组
      *
+     * @param groupId
      * @param groupVO
-     * @return DefaultCommonResult
+     * @return
      */
-    @PutMapping("")
-    public DefaultCommonResult updateGroup(@RequestBody @Valid AtyGroupVO groupVO) {
-        atyGroupService.updateGroup(groupVO.getId(), groupVO);
+    @PutMapping("/{groupId}")
+    public DefaultCommonResult updateGroup(@PathVariable String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
+        atyGroupService.updateGroup(groupId, groupVO);
         return DefaultCommonResult.success();
     }
 
@@ -58,24 +60,26 @@ public class AtyGroupController {
     /**
      * 删除用户组
      *
-     * @param groupVO
-     * @return DefaultCommonResult
+     * @param groupId
+     * @param realm
+     * @return
      */
-    @DeleteMapping("")
-    public DefaultCommonResult deleteGroup(@RequestBody @Valid AtyGroupVO groupVO) {
-        atyGroupService.deleteGroup(groupVO.getRealm(), groupVO.getId());
+    @DeleteMapping("/{groupId}")
+    public DefaultCommonResult deleteGroup(@Valid @NotBlank String realm, @PathVariable String groupId) {
+        atyGroupService.deleteGroup(realm, groupId);
         return DefaultCommonResult.success();
     }
 
     /**
      * 用户组详情
+     *
      * @param realm
-     * @param id
+     * @param groupId
      * @return DefaultCommonResult<AtyGroupInfoVO>
      */
-    @GetMapping("/{id}")
-    public DefaultCommonResult<AtyGroupInfoVO> getUser(@Valid @NotNull String realm, @PathVariable String id) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(realm, id));
+    @GetMapping("/{groupId}")
+    public DefaultCommonResult<AtyGroupInfoVO> getUser(@Valid @NotBlank String realm, @PathVariable String groupId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(realm, groupId));
     }
 
     /**
@@ -84,7 +88,7 @@ public class AtyGroupController {
      * @param groupParamVO
      * @return DefaultCommonResult<PageResultVO < AtyGroupInfoVO>>
      */
-    @PostMapping("/page/list")
+    @PostMapping("/page")
     public DefaultCommonResult<PageResultVO<AtyGroupInfoVO>> getUsers(@RequestBody AtyGroupParamVO groupParamVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(groupParamVO));
     }
@@ -97,7 +101,7 @@ public class AtyGroupController {
      * @return DefaultCommonResult<List < AtyGroupInfoVO>>
      */
     @GetMapping("/list")
-    public DefaultCommonResult<List<AtyGroupInfoVO>> getUsers(@Valid @NotNull String realm, String search) {
+    public DefaultCommonResult<List<AtyGroupInfoVO>> getUsers(@Valid @NotBlank String realm, String search) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(realm, search));
     }
 }

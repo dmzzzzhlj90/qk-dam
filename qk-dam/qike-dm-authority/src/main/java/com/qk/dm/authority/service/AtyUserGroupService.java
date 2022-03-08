@@ -1,9 +1,10 @@
 package com.qk.dm.authority.service;
 
 import com.qk.dm.authority.vo.group.AtyGroupBatchByGroupsVO;
-import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByUsersVO;
+import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyUserGroupVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface AtyUserGroupService {
     void addBatchByUsers(AtyGroupBatchByUsersVO atyGroupBatchByUsersVO);
 
     void addBatchByGroups(AtyGroupBatchByGroupsVO batchByGroupsVO);
+
+    List<AtyUserInfoVO> getUserGroupUsers(String realm, String groupId);
 }

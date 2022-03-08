@@ -6,6 +6,7 @@ import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByRolesVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByUsersVO;
 import com.qk.dm.authority.vo.clientrole.AtyUserClientRoleVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +47,11 @@ public class AtyUserRoleServiceImpl implements AtyUserRoleService {
     @Override
     public void addBatchByRoles(AtyRoleBatchByRolesVO batchByRolesVO) {
         batchByRolesVO.getRoleNames().forEach(roleName -> keyCloakApi.addUserClientRole(batchByRolesVO.getRealm(), batchByRolesVO.getClient_id(), batchByRolesVO.getUserId(), roleName));
+    }
+
+    @Override
+    public List<AtyUserInfoVO> getUserClientRoleUsers(String realm, String client_id, String roleName) {
+        return keyCloakApi.clientRoleUsers(realm, client_id, roleName);
     }
 
 

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -22,21 +22,21 @@ public class AtyRoleBatchByRolesVO {
     /**
      * 域
      */
-    @NotNull
+    @NotBlank(message = "域必填！")
     String realm;
     /**
      * 用户
      */
-    @NotBlank
+    @NotBlank(message = "用户id必填！")
     String userId;
     /**
      * 角色
      */
-    @NotNull
+    @NotEmpty(message = "角色列表必填！")
     List<String> roleNames;
     /**
      * 客户端的id
      */
-    @NotNull
+    @NotBlank(message = "客户端id必填！")
     String client_id;
 }

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author shenpj
@@ -20,16 +20,16 @@ public class AtyUserGroupVO {
     /**
      * 域
      */
-    @NotNull
+    @NotBlank(message = "域必填！")
     String realm;
     /**
      * 用户id
      */
-    @NotNull
+    @NotBlank(message = "用户id必填！")
     String userId;
     /**
-     * 分组id
+     * 用户组id
      */
-    @NotNull
+    @NotBlank(message = "用户组id必填！")
     String groupId;
 }

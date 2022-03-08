@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * 查询用户入参
  * @author zys
@@ -17,6 +20,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyUserParamVO {
+  /**
+   * 域
+   */
+  @NotBlank(message = "域必填！")
   String realm;
   /**
    * 分页信息

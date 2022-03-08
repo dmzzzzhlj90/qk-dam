@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author shenpj
@@ -20,21 +20,21 @@ public class AtyUserClientRoleVO {
     /**
      * 域
      */
-    @NotNull
+    @NotBlank(message = "域必填！")
     String realm;
     /**
      * 角色名称
      */
-    @NotNull
+    @NotBlank(message = "角色名称必填！")
     String roleName;
     /**
      * 客户端id
      */
-    @NotNull
+    @NotBlank(message = "客户端id必填！")
     String client_id;
     /**
      * 用户id
      */
-    @NotNull
+    @NotBlank(message = "用户id必填！")
     String userId;
 }

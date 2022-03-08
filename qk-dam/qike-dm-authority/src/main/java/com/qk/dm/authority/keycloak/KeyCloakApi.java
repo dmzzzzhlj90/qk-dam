@@ -234,10 +234,22 @@ public class KeyCloakApi {
     public AtyGroupInfoVO groupDetail(String realm, String groupId) {
         GroupResource groupResource = keycloak.realm(realm).groups().group(groupId);
         AtyGroupInfoVO atyGroupInfoVO = AtyGroupMapper.INSTANCE.userGroup(groupResource.toRepresentation());
-        List<UserRepresentation> members = groupResource.members();
-        List<AtyUserInfoVO> userInfos = AtyUserMapper.INSTANCE.userInfo(members);
-        atyGroupInfoVO.setMembers(userInfos);
+        atyGroupInfoVO.setMembers(getUserGroupUsers(groupResource));
         return atyGroupInfoVO;
+    }
+
+    /**
+     * 查询组下的所有用户
+     * @param realm
+     * @param groupId
+     * @return
+     */
+    public List<AtyUserInfoVO> getUserGroupUsers(String realm, String groupId) {
+        return getUserGroupUsers(keycloak.realm(realm).groups().group(groupId));
+    }
+
+    private List<AtyUserInfoVO> getUserGroupUsers(GroupResource groupResource) {
+        return AtyUserMapper.INSTANCE.userInfo(groupResource.members());
     }
 
     /**
@@ -348,10 +360,25 @@ public class KeyCloakApi {
     public AtyClientRoleInfoVO clientRoleDetail(String realm, String client_id, String roleName) {
         RoleResource roleResource = keycloak.realm(realm).clients().get(client_id).roles().get(roleName);
         AtyClientRoleInfoVO atyClientRoleInfoVO = AtyRoleMapper.INSTANCE.userRole(roleResource.toRepresentation());
-        Set<UserRepresentation> roleUserMembers = roleResource.getRoleUserMembers();
-        List<AtyUserInfoVO> atyUserInfoVOS = AtyUserMapper.INSTANCE.userInfo(new ArrayList<>(roleUserMembers));
-        atyClientRoleInfoVO.setMembers(atyUserInfoVOS);
+        atyClientRoleInfoVO.setMembers(clientRoleUsers(roleResource));
         return atyClientRoleInfoVO;
+    }
+
+    /**
+     * 客户端角色下所有用户
+     * @param realm
+     * @param client_id
+     * @param roleName
+     * @return
+     */
+    public List<AtyUserInfoVO> clientRoleUsers(String realm, String client_id, String roleName) {
+        RoleResource roleResource = keycloak.realm(realm).clients().get(client_id).roles().get(roleName);
+        return clientRoleUsers(roleResource);
+    }
+
+    private List<AtyUserInfoVO> clientRoleUsers(RoleResource roleResource) {
+        Set<UserRepresentation> roleUserMembers = roleResource.getRoleUserMembers();
+        return AtyUserMapper.INSTANCE.userInfo(new ArrayList<>(roleUserMembers));
     }
 
     /**

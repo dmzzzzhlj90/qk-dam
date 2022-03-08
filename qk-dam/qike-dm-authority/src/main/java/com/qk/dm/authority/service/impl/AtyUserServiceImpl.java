@@ -28,8 +28,9 @@ public class AtyUserServiceImpl implements AtyUserService {
     }
 
     @Override
-    public void updateUser(AtyUserUpdateVO atyUserVO) {
+    public void updateUser(String userId, AtyUserUpdateVO atyUserVO) {
         AtyUserKeyCloakVO atyUserKeyCloakVO = AtyUserMapper.INSTANCE.userInfo(atyUserVO);
+        atyUserKeyCloakVO.setId(userId);
         keyCloakApi.updateUser(atyUserVO.getRealm(), atyUserKeyCloakVO);
     }
 

@@ -3,6 +3,7 @@ package com.qk.dm.authority.vo.user;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,6 +16,7 @@ public class AtyUserVO {
     /**
      * 域
      */
+    @NotBlank(message = "域必填！")
     String realm;
     /**
      * 开启状态

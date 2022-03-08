@@ -1,10 +1,11 @@
 package com.qk.dm.authority.vo.clientrole;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author shenpj
@@ -19,12 +20,17 @@ public class AtyClientRoleVO {
     /**
      * 域
      */
-    @NotNull
+    @NotBlank(message = "域必填!")
     String realm;
+    /**
+     * 客户端id
+     */
+    @NotBlank(message = "客户端id必填!")
+    String client_id;
     /**
      * 角色名称
      */
-    @NotNull
+    @NotBlank(message = "角色名称必填!")
     String roleName;
     /**
      * 描述

@@ -10,7 +10,6 @@ import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -21,7 +20,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/client/{client_id}/role")
+@RequestMapping("/roles")
 public class AtyRoleController {
     private final AtyRoleService atyRoleService;
 
@@ -32,77 +31,70 @@ public class AtyRoleController {
     /**
      * 新增角色
      *
-     * @param client_id 客户端ID
      * @param clientRoleVO
      * @return
      */
     @PostMapping("")
-    public DefaultCommonResult addClientRole(@PathVariable String client_id, @RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.addClientRole(clientRoleVO.getRealm(), client_id, clientRoleVO.getRoleName(), clientRoleVO.getDescription());
+    public DefaultCommonResult addClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
+        atyRoleService.addClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
         return DefaultCommonResult.success();
     }
 
     /**
      * 修改角色
      *
-     * @param client_id 客户端ID
      * @param clientRoleVO
      * @return
      */
     @PutMapping("")
-    public DefaultCommonResult updateClientRole(@PathVariable String client_id, @RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.updateClientRole(clientRoleVO.getRealm(), client_id, clientRoleVO.getRoleName(), clientRoleVO.getDescription());
+    public DefaultCommonResult updateClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
+        atyRoleService.updateClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
         return DefaultCommonResult.success();
     }
 
     /**
      * 删除角色
      *
-     * @param client_id 客户端ID
      * @param clientRoleVO
      * @return
      */
     @DeleteMapping("")
-    public DefaultCommonResult deleteClientRole(@PathVariable String client_id, @RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.deleteClientRole(clientRoleVO.getRealm(), client_id, clientRoleVO.getRoleName());
+    public DefaultCommonResult deleteClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
+        atyRoleService.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
         return DefaultCommonResult.success();
     }
 
     /**
      * 角色详情
      *
-     * @param client_id 客户端ID
      * @param clientRoleVO
      * @return
      */
     @GetMapping("")
-    public DefaultCommonResult<AtyClientRoleInfoVO> getClientRole(@PathVariable String client_id, @Valid AtyClientRoleVO clientRoleVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getClientRole(clientRoleVO.getRealm(), client_id, clientRoleVO.getRoleName()));
+    public DefaultCommonResult<AtyClientRoleInfoVO> getClientRole(@Valid AtyClientRoleVO clientRoleVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName()));
     }
 
     /**
      * 角色分页列表
      *
-     * @param client_id 客户端ID
      * @param clientRoleParamVO
      * @return
      */
-    @PostMapping("/page/list")
-    public DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>> getClientRoles(@PathVariable String client_id, @RequestBody AtyClientRoleParamVO clientRoleParamVO) {
+    @PostMapping("/page")
+    public DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>> getClientRolesPage(@RequestBody @Valid AtyClientRoleParamVO clientRoleParamVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                atyRoleService.getClientRoles(clientRoleParamVO.getRealm(), client_id, clientRoleParamVO.getSearch(), clientRoleParamVO.getPagination()));
+                atyRoleService.getClientRoles(clientRoleParamVO.getRealm(), clientRoleParamVO.getClient_id(), clientRoleParamVO.getSearch(), clientRoleParamVO.getPagination()));
     }
 
     /**
      * 角色列表
      *
-     * @param client_id 客户端ID
-     * @param realm
-     * @param search
+     * @param clientRoleParamVO
      * @return
      */
     @GetMapping("/list")
-    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getClientRoles(@Valid @NotNull String realm, @PathVariable String client_id, String search) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getUsers(realm, client_id, search));
+    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getClientRoles(@Valid AtyClientRoleParamVO clientRoleParamVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getUsers(clientRoleParamVO.getRealm(), clientRoleParamVO.getClient_id(), clientRoleParamVO.getSearch()));
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public interface AtyUserService {
     void addUser(AtyUserCreateVO userVO);
 
-    void updateUser(AtyUserUpdateVO atyUserVO);
+    void updateUser(String userId, AtyUserUpdateVO atyUserVO);
 
     void deleteUser(String realm, String userId);
 
