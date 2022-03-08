@@ -1,13 +1,13 @@
 package com.qk.dm.dataservice.service.imp;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.dataservice.biz.HiveSqlExecutor;
 import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
 import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.CreateSqlRequestParamHeaderInfoEnum;
@@ -210,9 +210,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         // 1.生成查询SQL(根据数据源类型)
         //数据源连接类型
         DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = apiCreateSqlScriptVO.getApiCreateDefinitionVO();
-        String connectType = apiCreateSqlScriptDefinitionVO.getConnectType();
-        //数据库
-        String dataBaseName = apiCreateSqlScriptDefinitionVO.getDataBaseName();
+
         // 真实请求参数(SQL where条件,使用字段参数)
         Map<String, String> reqParams = apiCreateSqlScriptVO.getDebugApiParasVOS().stream()
                 .collect(Collectors.toMap(DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
@@ -225,15 +223,41 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
                 .getDataSourceMap(Lists.newArrayList(apiCreateSqlScriptDefinitionVO.getDataSourceName()));
         ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateSqlScriptDefinitionVO.getDataSourceName());
 
+        //执行SQL 查询数据
+        List<Map<String, Object>> searchData = getSearchData(apiCreateSqlScriptDefinitionVO, reqParams, connectBasicInfo);
+        return DebugApiResultVO.builder().resultData(searchData).build();
+    }
+
+    /**
+     *
+     *
+     * @param apiCreateSqlScriptDefinitionVO
+     * @param reqParams
+     * @param connectBasicInfo
+     * @return
+     */
+    private List<Map<String, Object>> getSearchData(DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO,
+                                                    Map<String, String> reqParams,
+                                                    ConnectBasicInfo connectBasicInfo) {
         List<Map<String, Object>> searchData = null;
+
+        // schema
+        String connectType = apiCreateSqlScriptDefinitionVO.getConnectType();
+        // 数据库
+        String dataBaseName = apiCreateSqlScriptDefinitionVO.getDataBaseName();
+        // SQL片段
+        String sqlPara = apiCreateSqlScriptDefinitionVO.getSqlPara();
+
         if (ConnTypeEnum.MYSQL.getName().equalsIgnoreCase(connectType)) {
             // mysql 执行sql获取查询结果集
             searchData = new MysqlSqlExecutor(connectBasicInfo, dataBaseName, reqParams, null)
-                    .mysqlExecuteSQL(null, sqlPara,null).searchDataSqlPara();
+                    .mysqlExecuteSQL(null, sqlPara, null).searchDataSqlPara();
         } else if (ConnTypeEnum.HIVE.getName().equalsIgnoreCase(connectType)) {
             // hive 执行sql获取查询结果集
+            searchData = new HiveSqlExecutor(connectBasicInfo, dataBaseName, reqParams, null)
+                    .hiveExecuteSQL(null, sqlPara, null).searchDataSqlPara();
         }
-        return DebugApiResultVO.builder().resultData(searchData).build();
+        return searchData;
     }
 
 }

@@ -1,8 +1,11 @@
 package com.qk.dm.dataservice.biz;
 
 import cn.hutool.db.Db;
+import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
 import cn.hutool.db.ds.simple.SimpleDataSource;
+import cn.hutool.db.handler.EntityListHandler;
+import cn.hutool.db.sql.SqlExecutor;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
@@ -10,19 +13,21 @@ import com.qk.dm.dataservice.utils.SqlExecuteUtils;
 import com.qk.dm.dataservice.vo.DasApiCreateRequestParasVO;
 import org.springframework.util.ObjectUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * MYSQL 执行器
+ * HIVE 执行器
  *
  * @author wjq
  * @date 2022/03/07
  * @since 1.0.0
  */
-public class MysqlSqlExecutor {
+public class HiveSqlExecutor {
+    public static final String HIVE_JDBC_DRIVER = "org.apache.hive.jdbc.HiveDriver";
+
     private final Db use;
     private final String host;
     private final String db;
@@ -30,20 +35,18 @@ public class MysqlSqlExecutor {
     private Map<String, String> reqParams;
     private Map<String, String> resParaMap;
 
-    public MysqlSqlExecutor(ConnectBasicInfo connectBasicInfo, String dataBaseName,
-                            Map<String, String> reqParams, Map<String, String> resParaMap) {
+    public HiveSqlExecutor(ConnectBasicInfo connectBasicInfo, String dataBaseName,
+                           Map<String, String> reqParams, Map<String, String> resParaMap) {
         this.use =
                 Db.use(
                         new SimpleDataSource(
-                                "jdbc:mysql://"
-                                        + connectBasicInfo.getServer() +
-                                        ":"
+                                "jdbc:hive2://"
+                                        + connectBasicInfo.getHiveServer2()
+                                        + ":"
                                         + connectBasicInfo.getPort()
-                                        + "/"
-                                        + dataBaseName,
-                                connectBasicInfo.getUserName(),
-                                connectBasicInfo.getPassword())
-                );
+                                        + "/" + Objects.requireNonNullElse(dataBaseName, "default"),
+                                Objects.requireNonNullElse(connectBasicInfo.getUserName(), "default"),
+                                connectBasicInfo.getPassword(), HIVE_JDBC_DRIVER));
         this.host = connectBasicInfo.getServer();
         this.db = dataBaseName;
         this.reqParams = reqParams;
@@ -57,12 +60,12 @@ public class MysqlSqlExecutor {
      * @param sqlPara   取数脚本
      * @return
      */
-    public MysqlSqlExecutor mysqlExecuteSQL(String tableName, String sqlPara, Map<String, List<DasApiCreateRequestParasVO>> mappingParams) {
+    public HiveSqlExecutor hiveExecuteSQL(String tableName, String sqlPara, Map<String, List<DasApiCreateRequestParasVO>> mappingParams) {
         if (ObjectUtils.isEmpty(sqlPara)) {
             //生成查询sql
-            this.sql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParaMap, mappingParams);
+            this.sql = SqlExecuteUtils.hiveExecuteSQL(tableName, reqParams, resParaMap, mappingParams);
         } else {
-            this.sql = SqlExecuteUtils.mysqlSqlPara(sqlPara, reqParams);
+            this.sql = SqlExecuteUtils.hiveSqlPara(sqlPara, reqParams);
         }
         return this;
     }
@@ -76,7 +79,7 @@ public class MysqlSqlExecutor {
     public List<Map<String, Object>> searchData() {
         List<Map<String, Object>> result = null;
         try {
-            List<Entity> searchDataList = use.query(sql);
+            List<Entity> searchDataList = execHiveSql(use, sql);
             result =
                     searchDataList.stream()
                             .map(entity ->
@@ -85,7 +88,7 @@ public class MysqlSqlExecutor {
                             .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BizException("mysql查询数据失败!!!");
+            throw new BizException("hive查询数据失败!!!");
         }
         return result;
     }
@@ -115,14 +118,14 @@ public class MysqlSqlExecutor {
     public List<Map<String, Object>> searchDataSqlPara() {
         List<Map<String, Object>> result = null;
         try {
-            List<Entity> searchDataList = use.query(sql);
+            List<Entity> searchDataList = execHiveSql(use, sql);
             result =
                     searchDataList.stream()
                             .map(this::buildSelectData)
                             .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
-            throw new BizException("mysql查询数据失败!!!");
+            throw new BizException("hive查询数据失败!!!");
         }
         return result;
     }
@@ -143,5 +146,28 @@ public class MysqlSqlExecutor {
         return resultMap;
     }
 
+    /**
+     * 执行SQL
+     *
+     * @param sql sql语句
+     * @return List<Entity>
+     * @throws SQLException sql异常
+     */
+    static List<Entity> execHiveSql(Db fromDb, String sql) throws Exception {
+        List<Entity> entities = new ArrayList<>(100);
+        java.sql.Statement statement = null;
+        try {
+            Connection connection = fromDb.getConnection();
+            statement = connection.createStatement();
+            // todo 暂时支持cross join，已实现合并结果输出
+            statement.execute("set hive.mapred.mode='strict'");
+            EntityListHandler rsh = new EntityListHandler(true);
+            entities.addAll(SqlExecutor.query(connection, sql, rsh));
+        } finally {
+            DbUtil.close(statement);
+        }
+        return entities;
+
+    }
 
 }
