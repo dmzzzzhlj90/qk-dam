@@ -8,6 +8,7 @@ import com.qk.dm.authority.vo.user.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class AtyUserController {
     private final AtyUserService atyUserService;
 
@@ -45,9 +46,9 @@ public class AtyUserController {
      * @param atyUserVO
      * @return DefaultCommonResult
      */
-    @PutMapping("")
-    public DefaultCommonResult updateUser(@RequestBody @Valid AtyUserUpdateVO atyUserVO) {
-        atyUserService.updateUser(atyUserVO);
+    @PutMapping("/{userId}")
+    public DefaultCommonResult updateUser(@PathVariable String userId, @RequestBody @Valid AtyUserUpdateVO atyUserVO) {
+        atyUserService.updateUser(userId, atyUserVO);
         return DefaultCommonResult.success();
     }
 
@@ -57,21 +58,22 @@ public class AtyUserController {
      * @param userVO
      * @return DefaultCommonResult
      */
-    @PutMapping("/password")
-    public DefaultCommonResult resetPassword(@RequestBody @Valid AtyUserResetPassWordVO userVO) {
-        atyUserService.resetPassword(userVO.getRealm(),userVO.getId(), userVO.getPassword());
+    @PutMapping("/{userId}/password")
+    public DefaultCommonResult resetPassword(@PathVariable String userId, @RequestBody @Valid AtyUserResetPassWordVO userVO) {
+        atyUserService.resetPassword(userVO.getRealm(), userId, userVO.getPassword());
         return DefaultCommonResult.success();
     }
 
     /**
      * 删除用户
      *
-     * @param userVO
-     * @return DefaultCommonResult
+     * @param userId
+     * @param realm
+     * @return
      */
-    @DeleteMapping("")
-    public DefaultCommonResult deleteUser(@RequestBody @Valid AtyUserDeleteVO userVO) {
-        atyUserService.deleteUser(userVO.getRealm(), userVO.getId());
+    @DeleteMapping("/{userId}")
+    public DefaultCommonResult deleteUser(@Valid @NotBlank String realm, @PathVariable String userId) {
+        atyUserService.deleteUser(realm, userId);
         return DefaultCommonResult.success();
     }
 
@@ -81,9 +83,9 @@ public class AtyUserController {
      * @param realm
      * @return DefaultCommonResult<AtyUserInfoVO>
      */
-    @GetMapping("/{id}")
-    public DefaultCommonResult<AtyUserInfoVO> getUser(@Valid @NotNull String realm, @PathVariable String id) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUser(realm, id));
+    @GetMapping("/{userId}")
+    public DefaultCommonResult<AtyUserInfoVO> getUser(@Valid @NotBlank String realm, @PathVariable String userId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUser(realm, userId));
     }
 
     /**
@@ -92,20 +94,19 @@ public class AtyUserController {
      * @param atyUserParamVO
      * @return DefaultCommonResult<PageResultVO < AtyUserInfoVO>>
      */
-    @PostMapping("/page/list")
-    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getUsers(@RequestBody AtyUserParamVO atyUserParamVO) {
+    @PostMapping("/page")
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getUsersPage(@RequestBody @Valid AtyUserParamVO atyUserParamVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(atyUserParamVO));
     }
 
     /**
      * 用户列表-不分页
      *
-     * @param realm
-     * @param search
+     * @param atyUserParamVO
      * @return
      */
     @GetMapping("/list")
-    public DefaultCommonResult<List<AtyUserInfoVO>> getUsers(String realm, String search) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(realm, search));
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUsers(@Valid AtyUserParamVO atyUserParamVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(atyUserParamVO.getRealm(), atyUserParamVO.getSearch()));
     }
 }

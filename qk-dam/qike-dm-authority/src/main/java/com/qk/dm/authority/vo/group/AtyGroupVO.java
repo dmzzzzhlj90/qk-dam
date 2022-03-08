@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author shenpj
@@ -17,14 +17,14 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyGroupVO {
-    String id;
     /**
      * 域
      */
-    @NotNull
+    @NotBlank(message = "域必填！")
     String realm;
     /**
      * 分组名称
      */
+    @NotBlank(message = "分组名称必填！")
     String groupName;
 }

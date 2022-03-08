@@ -1,8 +1,9 @@
 package com.qk.dm.authority.vo.user;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author shenpj
@@ -15,11 +16,11 @@ public class AtyUserCreateVO extends AtyUserVO {
     /**
      * 用户名
      */
-    @NotNull(message = "用户名必填!")
+    @NotBlank(message = "用户名必填!")
     private String username;
     /**
      * 密码
      */
-    @NotNull(message = "密码必填!")
+    @NotBlank(message = "密码必填!")
     private String password;
 }

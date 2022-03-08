@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -22,16 +22,16 @@ public class AtyGroupBatchByGroupsVO {
     /**
      * 域
      */
-    @NotNull
+    @NotBlank(message = "域必填！")
     String realm;
     /**
      * 用户
      */
-    @NotEmpty
+    @NotBlank(message = "用户id必填！")
     String userId;
     /**
      * 用户组
      */
-    @NotNull
+    @NotEmpty(message = "用户组id列表必填！")
     List<String> groupIds;
 }

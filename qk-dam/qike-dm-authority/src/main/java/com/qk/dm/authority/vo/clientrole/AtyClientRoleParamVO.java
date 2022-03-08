@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 查询用户入参
  * @author zys
@@ -17,6 +19,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyClientRoleParamVO {
+  /**
+   * 客户端id
+   */
+  @NotBlank(message = "客户端id必填!")
+  String client_id;
+  /**
+   * 域
+   */
+  @NotBlank(message = "域必填!")
   String realm;
   /**
    * 分页信息

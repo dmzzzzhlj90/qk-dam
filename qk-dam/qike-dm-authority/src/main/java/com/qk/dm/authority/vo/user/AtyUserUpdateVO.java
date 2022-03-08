@@ -11,5 +11,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class AtyUserUpdateVO extends AtyUserVO {
-    private String id;
+//    private String id;
 }
