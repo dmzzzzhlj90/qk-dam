@@ -12,11 +12,9 @@ import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
 import com.qk.dm.dataservice.constant.*;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateConfig;
-import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
 import com.qk.dm.dataservice.entity.QDasApiCreateConfig;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateConfigMapper;
-import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiCreateConfigService;
@@ -39,11 +37,9 @@ import java.util.stream.Collectors;
 @Service
 public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService {
 
-    private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
     private static final QDasApiCreateConfig qDasApiCreateConfig = QDasApiCreateConfig.dasApiCreateConfig;
 
     private final DasApiBasicInfoService dasApiBasicInfoService;
-    private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
     private final DasApiCreateConfigRepository dasApiCreateConfigRepository;
     private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
 
@@ -51,38 +47,24 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     @Autowired
     public DasApiCreateConfigServiceImpl(
             DasApiBasicInfoService dasApiBasicInfoService,
-            DasApiBasicInfoRepository dasApiBasicinfoRepository,
-            DasApiCreateConfigRepository dasApiCreateConfigRepository, DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
+            DasApiCreateConfigRepository dasApiCreateConfigRepository,
+            DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
         this.dasApiBasicInfoService = dasApiBasicInfoService;
-        this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
         this.dasApiCreateConfigRepository = dasApiCreateConfigRepository;
         this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
     }
 
     @Override
-    public DasApiCreateConfigVO detail(String apiId) {
-
-        // 获取API基础信息
-        Optional<DasApiBasicInfo> onDasApiBasicInfo = dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.apiId.eq(apiId));
-        if (onDasApiBasicInfo.isEmpty()) {
-            throw new BizException("查询不到对应的API基础信息!!!");
-        }
-        // 获取注册API信息
-        Optional<DasApiCreateConfig> onDasApiCreateConfig = dasApiCreateConfigRepository.findOne(qDasApiCreateConfig.apiId.eq(apiId));
-        if (onDasApiCreateConfig.isEmpty()) {
-            DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
-            return DasApiCreateConfigVO.builder().apiBasicInfoVO(dasApiBasicInfoVO).build();
-        }
-
+    public DasApiCreateConfigVO detail(DasApiBasicInfo dasApiBasicInfo, DasApiCreateConfig dasApiCreateConfig) {
+        //构建新建API配置方式
         DasApiCreateConfigVO dasApiCreateConfigVO = DasApiCreateConfigVO.builder().build();
-
         // API基础信息,设置入参定义VO转换对象
-        DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
+        DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(dasApiBasicInfo);
         dasApiCreateConfigVO.setApiBasicInfoVO(dasApiBasicInfoVO);
         // 新建API配置方式,配置信息VO转换
-        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfigDefinitionVO(onDasApiCreateConfig.get());
+        DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfigDefinitionVO(dasApiCreateConfig);
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
-        setDasApiCreateVOParams(onDasApiCreateConfig.get(), apiCreateConfigDefinitionVO);
+        setDasApiCreateVOParams(dasApiCreateConfig, apiCreateConfigDefinitionVO);
         dasApiCreateConfigVO.setApiCreateDefinitionVO(apiCreateConfigDefinitionVO);
 
         return dasApiCreateConfigVO;
@@ -94,8 +76,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
      * @param dasApiCreateConfig
      * @param apiCreateConfigDefinitionVO
      */
-    private void setDasApiCreateVOParams(DasApiCreateConfig dasApiCreateConfig,
-                                         DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO) {
+    private void setDasApiCreateVOParams(DasApiCreateConfig dasApiCreateConfig, DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO) {
         if (null != dasApiCreateConfig.getApiRequestParas() && dasApiCreateConfig.getApiRequestParas().length() > 0) {
             apiCreateConfigDefinitionVO.setApiCreateRequestParasVOS(
                     GsonUtil.fromJsonString(dasApiCreateConfig.getApiRequestParas(),
@@ -119,11 +100,11 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     /**
      * API基础信息,设置入参定义VO转换对象
      *
-     * @param onDasApiBasicInfo
+     * @param dasApiBasicInfo
      * @return
      */
-    private DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(Optional<DasApiBasicInfo> onDasApiBasicInfo) {
-        DasApiBasicInfo dasApiBasicInfo = onDasApiBasicInfo.get();
+    @Override
+    public DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(DasApiBasicInfo dasApiBasicInfo) {
         DasApiBasicInfoVO dasApiBasicInfoVO = DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
         String defInputParam = dasApiBasicInfo.getDefInputParam();
         if (defInputParam != null && defInputParam.length() != 0) {
@@ -254,7 +235,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         ConnectBasicInfo connectBasicInfo = getConnectBasicInfo(apiCreateConfigDefinitionVO);
         //执行SQL 查询数据
         List<Map<String, Object>> searchData =
-                getSearchData(apiCreateConfigDefinitionVO,mappingParams, reqParams, resParaMap, connectBasicInfo);
+                getSearchData(apiCreateConfigDefinitionVO, mappingParams, reqParams, resParaMap, connectBasicInfo);
 
         return DebugApiResultVO.builder().resultData(searchData).build();
     }

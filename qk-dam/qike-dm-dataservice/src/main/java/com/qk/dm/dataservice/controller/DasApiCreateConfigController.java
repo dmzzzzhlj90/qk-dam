@@ -37,18 +37,6 @@ public class DasApiCreateConfigController {
     }
 
     /**
-     * 新增API配置方式_详情展示
-     *
-     * @param apiId
-     * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
-     */
-    @GetMapping(value = "/{apiId}")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<DasApiCreateConfigVO> detail(@PathVariable("apiId") String apiId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.detail(apiId));
-    }
-
-    /**
      * 新增API配置方式
      *
      * @param dasApiCreateConfigVO

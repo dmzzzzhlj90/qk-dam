@@ -11,10 +11,7 @@ import com.qk.dm.dataservice.biz.HiveSqlExecutor;
 import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
 import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.CreateSqlRequestParamHeaderInfoEnum;
-import com.qk.dm.dataservice.entity.DasApiBasicInfo;
-import com.qk.dm.dataservice.entity.DasApiCreateSqlScript;
-import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
-import com.qk.dm.dataservice.entity.QDasApiCreateSqlScript;
+import com.qk.dm.dataservice.entity.*;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateSqlScriptMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
@@ -40,56 +37,57 @@ import java.util.stream.Collectors;
 @Service
 public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptService {
 
-    private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
     private static final QDasApiCreateSqlScript qDasApiCreateSqlScript = QDasApiCreateSqlScript.dasApiCreateSqlScript;
 
     private final DasApiBasicInfoService dasApiBasicInfoService;
-    private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
     private final DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository;
     private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
 
     @Autowired
     public DasApiCreateSqlScriptServiceImpl(
             DasApiBasicInfoService dasApiBasicInfoService,
-            DasApiBasicInfoRepository dasApiBasicinfoRepository,
             DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository,
             DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
         this.dasApiBasicInfoService = dasApiBasicInfoService;
-        this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
         this.dasApiCreateSqlScriptRepository = dasApiCreateSqlScriptRepository;
         this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
     }
 
     @Override
-    public DasApiCreateSqlScriptVO detail(String apiId) {
-        // 获取API基础信息
-        Optional<DasApiBasicInfo> onDasApiBasicInfo = dasApiBasicinfoRepository.findOne(qDasApiBasicInfo.apiId.eq(apiId));
-        if (onDasApiBasicInfo.isEmpty()) {
-            throw new BizException("查询不到对应的API基础信息!!!");
-        }
-        // 获取注册API信息
-        Optional<DasApiCreateSqlScript> onDasApiCreateSqlScript = dasApiCreateSqlScriptRepository.findOne(qDasApiCreateSqlScript.apiId.eq(apiId));
-
-        if (onDasApiCreateSqlScript.isEmpty()) {
-            //入参定义
-            DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
-            return DasApiCreateSqlScriptVO.builder().apiBasicInfoVO(dasApiBasicInfoVO).build();
-        }
-
+    public DasApiCreateSqlScriptVO detail(DasApiBasicInfo dasApiBasicInfo,DasApiCreateSqlScript dasApiCreateSqlScript) {
         DasApiCreateSqlScriptVO apiCreateSqlScriptVO = DasApiCreateSqlScriptVO.builder().build();
 
         // API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(onDasApiBasicInfo);
+        DasApiBasicInfoVO dasApiBasicInfoVO = setDasApiBasicInfoDelInputParam(dasApiBasicInfo);
         apiCreateSqlScriptVO.setApiBasicInfoVO(dasApiBasicInfoVO);
 
         // 新建API脚本方式,配置信息
         DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO =
-                DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScriptDefinitionVO(onDasApiCreateSqlScript.get());
+                DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScriptDefinitionVO(dasApiCreateSqlScript);
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
-        setDasApiCreateSqlScriptVOParams(onDasApiCreateSqlScript.get(), apiCreateSqlScriptDefinitionVO);
+        setDasApiCreateSqlScriptVOParams(dasApiCreateSqlScript, apiCreateSqlScriptDefinitionVO);
         apiCreateSqlScriptVO.setApiCreateDefinitionVO(apiCreateSqlScriptDefinitionVO);
 
         return apiCreateSqlScriptVO;
+    }
+
+    /**
+     * 入参定义
+     *
+     * @param dasApiBasicInfo
+     * @return
+     */
+    @Override
+    public DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(DasApiBasicInfo dasApiBasicInfo) {
+        DasApiBasicInfoVO dasApiBasicInfoVO = DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
+        String defInputParam = dasApiBasicInfo.getDefInputParam();
+        if (defInputParam != null && defInputParam.length() != 0) {
+            dasApiBasicInfoVO.setApiBasicInfoRequestParasVOS(
+                    GsonUtil.fromJsonString(dasApiBasicInfo.getDefInputParam(),
+                            new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
+                            }.getType()));
+        }
+        return dasApiBasicInfoVO;
     }
 
     private void setDasApiCreateSqlScriptVOParams(DasApiCreateSqlScript dasApiCreateSqlScript,
@@ -116,25 +114,6 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
                             new TypeToken<List<DasApiCreateOrderParasVO>>() {
                             }.getType()));
         }
-    }
-
-    /**
-     * 入参定义
-     *
-     * @param onDasApiBasicInfo
-     * @return
-     */
-    private DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(Optional<DasApiBasicInfo> onDasApiBasicInfo) {
-        DasApiBasicInfo dasApiBasicInfo = onDasApiBasicInfo.get();
-        DasApiBasicInfoVO dasApiBasicInfoVO = DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
-        String defInputParam = dasApiBasicInfo.getDefInputParam();
-        if (defInputParam != null && defInputParam.length() != 0) {
-            dasApiBasicInfoVO.setApiBasicInfoRequestParasVOS(
-                    GsonUtil.fromJsonString(dasApiBasicInfo.getDefInputParam(),
-                            new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
-                            }.getType()));
-        }
-        return dasApiBasicInfoVO;
     }
 
     @Override

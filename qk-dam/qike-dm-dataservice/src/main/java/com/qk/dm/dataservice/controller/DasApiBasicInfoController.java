@@ -10,6 +10,7 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
+import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -186,6 +187,18 @@ public class DasApiBasicInfoController {
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
     public DefaultCommonResult<LinkedList<Map<String, Object>>> getDebugParamHeaderInfo() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDebugParamHeaderInfo());
+    }
+
+    /**
+     * 新增API__详情展示
+     *
+     * @param apiId
+     * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
+     */
+    @GetMapping(value = "/create/detail/{apiId}")
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
+    public DefaultCommonResult<Object> createDetail(@PathVariable("apiId") String apiId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.createDetail(apiId));
     }
 
 }

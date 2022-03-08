@@ -266,6 +266,13 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DebugApiParamHeaderInfoEnum.getAllValue();
     }
 
+    @Override
+    public Object createDetail(String apiId) {
+
+
+        return null;
+    }
+
     private DasApiBasicInfoVO transformToVO(DasApiBasicInfo dasApiBasicInfo) {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
     }

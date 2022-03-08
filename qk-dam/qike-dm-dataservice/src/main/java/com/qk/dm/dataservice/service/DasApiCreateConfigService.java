@@ -1,5 +1,8 @@
 package com.qk.dm.dataservice.service;
 
+import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.entity.DasApiCreateConfig;
+import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
 import com.qk.dm.dataservice.vo.DebugApiResultVO;
 import org.springframework.stereotype.Service;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 数据服务_新建API_配置方式
@@ -18,7 +22,7 @@ import java.util.Map;
 @Service
 public interface DasApiCreateConfigService {
 
-    DasApiCreateConfigVO detail(String apiId);
+    DasApiCreateConfigVO detail(DasApiBasicInfo dasApiBasicInfo, DasApiCreateConfig dasApiCreateConfig);
 
     void insert(DasApiCreateConfigVO dasApiCreateConfigVO);
 
@@ -38,6 +42,8 @@ public interface DasApiCreateConfigService {
     LinkedList<Map<String, Object>> getParamHeaderInfo();
 
     DebugApiResultVO debugModel(DasApiCreateConfigVO dasApiCreateConfigVO);
+
+    DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(DasApiBasicInfo dasApiBasicInfo);
 
 //  // ========================数据源服务API调用=====================================
 //  List<String> getAllConnType();
