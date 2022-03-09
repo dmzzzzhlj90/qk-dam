@@ -20,11 +20,6 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class AtyClientRoleParamVO {
   /**
-   * 客户端id
-   */
-  @NotBlank(message = "客户端id必填!")
-  String client_id;
-  /**
    * 域
    */
   @NotBlank(message = "域必填!")

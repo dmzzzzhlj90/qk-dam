@@ -7,6 +7,7 @@ import com.qk.dm.authority.service.AtyRoleService;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,7 +37,7 @@ public class AtyRoleController {
      */
     @PostMapping("")
     public DefaultCommonResult addClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.addClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
+        atyRoleService.addClientRole(clientRoleVO.getRealm(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
         return DefaultCommonResult.success();
     }
 
@@ -48,7 +49,7 @@ public class AtyRoleController {
      */
     @PutMapping("")
     public DefaultCommonResult updateClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.updateClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
+        atyRoleService.updateClientRole(clientRoleVO.getRealm(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
         return DefaultCommonResult.success();
     }
 
@@ -60,7 +61,7 @@ public class AtyRoleController {
      */
     @DeleteMapping("")
     public DefaultCommonResult deleteClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
+        atyRoleService.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getRoleName());
         return DefaultCommonResult.success();
     }
 
@@ -72,7 +73,7 @@ public class AtyRoleController {
      */
     @GetMapping("")
     public DefaultCommonResult<AtyClientRoleInfoVO> getClientRole(@Valid AtyClientRoleVO clientRoleVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName()));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getClientRole(clientRoleVO.getRealm(), clientRoleVO.getRoleName()));
     }
 
     /**
@@ -84,7 +85,7 @@ public class AtyRoleController {
     @PostMapping("/page")
     public DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>> getClientRolesPage(@RequestBody @Valid AtyClientRoleParamVO clientRoleParamVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                atyRoleService.getClientRoles(clientRoleParamVO.getRealm(), clientRoleParamVO.getClient_id(), clientRoleParamVO.getSearch(), clientRoleParamVO.getPagination()));
+                atyRoleService.getClientRoles(clientRoleParamVO.getRealm(), clientRoleParamVO.getSearch(), clientRoleParamVO.getPagination()));
     }
 
     /**
@@ -95,6 +96,16 @@ public class AtyRoleController {
      */
     @GetMapping("/list")
     public DefaultCommonResult<List<AtyClientRoleInfoVO>> getClientRoles(@Valid AtyClientRoleParamVO clientRoleParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getUsers(clientRoleParamVO.getRealm(), clientRoleParamVO.getClient_id(), clientRoleParamVO.getSearch()));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getUsers(clientRoleParamVO.getRealm(), clientRoleParamVO.getSearch()));
+    }
+
+    /**
+     * 角色下的用户
+     * @param clientRoleVO
+     * @return
+     */
+    @GetMapping("/users")
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleVO clientRoleVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getRoleName()));
     }
 }

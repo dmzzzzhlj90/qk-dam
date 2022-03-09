@@ -234,7 +234,7 @@ public class KeyCloakApi {
     public AtyGroupInfoVO groupDetail(String realm, String groupId) {
         GroupResource groupResource = keycloak.realm(realm).groups().group(groupId);
         AtyGroupInfoVO atyGroupInfoVO = AtyGroupMapper.INSTANCE.userGroup(groupResource.toRepresentation());
-        atyGroupInfoVO.setMembers(getUserGroupUsers(groupResource));
+        atyGroupInfoVO.setMembers(getGroupUsers(groupResource));
         return atyGroupInfoVO;
     }
 
@@ -244,11 +244,11 @@ public class KeyCloakApi {
      * @param groupId
      * @return
      */
-    public List<AtyUserInfoVO> getUserGroupUsers(String realm, String groupId) {
-        return getUserGroupUsers(keycloak.realm(realm).groups().group(groupId));
+    public List<AtyUserInfoVO> getGroupUsers(String realm, String groupId) {
+        return getGroupUsers(keycloak.realm(realm).groups().group(groupId));
     }
 
-    private List<AtyUserInfoVO> getUserGroupUsers(GroupResource groupResource) {
+    private List<AtyUserInfoVO> getGroupUsers(GroupResource groupResource) {
         return AtyUserMapper.INSTANCE.userInfo(groupResource.members());
     }
 

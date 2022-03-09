@@ -6,6 +6,7 @@ import com.qk.dm.authority.service.AtyGroupService;
 import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +53,10 @@ public class AtyGroupServiceImpl implements AtyGroupService {
     @Override
     public List<AtyGroupInfoVO> getUsers(String realm, String search) {
         return keyCloakApi.groupList(realm, search);
+    }
+
+    @Override
+    public List<AtyUserInfoVO> getGroupUsers(String realm, String groupId) {
+        return keyCloakApi.getGroupUsers(realm,groupId);
     }
 }

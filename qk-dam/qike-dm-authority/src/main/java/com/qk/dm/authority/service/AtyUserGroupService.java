@@ -23,6 +23,4 @@ public interface AtyUserGroupService {
     void addBatchByUsers(AtyGroupBatchByUsersVO atyGroupBatchByUsersVO);
 
     void addBatchByGroups(AtyGroupBatchByGroupsVO batchByGroupsVO);
-
-    List<AtyUserInfoVO> getUserGroupUsers(String realm, String groupId);
 }

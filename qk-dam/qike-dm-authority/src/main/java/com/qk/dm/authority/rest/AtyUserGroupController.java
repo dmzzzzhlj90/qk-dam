@@ -7,12 +7,10 @@ import com.qk.dm.authority.vo.group.AtyGroupBatchByGroupsVO;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByUsersVO;
 import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyUserGroupVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -78,19 +76,6 @@ public class AtyUserGroupController {
     public DefaultCommonResult addBatchByGroups(@RequestBody @Valid AtyGroupBatchByGroupsVO batchByGroupsVO) {
         atyUserGroupService.addBatchByGroups(batchByGroupsVO);
         return DefaultCommonResult.success();
-    }
-
-
-    /**
-     * 查询用户组下的用户
-     *
-     * @param realm
-     * @param groupId
-     * @return
-     */
-    @GetMapping("/groups/{groupId}/users")
-    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroupUsers(realm, groupId));
     }
 
     /**

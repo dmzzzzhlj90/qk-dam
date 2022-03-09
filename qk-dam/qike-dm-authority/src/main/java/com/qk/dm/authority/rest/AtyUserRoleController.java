@@ -7,7 +7,6 @@ import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByRolesVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByUsersVO;
 import com.qk.dm.authority.vo.clientrole.AtyUserClientRoleVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,12 +34,11 @@ public class AtyUserRoleController {
      *
      * @param userId
      * @param realm
-     * @param client_clientId
      * @return
      */
     @GetMapping("/users/{userId}/roles")
-    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getUserClientRole(@Valid @NotBlank String realm, @PathVariable String userId, @Valid @NotBlank String client_clientId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserRoleService.getUserClientRole(realm, userId, client_clientId));
+    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getUserClientRole(@Valid @NotBlank String realm, @PathVariable String userId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserRoleService.getUserClientRole(realm, userId));
     }
 
     /**
@@ -77,20 +75,6 @@ public class AtyUserRoleController {
     public DefaultCommonResult addBatchByRoles(@RequestBody @Valid AtyRoleBatchByRolesVO batchByRolesVO) {
         atyUserRoleService.addBatchByRoles(batchByRolesVO);
         return DefaultCommonResult.success();
-    }
-
-
-    /**
-     * 查询角色下所有用户
-     *
-     * @param realm
-     * @param roleName
-     * @param client_id
-     * @return
-     */
-    @GetMapping("/roles/users")
-    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid @NotBlank String realm, @Valid @NotBlank String client_id, @Valid @NotBlank String roleName) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserRoleService.getUserClientRoleUsers(realm, client_id, roleName));
     }
 
     /**

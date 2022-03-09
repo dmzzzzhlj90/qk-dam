@@ -28,3 +28,6 @@ keycloak:
       username: admin
       password: zhudao123
       client_id: admin-cli
+  role:
+    client_id: 6fdfce20-1f50-43a2-bbbe-62337e35c3d9
+    client_clientId: demoClient

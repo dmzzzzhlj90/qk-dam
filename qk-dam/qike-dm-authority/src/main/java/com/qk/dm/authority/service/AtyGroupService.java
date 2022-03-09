@@ -2,8 +2,9 @@ package com.qk.dm.authority.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
-import com.qk.dm.authority.vo.group.AtyGroupVO;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
+import com.qk.dm.authority.vo.group.AtyGroupVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface AtyGroupService {
     PageResultVO<AtyGroupInfoVO> getUsers(AtyGroupParamVO groupParamVO);
 
     List<AtyGroupInfoVO> getUsers(String realm, String search);
+
+    List<AtyUserInfoVO> getGroupUsers(String realm, String groupId);
 }

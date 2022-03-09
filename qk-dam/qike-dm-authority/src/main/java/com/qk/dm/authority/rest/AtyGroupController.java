@@ -7,11 +7,11 @@ import com.qk.dm.authority.service.AtyGroupService;
 import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
+import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -103,5 +103,17 @@ public class AtyGroupController {
     @GetMapping("/list")
     public DefaultCommonResult<List<AtyGroupInfoVO>> getUsers(@Valid @NotBlank String realm, String search) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(realm, search));
+    }
+
+    /**
+     * 用户组下的用户
+     *
+     * @param realm
+     * @param groupId
+     * @return
+     */
+    @GetMapping("/{groupId}/users")
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(realm, groupId));
     }
 }

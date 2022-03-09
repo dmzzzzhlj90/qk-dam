@@ -23,11 +23,6 @@ public class AtyClientRoleVO {
     @NotBlank(message = "域必填!")
     String realm;
     /**
-     * 客户端id
-     */
-    @NotBlank(message = "客户端id必填!")
-    String client_id;
-    /**
      * 角色名称
      */
     @NotBlank(message = "角色名称必填!")

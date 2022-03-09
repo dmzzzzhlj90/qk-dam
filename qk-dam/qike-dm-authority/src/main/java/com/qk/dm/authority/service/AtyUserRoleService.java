@@ -4,7 +4,6 @@ import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByRolesVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByUsersVO;
 import com.qk.dm.authority.vo.clientrole.AtyUserClientRoleVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface AtyUserRoleService {
-    List<AtyClientRoleInfoVO> getUserClientRole(String realm, String userId, String client_clientId);
+    List<AtyClientRoleInfoVO> getUserClientRole(String realm, String userId);
 
     void addBatchByUsers(AtyUserClientRoleVO userClientRole);
 
@@ -23,6 +22,4 @@ public interface AtyUserRoleService {
     void addBatchByUsers(AtyRoleBatchByUsersVO atyGroupBatchVO);
 
     void addBatchByRoles(AtyRoleBatchByRolesVO batchByRolesVO);
-
-    List<AtyUserInfoVO> getUserClientRoleUsers(String realm, String client_id, String roleName);
 }

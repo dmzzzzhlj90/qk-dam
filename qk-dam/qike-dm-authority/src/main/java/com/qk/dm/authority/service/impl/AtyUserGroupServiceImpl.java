@@ -3,10 +3,9 @@ package com.qk.dm.authority.service.impl;
 import com.qk.dm.authority.keycloak.KeyCloakApi;
 import com.qk.dm.authority.service.AtyUserGroupService;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByGroupsVO;
-import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByUsersVO;
+import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyUserGroupVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,10 +47,4 @@ public class AtyUserGroupServiceImpl implements AtyUserGroupService {
     public void addBatchByGroups(AtyGroupBatchByGroupsVO batchByGroupsVO) {
         batchByGroupsVO.getGroupIds().forEach(groupId -> keyCloakApi.addUserGroup(batchByGroupsVO.getRealm(), batchByGroupsVO.getUserId(), groupId));
     }
-
-    @Override
-    public List<AtyUserInfoVO> getUserGroupUsers(String realm, String groupId) {
-        return keyCloakApi.getUserGroupUsers(realm,groupId);
-    }
-
 }
