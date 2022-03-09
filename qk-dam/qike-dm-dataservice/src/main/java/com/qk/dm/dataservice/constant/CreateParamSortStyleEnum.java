@@ -17,7 +17,7 @@ public enum CreateParamSortStyleEnum {
     /**
      * 升序
      */
-    ASC("REGISTER-API", "升序"),
+    ASC("ASC", "升序"),
 
     /**
      * 新建API

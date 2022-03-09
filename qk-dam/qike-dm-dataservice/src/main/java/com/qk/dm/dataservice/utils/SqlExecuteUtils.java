@@ -63,9 +63,6 @@ public class SqlExecuteUtils {
                 String value = reqParams.get(paraName);
                 // 操作符
                 String conditionType = apiCreateRequestParasVO.getConditionType();
-                if (OperationSymbolEnum.EQUAL.getValue().equals(conditionType)) {
-
-                }
                 //字段映射操作比较符号
                 mysqlSwitchOperationSymbol(whereBuffer, column, value, conditionType);
             }
@@ -164,9 +161,6 @@ public class SqlExecuteUtils {
                 String value = reqParams.get(paraName);
                 // 操作符
                 String conditionType = apiCreateRequestParasVO.getConditionType();
-                if (OperationSymbolEnum.EQUAL.getValue().equals(conditionType)) {
-
-                }
                 //字段映射操作比较符号
                 mysqlSwitchOperationSymbol(whereBuffer, column, value, conditionType);
             }
