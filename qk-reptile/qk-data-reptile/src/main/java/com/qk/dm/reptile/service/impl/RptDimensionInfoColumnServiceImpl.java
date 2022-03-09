@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
@@ -143,20 +144,41 @@ public class RptDimensionInfoColumnServiceImpl implements
   @Override
   public Map<String,String> queryColumnByDirName(
       RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
-    RptDimensionInfo rptDimensionInfo = rptDimensionInfoRepository.findById(rptDimensionInfoColumnScreenParamsDTO.getId()).orElse(null);
-    if (Objects.isNull(rptDimensionInfo)){
-      throw new BizException("id为"+rptDimensionInfoColumnScreenParamsDTO.getId()+"的目录查询为空");
-    }
-    List<RptDimensionColumnInfo> rptDimensionColumnInfoList = rptDimensionColumnInfoRepository.findAllByDimensionId(rptDimensionInfoColumnScreenParamsDTO.getId());
+    List<RptDimensionColumnInfo> rptDimensionColumnInfoList = getListById(rptDimensionInfoColumnScreenParamsDTO.getId());
     if (CollectionUtils.isEmpty(rptDimensionColumnInfoList)){
            return Maps.newHashMap();
     }
+
     return rptDimensionColumnInfoList.stream().filter(
         e -> e.getDimensionColumnCode().equals(RptConstant.NEXTURL)
           ||CollectionUtils.isEmpty(rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList())||!rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList().contains(e.getDimensionColumnCode()))
         .collect(Collectors
             .toMap(RptDimensionColumnInfo::getDimensionColumnName,
                 RptDimensionColumnInfo::getDimensionColumnCode));
+  }
+
+  @Override
+  public List<RptDimensionInfoColumnVO> list(RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
+    List<RptDimensionColumnInfo> columnInfoList = getListById(rptDimensionInfoColumnScreenParamsDTO.getId());
+    if(CollectionUtils.isEmpty(columnInfoList)){
+      return Lists.newArrayList();
+    }
+    List<RptDimensionInfoColumnVO> voList = RptDimensionInfoColumnMapper.INSTANCE.of(columnInfoList);
+    voList.forEach(e->{
+      if(!Objects.equals(e.getDimensionColumnCode(),RptConstant.NEXTURL)
+              &&rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList().contains(e.getDimensionColumnCode())){
+          e.setAlreadyAdd(true);
+      }
+    });
+    return voList;
+  }
+
+  private List<RptDimensionColumnInfo> getListById(Long id){
+    RptDimensionInfo rptDimensionInfo = rptDimensionInfoRepository.findById(id).orElse(null);
+    if (Objects.isNull(rptDimensionInfo)){
+      throw new BizException("id为"+id+"的目录查询为空");
+    }
+    return rptDimensionColumnInfoRepository.findAllByDimensionId(id);
   }
 
 

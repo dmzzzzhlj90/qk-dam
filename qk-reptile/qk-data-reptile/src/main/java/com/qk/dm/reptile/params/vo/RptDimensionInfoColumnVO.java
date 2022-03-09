@@ -42,6 +42,11 @@ public class RptDimensionInfoColumnVO {
   private String dimensionColumnName;
 
   /**
+   * 是否已经添加
+   */
+  private boolean alreadyAdd;
+
+  /**
    * 修改时间
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

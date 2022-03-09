@@ -78,8 +78,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     @Override
     public void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO) {
         List<RptBaseInfo> rptBaseInfoList = Lists.newArrayList();
+        RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.of(rptBaseInfoBatchDTO);
         rptBaseInfoBatchDTO.getListPageAddressList().forEach(e->{
-            RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.of(rptBaseInfoBatchDTO);
             rptBaseInfo.setListPageAddress(e);
             rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
             rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);

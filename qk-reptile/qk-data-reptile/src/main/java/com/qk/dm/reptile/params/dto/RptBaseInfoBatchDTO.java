@@ -15,7 +15,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class RptBaseInfoBatchDTO extends RptBaseInfoDTO{
-
+    /**
+     * 首页列表地址
+     */
     @NotNull(message = "列表页地址不能为空")
     private List<String> listPageAddressList;
 }
