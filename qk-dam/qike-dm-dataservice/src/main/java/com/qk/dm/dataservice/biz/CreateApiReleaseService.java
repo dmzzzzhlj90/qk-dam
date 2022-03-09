@@ -45,11 +45,11 @@ public class CreateApiReleaseService {
     /**
      * 同步注册API
      *
-     * @param registerBasicApiMap
+     * @param createBasicApiMap
      * @param dasReleaseApiParamsVO
      * @return
      */
-    public int syncCreateApi(Map<String, DasApiBasicInfo> registerBasicApiMap, DasReleaseApiParamsVO dasReleaseApiParamsVO) {
+    public int syncCreateApi(Map<String, DasApiBasicInfo> createBasicApiMap, DasReleaseApiParamsVO dasReleaseApiParamsVO) {
         AtomicInteger successfulNum = new AtomicInteger(0);
         AtomicInteger failNum = new AtomicInteger(0);
         try {
@@ -59,12 +59,12 @@ public class CreateApiReleaseService {
             List<RouteData> routeInfoList = apiSixProcessService.getRouteIdList(routeContext);
             //发布新建注册API
 
-            for (String apiId : registerBasicApiMap.keySet()) {
-                DasApiBasicInfo dasApiBasicInfo = registerBasicApiMap.get(apiId);
+            for (String apiId : createBasicApiMap.keySet()) {
+                DasApiBasicInfo dasApiBasicInfo = createBasicApiMap.get(apiId);
                 //检测路由信息是否包含需要发布的URL信息
-                boolean checkUrlFlag = UrlProcessUtils.checkUrlIsContain(routeInfoList, dasApiBasicInfo.getApiPath());
-                //更新发布状态
-                updateCreateStatus(successfulNum, failNum, routeContext, routeInfoList, dasApiBasicInfo, checkUrlFlag);
+//                boolean checkUrlFlag = UrlProcessUtils.checkUrlIsContain(routeInfoList, dasApiBasicInfo.getApiPath());
+                //更新发布状态 新建API使用统一路径根据apiId进行数据查询
+                updateCreateStatus(successfulNum, failNum, routeContext, routeInfoList, dasApiBasicInfo, true);
             }
             LOG.info("成功发布新建Api个数:【{}】", successfulNum);
             LOG.info("失败发布新建Api个数:【{}】", failNum);

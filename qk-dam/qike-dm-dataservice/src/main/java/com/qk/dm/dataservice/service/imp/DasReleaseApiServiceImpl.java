@@ -65,6 +65,7 @@ public class DasReleaseApiServiceImpl implements DasReleaseApiService {
         Set<String> apiIdSet = new LinkedHashSet<>();
         //注册API集合
         Map<String, DasApiBasicInfo> registerBasicApiMap = Maps.newHashMap();
+
         //新建API集合
         Map<String, DasApiBasicInfo> createBasicApiMap = Maps.newHashMap();
         splitRegisterAndCreate(apiBasicInfos, registerBasicApiMap, createBasicApiMap, apiIdSet);
