@@ -3,10 +3,7 @@ package com.qk.dm.authority.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,19 +19,20 @@ public class QkQxResourcesEmpower implements Serializable {
    */
   @Id
   @Column(name = "id", nullable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   /**
-   * 资源id
+   * 资源uuid
    */
-  @Column(name = "resource_id")
-  private Long resourceId;
+  @Column(name = "resource_uuid")
+  private String resourceUuid;
 
   /**
-   * 授权id
+   * 授权uuid
    */
-  @Column(name = "empower_id")
-  private Long empowerId;
+  @Column(name = "empower_uuid")
+  private String empowerUuid;
 
   /**
    * 创建时间

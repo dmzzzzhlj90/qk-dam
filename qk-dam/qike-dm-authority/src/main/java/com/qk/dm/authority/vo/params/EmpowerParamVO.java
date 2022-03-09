@@ -30,8 +30,8 @@ public class EmpowerParamVO {
   private String empoerName;
 
   /**
-   * 服务id
+   * 服务uuid
    */
-  @NotBlank(message = "服务id不能为空")
+  @NotBlank(message = "服务uuid不能为空")
   private String serviceId;
 }

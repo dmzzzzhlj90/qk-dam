@@ -80,7 +80,6 @@ public class QxExcelServiceImpl implements QxExcelService {
       ResourceExcelVO resourceExcelVO =
           ResourceExcelVO.builder()
               .name("资源名称" + i)
-              .powerSign("资源标识" + i)
               .path("网址路径" + i)
               .description("描述" + i)
               .createName("创建人名称" + i)

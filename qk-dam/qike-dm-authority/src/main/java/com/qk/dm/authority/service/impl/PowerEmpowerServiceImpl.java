@@ -5,9 +5,11 @@ import com.alibaba.nacos.common.utils.MapUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.entity.QQxEmpower;
+import com.qk.dm.authority.entity.QkQxResourcesEmpower;
 import com.qk.dm.authority.entity.QxEmpower;
 import com.qk.dm.authority.mapstruct.QxEmpowerMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
+import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.service.PowerEmpowerService;
 import com.qk.dm.authority.vo.params.EmpowerParamVO;
 import com.qk.dm.authority.vo.powervo.EmpowerVO;
@@ -15,10 +17,12 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author zys
@@ -28,6 +32,7 @@ import java.util.*;
 @Service
 public class PowerEmpowerServiceImpl implements PowerEmpowerService {
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
+  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QQxEmpower qQxEmpower = QQxEmpower.qxEmpower;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
@@ -35,8 +40,11 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
   //private keyClocakEmpowerApi keyClocakEmpowerApi;
 
 
-  public PowerEmpowerServiceImpl(QkQxEmpowerRepository qkQxEmpowerRepository,EntityManager entityManager) {
+  public PowerEmpowerServiceImpl(QkQxEmpowerRepository qkQxEmpowerRepository,
+      QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository,
+      EntityManager entityManager) {
     this.qkQxEmpowerRepository = qkQxEmpowerRepository;
+    this.qkQxResourcesEmpowerRepository = qkQxResourcesEmpowerRepository;
     this.entityManager = entityManager;
   }
   @PostConstruct
@@ -56,8 +64,25 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
     }else {
       //todo 修改keycloak被授权主体属性,根据授权主体的不同选择不同的方法修改授权主体的属性
       //keyClocakEmpowerApi.addPower(empowerVO);
-      qkQxEmpowerRepository.save(qxEmpower);
+      QxEmpower qxEmpower1 = qkQxEmpowerRepository.save(qxEmpower);
+      addResourceEmpower(qxEmpower1.getEmpowerId(),empowerVO.getResourceSigns());
     }
+  }
+
+  /**
+   * 新增资源和权限关系
+   * @param emoperId
+   * @param list
+   */
+  private void addResourceEmpower(String emoperId, List<String> list) {
+    List<QkQxResourcesEmpower> qkQxResourcesEmpowerList = new ArrayList<>();
+    list.forEach(s -> {
+      QkQxResourcesEmpower qkQxResourcesEmpower = new QkQxResourcesEmpower();
+      qkQxResourcesEmpower.setResourceUuid(s);
+      qkQxResourcesEmpower.setEmpowerUuid(emoperId);
+      qkQxResourcesEmpowerList.add(qkQxResourcesEmpower);
+    });
+    qkQxResourcesEmpowerRepository.saveAll(qkQxResourcesEmpowerList);
   }
 
   @Override
@@ -68,10 +93,23 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
           "当前查询数据为空"
       );
     }
-    return QxEmpowerMapper.INSTANCE.qxEmpowerVO(qxEmpower);
+    EmpowerVO empowerVO = QxEmpowerMapper.INSTANCE.qxEmpowerVO(qxEmpower);
+    empowerVO.setResourceSigns(queryResources(qxEmpower.getEmpowerId()));
+    return empowerVO;
+  }
+
+  /**
+   * 根据授权新查询授权-资源关系表的资源id集合
+   * @param id
+   * @return
+   */
+  private List<String> queryResources(String id) {
+    List<QkQxResourcesEmpower> byEmpowerId = qkQxResourcesEmpowerRepository.findByEmpowerUuid(id);
+    return  byEmpowerId.stream().map(QkQxResourcesEmpower::getResourceUuid).collect(Collectors.toList());
   }
 
   @Override
+  @Transactional
   public void updateEmpower(EmpowerVO empowerVO) {
     QxEmpower qxEmpower = qkQxEmpowerRepository.findById(empowerVO.getId())
         .orElse(null);
@@ -82,9 +120,21 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
     //TODO 修改对应授权主体的属性
     //keyClocakEmpowerApi.addPower(empowerVO);
     qkQxEmpowerRepository.saveAndFlush(qxEmpower1);
+    updateResourceEmpower(qxEmpower1.getEmpowerId(),empowerVO.getResourceSigns());
+  }
+
+  /**
+   * 修改权限-授权关系表
+   * @param id
+   * @param resourceSign
+   */
+  private void updateResourceEmpower(String id, List<String> resourceSign) {
+    qkQxResourcesEmpowerRepository.deleteAllByEmpowerUuid(id);
+    addResourceEmpower(id,resourceSign);
   }
 
   @Override
+  @Transactional
   public void deleteEmpower(Long id) {
     QxEmpower qxEmpower = qkQxEmpowerRepository.findById(id).orElse(null);
     if (Objects.isNull(qxEmpower)){
@@ -93,9 +143,18 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
       );
     }
     //TODO 删除授权主体中的属性
-    EmpowerVO empowerVO = QxEmpowerMapper.INSTANCE.qxEmpowerVO(qxEmpower);
+    //EmpowerVO empowerVO = QxEmpowerMapper.INSTANCE.qxEmpowerVO(qxEmpower);
     //keyClocakEmpowerApi.deletePower(empowerVO);
+    deleteResourceEmpoer(qxEmpower.getEmpowerId());
     qkQxEmpowerRepository.delete(qxEmpower);
+  }
+
+  /**
+   * 根据授权id删除资源-授权资源表数据
+   * @param id
+   */
+  void deleteResourceEmpoer(String id) {
+    qkQxResourcesEmpowerRepository.deleteAllByEmpowerUuid(id);
   }
 
   @Override

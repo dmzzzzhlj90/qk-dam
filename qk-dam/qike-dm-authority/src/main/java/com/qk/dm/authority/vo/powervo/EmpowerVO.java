@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**授权信息
  * @author zys
@@ -50,9 +51,9 @@ public class EmpowerVO {
   private Integer powerType;
 
   /**
-   * 授权资源标识（根据“,”隔开）
+   * 授权资源uuid
    */
-  private String resourceSign;
+  private List<String> resourceSigns;
 
   /**
    * 创建人id
@@ -88,7 +89,7 @@ public class EmpowerVO {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtModified;
   /**
-   * 服务id
+   * 服务uuid
    */
   private String serviceId;
 

@@ -89,7 +89,7 @@ public class QxResources implements Serializable {
   private Long pid;
 
   /**
-   * 服务id
+   * 服务UUID
    */
   @Column(name = "service_id")
   private String serviceId;

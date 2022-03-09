@@ -17,6 +17,7 @@ import com.qk.dm.authority.vo.powervo.ResourceVO;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -79,13 +80,14 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
   }
 
   @Override
+  @Transactional
   public void deleteResource(Long id) {
     QxResources qxResources = qkQxResourcesRepository.findById(id).orElse(null);
     if (Objects.isNull(qxResources)) {
       throw new BizException("当前需删除的数据不存在");
     }
     if (qxResources.getType()==QxConstant.API_TYPE) {
-      deleteResourceEmpower(id);
+      deleteResourceEmpower(qxResources.getResourcesid());
       qkQxResourcesRepository.deleteById(id);
     } else {
       List<QxResources> qxResourcesList = qkQxResourcesRepository.findByPid(qxResources.getId());
@@ -94,7 +96,7 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
             "存在子节点，请先删除"
         );
       }else{
-        deleteResourceEmpower(id);
+        deleteResourceEmpower(qxResources.getResourcesid());
         qkQxResourcesRepository.deleteById(id);
       }
     }
@@ -104,8 +106,8 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
    * 根据资源id删除资源授权关系表
    * @param id
    */
-  private void deleteResourceEmpower(Long id) {
-    qkQxResourcesEmpowerRepository.deleteByResourceId(id);
+  private void deleteResourceEmpower(String id) {
+    qkQxResourcesEmpowerRepository.deleteALLByResourceUuid(id);
   }
 
   @Override
@@ -113,8 +115,7 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
     List<ResourceOutVO> resourceOutVOList = new ArrayList<>();
     List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(resourceParamVO.getServiceId());
     //筛选资源数据
-    List<QxResources> list = qxResourcesList.stream().filter(qxResources -> qxResources.getPid()!= QxConstant.PID
-    ).collect(Collectors.toList());
+    List<QxResources> list = qxResourcesList.stream().filter(qxResources -> qxResources.getType().equals(QxConstant.RESOURCE_TYPE)).collect(Collectors.toList());
     if (CollectionUtils.isNotEmpty(list)){
       resourceOutVOList = QxResourcesMapper.INSTANCE.of(list);
     }
@@ -139,9 +140,9 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
     List<QxResources> qxResourcesList =new ArrayList<>();
     List<QxResources> byServiceId = qkQxResourcesRepository.findByServiceId(powerResourcesParamVO.getServiceId());
     if (powerResourcesParamVO.getType()==QxConstant.API_TYPE){
-       qxResourcesList = byServiceId.stream().filter(qxResources ->qxResources.getType() == QxConstant.API_TYPE).collect(Collectors.toList());
+       qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getId().toString())).collect(Collectors.toList());
     }else{
-      qxResourcesList = byServiceId.stream().filter(qxResources ->qxResources.getType() == QxConstant.RESOURCE_TYPE).collect(Collectors.toList());
+      qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getId().toString())).collect(Collectors.toList());
     }
     return  qxResourcesList.stream().map(QxResourcesMapper.INSTANCE::qxResourceVO).collect(Collectors.toList());
   }

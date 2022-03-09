@@ -16,8 +16,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class ApiResourcesParamVO {
   /**
-   * 服务id
+   * 服务UUID
    */
-  @NotBlank(message = "服务id不能为空")
+  @NotBlank(message = "服务UUID不能为空")
   private String serviceId;
 }
