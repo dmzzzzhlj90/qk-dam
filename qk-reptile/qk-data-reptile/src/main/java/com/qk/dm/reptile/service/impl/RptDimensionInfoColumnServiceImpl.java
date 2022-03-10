@@ -177,6 +177,9 @@ public class RptDimensionInfoColumnServiceImpl implements
     return voList;
   }
   private List<String> columnCodeList(Long baseInfoId){
+    if(Objects.isNull(baseInfoId)){
+      return List.of();
+    }
     return rptConfigInfoService.getColumnList(baseInfoId);
   }
 
