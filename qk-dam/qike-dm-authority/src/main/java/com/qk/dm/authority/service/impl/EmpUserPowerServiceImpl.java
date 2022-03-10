@@ -11,7 +11,7 @@ import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.service.AtyUserGroupService;
 import com.qk.dm.authority.service.AtyUserRoleService;
-import com.qk.dm.authority.service.UserEmpowerService;
+import com.qk.dm.authority.service.EmpUserPowerService;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
-public class UserEmpowerServiceImpl implements UserEmpowerService {
+public class EmpUserPowerServiceImpl implements EmpUserPowerService {
   private final AtyUserGroupService atyUserGroupService;
   private final AtyUserRoleService atyUserRoleService;
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
@@ -42,7 +42,7 @@ public class UserEmpowerServiceImpl implements UserEmpowerService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
 
-  public UserEmpowerServiceImpl(AtyUserGroupService atyUserGroupService,
+  public EmpUserPowerServiceImpl(AtyUserGroupService atyUserGroupService,
       AtyUserRoleService atyUserRoleService,
       QkQxEmpowerRepository qkQxEmpowerRepository,
       QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository,

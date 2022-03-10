@@ -2,8 +2,7 @@ package com.qk.dm.authority.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.authority.service.QxExcelService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.qk.dm.authority.service.EmpExcelService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,12 +17,11 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/excel")
-public class QxExcelController {
-  private final QxExcelService qxExcelService;
+public class EmpExcelController {
+  private final EmpExcelService empExcelService;
 
-  @Autowired
-  public QxExcelController(QxExcelService qxExcelService) {
-    this.qxExcelService = qxExcelService;
+  public EmpExcelController(EmpExcelService empExcelService) {
+    this.empExcelService = empExcelService;
   }
 
   /**
@@ -34,7 +32,7 @@ public class QxExcelController {
   @PostMapping("/resource/template")
   public void resourceDownloadTemplate(HttpServletResponse response) throws
       IOException {
-    qxExcelService.resourceDownloadTemplate(response);
+    empExcelService.resourceDownloadTemplate(response);
   }
 
   /**
@@ -45,7 +43,7 @@ public class QxExcelController {
   @PostMapping("/api/template")
   public void apiDownloadTemplate(HttpServletResponse response) throws
       IOException {
-    qxExcelService.apiDownloadTemplate(response);
+    empExcelService.apiDownloadTemplate(response);
   }
 
   /**
@@ -56,7 +54,7 @@ public class QxExcelController {
   @PostMapping("/user/template")
   public void userDownloadTemplate(HttpServletResponse response) throws
       IOException {
-    qxExcelService.userDownloadTemplate(response);
+    empExcelService.userDownloadTemplate(response);
   }
 
   /**
@@ -68,7 +66,7 @@ public class QxExcelController {
   @PostMapping("/resource/upload")
   @ResponseBody
   public DefaultCommonResult resourceInfoUpload(MultipartFile file) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,qxExcelService.resourceInfoUpload(file));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empExcelService.resourceInfoUpload(file));
   }
 
   /**
@@ -80,7 +78,7 @@ public class QxExcelController {
   @PostMapping("/api/upload")
   @ResponseBody
   public DefaultCommonResult apiResourceInfoUpload(MultipartFile file) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,qxExcelService.apiResourceInfoUpload(file));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empExcelService.apiResourceInfoUpload(file));
   }
 
   /**
@@ -92,7 +90,7 @@ public class QxExcelController {
   @PostMapping("/user/upload")
   @ResponseBody
   public DefaultCommonResult userResourceInfoUpload(String realm , MultipartFile file) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK,qxExcelService.userResourceInfoUpload(file,realm));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empExcelService.userResourceInfoUpload(file,realm));
   }
 
   /**
@@ -103,7 +101,7 @@ public class QxExcelController {
   @PostMapping("/resource/download")
   public DefaultCommonResult resourcesAllDownload(@RequestParam("serviceId") String serviceId,HttpServletResponse response)
       throws IOException {
-    qxExcelService.resourcesAllDownload(serviceId,response);
+    empExcelService.resourcesAllDownload(serviceId,response);
     return DefaultCommonResult.success();
   }
 
@@ -115,7 +113,7 @@ public class QxExcelController {
   @PostMapping("/api/download")
   public DefaultCommonResult apiAllDownload(@RequestParam("serviceId") String serviceId,HttpServletResponse response)
       throws IOException {
-    qxExcelService.apiAllDownload(serviceId,response);
+    empExcelService.apiAllDownload(serviceId,response);
     return DefaultCommonResult.success();
   }
 
@@ -129,7 +127,7 @@ public class QxExcelController {
   @PostMapping("/user/download")
   public DefaultCommonResult UserAllDownload(String realm, String search,HttpServletResponse response)
       throws IOException {
-    qxExcelService.UserAllDownload(realm,search,response);
+    empExcelService.UserAllDownload(realm,search,response);
     return DefaultCommonResult.success();
   }
 }

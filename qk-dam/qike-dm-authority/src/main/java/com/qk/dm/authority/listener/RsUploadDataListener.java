@@ -18,7 +18,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
-public class ResourceBasicInfoUploadDataListener extends AnalysisEventListener<ResourceExcelVO> {
+public class RsUploadDataListener extends AnalysisEventListener<ResourceExcelVO> {
   private static final Log LOG = LogFactory.getLog("ResourceBasicInfoUploadDataListener");
   private final ResourceExcelBatchService resourceExcelBatchService;
   /** 每隔1000条存储数据库，然后清理list ，方便内存回收 */
@@ -27,7 +27,7 @@ public class ResourceBasicInfoUploadDataListener extends AnalysisEventListener<R
   List<ResourceExcelVO> list = new ArrayList<>();
   List<ResourceExcelVO> returnList = new ArrayList<>();
 
-  public ResourceBasicInfoUploadDataListener(
+  public RsUploadDataListener(
       ResourceExcelBatchService resourceExcelBatchService) {
     this.resourceExcelBatchService = resourceExcelBatchService;
   }

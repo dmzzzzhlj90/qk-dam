@@ -7,14 +7,14 @@ import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.constant.QxConstant;
 import com.qk.dm.authority.entity.QxResources;
-import com.qk.dm.authority.listener.ApiResourceBasicInfoUploadDataListener;
-import com.qk.dm.authority.listener.ResourceBasicInfoUploadDataListener;
-import com.qk.dm.authority.listener.UserBasicInfoUploadDataListener;
+import com.qk.dm.authority.listener.ApiRsUploadDataListener;
+import com.qk.dm.authority.listener.RsUploadDataListener;
+import com.qk.dm.authority.listener.UserUploadDataListener;
 import com.qk.dm.authority.mapstruct.AtyUserMapper;
 import com.qk.dm.authority.mapstruct.QxResourcesMapper;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.service.AtyUserService;
-import com.qk.dm.authority.service.QxExcelService;
+import com.qk.dm.authority.service.EmpExcelService;
 import com.qk.dm.authority.util.MultipartFileUtil;
 import com.qk.dm.authority.vo.powervo.ResourceExcelVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
@@ -40,18 +40,18 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
-public class QxExcelServiceImpl implements QxExcelService {
+public class EmpExcelServiceImpl implements EmpExcelService {
   private static final Log LOG = LogFactory.getLog("资源数据导入导出");
   private final ResourceExcelBatchService resourceExcelBatchService;
-  private final ApiResourceExcelBatchService apiResourceExcelBatchService;
+  private final ApiRsExcelBatchService apiResourceExcelBatchService;
   private final UserExcelBatchService userExcelBatchService;
   private final QkQxResourcesRepository qkQxResourcesRepository;
   private final AtyUserService atyUserService;
   SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置格式
 
   @Autowired
-  public QxExcelServiceImpl(ResourceExcelBatchService resourceExcelBatchService,
-      ApiResourceExcelBatchService apiResourceExcelBatchService,
+  public EmpExcelServiceImpl(ResourceExcelBatchService resourceExcelBatchService,
+      ApiRsExcelBatchService apiResourceExcelBatchService,
       UserExcelBatchService userExcelBatchService, QkQxResourcesRepository qkQxResourcesRepository,
       AtyUserService atyUserService) {
     this.resourceExcelBatchService = resourceExcelBatchService;
@@ -134,7 +134,7 @@ public class QxExcelServiceImpl implements QxExcelService {
     List<ResourceExcelVO> list = new ArrayList<>();
     LOG.info("======开始导入资源数据!======");
     try {
-      ResourceBasicInfoUploadDataListener resourceBasicInfoUploadDataListener = new ResourceBasicInfoUploadDataListener(resourceExcelBatchService);
+      RsUploadDataListener resourceBasicInfoUploadDataListener = new RsUploadDataListener(resourceExcelBatchService);
       EasyExcel.read(
           file.getInputStream(),
           ResourceExcelVO.class,
@@ -165,7 +165,7 @@ public class QxExcelServiceImpl implements QxExcelService {
     List<ResourceVO> list = new ArrayList<>();
     LOG.info("======开始导入api资源数据!======");
     try {
-      ApiResourceBasicInfoUploadDataListener apiResourceBasicInfoUploadDataListener = new ApiResourceBasicInfoUploadDataListener(apiResourceExcelBatchService);
+      ApiRsUploadDataListener apiResourceBasicInfoUploadDataListener = new ApiRsUploadDataListener(apiResourceExcelBatchService);
       EasyExcel.read(
           file.getInputStream(),
           ResourceVO.class,
@@ -301,7 +301,7 @@ public class QxExcelServiceImpl implements QxExcelService {
     List<AtyUserInputExceVO> list = new ArrayList<>();
     LOG.info("======开始导入用户数据!======");
     try {
-      UserBasicInfoUploadDataListener userBasicInfoUploadDataListener = new UserBasicInfoUploadDataListener(userExcelBatchService);
+      UserUploadDataListener userBasicInfoUploadDataListener = new UserUploadDataListener(userExcelBatchService);
       userBasicInfoUploadDataListener.setRelame(realm);
       EasyExcel.read(
           file.getInputStream(),

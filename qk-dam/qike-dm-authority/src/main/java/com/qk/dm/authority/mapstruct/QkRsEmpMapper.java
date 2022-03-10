@@ -9,6 +9,5 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
  */
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
     nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-public interface QkQxResourcesEmpowerMapper {
-
+public interface QkRsEmpMapper {
 }

@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
 public class ResourceExcelBatchService {
   private static final Log LOG = LogFactory.getLog("resourceExcelBatchService");
   private final QkQxResourcesRepository qkQxResourcesRepository;
-  private final BloomFliterServer bloomFliterServer;
+  private final BloomFilterServer bloomFilterServer;
 
   public ResourceExcelBatchService(
       QkQxResourcesRepository qkQxResourcesRepository,
-      BloomFliterServer bloomFliterServer) {
+      BloomFilterServer bloomFilterServer) {
     this.qkQxResourcesRepository = qkQxResourcesRepository;
-    this.bloomFliterServer = bloomFliterServer;
+    this.bloomFilterServer = bloomFilterServer;
   }
 
   public List<ResourceExcelVO> saveResources(List<ResourceExcelVO> qxResourcesList) {
@@ -78,13 +78,13 @@ public class ResourceExcelBatchService {
         resourceExcelVO.setResourcesid(UUID.randomUUID().toString());
         //todo 加入操作人员id
         String key = MultipartFileUtil.getExcelKey(resourceExcelVO);
-        if (bloomFliterServer.getFilter()!=null){
-          boolean b = bloomFliterServer.getFilter().mightContain(key);
+        if (bloomFilterServer.getFilter()!=null){
+          boolean b = bloomFilterServer.getFilter().mightContain(key);
           if (b){
             list.add(resourceExcelVO);
             iterator.remove();
           }else {
-            bloomFliterServer.getFilter().put(key);
+            bloomFilterServer.getFilter().put(key);
           }
         }
       }

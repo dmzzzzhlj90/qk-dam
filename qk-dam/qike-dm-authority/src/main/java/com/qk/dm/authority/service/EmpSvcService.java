@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 权限服务
  */
-public interface PowerService {
+public interface EmpSvcService {
   void addService(ServiceVO serviceVO);
 
   ServiceVO ServiceDetails(Long id);

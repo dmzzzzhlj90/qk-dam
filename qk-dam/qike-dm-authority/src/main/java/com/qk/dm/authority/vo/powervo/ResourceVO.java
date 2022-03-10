@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -100,18 +101,21 @@ public class ResourceVO {
    * 父级id（API类型fid默认为-1）
    */
   @ExcelProperty(value = "父级id(API时为-1)",order = 5)
+  @NotBlank(message = "父级id不能为空")
   private Long pid;
 
   /**
    * 服务UUID
    */
   @ExcelProperty(value = "服务UUID",order = 6)
+  @NotBlank(message = "服务uuid不能为空")
   private String serviceId;
 
   /**
    * 0表示API，1表示资源
    */
   @ExcelProperty(value = "资源类型（0表示API，1表示资源）",order = 7)
+  @NotNull(message = "资源类型不能为空")
   private Integer type;
 
   /**

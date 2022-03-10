@@ -10,7 +10,7 @@ import com.qk.dm.authority.mapstruct.QxServiceMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxServiceRepository;
-import com.qk.dm.authority.service.PowerEmpowerService;
+import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.params.EmpowerParamVO;
 import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
 import com.qk.dm.authority.vo.powervo.EmpowerVO;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
-public class PowerEmpowerServiceImpl implements PowerEmpowerService {
+public class EmpPowerServiceImpl implements EmpPowerService {
   private final QkQxServiceRepository qkQxServiceRepository;
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
@@ -44,7 +44,7 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
   //private keyClocakEmpowerApi keyClocakEmpowerApi;
 
 
-  public PowerEmpowerServiceImpl(QkQxServiceRepository qkQxServiceRepository,
+  public EmpPowerServiceImpl(QkQxServiceRepository qkQxServiceRepository,
       QkQxEmpowerRepository qkQxEmpowerRepository,
       QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository,
       EntityManager entityManager) {

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 资源和API
  */
-public interface PowerResourcesService {
+public interface EmpRsService {
   void addResource(ResourceVO resourceVO);
 
   void updateResource(ResourceVO resourceVO);

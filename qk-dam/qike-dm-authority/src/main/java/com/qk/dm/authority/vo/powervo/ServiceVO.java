@@ -80,6 +80,7 @@ public class ServiceVO {
   /**
    * 区域id（项目id）
    */
+  @NotBlank(message = "域id不能为空")
   private String redionid;
 
   /**

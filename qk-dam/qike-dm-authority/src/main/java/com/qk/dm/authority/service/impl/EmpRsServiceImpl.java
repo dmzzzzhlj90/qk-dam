@@ -9,7 +9,7 @@ import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.mapstruct.QxResourcesMapper;
 import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
-import com.qk.dm.authority.service.PowerResourcesService;
+import com.qk.dm.authority.service.EmpRsService;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.PowerResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
-public class PowerResourcesServiceImpl implements PowerResourcesService {
+public class EmpRsServiceImpl implements EmpRsService {
   private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private final QkQxResourcesRepository qkQxResourcesRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
@@ -42,7 +42,7 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
 
-  public PowerResourcesServiceImpl(
+  public EmpRsServiceImpl(
       QkQxResourcesRepository qkQxResourcesRepository,
       QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository,
       EntityManager entityManager) {

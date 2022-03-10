@@ -18,7 +18,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
-public class UserBasicInfoUploadDataListener extends AnalysisEventListener<AtyUserInputExceVO> {
+public class UserUploadDataListener extends AnalysisEventListener<AtyUserInputExceVO> {
   private static final Log LOG = LogFactory.getLog("ResourceBasicInfoUploadDataListener");
   private final UserExcelBatchService userExcelBatchService;
   private String relame;
@@ -38,7 +38,7 @@ public class UserBasicInfoUploadDataListener extends AnalysisEventListener<AtyUs
   List<AtyUserInputExceVO> returnList = new ArrayList<>();
 
 
-  public UserBasicInfoUploadDataListener(
+  public UserUploadDataListener(
       UserExcelBatchService userExcelBatchService) {
     this.userExcelBatchService = userExcelBatchService;
   }

@@ -2,7 +2,7 @@ package com.qk.dm.authority.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
-import com.qk.dm.authority.service.impl.ApiResourceExcelBatchService;
+import com.qk.dm.authority.service.impl.ApiRsExcelBatchService;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,16 +18,17 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
-public class ApiResourceBasicInfoUploadDataListener extends AnalysisEventListener<ResourceVO> {
+public class ApiRsUploadDataListener extends AnalysisEventListener<ResourceVO> {
   private static final Log LOG = LogFactory.getLog("ApiResourceBasicInfoUploadDataListener");
-  private final ApiResourceExcelBatchService apiResourceExcelBatchService;
+  private final ApiRsExcelBatchService apiResourceExcelBatchService;
   /** 每隔1000条存储数据库，然后清理list ，方便内存回收 */
   private static final int BATCH_COUNT = 1000;
 
   List<ResourceVO> list = new ArrayList<>();
   List<ResourceVO> returnList = new ArrayList<>();
 
-  public ApiResourceBasicInfoUploadDataListener(ApiResourceExcelBatchService apiResourceExcelBatchService) {
+  public ApiRsUploadDataListener(
+      ApiRsExcelBatchService apiResourceExcelBatchService) {
     this.apiResourceExcelBatchService = apiResourceExcelBatchService;
   }
   /**
