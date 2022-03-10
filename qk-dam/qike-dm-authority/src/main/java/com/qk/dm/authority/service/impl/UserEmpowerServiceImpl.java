@@ -2,6 +2,8 @@ package com.qk.dm.authority.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
+import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
+import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.entity.*;
 import com.qk.dm.authority.mapstruct.QxServiceMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
@@ -10,8 +12,6 @@ import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.service.AtyUserGroupService;
 import com.qk.dm.authority.service.AtyUserRoleService;
 import com.qk.dm.authority.service.UserEmpowerService;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
-import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
