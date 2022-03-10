@@ -22,6 +22,7 @@ import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
+import com.qk.dm.reptile.utils.MultipartFileUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -49,6 +50,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private final RptBaseInfoRepository rptBaseInfoRepository;
     private final RptConfigInfoService rptConfigInfoService;
     private final JwtDecoder jwtDecoder;
+    private final BloomFliterServer bloomFliterServer;
 
     @PostConstruct
     public void initFactory() {
@@ -58,11 +60,12 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     public RptBaseInfoServiceImpl(RptBaseInfoRepository rptBaseInfoRepository,
                                   EntityManager entityManager,
                                   RptConfigInfoService rptConfigInfoService,
-                                  JwtDecoder jwtDecoder){
+                                  JwtDecoder jwtDecoder, BloomFliterServer bloomFliterServer){
         this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.entityManager = entityManager;
         this.rptConfigInfoService = rptConfigInfoService;
         this.jwtDecoder = jwtDecoder;
+        this.bloomFliterServer = bloomFliterServer;
     }
 
 
@@ -72,14 +75,21 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
         rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);
         rptBaseInfo.setStatus(RptConstant.WAITING);
-        rptBaseInfoRepository.save(rptBaseInfo);
+        String key = MultipartFileUtil.removeDuplicate(rptBaseInfo);
+        if (Objects.nonNull(bloomFliterServer.getFilter()) && bloomFliterServer.getFilter().mightContain(key)) {
+            throw new BizException("数据已存在，不可重复添加！！！");
+        } else {
+            rptBaseInfoRepository.save(rptBaseInfo);
+            bloomFliterServer.getFilter().put(key);
+        }
     }
 
     @Override
     public void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO) {
         List<RptBaseInfo> rptBaseInfoList = Lists.newArrayList();
-        RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.of(rptBaseInfoBatchDTO);
         rptBaseInfoBatchDTO.getListPageAddressList().forEach(e->{
+            RptBaseInfo rptBaseInfo = new RptBaseInfo();
+            RptBaseInfoMapper.INSTANCE.of(rptBaseInfoBatchDTO, rptBaseInfo);
             rptBaseInfo.setListPageAddress(e);
             rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
             rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);

@@ -231,6 +231,14 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }).collect(Collectors.toList());
     }
 
+    public List<String> getColumnList(Long baseId){
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(baseId);
+        if(CollectionUtils.isEmpty(list)){
+           return rptSelectorColumnInfoService.findByConfigIds(list.stream().map(RptConfigInfo::getId).collect(Collectors.toList()));
+        }
+        return List.of();
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void copyConfig(Long sourceId, Long targetId) {
@@ -259,11 +267,11 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
      */
     private void deleteTargetConfig(Long targetId){
         List<RptConfigInfo> targetList = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(targetId);
+        rptConfigInfoRepository.deleteAllByBaseInfoId(targetId);
         if(!CollectionUtils.isEmpty(targetList)){
             List<Long> targetIdList = targetList.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
             rptSelectorColumnInfoService.deleteByConfigId(targetIdList);
         }
-        rptConfigInfoRepository.deleteAllByBaseInfoId(targetId);
     }
 
     private void transRptConfigInfo(RptConfigInfo rptConfigInfo, RptConfigInfoDTO rptConfigInfoDTO){

@@ -18,6 +18,7 @@ import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnScreenParamsDTO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import com.qk.dm.reptile.repositories.RptDimensionColumnInfoRepository;
 import com.qk.dm.reptile.repositories.RptDimensionInfoRepository;
+import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.qk.dm.reptile.service.RptDimensionInfoColumnService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -48,6 +49,7 @@ public class RptDimensionInfoColumnServiceImpl implements
   private final QRptDimensionInfo qRptDimensionInfo = QRptDimensionInfo.rptDimensionInfo;
   private final RptDimensionColumnInfoRepository rptDimensionColumnInfoRepository;
   private final RptDimensionInfoRepository rptDimensionInfoRepository;
+  private final RptConfigInfoService rptConfigInfoService;
 
 
   @PostConstruct
@@ -56,12 +58,13 @@ public class RptDimensionInfoColumnServiceImpl implements
   }
 
   public RptDimensionInfoColumnServiceImpl(EntityManager entityManager,
-      RptDimensionColumnInfoRepository rptDimensionColumnInfoRepository,
-      RptDimensionInfoRepository rptDimensionInfoRepository){
+                                           RptDimensionColumnInfoRepository rptDimensionColumnInfoRepository,
+                                           RptDimensionInfoRepository rptDimensionInfoRepository, RptConfigInfoService rptConfigInfoService){
 
     this.entityManager = entityManager;
     this.rptDimensionColumnInfoRepository = rptDimensionColumnInfoRepository;
     this.rptDimensionInfoRepository = rptDimensionInfoRepository;
+    this.rptConfigInfoService = rptConfigInfoService;
   }
   /**
    * 新增维度数据
@@ -166,11 +169,14 @@ public class RptDimensionInfoColumnServiceImpl implements
     List<RptDimensionInfoColumnVO> voList = RptDimensionInfoColumnMapper.INSTANCE.of(columnInfoList);
     voList.forEach(e->{
       if(!Objects.equals(e.getDimensionColumnCode(),RptConstant.NEXTURL)
-              &&rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList().contains(e.getDimensionColumnCode())){
+              &&columnCodeList(rptDimensionInfoColumnScreenParamsDTO.getBaseInfoId()).contains(e.getDimensionColumnCode())){
           e.setAlreadyAdd(true);
       }
     });
     return voList;
+  }
+  private List<String> columnCodeList(Long baseInfoId){
+     return rptConfigInfoService.getColumnList(baseInfoId);
   }
 
   private List<RptDimensionColumnInfo> getListById(Long id){
