@@ -4,7 +4,6 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.authority.service.PowerResourcesService;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
-import com.qk.dm.authority.vo.params.PowerResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
 import com.qk.dm.authority.vo.powervo.ResourceOutVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
@@ -87,9 +86,9 @@ public class ResourcesController {
    * @param powerResourcesParamVO
    * @return
    */
-  @PostMapping("/authorized")
+  /*@PostMapping("/authorized")
   public DefaultCommonResult<List<ResourceVO>> queryauthorized(@RequestBody PowerResourcesParamVO powerResourcesParamVO){
     return DefaultCommonResult.success(ResultCodeEnum.OK,powerResourcesService.queryauthorized(powerResourcesParamVO));
-  }
+  }*/
 
 }

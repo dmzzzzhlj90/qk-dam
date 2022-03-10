@@ -3,6 +3,7 @@ package com.qk.dm.authority.service.impl;
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.constant.QxConstant;
+import com.qk.dm.authority.entity.QQkQxResourcesEmpower;
 import com.qk.dm.authority.entity.QQxResources;
 import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.mapstruct.QxResourcesMapper;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class PowerResourcesServiceImpl implements PowerResourcesService {
+  private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private final QkQxResourcesRepository qkQxResourcesRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QQxResources qQxResources= QQxResources.qxResources;
@@ -107,7 +109,11 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
    * @param id
    */
   private void deleteResourceEmpower(String id) {
-    qkQxResourcesEmpowerRepository.deleteALLByResourceUuid(id);
+    BooleanExpression expression = qQkQxResourcesEmpower.resourceUuid.eq(id);
+    boolean exists = qkQxResourcesEmpowerRepository.exists(expression);
+    if (exists){
+      qkQxResourcesEmpowerRepository.deleteALLByResourceUuid(id);
+    }
   }
 
   @Override

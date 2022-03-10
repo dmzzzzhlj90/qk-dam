@@ -4,6 +4,7 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.MapUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.authority.entity.QQkQxResourcesEmpower;
 import com.qk.dm.authority.entity.QQxEmpower;
 import com.qk.dm.authority.entity.QkQxResourcesEmpower;
 import com.qk.dm.authority.entity.QxEmpower;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 public class PowerEmpowerServiceImpl implements PowerEmpowerService {
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
+  private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private final QQxEmpower qQxEmpower = QQxEmpower.qxEmpower;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
@@ -116,8 +118,8 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
     if (Objects.isNull(qxEmpower)){
       throw new BizException("当前需修改的的数据不存在");
     }
-    QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
     //TODO 修改对应授权主体的属性
+    QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
     //keyClocakEmpowerApi.addPower(empowerVO);
     qkQxEmpowerRepository.saveAndFlush(qxEmpower1);
     updateResourceEmpower(qxEmpower1.getEmpowerId(),empowerVO.getResourceSigns());
@@ -129,7 +131,11 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
    * @param resourceSign
    */
   private void updateResourceEmpower(String id, List<String> resourceSign) {
-    qkQxResourcesEmpowerRepository.deleteAllByEmpowerUuid(id);
+    BooleanExpression expression = qQkQxResourcesEmpower.empowerUuid.eq(id);
+    boolean exists = qkQxResourcesEmpowerRepository.exists(expression);
+    if (exists){
+      qkQxResourcesEmpowerRepository.deleteAllByEmpowerUuid(id);
+    }
     addResourceEmpower(id,resourceSign);
   }
 
@@ -154,7 +160,11 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
    * @param id
    */
   void deleteResourceEmpoer(String id) {
-    qkQxResourcesEmpowerRepository.deleteAllByEmpowerUuid(id);
+    BooleanExpression expression = qQkQxResourcesEmpower.empowerUuid.eq(id);
+    boolean exists = qkQxResourcesEmpowerRepository.exists(expression);
+    if (exists){
+      qkQxResourcesEmpowerRepository.deleteAllByEmpowerUuid(id);
+    }
   }
 
   @Override
