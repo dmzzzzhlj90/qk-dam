@@ -1,12 +1,12 @@
 package com.qk.dm.authority.service.impl;
 
+import com.qk.dam.authority.common.keycloak.KeyCloakGroupApi;
+import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
+import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.authority.keycloak.KeyCloakApi;
 import com.qk.dm.authority.service.AtyGroupService;
-import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
-import com.qk.dm.authority.vo.group.AtyGroupVO;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
+import com.qk.dm.authority.vo.group.AtyGroupVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,44 +19,45 @@ import java.util.List;
 @Service
 public class AtyGroupServiceImpl implements AtyGroupService {
 
-    private final KeyCloakApi keyCloakApi;
+    private final KeyCloakGroupApi keyCloakGroupApi;
 
-    public AtyGroupServiceImpl(KeyCloakApi keyCloakApi) {
-        this.keyCloakApi = keyCloakApi;
+    public AtyGroupServiceImpl(KeyCloakGroupApi keyCloakGroupApi) {
+        this.keyCloakGroupApi = keyCloakGroupApi;
     }
+
 
     @Override
     public void addGroup(AtyGroupVO groupVO) {
-        keyCloakApi.addGroup(groupVO.getRealm(), groupVO.getGroupName());
+        keyCloakGroupApi.addGroup(groupVO.getRealm(), groupVO.getGroupName());
     }
 
     @Override
     public void updateGroup(String groupId, AtyGroupVO groupVO) {
-        keyCloakApi.updateGroup(groupVO.getRealm(), groupId, groupVO.getGroupName());
+        keyCloakGroupApi.updateGroup(groupVO.getRealm(), groupId, groupVO.getGroupName());
     }
 
     @Override
     public void deleteGroup(String realm, String groupId) {
-        keyCloakApi.deleteGroup(realm, groupId);
+        keyCloakGroupApi.deleteGroup(realm, groupId);
     }
 
     @Override
     public AtyGroupInfoVO getGroup(String realm, String groupId) {
-        return keyCloakApi.groupDetail(realm, groupId);
+        return keyCloakGroupApi.groupDetail(realm, groupId);
     }
 
     @Override
     public PageResultVO<AtyGroupInfoVO> getUsers(AtyGroupParamVO groupParamVO) {
-        return keyCloakApi.groupList(groupParamVO.getRealm(), groupParamVO.getSearch(), groupParamVO.getPagination());
+        return keyCloakGroupApi.groupList(groupParamVO.getRealm(), groupParamVO.getSearch(), groupParamVO.getPagination());
     }
 
     @Override
     public List<AtyGroupInfoVO> getUsers(String realm, String search) {
-        return keyCloakApi.groupList(realm, search);
+        return keyCloakGroupApi.groupList(realm, search);
     }
 
     @Override
     public List<AtyUserInfoVO> getGroupUsers(String realm, String groupId) {
-        return keyCloakApi.getGroupUsers(realm,groupId);
+        return keyCloakGroupApi.groupUsers(realm,groupId);
     }
 }

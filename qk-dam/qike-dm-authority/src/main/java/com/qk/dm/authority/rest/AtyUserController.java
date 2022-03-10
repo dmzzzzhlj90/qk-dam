@@ -1,15 +1,18 @@
 package com.qk.dm.authority.rest;
 
+import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyUserService;
-import com.qk.dm.authority.vo.user.*;
+import com.qk.dm.authority.vo.user.AtyUserCreateVO;
+import com.qk.dm.authority.vo.user.AtyUserParamVO;
+import com.qk.dm.authority.vo.user.AtyUserResetPassWordVO;
+import com.qk.dm.authority.vo.user.AtyUserUpdateVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**

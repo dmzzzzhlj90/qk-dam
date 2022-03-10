@@ -1,9 +1,9 @@
 package com.qk.dm.authority.rest;
 
+import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.authority.service.AtyUserRoleService;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByRolesVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByUsersVO;
 import com.qk.dm.authority.vo.clientrole.AtyUserClientRoleVO;

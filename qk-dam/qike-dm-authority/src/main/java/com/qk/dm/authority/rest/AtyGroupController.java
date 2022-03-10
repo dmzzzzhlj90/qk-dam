@@ -1,13 +1,13 @@
 package com.qk.dm.authority.rest;
 
+import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
+import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyGroupService;
-import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

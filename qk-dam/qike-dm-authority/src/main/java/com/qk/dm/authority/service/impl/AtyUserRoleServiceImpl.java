@@ -1,8 +1,8 @@
 package com.qk.dm.authority.service.impl;
 
-import com.qk.dm.authority.keycloak.KeyCloakApi;
+import com.qk.dam.authority.common.keycloak.KeyCloakRoleApi;
+import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.service.AtyUserRoleService;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByRolesVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByUsersVO;
 import com.qk.dm.authority.vo.clientrole.AtyUserClientRoleVO;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Service
 public class AtyUserRoleServiceImpl implements AtyUserRoleService {
-    private final KeyCloakApi keyCloakApi;
+    private final KeyCloakRoleApi keyCloakRoleApi;
 
     @Value("${keycloak.role.client_id}")
     private String client_id;
@@ -26,32 +26,32 @@ public class AtyUserRoleServiceImpl implements AtyUserRoleService {
     @Value("${keycloak.role.client_clientId}")
     private String client_clientId;
 
-    public AtyUserRoleServiceImpl(KeyCloakApi keyCloakApi) {
-        this.keyCloakApi = keyCloakApi;
+    public AtyUserRoleServiceImpl(KeyCloakRoleApi keyCloakRoleApi) {
+        this.keyCloakRoleApi = keyCloakRoleApi;
     }
 
     @Override
     public List<AtyClientRoleInfoVO> getUserClientRole(String realm, String userId) {
-        return keyCloakApi.userClientRole(realm, userId, client_clientId);
+        return keyCloakRoleApi.userClientRole(realm, userId, client_clientId);
     }
 
     @Override
     public void addBatchByUsers(AtyUserClientRoleVO userClientRole) {
-        keyCloakApi.addUserClientRole(userClientRole.getRealm(), client_id, userClientRole.getUserId(), userClientRole.getRoleName());
+        keyCloakRoleApi.addUserClientRole(userClientRole.getRealm(), client_id, userClientRole.getUserId(), userClientRole.getRoleName());
     }
 
     @Override
     public void deleteUserClientRole(AtyUserClientRoleVO userClientRole) {
-        keyCloakApi.deleteUserClientRole(userClientRole.getRealm(), client_id, userClientRole.getUserId(), userClientRole.getRoleName());
+        keyCloakRoleApi.deleteUserClientRole(userClientRole.getRealm(), client_id, userClientRole.getUserId(), userClientRole.getRoleName());
     }
 
     @Override
     public void addBatchByUsers(AtyRoleBatchByUsersVO atyGroupBatchVO) {
-        atyGroupBatchVO.getUserIds().forEach(userId -> keyCloakApi.addUserClientRole(atyGroupBatchVO.getRealm(), client_id, userId, atyGroupBatchVO.getRoleName()));
+        atyGroupBatchVO.getUserIds().forEach(userId -> keyCloakRoleApi.addUserClientRole(atyGroupBatchVO.getRealm(), client_id, userId, atyGroupBatchVO.getRoleName()));
     }
 
     @Override
     public void addBatchByRoles(AtyRoleBatchByRolesVO batchByRolesVO) {
-        batchByRolesVO.getRoleNames().forEach(roleName -> keyCloakApi.addUserClientRole(batchByRolesVO.getRealm(), client_id, batchByRolesVO.getUserId(), roleName));
+        batchByRolesVO.getRoleNames().forEach(roleName -> keyCloakRoleApi.addUserClientRole(batchByRolesVO.getRealm(), client_id, batchByRolesVO.getUserId(), roleName));
     }
 }

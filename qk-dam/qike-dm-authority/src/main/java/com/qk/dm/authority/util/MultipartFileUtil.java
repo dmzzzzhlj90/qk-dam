@@ -1,13 +1,13 @@
 package com.qk.dm.authority.util;
 
 import com.alibaba.nacos.common.utils.StringUtils;
+import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
+import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.constant.QxConstant;
 import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.vo.powervo.ResourceExcelVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
-import com.qk.dm.authority.vo.user.AtyUserInputExceVO;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -134,7 +134,7 @@ public class MultipartFileUtil {
    * @return
    */
   public static String getUserExcelKey(AtyUserInputExceVO atyUserInputExceVO,
-      String relame) {
+                                       String relame) {
     String key = String.join("->",relame,atyUserInputExceVO.getUsername());
     return key;
   }

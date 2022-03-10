@@ -1,9 +1,9 @@
 package com.qk.dm.authority.service;
 
+import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
+import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 
 import java.util.List;
 

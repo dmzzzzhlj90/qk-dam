@@ -1,7 +1,7 @@
 package com.qk.dm.authority.service;
 
-import com.qk.dm.authority.vo.ClientVO;
-import com.qk.dm.authority.vo.RealmVO;
+import com.qk.dam.authority.common.vo.ClientVO;
+import com.qk.dam.authority.common.vo.RealmVO;
 
 import java.util.List;
 

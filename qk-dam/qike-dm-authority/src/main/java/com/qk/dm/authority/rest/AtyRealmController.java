@@ -1,10 +1,10 @@
 package com.qk.dm.authority.rest;
 
+import com.qk.dam.authority.common.vo.ClientVO;
+import com.qk.dam.authority.common.vo.RealmVO;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.authority.service.AtyRealmService;
-import com.qk.dm.authority.vo.ClientVO;
-import com.qk.dm.authority.vo.RealmVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

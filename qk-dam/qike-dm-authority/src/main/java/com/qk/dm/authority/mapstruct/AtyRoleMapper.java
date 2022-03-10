@@ -1,13 +1,9 @@
 package com.qk.dm.authority.mapstruct;
 
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
-import org.keycloak.representations.idm.RoleRepresentation;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 /**
  * @author shenpj
@@ -19,7 +15,7 @@ import java.util.List;
 public interface AtyRoleMapper {
     AtyRoleMapper INSTANCE = Mappers.getMapper(AtyRoleMapper.class);
 
-    AtyClientRoleInfoVO userRole(RoleRepresentation roleRepresentation);
-
-    List<AtyClientRoleInfoVO> userRole(List<RoleRepresentation> roleRepresentation);
+//    AtyClientRoleInfoVO userRole(RoleRepresentation roleRepresentation);
+//
+//    List<AtyClientRoleInfoVO> userRole(List<RoleRepresentation> roleRepresentation);
 }

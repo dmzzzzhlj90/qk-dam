@@ -1,10 +1,9 @@
 package com.qk.dm.authority.service;
 
+import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByGroupsVO;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByUsersVO;
-import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
 import com.qk.dm.authority.vo.group.AtyUserGroupVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 
 import java.util.List;
 

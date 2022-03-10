@@ -1,9 +1,9 @@
 package com.qk.dm.authority.service.impl;
 
-import com.qk.dm.authority.keycloak.KeyCloakApi;
+import com.qk.dam.authority.common.keycloak.KeyCloakRealmApi;
+import com.qk.dam.authority.common.vo.ClientVO;
+import com.qk.dam.authority.common.vo.RealmVO;
 import com.qk.dm.authority.service.AtyRealmService;
-import com.qk.dm.authority.vo.ClientVO;
-import com.qk.dm.authority.vo.RealmVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,19 +15,19 @@ import java.util.List;
  */
 @Service
 public class AtyRealmServiceImpl implements AtyRealmService {
-    private final KeyCloakApi keyCloakApi;
+    private final KeyCloakRealmApi keyCloakRealmApi;
 
-    public AtyRealmServiceImpl(KeyCloakApi keyCloakApi) {
-        this.keyCloakApi = keyCloakApi;
+    public AtyRealmServiceImpl(KeyCloakRealmApi keyCloakRealmApi) {
+        this.keyCloakRealmApi = keyCloakRealmApi;
     }
 
     @Override
     public List<RealmVO> getRealmList() {
-        return keyCloakApi.realmList();
+        return keyCloakRealmApi.realmList();
     }
 
     @Override
     public List<ClientVO> getClientList(String realm, String client_clientId) {
-        return keyCloakApi.clientListByRealm(realm,client_clientId);
+        return keyCloakRealmApi.clientList(realm,client_clientId);
     }
 }

@@ -1,13 +1,9 @@
 package com.qk.dm.authority.mapstruct;
 
-import com.qk.dm.authority.vo.group.AtyGroupInfoVO;
-import org.keycloak.representations.idm.GroupRepresentation;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 /**
  * @author shenpj
@@ -19,7 +15,7 @@ import java.util.List;
 public interface AtyGroupMapper {
     AtyGroupMapper INSTANCE = Mappers.getMapper(AtyGroupMapper.class);
 
-    AtyGroupInfoVO userGroup(GroupRepresentation groupRepresentation);
-
-    List<AtyGroupInfoVO> userGroup(List<GroupRepresentation> groupRepresentation);
+//    AtyGroupInfoVO userGroup(GroupRepresentation groupRepresentation);
+//
+//    List<AtyGroupInfoVO> userGroup(List<GroupRepresentation> groupRepresentation);
 }

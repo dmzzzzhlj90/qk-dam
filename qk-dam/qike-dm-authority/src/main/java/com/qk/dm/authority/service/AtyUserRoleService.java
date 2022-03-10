@@ -1,6 +1,6 @@
 package com.qk.dm.authority.service;
 
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleInfoVO;
+import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByRolesVO;
 import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByUsersVO;
 import com.qk.dm.authority.vo.clientrole.AtyUserClientRoleVO;

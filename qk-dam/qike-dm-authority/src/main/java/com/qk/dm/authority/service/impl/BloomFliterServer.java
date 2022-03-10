@@ -4,14 +4,14 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.MapUtils;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
+import com.qk.dam.authority.common.vo.RealmVO;
+import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dm.authority.constant.QxConstant;
 import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.service.AtyRealmService;
 import com.qk.dm.authority.service.AtyUserService;
 import com.qk.dm.authority.util.MultipartFileUtil;
-import com.qk.dm.authority.vo.RealmVO;
-import com.qk.dm.authority.vo.user.AtyUserInfoVO;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 

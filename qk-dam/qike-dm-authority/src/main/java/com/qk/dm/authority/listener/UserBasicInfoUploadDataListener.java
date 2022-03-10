@@ -2,8 +2,8 @@ package com.qk.dm.authority.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dm.authority.service.impl.UserExcelBatchService;
-import com.qk.dm.authority.vo.user.AtyUserInputExceVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
