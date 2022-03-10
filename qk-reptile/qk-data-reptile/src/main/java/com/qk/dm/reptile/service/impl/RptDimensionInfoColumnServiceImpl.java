@@ -167,16 +167,17 @@ public class RptDimensionInfoColumnServiceImpl implements
       return Lists.newArrayList();
     }
     List<RptDimensionInfoColumnVO> voList = RptDimensionInfoColumnMapper.INSTANCE.of(columnInfoList);
+    List<String> codeList = columnCodeList(rptDimensionInfoColumnScreenParamsDTO.getBaseInfoId());
     voList.forEach(e->{
       if(!Objects.equals(e.getDimensionColumnCode(),RptConstant.NEXTURL)
-              &&columnCodeList(rptDimensionInfoColumnScreenParamsDTO.getBaseInfoId()).contains(e.getDimensionColumnCode())){
+              &&codeList.contains(e.getDimensionColumnCode())){
           e.setAlreadyAdd(true);
       }
     });
     return voList;
   }
   private List<String> columnCodeList(Long baseInfoId){
-     return rptConfigInfoService.getColumnList(baseInfoId);
+    return rptConfigInfoService.getColumnList(baseInfoId);
   }
 
   private List<RptDimensionColumnInfo> getListById(Long id){

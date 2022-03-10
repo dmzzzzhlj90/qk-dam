@@ -233,7 +233,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
 
     public List<String> getColumnList(Long baseId){
         List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(baseId);
-        if(CollectionUtils.isEmpty(list)){
+        if(!CollectionUtils.isEmpty(list)){
            return rptSelectorColumnInfoService.findByConfigIds(list.stream().map(RptConfigInfo::getId).collect(Collectors.toList()));
         }
         return List.of();
