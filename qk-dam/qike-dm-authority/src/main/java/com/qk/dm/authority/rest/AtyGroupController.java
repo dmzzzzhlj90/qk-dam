@@ -48,7 +48,7 @@ public class AtyGroupController {
      *
      * @param groupId
      * @param groupVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping("/{groupId}")
     public DefaultCommonResult updateGroup(@PathVariable String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
@@ -62,7 +62,7 @@ public class AtyGroupController {
      *
      * @param groupId
      * @param realm
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/{groupId}")
     public DefaultCommonResult deleteGroup(@Valid @NotBlank String realm, @PathVariable String groupId) {
@@ -110,7 +110,7 @@ public class AtyGroupController {
      *
      * @param realm
      * @param groupId
-     * @return
+     * @return DefaultCommonResult<List < AtyUserInfoVO>>
      */
     @GetMapping("/{groupId}/users")
     public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {

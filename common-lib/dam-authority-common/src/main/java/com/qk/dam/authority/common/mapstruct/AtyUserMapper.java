@@ -27,15 +27,5 @@ public interface AtyUserMapper {
 
     UserRepresentation userInfo(AtyUserKeyCloakVO userVO);
 
-//    AtyUserKeyCloakVO userInfo(AtyUserCreateVO userVO);
-//
-//    AtyUserKeyCloakVO userInfo(AtyUserUpdateVO atyUserVO);
-
-    void userUpdate(AtyUserKeyCloakVO userVO, @MappingTarget UserRepresentation userRepresentation);
-
-    void userUpdate(UserRepresentation userRep, @MappingTarget UserRepresentation userRepresentation);
-
-//    void userExcel(AtyUserInfoVO atyUserInfoVO, @MappingTarget AtyUserExcelVO atyUserExcelVO);
-//
     UserRepresentation userExcelInfo(AtyUserInputExceVO atyUserInputExceVO);
 }

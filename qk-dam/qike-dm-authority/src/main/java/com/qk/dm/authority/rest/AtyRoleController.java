@@ -33,7 +33,7 @@ public class AtyRoleController {
      * 新增角色
      *
      * @param clientRoleVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult addClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
@@ -45,7 +45,7 @@ public class AtyRoleController {
      * 修改角色
      *
      * @param clientRoleVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping("")
     public DefaultCommonResult updateClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
@@ -57,7 +57,7 @@ public class AtyRoleController {
      * 删除角色
      *
      * @param clientRoleVO
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("")
     public DefaultCommonResult deleteClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
@@ -69,7 +69,7 @@ public class AtyRoleController {
      * 角色详情
      *
      * @param clientRoleVO
-     * @return
+     * @return DefaultCommonResult<AtyClientRoleInfoVO>
      */
     @GetMapping("")
     public DefaultCommonResult<AtyClientRoleInfoVO> getClientRole(@Valid AtyClientRoleVO clientRoleVO) {
@@ -80,7 +80,7 @@ public class AtyRoleController {
      * 角色分页列表
      *
      * @param clientRoleParamVO
-     * @return
+     * @return DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>>
      */
     @PostMapping("/page")
     public DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>> getClientRolesPage(@RequestBody @Valid AtyClientRoleParamVO clientRoleParamVO) {
@@ -92,7 +92,7 @@ public class AtyRoleController {
      * 角色列表
      *
      * @param clientRoleParamVO
-     * @return
+     * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
      */
     @GetMapping("/list")
     public DefaultCommonResult<List<AtyClientRoleInfoVO>> getClientRoles(@Valid AtyClientRoleParamVO clientRoleParamVO) {
@@ -102,7 +102,7 @@ public class AtyRoleController {
     /**
      * 角色下的用户
      * @param clientRoleVO
-     * @return
+     * @return DefaultCommonResult<List<AtyUserInfoVO>>
      */
     @GetMapping("/users")
     public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleVO clientRoleVO) {

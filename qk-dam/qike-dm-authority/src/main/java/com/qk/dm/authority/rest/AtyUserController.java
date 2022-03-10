@@ -72,7 +72,7 @@ public class AtyUserController {
      *
      * @param userId
      * @param realm
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/{userId}")
     public DefaultCommonResult deleteUser(@Valid @NotBlank String realm, @PathVariable String userId) {
@@ -106,7 +106,7 @@ public class AtyUserController {
      * 用户列表-不分页
      *
      * @param atyUserParamVO
-     * @return
+     * @return DefaultCommonResult<List < AtyUserInfoVO>>
      */
     @GetMapping("/list")
     public DefaultCommonResult<List<AtyUserInfoVO>> getUsers(@Valid AtyUserParamVO atyUserParamVO) {

@@ -1,8 +1,6 @@
 package com.qk.dam.authority.common.keycloak;
 
-import com.qk.dam.authority.common.mapstruct.AtyGroupMapper;
 import com.qk.dam.authority.common.mapstruct.AtyUserMapper;
-import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.authority.common.vo.user.AtyUserKeyCloakVO;
@@ -111,15 +109,6 @@ public class KeyCloakUserApi {
      */
     public List<AtyUserInfoVO> userList(String realm, String search) {
         return AtyUserMapper.INSTANCE.userInfo(keyCloakApi.getUserList(realm, search));
-    }
-
-    /**
-     * 用户分组列表
-     *
-     * @param userId
-     */
-    public List<AtyGroupInfoVO> userGroup(String realm, String userId) {
-        return AtyGroupMapper.INSTANCE.userGroup(keyCloakApi.userGroup(realm, userId));
     }
 
     /**

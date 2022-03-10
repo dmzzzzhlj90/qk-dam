@@ -34,7 +34,7 @@ public class AtyUserGroupController {
      *
      * @param userId
      * @param realm
-     * @return
+     * @return DefaultCommonResult<List<AtyGroupInfoVO>>
      */
     @GetMapping("/users/{userId}/groups")
     public DefaultCommonResult<List<AtyGroupInfoVO>> getUserGroup(@Valid @NotBlank String realm, @PathVariable String userId) {
@@ -45,7 +45,7 @@ public class AtyUserGroupController {
      * 绑定
      *
      * @param atyUserGroupVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("/users/groups")
     public DefaultCommonResult addUserGroup(@RequestBody @Valid AtyUserGroupVO atyUserGroupVO) {
@@ -57,7 +57,7 @@ public class AtyUserGroupController {
      * 解绑
      *
      * @param atyUserGroupVO
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/users/groups")
     public DefaultCommonResult deleteUserGroup(@RequestBody @Valid AtyUserGroupVO atyUserGroupVO) {
@@ -70,7 +70,7 @@ public class AtyUserGroupController {
      * 批量绑定-用户组
      *
      * @param batchByGroupsVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("/users/groups/batch")
     public DefaultCommonResult addBatchByGroups(@RequestBody @Valid AtyGroupBatchByGroupsVO batchByGroupsVO) {
@@ -82,7 +82,7 @@ public class AtyUserGroupController {
      * 批量绑定-用户
      *
      * @param atyGroupBatchByUsersVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("/groups/users/batch")
     public DefaultCommonResult addBatchByUsers(@RequestBody @Valid AtyGroupBatchByUsersVO atyGroupBatchByUsersVO) {

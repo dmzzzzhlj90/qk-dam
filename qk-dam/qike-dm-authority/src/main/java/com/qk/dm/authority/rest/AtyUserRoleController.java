@@ -34,7 +34,7 @@ public class AtyUserRoleController {
      *
      * @param userId
      * @param realm
-     * @return
+     * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
      */
     @GetMapping("/users/{userId}/roles")
     public DefaultCommonResult<List<AtyClientRoleInfoVO>> getUserClientRole(@Valid @NotBlank String realm, @PathVariable String userId) {
@@ -45,7 +45,7 @@ public class AtyUserRoleController {
      * 绑定
      *
      * @param userClientRole
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("/users/roles")
     public DefaultCommonResult addUserClientRole(@RequestBody AtyUserClientRoleVO userClientRole) {
@@ -57,7 +57,7 @@ public class AtyUserRoleController {
      * 解绑
      *
      * @param userClientRole
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/users/roles")
     public DefaultCommonResult deleteUserClientRole(@RequestBody AtyUserClientRoleVO userClientRole) {
@@ -69,7 +69,7 @@ public class AtyUserRoleController {
      * 批量绑定-角色
      *
      * @param batchByRolesVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("/users/roles/batch")
     public DefaultCommonResult addBatchByRoles(@RequestBody @Valid AtyRoleBatchByRolesVO batchByRolesVO) {
@@ -81,7 +81,7 @@ public class AtyUserRoleController {
      * 批量绑定-用户
      *
      * @param atyGroupBatchVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("/roles/users/batch")
     public DefaultCommonResult addBatchByUsers(@RequestBody @Valid AtyRoleBatchByUsersVO atyGroupBatchVO) {
