@@ -4,15 +4,15 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.MapUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.authority.entity.QQkQxResourcesEmpower;
-import com.qk.dm.authority.entity.QQxEmpower;
-import com.qk.dm.authority.entity.QkQxResourcesEmpower;
-import com.qk.dm.authority.entity.QxEmpower;
+import com.qk.dm.authority.entity.*;
 import com.qk.dm.authority.mapstruct.QxEmpowerMapper;
+import com.qk.dm.authority.mapstruct.QxServiceMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
+import com.qk.dm.authority.repositories.QkQxServiceRepository;
 import com.qk.dm.authority.service.PowerEmpowerService;
 import com.qk.dm.authority.vo.params.EmpowerParamVO;
+import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
 import com.qk.dm.authority.vo.powervo.EmpowerVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -32,19 +32,23 @@ import java.util.stream.Collectors;
  */
 @Service
 public class PowerEmpowerServiceImpl implements PowerEmpowerService {
+  private final QkQxServiceRepository qkQxServiceRepository;
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private final QQxEmpower qQxEmpower = QQxEmpower.qxEmpower;
+  private final QQxService qQxService = QQxService.qxService;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
   //@Autowired
   //private keyClocakEmpowerApi keyClocakEmpowerApi;
 
 
-  public PowerEmpowerServiceImpl(QkQxEmpowerRepository qkQxEmpowerRepository,
+  public PowerEmpowerServiceImpl(QkQxServiceRepository qkQxServiceRepository,
+      QkQxEmpowerRepository qkQxEmpowerRepository,
       QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository,
       EntityManager entityManager) {
+    this.qkQxServiceRepository = qkQxServiceRepository;
     this.qkQxEmpowerRepository = qkQxEmpowerRepository;
     this.qkQxResourcesEmpowerRepository = qkQxResourcesEmpowerRepository;
     this.entityManager = entityManager;
@@ -188,6 +192,38 @@ public class PowerEmpowerServiceImpl implements PowerEmpowerService {
         empowerParamVO.getPagination().getPage(),
         empowerParamVO.getPagination().getSize(),
         modelPhysicalVOList);
+  }
+
+  /**
+   *
+   * @param empoerId
+   * @return
+   */
+  @Override
+  public List<EmpowerAllVO> queryAllEmpower(String empoerId) {
+    List<QxEmpower> qxEmpoerList = qkQxEmpowerRepository.findByEmpoerId(empoerId);
+    return getEmpowerVO(qxEmpoerList);
+  }
+
+  private List<EmpowerAllVO> getEmpowerVO(List<QxEmpower> qxEmpoerList) {
+    if (CollectionUtils.isNotEmpty(qxEmpoerList)){
+      List<String> serviceIdList = qxEmpoerList.stream().map(QxEmpower::getServiceId).collect(Collectors.toList());
+      List<QxService> serviceList = (List<QxService>) qkQxServiceRepository.findAll(qQxService.serviceid.in(serviceIdList));
+      return queryEmpowers(serviceList,qxEmpoerList);
+    }
+    return new ArrayList<EmpowerAllVO>();
+  }
+
+  private List<EmpowerAllVO> queryEmpowers(List<QxService> serviceList, List<QxEmpower> qxEmpoerList) {
+    if (CollectionUtils.isNotEmpty(serviceList)){
+      Map<String,String> map = serviceList.stream().collect(Collectors.toMap(QxService::getServiceid, QxService::getServiceName, (k1, k2) -> k2));
+       List<EmpowerAllVO> list = QxServiceMapper.INSTANCE.ofEmpowerAllVO(qxEmpoerList);
+       list.forEach(empowerAllVO -> {
+         empowerAllVO.setServiceName(map.get(empowerAllVO.getServiceId()));
+       });
+       return list;
+    }
+    return new ArrayList<EmpowerAllVO>();
   }
 
   private Map<String,Object> queryByParams(EmpowerParamVO empowerParamVO) {
