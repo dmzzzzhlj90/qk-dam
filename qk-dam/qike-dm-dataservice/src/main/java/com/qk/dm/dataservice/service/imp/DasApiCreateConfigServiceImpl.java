@@ -66,6 +66,8 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
         setDasApiCreateVOParams(dasApiCreateConfig, apiCreateConfigDefinitionVO);
         dasApiCreateConfigVO.setApiCreateDefinitionVO(apiCreateConfigDefinitionVO);
+        //设置DEBUG调试参数
+        dasApiCreateConfigVO.setDebugApiParasVOS(Lists.newArrayList());
 
         return dasApiCreateConfigVO;
     }
