@@ -10,7 +10,7 @@ import com.qk.dm.authority.mapstruct.QxServiceMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.repositories.QkQxServiceRepository;
-import com.qk.dm.authority.service.PowerService;
+import com.qk.dm.authority.service.EmpSvcService;
 import com.qk.dm.authority.vo.params.ServiceParamVO;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
 import com.querydsl.core.BooleanBuilder;
@@ -29,7 +29,7 @@ import java.util.*;
  * @since 1.0.0
  */
 @Service
-public class PowerServiceImpl implements PowerService {
+public class EmpSvcServiceImpl implements EmpSvcService {
   private final QkQxServiceRepository qkQxServiceRepository;
   private final QkQxResourcesRepository qkQxResourcesRepository;
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
@@ -37,7 +37,7 @@ public class PowerServiceImpl implements PowerService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
 
-  public PowerServiceImpl(QkQxServiceRepository qkQxServiceRepository,
+  public EmpSvcServiceImpl(QkQxServiceRepository qkQxServiceRepository,
       QkQxResourcesRepository qkQxResourcesRepository,
       QkQxEmpowerRepository qkQxEmpowerRepository, EntityManager entityManager) {
     this.qkQxServiceRepository = qkQxServiceRepository;

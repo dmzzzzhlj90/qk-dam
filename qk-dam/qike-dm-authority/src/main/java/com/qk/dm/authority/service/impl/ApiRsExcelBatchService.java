@@ -22,16 +22,16 @@ import java.util.UUID;
  * @since 1.0.0
  */
 @Service
-public class ApiResourceExcelBatchService {
+public class ApiRsExcelBatchService {
   private static final Log LOG = LogFactory.getLog("resourceExcelBatchService");
   private final QkQxResourcesRepository qkQxResourcesRepository;
-  private final BloomFliterServer bloomFliterServer;
+  private final BloomFilterServer bloomFilterServer;
 
-  public ApiResourceExcelBatchService(
+  public ApiRsExcelBatchService(
       QkQxResourcesRepository qkQxResourcesRepository,
-      BloomFliterServer bloomFliterServer) {
+      BloomFilterServer bloomFilterServer) {
     this.qkQxResourcesRepository = qkQxResourcesRepository;
-    this.bloomFliterServer = bloomFliterServer;
+    this.bloomFilterServer = bloomFilterServer;
   }
 
   public List<ResourceVO> saveResources(List<ResourceVO> qxResourcesList) {
@@ -59,13 +59,13 @@ public class ApiResourceExcelBatchService {
         resourceVO.setResourcesid(UUID.randomUUID().toString());
         //todo 加入操作人员id
         String key = MultipartFileUtil.getApiExcelKey(resourceVO);
-        if (bloomFliterServer.getFilter()!=null){
-          boolean b = bloomFliterServer.getFilter().mightContain(key);
+        if (bloomFilterServer.getFilter()!=null){
+          boolean b = bloomFilterServer.getFilter().mightContain(key);
           if (b){
             list.add(resourceVO);
             iterator.remove();
           }else {
-            bloomFliterServer.getFilter().put(key);
+            bloomFilterServer.getFilter().put(key);
           }
         }
       }

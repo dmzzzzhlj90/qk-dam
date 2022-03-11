@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 授权
  */
-public interface PowerEmpowerService {
+public interface EmpPowerService {
   void addEmpower(EmpowerVO empowerVO);
 
   EmpowerVO EmpowerDetails(Long id);

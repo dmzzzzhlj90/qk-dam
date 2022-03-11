@@ -20,13 +20,13 @@ import java.util.List;
 @Service
 public class UserExcelBatchService {
   private static final Log LOG = LogFactory.getLog("userExcelBatchService");
-  private final BloomFliterServer bloomFliterServer;
+  private final BloomFilterServer bloomFilterServer;
   private final AtyUserService atyUserService;
 
 
-  public UserExcelBatchService(BloomFliterServer bloomFliterServer,
+  public UserExcelBatchService(BloomFilterServer bloomFilterServer,
       AtyUserService atyUserService) {
-    this.bloomFliterServer = bloomFliterServer;
+    this.bloomFilterServer = bloomFilterServer;
     this.atyUserService = atyUserService;
   }
 
@@ -63,13 +63,13 @@ public class UserExcelBatchService {
         AtyUserInputExceVO atyUserInputExceVO = iterator.next();
         //todo 加入操作人员id
         String key = MultipartFileUtil.getUserExcelKey(atyUserInputExceVO,relame);
-        if (bloomFliterServer.getFilter()!=null){
-          boolean b = bloomFliterServer.getFilter().mightContain(key);
+        if (bloomFilterServer.getFilter()!=null){
+          boolean b = bloomFilterServer.getFilter().mightContain(key);
           if (b){
             list.add(atyUserInputExceVO);
             iterator.remove();
           }else {
-            bloomFliterServer.getFilter().put(key);
+            bloomFilterServer.getFilter().put(key);
           }
         }
       }

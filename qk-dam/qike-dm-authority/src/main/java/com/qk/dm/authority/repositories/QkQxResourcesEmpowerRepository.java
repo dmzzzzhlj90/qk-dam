@@ -10,4 +10,7 @@ public interface QkQxResourcesEmpowerRepository extends BaseRepository<QkQxResou
   void deleteAllByEmpowerUuid(String empowerId);
    List<QkQxResourcesEmpower> findByEmpowerUuid(String empowerId);
 
+  List<QkQxResourcesEmpower> findByResourceUuid(String resourceId);
+
+
 }

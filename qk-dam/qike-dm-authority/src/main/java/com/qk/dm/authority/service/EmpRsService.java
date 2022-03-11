@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 资源和API
  */
-public interface PowerResourcesService {
+public interface EmpRsService {
   void addResource(ResourceVO resourceVO);
 
   void updateResource(ResourceVO resourceVO);
@@ -23,4 +23,6 @@ public interface PowerResourcesService {
   List<ResourceVO> queryResourceApi(ApiResourcesParamVO apiResourcesParamVO);
 
   List<ResourceVO> queryauthorized(PowerResourcesParamVO powerResourcesParamVO);
+
+  Boolean qeryRsEmp(Long id);
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * 用户授权信息
  */
 
-public interface UserEmpowerService {
+public interface EmpUserPowerService {
   List<ServiceVO> queryServicesByUserId(String realm, String userId);
 
   List<String> queryEmpower(String realm, String serviceId, String userId);

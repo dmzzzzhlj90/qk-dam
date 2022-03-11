@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public interface QxExcelService {
+public interface EmpExcelService {
   void resourceDownloadTemplate(HttpServletResponse response)
       throws IOException;
 

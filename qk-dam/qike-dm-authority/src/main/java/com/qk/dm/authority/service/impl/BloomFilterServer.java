@@ -29,13 +29,13 @@ import java.util.Map;
  */
 @Component
 @Data
-public class BloomFliterServer {
+public class BloomFilterServer {
   private final QkQxResourcesRepository qkQxResourcesRepository;
   private final AtyRealmService atyRealmService;
   private final AtyUserService atyUserService;
   private BloomFilter<String> filter = null;
 
-  public BloomFliterServer(QkQxResourcesRepository qkQxResourcesRepository,
+  public BloomFilterServer(QkQxResourcesRepository qkQxResourcesRepository,
       AtyRealmService atyRealmService, AtyUserService atyUserService) {
     this.qkQxResourcesRepository = qkQxResourcesRepository;
     this.atyRealmService = atyRealmService;

@@ -1,15 +1,18 @@
 package com.qk.dm.authority.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.alibaba.nacos.common.utils.MapUtils;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.constant.QxConstant;
 import com.qk.dm.authority.entity.QQkQxResourcesEmpower;
 import com.qk.dm.authority.entity.QQxResources;
+import com.qk.dm.authority.entity.QkQxResourcesEmpower;
 import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.mapstruct.QxResourcesMapper;
+import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
-import com.qk.dm.authority.service.PowerResourcesService;
+import com.qk.dm.authority.service.EmpRsService;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.PowerResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
@@ -22,10 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**权限管理-资源
@@ -34,19 +34,21 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
-public class PowerResourcesServiceImpl implements PowerResourcesService {
+public class EmpRsServiceImpl implements EmpRsService {
   private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private final QkQxResourcesRepository qkQxResourcesRepository;
+  private final QkQxEmpowerRepository qkQxEmpowerRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QQxResources qQxResources= QQxResources.qxResources;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
 
-  public PowerResourcesServiceImpl(
-      QkQxResourcesRepository qkQxResourcesRepository,
+  public EmpRsServiceImpl(QkQxResourcesRepository qkQxResourcesRepository,
+      QkQxEmpowerRepository qkQxEmpowerRepository,
       QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository,
       EntityManager entityManager) {
     this.qkQxResourcesRepository = qkQxResourcesRepository;
+    this.qkQxEmpowerRepository = qkQxEmpowerRepository;
     this.qkQxResourcesEmpowerRepository = qkQxResourcesEmpowerRepository;
     this.entityManager = entityManager;
   }
@@ -112,8 +114,40 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
     BooleanExpression expression = qQkQxResourcesEmpower.resourceUuid.eq(id);
     boolean exists = qkQxResourcesEmpowerRepository.exists(expression);
     if (exists){
+      dealEmpPower(id);
       qkQxResourcesEmpowerRepository.deleteALLByResourceUuid(id);
     }
+  }
+
+  /**
+   * 处理授权表信息（如果授权信息只存在当前一条授权资源，则删除授权信息否则不删除授权信息）
+   * @param id
+   */
+  private void dealEmpPower(String id) {
+    Map<String,List<QkQxResourcesEmpower>> map = getRsEmpMap();
+    List<QkQxResourcesEmpower> qxRsEmpList = qkQxResourcesEmpowerRepository.findByResourceUuid(id);
+    if (CollectionUtils.isNotEmpty(qxRsEmpList) && MapUtils.isNotEmpty(map)){
+      List<String> EmpowerIdList = qxRsEmpList.stream().map(QkQxResourcesEmpower::getEmpowerUuid).collect(Collectors.toList());
+      EmpowerIdList.stream().forEach(empowerUuid->{
+        List<QkQxResourcesEmpower> qkQxResourcesEmpowerList = map.get(empowerUuid);
+        if (CollectionUtils.isNotEmpty(qkQxResourcesEmpowerList) && qkQxResourcesEmpowerList.size()<=QxConstant.RS_EMP){
+          qkQxEmpowerRepository.deleteByEmpowerId(empowerUuid);
+        }
+      });
+    }
+  }
+
+  /**
+   * 获取资源授权关系，以授权信息uuid为key
+   * @return
+   */
+  private Map<String,List<QkQxResourcesEmpower>> getRsEmpMap() {
+    List<QkQxResourcesEmpower> rsEmpList = qkQxResourcesEmpowerRepository.findAll();
+    if (CollectionUtils.isNotEmpty(rsEmpList)){
+      Map<String,List<QkQxResourcesEmpower>> map = rsEmpList.stream().collect(Collectors.groupingBy(QkQxResourcesEmpower::getEmpowerUuid));
+      return map;
+    }
+    return new HashMap<String,List<QkQxResourcesEmpower>>();
   }
 
   @Override
@@ -151,6 +185,20 @@ public class PowerResourcesServiceImpl implements PowerResourcesService {
       qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getId().toString())).collect(Collectors.toList());
     }
     return  qxResourcesList.stream().map(QxResourcesMapper.INSTANCE::qxResourceVO).collect(Collectors.toList());
+  }
+
+  @Override
+  public Boolean qeryRsEmp(Long id) {
+    QxResources qxResources = qkQxResourcesRepository.findById(id).orElse(null);
+    if (Objects.isNull(qxResources)) {
+      throw new BizException("当前需删除的数据不存在");
+    }
+    List<QkQxResourcesEmpower> rsEmpList = qkQxResourcesEmpowerRepository
+        .findByResourceUuid(qxResources.getResourcesid());
+    if (CollectionUtils.isNotEmpty(rsEmpList)){
+      return true;
+    }
+    return false;
   }
 
   private List<ResourceOutVO> buildByResource(

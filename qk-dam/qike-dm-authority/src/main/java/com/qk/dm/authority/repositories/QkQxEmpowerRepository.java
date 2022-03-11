@@ -8,5 +8,6 @@ import java.util.List;
 public interface QkQxEmpowerRepository extends BaseRepository<QxEmpower, Long> {
   List<QxEmpower> findByServiceId(String serviceId);
   List<QxEmpower> findByEmpoerId(String empoerId);
+  void  deleteByEmpowerId(String EmpowerId);
 
 }

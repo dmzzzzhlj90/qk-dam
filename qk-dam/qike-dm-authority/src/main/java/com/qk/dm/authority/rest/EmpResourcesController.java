@@ -2,7 +2,7 @@ package com.qk.dm.authority.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.authority.service.PowerResourcesService;
+import com.qk.dm.authority.service.EmpRsService;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
 import com.qk.dm.authority.vo.powervo.ResourceOutVO;
@@ -21,64 +21,74 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/resource")
-public class ResourcesController {
-  private final PowerResourcesService powerResourcesService;
+public class EmpResourcesController {
+  private final EmpRsService empRsService;
 
-  public ResourcesController(PowerResourcesService powerResourcesService) {
-    this.powerResourcesService = powerResourcesService;
+  public EmpResourcesController(EmpRsService empRsService) {
+    this.empRsService = empRsService;
   }
 
   /**
    * 新增资源（API）
-   * @param resourceVO
+   * @param resourceVO 新增资源（api）信息
    * @return
    */
-  @PostMapping
+  @PostMapping("")
   public DefaultCommonResult addResource(@Validated @RequestBody ResourceVO resourceVO){
-    powerResourcesService.addResource(resourceVO);
+    empRsService.addResource(resourceVO);
     return DefaultCommonResult.success();
   }
 
   /**
    * 编辑资源
-   * @param resourceVO
+   * @param resourceVO 编辑资源（api）信息
    * @return
    */
   @PutMapping("")
   public DefaultCommonResult updateResource(@Validated @RequestBody ResourceVO resourceVO){
-    powerResourcesService.updateResource(resourceVO);
+    empRsService.updateResource(resourceVO);
     return DefaultCommonResult.success();
   }
 
   /**
    * 删除资源
-   * @param id
+   * @param id 资源（api）id
    * @return
    */
   @DeleteMapping("/{id}")
   public DefaultCommonResult deleteResource(@NotNull @PathVariable("id") Long id){
-    powerResourcesService.deleteResource(id);
+    empRsService.deleteResource(id);
     return DefaultCommonResult.success();
   }
 
   /**
    * 根据服务id查询资源
-   * @param resourceParamVO
-   * @return
+   * @param resourceParamVO 查询资源条件
+   * @return DefaultCommonResult<List<ResourceOutVO>> 资源信息
    */
-  @PostMapping("/query")
+  @PostMapping("/rs")
   public DefaultCommonResult<List<ResourceOutVO>> queryResource(@RequestBody ResourceParamVO resourceParamVO){
-    return DefaultCommonResult.success(ResultCodeEnum.OK,powerResourcesService.queryResource(resourceParamVO));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.queryResource(resourceParamVO));
   }
 
   /**
    * 根据服务id查询API
-   * @param apiResourcesParamVO
-   * @return
+   * @param apiResourcesParamVO 查询api条件
+   * @return DefaultCommonResult<List<ResourceVO>> api信息
    */
   @PostMapping("/api")
   public DefaultCommonResult<List<ResourceVO>> queryResourceApi(@RequestBody ApiResourcesParamVO apiResourcesParamVO){
-    return DefaultCommonResult.success(ResultCodeEnum.OK,powerResourcesService.queryResourceApi(apiResourcesParamVO));
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.queryResourceApi(apiResourcesParamVO));
+  }
+
+  /**
+   * 查询删除的资源是否已经授权
+   * @param id 资源（api）id
+   * @return DefaultCommonResult<Boolean> 返回值为true表示存在为false表示不存在
+   */
+  @GetMapping("/qery/{id}")
+  public DefaultCommonResult<Boolean> qeryRsEmp(@NotNull @PathVariable("id") Long id){
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.qeryRsEmp(id));
   }
 
   /**

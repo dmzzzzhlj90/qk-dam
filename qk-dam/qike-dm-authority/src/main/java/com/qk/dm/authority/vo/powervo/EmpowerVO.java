@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -28,31 +30,37 @@ public class EmpowerVO {
   /**
    * 被授权主体类型(0表示用户，1表示角色，2表示用户组)
    */
+  @NotBlank(message = "被授权主体类型不能为空")
   private String empoerType;
 
   /**
    * 被授权主体名称
    */
+  @NotBlank(message = "被授权主体名称不能为空")
   private String empoerName;
 
   /**
    * 被授权主体id(当授权主体为角色时候存储对应的角色客户端id)
    */
+  @NotBlank(message = "被授权主体id不能为空")
   private String empoerId;
 
   /**
    * 授权类型(默认0标识拒绝,1标识允许)
    */
+  @NotNull(message = "授权类型不能为空")
   private Integer type;
 
   /**
    * 被授权类型（默认0表示API,1标识资源）
    */
+  @NotNull(message = "被授权类型不能为空")
   private Integer powerType;
 
   /**
    * 授权资源uuid
    */
+  @NotNull(message = "授权资源uuid不能为空")
   private List<String> resourceSigns;
 
   /**
@@ -91,6 +99,7 @@ public class EmpowerVO {
   /**
    * 服务uuid
    */
+  @NotBlank(message = "服务uuid不能为空")
   private String serviceId;
 
   /**
