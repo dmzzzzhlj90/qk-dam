@@ -359,7 +359,7 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
 
     private void setBackendConstantJson(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO, DasApiRegister dasApiRegister) {
         if (!ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getApiRegisterConstantParaVOS())) {
-            dasApiRegister.setBackendConstants(GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS()));
+            dasApiRegister.setBackendConstants(GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getApiRegisterConstantParaVOS()));
         }
     }
 
