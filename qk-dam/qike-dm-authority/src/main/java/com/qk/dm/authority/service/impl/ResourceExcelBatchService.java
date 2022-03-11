@@ -1,6 +1,7 @@
 package com.qk.dm.authority.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.qk.dm.authority.constant.QxConstant;
 import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.mapstruct.QxResourcesMapper;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
@@ -58,7 +59,7 @@ public class ResourceExcelBatchService {
         if (Objects.isNull(qxResources1)){
           resources = QxResourcesMapper.INSTANCE.qxResourcesExcel(resourceExcelVO);
           //设置父级id为0
-          resources.setPid(0l);
+          resources.setPid(QxConstant.DIRID);
         }else{
           resources = QxResourcesMapper.INSTANCE.qxResourcesExcel(resourceExcelVO);
           resources.setPid(qxResources1.getId());
