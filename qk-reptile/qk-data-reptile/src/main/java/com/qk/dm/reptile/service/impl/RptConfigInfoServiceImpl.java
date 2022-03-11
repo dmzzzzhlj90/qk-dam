@@ -197,8 +197,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         return RptSelectorVO.builder().configId(configId)
                 .selectorList(configInfoList)
                 .next(Objects.nonNull(configIdInfo))
-                .columnCodeList(CollectionUtils.isEmpty(configInfoList)?Collections.EMPTY_LIST:
-                        configInfoList.stream().map(RptSelectorColumnInfoVO::getColumnCode).collect(Collectors.toList()))
+                .columnCodeList(Collections.EMPTY_LIST)
                 .build();
     }
 
