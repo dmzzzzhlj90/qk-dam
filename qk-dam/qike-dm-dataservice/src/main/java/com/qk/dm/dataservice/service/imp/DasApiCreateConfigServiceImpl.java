@@ -91,7 +91,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         }
         if (null != dasApiCreateConfig.getApiOrderParas() && dasApiCreateConfig.getApiOrderParas().length() > 0) {
             apiCreateConfigDefinitionVO.setApiCreateOrderParasVOS(
-                    GsonUtil.fromJsonString(dasApiCreateConfig.getApiResponseParas(),
+                    GsonUtil.fromJsonString(dasApiCreateConfig.getApiOrderParas(),
                             new TypeToken<List<DasApiCreateOrderParasVO>>() {
                             }.getType()));
         }

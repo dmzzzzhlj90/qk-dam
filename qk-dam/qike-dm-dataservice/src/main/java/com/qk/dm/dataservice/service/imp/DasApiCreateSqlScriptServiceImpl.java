@@ -193,8 +193,6 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         // 真实请求参数(SQL where条件,使用字段参数)
         Map<String, String> reqParams = apiCreateSqlScriptVO.getDebugApiParasVOS().stream()
                 .collect(Collectors.toMap(DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
-        //执行SQL片段
-        String sqlPara = apiCreateSqlScriptDefinitionVO.getSqlPara();
 
         // 2.执行查询SQL(根据数据源类型)
         // 获取数据库连接信息
