@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service;
 
+import com.qk.dm.dataservice.vo.DasFrontPageTrendInfoDataVO;
 import com.qk.dm.dataservice.vo.DasReleaseTrendParamsVO;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasFrontPageInfoService {
 
-    Object releaseTrend(DasReleaseTrendParamsVO dasReleaseTrendParamsVO);
+    DasFrontPageTrendInfoDataVO releaseTrend(DasReleaseTrendParamsVO dasReleaseTrendParamsVO);
 
 }

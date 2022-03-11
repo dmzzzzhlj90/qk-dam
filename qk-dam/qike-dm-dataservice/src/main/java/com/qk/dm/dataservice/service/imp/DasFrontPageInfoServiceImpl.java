@@ -3,6 +3,7 @@ package com.qk.dm.dataservice.service.imp;
 
 import com.qk.dm.dataservice.controller.DasFrontPageInfoController;
 import com.qk.dm.dataservice.service.DasFrontPageInfoService;
+import com.qk.dm.dataservice.vo.DasFrontPageTrendInfoDataVO;
 import com.qk.dm.dataservice.vo.DasReleaseTrendParamsVO;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ import org.springframework.stereotype.Service;
 public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
 
     @Override
-    public Object releaseTrend(DasReleaseTrendParamsVO dasReleaseTrendParamsVO) {
+    public DasFrontPageTrendInfoDataVO releaseTrend(DasReleaseTrendParamsVO dasReleaseTrendParamsVO) {
+
         return null;
     }
 
