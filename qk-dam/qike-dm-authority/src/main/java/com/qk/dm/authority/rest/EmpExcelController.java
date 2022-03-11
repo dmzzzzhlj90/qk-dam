@@ -60,7 +60,7 @@ public class EmpExcelController {
   /**
    * 资源信息excel__导入数据
    *
-   * @param file
+   * @param file 导入文件
    * @return DefaultCommonResult
    */
   @PostMapping("/resource/upload")
@@ -72,7 +72,7 @@ public class EmpExcelController {
   /**
    * api_资源信息excel__导入数据
    *
-   * @param file
+   * @param file 导入文件
    * @return DefaultCommonResult
    */
   @PostMapping("/api/upload")
@@ -83,8 +83,8 @@ public class EmpExcelController {
 
   /**
    *  用户信息excel__导入数据
-   * @param realm
-   * @param file
+   * @param realm 域名称
+   * @param file  导入文件
    * @return
    */
   @PostMapping("/user/upload")
@@ -95,8 +95,10 @@ public class EmpExcelController {
 
   /**
    * 资源信息excel__导出数据
-   *
+   * @param serviceId 服务UUID
    * @param response
+   * @return
+   * @throws IOException
    */
   @PostMapping("/resource/download")
   public DefaultCommonResult resourcesAllDownload(@RequestParam("serviceId") String serviceId,HttpServletResponse response)
@@ -107,8 +109,10 @@ public class EmpExcelController {
 
   /**
    * api资源信息excel__导出数据
-   *
+   * @param serviceId 服务UUID
    * @param response
+   * @return
+   * @throws IOException
    */
   @PostMapping("/api/download")
   public DefaultCommonResult apiAllDownload(@RequestParam("serviceId") String serviceId,HttpServletResponse response)
@@ -119,8 +123,8 @@ public class EmpExcelController {
 
   /**
    * 用戶信息excel__导出数据
-   * @param realm
-   * @param search
+   * @param realm  域名称
+   * @param search 筛选条件
    * @return
    * @throws IOException
    */
