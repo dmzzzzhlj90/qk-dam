@@ -1,11 +1,13 @@
 package com.qk.dm.authority.service.impl;
 
-import com.qk.dam.authority.common.keycloak.KeyCloakGroupApi;
+import com.qk.dam.authority.common.keycloak.KeyCloakUserApi;
 import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyUserGroupService;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByGroupsVO;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByUsersVO;
 import com.qk.dm.authority.vo.group.AtyUserGroupVO;
+import com.qk.dm.authority.vo.user.AtyUserGroupParamVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,35 +19,39 @@ import java.util.List;
  */
 @Service
 public class AtyUserGroupServiceImpl implements AtyUserGroupService {
-    private final KeyCloakGroupApi keyCloakGroupApi;
+    private final KeyCloakUserApi keyCloakUserApi;
 
-    public AtyUserGroupServiceImpl(KeyCloakGroupApi keyCloakGroupApi) {
-        this.keyCloakGroupApi = keyCloakGroupApi;
+    public AtyUserGroupServiceImpl(KeyCloakUserApi keyCloakUserApi) {
+        this.keyCloakUserApi = keyCloakUserApi;
     }
 
+    @Override
+    public PageResultVO<AtyGroupInfoVO> getUserGroup(AtyUserGroupParamVO userGroupParamVO, String userId) {
+        return keyCloakUserApi.userGroup(userGroupParamVO.getRealm(), userId, userGroupParamVO.getPagination());
+    }
 
     @Override
     public List<AtyGroupInfoVO> getUserGroup(String realm, String userId) {
-        return keyCloakGroupApi.userGroup(realm, userId);
+        return keyCloakUserApi.userGroup(realm, userId);
     }
 
     @Override
     public void addBatchByUsers(AtyUserGroupVO atyUserGroupVO) {
-        keyCloakGroupApi.addUserGroup(atyUserGroupVO.getRealm(), atyUserGroupVO.getUserId(), atyUserGroupVO.getGroupId());
+        keyCloakUserApi.addUserGroup(atyUserGroupVO.getRealm(), atyUserGroupVO.getUserId(), atyUserGroupVO.getGroupId());
     }
 
     @Override
     public void deleteUserGroup(AtyUserGroupVO atyUserGroupVO) {
-        keyCloakGroupApi.deleteUserGroup(atyUserGroupVO.getRealm(), atyUserGroupVO.getUserId(), atyUserGroupVO.getGroupId());
+        keyCloakUserApi.deleteUserGroup(atyUserGroupVO.getRealm(), atyUserGroupVO.getUserId(), atyUserGroupVO.getGroupId());
     }
 
     @Override
     public void addBatchByUsers(AtyGroupBatchByUsersVO atyGroupBatchByUsersVO) {
-        atyGroupBatchByUsersVO.getUserIds().forEach(userId -> keyCloakGroupApi.addUserGroup(atyGroupBatchByUsersVO.getRealm(), userId, atyGroupBatchByUsersVO.getGroupId()));
+        atyGroupBatchByUsersVO.getUserIds().forEach(userId -> keyCloakUserApi.addUserGroup(atyGroupBatchByUsersVO.getRealm(), userId, atyGroupBatchByUsersVO.getGroupId()));
     }
 
     @Override
     public void addBatchByGroups(AtyGroupBatchByGroupsVO batchByGroupsVO) {
-        batchByGroupsVO.getGroupIds().forEach(groupId -> keyCloakGroupApi.addUserGroup(batchByGroupsVO.getRealm(), batchByGroupsVO.getUserId(), groupId));
+        batchByGroupsVO.getGroupIds().forEach(groupId -> keyCloakUserApi.addUserGroup(batchByGroupsVO.getRealm(), batchByGroupsVO.getUserId(), groupId));
     }
 }

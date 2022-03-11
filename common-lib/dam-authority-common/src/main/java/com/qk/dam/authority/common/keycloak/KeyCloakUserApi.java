@@ -1,6 +1,10 @@
 package com.qk.dam.authority.common.keycloak;
 
+import com.qk.dam.authority.common.mapstruct.AtyGroupMapper;
+import com.qk.dam.authority.common.mapstruct.AtyRoleMapper;
 import com.qk.dam.authority.common.mapstruct.AtyUserMapper;
+import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
+import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.authority.common.vo.user.AtyUserKeyCloakVO;
@@ -42,6 +46,7 @@ public class KeyCloakUserApi {
      * @param userVO
      */
     public void updateUser(String realm, AtyUserKeyCloakVO userVO) {
+        //todo 为了keycolakapi与mapstruct解偶，不使用mapstruct
         keyCloakApi.updateUser(
                 realm,
                 userVO.getId(),
@@ -80,9 +85,11 @@ public class KeyCloakUserApi {
      * @return
      */
     public AtyUserInfoVO userDetail(String realm, String userId) {
-        return AtyUserMapper.INSTANCE.userInfo(keyCloakApi.userDetail(realm, userId));
+        AtyUserInfoVO atyUserInfoVO = AtyUserMapper.INSTANCE.userInfo(keyCloakApi.userDetail(realm, userId));
+        //用户分组
+        atyUserInfoVO.setGroupList(userGroup(realm, userId));
+        return atyUserInfoVO;
     }
-
 
     /**
      * 用户列表
@@ -122,5 +129,83 @@ public class KeyCloakUserApi {
             UserRepresentation user = AtyUserMapper.INSTANCE.userExcelInfo(atyUserInputExceVO);
             keyCloakApi.createUser(relame,atyUserInputExceVO.getPassword(),user);
         });
+    }
+
+    /**
+     * 用户分组列表
+     * @param realm
+     * @param userId
+     * @param pagination
+     * @return
+     */
+    public PageResultVO<AtyGroupInfoVO> userGroup(String realm, String userId, Pagination pagination) {
+        return new PageResultVO<>(
+                keyCloakApi.userGroup(realm, userId).size(),
+                pagination.getPage(),
+                pagination.getSize(),
+                AtyGroupMapper.INSTANCE.userGroup(keyCloakApi.userGroup(realm, userId,pagination)));
+    }
+
+    /**
+     * 用户分组列表
+     * @param realm
+     * @param userId
+     * @return
+     */
+    public List<AtyGroupInfoVO> userGroup(String realm, String userId) {
+        return AtyGroupMapper.INSTANCE.userGroup(keyCloakApi.userGroup(realm, userId));
+    }
+
+    /**
+     * 用户添加分组
+     * @param realm
+     * @param userId
+     * @param groupId
+     */
+    public void addUserGroup(String realm, String userId, String groupId) {
+        keyCloakApi.addUserGroup(realm, userId, groupId);
+    }
+
+    /**
+     * 用户离开分组
+     * @param realm
+     * @param userId
+     * @param groupId
+     */
+    public void deleteUserGroup(String realm, String userId, String groupId) {
+        keyCloakApi.deleteUserGroup(realm, userId, groupId);
+    }
+
+    /**
+     * 用户的客户端角色列表
+     * @param realm
+     * @param userId
+     * @param client_clientId
+     * @return
+     */
+    public List<AtyClientRoleInfoVO> userClientRole(String realm, String userId, String client_clientId) {
+        return AtyRoleMapper.INSTANCE.userRole(keyCloakApi.userClientRole(realm, userId, client_clientId));
+    }
+
+    /**
+     * 用户添加客户端角色
+     * @param realm
+     * @param client_id
+     * @param userId
+     * @param roleName
+     */
+    public void addUserClientRole(String realm, String client_id, String userId, String roleName) {
+        keyCloakApi.addUserClientRole(realm, client_id, userId, roleName);
+    }
+
+    /**
+     * 用户删除客户端角色
+     * @param realm
+     * @param client_id
+     * @param userId
+     * @param roleName
+     */
+    public void deleteUserClientRole(String realm, String client_id, String userId, String roleName) {
+        keyCloakApi.deleteUserClientRole(realm, client_id, userId, roleName);
     }
 }

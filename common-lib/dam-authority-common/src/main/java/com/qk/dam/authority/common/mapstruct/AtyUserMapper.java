@@ -4,10 +4,7 @@ import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.authority.common.vo.user.AtyUserKeyCloakVO;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +28,10 @@ public interface AtyUserMapper {
     List<AtyUserInfoVO> userInfo(List<UserRepresentation> userRepresentation);
 
     UserRepresentation userInfo(AtyUserKeyCloakVO userVO);
+
+    void userUpdate(AtyUserKeyCloakVO userVO, @MappingTarget UserRepresentation userRepresentation);
+
+    void userUpdate(UserRepresentation userVO, @MappingTarget UserRepresentation userRepresentation);
 
     UserRepresentation userExcelInfo(AtyUserInputExceVO atyUserInputExceVO);
 

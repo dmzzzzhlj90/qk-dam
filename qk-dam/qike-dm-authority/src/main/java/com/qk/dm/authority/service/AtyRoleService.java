@@ -25,5 +25,7 @@ public interface AtyRoleService {
 
     List<AtyClientRoleInfoVO> getUsers(String realm, String search);
 
+    PageResultVO<AtyUserInfoVO> getRoleUsers(String realm, String roleName, Pagination pagination);
+
     List<AtyUserInfoVO> getRoleUsers(String realm, String roleName);
 }

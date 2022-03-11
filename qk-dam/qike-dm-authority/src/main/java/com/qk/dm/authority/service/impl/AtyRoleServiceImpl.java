@@ -58,6 +58,11 @@ public class AtyRoleServiceImpl implements AtyRoleService {
     }
 
     @Override
+    public PageResultVO<AtyUserInfoVO> getRoleUsers(String realm, String roleName, Pagination pagination) {
+        return keyCloakRoleApi.clientRoleUsers(realm, client_id, roleName,pagination);
+    }
+
+    @Override
     public List<AtyUserInfoVO> getRoleUsers(String realm, String roleName) {
         return keyCloakRoleApi.clientRoleUsers(realm, client_id, roleName);
     }

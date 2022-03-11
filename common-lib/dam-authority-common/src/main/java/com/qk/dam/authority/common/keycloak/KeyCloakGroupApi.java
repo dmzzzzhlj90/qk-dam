@@ -61,17 +61,10 @@ public class KeyCloakGroupApi {
      * @return
      */
     public AtyGroupInfoVO groupDetail(String realm, String groupId) {
-        return AtyGroupMapper.INSTANCE.userGroup(keyCloakApi.groupDetail(realm, groupId));
-    }
-
-    /**
-     * 查询组下的所有用户
-     * @param realm
-     * @param groupId
-     * @return
-     */
-    public List<AtyUserInfoVO> groupUsers(String realm, String groupId) {
-        return AtyUserMapper.INSTANCE.userInfo(keyCloakApi.getGroupUsers(realm, groupId));
+        AtyGroupInfoVO atyGroupInfoVO = AtyGroupMapper.INSTANCE.userGroup(keyCloakApi.groupDetail(realm, groupId));
+        //分组下的用户列表
+        atyGroupInfoVO.setMembers(AtyUserMapper.INSTANCE.userInfo(keyCloakApi.groupUsers(realm, groupId)));
+        return atyGroupInfoVO;
     }
 
     /**
@@ -88,30 +81,25 @@ public class KeyCloakGroupApi {
     /**
      * 查询所有分组
      */
-    public List<AtyGroupInfoVO> groupList(String realm, String search){
+    public List<AtyGroupInfoVO> groupList(String realm, String search) {
         return AtyGroupMapper.INSTANCE.userGroup(keyCloakApi.groupList(realm, search));
     }
 
     /**
-     * 用户分组列表
-     *
-     * @param userId
+     * 查询分组下的用户列表
      */
-    public List<AtyGroupInfoVO> userGroup(String realm, String userId) {
-        return AtyGroupMapper.INSTANCE.userGroup(keyCloakApi.userGroup(realm, userId));
+    public PageResultVO<AtyUserInfoVO> groupUsers(String realm, String groupId, Pagination pagination) {
+        return new PageResultVO<>(
+                keyCloakApi.groupUsers(realm, groupId).size(),
+                pagination.getPage(),
+                pagination.getSize(),
+                AtyUserMapper.INSTANCE.userInfo(keyCloakApi.groupUsers(realm, groupId, pagination)));
     }
 
     /**
-     * 用户添加分组
+     * 查询分组下的用户列表
      */
-    public void addUserGroup(String realm, String userId, String groupId) {
-        keyCloakApi.addUserGroup(realm, userId, groupId);
-    }
-
-    /**
-     * 用户离开分组
-     */
-    public void deleteUserGroup(String realm, String userId, String groupId) {
-        keyCloakApi.deleteUserGroup(realm, userId, groupId);
+    public List<AtyUserInfoVO> groupUsers(String realm, String groupId) {
+        return AtyUserMapper.INSTANCE.userInfo(keyCloakApi.groupUsers(realm, groupId));
     }
 }

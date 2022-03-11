@@ -7,6 +7,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyRoleService;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,9 +101,19 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色下的用户
+     * 角色下的用户-分页
      * @param clientRoleVO
-     * @return DefaultCommonResult<List<AtyUserInfoVO>>
+     * @return DefaultCommonResult<PageResultVO<AtyUserInfoVO>>
+     */
+    @PostMapping("/users")
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getUserClientRoleUsers(@RequestBody @Valid AtyClientRoleUserParamVO clientRoleVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getRoleName(),clientRoleVO.getPagination()));
+    }
+
+    /**
+     * 角色下的用户-不分页
+     * @param clientRoleVO
+     * @return
      */
     @GetMapping("/users")
     public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleVO clientRoleVO) {

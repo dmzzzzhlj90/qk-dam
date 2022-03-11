@@ -30,7 +30,7 @@ public class AtyUserRoleController {
     }
 
     /**
-     * 查询用户已绑定角色
+     * 用户角色列表
      *
      * @param userId
      * @param realm
@@ -48,7 +48,7 @@ public class AtyUserRoleController {
      * @return DefaultCommonResult
      */
     @PostMapping("/users/roles")
-    public DefaultCommonResult addUserClientRole(@RequestBody AtyUserClientRoleVO userClientRole) {
+    public DefaultCommonResult addUserClientRole(@RequestBody @Valid AtyUserClientRoleVO userClientRole) {
         atyUserRoleService.addBatchByUsers(userClientRole);
         return DefaultCommonResult.success();
     }
@@ -60,7 +60,7 @@ public class AtyUserRoleController {
      * @return DefaultCommonResult
      */
     @DeleteMapping("/users/roles")
-    public DefaultCommonResult deleteUserClientRole(@RequestBody AtyUserClientRoleVO userClientRole) {
+    public DefaultCommonResult deleteUserClientRole(@RequestBody @Valid AtyUserClientRoleVO userClientRole) {
         atyUserRoleService.deleteUserClientRole(userClientRole);
         return DefaultCommonResult.success();
     }

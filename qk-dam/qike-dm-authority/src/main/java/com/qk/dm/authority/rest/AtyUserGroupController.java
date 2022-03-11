@@ -3,10 +3,12 @@ package com.qk.dm.authority.rest;
 import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyUserGroupService;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByGroupsVO;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByUsersVO;
 import com.qk.dm.authority.vo.group.AtyUserGroupVO;
+import com.qk.dm.authority.vo.user.AtyUserGroupParamVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,7 +32,19 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 查询用户已绑定用户组
+     * 用户分组列表-分页
+     *
+     * @param userId
+     * @param userGroupParamVO
+     * @return DefaultCommonResult<PageResultVO < AtyGroupInfoVO>>
+     */
+    @PostMapping("/users/{userId}/groups")
+    public DefaultCommonResult<PageResultVO<AtyGroupInfoVO>> getUserGroup(@RequestBody @Valid AtyUserGroupParamVO userGroupParamVO, @PathVariable String userId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(userGroupParamVO, userId));
+    }
+
+    /**
+     * 用户分组列表-不分页
      *
      * @param userId
      * @param realm
