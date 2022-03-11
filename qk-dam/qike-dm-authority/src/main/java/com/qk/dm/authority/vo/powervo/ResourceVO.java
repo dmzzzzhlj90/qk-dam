@@ -101,7 +101,7 @@ public class ResourceVO {
    * 父级id（API类型fid默认为-1）
    */
   @ExcelProperty(value = "父级id(API时为-1)",order = 5)
-  @NotBlank(message = "父级id不能为空")
+  @NotNull(message = "父级id不能为空")
   private Long pid;
 
   /**

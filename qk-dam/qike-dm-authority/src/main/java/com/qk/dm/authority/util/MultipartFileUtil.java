@@ -118,7 +118,7 @@ public class MultipartFileUtil {
   /**
    * 创建用户存储guava中的key（用户名+域名）
    *
-   * @param k
+   * @param k 域名称
    * @param atyUserInfoVO
    * @return
    */

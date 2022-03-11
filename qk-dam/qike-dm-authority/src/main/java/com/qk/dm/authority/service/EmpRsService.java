@@ -23,4 +23,6 @@ public interface EmpRsService {
   List<ResourceVO> queryResourceApi(ApiResourcesParamVO apiResourcesParamVO);
 
   List<ResourceVO> queryauthorized(PowerResourcesParamVO powerResourcesParamVO);
+
+  Boolean qeryRsEmp(Long id);
 }

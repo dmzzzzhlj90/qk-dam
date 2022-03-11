@@ -82,6 +82,16 @@ public class EmpResourcesController {
   }
 
   /**
+   * 查询删除的资源是否已经授权
+   * @param id 资源（api）id
+   * @return DefaultCommonResult<Boolean> 返回值为true表示存在为false表示不存在
+   */
+  @GetMapping("/qery/{id}")
+  public DefaultCommonResult<Boolean> qeryRsEmp(@NotNull @PathVariable("id") Long id){
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.qeryRsEmp(id));
+  }
+
+  /**
    * 根据服务id和资源标识查询资源信息
    * @param powerResourcesParamVO
    * @return

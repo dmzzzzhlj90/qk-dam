@@ -27,19 +27,6 @@ public class QxConstant {
   public static final int RESOURCE_TYPE = 1;
 
   /**
-   * 授权主体为0表示用户
-   */
-  public static final String TYPE_USER ="0";
-  /**
-   * 授权主体为1表示角色
-   */
-  public static final String TYPE_ROLE = "1";
-  /**
-   * 授权主体为2表示用户组
-   */
-  public static final String TYPE_USER_GROUP ="2";
-
-  /**
    * 导入文件名称包含内同
    */
   public static  final String EXCEL_NAME="资源基本信息";
@@ -65,11 +52,8 @@ public class QxConstant {
    * 一级资源导出目录父级名称
    */
   public final static  String PID_NAME = "一级资源";
-
   /**
-   * 拼接属性标识key
+   * 一条授权信息对应一条关系数据
    */
-  public final static  String API_KEY = "api";
-
-
+  public final static  Integer RS_EMP=1;
 }

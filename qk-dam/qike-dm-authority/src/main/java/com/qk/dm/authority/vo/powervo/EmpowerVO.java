@@ -60,7 +60,7 @@ public class EmpowerVO {
   /**
    * 授权资源uuid
    */
-  @NotBlank(message = "授权资源uuid不能为空")
+  @NotNull(message = "授权资源uuid不能为空")
   private List<String> resourceSigns;
 
   /**
