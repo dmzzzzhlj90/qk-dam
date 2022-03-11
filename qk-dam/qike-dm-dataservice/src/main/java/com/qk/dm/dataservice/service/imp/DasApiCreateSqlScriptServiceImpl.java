@@ -67,6 +67,8 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
         setDasApiCreateSqlScriptVOParams(dasApiCreateSqlScript, apiCreateSqlScriptDefinitionVO);
         apiCreateSqlScriptVO.setApiCreateDefinitionVO(apiCreateSqlScriptDefinitionVO);
+        //设置DEBUG调试参数
+        apiCreateSqlScriptVO.setDebugApiParasVOS(Lists.newArrayList());
 
         return apiCreateSqlScriptVO;
     }
