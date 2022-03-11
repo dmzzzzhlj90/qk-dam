@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.mapstruct.mapper;
 
 import com.qk.dm.reptile.entity.RptBaseInfo;
+import com.qk.dm.reptile.params.dto.RptBaseInfoBatchDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import org.mapstruct.BeanMapping;
@@ -28,4 +29,6 @@ public interface RptBaseInfoMapper {
   List<RptBaseInfoVO> of(List<RptBaseInfo> rptBaseInfoList);
 
   RptBaseInfo userVoToRtpBaseInfo(RptBaseInfoVO rptBaseInfoVO);
+
+  RptBaseInfo of(RptBaseInfoBatchDTO rptBaseInfoBatchDTO);
 }

@@ -2,6 +2,7 @@ package com.qk.dm.reptile.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.params.dto.RptAssignedTaskDTO;
+import com.qk.dm.reptile.params.dto.RptBaseInfoBatchDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
@@ -10,6 +11,8 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 public interface RptBaseInfoService {
 
     void insert(RptBaseInfoDTO rptBaseInfoDTO);
+
+    void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO);
 
     void update(Long id, RptBaseInfoDTO rptBaseInfoDTO);
 

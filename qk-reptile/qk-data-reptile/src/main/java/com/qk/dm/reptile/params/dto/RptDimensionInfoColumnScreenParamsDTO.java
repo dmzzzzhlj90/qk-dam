@@ -29,4 +29,8 @@ public class RptDimensionInfoColumnScreenParamsDTO {
    */
   @NotNull(message = "目录字段编码集合不能为空")
   private List <String> dimensionColumnCodeList;
+  /**
+   * 基础数据id
+   */
+  private Long baseInfoId;
 }

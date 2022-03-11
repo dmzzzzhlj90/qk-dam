@@ -22,4 +22,6 @@ public interface RptDimensionInfoColumnService {
       RptDimensionInfoColumnParamDTO rptDimensionInfoColumnParamDTO);
 
   Map<String,String> queryColumnByDirName(RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO);
+
+  List<RptDimensionInfoColumnVO> list(RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO);
 }

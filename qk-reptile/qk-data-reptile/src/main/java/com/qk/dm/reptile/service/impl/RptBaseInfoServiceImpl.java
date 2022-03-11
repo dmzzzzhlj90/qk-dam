@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -14,12 +15,14 @@ import com.qk.dm.reptile.enums.TimeIntervalEnum;
 import com.qk.dm.reptile.factory.ReptileServerFactory;
 import com.qk.dm.reptile.mapstruct.mapper.RptBaseInfoMapper;
 import com.qk.dm.reptile.params.dto.RptAssignedTaskDTO;
+import com.qk.dm.reptile.params.dto.RptBaseInfoBatchDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
 import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import com.qk.dm.reptile.service.RptConfigInfoService;
+import com.qk.dm.reptile.utils.MultipartFileUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -47,6 +50,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private final RptBaseInfoRepository rptBaseInfoRepository;
     private final RptConfigInfoService rptConfigInfoService;
     private final JwtDecoder jwtDecoder;
+    private final BloomFliterServer bloomFliterServer;
 
     @PostConstruct
     public void initFactory() {
@@ -56,11 +60,12 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     public RptBaseInfoServiceImpl(RptBaseInfoRepository rptBaseInfoRepository,
                                   EntityManager entityManager,
                                   RptConfigInfoService rptConfigInfoService,
-                                  JwtDecoder jwtDecoder){
+                                  JwtDecoder jwtDecoder, BloomFliterServer bloomFliterServer){
         this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.entityManager = entityManager;
         this.rptConfigInfoService = rptConfigInfoService;
         this.jwtDecoder = jwtDecoder;
+        this.bloomFliterServer = bloomFliterServer;
     }
 
 
@@ -69,7 +74,29 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
         rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
         rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);
-        rptBaseInfoRepository.save(rptBaseInfo);
+        rptBaseInfo.setStatus(RptConstant.WAITING);
+        String key = MultipartFileUtil.removeDuplicate(rptBaseInfo);
+        if (Objects.nonNull(bloomFliterServer.getFilter()) && bloomFliterServer.getFilter().mightContain(key)) {
+            throw new BizException("数据已存在，不可重复添加！！！");
+        } else {
+            rptBaseInfoRepository.save(rptBaseInfo);
+            bloomFliterServer.getFilter().put(key);
+        }
+    }
+
+    @Override
+    public void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO) {
+        List<RptBaseInfo> rptBaseInfoList = Lists.newArrayList();
+        rptBaseInfoBatchDTO.getListPageAddressList().forEach(e->{
+            RptBaseInfo rptBaseInfo = new RptBaseInfo();
+            RptBaseInfoMapper.INSTANCE.of(rptBaseInfoBatchDTO, rptBaseInfo);
+            rptBaseInfo.setListPageAddress(e);
+            rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
+            rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);
+            rptBaseInfo.setStatus(RptConstant.WAITING);
+            rptBaseInfoList.add(rptBaseInfo);
+        });
+        rptBaseInfoRepository.saveAll(rptBaseInfoList);
     }
 
     @Override
@@ -90,7 +117,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
         rptBaseInfo.setRunStatus(runStatus);
-        if(RptConstant.START.equals(runStatus)){
+        if(Objects.equals(RptConstant.START,runStatus)){
             String result = ReptileServerFactory.timing(rptConfigInfoService.rptList(rptBaseInfo.getId()));
             if (!StringUtils.isBlank(result)) {
                 updateBaseInfo(rptBaseInfo, result);

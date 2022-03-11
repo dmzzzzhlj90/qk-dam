@@ -90,7 +90,10 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
 
     @Override
     public void deleteByConfigId(List<Long> configIdList) {
-        rptSelectorColumnInfoRepository.deleteAllByConfigIdIn(configIdList);
+        if(!CollectionUtils.isEmpty(configIdList)){
+            configIdList.forEach(rptSelectorColumnInfoRepository::deleteAllByConfigId);
+
+        }
     }
 
     @Override

@@ -41,10 +41,21 @@ public class RptBaseInfoController {
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated RptBaseInfoDTO rptBaseInfoDTO){
-        rptBaseInfoDTO.setStatus(RptConstant.WAITING);
         rptBaseInfoService.insert(rptBaseInfoDTO);
         return DefaultCommonResult.success();
     }
+
+    /**
+     * 批量添加基础信息
+     * @param rptBaseInfoBatchDTO
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/batch")
+    public DefaultCommonResult batchInsert(@RequestBody @Validated RptBaseInfoBatchDTO rptBaseInfoBatchDTO){
+        rptBaseInfoService.batchInsert(rptBaseInfoBatchDTO);
+        return DefaultCommonResult.success();
+    }
+
 
     /**
      * 修改基础信息
