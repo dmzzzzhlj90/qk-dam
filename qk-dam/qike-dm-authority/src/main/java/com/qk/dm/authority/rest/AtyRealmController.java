@@ -30,7 +30,7 @@ public class AtyRealmController {
     }
 
     /**
-     * 域管理-域列表
+     * 域列表
      *
      * @return DefaultCommonResult<List < RealmVO>>
      */
@@ -40,7 +40,7 @@ public class AtyRealmController {
     }
 
     /**
-     * 域管理-客户端列表
+     * 客户端列表
      *
      * @param realm
      * @param client_clientId 客户端 clientId

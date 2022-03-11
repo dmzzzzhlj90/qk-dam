@@ -90,7 +90,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色列表
+     * 角色下拉列表
      *
      * @param clientRoleParamVO
      * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
@@ -101,7 +101,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色下的用户-分页
+     * 角色的用户列表-分页
      * @param clientRoleVO
      * @return DefaultCommonResult<PageResultVO<AtyUserInfoVO>>
      */
@@ -111,7 +111,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色下的用户-不分页
+     * 角色的用户列表
      * @param clientRoleVO
      * @return
      */

@@ -93,7 +93,7 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组不分页列表
+     * 用户组下拉列表
      *
      * @param realm
      * @param search
@@ -105,7 +105,7 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组下的用户
+     * 用户组下的用户-分页
      * @param groupUserParamVO
      * @param groupId
      * @return <PageResultVO<AtyGroupInfoVO>>
@@ -115,8 +115,14 @@ public class AtyGroupController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupUserParamVO, groupId));
     }
 
-//    @GetMapping("/{groupId}/users")
-//    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(realm, groupId));
-//    }
+    /**
+     * 用户组下的用户
+     * @param realm
+     * @param groupId
+     * @return
+     */
+    @GetMapping("/{groupId}/users")
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(realm, groupId));
+    }
 }

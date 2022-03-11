@@ -44,7 +44,7 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 用户分组列表-不分页
+     * 用户分组列表
      *
      * @param userId
      * @param realm
