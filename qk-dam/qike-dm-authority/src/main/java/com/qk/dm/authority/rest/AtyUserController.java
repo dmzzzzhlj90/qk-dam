@@ -56,7 +56,7 @@ public class AtyUserController {
     }
 
     /**
-     * 修改用户_密码
+     * 重置密码
      *
      * @param userVO
      * @return DefaultCommonResult
@@ -92,7 +92,7 @@ public class AtyUserController {
     }
 
     /**
-     * 用户列表
+     * 用户列表-分页
      *
      * @param atyUserParamVO
      * @return DefaultCommonResult<PageResultVO < AtyUserInfoVO>>
@@ -103,7 +103,7 @@ public class AtyUserController {
     }
 
     /**
-     * 用户列表-不分页
+     * 用户列表
      *
      * @param atyUserParamVO
      * @return DefaultCommonResult<List < AtyUserInfoVO>>

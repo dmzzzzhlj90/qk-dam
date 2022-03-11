@@ -103,7 +103,7 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
     //1根据用户id和域获取用户分组
     List<AtyGroupInfoVO> userGroup = atyUserGroupService.getUserGroup(realm, userId);
     //2根据用户id、域、客户端获取用户角色
-    List<AtyClientRoleInfoVO> userClientRole = atyUserRoleService.getUserClientRole(realm, userId);
+    List<AtyClientRoleInfoVO> userClientRole = atyUserRoleService.getUserClientRole(realm, userId,null);
     if (CollectionUtils.isNotEmpty(userGroup)){
       List<String> groupIds = userGroup.stream().map(AtyGroupInfoVO::getId).collect(Collectors.toList());
       idList.addAll(groupIds);

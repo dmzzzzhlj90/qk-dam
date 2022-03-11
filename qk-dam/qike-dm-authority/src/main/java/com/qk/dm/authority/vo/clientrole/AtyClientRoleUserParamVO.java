@@ -18,12 +18,17 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyClientRoleParamVO {
+public class AtyClientRoleUserParamVO {
   /**
    * 域
    */
   @NotBlank(message = "域必填!")
   String realm;
+  /**
+   * 角色名称
+   */
+  @NotBlank(message = "角色名称必填!")
+  String roleName;
   /**
    * 客户端id
    */
@@ -33,8 +38,4 @@ public class AtyClientRoleParamVO {
    * 分页信息
    */
   private Pagination pagination;
-  /**
-   * 用户查询条件
-   */
-  private String search;
 }

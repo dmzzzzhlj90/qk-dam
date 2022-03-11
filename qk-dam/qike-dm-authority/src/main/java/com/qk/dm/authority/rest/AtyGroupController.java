@@ -7,6 +7,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyGroupService;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
+import com.qk.dm.authority.vo.group.AtyGroupUserParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,6 @@ public class AtyGroupController {
     public AtyGroupController(AtyGroupService atyUserGroupService) {
         this.atyGroupService = atyUserGroupService;
     }
-
 
     /**
      * 新增用户组
@@ -55,7 +55,6 @@ public class AtyGroupController {
         atyGroupService.updateGroup(groupId, groupVO);
         return DefaultCommonResult.success();
     }
-
 
     /**
      * 删除用户组
@@ -94,7 +93,7 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组不分页列表
+     * 用户组下拉列表
      *
      * @param realm
      * @param search
@@ -106,11 +105,21 @@ public class AtyGroupController {
     }
 
     /**
+     * 用户组下的用户-分页
+     * @param groupUserParamVO
+     * @param groupId
+     * @return <PageResultVO<AtyGroupInfoVO>>
+     */
+    @PostMapping("/{groupId}/users")
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getGroupUsers(@RequestBody @Valid AtyGroupUserParamVO groupUserParamVO, @PathVariable String groupId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupUserParamVO, groupId));
+    }
+
+    /**
      * 用户组下的用户
-     *
      * @param realm
      * @param groupId
-     * @return DefaultCommonResult<List < AtyUserInfoVO>>
+     * @return
      */
     @GetMapping("/{groupId}/users")
     public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {

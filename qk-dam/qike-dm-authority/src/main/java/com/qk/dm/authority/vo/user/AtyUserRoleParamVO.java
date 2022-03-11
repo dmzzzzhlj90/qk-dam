@@ -1,4 +1,4 @@
-package com.qk.dm.authority.vo.clientrole;
+package com.qk.dm.authority.vo.user;
 
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
@@ -18,23 +18,14 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyClientRoleParamVO {
+public class AtyUserRoleParamVO {
   /**
    * 域
    */
-  @NotBlank(message = "域必填!")
+  @NotBlank(message = "域必填！")
   String realm;
-  /**
-   * 客户端id
-   */
-  @NotBlank(message = "客户端id必填!")
-  String client_id;
   /**
    * 分页信息
    */
   private Pagination pagination;
-  /**
-   * 用户查询条件
-   */
-  private String search;
 }

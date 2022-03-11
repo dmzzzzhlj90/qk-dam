@@ -1,12 +1,10 @@
-package com.qk.dm.authority.vo.clientrole;
+package com.qk.dm.authority.vo.group;
 
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
 
 /**
  * 查询用户入参
@@ -18,23 +16,13 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyClientRoleParamVO {
+public class AtyGroupUserParamVO {
   /**
    * 域
    */
-  @NotBlank(message = "域必填!")
   String realm;
-  /**
-   * 客户端id
-   */
-  @NotBlank(message = "客户端id必填!")
-  String client_id;
   /**
    * 分页信息
    */
   private Pagination pagination;
-  /**
-   * 用户查询条件
-   */
-  private String search;
 }

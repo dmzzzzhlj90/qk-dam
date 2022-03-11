@@ -1,7 +1,5 @@
 package com.qk.dam.authority.common.keycloak;
 
-import com.qk.dam.authority.common.mapstruct.AtyUserMapper;
-import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.Pagination;
 import org.keycloak.admin.client.Keycloak;
@@ -52,14 +50,15 @@ public class KeyCloakApi {
 
     /**
      * 创建用户
+     *
      * @param realm
      * @param password
      * @param user
      */
-    public void createUser(String realm,String password, UserRepresentation user) {
+    public void createUser(String realm, String password, UserRepresentation user) {
         user.setEmailVerified(false);
         // 设置密码
-        if(password != null) {
+        if (password != null) {
             List<CredentialRepresentation> credentials = new ArrayList<>();
             CredentialRepresentation cr = new CredentialRepresentation();
             cr.setType(CredentialRepresentation.PASSWORD);
@@ -79,6 +78,7 @@ public class KeyCloakApi {
 
     /**
      * 修改用户信息
+     *
      * @param realm
      * @param userId
      * @param email
@@ -86,13 +86,13 @@ public class KeyCloakApi {
      * @param lastName
      * @param enabled
      */
-    public void updateUser(String realm,String userId,String email,String firstName,String lastName,Boolean enabled) {
+    public void updateUser(String realm, String userId, String email, String firstName, String lastName, Boolean enabled) {
         UsersResource userResource = keycloak.realm(realm).users();
         UserResource user = userResource.get(userId);
         UserRepresentation userRepresentation = user.toRepresentation();
-        userRepresentation.setEmail(email);
-        userRepresentation.setFirstName(firstName);
-        userRepresentation.setLastName(lastName);
+        userRepresentation.setEmail(email != null ? email : userRepresentation.getEmail());
+        userRepresentation.setFirstName(firstName != null ? firstName : userRepresentation.getFirstName());
+        userRepresentation.setLastName(lastName != null ? lastName : userRepresentation.getLastName());
         userRepresentation.setEnabled(enabled);
         try {
             user.update(userRepresentation);
@@ -157,6 +157,7 @@ public class KeyCloakApi {
 
     /**
      * 用户数汇总
+     *
      * @param realm
      * @param search
      * @return
@@ -227,17 +228,12 @@ public class KeyCloakApi {
     }
 
     /**
-     * 查询组下的所有用户
-     * @param realm
-     * @param groupId
-     * @return
-     */
-    public List<UserRepresentation> getGroupUsers(String realm, String groupId) {
-        return keycloak.realm(realm).groups().group(groupId).members();
-    }
-
-    /**
      * 查询所有分组
+     *
+     * @param realm
+     * @param search
+     * @param pagination
+     * @return
      */
     public List<GroupRepresentation> groupList(String realm, String search, Pagination pagination) {
         return keycloak.realm(realm).groups().groups(
@@ -248,14 +244,59 @@ public class KeyCloakApi {
 
     /**
      * 查询所有分组
+     *
+     * @param realm
+     * @param search
+     * @return
      */
-    public List<GroupRepresentation> groupList(String realm, String search){
+    public List<GroupRepresentation> groupList(String realm, String search) {
         return keycloak.realm(realm).groups().groups(search, null, null);
+    }
+
+    /**
+     * 分组用户列表
+     *
+     * @param realm
+     * @param groupId
+     * @param pagination
+     * @return
+     */
+    public List<UserRepresentation> groupUsers(String realm, String groupId, Pagination pagination) {
+        return keycloak.realm(realm).groups().group(groupId).members(
+                (pagination.getPage() - 1) * pagination.getSize(),
+                pagination.getSize());
+    }
+
+    /**
+     * 分组用户列表
+     *
+     * @param realm
+     * @param groupId
+     * @return
+     */
+    public List<UserRepresentation> groupUsers(String realm, String groupId) {
+        return keycloak.realm(realm).groups().group(groupId).members();
     }
 
     /**
      * 用户分组列表
      *
+     * @param realm
+     * @param userId
+     * @param pagination
+     * @return
+     */
+    public List<GroupRepresentation> userGroup(String realm, String userId, Pagination pagination) {
+        return keycloak.realm(realm).users().get(userId).groups(
+                (pagination.getPage() - 1) * pagination.getSize(),
+                pagination.getSize()
+        );
+    }
+
+    /**
+     * 用户分组列表
+     *
+     * @param realm
      * @param userId
      * @return
      */
@@ -265,6 +306,10 @@ public class KeyCloakApi {
 
     /**
      * 用户添加分组
+     *
+     * @param realm
+     * @param userId
+     * @param groupId
      */
     public void addUserGroup(String realm, String userId, String groupId) {
         keycloak.realm(realm).users().get(userId).joinGroup(groupId);
@@ -272,6 +317,10 @@ public class KeyCloakApi {
 
     /**
      * 用户离开分组
+     *
+     * @param realm
+     * @param userId
+     * @param groupId
      */
     public void deleteUserGroup(String realm, String userId, String groupId) {
         keycloak.realm(realm).users().get(userId).leaveGroup(groupId);
@@ -334,20 +383,14 @@ public class KeyCloakApi {
         return keycloak.realm(realm).clients().get(client_id).roles().get(roleName).toRepresentation();
     }
 
-    /**
-     * 客户端角色下所有用户
-     * @param realm
-     * @param client_id
-     * @param roleName
-     * @return
-     */
-    public Set<UserRepresentation> clientRoleUsers(String realm, String client_id, String roleName) {
-        return keycloak.realm(realm).clients().get(client_id).roles().get(roleName).getRoleUserMembers();
-    }
 
     /**
      * 客户端所有角色
      *
+     * @param realm
+     * @param client_id
+     * @param search
+     * @param pagination
      * @return
      */
     public List<RoleRepresentation> clientRoleList(String realm, String client_id, String search, Pagination pagination) {
@@ -360,6 +403,9 @@ public class KeyCloakApi {
     /**
      * 客户端所有角色
      *
+     * @param realm
+     * @param client_id
+     * @param search
      * @return
      */
     public List<RoleRepresentation> clientRoleList(String realm, String client_id, String search) {
@@ -367,16 +413,43 @@ public class KeyCloakApi {
     }
 
     /**
-     * 用户客户端角色
+     * 客户端角色下所有用户
      *
+     * @param realm
+     * @param client_id
+     * @param roleName
+     * @return
+     */
+    public Set<UserRepresentation> clientRoleUsers(String realm, String client_id, String roleName, Pagination pagination) {
+        return keycloak.realm(realm).clients().get(client_id).roles().get(roleName).getRoleUserMembers(
+                (pagination.getPage() - 1) * pagination.getSize(),
+                pagination.getSize());
+    }
+
+    /**
+     * 客户端角色下所有用户
+     *
+     * @param realm
+     * @param client_id
+     * @param roleName
+     * @return
+     */
+    public Set<UserRepresentation> clientRoleUsers(String realm, String client_id, String roleName) {
+        return keycloak.realm(realm).clients().get(client_id).roles().get(roleName).getRoleUserMembers();
+    }
+
+    /**
+     * 用户客户端角色
+     * @param realm
      * @param userId
+     * @param client_clientId
+     * @return
      */
     public List<RoleRepresentation> userClientRole(String realm, String userId, String client_clientId) {
         Map<String, ClientMappingsRepresentation> clientRoleMap = keycloak.realm(realm).users().get(userId).roles().getAll().getClientMappings();
         List<RoleRepresentation> mappings = null;
-        if (clientRoleMap != null && client_clientId != null && clientRoleMap.get(client_clientId) != null) {
-            ClientMappingsRepresentation clientMappingsRepresentation = clientRoleMap.get(client_clientId);
-            mappings = clientMappingsRepresentation.getMappings();
+        if (clientRoleMap != null && client_clientId != null && clientRoleMap.containsKey(client_clientId)) {
+            mappings = clientRoleMap.get(client_clientId).getMappings();
         }
         return mappings;
     }

@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0.0
  */
 @Configuration
+//@ConfigurationProperties(prefix = "keycloak.master.realm", ignoreInvalidFields = true)
 public class KeyCloakConfig {
 
     @Value("${keycloak.url}")

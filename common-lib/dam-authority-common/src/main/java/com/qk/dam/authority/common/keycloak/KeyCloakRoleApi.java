@@ -61,28 +61,23 @@ public class KeyCloakRoleApi {
 
     /**
      * 客户端角色详情
-     *
-     * @param roleName
-     * @return
-     */
-    public AtyClientRoleInfoVO clientRoleDetail(String realm, String client_id, String roleName) {
-        return AtyRoleMapper.INSTANCE.userRole(keyCloakApi.clientRoleDetail(realm, client_id, roleName));
-    }
-
-    /**
-     * 客户端角色下所有用户
      * @param realm
      * @param client_id
      * @param roleName
      * @return
      */
-    public List<AtyUserInfoVO> clientRoleUsers(String realm, String client_id, String roleName) {
-        return AtyUserMapper.INSTANCE.userInfo(new ArrayList<>(keyCloakApi.clientRoleUsers(realm, client_id, roleName)));
+    public AtyClientRoleInfoVO clientRoleDetail(String realm, String client_id, String roleName) {
+        AtyClientRoleInfoVO atyClientRoleInfoVO = AtyRoleMapper.INSTANCE.userRole(keyCloakApi.clientRoleDetail(realm, client_id, roleName));
+        atyClientRoleInfoVO.setMembers(clientRoleUsers(realm, client_id, roleName));
+        return atyClientRoleInfoVO;
     }
 
     /**
      * 客户端所有角色
-     *
+     * @param realm
+     * @param client_id
+     * @param search
+     * @param pagination
      * @return
      */
     public PageResultVO<AtyClientRoleInfoVO> clientRoleList(String realm, String client_id, String search, Pagination pagination) {
@@ -95,7 +90,9 @@ public class KeyCloakRoleApi {
 
     /**
      * 客户端所有角色
-     *
+     * @param realm
+     * @param client_id
+     * @param search
      * @return
      */
     public List<AtyClientRoleInfoVO> clientRoleList(String realm, String client_id, String search) {
@@ -103,35 +100,28 @@ public class KeyCloakRoleApi {
     }
 
     /**
-     * 用户的客户端角色
-     *
-     * @param userId
+     * 客户端角色下所有用户
+     * @param realm
+     * @param client_id
+     * @param roleName
+     * @return
      */
-    public List<AtyClientRoleInfoVO> userClientRole(String realm, String userId, String client_clientId) {
-        return AtyRoleMapper.INSTANCE.userRole(keyCloakApi.userClientRole(realm, userId, client_clientId));
+    public PageResultVO<AtyUserInfoVO> clientRoleUsers(String realm, String client_id, String roleName, Pagination pagination) {
+        return new PageResultVO<>(
+                keyCloakApi.clientRoleUsers(realm, client_id, roleName).size(),
+                pagination.getPage(),
+                pagination.getSize(),
+                AtyUserMapper.INSTANCE.userInfo(new ArrayList<>(keyCloakApi.clientRoleUsers(realm, client_id, roleName,pagination))));
     }
 
     /**
-     * 用户添加客户端角色
-     *
+     * 客户端角色下所有用户
      * @param realm
      * @param client_id
-     * @param userId
      * @param roleName
+     * @return
      */
-    public void addUserClientRole(String realm, String client_id, String userId, String roleName) {
-        keyCloakApi.addUserClientRole(realm, client_id, userId, roleName);
-    }
-
-    /**
-     * 用户删除客户端角色
-     *
-     * @param realm
-     * @param client_id
-     * @param userId
-     * @param roleName
-     */
-    public void deleteUserClientRole(String realm, String client_id, String userId, String roleName) {
-        keyCloakApi.deleteUserClientRole(realm, client_id, userId, roleName);
+    public List<AtyUserInfoVO> clientRoleUsers(String realm, String client_id, String roleName) {
+        return AtyUserMapper.INSTANCE.userInfo(new ArrayList<>(keyCloakApi.clientRoleUsers(realm, client_id, roleName)));
     }
 }

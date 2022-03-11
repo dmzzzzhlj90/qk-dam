@@ -4,6 +4,7 @@ import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
+import com.qk.dm.authority.vo.group.AtyGroupUserParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public interface AtyGroupService {
     PageResultVO<AtyGroupInfoVO> getUsers(AtyGroupParamVO groupParamVO);
 
     List<AtyGroupInfoVO> getUsers(String realm, String search);
+
+    PageResultVO<AtyUserInfoVO> getGroupUsers(AtyGroupUserParamVO groupUserParamVO, String groupId);
 
     List<AtyUserInfoVO> getGroupUsers(String realm, String groupId);
 }

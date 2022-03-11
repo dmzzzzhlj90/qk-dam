@@ -7,6 +7,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyRoleService;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,7 @@ public class AtyRoleController {
      */
     @PostMapping("")
     public DefaultCommonResult addClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.addClientRole(clientRoleVO.getRealm(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
+        atyRoleService.addClientRole(clientRoleVO);
         return DefaultCommonResult.success();
     }
 
@@ -49,7 +50,7 @@ public class AtyRoleController {
      */
     @PutMapping("")
     public DefaultCommonResult updateClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.updateClientRole(clientRoleVO.getRealm(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
+        atyRoleService.updateClientRole(clientRoleVO);
         return DefaultCommonResult.success();
     }
 
@@ -61,7 +62,7 @@ public class AtyRoleController {
      */
     @DeleteMapping("")
     public DefaultCommonResult deleteClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
-        atyRoleService.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getRoleName());
+        atyRoleService.deleteClientRole(clientRoleVO);
         return DefaultCommonResult.success();
     }
 
@@ -73,7 +74,7 @@ public class AtyRoleController {
      */
     @GetMapping("")
     public DefaultCommonResult<AtyClientRoleInfoVO> getClientRole(@Valid AtyClientRoleVO clientRoleVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getClientRole(clientRoleVO.getRealm(), clientRoleVO.getRoleName()));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getClientRole(clientRoleVO));
     }
 
     /**
@@ -84,28 +85,37 @@ public class AtyRoleController {
      */
     @PostMapping("/page")
     public DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>> getClientRolesPage(@RequestBody @Valid AtyClientRoleParamVO clientRoleParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,
-                atyRoleService.getClientRoles(clientRoleParamVO.getRealm(), clientRoleParamVO.getSearch(), clientRoleParamVO.getPagination()));
+        return DefaultCommonResult.success(ResultCodeEnum.OK,atyRoleService.getClientRoles(clientRoleParamVO));
     }
 
     /**
-     * 角色列表
+     * 角色下拉列表
      *
      * @param clientRoleParamVO
      * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
      */
     @GetMapping("/list")
     public DefaultCommonResult<List<AtyClientRoleInfoVO>> getClientRoles(@Valid AtyClientRoleParamVO clientRoleParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getUsers(clientRoleParamVO.getRealm(), clientRoleParamVO.getSearch()));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getUsers(clientRoleParamVO));
     }
 
     /**
-     * 角色下的用户
+     * 角色的用户列表-分页
      * @param clientRoleVO
-     * @return DefaultCommonResult<List<AtyUserInfoVO>>
+     * @return DefaultCommonResult<PageResultVO<AtyUserInfoVO>>
+     */
+    @PostMapping("/users")
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getUserClientRoleUsersPage(@RequestBody @Valid AtyClientRoleUserParamVO clientRoleVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsersPage(clientRoleVO));
+    }
+
+    /**
+     * 角色的用户列表
+     * @param clientRoleVO
+     * @return
      */
     @GetMapping("/users")
-    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleVO clientRoleVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getRoleName()));
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleUserParamVO clientRoleVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsers(clientRoleVO));
     }
 }
