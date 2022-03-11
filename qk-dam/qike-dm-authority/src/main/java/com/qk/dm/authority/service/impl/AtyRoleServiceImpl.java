@@ -4,9 +4,10 @@ import com.qk.dam.authority.common.keycloak.KeyCloakRoleApi;
 import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.authority.service.AtyRoleService;
-import org.springframework.beans.factory.annotation.Value;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,50 +21,47 @@ import java.util.List;
 public class AtyRoleServiceImpl implements AtyRoleService {
     private final KeyCloakRoleApi keyCloakRoleApi;
 
-    @Value("${keycloak.role.client_id}")
-    private String client_id;
-
     public AtyRoleServiceImpl(KeyCloakRoleApi keyCloakRoleApi) {
         this.keyCloakRoleApi = keyCloakRoleApi;
     }
 
     @Override
-    public void addClientRole(String realm, String roleName, String description) {
-        keyCloakRoleApi.addClientRole(realm, client_id, roleName, description);
+    public void addClientRole(AtyClientRoleVO clientRoleVO) {
+        keyCloakRoleApi.addClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
     }
 
     @Override
-    public void updateClientRole(String realm, String roleName, String description) {
-        keyCloakRoleApi.updateClientRole(realm, client_id, roleName, description);
+    public void updateClientRole(AtyClientRoleVO clientRoleVO) {
+        keyCloakRoleApi.updateClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
     }
 
     @Override
-    public void deleteClientRole(String realm, String roleName) {
-        keyCloakRoleApi.deleteClientRole(realm, client_id, roleName);
+    public void deleteClientRole(AtyClientRoleVO clientRoleVO) {
+        keyCloakRoleApi.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
     }
 
     @Override
-    public AtyClientRoleInfoVO getClientRole(String realm, String roleName) {
-        return keyCloakRoleApi.clientRoleDetail(realm, client_id, roleName);
+    public AtyClientRoleInfoVO getClientRole(AtyClientRoleVO clientRoleVO) {
+        return keyCloakRoleApi.clientRoleDetail(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
     }
 
     @Override
-    public PageResultVO<AtyClientRoleInfoVO> getClientRoles(String realm, String search, Pagination pagination) {
-        return keyCloakRoleApi.clientRoleList(realm, client_id, search, pagination);
+    public PageResultVO<AtyClientRoleInfoVO> getClientRoles(AtyClientRoleParamVO clientRoleVO) {
+        return keyCloakRoleApi.clientRoleList(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getSearch(), clientRoleVO.getPagination());
     }
 
     @Override
-    public List<AtyClientRoleInfoVO> getUsers(String realm, String search) {
-        return keyCloakRoleApi.clientRoleList(realm, client_id, search);
+    public List<AtyClientRoleInfoVO> getUsers(AtyClientRoleParamVO clientRoleVO) {
+        return keyCloakRoleApi.clientRoleList(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getSearch());
     }
 
     @Override
-    public PageResultVO<AtyUserInfoVO> getRoleUsers(String realm, String roleName, Pagination pagination) {
-        return keyCloakRoleApi.clientRoleUsers(realm, client_id, roleName,pagination);
+    public PageResultVO<AtyUserInfoVO> getRoleUsersPage(AtyClientRoleUserParamVO clientRoleVO) {
+        return keyCloakRoleApi.clientRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(),clientRoleVO.getPagination());
     }
 
     @Override
-    public List<AtyUserInfoVO> getRoleUsers(String realm, String roleName) {
-        return keyCloakRoleApi.clientRoleUsers(realm, client_id, roleName);
+    public List<AtyUserInfoVO> getRoleUsers(AtyClientRoleUserParamVO clientRoleVO) {
+        return keyCloakRoleApi.clientRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
     }
 }

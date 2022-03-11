@@ -30,6 +30,11 @@ public class AtyClientRoleUserParamVO {
   @NotBlank(message = "角色名称必填!")
   String roleName;
   /**
+   * 客户端id
+   */
+  @NotBlank(message = "客户端id必填!")
+  String client_id;
+  /**
    * 分页信息
    */
   private Pagination pagination;

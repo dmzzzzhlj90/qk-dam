@@ -3,7 +3,9 @@ package com.qk.dm.authority.service;
 import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dam.jpa.pojo.Pagination;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
+import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
 
 import java.util.List;
 
@@ -13,19 +15,19 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface AtyRoleService {
-    void addClientRole(String realm, String roleName, String description);
+    void addClientRole(AtyClientRoleVO clientRoleVO);
 
-    void updateClientRole(String realm, String roleName, String description);
+    void updateClientRole(AtyClientRoleVO clientRoleVO);
 
-    void deleteClientRole(String realm, String roleName);
+    void deleteClientRole(AtyClientRoleVO clientRoleVO);
 
-    AtyClientRoleInfoVO getClientRole(String realm, String roleName);
+    AtyClientRoleInfoVO getClientRole(AtyClientRoleVO clientRoleVO);
 
-    PageResultVO<AtyClientRoleInfoVO> getClientRoles(String realm, String search, Pagination pagination);
+    PageResultVO<AtyClientRoleInfoVO> getClientRoles(AtyClientRoleParamVO clientRoleParamVO);
 
-    List<AtyClientRoleInfoVO> getUsers(String realm, String search);
+    List<AtyClientRoleInfoVO> getUsers(AtyClientRoleParamVO clientRoleParamVO);
 
-    PageResultVO<AtyUserInfoVO> getRoleUsers(String realm, String roleName, Pagination pagination);
+    PageResultVO<AtyUserInfoVO> getRoleUsersPage(AtyClientRoleUserParamVO clientRoleVO);
 
-    List<AtyUserInfoVO> getRoleUsers(String realm, String roleName);
+    List<AtyUserInfoVO> getRoleUsers(AtyClientRoleUserParamVO clientRoleVO);
 }

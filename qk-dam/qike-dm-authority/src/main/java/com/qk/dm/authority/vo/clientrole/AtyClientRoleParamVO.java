@@ -25,6 +25,11 @@ public class AtyClientRoleParamVO {
   @NotBlank(message = "域必填!")
   String realm;
   /**
+   * 客户端id
+   */
+  @NotBlank(message = "客户端id必填!")
+  String client_id;
+  /**
    * 分页信息
    */
   private Pagination pagination;

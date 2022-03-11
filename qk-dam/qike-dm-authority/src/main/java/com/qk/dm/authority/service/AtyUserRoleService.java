@@ -13,7 +13,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface AtyUserRoleService {
-    List<AtyClientRoleInfoVO> getUserClientRole(String realm, String userId);
+    List<AtyClientRoleInfoVO> getUserClientRole(String realm, String userId,String client_clientId);
 
     void addBatchByUsers(AtyUserClientRoleVO userClientRole);
 

@@ -32,4 +32,9 @@ public class AtyUserClientRoleVO {
      */
     @NotBlank(message = "用户id必填！")
     String userId;
+    /**
+     * 客户端id
+     */
+    @NotBlank(message = "客户端id必填!")
+    String client_id;
 }

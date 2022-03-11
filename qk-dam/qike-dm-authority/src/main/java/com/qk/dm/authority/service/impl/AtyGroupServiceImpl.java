@@ -26,7 +26,6 @@ public class AtyGroupServiceImpl implements AtyGroupService {
         this.keyCloakGroupApi = keyCloakGroupApi;
     }
 
-
     @Override
     public void addGroup(AtyGroupVO groupVO) {
         keyCloakGroupApi.addGroup(groupVO.getRealm(), groupVO.getGroupName());
