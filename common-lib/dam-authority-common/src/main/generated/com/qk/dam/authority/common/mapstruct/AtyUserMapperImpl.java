@@ -1,6 +1,7 @@
 package com.qk.dam.authority.common.mapstruct;
 
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
+import com.qk.dam.authority.common.vo.user.AtyUserInfoVO.AtyUserInfoVOBuilder;
 import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.authority.common.vo.user.AtyUserKeyCloakVO;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import org.keycloak.representations.idm.UserRepresentation;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-14T15:31:12+0800",
+    date = "2022-03-14T15:32:22+0800",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.13 (Azul Systems, Inc.)"
 )
 public class AtyUserMapperImpl implements AtyUserMapper {
@@ -29,34 +30,34 @@ public class AtyUserMapperImpl implements AtyUserMapper {
             return null;
         }
 
-        AtyUserInfoVO atyUserInfoVO = new AtyUserInfoVO();
+        AtyUserInfoVOBuilder atyUserInfoVO = AtyUserInfoVO.builder();
 
         if ( userRepresentation.getId() != null ) {
-            atyUserInfoVO.setId( userRepresentation.getId() );
+            atyUserInfoVO.id( userRepresentation.getId() );
         }
         if ( userRepresentation.getUsername() != null ) {
-            atyUserInfoVO.setUsername( userRepresentation.getUsername() );
+            atyUserInfoVO.username( userRepresentation.getUsername() );
         }
         if ( userRepresentation.isEnabled() != null ) {
-            atyUserInfoVO.setEnabled( userRepresentation.isEnabled() );
+            atyUserInfoVO.enabled( userRepresentation.isEnabled() );
         }
         if ( userRepresentation.getFirstName() != null ) {
-            atyUserInfoVO.setFirstName( userRepresentation.getFirstName() );
+            atyUserInfoVO.firstName( userRepresentation.getFirstName() );
         }
         if ( userRepresentation.getLastName() != null ) {
-            atyUserInfoVO.setLastName( userRepresentation.getLastName() );
+            atyUserInfoVO.lastName( userRepresentation.getLastName() );
         }
         if ( userRepresentation.getEmail() != null ) {
-            atyUserInfoVO.setEmail( userRepresentation.getEmail() );
+            atyUserInfoVO.email( userRepresentation.getEmail() );
         }
         Map<String, List<String>> map = userRepresentation.getAttributes();
         if ( map != null ) {
-            atyUserInfoVO.setAttributes( new HashMap<String, List<String>>( map ) );
+            atyUserInfoVO.attributes( new HashMap<String, List<String>>( map ) );
         }
 
-        atyUserInfoVO.setCreatedTimestamp( com.qk.dam.authority.common.mapstruct.AtyUserMapper.parseLong(userRepresentation.getCreatedTimestamp()) );
+        atyUserInfoVO.createdTimestamp( com.qk.dam.authority.common.mapstruct.AtyUserMapper.parseLong(userRepresentation.getCreatedTimestamp()) );
 
-        return atyUserInfoVO;
+        return atyUserInfoVO.build();
     }
 
     @Override

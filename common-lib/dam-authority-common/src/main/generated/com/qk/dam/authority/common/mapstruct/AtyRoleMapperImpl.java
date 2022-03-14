@@ -1,6 +1,7 @@
 package com.qk.dam.authority.common.mapstruct;
 
 import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
+import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO.AtyClientRoleInfoVOBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import org.keycloak.representations.idm.RoleRepresentation;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-14T15:31:12+0800",
+    date = "2022-03-14T15:32:21+0800",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.13 (Azul Systems, Inc.)"
 )
 public class AtyRoleMapperImpl implements AtyRoleMapper {
@@ -21,23 +22,23 @@ public class AtyRoleMapperImpl implements AtyRoleMapper {
             return null;
         }
 
-        AtyClientRoleInfoVO atyClientRoleInfoVO = new AtyClientRoleInfoVO();
+        AtyClientRoleInfoVOBuilder atyClientRoleInfoVO = AtyClientRoleInfoVO.builder();
 
         if ( roleRepresentation.getId() != null ) {
-            atyClientRoleInfoVO.setId( roleRepresentation.getId() );
+            atyClientRoleInfoVO.id( roleRepresentation.getId() );
         }
         if ( roleRepresentation.getName() != null ) {
-            atyClientRoleInfoVO.setName( roleRepresentation.getName() );
+            atyClientRoleInfoVO.name( roleRepresentation.getName() );
         }
         if ( roleRepresentation.getDescription() != null ) {
-            atyClientRoleInfoVO.setDescription( roleRepresentation.getDescription() );
+            atyClientRoleInfoVO.description( roleRepresentation.getDescription() );
         }
         Map<String, List<String>> map = roleRepresentation.getAttributes();
         if ( map != null ) {
-            atyClientRoleInfoVO.setAttributes( new HashMap<String, List<String>>( map ) );
+            atyClientRoleInfoVO.attributes( new HashMap<String, List<String>>( map ) );
         }
 
-        return atyClientRoleInfoVO;
+        return atyClientRoleInfoVO.build();
     }
 
     @Override

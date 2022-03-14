@@ -10,22 +10,11 @@ import lombok.Data;
 public class DolphinProcessDefinition {
     public DolphinProcessDefinition(long taskCode,
                                     String name,
-                                    String environmentCode,
-                                    DolphinTaskDefinitionPropertiesBean definitionPropertiesBean) {
-        this.locations = "[{\"taskCode\":"+taskCode+",\"x\":63,\"y\":97}]";
-        this.name = name;
-        this.taskDefinitionJson = definitionPropertiesBean.taskDefinitionJson(taskCode,environmentCode);
-        this.taskRelationJson = "[{\"name\":\"\",\"postTaskCode\":"+taskCode+"}]";
-        this.tenantCode = definitionPropertiesBean.getTenantCode();
-    }
-    public DolphinProcessDefinition(long taskCode,
-                                    String name,
                                     String dataxJson,
-                                    String environmentCode,
                                     DolphinTaskDefinitionPropertiesBean definitionPropertiesBean) {
         this.locations = "[{\"taskCode\":"+taskCode+",\"x\":63,\"y\":97}]";
         this.name = name;
-        this.taskDefinitionJson = definitionPropertiesBean.taskDefinitionJson(taskCode,dataxJson,environmentCode);
+        this.taskDefinitionJson = definitionPropertiesBean.taskDefinitionJson(taskCode,dataxJson);
         this.taskRelationJson = "[{\"name\":\"\",\"postTaskCode\":"+taskCode+"}]";
         this.tenantCode = definitionPropertiesBean.getTenantCode();
     }

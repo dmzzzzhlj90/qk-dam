@@ -24,32 +24,30 @@ public class DataxController {
     /**
      * 创建datax 任务定义
      * @param projectId 项目id
-     * @param environmentCode 环境code
      * @param dataxJson datax配置脚本
      * @return  DefaultCommonResult
      * @throws ApiException api异常
      */
     @PostMapping("/process-Definition/{projectId}")
     public DefaultCommonResult<Result> createProcessDefinition(@PathVariable final Long projectId,
-                                                               final String environmentCode,
                                                                @RequestBody final String dataxJson) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                dataxClient.createProcessDefinition(projectId,environmentCode,dataxJson));
+                dataxClient.createProcessDefinition(projectId,dataxJson));
     }
 
     /**
      * 更新datax 任务定义
      * @param projectId 项目id
+     * @param dataxJson datax配置脚本
      * @param taskCode 任务code
-     * @param environmentCode 环境code
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
     @PutMapping("/process-Definition/{projectId}")
     public DefaultCommonResult<Result> putProcessDefinition(@PathVariable final Long projectId,
-                                                               final long taskCode,
-                                                               final String environmentCode) throws ApiException {
+                                                            @RequestBody final String dataxJson,
+                                                               final long taskCode) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                dataxClient.updateProcessDefinition(projectId,taskCode,environmentCode));
+                dataxClient.updateProcessDefinition(projectId,taskCode,dataxJson));
     }
 }

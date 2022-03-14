@@ -46,15 +46,13 @@ public class DolphinTaskDefinitionPropertiesBean {
     }
 
     public String taskDefinitionJson(long taskCode,
-                                     String dataxJson,
-                                     String environmentCode) {
+                                     String dataxJson) {
         this.getTaskParams().setJson(dataxJson);
         this.setCode(taskCode);
         this.setEnvironmentCode(environmentCode);
         return new Gson().toJson(List.of(this));
     }
-    public String taskDefinitionJson(long taskCode,
-                                     String environmentCode) {
+    public String taskDefinitionJson(long taskCode) {
         this.setCode(taskCode);
         this.setEnvironmentCode(environmentCode);
         return new Gson().toJson(List.of(this));

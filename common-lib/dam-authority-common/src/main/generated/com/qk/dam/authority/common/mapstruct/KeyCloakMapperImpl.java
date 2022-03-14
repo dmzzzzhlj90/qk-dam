@@ -1,7 +1,9 @@
 package com.qk.dam.authority.common.mapstruct;
 
 import com.qk.dam.authority.common.vo.ClientVO;
+import com.qk.dam.authority.common.vo.ClientVO.ClientVOBuilder;
 import com.qk.dam.authority.common.vo.RealmVO;
+import com.qk.dam.authority.common.vo.RealmVO.RealmVOBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,7 +12,7 @@ import org.keycloak.representations.idm.RealmRepresentation;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-14T15:31:12+0800",
+    date = "2022-03-14T15:32:22+0800",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.13 (Azul Systems, Inc.)"
 )
 public class KeyCloakMapperImpl implements KeyCloakMapper {
@@ -21,22 +23,22 @@ public class KeyCloakMapperImpl implements KeyCloakMapper {
             return null;
         }
 
-        RealmVO realmVO = new RealmVO();
+        RealmVOBuilder realmVO = RealmVO.builder();
 
         if ( realmRepresentation.getId() != null ) {
-            realmVO.setId( realmRepresentation.getId() );
+            realmVO.id( realmRepresentation.getId() );
         }
         if ( realmRepresentation.getRealm() != null ) {
-            realmVO.setRealm( realmRepresentation.getRealm() );
+            realmVO.realm( realmRepresentation.getRealm() );
         }
         if ( realmRepresentation.getDisplayName() != null ) {
-            realmVO.setDisplayName( realmRepresentation.getDisplayName() );
+            realmVO.displayName( realmRepresentation.getDisplayName() );
         }
         if ( realmRepresentation.getDisplayNameHtml() != null ) {
-            realmVO.setDisplayNameHtml( realmRepresentation.getDisplayNameHtml() );
+            realmVO.displayNameHtml( realmRepresentation.getDisplayNameHtml() );
         }
 
-        return realmVO;
+        return realmVO.build();
     }
 
     @Override
@@ -59,28 +61,28 @@ public class KeyCloakMapperImpl implements KeyCloakMapper {
             return null;
         }
 
-        ClientVO clientVO = new ClientVO();
+        ClientVOBuilder clientVO = ClientVO.builder();
 
         if ( clientRepresentation.getId() != null ) {
-            clientVO.setId( clientRepresentation.getId() );
+            clientVO.id( clientRepresentation.getId() );
         }
         if ( clientRepresentation.getClientId() != null ) {
-            clientVO.setClientId( clientRepresentation.getClientId() );
+            clientVO.clientId( clientRepresentation.getClientId() );
         }
         if ( clientRepresentation.getName() != null ) {
-            clientVO.setName( clientRepresentation.getName() );
+            clientVO.name( clientRepresentation.getName() );
         }
         if ( clientRepresentation.getDescription() != null ) {
-            clientVO.setDescription( clientRepresentation.getDescription() );
+            clientVO.description( clientRepresentation.getDescription() );
         }
         if ( clientRepresentation.isEnabled() != null ) {
-            clientVO.setEnabled( clientRepresentation.isEnabled() );
+            clientVO.enabled( clientRepresentation.isEnabled() );
         }
         if ( clientRepresentation.getBaseUrl() != null ) {
-            clientVO.setBaseUrl( clientRepresentation.getBaseUrl() );
+            clientVO.baseUrl( clientRepresentation.getBaseUrl() );
         }
 
-        return clientVO;
+        return clientVO.build();
     }
 
     @Override

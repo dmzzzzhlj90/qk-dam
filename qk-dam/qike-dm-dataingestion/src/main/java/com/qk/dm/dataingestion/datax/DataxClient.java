@@ -19,14 +19,14 @@ public class DataxClient {
         this.dolphinTaskDefinitionPropertiesBean = dolphinTaskDefinitionPropertiesBean;
     }
 
-    public Result createProcessDefinition(Long projectId,String environmentCode,String dataxJson) throws ApiException {
+    public Result createProcessDefinition(Long projectId,String dataxJson) throws ApiException {
         long taskCode =0L;
         try {
             taskCode = CodeGenerateUtils.getInstance().genCode();
         } catch (CodeGenerateUtils.CodeGenerateException e) {
             e.printStackTrace();
         }
-        DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(taskCode, "dataxceshi", dataxJson, environmentCode, dolphinTaskDefinitionPropertiesBean);
+        DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(taskCode, "dataxceshi", dataxJson, dolphinTaskDefinitionPropertiesBean);
         Result result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(processDefinition.getLocations(),
                 processDefinition.getName(),
                 projectId,
@@ -42,8 +42,8 @@ public class DataxClient {
 
     }
 
-    public Result updateProcessDefinition(Long projectId,long taskCode,String environmentCode) throws ApiException {
-        DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(taskCode, "dataxceshi", environmentCode, dolphinTaskDefinitionPropertiesBean);
+    public Result updateProcessDefinition(Long projectId,long taskCode,String dataxJson) throws ApiException {
+        DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(taskCode, "dataxceshi", dataxJson, dolphinTaskDefinitionPropertiesBean);
         return dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
                 taskCode,
                 processDefinition.getLocations(),
