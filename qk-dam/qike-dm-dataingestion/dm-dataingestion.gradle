@@ -3,7 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
 }
-version "${dmDataingestionVersion}"
+version "${damProfilesActive}-v${dmDatastandardsVersion}"
 group "com.qk.dm.dataingestion"
 configurations {
     [apiElements, runtimeElements].each {
@@ -11,21 +11,34 @@ configurations {
         it.outgoing.artifact(bootJar)
     }
 }
-
+processResources {
+    expand(project.properties)
+}
+docker {
+    dockerCreateDockerfile {
+        environmentVariable 'TimeZone', 'Asia/Shanghai'
+        instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
+    }
+    springBootApplication {
+        baseImage = "${jre11Image}"
+        ports = [8788]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
 dependencies {
-    implementation project(":commons-core")
-    implementation project(":dam-log")
+    implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
-    implementation project(":qk-sqlloader")
-    implementation group: 'org.apache.commons', name: 'commons-lang3'
-    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus'
-
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation project(":dam-log")
+    implementation project(":dolphinscheduler-starter-client")
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
+
+
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
             "javax.persistence:javax.persistence-api",
@@ -33,6 +46,7 @@ dependencies {
             "javax.annotation:javax.annotation-api",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
@@ -44,10 +58,3 @@ dependencyManagement {
     }
 }
 
-smartdoc {
-    configFile = file("src/main/resources/smart-doc.json")
-}
-
-test {
-    useJUnitPlatform()
-}
