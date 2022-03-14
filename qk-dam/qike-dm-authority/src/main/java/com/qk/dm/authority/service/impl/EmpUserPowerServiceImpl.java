@@ -14,6 +14,7 @@ import com.qk.dm.authority.service.AtyUserRoleService;
 import com.qk.dm.authority.service.EmpUserPowerService;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
@@ -151,15 +152,11 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
   }
 
   private List<String> getResourcesUuid(List<String> idList, String serviceId) {
-    List<String> list = new ArrayList<>();
-    if (StringUtils.isNotBlank(serviceId)){
-      List<QxEmpower> qxempowerList = (List<QxEmpower>) qkQxEmpowerRepository.findAll(qQxEmpower.empoerId.in(idList).and(qQxEmpower.serviceId.eq(serviceId)));
-      list=getEmpower(qxempowerList);
-    }else{
-      List<QxEmpower> qxempowerList = (List<QxEmpower>) qkQxEmpowerRepository.findAll(qQxEmpower.empoerId.in(idList));
-      list=getEmpower(qxempowerList);
-    }
-    return list;
+    Predicate predicate = StringUtils.isNotBlank(serviceId) ?
+        qQxEmpower.empoerId.in(idList).and(qQxEmpower.serviceId.eq(serviceId)) :
+        qQxEmpower.empoerId.in(idList);
+    List<QxEmpower> qxempowerList = (List<QxEmpower>) qkQxEmpowerRepository.findAll(predicate);
+    return getEmpower(qxempowerList);
   }
 
   private List<String> getEmpower(List<QxEmpower> qxempowerList) {
