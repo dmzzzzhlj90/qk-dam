@@ -33,7 +33,8 @@ public class BloomFilterServer {
   private final QkQxResourcesRepository qkQxResourcesRepository;
   private final AtyRealmService atyRealmService;
   private final AtyUserService atyUserService;
-  private BloomFilter<String> filter = null;
+  private BloomFilter<String> filter = BloomFilter.create(Funnels.stringFunnel(
+      Charset.defaultCharset()), QxConstant.GUAVA_CAPACITY,0.01);
 
   public BloomFilterServer(QkQxResourcesRepository qkQxResourcesRepository,
       AtyRealmService atyRealmService, AtyUserService atyUserService) {
@@ -47,8 +48,6 @@ public class BloomFilterServer {
    */
   @PostConstruct
   public void cacheData() {
-    filter= BloomFilter.create(Funnels.stringFunnel(
-        Charset.defaultCharset()), QxConstant.GUAVA_CAPACITY,0.01);
     List<QxResources> qxResourcesList = qkQxResourcesRepository.findAll();
     if (CollectionUtils.isNotEmpty(qxResourcesList)){
       qxResourcesList.forEach(qxResources -> {
@@ -59,11 +58,10 @@ public class BloomFilterServer {
   }
 
   /**
-   * 将库中的数据拼接成key存入guava中，分别是（根据资源名称、标识、服务id、资源类型）
+   * 将库中的数据拼接成key存入guava中，分别是（域名、用户名）
    */
   @PostConstruct
   public void cacheUserData() {
-    filter= BloomFilter.create(Funnels.stringFunnel(Charset.defaultCharset()), QxConstant.GUAVA_CAPACITY,0.01);
     Map<String,List<AtyUserInfoVO>> userMap = getUserMap();
     if (MapUtils.isNotEmpty(userMap)){
       userMap.forEach((k,v)->{
