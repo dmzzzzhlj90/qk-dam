@@ -2,6 +2,8 @@ package com.qk.dm.authority.service;
 
 import com.qk.dm.authority.vo.powervo.ServiceVO;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -9,7 +11,7 @@ import java.util.List;
  */
 
 public interface EmpUserPowerService {
-  List<ServiceVO> queryServicesByUserId(String realm, String userId);
+  List<ServiceVO> queryServicesByUserId(@Valid @NotBlank String s, String realm, String userId);
 
-  List<String> queryEmpower(String realm, String serviceId, String userId);
+  List<String> queryEmpower(@Valid @NotBlank String s, String realm, String serviceId, String userId);
 }

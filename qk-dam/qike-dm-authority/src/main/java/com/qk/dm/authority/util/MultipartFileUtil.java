@@ -50,7 +50,7 @@ public class MultipartFileUtil {
   }
 
   /**
-   * 根据字段去重(根据资源名称、服务id、资源类型)
+   * guava根据字段去重(根据资源名称、服务id、资源类型)
    * @param qQxResources
    * @return
    */
@@ -60,7 +60,7 @@ public class MultipartFileUtil {
   }
 
   /**
-   * 根据名称、服务id、类型拼接key
+   * 根据父级名称、服务id、类型拼接key
    * @param qxResources
    * @return
    */
@@ -70,7 +70,7 @@ public class MultipartFileUtil {
   }
 
   /**
-   * 创建资源导入key
+   * 创建资源导入key(去重key)
    * @param qxResources
    * @return
    */
