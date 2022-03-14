@@ -26,7 +26,7 @@ public class DasTrendCurveValVO {
     /**
      * y横轴
      */
-    private String yVal;
+    private Integer yVal;
 
 
 }

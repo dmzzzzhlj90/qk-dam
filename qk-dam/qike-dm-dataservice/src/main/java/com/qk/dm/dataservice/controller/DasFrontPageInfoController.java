@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * 数据服务_首页信息
  *
@@ -35,6 +37,17 @@ public class DasFrontPageInfoController {
     }
 
     /**
+     * 日期频次
+     *
+     * @return DefaultCommonResult<Map < String, String>>
+     */
+    @GetMapping(value = "/date/frequency")
+//  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
+    public DefaultCommonResult<Map<String, String>> getDateFrequency() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasFrontPageInfoService.getDateFrequency());
+    }
+
+    /**
      * 发布趋势
      *
      * @param dasReleaseTrendParamsVO
@@ -45,5 +58,6 @@ public class DasFrontPageInfoController {
     public DefaultCommonResult<DasFrontPageTrendInfoDataVO> releaseTrend(@RequestBody DasReleaseTrendParamsVO dasReleaseTrendParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasFrontPageInfoService.releaseTrend(dasReleaseTrendParamsVO));
     }
+
 
 }
