@@ -7,6 +7,8 @@ import com.qk.datacenter.model.Result;
 import com.qk.dm.dataingestion.datax.DataxClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 /**
  * 创建datax dolphin节点
@@ -40,13 +42,16 @@ public class DataxController {
      * @param projectId 项目id
      * @param dataxJson datax配置脚本
      * @param taskCode 任务code
+     * @param argsMap 环境配置
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
     @PutMapping("/process-Definition/{projectId}")
     public DefaultCommonResult<Result> putProcessDefinition(@PathVariable final Long projectId,
-                                                            @RequestBody final String dataxJson,
-                                                               final long taskCode) throws ApiException {
+                                                            final long taskCode,
+                                                            final Map<String,Object> argsMap,
+                                                            @RequestBody final String dataxJson
+                                                               ) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
                 dataxClient.updateProcessDefinition(projectId,taskCode,dataxJson));
     }
