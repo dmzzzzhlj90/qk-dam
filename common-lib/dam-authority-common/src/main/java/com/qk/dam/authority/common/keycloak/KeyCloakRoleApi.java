@@ -33,7 +33,7 @@ public class KeyCloakRoleApi {
      * @param description
      */
     public void addClientRole(String realm, String client_id, String roleName, String description) {
-        keyCloakApi.addUserClientRole(realm, client_id, roleName, description);
+        keyCloakApi.addClientRole(realm, client_id, roleName, description);
     }
 
     /**
