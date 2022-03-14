@@ -66,8 +66,8 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
    * @return
    */
   @Override
-  public List<ServiceVO> queryServicesByUserId(String realm, String userId) {
-    List<String> idList = getIdList(realm,userId);
+  public List<ServiceVO> queryServicesByUserId(String realm, String userId,String clientId) {
+    List<String> idList = getIdList(realm,userId,clientId);
     //3根据用户id、角色id、用户分组id返回授权服务信息
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     checkCondition(booleanBuilder, idList);
@@ -98,12 +98,12 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
     }
   }
 
-  private List<String> getIdList(String realm, String userId) {
+  private List<String> getIdList(String realm, String userId ,String clientId) {
     List<String> idList = new ArrayList<>();
     //1根据用户id和域获取用户分组
     List<AtyGroupInfoVO> userGroup = atyUserGroupService.getUserGroup(realm, userId);
     //2根据用户id、域、客户端获取用户角色
-    List<AtyClientRoleInfoVO> userClientRole = atyUserRoleService.getUserClientRole(realm, userId,null);
+    List<AtyClientRoleInfoVO> userClientRole = atyUserRoleService.getUserClientRole(realm, userId,clientId);
     if (CollectionUtils.isNotEmpty(userGroup)){
       List<String> groupIds = userGroup.stream().map(AtyGroupInfoVO::getId).collect(Collectors.toList());
       idList.addAll(groupIds);
@@ -125,8 +125,8 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
    * @return
    */
   @Override
-  public List<String> queryEmpower(String realm, String serviceId, String userId) {
-      List<String> idList = getIdList(realm, userId);
+  public List<String> queryEmpower(String realm, String serviceId, String userId,String clientId) {
+      List<String> idList = getIdList(realm, userId, clientId);
      return getEmpowerList(idList,serviceId);
   }
 

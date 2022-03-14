@@ -29,24 +29,28 @@ private final EmpUserPowerService empUserPowerService;
   }
 
   /**
-   *根据用户id查询服务信息
+   * 根据用户id查询服务信息
    * @param realm 域名称
    * @param userId 用户id
+   * @param clientId 客户端id
    * @return DefaultCommonResult<List<ServiceVO>> 服务信息
    */
   @GetMapping("/{userId}")
-  public DefaultCommonResult<List<ServiceVO>> queryServicesByUserId(@Valid @NotBlank String realm, @PathVariable String userId){
-    return DefaultCommonResult.success(ResultCodeEnum.OK,empUserPowerService.queryServicesByUserId(realm,userId));
+  public DefaultCommonResult<List<ServiceVO>> queryServicesByUserId(@Valid @NotBlank String realm, @PathVariable String userId ,@Valid @NotBlank String clientId){
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empUserPowerService.queryServicesByUserId(realm,userId,clientId));
   }
+
   /**
-   *根据用户id和服务uuid查询授权信息
-   * @param serviceId 服务uuid
+   *
+   * @param realm 域名称
+   * @param serviceId 服务id
    * @param userId 用户id
+   * @param clientId 客户端id
    * @return DefaultCommonResult<List<String>> 用户指定服务的授权url
    */
   @GetMapping("")
-  public DefaultCommonResult<List<String>> queryEmpower(@Valid @NotBlank String realm ,@Valid String serviceId, @Valid @NotBlank String userId){
-    return DefaultCommonResult.success(ResultCodeEnum.OK,empUserPowerService.queryEmpower(realm,serviceId,userId));
+  public DefaultCommonResult<List<String>> queryEmpower(@Valid @NotBlank String realm ,@Valid String serviceId, @Valid @NotBlank String userId,@Valid @NotBlank String clientId){
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empUserPowerService.queryEmpower(realm,serviceId,userId,clientId));
   }
 
 
