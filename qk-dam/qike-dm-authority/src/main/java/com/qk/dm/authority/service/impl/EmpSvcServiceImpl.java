@@ -55,7 +55,7 @@ public class EmpSvcServiceImpl implements EmpSvcService {
   public void addService(ServiceVO serviceVO) {
     serviceVO.setServiceid(UUID.randomUUID().toString());
     QxService qxService = QxServiceMapper.INSTANCE.qxService(serviceVO);
-    BooleanExpression predicate = qQxService.serviceName.eq(qxService.getServiceName());
+    BooleanExpression predicate = qQxService.serviceName.eq(qxService.getServiceName()).and(qQxService.redionid.eq(qxService.getRedionid()));
     boolean exists = qkQxServiceRepository.exists(predicate);
     if (exists){
       throw new BizException(
