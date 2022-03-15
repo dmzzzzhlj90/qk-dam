@@ -30,16 +30,18 @@ dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
+    implementation project(":dm-feign-client")
     implementation project(":dolphinscheduler-starter-client")
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
-    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
-
-
     implementation 'org.mapstruct:mapstruct'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
     annotationProcessor(
             "javax.persistence:javax.persistence-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",

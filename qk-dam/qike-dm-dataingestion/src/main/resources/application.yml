@@ -5,6 +5,8 @@ spring:
     basename: i18n/messages
   mvc:
     message-codes-resolver-format: postfix_error_code
+    pathmatch:
+      matching-strategy: ant_path_matcher
     servlet:
       path: /dis
   main:

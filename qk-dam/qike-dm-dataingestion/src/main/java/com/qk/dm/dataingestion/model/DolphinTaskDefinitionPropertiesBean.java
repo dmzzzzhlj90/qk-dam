@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author zhudaoming
@@ -15,7 +17,7 @@ import java.util.List;
 @Data
 @ConfigurationProperties("dolphinscheduler.task")
 public class DolphinTaskDefinitionPropertiesBean {
-    private long code;
+    private Long code;
     private String name;
     @Expose
     private String tenantCode;
@@ -46,15 +48,33 @@ public class DolphinTaskDefinitionPropertiesBean {
     }
 
     public String taskDefinitionJson(long taskCode,
-                                     String dataxJson) {
+                                     String dataxJson,
+                                     DolphinTaskDefinitionPropertiesBean taskParam) {
         this.getTaskParams().setJson(dataxJson);
         this.setCode(taskCode);
-        this.setEnvironmentCode(environmentCode);
-        return new Gson().toJson(List.of(this));
+        BeanMap abean = BeanMap.create(this);
+        BeanMap bbean = BeanMap.create(taskParam);
+        abean.forEach((k,v)->{
+            if (Objects.nonNull(bbean.get(k))){
+                Object tv = bbean.get(k);
+                if (tv instanceof TaskParams){
+                    BeanMap taskBean = BeanMap.create(abean.get(k));
+                    BeanMap targetTaskBean = BeanMap.create(tv);
+                    taskBean.forEach((kk,vv)->{
+                        taskBean.put(kk,Objects.nonNull(targetTaskBean.get(kk))?targetTaskBean.get(kk):vv);
+                    });
+
+                }else{
+                    abean.put(k,tv);
+                }
+
+            }
+        });
+        return new Gson().toJson(List.of(abean));
     }
-    public String taskDefinitionJson(long taskCode) {
+    public String taskDefinitionJson(long taskCode,String dataxJson) {
         this.setCode(taskCode);
-        this.setEnvironmentCode(environmentCode);
+        this.getTaskParams().setJson(dataxJson);
         return new Gson().toJson(List.of(this));
     }
 }

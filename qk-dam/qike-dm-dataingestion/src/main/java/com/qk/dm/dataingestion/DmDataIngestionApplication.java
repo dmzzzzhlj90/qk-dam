@@ -1,12 +1,10 @@
 package com.qk.dm.dataingestion;
 
-import com.qk.dam.commons.util.CodeGenerateUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
-
-import javax.annotation.PostConstruct;
 
 /**
  * 数据接入服务 Data Ingestion Service
@@ -17,13 +15,10 @@ import javax.annotation.PostConstruct;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableFeignClients(basePackages = "com.qk.dm.*")
 @ComponentScan(basePackages = "com.qk")
 public class DmDataIngestionApplication {
   public static void main(String[] args) {
     SpringApplication.run(DmDataIngestionApplication.class, args);
-  }
-  @PostConstruct
-  public void ttt(){
-
   }
 }
