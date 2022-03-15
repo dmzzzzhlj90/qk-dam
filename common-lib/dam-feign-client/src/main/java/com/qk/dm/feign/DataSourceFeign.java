@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(value = "dm-datasource-dev", path = "/ds/api")
+@FeignClient(value = "dm-datasource-${spring.profiles.active}", path = "/ds/api")
 @Component
 public interface DataSourceFeign {
 
