@@ -1,11 +1,15 @@
 package com.qk.dm.dataservice.utils;
 
+import com.qk.dm.dataservice.constant.CreateParamSortStyleEnum;
 import com.qk.dm.dataservice.constant.OperationSymbolEnum;
+import com.qk.dm.dataservice.vo.DasApiCreateOrderParasVO;
 import com.qk.dm.dataservice.vo.DasApiCreateRequestParasVO;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 执行SQL工具类
@@ -26,6 +30,14 @@ public class SqlExecuteUtils {
     public static final String APOSTROPHE_STRING = "'";
     public static final String PERCENT_SIGN = "%";
     public static final String LIKE = " like ";
+    /**
+     * 分页
+     */
+    public static final String PAGE_NUM = "page_num";
+    public static final String PAGE_SIZE = "page_size";
+    public static final String LIMIT = " LIMIT ";
+
+    public static final String ORDER_BY = " ORDER BY ";
 
 
     /*********************************************MYSQL******************************************************/
@@ -36,12 +48,14 @@ public class SqlExecuteUtils {
      * @param reqParams     请求参数
      * @param resParaMap    响应参数
      * @param mappingParams 参数字段映射关系
+     * @param orderByStr 排序SQL
      * @return
      */
     public static String mysqlExecuteSQL(String tableName,
                                          Map<String, String> reqParams,
                                          Map<String, String> resParaMap,
-                                         Map<String, List<DasApiCreateRequestParasVO>> mappingParams) {
+                                         Map<String, List<DasApiCreateRequestParasVO>> mappingParams,
+                                         String orderByStr) {
         String sql = SINGLE_TABLE_SELECT_SQL_TEMPLATE;
         // 表名称
         sql = sql.replace(TAB_KEY, tableName);
@@ -68,6 +82,12 @@ public class SqlExecuteUtils {
             }
             sql = sql + whereBuffer;
         }
+
+        //排序
+        sql = sql +orderByStr;
+
+        //分页查询
+        sql = sql + getPageSqlPart(reqParams);
         return sql;
     }
 
@@ -113,17 +133,41 @@ public class SqlExecuteUtils {
     /**
      * 执行SQL片段中的参数替换
      *
-     * @param sqlPara
-     * @param reqParams
+     * @param sqlPara 输入SQL片段
+     * @param reqParams 真实请求参数
+     * @param orderByStr 排序SQL
      * @return
      */
-    public static String mysqlSqlPara(String sqlPara, Map<String, String> reqParams) {
+    public static String mysqlSqlPara(String sqlPara, Map<String, String> reqParams, String orderByStr) {
         String replaceSql = sqlPara;
         for (String para : reqParams.keySet()) {
             String value = reqParams.get(para);
             replaceSql = replaceSql.replace(para, value);
         }
+
+        //排序
+        replaceSql = replaceSql + orderByStr;
+        //分页查询
+        replaceSql = replaceSql + getPageSqlPart(reqParams);
         return replaceSql;
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param reqParams
+     * @return
+     */
+    private static String getPageSqlPart(Map<String, String> reqParams) {
+        String pageSqlPart = "";
+        int pageNum = Integer.parseInt(reqParams.get(PAGE_NUM));
+
+        int pageSize = Integer.parseInt(reqParams.get(PAGE_SIZE));
+        if (!ObjectUtils.isEmpty(pageNum) && !ObjectUtils.isEmpty(pageSize)) {
+            int offset = (pageNum - 1) * pageSize;
+            pageSqlPart += LIMIT + offset + "," + pageSize;
+        }
+        return pageSqlPart;
     }
 
     /*********************************************HIVE*****************************************************/
