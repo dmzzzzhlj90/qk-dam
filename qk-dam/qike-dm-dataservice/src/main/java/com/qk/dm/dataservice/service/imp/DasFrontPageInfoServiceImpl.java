@@ -57,10 +57,12 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
         DasFrontPageTrendInfoDataVO.DasFrontPageTrendInfoDataVOBuilder dasFrontPageTrendInfoDataBuilder = DasFrontPageTrendInfoDataVO.builder();
         //日期频次时间范围
         String dateFrequency = dasReleaseTrendParamsVO.getDateFrequency();
+
         //查询时间范围
         searchDataTimeRange(dasReleaseTrendParamsVO, dateFrequency);
         //根据时间范围进行数据查询
         List<DasApiBasicInfo> apiBasicInfoList = queryApiBasicInfoByTime(dasReleaseTrendParamsVO);
+
         //构建曲线信息
         buildDasTrendCurveInfoVO(apiBasicInfoList, dasFrontPageTrendInfoDataBuilder, dasReleaseTrendParamsVO);
         //构建饼状图信息
@@ -83,8 +85,10 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
         String dateFrequency = dasReleaseTrendParamsVO.getDateFrequency();
         //首次开始时间
         String firstTime = dasReleaseTrendParamsVO.getBeginDate();
+
         //获取时间计算分组,间隔参数
         Map<String, Object> calGroupParams = getCalGroupParams(dateFrequency);
+
         //构建趋势图值信息
         DasTrendCurveInfoVO dasTrendCurveInfoVO =
                 setDasTrendCurveVal(
