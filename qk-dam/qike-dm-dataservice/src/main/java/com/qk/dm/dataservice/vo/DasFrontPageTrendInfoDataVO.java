@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 首页__发布趋势VO
+ * 首页__趋势查询信息VO
  *
  * @author wjq
  * @date 2022/03/11
@@ -16,22 +16,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DasReleaseTrendParamsVO {
+public class DasFrontPageTrendInfoDataVO {
 
     /**
-     * 日期频率
+     * 曲线信息
      */
-    private String dateFrequency;
-
-
-    /**
-     * 开始时间
-     */
-    private String beginDate;
+    private DasTrendCurveInfoVO dasTrendCurveInfoVO;
 
     /**
-     * 结束时间
+     * 饼状图信息
      */
-    private String endDate;
+    private DasTrendPieChartInfoVO dasTrendPieChartInfoVO;
 
 }
