@@ -217,7 +217,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         // 1.生成查询SQL(根据数据源类型)
         //数据源连接类型
         DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = apiCreateConfigVO.getApiCreateDefinitionVO();
-        // 新建API接口定义入参(对应元数据映射关系)
+        // 新建API接口请求参数,定义入参(对应元数据映射关系)
         Map<String, List<DasApiCreateRequestParasVO>> mappingParams =
                 apiCreateConfigDefinitionVO.getApiCreateRequestParasVOS().stream()
                         .collect(Collectors.groupingBy(DasApiCreateRequestParasVO::getParaName));

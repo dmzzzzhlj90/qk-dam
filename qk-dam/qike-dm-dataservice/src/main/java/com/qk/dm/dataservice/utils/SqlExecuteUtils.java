@@ -53,9 +53,9 @@ public class SqlExecuteUtils {
         sql = sql.replace(COL_LIST_KEY, COL_LIST_DEFAULT);
 
         // where条件
-        if (reqParams.size() > 0) {
+        if (mappingParams.size() > 0) {
             StringBuilder whereBuffer = new StringBuilder();
-            for (String paraName : reqParams.keySet()) {
+            for (String paraName : mappingParams.keySet()) {
                 DasApiCreateRequestParasVO apiCreateRequestParasVO = mappingParams.get(paraName).get(0);
                 // 数据库对应字段
                 String column = apiCreateRequestParasVO.getMappingName();
