@@ -31,10 +31,10 @@ public class AtyUserRoleController {
 
     /**
      * 用户角色列表
-     *
-     * @param userId
      * @param realm
-     * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
+     * @param userId
+     * @param client_clientId 唯一标识，客户端id
+     * @return
      */
     @GetMapping("/users/{userId}/roles")
     public DefaultCommonResult<List<AtyClientRoleInfoVO>> getUserClientRole(@Valid @NotBlank String realm, @PathVariable String userId,@Valid @NotBlank String client_clientId) {

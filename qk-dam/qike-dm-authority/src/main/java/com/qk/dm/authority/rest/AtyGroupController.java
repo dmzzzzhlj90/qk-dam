@@ -82,7 +82,7 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组分页列表
+     * 用户组列表-分页
      *
      * @param groupParamVO
      * @return DefaultCommonResult<PageResultVO < AtyGroupInfoVO>>
@@ -93,7 +93,7 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组下拉列表
+     * 用户组列表
      *
      * @param realm
      * @param search

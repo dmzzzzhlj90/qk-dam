@@ -3,10 +3,12 @@ package com.qk.dm.authority.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.authority.service.EmpExcelService;
+import com.qk.dm.authority.vo.user.AtyUserDownVO;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 /**
@@ -132,6 +134,20 @@ public class EmpExcelController {
   public DefaultCommonResult UserAllDownload(String realm, String search,HttpServletResponse response)
       throws IOException {
     empExcelService.UserAllDownload(realm,search,response);
+    return DefaultCommonResult.success();
+  }
+
+  /**
+   * 用戶信息excel__指定导出数据
+   * @param atyUserDownVO
+   * @param response
+   * @return
+   * @throws IOException
+   */
+  @PostMapping("/download/user")
+  public DefaultCommonResult UserDownloadByIds(@RequestBody @Valid AtyUserDownVO atyUserDownVO, HttpServletResponse response)
+          throws IOException {
+    empExcelService.UserAllDownload(atyUserDownVO,response);
     return DefaultCommonResult.success();
   }
 }

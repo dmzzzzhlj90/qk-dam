@@ -87,7 +87,7 @@ public class KeyCloakUserApi {
     public AtyUserInfoVO userDetail(String realm, String userId) {
         AtyUserInfoVO atyUserInfoVO = AtyUserMapper.INSTANCE.userInfo(keyCloakApi.userDetail(realm, userId));
         //用户分组
-        atyUserInfoVO.setGroupList(userGroup(realm, userId));
+//        atyUserInfoVO.setGroupList(userGroup(realm, userId));
         return atyUserInfoVO;
     }
 
@@ -125,7 +125,6 @@ public class KeyCloakUserApi {
      */
     public void saveAllUsers(List<AtyUserInputExceVO> userlist, String relame) {
         userlist.forEach(atyUserInputExceVO -> {
-            //todo 用户名电子邮箱不能重复
             UserRepresentation user = AtyUserMapper.INSTANCE.userExcelInfo(atyUserInputExceVO);
             keyCloakApi.createUser(relame,atyUserInputExceVO.getPassword(),user);
         });

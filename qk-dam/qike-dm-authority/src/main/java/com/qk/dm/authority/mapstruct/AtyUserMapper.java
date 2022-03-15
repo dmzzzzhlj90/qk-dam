@@ -5,11 +5,12 @@ import com.qk.dam.authority.common.vo.user.AtyUserKeyCloakVO;
 import com.qk.dm.authority.vo.user.AtyUserCreateVO;
 import com.qk.dm.authority.vo.user.AtyUserExcelVO;
 import com.qk.dm.authority.vo.user.AtyUserUpdateVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author shenpj
@@ -37,6 +38,19 @@ public interface AtyUserMapper {
 
     void userExcel(AtyUserInfoVO atyUserInfoVO, @MappingTarget AtyUserExcelVO atyUserExcelVO);
 
+    @Mapping(target = "createdTime", expression = "java(com.qk.dm.authority.mapstruct.AtyUserMapper.getTime(atyUserInfoVO.getCreatedTimestamp()))")
+    AtyUserExcelVO userExcel(AtyUserInfoVO atyUserInfoVO);
+
 //    UserRepresentation userExcelInfo(AtyUserInputExceVO atyUserInputExceVO);
 
+    SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置格式
+    static Date getTime(String createdTimestamp) {
+        Date parse = null;
+        try {
+            parse = format.parse(createdTimestamp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return parse;
+    }
 }

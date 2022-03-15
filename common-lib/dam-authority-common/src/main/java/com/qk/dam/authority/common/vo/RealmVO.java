@@ -16,7 +16,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RealmVO {
     private String id;
+    /**
+     * 域
+     */
     private String realm;
+    /**
+     * 描述
+     */
     private String displayName;
     private String displayNameHtml;
 }

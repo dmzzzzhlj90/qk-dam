@@ -149,10 +149,7 @@ public class KeyCloakApi {
      * @return
      */
     public List<UserRepresentation> getUserList(String realm, String search, Pagination pagination) {
-        return keycloak.realm(realm).users().search(
-                search,
-                (pagination.getPage() - 1) * pagination.getSize(),
-                pagination.getSize());
+        return keycloak.realm(realm).users().search(search, (pagination.getPage() - 1) * pagination.getSize(), pagination.getSize());
     }
 
     /**
@@ -236,10 +233,7 @@ public class KeyCloakApi {
      * @return
      */
     public List<GroupRepresentation> groupList(String realm, String search, Pagination pagination) {
-        return keycloak.realm(realm).groups().groups(
-                search,
-                (pagination.getPage() - 1) * pagination.getSize(),
-                pagination.getSize());
+        return keycloak.realm(realm).groups().groups(search, (pagination.getPage() - 1) * pagination.getSize(), pagination.getSize());
     }
 
     /**
@@ -262,9 +256,7 @@ public class KeyCloakApi {
      * @return
      */
     public List<UserRepresentation> groupUsers(String realm, String groupId, Pagination pagination) {
-        return keycloak.realm(realm).groups().group(groupId).members(
-                (pagination.getPage() - 1) * pagination.getSize(),
-                pagination.getSize());
+        return keycloak.realm(realm).groups().group(groupId).members((pagination.getPage() - 1) * pagination.getSize(), pagination.getSize());
     }
 
     /**
@@ -287,9 +279,7 @@ public class KeyCloakApi {
      * @return
      */
     public List<GroupRepresentation> userGroup(String realm, String userId, Pagination pagination) {
-        return keycloak.realm(realm).users().get(userId).groups(
-                (pagination.getPage() - 1) * pagination.getSize(),
-                pagination.getSize()
+        return keycloak.realm(realm).users().get(userId).groups((pagination.getPage() - 1) * pagination.getSize(), pagination.getSize()
         );
     }
 
@@ -325,9 +315,6 @@ public class KeyCloakApi {
     public void deleteUserGroup(String realm, String userId, String groupId) {
         keycloak.realm(realm).users().get(userId).leaveGroup(groupId);
     }
-
-    /**********************************分组结束************************************/
-
 
     /**********************************角色开始************************************/
 
@@ -394,10 +381,7 @@ public class KeyCloakApi {
      * @return
      */
     public List<RoleRepresentation> clientRoleList(String realm, String client_id, String search, Pagination pagination) {
-        return keycloak.realm(realm).clients().get(client_id).roles().list(
-                search,
-                (pagination.getPage() - 1) * pagination.getSize(),
-                pagination.getSize());
+        return keycloak.realm(realm).clients().get(client_id).roles().list(search, (pagination.getPage() - 1) * pagination.getSize(), pagination.getSize());
     }
 
     /**
@@ -421,9 +405,7 @@ public class KeyCloakApi {
      * @return
      */
     public Set<UserRepresentation> clientRoleUsers(String realm, String client_id, String roleName, Pagination pagination) {
-        return keycloak.realm(realm).clients().get(client_id).roles().get(roleName).getRoleUserMembers(
-                (pagination.getPage() - 1) * pagination.getSize(),
-                pagination.getSize());
+        return keycloak.realm(realm).clients().get(client_id).roles().get(roleName).getRoleUserMembers((pagination.getPage() - 1) * pagination.getSize(), pagination.getSize());
     }
 
     /**
@@ -481,32 +463,4 @@ public class KeyCloakApi {
         RoleRepresentation clientRoleRep = realmResource.clients().get(client_id).roles().get(roleName).toRepresentation();
         realmResource.users().get(userId).roles().clientLevel(client_id).remove(Arrays.asList(clientRoleRep));
     }
-
-//    /**
-//     * 导入添加用户信息
-//     * @param userlist
-//     * @param relame
-//     */
-//    public void saveAllUsers(List<AtyUserInputExceVO> userlist, String relame) {
-//        userlist.forEach(atyUserInputExceVO -> {
-//            //todo 用户名电子邮箱不能重复
-//            UserRepresentation user = AtyUserMapper.INSTANCE.userExcelInfo(atyUserInputExceVO);
-//            user.setEmailVerified(false);
-//            // 设置密码
-//            List<CredentialRepresentation> credentials = new ArrayList<>();
-//            CredentialRepresentation cr = new CredentialRepresentation();
-//            cr.setType(CredentialRepresentation.PASSWORD);
-//            cr.setValue(atyUserInputExceVO.getPassword());
-//            //临时密码，如果启用，用户需在下次登陆时更换密码
-//            cr.setTemporary(false);
-//            credentials.add(cr);
-//            user.setCredentials(credentials);
-//            //创建用户
-//            Response response = keycloak.realm(relame).users().create(user);
-//            Response.StatusType createUserStatus = response.getStatusInfo();
-//            if (!"Created".equals(createUserStatus.toString())) {
-//                throw new BizException("用户名或邮箱已经存在！");
-//            }
-//        });
-//    }
 }

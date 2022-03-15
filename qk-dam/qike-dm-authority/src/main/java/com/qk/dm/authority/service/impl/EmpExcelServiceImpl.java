@@ -18,6 +18,7 @@ import com.qk.dm.authority.service.EmpExcelService;
 import com.qk.dm.authority.util.MultipartFileUtil;
 import com.qk.dm.authority.vo.powervo.ResourceExcelVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
+import com.qk.dm.authority.vo.user.AtyUserDownVO;
 import com.qk.dm.authority.vo.user.AtyUserExcelVO;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
@@ -253,6 +254,19 @@ public class EmpExcelServiceImpl implements EmpExcelService {
       e.printStackTrace();
     }
     return parse;
+  }
+
+  @Override
+  public void UserAllDownload(AtyUserDownVO atyUserDownVO, HttpServletResponse response) throws IOException {
+    List<AtyUserExcelVO> atyUserExcelVOList = atyUserDownVO.getUserIds().stream().map(userId ->
+            AtyUserMapper.INSTANCE.userExcel(atyUserService.getUser(atyUserDownVO.getRealm(), userId))
+    ).collect(Collectors.toList());
+    response.setContentType("application/json;charset=utf-8");
+    String fileName = URLEncoder.encode("用户列表基本信息", "UTF-8").replaceAll("\\+", "%20");
+    response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+    EasyExcel.write(response.getOutputStream(), AtyUserExcelVO.class)
+            .sheet("用户列表基本信息")
+            .doWrite(atyUserExcelVOList);
   }
 
   /**

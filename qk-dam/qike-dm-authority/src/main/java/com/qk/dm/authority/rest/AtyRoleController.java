@@ -78,7 +78,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色分页列表
+     * 角色列表-分页
      *
      * @param clientRoleParamVO
      * @return DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>>
@@ -89,7 +89,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色下拉列表
+     * 角色列表
      *
      * @param clientRoleParamVO
      * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>

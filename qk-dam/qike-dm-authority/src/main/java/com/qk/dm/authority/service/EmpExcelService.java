@@ -1,5 +1,6 @@
 package com.qk.dm.authority.service;
 
+import com.qk.dm.authority.vo.user.AtyUserDownVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,8 @@ public interface EmpExcelService {
 
   void UserAllDownload(String realm, String search,
       HttpServletResponse response) throws IOException;
+
+  void UserAllDownload(AtyUserDownVO atyUserDownVO, HttpServletResponse response) throws IOException;
 
   void userDownloadTemplate(HttpServletResponse response) throws IOException;
 

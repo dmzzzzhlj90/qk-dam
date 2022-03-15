@@ -25,7 +25,7 @@ public class AtyClientRoleParamVO {
   @NotBlank(message = "域必填!")
   String realm;
   /**
-   * 客户端id
+   * 客户端表id
    */
   @NotBlank(message = "客户端id必填!")
   String client_id;

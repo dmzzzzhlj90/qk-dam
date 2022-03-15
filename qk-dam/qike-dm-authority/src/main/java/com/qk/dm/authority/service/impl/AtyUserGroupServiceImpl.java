@@ -46,8 +46,8 @@ public class AtyUserGroupServiceImpl implements AtyUserGroupService {
     }
 
     @Override
-    public void addBatchByUsers(AtyGroupBatchByUsersVO atyGroupBatchByUsersVO) {
-        atyGroupBatchByUsersVO.getUserIds().forEach(userId -> keyCloakUserApi.addUserGroup(atyGroupBatchByUsersVO.getRealm(), userId, atyGroupBatchByUsersVO.getGroupId()));
+    public void addBatchByUsers(AtyGroupBatchByUsersVO batchByUsersVO) {
+        batchByUsersVO.getUserIds().forEach(userId -> keyCloakUserApi.addUserGroup(batchByUsersVO.getRealm(), userId, batchByUsersVO.getGroupId()));
     }
 
     @Override

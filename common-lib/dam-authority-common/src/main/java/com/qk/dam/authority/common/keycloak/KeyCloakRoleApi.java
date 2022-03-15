@@ -68,7 +68,7 @@ public class KeyCloakRoleApi {
      */
     public AtyClientRoleInfoVO clientRoleDetail(String realm, String client_id, String roleName) {
         AtyClientRoleInfoVO atyClientRoleInfoVO = AtyRoleMapper.INSTANCE.userRole(keyCloakApi.clientRoleDetail(realm, client_id, roleName));
-        atyClientRoleInfoVO.setMembers(clientRoleUsers(realm, client_id, roleName));
+//        atyClientRoleInfoVO.setMembers(clientRoleUsers(realm, client_id, roleName));
         return atyClientRoleInfoVO;
     }
 

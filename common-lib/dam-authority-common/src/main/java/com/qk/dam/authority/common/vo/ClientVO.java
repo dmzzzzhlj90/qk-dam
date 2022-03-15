@@ -16,11 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClientVO {
     /**
-     * id
+     * id，客户端表id
      */
     private String id;
     /**
-     * 唯一标识
+     * 唯一标识，客户端id
      */
     private String clientId;
     /**

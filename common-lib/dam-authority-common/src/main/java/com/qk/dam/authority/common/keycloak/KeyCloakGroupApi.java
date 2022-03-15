@@ -63,7 +63,7 @@ public class KeyCloakGroupApi {
     public AtyGroupInfoVO groupDetail(String realm, String groupId) {
         AtyGroupInfoVO atyGroupInfoVO = AtyGroupMapper.INSTANCE.userGroup(keyCloakApi.groupDetail(realm, groupId));
         //分组下的用户列表
-        atyGroupInfoVO.setMembers(AtyUserMapper.INSTANCE.userInfo(keyCloakApi.groupUsers(realm, groupId)));
+//        atyGroupInfoVO.setMembers(AtyUserMapper.INSTANCE.userInfo(keyCloakApi.groupUsers(realm, groupId)));
         return atyGroupInfoVO;
     }
 
