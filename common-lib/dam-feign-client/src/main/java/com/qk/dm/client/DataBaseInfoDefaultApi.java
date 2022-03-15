@@ -22,7 +22,6 @@ import com.qk.dm.feign.DatastandardsFeign;
 import com.qk.dm.feign.MetaDataFeign;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

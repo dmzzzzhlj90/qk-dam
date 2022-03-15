@@ -18,11 +18,19 @@ public class DolphinProcessDefinition {
         this.taskRelationJson = "[{\"name\":\"\",\"postTaskCode\":"+taskCode+"}]";
         this.tenantCode = definitionPropertiesBean.getTenantCode();
     }
-
+    public DolphinProcessDefinition(long taskCode, String name, String dataxJson, DolphinTaskDefinitionPropertiesBean taskParam, DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean) {
+        this.locations = "[{\"taskCode\":"+taskCode+",\"x\":63,\"y\":97}]";
+        this.name = name;
+        this.taskDefinitionJson = dolphinTaskDefinitionPropertiesBean.taskDefinitionJson(taskCode,dataxJson,taskParam);
+        this.taskRelationJson = "[{\"name\":\"\",\"postTaskCode\":"+taskCode+"}]";
+        this.tenantCode = dolphinTaskDefinitionPropertiesBean.getTenantCode();
+    }
     private String locations;
     private String name;
     private String taskDefinitionJson;
     private String taskRelationJson;
-    private final  String tenantCode;
+    private String tenantCode;
     private final String releaseState = "OFFLINE";
+
+
 }
