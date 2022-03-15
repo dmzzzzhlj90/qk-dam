@@ -32,6 +32,7 @@ dependencies {
     implementation project(":dam-log")
     implementation project(":dm-feign-client")
     implementation project(":dolphinscheduler-starter-client")
+    implementation group: 'com.github.shalousun', name: 'smart-doc', version: '2.3.6'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
