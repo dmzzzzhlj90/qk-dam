@@ -16,7 +16,7 @@ import java.util.List;
 public abstract class DatasourceBasicController {
 
     @Autowired
-    private  DataBaseInfoDefaultApi dataBaseService;
+    protected   DataBaseInfoDefaultApi dataBaseService;
 
     /**
      * 获取数据源连接类型

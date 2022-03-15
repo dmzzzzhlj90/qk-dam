@@ -50,10 +50,10 @@ public class DataxTaskDefineController {
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
-    @PutMapping("/projects/{projectId}/process-definition/{taskCode}")
+    @PutMapping("/projects/{projectId}/process/{taskCode}")
     public DefaultCommonResult<Result> putProcessDefinition(@PathVariable final Long projectId,
-                                                            @PathVariable final String dataxName,
-                                                            final long taskCode,
+                                                            @PathVariable final long taskCode,
+                                                            final String dataxName,
                                                             @RequestParam(defaultValue = "{}") final String taskParam,
                                                             @RequestBody final String dataxJson
                                                                ) throws ApiException {
@@ -69,9 +69,9 @@ public class DataxTaskDefineController {
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
-    @PostMapping("/projects/{projectId}}/process-definition/{taskCode}/release/online")
-    public DefaultCommonResult<Result> processReleaseOnline(@PathVariable final Long projectId,
-                                                      @PathVariable final long taskCode) throws ApiException {
+    @PostMapping("/process/online")
+    public DefaultCommonResult<Result> processReleaseOnline(final Long projectId,
+                                                      final long taskCode) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
                 dataxDolphinClient.dolphinProcessRelease(taskCode,projectId,ProcessDefinition.ReleaseStateEnum.ONLINE));
     }
@@ -83,9 +83,9 @@ public class DataxTaskDefineController {
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
-    @PostMapping("/projects/{projectId}}/process-definition/{taskCode}/release/offline")
-    public DefaultCommonResult<Result> processRelease(@PathVariable final Long projectId,
-                                                      @PathVariable final long taskCode) throws ApiException {
+    @PostMapping("/process/offline")
+    public DefaultCommonResult<Result> processRelease(final Long projectId,
+                                                      final long taskCode) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
                 dataxDolphinClient.dolphinProcessRelease(taskCode,projectId,ProcessDefinition.ReleaseStateEnum.OFFLINE));
     }
@@ -95,9 +95,9 @@ public class DataxTaskDefineController {
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
-    @PostMapping("/projects/{projectId}}/executors/start/{taskCode}")
-    public DefaultCommonResult<Result> processRunning(@PathVariable final long projectId,
-                                                      @PathVariable final long taskCode,
+    @PostMapping("/executors/start")
+    public DefaultCommonResult<Result> processRunning( final long projectId,
+                                                       final long taskCode,
                                                       Long environmentCode) throws ApiException {
 
         return DefaultCommonResult.success(ResultCodeEnum.OK,
