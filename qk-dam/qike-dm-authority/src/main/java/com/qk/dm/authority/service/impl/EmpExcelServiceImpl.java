@@ -2,7 +2,6 @@ package com.qk.dm.authority.service.impl;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.nacos.common.utils.CollectionUtils;
-import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.constant.QxConstant;
@@ -229,14 +228,11 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   @Override
   public void UserAllDownload(String realm, String search,
       HttpServletResponse response) throws IOException {
-    List<AtyUserInfoVO> usersList = atyUserService.getUsers(realm, search);
-    List<AtyUserExcelVO> atyUserExcelVOList= new ArrayList<>();
-    usersList.forEach(atyUserInfoVO -> {
-      AtyUserExcelVO atyUserExcelVO = new AtyUserExcelVO();
-      AtyUserMapper.INSTANCE.userExcel( atyUserInfoVO,atyUserExcelVO);
-      atyUserExcelVO.setCreatedTime(getTime(atyUserInfoVO.getCreatedTimestamp()));
-      atyUserExcelVOList.add(atyUserExcelVO);
-    });
+    List<AtyUserExcelVO> atyUserExcelVOList = atyUserService.getUsers(realm, search).stream().map(atyUserInfoVO -> {
+          AtyUserExcelVO atyUserExcelVO = AtyUserMapper.INSTANCE.userExcel(atyUserInfoVO);
+          atyUserExcelVO.setCreatedTime(getTime(atyUserInfoVO.getCreatedTimestamp()));
+          return atyUserExcelVO;
+        }).collect(Collectors.toList());
     response.setContentType("application/json;charset=utf-8");
     String fileName = URLEncoder.encode("用户列表基本信息", "UTF-8").replaceAll("\\+", "%20");
     response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
