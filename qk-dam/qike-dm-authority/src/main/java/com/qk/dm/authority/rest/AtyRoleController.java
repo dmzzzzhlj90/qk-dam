@@ -78,7 +78,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色列表-分页
+     * 角色列表
      *
      * @param clientRoleParamVO
      * @return DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>>
@@ -89,7 +89,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色列表
+     * 用户-用户角色-添加-角色列表
      *
      * @param clientRoleParamVO
      * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
@@ -100,7 +100,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色的用户列表-分页
+     * 角色-已授权用户列表
      * @param clientRoleVO
      * @return DefaultCommonResult<PageResultVO<AtyUserInfoVO>>
      */
@@ -109,13 +109,13 @@ public class AtyRoleController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsersPage(clientRoleVO));
     }
 
-    /**
-     * 角色的用户列表
-     * @param clientRoleVO
-     * @return
-     */
-    @GetMapping("/users")
-    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleUserParamVO clientRoleVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsers(clientRoleVO));
-    }
+//    /**
+//     * 角色-已授权用户列表（不分页查询，暂时无用）
+//     * @param clientRoleVO
+//     * @return
+//     */
+//    @GetMapping("/users")
+//    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleUserParamVO clientRoleVO) {
+//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsers(clientRoleVO));
+//    }
 }

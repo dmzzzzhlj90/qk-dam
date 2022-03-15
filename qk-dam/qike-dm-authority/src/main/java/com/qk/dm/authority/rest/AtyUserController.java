@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
- * 权限管理_用户
+ * 权限管理_用户管理
  *
  * @author shenpj
  * @date 2022/3/2 10:41
@@ -92,7 +92,7 @@ public class AtyUserController {
     }
 
     /**
-     * 用户列表-分页
+     * 用户列表
      *
      * @param atyUserParamVO
      * @return DefaultCommonResult<PageResultVO < AtyUserInfoVO>>
@@ -103,7 +103,7 @@ public class AtyUserController {
     }
 
     /**
-     * 用户列表
+     * 用户组/角色详情-授权-用户列表
      *
      * @param atyUserParamVO
      * @return DefaultCommonResult<List < AtyUserInfoVO>>

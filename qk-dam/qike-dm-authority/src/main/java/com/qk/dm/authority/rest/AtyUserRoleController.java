@@ -30,7 +30,7 @@ public class AtyUserRoleController {
     }
 
     /**
-     * 用户角色列表
+     * 用户-用户角色列表
      * @param realm
      * @param userId
      * @param client_clientId 唯一标识，客户端id
@@ -42,7 +42,7 @@ public class AtyUserRoleController {
     }
 
     /**
-     * 绑定
+     * 用户绑定单个角色
      *
      * @param userClientRole
      * @return DefaultCommonResult
@@ -54,7 +54,7 @@ public class AtyUserRoleController {
     }
 
     /**
-     * 解绑
+     * 用户解绑单个角色
      *
      * @param userClientRole
      * @return DefaultCommonResult
@@ -66,7 +66,7 @@ public class AtyUserRoleController {
     }
 
     /**
-     * 批量绑定-角色
+     * 用户权限-用户角色-批量绑定-角色
      *
      * @param batchByRolesVO
      * @return DefaultCommonResult
@@ -78,7 +78,7 @@ public class AtyUserRoleController {
     }
 
     /**
-     * 批量绑定-用户
+     * 角色详情-授权-批量绑定-用户
      *
      * @param atyGroupBatchVO
      * @return DefaultCommonResult

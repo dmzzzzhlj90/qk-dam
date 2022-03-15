@@ -82,7 +82,7 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组列表-分页
+     * 用户组列表
      *
      * @param groupParamVO
      * @return DefaultCommonResult<PageResultVO < AtyGroupInfoVO>>
@@ -93,7 +93,7 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组列表
+     * 用户信息-所属分组-添加-用户组列表
      *
      * @param realm
      * @param search
@@ -105,7 +105,7 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组下的用户-分页
+     * 用户组-已绑定的用户列表
      * @param groupUserParamVO
      * @param groupId
      * @return <PageResultVO<AtyGroupInfoVO>>
@@ -115,14 +115,14 @@ public class AtyGroupController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupUserParamVO, groupId));
     }
 
-    /**
-     * 用户组下的用户
-     * @param realm
-     * @param groupId
-     * @return
-     */
-    @GetMapping("/{groupId}/users")
-    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(realm, groupId));
-    }
+//    /**
+//     * 用户组下的所有用户（不分页查询，暂时无用）
+//     * @param realm
+//     * @param groupId
+//     * @return
+//     */
+//    @GetMapping("/{groupId}/users")
+//    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {
+//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(realm, groupId));
+//    }
 }

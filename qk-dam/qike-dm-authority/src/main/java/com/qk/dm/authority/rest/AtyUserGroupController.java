@@ -12,8 +12,6 @@ import com.qk.dm.authority.vo.user.AtyUserGroupParamVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 /**
  * 权限管理_用户与用户组关联
@@ -32,7 +30,7 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 用户分组列表-分页
+     * 用户-已绑定的用户组列表
      *
      * @param userId
      * @param userGroupParamVO
@@ -43,20 +41,20 @@ public class AtyUserGroupController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(userGroupParamVO, userId));
     }
 
-    /**
-     * 用户分组列表
-     *
-     * @param userId
-     * @param realm
-     * @return DefaultCommonResult<List<AtyGroupInfoVO>>
-     */
-    @GetMapping("/users/{userId}/groups")
-    public DefaultCommonResult<List<AtyGroupInfoVO>> getUserGroup(@Valid @NotBlank String realm, @PathVariable String userId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(realm, userId));
-    }
+//    /**
+//     * 用户-已绑定用户组列表（不分页查询，暂时无用）
+//     *
+//     * @param userId
+//     * @param realm
+//     * @return DefaultCommonResult<List<AtyGroupInfoVO>>
+//     */
+//    @GetMapping("/users/{userId}/groups")
+//    public DefaultCommonResult<List<AtyGroupInfoVO>> getUserGroup(@Valid @NotBlank String realm, @PathVariable String userId) {
+//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(realm, userId));
+//    }
 
     /**
-     * 绑定
+     * 用户绑定单个用户组
      *
      * @param atyUserGroupVO
      * @return DefaultCommonResult
@@ -68,7 +66,7 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 解绑
+     * 用户解绑单个用户组
      *
      * @param atyUserGroupVO
      * @return DefaultCommonResult
@@ -81,7 +79,7 @@ public class AtyUserGroupController {
 
 
     /**
-     * 批量绑定-用户组
+     * 用户详情-所属分组-批量绑定-用户组
      *
      * @param batchByGroupsVO
      * @return DefaultCommonResult
@@ -93,7 +91,7 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 批量绑定-用户
+     * 用户组详情-已授权用户-批量绑定-用户
      *
      * @param atyGroupBatchByUsersVO
      * @return DefaultCommonResult
