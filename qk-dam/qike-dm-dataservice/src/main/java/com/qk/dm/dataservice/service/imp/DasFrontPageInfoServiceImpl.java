@@ -166,8 +166,9 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
                             .collect(Collectors.toList());
 
             DasTrendCurveValVO dasTrendCurveValVO = DasTrendCurveValVO.builder()
-                    //TODO 需要处理展示问题
-                    .xVal(DateUtil.dateToStr(filterBeginTime))
+                    .xVal(getTrendCurveValKey(
+                            DateUtil.dateToStr(filterBeginTime),
+                            dateFrequency))
                     .yVal(apiBasicInfos.size())
                     .build();
             dasTrendCurveValVOList.add(dasTrendCurveValVO);
@@ -228,14 +229,15 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
         List<DasApiBasicInfo> createSuccessUpload = apiBasicInfoList.stream().
                 filter(o -> SyncStatusEnum.CREATE_SUCCESS_UPLOAD.getCode().equalsIgnoreCase(o.getStatus()))
                 .collect(Collectors.toList());
+
         //构建饼状图信息
         DasTrendPieChartInfoVO dasTrendPieChartInfoVO = DasTrendPieChartInfoVO.builder()
                 .apiSumCount(apiBasicInfoList.size())
                 .createNoUploadCount(createNoUpload.size())
                 .createFailUploadCount(createFailUpload.size())
                 .createSuccessUploadCount(createSuccessUpload.size())
-                .beginDay(dasReleaseTrendParamsVO.getBeginDate())
-                .endDay(dasReleaseTrendParamsVO.getEndDate())
+                .beginDay(dasReleaseTrendParamsVO.getBeginDate().substring(0, 10))
+                .endDay(dasReleaseTrendParamsVO.getEndDate().substring(0, 10))
                 .build();
 
         dasFrontPageTrendInfoDataBuilder.dasTrendPieChartInfoVO(dasTrendPieChartInfoVO);
@@ -295,6 +297,30 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
                 break;
         }
         return calGroupParams;
+    }
+
+    /**
+     * 根据时间频次设置趋势曲线图显示KEY值
+     *
+     * @param beginTimeStr
+     * @param dateFrequency
+     * @return
+     */
+    private String getTrendCurveValKey(String beginTimeStr, String dateFrequency) {
+        String valKey = "";
+        DateFrequencyEnum dateFrequencyEnum = DateFrequencyEnum.getVal(dateFrequency);
+        switch (Objects.requireNonNull(dateFrequencyEnum)) {
+            case DAY:
+                valKey = beginTimeStr.substring(11, 13) + "时";
+                break;
+            case YEAR:
+                valKey = beginTimeStr.substring(0, 7);
+                break;
+            default:
+                valKey = beginTimeStr.substring(0, 10);
+                break;
+        }
+        return valKey;
     }
 
     /**

@@ -275,6 +275,8 @@ public final class DateUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(DateUtil.getNextMonthStart(new Date()));
+//        System.out.println(DateUtil.getNextMonthStart(new Date()));
+        String substring = "2022-03-15 01:02:00".substring(0, 7);
+        System.out.println("substring :"+substring);
     }
 }
