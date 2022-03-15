@@ -19,6 +19,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static com.qk.dm.dataservice.utils.DateUtil.*;
@@ -152,26 +153,32 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
                                                     String firstTime,
                                                     String dateFrequency) {
         List<DasTrendCurveValVO> dasTrendCurveValVOList = new LinkedList<>();
-
+        // 计数器
+        AtomicInteger index = new AtomicInteger(0);
         for (int i = 0; i < groupNum + 1; i++) {
-            //根据推算的时间进行数据过滤
+            // 根据推算的时间进行数据过滤
             Map<String, Object> filterTimeMap = getFilterTimeMap(interval, firstTime, dateFrequency);
             Date filterBeginTime = (Date) filterTimeMap.get(FILTER_BEGIN_TIME);
             Date filterEndTime = (Date) filterTimeMap.get(FILTER_END_TIME);
             firstTime = (String) filterTimeMap.get(FILTER_FIRST_TIME);
 
+            // 根据时间过滤数据
             List<DasApiBasicInfo> apiBasicInfos =
                     apiBasicInfoList.stream().filter(o ->
                             (o.getGmtModified().after(filterBeginTime)) && (o.getGmtModified().before(filterEndTime)))
                             .collect(Collectors.toList());
 
+            // 根据时间频次设置趋势曲线图显示KEY值
+            String valKey = getTrendCurveValKey(
+                    dateToStr(filterBeginTime), dateFrequency, groupNum, index.get());
+
+            //构建趋势曲线值对象信息
             DasTrendCurveValVO dasTrendCurveValVO = DasTrendCurveValVO.builder()
-                    .xVal(getTrendCurveValKey(
-                            DateUtil.dateToStr(filterBeginTime),
-                            dateFrequency))
+                    .xVal(valKey)
                     .yVal(apiBasicInfos.size())
                     .build();
             dasTrendCurveValVOList.add(dasTrendCurveValVO);
+            index.getAndIncrement();
         }
         return DasTrendCurveInfoVO.builder().dasTrendCurveValVOS(dasTrendCurveValVOList).build();
     }
@@ -304,14 +311,16 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
      *
      * @param beginTimeStr
      * @param dateFrequency
+     * @param groupNum
+     * @param index
      * @return
      */
-    private String getTrendCurveValKey(String beginTimeStr, String dateFrequency) {
+    private String getTrendCurveValKey(String beginTimeStr, String dateFrequency, int groupNum, int index) {
         String valKey = "";
         DateFrequencyEnum dateFrequencyEnum = DateFrequencyEnum.getVal(dateFrequency);
         switch (Objects.requireNonNull(dateFrequencyEnum)) {
             case DAY:
-                valKey = beginTimeStr.substring(11, 13) + "时";
+                valKey = getDayTrendCurveValKey(beginTimeStr, groupNum, index);
                 break;
             case YEAR:
                 valKey = beginTimeStr.substring(0, 7);
@@ -319,6 +328,24 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
             default:
                 valKey = beginTimeStr.substring(0, 10);
                 break;
+        }
+        return valKey;
+    }
+
+    /**
+     * DAY 时间范围结束日期00时转为24时
+     *
+     * @param beginTimeStr
+     * @param groupNum
+     * @param index
+     * @return
+     */
+    private String getDayTrendCurveValKey(String beginTimeStr, int groupNum, int index) {
+        String valKey;
+        if (groupNum == index) {
+            valKey = "24时";
+        } else {
+            valKey = beginTimeStr.substring(11, 13) + "时";
         }
         return valKey;
     }
