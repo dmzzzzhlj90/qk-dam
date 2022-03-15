@@ -50,10 +50,15 @@ public class IndexController {
      * @return
      */
     @RequestMapping(path = "/current/logout")
-    public String currentLogout(
+    public String logout(
             HttpServletRequest request,
             HttpServletResponse response,
             @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+        Arrays.stream(request.getCookies()).forEach(e->{
+            e.setMaxAge(0);
+            e.setPath("/");
+            response.addCookie(e);
+        });
         SecurityContext securityContext =
                 (SecurityContext) request.getSession().getAttribute(DEFAULT_SPRING_SECURITY_CONTEXT_ATTR_NAME);
         OidcUser principal = (DefaultOidcUser) securityContext.getAuthentication().getPrincipal();
@@ -75,11 +80,6 @@ public class IndexController {
         request.getSession().removeAttribute(RptUserConstant.USER_SESSION_KEY);
         //前端存储的session，退出后清除
         request.getSession().removeAttribute(RptUserConstant.BUTTON_POWER);
-        Arrays.stream(request.getCookies()).forEach(e->{
-            e.setMaxAge(0);
-            e.setPath("/");
-            response.addCookie(e);
-        });
         return  "redirect:/";
     }
 

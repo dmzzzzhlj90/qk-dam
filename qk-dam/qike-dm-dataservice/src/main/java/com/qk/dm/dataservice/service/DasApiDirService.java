@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service;
 
+import com.qk.dm.dataservice.entity.DasApiDir;
 import com.qk.dm.dataservice.vo.DasApiDirTreeVO;
 import com.qk.dm.dataservice.vo.DasApiDirVO;
 import java.util.List;
@@ -27,5 +28,7 @@ public interface DasApiDirService {
   void getApiDirId(Set<String> dirIdSet, String dirId);
 
   List<DasApiDirVO> getDasApiDirByDirName(String title);
+
+  DasApiDir searchApiDirInfoByDirId(String dirId);
 
 }

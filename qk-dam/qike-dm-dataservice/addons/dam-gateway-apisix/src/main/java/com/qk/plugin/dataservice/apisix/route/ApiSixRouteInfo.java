@@ -22,6 +22,7 @@ public class ApiSixRouteInfo extends RouteInfo {
   private String name;
   private Integer status;
   private List<String> uris; // [\"/das/*\"]
+  private String uri; // [\"/das/*\"]
   private List<String>
       methods; // [\"GET\",\"POST\",\"PUT\",\"DELETE\",\"PATCH\",\"HEAD\",\"OPTIONS\",\"CONNECT\",\"TRACE\"]
   //  private List<List<String>> vars; //

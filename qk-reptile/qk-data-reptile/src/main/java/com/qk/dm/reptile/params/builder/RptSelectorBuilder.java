@@ -13,6 +13,10 @@ public class RptSelectorBuilder {
     private Integer method;
     private String val;
     private Integer num;
+    private String request_before;
+    private String request_after;
+    private String source_before;
+    private String source_after;
     private String before;
     private String after;
 }

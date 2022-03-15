@@ -1,6 +1,7 @@
 package com.qk.dm.dataservice.mapstruct.mapper;
 
 import com.qk.dm.dataservice.entity.DasApiCreateConfig;
+import com.qk.dm.dataservice.vo.DasApiCreateConfigDefinitionVO;
 import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,7 +17,8 @@ import org.mapstruct.factory.Mappers;
 public interface DasApiCreateConfigMapper {
   DasApiCreateConfigMapper INSTANCE = Mappers.getMapper(DasApiCreateConfigMapper.class);
 
-  DasApiCreateConfigVO useDasApiCreateConfigVO(DasApiCreateConfig dasApiCreateConfig);
+  DasApiCreateConfigDefinitionVO useDasApiCreateConfigDefinitionVO(DasApiCreateConfig dasApiCreateConfig);
 
-  DasApiCreateConfig useDasApiCreateConfig(DasApiCreateConfigVO dasApiDataSourceConfigVO);
+  DasApiCreateConfig useDasApiCreateConfig(DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO);
+
 }

@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.enums.DataTypeEnum;
 import com.qk.dam.commons.exception.BizException;
@@ -95,6 +96,27 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        DasApiBasicInfo dasApiBasicInfo = buildSaveApiBasicInfo(dasApiBasicInfoVO);
+        dasApiBasicinfoRepository.save(dasApiBasicInfo);
+    }
+
+    /**
+     * 构建批量保存Api基础信息
+     *
+     * @param dasApiBasicInfoVO
+     */
+    @Override
+    public DasApiBasicInfo buildBulkSaveApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        return buildSaveApiBasicInfo(dasApiBasicInfoVO);
+    }
+
+    /**
+     * 构建保存Api基础信息
+     *
+     * @param dasApiBasicInfoVO
+     * @return
+     */
+    private DasApiBasicInfo buildSaveApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
         Optional<DasApiBasicInfo> optionalDasApiBasicInfo = checkExistApiBasicInfo(dasApiBasicInfoVO);
         if (optionalDasApiBasicInfo.isPresent()) {
             DasApiBasicInfo dasApiBasicInfo = optionalDasApiBasicInfo.get();
@@ -107,21 +129,31 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
                             + dasApiBasicInfo.getRequestType()
                             + " 的数据，已存在！！！");
         }
+
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParamJson(dasApiBasicInfoVO, dasApiBasicInfo);
-
         dasApiBasicInfo.setStatus(SyncStatusEnum.CREATE_NO_UPLOAD.getCode());
         dasApiBasicInfo.setGmtCreate(new Date());
         dasApiBasicInfo.setGmtModified(new Date());
         dasApiBasicInfo.setCreateUserid("admin");
         dasApiBasicInfo.setDelFlag(0);
-
-        dasApiBasicinfoRepository.save(dasApiBasicInfo);
+        return dasApiBasicInfo;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        dasApiBasicinfoRepository.saveAndFlush(buildUpdateApiBasicInfo(dasApiBasicInfoVO));
+    }
+
+    /**
+     * 构建更新Api基础信息
+     *
+     * @param dasApiBasicInfoVO
+     */
+    @Override
+    public DasApiBasicInfo buildUpdateApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        checkUpdateParams(dasApiBasicInfoVO);
         Predicate predicate = qDasApiBasicInfo.apiId.eq(dasApiBasicInfoVO.getApiId());
         Optional<DasApiBasicInfo> optionalDasApiBasicInfo = dasApiBasicinfoRepository.findOne(predicate);
         if (optionalDasApiBasicInfo.isEmpty()) {
@@ -134,8 +166,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         dasApiBasicInfo.setGmtModified(new Date());
         dasApiBasicInfo.setCreateUserid("admin");
         dasApiBasicInfo.setDelFlag(0);
-
-        dasApiBasicinfoRepository.saveAndFlush(dasApiBasicInfo);
+        return dasApiBasicInfo;
     }
 
     @Override
@@ -183,25 +214,12 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
     @Override
     public LinkedList<Map<String, Object>> getRequestParasHeaderInfos() {
-        return RequestParasHeaderInfoEnum.getAllValue();
+        return RequestParamHeaderInfoEnum.getAllValue();
     }
 
     @Override
     public Map<String, String> getRequestParamsPositions() {
         return RequestParamPositionEnum.getAllValue();
-    }
-
-    @Override
-    public Optional<DasApiBasicInfo> searchApiBasicInfoByDelParamIsEmpty(
-            DasApiBasicInfoVO dasApiBasicInfoVO) {
-        Predicate predicate =
-                qDasApiBasicInfo
-                        .apiName
-                        .eq(dasApiBasicInfoVO.getApiName())
-                        .and(qDasApiBasicInfo.apiPath.eq(dasApiBasicInfoVO.getApiPath()))
-                        .and(qDasApiBasicInfo.apiType.eq(dasApiBasicInfoVO.getApiType()))
-                        .and(qDasApiBasicInfo.defInputParam.isNull());
-        return dasApiBasicinfoRepository.findOne(predicate);
     }
 
     @Override
@@ -238,15 +256,31 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DataTypeEnum.getAllValue();
     }
 
+    @Override
+    public Map<String, String> getSyncType() {
+        return ApiSyncTypeEnum.getAllValue();
+    }
+
+    @Override
+    public LinkedList<Map<String, Object>> getDebugParamHeaderInfo() {
+        return DebugApiParamHeaderInfoEnum.getAllValue();
+    }
+
+    @Override
+    public Object createDetail(String apiId) {
+
+
+        return null;
+    }
+
     private DasApiBasicInfoVO transformToVO(DasApiBasicInfo dasApiBasicInfo) {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
     }
 
     private void setDelInputParamVO(DasApiBasicInfo dasApiBasicInfo, DasApiBasicInfoVO dasApiBasicinfoVO) {
         if (!ObjectUtils.isEmpty(dasApiBasicInfo.getDefInputParam())) {
-            dasApiBasicinfoVO.setDasApiBasicInfoRequestParasVO(
-                    GsonUtil.fromJsonString(
-                            dasApiBasicInfo.getDefInputParam(),
+            dasApiBasicinfoVO.setApiBasicInfoRequestParasVOS(
+                    GsonUtil.fromJsonString(dasApiBasicInfo.getDefInputParam(),
                             new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
                             }.getType()));
         }
@@ -256,17 +290,28 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfo(dasApiBasicInfoVO);
     }
 
-    private void setDedInputParamJson(
-            DasApiBasicInfoVO dasApiBasicInfoVO, DasApiBasicInfo dasApiBasicInfo) {
-        if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO())) {
-            dasApiBasicInfo.setDefInputParam(
-                    GsonUtil.toJsonString(dasApiBasicInfoVO.getDasApiBasicInfoRequestParasVO()));
+    private void setDedInputParamJson(DasApiBasicInfoVO dasApiBasicInfoVO, DasApiBasicInfo dasApiBasicInfo) {
+        if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS())) {
+            dasApiBasicInfo.setDefInputParam(GsonUtil.toJsonString(dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS()));
         }
     }
 
-    public Map<String, Object> queryDasApiBasicInfoByParams(
-            DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
-        Map<String, Object> result = new HashMap<>();
+    private void checkUpdateParams(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        if (ObjectUtils.isEmpty(dasApiBasicInfoVO.getId())) {
+            throw new BizException("API基础信息,ID参数为空,编辑失败!!!");
+        }
+
+        if (ObjectUtils.isEmpty(dasApiBasicInfoVO.getApiId())) {
+            throw new BizException("API基础信息,apiId参数为空,编辑失败!!!");
+        }
+
+        if (ObjectUtils.isEmpty(dasApiBasicInfoVO.getStatus())) {
+            throw new BizException("API基础信息,状态status参数为空,编辑失败!!!");
+        }
+    }
+
+    public Map<String, Object> queryDasApiBasicInfoByParams(DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
+        Map<String, Object> result = Maps.newHashMap();
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, qDasApiBasicInfo, dasApiBasicInfoParamsVO);
         long count =

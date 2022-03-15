@@ -34,6 +34,13 @@ public interface RptConfigInfoService {
     List<RptConfigInfoVO> rptList(Long baseId);
 
     /**
+     * 根据基础信息id获取配置字段编码
+     * @param baseId
+     * @return
+     */
+    List<String> getColumnList(Long baseId);
+
+    /**
      * 复制配置项
      */
     void copyConfig(Long sourceId,Long targetId);

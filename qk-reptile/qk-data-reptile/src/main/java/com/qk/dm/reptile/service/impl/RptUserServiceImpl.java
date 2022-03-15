@@ -52,7 +52,6 @@ public class RptUserServiceImpl implements RptUserService {
                 rptUserDTO.getPagination().getSize(),
                 userList);
     }
-
     @Override
     public Boolean menuPermissions(OAuth2AuthorizedClient authorizedClient) {
         return ClientUserInfo.menuPermissions(jwtDecoder,authorizedClient);

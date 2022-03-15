@@ -12,8 +12,11 @@ import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.service.AtyUserGroupService;
 import com.qk.dm.authority.service.AtyUserRoleService;
 import com.qk.dm.authority.service.EmpUserPowerService;
+import com.qk.dm.authority.vo.params.UserEmpParamVO;
+import com.qk.dm.authority.vo.params.UserEmpPowerParamVO;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
@@ -59,15 +62,15 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
+
   /**
    * 查询服务信息
-   * @param realm
-   * @param userId
+   * @param userEmpParamVO
    * @return
    */
   @Override
-  public List<ServiceVO> queryServicesByUserId(String realm, String userId,String clientId) {
-    List<String> idList = getIdList(realm,userId,clientId);
+  public List<ServiceVO> queryServicesByUserId(UserEmpParamVO userEmpParamVO) {
+    List<String> idList = getIdList(userEmpParamVO.getRealm(),userEmpParamVO.getUserId(),userEmpParamVO.getClientId());
     //3根据用户id、角色id、用户分组id返回授权服务信息
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     checkCondition(booleanBuilder, idList);
@@ -118,16 +121,13 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
 
   /**
    * 查询授权信息
-   *
-   * @param realm
-   * @param serviceId
-   * @param userId
+   * @param userEmpPowerParamVO
    * @return
    */
   @Override
-  public List<String> queryEmpower(String realm, String serviceId, String userId,String clientId) {
-      List<String> idList = getIdList(realm, userId, clientId);
-     return getEmpowerList(idList,serviceId);
+  public List<String> queryEmpower(UserEmpPowerParamVO userEmpPowerParamVO) {
+      List<String> idList = getIdList(userEmpPowerParamVO.getRealm(),userEmpPowerParamVO.getUserId(),userEmpPowerParamVO.getClientId());
+     return getEmpowerList(idList,userEmpPowerParamVO.getServiceId());
   }
 
   private List<String> getEmpowerList(List<String> idList, String serviceId) {
@@ -151,15 +151,11 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
   }
 
   private List<String> getResourcesUuid(List<String> idList, String serviceId) {
-    List<String> list = new ArrayList<>();
-    if (StringUtils.isNotBlank(serviceId)){
-      List<QxEmpower> qxempowerList = (List<QxEmpower>) qkQxEmpowerRepository.findAll(qQxEmpower.empoerId.in(idList).and(qQxEmpower.serviceId.eq(serviceId)));
-      list=getEmpower(qxempowerList);
-    }else{
-      List<QxEmpower> qxempowerList = (List<QxEmpower>) qkQxEmpowerRepository.findAll(qQxEmpower.empoerId.in(idList));
-      list=getEmpower(qxempowerList);
-    }
-    return list;
+    Predicate predicate = StringUtils.isNotBlank(serviceId) ?
+        qQxEmpower.empoerId.in(idList).and(qQxEmpower.serviceId.eq(serviceId)) :
+        qQxEmpower.empoerId.in(idList);
+    List<QxEmpower> qxempowerList = (List<QxEmpower>) qkQxEmpowerRepository.findAll(predicate);
+    return getEmpower(qxempowerList);
   }
 
   private List<String> getEmpower(List<QxEmpower> qxempowerList) {

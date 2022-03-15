@@ -1,51 +1,24 @@
-server:
-  port: 8788
 spring:
+  application:
+    name: ${name}-\${spring.profiles.active}
   logging:
     level: info
-    path: logs/dm-dataingestion.log
     appender:
-      ref: FILE
-  messages:
-    basename: i18n/messages
-  mvc:
-    message-codes-resolver-format: postfix_error_code
-    servlet:
-      path: /ddg
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: dm-dataingestion
+      ref: CONSOLE
+    path: logs/\${spring.application.name}.log
   cloud:
     nacos:
       discovery:
-        server-addr: http://172.20.0.13
-        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
-        group: DM-GROUP
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
       config:
-        server-addr: http://172.20.0.13
-        namespace: fb4b816f-64b3-4143-9954-33c45ce5dcf8
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
         extension-configs:
-          - dataId: laliyuncs_longgov.yml
+          - dataId: qkdam-mysql-\${spring.profiles.active}.yml
+            group: DAM
             refresh: true
-          - dataId: dm-dataingestion.yml
+          - dataId: qkdam-dataingestion-\${spring.profiles.active}.yml
             refresh: true
-management:
-  endpoints:
-    enabled-by-default: true
-    web:
-      base-path: /actuator
-      exposure:
-        include: "*"
-  endpoint:
-    info:
-      enabled: true
-    health:
-      show-details: always
-  metrics:
-    export:
-      prometheus:
-        enabled: true
-        descriptions: true
-    tags:
-      application: ${spring.application.name}
+  profiles:
+    active: ${damProfilesActive}

@@ -91,7 +91,7 @@ public class EmpExcelController {
    */
   @PostMapping("/user/upload")
   @ResponseBody
-  public DefaultCommonResult userResourceInfoUpload(String realm , MultipartFile file) {
+  public DefaultCommonResult userResourceInfoUpload(@RequestParam("realm")String realm , MultipartFile file) {
     return DefaultCommonResult.success(ResultCodeEnum.OK,empExcelService.userResourceInfoUpload(file,realm));
   }
 
@@ -131,7 +131,7 @@ public class EmpExcelController {
    * @throws IOException
    */
   @PostMapping("/user/download")
-  public DefaultCommonResult UserAllDownload(String realm, String search,HttpServletResponse response)
+  public DefaultCommonResult UserAllDownload(@RequestParam("realm")String realm,@RequestParam("search") String search,HttpServletResponse response)
       throws IOException {
     empExcelService.UserAllDownload(realm,search,response);
     return DefaultCommonResult.success();

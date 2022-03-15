@@ -232,4 +232,10 @@ public class DasApiDirServiceImpl implements DasApiDirService {
         return dasApiDirVOList;
     }
 
+    @Override
+    public DasApiDir searchApiDirInfoByDirId(String dirId) {
+        Optional<DasApiDir> dasApiDirOptional = dasApiDirRepository.findOne(qDasApiDir.dirId.eq(dirId));
+        return dasApiDirOptional.orElse(null);
+    }
+
 }

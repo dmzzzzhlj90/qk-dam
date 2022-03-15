@@ -1,15 +1,16 @@
 package com.qk.dm.dataservice.service;
 
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.metedata.entity.MtdApi;
-import com.qk.dam.metedata.entity.MtdApiParams;
-import com.qk.dam.metedata.entity.MtdAtlasEntityType;
+import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.entity.DasApiCreateConfig;
+import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
+import com.qk.dm.dataservice.vo.DebugApiResultVO;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 /**
  * 数据服务_新建API_配置方式
@@ -21,22 +22,28 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiCreateConfigService {
 
-  DasApiCreateConfigVO detail(String apiId);
+    DasApiCreateConfigVO detail(DasApiBasicInfo dasApiBasicInfo, DasApiCreateConfig dasApiCreateConfig);
 
-  void insert(DasApiCreateConfigVO dasApiCreateConfigVO);
+    void insert(DasApiCreateConfigVO dasApiCreateConfigVO);
 
-  void update(DasApiCreateConfigVO dasApiCreateConfigVO);
+    void update(DasApiCreateConfigVO dasApiCreateConfigVO);
 
-  // ========================参数配置表头信息=====================================
-  LinkedList<Map<String, Object>> getDasApiCreateRequestParaHeaderInfo();
+    // ========================参数配置表头信息=====================================
+    LinkedList<Map<String, Object>> getRequestParamHeaderInfo();
 
-  LinkedList<Map<String, Object>> getDasApiCreateResponseParaHeaderInfo();
+    LinkedList<Map<String, Object>> getResponseParamHeaderInfo();
 
-  LinkedList<Map<String, Object>> getDasApiCreateOrderParaHeaderInfo();
+    LinkedList<Map<String, Object>> getOrderParamHeaderInfo();
 
-  List<String> getDasApiCreateParasCompareSymbol();
+    List<String> getParamCompareSymbol();
 
-  Map<String, String> getDasApiCreateParasSortStyle();
+    Map<String, String> getParamSortStyle();
+
+    LinkedList<Map<String, Object>> getParamHeaderInfo();
+
+    DebugApiResultVO debugModel(DasApiCreateConfigVO dasApiCreateConfigVO);
+
+    DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(DasApiBasicInfo dasApiBasicInfo);
 
 //  // ========================数据源服务API调用=====================================
 //  List<String> getAllConnType();

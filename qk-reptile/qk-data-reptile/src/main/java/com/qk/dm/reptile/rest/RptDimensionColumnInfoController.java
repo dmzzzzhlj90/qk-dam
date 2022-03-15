@@ -86,4 +86,14 @@ private final RptDimensionInfoColumnService rptDimensionInfoColumnService;
   public DefaultCommonResult<Map<String,String>> queryColumnByDirName(@Validated @RequestBody RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.queryColumnByDirName(rptDimensionInfoColumnScreenParamsDTO));
   }
+
+  /**
+   * 获取字段列表
+   * @param rptDimensionInfoColumnScreenParamsDTO
+   * @return DefaultCommonResult<List<RptDimensionInfoColumnVO>>
+   */
+  @PostMapping("/column/list")
+  public DefaultCommonResult<List<RptDimensionInfoColumnVO>> columnList(@Validated @RequestBody RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO){
+    return DefaultCommonResult.success(ResultCodeEnum.OK, rptDimensionInfoColumnService.list(rptDimensionInfoColumnScreenParamsDTO));
+  }
 }

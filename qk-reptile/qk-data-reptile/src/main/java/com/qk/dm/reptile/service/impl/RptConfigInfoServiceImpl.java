@@ -54,6 +54,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RptAddConfigVO insert(RptConfigInfoDTO rptConfigInfoDTO) {
+        deleteConfig(rptConfigInfoDTO);
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
         //修改基础信息表状态为爬虫
         updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
@@ -63,11 +64,27 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO) {
+        deleteConfig(rptConfigInfoDTO);
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
        // 修改基础信息表状态为爬虫
         start(rptConfigInfoDTO.getBaseInfoId(),
         ReptileServerFactory.manual(rptList(config.getBaseInfoId())));
         return config.getId();
+    }
+
+    /**
+     * 配置是否已存在，存在则将之前的删除(添加，浏览器回退，重新保存会导致数据重复)
+     * @param rptConfigInfoDTO
+     */
+    private void deleteConfig(RptConfigInfoDTO rptConfigInfoDTO){
+        //id不为空则为编辑
+        if(Objects.nonNull(rptConfigInfoDTO.getId())){ return; }
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdAndParentId(rptConfigInfoDTO.getBaseInfoId(), rptConfigInfoDTO.getParentId());
+        if(!CollectionUtils.isEmpty(list)){
+            rptConfigInfoRepository.deleteAll(list);
+            List<Long> configIdList = list.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
+            rptSelectorColumnInfoService.deleteByConfigId(configIdList);
+        }
     }
 
     /**
@@ -97,8 +114,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
           rptBaseInfo.setConfigName(ClientUserInfo.getUserName());
           rptBaseInfo.setConfigDate(new Date());
           rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
-
     }
+
     private void configStatus(Long id) {
         RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
         if(Objects.isNull(rptBaseInfo)){
@@ -213,6 +230,14 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         }).collect(Collectors.toList());
     }
 
+    public List<String> getColumnList(Long baseId){
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(baseId);
+        if(!CollectionUtils.isEmpty(list)){
+           return rptSelectorColumnInfoService.findByConfigIds(list.stream().map(RptConfigInfo::getId).collect(Collectors.toList()));
+        }
+        return List.of();
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void copyConfig(Long sourceId, Long targetId) {
@@ -241,11 +266,11 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
      */
     private void deleteTargetConfig(Long targetId){
         List<RptConfigInfo> targetList = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(targetId);
+        rptConfigInfoRepository.deleteAllByBaseInfoId(targetId);
         if(!CollectionUtils.isEmpty(targetList)){
             List<Long> targetIdList = targetList.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
             rptSelectorColumnInfoService.deleteByConfigId(targetIdList);
         }
-        rptConfigInfoRepository.deleteAllByBaseInfoId(targetId);
     }
 
     private void transRptConfigInfo(RptConfigInfo rptConfigInfo, RptConfigInfoDTO rptConfigInfoDTO){

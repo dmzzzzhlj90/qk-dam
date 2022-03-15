@@ -41,10 +41,21 @@ public class RptBaseInfoController {
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated RptBaseInfoDTO rptBaseInfoDTO){
-        rptBaseInfoDTO.setStatus(RptConstant.WAITING);
         rptBaseInfoService.insert(rptBaseInfoDTO);
         return DefaultCommonResult.success();
     }
+
+    /**
+     * 批量添加基础信息
+     * @param rptBaseInfoBatchDTO
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/batch")
+    public DefaultCommonResult batchInsert(@RequestBody @Validated RptBaseInfoBatchDTO rptBaseInfoBatchDTO){
+        rptBaseInfoService.batchInsert(rptBaseInfoBatchDTO);
+        return DefaultCommonResult.success();
+    }
+
 
     /**
      * 修改基础信息
@@ -80,6 +91,7 @@ public class RptBaseInfoController {
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> waitingList(
             @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         rptBaseInfoDTO.setStatus(RptConstant.WAITING);
+        rptBaseInfoDTO.setDelFlag(RptConstant.REDUCTION_STATUS);
         return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
 
@@ -93,6 +105,7 @@ public class RptBaseInfoController {
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> reptileList(
             @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         rptBaseInfoDTO.setStatus(RptConstant.REPTILE);
+        rptBaseInfoDTO.setDelFlag(RptConstant.REDUCTION_STATUS);
         return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
 
@@ -104,7 +117,7 @@ public class RptBaseInfoController {
     @PostMapping("/history")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> historyList(
             @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-        rptBaseInfoDTO.setStatus(RptConstant.HISTORY);
+        rptBaseInfoDTO.setDelFlag(RptConstant.DEL_STATUS);
         return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
     /**
@@ -125,6 +138,17 @@ public class RptBaseInfoController {
     @DeleteMapping("/{ids}")
     public DefaultCommonResult delete(@PathVariable("ids") String ids){
         rptBaseInfoService.delete(ids);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 还原
+     * @param ids
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("/reduction/{ids}")
+    public DefaultCommonResult reduction(@PathVariable("ids") String ids){
+        rptBaseInfoService.reduction(ids);
         return DefaultCommonResult.success();
     }
 

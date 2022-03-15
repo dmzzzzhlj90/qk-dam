@@ -1,0 +1,20 @@
+server:
+  port: 8788
+spring:
+  messages:
+    basename: i18n/messages
+  mvc:
+    message-codes-resolver-format: postfix_error_code
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    servlet:
+      path: /dis
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    show-sql: false
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter

@@ -4,12 +4,12 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.springframework.stereotype.Service;
 
 /**
  * @author wjq
@@ -18,33 +18,41 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface DasApiBasicInfoService {
-  PageResultVO<DasApiBasicInfoVO> searchList(DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO);
 
-  void insert(DasApiBasicInfoVO dasApiBasicInfoVO);
+    PageResultVO<DasApiBasicInfoVO> searchList(DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO);
 
-  void update(DasApiBasicInfoVO dasApiBasicInfoVO);
+    void insert(DasApiBasicInfoVO dasApiBasicInfoVO);
 
-  void delete(Long delId);
+    DasApiBasicInfo buildBulkSaveApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
 
-  void deleteBulk(String ids);
+    void update(DasApiBasicInfoVO dasApiBasicInfoVO);
 
-  Map<String, String> getApiType();
+    DasApiBasicInfo buildUpdateApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
 
-  Map<String, String> getDMSourceType();
+    void delete(Long delId);
 
-  LinkedList<Map<String, Object>> getRequestParasHeaderInfos();
+    void deleteBulk(String ids);
 
-  Map<String, String> getRequestParamsPositions();
+    Map<String, String> getApiType();
 
-  Optional<DasApiBasicInfo> searchApiBasicInfoByDelParamIsEmpty(
-      DasApiBasicInfoVO dasApiBasicInfoVO);
+    Map<String, String> getDMSourceType();
 
-  Optional<DasApiBasicInfo> checkExistApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
+    LinkedList<Map<String, Object>> getRequestParasHeaderInfos();
 
-  List<DasApiBasicInfoVO> findAllByApiType(String apiType);
+    Map<String, String> getRequestParamsPositions();
 
-  Map<String, String> getStatusInfo();
+    Optional<DasApiBasicInfo> checkExistApiBasicInfo(DasApiBasicInfoVO dasApiBasicInfoVO);
 
-  Map<String, String> getDataType();
+    List<DasApiBasicInfoVO> findAllByApiType(String apiType);
+
+    Map<String, String> getStatusInfo();
+
+    Map<String, String> getDataType();
+
+    Map<String, String> getSyncType();
+
+    LinkedList<Map<String, Object>> getDebugParamHeaderInfo();
+
+    Object createDetail(String apiId);
 
 }

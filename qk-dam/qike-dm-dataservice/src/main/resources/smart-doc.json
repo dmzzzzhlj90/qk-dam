@@ -1,5 +1,5 @@
 {
-  "serverUrl": "http://main-dev.dam.qk.com:31352/das", //服务器地址,非必须。导出postman建议设置成http://{{server}}方便直接在postman直接设置环境变量
+  "serverUrl": "http://{{server}}", //服务器地址,非必须。导出postman建议设置成http://{{server}}方便直接在postman直接设置环境变量
   "isStrict": false, //是否开启严格模式
   "allInOne": true,  //是否将文档合并到一个文件中，一般推荐为true
   "outPath": "../../docs/数据服务", //指定文档的输出路径

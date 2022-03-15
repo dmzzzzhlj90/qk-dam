@@ -177,14 +177,12 @@ public class EmpRsServiceImpl implements EmpRsService {
 
   @Override
   public List<ResourceVO> queryauthorized(PowerResourcesParamVO powerResourcesParamVO) {
-    List<QxResources> qxResourcesList =new ArrayList<>();
     List<QxResources> byServiceId = qkQxResourcesRepository.findByServiceId(powerResourcesParamVO.getServiceId());
-    if (powerResourcesParamVO.getType()==QxConstant.API_TYPE){
-       qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getId().toString())).collect(Collectors.toList());
-    }else{
-      qxResourcesList = byServiceId.stream().filter(qxResources ->powerResourcesParamVO.getResourceSign().contains(qxResources.getId().toString())).collect(Collectors.toList());
-    }
-    return  qxResourcesList.stream().map(QxResourcesMapper.INSTANCE::qxResourceVO).collect(Collectors.toList());
+    List<QxResources> qxRsList = byServiceId.stream().filter(
+        qxResources -> powerResourcesParamVO.getResourceSign()
+            .contains(qxResources.getId().toString()))
+        .collect(Collectors.toList());
+    return  qxRsList.stream().map(QxResourcesMapper.INSTANCE::qxResourceVO).collect(Collectors.toList());
   }
 
   @Override

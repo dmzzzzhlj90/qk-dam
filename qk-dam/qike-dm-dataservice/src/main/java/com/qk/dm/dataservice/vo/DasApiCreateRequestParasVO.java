@@ -18,18 +18,29 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DasApiCreateRequestParasVO {
 
-  /** 绑定参数 */
-  private String paraName;
+    /**
+     * 绑定参数
+     */
+    private String paraName;
 
-  /** 绑定字段 */
-  private String mappingName;
+    /**
+     * 绑定字段
+     */
+    private String mappingName;
 
-  /** 操作符 */
-  private String conditionType;
+    /**
+     * 操作符
+     */
+    private String conditionType;
 
-  /** 后端参数 */
-  private String backendParaName;
+    /**
+     * 后端参数
+     */
+    private String backendParaName;
 
-  /** 后端参数位置 */
-  private String backendParaPosition;
+    /**
+     * 后端参数位置
+     */
+    private String backendParaPosition;
+
 }

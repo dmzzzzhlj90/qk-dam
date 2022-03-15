@@ -10,13 +10,13 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
+import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -166,4 +166,39 @@ public class DasApiBasicInfoController {
     public DefaultCommonResult<Map<String, String>> getDataType() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDataType());
     }
+
+    /**
+     * API同步方式
+     *
+     * @return DefaultCommonResult<Map < String, String>>
+     */
+    @GetMapping(value = "/sync/type")
+//  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
+    public DefaultCommonResult<Map<String, String>> getSyncType() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getSyncType());
+    }
+
+    /**
+     * API调试__请求参数表头信息
+     *
+     * @return DefaultCommonResult<Map < String, String>>
+     */
+    @GetMapping(value = "/debug/para/header/infos")
+//  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> getDebugParamHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDebugParamHeaderInfo());
+    }
+
+    /**
+     * 新增API__详情展示
+     *
+     * @param apiId
+     * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
+     */
+    @GetMapping(value = "/create/detail/{apiId}")
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
+    public DefaultCommonResult<Object> createDetail(@PathVariable("apiId") String apiId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.createDetail(apiId));
+    }
+
 }

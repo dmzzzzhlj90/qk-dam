@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class Value {
   private String name;
   private String id;
+  private String uri;
 }

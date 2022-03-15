@@ -2,6 +2,7 @@ package com.qk.dm.reptile.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.params.dto.RptAssignedTaskDTO;
+import com.qk.dm.reptile.params.dto.RptBaseInfoBatchDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
 import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
@@ -11,6 +12,8 @@ public interface RptBaseInfoService {
 
     void insert(RptBaseInfoDTO rptBaseInfoDTO);
 
+    void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO);
+
     void update(Long id, RptBaseInfoDTO rptBaseInfoDTO);
 
     void updateRunStatus(Long id,Integer runStatus);
@@ -18,6 +21,8 @@ public interface RptBaseInfoService {
     RptBaseInfoVO detail(Long id);
 
     void delete(String ids);
+
+    void reduction(String ids);
 
     PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO, OAuth2AuthorizedClient authorizedClient);
 

@@ -35,10 +35,10 @@ public class RptExcelBatchService {
 
   @Transactional(rollbackFor = Exception.class)
   public List<RptBaseInfo> saveRptBasicInfo(List<RptBaseInfo> prtBasicInfoList) {
-    List<RptBaseInfo> lsit = deal(prtBasicInfoList);
+    List<RptBaseInfo> list = deal(prtBasicInfoList);
     rptBaseInfoRepository.saveAllAndFlush(prtBasicInfoList);
     LOG.info(prtBasicInfoList.size()+"成功保存待配信息个数 【{}】");
-    return lsit;
+    return list;
   }
 
   private List<RptBaseInfo> deal(List<RptBaseInfo> prtBasicInfoList) {
@@ -47,7 +47,6 @@ public class RptExcelBatchService {
         Iterator<RptBaseInfo> iterator = prtBasicInfoList.iterator();
         while (iterator.hasNext()){
           RptBaseInfo rptBaseInfo = iterator.next();
-          //todo 加入操作人员id
           //创建人名称
           rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
           //状态
