@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -230,7 +229,6 @@ public class EmpExcelServiceImpl implements EmpExcelService {
       HttpServletResponse response) throws IOException {
     List<AtyUserExcelVO> atyUserExcelVOList = atyUserService.getUsers(realm, search).stream().map(atyUserInfoVO -> {
           AtyUserExcelVO atyUserExcelVO = AtyUserMapper.INSTANCE.userExcel(atyUserInfoVO);
-          atyUserExcelVO.setCreatedTime(getTime(atyUserInfoVO.getCreatedTimestamp()));
           return atyUserExcelVO;
         }).collect(Collectors.toList());
     response.setContentType("application/json;charset=utf-8");
@@ -240,16 +238,6 @@ public class EmpExcelServiceImpl implements EmpExcelService {
         .sheet("用户列表基本信息")
         .doWrite(atyUserExcelVOList);
 
-  }
-
-  private Date getTime(String createdTimestamp) {
-    Date parse = null;
-    try {
-      parse = this.format.parse(createdTimestamp);
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
-    return parse;
   }
 
   @Override
