@@ -5,6 +5,7 @@ import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyRoleService;
+import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
@@ -20,9 +21,11 @@ import java.util.List;
 @Service
 public class AtyRoleServiceImpl implements AtyRoleService {
     private final KeyCloakRoleApi keyCloakRoleApi;
+    private final EmpPowerService empPowerService;
 
-    public AtyRoleServiceImpl(KeyCloakRoleApi keyCloakRoleApi) {
+    public AtyRoleServiceImpl(KeyCloakRoleApi keyCloakRoleApi, EmpPowerService empPowerService) {
         this.keyCloakRoleApi = keyCloakRoleApi;
+        this.empPowerService = empPowerService;
     }
 
     @Override
@@ -37,7 +40,10 @@ public class AtyRoleServiceImpl implements AtyRoleService {
 
     @Override
     public void deleteClientRole(AtyClientRoleVO clientRoleVO) {
+        AtyClientRoleInfoVO clientRoleDetail = keyCloakRoleApi.clientRoleDetail(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
         keyCloakRoleApi.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
+        //删除权限
+        empPowerService.deleteEmpPower(clientRoleDetail.getId());
     }
 
     @Override

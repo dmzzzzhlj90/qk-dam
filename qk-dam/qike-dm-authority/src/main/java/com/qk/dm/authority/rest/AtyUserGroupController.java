@@ -54,7 +54,7 @@ public class AtyUserGroupController {
 //    }
 
     /**
-     * 用户绑定单个用户组
+     * 用户-绑定单个用户组
      *
      * @param atyUserGroupVO
      * @return DefaultCommonResult
@@ -66,7 +66,7 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 用户解绑单个用户组
+     * 用户-解绑单个用户组
      *
      * @param atyUserGroupVO
      * @return DefaultCommonResult
@@ -79,7 +79,7 @@ public class AtyUserGroupController {
 
 
     /**
-     * 用户详情-所属分组-批量绑定-用户组
+     * 用户-所属分组-批量绑定-用户组
      *
      * @param batchByGroupsVO
      * @return DefaultCommonResult
@@ -91,7 +91,7 @@ public class AtyUserGroupController {
     }
 
     /**
-     * 用户组详情-已授权用户-批量绑定-用户
+     * 用户组-已授权用户-批量绑定-用户
      *
      * @param atyGroupBatchByUsersVO
      * @return DefaultCommonResult

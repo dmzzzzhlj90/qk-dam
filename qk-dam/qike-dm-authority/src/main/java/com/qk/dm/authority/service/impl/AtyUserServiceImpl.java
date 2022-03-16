@@ -7,6 +7,7 @@ import com.qk.dam.authority.common.vo.user.AtyUserKeyCloakVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.mapstruct.AtyUserMapper;
 import com.qk.dm.authority.service.AtyUserService;
+import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.user.AtyUserCreateVO;
 import com.qk.dm.authority.vo.user.AtyUserParamVO;
 import com.qk.dm.authority.vo.user.AtyUserUpdateVO;
@@ -22,9 +23,11 @@ import java.util.List;
 @Service
 public class AtyUserServiceImpl implements AtyUserService {
     private final KeyCloakUserApi keyCloakUserApi;
+    private final EmpPowerService empPowerService;
 
-    public AtyUserServiceImpl(KeyCloakUserApi keyCloakUserApi) {
+    public AtyUserServiceImpl(KeyCloakUserApi keyCloakUserApi, EmpPowerService empPowerService) {
         this.keyCloakUserApi = keyCloakUserApi;
+        this.empPowerService = empPowerService;
     }
 
     @Override
@@ -42,6 +45,8 @@ public class AtyUserServiceImpl implements AtyUserService {
     @Override
     public void deleteUser(String realm, String userId) {
         keyCloakUserApi.deleteUser(realm, userId);
+        //删除权限
+        empPowerService.deleteEmpPower(userId);
     }
 
     @Override
