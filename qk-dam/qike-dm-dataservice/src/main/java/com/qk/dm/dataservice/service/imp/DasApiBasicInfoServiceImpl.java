@@ -340,19 +340,30 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
             BooleanBuilder booleanBuilder,
             QDasApiBasicInfo qDasApiBasicinfo,
             DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
+
+        // API目录ID
         if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getDirId())) {
-            Set<String> apiDirIdSet = new HashSet<>();
-            dasApiDirService.getApiDirId(apiDirIdSet, dasApiBasicInfoParamsVO.getDirId());
-            booleanBuilder.and(qDasApiBasicinfo.apiId.in(apiDirIdSet));
+            booleanBuilder.and(qDasApiBasicinfo.dirId.eq(dasApiBasicInfoParamsVO.getDirId()));
         }
+        // API名称
         if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getApiName())) {
             booleanBuilder.and(qDasApiBasicinfo.apiName.contains(dasApiBasicInfoParamsVO.getApiName()));
         }
+        // API标识ID
         if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getApiId())) {
             booleanBuilder.and(qDasApiBasicinfo.apiId.eq(dasApiBasicInfoParamsVO.getApiId()));
         }
+        // API类型
+        if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getApiType())) {
+            booleanBuilder.and(qDasApiBasicinfo.apiType.eq(dasApiBasicInfoParamsVO.getApiType()));
+        }
+        // 状态
+        if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getStatus())) {
+            booleanBuilder.and(qDasApiBasicinfo.status.eq(dasApiBasicInfoParamsVO.getStatus()));
+        }
+        // 开始时间--结束时间
         if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getBeginDay())
-                && !StringUtils.isEmpty(dasApiBasicInfoParamsVO.getEndDay())) {
+                && !ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getEndDay())) {
             StringTemplate dateExpr =
                     Expressions.stringTemplate(
                             "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDasApiBasicinfo.gmtModified);

@@ -19,20 +19,40 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DasApiBasicInfoParamsVO {
 
-  private Pagination pagination;
+    private Pagination pagination;
 
-  /** API标识ID */
-  private String apiId;
+    /**
+     * API标识ID
+     */
+    private String apiId;
 
-  /** API名称 */
-  private String apiName;
+    /**
+     * API名称
+     */
+    private String apiName;
 
-  /** API目录ID */
-  private String dirId;
+    /**
+     * API目录ID
+     */
+    private String dirId;
 
-  /** 开始时间 */
-  private String beginDay;
+    /**
+     * API类型
+     */
+    private String apiType;
 
-  /** 结束时间 */
-  private String endDay;
+    /**
+     * 状态
+     */
+    private String status;
+
+    /**
+     * 开始时间
+     */
+    private String beginDay;
+
+    /**
+     * 结束时间
+     */
+    private String endDay;
 }
