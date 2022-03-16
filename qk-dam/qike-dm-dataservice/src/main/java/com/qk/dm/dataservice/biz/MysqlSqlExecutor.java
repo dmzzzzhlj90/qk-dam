@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dm.dataservice.utils.SqlExecuteUtils;
+import com.qk.dm.dataservice.vo.DasApiCreateOrderParasVO;
 import com.qk.dm.dataservice.vo.DasApiCreateRequestParasVO;
 import org.springframework.util.ObjectUtils;
 
@@ -55,14 +56,18 @@ public class MysqlSqlExecutor {
      *
      * @param tableName
      * @param sqlPara   取数脚本
+     * @param orderByStr
      * @return
      */
-    public MysqlSqlExecutor mysqlExecuteSQL(String tableName, String sqlPara, Map<String, List<DasApiCreateRequestParasVO>> mappingParams) {
+    public MysqlSqlExecutor mysqlExecuteSQL(String tableName,
+                                            String sqlPara,
+                                            Map<String, List<DasApiCreateRequestParasVO>> mappingParams,
+                                            String orderByStr) {
         if (ObjectUtils.isEmpty(sqlPara)) {
             //生成查询sql
-            this.sql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParaMap, mappingParams);
+            this.sql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParaMap, mappingParams,orderByStr);
         } else {
-            this.sql = SqlExecuteUtils.mysqlSqlPara(sqlPara, reqParams);
+            this.sql = SqlExecuteUtils.mysqlSqlPara(sqlPara, reqParams,orderByStr);
         }
         return this;
     }

@@ -18,6 +18,7 @@ import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateConfigMapper;
 import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiCreateConfigService;
+import com.qk.dm.dataservice.utils.SqlExecuteUtils;
 import com.qk.dm.dataservice.vo.*;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ import java.util.stream.Collectors;
 public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService {
 
     private static final QDasApiCreateConfig qDasApiCreateConfig = QDasApiCreateConfig.dasApiCreateConfig;
+
 
     private final DasApiBasicInfoService dasApiBasicInfoService;
     private final DasApiCreateConfigRepository dasApiCreateConfigRepository;
@@ -231,7 +233,6 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         Map<String, String> resParaMap = apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()
                 .stream().collect(Collectors.toMap(
                         DasApiCreateResponseParasVO::getMappingName, DasApiCreateResponseParasVO::getParaName));
-
         // 2.执行查询SQL(根据数据源类型)
         // 获取数据库连接信息
         ConnectBasicInfo connectBasicInfo = getConnectBasicInfo(apiCreateConfigDefinitionVO);
@@ -262,17 +263,45 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         String dataBaseName = apiCreateConfigDefinitionVO.getDataBaseName();
         //表名称
         String tableName = apiCreateConfigDefinitionVO.getTableName();
+        // 排序查询,默认使用首个参数的排序方式
+        String orderByStr = getOrderByParaSqlStr(apiCreateConfigDefinitionVO);
+
         List<Map<String, Object>> searchData = null;
         if (ConnTypeEnum.MYSQL.getName().equalsIgnoreCase(connectType)) {
             // mysql 执行sql获取查询结果集
             searchData = new MysqlSqlExecutor(connectBasicInfo, dataBaseName, reqParams, resParaMap)
-                    .mysqlExecuteSQL(tableName, null, mappingParams).searchData();
+                    .mysqlExecuteSQL(tableName, null, mappingParams, orderByStr).searchData();
         } else if (ConnTypeEnum.HIVE.getName().equalsIgnoreCase(connectType)) {
             // hive 执行sql获取查询结果集
             searchData = new HiveSqlExecutor(connectBasicInfo, dataBaseName, reqParams, resParaMap)
                     .hiveExecuteSQL(tableName, null, mappingParams).searchData();
         }
         return searchData;
+    }
+
+    /**
+     * 排序SQL片段
+     *
+     * @param apiCreateConfigDefinitionVO
+     * @return
+     */
+    private String getOrderByParaSqlStr(DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO) {
+        String orderByStr = "";
+        // 默认使用首个参数的排序方式
+        DasApiCreateOrderParasVO orderParasVO = apiCreateConfigDefinitionVO.getApiCreateOrderParasVOS().get(0);
+        String orderType = orderParasVO.getOrderType();
+
+        List<DasApiCreateOrderParasVO> orderParas = apiCreateConfigDefinitionVO.getApiCreateOrderParasVOS();
+        if (orderParas != null && orderParas.size() > 0) {
+            if (CreateParamSortStyleEnum.ASC.getCode().equalsIgnoreCase(orderType) ||
+                    CreateParamSortStyleEnum.DESC.getCode().equalsIgnoreCase(orderType)) {
+                //排序字段
+                List<String> orderCols = orderParas.stream().map(DasApiCreateOrderParasVO::getColumnName).collect(Collectors.toList());
+                String orderColStr = String.join(",", orderCols);
+                orderByStr += SqlExecuteUtils.ORDER_BY + orderColStr + " " + orderType;
+            }
+        }
+        return orderByStr;
     }
 
     /**
