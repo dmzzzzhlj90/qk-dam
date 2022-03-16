@@ -209,6 +209,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
    * 根据删除的用户、角色、分组的id删除对应的授权信息和关系表
    * @param empid
    */
+  @Transactional(rollbackFor = {Exception.class})
   @Override
   public void deleteEmpPower(String empid) {
     List<QxEmpower> empList = (List<QxEmpower>) qkQxEmpowerRepository.findAll(qQxEmpower.empoerId.eq(empid));
@@ -221,15 +222,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   private void dealEmpMessage(List<QxEmpower> empList) {
     List<String> empoeridList = empList.stream().map(QxEmpower::getEmpowerId).collect(Collectors.toList());
     if (CollectionUtils.isNotEmpty(empoeridList)){
-     deleteEmpRs(empoeridList);
-    }
-  }
-
-  private void deleteEmpRs(List<String> empoeridList) {
-    List<QkQxResourcesEmpower> EmpRsList = (List<QkQxResourcesEmpower>) qkQxResourcesEmpowerRepository
-        .findAll(qQkQxResourcesEmpower.empowerUuid.in(empoeridList));
-    if (CollectionUtils.isNotEmpty(EmpRsList)){
-      qkQxResourcesEmpowerRepository.deleteAll(EmpRsList);
+      jpaQueryFactory.delete(qQkQxResourcesEmpower).where(qQkQxResourcesEmpower.empowerUuid.in(empoeridList)).execute();
     }
   }
 
