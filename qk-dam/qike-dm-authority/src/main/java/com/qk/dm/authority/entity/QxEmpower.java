@@ -101,7 +101,7 @@ public class QxEmpower implements Serializable {
   private Date gmtModified;
 
   /**
-   * 服务id
+   * 服务uuid
    */
   @Column(name = "service_id")
   private String serviceId;

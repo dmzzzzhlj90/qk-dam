@@ -40,7 +40,7 @@ public class EmpowerVO {
   private String empoerName;
 
   /**
-   * 被授权主体id(当授权主体为角色时候存储对应的角色客户端id)
+   * 被授权主体id
    */
   @NotBlank(message = "被授权主体id不能为空")
   private String empoerId;

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=false)
 public class UserEmpPowerParamVO extends UserEmpParamVO {
   /**
-   * 服务id
+   * 服务uuid
    */
   private String serviceId;
 }
