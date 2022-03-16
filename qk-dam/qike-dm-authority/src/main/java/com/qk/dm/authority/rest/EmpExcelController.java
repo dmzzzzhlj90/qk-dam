@@ -144,7 +144,7 @@ public class EmpExcelController {
    * @return
    * @throws IOException
    */
-  @PostMapping("/download/user")
+  @PostMapping("/user/download/ids")
   public DefaultCommonResult UserDownloadByIds(@RequestBody @Valid AtyUserDownVO atyUserDownVO, HttpServletResponse response)
           throws IOException {
     empExcelService.UserAllDownload(atyUserDownVO,response);
