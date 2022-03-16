@@ -37,7 +37,7 @@ public class AtyUserGroupController {
      * @return DefaultCommonResult<PageResultVO < AtyGroupInfoVO>>
      */
     @PostMapping("/users/{userId}/groups")
-    public DefaultCommonResult<PageResultVO<AtyGroupInfoVO>> getUserGroup(@RequestBody @Valid AtyUserGroupParamVO userGroupParamVO, @PathVariable String userId) {
+    public DefaultCommonResult<PageResultVO<AtyGroupInfoVO>> getUserGroup(@RequestBody @Valid AtyUserGroupParamVO userGroupParamVO, @PathVariable("userId") String userId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(userGroupParamVO, userId));
     }
 

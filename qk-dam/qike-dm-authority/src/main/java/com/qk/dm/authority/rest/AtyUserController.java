@@ -50,7 +50,7 @@ public class AtyUserController {
      * @return DefaultCommonResult
      */
     @PutMapping("/{userId}")
-    public DefaultCommonResult updateUser(@PathVariable String userId, @RequestBody @Valid AtyUserUpdateVO atyUserVO) {
+    public DefaultCommonResult updateUser(@PathVariable("userId") String userId, @RequestBody @Valid AtyUserUpdateVO atyUserVO) {
         atyUserService.updateUser(userId, atyUserVO);
         return DefaultCommonResult.success();
     }
@@ -62,7 +62,7 @@ public class AtyUserController {
      * @return DefaultCommonResult
      */
     @PutMapping("/{userId}/password")
-    public DefaultCommonResult resetPassword(@PathVariable String userId, @RequestBody @Valid AtyUserResetPassWordVO userVO) {
+    public DefaultCommonResult resetPassword(@PathVariable("userId") String userId, @RequestBody @Valid AtyUserResetPassWordVO userVO) {
         atyUserService.resetPassword(userVO.getRealm(), userId, userVO.getPassword());
         return DefaultCommonResult.success();
     }
@@ -75,7 +75,7 @@ public class AtyUserController {
      * @return DefaultCommonResult
      */
     @DeleteMapping("/{userId}")
-    public DefaultCommonResult deleteUser(@Valid @NotBlank String realm, @PathVariable String userId) {
+    public DefaultCommonResult deleteUser(@Valid @NotBlank String realm, @PathVariable("userId") String userId) {
         atyUserService.deleteUser(realm, userId);
         return DefaultCommonResult.success();
     }
@@ -87,7 +87,7 @@ public class AtyUserController {
      * @return DefaultCommonResult<AtyUserInfoVO>
      */
     @GetMapping("/{userId}")
-    public DefaultCommonResult<AtyUserInfoVO> getUser(@Valid @NotBlank String realm, @PathVariable String userId) {
+    public DefaultCommonResult<AtyUserInfoVO> getUser(@Valid @NotBlank String realm, @PathVariable("userId") String userId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUser(realm, userId));
     }
 

@@ -51,7 +51,7 @@ public class AtyGroupController {
      * @return DefaultCommonResult
      */
     @PutMapping("/{groupId}")
-    public DefaultCommonResult updateGroup(@PathVariable String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
+    public DefaultCommonResult updateGroup(@PathVariable("groupId") String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
         atyGroupService.updateGroup(groupId, groupVO);
         return DefaultCommonResult.success();
     }
@@ -64,7 +64,7 @@ public class AtyGroupController {
      * @return DefaultCommonResult
      */
     @DeleteMapping("/{groupId}")
-    public DefaultCommonResult deleteGroup(@Valid @NotBlank String realm, @PathVariable String groupId) {
+    public DefaultCommonResult deleteGroup(@Valid @NotBlank String realm, @PathVariable("groupId") String groupId) {
         atyGroupService.deleteGroup(realm, groupId);
         return DefaultCommonResult.success();
     }
@@ -77,7 +77,7 @@ public class AtyGroupController {
      * @return DefaultCommonResult<AtyGroupInfoVO>
      */
     @GetMapping("/{groupId}")
-    public DefaultCommonResult<AtyGroupInfoVO> getUser(@Valid @NotBlank String realm, @PathVariable String groupId) {
+    public DefaultCommonResult<AtyGroupInfoVO> getUser(@Valid @NotBlank String realm, @PathVariable("groupId") String groupId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(realm, groupId));
     }
 
@@ -111,7 +111,7 @@ public class AtyGroupController {
      * @return <PageResultVO<AtyGroupInfoVO>>
      */
     @PostMapping("/{groupId}/users")
-    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getGroupUsers(@RequestBody @Valid AtyGroupUserParamVO groupUserParamVO, @PathVariable String groupId) {
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getGroupUsers(@RequestBody @Valid AtyGroupUserParamVO groupUserParamVO, @PathVariable("groupId") String groupId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupUserParamVO, groupId));
     }
 

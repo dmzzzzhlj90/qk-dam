@@ -37,7 +37,7 @@ public class AtyUserRoleController {
      * @return
      */
     @GetMapping("/users/{userId}/roles")
-    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getUserClientRole(@Valid @NotBlank String realm, @PathVariable String userId,@Valid @NotBlank String client_clientId) {
+    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getUserClientRole(@Valid @NotBlank String realm, @PathVariable("userId") String userId,@Valid @NotBlank String client_clientId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserRoleService.getUserClientRole(realm, userId,client_clientId));
     }
 
