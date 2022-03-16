@@ -66,7 +66,7 @@ public class EmpResourcesController {
    * @param resourceParamVO 查询资源条件
    * @return DefaultCommonResult<List<ResourceOutVO>> 资源信息
    */
-  @PostMapping("/rs")
+  @PostMapping("/rse")
   public DefaultCommonResult<List<ResourceOutVO>> queryResource(@RequestBody ResourceParamVO resourceParamVO){
     return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.queryResource(resourceParamVO));
   }
@@ -86,7 +86,7 @@ public class EmpResourcesController {
    * @param id 资源（api）id
    * @return DefaultCommonResult<Boolean> 返回值为true表示存在为false表示不存在
    */
-  @GetMapping("/qery/{id}")
+  @GetMapping("/query/{id}")
   public DefaultCommonResult<Boolean> qeryRsEmp(@NotNull @PathVariable("id") Long id){
     return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.qeryRsEmp(id));
   }

@@ -93,4 +93,15 @@ public class EmpPowerController {
   public DefaultCommonResult<List<EmpowerAllVO>> queryAllEmpower(@Valid @NotBlank String id){
     return DefaultCommonResult.success(ResultCodeEnum.OK,empPowerService.queryAllEmpower(id));
   }
+
+  /**
+   *  用户、分组、角色(id)授权信息删除
+   * @param empid （用户、分组、角色）id删除授权信息
+   * @return DefaultCommonResult<List<EmpowerAllVO>> 查询授权信息
+   */
+ /* @DeleteMapping("/delete/emp")
+  public DefaultCommonResult deleteEmpPower( @Valid @NotBlank String empid){
+    empPowerService.deleteEmpPower(empid);
+    return DefaultCommonResult.success();
+  }*/
 }
