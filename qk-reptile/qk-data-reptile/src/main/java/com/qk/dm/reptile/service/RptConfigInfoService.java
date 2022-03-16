@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface RptConfigInfoService {
 
-    RptAddConfigVO insert(RptConfigInfoDTO rptConfigInfoDTO);
+    RptAddConfigVO end(RptConfigInfoDTO rptConfigInfoDTO);
+
+    RptAddConfigVO complete(RptConfigInfoDTO rptConfigInfoDTO);
 
     Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO);
 

@@ -28,6 +28,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
@@ -70,6 +71,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insert(RptBaseInfoDTO rptBaseInfoDTO) {
         RptBaseInfo rptBaseInfo = RptBaseInfoMapper.INSTANCE.userRtpBaseInfo(rptBaseInfoDTO);
         rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
@@ -85,6 +87,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO) {
         List<RptBaseInfo> rptBaseInfoList = Lists.newArrayList();
         rptBaseInfoBatchDTO.getListPageAddressList().forEach(e->{
@@ -100,6 +103,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(Long id, RptBaseInfoDTO rptBaseInfoDTO) {
         RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
         if (Objects.isNull(rptBaseInfo)) {
@@ -181,6 +185,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateStatus(Long id,Integer status) {
         RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(id).orElse(null);
         if(Objects.isNull(rptBaseInfo)){
@@ -204,6 +209,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void assignedTasks(RptAssignedTaskDTO rptAssignedTaskDTO) {
         Iterable<Long> idSet = Arrays.stream(rptAssignedTaskDTO.getIds().split(",")).map(Long::valueOf).collect(Collectors.toList());
         List<RptBaseInfo> rptBaseInfoList = rptBaseInfoRepository.findAllById(idSet);
@@ -245,11 +251,13 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void copyConfig(Long sourceId, Long targetId) {
        rptConfigInfoService.copyConfig(sourceId,targetId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateTimeInterval(TimeIntervalDTO timeIntervalDTO) {
         RptBaseInfo rptBaseInfo = rptBaseInfoRepository.findById(timeIntervalDTO.getId()).orElse(null);
         if(Objects.isNull(rptBaseInfo)){

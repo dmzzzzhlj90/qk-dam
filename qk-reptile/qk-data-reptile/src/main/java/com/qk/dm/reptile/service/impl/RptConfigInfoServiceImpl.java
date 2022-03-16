@@ -23,7 +23,6 @@ import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -53,8 +52,9 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     }
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public RptAddConfigVO insert(RptConfigInfoDTO rptConfigInfoDTO) {
-        deleteConfig(rptConfigInfoDTO);
+    public RptAddConfigVO end(RptConfigInfoDTO rptConfigInfoDTO) {
+        //删除所有子级数据
+        deleteChildrenConfig(rptConfigInfoDTO);
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
         //修改基础信息表状态为爬虫
         updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
@@ -63,8 +63,18 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO) {
+    public RptAddConfigVO complete(RptConfigInfoDTO rptConfigInfoDTO) {
+        //删除当前级数据
         deleteConfig(rptConfigInfoDTO);
+        RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
+        return buildRptAddConfigVO(config,rptConfigInfoDTO.getBaseInfoId());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Long endAndStart(RptConfigInfoDTO rptConfigInfoDTO) {
+        //删除所有子级数据
+        deleteChildrenConfig(rptConfigInfoDTO);
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
        // 修改基础信息表状态为爬虫
         start(rptConfigInfoDTO.getBaseInfoId(),
@@ -77,13 +87,50 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
      * @param rptConfigInfoDTO
      */
     private void deleteConfig(RptConfigInfoDTO rptConfigInfoDTO){
-        //id不为空则为编辑
-        if(Objects.nonNull(rptConfigInfoDTO.getId())){ return; }
-        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdAndParentId(rptConfigInfoDTO.getBaseInfoId(), rptConfigInfoDTO.getParentId());
-        if(!CollectionUtils.isEmpty(list)){
+        //id为空则为添加,如果当前层已经存在数据则删除
+        if(Objects.isNull(rptConfigInfoDTO.getId())){
+            deleteConfig(rptConfigInfoDTO.getBaseInfoId(), rptConfigInfoDTO.getParentId());
+        }
+    }
+
+    /**
+     * 删除当前层级数据
+     * @param baseInfoId
+     * @param parentId
+     */
+    private void deleteConfig(Long baseInfoId,Long parentId){
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdAndParentId(baseInfoId,parentId);
+        if (!CollectionUtils.isEmpty(list)) {
             rptConfigInfoRepository.deleteAll(list);
             List<Long> configIdList = list.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
             rptSelectorColumnInfoService.deleteByConfigId(configIdList);
+        }
+    }
+
+    private void deleteChildrenConfig(RptConfigInfoDTO rptConfigInfoDTO){
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdAndParentId(rptConfigInfoDTO.getBaseInfoId(),rptConfigInfoDTO.getParentId());
+        if(CollectionUtils.isEmpty(list)){return;}
+
+        if(Objects.isNull(rptConfigInfoDTO.getId())){
+            rptConfigInfoRepository.deleteAll(list);
+            List<Long> configIdList = list.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
+            rptSelectorColumnInfoService.deleteByConfigId(configIdList);
+        }
+        list.forEach(e->{deleteChildrenConfig(rptConfigInfoDTO.getBaseInfoId(),e.getId());});
+    }
+
+    /**
+     * 删除所有的子层级数据
+     * @param baseInfoId
+     * @param parentId
+     */
+    private void deleteChildrenConfig(Long baseInfoId,Long parentId){
+        List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdAndParentId(baseInfoId,parentId);
+        if (!CollectionUtils.isEmpty(list)) {
+            rptConfigInfoRepository.deleteAll(list);
+            List<Long> configIdList = list.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
+            rptSelectorColumnInfoService.deleteByConfigId(configIdList);
+            list.forEach(e->{deleteChildrenConfig(baseInfoId,e.getId());});
         }
     }
 
@@ -96,12 +143,12 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         RptConfigInfo rptConfigInfo = RptConfigInfoMapper.INSTANCE.useRptConfigInfo(rptConfigInfoDTO);
         transRptConfigInfo(rptConfigInfo,rptConfigInfoDTO);
         List<RptSelectorColumnInfoDTO> selectorList = rptConfigInfoDTO.getSelectorList();
-        RptConfigInfo config = rptConfigInfoRepository.save(rptConfigInfo);
-        //添加选择器
-        if(!CollectionUtils.isEmpty(selectorList)){
-            rptSelectorColumnInfoService.deleteByConfigId(config.getId());
-            rptSelectorColumnInfoService.batchInset(selectorList.stream().peek(e -> e.setConfigId(config.getId())).collect(Collectors.toList()));
+        RptConfigInfo config = rptConfigInfoRepository.saveAndFlush(rptConfigInfo);
+        //如果为编辑先将之前数据删除
+        if(Objects.nonNull(rptConfigInfoDTO.getId())){
+            rptSelectorColumnInfoService.deleteByConfigId(rptConfigInfoDTO.getId());
         }
+        rptSelectorColumnInfoService.batchInset(selectorList.stream().peek(e -> e.setConfigId(config.getId())).collect(Collectors.toList()));
         return config;
     }
 
@@ -266,7 +313,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
      */
     private void deleteTargetConfig(Long targetId){
         List<RptConfigInfo> targetList = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(targetId);
-        rptConfigInfoRepository.deleteAllByBaseInfoId(targetId);
+        rptConfigInfoRepository.deleteByBaseInfoId(targetId);
         if(!CollectionUtils.isEmpty(targetList)){
             List<Long> targetIdList = targetList.stream().map(RptConfigInfo::getId).collect(Collectors.toList());
             rptSelectorColumnInfoService.deleteByConfigId(targetIdList);

@@ -31,13 +31,23 @@ public class RptConfigInfoController {
     }
 
     /**
-     * 添加配置信息
+     * 配置结束接口
      * @param rptConfigInfoDTO
      * @return DefaultCommonResult<RptAddConfigVO> 返回id
      */
     @PostMapping("")
     public DefaultCommonResult<RptAddConfigVO> insert(@RequestBody @Validated RptConfigInfoDTO rptConfigInfoDTO){
-        return DefaultCommonResult.success(ResultCodeEnum.OK,rptConfigInfoService.insert(rptConfigInfoDTO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK,rptConfigInfoService.end(rptConfigInfoDTO));
+    }
+
+    /**
+     * 完成,跳转至下一级配置
+     * @param rptConfigInfoDTO
+     * @return
+     */
+    @PostMapping("/complete")
+    public DefaultCommonResult<RptAddConfigVO> complete(@RequestBody @Validated RptConfigInfoDTO rptConfigInfoDTO){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,rptConfigInfoService.complete(rptConfigInfoDTO));
     }
     /**
      * 结束并启动
