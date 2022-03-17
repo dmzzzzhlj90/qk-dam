@@ -38,23 +38,23 @@ public class DasApiLimitInfoVO {
      * 时长
      */
     @NotBlank(message = "时长不能为空！")
-    private String limitTime;
+    private Integer limitTime;
 
     /**
      * API流量限制(次)
      */
     @NotBlank(message = "API流量限制(次)不能为空！")
-    private String apiLimitCount;
+    private Integer apiLimitCount;
 
     /**
      * 用户流量限制(次)
      */
-    private String userLimitCount;
+    private Integer userLimitCount;
 
     /**
      * 应用流量限制(次)
      */
-    private String appLimitCount;
+    private Integer appLimitCount;
 
     /**
      * 描述

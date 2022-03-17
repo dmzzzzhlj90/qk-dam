@@ -34,25 +34,25 @@ public class DasApiLimitInfo implements Serializable {
      * 时长
      */
     @Column(name = "limit_time", nullable = false)
-    private String limitTime;
+    private Integer limitTime;
 
     /**
      * API流量限制(次)
      */
     @Column(name = "api_limit_count", nullable = false)
-    private String apiLimitCount;
+    private Integer apiLimitCount;
 
     /**
      * 用户流量限制(次)
      */
     @Column(name = "user_limit_count", nullable = false)
-    private String userLimitCount;
+    private Integer userLimitCount;
 
     /**
      * 应用流量限制(次)
      */
     @Column(name = "app_limit_count", nullable = false)
-    private String appLimitCount;
+    private Integer appLimitCount;
 
     /**
      * 描述
