@@ -95,7 +95,7 @@ public class DasApiLimitManageController {
      * @param dasApiLimitBindInfoVO
      * @return DefaultCommonResult
      */
-    @PutMapping("/bind")
+    @PostMapping("/bind")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.UPDATE)
     public DefaultCommonResult bind(@RequestBody @Validated DasApiLimitBindInfoVO dasApiLimitBindInfoVO) {
         dasApiLimitManageService.bind(dasApiLimitBindInfoVO);
@@ -107,7 +107,7 @@ public class DasApiLimitManageController {
      *
      * @return DefaultCommonResult
      */
-    @PutMapping("/group/routes")
+    @GetMapping("/group/routes")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.UPDATE)
     public DefaultCommonResult<List<DasApiGroupRouteVO>> routes() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiLimitManageService.routes());
@@ -118,7 +118,7 @@ public class DasApiLimitManageController {
      *
      * @return DefaultCommonResult
      */
-    @PutMapping("/timeUnit")
+    @GetMapping("/timeUnit")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.UPDATE)
     public DefaultCommonResult<Map<String,String>> timeUnit() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiLimitManageService.timeUnit());
