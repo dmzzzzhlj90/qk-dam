@@ -16,16 +16,15 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtyGroupVO {
+public class AtyGroupDetailVO {
+    /**
+     * 分组id
+     */
+    @NotBlank(message = "id必填！")
     String groupId;
     /**
      * 域
      */
     @NotBlank(message = "域必填！")
     String realm;
-    /**
-     * 分组名称
-     */
-    @NotBlank(message = "分组名称必填！")
-    String groupName;
 }

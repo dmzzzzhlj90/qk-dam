@@ -205,6 +205,27 @@ public class EmpPowerServiceImpl implements EmpPowerService {
     return getEmpowerVO(qxEmpoerList);
   }
 
+  /**
+   * 根据删除的用户、角色、分组的id删除对应的授权信息和关系表
+   * @param empid
+   */
+  @Transactional(rollbackFor = {Exception.class})
+  @Override
+  public void deleteEmpPower(String empid) {
+    List<QxEmpower> empList = (List<QxEmpower>) qkQxEmpowerRepository.findAll(qQxEmpower.empoerId.eq(empid));
+    if (CollectionUtils.isNotEmpty(empList)){
+      dealEmpMessage(empList);
+      qkQxEmpowerRepository.deleteAll(empList);
+    }
+  }
+
+  private void dealEmpMessage(List<QxEmpower> empList) {
+    List<String> empoeridList = empList.stream().map(QxEmpower::getEmpowerId).collect(Collectors.toList());
+    if (CollectionUtils.isNotEmpty(empoeridList)){
+      jpaQueryFactory.delete(qQkQxResourcesEmpower).where(qQkQxResourcesEmpower.empowerUuid.in(empoeridList)).execute();
+    }
+  }
+
   private List<EmpowerAllVO> getEmpowerVO(List<QxEmpower> qxEmpoerList) {
     if (CollectionUtils.isNotEmpty(qxEmpoerList)){
       List<String> serviceIdList = qxEmpoerList.stream().map(QxEmpower::getServiceId).collect(Collectors.toList());

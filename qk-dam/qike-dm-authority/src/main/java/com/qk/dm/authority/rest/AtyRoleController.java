@@ -6,9 +6,11 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyRoleService;
+import com.qk.dm.authority.service.AtyUserRoleService;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
+import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByUsersVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,9 +27,11 @@ import java.util.List;
 @RequestMapping("/roles")
 public class AtyRoleController {
     private final AtyRoleService atyRoleService;
+    private final AtyUserRoleService atyUserRoleService;
 
-    public AtyRoleController(AtyRoleService atyRoleService) {
+    public AtyRoleController(AtyRoleService atyRoleService, AtyUserRoleService atyUserRoleService) {
         this.atyRoleService = atyRoleService;
+        this.atyUserRoleService = atyUserRoleService;
     }
 
     /**
@@ -100,7 +104,7 @@ public class AtyRoleController {
     }
 
     /**
-     * 角色-已授权用户列表
+     * 已授权的用户列表
      * @param clientRoleVO
      * @return DefaultCommonResult<PageResultVO<AtyUserInfoVO>>
      */
@@ -118,4 +122,16 @@ public class AtyRoleController {
 //    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleUserParamVO clientRoleVO) {
 //        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsers(clientRoleVO));
 //    }
+
+    /**
+     * 角色详情-添加授权-批量绑定-用户
+     *
+     * @param atyGroupBatchVO
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/users/batch")
+    public DefaultCommonResult addBatchByUsers(@RequestBody @Valid AtyRoleBatchByUsersVO atyGroupBatchVO) {
+        atyUserRoleService.addBatchByUsers(atyGroupBatchVO);
+        return DefaultCommonResult.success();
+    }
 }

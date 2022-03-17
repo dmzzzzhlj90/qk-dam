@@ -7,11 +7,6 @@ import com.qk.dam.jdbc.DbTypeEnum;
 import com.qk.dam.jdbc.RawScript;
 import com.qk.dam.jdbc.ResultTable;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.JSQLParserException;
-import net.sf.jsqlparser.parser.CCJSqlParserUtil;
-import net.sf.jsqlparser.statement.Statement;
-import net.sf.jsqlparser.statement.Statements;
-import net.sf.jsqlparser.statement.select.Select;
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
@@ -64,34 +59,23 @@ public class ElasticSearchMain {
             System.exit(-1);
         }
         try (RestClient restClient = getRestClient(rawScript, authBase64)) {
-            Boolean sqlFl = false;
-            Statements stmts = null;
-            try {
-                stmts = CCJSqlParserUtil.parseStatements(script);
-                sqlFl=true;
-                for (Statement stmt : stmts.getStatements()) {
-                    if(stmt instanceof Select) {
-                        Request rq = fromEsSql(stmt.toString());
-                        Response response = restClient.performRequest(rq);
-                        String responseBody = EntityUtils.toString(response.getEntity());
-                        String rstStr = p.matcher(responseBody).replaceAll("");
-                        Object o = new Gson().fromJson(rstStr, Object.class);
+            Request rq = fromEsSql(script);
+            Response response = restClient.performRequest(rq);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            String rstStr = p.matcher(responseBody).replaceAll("");
+            Object o = new Gson().fromJson(rstStr, Object.class);
 
-                        overSqlData(rawScript, resultTable, (Map<String, Object>) o);
-                    }
-                }
-            } catch (JSQLParserException e) {
-                e.printStackTrace();
-            }
-            if (!sqlFl){
-                String[] lines = script.split("\\r?\\n");
-                String prePath = lines[0].trim();
-                Request request = fromEsDsl(script, prePath);
-                Response response = restClient.performRequest(request);
-                String responseBody = EntityUtils.toString(response.getEntity());
-                Object o = new Gson().fromJson(responseBody, Object.class);
-                log.info("rest api 返回结果数据信息：【{}】", o);
-            }
+            overSqlData(rawScript, resultTable, (Map<String, Object>) o);
+
+//            if (!sqlFl){
+//                String[] lines = script.split("\\r?\\n");
+//                String prePath = lines[0].trim();
+//                Request request = fromEsDsl(script, prePath);
+//                Response response = restClient.performRequest(request);
+//                String responseBody = EntityUtils.toString(response.getEntity());
+//                Object o = new Gson().fromJson(responseBody, Object.class);
+//                log.info("rest api 返回结果数据信息：【{}】", o);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,7 +124,7 @@ public class ElasticSearchMain {
         Object columns = ((List) rstMap.get("columns")).stream().map(it -> ((Map) it).get("name")).collect(Collectors.joining(","));
         Object columnList = ((List) rstMap.get("columns")).stream().map(it -> ((Map) it).get("name")).collect(Collectors.toList());
         String rowData = new Gson().toJson(rstMap.get("rows"));
-        log.info("最终数据：columns=====>{}", columns);
+//        log.info("最终数据：columns=====>{}", columns);
         log.info("最终数据：rowData=====>{}", rowData);
         // 开始写入结果
         Db rstDb = getToDb(rawScript, DbTypeEnum.MYSQL);
@@ -148,7 +132,7 @@ public class ElasticSearchMain {
         try {
 
             resultTable.setRule_result(rowData);
-            resultTable.setRule_meta_data((String) columns);
+//            resultTable.setRule_meta_data((String) columns);
             //结果表达式判断处理
             String ruleId = resultTable.getRule_id();
 

@@ -1,5 +1,7 @@
 package com.qk.dm.authority.service;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.authority.vo.params.ApiPageResourcesParamVO;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.PowerResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
@@ -16,7 +18,7 @@ public interface EmpRsService {
 
   void updateResource(ResourceVO resourceVO);
 
-  void deleteResource(Long id);
+  void deleteResource(String ids);
 
   List<ResourceOutVO> queryResource(ResourceParamVO resourceParamVO);
 
@@ -25,4 +27,6 @@ public interface EmpRsService {
   List<ResourceVO> queryauthorized(PowerResourcesParamVO powerResourcesParamVO);
 
   Boolean qeryRsEmp(Long id);
+
+  PageResultVO<ResourceVO> queryPageEmpower(ApiPageResourcesParamVO apiPageResourcesParamVO);
 }

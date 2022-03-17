@@ -5,6 +5,7 @@ import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyGroupService;
+import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupUserParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
@@ -21,9 +22,11 @@ import java.util.List;
 public class AtyGroupServiceImpl implements AtyGroupService {
 
     private final KeyCloakGroupApi keyCloakGroupApi;
+    private final EmpPowerService empPowerService;
 
-    public AtyGroupServiceImpl(KeyCloakGroupApi keyCloakGroupApi) {
+    public AtyGroupServiceImpl(KeyCloakGroupApi keyCloakGroupApi, EmpPowerService empPowerService) {
         this.keyCloakGroupApi = keyCloakGroupApi;
+        this.empPowerService = empPowerService;
     }
 
     @Override
@@ -39,6 +42,8 @@ public class AtyGroupServiceImpl implements AtyGroupService {
     @Override
     public void deleteGroup(String realm, String groupId) {
         keyCloakGroupApi.deleteGroup(realm, groupId);
+        //删除权限
+        empPowerService.deleteEmpPower(groupId);
     }
 
     @Override

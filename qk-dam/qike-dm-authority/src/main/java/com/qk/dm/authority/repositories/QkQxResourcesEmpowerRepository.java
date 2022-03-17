@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface QkQxResourcesEmpowerRepository extends BaseRepository<QkQxResourcesEmpower, Long>{
   void deleteALLByResourceUuid(String resourceId);
+
   void deleteAllByEmpowerUuid(String empowerId);
+
    List<QkQxResourcesEmpower> findByEmpowerUuid(String empowerId);
 
   List<QkQxResourcesEmpower> findByResourceUuid(String resourceId);

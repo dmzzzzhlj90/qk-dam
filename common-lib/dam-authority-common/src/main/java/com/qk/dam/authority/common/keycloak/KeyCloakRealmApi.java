@@ -6,7 +6,9 @@ import com.qk.dam.authority.common.vo.RealmVO;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author shenpj
@@ -20,6 +22,8 @@ public class KeyCloakRealmApi {
     public KeyCloakRealmApi(KeyCloakApi keyCloakApi) {
         this.keyCloakApi = keyCloakApi;
     }
+
+    static String[] clientIds = {"account","account-console","admin-cli","broker","realm-management","security-admin-console"};
 
     /**
      * 所有域
@@ -38,7 +42,10 @@ public class KeyCloakRealmApi {
      * @return
      */
     public List<ClientVO> clientList(String realm, String client_clientId) {
-        List<ClientRepresentation> list = keyCloakApi.getClientRepresentationList(realm, client_clientId);
-        return KeyCloakMapper.INSTANCE.userClient(list);
+        List<ClientRepresentation> representationList = keyCloakApi.getClientRepresentationList(realm, client_clientId)
+                .stream()
+                .filter(client -> !Arrays.asList(clientIds).contains(client.getClientId()))
+                .collect(Collectors.toList());
+        return KeyCloakMapper.INSTANCE.userClient(representationList);
     }
 }

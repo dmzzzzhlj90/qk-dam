@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 查询用户入参
  * @author zys
@@ -18,8 +20,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AtyGroupUserParamVO {
   /**
+   * 分组id
+   */
+  @NotBlank(message = "分组id必填！")
+  String groupId;
+  /**
    * 域
    */
+  @NotBlank(message = "域必填！")
   String realm;
   /**
    * 分页信息

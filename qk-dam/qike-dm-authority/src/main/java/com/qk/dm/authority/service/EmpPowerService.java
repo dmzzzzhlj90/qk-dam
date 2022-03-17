@@ -22,4 +22,6 @@ public interface EmpPowerService {
   PageResultVO<EmpowerVO> queryEmpower(EmpowerParamVO empowerParamVO);
 
   List<EmpowerAllVO> queryAllEmpower(String id);
+
+  void deleteEmpPower(String empid);
 }
