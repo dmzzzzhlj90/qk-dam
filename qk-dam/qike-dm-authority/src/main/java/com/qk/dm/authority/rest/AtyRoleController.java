@@ -60,11 +60,11 @@ public class AtyRoleController {
 
     /**
      * 删除角色
-     *
+     * 注释：因openApi不支持DeleteMapping带RequestBody
      * @param clientRoleVO
      * @return DefaultCommonResult
      */
-    @DeleteMapping("")
+    @PostMapping("/delete")
     public DefaultCommonResult deleteClientRole(@RequestBody @Valid AtyClientRoleVO clientRoleVO) {
         atyRoleService.deleteClientRole(clientRoleVO);
         return DefaultCommonResult.success();
@@ -114,7 +114,7 @@ public class AtyRoleController {
     }
 
 //    /**
-//     * 角色-已授权用户列表（不分页查询，暂时无用）
+//     * 已授权的用户列表（不分页查询，暂时无用）
 //     * @param clientRoleVO
 //     * @return
 //     */

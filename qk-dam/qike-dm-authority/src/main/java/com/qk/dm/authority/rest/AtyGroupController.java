@@ -58,12 +58,12 @@ public class AtyGroupController {
 
     /**
      * 删除用户组
-     *
+     * 注释：因openApi不支持DeleteMapping带RequestBody
      * @param groupDetailVO
      * @return DefaultCommonResult
      */
-    @DeleteMapping("")
-    public DefaultCommonResult deleteGroup(@Valid AtyGroupDetailVO groupDetailVO) {
+    @PostMapping("/delete")
+    public DefaultCommonResult deleteGroup(@RequestBody @Valid AtyGroupDetailVO groupDetailVO) {
         atyGroupService.deleteGroup(groupDetailVO.getRealm(), groupDetailVO.getGroupId());
         return DefaultCommonResult.success();
     }
@@ -114,14 +114,13 @@ public class AtyGroupController {
     }
 
 //    /**
-//     * 用户组下的所有用户（不分页查询，暂时无用）
-//     * @param realm
-//     * @param groupId
+//     * 已绑定的用户列表（不分页查询，暂时无用）
+//     * @param groupDetailVO
 //     * @return
 //     */
-//    @GetMapping("/{groupId}/users")
-//    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(realm, groupId));
+//    @GetMapping("/users")
+//    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid AtyGroupDetailVO groupDetailVO) {
+//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupDetailVO.getRealm(), groupDetailVO.getGroupId()));
 //    }
 
     /**

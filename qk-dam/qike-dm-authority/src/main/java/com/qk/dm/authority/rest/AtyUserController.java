@@ -77,10 +77,11 @@ public class AtyUserController {
 
     /**
      * 删除用户
+     * 注释：因openApi不支持DeleteMapping带RequestBody
      * @param userDetailVO
      * @return DefaultCommonResult
      */
-    @DeleteMapping("")
+    @PostMapping("/delete")
     public DefaultCommonResult deleteUser(@RequestBody @Valid AtyUserDetailVO userDetailVO) {
         atyUserService.deleteUser(userDetailVO.getRealm(), userDetailVO.getUserId());
         return DefaultCommonResult.success();
@@ -131,15 +132,14 @@ public class AtyUserController {
     }
 
 //    /**
-//     * 用户-已绑定用户组列表（不分页查询，暂时无用）
+//     * 已绑定的用户组列表（不分页查询，暂时无用）
 //     *
-//     * @param userId
-//     * @param realm
+//     * @param userDetailVO
 //     * @return DefaultCommonResult<List<AtyGroupInfoVO>>
 //     */
-//    @GetMapping("/users/{userId}/groups")
-//    public DefaultCommonResult<List<AtyGroupInfoVO>> getUserGroup(@Valid @NotBlank String realm, @PathVariable String userId) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(realm, userId));
+//    @GetMapping("/groups/list")
+//    public DefaultCommonResult<List<AtyGroupInfoVO>> getUserGroup(@Valid AtyUserDetailVO userDetailVO) {
+//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(userDetailVO.getRealm(), userDetailVO.getUserId()));
 //    }
 
     /**
@@ -156,11 +156,11 @@ public class AtyUserController {
 
     /**
      * 解绑单个用户组
-     *
+     * 注释：因openApi不支持DeleteMapping带RequestBody
      * @param atyUserGroupVO
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/groups")
+    @PostMapping("/groups/delete")
     public DefaultCommonResult deleteUserGroup(@RequestBody @Valid AtyUserGroupVO atyUserGroupVO) {
         atyUserGroupService.deleteUserGroup(atyUserGroupVO);
         return DefaultCommonResult.success();
@@ -202,11 +202,11 @@ public class AtyUserController {
 
     /**
      * 解绑单个角色
-     *
+     * 注释：因openApi不支持DeleteMapping带RequestBody
      * @param userClientRole
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/roles")
+    @PostMapping("/roles/delete")
     public DefaultCommonResult deleteUserClientRole(@RequestBody @Valid AtyUserClientRoleVO userClientRole) {
         atyUserRoleService.deleteUserClientRole(userClientRole);
         return DefaultCommonResult.success();
