@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -37,13 +39,19 @@ public class DasApiLimitInfoVO {
     /**
      * 时长
      */
-    @NotBlank(message = "时长不能为空！")
+    @NotNull(message = "时长不能为空！")
     private Integer limitTime;
+
+    /**
+     * 时长单位,秒,分钟,小时,天;
+     */
+    @NotBlank(message = "时长单位不能为空！")
+    private String limitTimeUnit;
 
     /**
      * API流量限制(次)
      */
-    @NotBlank(message = "API流量限制(次)不能为空！")
+    @NotNull(message = "API流量限制(次)不能为空！")
     private Integer apiLimitCount;
 
     /**

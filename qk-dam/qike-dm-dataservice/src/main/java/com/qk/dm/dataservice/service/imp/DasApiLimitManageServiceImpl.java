@@ -2,7 +2,10 @@ package com.qk.dm.dataservice.service.imp;
 
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.dataservice.spi.pojo.RouteData;
+import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataservice.biz.ApiSixProcessService;
 import com.qk.dm.dataservice.constant.TimeUnitTypeEnum;
 import com.qk.dm.dataservice.entity.DasApiLimitInfo;
 import com.qk.dm.dataservice.entity.QDasApiLimitInfo;
@@ -37,12 +40,15 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
 
     private static final QDasApiLimitInfo qDasApiLimitInfo = QDasApiLimitInfo.dasApiLimitInfo;
 
+    private final ApiSixProcessService apiSixProcessService;
     private final DasApiLimitInfoRepository dasApiLimitInfoRepository;
     private final JPAQueryFactory jpaQueryFactory;
 
     @Autowired
-    public DasApiLimitManageServiceImpl(DasApiLimitInfoRepository dasApiLimitInfoRepository,
+    public DasApiLimitManageServiceImpl(ApiSixProcessService apiSixProcessService,
+                                        DasApiLimitInfoRepository dasApiLimitInfoRepository,
                                         JPAQueryFactory jpaQueryFactory) {
+        this.apiSixProcessService = apiSixProcessService;
         this.dasApiLimitInfoRepository = dasApiLimitInfoRepository;
         this.jpaQueryFactory = jpaQueryFactory;
     }
@@ -98,10 +104,10 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
     @Transactional(rollbackFor = Exception.class)
     public void update(DasApiLimitInfoVO dasApiLimitInfoVO) {
         checkUpdateParams(dasApiLimitInfoVO);
-        Predicate predicate = qDasApiLimitInfo.limitName.eq(dasApiLimitInfoVO.getLimitName());
+        Predicate predicate = qDasApiLimitInfo.id.eq(dasApiLimitInfoVO.getId());
         Optional<DasApiLimitInfo> optionalDasApiLimitInfo = dasApiLimitInfoRepository.findOne(predicate);
         if (optionalDasApiLimitInfo.isEmpty()) {
-            throw new BizException("当前要编辑的流控策略名称为:" + dasApiLimitInfoVO.getLimitName() + " 的数据，不存在！！！");
+            throw new BizException("当前要编辑的流控策略ID为:" + dasApiLimitInfoVO.getId() + " 的数据，不存在！！！");
         }
 
         DasApiLimitInfo dasApiLimitInfo = transformToEntity(dasApiLimitInfoVO);
@@ -128,13 +134,29 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void bind(DasApiLimitBindInfoVO dasApiLimitBindInfoVO) {
+        //设置路由插件limit-count
+
+
 
     }
 
     @Override
     public List<DasApiGroupRouteVO> routes() {
-        return null;
+        List<DasApiGroupRouteVO> apiGroupRouteVOList = new LinkedList<>();
+        //获取路由信息
+        List<RouteData> routeInfoList = apiSixProcessService.getRouteIdList(apiSixProcessService.buildRouteContext());
+        routeInfoList.forEach(routeData -> {
+            DasApiGroupRouteVO dasApiGroupRouteVO =
+                    DasApiGroupRouteVO.builder()
+                            .routeId(routeData.getId())
+                            .routeName(routeData.getName())
+                            .routeUrl(routeData.getUri())
+                            .build();
+            apiGroupRouteVOList.add(dasApiGroupRouteVO);
+        });
+        return apiGroupRouteVOList;
     }
 
     @Override
@@ -196,7 +218,7 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
 
         // 策略名称
         if (!ObjectUtils.isEmpty(dasApiLimitManageParamsVO.getLimitName())) {
-            booleanBuilder.and(qDasApiLimitInfo.limitName.eq(dasApiLimitManageParamsVO.getLimitName()));
+            booleanBuilder.and(qDasApiLimitInfo.limitName.contains(dasApiLimitManageParamsVO.getLimitName()));
         }
         // 开始时间--结束时间
         if (!ObjectUtils.isEmpty(dasApiLimitManageParamsVO.getBeginDay())

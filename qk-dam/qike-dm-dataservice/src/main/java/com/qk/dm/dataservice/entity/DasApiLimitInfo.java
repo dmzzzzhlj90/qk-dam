@@ -37,6 +37,12 @@ public class DasApiLimitInfo implements Serializable {
     private Integer limitTime;
 
     /**
+     * 时长单位,秒,分钟,小时,天;
+     */
+    @Column(name = "limit_time_unit", nullable = false)
+    private String limitTimeUnit;
+
+    /**
      * API流量限制(次)
      */
     @Column(name = "api_limit_count", nullable = false)
