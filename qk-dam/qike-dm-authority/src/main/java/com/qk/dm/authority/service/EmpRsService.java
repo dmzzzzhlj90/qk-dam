@@ -18,7 +18,7 @@ public interface EmpRsService {
 
   void updateResource(ResourceVO resourceVO);
 
-  void deleteResource(Long id);
+  void deleteResource(String ids);
 
   List<ResourceOutVO> queryResource(ResourceParamVO resourceParamVO);
 

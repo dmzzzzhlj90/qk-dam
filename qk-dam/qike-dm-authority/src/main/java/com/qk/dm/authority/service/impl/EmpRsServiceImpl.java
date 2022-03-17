@@ -88,25 +88,32 @@ public class EmpRsServiceImpl implements EmpRsService {
 
   @Override
   @Transactional
-  public void deleteResource(Long id) {
-    QxResources qxResources = qkQxResourcesRepository.findById(id).orElse(null);
-    if (Objects.isNull(qxResources)) {
+  public void deleteResource(String ids) {
+    List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+    List<QxResources> qxResourcesList = (List<QxResources>) qkQxResourcesRepository.findAll(qQxResources.id.in(idList));
+    if (CollectionUtils.isEmpty(qxResourcesList)) {
       throw new BizException("当前需删除的数据不存在");
     }
-    if (qxResources.getType()==QxConstant.API_TYPE) {
-      deleteResourceEmpower(qxResources.getResourcesid());
-      qkQxResourcesRepository.deleteById(id);
-    } else {
-      List<QxResources> qxResourcesList = qkQxResourcesRepository.findByPid(qxResources.getId());
-      if (CollectionUtils.isNotEmpty(qxResourcesList)){
-        throw new BizException(
-            "存在子节点，请先删除"
-        );
-      }else{
+    dealRsEmpMessage(qxResourcesList);
+  }
+
+  private void dealRsEmpMessage(List<QxResources> qxResourcesList) {
+    qxResourcesList.stream().forEach(qxResources->{
+      if (qxResources.getType()==QxConstant.API_TYPE) {
         deleteResourceEmpower(qxResources.getResourcesid());
-        qkQxResourcesRepository.deleteById(id);
+        qkQxResourcesRepository.deleteById(qxResources.getId());
+      } else {
+        List<QxResources> qxResourcesLists = qkQxResourcesRepository.findByPid(qxResources.getId());
+        if (CollectionUtils.isNotEmpty(qxResourcesLists)){
+          throw new BizException(
+              "存在子节点，请先删除"
+          );
+        }else{
+          deleteResourceEmpower(qxResources.getResourcesid());
+          qkQxResourcesRepository.deleteById(qxResources.getId());
+        }
       }
-    }
+   });
   }
 
   /**

@@ -54,12 +54,12 @@ public class EmpResourcesController {
 
   /**
    * 删除资源
-   * @param id 资源（api）id
+   * @param ids 资源（api）id的字符串用“,”分隔
    * @return
    */
-  @DeleteMapping("/{id}")
-  public DefaultCommonResult deleteResource(@NotNull @PathVariable("id") Long id){
-    empRsService.deleteResource(id);
+  @DeleteMapping("/{ids}")
+  public DefaultCommonResult deleteResource(@NotNull @PathVariable("ids") String ids){
+    empRsService.deleteResource(ids);
     return DefaultCommonResult.success();
   }
 
