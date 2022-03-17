@@ -33,7 +33,7 @@ public class AtyRoleBatchByUsersVO {
      * 角色
      */
     @NotBlank(message = "角色名称必填！")
-    String roleName;
+    String name;
     /**
      * 客户端表id
      */

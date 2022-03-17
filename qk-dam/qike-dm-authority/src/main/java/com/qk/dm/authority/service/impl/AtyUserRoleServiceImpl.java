@@ -30,21 +30,21 @@ public class AtyUserRoleServiceImpl implements AtyUserRoleService {
 
     @Override
     public void addBatchByUsers(AtyUserClientRoleVO userClientRole) {
-        keyCloakUserApi.addUserClientRole(userClientRole.getRealm(), userClientRole.getClient_id(), userClientRole.getUserId(), userClientRole.getRoleName());
+        keyCloakUserApi.addUserClientRole(userClientRole.getRealm(), userClientRole.getClient_id(), userClientRole.getUserId(), userClientRole.getName());
     }
 
     @Override
     public void deleteUserClientRole(AtyUserClientRoleVO userClientRole) {
-        keyCloakUserApi.deleteUserClientRole(userClientRole.getRealm(), userClientRole.getClient_id(), userClientRole.getUserId(), userClientRole.getRoleName());
+        keyCloakUserApi.deleteUserClientRole(userClientRole.getRealm(), userClientRole.getClient_id(), userClientRole.getUserId(), userClientRole.getName());
     }
 
     @Override
     public void addBatchByUsers(AtyRoleBatchByUsersVO atyGroupBatchVO) {
-        atyGroupBatchVO.getUserIds().forEach(userId -> keyCloakUserApi.addUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userId, atyGroupBatchVO.getRoleName()));
+        atyGroupBatchVO.getUserIds().forEach(userId -> keyCloakUserApi.addUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userId, atyGroupBatchVO.getName()));
     }
 
     @Override
     public void addBatchByRoles(AtyRoleBatchByRolesVO batchByRolesVO) {
-        batchByRolesVO.getRoleNames().forEach(roleName -> keyCloakUserApi.addUserClientRole(batchByRolesVO.getRealm(), batchByRolesVO.getClient_id(), batchByRolesVO.getUserId(), roleName));
+        batchByRolesVO.getNames().forEach(roleName -> keyCloakUserApi.addUserClientRole(batchByRolesVO.getRealm(), batchByRolesVO.getClient_id(), batchByRolesVO.getUserId(), roleName));
     }
 }

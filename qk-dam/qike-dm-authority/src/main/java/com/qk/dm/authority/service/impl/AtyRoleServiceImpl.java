@@ -30,25 +30,25 @@ public class AtyRoleServiceImpl implements AtyRoleService {
 
     @Override
     public void addClientRole(AtyClientRoleVO clientRoleVO) {
-        keyCloakRoleApi.addClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
+        keyCloakRoleApi.addClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName(), clientRoleVO.getDescription());
     }
 
     @Override
     public void updateClientRole(AtyClientRoleVO clientRoleVO) {
-        keyCloakRoleApi.updateClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(), clientRoleVO.getDescription());
+        keyCloakRoleApi.updateClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName(), clientRoleVO.getDescription());
     }
 
     @Override
     public void deleteClientRole(AtyClientRoleVO clientRoleVO) {
-        AtyClientRoleInfoVO clientRoleDetail = keyCloakRoleApi.clientRoleDetail(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
-        keyCloakRoleApi.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
+        AtyClientRoleInfoVO clientRoleDetail = keyCloakRoleApi.clientRoleDetail(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
+        keyCloakRoleApi.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
         //删除权限
         empPowerService.deleteEmpPower(clientRoleDetail.getId());
     }
 
     @Override
     public AtyClientRoleInfoVO getClientRole(AtyClientRoleVO clientRoleVO) {
-        return keyCloakRoleApi.clientRoleDetail(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
+        return keyCloakRoleApi.clientRoleDetail(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
     }
 
     @Override
@@ -63,11 +63,11 @@ public class AtyRoleServiceImpl implements AtyRoleService {
 
     @Override
     public PageResultVO<AtyUserInfoVO> getRoleUsersPage(AtyClientRoleUserParamVO clientRoleVO) {
-        return keyCloakRoleApi.clientRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName(),clientRoleVO.getPagination());
+        return keyCloakRoleApi.clientRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName(),clientRoleVO.getPagination());
     }
 
     @Override
     public List<AtyUserInfoVO> getRoleUsers(AtyClientRoleUserParamVO clientRoleVO) {
-        return keyCloakRoleApi.clientRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getRoleName());
+        return keyCloakRoleApi.clientRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
     }
 }

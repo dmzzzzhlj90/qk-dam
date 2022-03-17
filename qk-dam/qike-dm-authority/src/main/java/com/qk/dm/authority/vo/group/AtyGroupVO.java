@@ -27,5 +27,5 @@ public class AtyGroupVO {
      * 分组名称
      */
     @NotBlank(message = "分组名称必填！")
-    String groupName;
+    String name;
 }

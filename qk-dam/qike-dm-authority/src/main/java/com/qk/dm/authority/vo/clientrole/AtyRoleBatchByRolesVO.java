@@ -32,8 +32,8 @@ public class AtyRoleBatchByRolesVO {
     /**
      * 角色
      */
-    @NotEmpty(message = "角色列表必填！")
-    List<String> roleNames;
+    @NotEmpty(message = "角色名称列表必填！")
+    List<String> names;
     /**
      * 客户端表id
      */

@@ -26,7 +26,7 @@ public class AtyUserClientRoleVO {
      * 角色名称
      */
     @NotBlank(message = "角色名称必填！")
-    String roleName;
+    String name;
     /**
      * 用户id
      */

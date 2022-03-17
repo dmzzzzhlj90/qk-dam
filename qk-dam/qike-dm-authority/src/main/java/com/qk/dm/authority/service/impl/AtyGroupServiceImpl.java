@@ -31,12 +31,12 @@ public class AtyGroupServiceImpl implements AtyGroupService {
 
     @Override
     public void addGroup(AtyGroupVO groupVO) {
-        keyCloakGroupApi.addGroup(groupVO.getRealm(), groupVO.getGroupName());
+        keyCloakGroupApi.addGroup(groupVO.getRealm(), groupVO.getName());
     }
 
     @Override
     public void updateGroup(String groupId, AtyGroupVO groupVO) {
-        keyCloakGroupApi.updateGroup(groupVO.getRealm(), groupId, groupVO.getGroupName());
+        keyCloakGroupApi.updateGroup(groupVO.getRealm(), groupId, groupVO.getName());
     }
 
     @Override
