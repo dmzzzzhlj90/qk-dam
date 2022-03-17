@@ -3,6 +3,7 @@ package com.qk.dm.authority.service.impl;
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.MapUtils;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.constant.QxConstant;
 import com.qk.dm.authority.entity.QQkQxResourcesEmpower;
 import com.qk.dm.authority.entity.QQxResources;
@@ -13,11 +14,13 @@ import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesRepository;
 import com.qk.dm.authority.service.EmpRsService;
+import com.qk.dm.authority.vo.params.ApiPageResourcesParamVO;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.PowerResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
 import com.qk.dm.authority.vo.powervo.ResourceOutVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
@@ -85,25 +88,32 @@ public class EmpRsServiceImpl implements EmpRsService {
 
   @Override
   @Transactional
-  public void deleteResource(Long id) {
-    QxResources qxResources = qkQxResourcesRepository.findById(id).orElse(null);
-    if (Objects.isNull(qxResources)) {
+  public void deleteResource(String ids) {
+    List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+    List<QxResources> qxResourcesList = (List<QxResources>) qkQxResourcesRepository.findAll(qQxResources.id.in(idList));
+    if (CollectionUtils.isEmpty(qxResourcesList)) {
       throw new BizException("当前需删除的数据不存在");
     }
-    if (qxResources.getType()==QxConstant.API_TYPE) {
-      deleteResourceEmpower(qxResources.getResourcesid());
-      qkQxResourcesRepository.deleteById(id);
-    } else {
-      List<QxResources> qxResourcesList = qkQxResourcesRepository.findByPid(qxResources.getId());
-      if (CollectionUtils.isNotEmpty(qxResourcesList)){
-        throw new BizException(
-            "存在子节点，请先删除"
-        );
-      }else{
+    dealRsEmpMessage(qxResourcesList);
+  }
+
+  private void dealRsEmpMessage(List<QxResources> qxResourcesList) {
+    qxResourcesList.stream().forEach(qxResources->{
+      if (qxResources.getType()==QxConstant.API_TYPE) {
         deleteResourceEmpower(qxResources.getResourcesid());
-        qkQxResourcesRepository.deleteById(id);
+        qkQxResourcesRepository.deleteById(qxResources.getId());
+      } else {
+        List<QxResources> qxResourcesLists = qkQxResourcesRepository.findByPid(qxResources.getId());
+        if (CollectionUtils.isNotEmpty(qxResourcesLists)){
+          throw new BizException(
+              "存在子节点，请先删除"
+          );
+        }else{
+          deleteResourceEmpower(qxResources.getResourcesid());
+          qkQxResourcesRepository.deleteById(qxResources.getId());
+        }
       }
-    }
+   });
   }
 
   /**
@@ -167,7 +177,7 @@ public class EmpRsServiceImpl implements EmpRsService {
     List<ResourceVO> resourceVOList = new ArrayList<>();
     List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(apiResourcesParamVO.getServiceId());
     //筛选资源数据
-    List<QxResources> list = qxResourcesList.stream().filter(qxResources -> qxResources.getPid() == QxConstant.PID
+    List<QxResources> list = qxResourcesList.stream().filter(qxResources -> qxResources.getType().equals(QxConstant.API_TYPE)
     ).collect(Collectors.toList());
     if (CollectionUtils.isNotEmpty(list)){
       resourceVOList = QxResourcesMapper.INSTANCE.qxResourcesOf(list);
@@ -197,6 +207,56 @@ public class EmpRsServiceImpl implements EmpRsService {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public PageResultVO<ResourceVO> queryPageEmpower(
+      ApiPageResourcesParamVO apiPageResourcesParamVO) {
+    Map<String, Object> map;
+    List<ResourceVO> resourceVOList = new ArrayList<>();
+    try {
+      map = queryByParams(apiPageResourcesParamVO);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new BizException("查询失败!!!");
+    }
+    if (MapUtils.isNotEmpty(map)){
+      List<QxResources> list = (List<QxResources>) map.get("list");
+      if (CollectionUtils.isNotEmpty(list)){
+        resourceVOList = QxResourcesMapper.INSTANCE.qxResourcesOf(list);
+      }
+    }
+    return new PageResultVO<>(
+        (long) map.get("total"),
+        apiPageResourcesParamVO.getPagination().getPage(),
+        apiPageResourcesParamVO.getPagination().getSize(),
+        resourceVOList);
+  }
+
+  private Map<String,Object> queryByParams(ApiPageResourcesParamVO apiPageResourcesParamVO) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    checkResource(booleanBuilder, apiPageResourcesParamVO);
+    Map<String, Object> result = new HashMap<>();
+    long count =jpaQueryFactory.select(qQxResources.count()).from(qQxResources).where(booleanBuilder).fetchOne();
+    List<QxResources> resourcesList = jpaQueryFactory.select(qQxResources)
+        .from(qQxResources).where(booleanBuilder)
+        .orderBy(qQxResources.gmtCreate.desc()).offset(
+            (long) (apiPageResourcesParamVO.getPagination().getPage() - 1)
+                * apiPageResourcesParamVO.getPagination().getSize())
+        .limit(apiPageResourcesParamVO.getPagination().getSize()).fetch();
+    result.put("list", resourcesList);
+    result.put("total", count);
+    return result;
+  }
+
+  private void checkResource(BooleanBuilder booleanBuilder, ApiPageResourcesParamVO apiPageResourcesParamVO) {
+    if (!Objects.isNull(apiPageResourcesParamVO.getName())) {
+      booleanBuilder.and(qQxResources.name.eq(apiPageResourcesParamVO.getName()));
+    }
+    if(!Objects.isNull(apiPageResourcesParamVO.getServiceId())){
+      booleanBuilder.and(qQxResources.serviceId.eq(apiPageResourcesParamVO.getServiceId()));
+    }
+    booleanBuilder.and(qQxResources.type.eq(QxConstant.API_TYPE));
   }
 
   private List<ResourceOutVO> buildByResource(

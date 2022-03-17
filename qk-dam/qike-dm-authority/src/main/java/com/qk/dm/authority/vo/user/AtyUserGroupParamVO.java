@@ -20,6 +20,11 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class AtyUserGroupParamVO {
   /**
+   * 用户id
+   */
+  @NotBlank(message = "用户id必填！")
+  String userId;
+  /**
    * 域
    */
   @NotBlank(message = "域必填！")
