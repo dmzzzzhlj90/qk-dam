@@ -2,7 +2,9 @@ package com.qk.dm.authority.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.EmpRsService;
+import com.qk.dm.authority.vo.params.ApiPageResourcesParamVO;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
 import com.qk.dm.authority.vo.powervo.ResourceOutVO;
@@ -52,17 +54,17 @@ public class EmpResourcesController {
 
   /**
    * 删除资源
-   * @param id 资源（api）id
+   * @param ids 资源（api）id的字符串用“,”分隔
    * @return
    */
-  @DeleteMapping("/{id}")
-  public DefaultCommonResult deleteResource(@NotNull @PathVariable("id") Long id){
-    empRsService.deleteResource(id);
+  @DeleteMapping("/{ids}")
+  public DefaultCommonResult deleteResource(@NotNull @PathVariable("ids") String ids){
+    empRsService.deleteResource(ids);
     return DefaultCommonResult.success();
   }
 
   /**
-   * 根据服务id查询资源
+   * 根据服务UUID查询资源
    * @param resourceParamVO 查询资源条件
    * @return DefaultCommonResult<List<ResourceOutVO>> 资源信息
    */
@@ -72,7 +74,7 @@ public class EmpResourcesController {
   }
 
   /**
-   * 根据服务id查询API
+   * 根据服务UUID查询API（不分页-新增授权使用）
    * @param apiResourcesParamVO 查询api条件
    * @return DefaultCommonResult<List<ResourceVO>> api信息
    */
@@ -80,6 +82,18 @@ public class EmpResourcesController {
   public DefaultCommonResult<List<ResourceVO>> queryResourceApi(@RequestBody ApiResourcesParamVO apiResourcesParamVO){
     return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.queryResourceApi(apiResourcesParamVO));
   }
+
+
+  /**
+   * 根据服务UUID、api名称查询api信息--分页查询
+   * @param apiPageResourcesParamVO 分页查询api信息条件
+   * @return DefaultCommonResult<PageResultVO<ResourceVO>> 分页api信息
+   */
+  @PostMapping("/api/page")
+  public DefaultCommonResult<PageResultVO<ResourceVO>> queryPageEmpower(@RequestBody ApiPageResourcesParamVO apiPageResourcesParamVO){
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.queryPageEmpower(apiPageResourcesParamVO));
+  }
+
 
   /**
    * 查询删除的资源是否已经授权
