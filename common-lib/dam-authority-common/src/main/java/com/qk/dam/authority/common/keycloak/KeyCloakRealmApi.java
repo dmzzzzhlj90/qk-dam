@@ -42,8 +42,10 @@ public class KeyCloakRealmApi {
      * @return
      */
     public List<ClientVO> clientList(String realm, String client_clientId) {
-        List<ClientRepresentation> list = keyCloakApi.getClientRepresentationList(realm, client_clientId);
-        List<ClientRepresentation> representationList = list.stream().filter(client -> !Arrays.asList(clientIds).contains(client.getClientId())).collect(Collectors.toList());
+        List<ClientRepresentation> representationList = keyCloakApi.getClientRepresentationList(realm, client_clientId)
+                .stream()
+                .filter(client -> !Arrays.asList(clientIds).contains(client.getClientId()))
+                .collect(Collectors.toList());
         return KeyCloakMapper.INSTANCE.userClient(representationList);
     }
 }
