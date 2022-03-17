@@ -6,9 +6,8 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyGroupService;
-import com.qk.dm.authority.vo.group.AtyGroupParamVO;
-import com.qk.dm.authority.vo.group.AtyGroupUserParamVO;
-import com.qk.dm.authority.vo.group.AtyGroupVO;
+import com.qk.dm.authority.service.AtyUserGroupService;
+import com.qk.dm.authority.vo.group.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,9 +25,11 @@ import java.util.List;
 @RequestMapping("/groups")
 public class AtyGroupController {
     private final AtyGroupService atyGroupService;
+    private final AtyUserGroupService atyUserGroupService;
 
-    public AtyGroupController(AtyGroupService atyUserGroupService) {
+    public AtyGroupController(AtyGroupService atyUserGroupService, AtyUserGroupService atyUserGroupService1) {
         this.atyGroupService = atyUserGroupService;
+        this.atyUserGroupService = atyUserGroupService1;
     }
 
     /**
@@ -46,39 +47,36 @@ public class AtyGroupController {
     /**
      * 修改用户组
      *
-     * @param groupId
      * @param groupVO
      * @return DefaultCommonResult
      */
-    @PutMapping("/{groupId}")
-    public DefaultCommonResult updateGroup(@PathVariable("groupId") String groupId, @RequestBody @Valid AtyGroupVO groupVO) {
-        atyGroupService.updateGroup(groupId, groupVO);
+    @PutMapping("")
+    public DefaultCommonResult updateGroup(@RequestBody @Valid AtyGroupVO groupVO) {
+        atyGroupService.updateGroup(groupVO.getGroupId(), groupVO);
         return DefaultCommonResult.success();
     }
 
     /**
      * 删除用户组
      *
-     * @param groupId
-     * @param realm
+     * @param groupDetailVO
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/{groupId}")
-    public DefaultCommonResult deleteGroup(@Valid @NotBlank String realm, @PathVariable("groupId") String groupId) {
-        atyGroupService.deleteGroup(realm, groupId);
+    @DeleteMapping("")
+    public DefaultCommonResult deleteGroup(@Valid AtyGroupDetailVO groupDetailVO) {
+        atyGroupService.deleteGroup(groupDetailVO.getRealm(), groupDetailVO.getGroupId());
         return DefaultCommonResult.success();
     }
 
     /**
      * 用户组详情
      *
-     * @param realm
-     * @param groupId
+     * @param groupDetailVO
      * @return DefaultCommonResult<AtyGroupInfoVO>
      */
-    @GetMapping("/{groupId}")
-    public DefaultCommonResult<AtyGroupInfoVO> getUser(@Valid @NotBlank String realm, @PathVariable("groupId") String groupId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(realm, groupId));
+    @GetMapping("")
+    public DefaultCommonResult<AtyGroupInfoVO> getUser(@Valid AtyGroupDetailVO groupDetailVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroup(groupDetailVO.getRealm(), groupDetailVO.getGroupId()));
     }
 
     /**
@@ -105,14 +103,14 @@ public class AtyGroupController {
     }
 
     /**
-     * 用户组-已绑定的用户列表
+     * 已绑定的用户列表
+     *
      * @param groupUserParamVO
-     * @param groupId
      * @return <PageResultVO<AtyGroupInfoVO>>
      */
-    @PostMapping("/{groupId}/users")
-    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getGroupUsers(@RequestBody @Valid AtyGroupUserParamVO groupUserParamVO, @PathVariable("groupId") String groupId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupUserParamVO, groupId));
+    @PostMapping("/users")
+    public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getGroupUsers(@RequestBody @Valid AtyGroupUserParamVO groupUserParamVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupUserParamVO, groupUserParamVO.getGroupId()));
     }
 
 //    /**
@@ -125,4 +123,16 @@ public class AtyGroupController {
 //    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid @NotBlank String realm, @PathVariable String groupId) {
 //        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(realm, groupId));
 //    }
+
+    /**
+     * 用户组-已授权用户-批量绑定-用户
+     *
+     * @param atyGroupBatchByUsersVO
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/users/batch")
+    public DefaultCommonResult addBatchByUsers(@RequestBody @Valid AtyGroupBatchByUsersVO atyGroupBatchByUsersVO) {
+        atyUserGroupService.addBatchByUsers(atyGroupBatchByUsersVO);
+        return DefaultCommonResult.success();
+    }
 }
