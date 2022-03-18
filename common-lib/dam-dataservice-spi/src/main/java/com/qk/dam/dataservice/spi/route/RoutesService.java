@@ -13,7 +13,13 @@ public interface RoutesService {
 
   List<RouteData> getRouteInfo();
 
+  RouteInfo getRouteInfoById();
+
   void clearRoute();
 
   void deleteRouteByRouteId();
+
+
+  void updateRoutePlugins();
+
 }

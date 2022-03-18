@@ -42,12 +42,12 @@ public enum TimeUnitTypeEnum {
         this.value = value;
     }
 
-    public static TimeUnitTypeEnum getVal(String value) {
-        if (StringUtils.isEmpty(value)) {
+    public static TimeUnitTypeEnum getVal(String code) {
+        if (StringUtils.isEmpty(code)) {
             return null;
         }
         for (TimeUnitTypeEnum enums : TimeUnitTypeEnum.values()) {
-            if (value.equals(enums.value)) {
+            if (code.equals(enums.code)) {
                 return enums;
             }
         }

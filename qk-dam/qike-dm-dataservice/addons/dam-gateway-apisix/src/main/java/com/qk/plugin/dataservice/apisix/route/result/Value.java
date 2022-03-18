@@ -6,13 +6,28 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Map;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Value {
-  private String name;
-  private String id;
-  private String uri;
+
+    private String name;
+
+    private String id;
+
+    private String uri;
+
+    private List<String> methods;
+
+    private Map<String, Object> plugins;
+
+    private String upstream_id;
+
+    private int status;
+
 }

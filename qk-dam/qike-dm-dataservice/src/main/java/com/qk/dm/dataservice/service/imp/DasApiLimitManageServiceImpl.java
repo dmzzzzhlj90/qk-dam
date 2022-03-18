@@ -3,29 +3,34 @@ package com.qk.dm.dataservice.service.imp;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.dataservice.spi.pojo.RouteData;
-import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.biz.ApiSixProcessService;
 import com.qk.dm.dataservice.constant.TimeUnitTypeEnum;
+import com.qk.dm.dataservice.entity.DasApiLimitBindInfo;
 import com.qk.dm.dataservice.entity.DasApiLimitInfo;
+import com.qk.dm.dataservice.entity.QDasApiLimitBindInfo;
 import com.qk.dm.dataservice.entity.QDasApiLimitInfo;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiLimitInfoMapper;
+import com.qk.dm.dataservice.repositories.DasApiLimitBindInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiLimitInfoRepository;
 import com.qk.dm.dataservice.service.DasApiLimitManageService;
-import com.qk.dm.dataservice.vo.DasApiGroupRouteVO;
-import com.qk.dm.dataservice.vo.DasApiLimitBindInfoVO;
-import com.qk.dm.dataservice.vo.DasApiLimitInfoVO;
-import com.qk.dm.dataservice.vo.DasApiLimitManageParamsVO;
+import com.qk.dm.dataservice.vo.*;
+import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
+import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
+import com.qk.plugin.dataservice.apisix.route.entity.PluginLimitCount;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.*;
 
 /**
@@ -39,17 +44,25 @@ import java.util.*;
 public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
 
     private static final QDasApiLimitInfo qDasApiLimitInfo = QDasApiLimitInfo.dasApiLimitInfo;
+    private static final QDasApiLimitBindInfo qDasApiLimitBindInfo = QDasApiLimitBindInfo.dasApiLimitBindInfo;
 
     private final ApiSixProcessService apiSixProcessService;
     private final DasApiLimitInfoRepository dasApiLimitInfoRepository;
+    private final DasApiLimitBindInfoRepository dasApiLimitBindInfoRepository;
     private final JPAQueryFactory jpaQueryFactory;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     public DasApiLimitManageServiceImpl(ApiSixProcessService apiSixProcessService,
                                         DasApiLimitInfoRepository dasApiLimitInfoRepository,
+                                        DasApiLimitBindInfoRepository dasApiLimitBindInfoRepository,
                                         JPAQueryFactory jpaQueryFactory) {
+
         this.apiSixProcessService = apiSixProcessService;
         this.dasApiLimitInfoRepository = dasApiLimitInfoRepository;
+        this.dasApiLimitBindInfoRepository = dasApiLimitBindInfoRepository;
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
@@ -130,16 +143,34 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
         Set<Long> idSet = new HashSet<>();
         idList.forEach(id -> idSet.add(Long.valueOf(id)));
         List<DasApiLimitInfo> apiLimitInfoList = dasApiLimitInfoRepository.findAllById(idSet);
+        // 批量删除流控信息
         dasApiLimitInfoRepository.deleteAllInBatch(apiLimitInfoList);
+
+        // 批量删除绑定信息
+        Iterable<DasApiLimitBindInfo> apiLimitBindInfos = dasApiLimitBindInfoRepository.findAll(qDasApiLimitBindInfo.limitId.in(idSet));
+        dasApiLimitBindInfoRepository.deleteAllInBatch(apiLimitBindInfos);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void bind(DasApiLimitBindInfoVO dasApiLimitBindInfoVO) {
-        //设置路由插件limit-count
-
-
-
+    public void bind(DasApiLimitBindParamsVO apiLimitBindParamsVO) {
+        List<DasApiLimitBindInfo> dasApiLimitBindInfos = Lists.newArrayList();
+        //参数信息
+        Long limitId = apiLimitBindParamsVO.getLimitId();
+        List<String> routeIds = apiLimitBindParamsVO.getRouteIds();
+        // 查询流控策略信息
+        Optional<DasApiLimitInfo> optionalDasApiLimitInfo = dasApiLimitInfoRepository.findById(limitId);
+        if (optionalDasApiLimitInfo.isPresent()) {
+            DasApiLimitInfo dasApiLimitInfo = optionalDasApiLimitInfo.get();
+            // 清除绑定路由
+            clearApiLimitBindRoutes(limitId, routeIds);
+            for (String routeId : routeIds) {
+                // 更新路由插件信息
+                updateRoutePlugins(dasApiLimitBindInfos, dasApiLimitInfo, routeId);
+            }
+            // 批量更新绑定信息
+            bulkUpdateApiLimitBindInfo(dasApiLimitBindInfos);
+        }
     }
 
     @Override
@@ -164,6 +195,16 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
         return TimeUnitTypeEnum.getAllValue();
     }
 
+    @Override
+    public List<DasApiLimitBindInfoVO> searchBindInfo(Long limitId) {
+        List<DasApiLimitBindInfoVO> limitBindInfoVOS = Lists.newArrayList();
+        Iterable<DasApiLimitBindInfo> limitBindInfos = dasApiLimitBindInfoRepository.findAll(qDasApiLimitBindInfo.limitId.eq(limitId));
+        limitBindInfos.forEach(bindInfo -> {
+            limitBindInfoVOS.add(DasApiLimitInfoMapper.INSTANCE.useDasApiLimitBindInfoVO(bindInfo));
+        });
+        return limitBindInfoVOS;
+    }
+
     private DasApiLimitInfoVO transformToVO(DasApiLimitInfo dasApiLimitInfo) {
         return DasApiLimitInfoMapper.INSTANCE.useDasApiLimitInfoVO(dasApiLimitInfo);
     }
@@ -172,6 +213,117 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
         return DasApiLimitInfoMapper.INSTANCE.useDasApiLimitInfo(dasApiLimitInfoVO);
     }
 
+    /**
+     * 更新路由插件信息
+     *
+     * @param dasApiLimitBindInfos
+     * @param dasApiLimitInfo
+     * @param routeId
+     */
+    private void updateRoutePlugins(List<DasApiLimitBindInfo> dasApiLimitBindInfos, DasApiLimitInfo dasApiLimitInfo, String routeId) {
+        // 根据路由ID查询路由信息
+        ApiSixRouteInfo routeInfo = (ApiSixRouteInfo) apiSixProcessService.getRouteInfoById(routeId);
+        // 路由插件信息(old)
+        Map<String, Object> plugins = routeInfo.getPlugins();
+        if (plugins == null) {
+            plugins = Maps.newHashMap();
+        }
+        // 设置 路由插件limit-count信息
+        PluginLimitCount pluginLimitCount = PluginLimitCount.builder()
+                .count(dasApiLimitInfo.getApiLimitCount())
+                .key_type(ApiSixConstant.PLUGINS_LIMIT_COUNT_KEY_TYPE)
+                .key(ApiSixConstant.PLUGINS_LIMIT_COUNT_REMOTE_ADDR)
+                .policy(ApiSixConstant.PLUGINS_LIMIT_COUNT_LOCAL)
+                .time_window(calTimeWindow(dasApiLimitInfo))
+                .rejected_code(ApiSixConstant.PLUGINS_LIMIT_COUNT_REJECTED_CODE)
+                .build();
+
+        plugins.put(ApiSixConstant.PLUGINS_LIMIT_COUNT_KEY, pluginLimitCount);
+        routeInfo.setPlugins(plugins);
+        // 添加 路由插件limit-count
+        apiSixProcessService.updateRoutePlugins(routeInfo);
+        // 设置绑定对象信息
+        dasApiLimitBindInfos.add(setApiLimitBindInfo(dasApiLimitInfo, routeInfo));
+    }
+
+    /**
+     * 批量更新绑定信息
+     *
+     * @param dasApiLimitBindInfos
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void bulkUpdateApiLimitBindInfo(List<DasApiLimitBindInfo> dasApiLimitBindInfos) {
+        for (DasApiLimitBindInfo dasApiLimitBindInfo : dasApiLimitBindInfos) {
+            entityManager.persist(dasApiLimitBindInfo);
+        }
+        entityManager.flush();
+        entityManager.clear();
+    }
+
+    /**
+     * 清除绑定路由
+     *
+     * @param limitId
+     * @param routeIds
+     */
+    private void clearApiLimitBindRoutes(Long limitId, List<String> routeIds) {
+        Predicate predicate = qDasApiLimitBindInfo.limitId.eq(limitId)
+                .and(qDasApiLimitBindInfo.routeId.in(routeIds));
+        Iterable<DasApiLimitBindInfo> oldLimitBindInfos = dasApiLimitBindInfoRepository.findAll(predicate);
+        dasApiLimitBindInfoRepository.deleteAllInBatch(oldLimitBindInfos);
+    }
+
+    /**
+     * 设置绑定对象信息
+     *
+     * @param dasApiLimitInfo
+     * @param routeInfo
+     * @return
+     */
+    private DasApiLimitBindInfo setApiLimitBindInfo(DasApiLimitInfo dasApiLimitInfo, ApiSixRouteInfo routeInfo) {
+        DasApiLimitBindInfo dasApiLimitBindInfo = new DasApiLimitBindInfo();
+        dasApiLimitBindInfo.setLimitId(dasApiLimitInfo.getId());
+        dasApiLimitBindInfo.setRouteId(routeInfo.getId());
+        dasApiLimitBindInfo.setApiGroupRouteName(routeInfo.getName());
+        dasApiLimitBindInfo.setApiGroupRoutePath(routeInfo.getUri());
+
+        dasApiLimitBindInfo.setGmtCreate(new Date());
+        dasApiLimitBindInfo.setGmtModified(new Date());
+        dasApiLimitBindInfo.setCreateUserid("admin");
+        dasApiLimitBindInfo.setDelFlag(0);
+        return dasApiLimitBindInfo;
+    }
+
+    /**
+     * 根据时间单位计算限制具体时长
+     *
+     * @param dasApiLimitInfo
+     * @return
+     */
+    private int calTimeWindow(DasApiLimitInfo dasApiLimitInfo) {
+        int timeWindow = 0;
+
+        Integer limitTime = dasApiLimitInfo.getLimitTime();
+        String limitTimeUnit = dasApiLimitInfo.getLimitTimeUnit();
+        TimeUnitTypeEnum timeUnitTypeEnum = TimeUnitTypeEnum.getVal(limitTimeUnit);
+        switch (Objects.requireNonNull(timeUnitTypeEnum)) {
+            case MS:
+                timeWindow = limitTime;
+                break;
+            case MIN:
+                timeWindow = limitTime * 60;
+                break;
+            case H:
+                timeWindow = limitTime * 60 * 60;
+                break;
+            case D:
+                timeWindow = limitTime * 60 * 60 * 24;
+                break;
+            default:
+                break;
+        }
+        return timeWindow;
+    }
 
     /**
      * 多条件查询流控策略信息列表
