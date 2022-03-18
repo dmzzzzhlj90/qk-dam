@@ -1,10 +1,7 @@
 package com.qk.dm.dataservice.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataservice.vo.DasApiGroupRouteVO;
-import com.qk.dm.dataservice.vo.DasApiLimitBindInfoVO;
-import com.qk.dm.dataservice.vo.DasApiLimitInfoVO;
-import com.qk.dm.dataservice.vo.DasApiLimitManageParamsVO;
+import com.qk.dm.dataservice.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,10 +25,12 @@ public interface DasApiLimitManageService {
 
     void deleteBulk(String ids);
 
-    void bind(DasApiLimitBindInfoVO dasApiLimitBindInfoVO);
+    void bind(DasApiLimitBindParamsVO apiLimitBindParamsVO);
 
     List<DasApiGroupRouteVO> routes();
 
     Map<String, String> timeUnit();
+
+    List<DasApiLimitBindInfoVO> searchBindInfo(Long limitId);
 
 }

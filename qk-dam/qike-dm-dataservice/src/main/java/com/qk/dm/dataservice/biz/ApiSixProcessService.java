@@ -5,6 +5,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.dataservice.spi.consunmer.ConsumerContext;
 import com.qk.dam.dataservice.spi.pojo.RouteData;
 import com.qk.dam.dataservice.spi.route.RouteContext;
+import com.qk.dam.dataservice.spi.route.RouteInfo;
 import com.qk.dam.dataservice.spi.server.ServerContext;
 import com.qk.dam.dataservice.spi.upstream.UpstreamContext;
 import com.qk.dm.dataservice.config.ApiSixConnectInfo;
@@ -299,6 +300,30 @@ public class ApiSixProcessService {
      */
     public void clearRouteInfo() {
         apiGatewayManager.clearRouteService(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, buildRouteContext());
+    }
+
+    /**
+     * 根据路由ID查询路由信息
+     *
+     * @param routeId
+     * @return
+     */
+    public RouteInfo getRouteInfoById(String routeId) {
+        RouteContext routeContext = buildRouteContext();
+        Map<String, String> systemParam = routeContext.getParams();
+        systemParam.put(ApiSixConstant.API_SIX_ROUTE_ID, routeId);
+        routeContext.setParams(systemParam);
+        return apiGatewayManager.getRouteInfoById(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeContext);
+    }
+
+    /**
+     * 更新路由查询信息
+     *
+     * @param routeInfo
+     */
+    public void updateRoutePlugins(RouteInfo routeInfo) {
+        RouteContext routeContext = buildRouteContext();
+        apiGatewayManager.updateRoutePlugins(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeInfo, routeContext);
     }
 
     //

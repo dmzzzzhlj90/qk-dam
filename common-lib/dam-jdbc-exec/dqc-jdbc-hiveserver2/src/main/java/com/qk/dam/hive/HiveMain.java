@@ -62,6 +62,8 @@ public class HiveMain {
             resultTable.setWarn_result(warnRst);
             log.info("插入结果数据入库【{}】",new Gson().toJson(resultTable));
             toDb.insert(Entity.create(RST_TABLE).parseBean(resultTable));
+            //@dmz todo 需开发刷新结果到promethues的即可
+            generateWarnRst(rawScript.getWarn_rpc_url());
         } catch (Exception e) {
             e.printStackTrace();
             log.error("执行添加结果数据失败:【{}】",e.getLocalizedMessage());

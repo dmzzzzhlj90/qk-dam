@@ -489,7 +489,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             if (!ObjectUtils.isEmpty(warnExpression)) {
                 return getExecuteWarnResult(dqcSchedulerRules);
             } else {
-                throw new BizException("未配置告警表达式!!!");
+                LOG.warn("ruleId: 【{}】,未配置告警表达式 ", ruleId);
             }
         }
         return null;
