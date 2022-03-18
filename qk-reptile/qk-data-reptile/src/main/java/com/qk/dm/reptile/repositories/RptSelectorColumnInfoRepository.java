@@ -8,7 +8,7 @@ import java.util.List;
 public interface RptSelectorColumnInfoRepository extends BaseRepository<RptSelectorColumnInfo, Long>{
     List<RptSelectorColumnInfo> findAllByConfigId(Long configId);
 
-    void deleteAllByConfigId(Long configId);
+    void deleteByConfigId(Long configId);
 
     List<RptSelectorColumnInfo> findAllByConfigIdIn(List<Long> configIdList);
 
