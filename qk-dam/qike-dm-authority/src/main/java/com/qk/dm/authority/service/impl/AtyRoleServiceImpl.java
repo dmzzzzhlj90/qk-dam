@@ -2,12 +2,10 @@ package com.qk.dm.authority.service.impl;
 
 import com.qk.dam.authority.common.keycloak.KeyCloakRoleApi;
 import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
-import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyRoleService;
 import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
 import org.springframework.stereotype.Service;
 
@@ -52,22 +50,12 @@ public class AtyRoleServiceImpl implements AtyRoleService {
     }
 
     @Override
-    public PageResultVO<AtyClientRoleInfoVO> getClientRoles(AtyClientRoleParamVO clientRoleVO) {
+    public PageResultVO<AtyClientRoleInfoVO> getClientRolesPage(AtyClientRoleParamVO clientRoleVO) {
         return keyCloakRoleApi.clientRoleList(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getSearch(), clientRoleVO.getPagination());
     }
 
     @Override
-    public List<AtyClientRoleInfoVO> getUsers(AtyClientRoleParamVO clientRoleVO) {
+    public List<AtyClientRoleInfoVO> getUsersRole(AtyClientRoleParamVO clientRoleVO) {
         return keyCloakRoleApi.clientRoleList(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getSearch());
-    }
-
-    @Override
-    public PageResultVO<AtyUserInfoVO> getRoleUsersPage(AtyClientRoleUserParamVO clientRoleVO) {
-        return keyCloakRoleApi.clientRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName(),clientRoleVO.getPagination());
-    }
-
-    @Override
-    public List<AtyUserInfoVO> getRoleUsers(AtyClientRoleUserParamVO clientRoleVO) {
-        return keyCloakRoleApi.clientRoleUsers(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
     }
 }

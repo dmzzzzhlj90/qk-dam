@@ -7,10 +7,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyRoleService;
 import com.qk.dm.authority.service.AtyUserRoleService;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
-import com.qk.dm.authority.vo.clientrole.AtyRoleBatchByUsersVO;
+import com.qk.dm.authority.vo.clientrole.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -89,42 +86,41 @@ public class AtyRoleController {
      */
     @PostMapping("/page")
     public DefaultCommonResult<PageResultVO<AtyClientRoleInfoVO>> getClientRolesPage(@RequestBody @Valid AtyClientRoleParamVO clientRoleParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,atyRoleService.getClientRoles(clientRoleParamVO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK,atyRoleService.getClientRolesPage(clientRoleParamVO));
     }
 
     /**
-     * 用户-用户角色-添加-角色列表
-     *
-     * @param clientRoleParamVO
-     * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
-     */
-    @GetMapping("/list")
-    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getClientRoles(@Valid AtyClientRoleParamVO clientRoleParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getUsers(clientRoleParamVO));
-    }
-
-    /**
-     * 已授权的用户列表
+     * 角色详情-已授权的用户列表
      * @param clientRoleVO
      * @return DefaultCommonResult<PageResultVO<AtyUserInfoVO>>
      */
     @PostMapping("/users")
     public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getUserClientRoleUsersPage(@RequestBody @Valid AtyClientRoleUserParamVO clientRoleVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsersPage(clientRoleVO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserRoleService.getRoleUsersPage(clientRoleVO));
     }
 
-//    /**
-//     * 已授权的用户列表（不分页查询，暂时无用）
-//     * @param clientRoleVO
-//     * @return
-//     */
-//    @GetMapping("/users")
-//    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyClientRoleUserParamVO clientRoleVO) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyRoleService.getRoleUsers(clientRoleVO));
-//    }
+    /**
+     * 角色详情-添加授权-分配的用户列表
+     * @param clientRoleVO
+     * @return
+     */
+    @GetMapping("/users")
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUserClientRoleUsers(@Valid AtyRoleUserFiltroVO clientRoleVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserRoleService.getRoleUsers(clientRoleVO));
+    }
 
     /**
-     * 角色详情-添加授权-批量绑定-用户
+     * 角色详情-添加授权-排除已授权的用户列表
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/users/filtro")
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUsers(@Valid AtyRoleUserFiltroVO roleUserFiltroVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,atyUserRoleService.getUsersFiltro(roleUserFiltroVO));
+    }
+
+    /**
+     * 角色详情-添加授权-批量绑定用户
      *
      * @param atyGroupBatchVO
      * @return DefaultCommonResult
@@ -134,4 +130,6 @@ public class AtyRoleController {
         atyUserRoleService.addBatchByUsers(atyGroupBatchVO);
         return DefaultCommonResult.success();
     }
+
+
 }

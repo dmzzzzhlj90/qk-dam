@@ -2,16 +2,12 @@ package com.qk.dm.authority.service.impl;
 
 import com.qk.dam.authority.common.keycloak.KeyCloakGroupApi;
 import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
-import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyGroupService;
 import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
-import com.qk.dm.authority.vo.group.AtyGroupUserParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author shenpj
@@ -52,22 +48,7 @@ public class AtyGroupServiceImpl implements AtyGroupService {
     }
 
     @Override
-    public PageResultVO<AtyGroupInfoVO> getUsers(AtyGroupParamVO groupParamVO) {
+    public PageResultVO<AtyGroupInfoVO> getGroupPage(AtyGroupParamVO groupParamVO) {
         return keyCloakGroupApi.groupList(groupParamVO.getRealm(), groupParamVO.getSearch(), groupParamVO.getPagination());
-    }
-
-    @Override
-    public List<AtyGroupInfoVO> getUsers(String realm, String search) {
-        return keyCloakGroupApi.groupList(realm, search);
-    }
-
-    @Override
-    public PageResultVO<AtyUserInfoVO> getGroupUsers(AtyGroupUserParamVO groupUserParamVO, String groupId) {
-        return keyCloakGroupApi.groupUsers(groupUserParamVO.getRealm(),groupId,groupUserParamVO.getPagination());
-    }
-
-    @Override
-    public List<AtyUserInfoVO> getGroupUsers(String realm, String groupId) {
-        return keyCloakGroupApi.groupUsers(realm,groupId);
     }
 }

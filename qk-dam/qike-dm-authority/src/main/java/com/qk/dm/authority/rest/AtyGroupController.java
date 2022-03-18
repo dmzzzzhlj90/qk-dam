@@ -11,7 +11,6 @@ import com.qk.dm.authority.vo.group.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -87,44 +86,42 @@ public class AtyGroupController {
      */
     @PostMapping("/page")
     public DefaultCommonResult<PageResultVO<AtyGroupInfoVO>> getUsers(@RequestBody AtyGroupParamVO groupParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(groupParamVO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupPage(groupParamVO));
     }
 
     /**
-     * 用户信息-所属分组-添加-用户组列表
-     *
-     * @param realm
-     * @param search
-     * @return DefaultCommonResult<List < AtyGroupInfoVO>>
-     */
-    @GetMapping("/list")
-    public DefaultCommonResult<List<AtyGroupInfoVO>> getUsers(@Valid @NotBlank String realm, String search) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getUsers(realm, search));
-    }
-
-    /**
-     * 已绑定的用户列表
+     * 用户组详情-已绑定的用户列表
      *
      * @param groupUserParamVO
      * @return <PageResultVO<AtyGroupInfoVO>>
      */
     @PostMapping("/users")
     public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getGroupUsers(@RequestBody @Valid AtyGroupUserParamVO groupUserParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupUserParamVO, groupUserParamVO.getGroupId()));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getGroupUsers(groupUserParamVO, groupUserParamVO.getGroupId()));
     }
 
-//    /**
-//     * 已绑定的用户列表（不分页查询，暂时无用）
-//     * @param groupDetailVO
-//     * @return
-//     */
-//    @GetMapping("/users")
-//    public DefaultCommonResult<List<AtyUserInfoVO>> getUserGroupUsers(@Valid AtyGroupDetailVO groupDetailVO) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupUsers(groupDetailVO.getRealm(), groupDetailVO.getGroupId()));
-//    }
+    /**
+     * 用户组详情-添加用户-分配的用户列表
+     * @param groupDetailVO
+     * @return
+     */
+    @GetMapping("/users")
+    public DefaultCommonResult<List<AtyUserInfoVO>> getGroupUsersList(@Valid AtyGroupDetailVO groupDetailVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getGroupUsers(groupDetailVO.getRealm(), groupDetailVO.getGroupId()));
+    }
 
     /**
-     * 用户组-已授权用户-批量绑定-用户
+     * 用户组详情-添加用户-排除已授权的用户列表
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/users/filtro")
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUsers(@Valid AtyGroupUserFiltroVO userFiltroVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,atyUserGroupService.getUserFiltro(userFiltroVO));
+    }
+
+    /**
+     * 用户组详情-添加用户-批量绑定
      *
      * @param atyGroupBatchByUsersVO
      * @return DefaultCommonResult

@@ -1,10 +1,8 @@
 package com.qk.dm.authority.service;
 
 import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
-import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
-import com.qk.dm.authority.vo.clientrole.AtyClientRoleUserParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
 
 import java.util.List;
@@ -23,11 +21,7 @@ public interface AtyRoleService {
 
     AtyClientRoleInfoVO getClientRole(AtyClientRoleVO clientRoleVO);
 
-    PageResultVO<AtyClientRoleInfoVO> getClientRoles(AtyClientRoleParamVO clientRoleParamVO);
+    PageResultVO<AtyClientRoleInfoVO> getClientRolesPage(AtyClientRoleParamVO clientRoleParamVO);
 
-    List<AtyClientRoleInfoVO> getUsers(AtyClientRoleParamVO clientRoleParamVO);
-
-    PageResultVO<AtyUserInfoVO> getRoleUsersPage(AtyClientRoleUserParamVO clientRoleVO);
-
-    List<AtyUserInfoVO> getRoleUsers(AtyClientRoleUserParamVO clientRoleVO);
+    List<AtyClientRoleInfoVO> getUsersRole(AtyClientRoleParamVO clientRoleParamVO);
 }

@@ -110,18 +110,7 @@ public class AtyUserController {
     }
 
     /**
-     * 用户组/角色详情-添加授权-用户列表
-     *
-     * @param atyUserParamVO
-     * @return DefaultCommonResult<List < AtyUserInfoVO>>
-     */
-    @GetMapping("/list")
-    public DefaultCommonResult<List<AtyUserInfoVO>> getUsers(@Valid AtyUserParamVO atyUserParamVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(atyUserParamVO.getRealm(), atyUserParamVO.getSearch()));
-    }
-
-    /**
-     * 已绑定的用户组列表
+     * 用户详情-已绑定的用户组列表
      *
      * @param userGroupParamVO
      * @return DefaultCommonResult<PageResultVO < AtyGroupInfoVO>>
@@ -131,31 +120,19 @@ public class AtyUserController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(userGroupParamVO, userGroupParamVO.getUserId()));
     }
 
-//    /**
-//     * 已绑定的用户组列表（不分页查询，暂时无用）
-//     *
-//     * @param userDetailVO
-//     * @return DefaultCommonResult<List<AtyGroupInfoVO>>
-//     */
-//    @GetMapping("/groups/list")
-//    public DefaultCommonResult<List<AtyGroupInfoVO>> getUserGroup(@Valid AtyUserDetailVO userDetailVO) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getUserGroup(userDetailVO.getRealm(), userDetailVO.getUserId()));
-//    }
-
     /**
-     * 绑定单个用户组
+     * 用户详情-添加用户组-排除已绑定的用户组列表
      *
-     * @param atyUserGroupVO
-     * @return DefaultCommonResult
+     * @param groupFiltroVO
+     * @return DefaultCommonResult<List<AtyGroupInfoVO>>
      */
-    @PostMapping("/groups")
-    public DefaultCommonResult addUserGroup(@RequestBody @Valid AtyUserGroupVO atyUserGroupVO) {
-        atyUserGroupService.addBatchByUsers(atyUserGroupVO);
-        return DefaultCommonResult.success();
+    @GetMapping("/groups/filtro")
+    public DefaultCommonResult<List<AtyGroupInfoVO>> getGroupFiltro(@Valid AtyUserGroupFiltroVO groupFiltroVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserGroupService.getGroupFiltro(groupFiltroVO));
     }
 
     /**
-     * 解绑单个用户组
+     * 用户详情-添加用户组-单个解绑
      * 注释：因openApi不支持DeleteMapping带RequestBody
      * @param atyUserGroupVO
      * @return DefaultCommonResult
@@ -167,7 +144,7 @@ public class AtyUserController {
     }
 
     /**
-     * 用户信息-所属分组-批量绑定-用户组
+     * 用户详情-添加用户组-批量绑定
      *
      * @param batchByGroupsVO
      * @return DefaultCommonResult
@@ -179,7 +156,7 @@ public class AtyUserController {
     }
 
     /**
-     * 已绑定的角色列表
+     * 用户权限-已绑定的角色列表
      * @param userRoleParamVO
      * @return
      */
@@ -189,19 +166,18 @@ public class AtyUserController {
     }
 
     /**
-     * 绑定单个角色
+     * 用户权限-添加角色-排除已绑定的角色列表
      *
-     * @param userClientRole
-     * @return DefaultCommonResult
+     * @param userRoleFiltroVO
+     * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
      */
-    @PostMapping("/roles")
-    public DefaultCommonResult addUserClientRole(@RequestBody @Valid AtyUserClientRoleVO userClientRole) {
-        atyUserRoleService.addBatchByUsers(userClientRole);
-        return DefaultCommonResult.success();
+    @GetMapping("/roles/filtro")
+    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getUsersRoleFiltro(@Valid AtyUserRoleFiltroVO userRoleFiltroVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserRoleService.getRolesFiltro(userRoleFiltroVO));
     }
 
     /**
-     * 解绑单个角色
+     * 用户权限-添加角色-单个解绑
      * 注释：因openApi不支持DeleteMapping带RequestBody
      * @param userClientRole
      * @return DefaultCommonResult
@@ -213,7 +189,7 @@ public class AtyUserController {
     }
 
     /**
-     * 用户权限-用户角色-批量绑定-角色
+     * 用户权限-添加角色-批量绑定
      *
      * @param batchByRolesVO
      * @return DefaultCommonResult
