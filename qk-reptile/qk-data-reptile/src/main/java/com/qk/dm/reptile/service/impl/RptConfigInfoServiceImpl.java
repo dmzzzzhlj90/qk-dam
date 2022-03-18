@@ -20,6 +20,7 @@ import com.qk.dm.reptile.repositories.RptBaseInfoRepository;
 import com.qk.dm.reptile.repositories.RptConfigInfoRepository;
 import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -67,6 +68,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         //删除当前级数据
         deleteConfig(rptConfigInfoDTO);
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
+        //修改基础信息表状态为爬虫
+        updateBaseInfoStatus(rptConfigInfoDTO.getBaseInfoId());
         return buildRptAddConfigVO(config,rptConfigInfoDTO.getBaseInfoId());
     }
 
@@ -76,7 +79,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         //删除所有子级数据
         deleteChildrenConfig(rptConfigInfoDTO);
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
-       // 修改基础信息表状态为爬虫
+       // 修改基础信息表状态为爬虫,调用爬虫接口
         start(rptConfigInfoDTO.getBaseInfoId(),
         ReptileServerFactory.manual(rptList(config.getBaseInfoId())));
         return config.getId();
@@ -148,7 +151,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(Objects.nonNull(rptConfigInfoDTO.getId())){
             rptSelectorColumnInfoService.deleteByConfigId(rptConfigInfoDTO.getId());
         }
-        rptSelectorColumnInfoService.batchInset(selectorList.stream().peek(e -> e.setConfigId(config.getId())).collect(Collectors.toList()));
+        rptSelectorColumnInfoService.batchInset(selectorList.stream().peek(e -> e.setConfigId(config.getId()))
+                .collect(Collectors.toList()));
         return config;
     }
 
@@ -228,13 +232,12 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
             return getDetailByParentId(rptConfigDetailDTO.getId());
         }else {
             List<RptConfigInfo> list = rptConfigInfoRepository.findAllByBaseInfoIdOrderByIdAsc(rptConfigDetailDTO.getId());
-            if (!CollectionUtils.isEmpty(list)) {
-                RptConfigInfoVO rptConfigVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(list.get(0));
-                transRptConfigInfoVO(list.get(0), rptConfigVO);
-                return rptConfigVO;
-            }
+            if(CollectionUtils.isEmpty(list)){ return null; }
+
+            RptConfigInfoVO rptConfigVO = RptConfigInfoMapper.INSTANCE.useRptConfigInfoVO(list.get(0));
+            transRptConfigInfoVO(list.get(0), rptConfigVO);
+            return rptConfigVO;
         }
-        return null;
     }
 
     @Override
@@ -298,6 +301,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
                 RptConfigInfoMapper.INSTANCE.of(e, info);
                 info.setBaseInfoId(targetId);
                 info.setParentId(parentId.get());
+                //配置信息第一层的请求地址不复制
+                if(parentId.get()==0){info.setRequestUrl(Strings.EMPTY);}
                 RptConfigInfo rptConfigInfo = rptConfigInfoRepository.save(info);
                 parentId.set(rptConfigInfo.getId());
                 rptSelectorColumnInfoService.copyConfig(e.getId(), rptConfigInfo.getId());
@@ -369,7 +374,8 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         if(CollectionUtils.isEmpty(configInfoList)){
             return Collections.emptyList();
         }
-        return rptSelectorColumnInfoService.findByConfigIds(configInfoList.stream().map(RptConfigInfo::getId).collect(Collectors.toList()));
+        return rptSelectorColumnInfoService.findByConfigIds(configInfoList.stream().map(RptConfigInfo::getId)
+                .collect(Collectors.toList()));
     }
 
 }

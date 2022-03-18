@@ -89,16 +89,17 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO) {
-        List<RptBaseInfo> rptBaseInfoList = Lists.newArrayList();
-        rptBaseInfoBatchDTO.getListPageAddressList().forEach(e->{
+
+        List<RptBaseInfo> rptBaseInfoList = rptBaseInfoBatchDTO.getListPageAddressList().stream().map(e -> {
             RptBaseInfo rptBaseInfo = new RptBaseInfo();
             RptBaseInfoMapper.INSTANCE.of(rptBaseInfoBatchDTO, rptBaseInfo);
             rptBaseInfo.setListPageAddress(e);
             rptBaseInfo.setCreateUsername(ClientUserInfo.getUserName());
             rptBaseInfo.setDelFlag(RptConstant.REDUCTION_STATUS);
             rptBaseInfo.setStatus(RptConstant.WAITING);
-            rptBaseInfoList.add(rptBaseInfo);
-        });
+            return rptBaseInfo;
+        }).collect(Collectors.toList());
+
         rptBaseInfoRepository.saveAll(rptBaseInfoList);
     }
 
@@ -122,10 +123,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
         rptBaseInfo.setRunStatus(runStatus);
         if(Objects.equals(RptConstant.START,runStatus)){
-            String result = ReptileServerFactory.timing(rptConfigInfoService.rptList(rptBaseInfo.getId()));
-            if (!StringUtils.isBlank(result)) {
-                updateBaseInfo(rptBaseInfo, result);
-            }
+            updateBaseInfo(rptBaseInfo, ReptileServerFactory.timing(rptConfigInfoService.rptList(rptBaseInfo.getId())));
         }else {
             rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
         }
@@ -163,7 +161,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(rptBaseInfoList.isEmpty()){
             throw new BizException("当前要还原的基础信息id为：" + ids + " 的数据不存在！！！");
         }
-        rptBaseInfoRepository.saveAllAndFlush(rptBaseInfoList.stream().peek(e->e.setDelFlag(RptConstant.REDUCTION_STATUS)).collect(Collectors.toList()));
+        rptBaseInfoRepository.saveAllAndFlush(rptBaseInfoList.stream().peek(e->e.setDelFlag(RptConstant.REDUCTION_STATUS))
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -197,15 +196,14 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
     @Override
     public void timedExecution(String timeInterval) {
-    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatusAndTimeInterval(RptRunStatusConstant.START,RptConstant.REPTILE,timeInterval);
-        if(!CollectionUtils.isEmpty(list)){
+    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatusAndTimeInterval(RptRunStatusConstant.START
+            ,RptConstant.REPTILE,timeInterval);
+       if(CollectionUtils.isEmpty(list)){return;}
+
             list.forEach(e -> {
-                String result = ReptileServerFactory.timing(rptConfigInfoService.rptList(e.getId()));
-                if (!StringUtils.isBlank(result)) {
-                  updateBaseInfo(e, result);
-                }
+                  updateBaseInfo(e, ReptileServerFactory.timing(rptConfigInfoService.rptList(e.getId())));
           });
-        }
+
     }
 
     @Override
@@ -230,6 +228,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
      * @param result
      */
     public void updateBaseInfo(RptBaseInfo rptBaseInfo,String result){
+        if (StringUtils.isBlank(result)) { return; }
         Map<String,String> map = GsonUtil.fromJsonString(result, Map.class);
         if(Objects.nonNull(map.get(RptConstant.JOBID))){
             rptBaseInfo.setJobId(map.get(RptConstant.JOBID));
@@ -244,10 +243,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        String result = ReptileServerFactory.manual(rptConfigInfoService.rptList(rptBaseInfo.getId()));
-        if (!StringUtils.isBlank(result)) {
-             updateBaseInfo(rptBaseInfo, result);
-        }
+        updateBaseInfo(rptBaseInfo, ReptileServerFactory.manual(rptConfigInfoService.rptList(rptBaseInfo.getId())));
+
     }
 
     @Override
