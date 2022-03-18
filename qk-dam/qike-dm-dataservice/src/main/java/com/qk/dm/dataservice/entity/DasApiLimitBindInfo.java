@@ -28,7 +28,7 @@ public class DasApiLimitBindInfo implements Serializable {
      * 流控策略ID
      */
     @Column(name = "limit_id", nullable = false)
-    private String limitId;
+    private Long limitId;
 
     /**
      * API路由组id

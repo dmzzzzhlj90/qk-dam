@@ -8,10 +8,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.service.DasApiLimitManageService;
-import com.qk.dm.dataservice.vo.DasApiGroupRouteVO;
-import com.qk.dm.dataservice.vo.DasApiLimitBindInfoVO;
-import com.qk.dm.dataservice.vo.DasApiLimitInfoVO;
-import com.qk.dm.dataservice.vo.DasApiLimitManageParamsVO;
+import com.qk.dm.dataservice.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -92,13 +89,13 @@ public class DasApiLimitManageController {
     /**
      * 绑定服务流控信息
      *
-     * @param dasApiLimitBindInfoVO
+     * @param apiLimitBindParamsVO
      * @return DefaultCommonResult
      */
     @PostMapping("/bind")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.UPDATE)
-    public DefaultCommonResult bind(@RequestBody @Validated DasApiLimitBindInfoVO dasApiLimitBindInfoVO) {
-        dasApiLimitManageService.bind(dasApiLimitBindInfoVO);
+    public DefaultCommonResult bind(@RequestBody @Validated DasApiLimitBindParamsVO apiLimitBindParamsVO) {
+        dasApiLimitManageService.bind(apiLimitBindParamsVO);
         return DefaultCommonResult.success();
     }
 
@@ -120,8 +117,20 @@ public class DasApiLimitManageController {
      */
     @GetMapping("/timeUnit")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.UPDATE)
-    public DefaultCommonResult<Map<String,String>> timeUnit() {
+    public DefaultCommonResult<Map<String, String>> timeUnit() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiLimitManageService.timeUnit());
+    }
+
+    /**
+     * 根据limitId查询绑定API组路由信息
+     *
+     * @param limitId 流控ID
+     * @return
+     */
+    @GetMapping("/bind/info")
+//  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.UPDATE)
+    public DefaultCommonResult<List<DasApiLimitBindInfoVO>> searchBindInfo(@RequestParam("limitId") Long limitId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiLimitManageService.searchBindInfo(limitId));
     }
 
 }
