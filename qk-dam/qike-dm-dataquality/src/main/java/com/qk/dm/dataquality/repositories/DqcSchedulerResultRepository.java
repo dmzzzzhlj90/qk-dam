@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DqcSchedulerResultRepository extends BaseRepository<DqcSchedulerResult, Long> {
 
-    @Query(value = " SELECT * FROM qk_dqc_scheduler_result WHERE task_code = ?1 AND gmt_create = ( SELECT max( gmt_create ) FROM qk_dqc_scheduler_result WHERE task_code = ?1 )", nativeQuery = true)
+    @Query(value = " SELECT * FROM qk_dqc_scheduler_result WHERE task_code = ?1  order by gmt_create desc limit 1", nativeQuery = true)
     DqcSchedulerResult findOneByLastTime(@Param("taskCode") Long taskCode);
 
 
