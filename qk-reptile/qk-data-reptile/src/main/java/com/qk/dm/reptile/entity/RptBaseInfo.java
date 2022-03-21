@@ -188,5 +188,50 @@ public class RptBaseInfo implements Serializable {
      */
     @Column(name = "executor_id")
     private Long executorId;
+    /**
+     * 执行间隔
+     */
+    @Column(name = "time_interval")
+    private String timeInterval;
 
+    /**
+     * 配置时间
+     */
+    @Column(name = "config_date")
+    private Date configDate;
+    /**
+     * 分配人
+     */
+    @Column(name = "assigned_person_name")
+    private String assignedPersonName;
+
+    /**
+     * 负责人
+     */
+    @Column(name = "responsible_person_name")
+    private String responsiblePersonName;
+
+    /**
+     * 是否已经添加了配置
+     */
+    @Column(name = "config_status")
+    private Boolean configStatus;
+
+    /**
+     * 0未删除 1已删除
+     */
+    @Column(name = "del_flag", nullable = false)
+    private Integer delFlag = 0;
+
+    /**
+     * 删除人
+     */
+    @Column(name = "del_username")
+    private String delUserName;
+
+    /**
+     * 删除时间
+     */
+    @Column(name = "del_date")
+    private Date delDate;
 }

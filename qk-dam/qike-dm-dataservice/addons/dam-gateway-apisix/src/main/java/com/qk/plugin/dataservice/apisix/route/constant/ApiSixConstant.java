@@ -20,4 +20,11 @@ public class ApiSixConstant {
 
   // UPSTREAM
   public static final String API_SIX_ADMIN_SERVER_URL_KEY = "API_SIX_ADMIN_SERVER_URL_KEY";
+
+  // 插件信息PLUGINS_LIMIT_COUNT
+  public static final String PLUGINS_LIMIT_COUNT_KEY = "limit-count";
+  public static final String PLUGINS_LIMIT_COUNT_KEY_TYPE = "var";
+  public static final String PLUGINS_LIMIT_COUNT_REMOTE_ADDR = "remote_addr";
+  public static final String PLUGINS_LIMIT_COUNT_LOCAL = "local";
+  public static final int PLUGINS_LIMIT_COUNT_REJECTED_CODE = 503;
 }

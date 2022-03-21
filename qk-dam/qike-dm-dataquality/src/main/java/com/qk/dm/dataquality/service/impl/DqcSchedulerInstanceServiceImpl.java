@@ -58,7 +58,7 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         //排序、分页
         List<ProcessInstanceDTO> list = getPager(instanceParamsDTO, getTotalListSort(totalList));
         //封装分页
-        return getInstancePage(instanceParamsDTO, list, totalList.size());
+        return getInstancePage(instanceParamsDTO, list, (long) totalList.size());
     }
 
     private List<ProcessInstanceDTO> getProcessInstanceResultList(DqcSchedulerInstanceParamsDTO instanceParamsDTO) {
@@ -101,7 +101,7 @@ public class DqcSchedulerInstanceServiceImpl implements DqcSchedulerInstanceServ
         return dolphinScheduler.instanceList(instanceSearch);
     }
 
-    private PageResultVO<DqcProcessInstanceVO> getInstancePage(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<ProcessInstanceDTO> list, int size) {
+    private PageResultVO<DqcProcessInstanceVO> getInstancePage(DqcSchedulerInstanceParamsDTO instanceParamsDTO, List<ProcessInstanceDTO> list, Long size) {
         return new PageResultVO<>(
                 size,
                 instanceParamsDTO.getPagination().getPage(),

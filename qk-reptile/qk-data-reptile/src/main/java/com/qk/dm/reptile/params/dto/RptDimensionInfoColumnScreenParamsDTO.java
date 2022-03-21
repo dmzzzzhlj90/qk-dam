@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -21,11 +21,16 @@ public class RptDimensionInfoColumnScreenParamsDTO {
   /**
    * 目录id
    */
-  @NotBlank(message = "目录id不能为空")
+  @NotNull(message = "目录id不能为空")
   private Long id;
 
   /**
    * 目录字段编码集合
    */
+  @NotNull(message = "目录字段编码集合不能为空")
   private List <String> dimensionColumnCodeList;
+  /**
+   * 基础数据id
+   */
+  private Long baseInfoId;
 }

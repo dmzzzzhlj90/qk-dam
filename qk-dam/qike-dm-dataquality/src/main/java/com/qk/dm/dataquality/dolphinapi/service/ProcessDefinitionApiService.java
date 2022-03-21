@@ -26,7 +26,7 @@ public interface ProcessDefinitionApiService {
 
     ProcessDefinitionDTO queryProcessDefinitionInfo(Long projectCode, String searchVal, String jobId);
 
-    void delete(Long projectCode, Long processDefinitionCode);
+    void delete(Long processDefinitionCode,Long projectCode);
 
     void deleteBulk(List<Long> processDefinitionIdList,Long projectCode);
 

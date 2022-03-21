@@ -4,14 +4,18 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.constant.RptConstant;
-import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
-import com.qk.dm.reptile.params.dto.RptCopyConfigDTO;
-import com.qk.dm.reptile.params.dto.RptRunStatusDTO;
+import com.qk.dm.reptile.enums.TimeIntervalEnum;
+import com.qk.dm.reptile.params.dto.*;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
+import com.qk.dm.reptile.params.vo.TimeIntervalVO;
 import com.qk.dm.reptile.service.RptBaseInfoService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 爬虫数据采集基础配置信息
@@ -37,10 +41,21 @@ public class RptBaseInfoController {
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated RptBaseInfoDTO rptBaseInfoDTO){
-        rptBaseInfoDTO.setStatus(RptConstant.WAITING);
         rptBaseInfoService.insert(rptBaseInfoDTO);
         return DefaultCommonResult.success();
     }
+
+    /**
+     * 批量添加基础信息
+     * @param rptBaseInfoBatchDTO
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/batch")
+    public DefaultCommonResult batchInsert(@RequestBody @Validated RptBaseInfoBatchDTO rptBaseInfoBatchDTO){
+        rptBaseInfoService.batchInsert(rptBaseInfoBatchDTO);
+        return DefaultCommonResult.success();
+    }
+
 
     /**
      * 修改基础信息
@@ -74,9 +89,10 @@ public class RptBaseInfoController {
      */
     @PostMapping("/waiting")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> waitingList(
-            @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
+            @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         rptBaseInfoDTO.setStatus(RptConstant.WAITING);
-        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO));
+        rptBaseInfoDTO.setDelFlag(RptConstant.REDUCTION_STATUS);
+        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
 
 
@@ -87,9 +103,10 @@ public class RptBaseInfoController {
      */
     @PostMapping("/reptile")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> reptileList(
-            @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
+            @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         rptBaseInfoDTO.setStatus(RptConstant.REPTILE);
-        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO));
+        rptBaseInfoDTO.setDelFlag(RptConstant.REDUCTION_STATUS);
+        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
 
     /**
@@ -99,9 +116,9 @@ public class RptBaseInfoController {
      */
     @PostMapping("/history")
     public DefaultCommonResult<PageResultVO<RptBaseInfoVO>> historyList(
-            @RequestBody RptBaseInfoDTO rptBaseInfoDTO) {
-        rptBaseInfoDTO.setStatus(RptConstant.HISTORY);
-        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO));
+            @RequestBody RptBaseInfoDTO rptBaseInfoDTO,@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+        rptBaseInfoDTO.setDelFlag(RptConstant.DEL_STATUS);
+        return DefaultCommonResult.success(ResultCodeEnum.OK, rptBaseInfoService.listByPage(rptBaseInfoDTO,authorizedClient));
     }
     /**
      * 详情
@@ -125,6 +142,17 @@ public class RptBaseInfoController {
     }
 
     /**
+     * 还原
+     * @param ids
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("/reduction/{ids}")
+    public DefaultCommonResult reduction(@PathVariable("ids") String ids){
+        rptBaseInfoService.reduction(ids);
+        return DefaultCommonResult.success();
+    }
+
+    /**
      * 手动执行调用爬虫接口
      * @param id
      * @return DefaultCommonResult
@@ -141,7 +169,7 @@ public class RptBaseInfoController {
      */
     @GetMapping("/timed/execution")
     public DefaultCommonResult timedExecution(){
-        rptBaseInfoService.timedExecution();
+        rptBaseInfoService.timedExecution(null);
         return DefaultCommonResult.success();
     }
 
@@ -153,6 +181,37 @@ public class RptBaseInfoController {
     @PostMapping("/copy/config")
     public DefaultCommonResult copyConfig(@RequestBody @Validated RptCopyConfigDTO rptCopyConfig){
         rptBaseInfoService.copyConfig(rptCopyConfig.getSourceId(),rptCopyConfig.getTargetId());
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 获取定时时间间隔
+     * @return
+     */
+    @GetMapping("/time/interval")
+    public DefaultCommonResult<List<TimeIntervalVO>> getTimeInterval(){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,TimeIntervalEnum.enumToList());
+    }
+
+    /**
+     * 修改定时时间间隔
+     * @param timeIntervalDTO
+     * @return
+     */
+    @PostMapping("/time/interval")
+    public DefaultCommonResult updateTimeInterval(@RequestBody @Validated TimeIntervalDTO timeIntervalDTO) {
+        rptBaseInfoService.updateTimeInterval(timeIntervalDTO);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 分配任务
+     * @param rptAssignedTaskDTO
+     * @return
+     */
+    @PostMapping("/assigned/task")
+    public DefaultCommonResult assignedTask(@RequestBody @Validated RptAssignedTaskDTO rptAssignedTaskDTO) {
+        rptBaseInfoService.assignedTasks(rptAssignedTaskDTO);
         return DefaultCommonResult.success();
     }
 

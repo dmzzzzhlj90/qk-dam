@@ -21,6 +21,8 @@ public interface RptSelectorColumnInfoService {
 
     void deleteByConfigId(Long configId);
 
+    void deleteByConfigId(List<Long> configIdList);
+
     List<RptSelectorColumnInfoVO> list(Long configId);
     /**
      * 复制配置项

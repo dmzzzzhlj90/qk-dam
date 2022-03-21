@@ -1,13 +1,13 @@
 package com.qk.dam.groovy;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.qk.dam.groovy.facts.RuleFunctionGenerator;
 import com.qk.dam.groovy.model.FactModel;
 import com.qk.dam.groovy.model.RuleFunctionInfo;
-import com.qk.dam.groovy.model.base.FactField;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,28 +57,42 @@ public class FactsJava {
 //        factModel.setFactField(factFields);
 
         //ruleFunctionInfo
+        //设置参数方式
         List<RuleFunctionInfo> ruleFunctionInfos = Lists.newArrayList();
-        RuleFunctionInfo ruleFunctionInfo = new RuleFunctionInfo("tradeDay", "tradeDay", "String", LocalDateTime.now());
-        ruleFunctionInfo.setExpression("tradeDay('20220106')");
-        ruleFunctionInfos.add(ruleFunctionInfo);
+//        List<String> params = new ArrayList<>();
+//        params.add("date");
+//        Map<String, Object> defaultVal = new HashMap<>(16);
+//        defaultVal.put("date", LocalDateTime.now());
+//
+//        RuleFunctionInfo ruleFunctionInfo1 = new RuleFunctionInfo("format", params, "日期格式化", "String", defaultVal);
+//        ruleFunctionInfo1.setExpression("format('date','yyyy/MM/dd')");
+//        ruleFunctionInfos.add(ruleFunctionInfo1);
+
+        //直接执行sql片段方式
+        List<String> params2 = new ArrayList<>();
+        Map<String, Object> defaultVal2 = new HashMap<>(16);
+
+        RuleFunctionInfo ruleFunctionInfo2 = new RuleFunctionInfo("tradeDay", params2, "日期格式化2", "String", null);
+        ruleFunctionInfo2.setExpression("tradeDay('20220111',1,'yyyyMMdd')");
+        ruleFunctionInfos.add(ruleFunctionInfo2);
+
         factModel.setRuleFunctionInfo(ruleFunctionInfos);
 
         //data
-        List<Object> uu = Lists.newArrayList();
-        for (int i = 0; i < 1; i++) {
-            Map<String, Object> dataMap = Maps.newHashMap();
-            dataMap.put("tradeDay", LocalDateTime.now());
-            uu.add(dataMap);
-        }
-        factModel.setData(uu);
+//        List<Object> uu = Lists.newArrayList();
+//        for (int i = 0; i < 1; i++) {
+//            Map<String, Object> dataMap = Maps.newHashMap();
+//            dataMap.put("tradeDay", LocalDateTime.now());
+//            uu.add(dataMap);
+//        }
+//        factModel.setData(uu);
 
-        for (int i = 0; i < 1; i++) {
-            RuleFunctionGenerator generater = new RuleFunctionGenerator(factModel);
-            long start = System.currentTimeMillis();
-            Map<String, Object> cc = generater.generateFunction();
-            long end = System.currentTimeMillis();
-            System.out.println("执行时间：" + (end - start) / 1000 + '秒');
-            System.out.println(cc);
-        }
+        RuleFunctionGenerator generater = new RuleFunctionGenerator(factModel);
+        long start = System.currentTimeMillis();
+        Map<String, Object> cc = generater.generateFunction();
+        long end = System.currentTimeMillis();
+        System.out.println("执行时间：" + (end - start) / 1000 + '秒');
+        System.out.println(cc);
     }
+
 }

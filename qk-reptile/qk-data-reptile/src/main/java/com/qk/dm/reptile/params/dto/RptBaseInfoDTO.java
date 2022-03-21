@@ -81,7 +81,6 @@ public class RptBaseInfoDTO {
   /**
    * 创建人姓名
    */
-  @NotBlank(message = "添加人不能为空")
   private String createUsername;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -153,4 +152,54 @@ public class RptBaseInfoDTO {
    * 执行人id
    */
   private Long executorId;
+  /**
+   * 定时间隔
+   */
+  private String timeInterval;
+
+  /**
+   * 分配人
+   */
+  private String assignedPersonName;
+
+  /**
+   * 负责人
+   */
+  private String responsiblePersonName;
+
+  /**
+   * 是否已经添加了配置
+   */
+  private Boolean configStatus;
+  /**
+   * 开始时间
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date startDate;
+  /**
+   * 结束时间
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date endDate;
+
+
+  /**
+   * 0未删除 1已删除
+   */
+  private Integer delFlag;
+
+
+  /**
+   * 删除人
+   */
+  private String delUserName;
+
+  /**
+   * 删除时间
+   */
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date delDate;
 }

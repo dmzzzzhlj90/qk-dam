@@ -4,11 +4,14 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.service.DqcSchedulerResultDataService;
+import com.qk.dm.dataquality.vo.DqcSchedulerResultPageVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultParamsVO;
 import com.qk.dm.dataquality.vo.DqcSchedulerResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 调度结果集
@@ -30,7 +33,7 @@ public class DqcSchedulerResultDataController {
 
 
     /**
-     * 根据规则模板获取执行Sql
+     * 分页查询规则结果集列表信息
      *
      * @param schedulerResultDataParamsVO
      * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
@@ -39,6 +42,18 @@ public class DqcSchedulerResultDataController {
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<PageResultVO<DqcSchedulerResultVO>> searchPageList(@RequestBody DqcSchedulerResultParamsVO schedulerResultDataParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.getResultDataList(schedulerResultDataParamsVO));
+    }
+
+    /**
+     * 根据规则查询最新的执行结果集信息
+     *
+     * @param taskCode
+     * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
+     */
+    @GetMapping("/latest")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult<List<DqcSchedulerResultVO>> searchResultByTaskCode(@RequestParam("taskCode") Long taskCode) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.searchResultByTaskCode(taskCode));
     }
 
     /**
@@ -53,4 +68,14 @@ public class DqcSchedulerResultDataController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.getWarnResultInfo(ruleId));
     }
 
+    /**
+     * 根据分类目录获取告警结果
+     * @param schedulerResultDataParamsVO
+     * @return DefaultCommonResult<PageResultVO < DqcSchedulerRulesVO>>
+     */
+    @PostMapping("/page/list/dir")
+    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
+    public DefaultCommonResult<PageResultVO<DqcSchedulerResultVO>> searchResultPageList(@RequestBody DqcSchedulerResultPageVO schedulerResultDataParamsVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerResultDataService.searchResultPageList(schedulerResultDataParamsVO));
+    }
 }

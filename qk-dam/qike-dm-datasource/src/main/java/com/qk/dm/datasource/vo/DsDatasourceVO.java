@@ -1,13 +1,14 @@
 package com.qk.dm.datasource.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 /**
  * @author zys
@@ -20,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Builder
 public class DsDatasourceVO {
   /** 数据源主键id */
-  private Integer id;
+  private String id;
 
   /** 数据源名称（返回值显示） */
   @NotBlank(message = "连接名称不为空")

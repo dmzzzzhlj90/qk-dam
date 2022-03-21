@@ -42,15 +42,14 @@ public class RptBaseInfoVO {
   /**
    * 网站名
    */
-  @NotBlank(message = "网站名不能为空")
   @ExcelProperty(value = "网站名",order = 5)
   private String websiteName;
 
   /**
    * 连接
    */
-  @NotBlank(message = "链接不能为空")
   @ExcelProperty(value = "链接",order = 6)
+  @NotBlank(message = "连接不能为空")
   private String websiteUrl;
 
   /**
@@ -107,7 +106,6 @@ public class RptBaseInfoVO {
   /**
    * 创建人姓名
    */
-  @NotBlank(message = "添加人不能为空")
   @ExcelProperty(value = "添加人姓名",order = 3)
   private String createUsername;
   /**
@@ -137,11 +135,13 @@ public class RptBaseInfoVO {
    * 二期站点类型
    */
   @ExcelProperty(value = "二期站点类型",order = 7)
+  @NotBlank(message = "二期站点类型不能为空")
   private String secondSiteType;
   /**
    * 列表页地址
    */
   @ExcelProperty(value = "列表页地址",order = 8)
+  @NotBlank(message = "列表页地址不能为空")
   private String listPageAddress;
   /**
    * 不同类型混合
@@ -198,4 +198,47 @@ public class RptBaseInfoVO {
    */
   @ExcelIgnore
   private Long executorId;
+  /**
+   * 是否已经添加了配置
+   */
+  @ExcelIgnore
+  private Boolean configStatus;
+  /**
+   * 定时间隔
+   */
+  @ExcelIgnore
+  private String timeInterval;
+
+  /**
+   * 分配人
+   */
+  @ExcelIgnore
+  private String assignedPersonName;
+
+  /**
+   * 负责人
+   */
+  @ExcelIgnore
+  private String responsiblePersonName;
+  /**
+   * 配置时间
+   */
+  @ExcelIgnore
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date configDate;
+
+  /**
+   * 删除人
+   */
+  @ExcelIgnore
+  private String delUserName;
+
+  /**
+   * 删除时间
+   */
+  @ExcelIgnore
+  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  private Date delDate;
 }

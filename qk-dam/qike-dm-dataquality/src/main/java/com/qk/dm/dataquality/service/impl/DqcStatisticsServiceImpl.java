@@ -7,7 +7,8 @@ import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
-import com.qk.dm.dataquality.vo.statistics.handler.CacheHandler;
+import com.qk.dm.dataquality.biz.CacheBiz;
+import com.qk.dm.dataquality.vo.statistics.WarnTrendVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,32 +22,36 @@ import java.util.List;
 @Service
 @Slf4j
 public class DqcStatisticsServiceImpl implements DqcStatisticsService {
-    private final CacheHandler cacheHandler;
+    private final CacheBiz cacheBiz;
 
-    public DqcStatisticsServiceImpl(CacheHandler cacheHandler) {
-        this.cacheHandler = cacheHandler;
+    public DqcStatisticsServiceImpl(CacheBiz cacheBiz) {
+        this.cacheBiz = cacheBiz;
     }
 
     @Override
     public DataSummaryVO summary() {
-//        log.info("===== summary定时开始执行 =====");
-        return GsonUtil.fromJsonString(cacheHandler.summary(), new TypeToken<DataSummaryVO>() {}.getType());
+        return GsonUtil.fromJsonString(cacheBiz.summary(), new TypeToken<DataSummaryVO>() {}.getType());
     }
 
     @Override
     public List<DimensionVO> dimension() {
-//        log.info("===== dimension定时开始执行 =====");
-        return GsonUtil.fromJsonString(cacheHandler.dimension(), new TypeToken<List<DimensionVO>>() {}.getType());
+        return GsonUtil.fromJsonString(cacheBiz.dimension(), new TypeToken<List<DimensionVO>>() {}.getType());
     }
 
     @Override
     public List<RuleDirVO> dir() {
-//        log.info("===== dir定时开始执行 =====");
-        return GsonUtil.fromJsonString(cacheHandler.dir(), new TypeToken<List<RuleDirVO>>() {}.getType());
+        return GsonUtil.fromJsonString(cacheBiz.dir(), new TypeToken<List<RuleDirVO>>() {}.getType());
     }
 
     @Override
     public List<DqcProcessInstanceVO> instanceList() {
-        return cacheHandler.instanceList();
+        return cacheBiz.instanceList();
     }
+
+    @Override
+    public List<WarnTrendVO> warnTrend() {
+        return cacheBiz.warnTrend();
+    }
+
+
 }

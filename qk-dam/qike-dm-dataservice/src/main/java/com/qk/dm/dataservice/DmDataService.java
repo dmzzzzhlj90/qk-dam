@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.qk.dm.*")
 @ComponentScan(basePackages = "com.qk")
 public class DmDataService {
   public static void main(String[] args) {

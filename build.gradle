@@ -1,17 +1,14 @@
 buildscript {
     repositories {
         maven {
-            url = 'http://172.21.128.2:8081/repository/qkdam/'
+            url = "${nexusRepositories}"
             credentials {
-                username = 'admin'
-                password = 'admin123'
+                username = "${nexusUsername}"
+                password = "${nexusPassword}"
             }
         }
         mavenLocal()
         mavenCentral()
-    }
-    dependencies {
-        classpath "org.openapitools:openapi-generator-gradle-plugin:5.3.0"
     }
 }
 
@@ -29,7 +26,7 @@ def getCurrentGitBranch() {
             gitBranch = result.text.trim()
         }
         if (gitBranch.contains("feature")){
-            return "${damProfilesActive}"
+            return "dev"
         }
     } catch (e) {
     }
@@ -41,12 +38,13 @@ subprojects {
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'org.openapi.generator'
+    apply plugin: 'org.sonarqube'
     repositories {
         maven {
-            url = 'http://172.21.128.2:8081/repository/qkdam/'
+            url = "${nexusRepositories}"
             credentials {
-                username = 'admin'
-                password = 'admin123'
+                username = "${nexusUsername}"
+                password = "${nexusPassword}"
             }
         }
         maven { url 'https://maven.aliyun.com/repository/public' }
@@ -115,14 +113,13 @@ subprojects {
     uploadArchives {
         repositories {
             mavenDeployer {
-                def releasesRepoUrl = "http://172.21.128.2:8081/repository/dm-release/"
-                def snapshotsRepoUrl = "http://172.21.128.2:8081/repository/dm-snapshot/"
-                def url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                def url = version.endsWith('SNAPSHOT') ? "${snapshotsRepoUrl}" : "${releasesRepoUrl}"
                 repository(url: url) {
-                    authentication(userName: "admin", password: "admin123")
+                    authentication(userName: "${nexusUsername}", password: "${nexusPassword}")
                 }
             }
         }
     }
 
 }
+

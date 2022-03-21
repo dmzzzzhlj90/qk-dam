@@ -2,10 +2,10 @@ pluginManagement {
     buildscript {
         repositories {
             maven {
-                url = 'http://172.21.128.2:8081/repository/qkdam/'
+                url = "${nexusRepositories}"
                 credentials {
-                    username = 'admin'
-                    password = 'admin123'
+                    username = "${nexusUsername}"
+                    password = "${nexusPassword}"
                 }
             }
             maven { url 'https://maven.aliyun.com/repository/public' }
@@ -19,6 +19,8 @@ pluginManagement {
             mavenLocal()
         }
         dependencies {
+            classpath "org.openapitools:openapi-generator-gradle-plugin:5.3.0"
+            classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3'
             classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.3.6'
             classpath group: 'com.github.shalousun', name: 'smart-doc-gradle-plugin', version: '2.3.4'
         }
@@ -28,10 +30,10 @@ pluginManagement {
         mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven {
-            url = 'http://172.21.128.2:8081/repository/qkdam/'
+            url = "${nexusRepositories}"
             credentials {
-                username = 'admin'
-                password = 'admin123'
+                username = "${nexusUsername}"
+                password = "${nexusPassword}"
             }
         }
     }

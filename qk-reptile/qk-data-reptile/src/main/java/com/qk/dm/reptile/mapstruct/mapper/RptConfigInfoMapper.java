@@ -16,7 +16,7 @@ public interface RptConfigInfoMapper {
     @Mappings({
             @Mapping(target = "raw",ignore = true),
             @Mapping(target = "formUrlencoded",ignore = true),
-            @Mapping(target = "fromData",ignore = true),
+            @Mapping(target = "formData",ignore = true),
             @Mapping(target = "cookies",ignore = true),
             @Mapping(target = "headers",ignore = true)
     })
@@ -25,7 +25,7 @@ public interface RptConfigInfoMapper {
     @Mappings({
             @Mapping(target = "raw",ignore = true),
             @Mapping(target = "formUrlencoded",ignore = true),
-            @Mapping(target = "fromData",ignore = true),
+            @Mapping(target = "formData",ignore = true),
             @Mapping(target = "cookies",ignore = true),
             @Mapping(target = "headers",ignore = true)
     })
@@ -34,7 +34,7 @@ public interface RptConfigInfoMapper {
     @Mappings({
             @Mapping(target = "raw",ignore = true),
             @Mapping(target = "formUrlencoded",ignore = true),
-            @Mapping(target = "fromData",ignore = true),
+            @Mapping(target = "formData",ignore = true),
             @Mapping(target = "cookies",ignore = true),
             @Mapping(target = "headers",ignore = true)
     })
@@ -42,5 +42,11 @@ public interface RptConfigInfoMapper {
     void of(RptConfigInfoDTO rptConfigInfoDTO, @MappingTarget RptConfigInfo rptConfigInfo);
 
     List<RptConfigInfoVO> of(List<RptConfigInfo> rptConfigInfoList);
+
+    @Mapping(target = "id",ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void of(RptConfigInfo info, @MappingTarget RptConfigInfo rptConfigInfo);
+
+
 
 }

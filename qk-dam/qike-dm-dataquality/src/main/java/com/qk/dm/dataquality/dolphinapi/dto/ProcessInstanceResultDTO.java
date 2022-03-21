@@ -12,8 +12,10 @@ import java.util.List;
  */
 @Data
 public class ProcessInstanceResultDTO implements Serializable {
-    private int total;
-    private int currentPage;
-    private int totalPage;
+    private Long total;
+    private Long currentPage;
+    private Long totalPage;
+    private Long pageSize;
+    private Long start;
     private List<ProcessInstanceDTO> totalList;
 }

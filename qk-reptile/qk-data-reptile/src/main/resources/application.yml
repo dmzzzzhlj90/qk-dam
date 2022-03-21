@@ -1,12 +1,13 @@
 server:
-  port: 8881
+  port: 8889
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
   messages:
     basename: i18n/messages
   mvc:
     message-codes-resolver-format: postfix_error_code
-    servlet:
-      path: /rpt
   main:
     allow-bean-definition-overriding: true
   jpa:

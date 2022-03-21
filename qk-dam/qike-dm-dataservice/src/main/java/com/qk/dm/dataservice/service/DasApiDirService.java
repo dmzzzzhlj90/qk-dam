@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service;
 
+import com.qk.dm.dataservice.entity.DasApiDir;
 import com.qk.dm.dataservice.vo.DasApiDirTreeVO;
 import com.qk.dm.dataservice.vo.DasApiDirVO;
 import java.util.List;
@@ -20,11 +21,14 @@ public interface DasApiDirService {
 
   void update(DasApiDirVO dasApiDirVO);
 
-  void delete(Long delId);
+  void delete(String id);
 
-  void deleteRoot(Long delId);
+  void deleteBulk(String ids);
 
-  void getApiDirId(Set<String> apiDirIdSet, String apiDirId);
+  void getApiDirId(Set<String> dirIdSet, String dirId);
 
   List<DasApiDirVO> getDasApiDirByDirName(String title);
+
+  DasApiDir searchApiDirInfoByDirId(String dirId);
+
 }

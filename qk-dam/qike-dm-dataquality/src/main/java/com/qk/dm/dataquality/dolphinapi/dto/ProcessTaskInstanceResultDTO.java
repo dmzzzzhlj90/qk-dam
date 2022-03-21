@@ -1,6 +1,9 @@
 package com.qk.dm.dataquality.dolphinapi.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,9 +14,14 @@ import java.util.List;
  * @since 1.0.0
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProcessTaskInstanceResultDTO implements Serializable {
-    private int total;
-    private int currentPage;
-    private int totalPage;
+    private Long total;
+    private Long currentPage;
+    private Long totalPage;
+    private Long pageSize;
+    private Long start;
     private List<TaskInstanceDTO> totalList;
 }

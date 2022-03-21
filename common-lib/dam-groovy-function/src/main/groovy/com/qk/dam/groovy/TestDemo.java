@@ -43,22 +43,33 @@ public class TestDemo {
 //
 //        Object evaluate = factsScriptShell.evaluate("(code[0]>0&&code[2]>0.1)&&(name[0]>0&&name[2]>0.1)");
         //
-        String expression = "(code[0]>0&&code[2]>0.1)&&(name[0]>0&&name[2]>0.1)";
+//        String expression = "(code[0]>0&&code[2]>0.1)&&(name[0]>5&&name[2]>0.1)";
+//        List<String> fields = new ArrayList<>();
+//        fields.add("code");
+//        fields.add("name");
+//
+//        Map<String, List<Object>> dataMap = new HashMap<>(16);
+//        List<Object> data1 = new ArrayList<>();
+//        data1.add(10);
+//        data1.add(800);
+//        data1.add(0.2);
+//        List<Object> data2 = new ArrayList<>();
+//        data2.add(10);
+//        data2.add(800);
+//        data2.add(0.2);
+//        dataMap.put("code", data1);
+//        dataMap.put("name", data2);
+
+        ////////////////////////
+        String expression = "mid[0] as Integer  > 100";
         List<String> fields = new ArrayList<>();
-        fields.add("code");
-        fields.add("name");
+//        fields.add("code");
+        fields.add("mid");
 
         Map<String, List<Object>> dataMap = new HashMap<>(16);
-        List<Object> data1 = new ArrayList<>();
-        data1.add(10);
-        data1.add(800);
-        data1.add(0.2);
-        List<Object> data2 = new ArrayList<>();
-        data2.add(10);
-        data2.add(800);
-        data2.add(0.2);
-        dataMap.put("code", data1);
-        dataMap.put("name", data2);
+        List<Object> data = new ArrayList<>();
+        data.add("138780636");
+        dataMap.put("mid",data);
 
         Object evaluate = GroovyShellExecutor.evaluateBinding(fields, dataMap, expression);
         System.out.println(evaluate);

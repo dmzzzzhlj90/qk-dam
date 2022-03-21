@@ -8,8 +8,7 @@ import java.util.function.BiFunction
 /**
  * 执行函数
  *
- * @author wjq
- * @date 2021/12/23
+ * @author wjq* @date 2021/12/23
  * @since 1.0.0
  */
 class RuleFun {
@@ -25,10 +24,12 @@ class RuleFun {
 //        computeField
 //    }
 
-    BiFunction ruleFunction = { source, allField ->
-        Script script = ObjectCache.getIfNull(allField.expression,{ -> factsScriptShell.parse(allField.expression) })
-        source.forEach({k,v->script.setProperty(k,v)});
-        script.setProperty("source",source);
+    BiFunction ruleFunction = { source, entity ->
+        Script script = ObjectCache.getIfNull(entity.expression, { -> factsScriptShell.parse(entity.expression) })
+        if (source != null) {
+            source.forEach({ k, v -> script.setProperty(k, v) });
+            script.setProperty("source", source);
+        }
         def computeField = script.run()
         computeField
     }

@@ -1,6 +1,5 @@
 package com.qk.dm.dataquality.constant;
 
-import com.alibaba.druid.DbType;
 import org.springframework.util.ObjectUtils;
 
 import java.util.HashMap;
@@ -14,16 +13,18 @@ import java.util.Map;
  * @since 1.0.0
  */
 public enum EngineTypeEnum {
-    MYSQL( "MYSQL", DbType.mysql),
-    HIVE( "HIVE", DbType.hive),
-    ORACLE( "ORACLE", DbType.oracle);
+    /**
+     * todo 20220117 去掉druid
+     */
+    MYSQL( "MYSQL"),
+    HIVE( "HIVE"),
+    ELASTICSEARCH( "ELASTICSEARCH"),
+    ORACLE( "ORACLE");
 
     private String code;
-    private DbType dbType;
 
-    EngineTypeEnum(String code, DbType dbType) {
+    EngineTypeEnum(String code) {
         this.code = code;
-        this.dbType = dbType;
     }
 
     public static EngineTypeEnum fromValue(String code) {
@@ -49,7 +50,4 @@ public enum EngineTypeEnum {
         return code;
     }
 
-    public DbType getDbType() {
-        return dbType;
-    }
 }

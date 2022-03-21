@@ -13,16 +13,17 @@ import java.util.Date;
 
 /**
  * task instance
+ * @author shenpengjie
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class TaskInstanceVO implements Serializable {
-    private int id;
+    private Long id;
     private String state;
-    private int processInstanceId;
-    private long taskCode;
+    private Long processInstanceId;
+    private Long taskCode;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
@@ -30,7 +31,6 @@ public class TaskInstanceVO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date endTime;
     private String processInstanceName;
-
 
 //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

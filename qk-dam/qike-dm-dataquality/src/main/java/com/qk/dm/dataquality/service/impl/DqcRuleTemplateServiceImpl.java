@@ -1,12 +1,9 @@
 package com.qk.dm.dataquality.service.impl;
 
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
-import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.EngineTypeEnum;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
@@ -26,6 +23,7 @@ import com.qk.dm.dataquality.vo.DqcRuleTemplateVO;
 import com.qk.dm.dataquality.vo.RuleTemplateConstantsVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -41,8 +39,8 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
-    private static final Log LOG = LogFactory.get("规则模版操作");
     private final DqcRuleTemplateRepository dqcRuleTemplateRepository;
     private JPAQueryFactory jpaQueryFactory;
     private final EntityManager entityManager;
@@ -65,7 +63,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     @Override
     public void insert(DqcRuleTemplateVO dqcRuleTemplateVo) {
         //判断sql是否适用与引擎
-        checkEngine(dqcRuleTemplateVo.getEngineTypeList(), dqcRuleTemplateVo.getTempSql());
+//        checkEngine(dqcRuleTemplateVo.getEngineTypeList(), dqcRuleTemplateVo.getTempSql());
         DqcRuleTemplate dqcRuleTemplate = DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo);
         //todo 转换类型
         dqcRuleTemplate.setEngineType(GsonUtil.toJsonString(dqcRuleTemplateVo.getEngineTypeList()));
@@ -81,6 +79,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
 
     @Override
     public void update(DqcRuleTemplateVO dqcRuleTemplateVo) {
+        //todo 暂无修改情况，直接删除再添加
         DqcRuleTemplate dqcRuleTemplate = getInfoById(dqcRuleTemplateVo.getId());
         checkPublishState(dqcRuleTemplate, "上线规则模版不支持修改！！！");
         DqcRuleTemplateMapper.INSTANCE.userDqcRuleTemplate(dqcRuleTemplateVo, dqcRuleTemplate);
@@ -197,7 +196,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
                     .where(booleanBuilder)
                     .fetchOne();
         } catch (Exception e) {
-            LOG.debug("查询总数量出错{}", e.getMessage());
+            log.error("查询总数量出错{}", e.getMessage());
             throw new BizException("查询失败");
         }
     }
@@ -214,7 +213,7 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
                     .limit(pagination.getSize())
                     .fetch();
         } catch (Exception e) {
-            LOG.debug("查询列表出错{}", e.getMessage());
+            log.error("查询列表出错{}", e.getMessage());
             throw new BizException("查询失败!!!");
         }
     }
@@ -268,9 +267,9 @@ public class DqcRuleTemplateServiceImpl implements DqcRuleTemplateService {
     }
 
     private void checkSql(String sql, EngineTypeEnum dataSourceEnums) {
-        if (!SqlParserFactory.parseStatements(sql, dataSourceEnums.getDbType())) {
-            throw new BizException("本sql " + dataSourceEnums.getCode() + " 不适用!");
-        }
+//        if (!SqlParserFactory.parseStatements(sql, dataSourceEnums.getDbType())) {
+//            throw new BizException("本sql " + dataSourceEnums.getCode() + " 不适用!");
+//        }
     }
 
     private void checkRulesIsQuote(String publishState, Long id) {

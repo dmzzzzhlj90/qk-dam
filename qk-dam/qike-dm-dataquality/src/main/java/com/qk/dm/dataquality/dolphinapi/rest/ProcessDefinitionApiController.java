@@ -44,7 +44,7 @@ public class ProcessDefinitionApiController {
     }
 
     /**
-     * 新增规则调度_基础信息
+     * 查询工作流实例ID
      *
      * @param projectCode,searchVal,jobId
      * @return DefaultCommonResult
@@ -55,6 +55,18 @@ public class ProcessDefinitionApiController {
                                                                                 @RequestParam("jobId") String jobId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
                 processDefinitionApiService.queryProcessDefinitionInfo(projectCode, searchVal, jobId));
+    }
+
+    /**
+     * 删除规则调度_基础信息
+     *
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("/definition/info")
+    public DefaultCommonResult deleteProcessDefinitionInfo(@RequestParam("processDefinitionCode") Long processDefinitionCode,
+                                                           @RequestParam("projectCode") Long projectCode) {
+        processDefinitionApiService.delete(processDefinitionCode, projectCode);
+        return DefaultCommonResult.success();
     }
 
     @PutMapping("/release")

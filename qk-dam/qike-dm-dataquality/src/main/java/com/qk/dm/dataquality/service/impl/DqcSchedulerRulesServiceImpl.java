@@ -17,13 +17,14 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -84,38 +85,52 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
 
     @Override
     public void insert(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        //设置规则信息关联流程任务节点taskCode
+        setTaskCode(dqcSchedulerRulesVO);
+        //规则名称
+        dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO));
+        //设置规则id
+        String ruleId = UUID.randomUUID().toString().replaceAll("-", "");
+        dqcSchedulerRulesVO.setRuleId(ruleId);
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
-
-        dqcSchedulerRules.setTables(GsonUtil.toJsonString(dqcSchedulerRulesVO.getTableList()));
-        dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
+        setMetaDataInfo(dqcSchedulerRulesVO, dqcSchedulerRules);
         // todo 创建人
         dqcSchedulerRules.setCreateUserid("admin");
         dqcSchedulerRules.setDelFlag(DqcConstant.DEL_FLAG_RETAIN);
         dqcSchedulerRulesRepository.save(dqcSchedulerRules);
     }
 
+    private void setMetaDataInfo(DqcSchedulerRulesVO dqcSchedulerRulesVO, DqcSchedulerRules dqcSchedulerRules) {
+        if (dqcSchedulerRulesVO.getTableList() != null && dqcSchedulerRulesVO.getTableList().size() > 0) {
+            dqcSchedulerRules.setTables(GsonUtil.toJsonString(dqcSchedulerRulesVO.getTableList()));
+        }
+        if (dqcSchedulerRulesVO.getFieldList() != null && dqcSchedulerRulesVO.getFieldList().size() > 0) {
+            dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
+        }
+    }
+
     @Override
     public List<DqcSchedulerRulesVO> insertBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId) {
         List<DqcSchedulerRulesVO> executorRuleList = new ArrayList<>();
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
+        AtomicInteger index = new AtomicInteger(1);
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
-            String ruleId = UUID.randomUUID().toString().replaceAll("-", "");
-            dqcSchedulerRulesVO.setRuleId(ruleId);
             dqcSchedulerRulesVO.setJobId(jobId);
-            //规则名称
-            dqcSchedulerRulesVO.setRuleName(getRuleName(dqcSchedulerRulesVO));
-            //设置规则信息关联流程任务节点taskCode
-            setTaskCode(dqcSchedulerRulesVO);
             //生成执行Sql;
             String executorSql = (String) getExecutorSql(dqcSchedulerRulesVO);
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
             //回填basicVo进行实例生成;
             executorRuleList.add(dqcSchedulerRulesVO);
-            insert(dqcSchedulerRulesVO);
+            //插入or更新
+            saveOrUpdateByRuleId(dqcSchedulerRulesVO);
+            index.getAndIncrement();
         }
         return executorRuleList;
     }
 
+    /**
+     * 设置规则信息关联流程任务节点taskCode
+     */
     private void setTaskCode(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         try {
             dqcSchedulerRulesVO.setTaskCode(CodeGenerateUtils.getInstance().genCode());
@@ -128,9 +143,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     @Override
     public void update(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
         DqcSchedulerRules dqcSchedulerRules = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRules(dqcSchedulerRulesVO);
-
-        dqcSchedulerRules.setTables(GsonUtil.toJsonString(dqcSchedulerRulesVO.getTableList()));
-        dqcSchedulerRules.setFields(GsonUtil.toJsonString(dqcSchedulerRulesVO.getFieldList()));
+        setMetaDataInfo(dqcSchedulerRulesVO, dqcSchedulerRules);
         // todo 修改人
         dqcSchedulerRules.setUpdateUserid("admin");
         if (dqcSchedulerRules.getId() == null) {
@@ -146,6 +159,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     public List<DqcSchedulerRulesVO> updateBulk(List<DqcSchedulerRulesVO> dqcSchedulerRulesVOList, String jobId) {
         List<DqcSchedulerRulesVO> executorRuleList = new ArrayList<>();
         //TODO 数据量比较少,暂时循环保存,后期修改为jpa批量操作
+        AtomicInteger index = new AtomicInteger(1);
         for (DqcSchedulerRulesVO dqcSchedulerRulesVO : dqcSchedulerRulesVOList) {
             dqcSchedulerRulesVO.setJobId(jobId);
             //规则名称
@@ -155,9 +169,24 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
             dqcSchedulerRulesVO.setExecuteSql(executorSql);
             //回填basicVo进行实例生成;
             executorRuleList.add(dqcSchedulerRulesVO);
-            update(dqcSchedulerRulesVO);
+            //插入or更新
+            saveOrUpdateByRuleId(dqcSchedulerRulesVO);
+            index.getAndIncrement();
         }
         return executorRuleList;
+    }
+
+    /**
+     * 插入or更新
+     */
+    private void saveOrUpdateByRuleId(DqcSchedulerRulesVO dqcSchedulerRulesVO) {
+        if (ObjectUtils.isEmpty(dqcSchedulerRulesVO.getRuleId())) {
+            //不存在,新增
+            insert(dqcSchedulerRulesVO);
+        } else {
+            //存在更新
+            update(dqcSchedulerRulesVO);
+        }
     }
 
     @Override
@@ -250,17 +279,24 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
     }
 
     private String getRuleName(DqcSchedulerRulesVO rulesVO) {
-        String tableStr = "";
-        String fieldStr = "";
+        String ruleMame = rulesVO.getTaskCode() +"/"+ rulesVO.getRuleType();
+
+        if (!ObjectUtils.isEmpty(rulesVO.getDatabaseName())) {
+            String dbStr = rulesVO.getDatabaseName();
+            ruleMame += "/" + dbStr;
+        }
+
         if (rulesVO.getTableList() != null) {
-            tableStr = String.join("&", rulesVO.getTableList());
+           String tableStr = String.join("&", rulesVO.getTableList());
+            ruleMame += "/" + tableStr;
         }
 
         if (rulesVO.getFieldList() != null) {
-            fieldStr = String.join("&", rulesVO.getFieldList());
+            String fieldStr = String.join("&", rulesVO.getFieldList());
+            ruleMame += "/" + fieldStr;
         }
 
-        return rulesVO.getRuleType() + "/" + rulesVO.getDatabaseName() + "/" + tableStr + "/" + fieldStr;
+        return ruleMame;
     }
 
 
@@ -269,7 +305,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //检测表数
         return dqcSchedulerRulesRepository.findAllTablesByTaskCode(taskCodeSet)
                 .stream()
-                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .flatMap(item -> DqcConstant.jsonStrToList(item).stream())
                 .collect(Collectors.toSet())
                 .size();
     }
@@ -279,7 +315,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //检测字段数
         return dqcSchedulerRulesRepository.findAllFieldsByTaskCode(taskCodeSet)
                 .stream()
-                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .flatMap(item -> DqcConstant.jsonStrToList(item).stream())
                 .collect(Collectors.toSet())
                 .size();
     }
@@ -289,7 +325,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //检测表数
         return dqcSchedulerRulesRepository.findAllTables()
                 .stream()
-                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .flatMap(item -> DqcConstant.jsonStrToList(item).stream())
                 .collect(Collectors.toSet())
                 .size();
     }
@@ -299,7 +335,7 @@ public class DqcSchedulerRulesServiceImpl implements DqcSchedulerRulesService {
         //检测字段数
         return dqcSchedulerRulesRepository.findAllFields()
                 .stream()
-                .flatMap(item -> Objects.requireNonNull(DqcConstant.jsonStrToList(item)).stream())
+                .flatMap(item -> DqcConstant.jsonStrToList(item).stream())
                 .collect(Collectors.toSet())
                 .size();
     }

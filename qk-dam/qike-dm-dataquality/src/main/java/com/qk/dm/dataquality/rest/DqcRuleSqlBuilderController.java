@@ -44,7 +44,7 @@ public class DqcRuleSqlBuilderController {
      * @param ruleId
      * @return DefaultCommonResult
      */
-    @GetMapping("/realtime/python")
+    @GetMapping("/realtime")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult getRealTimeSql(@RequestParam("ruleId") String ruleId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dqcRuleSqlBuilderService.getRealTimeSql(ruleId));

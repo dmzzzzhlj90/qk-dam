@@ -5,8 +5,9 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datasource.entity.DsDatasource;
 import com.qk.dm.datasource.vo.DsDataSourceParamsVO;
 import com.qk.dm.datasource.vo.DsDatasourceVO;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author zys
@@ -19,17 +20,17 @@ public interface DsDataSourceService {
 
   void addDsDataSource(DsDatasourceVO dsDatasourceVO);
 
-  void deleteDsDataSource(Integer id);
+  void deleteDsDataSource(String id);
 
   void updateDsDataSource(DsDatasourceVO dsDatasourceVO);
 
-  Boolean dataSourceConnect(DsDatasourceVO dsDatasourceVO);
+  void dataSourceConnect(DsDatasourceVO dsDatasourceVO);
 
   List<DsDatasourceVO> getDataSourceByType(String type);
 
   List<String> getDataType();
 
-  List<DsDatasourceVO> getDataSourceByDsname(Integer id);
+  List<DsDatasourceVO> getDataSourceByDsname(String id);
 
   ConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource);
 }

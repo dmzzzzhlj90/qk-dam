@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/**`
  * 表信息
  * @author wangzp
  * @date 2021/11/12 16:02
@@ -22,8 +22,6 @@ import java.util.List;
 public class Table {
     private String name = "";
     private List<Column> columns = new ArrayList<>();
-//    private Engine engine = Engine.InnoDB;
-//    private Charset charset = Charset.utf8;
     private String comments = "";
 
     public String getName() {

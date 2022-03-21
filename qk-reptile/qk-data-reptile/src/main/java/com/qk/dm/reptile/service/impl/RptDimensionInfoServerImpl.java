@@ -1,6 +1,7 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptDimensionColumnInfo;
 import com.qk.dm.reptile.entity.QRptDimensionInfo;
@@ -96,6 +97,8 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
     if (exists){
       throw new BizException("当前需要新增的维度目录名称为"+rptDimensionInfoDTO.getDimensionName()+"的数据已经存在");
     }
+    //添加用户名
+    rptDimensionInfo.setCreateUsername(ClientUserInfo.getUserName());
     rptDimensionInfoRepository.save(rptDimensionInfo);
   }
 
@@ -153,6 +156,8 @@ public class RptDimensionInfoServerImpl implements RptDimensionInfoService {
       throw new BizException("当前需修改的目录名称为"+rptDimensionInfoDTO.getDimensionName()+"的数据不存在");
     }
     RptDimensionInfoMapper.INSTANCE.of(rptDimensionInfoDTO, rptDimensionInfo);
+    //修改人
+    rptDimensionInfo.setUpdateUsername(ClientUserInfo.getUserName());
     rptDimensionInfoRepository.saveAndFlush(rptDimensionInfo);
   }
 

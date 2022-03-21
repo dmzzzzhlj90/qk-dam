@@ -21,7 +21,9 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +43,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
+    private final static Logger LOG = LoggerFactory.getLogger(DqcSchedulerInfoServiceImpl.class);
 
     private final DqcSchedulerBasicInfoRepository dqcSchedulerBasicInfoRepository;
     private final DqcSchedulerRulesRepository dqcSchedulerRulesRepository;
@@ -115,19 +118,25 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     public void insert(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         String jobId = UUID.randomUUID().toString().replaceAll("-", "");
         dqcSchedulerBasicInfoVO.setJobId(jobId);
+        LOG.info("新生成的JobId: 【{}】 ", jobId);
         //首次添加先设置为0,生成流程实例后获取真正的ID进行更新操作!
         dqcSchedulerBasicInfoVO.setProcessDefinitionCode(0L);
         //基础信息
         dqcSchedulerBasicInfoService.insert(dqcSchedulerBasicInfoVO);
+        LOG.info("调度规则,基础信息保存成功!");
         //规则信息
         dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(
-                        dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId));
+                dqcSchedulerRulesService.insertBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), jobId));
+        LOG.info("调度规则,规则信息保存成功!");
         //调度配置信息
         dqcSchedulerConfigService.insert(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO(), jobId);
+        LOG.info("调度配置信息保存成功!");
         //创建流程实例ID
         Long processDefinitionCode = processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
+        LOG.info("创建流程实例成功!");
         //存储流程实例ID
         updateProcessDefinitionIdByJobId(processDefinitionCode, jobId);
+        LOG.info("存储流程实例ID成功!");
     }
 
     @Override
@@ -135,13 +144,17 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     public void update(DqcSchedulerBasicInfoVO dqcSchedulerBasicInfoVO) {
         //基础信息
         dqcSchedulerBasicInfoService.update(dqcSchedulerBasicInfoVO);
+        LOG.info("调度规则,基础信息编辑成功!");
         //TODO 规则信息
         dqcSchedulerBasicInfoVO.setDqcSchedulerRulesVOList(
-                dqcSchedulerRulesService.updateBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(),dqcSchedulerBasicInfoVO.getJobId()));
+                dqcSchedulerRulesService.updateBulk(dqcSchedulerBasicInfoVO.getDqcSchedulerRulesVOList(), dqcSchedulerBasicInfoVO.getJobId()));
+        LOG.info("调度规则,规则信息编辑成功!");
         //调度配置信息
         dqcSchedulerConfigService.update(dqcSchedulerBasicInfoVO.getDqcSchedulerConfigVO());
+        LOG.info("调度配置信息编辑成功!");
         //更新流程实例
         processDefinitionApiService.saveAndFlush(dqcSchedulerBasicInfoVO);
+        LOG.info("更新流程实例成功!");
     }
 
     @Override
@@ -155,7 +168,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         //删除调度配置信息
         dqcSchedulerConfigService.deleteByJobId(schedulerBasicInfo.getJobId());
         //删除工作流信息
-        processDefinitionApiService.delete(dolphinSchedulerInfoConfig.getProjectCode(), schedulerBasicInfo.getProcessDefinitionCode());
+        processDefinitionApiService.delete(schedulerBasicInfo.getProcessDefinitionCode(), dolphinSchedulerInfoConfig.getProjectCode());
     }
 
     @Override
@@ -171,7 +184,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
         //删除调度配置信息
         dqcSchedulerConfigService.deleteBulkByJobIds(jobIds);
         //删除工作流信息
-        processDefinitionApiService.deleteBulk(processDefinitionIdList,dolphinSchedulerInfoConfig.getProjectCode());
+        processDefinitionApiService.deleteBulk(processDefinitionIdList, dolphinSchedulerInfoConfig.getProjectCode());
     }
 
     @Override
@@ -254,7 +267,7 @@ public class DqcSchedulerInfoServiceImpl implements DqcSchedulerInfoService {
     }
 
     private Map<String, List<DqcSchedulerRulesVO>> getSchedulerRulesMap(List<String> taskIds) {
-        Iterable<DqcSchedulerRules> dqcSchedulerRulesIterable = dqcSchedulerRulesRepository.findAll(QDqcSchedulerRules.dqcSchedulerRules.jobId.in(taskIds),QDqcSchedulerRules.dqcSchedulerRules.gmtModified.desc());
+        Iterable<DqcSchedulerRules> dqcSchedulerRulesIterable = dqcSchedulerRulesRepository.findAll(QDqcSchedulerRules.dqcSchedulerRules.jobId.in(taskIds), QDqcSchedulerRules.dqcSchedulerRules.gmtModified.desc());
         List<DqcSchedulerRulesVO> schedulerRulesVOList = new ArrayList<>();
         for (DqcSchedulerRules dqcSchedulerRules : dqcSchedulerRulesIterable) {
             DqcSchedulerRulesVO dqcSchedulerRulesVO = DqcSchedulerRulesMapper.INSTANCE.userDqcSchedulerRulesVO(dqcSchedulerRules);

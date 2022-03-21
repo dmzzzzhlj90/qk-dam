@@ -1,0 +1,1646 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "1b326caf-01ce-4e2f-bc0b-c23bcdf4a322",
+    "name": "dm-dataservice"
+  },
+  "item": [
+    {
+      "name": "数据服务_API基础信息",
+      "item": [
+        {
+          "name": "统一查询API基础信息入口",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"a65qrl\"\n  },\n  \"apiId\": \"104\",\n  \"apiName\": \"les.streich\",\n  \"dirId\": \"104\",\n  \"beginDay\": \"ludqyy\",\n  \"endDay\": \"n4jq5d\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/list",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "统一查询API基础信息入口",
+            "header": []
+          },
+          "description": "统一查询API基础信息入口"
+        },
+        {
+          "name": "新增API基础信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 932,\n  \"apiId\": \"104\",\n  \"dirId\": \"104\",\n  \"dirName\": \"les.streich\",\n  \"apiName\": \"les.streich\",\n  \"apiPath\": \"5wyzgc\",\n  \"protocolType\": \"nhk60u\",\n  \"requestType\": \"ee3623\",\n  \"apiType\": \"q40zx1\",\n  \"status\": \"x6zw5x\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"paraCHNName\": \"les.streich\",\n      \"paraPosition\": \"rs63ip\",\n      \"paraType\": \"e1k9xk\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"dgijnc\",\n      \"description\": \"pd2s00\"\n    }\n  ],\n  \"description\": \"f7foag\",\n  \"createUserid\": \"104\",\n  \"updateUserid\": \"104\",\n  \"gmtCreate\": \"2022-02-21 15:22:34\",\n  \"gmtModified\": \"2022-02-21 15:22:34\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增API基础信息",
+            "header": []
+          },
+          "description": "新增API基础信息"
+        },
+        {
+          "name": "编辑API基础信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 38,\n  \"apiId\": \"104\",\n  \"dirId\": \"104\",\n  \"dirName\": \"les.streich\",\n  \"apiName\": \"les.streich\",\n  \"apiPath\": \"bv8e52\",\n  \"protocolType\": \"n8d2y1\",\n  \"requestType\": \"zg4uri\",\n  \"apiType\": \"e4xxge\",\n  \"status\": \"lh1d5s\",\n  \"dasApiBasicInfoRequestParasVO\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"paraCHNName\": \"les.streich\",\n      \"paraPosition\": \"q3uxgq\",\n      \"paraType\": \"o9zun3\",\n      \"necessary\": true,\n      \"supportNull\": true,\n      \"defaultValue\": {\n        \"object\": \"any object\"\n      },\n      \"exampleValue\": \"6yfg8x\",\n      \"description\": \"i6gy2m\"\n    }\n  ],\n  \"description\": \"m5i5r1\",\n  \"createUserid\": \"104\",\n  \"updateUserid\": \"104\",\n  \"gmtCreate\": \"2022-02-21 15:22:34\",\n  \"gmtModified\": \"2022-02-21 15:22:34\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/update",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "update"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑API基础信息",
+            "header": []
+          },
+          "description": "编辑API基础信息"
+        },
+        {
+          "name": "//TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 删除API基础信息,关联删除新建\u0026\u0026注册API",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/104",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "104",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "//TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 删除API基础信息,关联删除新建\u0026\u0026注册API",
+            "header": []
+          },
+          "description": "//TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 删除API基础信息,关联删除新建\u0026\u0026注册API"
+        },
+        {
+          "name": "//TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 批量删除API基础信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/bulk/3g1854",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "bulk",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "um0x00",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "//TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 批量删除API基础信息",
+            "header": []
+          },
+          "description": "//TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 批量删除API基础信息"
+        },
+        {
+          "name": "获取API类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/query/api/type",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "query",
+                "api",
+                "type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取API类型",
+            "header": []
+          },
+          "description": "获取API类型"
+        },
+        {
+          "name": "获取取数方式",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/query/dm/source/type",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "query",
+                "dm",
+                "source",
+                "type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取取数方式",
+            "header": []
+          },
+          "description": "获取取数方式"
+        },
+        {
+          "name": "API基础信息__入参定义表头",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/query/request/paras/header/infos",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "query",
+                "request",
+                "paras",
+                "header",
+                "infos"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "API基础信息__入参定义表头",
+            "header": []
+          },
+          "description": "API基础信息__入参定义表头"
+        },
+        {
+          "name": "API基础信息__参数位置下拉列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/query/request/param/positions",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "query",
+                "request",
+                "param",
+                "positions"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "API基础信息__参数位置下拉列表",
+            "header": []
+          },
+          "description": "API基础信息__参数位置下拉列表"
+        },
+        {
+          "name": "API基础信息__状态信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/status/info",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "status",
+                "info"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "API基础信息__状态信息",
+            "header": []
+          },
+          "description": "API基础信息__状态信息"
+        },
+        {
+          "name": "数据类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/basic/info/data/type",
+              "protocol": "http",
+              "path": [
+                "api",
+                "basic",
+                "info",
+                "data",
+                "type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据类型",
+            "header": []
+          },
+          "description": "数据类型"
+        }
+      ]
+    },
+    {
+      "name": "数据服务_新建API_配置方式",
+      "item": [
+        {
+          "name": "新增API配置方式_详情展示",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/create/config/104",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "config",
+                ":apiId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "apiId",
+                  "value": "104",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "新增API配置方式_详情展示",
+            "header": []
+          },
+          "description": "新增API配置方式_详情展示"
+        },
+        {
+          "name": "新增API配置方式",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 182,\n    \"apiId\": \"104\",\n    \"dirId\": \"104\",\n    \"dirName\": \"les.streich\",\n    \"apiName\": \"les.streich\",\n    \"apiPath\": \"p0lxyr\",\n    \"protocolType\": \"yq9lxe\",\n    \"requestType\": \"oqlyks\",\n    \"apiType\": \"4t7rea\",\n    \"status\": \"qhqphi\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"les.streich\",\n        \"paraCHNName\": \"les.streich\",\n        \"paraPosition\": \"obm1af\",\n        \"paraType\": \"g37pm1\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"amcc9f\",\n        \"description\": \"6q1jgk\"\n      }\n    ],\n    \"description\": \"e4ajke\",\n    \"createUserid\": \"104\",\n    \"updateUserid\": \"104\",\n    \"gmtCreate\": \"2022-02-21 15:22:34\",\n    \"gmtModified\": \"2022-02-21 15:22:34\"\n  },\n  \"id\": 468,\n  \"apiId\": \"104\",\n  \"accessMethod\": \"dx7vgc\",\n  \"dataSourceType\": \"3kvufe\",\n  \"dataSourceConnect\": \"p817l4\",\n  \"dataBase\": \"feodhh\",\n  \"tableName\": \"les.streich\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"mappingName\": \"les.streich\",\n      \"conditionType\": \"3py12m\",\n      \"backendParaName\": \"les.streich\",\n      \"backendParaPosition\": \"00ejw3\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"mappingName\": \"les.streich\",\n      \"paraType\": \"6qsblf\",\n      \"exampleValue\": \"zkgmfa\",\n      \"defaultValue\": \"bauwn2\",\n      \"description\": \"niy956\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 633,\n      \"paraName\": \"les.streich\",\n      \"columnName\": \"les.streich\",\n      \"optional\": true,\n      \"orderType\": \"3f3deu\",\n      \"description\": \"nrbc4e\"\n    }\n  ],\n  \"description\": \"nha3uj\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/create/config/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "config",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增API配置方式",
+            "header": []
+          },
+          "description": "新增API配置方式"
+        },
+        {
+          "name": "编辑API配置方式",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 109,\n    \"apiId\": \"104\",\n    \"dirId\": \"104\",\n    \"dirName\": \"les.streich\",\n    \"apiName\": \"les.streich\",\n    \"apiPath\": \"8zssv8\",\n    \"protocolType\": \"ueoe7w\",\n    \"requestType\": \"kg84at\",\n    \"apiType\": \"lnp0xm\",\n    \"status\": \"ylx99h\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"les.streich\",\n        \"paraCHNName\": \"les.streich\",\n        \"paraPosition\": \"jiqfyf\",\n        \"paraType\": \"64mad6\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"adqna6\",\n        \"description\": \"zh599y\"\n      }\n    ],\n    \"description\": \"fak0xn\",\n    \"createUserid\": \"104\",\n    \"updateUserid\": \"104\",\n    \"gmtCreate\": \"2022-02-21 15:22:34\",\n    \"gmtModified\": \"2022-02-21 15:22:34\"\n  },\n  \"id\": 592,\n  \"apiId\": \"104\",\n  \"accessMethod\": \"j2lenc\",\n  \"dataSourceType\": \"fplom8\",\n  \"dataSourceConnect\": \"fbtocn\",\n  \"dataBase\": \"fczzr5\",\n  \"tableName\": \"les.streich\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"mappingName\": \"les.streich\",\n      \"conditionType\": \"zj5rvf\",\n      \"backendParaName\": \"les.streich\",\n      \"backendParaPosition\": \"9nz20x\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"mappingName\": \"les.streich\",\n      \"paraType\": \"znbpex\",\n      \"exampleValue\": \"ljp5m8\",\n      \"defaultValue\": \"agu0er\",\n      \"description\": \"oy5r7n\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 975,\n      \"paraName\": \"les.streich\",\n      \"columnName\": \"les.streich\",\n      \"optional\": true,\n      \"orderType\": \"9nvcd9\",\n      \"description\": \"5n5duw\"\n    }\n  ],\n  \"description\": \"5p5vk2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/create/config/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "config",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑API配置方式",
+            "header": []
+          },
+          "description": "编辑API配置方式"
+        },
+        {
+          "name": "新建API__请求参数表头",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/create/config/request/paras/header/infos",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "config",
+                "request",
+                "paras",
+                "header",
+                "infos"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新建API__请求参数表头",
+            "header": []
+          },
+          "description": "新建API__请求参数表头"
+        },
+        {
+          "name": "新建API__返回参数表头",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/create/config/response/paras/header/infos",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "config",
+                "response",
+                "paras",
+                "header",
+                "infos"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新建API__返回参数表头",
+            "header": []
+          },
+          "description": "新建API__返回参数表头"
+        },
+        {
+          "name": "新建API__排序参数表头",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/create/config/order/paras/header/infos",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "config",
+                "order",
+                "paras",
+                "header",
+                "infos"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新建API__排序参数表头",
+            "header": []
+          },
+          "description": "新建API__排序参数表头"
+        },
+        {
+          "name": "新建API__参数操作比较符号",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/create/config/paras/compare/symbol",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "config",
+                "paras",
+                "compare",
+                "symbol"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新建API__参数操作比较符号",
+            "header": []
+          },
+          "description": "新建API__参数操作比较符号"
+        },
+        {
+          "name": "新建API__排序方式",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/create/config/paras/sort/style",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "config",
+                "paras",
+                "sort",
+                "style"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新建API__排序方式",
+            "header": []
+          },
+          "description": "新建API__排序方式"
+        }
+      ]
+    },
+    {
+      "name": "数据服务_新建API_脚本方式",
+      "item": [
+        {
+          "name": "新增API脚本方式_详情展示",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/create/sqlScript/104",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "sqlScript",
+                ":apiId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "apiId",
+                  "value": "104",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "新增API脚本方式_详情展示",
+            "header": []
+          },
+          "description": "新增API脚本方式_详情展示"
+        },
+        {
+          "name": "新增API脚本方式",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 27,\n    \"apiId\": \"104\",\n    \"dirId\": \"104\",\n    \"dirName\": \"les.streich\",\n    \"apiName\": \"les.streich\",\n    \"apiPath\": \"ezhpnp\",\n    \"protocolType\": \"zc3y17\",\n    \"requestType\": \"hmz9rp\",\n    \"apiType\": \"bcj6t8\",\n    \"status\": \"8s2pi6\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"les.streich\",\n        \"paraCHNName\": \"les.streich\",\n        \"paraPosition\": \"phvoet\",\n        \"paraType\": \"8alg4d\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"26di32\",\n        \"description\": \"d0d4fq\"\n      }\n    ],\n    \"description\": \"hyuirh\",\n    \"createUserid\": \"104\",\n    \"updateUserid\": \"104\",\n    \"gmtCreate\": \"2022-02-21 15:22:34\",\n    \"gmtModified\": \"2022-02-21 15:22:34\"\n  },\n  \"id\": 861,\n  \"apiId\": \"104\",\n  \"accessMethod\": \"t25s2k\",\n  \"dataSourceType\": \"phu72w\",\n  \"dataSourceConnect\": \"m5c8qh\",\n  \"dataBase\": \"3zr7r1\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"mappingName\": \"les.streich\",\n      \"conditionType\": \"fn59o9\",\n      \"backendParaName\": \"les.streich\",\n      \"backendParaPosition\": \"yz9huz\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"mappingName\": \"les.streich\",\n      \"paraType\": \"6rfade\",\n      \"exampleValue\": \"mmr2sh\",\n      \"defaultValue\": \"xj2jxp\",\n      \"description\": \"pdd3fr\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 61,\n      \"paraName\": \"les.streich\",\n      \"columnName\": \"les.streich\",\n      \"optional\": true,\n      \"orderType\": \"7apsso\",\n      \"description\": \"b9j7yy\"\n    }\n  ],\n  \"sqlPara\": \"48zar6\",\n  \"description\": \"ajq3jo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/create/sqlScript/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "sqlScript",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增API脚本方式",
+            "header": []
+          },
+          "description": "新增API脚本方式"
+        },
+        {
+          "name": "编辑API脚本方式",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 799,\n    \"apiId\": \"104\",\n    \"dirId\": \"104\",\n    \"dirName\": \"les.streich\",\n    \"apiName\": \"les.streich\",\n    \"apiPath\": \"jw5ixp\",\n    \"protocolType\": \"nbjgxb\",\n    \"requestType\": \"2res9d\",\n    \"apiType\": \"4mmodt\",\n    \"status\": \"6ledwu\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"les.streich\",\n        \"paraCHNName\": \"les.streich\",\n        \"paraPosition\": \"viio5i\",\n        \"paraType\": \"fmw512\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"0svxk3\",\n        \"description\": \"3yuejo\"\n      }\n    ],\n    \"description\": \"yb1iyh\",\n    \"createUserid\": \"104\",\n    \"updateUserid\": \"104\",\n    \"gmtCreate\": \"2022-02-21 15:22:34\",\n    \"gmtModified\": \"2022-02-21 15:22:34\"\n  },\n  \"id\": 155,\n  \"apiId\": \"104\",\n  \"accessMethod\": \"lrsf4q\",\n  \"dataSourceType\": \"lzvqf2\",\n  \"dataSourceConnect\": \"e2g2ue\",\n  \"dataBase\": \"a1u7lb\",\n  \"apiCreateRequestParasVOS\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"mappingName\": \"les.streich\",\n      \"conditionType\": \"slleuq\",\n      \"backendParaName\": \"les.streich\",\n      \"backendParaPosition\": \"an09so\"\n    }\n  ],\n  \"apiCreateResponseParasVOS\": [\n    {\n      \"paraName\": \"les.streich\",\n      \"mappingName\": \"les.streich\",\n      \"paraType\": \"h4i023\",\n      \"exampleValue\": \"3v0hnk\",\n      \"defaultValue\": \"tto55o\",\n      \"description\": \"42nxkd\"\n    }\n  ],\n  \"apiCreateOrderParasVOS\": [\n    {\n      \"orderNum\": 600,\n      \"paraName\": \"les.streich\",\n      \"columnName\": \"les.streich\",\n      \"optional\": true,\n      \"orderType\": \"q3egui\",\n      \"description\": \"zqwgf2\"\n    }\n  ],\n  \"sqlPara\": \"vp5z34\",\n  \"description\": \"wah29q\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/create/sqlScript/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "create",
+                "sqlScript",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑API脚本方式",
+            "header": []
+          },
+          "description": "编辑API脚本方式"
+        }
+      ]
+    },
+    {
+      "name": "数据服务_API目录",
+      "item": [
+        {
+          "name": "获取API目录树",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/dir/list",
+              "protocol": "http",
+              "path": [
+                "api",
+                "dir",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取API目录树",
+            "header": []
+          },
+          "description": "获取API目录树"
+        },
+        {
+          "name": "新增API目录",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 646,\n  \"dirId\": \"104\",\n  \"title\": \"k8ohmf\",\n  \"value\": \"ngr94d\",\n  \"parentId\": \"104\",\n  \"description\": \"8sozyp\",\n  \"gmtCreate\": \"2022-02-21 15:22:34\",\n  \"gmtModified\": \"2022-02-21 15:22:34\",\n  \"delFlag\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/dir/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增API目录",
+            "header": []
+          },
+          "description": "新增API目录"
+        },
+        {
+          "name": "编辑API分类目录",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 507,\n  \"dirId\": \"104\",\n  \"title\": \"97p474\",\n  \"value\": \"z5qcef\",\n  \"parentId\": \"104\",\n  \"description\": \"ukdin3\",\n  \"gmtCreate\": \"2022-02-21 15:22:34\",\n  \"gmtModified\": \"2022-02-21 15:22:34\",\n  \"delFlag\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/dir/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑API分类目录",
+            "header": []
+          },
+          "description": "编辑API分类目录"
+        },
+        {
+          "name": "API分类目录单子节点删除方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/dir/104",
+              "protocol": "http",
+              "path": [
+                "api",
+                "dir",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "104",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "API分类目录单子节点删除方式",
+            "header": []
+          },
+          "description": "API分类目录单子节点删除方式"
+        },
+        {
+          "name": "API分类目录支持根节点关联删除子节点方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/dir/root/rl4ol7",
+              "protocol": "http",
+              "path": [
+                "api",
+                "dir",
+                "root",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "5ff3dg",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "API分类目录支持根节点关联删除子节点方式",
+            "header": []
+          },
+          "description": "API分类目录支持根节点关联删除子节点方式"
+        }
+      ]
+    },
+    {
+      "name": "数据服务_注册API",
+      "item": [
+        {
+          "name": "注册API_详情展示",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/register/query/by/104",
+              "protocol": "http",
+              "path": [
+                "api",
+                "register",
+                "query",
+                "by",
+                ":apiId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "apiId",
+                  "value": "104",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "注册API_详情展示",
+            "header": []
+          },
+          "description": "注册API_详情展示"
+        },
+        {
+          "name": "新增注册API",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 797,\n    \"apiId\": \"104\",\n    \"dirId\": \"104\",\n    \"dirName\": \"les.streich\",\n    \"apiName\": \"les.streich\",\n    \"apiPath\": \"f5i7x4\",\n    \"protocolType\": \"0qrgni\",\n    \"requestType\": \"lsrgej\",\n    \"apiType\": \"mx5cg1\",\n    \"status\": \"tn2vpp\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"les.streich\",\n        \"paraCHNName\": \"les.streich\",\n        \"paraPosition\": \"eavhhz\",\n        \"paraType\": \"1rq3ae\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"naf2v0\",\n        \"description\": \"qovv1z\"\n      }\n    ],\n    \"description\": \"vp8vke\",\n    \"createUserid\": \"104\",\n    \"updateUserid\": \"104\",\n    \"gmtCreate\": \"2022-02-21 15:22:34\",\n    \"gmtModified\": \"2022-02-21 15:22:34\"\n  },\n  \"dasApiRegisterDefinitionVO\": {\n    \"id\": 46,\n    \"apiId\": \"104\",\n    \"apiRouteId\": \"104\",\n    \"protocolType\": \"97bcvl\",\n    \"requestType\": \"fe673s\",\n    \"backendHost\": \"q9e9pi\",\n    \"backendPath\": \"6es3ax\",\n    \"backendTimeout\": \"nl55oj\",\n    \"dasApiRegisterBackendParaVO\": [\n      {\n        \"paraName\": \"les.streich\",\n        \"paraPosition\": \"wyclcw\",\n        \"paraType\": \"muzn5c\",\n        \"backendParaName\": \"les.streich\",\n        \"backendParaPosition\": \"lkhxij\",\n        \"description\": \"9gze4b\"\n      }\n    ],\n    \"dasApiRegisterConstantParaVO\": [\n      {\n        \"constantParaName\": \"les.streich\",\n        \"constantParaPosition\": \"7m58hm\",\n        \"constantParaType\": \"6acdyw\",\n        \"constantParaValue\": \"y9v5e5\",\n        \"description\": \"f05c24\"\n      }\n    ],\n    \"description\": \"gwe5oy\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/register/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "register",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增注册API",
+            "header": []
+          },
+          "description": "新增注册API"
+        },
+        {
+          "name": "编辑注册API",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dasApiBasicInfoVO\": {\n    \"id\": 741,\n    \"apiId\": \"104\",\n    \"dirId\": \"104\",\n    \"dirName\": \"les.streich\",\n    \"apiName\": \"les.streich\",\n    \"apiPath\": \"yqhidc\",\n    \"protocolType\": \"8n4ivq\",\n    \"requestType\": \"i7ci5q\",\n    \"apiType\": \"8av3zl\",\n    \"status\": \"9v5wfj\",\n    \"dasApiBasicInfoRequestParasVO\": [\n      {\n        \"paraName\": \"les.streich\",\n        \"paraCHNName\": \"les.streich\",\n        \"paraPosition\": \"nzr0x5\",\n        \"paraType\": \"hvc4c4\",\n        \"necessary\": true,\n        \"supportNull\": true,\n        \"defaultValue\": {\n          \"object\": \"any object\"\n        },\n        \"exampleValue\": \"b9n1a8\",\n        \"description\": \"ips17q\"\n      }\n    ],\n    \"description\": \"djycym\",\n    \"createUserid\": \"104\",\n    \"updateUserid\": \"104\",\n    \"gmtCreate\": \"2022-02-21 15:22:34\",\n    \"gmtModified\": \"2022-02-21 15:22:34\"\n  },\n  \"dasApiRegisterDefinitionVO\": {\n    \"id\": 731,\n    \"apiId\": \"104\",\n    \"apiRouteId\": \"104\",\n    \"protocolType\": \"cso2dv\",\n    \"requestType\": \"0bz8xv\",\n    \"backendHost\": \"adyjhv\",\n    \"backendPath\": \"io1buk\",\n    \"backendTimeout\": \"oib4sq\",\n    \"dasApiRegisterBackendParaVO\": [\n      {\n        \"paraName\": \"les.streich\",\n        \"paraPosition\": \"8wl5db\",\n        \"paraType\": \"9kpzs3\",\n        \"backendParaName\": \"les.streich\",\n        \"backendParaPosition\": \"x58tpi\",\n        \"description\": \"02md6o\"\n      }\n    ],\n    \"dasApiRegisterConstantParaVO\": [\n      {\n        \"constantParaName\": \"les.streich\",\n        \"constantParaPosition\": \"zcdzlu\",\n        \"constantParaType\": \"1ue8ef\",\n        \"constantParaValue\": \"kpsnnh\",\n        \"description\": \"vel522\"\n      }\n    ],\n    \"description\": \"n0t4ml\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/register/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "register",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑注册API",
+            "header": []
+          },
+          "description": "编辑注册API"
+        },
+        {
+          "name": "注册API__后端服务参数表头",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/register/backend/paras/header/infos",
+              "protocol": "http",
+              "path": [
+                "api",
+                "register",
+                "backend",
+                "paras",
+                "header",
+                "infos"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "注册API__后端服务参数表头",
+            "header": []
+          },
+          "description": "注册API__后端服务参数表头"
+        },
+        {
+          "name": "注册API__常量参数表头",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/register/constant/paras/header/infos",
+              "protocol": "http",
+              "path": [
+                "api",
+                "register",
+                "constant",
+                "paras",
+                "header",
+                "infos"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "注册API__常量参数表头",
+            "header": []
+          },
+          "description": "注册API__常量参数表头"
+        }
+      ]
+    },
+    {
+      "name": "数据服务_API路由Route匹配",
+      "item": [
+        {
+          "name": "查询所有API路由匹配信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/api/route/list",
+              "protocol": "http",
+              "path": [
+                "api",
+                "route",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "查询所有API路由匹配信息",
+            "header": []
+          },
+          "description": "查询所有API路由匹配信息"
+        },
+        {
+          "name": "新增API路由匹配信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 938,\n  \"apiRouteId\": \"104\",\n  \"apiRoutePath\": \"vhkrmy\",\n  \"description\": \"1sxioh\",\n  \"gmtModified\": \"2022-02-21 15:22:34\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/route/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "route",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增API路由匹配信息",
+            "header": []
+          },
+          "description": "新增API路由匹配信息"
+        },
+        {
+          "name": "编辑API路由匹配信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 465,\n  \"apiRouteId\": \"104\",\n  \"apiRoutePath\": \"yepfmh\",\n  \"description\": \"3m2m12\",\n  \"gmtModified\": \"2022-02-21 15:22:34\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/route/",
+              "protocol": "http",
+              "path": [
+                "api",
+                "route",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑API路由匹配信息",
+            "header": []
+          },
+          "description": "编辑API路由匹配信息"
+        },
+        {
+          "name": "批量删除API路由匹配信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "ids[]",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "xet3sh"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/api/route/bulk?ids\u003dxet3sh\u0026ids\u003dxet3sh",
+              "protocol": "http",
+              "path": [
+                "api",
+                "route",
+                "bulk"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "ids",
+                  "value": "0p9i5t",
+                  "description": "No comments found.,[array of string]"
+                }
+              ],
+              "variable": []
+            },
+            "description": "批量删除API路由匹配信息",
+            "header": []
+          },
+          "description": "批量删除API路由匹配信息"
+        }
+      ]
+    },
+    {
+      "name": "根据数据服务API生成OpenApiJson",
+      "item": [
+        {
+          "name": "根据数据服务注册API,生成OpenApiJson",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/generate/open/api/register",
+              "protocol": "http",
+              "path": [
+                "generate",
+                "open",
+                "api",
+                "register"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "根据数据服务注册API,生成OpenApiJson",
+            "header": []
+          },
+          "description": "根据数据服务注册API,生成OpenApiJson"
+        }
+      ]
+    },
+    {
+      "name": "OPEN-API同步至数据服务操作",
+      "item": [
+        {
+          "name": "同步Swagger至数据服务注册API",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/sync/open/api/register",
+              "protocol": "http",
+              "path": [
+                "sync",
+                "open",
+                "api",
+                "register"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "同步Swagger至数据服务注册API",
+            "header": []
+          },
+          "description": "同步Swagger至数据服务注册API"
+        }
+      ]
+    },
+    {
+      "name": "Interface name is not set.",
+      "item": [
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"104\",\n  \"name\": \"les.streich\",\n  \"parameter\": \"lnlvne\",\n  \"dataPushDetailList\": [\n    {\n      \"entName\": \"les.streich\",\n      \"uniscId\": \"104\",\n      \"regNo\": \"rr3wds\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/data/push",
+              "protocol": "http",
+              "path": [
+                "data",
+                "push"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "",
+            "header": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "服务流控",
+      "item": [
+        {
+          "name": "新增服务流控信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 36,\n  \"apiId\": \"104\",\n  \"strategyName\": \"les.streich\",\n  \"timeValue\": \"eoc9kf\",\n  \"timeUnit\": \"fp469c\",\n  \"apiTimes\": \"ntpgcw\",\n  \"userTimes\": \"k4c4p4\",\n  \"appTimes\": \"ummcje\",\n  \"ipTimes\": \"q0ki35\",\n  \"description\": \"1pqufs\",\n  \"gmtCreate\": \"2022-02-21 15:22:34\",\n  \"gmtModified\": \"2022-02-21 15:22:34\",\n  \"delFlag\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/flowstrategy/add",
+              "protocol": "http",
+              "path": [
+                "api",
+                "flowstrategy",
+                "add"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增服务流控信息",
+            "header": []
+          },
+          "description": "新增服务流控信息"
+        },
+        {
+          "name": "统一查询服务流控信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"252ste\"\n  },\n  \"beginDay\": \"7sjjur\",\n  \"endDay\": \"xscsm8\",\n  \"strategyName\": \"les.streich\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/flowstrategy/query",
+              "protocol": "http",
+              "path": [
+                "api",
+                "flowstrategy",
+                "query"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "统一查询服务流控信息",
+            "header": []
+          },
+          "description": "统一查询服务流控信息"
+        },
+        {
+          "name": "修改服务流控信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 711,\n  \"apiId\": \"104\",\n  \"strategyName\": \"les.streich\",\n  \"timeValue\": \"qctmih\",\n  \"timeUnit\": \"s5xqog\",\n  \"apiTimes\": \"g9yp10\",\n  \"userTimes\": \"k0ie8c\",\n  \"appTimes\": \"wim7er\",\n  \"ipTimes\": \"ch51im\",\n  \"description\": \"stynj4\",\n  \"gmtCreate\": \"2022-02-21 15:22:34\",\n  \"gmtModified\": \"2022-02-21 15:22:34\",\n  \"delFlag\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/flowstrategy/update",
+              "protocol": "http",
+              "path": [
+                "api",
+                "flowstrategy",
+                "update"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "修改服务流控信息",
+            "header": []
+          },
+          "description": "修改服务流控信息"
+        },
+        {
+          "name": "删除服务流控信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/flowstrategy/delete/104",
+              "protocol": "http",
+              "path": [
+                "api",
+                "flowstrategy",
+                "delete",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "104",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除服务流控信息",
+            "header": []
+          },
+          "description": "删除服务流控信息"
+        },
+        {
+          "name": "批量删除服务流控信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/flowstrategy/bulk/delete/g7edgv",
+              "protocol": "http",
+              "path": [
+                "api",
+                "flowstrategy",
+                "bulk",
+                "delete",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "17q3fc",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "批量删除服务流控信息",
+            "header": []
+          },
+          "description": "批量删除服务流控信息"
+        }
+      ]
+    },
+    {
+      "name": "应用管理",
+      "item": [
+        {
+          "name": "新增应用管理信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 350,\n  \"appId\": \"104\",\n  \"appName\": \"les.streich\",\n  \"appType\": \"scb7l3\",\n  \"apiId\": \"104\",\n  \"description\": \"v5v9pq\",\n  \"gmtCreate\": \"2022-02-21 15:22:35\",\n  \"gmtModified\": \"2022-02-21 15:22:35\",\n  \"delFlag\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/management/add",
+              "protocol": "http",
+              "path": [
+                "api",
+                "management",
+                "add"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增应用管理信息",
+            "header": []
+          },
+          "description": "新增应用管理信息"
+        },
+        {
+          "name": "统一查询应用管理系统",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"dojj6l\"\n  },\n  \"appName\": \"les.streich\",\n  \"appType\": \"89ffm0\",\n  \"beginDay\": \"1a8yxu\",\n  \"endDay\": \"yhekve\",\n  \"id\": 132,\n  \"apiIds\": \"l4agvg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/management/query",
+              "protocol": "http",
+              "path": [
+                "api",
+                "management",
+                "query"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "统一查询应用管理系统",
+            "header": []
+          },
+          "description": "统一查询应用管理系统"
+        },
+        {
+          "name": "修改应用管理信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 641,\n  \"appId\": \"104\",\n  \"appName\": \"les.streich\",\n  \"appType\": \"nvajyz\",\n  \"apiId\": \"104\",\n  \"description\": \"x0ui4y\",\n  \"gmtCreate\": \"2022-02-21 15:22:35\",\n  \"gmtModified\": \"2022-02-21 15:22:35\",\n  \"delFlag\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/management/update",
+              "protocol": "http",
+              "path": [
+                "api",
+                "management",
+                "update"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "修改应用管理信息",
+            "header": []
+          },
+          "description": "修改应用管理信息"
+        },
+        {
+          "name": "删除应用管理信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/management/delete/104",
+              "protocol": "http",
+              "path": [
+                "api",
+                "management",
+                "delete",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "104",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除应用管理信息",
+            "header": []
+          },
+          "description": "删除应用管理信息"
+        },
+        {
+          "name": "批量删除引用管理信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/api/management/bulk/delete/v0pjkc",
+              "protocol": "http",
+              "path": [
+                "api",
+                "management",
+                "bulk",
+                "delete",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "mjntpm",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "批量删除引用管理信息",
+            "header": []
+          },
+          "description": "批量删除引用管理信息"
+        },
+        {
+          "name": "授权应用管理信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"mklab2\"\n  },\n  \"appName\": \"les.streich\",\n  \"appType\": \"d6vha4\",\n  \"beginDay\": \"gl9lfy\",\n  \"endDay\": \"r70x0t\",\n  \"id\": 825,\n  \"apiIds\": \"u145oa\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/management/authorization",
+              "protocol": "http",
+              "path": [
+                "api",
+                "management",
+                "authorization"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "授权应用管理信息",
+            "header": []
+          },
+          "description": "授权应用管理信息"
+        }
+      ]
+    }
+  ]
+}

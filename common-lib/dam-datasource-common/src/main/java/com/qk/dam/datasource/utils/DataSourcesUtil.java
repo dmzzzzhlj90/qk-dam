@@ -12,5 +12,6 @@ public final class DataSourcesUtil {
   public static final String HIVE="hive";
   public static final String ELASTICSEARCH="elasticsearch";
   public static final String POSTGRESQL="postgresql";
+  public static final String EXCEPTION="Exception";
 
 }

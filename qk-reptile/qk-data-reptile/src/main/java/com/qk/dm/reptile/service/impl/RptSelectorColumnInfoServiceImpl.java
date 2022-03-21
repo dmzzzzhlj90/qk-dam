@@ -8,12 +8,10 @@ import com.qk.dm.reptile.params.vo.RptSelectorColumnInfoVO;
 import com.qk.dm.reptile.repositories.RptSelectorColumnInfoRepository;
 import com.qk.dm.reptile.service.RptSelectorColumnInfoService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -55,8 +53,9 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void batchUpdate(Long configId, List<RptSelectorColumnInfoDTO> rptSelectorColumnInfoDTOList) {
-        rptSelectorColumnInfoRepository.deleteAllByConfigId(configId);
+        rptSelectorColumnInfoRepository.deleteByConfigId(configId);
         if(!CollectionUtils.isEmpty(rptSelectorColumnInfoDTOList)){
             List<RptSelectorColumnInfo> list = RptSelectorColumnInfoMapper.INSTANCE.ofList(rptSelectorColumnInfoDTOList);
             rptSelectorColumnInfoRepository.saveAll(list.stream().peek(e->e.setConfigId(configId)).collect(Collectors.toList()));
@@ -83,31 +82,48 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteByConfigId(Long configId) {
-        rptSelectorColumnInfoRepository.deleteAllByConfigId(configId);
+        List<RptSelectorColumnInfo> configList = rptSelectorColumnInfoRepository.findAllByConfigId(configId);
+        if(!CollectionUtils.isEmpty(configList)){
+            rptSelectorColumnInfoRepository.deleteByConfigId(configId);
+        }
+
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteByConfigId(List<Long> configIdList) {
+        if(!CollectionUtils.isEmpty(configIdList)){
+            configIdList.forEach(rptSelectorColumnInfoRepository::deleteByConfigId);
+
+        }
     }
 
     @Override
     public List<RptSelectorColumnInfoVO> list(Long configId) {
         List<RptSelectorColumnInfo> list = rptSelectorColumnInfoRepository.findAllByConfigId(configId);
-        if(!CollectionUtils.isEmpty(list)){
-           return RptSelectorColumnInfoMapper.INSTANCE.of(list);
-        }
-        return null;
+        if(CollectionUtils.isEmpty(list)){return Collections.emptyList(); }
+        return RptSelectorColumnInfoMapper.INSTANCE.of(list);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void copyConfig(Long sourceId, Long targetId) {
         List<RptSelectorColumnInfo> list = rptSelectorColumnInfoRepository.findAllByConfigId(sourceId);
-        rptSelectorColumnInfoRepository.saveAll(list.stream().peek(e -> e.setConfigId(targetId)).collect(Collectors.toList()));
+        List<RptSelectorColumnInfo> rptSelectorColumnList = list.stream().map(e->{
+            RptSelectorColumnInfo rptSelectorColumnInfo = new RptSelectorColumnInfo();
+            RptSelectorColumnInfoMapper.INSTANCE.of(e, rptSelectorColumnInfo);
+            rptSelectorColumnInfo.setConfigId(targetId);
+            return rptSelectorColumnInfo;
+        }).collect(Collectors.toList());
+        rptSelectorColumnInfoRepository.saveAll(rptSelectorColumnList);
     }
 
     @Override
     public List<String> findByConfigIds(List<Long> configIds) {
         List<RptSelectorColumnInfo> rptSelectorColumnInfoList = rptSelectorColumnInfoRepository.findAllByConfigIdIn(configIds);
-        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){
-            return null;
-        }
+        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){ return Collections.emptyList(); }
         return rptSelectorColumnInfoList.stream().map(RptSelectorColumnInfo::getColumnCode).collect(Collectors.toList());
     }
 }

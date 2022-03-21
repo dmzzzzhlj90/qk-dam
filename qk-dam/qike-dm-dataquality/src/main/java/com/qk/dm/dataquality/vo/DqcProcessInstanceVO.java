@@ -8,7 +8,7 @@ import java.util.Objects;
 /** @author shenpengjie */
 @Data
 public class DqcProcessInstanceVO {
-  private int id;
+  private Long id;
   /** 流程code */
   private Long processDefinitionCode;
   /** 状态 */
@@ -20,7 +20,7 @@ public class DqcProcessInstanceVO {
   /** 结束时间  */
   private String endTime;
   /** 运行次数 */
-  private int runTimes;
+  private Long runTimes;
   /** 工作流名称 */
   private String name;
   /** 机器地址 */

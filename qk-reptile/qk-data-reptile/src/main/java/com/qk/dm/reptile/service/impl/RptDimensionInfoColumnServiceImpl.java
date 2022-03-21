@@ -1,9 +1,11 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.entity.QRptDimensionColumnInfo;
 import com.qk.dm.reptile.entity.QRptDimensionInfo;
@@ -16,6 +18,7 @@ import com.qk.dm.reptile.params.dto.RptDimensionInfoColumnScreenParamsDTO;
 import com.qk.dm.reptile.params.vo.RptDimensionInfoColumnVO;
 import com.qk.dm.reptile.repositories.RptDimensionColumnInfoRepository;
 import com.qk.dm.reptile.repositories.RptDimensionInfoRepository;
+import com.qk.dm.reptile.service.RptConfigInfoService;
 import com.qk.dm.reptile.service.RptDimensionInfoColumnService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -46,6 +49,7 @@ public class RptDimensionInfoColumnServiceImpl implements
   private final QRptDimensionInfo qRptDimensionInfo = QRptDimensionInfo.rptDimensionInfo;
   private final RptDimensionColumnInfoRepository rptDimensionColumnInfoRepository;
   private final RptDimensionInfoRepository rptDimensionInfoRepository;
+  private final RptConfigInfoService rptConfigInfoService;
 
 
   @PostConstruct
@@ -54,12 +58,13 @@ public class RptDimensionInfoColumnServiceImpl implements
   }
 
   public RptDimensionInfoColumnServiceImpl(EntityManager entityManager,
-      RptDimensionColumnInfoRepository rptDimensionColumnInfoRepository,
-      RptDimensionInfoRepository rptDimensionInfoRepository){
+                                           RptDimensionColumnInfoRepository rptDimensionColumnInfoRepository,
+                                           RptDimensionInfoRepository rptDimensionInfoRepository, RptConfigInfoService rptConfigInfoService){
 
     this.entityManager = entityManager;
     this.rptDimensionColumnInfoRepository = rptDimensionColumnInfoRepository;
     this.rptDimensionInfoRepository = rptDimensionInfoRepository;
+    this.rptConfigInfoService = rptConfigInfoService;
   }
   /**
    * 新增维度数据
@@ -67,13 +72,16 @@ public class RptDimensionInfoColumnServiceImpl implements
    */
   @Override
   public void addRptDimensionInfoColumn(RptDimensionInfoColumnDTO rptDimensionInfoColumnDTO) {
-    BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnDTO.getDimensionId()).and(qRptDimensionColumnInfo.dimensionColumnName.eq(rptDimensionInfoColumnDTO.getDimensionColumnName()));
+    BooleanExpression predicate = qRptDimensionColumnInfo.dimensionId.eq(rptDimensionInfoColumnDTO.getDimensionId()).and((qRptDimensionColumnInfo.dimensionColumnName.eq(rptDimensionInfoColumnDTO.getDimensionColumnName()))
+        .or(qRptDimensionColumnInfo.dimensionColumnCode.eq(rptDimensionInfoColumnDTO.getDimensionColumnCode())));
     boolean exists = rptDimensionColumnInfoRepository.exists(predicate);
     if (exists){
       throw new BizException("当前新增数据已经存在请查证");
     }
     RptDimensionColumnInfo rptDimensionColumnInfo = RptDimensionInfoColumnMapper.INSTANCE
         .userRptDimensionInfoColumnDTO(rptDimensionInfoColumnDTO);
+    //赋值创建人
+    rptDimensionColumnInfo.setCreateUsername(ClientUserInfo.getUserName());
     rptDimensionColumnInfoRepository.save(rptDimensionColumnInfo);
   }
 
@@ -103,6 +111,7 @@ public class RptDimensionInfoColumnServiceImpl implements
       throw new BizException("当前需修改的维度字段名称为"+rptDimensionColumnInfo.getDimensionColumnName()+"的数据不存在");
     }
     RptDimensionInfoColumnMapper.INSTANCE.of(rptDimensionInfoColumnDTO, rptDimensionColumnInfo);
+    rptDimensionColumnInfo.setUpdateUsername(ClientUserInfo.getUserName());
     rptDimensionColumnInfoRepository.saveAndFlush(rptDimensionColumnInfo);
   }
 
@@ -138,20 +147,48 @@ public class RptDimensionInfoColumnServiceImpl implements
   @Override
   public Map<String,String> queryColumnByDirName(
       RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
-    RptDimensionInfo rptDimensionInfo = rptDimensionInfoRepository.findById(rptDimensionInfoColumnScreenParamsDTO.getId()).orElse(null);
-    if (Objects.isNull(rptDimensionInfo)){
-      throw new BizException("id为"+rptDimensionInfoColumnScreenParamsDTO.getId()+"的目录查询为空");
-    }
-    List<RptDimensionColumnInfo> rptDimensionColumnInfoList = rptDimensionColumnInfoRepository.findAllByDimensionId(rptDimensionInfoColumnScreenParamsDTO.getId());
+    List<RptDimensionColumnInfo> rptDimensionColumnInfoList = getListById(rptDimensionInfoColumnScreenParamsDTO.getId());
     if (CollectionUtils.isEmpty(rptDimensionColumnInfoList)){
            return Maps.newHashMap();
     }
+
     return rptDimensionColumnInfoList.stream().filter(
         e -> e.getDimensionColumnCode().equals(RptConstant.NEXTURL)
-          || !rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList().contains(e.getDimensionColumnCode()))
+          ||CollectionUtils.isEmpty(rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList())||!rptDimensionInfoColumnScreenParamsDTO.getDimensionColumnCodeList().contains(e.getDimensionColumnCode()))
         .collect(Collectors
             .toMap(RptDimensionColumnInfo::getDimensionColumnName,
                 RptDimensionColumnInfo::getDimensionColumnCode));
+  }
+
+  @Override
+  public List<RptDimensionInfoColumnVO> list(RptDimensionInfoColumnScreenParamsDTO rptDimensionInfoColumnScreenParamsDTO) {
+    List<RptDimensionColumnInfo> columnInfoList = getListById(rptDimensionInfoColumnScreenParamsDTO.getId());
+    if(CollectionUtils.isEmpty(columnInfoList)){
+      return Lists.newArrayList();
+    }
+    List<RptDimensionInfoColumnVO> voList = RptDimensionInfoColumnMapper.INSTANCE.of(columnInfoList);
+    List<String> codeList = columnCodeList(rptDimensionInfoColumnScreenParamsDTO.getBaseInfoId());
+    voList.forEach(e->{
+      if(!Objects.equals(e.getDimensionColumnCode(),RptConstant.NEXTURL)
+              &&codeList.contains(e.getDimensionColumnCode())){
+          e.setAlreadyAdd(true);
+      }
+    });
+    return voList;
+  }
+  private List<String> columnCodeList(Long baseInfoId){
+    if(Objects.isNull(baseInfoId)){
+      return List.of();
+    }
+    return rptConfigInfoService.getColumnList(baseInfoId);
+  }
+
+  private List<RptDimensionColumnInfo> getListById(Long id){
+    RptDimensionInfo rptDimensionInfo = rptDimensionInfoRepository.findById(id).orElse(null);
+    if (Objects.isNull(rptDimensionInfo)){
+      throw new BizException("id为"+id+"的目录查询为空");
+    }
+    return rptDimensionColumnInfoRepository.findAllByDimensionId(id);
   }
 
 

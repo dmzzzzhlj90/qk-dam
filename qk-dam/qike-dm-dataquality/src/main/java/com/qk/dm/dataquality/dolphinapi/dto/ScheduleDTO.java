@@ -1,6 +1,9 @@
 package com.qk.dm.dataquality.dolphinapi.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,23 +14,29 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ScheduleDTO implements Serializable {
-    private int id;
-    private int processDefinitionId;
+    private Integer id;
+    private Long environmentCode;
+    private Long processDefinitionCode;
     private String processDefinitionName;
+    private Long processDefinitionId;
     private String projectName;
     private String definitionDescription;
     private String startTime;
     private String endTime;
+    private String timezoneId;
     private String crontab;
     private String failureStrategy;
     private String warningType;
     private String createTime;
     private String updateTime;
-    private int userId;
+    private Long userId;
     private String userName;
     private String releaseState;
-    private int warningGroupId;
+    private Long warningGroupId;
     private String processInstancePriority;
     private String workerGroup;
 }

@@ -1,49 +1,43 @@
 package com.qk.dm.dataservice.vo;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
+
+/**
+ * 新建API_取数SQL方式VO
+ *
+ * @author wjq
+ * @date 20210907
+ * @since 1.0.0
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class DasApiCreateSqlScriptVO {
-  /** API基础信息 */
-  private DasApiBasicInfoVO dasApiBasicInfoVO;
 
-  /** 主键ID */
-  private Long id;
+    /**
+     * API基础信息
+     */
+    @Valid
+    private DasApiBasicInfoVO apiBasicInfoVO;
 
-  /** API基础信息ID */
-  private String apiId;
+    /**
+     * 新建API__取数SQL方式__配置信息定义类
+     */
+    @Valid
+    private DasApiCreateSqlScriptDefinitionVO apiCreateDefinitionVO;
 
-  /** 取数据方式 */
-  private String accessMethod;
+    /**
+     * DEBUG调试参数
+     */
+    private List<DebugApiParasVO> debugApiParasVOS;
 
-  /** 数据源类型 */
-  private String dataSourceType;
 
-  /** 数据源连接 */
-  private String dataSourceConnect;
-
-  /** 数据库 */
-  private String dataBase;
-
-  /** 请求参数 */
-  private List<DasApiCreateRequestParasVO> apiCreateRequestParasVOS;
-
-  /** 响应参数 */
-  private List<DasApiCreateResponseParasVO> apiCreateResponseParasVOS;
-
-  /** 排序参数 */
-  private List<DasApiCreateOrderParasVO> apiCreateOrderParasVOS;
-
-  /** 取数脚本 */
-  private String sqlPara;
-
-  /** 描述 */
-  private String description;
 }

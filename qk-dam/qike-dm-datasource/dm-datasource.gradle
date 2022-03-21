@@ -17,6 +17,10 @@ processResources {
 }
 
 docker {
+    dockerCreateDockerfile {
+        environmentVariable 'TimeZone', 'Asia/Shanghai'
+        instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
+    }
     springBootApplication {
         baseImage = "${jre11Image}"
         ports = [8781]
@@ -41,6 +45,8 @@ configurations.all {
     exclude group: 'org.eclipse.jetty.aggregate', module: 'jetty-all'
     exclude group: 'org.eclipse.jetty.orbit', module: 'javax.servlet'
     exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    exclude group: 'org.mortbay.jetty', module: 'servlet-api-2.5'
+    exclude group: 'javax.servlet', module: 'servlet-api'
 }
 
 dependencies {
@@ -48,12 +54,13 @@ dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":commons-core")
     implementation project(":datasource-common-core")
-
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation 'com.alibaba:easyexcel'
+    implementation 'mysql:mysql-connector-java'
 
     implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
     implementation 'org.elasticsearch.plugin:x-pack-sql-jdbc:7.10.0'

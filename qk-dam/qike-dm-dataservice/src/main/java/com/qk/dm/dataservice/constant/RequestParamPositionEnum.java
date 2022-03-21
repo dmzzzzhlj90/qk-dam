@@ -1,6 +1,7 @@
 package com.qk.dm.dataservice.constant;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.util.StringUtils;
 
@@ -45,7 +46,7 @@ public enum RequestParamPositionEnum {
   }
 
   public static Map<String, String> getAllValue() {
-    Map<String, String> val = new HashMap<>();
+    Map<String, String> val = new LinkedHashMap<>();
     for (RequestParamPositionEnum enums : RequestParamPositionEnum.values()) {
       val.put(enums.name, enums.typeName);
     }

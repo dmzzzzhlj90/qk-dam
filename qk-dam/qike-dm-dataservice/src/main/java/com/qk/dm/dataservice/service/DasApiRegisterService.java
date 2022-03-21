@@ -1,9 +1,11 @@
 package com.qk.dm.dataservice.service;
 
 import com.qk.dm.dataservice.vo.DasApiRegisterVO;
+import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Service;
 
 /**
  * @author wjq
@@ -13,17 +15,17 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DasApiRegisterService {
 
-  DasApiRegisterVO detail(String apiId);
+    DasApiRegisterVO detail(String apiId);
 
-  void insert(DasApiRegisterVO dasApiRegisterVO);
+    void insert(DasApiRegisterVO dasApiRegisterVO);
 
-  void update(DasApiRegisterVO dasApiRegisterVO);
+    void update(DasApiRegisterVO dasApiRegisterVO);
 
-  Map<String, String> getRegisterBackendParaHeaderInfo();
+    LinkedList<Map<String, Object>> getRegisterBackendParaHeaderInfo();
 
-  Map<String, String> getRegisterConstantParaHeaderInfo();
+    LinkedList<Map<String, Object>> getRegisterConstantParaHeaderInfo();
 
-  void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList);
+    void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList);
 
-  List<DasApiRegisterVO> findAll();
+    List<DasApiRegisterVO> findAll();
 }

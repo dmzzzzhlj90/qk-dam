@@ -11,8 +11,8 @@ spring:
     allow-bean-definition-overriding: true
   jpa:
     show-sql: false
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter

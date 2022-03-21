@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ds
+  namespace: java-backend
+  labels:
+    app: ds
+  annotations:
+    kubesphere.io/alias-name: 数据源管理后端服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8781
+      protocol: TCP
+      port: 8781
+      targetPort: 8781
+  selector:
+    app: ds-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None

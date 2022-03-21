@@ -1,12 +1,18 @@
 package com.qk.dm.reptile.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.reptile.params.dto.RptAssignedTaskDTO;
+import com.qk.dm.reptile.params.dto.RptBaseInfoBatchDTO;
 import com.qk.dm.reptile.params.dto.RptBaseInfoDTO;
+import com.qk.dm.reptile.params.dto.TimeIntervalDTO;
 import com.qk.dm.reptile.params.vo.RptBaseInfoVO;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 
 public interface RptBaseInfoService {
 
     void insert(RptBaseInfoDTO rptBaseInfoDTO);
+
+    void batchInsert(RptBaseInfoBatchDTO rptBaseInfoBatchDTO);
 
     void update(Long id, RptBaseInfoDTO rptBaseInfoDTO);
 
@@ -16,14 +22,16 @@ public interface RptBaseInfoService {
 
     void delete(String ids);
 
-    PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO);
+    void reduction(String ids);
+
+    PageResultVO<RptBaseInfoVO> listByPage(RptBaseInfoDTO rptBaseInfoDTO, OAuth2AuthorizedClient authorizedClient);
 
     void updateStatus(Long id,Integer status);
 
     /**
      * 定时调用爬虫接口
      */
-    void timedExecution();
+    void timedExecution(String timeInterval);
 
     /**
      * 手动执行调用爬虫接口
@@ -37,4 +45,17 @@ public interface RptBaseInfoService {
      * @param targetId
      */
     void copyConfig(Long sourceId,Long targetId);
+
+    /**
+     * 修改定时时间间隔
+     * @param timeIntervalDTO
+     */
+    void updateTimeInterval(TimeIntervalDTO timeIntervalDTO);
+
+    /**
+     * 任务分配
+     * @param rptAssignedTaskDTO
+     */
+    void assignedTasks(RptAssignedTaskDTO rptAssignedTaskDTO);
+
 }

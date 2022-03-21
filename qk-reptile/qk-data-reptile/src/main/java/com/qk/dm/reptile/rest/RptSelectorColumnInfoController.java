@@ -53,6 +53,18 @@ public class RptSelectorColumnInfoController {
     }
 
     /**
+     * 根据配置id 批量修改选择器信息
+     * @param configId
+     * @param rptSelectorColumnInfoDTOList
+     * @return
+     */
+    @PutMapping("/batch/{configId}")
+    public DefaultCommonResult batchUpdate(@PathVariable("configId") Long configId,@RequestBody @Validated List<RptSelectorColumnInfoDTO> rptSelectorColumnInfoDTOList){
+        rptSelectorColumnInfoService.batchUpdate(configId,rptSelectorColumnInfoDTOList);
+        return DefaultCommonResult.success();
+    }
+
+    /**
      * 选择器列表
      * @param configId
      * @return DefaultCommonResult<List<RptSelectorColumnInfoVO>>

@@ -4,6 +4,7 @@ import com.qk.dm.dataquality.vo.DqcProcessInstanceVO;
 import com.qk.dm.dataquality.vo.statistics.DataSummaryVO;
 import com.qk.dm.dataquality.vo.statistics.DimensionVO;
 import com.qk.dm.dataquality.vo.statistics.RuleDirVO;
+import com.qk.dm.dataquality.vo.statistics.WarnTrendVO;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface DqcStatisticsService {
     List<RuleDirVO> dir();
 
     List<DqcProcessInstanceVO> instanceList();
+
+    List<WarnTrendVO> warnTrend();
 }

@@ -11,9 +11,13 @@ configurations {
         it.outgoing.artifact(bootJar)
     }
 }
-processResources {
-    expand(project.properties)
+configure(tasks.processResources) {
 }
+
+configurations.all {
+    exclude group: 'org.apache.poi', module: 'poi-ooxml'
+}
+
 docker {
     springBootApplication {
         baseImage = "${jre11Image}"
@@ -37,21 +41,25 @@ dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
+    implementation project(":qk-authorization")
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
-    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
-    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
-
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.alibaba:easyexcel'
     implementation 'org.mapstruct:mapstruct'
+    implementation 'org.aspectj:aspectjrt:1.9.7'
+    implementation 'org.aspectj:aspectjweaver:1.9.7'
+    compile group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
     annotationProcessor(
             "javax.persistence:javax.persistence-api",
             "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
             "javax.annotation:javax.annotation-api",
             "org.projectlombok:lombok",
             'org.mapstruct:mapstruct-processor')
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
@@ -64,40 +72,6 @@ dependencyManagement {
     }
 }
 
-openApiGenerate {
-    generatorName = "java"
-    inputSpec = "$rootDir/docs/dolphinscheduler/openapi.yaml".toString()
-    outputDir = "/Users/zhudaoming/Documents/openapigener".toString()
-    apiPackage = "com.qk.datacenter.api"
-    invokerPackage = "com.qk.datacenter.client"
-    modelPackage = "com.qk.datacenter.model"
-    configOptions = [
-            artifactId:"dolphinscheduler-java-client",
-            artifactUrl:"qk.com",
-            artifactVersion:"1.0.0",
-            dateLibrary: "java8",
-            library:"native",
-            serializationLibrary:"gson",
-            bigDecimalAsString:"true",
-            interfaceOnly        : "true",
-            useTags      : "true",
-            ignoreAnyOfInEnum      : "true",
-            useBeanValidation    : "false",
-            performBeanValidation: "false",
-            useOptional          : "true",
-            serviceImplementation: "true",
-            serviceInterface     : "true",
-            java8                : "true",
-    ]
-    verbose=false
-    validateSpec=false
-    skipValidateSpec=true
-    globalProperties = [
-            modelDocs: "false",
-            apiTests: "true",
-            modelTests:"false"
-    ]
-}
 test {
     useTestNG {
         suites(file('src/test/resources/testng.xml'));

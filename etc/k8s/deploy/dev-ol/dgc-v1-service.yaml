@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dqc
+  namespace: java-backend
+  labels:
+    app: dqc
+  annotations:
+    kubesphere.io/alias-name: 数据质量后端服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8789
+      protocol: TCP
+      port: 8789
+      targetPort: 8789
+  selector:
+    app: dqc-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None
