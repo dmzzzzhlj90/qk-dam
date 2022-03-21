@@ -99,12 +99,12 @@ public class DasReleaseApiServiceImpl implements DasReleaseApiService {
     }
 
     @Override
-    public List searchApiSixUpstreamInfo() {
+    public List<Map<String, String>> searchApiSixUpstreamInfo() {
         return apiSixProcessService.searchApiSixUpstreamInfo();
     }
 
     @Override
-    public List searchApiSixServiceInfo() {
+    public List<Map<String,String>> searchApiSixServiceInfo() {
         return apiSixProcessService.searchApiSixServiceInfo();
     }
 

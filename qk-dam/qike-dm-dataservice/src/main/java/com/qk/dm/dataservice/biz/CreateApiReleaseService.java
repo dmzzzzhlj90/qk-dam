@@ -56,7 +56,7 @@ public class CreateApiReleaseService {
             //设置Route上下文参数
             RouteContext routeContext = apiSixProcessService.buildRouteContext();
             //获取路由ID集合
-            List<RouteData> routeInfoList = apiSixProcessService.getRouteIdList(routeContext);
+            List<RouteData> routeInfoList = apiSixProcessService.getRouteInfo(routeContext);
             //发布新建注册API
 
             for (String apiId : createBasicApiMap.keySet()) {

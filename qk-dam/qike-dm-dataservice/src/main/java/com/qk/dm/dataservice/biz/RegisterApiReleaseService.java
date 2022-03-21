@@ -64,7 +64,7 @@ public class RegisterApiReleaseService {
             //设置Route上下文参数
             RouteContext routeContext = apiSixProcessService.buildRouteContext();
             //获取路由ID集合
-            List<RouteData> routeInfoList = apiSixProcessService.getRouteIdList(routeContext);
+            List<RouteData> routeInfoList = apiSixProcessService.getRouteInfo(routeContext);
             //根据apiID查询注册API信息
             Iterable<DasApiRegister> dasApiRegisters = dasApiRegisterRepository.findAll(qDasApiRegister.apiId.in(registerBasicApiMap.keySet()));
             //发布同步注册API

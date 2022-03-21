@@ -177,7 +177,7 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
     public List<DasApiGroupRouteVO> routes() {
         List<DasApiGroupRouteVO> apiGroupRouteVOList = new LinkedList<>();
         //获取路由信息
-        List<RouteData> routeInfoList = apiSixProcessService.getRouteIdList(apiSixProcessService.buildRouteContext());
+        List<RouteData> routeInfoList = apiSixProcessService.getRouteInfo(apiSixProcessService.buildRouteContext());
         routeInfoList.forEach(routeData -> {
             DasApiGroupRouteVO dasApiGroupRouteVO =
                     DasApiGroupRouteVO.builder()

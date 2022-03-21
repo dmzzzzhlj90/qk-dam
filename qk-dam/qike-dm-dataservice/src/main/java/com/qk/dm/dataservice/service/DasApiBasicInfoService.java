@@ -31,7 +31,7 @@ public interface DasApiBasicInfoService {
 
     void delete(Long delId);
 
-    void deleteBulk(String ids);
+    void deleteBulk(List<Long> ids);
 
     Map<String, String> getApiType();
 
@@ -52,7 +52,5 @@ public interface DasApiBasicInfoService {
     Map<String, String> getSyncType();
 
     LinkedList<Map<String, Object>> getDebugParamHeaderInfo();
-
-    Object createDetail(String apiId);
 
 }
