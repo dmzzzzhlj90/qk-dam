@@ -3,6 +3,7 @@ package com.qk.dm.dataquality.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.DqcConstant;
+import com.qk.dm.dataquality.constant.SchedulerCycleEnum;
 import com.qk.dm.dataquality.constant.SchedulerTypeEnum;
 import com.qk.dm.dataquality.entity.DqcSchedulerConfig;
 import com.qk.dm.dataquality.entity.QDqcSchedulerConfig;
@@ -57,9 +58,23 @@ public class DqcSchedulerConfigServiceImpl implements DqcSchedulerConfigService 
     String cron = generateCron(dqcSchedulerConfigVO);
     config.setCron(cron);
     dqcSchedulerConfigVO.setCron(cron);
+    //根据调度周期不同清空时间状态
+    judgeCycleUpdateState(dqcSchedulerConfigVO, config);
     // todo 修改人
     config.setUpdateUserid("admin");
     dqcSchedulerConfigRepository.save(config);
+  }
+
+  private void judgeCycleUpdateState(DqcSchedulerConfigVO dqcSchedulerConfigVO, DqcSchedulerConfig config) {
+    switch (SchedulerCycleEnum.fromValue(dqcSchedulerConfigVO.getSchedulerCycle())) {
+      case minute:
+      case hour:
+        config.setSchedulerTime(null);
+        break;
+      case day:
+        config.setSchedulerIntervalTime(null);
+        break;
+    }
   }
 
   @Override
