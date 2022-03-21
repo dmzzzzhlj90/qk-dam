@@ -15,6 +15,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * API发布_同步数据服务API至服务网关
@@ -67,7 +68,7 @@ public class DasReleaseApiController {
      */
     @GetMapping("/apiSix/upstream/info")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<List> searchApiSixUpstreamInfo() {
+    public DefaultCommonResult<List<Map<String, String>>> searchApiSixUpstreamInfo() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasReleaseApiService.searchApiSixUpstreamInfo());
     }
 
@@ -78,7 +79,7 @@ public class DasReleaseApiController {
      */
     @GetMapping("/apiSix/service/info")
 //  @Auth(bizType = BizResource.DAS_SYNC_API_GATEWAY, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<List> searchApiSixServiceInfo() {
+    public DefaultCommonResult<List<Map<String,String>>> searchApiSixServiceInfo() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasReleaseApiService.searchApiSixServiceInfo());
     }
 

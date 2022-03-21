@@ -7,8 +7,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.constant.*;
-import com.qk.dm.dataservice.entity.DasApiBasicInfo;
-import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
+import com.qk.dm.dataservice.entity.*;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
@@ -28,9 +27,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wjq
@@ -40,6 +39,9 @@ import java.util.*;
 @Service
 public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
+    private static final QDasApiRegister qDasApiRegister = QDasApiRegister.dasApiRegister;
+    private static final QDasApiCreateConfig qDasApiCreateConfig = QDasApiCreateConfig.dasApiCreateConfig;
+    private static final QDasApiCreateSqlScript qDasApiCreateSqlScript = QDasApiCreateSqlScript.dasApiCreateSqlScript;
 
     private final DasApiDirService dasApiDirService;
     private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
@@ -194,12 +196,31 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBulk(String ids) {
-        //        List<String> idList = Arrays.asList(ids.split(","));
-        //        Set<Long> idSet = new HashSet<>();
-        //        idList.forEach(id -> idSet.add(Long.valueOf(id)));
-        //        List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(idSet);
-        //        dasApiBasicinfoRepository.deleteInBatch(apiBasicInfoList);
+    public void deleteBulk(List<Long> ids) {
+        // 批量删除API基础信息
+        List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(ids);
+        dasApiBasicinfoRepository.deleteAll(apiBasicInfoList);
+
+        // 获取API标识ID集合
+        List<String> registerApiIds = apiBasicInfoList.stream()
+                .filter(o -> ApiTypeEnum.REGISTER_API.getCode().equalsIgnoreCase(o.getApiType()))
+                .map(DasApiBasicInfo::getApiId).collect(Collectors.toList());
+
+        List<String> createApiIds = apiBasicInfoList.stream()
+                .filter(o -> ApiTypeEnum.CREATE_API.getCode().equalsIgnoreCase(o.getApiType()))
+                .map(DasApiBasicInfo::getApiId).collect(Collectors.toList());
+
+        // 批量删除注册API配置信息
+        Iterable<DasApiRegister> apiRegisterRepositoryAll = dasApiRegisterRepository.findAll(qDasApiRegister.apiId.in(registerApiIds));
+        dasApiRegisterRepository.deleteAll(apiRegisterRepositoryAll);
+
+        // 批量删除新建API配置信息
+        // 新建配置
+        Iterable<DasApiCreateConfig> dasApiCreateConfigRepositoryAll = dasApiCreateConfigRepository.findAll(qDasApiCreateConfig.apiId.in(createApiIds));
+        dasApiCreateConfigRepository.deleteAll(dasApiCreateConfigRepositoryAll);
+        // 新建脚本
+        Iterable<DasApiCreateSqlScript> dasApiCreateSqlScriptRepositoryAll = dasApiCreateSqlScriptRepository.findAll(qDasApiCreateSqlScript.apiId.in(createApiIds));
+        dasApiCreateSqlScriptRepository.deleteAll(dasApiCreateSqlScriptRepositoryAll);
     }
 
     @Override
@@ -264,13 +285,6 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     @Override
     public LinkedList<Map<String, Object>> getDebugParamHeaderInfo() {
         return DebugApiParamHeaderInfoEnum.getAllValue();
-    }
-
-    @Override
-    public Object createDetail(String apiId) {
-
-
-        return null;
     }
 
     private DasApiBasicInfoVO transformToVO(DasApiBasicInfo dasApiBasicInfo) {
