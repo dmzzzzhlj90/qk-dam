@@ -81,7 +81,7 @@ public class DasApiLimitManageController {
      */
     @DeleteMapping("/bulk/{ids}")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+    public DefaultCommonResult deleteBulk(@RequestBody List<Long> ids) {
         dasApiLimitManageService.deleteBulk(ids);
         return DefaultCommonResult.success();
     }

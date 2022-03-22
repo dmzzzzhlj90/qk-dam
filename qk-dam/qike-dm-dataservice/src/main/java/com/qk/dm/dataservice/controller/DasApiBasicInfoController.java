@@ -84,7 +84,7 @@ public class DasApiBasicInfoController {
      */
     @DeleteMapping("/bulk")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@RequestParam("ids") List<Long> ids) {
+    public DefaultCommonResult deleteBulk(@RequestBody List<Long> ids) {
         dasApiBasicInfoService.deleteBulk(ids);
         return DefaultCommonResult.success();
     }
