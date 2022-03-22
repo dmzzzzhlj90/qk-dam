@@ -79,13 +79,13 @@ public class DasApiBasicInfoController {
     /**
      * 批量删除API,根据API类型关联删除API附属信息
      *
-     * @param bulkDeleteParamVO
+     * @param ids
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/bulk")
+    @DeleteMapping("/bulk/{ids}")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@RequestBody BulkDeleteParamVO bulkDeleteParamVO) {
-        dasApiBasicInfoService.deleteBulk(bulkDeleteParamVO);
+    public DefaultCommonResult deleteBulk(@PathVariable("ids") String ids) {
+        dasApiBasicInfoService.deleteBulk(ids);
         return DefaultCommonResult.success();
     }
 

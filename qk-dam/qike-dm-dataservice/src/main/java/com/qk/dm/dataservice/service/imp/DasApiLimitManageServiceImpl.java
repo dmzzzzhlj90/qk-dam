@@ -138,14 +138,16 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO) {
-        List<Long> ids = bulkDeleteParamVO.getIds();
-        List<DasApiLimitInfo> apiLimitInfoList = dasApiLimitInfoRepository.findAllById(ids);
+    public void deleteBulk(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id)));
+        List<DasApiLimitInfo> apiLimitInfoList = dasApiLimitInfoRepository.findAllById(idSet);
         // 批量删除流控信息
         dasApiLimitInfoRepository.deleteAllInBatch(apiLimitInfoList);
 
         // 批量删除绑定信息
-        Iterable<DasApiLimitBindInfo> apiLimitBindInfos = dasApiLimitBindInfoRepository.findAll(qDasApiLimitBindInfo.limitId.in(ids));
+        Iterable<DasApiLimitBindInfo> apiLimitBindInfos = dasApiLimitBindInfoRepository.findAll(qDasApiLimitBindInfo.limitId.in(idSet));
         dasApiLimitBindInfoRepository.deleteAllInBatch(apiLimitBindInfos);
     }
 
