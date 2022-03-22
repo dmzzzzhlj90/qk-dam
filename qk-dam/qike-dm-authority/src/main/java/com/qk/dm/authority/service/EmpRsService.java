@@ -26,7 +26,7 @@ public interface EmpRsService {
 
   List<ResourceVO> queryauthorized(PowerResourcesParamVO powerResourcesParamVO);
 
-  Boolean qeryRsEmp(Long id);
+  Boolean qeryRsEmp(String id);
 
   PageResultVO<ResourceVO> queryPageEmpower(ApiPageResourcesParamVO apiPageResourcesParamVO);
 }
