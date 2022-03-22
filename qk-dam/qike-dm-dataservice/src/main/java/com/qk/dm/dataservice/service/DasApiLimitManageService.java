@@ -23,7 +23,7 @@ public interface DasApiLimitManageService {
 
     void update(DasApiLimitInfoVO dasApiLimitInfoVO);
 
-    void deleteBulk(List<Long> ids);
+    void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO);
 
     void bind(DasApiLimitBindParamsVO apiLimitBindParamsVO);
 

@@ -9,6 +9,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.dataservice.spi.pojo.RouteData;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.service.DasApiAppManageInfoService;
+import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiAppManageInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiAppManageInfoVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
@@ -79,13 +80,13 @@ public class DasApiAppManageInfoController {
     /**
      * 批量删除API应用管理信息
      *
-     * @param ids
+     * @param bulkDeleteParamVO
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/bulk/")
+    @DeleteMapping("/bulk")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@RequestBody List<Long> ids) {
-        dasApiAppManageInfoService.deleteBulk(ids);
+    public DefaultCommonResult deleteBulk(@RequestBody BulkDeleteParamVO bulkDeleteParamVO) {
+        dasApiAppManageInfoService.deleteBulk(bulkDeleteParamVO);
         return DefaultCommonResult.success();
     }
 
