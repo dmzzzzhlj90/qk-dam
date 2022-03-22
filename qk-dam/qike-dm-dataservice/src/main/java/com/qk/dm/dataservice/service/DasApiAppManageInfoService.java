@@ -27,7 +27,7 @@ public interface DasApiAppManageInfoService {
 
     void update(DasApiAppManageInfoVO dasApiAppManageInfoVO);
 
-    void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO);
+    void deleteBulk(String ids);
 
     List<RouteData> searchApiSixRouteInfo();
 

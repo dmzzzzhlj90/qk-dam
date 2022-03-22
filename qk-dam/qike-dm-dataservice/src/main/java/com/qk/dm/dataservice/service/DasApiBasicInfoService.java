@@ -32,7 +32,7 @@ public interface DasApiBasicInfoService {
 
     void delete(Long delId);
 
-    void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO);
+    void deleteBulk(String ids);
 
     Map<String, String> getApiType();
 

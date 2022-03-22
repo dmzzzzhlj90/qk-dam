@@ -133,8 +133,11 @@ public class DasApiAppManageInfoServiceImpl implements DasApiAppManageInfoServic
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO) {
-        List<DasApiAppManageInfo> apiAppManageInfoList = dasApiAppManageInfoRepository.findAllById(bulkDeleteParamVO.getIds());
+    public void deleteBulk(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id)));
+        List<DasApiAppManageInfo> apiAppManageInfoList = dasApiAppManageInfoRepository.findAllById(idSet);
         // 批量删除应用管理信息
         dasApiAppManageInfoRepository.deleteAllInBatch(apiAppManageInfoList);
     }

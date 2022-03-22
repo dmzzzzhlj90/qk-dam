@@ -197,10 +197,12 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO) {
-        List<Long> ids = bulkDeleteParamVO.getIds();
+    public void deleteBulk(String ids) {
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id)));
         // 批量删除API基础信息
-        List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(ids);
+        List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(idSet);
         dasApiBasicinfoRepository.deleteAll(apiBasicInfoList);
 
         // 获取API标识ID集合
