@@ -196,13 +196,15 @@ public class EmpRsServiceImpl implements EmpRsService {
   }
 
   @Override
-  public Boolean qeryRsEmp(Long id) {
-    QxResources qxResources = qkQxResourcesRepository.findById(id).orElse(null);
-    if (Objects.isNull(qxResources)) {
+  public Boolean qeryRsEmp(String ids) {
+    List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+    List<QxResources> qxResourcesList = qkQxResourcesRepository.findAllById(idList);
+    if (CollectionUtils.isEmpty(qxResourcesList)) {
       throw new BizException("当前需删除的数据不存在");
     }
-    List<QkQxResourcesEmpower> rsEmpList = qkQxResourcesEmpowerRepository
-        .findByResourceUuid(qxResources.getResourcesid());
+    List<String> resourcesIdList = qxResourcesList.stream().map(QxResources::getResourcesid).collect(Collectors.toList());
+    List<QkQxResourcesEmpower> rsEmpList = (List<QkQxResourcesEmpower>) qkQxResourcesEmpowerRepository
+        .findAll(qQkQxResourcesEmpower.resourceUuid.in(resourcesIdList));
     if (CollectionUtils.isNotEmpty(rsEmpList)){
       return true;
     }

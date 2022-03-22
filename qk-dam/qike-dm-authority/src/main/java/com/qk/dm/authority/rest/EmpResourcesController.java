@@ -97,12 +97,12 @@ public class EmpResourcesController {
 
   /**
    * 查询删除的资源是否已经授权
-   * @param id 资源（api）id
+   * @param ids 资源（api）id的字符串用“,”分隔
    * @return DefaultCommonResult<Boolean> 返回值为true表示存在为false表示不存在
    */
-  @GetMapping("/query/{id}")
-  public DefaultCommonResult<Boolean> qeryRsEmp(@NotNull @PathVariable("id") Long id){
-    return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.qeryRsEmp(id));
+  @GetMapping("/query/{ids}")
+  public DefaultCommonResult<Boolean> qeryRsEmp(@NotNull @PathVariable("ids") String ids){
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.qeryRsEmp(ids));
   }
 
   /**
