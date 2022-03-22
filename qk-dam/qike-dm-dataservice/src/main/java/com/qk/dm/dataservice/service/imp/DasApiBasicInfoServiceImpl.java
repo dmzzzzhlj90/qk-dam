@@ -15,7 +15,6 @@ import com.qk.dm.dataservice.repositories.DasApiCreateSqlScriptRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiDirService;
-import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
@@ -24,6 +23,7 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -132,6 +132,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
                             + dasApiBasicInfo.getRequestType()
                             + " 的数据，已存在！！！");
         }
+        // 参数为空,不存null值
+        setParaIsNull(dasApiBasicInfoVO);
 
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParamJson(dasApiBasicInfoVO, dasApiBasicInfo);
@@ -162,6 +164,9 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         if (optionalDasApiBasicInfo.isEmpty()) {
             throw new BizException("当前要编辑的apiId为:" + dasApiBasicInfoVO.getApiId() + " 的数据，不存在！！！");
         }
+
+        // 参数为空,不存null值
+//        setParaIsNull(dasApiBasicInfoVO);
 
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParamJson(dasApiBasicInfoVO, dasApiBasicInfo);
@@ -291,6 +296,18 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DebugApiParamHeaderInfoEnum.getAllValue();
     }
 
+    /**
+     * 参数为空,不存null值
+     *
+     * @param dasApiBasicInfoVO
+     */
+    private void setParaIsNull(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        List<DasApiBasicInfoRequestParasVO> requestParasVOS = dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS();
+        if (null == requestParasVOS) {
+            dasApiBasicInfoVO.setApiBasicInfoRequestParasVOS(Lists.newArrayList());
+        }
+    }
+
     private DasApiBasicInfoVO transformToVO(DasApiBasicInfo dasApiBasicInfo) {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
     }
@@ -311,6 +328,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     private void setDedInputParamJson(DasApiBasicInfoVO dasApiBasicInfoVO, DasApiBasicInfo dasApiBasicInfo) {
         if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS())) {
             dasApiBasicInfo.setDefInputParam(GsonUtil.toJsonString(dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS()));
+        } else {
+            dasApiBasicInfo.setDefInputParam(GsonUtil.toJsonString(Lists.newArrayList()));
         }
     }
 

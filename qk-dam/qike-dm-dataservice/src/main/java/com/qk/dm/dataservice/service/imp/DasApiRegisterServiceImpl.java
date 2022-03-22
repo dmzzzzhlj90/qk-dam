@@ -23,6 +23,7 @@ import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiRegisterService;
 import com.qk.dm.dataservice.vo.*;
 import com.querydsl.core.types.Predicate;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -140,6 +141,9 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     private DasApiRegister buildSaveApiRegister(DasApiRegisterVO dasApiRegisterVO, String apiId) {
         // 保存注册API信息
         DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getApiRegisterDefinitionVO();
+        // 参数为空,不存null值
+//        setParaIsNull(dasApiRegisterDefinitionVO);
+
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterDefinitionVO);
         setBackendRequestParaJson(dasApiRegisterDefinitionVO, dasApiRegister);
         setBackendConstantJson(dasApiRegisterDefinitionVO, dasApiRegister);
@@ -152,7 +156,6 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         dasApiRegister.setDelFlag(0);
         return dasApiRegister;
     }
-
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -207,8 +210,10 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     private DasApiRegister buildUpdateDasApiRegister(DasApiRegisterVO dasApiRegisterVO) {
         // 更新注册API
         DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getApiRegisterDefinitionVO();
-        //校验更新ID参数
+        // 校验更新ID参数
         checkUpdateParams(dasApiRegisterDefinitionVO);
+        // 参数为空,不存null值
+        setParaIsNull(dasApiRegisterDefinitionVO);
         DasApiRegister dasApiRegister = transformToRegisterEntity(dasApiRegisterDefinitionVO);
         //请求参数转换
         setBackendRequestParaJson(dasApiRegisterDefinitionVO, dasApiRegister);
@@ -308,6 +313,22 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
         return dasApiRegisterVOList;
     }
 
+    /**
+     * 参数为空,不存null值
+     *
+     * @param dasApiRegisterDefinitionVO
+     */
+    private void setParaIsNull(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO) {
+        List<DasApiRegisterBackendParaVO> backendParaVOS = dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS();
+        if (null == backendParaVOS) {
+            dasApiRegisterDefinitionVO.setApiRegisterBackendParaVOS(Lists.newArrayList());
+        }
+        List<DasApiRegisterConstantParaVO> constantParaVOS = dasApiRegisterDefinitionVO.getApiRegisterConstantParaVOS();
+        if (null == constantParaVOS) {
+            dasApiRegisterDefinitionVO.setApiRegisterConstantParaVOS(Lists.newArrayList());
+        }
+    }
+
     // =====================transformToVO=================================
     private DasApiRegisterDefinitionVO transformToRegisterDefinitionVO(DasApiRegister dasApiRegister) {
         return DasApiRegisterMapper.INSTANCE.useDasApiRegisterDefinitioVO(dasApiRegister);
@@ -354,12 +375,16 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
     private void setBackendRequestParaJson(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO, DasApiRegister dasApiRegister) {
         if (!ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS())) {
             dasApiRegister.setBackendRequestParas(GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS()));
+        } else {
+            dasApiRegister.setBackendRequestParas(GsonUtil.toJsonString(Lists.newArrayList()));
         }
     }
 
     private void setBackendConstantJson(DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO, DasApiRegister dasApiRegister) {
         if (!ObjectUtils.isEmpty(dasApiRegisterDefinitionVO.getApiRegisterConstantParaVOS())) {
             dasApiRegister.setBackendConstants(GsonUtil.toJsonString(dasApiRegisterDefinitionVO.getApiRegisterConstantParaVOS()));
+        } else {
+            dasApiRegister.setBackendConstants(GsonUtil.toJsonString(Lists.newArrayList()));
         }
     }
 
