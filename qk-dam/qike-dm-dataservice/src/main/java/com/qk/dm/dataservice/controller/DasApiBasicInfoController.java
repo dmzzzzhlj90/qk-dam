@@ -8,6 +8,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
+import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -79,13 +79,13 @@ public class DasApiBasicInfoController {
     /**
      * 批量删除API,根据API类型关联删除API附属信息
      *
-     * @param ids
+     * @param bulkDeleteParamVO
      * @return DefaultCommonResult
      */
     @DeleteMapping("/bulk")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@RequestBody List<Long> ids) {
-        dasApiBasicInfoService.deleteBulk(ids);
+    public DefaultCommonResult deleteBulk(@RequestBody BulkDeleteParamVO bulkDeleteParamVO) {
+        dasApiBasicInfoService.deleteBulk(bulkDeleteParamVO);
         return DefaultCommonResult.success();
     }
 

@@ -2,6 +2,7 @@ package com.qk.dm.dataservice.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public interface DasApiBasicInfoService {
 
     void delete(Long delId);
 
-    void deleteBulk(List<Long> ids);
+    void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO);
 
     Map<String, String> getApiType();
 

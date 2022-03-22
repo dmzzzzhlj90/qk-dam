@@ -76,13 +76,13 @@ public class DasApiLimitManageController {
     /**
      * 批量删除服务流控信息
      *
-     * @param ids
+     * @param bulkDeleteParamVO
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/bulk/{ids}")
+    @DeleteMapping("/bulk")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
-    public DefaultCommonResult deleteBulk(@RequestBody List<Long> ids) {
-        dasApiLimitManageService.deleteBulk(ids);
+    public DefaultCommonResult deleteBulk(@RequestBody BulkDeleteParamVO bulkDeleteParamVO) {
+        dasApiLimitManageService.deleteBulk(bulkDeleteParamVO);
         return DefaultCommonResult.success();
     }
 

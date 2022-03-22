@@ -15,6 +15,7 @@ import com.qk.dm.dataservice.repositories.DasApiCreateSqlScriptRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
 import com.qk.dm.dataservice.service.DasApiDirService;
+import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
@@ -196,7 +197,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBulk(List<Long> ids) {
+    public void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO) {
+        List<Long> ids = bulkDeleteParamVO.getIds();
         // 批量删除API基础信息
         List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(ids);
         dasApiBasicinfoRepository.deleteAll(apiBasicInfoList);

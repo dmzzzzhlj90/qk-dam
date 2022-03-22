@@ -138,7 +138,8 @@ public class DasApiLimitManageServiceImpl implements DasApiLimitManageService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBulk(List<Long> ids) {
+    public void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO) {
+        List<Long> ids = bulkDeleteParamVO.getIds();
         List<DasApiLimitInfo> apiLimitInfoList = dasApiLimitInfoRepository.findAllById(ids);
         // 批量删除流控信息
         dasApiLimitInfoRepository.deleteAllInBatch(apiLimitInfoList);

@@ -14,6 +14,7 @@ import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.repositories.DasApiAppManageInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.service.DasApiAppManageInfoService;
+import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiAppManageInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiAppManageInfoVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
@@ -132,8 +133,8 @@ public class DasApiAppManageInfoServiceImpl implements DasApiAppManageInfoServic
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBulk(List<Long> ids) {
-        List<DasApiAppManageInfo> apiAppManageInfoList = dasApiAppManageInfoRepository.findAllById(ids);
+    public void deleteBulk(BulkDeleteParamVO bulkDeleteParamVO) {
+        List<DasApiAppManageInfo> apiAppManageInfoList = dasApiAppManageInfoRepository.findAllById(bulkDeleteParamVO.getIds());
         // 批量删除应用管理信息
         dasApiAppManageInfoRepository.deleteAllInBatch(apiAppManageInfoList);
     }
