@@ -1,9 +1,11 @@
 package com.qk.dm.dataservice.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -77,13 +79,13 @@ public class DasApiAppManageInfoVO {
     /**
      * 修改时间
      */
-    @Column(name = "gmt_modified")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date gmtModified;
 
     /**
      * 是否删除；0逻辑删除，1物理删除；
      */
-    @Column(name = "del_flag", nullable = false)
     private Integer delFlag;
 
 }
