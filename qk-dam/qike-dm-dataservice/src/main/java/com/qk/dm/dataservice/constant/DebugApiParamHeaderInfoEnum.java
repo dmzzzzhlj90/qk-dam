@@ -33,12 +33,7 @@ public enum DebugApiParamHeaderInfoEnum {
     /**
      * 值
      */
-    VALUE("value", "值"),
-
-    /**
-     * 是否传递
-     */
-    USE_PARA("usePara", "是否传递");
+    VALUE("value", "值");
 
     private String key;
     private String value;
