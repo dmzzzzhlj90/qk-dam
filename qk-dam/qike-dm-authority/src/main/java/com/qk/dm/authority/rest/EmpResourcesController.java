@@ -7,7 +7,7 @@ import com.qk.dm.authority.service.EmpRsService;
 import com.qk.dm.authority.vo.params.ApiPageResourcesParamVO;
 import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
-import com.qk.dm.authority.vo.powervo.ResourceOutVO;
+import com.qk.dm.authority.vo.powervo.ResourceQueryVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +69,7 @@ public class EmpResourcesController {
    * @return DefaultCommonResult<List<ResourceOutVO>> 资源信息
    */
   @PostMapping("/rse")
-  public DefaultCommonResult<List<ResourceOutVO>> queryResource(@RequestBody ResourceParamVO resourceParamVO){
+  public DefaultCommonResult<List<ResourceQueryVO>> queryResource(@RequestBody ResourceParamVO resourceParamVO){
     return DefaultCommonResult.success(ResultCodeEnum.OK,empRsService.queryResource(resourceParamVO));
   }
 
