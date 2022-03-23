@@ -49,12 +49,12 @@ public class DasApiBasicInfoRequestParasVO {
     private Boolean supportNull;
 
     /**
-     * 示例值
+     * 默认值
      */
     private Object defaultValue;
 
     /**
-     * 默认值
+     * 示例值
      */
     private String exampleValue;
 
