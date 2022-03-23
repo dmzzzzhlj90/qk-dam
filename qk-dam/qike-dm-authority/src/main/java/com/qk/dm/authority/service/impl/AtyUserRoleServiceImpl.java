@@ -11,6 +11,7 @@ import com.qk.dm.authority.vo.clientrole.*;
 import com.qk.dm.authority.vo.user.AtyUserRoleFiltroVO;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,23 +47,71 @@ public class AtyUserRoleServiceImpl implements AtyUserRoleService {
 
     @Override
     public void addBatchByUsers(AtyRoleBatchByUsersVO atyGroupBatchVO) {
-        //根据角色id查已存在的用户全部解绑
-        dealAddUsers(atyGroupBatchVO);
-        atyGroupBatchVO.getUserIds().forEach(userId -> keyCloakUserApi.addUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userId, atyGroupBatchVO.getName()));
+            //根据角色id查已存在的用户全部解绑
+            List<String> userIdList =dealAddUsers(atyGroupBatchVO);
+            if (CollectionUtils.isNotEmpty(userIdList)){
+                userIdList.forEach(userId -> keyCloakUserApi.addUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userId, atyGroupBatchVO.getName()));
+            }
     }
 
     /**
      * 根据角色id查已存在的用户全部解绑
      * @param atyGroupBatchVO
+     * @return
      */
-    private void dealAddUsers(AtyRoleBatchByUsersVO atyGroupBatchVO) {
+    private List<String> dealAddUsers(AtyRoleBatchByUsersVO atyGroupBatchVO) {
         //查询已授权用户-当前角色
         List<AtyUserInfoVO> userFiltro = keyCloakRoleApi.clientRoleUsers(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), atyGroupBatchVO.getName());
-        //解绑已存在的用户-当前角色
-        if(CollectionUtils.isNotEmpty(userFiltro)){
-            userFiltro.stream().forEach(userInfoVO->{
-                keyCloakUserApi.deleteUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userInfoVO.getId(), atyGroupBatchVO.getName());
+            //获取需要解绑的用户id
+            List<String> unboundIdList =CollectionUtils.isEmpty(userFiltro) ? new ArrayList<>() : unboundIdList(userFiltro,atyGroupBatchVO);
+            //获取需要绑定的用户id
+            List<String> bindingList = CollectionUtils.isEmpty(atyGroupBatchVO.getUserIds()) ? new ArrayList<>() : bindingIdList(userFiltro,atyGroupBatchVO);
+            if (CollectionUtils.isEmpty(unboundIdList)){
+                //解绑用户
+                unboundIdList.forEach(userId->{
+                    keyCloakUserApi.deleteUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userId, atyGroupBatchVO.getName());
+                });
+            }
+        return bindingList;
+    }
+
+    /**
+     * 获取绑定的用户id
+     * @param userFiltro
+     * @param atyGroupBatchVO
+     * @return
+     */
+    private List<String> bindingIdList(List<AtyUserInfoVO> userFiltro, AtyRoleBatchByUsersVO atyGroupBatchVO) {
+        //当查询橘色绑定用户为空
+        if (CollectionUtils.isEmpty(userFiltro)){
+            return atyGroupBatchVO.getUserIds();
+        }else{
+            List<String> idList = userFiltro.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
+            atyGroupBatchVO.getUserIds().forEach(id->{
+                if (idList.contains(id)){
+                    atyGroupBatchVO.getUserIds().remove(id);
+                }
             });
+            return  atyGroupBatchVO.getUserIds();
+        }
+    }
+
+    /**
+     * 获取需要解绑的用户id
+     * @param userFiltro
+     * @param atyGroupBatchVO
+     * @return
+     */
+    private List<String> unboundIdList(List<AtyUserInfoVO> userFiltro, AtyRoleBatchByUsersVO atyGroupBatchVO) {
+        if (CollectionUtils.isEmpty(atyGroupBatchVO.getUserIds())){
+            return userFiltro.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
+        }else{
+            userFiltro.forEach(userInfoVO -> {
+                if (atyGroupBatchVO.getUserIds().contains(userInfoVO.getId())){
+                    userFiltro.remove(userInfoVO);
+                }
+            });
+         return userFiltro.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
         }
     }
 

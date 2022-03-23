@@ -19,6 +19,7 @@ import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.PowerResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
 import com.qk.dm.authority.vo.powervo.ResourceOutVO;
+import com.qk.dm.authority.vo.powervo.ResourceQueryVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -161,7 +162,7 @@ public class EmpRsServiceImpl implements EmpRsService {
   }
 
   @Override
-  public List<ResourceOutVO> queryResource(ResourceParamVO resourceParamVO) {
+  public List<ResourceQueryVO> queryResource(ResourceParamVO resourceParamVO) {
     List<ResourceOutVO> resourceOutVOList = new ArrayList<>();
     List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(resourceParamVO.getServiceId());
     //筛选资源数据
@@ -169,7 +170,8 @@ public class EmpRsServiceImpl implements EmpRsService {
     if (CollectionUtils.isNotEmpty(list)){
       resourceOutVOList = QxResourcesMapper.INSTANCE.of(list);
     }
-    return buildByResource(resourceOutVOList,resourceParamVO.getName());
+    List<ResourceOutVO> resourceOutVOLists = buildByResource(resourceOutVOList,resourceParamVO.getName());
+    return  QxResourcesMapper.INSTANCE.resourceOutVOlist(resourceOutVOList);
   }
 
   @Override
