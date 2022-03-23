@@ -30,6 +30,7 @@ public class SqlExecuteUtils {
     public static final String APOSTROPHE_STRING = "'";
     public static final String PERCENT_SIGN = "%";
     public static final String LIKE = " like ";
+    public static final String SPACE = " ";
     /**
      * 分页
      */
@@ -105,15 +106,19 @@ public class SqlExecuteUtils {
         switch (Objects.requireNonNull(symbolEnum)) {
             case NO_GREATER_LESS_THAN:
                 condition = OperationSymbolEnum.NO_GREATER_LESS_THAN.getValue();
+                value = APOSTROPHE_STRING + value  + APOSTROPHE_STRING;
                 break;
             case MORE_THAN:
                 condition = OperationSymbolEnum.MORE_THAN.getValue();
+                value = APOSTROPHE_STRING + value  + APOSTROPHE_STRING;
                 break;
             case LESS_THAN:
                 condition = OperationSymbolEnum.LESS_THAN.getValue();
+                value = APOSTROPHE_STRING + value  + APOSTROPHE_STRING;
                 break;
             case LESS_THAN_EQUAL:
                 condition = OperationSymbolEnum.LESS_THAN_EQUAL.getValue();
+                value = APOSTROPHE_STRING + value  + APOSTROPHE_STRING;
                 break;
             case ALL_LIKE:
                 condition = LIKE;
@@ -125,9 +130,10 @@ public class SqlExecuteUtils {
                 break;
             default:
                 condition = OperationSymbolEnum.EQUAL.getValue();
+                value = APOSTROPHE_STRING + value  + APOSTROPHE_STRING;
                 break;
         }
-        whereBuffer.append(AND).append(column).append(condition).append(value);
+        whereBuffer.append(AND).append(column).append(condition).append(SPACE).append(value);
     }
 
     /**

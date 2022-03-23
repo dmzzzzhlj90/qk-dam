@@ -226,15 +226,15 @@ public class DasFrontPageInfoServiceImpl implements DasFrontPageInfoService {
                                              DasReleaseTrendParamsVO dasReleaseTrendParamsVO) {
         //新建未发布
         List<DasApiBasicInfo> createNoUpload = apiBasicInfoList.stream().
-                filter(o -> SyncStatusEnum.CREATE_NO_UPLOAD.getCode().equalsIgnoreCase(o.getStatus()))
+                filter(o -> SyncStatusEnum.NO_UPLOAD.getCode().equalsIgnoreCase(o.getStatus()))
                 .collect(Collectors.toList());
         //新建发布失败
         List<DasApiBasicInfo> createFailUpload = apiBasicInfoList.stream().
-                filter(o -> SyncStatusEnum.CREATE_FAIL_UPLOAD.getCode().equalsIgnoreCase(o.getStatus()))
+                filter(o -> SyncStatusEnum.FAIL_UPLOAD.getCode().equalsIgnoreCase(o.getStatus()))
                 .collect(Collectors.toList());
         //新建发布成功
         List<DasApiBasicInfo> createSuccessUpload = apiBasicInfoList.stream().
-                filter(o -> SyncStatusEnum.CREATE_SUCCESS_UPLOAD.getCode().equalsIgnoreCase(o.getStatus()))
+                filter(o -> SyncStatusEnum.SUCCESS_UPLOAD.getCode().equalsIgnoreCase(o.getStatus()))
                 .collect(Collectors.toList());
 
         //构建饼状图信息
