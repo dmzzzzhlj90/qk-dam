@@ -1,5 +1,6 @@
 package com.qk.dm.authority.service.impl;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.authority.common.keycloak.KeyCloakRoleApi;
 import com.qk.dam.authority.common.keycloak.KeyCloakUserApi;
 import com.qk.dam.authority.common.vo.clientrole.AtyClientRoleInfoVO;
@@ -45,7 +46,24 @@ public class AtyUserRoleServiceImpl implements AtyUserRoleService {
 
     @Override
     public void addBatchByUsers(AtyRoleBatchByUsersVO atyGroupBatchVO) {
+        //根据角色id查已存在的用户全部解绑
+        dealAddUsers(atyGroupBatchVO);
         atyGroupBatchVO.getUserIds().forEach(userId -> keyCloakUserApi.addUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userId, atyGroupBatchVO.getName()));
+    }
+
+    /**
+     * 根据角色id查已存在的用户全部解绑
+     * @param atyGroupBatchVO
+     */
+    private void dealAddUsers(AtyRoleBatchByUsersVO atyGroupBatchVO) {
+        //查询已授权用户-当前角色
+        List<AtyUserInfoVO> userFiltro = keyCloakRoleApi.clientRoleUsers(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), atyGroupBatchVO.getName());
+        //解绑已存在的用户-当前角色
+        if(CollectionUtils.isNotEmpty(userFiltro)){
+            userFiltro.stream().forEach(userInfoVO->{
+                keyCloakUserApi.deleteUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userInfoVO.getId(), atyGroupBatchVO.getName());
+            });
+        }
     }
 
     @Override
