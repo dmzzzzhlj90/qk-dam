@@ -171,7 +171,7 @@ public class EmpRsServiceImpl implements EmpRsService {
       resourceOutVOList = QxResourcesMapper.INSTANCE.of(list);
     }
     List<ResourceOutVO> resourceOutVOLists = buildByResource(resourceOutVOList,resourceParamVO.getName());
-    return  QxResourcesMapper.INSTANCE.resourceOutVOlist(resourceOutVOList);
+    return  QxResourcesMapper.INSTANCE.resourceOutVOlist(resourceOutVOLists);
   }
 
   @Override
