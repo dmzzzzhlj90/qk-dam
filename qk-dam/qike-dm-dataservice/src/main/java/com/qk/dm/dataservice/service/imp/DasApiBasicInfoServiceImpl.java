@@ -379,7 +379,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
             DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
 
         // API目录ID
-        if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getDirId())) {
+        if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getDirId())
+                && !DasConstant.TREE_DIR_TOP_PARENT_ID.equals(dasApiBasicInfoParamsVO.getDirId())) {
             booleanBuilder.and(qDasApiBasicinfo.dirId.eq(dasApiBasicInfoParamsVO.getDirId()));
         }
         // API名称
