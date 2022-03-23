@@ -10,6 +10,7 @@ import com.qk.dm.datamodel.params.vo.ModelDimVO;
 import com.qk.dm.datamodel.service.ModelDimService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 /**
  * 维度
@@ -40,13 +41,12 @@ public class ModelDimController {
 
     /**
      * 修改维度
-     * @param id 维度id
-     * @param modelDimDTO 维度参数实体
+     * @param modelDimDTO 维度参数实体，id不能为空
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id,@RequestBody @Validated ModelDimDTO modelDimDTO){
-        modelDimService.update(id,modelDimDTO);
+    @PutMapping("")
+    public DefaultCommonResult update(@RequestBody @Validated ModelDimDTO modelDimDTO){
+        modelDimService.update(modelDimDTO);
         return  DefaultCommonResult.success();
     }
 
@@ -72,23 +72,34 @@ public class ModelDimController {
 
     /**
      * 发布维度
-     * @param ids 维度id,如果多个，使用英文逗号分割
+     * @param idList 维度id集合
      * @return DefaultCommonResult
      */
-    @PutMapping("/publish/{ids}")
-    public DefaultCommonResult publish(@PathVariable("ids") String ids) {
-        modelDimService.publish(ids);
+    @PutMapping("/publish")
+    public DefaultCommonResult publish(@RequestBody @Validated List<Long> idList) {
+        modelDimService.publish(idList);
         return DefaultCommonResult.success();
     }
 
     /**
      * 下线维度
+     * @param idList 维度id集合
+     * @return DefaultCommonResult
+     */
+    @PutMapping("/offline")
+    public DefaultCommonResult offline(@RequestBody @Validated List<Long> idList) {
+        modelDimService.offline(idList);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 删除维度
      * @param ids 维度id,如果多个，使用英文逗号分割
      * @return DefaultCommonResult
      */
-    @PutMapping("/offline/{ids}")
-    public DefaultCommonResult offline(@PathVariable("ids") String ids) {
-        modelDimService.offline(ids);
+    @DeleteMapping("{ids}")
+    public DefaultCommonResult delete(@PathVariable("ids") String ids){
+        modelDimService.delete(ids);
         return DefaultCommonResult.success();
     }
 

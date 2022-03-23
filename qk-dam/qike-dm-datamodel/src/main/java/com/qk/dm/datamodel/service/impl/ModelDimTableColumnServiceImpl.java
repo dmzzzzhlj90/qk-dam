@@ -9,6 +9,7 @@ import com.qk.dm.datamodel.repositories.ModelDimTableColumnRepository;
 import com.qk.dm.datamodel.service.ModelDimTableColumnService;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,8 +51,8 @@ public class ModelDimTableColumnServiceImpl implements ModelDimTableColumnServic
     }
 
     @Override
-    public void delete(String ids) {
-
+    public void delete(String dimTableIds) {
+        Arrays.stream(dimTableIds.split(",")).forEach(e->{modelDimTableColumnRepository.deleteByDimTableId(Long.valueOf(e));});
     }
 
     @Override

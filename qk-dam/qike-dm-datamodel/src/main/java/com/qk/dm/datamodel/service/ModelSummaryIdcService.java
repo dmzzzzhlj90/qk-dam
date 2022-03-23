@@ -13,7 +13,7 @@ public interface ModelSummaryIdcService {
 
     void update(Long summaryId,List<ModelSummaryIdcDTO> modelSummaryIdcDTOList);
 
-    void delete(String ids);
+    void delete(String summaryIds);
 
     List<ModelSummaryIdcVO> list(Long summaryId);
 }

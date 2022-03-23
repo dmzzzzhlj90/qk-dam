@@ -3,6 +3,7 @@ package com.qk.dm.datamodel.params.dto;
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ModelSummaryDTO implements Serializable {
     /**
      * 表名称
      */
+    @NotNull(message = "表名称不能为空")
     private String tableName;
 
     /**

@@ -51,9 +51,9 @@ public class ModelDimTableVO implements Serializable {
     private Integer status;
 
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    private String connectionType;
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -63,7 +63,12 @@ public class ModelDimTableVO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
+
+    /**
+     * 责任人
+     */
+    private String responsibleBy;
 
     /**
      * 创建时间

@@ -6,12 +6,14 @@ import com.qk.dm.datamodel.params.dto.ModelDimQueryDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimDetailVO;
 import com.qk.dm.datamodel.params.vo.ModelDimVO;
 
+import java.util.List;
+
 public interface ModelDimService {
     void insert(ModelDimDTO modelDimDTO);
 
     ModelDimDetailVO detail(Long id);
 
-    void update(Long id,ModelDimDTO modelDimDTO);
+    void update(ModelDimDTO modelDimDTO);
 
     void delete(String ids);
 
@@ -19,13 +21,13 @@ public interface ModelDimService {
 
     /**
      * 发布
-     * @param ids
+     * @param idList
      */
-    void publish(String ids);
+    void publish(List<Long> idList);
 
     /**
      * 下线
-     * @param ids
+     * @param idList
      */
-    void offline(String ids);
+    void offline(List<Long> idList);
 }

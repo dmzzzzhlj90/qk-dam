@@ -9,4 +9,8 @@ import lombok.EqualsAndHashCode;
 public class ModelDimTableQueryDTO extends ModelPageDTO {
 
     private String dimName;
+    /**
+     * 维度名称
+     */
+    private String themeName;
 }

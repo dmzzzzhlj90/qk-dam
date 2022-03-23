@@ -8,6 +8,9 @@ import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 import com.qk.dm.datamodel.service.ModelFactTableService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * 事实表
  * @author wangzp
@@ -36,13 +39,12 @@ public class ModelFactTableController {
     }
     /**
      * 修改事实表
-     * @param id 事实表id
-     * @param modelFactTableDTO 事实表实体
+     * @param modelFactTableDTO 事实表实体,编辑id不能为空
      * @return DefaultCommonResult
      */
     @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
-        modelFactTableService.update(id,modelFactTableDTO);
+    public DefaultCommonResult update(@RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
+        modelFactTableService.update(modelFactTableDTO);
         return  DefaultCommonResult.success();
     }
 
@@ -67,25 +69,37 @@ public class ModelFactTableController {
     }
     /**
      * 发布事实表
-     * @param ids 事实表id，多个id使用英文逗号分割
+     * @param idList
      * @return DefaultCommonResult
      */
-    @PutMapping("/publish/{ids}")
-    public DefaultCommonResult publish(@PathVariable("ids") String ids) {
-        modelFactTableService.publish(ids);
+    @PutMapping("/publish")
+    public DefaultCommonResult publish(@RequestBody @Validated List<Long> idList) {
+        modelFactTableService.publish(idList);
         return DefaultCommonResult.success();
     }
 
     /**
      * 下线事实表
-     * @param ids 事实表id，多个id使用英文逗号分割
+     * @param idList
      * @return DefaultCommonResult
      */
-    @PutMapping("/offline/{ids}")
-    public DefaultCommonResult offline(@PathVariable("ids") String ids) {
-        modelFactTableService.offline(ids);
+    @PutMapping("/offline")
+    public DefaultCommonResult offline(@RequestBody @Validated List<Long> idList) {
+        modelFactTableService.offline(idList);
         return DefaultCommonResult.success();
     }
+
+    /**
+     * 删除事实表
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("{ids}")
+    public DefaultCommonResult delete(@PathVariable("ids") String ids){
+        modelFactTableService.delete(ids);
+        return DefaultCommonResult.success();
+    }
+
     /**
      * 预览SQL
      * @param tableId 事实表id

@@ -8,6 +8,9 @@ import com.qk.dm.datamodel.params.vo.ModelSummaryVO;
 import com.qk.dm.datamodel.service.ModelSummaryService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * 汇总表
  * @author wangzp
@@ -36,13 +39,12 @@ public class ModelSummaryController {
     }
     /**
      * 修改汇总表
-     * @param id 汇总表id
-     * @param modelSummaryDTO 汇总表实体
+     * @param modelSummaryDTO 汇总表实体 id不能为空
      * @return DefaultCommonResult
      */
     @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelSummaryDTO modelSummaryDTO){
-        modelSummaryService.update(id,modelSummaryDTO);
+    public DefaultCommonResult update(@RequestBody @Validated ModelSummaryDTO modelSummaryDTO){
+        modelSummaryService.update(modelSummaryDTO);
         return  DefaultCommonResult.success();
     }
 
@@ -67,23 +69,34 @@ public class ModelSummaryController {
     }
     /**
      * 发布汇总表
-     * @param ids 汇总表id，多个id使用英文逗号分割
+     * @param idList
      * @return DefaultCommonResult
      */
-    @PutMapping("/publish/{ids}")
-    public DefaultCommonResult publish(@PathVariable("ids") String ids) {
-        modelSummaryService.publish(ids);
+    @PutMapping("/publish")
+    public DefaultCommonResult publish(@RequestBody @Validated List<Long> idList) {
+        modelSummaryService.publish(idList);
         return DefaultCommonResult.success();
     }
 
     /**
      * 下线汇总表
-     * @param ids 汇总表id，多个id使用英文逗号分割
+     * @param idList
      * @return DefaultCommonResult
      */
-    @PutMapping("/offline/{ids}")
-    public DefaultCommonResult offline(@PathVariable("ids") String ids) {
-        modelSummaryService.offline(ids);
+    @PutMapping("/offline")
+    public DefaultCommonResult offline(@RequestBody @Validated List<Long> idList) {
+        modelSummaryService.offline(idList);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 删除汇总表
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("{ids}")
+    public DefaultCommonResult delete(@PathVariable("ids") String ids){
+        modelSummaryService.delete(ids);
         return DefaultCommonResult.success();
     }
     /**

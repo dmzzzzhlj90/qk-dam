@@ -2,6 +2,7 @@ package com.qk.dm.datamodel.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.model.constant.ModelStatus;
 import com.qk.dam.model.constant.ModelType;
 import com.qk.dam.sqlbuilder.SqlBuilderFactory;
 import com.qk.dam.sqlbuilder.model.Column;
@@ -97,10 +98,13 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(Long id, ModelDimTableDTO modelDimTableDTO) {
-        Optional<ModelDimTable> modelDimTable = modelDimTableRepository.findById(id);
+    public void update(ModelDimTableDTO modelDimTableDTO) {
+        if(Objects.isNull(modelDimTableDTO.getId())){
+            throw new BizException("修改维度表id不能为空！！！");
+        }
+        Optional<ModelDimTable> modelDimTable = modelDimTableRepository.findById(modelDimTableDTO.getId());
         if(modelDimTable.isEmpty()){
-            throw new BizException("当前查找的维度表id为"+id+"的数据不存在");
+            throw new BizException("当前要修改的维度表id为"+modelDimTableDTO.getId()+"的数据不存在");
          }
         updateDimTable(modelDimTableDTO,modelDimTable.get());
 
@@ -131,7 +135,13 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
         if(modelDimTableList.isEmpty()){
             throw new BizException("当前要删除的维度表id为："+ids+"的数据不存在！！！");
         }
+        modelDimTableList = modelDimTableList.stream().peek(e -> {
+            if (e.getStatus() == ModelStatus.PUBLISH) {
+                throw new BizException(e.getDimName() + "只有当维度处于草稿或已线下状态才可删除");
+            }
+        }).collect(Collectors.toList());
         modelDimTableRepository.deleteAll(modelDimTableList);
+        modelDimTableColumnService.delete(ids);
     }
 
     @Override
@@ -150,6 +160,17 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
                 modelDimTableQueryDTO.getPagination().getPage(),
                 modelDimTableQueryDTO.getPagination().getSize(),
                 voList);
+    }
+
+    @Override
+    public void sync(List<Long> idList) {
+        //todo 逻辑待实现
+
+    }
+
+    @Override
+    public void fallLibrary(List<Long> idList) {
+        //todo 逻辑待实现
     }
 
     @Override
@@ -197,6 +218,9 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     public void checkCondition(BooleanBuilder booleanBuilder, ModelDimTableQueryDTO modelDimTableQueryDTO) {
         if (!StringUtils.isEmpty(modelDimTableQueryDTO.getDimName())) {
             booleanBuilder.and(qModelDimTable.dimName.contains(modelDimTableQueryDTO.getDimName()));
+        }
+        if(!StringUtils.isEmpty(modelDimTableQueryDTO.getThemeName())){
+            booleanBuilder.and(qModelDimTable.themeName.contains(modelDimTableQueryDTO.getThemeName()));
         }
     }
 }

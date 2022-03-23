@@ -10,6 +10,8 @@ import com.qk.dm.datamodel.repositories.ModelFactColumnRepository;
 import com.qk.dm.datamodel.repositories.ModelFactTableRepository;
 import com.qk.dm.datamodel.service.ModelFactColumnService;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,8 +45,8 @@ public class ModelFactColumnServiceImpl implements ModelFactColumnService {
     }
 
     @Override
-    public void delete(String ids) {
-
+    public void delete(String factIds) {
+        Arrays.stream(factIds.split(",")).forEach(e->{modelFactColumnRepository.deleteByFactId(Long.valueOf(e));});
     }
 
     @Override

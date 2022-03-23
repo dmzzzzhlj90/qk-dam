@@ -4,10 +4,7 @@ import com.qk.dm.datamodel.entity.ModelDimTable;
 import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableDetailVO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableVO;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -21,10 +18,12 @@ public interface ModelDimTableMapper {
 
     ModelDimTableVO of(ModelDimTable modelDimTable);
 
+    @IterableMapping(elementTargetType = ModelDimTableVO.class)
     List<ModelDimTableVO> of(List<ModelDimTable> modelDimTableList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void from(ModelDimTableDTO modelDimTableDTO, @MappingTarget ModelDimTable modelDimTable);
 
+    @IterableMapping(elementTargetType = ModelDimTableDetailVO.class)
     ModelDimTableDetailVO ofDetail(ModelDimTable modelDimTable);
 }

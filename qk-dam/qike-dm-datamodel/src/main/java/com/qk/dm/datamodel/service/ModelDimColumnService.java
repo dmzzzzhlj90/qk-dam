@@ -9,7 +9,7 @@ public interface ModelDimColumnService {
 
     void update(Long dimId,List<ModelDimColumnDTO> modelPhysicalColumnDTOList);
 
-    void delete(String ids);
+    void delete(String dimIds);
 
     List<ModelDimColumnVO> list(Long dimId);
 }

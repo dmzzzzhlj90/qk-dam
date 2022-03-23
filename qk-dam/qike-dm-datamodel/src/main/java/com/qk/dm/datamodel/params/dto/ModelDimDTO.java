@@ -18,13 +18,12 @@ public class ModelDimDTO implements Serializable {
     /**
      * 主题id
      */
-
-    @NotNull(message = "主题id不能为空 ")
     private Long themeId;
 
     /**
      * 主题名称
      */
+    @NotNull(message = "主题名称不能为空 ")
     private String themeName;
 
     /**
@@ -53,10 +52,6 @@ public class ModelDimDTO implements Serializable {
      */
     private Integer status;
 
-    /**
-     * 连接类型
-     */
-   // private String connectionType;
 
     /**
      * 数据连接

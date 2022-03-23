@@ -3,13 +3,14 @@ package com.qk.dm.datamodel.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
 import com.qk.dm.datamodel.params.dto.ModelDimTableQueryDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableDetailVO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableVO;
 import com.qk.dm.datamodel.service.ModelDimTableService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 维度表
@@ -29,17 +30,16 @@ public class ModelDimTableController {
 
 
 
-    /**
-     * 修改维度表
-     * @param id 维度表id
-     * @param modelDimTableDTO 维度表实体
-     * @return DefaultCommonResult
-     */
-    @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelDimTableDTO modelDimTableDTO){
-        modelDimTableService.update(id,modelDimTableDTO);
-        return  DefaultCommonResult.success();
-    }
+//    /**
+//     * 修改维度表
+//     * @param modelDimTableDTO 维度表实体
+//     * @return DefaultCommonResult
+//     */
+//    @PutMapping("")
+//    public DefaultCommonResult update(@RequestBody @Validated ModelDimTableDTO modelDimTableDTO){
+//        modelDimTableService.update(modelDimTableDTO);
+//        return  DefaultCommonResult.success();
+//    }
 
     /**
      * 维度表详情
@@ -59,6 +59,39 @@ public class ModelDimTableController {
     @PostMapping(value = "/list")
     public DefaultCommonResult<PageResultVO<ModelDimTableVO>> list(@RequestBody @Validated ModelDimTableQueryDTO modelDimTableQueryDTO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimTableService.list(modelDimTableQueryDTO));
+    }
+
+    /**
+     * 同步
+     * @param idList
+     * @return
+     */
+    @PostMapping(value = "/sync")
+    public DefaultCommonResult sync(@RequestBody @Validated List<Long> idList){
+        modelDimTableService.sync(idList);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 删除维度表
+     * @param ids 维度表id,如果多个，使用英文逗号分割
+     * @return DefaultCommonResult
+     */
+    @DeleteMapping("{ids}")
+    public DefaultCommonResult delete(@PathVariable("ids") String ids){
+        modelDimTableService.delete(ids);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 数据落库
+     * @param idList
+     * @return
+     */
+    @PostMapping(value = "/fall/library")
+    public DefaultCommonResult fallLibrary(@RequestBody @Validated List<Long> idList){
+        modelDimTableService.fallLibrary(idList);
+        return DefaultCommonResult.success();
     }
 
     /**

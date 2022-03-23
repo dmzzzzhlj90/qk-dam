@@ -83,10 +83,13 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
-    public void update(Long id, ModelFactTableDTO modelFactTableDTO) {
-        ModelFactTable modelFactTable = modelFactTableRepository.findById(id).orElse(null);
+    public void update(ModelFactTableDTO modelFactTableDTO) {
+        if(Objects.isNull(modelFactTableDTO.getId())){
+            throw new BizException("事实表id不能为空");
+        }
+        ModelFactTable modelFactTable = modelFactTableRepository.findById(modelFactTableDTO.getId()).orElse(null);
         if(Objects.isNull(modelFactTable)){
-            throw new BizException("当前要查找的事实表id为"+id+"的数据不存在");
+            throw new BizException("当前要查找的事实表id为"+modelFactTableDTO.getId()+"的数据不存在");
         }
         if(Objects.equals(modelFactTable.getStatus(), ModelStatus.PUBLISH)){
             throw new BizException("当前事实表已发布，不可修改！！！");
@@ -98,7 +101,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
             if(checkRepeat(modelFactColumnList)){
                 throw new BizException("存在重复的字段！！！");
             }
-            modelFactColumnService.update(id,modelFactColumnList);
+            modelFactColumnService.update(modelFactTableDTO.getId(),modelFactColumnList);
             //组装建表SQL,添加到数据库中
             ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelFactTable.getFactName(), modelFactColumnList))
                     .tableId(modelFactTable.getId()).type(ModelType.FACT_TABLE).build();
@@ -109,8 +112,15 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
 
     @Override
     public void delete(String ids) {
-        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
+        List<Long> list = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(list);
+        modelFactTableList = modelFactTableList.stream().peek(e -> {
+            if (e.getStatus() == ModelStatus.PUBLISH) {
+                throw new BizException(e.getFactName() + "事实表已发布，不可删除！！！");
+            }
+        }).collect(Collectors.toList());
         modelFactTableRepository.deleteAll(modelFactTableList);
+        modelFactColumnService.delete(ids);
     }
 
     @Override
@@ -132,16 +142,16 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
-    public void publish(String ids) {
-        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
+    public void publish(List<Long> idList) {
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(idList);
         modelFactTableList.forEach(e->e.setStatus(ModelStatus.PUBLISH));
         modelFactTableRepository.saveAllAndFlush(modelFactTableList);
 
     }
 
     @Override
-    public void offline(String ids) {
-        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
+    public void offline(List<Long> idList) {
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(idList);
         modelFactTableList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
         modelFactTableRepository.saveAllAndFlush(modelFactTableList);
     }
@@ -174,11 +184,11 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
                 filter(key -> collect.get(key) > 1).collect(Collectors.toList());
         return !CollectionUtils.isEmpty(list);
     }
-    private List<ModelFactTable> getModelFactTableList(String ids){
-        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-        List<ModelFactTable> modelFactTableList = modelFactTableRepository.findAllById(idSet);
+
+    private List<ModelFactTable> getModelFactTableList(List<Long> idList){
+        List<ModelFactTable> modelFactTableList = modelFactTableRepository.findAllById(idList);
         if(modelFactTableList.isEmpty()){
-            throw new BizException("当前要操作的事实表id为："+ids+"的数据不存在！！！");
+            throw new BizException("当前要操作的事实表id为："+idList+"的数据不存在！！！");
         }
         return modelFactTableList;
     }

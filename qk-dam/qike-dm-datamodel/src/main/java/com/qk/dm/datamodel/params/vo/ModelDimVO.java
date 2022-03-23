@@ -49,20 +49,15 @@ public class ModelDimVO implements Serializable {
      */
     private Integer status;
 
-//    /**
-//     * 连接类型
-//     */
-//    private String connectionType;
+    /**
+     * 数据源连接名称
+     */
+    private String dataSourceName;
 
     /**
      * 数据连接
      */
     private String dataConnection;
-
-    /**
-     * 数据源连接名称
-     */
-    private String dataSourceName;
 
     /**
      * 数据库名称

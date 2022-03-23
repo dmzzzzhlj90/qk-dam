@@ -78,7 +78,6 @@ public class ModelDimServiceImpl implements ModelDimService {
         //保存维度基本信息
         ModelDim dim = modelDimRepository.save(modelDim);
         //保存字段信息
-        //modelDimColumnList.forEach(e->e.setDimId(dim.getId()));
         modelDimColumnSerVice.insert(modelDimColumnList,dim.getId());
         //如果是直接发布 需要保存维度表
         if(Objects.equals(ModelStatus.PUBLISH,modelDim.getStatus())){
@@ -102,10 +101,13 @@ public class ModelDimServiceImpl implements ModelDimService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(Long id, ModelDimDTO modelDimDTO) {
-        ModelDim modelDim = modelDimRepository.findById(id).orElse(null);
+    public void update(ModelDimDTO modelDimDTO) {
+        if(Objects.isNull(modelDimDTO.getId())){
+            throw new BizException("修改的维度信息 id不能为空！！！");
+        }
+        ModelDim modelDim = modelDimRepository.findById(modelDimDTO.getId()).orElse(null);
         if(Objects.isNull(modelDim)){
-            throw new BizException("当前要修改的维度信息 id为"+id+"的数据不存在！！！");
+            throw new BizException("当前要修改的维度信息 id为"+modelDimDTO.getId()+"的数据不存在！！！");
         }
         if(Objects.equals(modelDim.getStatus(), ModelStatus.PUBLISH)){
             throw new BizException("当前维度已发布，不可修改！！！");
@@ -114,7 +116,7 @@ public class ModelDimServiceImpl implements ModelDimService {
         modelDimRepository.saveAndFlush(modelDim);
         List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimDTO.getColumnList();
         if(!modelDimColumnDTOList.isEmpty()){
-            modelDimColumnSerVice.update(id,modelDimColumnDTOList);
+            modelDimColumnSerVice.update(modelDimDTO.getId(),modelDimColumnDTOList);
         }
         //如果是直接发布 需要修改或添加维度表
         if(Objects.equals(ModelStatus.PUBLISH,modelDim.getStatus())){
@@ -127,9 +129,18 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(String ids) {
-        List<ModelDim> modelDimList = getModelDimList(ids);
+        List<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelDim> modelDimList = getModelDimList(idSet);
+        modelDimList = modelDimList.stream().peek(e -> {
+            if (e.getStatus() == ModelStatus.PUBLISH) {
+                throw new BizException(e.getDimName() + "维度已发布，不可删除！！！");
+            }
+        }).collect(Collectors.toList());
         modelDimRepository.deleteAll(modelDimList);
+        //删除字段
+        modelDimColumnSerVice.delete(ids);
     }
 
     @Override
@@ -151,8 +162,8 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public void publish(String ids) {
-        List<ModelDim> modelDimList = getModelDimList(ids);
+    public void publish(List<Long> idList) {
+        List<ModelDim> modelDimList = getModelDimList(idList);
         modelDimList = modelDimList.stream().peek(e -> {
             if (e.getStatus() == ModelStatus.PUBLISH) {
                 throw new BizException(e.getDimName() + "维度已发布，不可重复发布！！！");
@@ -163,8 +174,8 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public void offline(String ids) {
-        List<ModelDim> modelDimList = getModelDimList(ids);
+    public void offline(List<Long> idList) {
+        List<ModelDim> modelDimList = getModelDimList(idList);
         modelDimList.forEach(e->{
             if(e.getStatus()!=ModelStatus.PUBLISH){
                 throw new BizException(e.getDimName() + "维度还未发布，不可下线！！！");
@@ -181,11 +192,12 @@ public class ModelDimServiceImpl implements ModelDimService {
                 filter(key -> collect.get(key) > 1).collect(Collectors.toList());
         return !CollectionUtils.isEmpty(list);
     }
-    private List<ModelDim> getModelDimList(String ids){
-        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-        List<ModelDim> modelDimList = modelDimRepository.findAllById(idSet);
+
+    private List<ModelDim> getModelDimList(List<Long> idList){
+
+        List<ModelDim> modelDimList = modelDimRepository.findAllById(idList);
         if(modelDimList.isEmpty()){
-            throw new BizException("当前要操作维度id为："+ids+"的数据不存在！！！");
+            throw new BizException("当前要操作维度id为："+idList+"的数据不存在！！！");
         }
         return modelDimList;
     }
@@ -217,6 +229,9 @@ public class ModelDimServiceImpl implements ModelDimService {
         }
         if(Objects.nonNull(modelDimQueryDTO.getStatus())){
             booleanBuilder.and(qModelDim.status.eq(modelDimQueryDTO.getStatus()));
+        }
+        if(Objects.nonNull(modelDimQueryDTO.getThemeName())){
+            booleanBuilder.and(qModelDim.themeName.contains(modelDimQueryDTO.getThemeName()));
         }
     }
 

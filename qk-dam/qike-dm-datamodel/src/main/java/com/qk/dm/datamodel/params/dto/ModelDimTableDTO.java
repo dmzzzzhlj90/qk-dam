@@ -48,10 +48,11 @@ public class ModelDimTableDTO implements Serializable {
      */
     private Integer status;
 
+
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    private String connectionType;
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -61,7 +62,7 @@ public class ModelDimTableDTO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      * 关联维度的id

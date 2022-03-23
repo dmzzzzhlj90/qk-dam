@@ -17,4 +17,8 @@ public class ModelDimQueryDTO extends ModelPageDTO{
      * 0待审核 1已发布2 已下线
      */
     private Integer status;
+    /**
+     * 维度名称
+     */
+    private String themeName;
 }

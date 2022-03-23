@@ -12,7 +12,7 @@ public interface ModelDimTableColumnService {
 
     void update(Long dimTableId,List<ModelDimTableColumnDTO> modelDimTableColumnDTOList);
 
-    void delete(String ids);
+    void delete(String dimTableIds);
 
     List<ModelDimTableColumnVO> list(Long dimTableId);
 }
