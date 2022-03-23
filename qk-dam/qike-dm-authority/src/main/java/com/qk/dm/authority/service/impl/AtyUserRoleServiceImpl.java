@@ -12,6 +12,7 @@ import com.qk.dm.authority.vo.user.AtyUserRoleFiltroVO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,8 +66,8 @@ public class AtyUserRoleServiceImpl implements AtyUserRoleService {
             //获取需要解绑的用户id
             List<String> unboundIdList =CollectionUtils.isEmpty(userFiltro) ? new ArrayList<>() : unboundIdList(userFiltro,atyGroupBatchVO);
             //获取需要绑定的用户id
-            List<String> bindingList = CollectionUtils.isEmpty(atyGroupBatchVO.getUserIds()) ? new ArrayList<>() : bindingIdList(userFiltro,atyGroupBatchVO);
-            if (CollectionUtils.isEmpty(unboundIdList)){
+            List<String> bindingList = CollectionUtils.isEmpty(atyGroupBatchVO.getUserIds()) ? new ArrayList<>() : bindingIdList(atyGroupBatchVO);
+            if (CollectionUtils.isNotEmpty(unboundIdList)){
                 //解绑用户
                 unboundIdList.forEach(userId->{
                     keyCloakUserApi.deleteUserClientRole(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), userId, atyGroupBatchVO.getName());
@@ -77,21 +78,24 @@ public class AtyUserRoleServiceImpl implements AtyUserRoleService {
 
     /**
      * 获取绑定的用户id
-     * @param userFiltro
      * @param atyGroupBatchVO
      * @return
      */
-    private List<String> bindingIdList(List<AtyUserInfoVO> userFiltro, AtyRoleBatchByUsersVO atyGroupBatchVO) {
+    private List<String> bindingIdList(AtyRoleBatchByUsersVO atyGroupBatchVO) {
+        //查询已授权用户-当前角色
+        List<AtyUserInfoVO> userFiltros = keyCloakRoleApi.clientRoleUsers(atyGroupBatchVO.getRealm(), atyGroupBatchVO.getClient_id(), atyGroupBatchVO.getName());
         //当查询橘色绑定用户为空
-        if (CollectionUtils.isEmpty(userFiltro)){
+        if (CollectionUtils.isEmpty(userFiltros)){
             return atyGroupBatchVO.getUserIds();
         }else{
-            List<String> idList = userFiltro.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
-            atyGroupBatchVO.getUserIds().forEach(id->{
+            List<String> idList = userFiltros.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
+            Iterator<String> iterator = atyGroupBatchVO.getUserIds().iterator();
+            while (iterator.hasNext()){
+                String id = iterator.next();
                 if (idList.contains(id)){
-                    atyGroupBatchVO.getUserIds().remove(id);
+                    iterator.remove();
                 }
-            });
+            }
             return  atyGroupBatchVO.getUserIds();
         }
     }
@@ -106,13 +110,15 @@ public class AtyUserRoleServiceImpl implements AtyUserRoleService {
         if (CollectionUtils.isEmpty(atyGroupBatchVO.getUserIds())){
             return userFiltro.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
         }else{
-            userFiltro.forEach(userInfoVO -> {
-                if (atyGroupBatchVO.getUserIds().contains(userInfoVO.getId())){
-                    userFiltro.remove(userInfoVO);
+            Iterator<AtyUserInfoVO> iterator = userFiltro.iterator();
+            while (iterator.hasNext()){
+                AtyUserInfoVO atyUserInfoVO = iterator.next();
+                if (atyGroupBatchVO.getUserIds().contains(atyUserInfoVO.getId())){
+                    iterator.remove();
                 }
-            });
-         return userFiltro.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
-        }
+            }
+            return userFiltro.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
+            }
     }
 
     @Override

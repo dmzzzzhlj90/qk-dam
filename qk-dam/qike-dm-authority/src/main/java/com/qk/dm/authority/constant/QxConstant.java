@@ -16,6 +16,10 @@ public class QxConstant {
    * 主目录id设置
    */
   public static final Long DIRID = 0L;
+  /**
+   * 主目录uuid设置
+   */
+  public static final String RESOURCEID = "0";
 
   /**
    * 授权页面查询访问资源(查询api资源)
