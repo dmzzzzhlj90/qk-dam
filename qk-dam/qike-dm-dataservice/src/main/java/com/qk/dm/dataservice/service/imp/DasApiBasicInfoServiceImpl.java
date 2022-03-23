@@ -137,7 +137,7 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParamJson(dasApiBasicInfoVO, dasApiBasicInfo);
-        dasApiBasicInfo.setStatus(SyncStatusEnum.CREATE_NO_UPLOAD.getCode());
+        dasApiBasicInfo.setStatus(SyncStatusEnum.NO_UPLOAD.getCode());
         dasApiBasicInfo.setGmtCreate(new Date());
         dasApiBasicInfo.setGmtModified(new Date());
         dasApiBasicInfo.setCreateUserid("admin");

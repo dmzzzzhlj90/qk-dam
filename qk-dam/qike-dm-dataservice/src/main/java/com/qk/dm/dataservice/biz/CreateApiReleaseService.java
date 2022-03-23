@@ -7,9 +7,7 @@ import com.qk.dam.dataservice.spi.pojo.RouteData;
 import com.qk.dam.dataservice.spi.route.RouteContext;
 import com.qk.dm.dataservice.constant.SyncStatusEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
-import com.qk.dm.dataservice.entity.DasApiRegister;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
-import com.qk.dm.dataservice.utils.UrlProcessUtils;
 import com.qk.dm.dataservice.vo.DasReleaseApiParamsVO;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,12 +160,12 @@ public class CreateApiReleaseService {
                               AtomicInteger successfulNum,
                               AtomicInteger failNum) {
         if (syncFlag) {
-            dasApiBasicInfo.setStatus(SyncStatusEnum.CREATE_SUCCESS_UPLOAD.getCode());
+            dasApiBasicInfo.setStatus(SyncStatusEnum.SUCCESS_UPLOAD.getCode());
             dasApiBasicInfoRepository.saveAndFlush(dasApiBasicInfo);
             LOG.info("发布同步成功,更新新建API同步状态成功,API路径为:【{}】", dasApiBasicInfo.getApiPath());
             successfulNum.getAndIncrement();
         } else {
-            dasApiBasicInfo.setStatus(SyncStatusEnum.CREATE_FAIL_UPLOAD.getCode());
+            dasApiBasicInfo.setStatus(SyncStatusEnum.FAIL_UPLOAD.getCode());
             dasApiBasicInfoRepository.saveAndFlush(dasApiBasicInfo);
             LOG.info("发布失败,更新新建API同步状态,API路径为:【{}】", dasApiBasicInfo.getApiPath());
             failNum.getAndIncrement();
