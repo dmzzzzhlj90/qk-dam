@@ -266,7 +266,7 @@ public class EmpRsServiceImpl implements EmpRsService {
   private List<ResourceOutVO> buildByResource(
       List<ResourceOutVO> resourceOutVOList, String name) {
     List<ResourceOutVO> trees = new ArrayList<>();
-    ResourceOutVO resourceOutVO = ResourceOutVO.builder().id(QxConstant.DIRID).name(name).build();
+    ResourceOutVO resourceOutVO = ResourceOutVO.builder().id(QxConstant.DIRID).name(name).resourcesid(QxConstant.RESOURCEID).build();
     trees.add(findChildren(resourceOutVO, resourceOutVOList));
     return trees;
   }
