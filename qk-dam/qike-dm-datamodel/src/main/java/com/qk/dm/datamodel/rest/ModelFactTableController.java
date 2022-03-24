@@ -3,6 +3,7 @@ package com.qk.dm.datamodel.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.datamodel.params.dto.ModelFactQueryDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 import com.qk.dm.datamodel.service.ModelFactTableService;
@@ -60,12 +61,12 @@ public class ModelFactTableController {
 
     /**
      * 事实表列表
-     * @param modelFactTableDTO 事实表实体
+     * @param modelFactQueryDTO 事实表实体
      * @return DefaultCommonResult<PageResultVO<ModelFactTableVO>>
      */
     @PostMapping(value = "/list")
-    public DefaultCommonResult<PageResultVO<ModelFactTableVO>> list(@RequestBody ModelFactTableDTO modelFactTableDTO){
-        return DefaultCommonResult.success(ResultCodeEnum.OK,modelFactTableService.list(modelFactTableDTO));
+    public DefaultCommonResult<PageResultVO<ModelFactTableVO>> list(@RequestBody ModelFactQueryDTO modelFactQueryDTO){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelFactTableService.list(modelFactQueryDTO));
     }
     /**
      * 发布事实表

@@ -1,18 +1,15 @@
 package com.qk.dm.datamodel.params.dto;
 
-import com.qk.dam.jpa.pojo.Pagination;
 import lombok.Data;
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Data
 public class ModelFactTableDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Pagination pagination;
 
     private Long id;
 
@@ -24,11 +21,13 @@ public class ModelFactTableDTO implements Serializable {
     /**
      * 主题名称
      */
+    @NotBlank(message = "主题名称不能为空")
     private String themeName;
 
     /**
-     * 维度名称
+     * 维度表名称
      */
+    @NotBlank(message = "表名称不能为空")
     private String factName;
 
     /**
@@ -39,12 +38,13 @@ public class ModelFactTableDTO implements Serializable {
     /**
      * 0待审核 1已发布2 已下线
      */
+    @NotNull(message = "维度表状态不能为空")
     private Integer status;
 
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    private Integer connectionType;
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -54,11 +54,11 @@ public class ModelFactTableDTO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
     /**
      * 字段信息
      */
-    private List<ModelFactColumnDTO> modelFactColumnList;
+    private List<ModelFactColumnDTO> columnList;
 
 
 

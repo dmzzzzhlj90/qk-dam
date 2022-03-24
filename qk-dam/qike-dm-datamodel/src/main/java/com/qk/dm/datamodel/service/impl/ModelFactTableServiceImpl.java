@@ -12,6 +12,7 @@ import com.qk.dm.datamodel.entity.ModelFactTable;
 import com.qk.dm.datamodel.entity.QModelFactTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelFactTableMapper;
 import com.qk.dm.datamodel.params.dto.ModelFactColumnDTO;
+import com.qk.dm.datamodel.params.dto.ModelFactQueryDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.dto.ModelSqlDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
@@ -59,7 +60,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     public void insert(ModelFactTableDTO modelFactTableDTO) {
         ModelFactTable modelFactTable = ModelFactTableMapper.INSTANCE.of(modelFactTableDTO);
         ModelFactTable modelFact = modelFactTableRepository.save(modelFactTable);
-        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getModelFactColumnList();
+        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getColumnList();
         if(!modelFactColumnList.isEmpty()){
             if(checkRepeat(modelFactColumnList)){
                 throw new BizException("存在重复的字段！！！");
@@ -96,7 +97,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         }
         ModelFactTableMapper.INSTANCE.from(modelFactTableDTO,modelFactTable);
         modelFactTableRepository.saveAndFlush(modelFactTable);
-        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getModelFactColumnList();
+        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getColumnList();
         if(!modelFactColumnList.isEmpty()){
             if(checkRepeat(modelFactColumnList)){
                 throw new BizException("存在重复的字段！！！");
@@ -124,10 +125,10 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
-    public PageResultVO<ModelFactTableVO> list(ModelFactTableDTO modelFactTableDTO) {
+    public PageResultVO<ModelFactTableVO> list(ModelFactQueryDTO modelFactQueryDTO) {
         Map<String, Object> map;
         try {
-            map = queryByParams(modelFactTableDTO);
+            map = queryByParams(modelFactQueryDTO);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException("查询失败!!!");
@@ -136,8 +137,8 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         List<ModelFactTableVO> voList = ModelFactTableMapper.INSTANCE.of(list);
         return new PageResultVO<>(
                 (long) map.get("total"),
-                modelFactTableDTO.getPagination().getPage(),
-                modelFactTableDTO.getPagination().getSize(),
+                modelFactQueryDTO.getPagination().getPage(),
+                modelFactQueryDTO.getPagination().getSize(),
                 voList);
     }
 
@@ -193,9 +194,9 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         return modelFactTableList;
     }
 
-    private Map<String, Object> queryByParams(ModelFactTableDTO modelFactTableDTO) {
+    private Map<String, Object> queryByParams(ModelFactQueryDTO modelFactQueryDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        checkCondition(booleanBuilder, modelFactTableDTO);
+        checkCondition(booleanBuilder, modelFactQueryDTO);
         Map<String, Object> result = new HashMap<>();
         long count =
                 jpaQueryFactory.select(qModelFactTable.count()).from(qModelFactTable).where(booleanBuilder).fetchOne();
@@ -205,21 +206,21 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
                 .where(booleanBuilder)
                 .orderBy(qModelFactTable.id.asc())
                 .offset(
-                        (long) (modelFactTableDTO.getPagination().getPage() - 1)
-                                * modelFactTableDTO.getPagination().getSize())
-                .limit(modelFactTableDTO.getPagination().getSize())
+                        (long) (modelFactQueryDTO.getPagination().getPage() - 1)
+                                * modelFactQueryDTO.getPagination().getSize())
+                .limit(modelFactQueryDTO.getPagination().getSize())
                 .fetch();
         result.put("list", modelFactTableList);
         result.put("total", count);
         return result;
     }
 
-    public void checkCondition(BooleanBuilder booleanBuilder, ModelFactTableDTO modelFactTableDTO) {
-        if (!StringUtils.isEmpty(modelFactTableDTO.getFactName())) {
-            booleanBuilder.and(
-                    qModelFactTable
-                            .factName
-                            .contains(modelFactTableDTO.getFactName()));
+    public void checkCondition(BooleanBuilder booleanBuilder, ModelFactQueryDTO modelFactQueryDTO) {
+        if (!StringUtils.isEmpty(modelFactQueryDTO.getFactName())) {
+            booleanBuilder.and(qModelFactTable.factName.contains(modelFactQueryDTO.getFactName()));
+        }
+        if(StringUtils.isEmpty(modelFactQueryDTO.getThemeName())){
+            booleanBuilder.and(qModelFactTable.themeName.contains(modelFactQueryDTO.getThemeName()));
         }
     }
 }

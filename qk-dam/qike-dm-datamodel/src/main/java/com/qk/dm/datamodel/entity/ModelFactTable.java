@@ -53,10 +53,10 @@ public class ModelFactTable implements Serializable {
     private Integer status = 0;
 
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    @Column(name = "connection_type", nullable = false)
-    private Integer connectionType;
+    @Column(name = "data_source_name")
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -68,7 +68,7 @@ public class ModelFactTable implements Serializable {
      * 数据库名称
      */
     @Column(name = "database_name", nullable = false)
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      * 创建时间

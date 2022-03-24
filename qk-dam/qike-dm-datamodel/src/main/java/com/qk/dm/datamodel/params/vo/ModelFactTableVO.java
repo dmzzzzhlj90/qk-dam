@@ -48,9 +48,9 @@ public class ModelFactTableVO implements Serializable {
     private Integer status;
 
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    private Integer connectionType;
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -60,7 +60,7 @@ public class ModelFactTableVO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      * 创建时间

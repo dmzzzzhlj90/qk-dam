@@ -1,6 +1,7 @@
 package com.qk.dm.datamodel.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.datamodel.params.dto.ModelFactQueryDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 
@@ -15,7 +16,7 @@ public interface ModelFactTableService {
 
     void delete(String ids);
 
-    PageResultVO<ModelFactTableVO> list(ModelFactTableDTO modelFactTableDTO);
+    PageResultVO<ModelFactTableVO> list(ModelFactQueryDTO modelFactQueryDTO);
     /**
      * 发布
      * @param idList
