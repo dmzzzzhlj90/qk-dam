@@ -1,5 +1,6 @@
 package com.qk.dm.datamodel.mapstruct.mapper;
 
+import com.qk.dm.datamodel.entity.ModelDim;
 import com.qk.dm.datamodel.entity.ModelDimTable;
 import com.qk.dm.datamodel.params.dto.ModelDimTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelDimTableDetailVO;
@@ -26,4 +27,8 @@ public interface ModelDimTableMapper {
 
     @IterableMapping(elementTargetType = ModelDimTableDetailVO.class)
     ModelDimTableDetailVO ofDetail(ModelDimTable modelDimTable);
+
+    @Mapping(target = "id",ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void of(ModelDim modelDim,@MappingTarget ModelDimTable modelDimTable);
 }

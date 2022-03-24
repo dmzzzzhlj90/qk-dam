@@ -5,4 +5,5 @@ import com.qk.dm.datamodel.entity.ModelDimTable;
 
 public interface ModelDimTableRepository extends BaseRepository<ModelDimTable, Long> {
 
+    void deleteByModelDimId(Long modelDimId);
 }

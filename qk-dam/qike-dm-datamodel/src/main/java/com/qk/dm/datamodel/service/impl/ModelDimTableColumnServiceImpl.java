@@ -60,4 +60,9 @@ public class ModelDimTableColumnServiceImpl implements ModelDimTableColumnServic
         List<ModelDimTableColumn> modelDimTableColumnList = modelDimTableColumnRepository.findAllByDimTableId(dimTableId);
         return ModelDimTableColumnMapper.INSTANCE.of(modelDimTableColumnList);
     }
+
+    @Override
+    public void deleteByDimTableId(Long dimTableId) {
+        modelDimTableColumnRepository.deleteByDimTableId(dimTableId);
+    }
 }

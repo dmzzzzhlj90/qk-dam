@@ -71,6 +71,11 @@ public class ModelDimTableVO implements Serializable {
     private String responsibleBy;
 
     /**
+     * 关联的维度id
+     */
+    private Long modelDimId;
+
+    /**
      * 创建时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
