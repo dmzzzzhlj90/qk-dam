@@ -12,7 +12,9 @@ import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
 import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.CreateParamSortStyleEnum;
 import com.qk.dm.dataservice.constant.CreateSqlRequestParamHeaderInfoEnum;
-import com.qk.dm.dataservice.entity.*;
+import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.entity.DasApiCreateSqlScript;
+import com.qk.dm.dataservice.entity.QDasApiCreateSqlScript;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateSqlScriptMapper;
 import com.qk.dm.dataservice.repositories.DasApiCreateSqlScriptRepository;
@@ -55,7 +57,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     }
 
     @Override
-    public DasApiCreateSqlScriptVO detail(DasApiBasicInfo dasApiBasicInfo,DasApiCreateSqlScript dasApiCreateSqlScript) {
+    public DasApiCreateSqlScriptVO detail(DasApiBasicInfo dasApiBasicInfo, DasApiCreateSqlScript dasApiCreateSqlScript) {
         DasApiCreateSqlScriptVO apiCreateSqlScriptVO = DasApiCreateSqlScriptVO.builder().build();
 
         // API基础信息
@@ -113,8 +115,8 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         //排序
         if (null != dasApiCreateSqlScript.getApiOrderParas() && dasApiCreateSqlScript.getApiOrderParas().length() > 0) {
             apiCreateSqlScriptDefinitionVO.setApiCreateOrderParasVOS(
-                    GsonUtil.fromJsonString(dasApiCreateSqlScript.getApiResponseParas(),
-                            new TypeToken<List<DasApiCreateOrderParasVO>>() {
+                    GsonUtil.fromJsonString(dasApiCreateSqlScript.getApiOrderParas(),
+                            new TypeToken<List<DasApiCreateSqlScriptOrderParasVO>>() {
                             }.getType()));
         }
     }
@@ -209,8 +211,6 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     }
 
     /**
-     *
-     *
      * @param apiCreateSqlScriptDefinitionVO
      * @param reqParams
      * @param connectBasicInfo
@@ -229,12 +229,6 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         String sqlPara = apiCreateSqlScriptDefinitionVO.getSqlPara();
         // 排序查询,默认使用首个参数的排序方式
         String orderByStr = getOrderByParaSqlStr(apiCreateSqlScriptDefinitionVO);
-
-        Map<String, String> orderParas = apiCreateSqlScriptDefinitionVO.getApiCreateOrderParasVOS()
-                .stream().collect(
-                        Collectors.toMap(
-                                DasApiCreateSqlScriptOrderParasVO::getColumnName,
-                                DasApiCreateSqlScriptOrderParasVO::getOrderType));
 
         if (ConnTypeEnum.MYSQL.getName().equalsIgnoreCase(connectType)) {
             // mysql 执行sql获取查询结果集
@@ -257,17 +251,17 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     private String getOrderByParaSqlStr(DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO) {
         String orderByStr = "";
         // 默认使用首个参数的排序方式
-        DasApiCreateSqlScriptOrderParasVO orderParasVO = apiCreateSqlScriptDefinitionVO.getApiCreateOrderParasVOS().get(0);
-        String orderType = orderParasVO.getOrderType();
-
         List<DasApiCreateSqlScriptOrderParasVO> orderParas = apiCreateSqlScriptDefinitionVO.getApiCreateOrderParasVOS();
-        if (orderParas != null && orderParas.size() > 0) {
+        if (null != orderParas && orderParas.size() > 0) {
+            DasApiCreateSqlScriptOrderParasVO orderParasVO = orderParas.get(0);
+            String orderType = orderParasVO.getOrderType();
+
             if (CreateParamSortStyleEnum.ASC.getCode().equalsIgnoreCase(orderType) ||
                     CreateParamSortStyleEnum.DESC.getCode().equalsIgnoreCase(orderType)) {
                 //排序字段
                 List<String> orderCols = orderParas.stream().map(DasApiCreateSqlScriptOrderParasVO::getColumnName).collect(Collectors.toList());
                 String orderColStr = String.join(",", orderCols);
-                orderByStr += SqlExecuteUtils.ORDER_BY + orderColStr +" "+ orderType;
+                orderByStr += SqlExecuteUtils.ORDER_BY + orderColStr + " " + orderType;
             }
         }
         return orderByStr;
