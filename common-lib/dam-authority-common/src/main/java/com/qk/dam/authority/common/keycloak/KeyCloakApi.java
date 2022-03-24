@@ -187,7 +187,12 @@ public class KeyCloakApi {
         GroupsResource groupsResource = keycloak.realm(realm).groups();
         GroupRepresentation groupRepresentation = new GroupRepresentation();
         groupRepresentation.setName(groupName);
-        groupsResource.add(groupRepresentation);
+
+        try {
+            groupsResource.add(groupRepresentation);
+        } catch (Exception e) {
+                throw new BizException("当前新增分组名称为"+groupName+"的数据已经存在,请确认后重新添加");
+        }
     }
 
     /**
@@ -331,7 +336,11 @@ public class KeyCloakApi {
         RoleRepresentation roleRepresentation = new RoleRepresentation();
         roleRepresentation.setName(roleName);
         roleRepresentation.setDescription(description);
-        roles.create(roleRepresentation);
+        try {
+            roles.create(roleRepresentation);
+        } catch (Exception e) {
+                throw new BizException("当前新增角色名称为"+roleName+"的数据已经存在,请确认后重新添加");
+        }
     }
 
     /**
