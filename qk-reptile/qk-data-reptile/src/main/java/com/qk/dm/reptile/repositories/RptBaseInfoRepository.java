@@ -8,5 +8,5 @@ import java.util.List;
 public interface RptBaseInfoRepository extends BaseRepository<RptBaseInfo, Long> {
         List<RptBaseInfo> findAllByStatus(Integer status);
 
-        List<RptBaseInfo> findAllByRunStatusAndStatusAndTimeInterval(Integer runStatus, Integer status,String timeInterval);
+        List<RptBaseInfo> findAllByRunStatusAndStatusAndTimeIntervalAndDelFlag(Integer runStatus, Integer status,String timeInterval,Integer delFlag);
 }
