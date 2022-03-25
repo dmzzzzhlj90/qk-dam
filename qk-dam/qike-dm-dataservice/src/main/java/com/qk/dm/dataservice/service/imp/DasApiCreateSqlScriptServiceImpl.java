@@ -101,7 +101,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         if (null != dasApiCreateSqlScript.getApiRequestParas() && dasApiCreateSqlScript.getApiRequestParas().length() > 0) {
             apiCreateSqlScriptDefinitionVO.setApiCreateSqlRequestParasVOS(
                     GsonUtil.fromJsonString(dasApiCreateSqlScript.getApiRequestParas(),
-                            new TypeToken<List<DasApiCreateRequestParasVO>>() {
+                            new TypeToken<List<DasApiCreateSqlRequestParasVO>>() {
                             }.getType()));
         }
 
