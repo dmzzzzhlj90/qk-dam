@@ -18,6 +18,6 @@ public interface DasApiCreateSummaryService {
 
     Object detail(String apiId);
 
-    DebugApiResultVO remoteSearchData(String apiId, List<DebugApiParasVO> debugApiParasVO);
+    DebugApiResultVO remoteSearchData(String apiId, String paramData);
 
 }

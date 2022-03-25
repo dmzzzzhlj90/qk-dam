@@ -37,6 +37,10 @@ public class SqlExecuteUtils {
 
     public static final String ORDER_BY = " ORDER BY ";
 
+    public static final String DOLLAR_SYMBOL = "$";
+    public static final String LEFT_BIG_BRACKETS = "{";
+    public static final String RIGHT_BIG_BRACKETS = "}";
+
 
     /*********************************************MYSQL******************************************************/
     /**
@@ -146,7 +150,8 @@ public class SqlExecuteUtils {
         for (String para : reqParams.keySet()) {
             String value = reqParams.get(para);
             if (!ObjectUtils.isEmpty(value)) {
-                replaceSql = replaceSql.replace(para, value);
+                replaceSql = replaceSql.replace(DOLLAR_SYMBOL + LEFT_BIG_BRACKETS + para + RIGHT_BIG_BRACKETS,
+                        APOSTROPHE_STRING + value + APOSTROPHE_STRING);
             }
         }
 
