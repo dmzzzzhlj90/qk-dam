@@ -80,7 +80,9 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         if(modelFactTable.isEmpty()){
             throw new BizException("当前要查找的事实表id为"+id+"的数据不存在");
         }
-        return ModelFactTableMapper.INSTANCE.of(modelFactTable.get());
+        ModelFactTableVO modelFactTableVO= ModelFactTableMapper.INSTANCE.of(modelFactTable.get());
+        modelFactTableVO.setColumnList(modelFactColumnService.list(modelFactTableVO.getId()));
+        return modelFactTableVO;
     }
 
     @Override
@@ -219,7 +221,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         if (!StringUtils.isEmpty(modelFactQueryDTO.getFactName())) {
             booleanBuilder.and(qModelFactTable.factName.contains(modelFactQueryDTO.getFactName()));
         }
-        if(StringUtils.isEmpty(modelFactQueryDTO.getThemeName())){
+        if(!StringUtils.isEmpty(modelFactQueryDTO.getThemeName())){
             booleanBuilder.and(qModelFactTable.themeName.contains(modelFactQueryDTO.getThemeName()));
         }
     }

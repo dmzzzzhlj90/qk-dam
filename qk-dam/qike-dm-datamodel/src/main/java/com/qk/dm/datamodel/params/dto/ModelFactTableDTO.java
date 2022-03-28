@@ -56,6 +56,10 @@ public class ModelFactTableDTO implements Serializable {
      */
     private String dataBaseName;
     /**
+     * 责任人名称
+     */
+    private String responsibleBy;
+    /**
      * 字段信息
      */
     private List<ModelFactColumnDTO> columnList;

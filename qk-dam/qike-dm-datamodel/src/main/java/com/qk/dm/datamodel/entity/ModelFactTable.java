@@ -100,11 +100,6 @@ public class ModelFactTable implements Serializable {
     @Column(name = "update_userid", nullable = false)
     private Long updateUserid;
     /**
-     * 所属层级id
-     */
-    @Column(name = "model_id", nullable = false)
-    private Long modelId;
-    /**
      * 责任人姓名
      */
     @Column(name = "responsible_by", nullable = false)

@@ -43,7 +43,7 @@ public class ModelFactTableController {
      * @param modelFactTableDTO 事实表实体,编辑id不能为空
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}")
+    @PutMapping("")
     public DefaultCommonResult update(@RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
         modelFactTableService.update(modelFactTableDTO);
         return  DefaultCommonResult.success();

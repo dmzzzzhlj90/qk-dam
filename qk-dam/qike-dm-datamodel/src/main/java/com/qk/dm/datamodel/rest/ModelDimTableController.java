@@ -66,7 +66,7 @@ public class ModelDimTableController {
      * @param ids  维度表id,如果多个，使用英文逗号分割
      * @return
      */
-    @PostMapping(value = "/sync/{ids}")
+    @PutMapping(value = "/sync/{ids}")
     public DefaultCommonResult sync(@PathVariable("ids") String ids){
         modelDimTableService.sync(ids);
         return DefaultCommonResult.success();

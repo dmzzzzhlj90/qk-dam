@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class ModelFactTableVO implements Serializable {
 
@@ -71,6 +73,14 @@ public class ModelFactTableVO implements Serializable {
      * 修改时间
      */
     private Date gmtModified;
+    /**
+     * 责任人名称
+     */
+    private String responsibleBy;
 
+    /**
+     * 字段信息
+     */
+    private List<ModelFactColumnVO> columnList;
 
 }

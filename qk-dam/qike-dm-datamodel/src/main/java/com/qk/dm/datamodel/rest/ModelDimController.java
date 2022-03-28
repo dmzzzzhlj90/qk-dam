@@ -44,8 +44,8 @@ public class ModelDimController {
      * @param modelDimDTO 维度参数实体，id不能为空
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id,@RequestBody @Validated ModelDimDTO modelDimDTO){
+    @PutMapping("")
+    public DefaultCommonResult update(@RequestBody @Validated ModelDimDTO modelDimDTO){
         modelDimService.update(modelDimDTO);
         return  DefaultCommonResult.success();
     }
