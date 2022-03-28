@@ -9,14 +9,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: http://172.21.32.2
-        namespace: dam-test
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
       config:
-        server-addr: http://172.21.32.2
-        namespace: dam-test
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
         extension-configs:
-          - dataId: qkdam-mysql-test.yml
+          - dataId: qkdam-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
   profiles:
-    active: test
+    active: ${damProfilesActive}
