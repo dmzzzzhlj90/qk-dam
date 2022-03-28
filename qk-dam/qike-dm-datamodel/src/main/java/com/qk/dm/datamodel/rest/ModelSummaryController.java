@@ -95,7 +95,7 @@ public class ModelSummaryController {
      * @return
      */
     @DeleteMapping("{ids}")
-    public DefaultCommonResult delete(@PathVariable("ids") String ids){
+    public DefaultCommonResult batchDelete(@PathVariable("ids") String ids){
         modelSummaryService.delete(ids);
         return DefaultCommonResult.success();
     }

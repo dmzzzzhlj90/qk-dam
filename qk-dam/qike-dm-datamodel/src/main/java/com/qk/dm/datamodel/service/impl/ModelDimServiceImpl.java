@@ -114,6 +114,7 @@ public class ModelDimServiceImpl implements ModelDimService {
         }
         ModelDimMapper.INSTANCE.from(modelDimDTO,modelDim);
         modelDimRepository.saveAndFlush(modelDim);
+
         List<ModelDimColumnDTO> modelDimColumnDTOList = modelDimDTO.getColumnList();
         if(!modelDimColumnDTOList.isEmpty()){
             modelDimColumnSerVice.update(modelDimDTO.getId(),modelDimColumnDTOList);
@@ -131,8 +132,7 @@ public class ModelDimServiceImpl implements ModelDimService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(String ids) {
-        List<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-        List<ModelDim> modelDimList = getModelDimList(idSet);
+        List<ModelDim> modelDimList = getModelDimList(ids);
         modelDimList = modelDimList.stream().peek(e -> {
             if (e.getStatus() == ModelStatus.PUBLISH) {
                 throw new BizException(e.getDimName() + "维度已发布，不可删除！！！");
@@ -162,8 +162,8 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public void publish(List<Long> idList) {
-        List<ModelDim> modelDimList = getModelDimList(idList);
+    public void publish(String ids) {
+        List<ModelDim> modelDimList = getModelDimList(ids);
         modelDimList = modelDimList.stream().peek(e -> {
             if (e.getStatus() == ModelStatus.PUBLISH) {
                 throw new BizException(e.getDimName() + "维度已发布，不可重复发布！！！");
@@ -174,8 +174,8 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
-    public void offline(List<Long> idList) {
-        List<ModelDim> modelDimList = getModelDimList(idList);
+    public void offline(String ids) {
+        List<ModelDim> modelDimList = getModelDimList(ids);
         modelDimList.forEach(e->{
             if(e.getStatus()!=ModelStatus.PUBLISH){
                 throw new BizException(e.getDimName() + "维度还未发布，不可下线！！！");
@@ -193,8 +193,8 @@ public class ModelDimServiceImpl implements ModelDimService {
         return !CollectionUtils.isEmpty(list);
     }
 
-    private List<ModelDim> getModelDimList(List<Long> idList){
-
+    private List<ModelDim> getModelDimList(String ids){
+        List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
         List<ModelDim> modelDimList = modelDimRepository.findAllById(idList);
         if(modelDimList.isEmpty()){
             throw new BizException("当前要操作维度id为："+idList+"的数据不存在！！！");

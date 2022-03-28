@@ -19,15 +19,15 @@ public interface ModelFactTableService {
     PageResultVO<ModelFactTableVO> list(ModelFactQueryDTO modelFactQueryDTO);
     /**
      * 发布
-     * @param idList
+     * @param ids
      */
-    void publish(List<Long> idList);
+    void publish(String ids);
 
     /**
      * 下线
-     * @param idList
+     * @param ids
      */
-    void offline(List<Long> idList);
+    void offline(String ids);
 
     /**
      * 预览SQL

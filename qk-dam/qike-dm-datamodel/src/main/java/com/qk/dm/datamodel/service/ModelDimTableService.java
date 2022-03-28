@@ -23,9 +23,9 @@ public interface ModelDimTableService {
 
     /**
      * 同步
-     * @param idList
+     * @param ids
      */
-    void sync(List<Long> idList);
+    void sync(String ids);
 
     /**
      * 数据落库

@@ -70,23 +70,23 @@ public class ModelFactTableController {
     }
     /**
      * 发布事实表
-     * @param idList
+     * @param ids
      * @return DefaultCommonResult
      */
-    @PutMapping("/publish")
-    public DefaultCommonResult publish(@RequestBody @Validated List<Long> idList) {
-        modelFactTableService.publish(idList);
+    @PutMapping("/publish/{ids}")
+    public DefaultCommonResult publish(@PathVariable("ids") String ids) {
+        modelFactTableService.publish(ids);
         return DefaultCommonResult.success();
     }
 
     /**
      * 下线事实表
-     * @param idList
+     * @param ids
      * @return DefaultCommonResult
      */
-    @PutMapping("/offline")
-    public DefaultCommonResult offline(@RequestBody @Validated List<Long> idList) {
-        modelFactTableService.offline(idList);
+    @PutMapping("/offline/{ids}")
+    public DefaultCommonResult offline(@PathVariable("ids") String ids) {
+        modelFactTableService.offline(ids);
         return DefaultCommonResult.success();
     }
 
@@ -96,7 +96,7 @@ public class ModelFactTableController {
      * @return
      */
     @DeleteMapping("{ids}")
-    public DefaultCommonResult delete(@PathVariable("ids") String ids){
+    public DefaultCommonResult batchDelete(@PathVariable("ids") String ids){
         modelFactTableService.delete(ids);
         return DefaultCommonResult.success();
     }

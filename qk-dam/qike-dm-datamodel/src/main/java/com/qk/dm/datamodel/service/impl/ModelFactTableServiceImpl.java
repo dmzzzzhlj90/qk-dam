@@ -113,8 +113,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
 
     @Override
     public void delete(String ids) {
-        List<Long> list = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-        List<ModelFactTable> modelFactTableList = getModelFactTableList(list);
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
         modelFactTableList = modelFactTableList.stream().peek(e -> {
             if (e.getStatus() == ModelStatus.PUBLISH) {
                 throw new BizException(e.getFactName() + "事实表已发布，不可删除！！！");
@@ -143,16 +142,16 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
-    public void publish(List<Long> idList) {
-        List<ModelFactTable> modelFactTableList = getModelFactTableList(idList);
+    public void publish(String ids) {
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
         modelFactTableList.forEach(e->e.setStatus(ModelStatus.PUBLISH));
         modelFactTableRepository.saveAllAndFlush(modelFactTableList);
 
     }
 
     @Override
-    public void offline(List<Long> idList) {
-        List<ModelFactTable> modelFactTableList = getModelFactTableList(idList);
+    public void offline(String ids) {
+        List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
         modelFactTableList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
         modelFactTableRepository.saveAllAndFlush(modelFactTableList);
     }
@@ -186,7 +185,8 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         return !CollectionUtils.isEmpty(list);
     }
 
-    private List<ModelFactTable> getModelFactTableList(List<Long> idList){
+    private List<ModelFactTable> getModelFactTableList(String ids){
+        List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
         List<ModelFactTable> modelFactTableList = modelFactTableRepository.findAllById(idList);
         if(modelFactTableList.isEmpty()){
             throw new BizException("当前要操作的事实表id为："+idList+"的数据不存在！！！");

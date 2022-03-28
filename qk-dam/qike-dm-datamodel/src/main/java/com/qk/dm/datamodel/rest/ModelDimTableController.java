@@ -63,12 +63,12 @@ public class ModelDimTableController {
 
     /**
      * 同步
-     * @param idList
+     * @param ids  维度表id,如果多个，使用英文逗号分割
      * @return
      */
-    @PostMapping(value = "/sync")
-    public DefaultCommonResult sync(@RequestBody @Validated List<Long> idList){
-        modelDimTableService.sync(idList);
+    @PostMapping(value = "/sync/{ids}")
+    public DefaultCommonResult sync(@PathVariable("ids") String ids){
+        modelDimTableService.sync(ids);
         return DefaultCommonResult.success();
     }
 
@@ -78,7 +78,7 @@ public class ModelDimTableController {
      * @return DefaultCommonResult
      */
     @DeleteMapping("{ids}")
-    public DefaultCommonResult delete(@PathVariable("ids") String ids){
+    public DefaultCommonResult batchDelete(@PathVariable("ids") String ids){
         modelDimTableService.delete(ids);
         return DefaultCommonResult.success();
     }

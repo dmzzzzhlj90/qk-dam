@@ -44,8 +44,8 @@ public class ModelDimController {
      * @param modelDimDTO 维度参数实体，id不能为空
      * @return DefaultCommonResult
      */
-    @PutMapping("")
-    public DefaultCommonResult update(@RequestBody @Validated ModelDimDTO modelDimDTO){
+    @PutMapping("/{id}")
+    public DefaultCommonResult update(@PathVariable("id") Long id,@RequestBody @Validated ModelDimDTO modelDimDTO){
         modelDimService.update(modelDimDTO);
         return  DefaultCommonResult.success();
     }
@@ -72,23 +72,23 @@ public class ModelDimController {
 
     /**
      * 发布维度
-     * @param idList 维度id集合
+     * @param ids 如果多个，使用英文逗号分割
      * @return DefaultCommonResult
      */
-    @PutMapping("/publish")
-    public DefaultCommonResult publish(@RequestBody @Validated List<Long> idList) {
-        modelDimService.publish(idList);
+    @PutMapping("/publish/{ids}")
+    public DefaultCommonResult publish(@PathVariable("ids") String ids) {
+        modelDimService.publish(ids);
         return DefaultCommonResult.success();
     }
 
     /**
      * 下线维度
-     * @param idList 维度id集合
+     * @param ids 如果多个，使用英文逗号分割
      * @return DefaultCommonResult
      */
-    @PutMapping("/offline")
-    public DefaultCommonResult offline(@RequestBody @Validated List<Long> idList) {
-        modelDimService.offline(idList);
+    @PutMapping("/offline/{ids}")
+    public DefaultCommonResult offline(@PathVariable("ids") String ids) {
+        modelDimService.offline(ids);
         return DefaultCommonResult.success();
     }
 
@@ -98,7 +98,7 @@ public class ModelDimController {
      * @return DefaultCommonResult
      */
     @DeleteMapping("{ids}")
-    public DefaultCommonResult delete(@PathVariable("ids") String ids){
+    public DefaultCommonResult batchDelete(@PathVariable("ids") String ids){
         modelDimService.delete(ids);
         return DefaultCommonResult.success();
     }

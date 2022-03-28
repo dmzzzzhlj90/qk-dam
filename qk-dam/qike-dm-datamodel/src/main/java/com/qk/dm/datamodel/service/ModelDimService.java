@@ -21,13 +21,13 @@ public interface ModelDimService {
 
     /**
      * 发布
-     * @param idList
+     * @param ids
      */
-    void publish(List<Long> idList);
+    void publish(String ids);
 
     /**
      * 下线
-     * @param idList
+     * @param ids
      */
-    void offline(List<Long> idList);
+    void offline(String ids);
 }

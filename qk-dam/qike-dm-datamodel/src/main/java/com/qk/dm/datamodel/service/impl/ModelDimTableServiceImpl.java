@@ -184,8 +184,9 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void sync(List<Long> idList) {
-        List<ModelDimTable> dimTableList = modelDimTableRepository.findAllById(idList);
+    public void sync(String ids) {
+        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelDimTable> dimTableList = modelDimTableRepository.findAllById(idSet);
         if(CollectionUtils.isEmpty(dimTableList)){return; }
         dimTableList.forEach(e->{
             //更新基本信息
@@ -208,6 +209,7 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
 
     @Override
     public String previewSql(Long tableId) {
+
         return modelSqlService.detail(ModelType.DIM_TABLE,tableId).getSqlSentence();
     }
 
