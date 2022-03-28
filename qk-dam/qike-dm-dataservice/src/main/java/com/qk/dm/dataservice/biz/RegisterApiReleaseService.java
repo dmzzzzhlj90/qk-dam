@@ -16,7 +16,6 @@ import com.qk.dm.dataservice.vo.DasReleaseApiParamsVO;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -64,7 +63,7 @@ public class RegisterApiReleaseService {
             //设置Route上下文参数
             RouteContext routeContext = apiSixProcessService.buildRouteContext();
             //获取路由ID集合
-            List<RouteData> routeInfoList = apiSixProcessService.getRouteIdList(routeContext);
+            List<RouteData> routeInfoList = apiSixProcessService.getRouteInfo(routeContext);
             //根据apiID查询注册API信息
             Iterable<DasApiRegister> dasApiRegisters = dasApiRegisterRepository.findAll(qDasApiRegister.apiId.in(registerBasicApiMap.keySet()));
             //发布同步注册API
@@ -180,12 +179,12 @@ public class RegisterApiReleaseService {
                               AtomicInteger successfulNum,
                               AtomicInteger failNum) {
         if (syncFlag) {
-            dasApiBasicInfo.setStatus(SyncStatusEnum.CREATE_SUCCESS_UPLOAD.getCode());
+            dasApiBasicInfo.setStatus(SyncStatusEnum.SUCCESS_UPLOAD.getCode());
             dasApiBasicInfoRepository.saveAndFlush(dasApiBasicInfo);
             LOG.info("发布同步成功,更新注册API同步状态成功,API路径为:【{}】", dasApiRegister.getBackendPath());
             successfulNum.getAndIncrement();
         } else {
-            dasApiBasicInfo.setStatus(SyncStatusEnum.CREATE_FAIL_UPLOAD.getCode());
+            dasApiBasicInfo.setStatus(SyncStatusEnum.FAIL_UPLOAD.getCode());
             dasApiBasicInfoRepository.saveAndFlush(dasApiBasicInfo);
             LOG.info("发布失败,更新注册API同步状态,API路径为:【{}】", dasApiRegister.getBackendPath());
             failNum.getAndIncrement();

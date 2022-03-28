@@ -1,15 +1,12 @@
 package com.qk.dm.dataservice.utils;
 
-import com.qk.dm.dataservice.constant.CreateParamSortStyleEnum;
 import com.qk.dm.dataservice.constant.OperationSymbolEnum;
-import com.qk.dm.dataservice.vo.DasApiCreateOrderParasVO;
 import com.qk.dm.dataservice.vo.DasApiCreateRequestParasVO;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * 执行SQL工具类
@@ -30,6 +27,7 @@ public class SqlExecuteUtils {
     public static final String APOSTROPHE_STRING = "'";
     public static final String PERCENT_SIGN = "%";
     public static final String LIKE = " like ";
+    public static final String SPACE = " ";
     /**
      * 分页
      */
@@ -38,6 +36,10 @@ public class SqlExecuteUtils {
     public static final String LIMIT = " LIMIT ";
 
     public static final String ORDER_BY = " ORDER BY ";
+
+    public static final String DOLLAR_SYMBOL = "$";
+    public static final String LEFT_BIG_BRACKETS = "{";
+    public static final String RIGHT_BIG_BRACKETS = "}";
 
 
     /*********************************************MYSQL******************************************************/
@@ -48,7 +50,7 @@ public class SqlExecuteUtils {
      * @param reqParams     请求参数
      * @param resParaMap    响应参数
      * @param mappingParams 参数字段映射关系
-     * @param orderByStr 排序SQL
+     * @param orderByStr    排序SQL
      * @return
      */
     public static String mysqlExecuteSQL(String tableName,
@@ -84,7 +86,7 @@ public class SqlExecuteUtils {
         }
 
         //排序
-        sql = sql +orderByStr;
+        sql = sql + orderByStr;
 
         //分页查询
         sql = sql + getPageSqlPart(reqParams);
@@ -105,15 +107,19 @@ public class SqlExecuteUtils {
         switch (Objects.requireNonNull(symbolEnum)) {
             case NO_GREATER_LESS_THAN:
                 condition = OperationSymbolEnum.NO_GREATER_LESS_THAN.getValue();
+                value = APOSTROPHE_STRING + value + APOSTROPHE_STRING;
                 break;
             case MORE_THAN:
                 condition = OperationSymbolEnum.MORE_THAN.getValue();
+                value = APOSTROPHE_STRING + value + APOSTROPHE_STRING;
                 break;
             case LESS_THAN:
                 condition = OperationSymbolEnum.LESS_THAN.getValue();
+                value = APOSTROPHE_STRING + value + APOSTROPHE_STRING;
                 break;
             case LESS_THAN_EQUAL:
                 condition = OperationSymbolEnum.LESS_THAN_EQUAL.getValue();
+                value = APOSTROPHE_STRING + value + APOSTROPHE_STRING;
                 break;
             case ALL_LIKE:
                 condition = LIKE;
@@ -125,16 +131,17 @@ public class SqlExecuteUtils {
                 break;
             default:
                 condition = OperationSymbolEnum.EQUAL.getValue();
+                value = APOSTROPHE_STRING + value + APOSTROPHE_STRING;
                 break;
         }
-        whereBuffer.append(AND).append(column).append(condition).append(value);
+        whereBuffer.append(AND).append(column).append(condition).append(SPACE).append(value);
     }
 
     /**
      * 执行SQL片段中的参数替换
      *
-     * @param sqlPara 输入SQL片段
-     * @param reqParams 真实请求参数
+     * @param sqlPara    输入SQL片段
+     * @param reqParams  真实请求参数
      * @param orderByStr 排序SQL
      * @return
      */
@@ -142,7 +149,10 @@ public class SqlExecuteUtils {
         String replaceSql = sqlPara;
         for (String para : reqParams.keySet()) {
             String value = reqParams.get(para);
-            replaceSql = replaceSql.replace(para, value);
+            if (!ObjectUtils.isEmpty(value)) {
+                replaceSql = replaceSql.replace(DOLLAR_SYMBOL + LEFT_BIG_BRACKETS + para + RIGHT_BIG_BRACKETS,
+                        APOSTROPHE_STRING + value + APOSTROPHE_STRING);
+            }
         }
 
         //排序
@@ -160,10 +170,9 @@ public class SqlExecuteUtils {
      */
     private static String getPageSqlPart(Map<String, String> reqParams) {
         String pageSqlPart = "";
-        int pageNum = Integer.parseInt(reqParams.get(PAGE_NUM));
-
-        int pageSize = Integer.parseInt(reqParams.get(PAGE_SIZE));
-        if (!ObjectUtils.isEmpty(pageNum) && !ObjectUtils.isEmpty(pageSize)) {
+        if (!ObjectUtils.isEmpty(reqParams.get(PAGE_NUM)) && !ObjectUtils.isEmpty(reqParams.get(PAGE_SIZE))) {
+            int pageNum = Integer.parseInt(Objects.requireNonNull(reqParams.get(PAGE_NUM)));
+            int pageSize = Integer.parseInt(Objects.requireNonNull(reqParams.get(PAGE_SIZE)));
             int offset = (pageNum - 1) * pageSize;
             pageSqlPart += LIMIT + offset + "," + pageSize;
         }
@@ -221,7 +230,8 @@ public class SqlExecuteUtils {
      * @param value
      * @param conditionType
      */
-    private static void hiveSwitchOperationSymbol(StringBuilder whereBuffer, String column, String value, String conditionType) {
+    private static void hiveSwitchOperationSymbol(StringBuilder whereBuffer, String column, String value, String
+            conditionType) {
         String condition = null;
         OperationSymbolEnum symbolEnum = OperationSymbolEnum.getVal(conditionType);
         switch (Objects.requireNonNull(symbolEnum)) {

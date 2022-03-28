@@ -72,7 +72,7 @@ public class DasReleaseApiServiceImpl implements DasReleaseApiService {
 
         if (dasReleaseApiParamsVO.getApiSyncType().equalsIgnoreCase(ApiSyncTypeEnum.OFFLINE.getCode())) {
             //下线操作
-            dasApiBasicInfoRepository.updateStatusByApiId(SyncStatusEnum.CREATE_NO_UPLOAD.getCode(), apiIdSet);
+            dasApiBasicInfoRepository.updateStatusByApiId(SyncStatusEnum.NO_UPLOAD.getCode(), apiIdSet);
             LOG.info("====================下线操作成功!====================");
         } else {
             //校验API_SIX上游和服务信息
@@ -99,12 +99,12 @@ public class DasReleaseApiServiceImpl implements DasReleaseApiService {
     }
 
     @Override
-    public List searchApiSixUpstreamInfo() {
+    public List<Map<String, String>> searchApiSixUpstreamInfo() {
         return apiSixProcessService.searchApiSixUpstreamInfo();
     }
 
     @Override
-    public List searchApiSixServiceInfo() {
+    public List<Map<String,String>> searchApiSixServiceInfo() {
         return apiSixProcessService.searchApiSixServiceInfo();
     }
 
@@ -142,10 +142,10 @@ public class DasReleaseApiServiceImpl implements DasReleaseApiService {
         if (dasReleaseApiParamsVO.getApiSyncType().equalsIgnoreCase(ApiSyncTypeEnum.OFFLINE.getCode())) {
             //下线操作
             apiBasicInfos = dasApiBasicInfoRepository.findAll(qDasApiBasicInfo.apiId.in(dasReleaseApiParamsVO.getApiIds())
-                    .and(qDasApiBasicInfo.status.eq(SyncStatusEnum.CREATE_SUCCESS_UPLOAD.getCode())));
+                    .and(qDasApiBasicInfo.status.eq(SyncStatusEnum.SUCCESS_UPLOAD.getCode())));
         } else {
             apiBasicInfos = dasApiBasicInfoRepository.findAll(qDasApiBasicInfo.apiId.in(dasReleaseApiParamsVO.getApiIds())
-                    .and(qDasApiBasicInfo.status.ne(SyncStatusEnum.CREATE_SUCCESS_UPLOAD.getCode())));
+                    .and(qDasApiBasicInfo.status.ne(SyncStatusEnum.SUCCESS_UPLOAD.getCode())));
         }
         return apiBasicInfos;
     }
@@ -161,10 +161,10 @@ public class DasReleaseApiServiceImpl implements DasReleaseApiService {
         if (dasReleaseApiParamsVO.getApiSyncType().equalsIgnoreCase(ApiSyncTypeEnum.OFFLINE.getCode())) {
             //下线操作
             apiBasicInfos = dasApiBasicInfoRepository.findAll(qDasApiBasicInfo.apiPath.like(dasReleaseApiParamsVO.getNearlyApiPath() + "%")
-                    .and(qDasApiBasicInfo.status.eq(SyncStatusEnum.CREATE_SUCCESS_UPLOAD.getCode())));
+                    .and(qDasApiBasicInfo.status.eq(SyncStatusEnum.SUCCESS_UPLOAD.getCode())));
         } else {
             apiBasicInfos = dasApiBasicInfoRepository.findAll(qDasApiBasicInfo.apiPath.like(dasReleaseApiParamsVO.getNearlyApiPath() + "%")
-                    .and(qDasApiBasicInfo.status.ne(SyncStatusEnum.CREATE_SUCCESS_UPLOAD.getCode())));
+                    .and(qDasApiBasicInfo.status.ne(SyncStatusEnum.SUCCESS_UPLOAD.getCode())));
         }
         return apiBasicInfos;
     }

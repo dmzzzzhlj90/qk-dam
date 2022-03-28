@@ -2,8 +2,10 @@ package com.qk.dm.dataservice.service;
 
 import com.qk.dm.dataservice.vo.DasReleaseApiParamsVO;
 import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * API发布_同步数据服务API至服务网关
@@ -16,14 +18,14 @@ import org.springframework.stereotype.Service;
 public interface DasReleaseApiService {
 
 
-  void syncApiSixRoutes(DasReleaseApiParamsVO dasReleaseApiParamsVO);
+    void syncApiSixRoutes(DasReleaseApiParamsVO dasReleaseApiParamsVO);
 
-  void createApiSixConsumerKeyAuthPlugin(ApiSixConsumerInfo apiSixConsumerInfo);
+    void createApiSixConsumerKeyAuthPlugin(ApiSixConsumerInfo apiSixConsumerInfo);
 
-  List searchApiSixUpstreamInfo();
+    List<Map<String, String>> searchApiSixUpstreamInfo();
 
-  List searchApiSixServiceInfo();
+    List<Map<String, String>> searchApiSixServiceInfo();
 
-  void clearRouteInfo();
+    void clearRouteInfo();
 
 }

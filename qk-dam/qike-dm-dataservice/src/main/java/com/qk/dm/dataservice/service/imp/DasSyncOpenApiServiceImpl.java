@@ -142,18 +142,18 @@ public class DasSyncOpenApiServiceImpl implements DasSyncOpenApiService {
             String requestType = operationEntry.getKey();
             // API中文名称
             String apiName = operationEntry.getValue().getSummary();
-            //RequestBody
+            // RequestBody
             RequestBody requestBody = operationEntry.getValue().getRequestBody();
-            //设置API基础信息对象
+            // 设置API基础信息对象
             apiBasicInfoBuilder
                     .apiName(apiName)
                     .apiPath(pathKey)
                     .apiType(ApiTypeEnum.REGISTER_API.getCode())
                     .protocolType(baseUrl.getProtocol())
                     .requestType(requestType)
-                    .status(SyncStatusEnum.CREATE_NO_UPLOAD.getCode())
+                    .status(SyncStatusEnum.NO_UPLOAD.getCode())
                     .description(title + " : " + apiName);
-            //设置注册API子类定义信息对象
+            // 设置注册API子类定义信息对象
             dasApiRegisterDefinitionBuilder
                     .backendHost(baseUrl.getHost())
                     .backendPath(pathKey)

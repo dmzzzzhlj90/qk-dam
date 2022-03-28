@@ -1,7 +1,9 @@
 package com.qk.dam.authority.common.keycloak;
 
+import com.qk.dam.authority.common.util.Pager;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.Pagination;
+import org.apache.commons.collections4.CollectionUtils;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.*;
 import org.keycloak.representations.idm.*;
@@ -149,7 +151,25 @@ public class KeyCloakApi {
      * @return
      */
     public List<UserRepresentation> getUserList(String realm, String search, Pagination pagination) {
-        return keycloak.realm(realm).users().search(search, (pagination.getPage() - 1) * pagination.getSize(), pagination.getSize());
+        List<UserRepresentation> userList = keycloak.realm(realm).users().search(search);
+        return dealUser(userList,pagination);
+    }
+
+    /**
+     * 将用户按照时间排序，然后分页
+     * @param userList
+     * @param pagination
+     * @return
+     */
+    private List<UserRepresentation> dealUser(List<UserRepresentation> userList, Pagination pagination) {
+        //根据时间排序
+        if (CollectionUtils.isNotEmpty(userList)){
+            userList.sort((x,y)->Long.compare(y.getCreatedTimestamp(),x.getCreatedTimestamp()));
+            //做分页
+            Pager<UserRepresentation> userRepresentationPager = Pager.create(userList, pagination.getSize());
+            return userRepresentationPager.getPagedList(pagination.getPage());
+        }
+        return new ArrayList<>();
     }
 
     /**
@@ -187,7 +207,13 @@ public class KeyCloakApi {
         GroupsResource groupsResource = keycloak.realm(realm).groups();
         GroupRepresentation groupRepresentation = new GroupRepresentation();
         groupRepresentation.setName(groupName);
-        groupsResource.add(groupRepresentation);
+
+
+            Response response = groupsResource.add(groupRepresentation);
+            Response.StatusType createUserStatus = response.getStatusInfo();
+            if (!"Created".equals(createUserStatus.toString())) {
+                throw new BizException("当前新增分组名称为"+groupName+"的数据已经存在,请确认后重新添加");
+            }
     }
 
     /**
@@ -331,7 +357,11 @@ public class KeyCloakApi {
         RoleRepresentation roleRepresentation = new RoleRepresentation();
         roleRepresentation.setName(roleName);
         roleRepresentation.setDescription(description);
-        roles.create(roleRepresentation);
+        try {
+            roles.create(roleRepresentation);
+        } catch (Exception e) {
+                throw new BizException("当前新增角色名称为"+roleName+"的数据已经存在,请确认后重新添加");
+        }
     }
 
     /**

@@ -38,7 +38,7 @@ public enum CreateSqlRequestParamHeaderInfoEnum {
     /**
      * 示例值
      */
-    EXAMPLE_VALUE("exampleValue", "是否必填",false),
+    EXAMPLE_VALUE("exampleValue", "示例值",false),
 
 
     /**

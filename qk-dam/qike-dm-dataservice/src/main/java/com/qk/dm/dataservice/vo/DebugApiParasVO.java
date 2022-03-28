@@ -38,9 +38,4 @@ public class DebugApiParasVO {
      */
     private String value;
 
-    /**
-     * 是否传递
-     */
-    private Boolean usePara;
-
 }

@@ -3,10 +3,9 @@ package com.qk.dm.authority.mapstruct;
 import com.qk.dm.authority.entity.QxResources;
 import com.qk.dm.authority.vo.powervo.ResourceExcelVO;
 import com.qk.dm.authority.vo.powervo.ResourceOutVO;
+import com.qk.dm.authority.vo.powervo.ResourceQueryVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -32,4 +31,13 @@ public interface QxResourcesMapper {
   List<QxResources> ofResourcesVO(List<ResourceVO> qxResourcesList);
 
   List<ResourceExcelVO> ofExcelVO(List<QxResources> list);
+
+  @Mappings({
+      @Mapping(source = "resourcesid", target = "value"),
+      @Mapping(source = "name", target = "title"),
+      @Mapping(source = "childrenList", target = "children")
+  })
+  ResourceQueryVO resourceOutVOof (ResourceOutVO resourceOutVO);
+
+  List<ResourceQueryVO> resourceOutVOlist(List<ResourceOutVO> resourceOutVOList);
 }

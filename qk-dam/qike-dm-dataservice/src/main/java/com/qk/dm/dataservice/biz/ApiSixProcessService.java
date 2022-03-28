@@ -15,6 +15,7 @@ import com.qk.dm.dataservice.manager.ApiGatewayManager;
 import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -126,7 +127,7 @@ public class ApiSixProcessService {
      * @param routeContext
      * @return
      */
-    public List<RouteData> getRouteIdList(RouteContext routeContext) {
+    public List<RouteData> getRouteInfo(RouteContext routeContext) {
         return apiGatewayManager.getRouteInfo(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeContext);
     }
 
@@ -221,14 +222,13 @@ public class ApiSixProcessService {
      *
      * @return
      */
-    public List searchApiSixUpstreamInfo() {
+    public List<Map<String, String>> searchApiSixUpstreamInfo() {
         UpstreamContext upstreamContext = new UpstreamContext();
         Map<String, String> systemParam = Maps.newHashMap();
         systemParam.put(ApiSixConstant.API_SIX_ADMIN_UPSTREAM_URL_KEY, apiSixConnectInfo.getAdminUpstreamUrl());
         systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
         upstreamContext.setParams(systemParam);
-        List upstreamInfoList = apiGatewayManager.getUpstreamInfo(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, upstreamContext);
-        return upstreamInfoList;
+        return apiGatewayManager.getUpstreamInfo(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, upstreamContext);
     }
 
     /**
@@ -236,14 +236,13 @@ public class ApiSixProcessService {
      *
      * @return
      */
-    public List searchApiSixServiceInfo() {
+    public List<Map<String, String>> searchApiSixServiceInfo() {
         ServerContext serverContext = new ServerContext();
         Map<String, String> systemParam = Maps.newHashMap();
         systemParam.put(ApiSixConstant.API_SIX_ADMIN_SERVER_URL_KEY, apiSixConnectInfo.getAdminServerUrl());
         systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
         serverContext.setParams(systemParam);
-        List serviceInfoList = apiGatewayManager.getServiceInfo(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, serverContext);
-        return serviceInfoList;
+        return apiGatewayManager.getServiceInfo(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, serverContext);
     }
 
     /**
@@ -324,6 +323,14 @@ public class ApiSixProcessService {
     public void updateRoutePlugins(RouteInfo routeInfo) {
         RouteContext routeContext = buildRouteContext();
         apiGatewayManager.updateRoutePlugins(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, routeInfo, routeContext);
+    }
+
+    /**
+     * 查询路由信息
+     * @return
+     */
+    public List<RouteData> searchApiSixRouteInfo() {
+        return getRouteInfo(buildRouteContext());
     }
 
     //

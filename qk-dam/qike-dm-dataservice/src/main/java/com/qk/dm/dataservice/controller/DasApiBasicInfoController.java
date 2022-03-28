@@ -8,9 +8,9 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
+import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
-import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -75,21 +75,9 @@ public class DasApiBasicInfoController {
         return DefaultCommonResult.success();
     }
 
-    /**
-     * //TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 删除API基础信息,关联删除新建&&注册API
-     *
-     * @param id
-     * @return DefaultCommonResult
-     */
-    @DeleteMapping("/{id}")
-//  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.DELETE)
-    public DefaultCommonResult delete(@PathVariable("id") String id) {
-        dasApiBasicInfoService.delete(Long.valueOf(id));
-        return DefaultCommonResult.success();
-    }
 
     /**
-     * //TODO 删除API,根据API类型对应删除,统一放到删除基础信息进行删除 批量删除API基础信息
+     * 批量删除API,根据API类型关联删除API附属信息
      *
      * @param ids
      * @return DefaultCommonResult
@@ -187,18 +175,6 @@ public class DasApiBasicInfoController {
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
     public DefaultCommonResult<LinkedList<Map<String, Object>>> getDebugParamHeaderInfo() {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDebugParamHeaderInfo());
-    }
-
-    /**
-     * 新增API__详情展示
-     *
-     * @param apiId
-     * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
-     */
-    @GetMapping(value = "/create/detail/{apiId}")
-//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<Object> createDetail(@PathVariable("apiId") String apiId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.createDetail(apiId));
     }
 
 }

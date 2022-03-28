@@ -19,6 +19,7 @@ import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -91,26 +92,26 @@ public class ApiGatewayManager {
         return upstreamService;
     }
 
-    public List getUpstreamInfo(final String type, UpstreamContext upstreamContext) {
+    public List<Map<String,String>> getUpstreamInfo(final String type, UpstreamContext upstreamContext) {
         GatewayPlugin gatewayPlugin = plugins.get(type);
         if (gatewayPlugin != null) {
             UpstreamFactory upstreamFactory = gatewayPlugin.upstreamFactory(upstreamContext);
             this.upstreamService = upstreamFactory.getUpstreamService();
-            List upstreamInfoList = upstreamService.getUpstreamInfo();
+            List<Map<String,String>> upstreamInfo = upstreamService.getUpstreamInfo();
             log.info("======成功获取到路由Upstream信息！======");
-            return upstreamInfoList;
+            return upstreamInfo;
         }
         return null;
     }
 
-    public List getServiceInfo(final String type, ServerContext serverContext) {
+    public List<Map<String,String>> getServiceInfo(final String type, ServerContext serverContext) {
         GatewayPlugin gatewayPlugin = plugins.get(type);
         if (gatewayPlugin != null) {
             ServerFactory serverFactory = gatewayPlugin.serverFactory(serverContext);
             this.serverService = serverFactory.getServerService();
-            List serverInfoList = serverService.getServerInfo();
+            List<Map<String,String>> serviceInfo = serverService.getServerInfo();
             log.info("======成功获取到服务Service信息！======");
-            return serverInfoList;
+            return serviceInfo;
         }
         return null;
     }

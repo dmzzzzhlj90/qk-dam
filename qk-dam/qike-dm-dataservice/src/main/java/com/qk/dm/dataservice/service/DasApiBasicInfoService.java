@@ -2,6 +2,7 @@ package com.qk.dm.dataservice.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,5 @@ public interface DasApiBasicInfoService {
     Map<String, String> getSyncType();
 
     LinkedList<Map<String, Object>> getDebugParamHeaderInfo();
-
-    Object createDetail(String apiId);
 
 }
