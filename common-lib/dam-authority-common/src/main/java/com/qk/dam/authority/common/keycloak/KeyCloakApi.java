@@ -208,11 +208,12 @@ public class KeyCloakApi {
         GroupRepresentation groupRepresentation = new GroupRepresentation();
         groupRepresentation.setName(groupName);
 
-        try {
-            groupsResource.add(groupRepresentation);
-        } catch (Exception e) {
+
+            Response response = groupsResource.add(groupRepresentation);
+            Response.StatusType createUserStatus = response.getStatusInfo();
+            if (!"Created".equals(createUserStatus.toString())) {
                 throw new BizException("当前新增分组名称为"+groupName+"的数据已经存在,请确认后重新添加");
-        }
+            }
     }
 
     /**
