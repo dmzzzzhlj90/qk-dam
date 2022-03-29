@@ -4,9 +4,7 @@ import com.qk.dm.authority.entity.QxEmpower;
 import com.qk.dm.authority.entity.QxService;
 import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -21,6 +19,10 @@ public interface QxServiceMapper {
 
   QxService qxService(ServiceVO serviceVO);
 
+  @Mappings({
+      @Mapping(source = "serviceid", target = "value"),
+      @Mapping(source = "serviceName", target = "title")
+  })
   ServiceVO qxServiceVO(QxService qxService);
 
   List<ServiceVO> of(List<QxService> list);
