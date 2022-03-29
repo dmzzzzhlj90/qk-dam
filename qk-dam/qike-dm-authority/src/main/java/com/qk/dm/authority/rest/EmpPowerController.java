@@ -5,15 +5,13 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.params.EmpowerParamVO;
+import com.qk.dm.authority.vo.params.EmpowerQueryVO;
 import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
 import com.qk.dm.authority.vo.powervo.EmpowerVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * 授权管理-授权信息
@@ -86,12 +84,13 @@ public class EmpPowerController {
 
   /**
    *  用户、分组、角色(id)授权信息查询
-   * @param id （用户、分组、角色）id查询授权信息
+   * @param empowerQueryVO （用户、分组、角色）id和分页信息查询授权信息
    * @return DefaultCommonResult<List<EmpowerAllVO>> 查询授权信息
    */
-  @GetMapping("/allempowers")
-  public DefaultCommonResult<List<EmpowerAllVO>> queryAllEmpower(@Valid @NotBlank String id){
-    return DefaultCommonResult.success(ResultCodeEnum.OK,empPowerService.queryAllEmpower(id));
+  @PostMapping("/allempowers")
+  public DefaultCommonResult<PageResultVO<EmpowerAllVO>> queryAllEmpower(@Validated @RequestBody
+      EmpowerQueryVO empowerQueryVO){
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empPowerService.queryAllEmpower(empowerQueryVO));
   }
 
   /**
