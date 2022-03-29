@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -24,11 +23,12 @@ public class AtyGroupBatchByUsersVO {
      */
     @NotBlank(message = "域必填！")
     String realm;
+
     /**
      * 用户列表
      */
-    @NotEmpty(message = "用户列表必填！")
     List<String> userIds;
+
     /**
      * 用户组id
      */
