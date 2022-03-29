@@ -12,6 +12,7 @@ import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxServiceRepository;
 import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.params.EmpowerParamVO;
+import com.qk.dm.authority.vo.params.EmpowerQueryVO;
 import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
 import com.qk.dm.authority.vo.powervo.EmpowerVO;
 import com.querydsl.core.BooleanBuilder;
@@ -196,13 +197,57 @@ public class EmpPowerServiceImpl implements EmpPowerService {
 
   /**
    *
-   * @param empoerId
+   * @param empowerQueryVO
    * @return
    */
   @Override
-  public List<EmpowerAllVO> queryAllEmpower(String empoerId) {
-    List<QxEmpower> qxEmpoerList = qkQxEmpowerRepository.findByEmpoerId(empoerId);
-    return getEmpowerVO(qxEmpoerList);
+  public PageResultVO<EmpowerAllVO> queryAllEmpower(EmpowerQueryVO empowerQueryVO) {
+    Map<String, Object> map;
+    List<EmpowerAllVO> empowerVO = new ArrayList<>();
+    try {
+      map = queryByEmpQueryVO(empowerQueryVO);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new BizException("查询失败!!!");
+    }
+    if (MapUtils.isNotEmpty(map)){
+      List<QxEmpower> list = (List<QxEmpower>) map.get("list");
+      if (CollectionUtils.isNotEmpty(list)){
+         empowerVO = getEmpowerVO(list);
+      }
+    }
+    return new PageResultVO<>(
+        (long) map.get("total"),
+        empowerQueryVO.getPagination().getPage(),
+        empowerQueryVO.getPagination().getSize(),
+        empowerVO);
+  }
+
+  private Map<String,Object> queryByEmpQueryVO(EmpowerQueryVO empowerQueryVO) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    checkQueryCondition(booleanBuilder, empowerQueryVO);
+    Map<String, Object> result = new HashMap<>();
+    long count =jpaQueryFactory.select(qQxEmpower.count()).from(qQxEmpower).where(booleanBuilder).fetchOne();
+    List<QxEmpower> empowerList =
+        jpaQueryFactory
+            .select(qQxEmpower)
+            .from(qQxEmpower)
+            .where(booleanBuilder)
+            .orderBy(qQxEmpower.gmtCreate.desc())
+            .offset(
+                (long) (empowerQueryVO.getPagination().getPage() - 1)
+                    * empowerQueryVO.getPagination().getSize())
+            .limit(empowerQueryVO.getPagination().getSize())
+            .fetch();
+    result.put("list", empowerList);
+    result.put("total", count);
+    return result;
+  }
+
+  private void checkQueryCondition(BooleanBuilder booleanBuilder, EmpowerQueryVO empowerQueryVO) {
+    if (!Objects.isNull(empowerQueryVO.getId())) {
+      booleanBuilder.and(qQxEmpower.empoerId.eq(empowerQueryVO.getId()));
+    }
   }
 
   /**
