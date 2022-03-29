@@ -153,6 +153,7 @@ public class SqlExecuteUtils {
                 replaceSql = replaceSql.replace(DOLLAR_SYMBOL + LEFT_BIG_BRACKETS + para + RIGHT_BIG_BRACKETS,
                         APOSTROPHE_STRING + value + APOSTROPHE_STRING);
             }
+            //TODO sql查询条件设置对应参数,调试接口传递空值查询失败
         }
 
         //排序
