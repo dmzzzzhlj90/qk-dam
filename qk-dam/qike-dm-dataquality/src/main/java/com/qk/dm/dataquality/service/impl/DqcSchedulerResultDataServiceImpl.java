@@ -8,6 +8,7 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataquality.constant.DqcConstant;
 import com.qk.dm.dataquality.constant.NumberIndexEnum;
 import com.qk.dm.dataquality.constant.RuleTypeEnum;
+import com.qk.dm.dataquality.constant.ruletemplate.TempTypeEnum;
 import com.qk.dm.dataquality.entity.*;
 import com.qk.dm.dataquality.repositories.DqcRuleTemplateRepository;
 import com.qk.dm.dataquality.repositories.DqcSchedulerResultRepository;
@@ -159,6 +160,8 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         DqcRuleTemplate dqcRuleTemplate = ruleTemplateInfoMap.get(Long.valueOf(dqcSchedulerResult.getRuleTempId())).get(0);
         //模板定义信息 空值行数 : ${1}, 总行数 : ${2}, 空值率 : ${3}
         List<String> tempResultList = getTempResultList(dqcRuleTemplate);
+        //模板类型
+        String tempType = dqcRuleTemplate.getTempType();
         //结果集基础信息
         DqcSchedulerResultVO.DqcSchedulerResultVOBuilder resultBuilder = DqcSchedulerResultVO.builder();
         resultBuilder.jobId(dqcSchedulerResult.getJobId());
@@ -173,7 +176,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
         resultBuilder.resultTitleList(resultTitleVOList);
         //设置列的信息
         resultBuilder.resultDataList(
-                buildResultDataVOList(resultTitleVOList, dqcSchedulerResult, dqcSchedulerResult.getRuleId()));
+                buildResultDataVOList(resultTitleVOList, dqcSchedulerResult, dqcSchedulerResult.getRuleId(), tempType));
         return resultBuilder.build();
     }
 
@@ -230,7 +233,10 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     /**
      * 设置列的信息
      */
-    private List<Map<String, Object>> buildResultDataVOList(List<DqcSchedulerResultTitleVO> resultTitleVOList, DqcSchedulerResult dqcSchedulerResult, String ruleId) {
+    private List<Map<String, Object>> buildResultDataVOList(List<DqcSchedulerResultTitleVO> resultTitleVOList,
+                                                            DqcSchedulerResult dqcSchedulerResult,
+                                                            String ruleId,
+                                                            String tempType) {
         List<Map<String, Object>> resultDataVOList = new ArrayList<>();
         //获取规则信息
         Optional<DqcSchedulerRules> schedulerRulesOptional = dqcSchedulerRulesRepository.findOne(QDqcSchedulerRules.dqcSchedulerRules.ruleId.eq(ruleId));
@@ -244,7 +250,7 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
             getDataIndexMap(resultTitleVOList, dataIndexMap);
 
             //构建ResultData
-            buildResultData(resultDataVOList, dataIndexNamePrefix, dataIndexMap, dqcSchedulerResult);
+            buildResultData(resultDataVOList, dataIndexNamePrefix, dataIndexMap, dqcSchedulerResult, tempType);
         }
         return resultDataVOList;
     }
@@ -297,7 +303,8 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     private void buildResultData(List<Map<String, Object>> resultDataVOList,
                                  String dataIndexNamePrefix,
                                  Map<String, Boolean> dataIndexMap,
-                                 DqcSchedulerResult dqcSchedulerResult) {
+                                 DqcSchedulerResult dqcSchedulerResult,
+                                 String tempType) {
         //获取结果集数据
         List<List<Object>> resultDataList = getResultDataList(dqcSchedulerResult);
 
@@ -306,12 +313,12 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
 
         Set<String> dataIndexSet = dataIndexMap.keySet();
         List<String> dataIndexList = new ArrayList<>(dataIndexSet);
-        if (metaDataList != null) {
-            //解析批量获取指标值,设置元数据信息
-            bulkResultDataWithMetaData(resultDataVOList, dataIndexNamePrefix, dataIndexMap, resultDataList, metaDataList, dataIndexList);
+        if (TempTypeEnum.CUSTOM.getCode().equalsIgnoreCase(tempType)) {
+            // 自定义模板.解析批量获取指标值,未设置元数据信息
+            bulkResultDataCustom(resultDataVOList, UNDEFINED, dataIndexMap, resultDataList, dataIndexList);
         } else {
-            //解析批量获取指标值,未设置元数据信息
-            bulkResultDataNoMetaData(resultDataVOList, UNDEFINED, dataIndexMap, resultDataList, dataIndexList);
+            // 系统内置模板,解析批量获取指标值,设置元数据信息
+            bulkResultDataBuiltInSystem(resultDataVOList, dataIndexNamePrefix, dataIndexMap, resultDataList, metaDataList, dataIndexList);
         }
     }
 
@@ -337,43 +344,46 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
     }
 
     /**
-     * 解析批量获取指标值,设置元数据信息
+     * 系统内置模板,解析批量获取指标值,设置元数据信息
      */
-    private void bulkResultDataWithMetaData(List<Map<String, Object>> resultDataVOList, String dataIndexNamePrefix, Map<String, Boolean> dataIndexMap, List<List<Object>> resultDataList, List<String> metaDataList, List<String> dataIndexList) {
-        //设置元数据信息
-        AtomicInteger fieldAtomic = new AtomicInteger(0);
-        for (String metaData : metaDataList) {
-            int fieldIndex = fieldAtomic.getAndIncrement();
-            //设置列具体名称
-            String dataIndexName = dataIndexNamePrefix + metaData;
-            //获取字段对应的结果集
-            List<Object> resultData = null;
-            if (fieldIndex > resultDataList.size() - 1) {
-                //未能准备匹配.默认取首位数据
-                resultData = resultDataList.get(0);
-            } else {
-                //正确匹配
-                resultData = resultDataList.get(fieldIndex);
-            }
-            //数据存储
-            Map<String, Object> resultDataMap = new LinkedHashMap<>();
-            resultDataMap.put(dataIndexList.get(0), dataIndexName);
-            //获取指标数值
-            getDataValue(dataIndexMap, dataIndexList, resultData, resultDataMap);
+    private void bulkResultDataBuiltInSystem(List<Map<String, Object>> resultDataVOList, String dataIndexNamePrefix, Map<String, Boolean> dataIndexMap, List<List<Object>> resultDataList, List<String> metaDataList, List<String> dataIndexList) {
+        if (null != metaDataList) {
+            //设置元数据信息
+            AtomicInteger fieldAtomic = new AtomicInteger(0);
+            for (String metaData : metaDataList) {
+                int fieldIndex = fieldAtomic.getAndIncrement();
+                //设置列具体名称
+                String dataIndexName = dataIndexNamePrefix + metaData;
+                //获取字段对应的结果集
+                List<Object> resultData = null;
+                if (fieldIndex > resultDataList.size() - 1) {
+                    //未能准备匹配.默认取首位数据
+                    resultData = resultDataList.get(0);
+                } else {
+                    //正确匹配
+                    resultData = resultDataList.get(fieldIndex);
+                }
+                //数据存储
+                Map<String, Object> resultDataMap = new LinkedHashMap<>();
+                // 提前设置key值为targetObj对应的值
+                resultDataMap.put(dataIndexList.get(0), dataIndexName);
+                //获取指标数值
+                getDataValue(dataIndexMap, dataIndexList, resultData, resultDataMap);
 
-            resultDataVOList.add(resultDataMap);
-            fieldAtomic.getAndIncrement();
+                resultDataVOList.add(resultDataMap);
+                fieldAtomic.getAndIncrement();
+            }
         }
     }
 
     /**
-     * 解析批量获取指标值,未设置元数据信息
+     * 自定义模板.解析批量获取指标值,未设置元数据信息
      */
-    private void bulkResultDataNoMetaData(List<Map<String, Object>> resultDataVOList,
-                                          String dataIndexName,
-                                          Map<String, Boolean> dataIndexMap,
-                                          List<List<Object>> resultDataList,
-                                          List<String> dataIndexList) {
+    private void bulkResultDataCustom(List<Map<String, Object>> resultDataVOList,
+                                      String dataIndexName,
+                                      Map<String, Boolean> dataIndexMap,
+                                      List<List<Object>> resultDataList,
+                                      List<String> dataIndexList) {
         AtomicInteger dataIndex = new AtomicInteger(0);
         for (List data : resultDataList) {
             //数据存储
@@ -393,17 +403,24 @@ public class DqcSchedulerResultDataServiceImpl implements DqcSchedulerResultData
      * 获取指标数值
      */
     private void getDataValue(Map<String, Boolean> dataIndexMap, List<String> dataIndexList, List data, Map<String, Object> resultDataMap) {
-        AtomicInteger valueIndex = new AtomicInteger(1);
-        for (Object value : data) {
-            //TODO 修改模板定义展示,可以考虑根据模板修订时间进行查询
-            String dataIndexKey = dataIndexList.get(valueIndex.get());
-            Boolean isDouble = dataIndexMap.get(dataIndexKey);
-            //是否为Double数据类型
-            if (isDouble) {
-                BigDecimal bigDecimal = BigDecimal.valueOf((Double) value);
-                value = bigDecimal.multiply(BigDecimal.valueOf(PERCENTAGE)).setScale(DECIMAL_PLACE, RoundingMode.FLOOR);
+        AtomicInteger valueIndex = new AtomicInteger(0);
+        for (String dataIndexKey : dataIndexList) {
+            Object dataValue = "";
+            // 跳过设置key值为targetObj对应的值
+            if (DEFAULT_DATA_INDEX.equalsIgnoreCase(dataIndexKey)) {
+                continue;
             }
-            resultDataMap.put(dataIndexKey, value);
+            // 按照存储顺序获取结果值,如果模板进行修改,历史执行的结果信息,根据最新的模板进行展示,结果值位数不足进行空串补位;
+            if (valueIndex.get() < data.size()) {
+                dataValue = data.get(valueIndex.get());
+            }
+            // 是否为Double类型
+            Boolean isDouble = dataIndexMap.get(dataIndexKey);
+            if (isDouble) {
+                BigDecimal bigDecimal = BigDecimal.valueOf((Double) dataValue);
+                dataValue = bigDecimal.multiply(BigDecimal.valueOf(PERCENTAGE)).setScale(DECIMAL_PLACE, RoundingMode.FLOOR);
+            }
+            resultDataMap.put(dataIndexKey, dataValue);
             valueIndex.getAndIncrement();
         }
     }
