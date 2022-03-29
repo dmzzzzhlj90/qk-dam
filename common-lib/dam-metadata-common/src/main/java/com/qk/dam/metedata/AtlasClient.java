@@ -5,6 +5,7 @@ import org.apache.atlas.AtlasClientV2;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Objects;
 
 /**
  *
@@ -25,8 +26,11 @@ public class AtlasClient  {
 
     @PostConstruct
     public void init(){
-        atlasClientV2 = new AtlasClientV2(new String[]{atlasBeanProperties.getAddress()},
-                atlasBeanProperties.getBasicAuth().split(","));
+        if(Objects.nonNull(atlasBeanProperties.getAddress())&&
+        Objects.nonNull(atlasBeanProperties.getBasicAuth())){
+            atlasClientV2 = new AtlasClientV2(new String[]{atlasBeanProperties.getAddress()},
+                    atlasBeanProperties.getBasicAuth().split(","));
+        }
     }
 
     public AtlasClientV2 instance() {
