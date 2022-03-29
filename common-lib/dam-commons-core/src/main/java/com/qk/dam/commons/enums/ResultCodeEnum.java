@@ -41,13 +41,15 @@ public enum ResultCodeEnum {
   OK(HttpStatus.OK, "DM-200-00000", "请求处理成功"),
   /** 一切皆ok */
   OK_MSG(HttpStatus.OK, "DM-200-00000", "请求处理成功"),
-  /** 请求发生未知错误 */
-  BAD_REQUEST(HttpStatus.BAD_REQUEST, "DM-400-A0001", "请求发生未知错误"),
 
   /** 服务器内部错误 */
   INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DM-500-B0001", "后台服务异常，请联系管理员!"),
+
+  /** 请求发生未知错误 */
+  BAD_REQUEST(HttpStatus.BAD_REQUEST, "DM-400-A0001", "请求发生未知错误"),
   /** 系统运行时异常 */
-  DATA_OPT_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0003", "数据操作异常！"),
+  DATA_OPT_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0002", "数据操作异常！"),
+  HTTP_MESSAGE_CONVERTER(HttpStatus.BAD_REQUEST, "DM-400-B0005", "Http消息转换尝试失败,通常发生在请求参数转换期间!"),
   TARGET_OBJ_ERROR(HttpStatus.BAD_REQUEST, "DM-400-B0004", "目标对象错误！"),
   /** 系统运行时异常 */
   UN_AUTHORIZED(HttpStatus.UNAUTHORIZED, "DM-401-B0003", "权限验证失败！"),

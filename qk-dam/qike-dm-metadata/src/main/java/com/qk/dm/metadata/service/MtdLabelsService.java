@@ -1,9 +1,10 @@
 package com.qk.dm.metadata.service;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
-import com.qk.dm.metadata.vo.PageResultVO;
+
 import java.util.List;
 
 public interface MtdLabelsService {

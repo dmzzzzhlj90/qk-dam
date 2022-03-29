@@ -1,9 +1,10 @@
 package com.qk.dm.metadata.service;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
 import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
-import com.qk.dm.metadata.vo.PageResultVO;
+
 import java.util.List;
 
 /** @author shenpengjie */

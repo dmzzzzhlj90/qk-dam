@@ -1,6 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.entity.MtdClassify;
 import com.qk.dm.metadata.entity.MtdClassifyAtlas;
@@ -12,7 +13,6 @@ import com.qk.dm.metadata.service.MtdClassifyService;
 import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
 import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
-import com.qk.dm.metadata.vo.PageResultVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;

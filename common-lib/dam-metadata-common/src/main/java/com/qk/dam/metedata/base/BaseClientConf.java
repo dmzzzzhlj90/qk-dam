@@ -1,5 +1,6 @@
 package com.qk.dam.metedata.base;
 
+import com.qk.dam.metedata.util.SpringApplicationContextHolder;
 import org.apache.atlas.ApplicationProperties;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasException;
@@ -13,7 +14,7 @@ import org.apache.commons.lang.ArrayUtils;
  */
 public abstract class BaseClientConf {
   protected static final String ATLAS_REST_ADDRESS = "atlas.rest.address";
-  protected static final String ATLAS_REST_AUTH = "atlas.rest.basic.auth";
+  protected static final String ATLAS_REST_AUTH = "atlas.rest.basicAuth";
   public final AtlasClientV2 atlasClientV2;
   private static String[] basicAuthUsernamePassword;
 

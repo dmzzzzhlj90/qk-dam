@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -55,10 +56,15 @@ public class GlobalExceptionAdvice {
   @ExceptionHandler(RuntimeException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public <T> BaseResult<T> sendErrorResponse(RuntimeException exception) {
+    log.error("系统运行时异常: {}", getStackTrace(exception));
+
     if (exception.getClass().getName().contains("AccessDenied")) {
       return DefaultCommonResult.fail(ResultCodeEnum.UN_AUTHORIZED);
     }
-    log.error("系统运行时异常: {}", getStackTrace(exception));
+    if (exception instanceof HttpMessageConversionException){
+      return DefaultCommonResult.fail(ResultCodeEnum.HTTP_MESSAGE_CONVERTER);
+    }
+
     return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST);
   }
 
@@ -118,7 +124,9 @@ public class GlobalExceptionAdvice {
         errors.forEach(
             p -> {
               FieldError fieldError = (FieldError) p;
-              errorMsg.append(fieldError.getDefaultMessage()).append(",");
+              errorMsg.append(fieldError.getField())
+                      .append(fieldError.getDefaultMessage())
+                      .append(",");
             });
       }
     } else if (e instanceof BindException) {

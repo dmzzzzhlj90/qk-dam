@@ -11,5 +11,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class AtyUserUpdateVO extends AtyUserVO {
+    /**
+     * 用户id（修改时为必填参数）
+     */
     private String userId;
 }
