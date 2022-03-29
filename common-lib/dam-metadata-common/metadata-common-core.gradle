@@ -4,6 +4,9 @@ plugins {
 }
 version "${commonLibVersion}"
 group "com.qk.dam.metedata.common"
+bootJar{
+    enabled = false
+}
 configurations.all {
     exclude group: 'org.springframework',module: 'spring-web'
     exclude group: 'org.springframework',module: 'spring-aop'
