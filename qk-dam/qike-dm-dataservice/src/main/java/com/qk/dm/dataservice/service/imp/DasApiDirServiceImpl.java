@@ -13,6 +13,7 @@ import com.qk.dm.dataservice.vo.DasApiDirTreeVO;
 import com.qk.dm.dataservice.vo.DasApiDirVO;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -42,7 +43,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     @Override
     public List<DasApiDirTreeVO> searchList() {
         Predicate predicate = qDasApiDir.delFlag.eq(0);
-        List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate);
+        List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate, Sort.by("dirName"));
         List<DasApiDirTreeVO> respList = new ArrayList<>();
         for (DasApiDir dasApiDir : dasApiDirList) {
             DasApiDirTreeVO dirTreeVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirTreeVO(dasApiDir);

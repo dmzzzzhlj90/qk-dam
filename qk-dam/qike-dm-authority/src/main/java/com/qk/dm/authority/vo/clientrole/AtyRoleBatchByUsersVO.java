@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -27,7 +26,6 @@ public class AtyRoleBatchByUsersVO {
     /**
      * 用户
      */
-    @NotEmpty(message = "用户id列表必填！")
     List<String> userIds;
     /**
      * 角色

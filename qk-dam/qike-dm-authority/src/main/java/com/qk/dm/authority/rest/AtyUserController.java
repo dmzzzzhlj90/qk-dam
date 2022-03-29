@@ -14,9 +14,11 @@ import com.qk.dm.authority.vo.clientrole.AtyUserClientRoleVO;
 import com.qk.dm.authority.vo.group.AtyGroupBatchByGroupsVO;
 import com.qk.dm.authority.vo.group.AtyUserGroupVO;
 import com.qk.dm.authority.vo.user.*;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -107,6 +109,18 @@ public class AtyUserController {
     @PostMapping("/page")
     public DefaultCommonResult<PageResultVO<AtyUserInfoVO>> getUsersPage(@RequestBody @Valid AtyUserParamVO atyUserParamVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(atyUserParamVO));
+    }
+
+    /**
+     * 用户列表-不分页查询所有用户
+     * @param realm
+     * @param search
+     * @return
+     */
+    @GetMapping("/list")
+    @Validated
+    public DefaultCommonResult<List<AtyUserInfoVO>> getUsersList(@NotBlank @RequestParam("realm") String realm, String search) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyUserService.getUsers(realm,search));
     }
 
     /**

@@ -1,7 +1,10 @@
 package com.qk.dm.dataservice.service.imp;
 
 import com.google.common.collect.Maps;
+import com.google.gson.reflect.TypeToken;
+import com.qk.dam.commons.enums.DataTypeEnum;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataservice.constant.CreateTypeEnum;
 import com.qk.dm.dataservice.entity.*;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
@@ -11,8 +14,10 @@ import com.qk.dm.dataservice.service.DasApiCreateConfigService;
 import com.qk.dm.dataservice.service.DasApiCreateSqlScriptService;
 import com.qk.dm.dataservice.service.DasApiCreateSummaryService;
 import com.qk.dm.dataservice.vo.*;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -82,8 +87,10 @@ public class DasApiCreateSummaryServiceImpl implements DasApiCreateSummaryServic
     }
 
     @Override
-    public DebugApiResultVO remoteSearchData(String apiId, List<DebugApiParasVO> debugApiParasVO) {
+    public DebugApiResultVO remoteSearchData(String apiId, String paramData) {
         DebugApiResultVO debugApiResultVO = null;
+        //校验转换调试参数
+        List<DebugApiParasVO> debugApiParasVO = useDebugApiParasVO(apiId, paramData);
         // 查询新建API
         Map<String, Object> createApiMap = searchCreateApi(apiId);
 
@@ -104,6 +111,39 @@ public class DasApiCreateSummaryServiceImpl implements DasApiCreateSummaryServic
             debugApiResultVO = dasApiCreateSqlScriptService.debugModel(apiCreateSqlScriptVO);
         }
         return debugApiResultVO;
+    }
+
+    /**
+     * 校验转换调试参数
+     *
+     * @param apiId
+     * @param paramData
+     * @return
+     */
+    private List<DebugApiParasVO> useDebugApiParasVO(String apiId, String paramData) {
+        List<DebugApiParasVO> debugApiParasVOList = Lists.newArrayList();
+        if (ObjectUtils.isEmpty(apiId)) {
+            throw new BizException("请求的apiID参数为空!!!");
+        }
+
+        if (ObjectUtils.isEmpty(paramData)) {
+            throw new BizException("请求的paramDataD参数为空!!!");
+        }
+
+        //转换调试参数
+        Map<String, String> params = GsonUtil.fromJsonString(paramData, new TypeToken<Map<String, String>>() {
+        }.getType());
+
+        params.keySet().forEach(k->{
+            DebugApiParasVO debugApiParasVO = DebugApiParasVO.builder()
+                    .paraName(k)
+                    .value(params.get(k))
+                    .necessary(true)
+                    .paraType(DataTypeEnum.STRING.getCode())
+                    .build();
+            debugApiParasVOList.add(debugApiParasVO);
+        });
+        return debugApiParasVOList;
     }
 
     /**

@@ -37,14 +37,15 @@ public class DasApiCreateRemoteController {
     /**
      * 根据apiId查询对应新建API数据
      *
-     * @param apiId
-     * @return DefaultCommonResult<PageResultVO < DasApiCreateVO>>
+     * @param apiId apiId
+     * @param paramData 请求字段参数信息
+     * @return
      */
-    @PostMapping(value = "/search")
+    @PostMapping(value = "/search/{apiId}")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<DebugApiResultVO> remoteSearchData(@RequestParam("apiId") String apiId,
-                                                                  @RequestBody List<DebugApiParasVO> debugApiParasVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSummaryService.remoteSearchData(apiId,debugApiParasVO));
+    public DefaultCommonResult<DebugApiResultVO> remoteSearchData(@PathVariable("apiId") String apiId,
+                                                                  @RequestParam("paramData") String paramData) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSummaryService.remoteSearchData(apiId,paramData));
     }
 
 }

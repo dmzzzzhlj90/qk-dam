@@ -14,10 +14,6 @@ configurations {
 configure(tasks.processResources) {
 }
 
-configurations.all {
-    exclude group: 'org.apache.poi', module: 'poi-ooxml'
-}
-
 docker {
     springBootApplication {
         baseImage = "${jre11Image}"

@@ -7,8 +7,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.constant.*;
-import com.qk.dm.dataservice.entity.DasApiBasicInfo;
-import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
+import com.qk.dm.dataservice.entity.*;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
@@ -24,13 +23,14 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wjq
@@ -40,6 +40,9 @@ import java.util.*;
 @Service
 public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
+    private static final QDasApiRegister qDasApiRegister = QDasApiRegister.dasApiRegister;
+    private static final QDasApiCreateConfig qDasApiCreateConfig = QDasApiCreateConfig.dasApiCreateConfig;
+    private static final QDasApiCreateSqlScript qDasApiCreateSqlScript = QDasApiCreateSqlScript.dasApiCreateSqlScript;
 
     private final DasApiDirService dasApiDirService;
     private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
@@ -129,10 +132,12 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
                             + dasApiBasicInfo.getRequestType()
                             + " 的数据，已存在！！！");
         }
+        // 参数为空,不存null值
+        setParaIsNull(dasApiBasicInfoVO);
 
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParamJson(dasApiBasicInfoVO, dasApiBasicInfo);
-        dasApiBasicInfo.setStatus(SyncStatusEnum.CREATE_NO_UPLOAD.getCode());
+        dasApiBasicInfo.setStatus(SyncStatusEnum.NO_UPLOAD.getCode());
         dasApiBasicInfo.setGmtCreate(new Date());
         dasApiBasicInfo.setGmtModified(new Date());
         dasApiBasicInfo.setCreateUserid("admin");
@@ -159,6 +164,9 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         if (optionalDasApiBasicInfo.isEmpty()) {
             throw new BizException("当前要编辑的apiId为:" + dasApiBasicInfoVO.getApiId() + " 的数据，不存在！！！");
         }
+
+        // 参数为空,不存null值
+//        setParaIsNull(dasApiBasicInfoVO);
 
         DasApiBasicInfo dasApiBasicInfo = transformToEntity(dasApiBasicInfoVO);
         setDedInputParamJson(dasApiBasicInfoVO, dasApiBasicInfo);
@@ -195,11 +203,33 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteBulk(String ids) {
-        //        List<String> idList = Arrays.asList(ids.split(","));
-        //        Set<Long> idSet = new HashSet<>();
-        //        idList.forEach(id -> idSet.add(Long.valueOf(id)));
-        //        List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(idSet);
-        //        dasApiBasicinfoRepository.deleteInBatch(apiBasicInfoList);
+        List<String> idList = Arrays.asList(ids.split(","));
+        Set<Long> idSet = new HashSet<>();
+        idList.forEach(id -> idSet.add(Long.valueOf(id)));
+        // 批量删除API基础信息
+        List<DasApiBasicInfo> apiBasicInfoList = dasApiBasicinfoRepository.findAllById(idSet);
+        dasApiBasicinfoRepository.deleteAll(apiBasicInfoList);
+
+        // 获取API标识ID集合
+        List<String> registerApiIds = apiBasicInfoList.stream()
+                .filter(o -> ApiTypeEnum.REGISTER_API.getCode().equalsIgnoreCase(o.getApiType()))
+                .map(DasApiBasicInfo::getApiId).collect(Collectors.toList());
+
+        List<String> createApiIds = apiBasicInfoList.stream()
+                .filter(o -> ApiTypeEnum.CREATE_API.getCode().equalsIgnoreCase(o.getApiType()))
+                .map(DasApiBasicInfo::getApiId).collect(Collectors.toList());
+
+        // 批量删除注册API配置信息
+        Iterable<DasApiRegister> apiRegisterRepositoryAll = dasApiRegisterRepository.findAll(qDasApiRegister.apiId.in(registerApiIds));
+        dasApiRegisterRepository.deleteAll(apiRegisterRepositoryAll);
+
+        // 批量删除新建API配置信息
+        // 新建配置
+        Iterable<DasApiCreateConfig> dasApiCreateConfigRepositoryAll = dasApiCreateConfigRepository.findAll(qDasApiCreateConfig.apiId.in(createApiIds));
+        dasApiCreateConfigRepository.deleteAll(dasApiCreateConfigRepositoryAll);
+        // 新建脚本
+        Iterable<DasApiCreateSqlScript> dasApiCreateSqlScriptRepositoryAll = dasApiCreateSqlScriptRepository.findAll(qDasApiCreateSqlScript.apiId.in(createApiIds));
+        dasApiCreateSqlScriptRepository.deleteAll(dasApiCreateSqlScriptRepositoryAll);
     }
 
     @Override
@@ -266,11 +296,16 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DebugApiParamHeaderInfoEnum.getAllValue();
     }
 
-    @Override
-    public Object createDetail(String apiId) {
-
-
-        return null;
+    /**
+     * 参数为空,不存null值
+     *
+     * @param dasApiBasicInfoVO
+     */
+    private void setParaIsNull(DasApiBasicInfoVO dasApiBasicInfoVO) {
+        List<DasApiBasicInfoRequestParasVO> requestParasVOS = dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS();
+        if (null == requestParasVOS) {
+            dasApiBasicInfoVO.setApiBasicInfoRequestParasVOS(Lists.newArrayList());
+        }
     }
 
     private DasApiBasicInfoVO transformToVO(DasApiBasicInfo dasApiBasicInfo) {
@@ -293,6 +328,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     private void setDedInputParamJson(DasApiBasicInfoVO dasApiBasicInfoVO, DasApiBasicInfo dasApiBasicInfo) {
         if (!ObjectUtils.isEmpty(dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS())) {
             dasApiBasicInfo.setDefInputParam(GsonUtil.toJsonString(dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS()));
+        } else {
+            dasApiBasicInfo.setDefInputParam(GsonUtil.toJsonString(Lists.newArrayList()));
         }
     }
 
@@ -342,7 +379,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
             DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO) {
 
         // API目录ID
-        if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getDirId())) {
+        if (!ObjectUtils.isEmpty(dasApiBasicInfoParamsVO.getDirId())
+                && !DasConstant.TREE_DIR_TOP_PARENT_ID.equals(dasApiBasicInfoParamsVO.getDirId())) {
             booleanBuilder.and(qDasApiBasicinfo.dirId.eq(dasApiBasicInfoParamsVO.getDirId()));
         }
         // API名称

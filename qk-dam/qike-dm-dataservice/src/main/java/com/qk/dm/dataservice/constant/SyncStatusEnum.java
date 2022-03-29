@@ -16,19 +16,19 @@ import java.util.Map;
 public enum SyncStatusEnum {
 
     /**
-     * 新建未上传数据网关
+     * 未上传
      */
-    CREATE_NO_UPLOAD("0", "新建未上传数据网关"),
+    NO_UPLOAD("0", "未上传"),
 
     /**
-     * 上传数据网关失败
+     * 上传失败
      */
-    CREATE_FAIL_UPLOAD("1", "上传数据网关失败"),
+    FAIL_UPLOAD("1", "上传失败"),
 
     /**
-     * 成功上传数据网关
+     * 已上传
      */
-    CREATE_SUCCESS_UPLOAD("2", "成功上传数据网关");
+    SUCCESS_UPLOAD("2", "已上传");
 
     private String code;
     private String name;

@@ -196,8 +196,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
 
     @Override
     public void timedExecution(String timeInterval) {
-    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatusAndTimeInterval(RptRunStatusConstant.START
-            ,RptConstant.REPTILE,timeInterval);
+    List<RptBaseInfo> list = rptBaseInfoRepository.findAllByRunStatusAndStatusAndTimeIntervalAndDelFlag(RptRunStatusConstant.START
+            ,RptConstant.REPTILE,timeInterval,0);
        if(CollectionUtils.isEmpty(list)){return;}
 
             list.forEach(e -> {

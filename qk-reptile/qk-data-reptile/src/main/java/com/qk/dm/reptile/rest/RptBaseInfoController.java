@@ -168,8 +168,8 @@ public class RptBaseInfoController {
      * @return DefaultCommonResult
      */
     @GetMapping("/timed/execution")
-    public DefaultCommonResult timedExecution(){
-        rptBaseInfoService.timedExecution(null);
+    public DefaultCommonResult timedExecution(String timeInterval){
+        rptBaseInfoService.timedExecution(timeInterval);
         return DefaultCommonResult.success();
     }
 

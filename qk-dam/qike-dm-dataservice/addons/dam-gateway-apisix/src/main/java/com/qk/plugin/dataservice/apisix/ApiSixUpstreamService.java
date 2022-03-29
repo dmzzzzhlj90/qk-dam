@@ -9,9 +9,14 @@ import com.qk.dam.dataservice.spi.upstream.UpstreamService;
 import com.qk.plugin.dataservice.apisix.route.ApiSixResultVO;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
 import com.qk.plugin.dataservice.apisix.route.result.Nodes;
+
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.qk.plugin.dataservice.apisix.route.result.Value;
 import org.springframework.http.*;
 import org.springframework.util.ObjectUtils;
 
@@ -31,8 +36,9 @@ public class ApiSixUpstreamService implements UpstreamService {
   }
 
   @Override
-  public List getUpstreamInfo() {
-    List<Nodes> nodeList = null;
+  public List<Map<String,String>> getUpstreamInfo() {
+    List<Map<String, String>> upstreamInfo = new LinkedList<>();
+
     Map<String, String> params = upstreamContext.getParams();
     HttpEntity<UpstreamInfo> httpEntity = setHttpEntity(null, params);
     ResponseEntity<ApiSixResultVO> responseEntity =
@@ -44,13 +50,22 @@ public class ApiSixUpstreamService implements UpstreamService {
     if (isEmptyResponseEntityBody(responseEntity.getBody().getNode())) {
       Object nodes = responseEntity.getBody().getNode().get("nodes");
       if (isEmptyResponseEntityBody(nodes)) {
-        nodeList =
-            GsonUtil.fromJsonString(
-                GsonUtil.toJsonString(nodes), new TypeToken<List<Nodes>>() {}.getType());
-        return nodeList;
+        List<Nodes> nodeList = GsonUtil.fromJsonString(
+                GsonUtil.toJsonString(nodes), new TypeToken<List<Nodes>>() {
+                }.getType());
+        if (null != nodeList && nodeList.size() > 0) {
+          for (Nodes node : nodeList) {
+            Map<String, String> upstreamInfoMap = new LinkedHashMap<>();
+            Value value = node.getValue();
+            upstreamInfoMap.put("id", value.getId());
+            upstreamInfoMap.put("name", value.getName());
+            upstreamInfo.add(upstreamInfoMap);
+          }
+        }
+        return upstreamInfo;
       }
     }
-    return nodeList;
+    return upstreamInfo;
   }
 
   @Override

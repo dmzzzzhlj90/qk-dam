@@ -19,6 +19,7 @@ import com.qk.dm.authority.vo.params.ApiResourcesParamVO;
 import com.qk.dm.authority.vo.params.PowerResourcesParamVO;
 import com.qk.dm.authority.vo.params.ResourceParamVO;
 import com.qk.dm.authority.vo.powervo.ResourceOutVO;
+import com.qk.dm.authority.vo.powervo.ResourceQueryVO;
 import com.qk.dm.authority.vo.powervo.ResourceVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -161,7 +162,7 @@ public class EmpRsServiceImpl implements EmpRsService {
   }
 
   @Override
-  public List<ResourceOutVO> queryResource(ResourceParamVO resourceParamVO) {
+  public List<ResourceQueryVO> queryResource(ResourceParamVO resourceParamVO) {
     List<ResourceOutVO> resourceOutVOList = new ArrayList<>();
     List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(resourceParamVO.getServiceId());
     //筛选资源数据
@@ -169,7 +170,8 @@ public class EmpRsServiceImpl implements EmpRsService {
     if (CollectionUtils.isNotEmpty(list)){
       resourceOutVOList = QxResourcesMapper.INSTANCE.of(list);
     }
-    return buildByResource(resourceOutVOList,resourceParamVO.getName());
+    List<ResourceOutVO> resourceOutVOLists = buildByResource(resourceOutVOList,resourceParamVO.getName());
+    return  QxResourcesMapper.INSTANCE.resourceOutVOlist(resourceOutVOLists);
   }
 
   @Override
@@ -196,13 +198,15 @@ public class EmpRsServiceImpl implements EmpRsService {
   }
 
   @Override
-  public Boolean qeryRsEmp(Long id) {
-    QxResources qxResources = qkQxResourcesRepository.findById(id).orElse(null);
-    if (Objects.isNull(qxResources)) {
+  public Boolean qeryRsEmp(String ids) {
+    List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+    List<QxResources> qxResourcesList = qkQxResourcesRepository.findAllById(idList);
+    if (CollectionUtils.isEmpty(qxResourcesList)) {
       throw new BizException("当前需删除的数据不存在");
     }
-    List<QkQxResourcesEmpower> rsEmpList = qkQxResourcesEmpowerRepository
-        .findByResourceUuid(qxResources.getResourcesid());
+    List<String> resourcesIdList = qxResourcesList.stream().map(QxResources::getResourcesid).collect(Collectors.toList());
+    List<QkQxResourcesEmpower> rsEmpList = (List<QkQxResourcesEmpower>) qkQxResourcesEmpowerRepository
+        .findAll(qQkQxResourcesEmpower.resourceUuid.in(resourcesIdList));
     if (CollectionUtils.isNotEmpty(rsEmpList)){
       return true;
     }
@@ -262,7 +266,7 @@ public class EmpRsServiceImpl implements EmpRsService {
   private List<ResourceOutVO> buildByResource(
       List<ResourceOutVO> resourceOutVOList, String name) {
     List<ResourceOutVO> trees = new ArrayList<>();
-    ResourceOutVO resourceOutVO = ResourceOutVO.builder().id(QxConstant.DIRID).name(name).build();
+    ResourceOutVO resourceOutVO = ResourceOutVO.builder().id(QxConstant.DIRID).name(name).resourcesid(QxConstant.RESOURCEID).build();
     trees.add(findChildren(resourceOutVO, resourceOutVOList));
     return trees;
   }
