@@ -87,4 +87,16 @@ public class ServiceVO {
    * 服务uuid
    */
   private String serviceid;
+
+  /**
+   * 服务名称（前端展示使用）
+   */
+  private String title;
+
+  /**
+   * 服务的uuid（前端展示使用）
+   */
+  private String value;
+
+
 }
