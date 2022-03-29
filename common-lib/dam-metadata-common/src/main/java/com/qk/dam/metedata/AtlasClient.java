@@ -17,7 +17,7 @@ import java.util.Objects;
 @Component
 public class AtlasClient  {
 
-    private AtlasClientV2 atlasClientV2;
+    private AtlasClientV2 atlasClientV2 = null;
     private final AtlasBeanProperties atlasBeanProperties;
 
     public AtlasClient(AtlasBeanProperties atlasBeanProperties) {

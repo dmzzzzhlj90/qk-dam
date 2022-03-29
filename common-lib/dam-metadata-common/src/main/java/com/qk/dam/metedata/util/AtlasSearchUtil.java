@@ -1,7 +1,6 @@
 package com.qk.dam.metedata.util;
 
 import com.qk.dam.metedata.config.AtlasConfig;
-import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
@@ -22,7 +21,6 @@ public class AtlasSearchUtil {
     throw new IllegalStateException("Utility search");
   }
 
-  private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
 
   public static List<AtlasEntityHeader> getAtlasEntityHeaderListByAttr(String typeName,SearchParameters.FilterCriteria filterCriteria, Integer limit, Integer offset){
@@ -126,7 +124,7 @@ public class AtlasSearchUtil {
   public static AtlasEntity.AtlasEntityWithExtInfo getAtlasEntity(String guid){
 
     try {
-       return  atlasClientV2.getEntityByGuid(guid, true, false);
+       return  AtlasConfig.getAtlasClientV2().getEntityByGuid(guid, true, false);
     } catch (AtlasServiceException e) {
       e.printStackTrace();
     }
@@ -142,7 +140,7 @@ public class AtlasSearchUtil {
                                                          Integer limit, Integer offset){
     try {
       AtlasSearchResult atlasSearchResult =
-              atlasClientV2.basicSearch(typeName, filterCriteria, null, null, false,
+              AtlasConfig.getAtlasClientV2().basicSearch(typeName, filterCriteria, null, null, false,
                       Objects.isNull(limit)?1000:limit, Objects.isNull(offset)?0:offset);
       return atlasSearchResult.getEntities();
     } catch (Exception e) {

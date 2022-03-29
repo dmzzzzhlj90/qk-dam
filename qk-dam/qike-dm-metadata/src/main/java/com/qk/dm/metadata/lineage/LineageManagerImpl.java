@@ -38,7 +38,6 @@ import static com.qk.dam.metedata.type.AtlasEntityConstant.*;
 @Component
 public class LineageManagerImpl implements LineageService {
     private final AtlasClient atlasClient;
-    private static final AtlasClientV2 ccc = AtlasConfig.getAtlasClientV2();
     private final Process process;
 
     public LineageManagerImpl(AtlasClient atlasClient, Process process) {
@@ -149,6 +148,13 @@ public class LineageManagerImpl implements LineageService {
         Map<String, DataConnect> dataConnectMap = dataConnects.stream().distinct().collect(Collectors.toMap(DataConnect::getName, v -> v,(a,b)->a));
         deleteProcess(lineageTemplate, dataConnectMap);
 
+    }
+    @Override
+    public void deleteEntitiesByGuids(List<String> guids) throws AtlasServiceException {
+        atlasClient.instance().deleteEntitiesByGuids(guids);
+
+        // fixme 清理delete实体太慢，需要异步处理并优化
+        // realCleanEntities();
     }
 
     private void extractedVO(InputStream excelFile, List<DataConnect> dataConnects, List<LineageTemplateVO> lineageTemplate) {
