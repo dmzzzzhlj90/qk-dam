@@ -17,6 +17,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AtyGroupVO {
+    /**
+     * 分组id（修改为必填参数）
+     */
     String groupId;
     /**
      * 域
