@@ -5,13 +5,14 @@ package com.qk.dm.metadata.rest;
 //import com.qk.dam.authorization.RestActionType;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.metadata.service.MtdClassifyService;
 import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
 import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
-import com.qk.dm.metadata.vo.PageResultVO;
+
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.*;
 public class MtdClassifyController {
   private final MtdClassifyService mtdClassifyService;
 
-  @Autowired
   public MtdClassifyController(MtdClassifyService mtdClassifyService) {
     this.mtdClassifyService = mtdClassifyService;
   }

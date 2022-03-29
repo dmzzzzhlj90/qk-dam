@@ -9,7 +9,7 @@ import java.util.List;
  * @date 2021/6/8
  * @since 1.0.0
  */
-public class PageResultVO<O> {
+public class PageResultVO<T> {
 
   /** 数据总量 */
   private long total;
@@ -21,11 +21,11 @@ public class PageResultVO<O> {
   private int pageSize;
 
   /** 返回数据data */
-  private List<O> list;
+  private List<T> list;
 
   public PageResultVO() {}
 
-  public PageResultVO(long total, int pageNum, int pageSize, List<O> list) {
+  public PageResultVO(long total, int pageNum, int pageSize, List<T> list) {
     this.total = total;
     this.pageNum = pageNum;
     this.pageSize = pageSize;
@@ -56,11 +56,11 @@ public class PageResultVO<O> {
     this.pageSize = pageSize;
   }
 
-  public List<O> getList() {
+  public List<T> getList() {
     return list;
   }
 
-  public void setList(List<O> list) {
+  public void setList(List<T> list) {
     this.list = list;
   }
 
