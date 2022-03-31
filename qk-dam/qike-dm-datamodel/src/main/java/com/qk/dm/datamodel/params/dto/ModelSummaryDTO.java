@@ -20,7 +20,7 @@ public class ModelSummaryDTO implements Serializable {
     /**
      * 主题id
      */
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -42,7 +42,10 @@ public class ModelSummaryDTO implements Serializable {
      * 维度名称
      */
     private String dimName;
-
+    /**
+     * 数据源连接名称
+     */
+    private String dataSourceName;
     /**
      * 数据连接
      */
@@ -51,7 +54,7 @@ public class ModelSummaryDTO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      * 描述

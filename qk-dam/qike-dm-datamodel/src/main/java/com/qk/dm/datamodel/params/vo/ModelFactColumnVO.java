@@ -1,6 +1,9 @@
 package com.qk.dm.datamodel.params.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,6 +18,11 @@ public class ModelFactColumnVO implements Serializable {
      * 事实id
      */
     private Long factId;
+
+    /**
+     * 维度id,添加字段为维度时，对应维度id
+     */
+    private Long dimId;
 
     /**
      * 属性类型 0 维度 1度量
@@ -64,6 +72,8 @@ public class ModelFactColumnVO implements Serializable {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date gmtCreate;
 
 

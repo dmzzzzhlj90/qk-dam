@@ -14,6 +14,8 @@ public interface ModelDimTableColumnService {
 
     void delete(String dimTableIds);
 
+    void delete(List<Long> dimTableIdList);
+
     List<ModelDimTableColumnVO> list(Long dimTableId);
 
     void deleteByDimTableId(Long dimTableId);

@@ -10,12 +10,14 @@ public class ModelFactColumnDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-
     /**
      * 事实id
      */
     private Long factId;
+    /**
+     * 维度id,添加字段为维度时，对应维度id
+     */
+    private Long dimId;
 
     /**
      * 属性类型 0 维度 1度量

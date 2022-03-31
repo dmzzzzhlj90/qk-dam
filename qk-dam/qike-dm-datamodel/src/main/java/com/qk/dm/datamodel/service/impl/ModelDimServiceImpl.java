@@ -141,6 +141,8 @@ public class ModelDimServiceImpl implements ModelDimService {
         modelDimRepository.deleteAll(modelDimList);
         //删除字段
         modelDimColumnSerVice.delete(ids);
+        //删除维度表
+        modelDimTableService.deleteByDimId(ids);
     }
 
     @Override
@@ -162,6 +164,12 @@ public class ModelDimServiceImpl implements ModelDimService {
     }
 
     @Override
+    public List<ModelDimVO> listAll(ModelDimQueryDTO modelDimQueryDTO) {
+       return ModelDimMapper.INSTANCE.of(queryAllByParams(modelDimQueryDTO));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void publish(String ids) {
         List<ModelDim> modelDimList = getModelDimList(ids);
         modelDimList = modelDimList.stream().peek(e -> {
@@ -169,6 +177,10 @@ public class ModelDimServiceImpl implements ModelDimService {
                 throw new BizException(e.getDimName() + "维度已发布，不可重复发布！！！");
             }
             e.setStatus(ModelStatus.PUBLISH);
+            ModelDimTableDTO modelDimTableDTO= ModelDimMapper.INSTANCE.ofTable(e);
+            modelDimTableDTO.setModelDimId(e.getId());
+            modelDimTableDTO.setColumnList(ModelDimColumnMapper.INSTANCE.ofDimTableColumnDTO(modelDimColumnSerVice.list(e.getId())));
+            modelDimTableService.updateDim(e.getId(),modelDimTableDTO);
         }).collect(Collectors.toList());
         modelDimRepository.saveAllAndFlush(modelDimList);
     }
@@ -183,6 +195,8 @@ public class ModelDimServiceImpl implements ModelDimService {
             e.setStatus(ModelStatus.OFFLINE);
         });
         modelDimRepository.saveAllAndFlush(modelDimList);
+        //维度表下线
+        modelDimTableService.offline(modelDimList.stream().map(ModelDim::getId).collect(Collectors.toList()));
     }
 
     private Boolean checkRepeat(List<ModelDimColumnDTO> modelDimColumnDTOList){
@@ -202,12 +216,22 @@ public class ModelDimServiceImpl implements ModelDimService {
         return modelDimList;
     }
 
+    private List<ModelDim> queryAllByParams(ModelDimQueryDTO modelDimQueryDTO) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        checkCondition(booleanBuilder, modelDimQueryDTO);
+        return jpaQueryFactory
+                .select(qModelDim)
+                .from(qModelDim)
+                .where(booleanBuilder)
+                .orderBy(qModelDim.id.asc())
+                .fetch();
+    }
+
     private Map<String, Object> queryByParams(ModelDimQueryDTO modelDimQueryDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, modelDimQueryDTO);
         Map<String, Object> result = new HashMap<>();
-        long count =
-                jpaQueryFactory.select(qModelDim.count()).from(qModelDim).where(booleanBuilder).fetchOne();
+        long count = jpaQueryFactory.select(qModelDim.count()).from(qModelDim).where(booleanBuilder).fetchOne();
         List<ModelDim> modelDimList = jpaQueryFactory
                 .select(qModelDim)
                 .from(qModelDim)
@@ -230,8 +254,8 @@ public class ModelDimServiceImpl implements ModelDimService {
         if(Objects.nonNull(modelDimQueryDTO.getStatus())){
             booleanBuilder.and(qModelDim.status.eq(modelDimQueryDTO.getStatus()));
         }
-        if(Objects.nonNull(modelDimQueryDTO.getThemeName())){
-            booleanBuilder.and(qModelDim.themeName.contains(modelDimQueryDTO.getThemeName()));
+        if(!CollectionUtils.isEmpty(modelDimQueryDTO.getThemeIdList())&&!modelDimQueryDTO.getThemeIdList().get(ModelStatus.FIRSTDIR).equals(ModelStatus.DIRNAMEID)){
+            booleanBuilder.and(qModelDim.themeId.in(modelDimQueryDTO.getThemeIdList()));
         }
     }
 

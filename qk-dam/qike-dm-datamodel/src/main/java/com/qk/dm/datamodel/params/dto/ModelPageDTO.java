@@ -8,6 +8,5 @@ import javax.validation.constraints.NotNull;
 @Data
 public class ModelPageDTO {
 
-    @NotNull(message = "分页参数不能为空")
     private Pagination pagination;
 }

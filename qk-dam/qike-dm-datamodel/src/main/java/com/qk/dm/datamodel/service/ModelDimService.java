@@ -19,6 +19,8 @@ public interface ModelDimService {
 
     PageResultVO<ModelDimVO> list(ModelDimQueryDTO modelDimQueryDTO);
 
+    List<ModelDimVO> listAll(ModelDimQueryDTO modelDimQueryDTO);
+
     /**
      * 发布
      * @param ids

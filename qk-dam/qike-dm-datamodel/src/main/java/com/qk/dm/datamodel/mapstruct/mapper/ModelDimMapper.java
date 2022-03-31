@@ -21,6 +21,9 @@ public interface ModelDimMapper {
 
     ModelDimTableDTO ofDimTable(ModelDimDTO modelDimDTO);
 
+    @Mapping(target = "id",ignore = true)
+    ModelDimTableDTO ofTable(ModelDim modelDim);
+
     @IterableMapping(elementTargetType = ModelDimVO.class)
     List<ModelDimVO> of(List<ModelDim> modelDimList);
 

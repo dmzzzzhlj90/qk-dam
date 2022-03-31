@@ -71,6 +71,17 @@ public class ModelDimController {
     }
 
     /**
+     * 维度列表(不分页)
+     * @param modelDimQueryDTO 维度查询参数实体
+     * @return DefaultCommonResult<List<ModelDimVO>>
+     */
+    @PostMapping(value = "/list/all")
+    public DefaultCommonResult<List<ModelDimVO>> listAll(@RequestBody ModelDimQueryDTO modelDimQueryDTO){
+        modelDimQueryDTO.setStatus(1);
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelDimService.listAll(modelDimQueryDTO));
+    }
+
+    /**
      * 发布维度
      * @param ids 如果多个，使用英文逗号分割
      * @return DefaultCommonResult

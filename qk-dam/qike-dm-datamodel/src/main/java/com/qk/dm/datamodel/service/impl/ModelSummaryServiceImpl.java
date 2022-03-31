@@ -204,16 +204,13 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, modelSummaryDTO);
         Map<String, Object> result = new HashMap<>();
-        long count =
-                jpaQueryFactory.select(qModelSummary.count()).from(qModelSummary).where(booleanBuilder).fetchOne();
-        List<ModelSummary> modelPhysicalTableList =
-                jpaQueryFactory
+        long count = jpaQueryFactory.select(qModelSummary.count()).from(qModelSummary).where(booleanBuilder).fetchOne();
+        List<ModelSummary> modelPhysicalTableList = jpaQueryFactory
                         .select(qModelSummary)
                         .from(qModelSummary)
                         .where(booleanBuilder)
                         .orderBy(qModelSummary.id.asc())
-                        .offset(
-                                (long) (modelSummaryDTO.getPagination().getPage() - 1)
+                        .offset((long) (modelSummaryDTO.getPagination().getPage() - 1)
                                         * modelSummaryDTO.getPagination().getSize())
                         .limit(modelSummaryDTO.getPagination().getSize())
                         .fetch();
@@ -224,13 +221,10 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
 
     public void checkCondition(BooleanBuilder booleanBuilder, ModelSummaryDTO modelSummaryDTO) {
         if (!StringUtils.isEmpty(modelSummaryDTO.getTableName())) {
-            booleanBuilder.and(
-                    qModelSummary
-                            .tableName
-                            .contains(modelSummaryDTO.getTableName()));
+            booleanBuilder.and(qModelSummary.tableName.contains(modelSummaryDTO.getTableName()));
         }
-        if(!StringUtils.isEmpty(modelSummaryDTO.getDatabaseName())){
-            booleanBuilder.and(qModelSummary.databaseName.contains(modelSummaryDTO.getDatabaseName()));
+        if(!StringUtils.isEmpty(modelSummaryDTO.getDataBaseName())){
+            booleanBuilder.and(qModelSummary.dataBaseName.contains(modelSummaryDTO.getDataBaseName()));
         }
         if(!StringUtils.isEmpty(modelSummaryDTO.getDataConnection())){
             booleanBuilder.and(qModelSummary.dataConnection.contains(modelSummaryDTO.getDataConnection()));

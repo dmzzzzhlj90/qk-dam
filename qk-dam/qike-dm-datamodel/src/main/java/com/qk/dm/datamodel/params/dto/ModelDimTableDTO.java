@@ -20,7 +20,7 @@ public class ModelDimTableDTO implements Serializable {
     /**
      * 主题id
      */
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称

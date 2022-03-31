@@ -26,7 +26,7 @@ public class ModelDim implements Serializable {
      * 主题id
      */
     @Column(name = "theme_id", nullable = false)
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称

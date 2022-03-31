@@ -24,6 +24,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
@@ -57,6 +58,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insert(ModelFactTableDTO modelFactTableDTO) {
         ModelFactTable modelFactTable = ModelFactTableMapper.INSTANCE.of(modelFactTableDTO);
         ModelFactTable modelFact = modelFactTableRepository.save(modelFactTable);
@@ -86,6 +88,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(ModelFactTableDTO modelFactTableDTO) {
         if(Objects.isNull(modelFactTableDTO.getId())){
             throw new BizException("事实表id不能为空");
@@ -114,6 +117,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(String ids) {
         List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
         modelFactTableList = modelFactTableList.stream().peek(e -> {
@@ -200,8 +204,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, modelFactQueryDTO);
         Map<String, Object> result = new HashMap<>();
-        long count =
-                jpaQueryFactory.select(qModelFactTable.count()).from(qModelFactTable).where(booleanBuilder).fetchOne();
+        long count = jpaQueryFactory.select(qModelFactTable.count()).from(qModelFactTable).where(booleanBuilder).fetchOne();
         List<ModelFactTable> modelFactTableList = jpaQueryFactory
                 .select(qModelFactTable)
                 .from(qModelFactTable)
@@ -221,8 +224,8 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         if (!StringUtils.isEmpty(modelFactQueryDTO.getFactName())) {
             booleanBuilder.and(qModelFactTable.factName.contains(modelFactQueryDTO.getFactName()));
         }
-        if(!StringUtils.isEmpty(modelFactQueryDTO.getThemeName())){
-            booleanBuilder.and(qModelFactTable.themeName.contains(modelFactQueryDTO.getThemeName()));
+        if(!CollectionUtils.isEmpty(modelFactQueryDTO.getThemeIdList())&&!modelFactQueryDTO.getThemeIdList().get(ModelStatus.FIRSTDIR).equals(ModelStatus.DIRNAMEID)){
+            booleanBuilder.and(qModelFactTable.themeId.in(modelFactQueryDTO.getThemeIdList()));
         }
     }
 }

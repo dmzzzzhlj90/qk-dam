@@ -26,7 +26,7 @@ public class ModelFactTable implements Serializable {
      * 主题id
      */
     @Column(name = "theme_id", nullable = false)
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -35,7 +35,7 @@ public class ModelFactTable implements Serializable {
     private String themeName;
 
     /**
-     * 维度名称
+     * 事实表名称
      */
     @Column(name = "fact_name", nullable = false)
     private String factName;
@@ -69,6 +69,24 @@ public class ModelFactTable implements Serializable {
      */
     @Column(name = "database_name", nullable = false)
     private String dataBaseName;
+
+    /**
+     * HIVE类型表需要选择数据格式
+     */
+    @Column(name = "data_format")
+    private String dataFormat;
+
+    /**
+     * HIVE类型表需要给hdfs路径
+     */
+    @Column(name = "hdfs_route")
+    private String hdfsRoute ;
+
+    /**
+     * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
+     */
+    @Column(name = "table_type")
+    private String tableType;
 
     /**
      * 创建时间

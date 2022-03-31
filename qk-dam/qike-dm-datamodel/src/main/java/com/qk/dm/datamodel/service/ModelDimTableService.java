@@ -19,6 +19,15 @@ public interface ModelDimTableService {
 
     void delete(String ids);
 
+    void deleteByDimId(String dimIds);
+
+    /**
+     * 下线
+     * @param dims
+     */
+    void offline(List<Long> dims);
+
+
     PageResultVO<ModelDimTableVO> list(ModelDimTableQueryDTO modelDimTableQueryDTO);
 
     /**
@@ -29,9 +38,9 @@ public interface ModelDimTableService {
 
     /**
      * 数据落库
-     * @param idList
+     * @param ids
      */
-    void fallLibrary(List<Long> idList);
+    void fallLibrary(String ids);
 
     /**
      * 预览SQL

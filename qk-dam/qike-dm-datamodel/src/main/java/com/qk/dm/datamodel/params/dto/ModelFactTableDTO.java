@@ -16,7 +16,7 @@ public class ModelFactTableDTO implements Serializable {
     /**
      * 主题id
      */
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -25,7 +25,7 @@ public class ModelFactTableDTO implements Serializable {
     private String themeName;
 
     /**
-     * 维度表名称
+     * 事实表名称
      */
     @NotBlank(message = "表名称不能为空")
     private String factName;
@@ -38,7 +38,7 @@ public class ModelFactTableDTO implements Serializable {
     /**
      * 0待审核 1已发布2 已下线
      */
-    @NotNull(message = "维度表状态不能为空")
+    @NotNull(message = "事实表状态不能为空")
     private Integer status;
 
     /**
@@ -55,6 +55,21 @@ public class ModelFactTableDTO implements Serializable {
      * 数据库名称
      */
     private String dataBaseName;
+
+    /**
+     * HIVE类型表需要选择数据格式
+     */
+    private String dataFormat;
+
+    /**
+     * HIVE类型表需要给hdfs路径
+     */
+    private String hdfsRoute ;
+
+    /**
+     * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
+     */
+    private String tableType;
     /**
      * 责任人名称
      */

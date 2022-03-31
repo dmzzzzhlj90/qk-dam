@@ -37,6 +37,7 @@ import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Service
 public class ModelDimTableServiceImpl implements ModelDimTableService {
 
@@ -137,6 +138,7 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(String ids) {
         Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
         List<ModelDimTable> modelDimTableList = modelDimTableRepository.findAllById(idSet);
@@ -150,6 +152,23 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
         }).collect(Collectors.toList());
         modelDimTableRepository.deleteAll(modelDimTableList);
         modelDimTableColumnService.delete(ids);
+    }
+
+    @Override
+    public void deleteByDimId(String dimIds) {
+        List<Long> dimIdList = Arrays.stream(dimIds.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        dimIdList.stream().map(modelDimTableRepository::findAllByModelDimId).filter(modelDimTableList -> !CollectionUtils.isEmpty(modelDimTableList)).forEach(modelDimTableList -> {
+            modelDimTableRepository.deleteAll(modelDimTableList);
+            modelDimTableColumnService.delete( modelDimTableList.stream().map(ModelDimTable::getId).collect(Collectors.toList()));
+        });
+    }
+
+    @Override
+    public void offline(List<Long> dims) {
+        if(CollectionUtils.isEmpty(dims)){return;}
+        List<ModelDimTable> modelDimTableList= modelDimTableRepository.findAllByModelDimIdIn(dims);
+        modelDimTableList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
+        modelDimTableRepository.saveAllAndFlush(modelDimTableList);
     }
 
     @Override
@@ -185,7 +204,7 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void sync(String ids) {
-        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+         Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
         List<ModelDimTable> dimTableList = modelDimTableRepository.findAllById(idSet);
         if(CollectionUtils.isEmpty(dimTableList)){return; }
         dimTableList.forEach(e->{
@@ -203,7 +222,7 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     }
 
     @Override
-    public void fallLibrary(List<Long> idList) {
+    public void fallLibrary(String ids) {
         //todo 逻辑待实现
     }
 
@@ -233,15 +252,13 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, modelDimTableQueryDTO);
         Map<String, Object> result = new HashMap<>();
-        long count =
-                jpaQueryFactory.select(qModelDimTable.count()).from(qModelDimTable).where(booleanBuilder).fetchOne();
+        long count = jpaQueryFactory.select(qModelDimTable.count()).from(qModelDimTable).where(booleanBuilder).fetchOne();
         List<ModelDimTable> modelDimTableList = jpaQueryFactory
                 .select(qModelDimTable)
                 .from(qModelDimTable)
                 .where(booleanBuilder)
                 .orderBy(qModelDimTable.id.asc())
-                .offset(
-                        (long) (modelDimTableQueryDTO.getPagination().getPage() - 1)
+                .offset((long) (modelDimTableQueryDTO.getPagination().getPage() - 1)
                                 * modelDimTableQueryDTO.getPagination().getSize())
                 .limit(modelDimTableQueryDTO.getPagination().getSize())
                 .fetch();
@@ -254,8 +271,8 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
         if (!StringUtils.isEmpty(modelDimTableQueryDTO.getDimName())) {
             booleanBuilder.and(qModelDimTable.dimName.contains(modelDimTableQueryDTO.getDimName()));
         }
-        if(!StringUtils.isEmpty(modelDimTableQueryDTO.getThemeName())){
-            booleanBuilder.and(qModelDimTable.themeName.contains(modelDimTableQueryDTO.getThemeName()));
+        if(!CollectionUtils.isEmpty(modelDimTableQueryDTO.getThemeIdList())&&!modelDimTableQueryDTO.getThemeIdList().get(ModelStatus.FIRSTDIR).equals(ModelStatus.DIRNAMEID)){
+            booleanBuilder.and(qModelDimTable.themeId.in(modelDimTableQueryDTO.getThemeIdList()));
         }
     }
 }

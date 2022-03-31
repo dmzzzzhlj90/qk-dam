@@ -56,6 +56,11 @@ public class ModelDimTableColumnServiceImpl implements ModelDimTableColumnServic
     }
 
     @Override
+    public void delete(List<Long> dimTableIdList) {
+        dimTableIdList.forEach(modelDimTableColumnRepository::deleteByDimTableId);
+    }
+
+    @Override
     public List<ModelDimTableColumnVO> list(Long dimTableId) {
         List<ModelDimTableColumn> modelDimTableColumnList = modelDimTableColumnRepository.findAllByDimTableId(dimTableId);
         return ModelDimTableColumnMapper.INSTANCE.of(modelDimTableColumnList);

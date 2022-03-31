@@ -10,7 +10,6 @@ import com.qk.dm.datamodel.service.ModelDimTableService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * 维度表
@@ -64,7 +63,7 @@ public class ModelDimTableController {
     /**
      * 同步
      * @param ids  维度表id,如果多个，使用英文逗号分割
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping(value = "/sync/{ids}")
     public DefaultCommonResult sync(@PathVariable("ids") String ids){
@@ -85,12 +84,12 @@ public class ModelDimTableController {
 
     /**
      * 数据落库
-     * @param idList
-     * @return
+     * @param ids 维度表id,如果多个，使用英文逗号分割
+     * @return DefaultCommonResult
      */
-    @PostMapping(value = "/fall/library")
-    public DefaultCommonResult fallLibrary(@RequestBody @Validated List<Long> idList){
-        modelDimTableService.fallLibrary(idList);
+    @PutMapping(value = "/fall/library/{ids}")
+    public DefaultCommonResult fallLibrary(@PathVariable("ids") String ids){
+        modelDimTableService.fallLibrary(ids);
         return DefaultCommonResult.success();
     }
 

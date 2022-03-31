@@ -3,6 +3,8 @@ package com.qk.dm.datamodel.params.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -10,7 +12,7 @@ public class ModelDimTableQueryDTO extends ModelPageDTO {
 
     private String dimName;
     /**
-     * 维度名称
+     * 主题id集合
      */
-    private String themeName;
+    private List<String> themeIdList;
 }
