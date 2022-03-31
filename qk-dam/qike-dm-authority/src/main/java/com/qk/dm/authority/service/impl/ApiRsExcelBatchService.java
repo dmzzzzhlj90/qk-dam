@@ -1,11 +1,11 @@
 package com.qk.dm.authority.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
-import com.qk.dm.authority.entity.QxResources;
-import com.qk.dm.authority.mapstruct.QxResourcesMapper;
-import com.qk.dm.authority.repositories.QkQxResourcesRepository;
+import com.qk.dm.authority.entity.QkQxResourcesApi;
+import com.qk.dm.authority.mapstruct.QxResourcesApiMapper;
+import com.qk.dm.authority.repositories.QkQxResourcesApiRepository;
 import com.qk.dm.authority.util.MultipartFileUtil;
-import com.qk.dm.authority.vo.powervo.ResourceVO;
+import com.qk.dm.authority.vo.powervo.ResourceApiVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -24,18 +24,18 @@ import java.util.UUID;
 @Service
 public class ApiRsExcelBatchService {
   private static final Log LOG = LogFactory.getLog("resourceExcelBatchService");
-  private final QkQxResourcesRepository qkQxResourcesRepository;
+  private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
   private final BloomFilterServer bloomFilterServer;
 
   public ApiRsExcelBatchService(
-      QkQxResourcesRepository qkQxResourcesRepository,
-      BloomFilterServer bloomFilterServer) {
-    this.qkQxResourcesRepository = qkQxResourcesRepository;
+      QkQxResourcesApiRepository qkQxResourcesApiRepository, BloomFilterServer bloomFilterServer) {
+    this.qkQxResourcesApiRepository = qkQxResourcesApiRepository;
+
     this.bloomFilterServer = bloomFilterServer;
   }
 
-  public List<ResourceVO> saveResources(List<ResourceVO> qxResourcesList) {
-    List<ResourceVO> lsit = deal(qxResourcesList);
+  public List<ResourceApiVO> saveResources(List<ResourceApiVO> qxResourcesList) {
+    List<ResourceApiVO> lsit = deal(qxResourcesList);
     saveAllApiResources(qxResourcesList);
     LOG.info(qxResourcesList.size()+"成功保存api资源信息个数 【{}】");
     return lsit;
@@ -45,24 +45,24 @@ public class ApiRsExcelBatchService {
    * 存储api资源
    * @param qxResourcesList
    */
-  private void saveAllApiResources(List<ResourceVO> qxResourcesList) {
-    List<QxResources> resourseList = QxResourcesMapper.INSTANCE.ofResourcesVO(qxResourcesList);
-    qkQxResourcesRepository.saveAll(resourseList);
+  private void saveAllApiResources(List<ResourceApiVO> qxResourcesList) {
+    List<QkQxResourcesApi> resourseList =  QxResourcesApiMapper.INSTANCE.ofResourcesApi(qxResourcesList);
+    qkQxResourcesApiRepository.saveAll(resourseList);
   }
 
-  private List<ResourceVO> deal(List<ResourceVO> qxResourcesList) {
-    List<ResourceVO> list = new ArrayList<>();
+  private List<ResourceApiVO> deal(List<ResourceApiVO> qxResourcesList) {
+    List<ResourceApiVO> list = new ArrayList<>();
     if (CollectionUtils.isNotEmpty(qxResourcesList)){
-      Iterator<ResourceVO> iterator = qxResourcesList.iterator();
+      Iterator<ResourceApiVO> iterator = qxResourcesList.iterator();
       while (iterator.hasNext()){
-        ResourceVO resourceVO = iterator.next();
-        resourceVO.setResourcesid(UUID.randomUUID().toString());
+        ResourceApiVO resourceApiVO = iterator.next();
+        resourceApiVO.setResourcesid(UUID.randomUUID().toString());
         //todo 加入操作人员id
-        String key = MultipartFileUtil.getApiExcelKey(resourceVO);
+        String key = MultipartFileUtil.getApiExcelKey(resourceApiVO);
         if (bloomFilterServer.getFilter()!=null){
           boolean b = bloomFilterServer.getFilter().mightContain(key);
           if (b){
-            list.add(resourceVO);
+            list.add(resourceApiVO);
             iterator.remove();
           }else {
             bloomFilterServer.getFilter().put(key);
