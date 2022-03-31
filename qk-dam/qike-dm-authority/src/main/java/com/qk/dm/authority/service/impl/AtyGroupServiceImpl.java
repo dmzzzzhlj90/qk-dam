@@ -9,6 +9,8 @@ import com.qk.dm.authority.vo.group.AtyGroupParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author shenpj
  * @date 2022/3/2 17:44
@@ -50,5 +52,10 @@ public class AtyGroupServiceImpl implements AtyGroupService {
     @Override
     public PageResultVO<AtyGroupInfoVO> getGroupPage(AtyGroupParamVO groupParamVO) {
         return keyCloakGroupApi.groupList(groupParamVO.getRealm(), groupParamVO.getSearch(), groupParamVO.getPagination());
+    }
+
+    @Override
+    public List<AtyGroupInfoVO> getGroupList(String realm,String search) {
+        return keyCloakGroupApi.groupList(realm, search);
     }
 }
