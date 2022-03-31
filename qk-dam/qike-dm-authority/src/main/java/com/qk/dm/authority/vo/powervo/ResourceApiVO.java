@@ -16,9 +16,9 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
- * 资源导入导出VO
+ * 访问（api）VO
  * @author zys
- * @date 2022/3/1 16:35
+ * @date 2022/3/31 14:56
  * @since 1.0.0
  */
 @Data
@@ -28,9 +28,9 @@ import java.util.Date;
 @ContentRowHeight(20)
 @HeadRowHeight(20)
 @ColumnWidth(25)
-public class ResourceExcelVO {
+public class ResourceApiVO {
   /**
-   * 主键id(修改时候为必填字段)
+   * 主键id(修改为必填参)
    */
   @ExcelIgnore
   private Long id;
@@ -70,7 +70,7 @@ public class ResourceExcelVO {
   /**
    * 创建人名称
    */
-  @ExcelProperty(value = "创建人名称",order =4)
+  @ExcelProperty(value = "创建人名称",order = 4)
   private String createName;
 
   /**
@@ -96,25 +96,14 @@ public class ResourceExcelVO {
   private Date gmtModified;
 
   /**
-   * 父级id（API类型fid默认为-1）
+   * 服务id
    */
-  @ExcelProperty(value = "父级名称",order = 5)
-  private String pidName;
-
-  /**
-   * 服务UUID
-   */
-  @ExcelProperty(value = "服务UUID",order = 6)
+  @ExcelProperty(value = "服务UUID",order = 5)
+  @NotBlank(message = "服务uuid不能为空")
   private String serviceId;
 
   /**
-   * 0表示API，1表示资源
-   */
-  @ExcelProperty(value = "资源类型（0表示API，1表示资源）",order = 7)
-  private Integer type;
-
-  /**
-   * 资源uuid
+   * api的uuid
    */
   @ExcelIgnore
   private String resourcesid;

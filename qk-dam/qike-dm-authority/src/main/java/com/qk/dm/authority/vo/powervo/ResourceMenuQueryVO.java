@@ -1,5 +1,6 @@
 package com.qk.dm.authority.vo.powervo;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,30 +12,30 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 查询资源节点输出VO
  * @author zys
- * @date 2022/3/23 17:09
+ * @date 2022/3/31 17:19
  * @since 1.0.0
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResourceQueryVO {
+@Builder
+public class ResourceMenuQueryVO {
   /**
-   * 主键id
+   * 主键id(修改时为必填参数)
    */
   private Long id;
+
+
+  /**
+   * 资源名称（name -> title）
+   */
+  private String title;
 
   /**
    * 资源uuid
    */
   private String value;
-
-  /**
-   * 资源（API）名称（name -> title）
-   */
-  private String title;
 
   /**
    * 网址路径
@@ -69,6 +70,7 @@ public class ResourceQueryVO {
   /**
    * 创建时间
    */
+  @ExcelIgnore
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtCreate;
@@ -76,32 +78,63 @@ public class ResourceQueryVO {
   /**
    * 修改时间
    */
+  @ExcelIgnore
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtModified;
 
   /**
-   * 父级id（API类型fid默认为-1）
+   * 父级id
    */
   private Long pid;
 
   /**
-   * 服务id
+   * 服务的uuid
    */
   private String serviceId;
 
   /**
-   * 0标识API，1表示资源
-   */
-  private Integer type;
-
-  /**
-   * 资源uuid
+   * 资源（菜单）uuid
    */
   private String resourcesid;
 
   /**
-   * 子节点（childrenList -> children）
+   * 页面
    */
-  private List<ResourceQueryVO> children;
+  private String component;
+
+  /**
+   * 子路由
+   */
+  private String route;
+
+  /**
+   * 显示icon
+   */
+  private String icon;
+
+  /**
+   * 重定向
+   */
+  private String redirect;
+
+  /**
+   * 是否隐藏菜单
+   */
+  private String hideInMenu;
+
+  /**
+   * 是否隐藏面包屑
+   */
+  private String hideInBreadcrumb;
+
+  /**
+   * 是否严格匹配
+   */
+  private String exact;
+
+  /**
+   * 子节点
+   */
+  private List<ResourceMenuQueryVO> children;
 }

@@ -2,14 +2,9 @@ package com.qk.dm.authority.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.authority.entity.QQxService;
-import com.qk.dm.authority.entity.QxEmpower;
-import com.qk.dm.authority.entity.QxResources;
-import com.qk.dm.authority.entity.QxService;
+import com.qk.dm.authority.entity.*;
 import com.qk.dm.authority.mapstruct.QxServiceMapper;
-import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
-import com.qk.dm.authority.repositories.QkQxResourcesRepository;
-import com.qk.dm.authority.repositories.QkQxServiceRepository;
+import com.qk.dm.authority.repositories.*;
 import com.qk.dm.authority.service.EmpSvcService;
 import com.qk.dm.authority.vo.params.ServiceParamVO;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
@@ -22,6 +17,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**权限管理-服务
  * @author zys
@@ -31,19 +27,26 @@ import java.util.*;
 @Service
 public class EmpSvcServiceImpl implements EmpSvcService {
   private final QkQxServiceRepository qkQxServiceRepository;
-  private final QkQxResourcesRepository qkQxResourcesRepository;
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
   private final QQxService qQxService=QQxService.qxService;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
+  private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
+  private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
+  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
+  private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
 
   public EmpSvcServiceImpl(QkQxServiceRepository qkQxServiceRepository,
-      QkQxResourcesRepository qkQxResourcesRepository,
-      QkQxEmpowerRepository qkQxEmpowerRepository, EntityManager entityManager) {
+      QkQxEmpowerRepository qkQxEmpowerRepository, EntityManager entityManager,
+      QkQxResourcesMenuRepository qkQxResourcesMenuRepository,
+      QkQxResourcesApiRepository qkQxResourcesApiRepository,
+      QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository) {
     this.qkQxServiceRepository = qkQxServiceRepository;
-    this.qkQxResourcesRepository = qkQxResourcesRepository;
     this.qkQxEmpowerRepository = qkQxEmpowerRepository;
     this.entityManager = entityManager;
+    this.qkQxResourcesMenuRepository = qkQxResourcesMenuRepository;
+    this.qkQxResourcesApiRepository = qkQxResourcesApiRepository;
+    this.qkQxResourcesEmpowerRepository = qkQxResourcesEmpowerRepository;
   }
 
   @PostConstruct
@@ -107,13 +110,22 @@ public class EmpSvcServiceImpl implements EmpSvcService {
    */
   private void deleteAssociatedData(QxService qxService) {
     //根据服务的uuid查询资源信息
-    List<QxResources> resourcesList = qkQxResourcesRepository.findByServiceId(qxService.getServiceid());
+    List<QkQxResourcesMenu> qxResourcesMenuList = qkQxResourcesMenuRepository.findByServiceId(qxService.getServiceid());
+    //根据服务的uuid查询api信息
+    List<QkQxResourcesApi> qkQxResourcesApiList = qkQxResourcesApiRepository.findByServiceId(qxService.getServiceid());
     //根据服务的uuid查询授权信息
     List<QxEmpower> qxEmpowerList = qkQxEmpowerRepository.findByServiceId(qxService.getServiceid());
-    if (CollectionUtils.isNotEmpty(resourcesList)){
-      qkQxResourcesRepository.deleteAll(resourcesList);
+    //查询
+    if (CollectionUtils.isNotEmpty(qxResourcesMenuList)){
+      qkQxResourcesMenuRepository.deleteAll(qxResourcesMenuList);
+    }
+    if (CollectionUtils.isNotEmpty(qkQxResourcesApiList)){
+      qkQxResourcesApiRepository.deleteAll(qkQxResourcesApiList);
     }
     if (CollectionUtils.isNotEmpty(qxEmpowerList)){
+      List<String> empowerIdList = qxEmpowerList.stream().map(QxEmpower::getEmpowerId).collect(Collectors.toList());
+      List<QkQxResourcesEmpower> qkQxResourcesEmpowerList = (List<QkQxResourcesEmpower>) qkQxResourcesEmpowerRepository.findAll(qQkQxResourcesEmpower.empowerUuid.in(empowerIdList));
+      qkQxResourcesEmpowerRepository.deleteAll(qkQxResourcesEmpowerList);
       qkQxEmpowerRepository.deleteAll(qxEmpowerList);
     }
   }

@@ -5,9 +5,10 @@ import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.constant.QxConstant;
-import com.qk.dm.authority.entity.QxResources;
-import com.qk.dm.authority.vo.powervo.ResourceExcelVO;
-import com.qk.dm.authority.vo.powervo.ResourceVO;
+import com.qk.dm.authority.entity.QkQxResourcesApi;
+import com.qk.dm.authority.entity.QkQxResourcesMenu;
+import com.qk.dm.authority.vo.powervo.ResourceApiVO;
+import com.qk.dm.authority.vo.powervo.ResourceMenuExcelVO;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -50,42 +51,42 @@ public class MultipartFileUtil {
   }
 
   /**
-   * guava根据字段去重(根据资源名称、服务id、资源类型)
+   * guava根据字段去重(根据资源名称、服务id、资源页面)
    * @param qQxResources
    * @return
    */
-  public static String removeDuplicate(QxResources qQxResources){
-    String key = String.join("->",qQxResources.getName(),qQxResources.getServiceId(),qQxResources.getType().toString());
+  public static String removeDuplicate(QkQxResourcesMenu qQxResources){
+    String key = String.join("->",qQxResources.getName(),qQxResources.getServiceId(),qQxResources.getComponent());
     return key;
   }
 
   /**
-   * 根据父级名称、服务id、类型拼接key
+   * 根据父级名称、服务id、页面类型拼接key
    * @param qxResources
    * @return
    */
-  public static String getKey(ResourceExcelVO qxResources) {
-    String key = String.join("->",qxResources.getPidName(),qxResources.getServiceId(),qxResources.getType().toString());
+  public static String getKey(ResourceMenuExcelVO qxResources) {
+    String key = String.join("->",qxResources.getPidName(),qxResources.getServiceId(),qxResources.getComponent());
     return key;
   }
 
   /**
-   * 创建资源导入key(去重key)
+   * 创建资源导入key(资源名称、资源服务名称、资源页面)
    * @param qxResources
    * @return
    */
-  public static String getExcelKey(ResourceExcelVO qxResources) {
-    String key = String.join("->",qxResources.getName(),qxResources.getServiceId(),qxResources.getType().toString());
+  public static String getExcelKey(ResourceMenuExcelVO qxResources) {
+    String key = String.join("->",qxResources.getName(),qxResources.getServiceId(),qxResources.getComponent());
     return key;
   }
 
   /**
-   * 创建添加后资源key
+   * 创建添加后资源key（名称、服务id、页面）
    * @param resourceExcelVO
    * @return
    */
-  public static String createKey(ResourceExcelVO resourceExcelVO) {
-    String key = String.join("->",resourceExcelVO.getName(),resourceExcelVO.getServiceId(),resourceExcelVO.getType().toString());
+  public static String createKey(ResourceMenuExcelVO resourceExcelVO) {
+    String key = String.join("->",resourceExcelVO.getName(),resourceExcelVO.getServiceId(),resourceExcelVO.getComponent());
     return key;
   }
 
@@ -94,8 +95,8 @@ public class MultipartFileUtil {
    * @param resourceVO
    * @return
    */
-  public static String getApiExcelKey(ResourceVO resourceVO) {
-    String key = String.join("->",resourceVO.getName(),resourceVO.getServiceId(),resourceVO.getType().toString());
+  public static String getApiExcelKey(ResourceApiVO resourceVO) {
+    String key = String.join("->",resourceVO.getName(),resourceVO.getServiceId());
     return key;
   }
 
@@ -136,6 +137,16 @@ public class MultipartFileUtil {
   public static String getUserExcelKey(AtyUserInputExceVO atyUserInputExceVO,
                                        String relame) {
     String key = String.join("->",relame,atyUserInputExceVO.getUsername());
+    return key;
+  }
+
+  /**
+   * 创建api存储guava中的key（名称、服务id）
+   * @param qkQxResourcesApi
+   * @return
+   */
+  public static String createRsApiKey(QkQxResourcesApi qkQxResourcesApi) {
+    String key = String.join("->",qkQxResourcesApi.getName(),qkQxResourcesApi.getServiceId());
     return key;
   }
 }
