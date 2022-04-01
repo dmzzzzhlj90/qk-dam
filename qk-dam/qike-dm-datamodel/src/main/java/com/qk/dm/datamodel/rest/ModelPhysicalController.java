@@ -13,7 +13,6 @@ import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
 import com.qk.dm.datamodel.service.ModelPhysicalColumnService;
 import com.qk.dm.datamodel.service.ModelPhysicalTableService;
 import com.qk.dm.datamodel.service.PhysicalService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +29,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/modelphysical")
 public class ModelPhysicalController {
-  @Autowired
-  PhysicalService physicalService;
-  @Autowired
-  ModelPhysicalTableService modelPhysicalTableService;
-  @Autowired
-  ModelPhysicalColumnService modelPhysicalColumnService;
+  private final PhysicalService physicalService;
+  private final ModelPhysicalTableService modelPhysicalTableService;
+  private final ModelPhysicalColumnService modelPhysicalColumnService;
 
   public ModelPhysicalController(
       PhysicalService physicalService,
