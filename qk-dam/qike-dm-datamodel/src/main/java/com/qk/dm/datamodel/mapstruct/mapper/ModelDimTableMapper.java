@@ -22,6 +22,7 @@ public interface ModelDimTableMapper {
     @IterableMapping(elementTargetType = ModelDimTableVO.class)
     List<ModelDimTableVO> of(List<ModelDimTable> modelDimTableList);
 
+    @Mapping(target = "id",ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void from(ModelDimTableDTO modelDimTableDTO, @MappingTarget ModelDimTable modelDimTable);
 
