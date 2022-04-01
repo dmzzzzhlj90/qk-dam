@@ -29,4 +29,6 @@ public interface QxResourcesMenuMapper {
   ResourceMenuExcelVO ResourceExcelVO(QkQxResourcesMenu qkQxResourcesMenu);
 
   List<ResourceMenuExcelVO> ofResourceExcelVO(List<QkQxResourcesMenu> qxResourcesMenuList);
+
+  void from(ResourceMenuVO resourceMenuVO, @MappingTarget QkQxResourcesMenu qkQxResourcesMenuOne);
 }

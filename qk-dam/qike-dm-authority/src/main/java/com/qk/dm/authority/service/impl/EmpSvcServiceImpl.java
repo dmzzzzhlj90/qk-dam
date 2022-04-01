@@ -88,8 +88,8 @@ public class EmpSvcServiceImpl implements EmpSvcService {
     if (Objects.isNull(qeryQxService)){
       throw new BizException("当前需修改的名称为"+serviceVO.getServiceName()+"的数据不存在");
     }
-    QxService qxService = QxServiceMapper.INSTANCE.qxService(serviceVO);
-    qkQxServiceRepository.saveAndFlush(qxService);
+    QxServiceMapper.INSTANCE.from(serviceVO,qeryQxService);
+    qkQxServiceRepository.saveAndFlush(qeryQxService);
   }
 
   @Override

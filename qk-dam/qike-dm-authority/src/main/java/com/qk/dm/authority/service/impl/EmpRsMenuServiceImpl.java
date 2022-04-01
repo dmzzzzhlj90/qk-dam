@@ -79,6 +79,7 @@ public class EmpRsMenuServiceImpl implements EmpRsMenuService {
     if (Objects.isNull(qkQxResourcesMenuOne)){
       throw new BizException("当前需修改的名称为"+resourceMenuVO.getName()+"的资源数据不存在");
     }
+    QxResourcesMenuMapper.INSTANCE.from(resourceMenuVO,qkQxResourcesMenuOne);
     QkQxResourcesMenu qkQxResourcesMenu = QxResourcesMenuMapper.INSTANCE.qxResourcesMenu(resourceMenuVO);
     qkQxResourcesMenuRepository.saveAndFlush(qkQxResourcesMenu);
   }

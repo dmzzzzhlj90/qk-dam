@@ -33,4 +33,6 @@ public interface QxServiceMapper {
   ServiceQueryVO serviceQueryVO (QxService qxService);
 
   List<ServiceQueryVO> serviceQueryVOof(List<QxService> qxServiceList);
+
+  void from(ServiceVO serviceVO, @MappingTarget QxService qeryQxService);
 }
