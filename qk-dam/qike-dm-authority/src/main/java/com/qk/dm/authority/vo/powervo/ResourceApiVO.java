@@ -103,7 +103,7 @@ public class ResourceApiVO {
   private String serviceId;
 
   /**
-   * api的uuid
+   * api的uuid（编辑为必填参数）
    */
   @ExcelIgnore
   private String resourcesId;
