@@ -236,7 +236,7 @@ public class ModelDimServiceImpl implements ModelDimService {
                 .select(qModelDim)
                 .from(qModelDim)
                 .where(booleanBuilder)
-                .orderBy(qModelDim.id.asc())
+                .orderBy(qModelDim.id.desc())
                 .offset(
                         (long) (modelDimQueryDTO.getPagination().getPage() - 1)
                                 * modelDimQueryDTO.getPagination().getSize())

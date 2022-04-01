@@ -257,7 +257,7 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
                 .select(qModelDimTable)
                 .from(qModelDimTable)
                 .where(booleanBuilder)
-                .orderBy(qModelDimTable.id.asc())
+                .orderBy(qModelDimTable.id.desc())
                 .offset((long) (modelDimTableQueryDTO.getPagination().getPage() - 1)
                                 * modelDimTableQueryDTO.getPagination().getSize())
                 .limit(modelDimTableQueryDTO.getPagination().getSize())
@@ -270,6 +270,9 @@ public class ModelDimTableServiceImpl implements ModelDimTableService {
     public void checkCondition(BooleanBuilder booleanBuilder, ModelDimTableQueryDTO modelDimTableQueryDTO) {
         if (!StringUtils.isEmpty(modelDimTableQueryDTO.getDimName())) {
             booleanBuilder.and(qModelDimTable.dimName.contains(modelDimTableQueryDTO.getDimName()));
+        }
+        if(Objects.nonNull(modelDimTableQueryDTO.getStatus())){
+            booleanBuilder.and(qModelDimTable.status.eq(modelDimTableQueryDTO.getStatus()));
         }
         if(!CollectionUtils.isEmpty(modelDimTableQueryDTO.getThemeIdList())&&!modelDimTableQueryDTO.getThemeIdList().get(ModelStatus.FIRSTDIR).equals(ModelStatus.DIRNAMEID)){
             booleanBuilder.and(qModelDimTable.themeId.in(modelDimTableQueryDTO.getThemeIdList()));

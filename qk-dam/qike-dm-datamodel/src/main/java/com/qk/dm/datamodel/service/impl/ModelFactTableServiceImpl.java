@@ -209,7 +209,7 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
                 .select(qModelFactTable)
                 .from(qModelFactTable)
                 .where(booleanBuilder)
-                .orderBy(qModelFactTable.id.asc())
+                .orderBy(qModelFactTable.id.desc())
                 .offset(
                         (long) (modelFactQueryDTO.getPagination().getPage() - 1)
                                 * modelFactQueryDTO.getPagination().getSize())
