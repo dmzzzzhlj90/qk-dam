@@ -89,8 +89,27 @@ public class ServiceVO {
   private String serviceid;
 
   /**
+   * 微服务线上地址
+   */
+  @NotBlank(message = "微服务线上地址不为空能")
+  private String entry;
+
+  /**
+   * 微服务项目名
+   */
+  @NotBlank(message = "微服务项目名不为空能")
+  private String path;
+
+  /**
+   * 微应用
+   */
+  @NotBlank(message = "微应用不为空能")
+  private String microApp;
+
+  /**
    * 服务名称（前端展示使用）
    */
+
   private String title;
 
   /**
