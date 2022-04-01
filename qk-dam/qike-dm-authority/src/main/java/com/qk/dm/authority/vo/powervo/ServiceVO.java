@@ -84,7 +84,7 @@ public class ServiceVO {
   private String redionId;
 
   /**
-   * 服务uuid
+   * 服务uuid（修改为必填参数）
    */
   private String serviceId;
 

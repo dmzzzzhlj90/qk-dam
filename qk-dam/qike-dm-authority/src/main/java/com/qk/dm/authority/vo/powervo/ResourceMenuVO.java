@@ -93,7 +93,7 @@ public class ResourceMenuVO {
   private String serviceId;
 
   /**
-   * 资源（菜单）uuid
+   * 资源（菜单）uuid（编辑为必填参数）
    */
   private String resourcesId;
 
