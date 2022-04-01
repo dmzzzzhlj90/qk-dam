@@ -61,7 +61,7 @@ public class EmpRsApiServiceImpl implements EmpRsApiService {
    */
   @Override
   public void addApiResource(ResourceApiVO resourceApiVO) {
-    resourceApiVO.setResourcesid(UUID.randomUUID().toString());
+    resourceApiVO.setResourcesId(UUID.randomUUID().toString());
     QkQxResourcesApi qkQxResourcesApi = QxResourcesApiMapper.INSTANCE.qxApiResources(resourceApiVO);
     BooleanExpression predicate = qQkQxResourcesApi.name.eq(resourceApiVO.getName())
         .and(qQkQxResourcesApi.serviceId.eq(resourceApiVO.getServiceId()));
@@ -108,7 +108,7 @@ public class EmpRsApiServiceImpl implements EmpRsApiService {
 
   private void dealApiRsMessage(List<QkQxResourcesApi> qkQxResourcesList) {
     qkQxResourcesList.stream().forEach(qkQxResourcesApi->{
-        deleteResourceEmpower(qkQxResourcesApi.getResourcesid());
+        deleteResourceEmpower(qkQxResourcesApi.getResourcesId());
       qkQxResourcesApiRepository.deleteById(qkQxResourcesApi.getId());
     });
   }
@@ -230,7 +230,7 @@ public class EmpRsApiServiceImpl implements EmpRsApiService {
     if (CollectionUtils.isEmpty(qkQxResourcesApiList)) {
       throw new BizException("当前需删除的数据不存在");
     }
-    List<String> resourcesIdList = qkQxResourcesApiList.stream().map(QkQxResourcesApi::getResourcesid).collect(Collectors.toList());
+    List<String> resourcesIdList = qkQxResourcesApiList.stream().map(QkQxResourcesApi::getResourcesId).collect(Collectors.toList());
     List<QkQxResourcesEmpower> rsEmpList = (List<QkQxResourcesEmpower>) qkQxResourcesEmpowerRepository.findAll(qQkQxResourcesEmpower.resourceUuid.in(resourcesIdList));
     if (CollectionUtils.isNotEmpty(rsEmpList)){
       return true;

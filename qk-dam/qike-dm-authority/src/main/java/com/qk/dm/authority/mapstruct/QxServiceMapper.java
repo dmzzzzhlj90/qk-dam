@@ -1,8 +1,7 @@
 package com.qk.dm.authority.mapstruct;
 
-import com.qk.dm.authority.entity.QxEmpower;
 import com.qk.dm.authority.entity.QxService;
-import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
+import com.qk.dm.authority.vo.powervo.ServiceQueryVO;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -20,12 +19,18 @@ public interface QxServiceMapper {
   QxService qxService(ServiceVO serviceVO);
 
   @Mappings({
-      @Mapping(source = "serviceid", target = "value"),
+      @Mapping(source = "serviceId", target = "value"),
       @Mapping(source = "serviceName", target = "title")
   })
   ServiceVO qxServiceVO(QxService qxService);
 
   List<ServiceVO> of(List<QxService> list);
 
-  List<EmpowerAllVO> ofEmpowerAllVO(List<QxEmpower> qxEmpoerList);
+  @Mappings({
+      @Mapping(source = "serviceName", target = "name"),
+      @Mapping(source = "serviceId", target = "id")
+  })
+  ServiceQueryVO serviceQueryVO (QxService qxService);
+
+  List<ServiceQueryVO> serviceQueryVOof(List<QxService> qxServiceList);
 }

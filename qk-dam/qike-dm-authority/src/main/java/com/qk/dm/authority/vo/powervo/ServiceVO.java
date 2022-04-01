@@ -81,12 +81,12 @@ public class ServiceVO {
    * 区域id（项目id）
    */
   @NotBlank(message = "域id不能为空")
-  private String redionid;
+  private String redionId;
 
   /**
    * 服务uuid
    */
-  private String serviceid;
+  private String serviceId;
 
   /**
    * 微服务线上地址

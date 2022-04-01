@@ -6,7 +6,6 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.entity.*;
 import com.qk.dm.authority.mapstruct.QxEmpowerMapper;
-import com.qk.dm.authority.mapstruct.QxServiceMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxServiceRepository;
@@ -41,9 +40,6 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   private final QQxService qQxService = QQxService.qxService;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
-  //@Autowired
-  //private keyClocakEmpowerApi keyClocakEmpowerApi;
-
 
   public EmpPowerServiceImpl(QkQxServiceRepository qkQxServiceRepository,
       QkQxEmpowerRepository qkQxEmpowerRepository,
@@ -274,7 +270,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   private List<EmpowerAllVO> getEmpowerVO(List<QxEmpower> qxEmpoerList) {
     if (CollectionUtils.isNotEmpty(qxEmpoerList)){
       List<String> serviceIdList = qxEmpoerList.stream().map(QxEmpower::getServiceId).collect(Collectors.toList());
-      List<QxService> serviceList = (List<QxService>) qkQxServiceRepository.findAll(qQxService.serviceid.in(serviceIdList));
+      List<QxService> serviceList = (List<QxService>) qkQxServiceRepository.findAll(qQxService.serviceId.in(serviceIdList));
       return queryEmpowers(serviceList,qxEmpoerList);
     }
     return new ArrayList<EmpowerAllVO>();
@@ -282,8 +278,8 @@ public class EmpPowerServiceImpl implements EmpPowerService {
 
   private List<EmpowerAllVO> queryEmpowers(List<QxService> serviceList, List<QxEmpower> qxEmpoerList) {
     if (CollectionUtils.isNotEmpty(serviceList)){
-      Map<String,String> map = serviceList.stream().collect(Collectors.toMap(QxService::getServiceid, QxService::getServiceName, (k1, k2) -> k2));
-       List<EmpowerAllVO> list = QxServiceMapper.INSTANCE.ofEmpowerAllVO(qxEmpoerList);
+      Map<String,String> map = serviceList.stream().collect(Collectors.toMap(QxService::getServiceId, QxService::getServiceName, (k1, k2) -> k2));
+       List<EmpowerAllVO> list = QxEmpowerMapper.INSTANCE.ofEmpowerAllVO(qxEmpoerList);
        list.forEach(empowerAllVO -> {
          empowerAllVO.setServiceName(map.get(empowerAllVO.getServiceId()));
        });

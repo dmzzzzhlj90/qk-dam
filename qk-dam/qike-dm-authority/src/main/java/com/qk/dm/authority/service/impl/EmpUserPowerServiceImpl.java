@@ -15,7 +15,7 @@ import com.qk.dm.authority.service.AtyUserRoleService;
 import com.qk.dm.authority.service.EmpUserPowerService;
 import com.qk.dm.authority.vo.params.UserEmpParamVO;
 import com.qk.dm.authority.vo.params.UserEmpPowerParamVO;
-import com.qk.dm.authority.vo.powervo.ServiceVO;
+import com.qk.dm.authority.vo.powervo.ServiceQueryVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -72,7 +72,7 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
    * @return
    */
   @Override
-  public List<ServiceVO> queryServicesByUserId(UserEmpParamVO userEmpParamVO) {
+  public List<ServiceQueryVO> queryServicesByUserId(UserEmpParamVO userEmpParamVO) {
     List<String> idList = getIdList(userEmpParamVO.getRealm(),userEmpParamVO.getUserId(),userEmpParamVO.getClientId());
     //3根据用户id、角色id、用户分组id返回授权服务信息
     BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -81,9 +81,9 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
     if (CollectionUtils.isNotEmpty(qxEmpowerList)){
       List<String> serviceidList = qxEmpowerList.stream().map(QxEmpower::getServiceId).collect(Collectors.toList());
       List<QxService> qxServiceList = getServices(serviceidList);
-      return  QxServiceMapper.INSTANCE.of(qxServiceList);
+      return  QxServiceMapper.INSTANCE.serviceQueryVOof(qxServiceList);
     }
-    return new ArrayList<ServiceVO>();
+    return new ArrayList<ServiceQueryVO>();
   }
 
   private List<QxService> getServices(List<String> serviceidList) {
@@ -94,7 +94,7 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
 
   private void checkServiceCondition(BooleanBuilder booleanBuilder, List<String> serviceidList) {
     if (CollectionUtils.isNotEmpty(serviceidList)){
-      booleanBuilder.and(qQxService.serviceid.in(serviceidList));
+      booleanBuilder.and(qQxService.serviceId.in(serviceidList));
     }
   }
 
@@ -146,7 +146,7 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
    */
   private List<String> getUserPower(List<String> resourcesUuidList) {
     if (CollectionUtils.isNotEmpty(resourcesUuidList)){
-      List<QkQxResourcesApi> resourcesApiList = (List<QkQxResourcesApi>) qkQxResourcesApiRepository.findAll(qQkQxResourcesApi.resourcesid.in(resourcesUuidList));
+      List<QkQxResourcesApi> resourcesApiList = (List<QkQxResourcesApi>) qkQxResourcesApiRepository.findAll(qQkQxResourcesApi.resourcesId.in(resourcesUuidList));
       if (CollectionUtils.isNotEmpty(resourcesApiList)){
         return resourcesApiList.stream().map(QkQxResourcesApi::getPath).collect(Collectors.toList()).stream().distinct().collect(Collectors.toList());
       }

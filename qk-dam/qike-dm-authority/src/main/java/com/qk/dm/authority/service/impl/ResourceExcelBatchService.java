@@ -75,7 +75,7 @@ public class ResourceExcelBatchService {
       Iterator<ResourceMenuExcelVO> iterator = qxResourcesList.iterator();
       while (iterator.hasNext()){
         ResourceMenuExcelVO resourceMenuExcelVO = iterator.next();
-        resourceMenuExcelVO.setResourcesid(UUID.randomUUID().toString());
+        resourceMenuExcelVO.setResourcesId(UUID.randomUUID().toString());
         //todo 加入操作人员id
         String key = MultipartFileUtil.getExcelKey(resourceMenuExcelVO);
         if (bloomFilterServer.getFilter()!=null){

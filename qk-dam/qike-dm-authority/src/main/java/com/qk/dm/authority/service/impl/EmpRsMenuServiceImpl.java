@@ -54,7 +54,7 @@ public class EmpRsMenuServiceImpl implements EmpRsMenuService {
    */
   @Override
   public void addResourceMenu(ResourceMenuVO resourceMenuVO) {
-    resourceMenuVO.setResourcesid(UUID.randomUUID().toString());
+    resourceMenuVO.setResourcesId(UUID.randomUUID().toString());
     QkQxResourcesMenu qkQxResourcesMenu = QxResourcesMenuMapper.INSTANCE.qxResourcesMenu(resourceMenuVO);
     BooleanExpression predicate = qQkQxResourcesMenu.name.eq(resourceMenuVO.getName()).and(qQkQxResourcesMenu.serviceId.eq(resourceMenuVO.getServiceId()));
     boolean exists = qkQxResourcesMenuRepository.exists(predicate);
@@ -102,7 +102,7 @@ public class EmpRsMenuServiceImpl implements EmpRsMenuService {
 
   private void dealRsEmpMessage(List<QkQxResourcesMenu> qkQxResourcesMenuList) {
     qkQxResourcesMenuList.stream().forEach(qxResources->{
-        deleteResourceEmpower(qxResources.getResourcesid());
+        deleteResourceEmpower(qxResources.getResourcesId());
         qkQxResourcesMenuRepository.deleteById(qxResources.getId());
     });
   }
@@ -199,7 +199,7 @@ public class EmpRsMenuServiceImpl implements EmpRsMenuService {
     if (CollectionUtils.isEmpty(qkQxResourcesMenuList)) {
       throw new BizException("当前需删除的数据不存在");
     }
-    List<String> resourcesIdList = qkQxResourcesMenuList.stream().map(QkQxResourcesMenu::getResourcesid).collect(Collectors.toList());
+    List<String> resourcesIdList = qkQxResourcesMenuList.stream().map(QkQxResourcesMenu::getResourcesId).collect(Collectors.toList());
     List<QkQxResourcesEmpower> rsEmpList = (List<QkQxResourcesEmpower>) qkQxResourcesEmpowerRepository
         .findAll(qQkQxResourcesEmpower.resourceUuid.in(resourcesIdList));
     if (CollectionUtils.isNotEmpty(rsEmpList)){

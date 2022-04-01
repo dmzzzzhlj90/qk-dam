@@ -98,7 +98,7 @@ public class QkQxResourcesMenu implements Serializable {
    * 资源（菜单）uuid
    */
   @Column(name = "resources_id")
-  private String resourcesid;
+  private String resourcesId;
 
   /**
    * 页面
