@@ -1,6 +1,7 @@
 package com.qk.dm.authority.mapstruct;
 
 import com.qk.dm.authority.entity.QxEmpower;
+import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
 import com.qk.dm.authority.vo.powervo.EmpowerVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
@@ -22,4 +23,6 @@ public interface QxEmpowerMapper {
   EmpowerVO qxEmpowerVO(QxEmpower qxEmpower);
 
   List<EmpowerVO> of(List<QxEmpower> list);
+
+  List<EmpowerAllVO> ofEmpowerAllVO(List<QxEmpower> qxEmpoerList);
 }

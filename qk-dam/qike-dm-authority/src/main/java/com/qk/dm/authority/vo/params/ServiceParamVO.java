@@ -27,5 +27,5 @@ public class ServiceParamVO {
    * 区域id（项目id）
    */
   @NotBlank(message = "区域id不能为空")
-  private String redionid;
+  private String redionId;
 }

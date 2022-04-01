@@ -86,13 +86,13 @@ public class QxService implements Serializable {
    * 区域id（项目id）
    */
   @Column(name = "region_id")
-  private String redionid;
+  private String redionId;
 
   /**
    * 服务uuid
    */
   @Column(name = "service_id")
-  private String serviceid;
+  private String serviceId;
 
   /**
    * 微服务线上地址

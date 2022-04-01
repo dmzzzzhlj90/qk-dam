@@ -56,9 +56,9 @@ public class EmpSvcServiceImpl implements EmpSvcService {
 
   @Override
   public void addService(ServiceVO serviceVO) {
-    serviceVO.setServiceid(UUID.randomUUID().toString());
+    serviceVO.setServiceId(UUID.randomUUID().toString());
     QxService qxService = QxServiceMapper.INSTANCE.qxService(serviceVO);
-    BooleanExpression predicate = qQxService.serviceName.eq(qxService.getServiceName()).and(qQxService.redionid.eq(qxService.getRedionid()));
+    BooleanExpression predicate = qQxService.serviceName.eq(qxService.getServiceName()).and(qQxService.redionId.eq(qxService.getRedionId()));
     boolean exists = qkQxServiceRepository.exists(predicate);
     if (exists){
       throw new BizException(
@@ -110,11 +110,11 @@ public class EmpSvcServiceImpl implements EmpSvcService {
    */
   private void deleteAssociatedData(QxService qxService) {
     //根据服务的uuid查询资源信息
-    List<QkQxResourcesMenu> qxResourcesMenuList = qkQxResourcesMenuRepository.findByServiceId(qxService.getServiceid());
+    List<QkQxResourcesMenu> qxResourcesMenuList = qkQxResourcesMenuRepository.findByServiceId(qxService.getServiceId());
     //根据服务的uuid查询api信息
-    List<QkQxResourcesApi> qkQxResourcesApiList = qkQxResourcesApiRepository.findByServiceId(qxService.getServiceid());
+    List<QkQxResourcesApi> qkQxResourcesApiList = qkQxResourcesApiRepository.findByServiceId(qxService.getServiceId());
     //根据服务的uuid查询授权信息
-    List<QxEmpower> qxEmpowerList = qkQxEmpowerRepository.findByServiceId(qxService.getServiceid());
+    List<QxEmpower> qxEmpowerList = qkQxEmpowerRepository.findByServiceId(qxService.getServiceId());
     //查询
     if (CollectionUtils.isNotEmpty(qxResourcesMenuList)){
       qkQxResourcesMenuRepository.deleteAll(qxResourcesMenuList);
@@ -157,8 +157,8 @@ public class EmpSvcServiceImpl implements EmpSvcService {
     if (!StringUtils.isEmpty(serviceParamVO.getServiceName())) {
       booleanBuilder.and(qQxService.serviceName.contains(serviceParamVO.getServiceName()));
     }
-    if (!StringUtils.isEmpty(serviceParamVO.getRedionid())) {
-      booleanBuilder.and(qQxService.redionid.contains(serviceParamVO.getRedionid()));
+    if (!StringUtils.isEmpty(serviceParamVO.getRedionId())) {
+      booleanBuilder.and(qQxService.redionId.contains(serviceParamVO.getRedionId()));
     }
   }
 }

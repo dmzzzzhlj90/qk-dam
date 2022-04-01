@@ -106,5 +106,5 @@ public class ResourceApiVO {
    * api的uuid
    */
   @ExcelIgnore
-  private String resourcesid;
+  private String resourcesId;
 }

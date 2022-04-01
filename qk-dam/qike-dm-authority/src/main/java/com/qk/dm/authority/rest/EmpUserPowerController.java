@@ -5,7 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.authority.service.EmpUserPowerService;
 import com.qk.dm.authority.vo.params.UserEmpParamVO;
 import com.qk.dm.authority.vo.params.UserEmpPowerParamVO;
-import com.qk.dm.authority.vo.powervo.ServiceVO;
+import com.qk.dm.authority.vo.powervo.ServiceQueryVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +35,7 @@ private final EmpUserPowerService empUserPowerService;
    * @return DefaultCommonResult<List<ServiceVO>> 服务信息
    */
   @PostMapping("/service")
-  public DefaultCommonResult<List<ServiceVO>> queryServicesByUserId(@RequestBody @Validated UserEmpParamVO userEmpParamVO){
+  public DefaultCommonResult<List<ServiceQueryVO>> queryServicesByUserId(@RequestBody @Validated UserEmpParamVO userEmpParamVO){
     return DefaultCommonResult.success(ResultCodeEnum.OK,empUserPowerService.queryServicesByUserId(userEmpParamVO));
   }
 

@@ -56,7 +56,7 @@ public class ApiRsExcelBatchService {
       Iterator<ResourceApiVO> iterator = qxResourcesList.iterator();
       while (iterator.hasNext()){
         ResourceApiVO resourceApiVO = iterator.next();
-        resourceApiVO.setResourcesid(UUID.randomUUID().toString());
+        resourceApiVO.setResourcesId(UUID.randomUUID().toString());
         //todo 加入操作人员id
         String key = MultipartFileUtil.getApiExcelKey(resourceApiVO);
         if (bloomFilterServer.getFilter()!=null){

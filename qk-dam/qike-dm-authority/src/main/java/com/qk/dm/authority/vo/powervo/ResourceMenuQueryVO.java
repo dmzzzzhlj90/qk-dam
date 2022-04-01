@@ -96,7 +96,7 @@ public class ResourceMenuQueryVO {
   /**
    * 资源（菜单）uuid
    */
-  private String resourcesid;
+  private String resourcesId;
 
   /**
    * 页面

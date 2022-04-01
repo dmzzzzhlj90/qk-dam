@@ -17,7 +17,7 @@ public interface QxResourcesMenuMapper {
   QkQxResourcesMenu qxResourcesMenu(ResourceMenuVO resourceMenuVO);
 
   @Mappings({
-      @Mapping(source = "resourcesid", target = "value"),
+      @Mapping(source = "resourcesId", target = "value"),
       @Mapping(source = "name", target = "title")
   })
   ResourceMenuQueryVO ResourceMenuQueryVO(QkQxResourcesMenu qkQxResourcesMenu);

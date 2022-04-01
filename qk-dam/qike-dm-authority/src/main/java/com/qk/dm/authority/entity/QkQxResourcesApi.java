@@ -92,6 +92,6 @@ public class QkQxResourcesApi implements Serializable {
    * api的uuid
    */
   @Column(name = "resources_id")
-  private String resourcesid;
+  private String resourcesId;
 
 }

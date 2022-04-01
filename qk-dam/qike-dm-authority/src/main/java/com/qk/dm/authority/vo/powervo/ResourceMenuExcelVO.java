@@ -102,7 +102,7 @@ public class ResourceMenuExcelVO {
    * 资源（菜单）uuid
    */
   @ExcelIgnore
-  private String resourcesid;
+  private String resourcesId;
 
   /**
    * 页面
