@@ -93,5 +93,4 @@ public class QkQxResourcesApi implements Serializable {
    */
   @Column(name = "resources_id")
   private String resourcesId;
-
 }

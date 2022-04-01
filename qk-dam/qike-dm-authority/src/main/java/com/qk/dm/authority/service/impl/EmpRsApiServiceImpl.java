@@ -86,8 +86,9 @@ public class EmpRsApiServiceImpl implements EmpRsApiService {
     if (Objects.isNull(qkQxResourcesApiOne)){
       throw new BizException("当前需修改的名称为"+resourceApiVO.getName()+"的API数据不存在");
     }
-    QkQxResourcesApi qkQxResourcesApis = QxResourcesApiMapper.INSTANCE.qxApiResources(resourceApiVO);
-    qkQxResourcesApiRepository.saveAndFlush(qkQxResourcesApis);
+    QxResourcesApiMapper.INSTANCE.from(resourceApiVO,qkQxResourcesApiOne);
+    //s = QxResourcesApiMapper.INSTANCE.qxApiResources(resourceApiVO);
+    qkQxResourcesApiRepository.saveAndFlush(qkQxResourcesApiOne);
   }
 
   /**

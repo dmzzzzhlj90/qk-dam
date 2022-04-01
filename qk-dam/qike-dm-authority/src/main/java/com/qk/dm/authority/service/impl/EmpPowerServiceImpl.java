@@ -120,10 +120,11 @@ public class EmpPowerServiceImpl implements EmpPowerService {
       throw new BizException("当前需修改的的数据不存在");
     }
     //TODO 修改对应授权主体的属性
-    QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
+    QxEmpowerMapper.INSTANCE.from(empowerVO,qxEmpower);
+    //QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
     //keyClocakEmpowerApi.addPower(empowerVO);
-    qkQxEmpowerRepository.saveAndFlush(qxEmpower1);
-    updateResourceEmpower(qxEmpower1.getEmpowerId(),empowerVO.getResourceSigns());
+    qkQxEmpowerRepository.saveAndFlush(qxEmpower);
+    updateResourceEmpower(qxEmpower.getEmpowerId(),empowerVO.getResourceSigns());
   }
 
   /**
