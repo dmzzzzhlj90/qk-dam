@@ -229,7 +229,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
             .select(qQxEmpower)
             .from(qQxEmpower)
             .where(booleanBuilder)
-            .orderBy(qQxEmpower.gmtCreate.desc())
+            .orderBy(qQxEmpower.gmtCreate.asc())
             .offset(
                 (long) (empowerQueryVO.getPagination().getPage() - 1)
                     * empowerQueryVO.getPagination().getSize())
@@ -298,7 +298,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
             .select(qQxEmpower)
             .from(qQxEmpower)
             .where(booleanBuilder)
-            .orderBy(qQxEmpower.gmtCreate.desc())
+            .orderBy(qQxEmpower.gmtCreate.asc())
             .offset(
                 (long) (empowerParamVO.getPagination().getPage() - 1)
                     * empowerParamVO.getPagination().getSize())
