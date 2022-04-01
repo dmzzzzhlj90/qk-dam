@@ -168,7 +168,7 @@ public class EmpRsMenuServiceImpl implements EmpRsMenuService {
 
   private List<ResourceMenuQueryVO> buildByResource(List<ResourceMenuQueryVO> resourceOutVOList, String name) {
     List<ResourceMenuQueryVO> trees = new ArrayList<>();
-    ResourceMenuQueryVO resourceMenuQueryVO = ResourceMenuQueryVO.builder().id(QxConstant.DIRID).title(name).resourcesid(QxConstant.RESOURCEID).build();
+    ResourceMenuQueryVO resourceMenuQueryVO = ResourceMenuQueryVO.builder().id(QxConstant.DIRID).title(name).value(QxConstant.RESOURCEID).build();
     trees.add(findChildren(resourceMenuQueryVO, resourceOutVOList));
     return trees;
   }
