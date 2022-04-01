@@ -200,7 +200,7 @@ public class EmpRsApiServiceImpl implements EmpRsApiService {
     long count =jpaQueryFactory.select(qQkQxResourcesApi.count()).from(qQkQxResourcesApi).where(booleanBuilder).fetchOne();
     List<QkQxResourcesApi> qkQxResourcesApiList = jpaQueryFactory.select(qQkQxResourcesApi)
         .from(qQkQxResourcesApi).where(booleanBuilder)
-        .orderBy(qQkQxResourcesApi.gmtCreate.desc()).offset(
+        .orderBy(qQkQxResourcesApi.gmtCreate.asc()).offset(
             (long) (apiPageResourcesParamVO.getPagination().getPage() - 1)
                 * apiPageResourcesParamVO.getPagination().getSize())
         .limit(apiPageResourcesParamVO.getPagination().getSize()).fetch();
