@@ -1,5 +1,6 @@
 package com.qk.dm.authority.service.impl;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.authority.common.keycloak.KeyCloakGroupApi;
 import com.qk.dam.authority.common.keycloak.KeyCloakUserApi;
 import com.qk.dam.authority.common.vo.group.AtyGroupInfoVO;
@@ -11,7 +12,10 @@ import com.qk.dm.authority.vo.user.AtyUserGroupFiltroVO;
 import com.qk.dm.authority.vo.user.AtyUserGroupParamVO;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author shenpj
@@ -50,7 +54,75 @@ public class AtyUserGroupServiceImpl implements AtyUserGroupService {
 
     @Override
     public void addBatchByUsers(AtyGroupBatchByUsersVO batchByUsersVO) {
-        batchByUsersVO.getUserIds().forEach(userId -> keyCloakUserApi.addUserGroup(batchByUsersVO.getRealm(), userId, batchByUsersVO.getGroupId()));
+        //根据分组id查已存在的用户全部解绑
+        List<String> userIdList =dealAddGroupUsers(batchByUsersVO);
+        userIdList.forEach(userId -> keyCloakUserApi.addUserGroup(batchByUsersVO.getRealm(), userId, batchByUsersVO.getGroupId()));
+    }
+
+    /**
+     * 根据分组id解绑本次不保存的用户
+     * @param batchByUsersVO
+     * @return
+     */
+    private List<String> dealAddGroupUsers(AtyGroupBatchByUsersVO batchByUsersVO) {
+        //查询已授权用户-当前分组
+        List<AtyUserInfoVO> atyUserInfoVOList = keyCloakGroupApi.groupUsers(batchByUsersVO.getRealm(), batchByUsersVO.getGroupId());
+        //获取需要解绑的用户id
+        List<String> unboundIdList = CollectionUtils.isEmpty(atyUserInfoVOList) ? new ArrayList<>() : queryUnboundIdList(atyUserInfoVOList,batchByUsersVO);
+        //获取需要绑定的用户id
+        List<String> bindingList = CollectionUtils.isEmpty(batchByUsersVO.getUserIds()) ? new ArrayList<>() : queryBindingIdList(batchByUsersVO);
+        if (CollectionUtils.isNotEmpty(unboundIdList)){
+            //解绑用户
+            unboundIdList.forEach(userId->{
+                keyCloakUserApi.deleteUserGroup(batchByUsersVO.getRealm(), userId, batchByUsersVO.getGroupId());
+            });
+        }
+        return bindingList;
+    }
+
+    /**
+     * 获取需要绑定的用户id集合
+     * @param batchByUsersVO
+     * @return
+     */
+    private List<String> queryBindingIdList(AtyGroupBatchByUsersVO batchByUsersVO) {
+        //查询已授权用户-当前分组
+        List<AtyUserInfoVO> atyUserInfoVOList = keyCloakGroupApi.groupUsers(batchByUsersVO.getRealm(), batchByUsersVO.getGroupId());
+        //当查询分组绑定用户为空
+        if (CollectionUtils.isEmpty(atyUserInfoVOList)){
+            return batchByUsersVO.getUserIds();
+        }else{
+            List<String> idList = atyUserInfoVOList.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
+            Iterator<String> iterator = batchByUsersVO.getUserIds().iterator();
+            while (iterator.hasNext()){
+                String id = iterator.next();
+                if (idList.contains(id)){
+                    iterator.remove();
+                }
+            }
+            return  batchByUsersVO.getUserIds();
+        }
+    }
+
+    /**
+     * 获取需要解绑的用户id集合
+     * @param atyUserInfoVOList
+     * @param batchByUsersVO
+     * @return
+     */
+    private List<String> queryUnboundIdList(List<AtyUserInfoVO> atyUserInfoVOList, AtyGroupBatchByUsersVO batchByUsersVO) {
+        if (CollectionUtils.isEmpty(batchByUsersVO.getUserIds())){
+            return atyUserInfoVOList.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
+        }else{
+            Iterator<AtyUserInfoVO> iterator = atyUserInfoVOList.iterator();
+            while (iterator.hasNext()){
+                AtyUserInfoVO atyUserInfoVO = iterator.next();
+                if (batchByUsersVO.getUserIds().contains(atyUserInfoVO.getId())){
+                    iterator.remove();
+                }
+            }
+            return atyUserInfoVOList.stream().map(AtyUserInfoVO::getId).collect(Collectors.toList());
+        }
     }
 
     @Override

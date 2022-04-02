@@ -86,11 +86,29 @@ public class QxService implements Serializable {
    * 区域id（项目id）
    */
   @Column(name = "region_id")
-  private String redionid;
+  private String redionId;
 
   /**
    * 服务uuid
    */
   @Column(name = "service_id")
-  private String serviceid;
+  private String serviceId;
+
+  /**
+   * 微服务线上地址
+   */
+  @Column(name = "entry")
+  private String entry;
+
+  /**
+   * 微服务项目名(path)
+   */
+  @Column(name = "path")
+  private String path;
+
+  /**
+   * microapp（微应用唯一标识）
+   */
+  @Column(name = "micro_app")
+  private String microApp;
 }

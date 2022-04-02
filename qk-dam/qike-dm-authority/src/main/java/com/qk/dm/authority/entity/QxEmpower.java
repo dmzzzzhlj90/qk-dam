@@ -115,6 +115,6 @@ public class QxEmpower implements Serializable {
   /**
    * 当授权主体为角色时候，存角色对应的客户端名称
    */
-  @Column(name = "client_name")
-  private String clientName;
+  @Column(name = "client_id")
+  private String clientId;
 }

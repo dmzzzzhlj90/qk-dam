@@ -5,6 +5,8 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
 
+import java.util.List;
+
 /**
  * @author shenpj
  * @date 2022/3/2 17:43
@@ -20,4 +22,6 @@ public interface AtyGroupService {
     AtyGroupInfoVO getGroup(String realm, String groupId);
 
     PageResultVO<AtyGroupInfoVO> getGroupPage(AtyGroupParamVO groupParamVO);
+
+    List<AtyGroupInfoVO> getGroupList(String realm,String search);
 }

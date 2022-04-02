@@ -1,6 +1,7 @@
 package com.qk.dm.metadata.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.property.SynchStateProperty;
 import com.qk.dm.metadata.entity.MtdLabels;
 import com.qk.dm.metadata.entity.MtdLabelsAtlas;
@@ -12,7 +13,6 @@ import com.qk.dm.metadata.service.MtdLabelsService;
 import com.qk.dm.metadata.vo.MtdLabelsInfoVO;
 import com.qk.dm.metadata.vo.MtdLabelsListVO;
 import com.qk.dm.metadata.vo.MtdLabelsVO;
-import com.qk.dm.metadata.vo.PageResultVO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;

@@ -5,21 +5,17 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- *资源VO
+ * 资源导入导出VO
  * @author zys
- * @date 2022/2/24 17:03
+ * @date 2022/3/31 20:57
  * @since 1.0.0
  */
 @Data
@@ -29,26 +25,23 @@ import java.util.Date;
 @ContentRowHeight(20)
 @HeadRowHeight(20)
 @ColumnWidth(25)
-public class ResourceVO {
+public class ResourceMenuExcelVO {
   /**
-   * 主键id(修改时候为必填字段)
+   * 主键id
    */
   @ExcelIgnore
   private Long id;
 
   /**
-   * 资源（API）名称
+   * 资源名称
    */
   @ExcelProperty(value = "资源名称",order = 1)
-  @NotBlank(message = "资源（API）名称不能为空")
   private String name;
-
 
   /**
    * 网址路径
    */
   @ExcelProperty(value = "网址路径",order = 2)
-  @NotBlank(message = "网址路径不能为空")
   private String path;
 
   /**
@@ -72,7 +65,7 @@ public class ResourceVO {
   /**
    * 创建人名称
    */
-  @ExcelProperty(value = "创建人名称",order = 4)
+  @ExcelProperty(value = "创建人名称",order =4)
   private String createName;
 
   /**
@@ -85,42 +78,71 @@ public class ResourceVO {
    * 创建时间
    */
   @ExcelIgnore
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtCreate;
 
   /**
    * 修改时间
    */
   @ExcelIgnore
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtModified;
 
   /**
-   * 父级id（API类型fid默认为-1）
+   * 父级id
    */
-  @ExcelProperty(value = "父级id(API时为-1)",order = 5)
-  @NotNull(message = "父级id不能为空")
-  private Long pid;
+  @ExcelProperty(value = "父级名称",order = 5)
+  private String pidName;
 
   /**
-   * 服务UUID
+   * 服务的uuid
    */
   @ExcelProperty(value = "服务UUID",order = 6)
-  @NotBlank(message = "服务uuid不能为空")
   private String serviceId;
 
   /**
-   * 0表示API，1表示资源
-   */
-  @ExcelProperty(value = "资源类型（0表示API，1表示资源）",order = 7)
-  @NotNull(message = "资源类型不能为空")
-  private Integer type;
-
-  /**
-   * 资源UUID
+   * 资源（菜单）uuid
    */
   @ExcelIgnore
-  private String resourcesid;
+  private String resourcesId;
+
+  /**
+   * 页面
+   */
+  @ExcelProperty(value = "页面",order = 7)
+  private String component;
+
+  /**
+   * 子路由
+   */
+  //@ExcelProperty(value = "子路由",order = 8)
+  //private String route;
+
+  /**
+   * 显示icon
+   */
+  @ExcelProperty(value = "显示icon",order = 8)
+  private String icon;
+
+  /**
+   * 重定向
+   */
+  @ExcelProperty(value = "重定向",order = 9)
+  private String redirect;
+
+  /**
+   * 是否隐藏菜单
+   */
+  @ExcelProperty(value = "是否隐藏菜单",order = 10)
+  private Boolean hideInMenu;
+
+  /**
+   * 是否隐藏面包屑
+   */
+  @ExcelProperty(value = "是否隐藏面包屑",order = 11)
+  private Boolean hideInBreadcrumb;
+
+  /**
+   * 是否严格匹配
+   */
+  @ExcelProperty(value = "是否严格匹配",order = 12)
+  private Boolean exact;
 }

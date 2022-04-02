@@ -1,10 +1,9 @@
 package com.qk.dm.authority.mapstruct;
 
 import com.qk.dm.authority.entity.QxEmpower;
+import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
 import com.qk.dm.authority.vo.powervo.EmpowerVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -22,4 +21,9 @@ public interface QxEmpowerMapper {
   EmpowerVO qxEmpowerVO(QxEmpower qxEmpower);
 
   List<EmpowerVO> of(List<QxEmpower> list);
+
+  List<EmpowerAllVO> ofEmpowerAllVO(List<QxEmpower> qxEmpoerList);
+
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void from(EmpowerVO empowerVO, @MappingTarget QxEmpower qxEmpower);
 }

@@ -6,12 +6,12 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.entity.*;
 import com.qk.dm.authority.mapstruct.QxEmpowerMapper;
-import com.qk.dm.authority.mapstruct.QxServiceMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxServiceRepository;
 import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.params.EmpowerParamVO;
+import com.qk.dm.authority.vo.params.EmpowerQueryVO;
 import com.qk.dm.authority.vo.powervo.EmpowerAllVO;
 import com.qk.dm.authority.vo.powervo.EmpowerVO;
 import com.querydsl.core.BooleanBuilder;
@@ -40,9 +40,6 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   private final QQxService qQxService = QQxService.qxService;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
-  //@Autowired
-  //private keyClocakEmpowerApi keyClocakEmpowerApi;
-
 
   public EmpPowerServiceImpl(QkQxServiceRepository qkQxServiceRepository,
       QkQxEmpowerRepository qkQxEmpowerRepository,
@@ -123,10 +120,11 @@ public class EmpPowerServiceImpl implements EmpPowerService {
       throw new BizException("当前需修改的的数据不存在");
     }
     //TODO 修改对应授权主体的属性
-    QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
+    QxEmpowerMapper.INSTANCE.from(empowerVO,qxEmpower);
+    //QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
     //keyClocakEmpowerApi.addPower(empowerVO);
-    qkQxEmpowerRepository.saveAndFlush(qxEmpower1);
-    updateResourceEmpower(qxEmpower1.getEmpowerId(),empowerVO.getResourceSigns());
+    qkQxEmpowerRepository.saveAndFlush(qxEmpower);
+    updateResourceEmpower(qxEmpower.getEmpowerId(),empowerVO.getResourceSigns());
   }
 
   /**
@@ -196,13 +194,57 @@ public class EmpPowerServiceImpl implements EmpPowerService {
 
   /**
    *
-   * @param empoerId
+   * @param empowerQueryVO
    * @return
    */
   @Override
-  public List<EmpowerAllVO> queryAllEmpower(String empoerId) {
-    List<QxEmpower> qxEmpoerList = qkQxEmpowerRepository.findByEmpoerId(empoerId);
-    return getEmpowerVO(qxEmpoerList);
+  public PageResultVO<EmpowerAllVO> queryAllEmpower(EmpowerQueryVO empowerQueryVO) {
+    Map<String, Object> map;
+    List<EmpowerAllVO> empowerVO = new ArrayList<>();
+    try {
+      map = queryByEmpQueryVO(empowerQueryVO);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new BizException("查询失败!!!");
+    }
+    if (MapUtils.isNotEmpty(map)){
+      List<QxEmpower> list = (List<QxEmpower>) map.get("list");
+      if (CollectionUtils.isNotEmpty(list)){
+         empowerVO = getEmpowerVO(list);
+      }
+    }
+    return new PageResultVO<>(
+        (long) map.get("total"),
+        empowerQueryVO.getPagination().getPage(),
+        empowerQueryVO.getPagination().getSize(),
+        empowerVO);
+  }
+
+  private Map<String,Object> queryByEmpQueryVO(EmpowerQueryVO empowerQueryVO) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    checkQueryCondition(booleanBuilder, empowerQueryVO);
+    Map<String, Object> result = new HashMap<>();
+    long count =jpaQueryFactory.select(qQxEmpower.count()).from(qQxEmpower).where(booleanBuilder).fetchOne();
+    List<QxEmpower> empowerList =
+        jpaQueryFactory
+            .select(qQxEmpower)
+            .from(qQxEmpower)
+            .where(booleanBuilder)
+            .orderBy(qQxEmpower.gmtModified.asc())
+            .offset(
+                (long) (empowerQueryVO.getPagination().getPage() - 1)
+                    * empowerQueryVO.getPagination().getSize())
+            .limit(empowerQueryVO.getPagination().getSize())
+            .fetch();
+    result.put("list", empowerList);
+    result.put("total", count);
+    return result;
+  }
+
+  private void checkQueryCondition(BooleanBuilder booleanBuilder, EmpowerQueryVO empowerQueryVO) {
+    if (!Objects.isNull(empowerQueryVO.getId())) {
+      booleanBuilder.and(qQxEmpower.empoerId.eq(empowerQueryVO.getId()));
+    }
   }
 
   /**
@@ -229,7 +271,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   private List<EmpowerAllVO> getEmpowerVO(List<QxEmpower> qxEmpoerList) {
     if (CollectionUtils.isNotEmpty(qxEmpoerList)){
       List<String> serviceIdList = qxEmpoerList.stream().map(QxEmpower::getServiceId).collect(Collectors.toList());
-      List<QxService> serviceList = (List<QxService>) qkQxServiceRepository.findAll(qQxService.serviceid.in(serviceIdList));
+      List<QxService> serviceList = (List<QxService>) qkQxServiceRepository.findAll(qQxService.serviceId.in(serviceIdList));
       return queryEmpowers(serviceList,qxEmpoerList);
     }
     return new ArrayList<EmpowerAllVO>();
@@ -237,8 +279,8 @@ public class EmpPowerServiceImpl implements EmpPowerService {
 
   private List<EmpowerAllVO> queryEmpowers(List<QxService> serviceList, List<QxEmpower> qxEmpoerList) {
     if (CollectionUtils.isNotEmpty(serviceList)){
-      Map<String,String> map = serviceList.stream().collect(Collectors.toMap(QxService::getServiceid, QxService::getServiceName, (k1, k2) -> k2));
-       List<EmpowerAllVO> list = QxServiceMapper.INSTANCE.ofEmpowerAllVO(qxEmpoerList);
+      Map<String,String> map = serviceList.stream().collect(Collectors.toMap(QxService::getServiceId, QxService::getServiceName, (k1, k2) -> k2));
+       List<EmpowerAllVO> list = QxEmpowerMapper.INSTANCE.ofEmpowerAllVO(qxEmpoerList);
        list.forEach(empowerAllVO -> {
          empowerAllVO.setServiceName(map.get(empowerAllVO.getServiceId()));
        });
@@ -257,7 +299,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
             .select(qQxEmpower)
             .from(qQxEmpower)
             .where(booleanBuilder)
-            .orderBy(qQxEmpower.gmtCreate.desc())
+            .orderBy(qQxEmpower.gmtCreate.asc())
             .offset(
                 (long) (empowerParamVO.getPagination().getPage() - 1)
                     * empowerParamVO.getPagination().getSize())

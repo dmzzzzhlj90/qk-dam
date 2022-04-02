@@ -42,6 +42,7 @@ dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
     implementation project(":metadata-common-core")
+    implementation 'com.alibaba:easyexcel:3.0.5'
 //    compile project(":qk-authorization")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
@@ -50,7 +51,12 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
-
+    //start fixme!这段为了兼容升级spring cloud导致jackson版本2.12.5+version atlas返回数据json错误
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.12.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.12.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.5'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.12.5'
+    // over
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor(
             "javax.persistence:javax.persistence-api",

@@ -9,12 +9,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 资源和API表
+ * 访问（api）表
  */
 @Data
 @Entity
-@Table(name = "qk_qx_resources")
-public class QxResources implements Serializable {
+@Table(name = "qk_qx_resources_api")
+public class QkQxResourcesApi implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -29,13 +29,13 @@ public class QxResources implements Serializable {
   /**
    * 资源（API）名称
    */
-  @Column(name = "name")
+  @Column(name = "name", nullable = false)
   private String name;
 
   /**
    * 网址路径
    */
-  @Column(name = "path")
+  @Column(name = "path", nullable = false)
   private String path;
 
   /**
@@ -83,27 +83,14 @@ public class QxResources implements Serializable {
   private Date gmtModified;
 
   /**
-   * 父级id（API类型fid默认为-1）
+   * 服务的uuid
    */
-  @Column(name = "pid")
-  private Long pid;
-
-  /**
-   * 服务UUID
-   */
-  @Column(name = "service_id")
+  @Column(name = "service_id",nullable = false)
   private String serviceId;
 
   /**
-   * 0标识API，1表示资源
-   */
-  @Column(name = "type")
-  private Integer type;
-
-  /**
-   * 资源uuid
+   * api的uuid
    */
   @Column(name = "resources_id")
-  private String resourcesid;
-
+  private String resourcesId;
 }

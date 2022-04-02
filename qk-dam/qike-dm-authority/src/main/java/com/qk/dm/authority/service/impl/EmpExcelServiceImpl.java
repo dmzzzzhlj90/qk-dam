@@ -5,18 +5,21 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.authority.common.vo.user.AtyUserInputExceVO;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.authority.constant.QxConstant;
-import com.qk.dm.authority.entity.QxResources;
+import com.qk.dm.authority.entity.QkQxResourcesApi;
+import com.qk.dm.authority.entity.QkQxResourcesMenu;
 import com.qk.dm.authority.listener.ApiRsUploadDataListener;
 import com.qk.dm.authority.listener.RsUploadDataListener;
 import com.qk.dm.authority.listener.UserUploadDataListener;
 import com.qk.dm.authority.mapstruct.AtyUserMapper;
-import com.qk.dm.authority.mapstruct.QxResourcesMapper;
-import com.qk.dm.authority.repositories.QkQxResourcesRepository;
+import com.qk.dm.authority.mapstruct.QxResourcesApiMapper;
+import com.qk.dm.authority.mapstruct.QxResourcesMenuMapper;
+import com.qk.dm.authority.repositories.QkQxResourcesApiRepository;
+import com.qk.dm.authority.repositories.QkQxResourcesMenuRepository;
 import com.qk.dm.authority.service.AtyUserService;
 import com.qk.dm.authority.service.EmpExcelService;
 import com.qk.dm.authority.util.MultipartFileUtil;
-import com.qk.dm.authority.vo.powervo.ResourceExcelVO;
-import com.qk.dm.authority.vo.powervo.ResourceVO;
+import com.qk.dm.authority.vo.powervo.ResourceApiVO;
+import com.qk.dm.authority.vo.powervo.ResourceMenuExcelVO;
 import com.qk.dm.authority.vo.user.AtyUserDownVO;
 import com.qk.dm.authority.vo.user.AtyUserExcelVO;
 import org.apache.juli.logging.Log;
@@ -44,19 +47,22 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   private final ResourceExcelBatchService resourceExcelBatchService;
   private final ApiRsExcelBatchService apiResourceExcelBatchService;
   private final UserExcelBatchService userExcelBatchService;
-  private final QkQxResourcesRepository qkQxResourcesRepository;
+  private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
+  private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
   private final AtyUserService atyUserService;
   SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置格式
 
   @Autowired
   public EmpExcelServiceImpl(ResourceExcelBatchService resourceExcelBatchService,
       ApiRsExcelBatchService apiResourceExcelBatchService,
-      UserExcelBatchService userExcelBatchService, QkQxResourcesRepository qkQxResourcesRepository,
-      AtyUserService atyUserService) {
+      UserExcelBatchService userExcelBatchService,
+      QkQxResourcesApiRepository qkQxResourcesApiRepository,
+      QkQxResourcesMenuRepository qkQxResourcesMenuRepository, AtyUserService atyUserService) {
     this.resourceExcelBatchService = resourceExcelBatchService;
     this.apiResourceExcelBatchService = apiResourceExcelBatchService;
     this.userExcelBatchService = userExcelBatchService;
-    this.qkQxResourcesRepository = qkQxResourcesRepository;
+    this.qkQxResourcesApiRepository = qkQxResourcesApiRepository;
+    this.qkQxResourcesMenuRepository = qkQxResourcesMenuRepository;
     this.atyUserService = atyUserService;
   }
 
@@ -64,29 +70,34 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   @Override
   public void resourceDownloadTemplate(HttpServletResponse response)
       throws IOException {
-    List<ResourceExcelVO> rptBaseInfoVOList = prtBaseInfoSampleData();
+    List<ResourceMenuExcelVO> rptBaseInfoVOList = prtBaseInfoSampleData();
     response.setContentType("application/json;charset=utf-8");
     String fileName = URLEncoder.encode("资源基本信息导入模板", "UTF-8").replaceAll("\\+", "%20");
     response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-    EasyExcel.write(response.getOutputStream(), ResourceExcelVO.class)
+    EasyExcel.write(response.getOutputStream(), ResourceMenuExcelVO.class)
         .sheet("资源基本信息导入模板")
         .doWrite(rptBaseInfoVOList);
   }
 
-  private List<ResourceExcelVO> prtBaseInfoSampleData() {
-    List<ResourceExcelVO> list = new ArrayList<>();
+  private List<ResourceMenuExcelVO> prtBaseInfoSampleData() {
+    List<ResourceMenuExcelVO> list = new ArrayList<>();
     for (int i = 0; i < 2; i++) {
-      ResourceExcelVO resourceExcelVO =
-          ResourceExcelVO.builder()
+      ResourceMenuExcelVO resourceMenuExcelVO =
+          ResourceMenuExcelVO.builder()
               .name("资源名称" + i)
               .path("网址路径" + i)
               .description("描述" + i)
               .createName("创建人名称" + i)
               .pidName("父级名称"+i)
               .serviceId(("服务UUID")+i)
-              .type(1)
+              .component("页面"+i)
+              .icon("显示icon"+i)
+              .redirect("重定向"+i)
+              .hideInMenu(true)
+              .hideInBreadcrumb(true)
+              .exact(true)
               .build();
-      list.add(resourceExcelVO);
+      list.add(resourceMenuExcelVO);
     }
     return list;
 
@@ -95,29 +106,27 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   @Override
   public void apiDownloadTemplate(HttpServletResponse response)
       throws IOException {
-    List<ResourceVO> rptBaseInfoVOList = getApiDownloadTemplate();
+    List<ResourceApiVO> rptBaseInfoVOList = getApiDownloadTemplate();
     response.setContentType("application/json;charset=utf-8");
     String fileName = URLEncoder.encode("API资源基本信息导入模板", "UTF-8").replaceAll("\\+", "%20");
     response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-    EasyExcel.write(response.getOutputStream(), ResourceVO.class)
+    EasyExcel.write(response.getOutputStream(), ResourceApiVO.class)
         .sheet("API资源基本信息导入模板")
         .doWrite(rptBaseInfoVOList);
   }
 
-  private List<ResourceVO> getApiDownloadTemplate() {
-    List<ResourceVO> list = new ArrayList<>();
+  private List<ResourceApiVO> getApiDownloadTemplate() {
+    List<ResourceApiVO> list = new ArrayList<>();
     for (int i = 0; i < 2; i++) {
-      ResourceVO resourceVO =
-          ResourceVO.builder()
+      ResourceApiVO resourceApiVO =
+          ResourceApiVO.builder()
               .name("资源名称" + i)
               .path("网址路径" + i)
               .description("描述" + i)
               .createName("创建人名称" + i)
-              .pid(-1l)
               .serviceId(("服务UUID")+i)
-              .type(0)
               .build();
-      list.add(resourceVO);
+      list.add(resourceApiVO);
     }
     return list;
   }
@@ -130,13 +139,13 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   @Override
   public Boolean resourceInfoUpload(MultipartFile file) {
     MultipartFileUtil.checkFile(file);
-    List<ResourceExcelVO> list = new ArrayList<>();
+    List<ResourceMenuExcelVO> list = new ArrayList<>();
     LOG.info("======开始导入资源数据!======");
     try {
       RsUploadDataListener resourceBasicInfoUploadDataListener = new RsUploadDataListener(resourceExcelBatchService);
       EasyExcel.read(
           file.getInputStream(),
-          ResourceExcelVO.class,
+          ResourceMenuExcelVO.class,
           resourceBasicInfoUploadDataListener)
           .sheet()
           .doRead();
@@ -161,13 +170,13 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   @Override
   public Boolean apiResourceInfoUpload(MultipartFile file) {
     MultipartFileUtil.checkFile(file);
-    List<ResourceVO> list = new ArrayList<>();
+    List<ResourceApiVO> list = new ArrayList<>();
     LOG.info("======开始导入api资源数据!======");
     try {
       ApiRsUploadDataListener apiResourceBasicInfoUploadDataListener = new ApiRsUploadDataListener(apiResourceExcelBatchService);
       EasyExcel.read(
           file.getInputStream(),
-          ResourceVO.class,
+          ResourceApiVO.class,
           apiResourceBasicInfoUploadDataListener)
           .sheet()
           .doRead();
@@ -192,11 +201,11 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   @Override
   public void resourcesAllDownload(String serviceId, HttpServletResponse response)
       throws IOException {
-    List<ResourceExcelVO> dsdCodeInfoVOList = GetResourcesAll(serviceId);
+    List<ResourceMenuExcelVO> dsdCodeInfoVOList = GetResourcesAll(serviceId);
     response.setContentType("application/json;charset=utf-8");
     String fileName = URLEncoder.encode("资源基本信息", "UTF-8").replaceAll("\\+", "%20");
     response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-    EasyExcel.write(response.getOutputStream(), ResourceExcelVO.class)
+    EasyExcel.write(response.getOutputStream(), ResourceMenuExcelVO.class)
         .sheet("资源基本信息")
         .doWrite(dsdCodeInfoVOList);
   }
@@ -209,11 +218,11 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   @Override
   public void apiAllDownload(String serviceId, HttpServletResponse response)
       throws IOException {
-    List<ResourceVO> apiResourcesList = GetApiAll(serviceId);
+    List<ResourceApiVO> apiResourcesList = GetApiAll(serviceId);
     response.setContentType("application/json;charset=utf-8");
     String fileName = URLEncoder.encode("api资源基本信息", "UTF-8").replaceAll("\\+", "%20");
     response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
-    EasyExcel.write(response.getOutputStream(), ResourceVO.class)
+    EasyExcel.write(response.getOutputStream(), ResourceApiVO.class)
         .sheet("api资源基本信息")
         .doWrite(apiResourcesList);
   }
@@ -326,14 +335,12 @@ public class EmpExcelServiceImpl implements EmpExcelService {
    * @param serviceId
    * @return
    */
-  private List<ResourceVO> GetApiAll(String serviceId) {
-    List<ResourceVO> resourceVOList = new ArrayList<>();
-    List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(serviceId);
-    //筛选资源数据
-    List<QxResources> list = qxResourcesList.stream().filter(qxResources -> qxResources.getPid() == QxConstant.PID
-    ).collect(Collectors.toList());
-    if (CollectionUtils.isNotEmpty(list)){
-      resourceVOList = QxResourcesMapper.INSTANCE.qxResourcesOf(list);
+  private List<ResourceApiVO> GetApiAll(String serviceId) {
+    List<ResourceApiVO> resourceVOList = new ArrayList<>();
+    List<QkQxResourcesApi> resourceApiList = qkQxResourcesApiRepository
+        .findByServiceId(serviceId);
+    if (CollectionUtils.isNotEmpty(resourceApiList)){
+      resourceVOList = QxResourcesApiMapper.INSTANCE.qxApiResourcesOf(resourceApiList);
     }
     return resourceVOList;
   }
@@ -343,15 +350,15 @@ public class EmpExcelServiceImpl implements EmpExcelService {
    * @param serviceId
    * @return
    */
-  private List<ResourceExcelVO> GetResourcesAll(String serviceId) {
-    List<ResourceExcelVO> resourceOutVOList = new ArrayList<>();
-    List<QxResources> qxResourcesList = qkQxResourcesRepository.findByServiceId(serviceId);
-    //筛选资源数据
-    List<QxResources> list = qxResourcesList.stream().filter(qxResources -> qxResources.getPid()!= QxConstant.PID
-    ).collect(Collectors.toList());
-    Map<Long,String> map = dealResources(list);
-    if (CollectionUtils.isNotEmpty(list)){
-      resourceOutVOList = QxResourcesMapper.INSTANCE.ofExcelVO(list);
+  private List<ResourceMenuExcelVO> GetResourcesAll(String serviceId) {
+    List<ResourceMenuExcelVO> resourceOutVOList = new ArrayList<>();
+    List<QkQxResourcesMenu> qkQxResourcesMenuList = qkQxResourcesMenuRepository.findByServiceId(serviceId);
+    List<QkQxResourcesMenu> qxResourcesMenuList = qkQxResourcesMenuList.stream().filter(
+        qkQxResourcesMenu -> qkQxResourcesMenu.getPid() != QxConstant.PID)
+        .collect(Collectors.toList());
+    Map<Long,String> map = dealResources(qxResourcesMenuList);
+    if (CollectionUtils.isNotEmpty(qxResourcesMenuList)){
+      resourceOutVOList = QxResourcesMenuMapper.INSTANCE.ofResourceExcelVO(qxResourcesMenuList);
       resourceOutVOList.forEach(resourceExcelVO -> {
         resourceExcelVO.setPidName(map.get(resourceExcelVO.getId()));
       });
@@ -364,20 +371,22 @@ public class EmpExcelServiceImpl implements EmpExcelService {
    * @param list
    * @return
    */
-  private Map<Long,String> dealResources(List<QxResources> list) {
+  private Map<Long,String> dealResources(List<QkQxResourcesMenu> list) {
     Map<Long,String> map  = new HashMap<>();
     if (CollectionUtils.isNotEmpty(list)){
-      list.forEach(qxResources -> {
-        map.put(qxResources.getId(),getValue(qxResources.getPid(),list));
+      list.forEach(qkQxResourcesMenu -> {
+        map.put(qkQxResourcesMenu.getId(),getValue(qkQxResourcesMenu.getPid(),list));
       });
     }
     return map;
   }
 
-  private String getValue(Long pid, List<QxResources> list) {
-    Optional<QxResources> qxResourcesOptional = list.stream().filter(qxResources -> qxResources.getId().equals(pid)).findFirst();
-    if (qxResourcesOptional.isPresent()){
-      return qxResourcesOptional.get().getName();
+  private String getValue(Long pid, List<QkQxResourcesMenu> list) {
+    Optional<QkQxResourcesMenu> resourcesMenu = list.stream()
+        .filter(qkQxResourcesMenu -> qkQxResourcesMenu.getId().equals(pid))
+        .findFirst();
+    if (resourcesMenu.isPresent()){
+      return resourcesMenu.get().getName();
     }
     return QxConstant.PID_NAME;
   }

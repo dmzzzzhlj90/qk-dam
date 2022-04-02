@@ -3,6 +3,7 @@ package com.qk.dm.metadata.service.impl;
 import com.google.common.collect.Sets;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.metedata.AtlasClient;
 import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dam.metedata.property.AtlasBaseProperty;
@@ -39,18 +40,19 @@ import org.springframework.util.CollectionUtils;
 @Service
 public class AtlasMetaDataServiceImpl implements AtlasMetaDataService {
 
-  private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
-
+  private AtlasClientV2 atlasClientV2;
+  private final AtlasClient atlasClient;
   private final MtdLabelsAtlasService mtdLabelsAtlasService;
 
   private final MtdClassifyAtlasService mtdClassifyAtlasService;
 
-  @Autowired
   public AtlasMetaDataServiceImpl(
-      MtdLabelsAtlasService mtdLabelsAtlasService,
-      MtdClassifyAtlasService mtdClassifyAtlasService) {
+          AtlasClient atlasClient, MtdLabelsAtlasService mtdLabelsAtlasService,
+          MtdClassifyAtlasService mtdClassifyAtlasService) {
+    this.atlasClient = atlasClient;
     this.mtdLabelsAtlasService = mtdLabelsAtlasService;
     this.mtdClassifyAtlasService = mtdClassifyAtlasService;
+    this.atlasClientV2=atlasClient.instance();
   }
 
   @Override
