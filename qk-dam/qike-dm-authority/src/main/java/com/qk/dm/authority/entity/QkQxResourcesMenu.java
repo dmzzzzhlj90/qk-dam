@@ -109,8 +109,8 @@ public class QkQxResourcesMenu implements Serializable {
   /**
    * 子路由
    */
-  @Column(name = "route")
-  private String route;
+  //@Column(name = "route")
+  //private String route;
 
   /**
    * 显示icon
@@ -128,18 +128,18 @@ public class QkQxResourcesMenu implements Serializable {
    * 是否隐藏菜单
    */
   @Column(name = "hide_in_menu")
-  private String hideInMenu;
+  private Boolean hideInMenu;
 
   /**
    * 是否隐藏面包屑
    */
   @Column(name = "hide_in_breadcrumb")
-  private String hideInBreadcrumb;
+  private Boolean hideInBreadcrumb;
 
   /**
    * 是否严格匹配
    */
   @Column(name = "exact")
-  private String exact;
+  private Boolean exact;
 
 }

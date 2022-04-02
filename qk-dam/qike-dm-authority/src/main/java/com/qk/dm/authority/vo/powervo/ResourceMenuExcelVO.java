@@ -113,36 +113,36 @@ public class ResourceMenuExcelVO {
   /**
    * 子路由
    */
-  @ExcelProperty(value = "子路由",order = 8)
-  private String route;
+  //@ExcelProperty(value = "子路由",order = 8)
+  //private String route;
 
   /**
    * 显示icon
    */
-  @ExcelProperty(value = "显示icon",order = 9)
+  @ExcelProperty(value = "显示icon",order = 8)
   private String icon;
 
   /**
    * 重定向
    */
-  @ExcelProperty(value = "重定向",order = 10)
+  @ExcelProperty(value = "重定向",order = 9)
   private String redirect;
 
   /**
    * 是否隐藏菜单
    */
-  @ExcelProperty(value = "是否隐藏菜单",order = 11)
-  private String hideInMenu;
+  @ExcelProperty(value = "是否隐藏菜单",order = 10)
+  private Boolean hideInMenu;
 
   /**
    * 是否隐藏面包屑
    */
-  @ExcelProperty(value = "是否隐藏面包屑",order = 12)
-  private String hideInBreadcrumb;
+  @ExcelProperty(value = "是否隐藏面包屑",order = 11)
+  private Boolean hideInBreadcrumb;
 
   /**
    * 是否严格匹配
    */
-  @ExcelProperty(value = "是否严格匹配",order = 13)
-  private String exact;
+  @ExcelProperty(value = "是否严格匹配",order = 12)
+  private Boolean exact;
 }

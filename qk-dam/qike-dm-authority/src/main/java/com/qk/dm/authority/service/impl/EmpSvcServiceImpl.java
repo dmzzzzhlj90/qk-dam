@@ -105,7 +105,7 @@ public class EmpSvcServiceImpl implements EmpSvcService {
   }
 
   /**
-   * 删除服务的同时删除资源和授权信息
+   * 删除服务的同时删除资源（api）和授权信息及关系表
    * @param qxService
    */
   private void deleteAssociatedData(QxService qxService) {

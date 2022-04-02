@@ -106,7 +106,7 @@ public class ResourceMenuQueryVO {
   /**
    * 子路由
    */
-  private String route;
+  //private String route;
 
   /**
    * 显示icon
@@ -121,17 +121,17 @@ public class ResourceMenuQueryVO {
   /**
    * 是否隐藏菜单
    */
-  private String hideInMenu;
+  private Boolean hideInMenu;
 
   /**
    * 是否隐藏面包屑
    */
-  private String hideInBreadcrumb;
+  private Boolean hideInBreadcrumb;
 
   /**
    * 是否严格匹配
    */
-  private String exact;
+  private Boolean exact;
 
   /**
    * 子节点
