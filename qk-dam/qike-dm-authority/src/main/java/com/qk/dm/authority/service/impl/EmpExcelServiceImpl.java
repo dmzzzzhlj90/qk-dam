@@ -31,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,7 +49,6 @@ public class EmpExcelServiceImpl implements EmpExcelService {
   private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
   private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
   private final AtyUserService atyUserService;
-  SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置格式
 
   @Autowired
   public EmpExcelServiceImpl(ResourceExcelBatchService resourceExcelBatchService,
