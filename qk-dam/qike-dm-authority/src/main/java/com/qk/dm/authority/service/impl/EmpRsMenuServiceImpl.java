@@ -174,7 +174,8 @@ public class EmpRsMenuServiceImpl implements EmpRsMenuService {
     return trees;
   }
 
-  private ResourceMenuQueryVO findChildren(ResourceMenuQueryVO resourceMenuQueryVO, List<ResourceMenuQueryVO> resourceOutVOList) {
+  ResourceMenuQueryVO findChildren(ResourceMenuQueryVO resourceMenuQueryVO,
+      List<ResourceMenuQueryVO> resourceOutVOList) {
     resourceMenuQueryVO.setChildren(new ArrayList<>());
     if (CollectionUtils.isNotEmpty(resourceOutVOList)){
       resourceOutVOList.forEach(resourceMenuQueryVO1 -> {

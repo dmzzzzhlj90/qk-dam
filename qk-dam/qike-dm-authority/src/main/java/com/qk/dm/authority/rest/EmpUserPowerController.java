@@ -5,6 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.authority.service.EmpUserPowerService;
 import com.qk.dm.authority.vo.params.UserEmpParamVO;
 import com.qk.dm.authority.vo.params.UserEmpPowerParamVO;
+import com.qk.dm.authority.vo.powervo.EmpResourceUrlVO;
 import com.qk.dm.authority.vo.powervo.ServiceQueryVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,9 +56,9 @@ private final EmpUserPowerService empUserPowerService;
    * @param userEmpPowerParamVO 查询用户授权url参数
    * @return DefaultCommonResult<List<EmpResourceUrlVO>> 用户授权服务资源的url
    */
- /* @PostMapping("/resource")
+  @PostMapping("/resource")
 public DefaultCommonResult<List<EmpResourceUrlVO>> queryEmpowerResource(@RequestBody @Validated
     UserEmpPowerParamVO userEmpPowerParamVO){
   return DefaultCommonResult.success(ResultCodeEnum.OK,empUserPowerService.queryEmpowerResource(userEmpPowerParamVO));
-}*/
+}
 }

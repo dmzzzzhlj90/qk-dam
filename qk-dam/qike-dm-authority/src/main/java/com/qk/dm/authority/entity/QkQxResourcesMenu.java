@@ -125,19 +125,19 @@ public class QkQxResourcesMenu implements Serializable {
   private String redirect;
 
   /**
-   * 是否隐藏菜单
+   * 是否隐藏菜单（true表示隐藏）
    */
   @Column(name = "hide_in_menu")
   private Boolean hideInMenu;
 
   /**
-   * 是否隐藏面包屑
+   * 是否隐藏面包屑（true表示隐藏）
    */
   @Column(name = "hide_in_breadcrumb")
   private Boolean hideInBreadcrumb;
 
   /**
-   * 是否严格匹配
+   * 是否严格匹配（true表示严格匹配）
    */
   @Column(name = "exact")
   private Boolean exact;

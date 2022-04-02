@@ -1,6 +1,7 @@
 package com.qk.dm.authority.mapstruct;
 
 import com.qk.dm.authority.entity.QkQxResourcesMenu;
+import com.qk.dm.authority.vo.powervo.EmpResourceUrlVO;
 import com.qk.dm.authority.vo.powervo.ResourceMenuExcelVO;
 import com.qk.dm.authority.vo.powervo.ResourceMenuQueryVO;
 import com.qk.dm.authority.vo.powervo.ResourceMenuVO;
@@ -31,4 +32,12 @@ public interface QxResourcesMenuMapper {
   List<ResourceMenuExcelVO> ofResourceExcelVO(List<QkQxResourcesMenu> qxResourcesMenuList);
 
   void from(ResourceMenuVO resourceMenuVO, @MappingTarget QkQxResourcesMenu qkQxResourcesMenuOne);
+
+  @Mappings({
+      @Mapping(source = "title", target = "name"),
+      @Mapping(source = "children", target = "route")
+  })
+  EmpResourceUrlVO empResourceUrlVO(ResourceMenuQueryVO resourceMenuQueryVO);
+
+  List<EmpResourceUrlVO> ofEmpResourceUrlVO(List<ResourceMenuQueryVO> trees);
 }

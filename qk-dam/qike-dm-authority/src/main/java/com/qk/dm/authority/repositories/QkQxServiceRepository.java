@@ -4,5 +4,6 @@ import com.qk.dam.jpa.base.BaseRepository;
 import com.qk.dm.authority.entity.QxService;
 
 public interface QkQxServiceRepository extends BaseRepository<QxService, Long> {
+  QxService findByServiceId(String ServiceId);
 
 }

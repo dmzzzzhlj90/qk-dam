@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * 根据用户id查询资源VO
+ * 根据用户id查询授权菜单VO
  * @author zys
  * @date 2022/3/30 17:27
  * @since 1.0.0
@@ -19,17 +19,12 @@ import java.util.List;
 @AllArgsConstructor
 public class EmpResourceUrlVO {
   /**
-   * 主键id
+   * 主键id(修改时为必填参数)
    */
   private Long id;
 
   /**
-   * 父级id（API类型fid默认为-1）
-   */
-  private Long pid;
-
-  /**
-   * 资源（API）名称
+   * 资源名称
    */
   private String name;
 
@@ -39,7 +34,47 @@ public class EmpResourceUrlVO {
   private String path;
 
   /**
-   * 子节点集合
+   * 描述
    */
-  private List<EmpResourceUrlVO> chirdren;
+  private String description;
+
+  /**
+   * 父级id
+   */
+  private Long pid;
+
+  /**
+   * 页面
+   */
+  private String component;
+
+  /**
+   * 显示icon
+   */
+  private String icon;
+
+  /**
+   * 重定向
+   */
+  private String redirect;
+
+  /**
+   * 是否隐藏菜单
+   */
+  private Boolean hideInMenu;
+
+  /**
+   * 是否隐藏面包屑
+   */
+  private Boolean hideInBreadcrumb;
+
+  /**
+   * 是否严格匹配
+   */
+  private Boolean exact;
+
+  /**
+   * 子菜单
+   */
+  private List<EmpResourceUrlVO> route;
 }
