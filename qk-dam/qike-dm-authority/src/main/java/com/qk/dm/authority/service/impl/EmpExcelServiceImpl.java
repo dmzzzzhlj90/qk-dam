@@ -91,12 +91,11 @@ public class EmpExcelServiceImpl implements EmpExcelService {
               .pidName("父级名称"+i)
               .serviceId(("服务UUID")+i)
               .component("页面"+i)
-              .route("子路由"+i)
               .icon("显示icon"+i)
               .redirect("重定向"+i)
-              .hideInMenu("是否隐藏菜单"+i)
-              .hideInBreadcrumb("是否隐藏面包屑"+i)
-              .exact("是否严格匹配"+i)
+              .hideInMenu(true)
+              .hideInBreadcrumb(true)
+              .exact(true)
               .build();
       list.add(resourceMenuExcelVO);
     }
