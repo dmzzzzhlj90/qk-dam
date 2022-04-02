@@ -548,13 +548,13 @@ public class PhysicalServiceImpl implements PhysicalService {
       case ModelStatus.EXIST_DATA:
         throw new BizException("发布失败,该表已经存在并且存在数据");
       case ModelStatus.EXIST_NO_DATA:
-        ModelSql sqlv1 = modelSqlRepository.findByTableId(id);
+        ModelSql sqlv1 = modelSqlRepository.findByTableIdAndType(id,ModelType.PHYSICAL_TABLE);
         //todo(需要完善)执行sql成功后修改数据状态
 
         builPushData(modelPhysical);
         break;
       case ModelStatus.NO_EXIST:
-        ModelSql sqlv0 = modelSqlRepository.findByTableId(id);
+        ModelSql sqlv0 = modelSqlRepository.findByTableIdAndType(id,ModelType.PHYSICAL_TABLE);
         //todo(需要完善)执行sql成功后修改数据状态
 
         builPushData(modelPhysical);
