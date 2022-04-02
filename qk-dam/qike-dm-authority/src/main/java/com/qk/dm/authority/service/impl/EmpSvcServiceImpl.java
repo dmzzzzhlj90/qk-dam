@@ -26,15 +26,15 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EmpSvcServiceImpl implements EmpSvcService {
+  private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
+  private final QQxService qQxService=QQxService.qxService;
   private final QkQxServiceRepository qkQxServiceRepository;
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
-  private final QQxService qQxService=QQxService.qxService;
-  private JPAQueryFactory jpaQueryFactory;
-  private final EntityManager entityManager;
   private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
   private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
-  private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
+  private JPAQueryFactory jpaQueryFactory;
+  private final EntityManager entityManager;
 
   public EmpSvcServiceImpl(QkQxServiceRepository qkQxServiceRepository,
       QkQxEmpowerRepository qkQxEmpowerRepository, EntityManager entityManager,

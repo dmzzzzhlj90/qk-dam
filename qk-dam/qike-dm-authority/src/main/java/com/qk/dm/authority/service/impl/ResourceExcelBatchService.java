@@ -49,10 +49,10 @@ public class ResourceExcelBatchService {
       Map<String,QkQxResourcesMenu> resourceMap = qkQxResourcesMenuList.stream().collect(
           Collectors.toMap(k -> k.getName() + "->" + k.getServiceId()+ "->" + k.getComponent(), k -> k, (k1, k2) -> k1));
           qxResourcesList.forEach(resourceMenuExcelVO-> {
-        //根据key获取父级信息
-        String key = MultipartFileUtil.getKey(resourceMenuExcelVO);
-        //生成新的资源key
-        String createKey = MultipartFileUtil.createKey(resourceMenuExcelVO);
+          //根据key获取父级信息
+          String key = MultipartFileUtil.getKey(resourceMenuExcelVO);
+          //生成新的资源key
+          String createKey = MultipartFileUtil.createKey(resourceMenuExcelVO);
             QkQxResourcesMenu qkQxResourcesMenu = resourceMap.get(key);
             QkQxResourcesMenu resources =null;
         if (Objects.isNull(qkQxResourcesMenu)){

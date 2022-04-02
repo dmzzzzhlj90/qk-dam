@@ -39,6 +39,9 @@ import java.util.stream.Collectors;
 public class EmpUserPowerServiceImpl implements EmpUserPowerService {
   private final QQkQxResourcesApi qQkQxResourcesApi = QQkQxResourcesApi.qkQxResourcesApi;
   private final QQkQxResourcesMenu qQkQxResourcesMenu = QQkQxResourcesMenu.qkQxResourcesMenu;
+  private final QQkQxResourcesEmpower qQkQxResourcesEmpower =QQkQxResourcesEmpower.qkQxResourcesEmpower;
+  private final QQxEmpower qQxEmpower = QQxEmpower.qxEmpower;
+  private final QQxService qQxService = QQxService.qxService;
   private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
   private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
   private final AtyUserGroupService atyUserGroupService;
@@ -46,9 +49,6 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QkQxServiceRepository qkQxServiceRepository;
-  private final QQxEmpower qQxEmpower = QQxEmpower.qxEmpower;
-  private final QQxService qQxService = QQxService.qxService;
-  private final QQkQxResourcesEmpower qQkQxResourcesEmpower =QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
   private final EmpRsMenuServiceImpl empRsMenuServiceImpl;
@@ -59,8 +59,8 @@ public class EmpUserPowerServiceImpl implements EmpUserPowerService {
       AtyUserRoleService atyUserRoleService,
       QkQxEmpowerRepository qkQxEmpowerRepository,
       QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository,
-      EntityManager entityManager, QkQxServiceRepository qkQxServiceRepository,
-      QkQxServiceRepository qkQxServiceRepository1, EmpRsMenuServiceImpl empRsMenuServiceImpl) {
+      EntityManager entityManager,QkQxServiceRepository qkQxServiceRepository1,
+      EmpRsMenuServiceImpl empRsMenuServiceImpl) {
     this.qkQxResourcesApiRepository = qkQxResourcesApiRepository;
     this.qkQxResourcesMenuRepository = qkQxResourcesMenuRepository;
     this.atyUserGroupService = atyUserGroupService;

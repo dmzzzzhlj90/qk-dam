@@ -32,12 +32,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EmpPowerServiceImpl implements EmpPowerService {
-  private final QkQxServiceRepository qkQxServiceRepository;
-  private final QkQxEmpowerRepository qkQxEmpowerRepository;
-  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private final QQxEmpower qQxEmpower = QQxEmpower.qxEmpower;
   private final QQxService qQxService = QQxService.qxService;
+  private final QkQxServiceRepository qkQxServiceRepository;
+  private final QkQxEmpowerRepository qkQxEmpowerRepository;
+  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
 

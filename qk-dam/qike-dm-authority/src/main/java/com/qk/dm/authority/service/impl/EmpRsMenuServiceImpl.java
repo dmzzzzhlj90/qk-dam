@@ -32,11 +32,10 @@ import java.util.stream.Collectors;
 @Service
 public class EmpRsMenuServiceImpl implements EmpRsMenuService {
   private final QQkQxResourcesMenu qQkQxResourcesMenu=QQkQxResourcesMenu.qkQxResourcesMenu;
-  private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
   private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
+  private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
   private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
-
 
   public EmpRsMenuServiceImpl(
       QkQxResourcesMenuRepository qkQxResourcesMenuRepository,
@@ -163,8 +162,12 @@ public class EmpRsMenuServiceImpl implements EmpRsMenuService {
     if (CollectionUtils.isNotEmpty(qkQxResourcesMenuList)){
       resourceOutVOList = QxResourcesMenuMapper.INSTANCE.ResourceMenuQueryVOof(qkQxResourcesMenuList);
       return buildByResource(resourceOutVOList,resourceParamVO.getName());
+    }else{
+      ResourceMenuQueryVO resourceMenuQueryVO = ResourceMenuQueryVO.builder().id(QxConstant.DIRID).title(resourceParamVO.getName()).value(QxConstant.RESOURCEID).build();
+      return  new ArrayList<ResourceMenuQueryVO>(){{
+        add(resourceMenuQueryVO);
+      }};
     }
-    return  new ArrayList<ResourceMenuQueryVO>();
   }
 
   private List<ResourceMenuQueryVO> buildByResource(List<ResourceMenuQueryVO> resourceOutVOList, String name) {

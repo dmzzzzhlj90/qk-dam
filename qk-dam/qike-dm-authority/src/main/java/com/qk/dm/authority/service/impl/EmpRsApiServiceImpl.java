@@ -33,8 +33,8 @@ import java.util.stream.Collectors;
 @Service
 public class EmpRsApiServiceImpl implements EmpRsApiService {
   private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
-  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QQkQxResourcesApi qQkQxResourcesApi = QQkQxResourcesApi.qkQxResourcesApi;
+  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
   private final QkQxEmpowerRepository qkQxEmpowerRepository;
   private JPAQueryFactory jpaQueryFactory;
@@ -87,7 +87,6 @@ public class EmpRsApiServiceImpl implements EmpRsApiService {
       throw new BizException("当前需修改的名称为"+resourceApiVO.getName()+"的API数据不存在");
     }
     QxResourcesApiMapper.INSTANCE.from(resourceApiVO,qkQxResourcesApiOne);
-    //s = QxResourcesApiMapper.INSTANCE.qxApiResources(resourceApiVO);
     qkQxResourcesApiRepository.saveAndFlush(qkQxResourcesApiOne);
   }
 
