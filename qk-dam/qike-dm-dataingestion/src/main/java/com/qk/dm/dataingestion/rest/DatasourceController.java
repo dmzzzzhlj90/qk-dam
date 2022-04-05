@@ -1,11 +1,5 @@
 package com.qk.dm.dataingestion.rest;
 
-/**
- * 访问数据源服务
- *
- * @author zhudaoming
- */
-
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
@@ -20,6 +14,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 访问数据源服务
+ * 通过元数据服务获取。例如：库，表，列，字段
+ *
+ * @author zhudaoming
+ */
 @RestController
 @RequestMapping("/datax")
 public class DatasourceController extends DatasourceBasicController {
@@ -29,7 +29,7 @@ public class DatasourceController extends DatasourceBasicController {
      * @return List<ResultDatasourceInfo> 所有数据连接
      */
     @GetMapping("/connects")
-    public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType() {
+    public DefaultCommonResult<List<ResultDatasourceInfo>> getResultAllDataSource() {
 
         return DefaultCommonResult.success(ResultCodeEnum.OK,Arrays.stream(IngestionType.values())
                 .map(ingestionType ->

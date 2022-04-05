@@ -30,12 +30,12 @@ public abstract class DatasourceBasicController {
 
     /**
      * 获取数据源连接
-     * @param connectType
+     * @param type
      * @return DefaultCommonResult<List<String>>
      */
     @GetMapping("/connect/{type}")
-    public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(@PathVariable("type") String connectType) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getResultDataSourceByType(connectType));
+    public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSource(@PathVariable final String type) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getResultDataSourceByType(type));
     }
 
     /**
