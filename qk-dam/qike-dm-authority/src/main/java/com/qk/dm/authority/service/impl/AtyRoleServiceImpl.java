@@ -8,6 +8,7 @@ import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleParamVO;
 import com.qk.dm.authority.vo.clientrole.AtyClientRoleVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,11 +38,12 @@ public class AtyRoleServiceImpl implements AtyRoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteClientRole(AtyClientRoleVO clientRoleVO) {
-        AtyClientRoleInfoVO clientRoleDetail = keyCloakRoleApi.clientRoleDetail(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
-        keyCloakRoleApi.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
         //删除权限
+        AtyClientRoleInfoVO clientRoleDetail = keyCloakRoleApi.clientRoleDetail(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
         empPowerService.deleteEmpPower(clientRoleDetail.getId());
+        keyCloakRoleApi.deleteClientRole(clientRoleVO.getRealm(), clientRoleVO.getClient_id(), clientRoleVO.getName());
     }
 
     @Override

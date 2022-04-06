@@ -8,6 +8,7 @@ import com.qk.dm.authority.service.EmpPowerService;
 import com.qk.dm.authority.vo.group.AtyGroupParamVO;
 import com.qk.dm.authority.vo.group.AtyGroupVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,10 +39,11 @@ public class AtyGroupServiceImpl implements AtyGroupService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteGroup(String realm, String groupId) {
-        keyCloakGroupApi.deleteGroup(realm, groupId);
-        //删除权限
+        //删除权限,先删除权限可控制回滚
         empPowerService.deleteEmpPower(groupId);
+        keyCloakGroupApi.deleteGroup(realm, groupId);
     }
 
     @Override
