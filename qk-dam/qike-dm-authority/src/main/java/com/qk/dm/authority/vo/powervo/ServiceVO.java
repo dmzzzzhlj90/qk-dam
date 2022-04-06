@@ -91,19 +91,19 @@ public class ServiceVO {
   /**
    * 微服务线上地址
    */
-  @NotBlank(message = "微服务线上地址不为空能")
+  @NotBlank(message = "entry不能为空")
   private String entry;
 
   /**
    * 微服务项目名
    */
-  @NotBlank(message = "微服务项目名不为空能")
+  @NotBlank(message = "path不能为空")
   private String path;
 
   /**
    * 微应用
    */
-  @NotBlank(message = "微应用不为空能")
+  @NotBlank(message = "microApp不能为空")
   private String microApp;
 
   /**
@@ -116,6 +116,5 @@ public class ServiceVO {
    * 服务的uuid（前端展示使用）
    */
   private String value;
-
 
 }
