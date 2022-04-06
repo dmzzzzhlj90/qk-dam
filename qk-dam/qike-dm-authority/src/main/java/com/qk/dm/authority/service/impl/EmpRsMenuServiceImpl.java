@@ -88,7 +88,7 @@ public class EmpRsMenuServiceImpl implements EmpRsMenuService {
    * @param id
    */
   @Override
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void deleteResourceMenu(Long id) {
     ArrayList<Long> ids = new ArrayList<>();
     ids.add(id);

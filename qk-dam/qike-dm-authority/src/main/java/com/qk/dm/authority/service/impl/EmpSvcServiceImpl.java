@@ -12,6 +12,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -93,6 +94,7 @@ public class EmpSvcServiceImpl implements EmpSvcService {
   }
 
   @Override
+  @Transactional(rollbackFor = Exception.class)
   public void deleteService(Long id) {
     QxService qxService = qkQxServiceRepository.findById(id).orElse(null);
     if (Objects.isNull(qxService)){
@@ -155,10 +157,10 @@ public class EmpSvcServiceImpl implements EmpSvcService {
 
   private void checkCondition(BooleanBuilder booleanBuilder, ServiceParamVO serviceParamVO) {
     if (!StringUtils.isEmpty(serviceParamVO.getServiceName())) {
-      booleanBuilder.and(qQxService.serviceName.contains(serviceParamVO.getServiceName()));
+      booleanBuilder.and(qQxService.serviceName.eq(serviceParamVO.getServiceName()));
     }
     if (!StringUtils.isEmpty(serviceParamVO.getRedionId())) {
-      booleanBuilder.and(qQxService.redionId.contains(serviceParamVO.getRedionId()));
+      booleanBuilder.and(qQxService.redionId.eq(serviceParamVO.getRedionId()));
     }
   }
 }
