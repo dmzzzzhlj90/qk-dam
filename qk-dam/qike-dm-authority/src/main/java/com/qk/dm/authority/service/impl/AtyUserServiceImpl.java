@@ -12,6 +12,7 @@ import com.qk.dm.authority.vo.user.AtyUserCreateVO;
 import com.qk.dm.authority.vo.user.AtyUserParamVO;
 import com.qk.dm.authority.vo.user.AtyUserUpdateVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -43,10 +44,11 @@ public class AtyUserServiceImpl implements AtyUserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteUser(String realm, String userId) {
-        keyCloakUserApi.deleteUser(realm, userId);
         //删除权限
         empPowerService.deleteEmpPower(userId);
+        keyCloakUserApi.deleteUser(realm, userId);
     }
 
     @Override

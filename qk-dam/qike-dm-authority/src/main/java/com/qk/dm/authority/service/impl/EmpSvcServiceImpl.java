@@ -157,7 +157,7 @@ public class EmpSvcServiceImpl implements EmpSvcService {
 
   private void checkCondition(BooleanBuilder booleanBuilder, ServiceParamVO serviceParamVO) {
     if (!StringUtils.isEmpty(serviceParamVO.getServiceName())) {
-      booleanBuilder.and(qQxService.serviceName.eq(serviceParamVO.getServiceName()));
+      booleanBuilder.and(qQxService.serviceName.contains(serviceParamVO.getServiceName()));
     }
     if (!StringUtils.isEmpty(serviceParamVO.getRedionId())) {
       booleanBuilder.and(qQxService.redionId.eq(serviceParamVO.getRedionId()));
