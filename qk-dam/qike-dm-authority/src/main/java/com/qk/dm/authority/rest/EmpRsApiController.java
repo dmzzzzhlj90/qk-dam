@@ -85,7 +85,7 @@ public class EmpRsApiController {
 
 
   /**
-   * 查询删除的资源是否已经授权
+   * 查询删除的api是否已经授权(true存在授权为false不存在授权)
    * @param ids 资源（api）id的字符串用“,”分隔
    * @return DefaultCommonResult<Boolean> 返回值为true表示存在为false表示不存在
    */

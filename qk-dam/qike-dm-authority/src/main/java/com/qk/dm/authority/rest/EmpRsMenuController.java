@@ -72,7 +72,7 @@ public class EmpRsMenuController {
 
 
   /**
-   * 查询删除的资源是否已经授权
+   * 查询删除的资源是否已经授权(true存在授权为false不存在授权)
    * @param id 资源id
    * @return DefaultCommonResult<Boolean> 返回值为true表示存在为false表示不存在
    */
