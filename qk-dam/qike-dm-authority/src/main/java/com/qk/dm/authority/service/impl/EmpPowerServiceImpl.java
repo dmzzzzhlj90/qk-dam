@@ -55,6 +55,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
   @Override
+  @Transactional(rollbackFor = Exception.class)
   public void addEmpower(EmpowerVO empowerVO) {
     empowerVO.setEmpowerId(UUID.randomUUID().toString());
     QxEmpower qxEmpower = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
@@ -112,7 +113,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   }
 
   @Override
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void updateEmpower(EmpowerVO empowerVO) {
     QxEmpower qxEmpower = qkQxEmpowerRepository.findById(empowerVO.getId())
         .orElse(null);
@@ -142,7 +143,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   }
 
   @Override
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void deleteEmpower(Long id) {
     QxEmpower qxEmpower = qkQxEmpowerRepository.findById(id).orElse(null);
     if (Objects.isNull(qxEmpower)){

@@ -95,7 +95,7 @@ public class EmpRsApiServiceImpl implements EmpRsApiService {
    * @param ids
    */
   @Override
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void deleteApiResource(String ids) {
     List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
     List<QkQxResourcesApi> qkQxResourcesList = (List<QkQxResourcesApi>) qkQxResourcesApiRepository

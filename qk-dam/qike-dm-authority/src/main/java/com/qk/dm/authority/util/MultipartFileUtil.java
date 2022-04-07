@@ -61,7 +61,7 @@ public class MultipartFileUtil {
   }
 
   /**
-   * 根据父级名称、服务id、页面类型拼接key
+   * 根据父级名称、服务uuid、页面类型拼接key
    * @param qxResources
    * @return
    */
@@ -71,7 +71,7 @@ public class MultipartFileUtil {
   }
 
   /**
-   * 创建资源导入key(资源名称、资源服务名称、资源页面)
+   * 创建资源导入key(资源名称、资源uuid、资源页面)
    * @param qxResources
    * @return
    */
@@ -81,7 +81,7 @@ public class MultipartFileUtil {
   }
 
   /**
-   * 创建添加后资源key（名称、服务id、页面）
+   * 创建添加后资源key（名称、服务uuid、页面）
    * @param resourceExcelVO
    * @return
    */
@@ -91,7 +91,7 @@ public class MultipartFileUtil {
   }
 
   /**
-   * 创建api资源key
+   * 创建api资源key(api的名称、服务的uuid)
    * @param resourceVO
    * @return
    */
