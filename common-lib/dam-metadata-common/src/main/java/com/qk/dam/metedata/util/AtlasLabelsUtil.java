@@ -3,7 +3,6 @@ package com.qk.dam.metedata.util;
 import com.qk.dam.metedata.config.AtlasConfig;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasClassification;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
@@ -23,7 +22,6 @@ public class AtlasLabelsUtil {
     throw new IllegalStateException("Utility labels");
   }
 
-  private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
   /**
    * 查询实体上标签
@@ -33,7 +31,7 @@ public class AtlasLabelsUtil {
    * @throws AtlasServiceException
    */
   public static Set<String> getLabels(String guid) throws AtlasServiceException {
-    AtlasEntityHeader entityHeaderByGuid = atlasClientV2.getEntityHeaderByGuid(guid);
+    AtlasEntityHeader entityHeaderByGuid = AtlasConfig.getAtlasClientV2().getEntityHeaderByGuid(guid);
     return entityHeaderByGuid.getLabels();
   }
 
@@ -45,7 +43,7 @@ public class AtlasLabelsUtil {
    * @throws AtlasServiceException
    */
   public static void setLabels(String guid, String labels) throws AtlasServiceException {
-    atlasClientV2.setLabels(guid, getLabelSet(labels));
+    AtlasConfig.getAtlasClientV2().setLabels(guid, getLabelSet(labels));
   }
 
   /**
@@ -57,7 +55,7 @@ public class AtlasLabelsUtil {
   public static void removeLabels(String guid) throws AtlasServiceException {
     Set<String> labels = getLabels(guid);
     if (!labels.isEmpty()) {
-      atlasClientV2.removeLabels(guid, labels);
+      AtlasConfig.getAtlasClientV2().removeLabels(guid, labels);
     }
   }
 
@@ -69,7 +67,7 @@ public class AtlasLabelsUtil {
    * @throws AtlasServiceException
    */
   public static void removeLabels(String guid, String labels) throws AtlasServiceException {
-    atlasClientV2.removeLabels(guid, getLabelSet(labels));
+    AtlasConfig.getAtlasClientV2().removeLabels(guid, getLabelSet(labels));
   }
 
   public static Set<String> getLabelSet(String labels) {
@@ -87,7 +85,7 @@ public class AtlasLabelsUtil {
   public static void delEntitiesClassis(String guid) throws AtlasServiceException {
     List<AtlasClassification> classifications = getAtlasClassifications(guid);
     for (AtlasClassification classification : classifications) {
-      atlasClientV2.deleteClassification(guid, classification.getTypeName());
+      AtlasConfig.getAtlasClientV2().deleteClassification(guid, classification.getTypeName());
     }
   }
 
@@ -123,7 +121,7 @@ public class AtlasLabelsUtil {
   public static void delEntitiesClassis(String guid, List<String> classify)
       throws AtlasServiceException {
     List<AtlasClassification> classificationList = getAtlasClassificationList(classify);
-    atlasClientV2.deleteClassifications(guid, classificationList);
+    AtlasConfig.getAtlasClientV2().deleteClassifications(guid, classificationList);
   }
 
   /**
@@ -136,7 +134,7 @@ public class AtlasLabelsUtil {
   public static void addEntitiesClassis(String guid, List<String> classify)
       throws AtlasServiceException {
     List<AtlasClassification> classificationList = getAtlasClassificationList(classify);
-    atlasClientV2.addClassifications(guid, classificationList);
+    AtlasConfig.getAtlasClientV2().addClassifications(guid, classificationList);
   }
 
   /**
@@ -146,7 +144,7 @@ public class AtlasLabelsUtil {
    * @throws AtlasServiceException
    */
   public static void addTypedefs(Map<String, String> map) throws AtlasServiceException {
-    atlasClientV2.createAtlasTypeDefs(getTypesDef(map));
+    AtlasConfig.getAtlasClientV2().createAtlasTypeDefs(getTypesDef(map));
   }
 
   /**
@@ -157,7 +155,7 @@ public class AtlasLabelsUtil {
    * @throws AtlasServiceException
    */
   public static void addTypedefs(String name, String description) throws AtlasServiceException {
-    atlasClientV2.createAtlasTypeDefs(getTypesDef(Map.of(name, description)));
+    AtlasConfig.getAtlasClientV2().createAtlasTypeDefs(getTypesDef(Map.of(name, description)));
   }
 
   /**
@@ -167,7 +165,7 @@ public class AtlasLabelsUtil {
    * @throws AtlasServiceException
    */
   public static void delTypedefs(Map<String, String> map) throws AtlasServiceException {
-    atlasClientV2.deleteAtlasTypeDefs(getTypesDef(map));
+    AtlasConfig.getAtlasClientV2().deleteAtlasTypeDefs(getTypesDef(map));
   }
 
   public static AtlasTypesDef getTypesDef(Map<String, String> map) {
@@ -186,7 +184,7 @@ public class AtlasLabelsUtil {
 
   private static List<AtlasClassification> getAtlasClassifications(String guid)
       throws AtlasServiceException {
-    AtlasEntityHeader entityHeaderByGuid = atlasClientV2.getEntityHeaderByGuid(guid);
+    AtlasEntityHeader entityHeaderByGuid = AtlasConfig.getAtlasClientV2().getEntityHeaderByGuid(guid);
     return entityHeaderByGuid.getClassifications();
   }
 

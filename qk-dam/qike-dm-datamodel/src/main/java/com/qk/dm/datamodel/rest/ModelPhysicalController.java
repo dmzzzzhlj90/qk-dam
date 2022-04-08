@@ -7,12 +7,12 @@ import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
 import com.qk.dm.datamodel.params.dto.ModelReverseBaseDTO;
 import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
+import com.qk.dm.datamodel.params.vo.ModelDataSourceinfoVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
 import com.qk.dm.datamodel.service.ModelPhysicalColumnService;
 import com.qk.dm.datamodel.service.ModelPhysicalTableService;
 import com.qk.dm.datamodel.service.PhysicalService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +29,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/modelphysical")
 public class ModelPhysicalController {
-  @Autowired
-  PhysicalService physicalService;
-  @Autowired
-  ModelPhysicalTableService modelPhysicalTableService;
-  @Autowired
-  ModelPhysicalColumnService modelPhysicalColumnService;
+  private final PhysicalService physicalService;
+  private final ModelPhysicalTableService modelPhysicalTableService;
+  private final ModelPhysicalColumnService modelPhysicalColumnService;
 
   public ModelPhysicalController(
       PhysicalService physicalService,
@@ -200,6 +197,16 @@ public class ModelPhysicalController {
   public DefaultCommonResult<List<String>> queryDataType(){
     return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.queryDataType());
   }
+
+  /**
+   * 基础信息—数据连接类型、数据源名称
+   * @return DefaultCommonResult<ModelDataSourceinfoVO>
+   */
+  @GetMapping("/data/source")
+  public DefaultCommonResult<ModelDataSourceinfoVO> getDataSourceinfo(){
+    return DefaultCommonResult.success(ResultCodeEnum.OK, physicalService.getDataSourceinfo());
+  }
+
   //============================数据连接调用=========================================>
 
   /**

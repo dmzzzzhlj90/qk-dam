@@ -26,7 +26,7 @@ public class ModelDimTable implements Serializable {
      * 主题id
      */
     @Column(name = "theme_id", nullable = false)
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -65,10 +65,10 @@ public class ModelDimTable implements Serializable {
     private Integer status = 0;
 
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    @Column(name = "connection_type", nullable = false)
-    private String connectionType;
+    @Column(name = "data_source_name")
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -80,7 +80,7 @@ public class ModelDimTable implements Serializable {
      * 数据库名称
      */
     @Column(name = "database_name", nullable = false)
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      * 创建时间

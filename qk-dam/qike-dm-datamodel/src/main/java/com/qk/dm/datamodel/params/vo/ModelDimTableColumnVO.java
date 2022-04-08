@@ -20,6 +20,10 @@ public class ModelDimTableColumnVO implements Serializable {
      * 字段名称
      */
     private String columnName;
+    /**
+     * 标准编码
+     */
+    private String standardsCode;
 
     /**
      * 字段类型

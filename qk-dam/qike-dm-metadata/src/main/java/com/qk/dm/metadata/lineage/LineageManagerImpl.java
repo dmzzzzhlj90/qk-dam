@@ -13,6 +13,7 @@ import com.qk.dm.metadata.vo.LineageSearchVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
+import org.apache.atlas.SortOrder;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
 import org.apache.atlas.model.instance.AtlasEntity;
@@ -37,7 +38,6 @@ import static com.qk.dam.metedata.type.AtlasEntityConstant.*;
 @Component
 public class LineageManagerImpl implements LineageService {
     private final AtlasClient atlasClient;
-    private static final AtlasClientV2 ccc = AtlasConfig.getAtlasClientV2();
     private final Process process;
 
     public LineageManagerImpl(AtlasClient atlasClient, Process process) {
@@ -54,6 +54,7 @@ public class LineageManagerImpl implements LineageService {
 
         entityFilter.setCondition(SearchParameters.FilterCriteria.Condition.AND);
 
+        //tip 以下条件参数逻辑为 typeName and (name or qualifiedName)
         List<SearchParameters.FilterCriteria> criterions = Lists.newArrayList();
         if (Objects.nonNull(lineageSearchVO.getTypeName())){
             // typename 过滤条件不为空
@@ -66,22 +67,43 @@ public class LineageManagerImpl implements LineageService {
         }
 
         if (Objects.nonNull(lineageSearchVO.getQualifiedName())){
+            SearchParameters.FilterCriteria groupCti = new SearchParameters.FilterCriteria();
+            List<SearchParameters.FilterCriteria> groupCriterions = Lists.newArrayList();
+            groupCti.setCondition(SearchParameters.FilterCriteria.Condition.OR);
+
             // name 按名称检索
             SearchParameters.FilterCriteria criterion = new SearchParameters.FilterCriteria();
             criterion.setAttributeName("qualifiedName");
             criterion.setOperator(SearchParameters.Operator.CONTAINS);
             criterion.setAttributeValue(lineageSearchVO.getQualifiedName());
-            criterions.add(criterion);
+            groupCriterions.add(criterion);
+
+            SearchParameters.FilterCriteria nameCriterion = new SearchParameters.FilterCriteria();
+            nameCriterion.setAttributeName("name");
+            nameCriterion.setOperator(SearchParameters.Operator.CONTAINS);
+            nameCriterion.setAttributeValue(lineageSearchVO.getQualifiedName());
+            groupCriterions.add(nameCriterion);
+
+            groupCti.setCriterion(groupCriterions);
+            criterions.add(groupCti);
             entityFilter.setCriterion(criterions);
         }
 
 
-        AtlasSearchResult atlasSearchResult = atlasClient.instance().basicSearch("Process",
-                entityFilter,
-                null,
-                null,
-                true,
-                pagination.getSize(), (pagination.getPage() - 1));
+
+        SearchParameters parameters = new SearchParameters();
+        parameters.setAttributes(Set.of("__timestamp"));
+        parameters.setTypeName("Process");
+        parameters.setExcludeDeletedEntities(true);
+        parameters.setSortOrder(SortOrder.DESCENDING);
+        parameters.setSortBy("__timestamp");
+        parameters.setLimit(pagination.getSize());
+        parameters.setOffset((pagination.getPage() - 1));
+        parameters.setEntityFilters(entityFilter);
+        AtlasSearchResult atlasSearchResult = atlasClient.instance().callAPI(AtlasClientV2.API_V2.BASIC_SEARCH,
+                AtlasSearchResult.class,
+                parameters);
+
 
 
         if (Objects.nonNull(atlasSearchResult.getEntities())){
@@ -126,6 +148,13 @@ public class LineageManagerImpl implements LineageService {
         Map<String, DataConnect> dataConnectMap = dataConnects.stream().distinct().collect(Collectors.toMap(DataConnect::getName, v -> v,(a,b)->a));
         deleteProcess(lineageTemplate, dataConnectMap);
 
+    }
+    @Override
+    public void deleteEntitiesByGuids(List<String> guids) throws AtlasServiceException {
+        atlasClient.instance().deleteEntitiesByGuids(guids);
+
+        // fixme 清理delete实体太慢，需要异步处理并优化
+        // realCleanEntities();
     }
 
     private void extractedVO(InputStream excelFile, List<DataConnect> dataConnects, List<LineageTemplateVO> lineageTemplate) {

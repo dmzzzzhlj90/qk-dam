@@ -8,9 +8,11 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.service.AtyGroupService;
 import com.qk.dm.authority.service.AtyUserGroupService;
 import com.qk.dm.authority.vo.group.*;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -87,6 +89,18 @@ public class AtyGroupController {
     @PostMapping("/page")
     public DefaultCommonResult<PageResultVO<AtyGroupInfoVO>> getUsers(@RequestBody AtyGroupParamVO groupParamVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupPage(groupParamVO));
+    }
+
+    /**
+     * 用户组列表-不分页查询所有
+     * @param realm
+     * @param search
+     * @return
+     */
+    @GetMapping("/list")
+    @Validated
+    public DefaultCommonResult<List<AtyGroupInfoVO>> getUsersGroups(@NotBlank @RequestParam("realm") String realm, String search) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, atyGroupService.getGroupList(realm, search));
     }
 
     /**

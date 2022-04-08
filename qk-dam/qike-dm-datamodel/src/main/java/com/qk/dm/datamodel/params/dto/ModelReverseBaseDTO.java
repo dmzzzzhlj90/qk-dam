@@ -47,14 +47,14 @@ public class ModelReverseBaseDTO {
   /**
    * 数据源连接id
    */
-  @NotNull(message = "数据源连接id")
+  //@NotNull(message = "数据源连接id")
   private Integer dataSourceId;
 
   /**
    * 所属主题id
    */
   @NotNull(message = "所属主题id")
-  private Long themeId;
+  private String themeId;
 
   /**
    * 所属层级id

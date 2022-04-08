@@ -6,7 +6,6 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.authority.entity.*;
 import com.qk.dm.authority.mapstruct.QxEmpowerMapper;
-import com.qk.dm.authority.mapstruct.QxServiceMapper;
 import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxResourcesEmpowerRepository;
 import com.qk.dm.authority.repositories.QkQxServiceRepository;
@@ -33,17 +32,14 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EmpPowerServiceImpl implements EmpPowerService {
-  private final QkQxServiceRepository qkQxServiceRepository;
-  private final QkQxEmpowerRepository qkQxEmpowerRepository;
-  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private final QQxEmpower qQxEmpower = QQxEmpower.qxEmpower;
   private final QQxService qQxService = QQxService.qxService;
+  private final QkQxServiceRepository qkQxServiceRepository;
+  private final QkQxEmpowerRepository qkQxEmpowerRepository;
+  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
-  //@Autowired
-  //private keyClocakEmpowerApi keyClocakEmpowerApi;
-
 
   public EmpPowerServiceImpl(QkQxServiceRepository qkQxServiceRepository,
       QkQxEmpowerRepository qkQxEmpowerRepository,
@@ -59,6 +55,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
   @Override
+  @Transactional(rollbackFor = Exception.class)
   public void addEmpower(EmpowerVO empowerVO) {
     empowerVO.setEmpowerId(UUID.randomUUID().toString());
     QxEmpower qxEmpower = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
@@ -116,7 +113,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   }
 
   @Override
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void updateEmpower(EmpowerVO empowerVO) {
     QxEmpower qxEmpower = qkQxEmpowerRepository.findById(empowerVO.getId())
         .orElse(null);
@@ -124,10 +121,11 @@ public class EmpPowerServiceImpl implements EmpPowerService {
       throw new BizException("当前需修改的的数据不存在");
     }
     //TODO 修改对应授权主体的属性
-    QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
+    QxEmpowerMapper.INSTANCE.from(empowerVO,qxEmpower);
+    //QxEmpower qxEmpower1 = QxEmpowerMapper.INSTANCE.qxEmpower(empowerVO);
     //keyClocakEmpowerApi.addPower(empowerVO);
-    qkQxEmpowerRepository.saveAndFlush(qxEmpower1);
-    updateResourceEmpower(qxEmpower1.getEmpowerId(),empowerVO.getResourceSigns());
+    qkQxEmpowerRepository.saveAndFlush(qxEmpower);
+    updateResourceEmpower(qxEmpower.getEmpowerId(),empowerVO.getResourceSigns());
   }
 
   /**
@@ -145,7 +143,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   }
 
   @Override
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public void deleteEmpower(Long id) {
     QxEmpower qxEmpower = qkQxEmpowerRepository.findById(id).orElse(null);
     if (Objects.isNull(qxEmpower)){
@@ -233,7 +231,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
             .select(qQxEmpower)
             .from(qQxEmpower)
             .where(booleanBuilder)
-            .orderBy(qQxEmpower.gmtCreate.desc())
+            .orderBy(qQxEmpower.gmtModified.asc())
             .offset(
                 (long) (empowerQueryVO.getPagination().getPage() - 1)
                     * empowerQueryVO.getPagination().getSize())
@@ -274,7 +272,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
   private List<EmpowerAllVO> getEmpowerVO(List<QxEmpower> qxEmpoerList) {
     if (CollectionUtils.isNotEmpty(qxEmpoerList)){
       List<String> serviceIdList = qxEmpoerList.stream().map(QxEmpower::getServiceId).collect(Collectors.toList());
-      List<QxService> serviceList = (List<QxService>) qkQxServiceRepository.findAll(qQxService.serviceid.in(serviceIdList));
+      List<QxService> serviceList = (List<QxService>) qkQxServiceRepository.findAll(qQxService.serviceId.in(serviceIdList));
       return queryEmpowers(serviceList,qxEmpoerList);
     }
     return new ArrayList<EmpowerAllVO>();
@@ -282,8 +280,8 @@ public class EmpPowerServiceImpl implements EmpPowerService {
 
   private List<EmpowerAllVO> queryEmpowers(List<QxService> serviceList, List<QxEmpower> qxEmpoerList) {
     if (CollectionUtils.isNotEmpty(serviceList)){
-      Map<String,String> map = serviceList.stream().collect(Collectors.toMap(QxService::getServiceid, QxService::getServiceName, (k1, k2) -> k2));
-       List<EmpowerAllVO> list = QxServiceMapper.INSTANCE.ofEmpowerAllVO(qxEmpoerList);
+      Map<String,String> map = serviceList.stream().collect(Collectors.toMap(QxService::getServiceId, QxService::getServiceName, (k1, k2) -> k2));
+       List<EmpowerAllVO> list = QxEmpowerMapper.INSTANCE.ofEmpowerAllVO(qxEmpoerList);
        list.forEach(empowerAllVO -> {
          empowerAllVO.setServiceName(map.get(empowerAllVO.getServiceId()));
        });
@@ -302,7 +300,7 @@ public class EmpPowerServiceImpl implements EmpPowerService {
             .select(qQxEmpower)
             .from(qQxEmpower)
             .where(booleanBuilder)
-            .orderBy(qQxEmpower.gmtCreate.desc())
+            .orderBy(qQxEmpower.gmtCreate.asc())
             .offset(
                 (long) (empowerParamVO.getPagination().getPage() - 1)
                     * empowerParamVO.getPagination().getSize())

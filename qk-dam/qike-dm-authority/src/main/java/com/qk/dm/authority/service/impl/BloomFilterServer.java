@@ -7,8 +7,10 @@ import com.google.common.hash.Funnels;
 import com.qk.dam.authority.common.vo.RealmVO;
 import com.qk.dam.authority.common.vo.user.AtyUserInfoVO;
 import com.qk.dm.authority.constant.QxConstant;
-import com.qk.dm.authority.entity.QxResources;
-import com.qk.dm.authority.repositories.QkQxResourcesRepository;
+import com.qk.dm.authority.entity.QkQxResourcesApi;
+import com.qk.dm.authority.entity.QkQxResourcesMenu;
+import com.qk.dm.authority.repositories.QkQxResourcesApiRepository;
+import com.qk.dm.authority.repositories.QkQxResourcesMenuRepository;
 import com.qk.dm.authority.service.AtyRealmService;
 import com.qk.dm.authority.service.AtyUserService;
 import com.qk.dm.authority.util.MultipartFileUtil;
@@ -30,28 +32,45 @@ import java.util.Map;
 @Component
 @Data
 public class BloomFilterServer {
-  private final QkQxResourcesRepository qkQxResourcesRepository;
+  private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
+  private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
   private final AtyRealmService atyRealmService;
   private final AtyUserService atyUserService;
   private BloomFilter<String> filter = BloomFilter.create(Funnels.stringFunnel(
       Charset.defaultCharset()), QxConstant.GUAVA_CAPACITY,0.01);
 
-  public BloomFilterServer(QkQxResourcesRepository qkQxResourcesRepository,
-      AtyRealmService atyRealmService, AtyUserService atyUserService) {
-    this.qkQxResourcesRepository = qkQxResourcesRepository;
+  public BloomFilterServer(
+      QkQxResourcesMenuRepository qkQxResourcesMenuRepository,
+      QkQxResourcesApiRepository qkQxResourcesApiRepository, AtyRealmService atyRealmService, AtyUserService atyUserService) {
+    this.qkQxResourcesMenuRepository = qkQxResourcesMenuRepository;
+    this.qkQxResourcesApiRepository = qkQxResourcesApiRepository;
     this.atyRealmService = atyRealmService;
     this.atyUserService = atyUserService;
   }
 
   /**
-   * 将库中的数据拼接成key存入guava中，分别是（根据资源名称、标识、服务id、资源类型）
+   * 将库中的数据拼接成key存入guava中，分别是（根据资源名称、服务uuid、页面）
    */
   @PostConstruct
   public void cacheData() {
-    List<QxResources> qxResourcesList = qkQxResourcesRepository.findAll();
-    if (CollectionUtils.isNotEmpty(qxResourcesList)){
-      qxResourcesList.forEach(qxResources -> {
-        String key = MultipartFileUtil.removeDuplicate(qxResources);
+    List<QkQxResourcesMenu> qkQxResourcesMenuList = qkQxResourcesMenuRepository.findAll();
+    if (CollectionUtils.isNotEmpty(qkQxResourcesMenuList)){
+      qkQxResourcesMenuList.forEach(qkQxResourcesMenu -> {
+        String key = MultipartFileUtil.removeDuplicate(qkQxResourcesMenu);
+        filter.put(key);
+      });
+    }
+  }
+
+  /**
+   *将数据库中的api数据信息存储在guava中key为（名称、服务uuid）
+   */
+  @PostConstruct
+  public void cacheRsApiData() {
+    List<QkQxResourcesApi> qkQxResourcesApiList = qkQxResourcesApiRepository.findAll();
+    if (CollectionUtils.isNotEmpty(qkQxResourcesApiList)){
+      qkQxResourcesApiList.forEach(qkQxResourcesApi -> {
+        String key = MultipartFileUtil.createRsApiKey(qkQxResourcesApi);
         filter.put(key);
       });
     }

@@ -10,7 +10,7 @@ public interface ModelFactColumnService {
 
     void update(Long factId,List<ModelFactColumnDTO> modelFactColumnDTOList);
 
-    void delete(String ids);
+    void delete(String factIds);
 
     List<ModelFactColumnVO> list(Long factId);
 }

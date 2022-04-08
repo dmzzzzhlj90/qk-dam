@@ -51,24 +51,29 @@ public class ModelDimColumn implements Serializable {
      */
     @Column(name = "standards_name")
     private String standardsName;
+    /**
+     * 标准编码
+     */
+    @Column(name = "standards_code")
+    private String standardsCode;
 
     /**
      * 是否是主键 0否 1是
      */
-    @Column(name = "its_primary_key", nullable = false)
-    private String itsPrimaryKey;
+    @Column(name = "its_primary_key")
+    private String itsPrimaryKey = "0";
 
     /**
      * 是否分区 0否 1是
      */
-    @Column(name = "its_partition", nullable = false)
-    private String itsPartition;
+    @Column(name = "its_partition")
+    private String itsPartition = "0";
 
     /**
      * 是否为空 0否 1是
      */
-    @Column(name = "its_null", nullable = false)
-    private String itsNull;
+    @Column(name = "its_null")
+    private String itsNull = "0";
 
     /**
      * 描述

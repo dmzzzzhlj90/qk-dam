@@ -2,14 +2,9 @@ package com.qk.dm.authority.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.authority.entity.QQxService;
-import com.qk.dm.authority.entity.QxEmpower;
-import com.qk.dm.authority.entity.QxResources;
-import com.qk.dm.authority.entity.QxService;
+import com.qk.dm.authority.entity.*;
 import com.qk.dm.authority.mapstruct.QxServiceMapper;
-import com.qk.dm.authority.repositories.QkQxEmpowerRepository;
-import com.qk.dm.authority.repositories.QkQxResourcesRepository;
-import com.qk.dm.authority.repositories.QkQxServiceRepository;
+import com.qk.dm.authority.repositories.*;
 import com.qk.dm.authority.service.EmpSvcService;
 import com.qk.dm.authority.vo.params.ServiceParamVO;
 import com.qk.dm.authority.vo.powervo.ServiceVO;
@@ -17,11 +12,13 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**权限管理-服务
  * @author zys
@@ -30,20 +27,27 @@ import java.util.*;
  */
 @Service
 public class EmpSvcServiceImpl implements EmpSvcService {
-  private final QkQxServiceRepository qkQxServiceRepository;
-  private final QkQxResourcesRepository qkQxResourcesRepository;
-  private final QkQxEmpowerRepository qkQxEmpowerRepository;
+  private final QQkQxResourcesEmpower qQkQxResourcesEmpower=QQkQxResourcesEmpower.qkQxResourcesEmpower;
   private final QQxService qQxService=QQxService.qxService;
+  private final QkQxServiceRepository qkQxServiceRepository;
+  private final QkQxEmpowerRepository qkQxEmpowerRepository;
+  private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
+  private final QkQxResourcesApiRepository qkQxResourcesApiRepository;
+  private final QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository;
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
 
   public EmpSvcServiceImpl(QkQxServiceRepository qkQxServiceRepository,
-      QkQxResourcesRepository qkQxResourcesRepository,
-      QkQxEmpowerRepository qkQxEmpowerRepository, EntityManager entityManager) {
+      QkQxEmpowerRepository qkQxEmpowerRepository, EntityManager entityManager,
+      QkQxResourcesMenuRepository qkQxResourcesMenuRepository,
+      QkQxResourcesApiRepository qkQxResourcesApiRepository,
+      QkQxResourcesEmpowerRepository qkQxResourcesEmpowerRepository) {
     this.qkQxServiceRepository = qkQxServiceRepository;
-    this.qkQxResourcesRepository = qkQxResourcesRepository;
     this.qkQxEmpowerRepository = qkQxEmpowerRepository;
     this.entityManager = entityManager;
+    this.qkQxResourcesMenuRepository = qkQxResourcesMenuRepository;
+    this.qkQxResourcesApiRepository = qkQxResourcesApiRepository;
+    this.qkQxResourcesEmpowerRepository = qkQxResourcesEmpowerRepository;
   }
 
   @PostConstruct
@@ -53,9 +57,9 @@ public class EmpSvcServiceImpl implements EmpSvcService {
 
   @Override
   public void addService(ServiceVO serviceVO) {
-    serviceVO.setServiceid(UUID.randomUUID().toString());
+    serviceVO.setServiceId(UUID.randomUUID().toString());
     QxService qxService = QxServiceMapper.INSTANCE.qxService(serviceVO);
-    BooleanExpression predicate = qQxService.serviceName.eq(qxService.getServiceName()).and(qQxService.redionid.eq(qxService.getRedionid()));
+    BooleanExpression predicate = qQxService.serviceName.eq(qxService.getServiceName()).and(qQxService.redionId.eq(qxService.getRedionId()));
     boolean exists = qkQxServiceRepository.exists(predicate);
     if (exists){
       throw new BizException(
@@ -85,11 +89,12 @@ public class EmpSvcServiceImpl implements EmpSvcService {
     if (Objects.isNull(qeryQxService)){
       throw new BizException("当前需修改的名称为"+serviceVO.getServiceName()+"的数据不存在");
     }
-    QxService qxService = QxServiceMapper.INSTANCE.qxService(serviceVO);
-    qkQxServiceRepository.saveAndFlush(qxService);
+    QxServiceMapper.INSTANCE.from(serviceVO,qeryQxService);
+    qkQxServiceRepository.saveAndFlush(qeryQxService);
   }
 
   @Override
+  @Transactional(rollbackFor = Exception.class)
   public void deleteService(Long id) {
     QxService qxService = qkQxServiceRepository.findById(id).orElse(null);
     if (Objects.isNull(qxService)){
@@ -102,18 +107,27 @@ public class EmpSvcServiceImpl implements EmpSvcService {
   }
 
   /**
-   * 删除服务的同时删除资源和授权信息
+   * 删除服务的同时删除资源（api）和授权信息及关系表
    * @param qxService
    */
   private void deleteAssociatedData(QxService qxService) {
     //根据服务的uuid查询资源信息
-    List<QxResources> resourcesList = qkQxResourcesRepository.findByServiceId(qxService.getServiceid());
+    List<QkQxResourcesMenu> qxResourcesMenuList = qkQxResourcesMenuRepository.findByServiceId(qxService.getServiceId());
+    //根据服务的uuid查询api信息
+    List<QkQxResourcesApi> qkQxResourcesApiList = qkQxResourcesApiRepository.findByServiceId(qxService.getServiceId());
     //根据服务的uuid查询授权信息
-    List<QxEmpower> qxEmpowerList = qkQxEmpowerRepository.findByServiceId(qxService.getServiceid());
-    if (CollectionUtils.isNotEmpty(resourcesList)){
-      qkQxResourcesRepository.deleteAll(resourcesList);
+    List<QxEmpower> qxEmpowerList = qkQxEmpowerRepository.findByServiceId(qxService.getServiceId());
+    //查询
+    if (CollectionUtils.isNotEmpty(qxResourcesMenuList)){
+      qkQxResourcesMenuRepository.deleteAll(qxResourcesMenuList);
+    }
+    if (CollectionUtils.isNotEmpty(qkQxResourcesApiList)){
+      qkQxResourcesApiRepository.deleteAll(qkQxResourcesApiList);
     }
     if (CollectionUtils.isNotEmpty(qxEmpowerList)){
+      List<String> empowerIdList = qxEmpowerList.stream().map(QxEmpower::getEmpowerId).collect(Collectors.toList());
+      List<QkQxResourcesEmpower> qkQxResourcesEmpowerList = (List<QkQxResourcesEmpower>) qkQxResourcesEmpowerRepository.findAll(qQkQxResourcesEmpower.empowerUuid.in(empowerIdList));
+      qkQxResourcesEmpowerRepository.deleteAll(qkQxResourcesEmpowerList);
       qkQxEmpowerRepository.deleteAll(qxEmpowerList);
     }
   }
@@ -145,8 +159,8 @@ public class EmpSvcServiceImpl implements EmpSvcService {
     if (!StringUtils.isEmpty(serviceParamVO.getServiceName())) {
       booleanBuilder.and(qQxService.serviceName.contains(serviceParamVO.getServiceName()));
     }
-    if (!StringUtils.isEmpty(serviceParamVO.getRedionid())) {
-      booleanBuilder.and(qQxService.redionid.contains(serviceParamVO.getRedionid()));
+    if (!StringUtils.isEmpty(serviceParamVO.getRedionId())) {
+      booleanBuilder.and(qQxService.redionId.eq(serviceParamVO.getRedionId()));
     }
   }
 }

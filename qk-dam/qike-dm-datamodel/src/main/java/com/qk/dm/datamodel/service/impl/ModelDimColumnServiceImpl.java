@@ -10,8 +10,11 @@ import com.qk.dm.datamodel.repositories.ModelDimColumnRepository;
 import com.qk.dm.datamodel.repositories.ModelDimRepository;
 import com.qk.dm.datamodel.service.ModelDimColumnService;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
 /**
  * 维度字段
  * @author wangzp
@@ -32,8 +35,9 @@ public class ModelDimColumnServiceImpl implements ModelDimColumnService {
     }
 
     @Override
-    public void insert(List<ModelDimColumnDTO> modelDimColumnDTOList) {
+    public void insert(List<ModelDimColumnDTO> modelDimColumnDTOList,Long dimId) {
         List<ModelDimColumn> modelDimColumnList = ModelDimColumnMapper.INSTANCE.use(modelDimColumnDTOList);
+        modelDimColumnList.forEach(e->e.setDimId(dimId));
         modelDimColumnRepository.saveAll(modelDimColumnList);
     }
 
@@ -50,8 +54,8 @@ public class ModelDimColumnServiceImpl implements ModelDimColumnService {
     }
 
     @Override
-    public void delete(String ids) {
-
+    public void delete(String dmIds) {
+        Arrays.stream(dmIds.split(",")).forEach(e->{modelDimColumnRepository.deleteByDimId(Long.valueOf(e));});
     }
 
     @Override

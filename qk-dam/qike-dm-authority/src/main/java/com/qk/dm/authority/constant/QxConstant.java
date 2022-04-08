@@ -60,4 +60,9 @@ public class QxConstant {
    * 一条授权信息对应一条关系数据
    */
   public final static  Integer RS_EMP=1;
+
+  /**
+   * 用户查询资源path如果没有服务则一级目录名称默认设置为“系统权限”
+   */
+  public final static  String SERVICE_NAME="系统权限";
 }

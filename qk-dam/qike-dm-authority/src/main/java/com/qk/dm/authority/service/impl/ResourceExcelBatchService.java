@@ -2,11 +2,11 @@ package com.qk.dm.authority.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dm.authority.constant.QxConstant;
-import com.qk.dm.authority.entity.QxResources;
-import com.qk.dm.authority.mapstruct.QxResourcesMapper;
-import com.qk.dm.authority.repositories.QkQxResourcesRepository;
+import com.qk.dm.authority.entity.QkQxResourcesMenu;
+import com.qk.dm.authority.mapstruct.QxResourcesMenuMapper;
+import com.qk.dm.authority.repositories.QkQxResourcesMenuRepository;
 import com.qk.dm.authority.util.MultipartFileUtil;
-import com.qk.dm.authority.vo.powervo.ResourceExcelVO;
+import com.qk.dm.authority.vo.powervo.ResourceMenuExcelVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -23,18 +23,17 @@ import java.util.stream.Collectors;
 @Service
 public class ResourceExcelBatchService {
   private static final Log LOG = LogFactory.getLog("resourceExcelBatchService");
-  private final QkQxResourcesRepository qkQxResourcesRepository;
+  private final QkQxResourcesMenuRepository qkQxResourcesMenuRepository;
   private final BloomFilterServer bloomFilterServer;
 
   public ResourceExcelBatchService(
-      QkQxResourcesRepository qkQxResourcesRepository,
-      BloomFilterServer bloomFilterServer) {
-    this.qkQxResourcesRepository = qkQxResourcesRepository;
+      QkQxResourcesMenuRepository qkQxResourcesMenuRepository, BloomFilterServer bloomFilterServer) {
+    this.qkQxResourcesMenuRepository = qkQxResourcesMenuRepository;
     this.bloomFilterServer = bloomFilterServer;
   }
 
-  public List<ResourceExcelVO> saveResources(List<ResourceExcelVO> qxResourcesList) {
-    List<ResourceExcelVO> lsit = deal(qxResourcesList);
+  public List<ResourceMenuExcelVO> saveResources(List<ResourceMenuExcelVO> qxResourcesList) {
+    List<ResourceMenuExcelVO> lsit = deal(qxResourcesList);
     saveAllResources(qxResourcesList);
     LOG.info(qxResourcesList.size()+"成功保存资源信息个数 【{}】");
     return lsit;
@@ -44,45 +43,45 @@ public class ResourceExcelBatchService {
    * 存储资源
    * @param qxResourcesList
    */
-  private void saveAllResources(List<ResourceExcelVO> qxResourcesList) {
-    List<QxResources> resourcesList = qkQxResourcesRepository.findAll();
-    if (CollectionUtils.isNotEmpty(resourcesList)){
-      Map<String,QxResources> resourceMap = resourcesList.stream().collect(
-          Collectors.toMap(k -> k.getName() + "->" + k.getServiceId() + "->" + k.getType(), k -> k, (k1, k2) -> k1));
-          qxResourcesList.forEach(resourceExcelVO-> {
-        //根据key获取父级信息
-        String key = MultipartFileUtil.getKey(resourceExcelVO);
-        //生成新的资源key
-        String createKey = MultipartFileUtil.createKey(resourceExcelVO);
-        QxResources qxResources1 = resourceMap.get(key);
-        QxResources resources =null;
-        if (Objects.isNull(qxResources1)){
-          resources = QxResourcesMapper.INSTANCE.qxResourcesExcel(resourceExcelVO);
+  private void saveAllResources(List<ResourceMenuExcelVO> qxResourcesList) {
+    List<QkQxResourcesMenu> qkQxResourcesMenuList = qkQxResourcesMenuRepository.findAll();
+    if (CollectionUtils.isNotEmpty(qkQxResourcesMenuList)){
+      Map<String,QkQxResourcesMenu> resourceMap = qkQxResourcesMenuList.stream().collect(
+          Collectors.toMap(k -> k.getName() + "->" + k.getServiceId()+ "->" + k.getComponent(), k -> k, (k1, k2) -> k1));
+          qxResourcesList.forEach(resourceMenuExcelVO-> {
+          //根据key获取父级信息
+          String key = MultipartFileUtil.getKey(resourceMenuExcelVO);
+          //生成新的资源key
+          String createKey = MultipartFileUtil.createKey(resourceMenuExcelVO);
+            QkQxResourcesMenu qkQxResourcesMenu = resourceMap.get(key);
+            QkQxResourcesMenu resources =null;
+        if (Objects.isNull(qkQxResourcesMenu)){
+          resources = QxResourcesMenuMapper.INSTANCE.qxResourcesMenuExcel(resourceMenuExcelVO);
           //设置父级id为0
           resources.setPid(QxConstant.DIRID);
         }else{
-          resources = QxResourcesMapper.INSTANCE.qxResourcesExcel(resourceExcelVO);
-          resources.setPid(qxResources1.getId());
+          resources = QxResourcesMenuMapper.INSTANCE.qxResourcesMenuExcel(resourceMenuExcelVO);
+          resources.setPid(qkQxResourcesMenu.getId());
         }
-        qkQxResourcesRepository.save(resources);
+        qkQxResourcesMenuRepository.save(resources);
         resourceMap.put(createKey,resources);
       });
     }
   }
 
-  private List<ResourceExcelVO> deal(List<ResourceExcelVO> qxResourcesList) {
-    List<ResourceExcelVO> list = new ArrayList<>();
+  private List<ResourceMenuExcelVO> deal(List<ResourceMenuExcelVO> qxResourcesList) {
+    List<ResourceMenuExcelVO> list = new ArrayList<>();
     if (CollectionUtils.isNotEmpty(qxResourcesList)){
-      Iterator<ResourceExcelVO> iterator = qxResourcesList.iterator();
+      Iterator<ResourceMenuExcelVO> iterator = qxResourcesList.iterator();
       while (iterator.hasNext()){
-        ResourceExcelVO resourceExcelVO = iterator.next();
-        resourceExcelVO.setResourcesid(UUID.randomUUID().toString());
+        ResourceMenuExcelVO resourceMenuExcelVO = iterator.next();
+        resourceMenuExcelVO.setResourcesId(UUID.randomUUID().toString());
         //todo 加入操作人员id
-        String key = MultipartFileUtil.getExcelKey(resourceExcelVO);
+        String key = MultipartFileUtil.getExcelKey(resourceMenuExcelVO);
         if (bloomFilterServer.getFilter()!=null){
           boolean b = bloomFilterServer.getFilter().mightContain(key);
           if (b){
-            list.add(resourceExcelVO);
+            list.add(resourceMenuExcelVO);
             iterator.remove();
           }else {
             bloomFilterServer.getFilter().put(key);

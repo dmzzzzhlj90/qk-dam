@@ -12,6 +12,7 @@ import com.qk.dm.datamodel.entity.ModelFactTable;
 import com.qk.dm.datamodel.entity.QModelFactTable;
 import com.qk.dm.datamodel.mapstruct.mapper.ModelFactTableMapper;
 import com.qk.dm.datamodel.params.dto.ModelFactColumnDTO;
+import com.qk.dm.datamodel.params.dto.ModelFactQueryDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.dto.ModelSqlDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
@@ -23,6 +24,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import net.logstash.logback.encoder.org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
@@ -56,10 +58,11 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insert(ModelFactTableDTO modelFactTableDTO) {
         ModelFactTable modelFactTable = ModelFactTableMapper.INSTANCE.of(modelFactTableDTO);
         ModelFactTable modelFact = modelFactTableRepository.save(modelFactTable);
-        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getModelFactColumnList();
+        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getColumnList();
         if(!modelFactColumnList.isEmpty()){
             if(checkRepeat(modelFactColumnList)){
                 throw new BizException("存在重复的字段！！！");
@@ -79,26 +82,32 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         if(modelFactTable.isEmpty()){
             throw new BizException("当前要查找的事实表id为"+id+"的数据不存在");
         }
-        return ModelFactTableMapper.INSTANCE.of(modelFactTable.get());
+        ModelFactTableVO modelFactTableVO= ModelFactTableMapper.INSTANCE.of(modelFactTable.get());
+        modelFactTableVO.setColumnList(modelFactColumnService.list(modelFactTableVO.getId()));
+        return modelFactTableVO;
     }
 
     @Override
-    public void update(Long id, ModelFactTableDTO modelFactTableDTO) {
-        ModelFactTable modelFactTable = modelFactTableRepository.findById(id).orElse(null);
+    @Transactional(rollbackFor = Exception.class)
+    public void update(ModelFactTableDTO modelFactTableDTO) {
+        if(Objects.isNull(modelFactTableDTO.getId())){
+            throw new BizException("事实表id不能为空");
+        }
+        ModelFactTable modelFactTable = modelFactTableRepository.findById(modelFactTableDTO.getId()).orElse(null);
         if(Objects.isNull(modelFactTable)){
-            throw new BizException("当前要查找的事实表id为"+id+"的数据不存在");
+            throw new BizException("当前要查找的事实表id为"+modelFactTableDTO.getId()+"的数据不存在");
         }
         if(Objects.equals(modelFactTable.getStatus(), ModelStatus.PUBLISH)){
             throw new BizException("当前事实表已发布，不可修改！！！");
         }
         ModelFactTableMapper.INSTANCE.from(modelFactTableDTO,modelFactTable);
         modelFactTableRepository.saveAndFlush(modelFactTable);
-        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getModelFactColumnList();
+        List<ModelFactColumnDTO> modelFactColumnList = modelFactTableDTO.getColumnList();
         if(!modelFactColumnList.isEmpty()){
             if(checkRepeat(modelFactColumnList)){
                 throw new BizException("存在重复的字段！！！");
             }
-            modelFactColumnService.update(id,modelFactColumnList);
+            modelFactColumnService.update(modelFactTableDTO.getId(),modelFactColumnList);
             //组装建表SQL,添加到数据库中
             ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelFactTable.getFactName(), modelFactColumnList))
                     .tableId(modelFactTable.getId()).type(ModelType.FACT_TABLE).build();
@@ -108,16 +117,23 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(String ids) {
         List<ModelFactTable> modelFactTableList = getModelFactTableList(ids);
+        modelFactTableList = modelFactTableList.stream().peek(e -> {
+            if (e.getStatus() == ModelStatus.PUBLISH) {
+                throw new BizException(e.getFactName() + "事实表已发布，不可删除！！！");
+            }
+        }).collect(Collectors.toList());
         modelFactTableRepository.deleteAll(modelFactTableList);
+        modelFactColumnService.delete(ids);
     }
 
     @Override
-    public PageResultVO<ModelFactTableVO> list(ModelFactTableDTO modelFactTableDTO) {
+    public PageResultVO<ModelFactTableVO> list(ModelFactQueryDTO modelFactQueryDTO) {
         Map<String, Object> map;
         try {
-            map = queryByParams(modelFactTableDTO);
+            map = queryByParams(modelFactQueryDTO);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException("查询失败!!!");
@@ -126,8 +142,8 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
         List<ModelFactTableVO> voList = ModelFactTableMapper.INSTANCE.of(list);
         return new PageResultVO<>(
                 (long) map.get("total"),
-                modelFactTableDTO.getPagination().getPage(),
-                modelFactTableDTO.getPagination().getSize(),
+                modelFactQueryDTO.getPagination().getPage(),
+                modelFactQueryDTO.getPagination().getSize(),
                 voList);
     }
 
@@ -174,42 +190,42 @@ public class ModelFactTableServiceImpl implements ModelFactTableService {
                 filter(key -> collect.get(key) > 1).collect(Collectors.toList());
         return !CollectionUtils.isEmpty(list);
     }
+
     private List<ModelFactTable> getModelFactTableList(String ids){
-        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-        List<ModelFactTable> modelFactTableList = modelFactTableRepository.findAllById(idSet);
+        List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelFactTable> modelFactTableList = modelFactTableRepository.findAllById(idList);
         if(modelFactTableList.isEmpty()){
-            throw new BizException("当前要操作的事实表id为："+ids+"的数据不存在！！！");
+            throw new BizException("当前要操作的事实表id为："+idList+"的数据不存在！！！");
         }
         return modelFactTableList;
     }
 
-    private Map<String, Object> queryByParams(ModelFactTableDTO modelFactTableDTO) {
+    private Map<String, Object> queryByParams(ModelFactQueryDTO modelFactQueryDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        checkCondition(booleanBuilder, modelFactTableDTO);
+        checkCondition(booleanBuilder, modelFactQueryDTO);
         Map<String, Object> result = new HashMap<>();
-        long count =
-                jpaQueryFactory.select(qModelFactTable.count()).from(qModelFactTable).where(booleanBuilder).fetchOne();
+        long count = jpaQueryFactory.select(qModelFactTable.count()).from(qModelFactTable).where(booleanBuilder).fetchOne();
         List<ModelFactTable> modelFactTableList = jpaQueryFactory
                 .select(qModelFactTable)
                 .from(qModelFactTable)
                 .where(booleanBuilder)
-                .orderBy(qModelFactTable.id.asc())
+                .orderBy(qModelFactTable.id.desc())
                 .offset(
-                        (long) (modelFactTableDTO.getPagination().getPage() - 1)
-                                * modelFactTableDTO.getPagination().getSize())
-                .limit(modelFactTableDTO.getPagination().getSize())
+                        (long) (modelFactQueryDTO.getPagination().getPage() - 1)
+                                * modelFactQueryDTO.getPagination().getSize())
+                .limit(modelFactQueryDTO.getPagination().getSize())
                 .fetch();
         result.put("list", modelFactTableList);
         result.put("total", count);
         return result;
     }
 
-    public void checkCondition(BooleanBuilder booleanBuilder, ModelFactTableDTO modelFactTableDTO) {
-        if (!StringUtils.isEmpty(modelFactTableDTO.getFactName())) {
-            booleanBuilder.and(
-                    qModelFactTable
-                            .factName
-                            .contains(modelFactTableDTO.getFactName()));
+    public void checkCondition(BooleanBuilder booleanBuilder, ModelFactQueryDTO modelFactQueryDTO) {
+        if (!StringUtils.isEmpty(modelFactQueryDTO.getFactName())) {
+            booleanBuilder.and(qModelFactTable.factName.contains(modelFactQueryDTO.getFactName()));
+        }
+        if(!CollectionUtils.isEmpty(modelFactQueryDTO.getThemeIdList())&&!modelFactQueryDTO.getThemeIdList().get(ModelStatus.FIRSTDIR).equals(ModelStatus.DIRNAMEID)){
+            booleanBuilder.and(qModelFactTable.themeId.in(modelFactQueryDTO.getThemeIdList()));
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.qk.dm.datamodel.params.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,7 +17,7 @@ public class ModelDimVO implements Serializable {
     /**
      * 主题id
      */
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -48,9 +50,9 @@ public class ModelDimVO implements Serializable {
     private Integer status;
 
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    private String connectionType;
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -60,16 +62,37 @@ public class ModelDimVO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
+
+    /**
+     * HIVE类型表需要选择数据格式
+     */
+    private String dataFormat;
+    /**
+     * HIVE类型表需要给hdfs路径
+     */
+    private String hdfsRoute;
+    /**
+     * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
+     */
+    private String tableType;
+    /**
+     * 责任人
+     */
+    private String responsibleBy;
 
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date gmtCreate;
 
     /**
      * 修改时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date gmtModified;
 
 }

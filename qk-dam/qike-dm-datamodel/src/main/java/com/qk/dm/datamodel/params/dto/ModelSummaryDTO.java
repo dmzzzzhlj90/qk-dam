@@ -3,6 +3,7 @@ package com.qk.dm.datamodel.params.dto;
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ public class ModelSummaryDTO implements Serializable {
     /**
      * 主题id
      */
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -29,6 +30,7 @@ public class ModelSummaryDTO implements Serializable {
     /**
      * 表名称
      */
+    @NotNull(message = "表名称不能为空")
     private String tableName;
 
     /**
@@ -40,7 +42,10 @@ public class ModelSummaryDTO implements Serializable {
      * 维度名称
      */
     private String dimName;
-
+    /**
+     * 数据源连接名称
+     */
+    private String dataSourceName;
     /**
      * 数据连接
      */
@@ -49,7 +54,7 @@ public class ModelSummaryDTO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      * 描述

@@ -1,7 +1,6 @@
 package com.qk.dam.metedata.util;
 
 import com.qk.dam.metedata.config.AtlasConfig;
-import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.SearchFilter;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
@@ -19,7 +18,6 @@ public class AtlasClassificationUtil {
     throw new IllegalStateException("Utility class");
   }
 
-  private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
   private static final String CLASSIFICATION = "classification";
 
   /**
@@ -31,7 +29,7 @@ public class AtlasClassificationUtil {
   public static void delEntitiesClassis(String classificationName) throws AtlasServiceException {
     List<AtlasEntityHeader> atlasEntityHeaders = getEntitiesByClassis(classificationName);
     for (AtlasEntityHeader atlasEntityHeader : atlasEntityHeaders) {
-      atlasClientV2.deleteClassification(atlasEntityHeader.getGuid(), classificationName);
+      AtlasConfig.getAtlasClientV2().deleteClassification(atlasEntityHeader.getGuid(), classificationName);
     }
   }
 
@@ -44,13 +42,13 @@ public class AtlasClassificationUtil {
   public static void delClassi(String classificationName) throws AtlasServiceException {
     AtlasTypesDef typesDef = new AtlasTypesDef();
     typesDef.setClassificationDefs(getClassis(classificationName));
-    atlasClientV2.deleteAtlasTypeDefs(typesDef);
+    AtlasConfig.getAtlasClientV2().deleteAtlasTypeDefs(typesDef);
   }
 
   public static List<AtlasClassificationDef> getClassis() throws AtlasServiceException {
     SearchFilter searchFilter = new SearchFilter();
     searchFilter.setParam("type", CLASSIFICATION);
-    AtlasTypesDef allTypeDefs = atlasClientV2.getAllTypeDefs(searchFilter);
+    AtlasTypesDef allTypeDefs = AtlasConfig.getAtlasClientV2().getAllTypeDefs(searchFilter);
     return allTypeDefs.getClassificationDefs();
   }
 
@@ -58,7 +56,7 @@ public class AtlasClassificationUtil {
     SearchFilter searchFilter = new SearchFilter();
     searchFilter.setParam("type", CLASSIFICATION);
     searchFilter.setParam("name", name);
-    AtlasTypesDef allTypeDefs = atlasClientV2.getAllTypeDefs(searchFilter);
+    AtlasTypesDef allTypeDefs = AtlasConfig.getAtlasClientV2().getAllTypeDefs(searchFilter);
     return allTypeDefs.getClassificationDefs();
   }
 
@@ -77,7 +75,7 @@ public class AtlasClassificationUtil {
         .map(
             atlasClassificationDef -> {
               try {
-                return atlasClientV2.basicSearch(
+                return AtlasConfig.getAtlasClientV2().basicSearch(
                     null, atlasClassificationDef.getName(), null, true, 1000, 0);
               } catch (AtlasServiceException e) {
                 e.printStackTrace();

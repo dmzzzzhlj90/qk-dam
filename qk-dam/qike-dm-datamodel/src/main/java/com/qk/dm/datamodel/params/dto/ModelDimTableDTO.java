@@ -1,5 +1,4 @@
 package com.qk.dm.datamodel.params.dto;
-import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,14 +15,12 @@ public class ModelDimTableDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Pagination pagination;
-
     private Long id;
 
     /**
      * 主题id
      */
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -35,10 +32,6 @@ public class ModelDimTableDTO implements Serializable {
      */
     private String dimName;
 
-    /**
-     * 维度编码
-     */
-    private String dimCode;
 
     /**
      * 1 普通维度 2 码表维度 3 层级维度
@@ -55,10 +48,11 @@ public class ModelDimTableDTO implements Serializable {
      */
     private Integer status;
 
+
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    private String connectionType;
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -68,7 +62,7 @@ public class ModelDimTableDTO implements Serializable {
     /**
      * 数据库名称
      */
-    private String databaseName;
+    private String dataBaseName;
 
     /**
      * 关联维度的id

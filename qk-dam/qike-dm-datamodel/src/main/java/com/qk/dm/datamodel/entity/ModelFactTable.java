@@ -26,7 +26,7 @@ public class ModelFactTable implements Serializable {
      * 主题id
      */
     @Column(name = "theme_id", nullable = false)
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -35,7 +35,7 @@ public class ModelFactTable implements Serializable {
     private String themeName;
 
     /**
-     * 维度名称
+     * 事实表名称
      */
     @Column(name = "fact_name", nullable = false)
     private String factName;
@@ -53,10 +53,10 @@ public class ModelFactTable implements Serializable {
     private Integer status = 0;
 
     /**
-     * 连接类型
+     * 数据源连接名称
      */
-    @Column(name = "connection_type", nullable = false)
-    private Integer connectionType;
+    @Column(name = "data_source_name")
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -68,7 +68,25 @@ public class ModelFactTable implements Serializable {
      * 数据库名称
      */
     @Column(name = "database_name", nullable = false)
-    private String databaseName;
+    private String dataBaseName;
+
+    /**
+     * HIVE类型表需要选择数据格式
+     */
+    @Column(name = "data_format")
+    private String dataFormat;
+
+    /**
+     * HIVE类型表需要给hdfs路径
+     */
+    @Column(name = "hdfs_route")
+    private String hdfsRoute ;
+
+    /**
+     * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
+     */
+    @Column(name = "table_type")
+    private String tableType;
 
     /**
      * 创建时间
@@ -99,11 +117,6 @@ public class ModelFactTable implements Serializable {
      */
     @Column(name = "update_userid", nullable = false)
     private Long updateUserid;
-    /**
-     * 所属层级id
-     */
-    @Column(name = "model_id", nullable = false)
-    private Long modelId;
     /**
      * 责任人姓名
      */

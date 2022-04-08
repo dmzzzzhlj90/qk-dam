@@ -23,12 +23,11 @@ import org.springframework.util.CollectionUtils;
  */
 @Service
 public class MetaDataLineageServiceImpl implements MetaDataLineageService {
-  private static final AtlasClientV2 atlasClientV2 = AtlasConfig.getAtlasClientV2();
 
   @Override
   public MtdLineageVO getLineageInfo(MtdLineageParamsVO mtdLineageParaVO) {
     try {
-      AtlasLineageInfo atlasLineageInfo = atlasClientV2.getLineageInfo(mtdLineageParaVO.getGuid(),
+      AtlasLineageInfo atlasLineageInfo = AtlasConfig.getAtlasClientV2().getLineageInfo(mtdLineageParaVO.getGuid(),
               getLineageDirectionEnum(mtdLineageParaVO.getDirection()),
               mtdLineageParaVO.getDepth() == null ? 3 : mtdLineageParaVO.getDepth());
 
@@ -65,7 +64,7 @@ public class MetaDataLineageServiceImpl implements MetaDataLineageService {
   public Map<String, Object> relationShip(String guid) {
     Map<String, Object> map = new HashMap<>();
     try {
-      AtlasEntity.AtlasEntityWithExtInfo detail = atlasClientV2.getEntityByGuid(guid, true, false);
+      AtlasEntity.AtlasEntityWithExtInfo detail = AtlasConfig.getAtlasClientV2().getEntityByGuid(guid, true, false);
       Map<String, Object> relationShip = detail.getEntity().getRelationshipAttributes();
       List<Map<String, Object>> relationShipVOList = new ArrayList<>();
       if (!CollectionUtils.isEmpty(relationShip)) {

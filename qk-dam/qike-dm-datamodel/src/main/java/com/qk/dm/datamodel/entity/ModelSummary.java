@@ -26,7 +26,7 @@ public class ModelSummary implements Serializable {
      * 主题id
      */
     @Column(name = "theme_id", nullable = false)
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -53,6 +53,12 @@ public class ModelSummary implements Serializable {
     private String dimName;
 
     /**
+     * 数据源连接名称
+     */
+    @Column(name = "data_source_name")
+    private String dataSourceName;
+
+    /**
      * 数据连接
      */
     @Column(name = "data_connection", nullable = false)
@@ -62,7 +68,7 @@ public class ModelSummary implements Serializable {
      * 数据库名称
      */
     @Column(name = "database_name", nullable = false)
-    private String databaseName;
+    private String dataBaseName;
     /**
      * 责任人姓名
      */

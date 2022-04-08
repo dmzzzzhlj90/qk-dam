@@ -10,6 +10,7 @@ import com.qk.dm.metadata.vo.MtdLineageParamsVO;
 import com.qk.dm.metadata.vo.MtdLineageVO;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.atlas.AtlasServiceException;
@@ -17,6 +18,9 @@ import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 元数据血缘
@@ -83,8 +87,25 @@ public class MtdLineageController {
    */
   @PostMapping("/lineage/template/import")
   @ResponseBody
-  public DefaultCommonResult lineageImport(@RequestParam MultipartFile file) throws Exception {
+  public DefaultCommonResult lineageImport(MultipartFile file) throws Exception {
     lineageService.lineageImport(new ByteArrayInputStream(file.getBytes()));
+    return DefaultCommonResult.success();
+  }
+
+  /**
+   * 血缘删除清理
+   * @param guids guids
+   * @return DefaultCommonResult
+   * @throws Exception 异常
+   */
+  @DeleteMapping("/lineage/guids")
+  @ResponseBody
+  public DefaultCommonResult lineageClearGuids(@NotNull @NotBlank @RequestParam String guids,
+                                          @RequestParam Boolean deleteFl) throws Exception {
+    lineageService.deleteEntitiesByGuids(List.of(guids.split(",")));
+    if (deleteFl){
+      lineageService.realCleanEntities();
+    }
     return DefaultCommonResult.success();
   }
 

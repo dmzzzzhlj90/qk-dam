@@ -90,6 +90,17 @@ public class AtyRoleController {
     }
 
     /**
+     * 角色列表-不分页查询所有
+     *
+     * @param clientRoleParamVO
+     * @return DefaultCommonResult<List<AtyClientRoleInfoVO>>
+     */
+    @GetMapping("/list")
+    public DefaultCommonResult<List<AtyClientRoleInfoVO>> getClientRolesList(@Valid AtyClientRoleParamVO clientRoleParamVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,atyRoleService.getUsersRole(clientRoleParamVO));
+    }
+
+    /**
      * 角色详情-已授权的用户列表
      * @param clientRoleVO
      * @return DefaultCommonResult<PageResultVO<AtyUserInfoVO>>

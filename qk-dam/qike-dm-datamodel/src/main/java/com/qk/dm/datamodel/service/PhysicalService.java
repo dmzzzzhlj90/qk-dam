@@ -6,6 +6,7 @@ import com.qk.dm.datamodel.params.dto.ModelPhysicalDTO;
 import com.qk.dm.datamodel.params.dto.ModelReverseBaseDTO;
 import com.qk.dm.datamodel.params.dto.QueryModelPhysicalDTO;
 import com.qk.dm.datamodel.params.vo.CensusDataVO;
+import com.qk.dm.datamodel.params.vo.ModelDataSourceinfoVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalTableVO;
 import com.qk.dm.datamodel.params.vo.ModelPhysicalVO;
 import org.springframework.stereotype.Service;
@@ -44,4 +45,6 @@ public interface PhysicalService {
   List<String> queryDataType();
 
   List<DataStandardInfoVO> getTree();
+
+  ModelDataSourceinfoVO getDataSourceinfo();
 }

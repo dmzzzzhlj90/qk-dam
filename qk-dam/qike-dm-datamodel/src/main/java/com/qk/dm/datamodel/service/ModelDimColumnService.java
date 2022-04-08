@@ -5,11 +5,11 @@ import com.qk.dm.datamodel.params.vo.ModelDimColumnVO;
 import java.util.List;
 
 public interface ModelDimColumnService {
-    void insert(List<ModelDimColumnDTO> modelDimColumnDTOList);
+    void insert(List<ModelDimColumnDTO> modelDimColumnDTOList,Long dimId);
 
     void update(Long dimId,List<ModelDimColumnDTO> modelPhysicalColumnDTOList);
 
-    void delete(String ids);
+    void delete(String dimIds);
 
     List<ModelDimColumnVO> list(Long dimId);
 }

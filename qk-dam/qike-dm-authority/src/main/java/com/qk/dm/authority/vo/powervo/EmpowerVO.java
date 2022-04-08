@@ -103,12 +103,12 @@ public class EmpowerVO {
   private String serviceId;
 
   /**
-   * 授权信息uuid
+   * 授权信息uuid(修改为必填参数)
    */
   private String empowerId;
 
   /**
-   * 当授权主体为角色时候，存角色对应的客户端名称
+   * （当授权主体为角色时候必填），存角色对应的客户端id
    */
-  private String clientName;
+  private String clientId;
 }

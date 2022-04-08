@@ -84,10 +84,13 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     }
 
     @Override
-    public void update(Long id, ModelSummaryDTO modelSummaryDTO) {
-        ModelSummary modelSummary = modelSummaryRepository.findById(id).orElse(null);
+    public void update(ModelSummaryDTO modelSummaryDTO) {
+        if(Objects.isNull(modelSummaryDTO.getId())){
+            throw new BizException("汇总表id不能为空");
+        }
+        ModelSummary modelSummary = modelSummaryRepository.findById(modelSummaryDTO.getId()).orElse(null);
          if(Objects.isNull(modelSummary)){
-             throw new BizException("当前查询的汇总表 id为"+id+"的数据不存在");
+             throw new BizException("当前查询的汇总表 id为"+modelSummaryDTO.getId()+"的数据不存在");
          }
         if(Objects.equals(modelSummary.getStatus(), ModelStatus.PUBLISH)){
             throw new BizException("当前汇总表已发布，不可修改！！！");
@@ -99,20 +102,27 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
             if(checkRepeat(modelSummaryIdcList)){
                 throw new BizException("存在重复的字段！！！");
             }
-            modelSummaryIdcList.forEach(e->e.setSummaryId(id));
-            modelSummaryIdcService.update(id,modelSummaryIdcList);
+            modelSummaryIdcService.update(modelSummaryDTO.getId(),modelSummaryIdcList);
             //组装建表SQL,添加到数据库中
             ModelSqlDTO modelSql = ModelSqlDTO.builder().sqlSentence(generateSql(modelSummary.getTableName(), modelSummaryIdcList))
                     .tableId(modelSummary.getId()).type(ModelType.FACT_TABLE).build();
             modelSqlService.update(modelSql);
         }
 
+
     }
 
     @Override
     public void delete(String ids) {
-        List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
+        List<Long> list = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<ModelSummary> modelSummaryList = getModelSummaryList(list);
+        modelSummaryList = modelSummaryList.stream().peek(e -> {
+            if (e.getStatus() == ModelStatus.PUBLISH) {
+                throw new BizException(e.getTableName() + "汇总表已发布，不可删除！！！");
+            }
+        }).collect(Collectors.toList());
         modelSummaryRepository.deleteAll(modelSummaryList);
+        modelSummaryIdcService.delete(ids);
     }
 
     @Override
@@ -134,15 +144,15 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
     }
 
     @Override
-    public void publish(String ids) {
-        List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
+    public void publish(List<Long> idList) {
+        List<ModelSummary> modelSummaryList = getModelSummaryList(idList);
         modelSummaryList.forEach(e->e.setStatus(ModelStatus.PUBLISH));
         modelSummaryRepository.saveAllAndFlush(modelSummaryList);
     }
 
     @Override
-    public void offline(String ids) {
-        List<ModelSummary> modelSummaryList = getModelSummaryList(ids);
+    public void offline(List<Long> idList) {
+        List<ModelSummary> modelSummaryList = getModelSummaryList(idList);
         modelSummaryList.forEach(e->e.setStatus(ModelStatus.OFFLINE));
         modelSummaryRepository.saveAllAndFlush(modelSummaryList);
     }
@@ -181,11 +191,11 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
         return SqlBuilderFactory.creatTableSQL(Table.builder().name(tableName).columns(columns).build());
     }
 
-    private List<ModelSummary> getModelSummaryList(String ids){
-        Iterable<Long> idSet = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
-        List<ModelSummary> modelSummaryList = modelSummaryRepository.findAllById(idSet);
+    private List<ModelSummary> getModelSummaryList(List<Long> idList){
+
+        List<ModelSummary> modelSummaryList = modelSummaryRepository.findAllById(idList);
         if(modelSummaryList.isEmpty()){
-            throw new BizException("当前要操作的汇总表id为："+ids+"的数据不存在！！！");
+            throw new BizException("当前要操作的汇总表id为："+idList+"的数据不存在！！！");
         }
         return modelSummaryList;
     }
@@ -194,16 +204,13 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, modelSummaryDTO);
         Map<String, Object> result = new HashMap<>();
-        long count =
-                jpaQueryFactory.select(qModelSummary.count()).from(qModelSummary).where(booleanBuilder).fetchOne();
-        List<ModelSummary> modelPhysicalTableList =
-                jpaQueryFactory
+        long count = jpaQueryFactory.select(qModelSummary.count()).from(qModelSummary).where(booleanBuilder).fetchOne();
+        List<ModelSummary> modelPhysicalTableList = jpaQueryFactory
                         .select(qModelSummary)
                         .from(qModelSummary)
                         .where(booleanBuilder)
                         .orderBy(qModelSummary.id.asc())
-                        .offset(
-                                (long) (modelSummaryDTO.getPagination().getPage() - 1)
+                        .offset((long) (modelSummaryDTO.getPagination().getPage() - 1)
                                         * modelSummaryDTO.getPagination().getSize())
                         .limit(modelSummaryDTO.getPagination().getSize())
                         .fetch();
@@ -214,10 +221,20 @@ public class ModelSummaryServiceImpl implements ModelSummaryService {
 
     public void checkCondition(BooleanBuilder booleanBuilder, ModelSummaryDTO modelSummaryDTO) {
         if (!StringUtils.isEmpty(modelSummaryDTO.getTableName())) {
-            booleanBuilder.and(
-                    qModelSummary
-                            .tableName
-                            .contains(modelSummaryDTO.getTableName()));
+            booleanBuilder.and(qModelSummary.tableName.contains(modelSummaryDTO.getTableName()));
         }
+        if(!StringUtils.isEmpty(modelSummaryDTO.getDataBaseName())){
+            booleanBuilder.and(qModelSummary.dataBaseName.contains(modelSummaryDTO.getDataBaseName()));
+        }
+        if(!StringUtils.isEmpty(modelSummaryDTO.getDataConnection())){
+            booleanBuilder.and(qModelSummary.dataConnection.contains(modelSummaryDTO.getDataConnection()));
+        }
+        if(!StringUtils.isEmpty(modelSummaryDTO.getDimName())){
+            booleanBuilder.and(qModelSummary.dimName.contains(modelSummaryDTO.getDimName()));
+        }
+        if(!StringUtils.isEmpty(modelSummaryDTO.getThemeName())){
+            booleanBuilder.and(qModelSummary.themeName.contains(modelSummaryDTO.getThemeName()));
+        }
+
     }
 }

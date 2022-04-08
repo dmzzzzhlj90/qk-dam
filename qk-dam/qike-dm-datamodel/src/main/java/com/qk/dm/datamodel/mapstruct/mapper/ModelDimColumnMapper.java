@@ -20,6 +20,8 @@ public interface ModelDimColumnMapper {
 
     List<ModelDimTableColumnDTO> ofDimTableColumn(List<ModelDimColumnDTO> modelDimColumnList);
 
+    List<ModelDimTableColumnDTO> ofDimTableColumnDTO(List<ModelDimColumnVO> modelDimColumnList);
+
     ModelDimColumnVO of(ModelDimColumn modelDimColumn);
 
     List<ModelDimColumnVO> of(List<ModelDimColumn> modelDimColumnList);

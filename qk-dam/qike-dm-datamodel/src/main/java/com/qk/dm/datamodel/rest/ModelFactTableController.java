@@ -3,13 +3,17 @@ package com.qk.dm.datamodel.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.datamodel.params.dto.ModelFactQueryDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 import com.qk.dm.datamodel.service.ModelFactTableService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
- * 数据模型物理表
+ * 事实表
  * @author wangzp
  * @date 2021/11/10 10:28
  * @since 1.0.0
@@ -36,13 +40,12 @@ public class ModelFactTableController {
     }
     /**
      * 修改事实表
-     * @param id 事实表id
-     * @param modelFactTableDTO 事实表实体
+     * @param modelFactTableDTO 事实表实体,编辑id不能为空
      * @return DefaultCommonResult
      */
-    @PutMapping("/{id}")
-    public DefaultCommonResult update(@PathVariable("id") Long id, @RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
-        modelFactTableService.update(id,modelFactTableDTO);
+    @PutMapping("")
+    public DefaultCommonResult update(@RequestBody @Validated ModelFactTableDTO modelFactTableDTO){
+        modelFactTableService.update(modelFactTableDTO);
         return  DefaultCommonResult.success();
     }
 
@@ -58,16 +61,16 @@ public class ModelFactTableController {
 
     /**
      * 事实表列表
-     * @param modelFactTableDTO 事实表实体
+     * @param modelFactQueryDTO 事实表实体
      * @return DefaultCommonResult<PageResultVO<ModelFactTableVO>>
      */
     @PostMapping(value = "/list")
-    public DefaultCommonResult<PageResultVO<ModelFactTableVO>> list(@RequestBody ModelFactTableDTO modelFactTableDTO){
-        return DefaultCommonResult.success(ResultCodeEnum.OK,modelFactTableService.list(modelFactTableDTO));
+    public DefaultCommonResult<PageResultVO<ModelFactTableVO>> list(@RequestBody ModelFactQueryDTO modelFactQueryDTO){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,modelFactTableService.list(modelFactQueryDTO));
     }
     /**
      * 发布事实表
-     * @param ids 事实表id，多个id使用英文逗号分割
+     * @param ids
      * @return DefaultCommonResult
      */
     @PutMapping("/publish/{ids}")
@@ -78,7 +81,7 @@ public class ModelFactTableController {
 
     /**
      * 下线事实表
-     * @param ids 事实表id，多个id使用英文逗号分割
+     * @param ids
      * @return DefaultCommonResult
      */
     @PutMapping("/offline/{ids}")
@@ -86,6 +89,18 @@ public class ModelFactTableController {
         modelFactTableService.offline(ids);
         return DefaultCommonResult.success();
     }
+
+    /**
+     * 删除事实表
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("{ids}")
+    public DefaultCommonResult batchDelete(@PathVariable("ids") String ids){
+        modelFactTableService.delete(ids);
+        return DefaultCommonResult.success();
+    }
+
     /**
      * 预览SQL
      * @param tableId 事实表id

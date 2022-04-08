@@ -51,6 +51,12 @@ public class ModelDimTableColumn implements Serializable {
     private String standardsName;
 
     /**
+     * 标准编码
+     */
+    @Column(name = "standards_code")
+    private String standardsCode;
+
+    /**
      * 是否是主键 0否 1是
      */
     @Column(name = "its_primary_key", nullable = false)

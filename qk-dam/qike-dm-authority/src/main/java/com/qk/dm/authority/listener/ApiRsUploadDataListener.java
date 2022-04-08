@@ -3,7 +3,7 @@ package com.qk.dm.authority.listener;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.qk.dm.authority.service.impl.ApiRsExcelBatchService;
-import com.qk.dm.authority.vo.powervo.ResourceVO;
+import com.qk.dm.authority.vo.powervo.ResourceApiVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
@@ -18,14 +18,14 @@ import java.util.List;
  * @since 1.0.0
  */
 @Component
-public class ApiRsUploadDataListener extends AnalysisEventListener<ResourceVO> {
+public class ApiRsUploadDataListener extends AnalysisEventListener<ResourceApiVO> {
   private static final Log LOG = LogFactory.getLog("ApiResourceBasicInfoUploadDataListener");
   private final ApiRsExcelBatchService apiResourceExcelBatchService;
   /** 每隔1000条存储数据库，然后清理list ，方便内存回收 */
   private static final int BATCH_COUNT = 1000;
 
-  List<ResourceVO> list = new ArrayList<>();
-  List<ResourceVO> returnList = new ArrayList<>();
+  List<ResourceApiVO> list = new ArrayList<>();
+  List<ResourceApiVO> returnList = new ArrayList<>();
 
   public ApiRsUploadDataListener(
       ApiRsExcelBatchService apiResourceExcelBatchService) {
@@ -38,11 +38,11 @@ public class ApiRsUploadDataListener extends AnalysisEventListener<ResourceVO> {
    * @param context
    */
   @Override
-  public void invoke(ResourceVO data, AnalysisContext context) {
+  public void invoke(ResourceApiVO data, AnalysisContext context) {
       list.add(data);
     // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM
     if (list.size() >= BATCH_COUNT) {
-      List<ResourceVO> rptBaseInfos = saveData();
+      List<ResourceApiVO> rptBaseInfos = saveData();
       returnList.addAll(rptBaseInfos);
       // 存储完成清理 list
       list.clear();
@@ -57,15 +57,15 @@ public class ApiRsUploadDataListener extends AnalysisEventListener<ResourceVO> {
   @Override
   public void doAfterAllAnalysed(AnalysisContext context) {
     // 这里也要保存数据，确保最后遗留的数据也存储到数据库
-    List<ResourceVO> rptBaseInfos = saveData();
+    List<ResourceApiVO> rptBaseInfos = saveData();
     returnList.addAll(rptBaseInfos);
   }
 
-  private List<ResourceVO> saveData() {
+  private List<ResourceApiVO> saveData() {
     return  apiResourceExcelBatchService.saveResources(list);
   }
 
-  public List<ResourceVO> getList(){
+  public List<ResourceApiVO> getList(){
     return returnList;
   }
 }

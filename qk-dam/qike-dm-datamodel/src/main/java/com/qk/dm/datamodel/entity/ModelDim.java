@@ -26,7 +26,7 @@ public class ModelDim implements Serializable {
      * 主题id
      */
     @Column(name = "theme_id", nullable = false)
-    private Long themeId;
+    private String themeId;
 
     /**
      * 主题名称
@@ -65,10 +65,10 @@ public class ModelDim implements Serializable {
     private Integer status = 0;
 
     /**
-     * 连接类型
+     * 数据源名称
      */
-    @Column(name = "connection_type", nullable = false)
-    private String connectionType;
+    @Column(name = "data_source_name", nullable = false)
+    private String dataSourceName;
 
     /**
      * 数据连接
@@ -80,7 +80,22 @@ public class ModelDim implements Serializable {
      * 数据库名称
      */
     @Column(name = "database_name", nullable = false)
-    private String databaseName;
+    private String dataBaseName;
+    /**
+     * HIVE类型表需要选择数据格式
+     */
+    @Column(name = "data_format")
+    private String dataFormat;
+    /**
+     * HIVE类型表需要给hdfs路径
+     */
+    @Column(name = "hdfs_route")
+    private String hdfsRoute;
+    /**
+     * HIVE类型表分为内部表和外部表(1表示内部，2表示外部)
+     */
+    @Column(name = "table_type", nullable = false)
+    private String tableType;
 
     /**
      * 创建时间

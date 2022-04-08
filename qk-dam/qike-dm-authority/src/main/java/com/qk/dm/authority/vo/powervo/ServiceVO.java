@@ -81,10 +81,40 @@ public class ServiceVO {
    * 区域id（项目id）
    */
   @NotBlank(message = "域id不能为空")
-  private String redionid;
+  private String redionId;
 
   /**
-   * 服务uuid
+   * 服务uuid（修改为必填参数）
    */
-  private String serviceid;
+  private String serviceId;
+
+  /**
+   * 微服务线上地址
+   */
+  @NotBlank(message = "entry不能为空")
+  private String entry;
+
+  /**
+   * 微服务项目名
+   */
+  @NotBlank(message = "path不能为空")
+  private String path;
+
+  /**
+   * 微应用
+   */
+  @NotBlank(message = "microApp不能为空")
+  private String microApp;
+
+  /**
+   * 服务名称（前端展示使用）
+   */
+
+  private String title;
+
+  /**
+   * 服务的uuid（前端展示使用）
+   */
+  private String value;
+
 }
