@@ -87,8 +87,7 @@ public class ApiSixProcessService {
         systemParam.put(ApiSixConstant.API_SIX_ADMIN_UPSTREAM_URL_KEY, apiSixConnectInfo.getAdminUpstreamUrl());
         systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
         upstreamContext.setParams(systemParam);
-        List upstreamInfoIds = apiGatewayManager.apiSixUpstreamInfoIds(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, upstreamContext);
-        return upstreamInfoIds;
+        return apiGatewayManager.apiSixUpstreamInfoIds(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, upstreamContext);
     }
 
     /**
@@ -102,8 +101,7 @@ public class ApiSixProcessService {
         systemParam.put(ApiSixConstant.API_SIX_ADMIN_SERVER_URL_KEY, apiSixConnectInfo.getAdminServerUrl());
         systemParam.put(ApiSixConstant.API_SIX_HEAD_KEY, apiSixConnectInfo.getHeadKeyValue());
         serverContext.setParams(systemParam);
-        List serviceInfoIds = apiGatewayManager.apiSixServiceInfoIds(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, serverContext);
-        return serviceInfoIds;
+        return apiGatewayManager.apiSixServiceInfoIds(ApiSixConnectInfo.GATEWAY_TYPE_API_SIX, serverContext);
     }
 
 

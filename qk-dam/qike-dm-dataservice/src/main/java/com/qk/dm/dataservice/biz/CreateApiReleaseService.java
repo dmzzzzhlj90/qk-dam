@@ -60,9 +60,10 @@ public class CreateApiReleaseService {
             for (String apiId : createBasicApiMap.keySet()) {
                 DasApiBasicInfo dasApiBasicInfo = createBasicApiMap.get(apiId);
                 //检测路由信息是否包含需要发布的URL信息
+                boolean checkUrlFlag = true;
 //                boolean checkUrlFlag = UrlProcessUtils.checkUrlIsContain(routeInfoList, dasApiBasicInfo.getApiPath());
                 //更新发布状态 新建API使用统一路径根据apiId进行数据查询
-                updateCreateStatus(successfulNum, failNum, routeContext, routeInfoList, dasApiBasicInfo, true);
+                updateCreateStatus(successfulNum, failNum, routeContext, routeInfoList, dasApiBasicInfo, checkUrlFlag);
             }
             LOG.info("成功发布新建Api个数:【{}】", successfulNum);
             LOG.info("失败发布新建Api个数:【{}】", failNum);

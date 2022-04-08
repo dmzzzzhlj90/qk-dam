@@ -250,10 +250,10 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
      */
     private String getOrderByParaSqlStr(DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO) {
         String orderByStr = "";
-        // 默认使用首个参数的排序方式
         List<DasApiCreateSqlScriptOrderParasVO> orderParas = apiCreateSqlScriptDefinitionVO.getApiCreateOrderParasVOS();
         if (null != orderParas && orderParas.size() > 0) {
-            DasApiCreateSqlScriptOrderParasVO orderParasVO = orderParas.get(0);
+            // 默认使用首个参数的排序方式
+            DasApiCreateSqlScriptOrderParasVO orderParasVO = orderParas.stream().findFirst().get();
             String orderType = orderParasVO.getOrderType();
 
             if (CreateParamSortStyleEnum.ASC.getCode().equalsIgnoreCase(orderType) ||

@@ -287,19 +287,18 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
      */
     private String getOrderByParaSqlStr(DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO) {
         String orderByStr = "";
-        // 默认使用首个参数的排序方式
-        DasApiCreateOrderParasVO orderParasVO = apiCreateConfigDefinitionVO.getApiCreateOrderParasVOS().get(0);
-        String orderType = orderParasVO.getOrderType();
-
         List<DasApiCreateOrderParasVO> orderParas = apiCreateConfigDefinitionVO.getApiCreateOrderParasVOS();
-        if (orderParas != null && orderParas.size() > 0) {
-            if (CreateParamSortStyleEnum.ASC.getCode().equalsIgnoreCase(orderType) ||
-                    CreateParamSortStyleEnum.DESC.getCode().equalsIgnoreCase(orderType)) {
-                //排序字段
-                List<String> orderCols = orderParas.stream().map(DasApiCreateOrderParasVO::getColumnName).collect(Collectors.toList());
-                String orderColStr = String.join(",", orderCols);
-                orderByStr += SqlExecuteUtils.ORDER_BY + orderColStr + " " + orderType;
-            }
+        if (null != orderParas && orderParas.size() > 0) {
+            // 默认使用首个参数的排序方式
+            DasApiCreateOrderParasVO orderParasVO = orderParas.stream().findFirst().get();
+            String orderType = orderParasVO.getOrderType();
+                if (CreateParamSortStyleEnum.ASC.getCode().equalsIgnoreCase(orderType) ||
+                        CreateParamSortStyleEnum.DESC.getCode().equalsIgnoreCase(orderType)) {
+                    //排序字段
+                    List<String> orderCols = orderParas.stream().map(DasApiCreateOrderParasVO::getColumnName).collect(Collectors.toList());
+                    String orderColStr = String.join(",", orderCols);
+                    orderByStr += SqlExecuteUtils.ORDER_BY + orderColStr + " " + orderType;
+                }
         }
         return orderByStr;
     }

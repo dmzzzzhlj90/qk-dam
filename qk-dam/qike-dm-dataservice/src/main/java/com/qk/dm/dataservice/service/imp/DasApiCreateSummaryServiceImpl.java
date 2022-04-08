@@ -103,7 +103,7 @@ public class DasApiCreateSummaryServiceImpl implements DasApiCreateSummaryServic
             //调用数据查询
             debugApiResultVO = dasApiCreateConfigService.debugModel(apiCreateConfigVO);
         } else if (createTypeSet.contains(CreateTypeEnum.CREATE_API_SQL_SCRIPT_TYPE.getCode())) {
-            //配置API
+            // 取数方式
             DasApiCreateSqlScriptVO apiCreateSqlScriptVO = (DasApiCreateSqlScriptVO) createApiMap.get(CreateTypeEnum.CREATE_API_SQL_SCRIPT_TYPE.getCode());
             //设置请求参数 DEBUG调试参数
             apiCreateSqlScriptVO.setDebugApiParasVOS(debugApiParasVO);
