@@ -1,0 +1,61 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "测试一下",
+    "title": "test",
+    "version": "3.0.3"
+  },
+  "paths": {
+    "/api/v2/getentid/": {
+      "parameters": [
+        {
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "in": "query",
+          "name": "guids"
+        },
+        {
+          "required": false,
+          "schema": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "in": "query",
+          "name": "age"
+        }
+      ],
+      "post": {
+        "summary": "这个接口啊啊啊",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GetentidPayload": {
+        "properties": {
+          "ctype": {
+            "description": "cccctype",
+            "type": "string",
+            "title": "ctype"
+          },
+          "key": {
+            "description": "测key",
+            "type": "string",
+            "title": "key"
+          }
+        },
+        "title": "GetentidPayload",
+        "required": [
+          "key"
+        ]
+      }
+    }
+  }
+}

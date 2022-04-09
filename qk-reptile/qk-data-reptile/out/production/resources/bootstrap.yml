@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: dm-reptile
+  logging:
+    level: info
+    appender:
+      ref: CONSOLE
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.21.128.97
+        namespace: dam-prod
+      config:
+        server-addr: http://172.21.128.97
+        namespace: dam-prod
+        extension-configs:
+          - dataId: qkreptile-mysql-prod.yml
+            group: DAM
+            refresh: true
+          - dataId: qkreptile-oauth2-prod.yml
+            group: DAM
+            refresh: true
+  profiles:
+    active: prod

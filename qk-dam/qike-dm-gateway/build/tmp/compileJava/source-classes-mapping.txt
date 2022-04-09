@@ -1,0 +1,12 @@
+com/qk/dam/gateway/config/ResourceServerConfig.java
+ com.qk.dam.gateway.config.ResourceServerConfig
+com/qk/dam/gateway/auth/DamAuthorizationManager.java
+ com.qk.dam.gateway.auth.DamAuthorizationManager
+com/qk/dam/gateway/config/GatewayRouteConfig.java
+ com.qk.dam.gateway.config.GatewayRouteConfig
+com/qk/dam/gateway/config/GlobalExceptionAdvice.java
+ com.qk.dam.gateway.config.GlobalExceptionAdvice
+com/qk/dam/gateway/web/HomeController.java
+ com.qk.dam.gateway.web.HomeController
+com/qk/dam/gateway/DmGatewayApplication.java
+ com.qk.dam.gateway.DmGatewayApplication

@@ -1,0 +1,49 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
+}
+version "${damProfilesActive}-v${dmMicroServices}"
+group "com.qk.dam.auth"
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+processResources {
+    filesMatching('*.yml') {
+        expand(project.properties)
+    }
+}
+docker {
+    springBootApplication {
+        baseImage = "openjdk:11.0.12-jre-slim-buster"
+        ports = [8765]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
+dependencies {
+    implementation project(":dam-mvc-validation")
+    implementation project(":commons-core")
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
+    annotationProcessor 'org.projectlombok:lombok'
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,95 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
+}
+version "${dmDataServiceVersion}"
+group "com.qk.dm.datasource"
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+
+processResources {
+    expand(project.properties)
+}
+
+docker {
+    dockerCreateDockerfile {
+        environmentVariable 'TimeZone', 'Asia/Shanghai'
+        instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
+    }
+    springBootApplication {
+        baseImage = "${jre11Image}"
+        ports = [8781]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
+
+compileJava {
+    doFirst {
+        options.compilerArgs = [
+                //添加mapStruct的一些配置
+                '-Amapstruct.unmappedTargetPolicy=IGNORE',//未映射字段默认报错
+                '-Amapstruct.suppressGeneratorTimestamp=false',//未映射字段默认报错
+                '-Aspatial=false'//未映射字段默认报错
+        ]
+    }
+}
+
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    exclude group: 'org.eclipse.jetty.aggregate', module: 'jetty-all'
+    exclude group: 'org.eclipse.jetty.orbit', module: 'javax.servlet'
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    exclude group: 'org.mortbay.jetty', module: 'servlet-api-2.5'
+    exclude group: 'javax.servlet', module: 'servlet-api'
+}
+
+dependencies {
+    implementation project(":qk-data-jpa")
+    implementation project(":dam-mvc-validation")
+    implementation project(":commons-core")
+    implementation project(":datasource-common-core")
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+    implementation 'com.alibaba:easyexcel'
+    implementation 'mysql:mysql-connector-java'
+
+    implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
+    implementation 'org.elasticsearch.plugin:x-pack-sql-jdbc:7.10.0'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
+    implementation group: 'com.github.noraui', name: 'ojdbc8', version: '12.2.0.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.mapstruct:mapstruct'
+    annotationProcessor(
+            "javax.persistence:javax.persistence-api",
+            "javax.annotation:javax.annotation-api",
+            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
+            "org.projectlombok:lombok",
+            'org.mapstruct:mapstruct-processor')
+    testAnnotationProcessor('org.mapstruct:mapstruct-processor')
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+smartdoc {
+    configFile = file("src/main/resources/smart-doc.json")
+}
+
+test {
+    useJUnitPlatform()
+}

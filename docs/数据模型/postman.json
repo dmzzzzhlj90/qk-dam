@@ -1,0 +1,1859 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "3c2365e6-12ef-44f8-a3c5-b472393c9828",
+    "name": "dm-datamodel"
+  },
+  "item": [
+    {
+      "name": "关系建模",
+      "item": [
+        {
+          "name": "新增——关系建模(创建结束时的保存\\发布)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 661,\n    \"tableName\": \"leesa.gottlieb\",\n    \"theme\": \"ewohtu\",\n    \"dataConnection\": \"mafl84\",\n    \"dataBaseName\": \"leesa.gottlieb\",\n    \"dataSourceName\": \"leesa.gottlieb\",\n    \"dataSourceId\": 188,\n    \"description\": \"ii7e6m\",\n    \"status\": 464,\n    \"gmtCreate\": \"2022-01-20 17:53:27\",\n    \"gmtModified\": \"2022-01-20 17:53:27\",\n    \"tableType\": \"y3dbbv\",\n    \"responsibleBy\": \"19p6ax\",\n    \"dataFormat\": \"9w9xos\",\n    \"themeId\": \"26\",\n    \"modelId\": 191,\n    \"hftsRoute\": \"txltgm\",\n    \"syncStatus\": 658\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 533,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"gpb3d2\",\n      \"standardsId\": 827,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"standardsCode\": \"7123\",\n      \"itsPrimaryKey\": \"pwanar\",\n      \"itsPartition\": \"yny6q3\",\n      \"itsNull\": \"u19ok5\",\n      \"description\": \"llrqh0\",\n      \"gmtCreate\": \"2022-01-20 17:53:27\",\n      \"gmtModified\": \"2022-01-20 17:53:27\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 489,\n      \"tableId\": 255,\n      \"columnName\": \"leesa.gottlieb\",\n      \"childTableName\": \"leesa.gottlieb\",\n      \"childTableColumn\": \"0tqkun\",\n      \"childConnectionWay\": \"13xoe2\",\n      \"fatherTableName\": \"leesa.gottlieb\",\n      \"fatherTableColumn\": \"cgi1gd\",\n      \"fatherConnectionWay\": \"0f410g\",\n      \"gmtCreate\": \"2022-01-20 17:53:27\",\n      \"gmtModified\": \"2022-01-20 17:53:27\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增——关系建模(创建结束时的保存\\发布)",
+            "header": []
+          },
+          "description": "新增——关系建模(创建结束时的保存\\发布)"
+        },
+        {
+          "name": "删除——关系建模（下线操作）",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  684,\n  457\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/delete",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "delete"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "删除——关系建模（下线操作）",
+            "header": []
+          },
+          "description": "删除——关系建模（下线操作）"
+        },
+        {
+          "name": "修改——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelPhysicalTableDTO\": {\n    \"id\": 325,\n    \"tableName\": \"leesa.gottlieb\",\n    \"theme\": \"cfrhqy\",\n    \"dataConnection\": \"79c2ka\",\n    \"dataBaseName\": \"leesa.gottlieb\",\n    \"dataSourceName\": \"leesa.gottlieb\",\n    \"dataSourceId\": 758,\n    \"description\": \"1btjee\",\n    \"status\": 249,\n    \"gmtCreate\": \"2022-01-20 17:53:27\",\n    \"gmtModified\": \"2022-01-20 17:53:27\",\n    \"tableType\": \"41tkq3\",\n    \"responsibleBy\": \"90teeu\",\n    \"dataFormat\": \"mrg7y1\",\n    \"themeId\": \"26\",\n    \"modelId\": 11,\n    \"hftsRoute\": \"9hlymg\",\n    \"syncStatus\": 373\n  },\n  \"modelColumnDtoList\": [\n    {\n      \"tableId\": 961,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"8xxdu6\",\n      \"standardsId\": 895,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"standardsCode\": \"7123\",\n      \"itsPrimaryKey\": \"1x6pv8\",\n      \"itsPartition\": \"vq8o5g\",\n      \"itsNull\": \"4kt54h\",\n      \"description\": \"xf1opx\",\n      \"gmtCreate\": \"2022-01-20 17:53:27\",\n      \"gmtModified\": \"2022-01-20 17:53:27\"\n    }\n  ],\n  \"modelRelationDtoList\": [\n    {\n      \"id\": 149,\n      \"tableId\": 730,\n      \"columnName\": \"leesa.gottlieb\",\n      \"childTableName\": \"leesa.gottlieb\",\n      \"childTableColumn\": \"aepajj\",\n      \"childConnectionWay\": \"xoenn7\",\n      \"fatherTableName\": \"leesa.gottlieb\",\n      \"fatherTableColumn\": \"pa3rhz\",\n      \"fatherConnectionWay\": \"df8otf\",\n      \"gmtCreate\": \"2022-01-20 17:53:27\",\n      \"gmtModified\": \"2022-01-20 17:53:27\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "修改——关系建模",
+            "header": []
+          },
+          "description": "修改——关系建模"
+        },
+        {
+          "name": "查询——关系建模",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"qe5hw7\"\n  },\n  \"themeIdList\": [\n    \"wc0s99\"\n  ],\n  \"modelId\": 866\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/query",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "query"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "查询——关系建模",
+            "header": []
+          },
+          "description": "查询——关系建模"
+        },
+        {
+          "name": "详情——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/194",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "635",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "详情——关系建模",
+            "header": []
+          },
+          "description": "详情——关系建模"
+        },
+        {
+          "name": "统计信息——关系建模",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"3ungln\"\n  },\n  \"themeIdList\": [\n    \"u2z4zh\"\n  ],\n  \"modelId\": 788\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/census",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "census"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "统计信息——关系建模",
+            "header": []
+          },
+          "description": "统计信息——关系建模"
+        },
+        {
+          "name": "数据类型下拉列表——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/data/types",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "data",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据类型下拉列表——关系建模",
+            "header": []
+          },
+          "description": "数据类型下拉列表——关系建模"
+        },
+        {
+          "name": "预览sql——关系建模",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/query/sql/56",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "query",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "957",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "预览sql——关系建模",
+            "header": []
+          },
+          "description": "预览sql——关系建模"
+        },
+        {
+          "name": "手动同步——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  921,\n  493\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/synchronization",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "synchronization"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "手动同步——关系建模",
+            "header": []
+          },
+          "description": "手动同步——关系建模"
+        },
+        {
+          "name": "批量发布——关系建模",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  626,\n  887\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/push",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "push"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "批量发布——关系建模",
+            "header": []
+          },
+          "description": "批量发布——关系建模"
+        },
+        {
+          "name": "逆向数据库",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theme\": \"827izg\",\n  \"dataConnection\": \"8t9ngk\",\n  \"dataBaseName\": \"leesa.gottlieb\",\n  \"dataSourceName\": \"leesa.gottlieb\",\n  \"dataSourceId\": 705,\n  \"themeId\": \"26\",\n  \"modelId\": 639,\n  \"replace\": \"ff9chz\",\n  \"tableList\": [\n    \"rafxbj\"\n  ],\n  \"allChoice\": \"lzurfy\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/reverse/base",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "reverse",
+                "base"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "逆向数据库",
+            "header": []
+          },
+          "description": "逆向数据库"
+        },
+        {
+          "name": "新建关系获取表名称（上线表的表名称）",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/tables",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "tables"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新建关系获取表名称（上线表的表名称）",
+            "header": []
+          },
+          "description": "新建关系获取表名称（上线表的表名称）"
+        },
+        {
+          "name": "根据表名称查询表字段名称",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "tableName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "leesa.gottlieb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/column?tableName\u003dleesa.gottlieb",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "column"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "tableName",
+                  "value": "leesa.gottlieb",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "根据表名称查询表字段名称",
+            "header": []
+          },
+          "description": "根据表名称查询表字段名称"
+        },
+        {
+          "name": "基础信息—查询数据格式",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/data/fromat",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "data",
+                "fromat"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "基础信息—查询数据格式",
+            "header": []
+          },
+          "description": "基础信息—查询数据格式"
+        },
+        {
+          "name": "基础信息—数据连接类型、数据源名称",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/modelphysical/data/source",
+              "protocol": "http",
+              "path": [
+                "modelphysical",
+                "data",
+                "source"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "基础信息—数据连接类型、数据源名称",
+            "header": []
+          },
+          "description": "基础信息—数据连接类型、数据源名称"
+        }
+      ]
+    },
+    {
+      "name": "数据模型物理表",
+      "item": [
+        {
+          "name": "添加事实表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"v0nt6n\"\n  },\n  \"id\": 442,\n  \"themeId\": 950,\n  \"themeName\": \"leesa.gottlieb\",\n  \"factName\": \"leesa.gottlieb\",\n  \"description\": \"tbw6g9\",\n  \"status\": 885,\n  \"connectionType\": 599,\n  \"dataConnection\": \"x0xpzv\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 454,\n      \"factId\": 955,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"b977uk\",\n      \"standardsId\": 197,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": 146,\n      \"itsPartition\": 567,\n      \"itsNull\": 616,\n      \"description\": \"di12ng\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/fact/",
+              "protocol": "http",
+              "path": [
+                "fact",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加事实表",
+            "header": []
+          },
+          "description": "添加事实表"
+        },
+        {
+          "name": "修改事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"n9098p\"\n  },\n  \"id\": 739,\n  \"themeId\": 884,\n  \"themeName\": \"leesa.gottlieb\",\n  \"factName\": \"leesa.gottlieb\",\n  \"description\": \"owdu8x\",\n  \"status\": 813,\n  \"connectionType\": 393,\n  \"dataConnection\": \"mrs3hb\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 200,\n      \"factId\": 525,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"qvnkl7\",\n      \"standardsId\": 128,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": 171,\n      \"itsPartition\": 84,\n      \"itsNull\": 129,\n      \"description\": \"4yzxcl\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/fact/844",
+              "protocol": "http",
+              "path": [
+                "fact",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "182",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "修改事实表",
+            "header": []
+          },
+          "description": "修改事实表"
+        },
+        {
+          "name": "事实表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/fact/933",
+              "protocol": "http",
+              "path": [
+                "fact",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "46",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "事实表详情",
+            "header": []
+          },
+          "description": "事实表详情"
+        },
+        {
+          "name": "事实表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"t193wa\"\n  },\n  \"id\": 571,\n  \"themeId\": 938,\n  \"themeName\": \"leesa.gottlieb\",\n  \"factName\": \"leesa.gottlieb\",\n  \"description\": \"l939a7\",\n  \"status\": 768,\n  \"connectionType\": 486,\n  \"dataConnection\": \"yecx2r\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelFactColumnList\": [\n    {\n      \"id\": 921,\n      \"factId\": 790,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"kjl6gc\",\n      \"standardsId\": 830,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": 609,\n      \"itsPartition\": 604,\n      \"itsNull\": 426,\n      \"description\": \"5udikw\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/fact/list",
+              "protocol": "http",
+              "path": [
+                "fact",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "事实表列表",
+            "header": []
+          },
+          "description": "事实表列表"
+        },
+        {
+          "name": "发布事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/fact/publish/2wcl7t",
+              "protocol": "http",
+              "path": [
+                "fact",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "o7io8h",
+                  "description": "事实表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布事实表",
+            "header": []
+          },
+          "description": "发布事实表"
+        },
+        {
+          "name": "下线事实表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/fact/offline/yrzdaf",
+              "protocol": "http",
+              "path": [
+                "fact",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "ie1zhv",
+                  "description": "事实表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线事实表",
+            "header": []
+          },
+          "description": "下线事实表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/fact/preview/sql/400",
+              "protocol": "http",
+              "path": [
+                "fact",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "299",
+                  "description": "事实表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "数据模型物理表",
+      "item": [
+        {
+          "name": "添加物理表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 941,\n  \"tableName\": \"leesa.gottlieb\",\n  \"theme\": \"mn7k84\",\n  \"dataConnection\": \"n7u2c0\",\n  \"dataBaseName\": \"leesa.gottlieb\",\n  \"dataSourceName\": \"leesa.gottlieb\",\n  \"dataSourceId\": 856,\n  \"description\": \"rgwbqb\",\n  \"status\": 693,\n  \"gmtCreate\": \"2022-01-20 17:53:27\",\n  \"gmtModified\": \"2022-01-20 17:53:27\",\n  \"tableType\": \"jv6b23\",\n  \"responsibleBy\": \"q9yp1t\",\n  \"dataFormat\": \"d0ztb9\",\n  \"themeId\": \"26\",\n  \"modelId\": 280,\n  \"hftsRoute\": \"zoxil6\",\n  \"syncStatus\": 623\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/physical/",
+              "protocol": "http",
+              "path": [
+                "physical",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加物理表",
+            "header": []
+          },
+          "description": "添加物理表"
+        },
+        {
+          "name": "修改物理表信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 849,\n  \"tableName\": \"leesa.gottlieb\",\n  \"theme\": \"zkv17f\",\n  \"dataConnection\": \"6ccs6x\",\n  \"dataBaseName\": \"leesa.gottlieb\",\n  \"dataSourceName\": \"leesa.gottlieb\",\n  \"dataSourceId\": 244,\n  \"description\": \"8hvj3v\",\n  \"status\": 846,\n  \"gmtCreate\": \"2022-01-20 17:53:27\",\n  \"gmtModified\": \"2022-01-20 17:53:27\",\n  \"tableType\": \"toscsr\",\n  \"responsibleBy\": \"lk9ttk\",\n  \"dataFormat\": \"crni01\",\n  \"themeId\": \"26\",\n  \"modelId\": 74,\n  \"hftsRoute\": \"wtfe1h\",\n  \"syncStatus\": 551\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/physical/328",
+              "protocol": "http",
+              "path": [
+                "physical",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "59",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "修改物理表信息",
+            "header": []
+          },
+          "description": "修改物理表信息"
+        },
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/physical/cyf9iy",
+              "protocol": "http",
+              "path": [
+                "physical",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "ftnp3g",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "",
+            "header": []
+          },
+          "description": ""
+        },
+        {
+          "name": "获取物理表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/physical/20",
+              "protocol": "http",
+              "path": [
+                "physical",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "获取物理表详情",
+            "header": []
+          },
+          "description": "获取物理表详情"
+        },
+        {
+          "name": "获取物理表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 184,\n  \"tableName\": \"leesa.gottlieb\",\n  \"theme\": \"j6nmku\",\n  \"dataConnection\": \"ap3mxa\",\n  \"dataBaseName\": \"leesa.gottlieb\",\n  \"dataSourceName\": \"leesa.gottlieb\",\n  \"dataSourceId\": 212,\n  \"description\": \"j4czfn\",\n  \"status\": 822,\n  \"gmtCreate\": \"2022-01-20 17:53:27\",\n  \"gmtModified\": \"2022-01-20 17:53:27\",\n  \"tableType\": \"py1urr\",\n  \"responsibleBy\": \"l61x28\",\n  \"dataFormat\": \"g8yr97\",\n  \"themeId\": \"26\",\n  \"modelId\": 512,\n  \"hftsRoute\": \"z2jwjx\",\n  \"syncStatus\": 862\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/physical/list",
+              "protocol": "http",
+              "path": [
+                "physical",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取物理表列表",
+            "header": []
+          },
+          "description": "获取物理表列表"
+        }
+      ]
+    },
+    {
+      "name": "数据模型（物理模型）",
+      "item": [
+        {
+          "name": "新增—关系建模层级",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelName\": \"leesa.gottlieb\",\n  \"layeredName\": \"leesa.gottlieb\",\n  \"description\": \"w9tfai\",\n  \"modelType\": 130\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/model/",
+              "protocol": "http",
+              "path": [
+                "model",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增—关系建模层级",
+            "header": []
+          },
+          "description": "新增—关系建模层级"
+        },
+        {
+          "name": "获取-关系建模层级",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/model/",
+              "protocol": "http",
+              "path": [
+                "model",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取-关系建模层级",
+            "header": []
+          },
+          "description": "获取-关系建模层级"
+        }
+      ]
+    },
+    {
+      "name": "汇总表",
+      "item": [
+        {
+          "name": "添加汇总表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"n4zapw\"\n  },\n  \"id\": 635,\n  \"themeId\": 385,\n  \"themeName\": \"leesa.gottlieb\",\n  \"tableName\": \"leesa.gottlieb\",\n  \"dimId\": 405,\n  \"dimName\": \"leesa.gottlieb\",\n  \"dataConnection\": \"mmnrhk\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"description\": \"ho89dr\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 861,\n      \"summaryId\": 940,\n      \"indicatorsType\": 733,\n      \"indicatorsName\": \"leesa.gottlieb\",\n      \"indicatorsCode\": \"7123\",\n      \"dataType\": \"emwbyw\",\n      \"itsNull\": \"2ks1g3\",\n      \"description\": \"sgf51s\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/summary/",
+              "protocol": "http",
+              "path": [
+                "summary",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加汇总表",
+            "header": []
+          },
+          "description": "添加汇总表"
+        },
+        {
+          "name": "修改汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"fx7zr2\"\n  },\n  \"id\": 441,\n  \"themeId\": 349,\n  \"themeName\": \"leesa.gottlieb\",\n  \"tableName\": \"leesa.gottlieb\",\n  \"dimId\": 796,\n  \"dimName\": \"leesa.gottlieb\",\n  \"dataConnection\": \"uthcf4\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"description\": \"91ykjz\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 875,\n      \"summaryId\": 738,\n      \"indicatorsType\": 123,\n      \"indicatorsName\": \"leesa.gottlieb\",\n      \"indicatorsCode\": \"7123\",\n      \"dataType\": \"xn45z9\",\n      \"itsNull\": \"lzbd3v\",\n      \"description\": \"4rutur\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/summary/538",
+              "protocol": "http",
+              "path": [
+                "summary",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "638",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "修改汇总表",
+            "header": []
+          },
+          "description": "修改汇总表"
+        },
+        {
+          "name": "汇总表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/summary/986",
+              "protocol": "http",
+              "path": [
+                "summary",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "617",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "汇总表详情",
+            "header": []
+          },
+          "description": "汇总表详情"
+        },
+        {
+          "name": "汇总表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"egv8cj\"\n  },\n  \"id\": 983,\n  \"themeId\": 533,\n  \"themeName\": \"leesa.gottlieb\",\n  \"tableName\": \"leesa.gottlieb\",\n  \"dimId\": 344,\n  \"dimName\": \"leesa.gottlieb\",\n  \"dataConnection\": \"b59bye\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"description\": \"6u4ajc\",\n  \"modelSummaryIdcList\": [\n    {\n      \"id\": 546,\n      \"summaryId\": 714,\n      \"indicatorsType\": 279,\n      \"indicatorsName\": \"leesa.gottlieb\",\n      \"indicatorsCode\": \"7123\",\n      \"dataType\": \"6b9eqj\",\n      \"itsNull\": \"9jhnj5\",\n      \"description\": \"7semm7\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/summary/list",
+              "protocol": "http",
+              "path": [
+                "summary",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "汇总表列表",
+            "header": []
+          },
+          "description": "汇总表列表"
+        },
+        {
+          "name": "发布汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/summary/publish/qr8bdi",
+              "protocol": "http",
+              "path": [
+                "summary",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "l8rvwj",
+                  "description": "汇总表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布汇总表",
+            "header": []
+          },
+          "description": "发布汇总表"
+        },
+        {
+          "name": "下线汇总表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/summary/offline/8yhx2f",
+              "protocol": "http",
+              "path": [
+                "summary",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "hnayds",
+                  "description": "汇总表id，多个id使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线汇总表",
+            "header": []
+          },
+          "description": "下线汇总表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/summary/preview/sql/821",
+              "protocol": "http",
+              "path": [
+                "summary",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "296",
+                  "description": "汇总表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "维度",
+      "item": [
+        {
+          "name": "添加维度信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7e067e\"\n  },\n  \"id\": 135,\n  \"themeId\": 873,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"plmhwt\",\n  \"description\": \"oakdun\",\n  \"status\": 336,\n  \"connectionType\": \"h16x16\",\n  \"dataConnection\": \"87uws1\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 871,\n      \"dimId\": 932,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"4zv88v\",\n      \"standardsId\": 636,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"ydvjtn\",\n      \"itsPartition\": \"zsqfpt\",\n      \"itsNull\": \"ecxugw\",\n      \"description\": \"lkvke2\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/",
+              "protocol": "http",
+              "path": [
+                "dim",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加维度信息",
+            "header": []
+          },
+          "description": "添加维度信息"
+        },
+        {
+          "name": "修改维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"w80ltb\"\n  },\n  \"id\": 607,\n  \"themeId\": 385,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"l8s4ua\",\n  \"description\": \"x2q6d1\",\n  \"status\": 25,\n  \"connectionType\": \"m72m5k\",\n  \"dataConnection\": \"m8g94h\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 845,\n      \"dimId\": 905,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"nzi0hq\",\n      \"standardsId\": 920,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"dmi8xx\",\n      \"itsPartition\": \"6pze91\",\n      \"itsNull\": \"gkz6oh\",\n      \"description\": \"p8396j\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/901",
+              "protocol": "http",
+              "path": [
+                "dim",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "158",
+                  "description": "维度id"
+                }
+              ]
+            },
+            "description": "修改维度",
+            "header": []
+          },
+          "description": "修改维度"
+        },
+        {
+          "name": "维度详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/213",
+              "protocol": "http",
+              "path": [
+                "dim",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "104",
+                  "description": "维度id"
+                }
+              ]
+            },
+            "description": "维度详情",
+            "header": []
+          },
+          "description": "维度详情"
+        },
+        {
+          "name": "维度列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"7to8w5\"\n  },\n  \"id\": 716,\n  \"themeId\": 403,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"o1gzbm\",\n  \"description\": \"rg8i2r\",\n  \"status\": 29,\n  \"connectionType\": \"v2xp02\",\n  \"dataConnection\": \"2bd1j3\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimColumnList\": [\n    {\n      \"id\": 961,\n      \"dimId\": 776,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"tbhuu0\",\n      \"standardsId\": 431,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"ybiqcu\",\n      \"itsPartition\": \"uqklc1\",\n      \"itsNull\": \"ws83wh\",\n      \"description\": \"lfhb4o\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/list",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "维度列表",
+            "header": []
+          },
+          "description": "维度列表"
+        },
+        {
+          "name": "发布维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/publish/ihlktx",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "publish",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "5iq1yy",
+                  "description": "维度id,如果多个，使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "发布维度",
+            "header": []
+          },
+          "description": "发布维度"
+        },
+        {
+          "name": "下线维度",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/offline/f59qgb",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "offline",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "pbx3ty",
+                  "description": "维度id,如果多个，使用英文逗号分割"
+                }
+              ]
+            },
+            "description": "下线维度",
+            "header": []
+          },
+          "description": "下线维度"
+        }
+      ]
+    },
+    {
+      "name": "维度表",
+      "item": [
+        {
+          "name": "添加维度表信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"tqe1mu\"\n  },\n  \"id\": 403,\n  \"themeId\": 460,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"tui3y5\",\n  \"description\": \"auo574\",\n  \"status\": 579,\n  \"connectionType\": \"x2fcul\",\n  \"dataConnection\": \"ezyqy5\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimId\": 342,\n  \"columnList\": [\n    {\n      \"id\": 280,\n      \"dimTableId\": 551,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"veb9ws\",\n      \"standardsId\": 225,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"wjv17y\",\n      \"itsPartition\": \"mtm1qs\",\n      \"itsNull\": \"pod2xt\",\n      \"description\": \"xpfmmv\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/table/",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "添加维度表信息",
+            "header": []
+          },
+          "description": "添加维度表信息"
+        },
+        {
+          "name": "修改维度表",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"hax3mt\"\n  },\n  \"id\": 349,\n  \"themeId\": 951,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"qg56zv\",\n  \"description\": \"qkg53m\",\n  \"status\": 165,\n  \"connectionType\": \"ds92vx\",\n  \"dataConnection\": \"kzc81i\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimId\": 850,\n  \"columnList\": [\n    {\n      \"id\": 994,\n      \"dimTableId\": 311,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"thnsfd\",\n      \"standardsId\": 203,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"qm2x2l\",\n      \"itsPartition\": \"taoq8v\",\n      \"itsNull\": \"x1e3o5\",\n      \"description\": \"t96f8j\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/table/419",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "386",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "修改维度表",
+            "header": []
+          },
+          "description": "修改维度表"
+        },
+        {
+          "name": "维度表详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/table/371",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "33",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "维度表详情",
+            "header": []
+          },
+          "description": "维度表详情"
+        },
+        {
+          "name": "维度表列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"edf636\"\n  },\n  \"id\": 661,\n  \"themeId\": 428,\n  \"themeName\": \"leesa.gottlieb\",\n  \"dimName\": \"leesa.gottlieb\",\n  \"dimCode\": \"7123\",\n  \"dimType\": \"t8wu7o\",\n  \"description\": \"znohal\",\n  \"status\": 712,\n  \"connectionType\": \"zgjihx\",\n  \"dataConnection\": \"6083x0\",\n  \"databaseName\": \"leesa.gottlieb\",\n  \"modelDimId\": 822,\n  \"columnList\": [\n    {\n      \"id\": 488,\n      \"dimTableId\": 70,\n      \"columnName\": \"leesa.gottlieb\",\n      \"columnType\": \"urvuex\",\n      \"standardsId\": 544,\n      \"standardsName\": \"leesa.gottlieb\",\n      \"itsPrimaryKey\": \"pljdc6\",\n      \"itsPartition\": \"8x3cvr\",\n      \"itsNull\": \"fp3c33\",\n      \"description\": \"y38enw\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dim/table/list",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "维度表列表",
+            "header": []
+          },
+          "description": "维度表列表"
+        },
+        {
+          "name": "预览SQL",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dim/table/preview/sql/624",
+              "protocol": "http",
+              "path": [
+                "dim",
+                "table",
+                "preview",
+                "sql",
+                ":tableId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tableId",
+                  "value": "200",
+                  "description": "维度表id"
+                }
+              ]
+            },
+            "description": "预览SQL",
+            "header": []
+          },
+          "description": "预览SQL"
+        }
+      ]
+    },
+    {
+      "name": "获取数据源和元数据相关接口",
+      "item": [
+        {
+          "name": "获取数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/model/db/connect/types",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "connect",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接类型",
+            "header": []
+          },
+          "description": "获取数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/model/db/connect/25qdbe",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "connect",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "type",
+                  "value": "a1ufdl",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "获取数据源连接",
+            "header": []
+          },
+          "description": "获取数据源连接"
+        },
+        {
+          "name": "获取db库列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "go8xza"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "leesa.gottlieb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/model/db/?dataSourceName\u003dleesa.gottlieb\u0026connectType\u003dgo8xza",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "8v7ww7",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "leesa.gottlieb",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取db库列表",
+            "header": []
+          },
+          "description": "获取db库列表"
+        },
+        {
+          "name": "获取table表列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "89e4q7"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "leesa.gottlieb"
+                },
+                {
+                  "key": "dataBaseName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "leesa.gottlieb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/model/db/table?connectType\u003d89e4q7\u0026dataBaseName\u003dleesa.gottlieb\u0026dataSourceName\u003dleesa.gottlieb",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "ffol0v",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "leesa.gottlieb",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataBaseName",
+                  "value": "leesa.gottlieb",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取table表列表",
+            "header": []
+          },
+          "description": "获取table表列表"
+        },
+        {
+          "name": "获取column字段列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "connectType",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "1fo3ql"
+                },
+                {
+                  "key": "dataSourceName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "leesa.gottlieb"
+                },
+                {
+                  "key": "dataBaseName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "leesa.gottlieb"
+                },
+                {
+                  "key": "tableName",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "leesa.gottlieb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/model/db/column?dataSourceName\u003dleesa.gottlieb\u0026tableName\u003dleesa.gottlieb\u0026connectType\u003d1fo3ql\u0026dataBaseName\u003dleesa.gottlieb",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "column"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "connectType",
+                  "value": "e5gklr",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataSourceName",
+                  "value": "leesa.gottlieb",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "dataBaseName",
+                  "value": "leesa.gottlieb",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "tableName",
+                  "value": "leesa.gottlieb",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取column字段列表",
+            "header": []
+          },
+          "description": "获取column字段列表"
+        },
+        {
+          "name": "获取数据标准",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"zgee10\"\n  },\n  \"dsdName\": \"leesa.gottlieb\",\n  \"dsdCode\": \"7123\",\n  \"dsdLevel\": \"0vl2tv\",\n  \"dsdLevelId\": \"26\",\n  \"beginDay\": \"vusuvf\",\n  \"endDay\": \"3d86jv\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/model/db/standard",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "standard"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据标准",
+            "header": []
+          },
+          "description": "获取数据标准"
+        },
+        {
+          "name": "获取数据标准分类目录树",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://::server/model/db/theme",
+              "protocol": "http",
+              "path": [
+                "model",
+                "db",
+                "theme"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据标准分类目录树",
+            "header": []
+          },
+          "description": "获取数据标准分类目录树"
+        }
+      ]
+    }
+  ]
+}

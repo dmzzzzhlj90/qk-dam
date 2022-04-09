@@ -1,0 +1,8 @@
+com/dolphinscheduler/DolphinschedulerAutoConfiguration.java
+ com.dolphinscheduler.DolphinschedulerAutoConfiguration
+com/dolphinscheduler/client/DolphinschedulerManager.java
+ com.dolphinscheduler.client.DolphinschedulerManager
+com/dolphinscheduler/ConditionalOnDolphinschedulerEnabled.java
+ com.dolphinscheduler.ConditionalOnDolphinschedulerEnabled
+com/dolphinscheduler/DolphinschedulerProperties.java
+ com.dolphinscheduler.DolphinschedulerProperties

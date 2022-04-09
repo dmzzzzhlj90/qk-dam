@@ -1,0 +1,21 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+}
+version "${commonLibVersion}"
+group "com.qk.dam.dataservice.spi"
+dependencies {
+    implementation group: 'org.projectlombok', name: 'lombok'
+    implementation "org.slf4j:slf4j-api:1.7.26"
+    implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310',version: '2.12.1'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+}

@@ -1,0 +1,57 @@
+pluginManagement {
+    buildscript {
+        repositories {
+            maven {
+                url = "${nexusRepositories}"
+                credentials {
+                    username = "${nexusUsername}"
+                    password = "${nexusPassword}"
+                }
+            }
+            maven { url 'https://maven.aliyun.com/repository/public' }
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
+            mavenCentral()
+            flatDir {
+                dirs './plugin-folder/'
+            }
+            mavenLocal()
+        }
+        dependencies {
+            classpath "org.openapitools:openapi-generator-gradle-plugin:5.3.0"
+            classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3'
+            classpath group: 'com.github.shalousun', name: 'smart-doc', version: '2.4.3'
+            classpath 'com.github.shalousun:smart-doc-gradle-plugin:2.4.1'
+        }
+
+    }
+    repositories {
+        mavenLocal()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven {
+            url = "${nexusRepositories}"
+            credentials {
+                username = "${nexusUsername}"
+                password = "${nexusPassword}"
+            }
+        }
+    }
+}
+
+rootProject.name = 'qk-data-middle'
+
+FileTree buildFiles = fileTree(rootDir) {
+    include '**/*.gradle'
+    exclude 'build', '**/gradle', 'settings.gradle', 'buildSrc', '/build.gradle', '.*', 'out'
+}
+
+buildFiles.each { File buildFile ->
+    String projectName = buildFile.name.replace('.gradle', '');
+    String projectPath = ':' + projectName;
+    include projectPath
+    def project = findProject("${projectPath}")
+    project.name = projectName
+    project.projectDir = buildFile.parentFile
+    project.buildFileName = buildFile.name
+}

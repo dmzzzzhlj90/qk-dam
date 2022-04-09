@@ -1,0 +1,19 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java'
+}
+version "${commonLibVersion}"
+group "com.qk.dam.openapi"
+
+dependencies {
+    implementation group: 'org.openapi4j', name: 'openapi-parser'
+    implementation group: 'com.google.guava', name: 'guava'
+
+    compile group: 'org.projectlombok', name: 'lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+}

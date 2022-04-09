@@ -1,0 +1,2 @@
+com/qk/dam/mybatisplus/conf/MapperScanner.java
+ com.qk.dam.mybatisplus.conf.MapperScanner

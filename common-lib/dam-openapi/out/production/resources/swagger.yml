@@ -1,0 +1,573 @@
+openapi: "3.0.2"
+info:
+  description: ""
+  title: "NinjaAPI"
+  version: "2.0.0"
+paths:
+  /api/v2/:
+    get:
+      summary: "Index"
+      operationId: "api_v2_views_index"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/getentid/:
+    post:
+      summary: "获取entid"
+      description: "form"
+      operationId: "api_v2_views_getentid"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/GetentidPayload"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/mohu/:
+    post:
+      summary: "基础模糊"
+      description: "form"
+      operationId: "api_v2_views_mohu"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                key:
+                  description: "查询关键字"
+                  type: "string"
+                  title: "Key"
+              type: "object"
+              title: "FormParams"
+              required:
+                - "key"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/job/:
+    post:
+      summary: "招聘筛选接口"
+      description: "form"
+      operationId: "api_v2_views_job"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/JobApi"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/job_search/:
+    post:
+      summary: "招聘查询接口"
+      description: "form"
+      operationId: "api_v2_views_job_search"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/JobSearchApi"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/company_search/:
+    post:
+      summary: "企业探查"
+      description: "form"
+      operationId: "api_v2_views_company_search"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CompanySearch"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/super_api/:
+    post:
+      summary: "高级查询"
+      description: "form"
+      operationId: "api_v2_views_super_api"
+      parameters: []
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/SuperApi"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/company_batch_query/:
+    post:
+      summary: "企业批量查询"
+      description: "form"
+      operationId: "api_v2_views_company_batch_query"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/BatchQuery"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/company_query_push/:
+    post:
+      summary: "企业查询推送"
+      description: "form"
+      operationId: "api_v2_views_company_query_push"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/QueryPush"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/search_keyword/:
+    post:
+      summary: "关键词匹配"
+      description: "form"
+      operationId: "api_v2_views_search_keyword"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/KeywordQuery"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/lianxi_search/:
+    post:
+      summary: "联系方式查询"
+      description: "form"
+      operationId: "api_v2_views_lianxi_search"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/LianxiPayload"
+      responses:
+        "200":
+          description: "OK"
+  /api/v2/contact_obj/:
+    post:
+      summary: "联系方式对象详情"
+      description: "form"
+      operationId: "api_v2_views_contact_obj"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/ContactPayload"
+      responses:
+        "200":
+          description: "OK"
+components:
+  schemas:
+    GetentidPayload:
+      properties:
+        key:
+          description: "查询关键字"
+          type: "string"
+          title: "Key"
+        ctype:
+          description: "关键字类型（1：信用代码/注册号；2：企业全称）"
+          type: "string"
+          title: "Ctype"
+      type: "object"
+      title: "GetentidPayload"
+      required:
+        - "key"
+        - "ctype"
+    JobApi:
+      properties:
+        post_name:
+          description: "招聘职位"
+          type: "string"
+          title: "Post Name"
+        post_industry:
+          description: "招聘行业"
+          type: "string"
+          title: "Post Industry"
+        post_release_date:
+          description: "发布日期"
+          type: "string"
+          title: "Post Release Date"
+        ent_name:
+          description: "企业名称"
+          type: "string"
+          title: "Ent Name"
+        ent_type:
+          description: "企业类型"
+          type: "string"
+          title: "Ent Type"
+        region_id:
+          description: "行政区划"
+          type: "string"
+          title: "Region Id"
+        nic_id:
+          description: "所属行业"
+          type: "string"
+          title: "Nic Id"
+        ent_state:
+          description: "企业状态"
+          type: "string"
+          title: "Ent State"
+        es_date:
+          description: "开业日期"
+          type: "string"
+          title: "Es Date"
+        reg_cap:
+          description: "注册资金"
+          type: "string"
+          title: "Reg Cap"
+        ent_si_num:
+          description: "企业社保人数"
+          type: "string"
+          title: "Ent Si Num"
+        invse_round:
+          description: "投资轮次"
+          type: "string"
+          title: "Invse Round"
+        pageindex:
+          description: "当前页码，默认0"
+          type: "string"
+          title: "Pageindex"
+          default: "0"
+        pagesize:
+          description: "每页数量，默认10"
+          type: "string"
+          title: "Pagesize"
+          default: "10"
+        version:
+          description: "返回格式版本，默认0"
+          type: "string"
+          title: "Version"
+          default: "0"
+      type: "object"
+      title: "JobApi"
+    JobSearchApi:
+      properties:
+        entid:
+          description: "企业唯一标识"
+          type: "string"
+          title: "Entid"
+        title:
+          description: "招聘标题"
+          type: "string"
+          title: "Title"
+        ent_industry:
+          description: "招聘行业"
+          type: "string"
+          title: "Ent Industry"
+        release_date:
+          description: "发布日期"
+          type: "string"
+          title: "Release Date"
+        pageindex:
+          description: "当前页码，默认0"
+          type: "string"
+          title: "Pageindex"
+          default: "0"
+        pagesize:
+          description: "每页数量，默认10"
+          type: "string"
+          title: "Pagesize"
+          default: "10"
+      type: "object"
+      title: "JobSearchApi"
+      required:
+        - "entid"
+    CompanySearch:
+      properties:
+        basic_entname:
+          description: "公司名称"
+          type: "string"
+          title: "Basic Entname"
+        basic_person_name:
+          description: "人名"
+          type: "string"
+          title: "Basic Person Name"
+        tuiguang_app:
+          description: "产品"
+          type: "string"
+          title: "Tuiguang App"
+        website_name:
+          description: "网站"
+          type: "string"
+          title: "Website Name"
+        has_tuiguang_website:
+          description: "推广官网"
+          type: "string"
+          title: "Has Tuiguang Website"
+        ip_patent_patname:
+          description: "专利"
+          type: "string"
+          title: "Ip Patent Patname"
+        ip_tminfo_tname:
+          description: "商标"
+          type: "string"
+          title: "Ip Tminfo Tname"
+        bid_title:
+          description: "招标"
+          type: "string"
+          title: "Bid Title"
+        basic_dom:
+          description: "企业地址"
+          type: "string"
+          title: "Basic Dom"
+        basic_opscope:
+          description: "经营范围"
+          type: "string"
+          title: "Basic Opscope"
+        lianxi:
+          description: "联系方式"
+          type: "string"
+          title: "Lianxi"
+        basic_uniscid:
+          description: "统一社会信用代码"
+          type: "string"
+          title: "Basic Uniscid"
+        basic_regcap:
+          description: "企业注册资金"
+          type: "string"
+          title: "Basic Regcap"
+        basic_nicid:
+          description: "企业行业"
+          type: "string"
+          title: "Basic Nicid"
+        basic_esdate:
+          description: "开业日期"
+          type: "string"
+          title: "Basic Esdate"
+        basic_enttype:
+          description: "企业类型"
+          type: "string"
+          title: "Basic Enttype"
+        basic_ygrs:
+          description: "员工/社保人数"
+          type: "string"
+          title: "Basic Ygrs"
+        basic_status:
+          description: "企业状态"
+          type: "string"
+          title: "Basic Status"
+        basic_regionid:
+          description: "企业所属地区"
+          type: "string"
+          title: "Basic Regionid"
+        jingying_vc_round:
+          description: "当前融资轮次"
+          type: "string"
+          title: "Jingying Vc Round"
+        psize:
+          description: "每页数量 默认20，最大200"
+          type: "string"
+          title: "Psize"
+        pindex:
+          description: "页码，默认0，最大翻页1000"
+          type: "string"
+          title: "Pindex"
+        sort_field:
+          description: "排序字段"
+          type: "string"
+          title: "Sort Field"
+          default: "default"
+        sort_order:
+          description: "排序顺序"
+          type: "string"
+          title: "Sort Order"
+          default: "desc"
+        version:
+          description: "返回格式版本，默认0"
+          type: "string"
+          title: "Version"
+          default: "0"
+        corp_id:
+          description: "当前企业id"
+          type: "string"
+          title: "Corp Id"
+        env:
+          description: "当前环境"
+          type: "string"
+          title: "Env"
+      type: "object"
+      title: "CompanySearch"
+    SuperApi:
+      properties:
+        query:
+          description: "查询条件"
+          type: "string"
+          title: "Query"
+        pagesize:
+          description: "每页数量 默认20，最大200"
+          type: "string"
+          title: "Pagesize"
+          default: "20"
+        pageindex:
+          description: "页码，默认0，最大翻页1000"
+          type: "string"
+          title: "Pageindex"
+          default: "0"
+        sort_field:
+          description: "排序字段"
+          type: "string"
+          title: "Sort Field"
+          default: "default"
+        sort_order:
+          description: "排序顺序"
+          type: "string"
+          title: "Sort Order"
+          default: "desc"
+        version:
+          description: "返回格式版本，默认0"
+          type: "string"
+          title: "Version"
+          default: "0"
+        corp_id:
+          description: "当前企业id"
+          type: "string"
+          title: "Corp Id"
+        env:
+          description: "当前环境"
+          type: "string"
+          title: "Env"
+      type: "object"
+      title: "SuperApi"
+    BatchQuery:
+      properties:
+        pageIndex:
+          description: "页码"
+          type: "string"
+          title: "Pageindex"
+        pageSize:
+          description: "每页数量"
+          type: "string"
+          title: "Pagesize"
+        entid:
+          description: "企业id加密，最多传入200个"
+          type: "string"
+          title: "Entid"
+        entName:
+          description: "企业名称，最多传入200个"
+          type: "string"
+          title: "Entname"
+        version:
+          description: "返回格式版本，默认0"
+          type: "string"
+          title: "Version"
+          default: "0"
+        sort_field:
+          description: "排序字段"
+          type: "string"
+          title: "Sort Field"
+          default: "default"
+        sort_order:
+          description: "排序顺序"
+          type: "string"
+          title: "Sort Order"
+          default: "desc"
+      type: "object"
+      title: "BatchQuery"
+    QueryPush:
+      properties:
+        id:
+          description: "查询条件Id"
+          type: "string"
+          title: "Id"
+        name:
+          description: "查询条件名称"
+          type: "string"
+          title: "Name"
+        parameter:
+          description: "查询条件参数"
+          type: "string"
+          title: "Parameter"
+      type: "object"
+      title: "QueryPush"
+      required:
+        - "id"
+        - "parameter"
+    KeywordQuery:
+      properties:
+        entids:
+          description: "企业entid，使用,分隔"
+          type: "string"
+          title: "Entids"
+        keywordType:
+          description: "关键词类型"
+          type: "string"
+          title: "Keywordtype"
+        keyword:
+          description: "查询关键词"
+          type: "string"
+          title: "Keyword"
+      type: "object"
+      title: "KeywordQuery"
+      required:
+        - "entids"
+        - "keywordType"
+        - "keyword"
+    LianxiPayload:
+      properties:
+        entid:
+          description: "企业唯一标识"
+          type: "string"
+          title: "Entid"
+        contact_type:
+          description: "类型（1、2、3三种，1手机2座机3邮箱，全选为123，默认为123）"
+          type: "string"
+          title: "Contact Type"
+          default: "123"
+        pagesize:
+          description: "每页数量 默认50"
+          type: "string"
+          title: "Pagesize"
+          default: "50"
+        pageindex:
+          description: "页码，默认0"
+          type: "string"
+          title: "Pageindex"
+          default: "0"
+      type: "object"
+      title: "LianxiPayload"
+      required:
+        - "entid"
+    ContactPayload:
+      properties:
+        entid:
+          description: "企业唯一标识"
+          type: "string"
+          title: "Entid"
+        contact_id:
+          description: "联系方式id"
+          type: "string"
+          title: "Contact Id"
+      type: "object"
+      title: "ContactPayload"
+      required:
+        - "entid"
+        - "contact_id"

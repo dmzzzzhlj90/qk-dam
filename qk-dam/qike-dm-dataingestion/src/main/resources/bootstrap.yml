@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: ${name}-\${spring.profiles.active}
+  logging:
+    level: info
+    appender:
+      ref: CONSOLE
+    path: logs/\${spring.application.name}.log
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
+      config:
+        server-addr: ${nacosServerAddr}
+        namespace: ${nacosServerNamespace}-\${spring.profiles.active}
+        extension-configs:
+          - dataId: qkdam-mysql-\${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
+          - dataId: qkdam-dataingestion-\${spring.profiles.active}.yml
+            refresh: true
+  profiles:
+    active: ${damProfilesActive}

@@ -1,0 +1,63 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
+}
+version "${damProfilesActive}-v${dmDatastandardsVersion}"
+group "com.qk.dm.dataingestion"
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+processResources {
+    expand(project.properties)
+}
+docker {
+    dockerCreateDockerfile {
+        environmentVariable 'TimeZone', 'Asia/Shanghai'
+        instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
+    }
+    springBootApplication {
+        baseImage = "${jre11Image}"
+        ports = [8788]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
+dependencies {
+    implementation project(":qk-data-jpa")
+    implementation project(":dam-mvc-validation")
+    implementation project(":dam-log")
+    implementation project(":dm-feign-client")
+    implementation project(":dolphinscheduler-starter-client")
+    implementation group: 'com.github.shalousun', name: 'smart-doc', version: '2.3.6'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation 'org.mapstruct:mapstruct'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
+    annotationProcessor(
+            "javax.persistence:javax.persistence-api",
+            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
+            "javax.annotation:javax.annotation-api",
+            "org.projectlombok:lombok",
+            'org.mapstruct:mapstruct-processor')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testAnnotationProcessor('org.mapstruct:mapstruct-processor')
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+

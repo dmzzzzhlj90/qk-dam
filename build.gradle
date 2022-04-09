@@ -1,0 +1,125 @@
+buildscript {
+    repositories {
+        maven {
+            url = "${nexusRepositories}"
+            credentials {
+                username = "${nexusUsername}"
+                password = "${nexusPassword}"
+            }
+        }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+group 'com.qk'
+version "${version}"
+description = '数据中台'
+ext.snapshotBuild = version.contains("SNAPSHOT")
+def getCurrentGitBranch() {
+    def gitBranch = "${damProfilesActive}"
+    try {
+        def workingDir = new File("${project.projectDir}")
+        def result = 'git rev-parse --abbrev-ref HEAD'.execute(null, workingDir)
+        result.waitFor()
+        if (result.exitValue() == 0) {
+            gitBranch = result.text.trim()
+        }
+        if (gitBranch.contains("feature")){
+            return "dev"
+        }
+    } catch (e) {
+    }
+    return gitBranch
+}
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'org.openapi.generator'
+    apply plugin: 'org.sonarqube'
+    repositories {
+        maven {
+            url = "${nexusRepositories}"
+            credentials {
+                username = "${nexusUsername}"
+                password = "${nexusPassword}"
+            }
+        }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenLocal()
+
+    }
+    configurations.all {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    plugins.withType(JavaPlugin) {
+        project.sourceCompatibility = "11"
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+    if (!project.name.contains("dam-dependencies")) {
+        apply plugin: 'java'
+        apply plugin: "smart-doc"
+        task sourcesJar(type: Jar) {
+            from sourceSets.main.allJava
+            archiveClassifier = 'sources'
+        }
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    versionMapping {
+                        usage('java-api') {
+                            fromResolutionOf('runtimeClasspath')
+                        }
+                        usage('java-runtime') {
+                            fromResolutionResult()
+                        }
+                    }
+                    from components.java
+                    artifact sourcesJar
+                    afterEvaluate {
+                        group = project.group
+                        artifactId = project.name
+                        version = project.version
+                    }
+                }
+            }
+        }
+        if (project.name.startsWith("dm-")) {
+            task makeReleaseJar(type: Copy) {
+                def distroPath = "${project.rootDir}/distro/target"
+                file(distroPath).list().each {
+                    f ->
+                        if (f.endsWith(".jar")&&f.startsWith(project.name)) {
+                            println("${distroPath}/${f}")
+                            delete "${distroPath}/${f}"
+                        }
+                }
+                println("编译打包项目:${project.name}")
+                from('build/libs')
+                into(distroPath)
+            }
+            damProfilesActive = getCurrentGitBranch()
+
+        }
+        smartdoc {
+            configFile = file("src/main/resources/smart-doc.json")
+        }
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                def url = version.endsWith('SNAPSHOT') ? "${snapshotsRepoUrl}" : "${releasesRepoUrl}"
+                repository(url: url) {
+                    authentication(userName: "${nexusUsername}", password: "${nexusPassword}")
+                }
+            }
+        }
+    }
+
+}
+

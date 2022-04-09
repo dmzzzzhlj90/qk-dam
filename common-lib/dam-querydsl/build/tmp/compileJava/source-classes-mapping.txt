@@ -1,0 +1,8 @@
+com/qk/dam/jpa/config/AppJpaConfig.java
+ com.qk.dam.jpa.config.AppJpaConfig
+com/qk/dam/jpa/pojo/Pagination.java
+ com.qk.dam.jpa.pojo.Pagination
+com/qk/dam/jpa/base/BaseRepository.java
+ com.qk.dam.jpa.base.BaseRepository
+com/qk/dam/jpa/pojo/PageResultVO.java
+ com.qk.dam.jpa.pojo.PageResultVO

@@ -1,0 +1,15 @@
+com/qk/dm/dataingestion/datax/DataxDolphinClient.java
+ com.qk.dm.dataingestion.datax.DataxDolphinClient
+com/qk/dm/dataingestion/model/DolphinTaskDefinitionPropertiesBean.java
+ com.qk.dm.dataingestion.model.DolphinTaskDefinitionPropertiesBean
+ com.qk.dm.dataingestion.model.DolphinTaskDefinitionPropertiesBean$TaskParams
+com/qk/dm/dataingestion/model/DolphinProcessDefinition.java
+ com.qk.dm.dataingestion.model.DolphinProcessDefinition
+com/qk/dm/dataingestion/rest/DataxTaskDefineController.java
+ com.qk.dm.dataingestion.rest.DataxTaskDefineController
+com/qk/dm/dataingestion/DmDataIngestionApplication.java
+ com.qk.dm.dataingestion.DmDataIngestionApplication
+com/qk/dm/dataingestion/model/IngestionType.java
+ com.qk.dm.dataingestion.model.IngestionType
+com/qk/dm/dataingestion/rest/DatasourceController.java
+ com.qk.dm.dataingestion.rest.DatasourceController

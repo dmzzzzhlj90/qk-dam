@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: dm-datamodel-${spring.profiles.active}
+  logging:
+    level: info
+    appender:
+      ref: CONSOLE
+    path: logs/${spring.application.name}.log
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.21.32.2
+        namespace: dam-${spring.profiles.active}
+      config:
+        server-addr: http://172.21.32.2
+        namespace: dam-${spring.profiles.active}
+        extension-configs:
+          - dataId: qkdam-mysql-${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
+  profiles:
+    active: dev

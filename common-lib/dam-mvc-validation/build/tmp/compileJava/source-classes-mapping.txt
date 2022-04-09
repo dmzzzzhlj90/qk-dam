@@ -1,0 +1,8 @@
+com/qk/mvc/validation/config/MyHttpMessageConvertersConfiguration.java
+ com.qk.mvc.validation.config.MyHttpMessageConvertersConfiguration
+com/qk/mvc/validation/advice/GlobalExceptionAdvice.java
+ com.qk.mvc.validation.advice.GlobalExceptionAdvice
+com/qk/mvc/validation/config/localeResolverConfiguration.java
+ com.qk.mvc.validation.config.localeResolverConfiguration
+com/qk/mvc/validation/config/MvcConfiguration.java
+ com.qk.mvc.validation.config.MvcConfiguration

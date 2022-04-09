@@ -1,0 +1,1220 @@
+{
+  "components": {
+    "schemas": {
+      "_datax_executors_startResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "code": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "data": {
+                "description": "No comments found.(object)",
+                "type": "object"
+              },
+              "failed": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              },
+              "msg": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "success": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "_datax_projects__projectId__process__taskCode_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "code": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "data": {
+                "description": "No comments found.(object)",
+                "type": "object"
+              },
+              "failed": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              },
+              "msg": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "success": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "_datax_connect_typesResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "_datax_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "guid": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "displayText": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "typeName": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "description": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datax_tableResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "guid": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "typeName": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "entityStatus": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "displayText": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "relationshipType": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "relationshipGuid": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "relationshipStatus": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "comment": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datax_projects__projectId__process__taskCode_Request": {
+        "properties": {
+          "dataxJson": {
+            "format": "string",
+            "description": "datax配置脚本",
+            "type": "string"
+          }
+        }
+      },
+      "_datax_connectsRequest": {},
+      "_datax_connect__type_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int32",
+                  "description": "数据源主键id",
+                  "type": "integer"
+                },
+                "dataSourceName": {
+                  "format": "string",
+                  "description": "系统名称",
+                  "type": "string"
+                },
+                "homeSystem": {
+                  "format": "string",
+                  "description": "所属系统",
+                  "type": "string"
+                },
+                "connectBasicInfoJson": {
+                  "format": "string",
+                  "description": "数据源连接返回JSON信息",
+                  "type": "string"
+                },
+                "dbType": {
+                  "format": "string",
+                  "description": "连接方式",
+                  "type": "string"
+                },
+                "status": {
+                  "format": "int32",
+                  "description": "状态设置状态值",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datax_projects__projectId_Request": {
+        "properties": {
+          "dataxJson": {
+            "format": "string",
+            "description": "datax配置脚本",
+            "type": "string"
+          }
+        }
+      },
+      "_datax_process_offlineResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "code": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "data": {
+                "description": "No comments found.(object)",
+                "type": "object"
+              },
+              "failed": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              },
+              "msg": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "success": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "_datax_connect_typesRequest": {},
+      "_datax_Request": {},
+      "_datax_process_onlineResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "code": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "data": {
+                "description": "No comments found.(object)",
+                "type": "object"
+              },
+              "failed": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              },
+              "msg": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "success": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "_datax_connectsResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int32",
+                  "description": "数据源主键id",
+                  "type": "integer"
+                },
+                "dataSourceName": {
+                  "format": "string",
+                  "description": "系统名称",
+                  "type": "string"
+                },
+                "homeSystem": {
+                  "format": "string",
+                  "description": "所属系统",
+                  "type": "string"
+                },
+                "connectBasicInfoJson": {
+                  "format": "string",
+                  "description": "数据源连接返回JSON信息",
+                  "type": "string"
+                },
+                "dbType": {
+                  "format": "string",
+                  "description": "连接方式",
+                  "type": "string"
+                },
+                "status": {
+                  "format": "int32",
+                  "description": "状态设置状态值",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datax_projects__projectId_Response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "code": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "data": {
+                "description": "No comments found.(object)",
+                "type": "object"
+              },
+              "failed": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              },
+              "msg": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "success": {
+                "format": "boolean",
+                "description": "No comments found.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "_datax_tableRequest": {},
+      "_datax_process_offlineRequest": {},
+      "_datax_connect__type_Request": {},
+      "_datax_process_onlineRequest": {},
+      "_datax_executors_startRequest": {},
+      "_datax_columnRequest": {},
+      "_datax_columnResponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {}
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://172.20.0.13:8782/mtd"
+    }
+  ],
+  "openapi": "3.0.3",
+  "paths": {
+    "/datax/connects": {
+      "get": {
+        "summary": "获取所有数据连接",
+        "deprecated": false,
+        "description": "获取所有数据连接",
+        "tags": [
+          "DatasourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_connectsResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"s0np53\",\n  \"tips\": \"j6q5r4\",\n  \"data\": [\n    {\n      \"id\": 14,\n      \"dataSourceName\": \"pedro.nienow\",\n      \"homeSystem\": \"it6m4i\",\n      \"connectBasicInfoJson\": \"0v5a2w\",\n      \"dbType\": \"gedjr8\",\n      \"status\": 224\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getResultDataSourceByType",
+        "parameters": []
+      }
+    },
+    "/datax/table": {
+      "get": {
+        "summary": "获取table表列表",
+        "deprecated": false,
+        "description": "获取table表列表",
+        "tags": [
+          "DatasourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_tableResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"2k9pfk\",\n  \"tips\": \"0a3mi1\",\n  \"data\": [\n    {\n      \"guid\": \"84\",\n      \"typeName\": \"pedro.nienow\",\n      \"entityStatus\": \"4937rr\",\n      \"displayText\": \"3mho8h\",\n      \"relationshipType\": \"qyf9wg\",\n      \"relationshipGuid\": \"84\",\n      \"relationshipStatus\": \"edxh58\",\n      \"comment\": \"mu30ut\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllTable",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "7ehcmc",
+            "name": "connectType"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "pedro.nienow",
+            "name": "dataSourceName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "pedro.nienow",
+            "name": "dataBaseName"
+          }
+        ]
+      }
+    },
+    "/datax/column": {
+      "get": {
+        "summary": "获取column字段列表",
+        "deprecated": false,
+        "description": "获取column字段列表",
+        "tags": [
+          "DatasourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_columnResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"msiby1\",\n  \"tips\": \"ha4ag0\",\n  \"data\": [\n    \"lh2b51\",\n    \"mol8lr\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllColumn",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "kvu4p3",
+            "name": "connectType"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "pedro.nienow",
+            "name": "dataSourceName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "pedro.nienow",
+            "name": "dataBaseName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "pedro.nienow",
+            "name": "tableName"
+          }
+        ]
+      }
+    },
+    "/datax/process/online": {
+      "post": {
+        "summary": "上线",
+        "deprecated": false,
+        "description": "上线",
+        "tags": [
+          "DataxTaskDefineController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datax_process_onlineRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.20.0.13:8782/mtd/datax/process/online --data \u0027taskCode\u003d305\u0026projectId\u003d241\u0027"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_process_onlineResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"dj8v27\",\n  \"tips\": \"01i017\",\n  \"data\": {\n    \"code\": 217,\n    \"data\": {\n      \"waring\": \"You may have used non-display generics.\"\n    },\n    \"failed\": true,\n    \"msg\": \"a1otlu\",\n    \"success\": true\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "processReleaseOnline",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": " 项目id",
+            "required": false,
+            "example": "137",
+            "name": "projectId"
+          },
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "任务code",
+            "required": false,
+            "example": "816",
+            "name": "taskCode"
+          }
+        ]
+      }
+    },
+    "/datax/": {
+      "get": {
+        "summary": "获取db库列表",
+        "deprecated": false,
+        "description": "获取db库列表",
+        "tags": [
+          "DatasourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"q59f6s\",\n  \"tips\": \"81v9v1\",\n  \"data\": [\n    {\n      \"guid\": \"84\",\n      \"displayText\": \"hjiuxr\",\n      \"typeName\": \"pedro.nienow\",\n      \"description\": \"64827c\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllDataBase",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "9qlp16",
+            "name": "connectType"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "pedro.nienow",
+            "name": "dataSourceName"
+          }
+        ]
+      }
+    },
+    "/datax/process/offline": {
+      "post": {
+        "summary": "下线",
+        "deprecated": false,
+        "description": "下线",
+        "tags": [
+          "DataxTaskDefineController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datax_process_offlineRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.20.0.13:8782/mtd/datax/process/offline --data \u0027taskCode\u003d862\u0026projectId\u003d125\u0027"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_process_offlineResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"w2cj1o\",\n  \"tips\": \"vl45ul\",\n  \"data\": {\n    \"code\": 141,\n    \"data\": {\n      \"waring\": \"You may have used non-display generics.\"\n    },\n    \"failed\": true,\n    \"msg\": \"wz3okq\",\n    \"success\": true\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "processRelease",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": " 项目id",
+            "required": false,
+            "example": "494",
+            "name": "projectId"
+          },
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "任务code",
+            "required": false,
+            "example": "162",
+            "name": "taskCode"
+          }
+        ]
+      }
+    },
+    "/datax/connect/{type}": {
+      "get": {
+        "summary": "获取数据源连接",
+        "deprecated": false,
+        "description": "获取数据源连接",
+        "tags": [
+          "DatasourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_connect__type_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"cn0ysh\",\n  \"tips\": \"q7azw7\",\n  \"data\": [\n    {\n      \"id\": 781,\n      \"dataSourceName\": \"pedro.nienow\",\n      \"homeSystem\": \"o96e53\",\n      \"connectBasicInfoJson\": \"2kogeb\",\n      \"dbType\": \"safvdj\",\n      \"status\": 73\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getResultDataSourceByType",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "yz0k8v",
+            "name": "type"
+          }
+        ]
+      }
+    },
+    "/datax/projects/{projectId}": {
+      "post": {
+        "summary": "创建datax 任务定义",
+        "deprecated": false,
+        "description": "创建datax 任务定义",
+        "tags": [
+          "DataxTaskDefineController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "type": "string"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"dataxJson\": \"f2l4lu\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_projects__projectId_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"79prrn\",\n  \"tips\": \"ckeyyn\",\n  \"data\": {\n    \"code\": 786,\n    \"data\": {\n      \"waring\": \"You may have used non-display generics.\"\n    },\n    \"failed\": true,\n    \"msg\": \"u471c4\",\n    \"success\": true\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "createProcessDefinition",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "项目id",
+            "required": true,
+            "example": "704",
+            "name": "projectId"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "pedro.nienow",
+            "name": "dataxName"
+          }
+        ]
+      }
+    },
+    "/datax/connect/types": {
+      "get": {
+        "summary": "获取数据源连接类型",
+        "deprecated": false,
+        "description": "获取数据源连接类型",
+        "tags": [
+          "DatasourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_connect_typesResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"bex53c\",\n  \"tips\": \"fbi4jx\",\n  \"data\": [\n    \"s085uk\",\n    \"5qkkno\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllConnType",
+        "parameters": []
+      }
+    },
+    "/datax/projects/{projectId}/process/{taskCode}": {
+      "put": {
+        "summary": "更新datax 任务定义",
+        "deprecated": false,
+        "description": "更新datax 任务定义",
+        "tags": [
+          "DataxTaskDefineController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "type": "string"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"dataxJson\": \"7j9auh\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_projects__projectId__process__taskCode_Response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"16klcd\",\n  \"tips\": \"ny4ryn\",\n  \"data\": {\n    \"code\": 572,\n    \"data\": {\n      \"waring\": \"You may have used non-display generics.\"\n    },\n    \"failed\": true,\n    \"msg\": \"eeulnm\",\n    \"success\": true\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "putProcessDefinition",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "项目id",
+            "required": true,
+            "example": "697",
+            "name": "projectId"
+          },
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "任务code",
+            "required": true,
+            "example": "375",
+            "name": "taskCode"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "pedro.nienow",
+            "name": "dataxName"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "环境配置",
+            "required": true,
+            "example": "{}",
+            "name": "taskParam"
+          }
+        ]
+      }
+    },
+    "/datax/executors/start": {
+      "post": {
+        "summary": "运行",
+        "deprecated": false,
+        "description": "运行",
+        "tags": [
+          "DataxTaskDefineController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datax_executors_startRequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.20.0.13:8782/mtd/datax/executors/start --data \u0027taskCode\u003d985\u0026environmentCode\u003d825\u0026projectId\u003d12\u0027"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datax_executors_startResponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"82885\",\n  \"retMsg\": \"pjhm18\",\n  \"tips\": \"5imzee\",\n  \"data\": {\n    \"code\": 126,\n    \"data\": {\n      \"waring\": \"You may have used non-display generics.\"\n    },\n    \"failed\": true,\n    \"msg\": \"0x0if9\",\n    \"success\": true\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "processRunning",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "373",
+            "name": "projectId"
+          },
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "944",
+            "name": "taskCode"
+          },
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "21",
+            "name": "environmentCode"
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "dm-dataingestion",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,36 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'org.springframework.boot' version "${springBootVersion}"
+}
+version "${commonLibVersion}"
+group "com.qk.dam.metedata.common"
+bootJar{
+    enabled = false
+}
+configurations.all {
+    exclude group: 'org.springframework',module: 'spring-web'
+    exclude group: 'org.springframework',module: 'spring-aop'
+    exclude group: 'org.springframework',module: 'spring-expression'
+}
+dependencies {
+    compile group: 'org.projectlombok', name: 'lombok'
+    compile('org.apache.atlas:atlas-client-v2')
+    compile group: 'javax.validation', name: 'validation-api'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

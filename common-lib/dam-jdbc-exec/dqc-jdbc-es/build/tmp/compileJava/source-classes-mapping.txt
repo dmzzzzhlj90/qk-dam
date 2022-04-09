@@ -1,0 +1,3 @@
+com/qk/dam/es/ElasticSearchMain.java
+ com.qk.dam.es.ElasticSearchMain
+ com.qk.dam.es.ElasticSearchMain$1

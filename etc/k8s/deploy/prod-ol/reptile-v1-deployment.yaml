@@ -1,0 +1,51 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: reptile-deploy
+  namespace: backend-dam
+  labels:
+    app: reptile-deploy
+    version: v1
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reptile-deploy
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: reptile-deploy
+        version: v1
+    spec:
+      containers:
+        - name: $BUILD_NUMBER-reptile$BRANCH_NAME
+          image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER
+          ports:
+            - name: tcp-8881
+              containerPort: 8881
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/hostname: iz2zebha4s90zgyyhmqtokz
+      serviceAccountName: default
+      securityContext: {}
+      imagePullSecrets:
+        - name: harbor
+      affinity: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

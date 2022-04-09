@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: reptile
+  namespace: backend-dam
+  labels:
+    app: reptile
+  annotations:
+    kubesphere.io/alias-name: 爬虫采集后端服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8881
+      protocol: TCP
+      port: 8881
+      targetPort: 8881
+  selector:
+    app: reptile-deploy
+    version: v1
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster

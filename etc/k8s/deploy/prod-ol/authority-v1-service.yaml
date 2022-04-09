@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: authority
+  namespace: backend-dam
+  labels:
+    app: authority
+  annotations:
+    kubesphere.io/alias-name: 数据质量后端服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8790
+      protocol: TCP
+      port: 8790
+      targetPort: 8790
+  selector:
+    app: authority-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None

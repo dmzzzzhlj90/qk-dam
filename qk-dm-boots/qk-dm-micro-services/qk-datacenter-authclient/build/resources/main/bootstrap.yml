@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: qk-datacenter-auth-${spring.profiles.active}
+  session:
+    redis:
+      configure-action: none
+      flush-mode: immediate
+      namespace: qkdam:session
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.21.32.2
+        namespace: dam-${spring.profiles.active}
+      config:
+        server-addr: http://172.21.32.2
+        namespace: dam-${spring.profiles.active}
+        extension-configs:
+          - dataId: qkdam-mysql-${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
+          - dataId: qkdam-oauth2-client-${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
+          - dataId: qkdam-redis-${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
+  profiles:
+    active: test

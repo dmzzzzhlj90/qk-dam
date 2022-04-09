@@ -1,0 +1,118 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
+}
+version "${damProfilesActive}-v${dmDatastandardsVersion}"
+group "com.qk.dm.metadata"
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+processResources {
+    expand(project.properties)
+}
+docker {
+    dockerCreateDockerfile {
+        environmentVariable 'TimeZone', 'Asia/Shanghai'
+        instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
+    }
+    springBootApplication {
+        baseImage = "${jre11Image}"
+        ports = [8782]
+        images = ["${imagePush}/${project.name}:${version}"]
+        jvmArgs = ['-Xmx248m']
+    }
+}
+compileJava {
+    doFirst {
+        options.compilerArgs = [
+                //添加mapStruct的一些配置
+                '-Amapstruct.unmappedTargetPolicy=IGNORE',//未映射字段默认报错
+                '-Amapstruct.suppressGeneratorTimestamp=false',//未映射字段默认报错
+                '-Aspatial=false'//未映射字段默认报错
+        ]
+    }
+}
+
+dependencies {
+    implementation project(":qk-data-jpa")
+    implementation project(":dam-mvc-validation")
+    implementation project(":dam-log")
+    implementation project(":metadata-common-core")
+    implementation 'com.alibaba:easyexcel:3.0.5'
+//    compile project(":qk-authorization")
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
+
+    //start fixme!这段为了兼容升级spring cloud导致jackson版本2.12.5+version atlas返回数据json错误
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.12.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.12.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.5'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.12.5'
+    // over
+    implementation 'org.mapstruct:mapstruct'
+    annotationProcessor(
+            "javax.persistence:javax.persistence-api",
+            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
+            "javax.annotation:javax.annotation-api",
+            "org.projectlombok:lombok",
+            'org.mapstruct:mapstruct-processor')
+    testImplementation 'org.testng:testng:7.4.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testAnnotationProcessor('org.mapstruct:mapstruct-processor')
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+openApiGenerate {
+    generatorName = "java"
+    inputSpec = "$rootDir/docs/dolphinscheduler/openapi.yaml".toString()
+    outputDir = "/Users/zhudaoming/Documents/openapigener".toString()
+    apiPackage = "com.qk.datacenter.api"
+    invokerPackage = "com.qk.datacenter.client"
+    modelPackage = "com.qk.datacenter.model"
+    configOptions = [
+            artifactId:"dolphinscheduler-java-client",
+            artifactUrl:"qk.com",
+            artifactVersion:"1.0.0",
+            dateLibrary: "java8",
+            library:"native",
+            serializationLibrary:"gson",
+            bigDecimalAsString:"true",
+            interfaceOnly        : "true",
+            useTags      : "true",
+            ignoreAnyOfInEnum      : "true",
+            useBeanValidation    : "false",
+            performBeanValidation: "false",
+            useOptional          : "true",
+            serviceImplementation: "true",
+            serviceInterface     : "true",
+            java8                : "true",
+    ]
+    verbose=false
+    validateSpec=false
+    skipValidateSpec=true
+    globalProperties = [
+            modelDocs: "false",
+            apiTests: "true",
+            modelTests:"false"
+    ]
+}
+test {
+    useTestNG {
+        suites(file('src/test/resources/testng.xml'));
+    }
+}

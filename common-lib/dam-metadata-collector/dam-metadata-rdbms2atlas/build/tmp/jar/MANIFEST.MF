@@ -1,0 +1,49 @@
+Manifest-Version: 1.0
+Main-Class: com.qk.dam.rdbmsl2atlas.QuickStart
+Class-Path:  lib//lombok-1.18.20.jar lib//logback-classic-1.2.3.jar lib/
+ /logback-core-1.2.3.jar lib//atlas-client-v2-2.2.0.jar lib//jackson-dat
+ atype-jsr310-2.12.1.jar lib//atlas-client-common-2.2.0.jar lib//atlas-i
+ ntg-2.2.0.jar lib//jackson-jaxrs-json-provider-2.12.1.jar lib//jackson-
+ module-jaxb-annotations-2.12.1.jar lib//jackson-annotations-2.12.1.jar 
+ lib//jackson-jaxrs-base-2.12.1.jar lib//jackson-datatype-jdk8-2.12.1.ja
+ r lib//hadoop-common-3.3.0.jar lib//jackson-databind-2.12.1.jar lib//ja
+ ckson-core-2.12.1.jar lib//mysql-connector-java-8.0.25.jar lib//snakeya
+ ml-1.29.jar lib//HikariCP-3.4.5.jar lib//hutool-db-5.6.6.jar lib//jul-t
+ o-slf4j-1.7.30.jar lib//avro-1.7.7.jar lib//hadoop-auth-3.3.0.jar lib//
+ zookeeper-3.5.6.jar lib//kerb-simplekdc-1.0.1.jar lib//kerb-client-1.0.
+ 1.jar lib//kerb-admin-1.0.1.jar lib//kerb-util-1.0.1.jar lib//token-pro
+ vider-1.0.1.jar lib//kerb-server-1.0.1.jar lib//kerb-common-1.0.1.jar l
+ ib//kerb-crypto-1.0.1.jar lib//kerb-identity-1.0.1.jar lib//kerb-core-1
+ .0.1.jar lib//kerby-pkix-1.0.1.jar lib//kerby-config-1.0.1.jar lib//slf
+ 4j-api-1.7.30.jar lib//guava-27.0-jre.jar lib//jersey-multipart-1.19.ja
+ r lib//cglib-2.2.2.jar lib//protobuf-java-3.11.4.jar lib//hutool-settin
+ g-5.6.6.jar lib//hutool-log-5.6.6.jar lib//hutool-core-5.6.6.jar lib//c
+ ommons-validator-1.6.jar lib//commons-beanutils-1.9.4.jar lib//commons-
+ collections-3.2.2.jar lib//javax.inject-1.jar lib//commons-configuratio
+ n-1.10.jar lib//httpclient-4.5.13.jar lib//jersey-client-1.19.jar lib//
+ jsr305-3.0.2.jar lib//checker-qual-2.5.2.jar lib//error_prone_annotatio
+ ns-2.2.0.jar lib//j2objc-annotations-1.1.jar lib//animal-sniffer-annota
+ tions-1.17.jar lib//mimepull-1.9.3.jar lib//jersey-json-1.19.jar lib//j
+ ersey-servlet-1.19.jar lib//jersey-server-1.19.jar lib//jersey-core-1.1
+ 9.jar lib//asm-3.3.1.jar lib//hadoop-shaded-protobuf_3_7-1.0.0.jar lib/
+ /hadoop-annotations-3.3.0.jar lib//commons-cli-1.2.jar lib//commons-mat
+ h3-3.1.1.jar lib//commons-codec-1.11.jar lib//commons-io-2.5.jar lib//c
+ ommons-net-3.6.jar lib//javax.activation-api-1.2.0.jar lib//jsp-api-2.1
+ .jar lib//commons-configuration2-2.1.1.jar lib//commons-logging-1.2.jar
+  lib//log4j-1.2.17.jar lib//commons-text-1.4.jar lib//commons-lang3-3.7
+ .jar lib//re2j-1.1.jar lib//gson-2.2.4.jar lib//jsch-0.1.55.jar lib//cu
+ rator-recipes-4.2.0.jar lib//curator-framework-4.2.0.jar lib//curator-c
+ lient-4.2.0.jar lib//htrace-core4-4.1.0-incubating.jar lib//commons-com
+ press-1.19.jar lib//woodstox-core-5.0.3.jar lib//stax2-api-3.1.4.jar li
+ b//dnsjava-2.1.7.jar lib//commons-digester-1.8.1.jar lib//commons-lang-
+ 2.6.jar lib//httpcore-4.4.13.jar lib//jsr311-api-1.1.1.jar lib//failure
+ access-1.0.jar lib//listenablefuture-9999.0-empty-to-avoid-conflict-wit
+ h-guava.jar lib//jettison-1.1.jar lib//jaxb-impl-2.2.3-1.jar lib//paran
+ amer-2.3.jar lib//snappy-java-1.0.5.jar lib//nimbus-jose-jwt-7.9.jar li
+ b//json-smart-2.3.jar lib//zookeeper-jute-3.5.6.jar lib//audience-annot
+ ations-0.5.0.jar lib//jaxb-api-2.2.2.jar lib//jcip-annotations-1.0-1.ja
+ r lib//accessors-smart-1.2.jar lib//kerby-asn1-1.0.1.jar lib//kerby-uti
+ l-1.0.1.jar lib//jakarta.xml.bind-api-2.3.2.jar lib//jakarta.activation
+ -api-1.2.1.jar lib//stax-api-1.0-2.jar lib//activation-1.1.jar lib//asm
+ -5.0.4.jar lib//kerby-xdr-1.0.1.jar
+

@@ -1,0 +1,22 @@
+{
+  "format": {
+    "functionName": "format",
+    "type": "String",
+    "params": [
+    ],
+    "description": "格式化日期",
+    "defaultVal": {
+    },
+    "expression": ""
+  },
+  "tradeDay": {
+    "functionName": "tradeDay",
+    "type": "String",
+    "params": [
+    ],
+    "description": "交易日",
+    "defaultVal": {
+    },
+    "expression": ""
+  }
+}
