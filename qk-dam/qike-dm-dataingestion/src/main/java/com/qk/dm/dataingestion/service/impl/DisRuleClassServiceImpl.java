@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 public class DisRuleClassServiceImpl implements DisRuleClassService {
 
     private final QDisRuleClassification qDisRuleClassification = QDisRuleClassification.disRuleClassification;
-    private final DisRuleClassificationRepository ddgRuleClassificationRepository;
+    private final DisRuleClassificationRepository disRuleClassificationRepository;
 
-    public DisRuleClassServiceImpl(DisRuleClassificationRepository ddgRuleClassificationRepository) {
-        this.ddgRuleClassificationRepository = ddgRuleClassificationRepository;
+    public DisRuleClassServiceImpl(DisRuleClassificationRepository disRuleClassificationRepository) {
+        this.disRuleClassificationRepository = disRuleClassificationRepository;
     }
 
     @Override
     public List<DisRuleClassVO> list() {
 
-        List<DisRuleClassVO> list = DisRuleClassMapper.INSTANCE.list((List<DisRuleClassification>) ddgRuleClassificationRepository.findAll(
+        List<DisRuleClassVO> list = DisRuleClassMapper.INSTANCE.list((List<DisRuleClassification>) disRuleClassificationRepository.findAll(
                 qDisRuleClassification.delFlag.eq(0)));
 
         return list.stream()

@@ -6,10 +6,12 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisBaseInfoMapper;
+import com.qk.dm.dataingestion.model.*;
 import com.qk.dm.dataingestion.service.DataMigrationService;
 import com.qk.dm.dataingestion.service.DisBaseInfoService;
 import com.qk.dm.dataingestion.service.DisColumnInfoService;
 import com.qk.dm.dataingestion.service.DisSchedulerConfigService;
+import com.qk.dm.dataingestion.strategy.DataSyncFactory;
 import com.qk.dm.dataingestion.vo.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -30,6 +32,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     private final DisBaseInfoService baseInfoService;
     private final DisColumnInfoService columnInfoService;
     private final DisSchedulerConfigService schedulerConfigService;
+    private final DataSyncFactory dataSyncFactory;
 
     @PostConstruct
     public void initFactory() {
@@ -37,11 +40,12 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     }
 
     public DataMigrationServiceImpl(EntityManager entityManager, DisBaseInfoService baseInfoService, DisColumnInfoService columnInfoService,
-                                    DisSchedulerConfigService schedulerConfigService) {
+                                    DisSchedulerConfigService schedulerConfigService, DataSyncFactory dataSyncFactory) {
         this.entityManager = entityManager;
         this.baseInfoService = baseInfoService;
         this.columnInfoService = columnInfoService;
         this.schedulerConfigService = schedulerConfigService;
+        this.dataSyncFactory = dataSyncFactory;
     }
 
     @Override
@@ -57,6 +61,9 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
+        System.out.println(dataSyncFactory.transJson(dataMigrationVO,IngestionType.MYSQL,IngestionType.HIVE));
+
+
     }
 
     @Override

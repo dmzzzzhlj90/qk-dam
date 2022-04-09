@@ -22,10 +22,10 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
     }
 
     @Override
-    public Long add(DisMigrationBaseInfoVO ddgMigrationBaseInfoVO) {
-        DisMigrationBaseInfo ddgMigrationBaseInfo = disMigrationBaseInfoRepository.save(DisBaseInfoMapper.
-                INSTANCE.of(ddgMigrationBaseInfoVO));
-        return ddgMigrationBaseInfo.getId();
+    public Long add(DisMigrationBaseInfoVO disMigrationBaseInfoVO) {
+        DisMigrationBaseInfo disMigrationBaseInfo = disMigrationBaseInfoRepository.save(DisBaseInfoMapper.
+                INSTANCE.of(disMigrationBaseInfoVO));
+        return disMigrationBaseInfo.getId();
     }
 
     @Override
@@ -50,8 +50,8 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
 
     @Override
     public DisMigrationBaseInfoVO detail(Long id) {
-        DisMigrationBaseInfo ddgMigrationBaseInfo = disMigrationBaseInfoRepository.getById(id);
-        return DisBaseInfoMapper.INSTANCE.of(ddgMigrationBaseInfo);
+        DisMigrationBaseInfo disMigrationBaseInfo = disMigrationBaseInfoRepository.getById(id);
+        return DisBaseInfoMapper.INSTANCE.of(disMigrationBaseInfo);
     }
 
 }

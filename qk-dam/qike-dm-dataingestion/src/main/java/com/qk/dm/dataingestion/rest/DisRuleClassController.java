@@ -27,7 +27,7 @@ public class DisRuleClassController {
 
     /**
      * 获取规则列表
-     * @return DefaultCommonResult<List<DdgRuleClassVO>>
+     * @return DefaultCommonResult<List<DisRuleClassVO>>
      */
     @GetMapping("/list")
     public DefaultCommonResult<List<DisRuleClassVO>> list(){

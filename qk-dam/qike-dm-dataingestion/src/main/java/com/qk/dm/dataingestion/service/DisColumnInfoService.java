@@ -10,7 +10,7 @@ public interface DisColumnInfoService {
 
     void delete(List<Long> baseIdList);
 
-    void update(Long baseId,List<DisColumnInfoVO> ddgColumnInfoList);
+    void update(Long baseId,List<DisColumnInfoVO> disColumnInfoList);
 
     List<DisColumnInfoVO> list(Long baseInfoId);
 }
