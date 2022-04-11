@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -92,6 +93,7 @@ public class ServiceVO {
    * 微服务线上地址
    */
   @NotBlank(message = "entry不能为空")
+  @Pattern(regexp = "^(https?|ftp)://.*$", message = "只能以http/https开头")
   private String entry;
 
   /**
@@ -104,6 +106,7 @@ public class ServiceVO {
    * 微应用
    */
   @NotBlank(message = "microApp不能为空")
+  @Pattern(regexp = "[a-zA-Z]*", message = "只能为英文字母大小写")
   private String microApp;
 
   /**
