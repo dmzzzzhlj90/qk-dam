@@ -42,7 +42,11 @@ public class DisMigrationBaseInfo implements Serializable {
      */
     @Column(name = "job_name", nullable = false)
     private String jobName;
-
+    /**
+     * 源数据库类型
+     */
+    @Column(name = "source_db_type", nullable = false)
+    private String sourceDbType;
     /**
      * 源连接
      */
@@ -60,7 +64,11 @@ public class DisMigrationBaseInfo implements Serializable {
      */
     @Column(name = "source_table")
     private String sourceTable;
-
+    /**
+     * 目标数据库类型
+     */
+    @Column(name = "target_db_type")
+    private String targetDbType;
     /**
      * 目标连接
      */

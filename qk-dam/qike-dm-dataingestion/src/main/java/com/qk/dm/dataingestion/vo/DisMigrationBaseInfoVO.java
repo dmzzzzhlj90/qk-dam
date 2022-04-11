@@ -28,7 +28,10 @@ public class DisMigrationBaseInfoVO {
      * 作业名称
      */
     private String jobName;
-
+    /**
+     * 源数据库类型
+     */
+    private String sourceDbType;
     /**
      * 源连接
      */
@@ -43,6 +46,11 @@ public class DisMigrationBaseInfoVO {
      * 源表
      */
     private String sourceTable;
+
+    /**
+     * 目标数据库类型
+     */
+    private String targetDbType;
 
     /**
      * 目标连接

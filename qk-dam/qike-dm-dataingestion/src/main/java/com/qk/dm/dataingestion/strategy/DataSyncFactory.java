@@ -15,7 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+/**
+ * 离线数据同步工厂
+ * @author wangzp
+ * @date 2022/04/09 14:32
+ * @since 1.0.0
+ */
 @Component
 public class DataSyncFactory {
 

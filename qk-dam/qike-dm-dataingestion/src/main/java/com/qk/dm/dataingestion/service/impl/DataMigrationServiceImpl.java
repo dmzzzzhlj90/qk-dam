@@ -3,6 +3,7 @@ package com.qk.dm.dataingestion.service.impl;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisBaseInfoMapper;
@@ -33,6 +34,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     private final DisColumnInfoService columnInfoService;
     private final DisSchedulerConfigService schedulerConfigService;
     private final DataSyncFactory dataSyncFactory;
+    private final DataxDolphinClient dataxDolphinClient;
 
     @PostConstruct
     public void initFactory() {
@@ -40,12 +42,13 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     }
 
     public DataMigrationServiceImpl(EntityManager entityManager, DisBaseInfoService baseInfoService, DisColumnInfoService columnInfoService,
-                                    DisSchedulerConfigService schedulerConfigService, DataSyncFactory dataSyncFactory) {
+                                    DisSchedulerConfigService schedulerConfigService, DataSyncFactory dataSyncFactory, DataxDolphinClient dataxDolphinClient) {
         this.entityManager = entityManager;
         this.baseInfoService = baseInfoService;
         this.columnInfoService = columnInfoService;
         this.schedulerConfigService = schedulerConfigService;
         this.dataSyncFactory = dataSyncFactory;
+        this.dataxDolphinClient = dataxDolphinClient;
     }
 
     @Override
@@ -61,6 +64,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
+
         System.out.println(dataSyncFactory.transJson(dataMigrationVO,IngestionType.MYSQL,IngestionType.HIVE));
 
 

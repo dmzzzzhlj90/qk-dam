@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * 文件数据同步
+ * @author wangzp
+ * @date 2022/04/09 15:41
+ * @since 1.0.0
  */
 @Component
 public class FileDataxJson implements DataxJson{
