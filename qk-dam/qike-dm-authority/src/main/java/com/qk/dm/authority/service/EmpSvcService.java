@@ -18,4 +18,6 @@ public interface EmpSvcService {
   void deleteService(Long id);
 
   List<ServiceVO> queryServices(ServiceParamVO serviceParamVO);
+
+  Boolean cleckdDeleteService(Long id);
 }

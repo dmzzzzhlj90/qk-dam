@@ -69,6 +69,18 @@ public class EmpServiceController {
   }
 
   /**
+   * 删除服务—检验
+   * @param id 服务id
+   * @return
+   */
+  @DeleteMapping("/check/{id}")
+  public DefaultCommonResult<Boolean> cleckdDeleteService(@NotNull @PathVariable("id") Long id){
+
+    return DefaultCommonResult.success(ResultCodeEnum.OK,empSvcService.cleckdDeleteService(id));
+  }
+
+
+  /**
    * 查询服务
    * @param serviceParamVO 查询服务信息参数
    * @return DefaultCommonResult<List<ServiceVO>> 查询服务信息

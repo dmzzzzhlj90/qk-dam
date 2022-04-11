@@ -163,4 +163,26 @@ public class EmpSvcServiceImpl implements EmpSvcService {
       booleanBuilder.and(qQxService.redionId.eq(serviceParamVO.getRedionId()));
     }
   }
+
+  /**
+   *校验当前删除服务是否存在有授权信息
+   * @param id
+   * @return
+   */
+  @Override
+  public Boolean cleckdDeleteService(Long id) {
+    QxService qxService = qkQxServiceRepository.findById(id).orElse(null);
+    if (Objects.isNull(qxService)){
+      throw new BizException(
+          "当前需删除的数据不存在"
+      );
+    }
+    //根据服务的uuid查询是否存在授权信息
+    List<QxEmpower> qxEmpoerList = qkQxEmpowerRepository.findByServiceId(qxService.getServiceId());
+    if (CollectionUtils.isNotEmpty(qxEmpoerList)){
+      return true;
+    }else {
+      return false;
+    }
+  }
 }
