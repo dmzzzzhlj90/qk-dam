@@ -35,8 +35,8 @@ public abstract class DatasourceBasicController {
      * @return DefaultCommonResult<List<String>>
      */
     @GetMapping("/connect/{type}")
-    public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSource(@PathVariable final String type) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getResultDataSourceByType(type));
+    public DefaultCommonResult<List<String>> getResultDataSource(@PathVariable final String type) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSource(type));
     }
 
     /**
