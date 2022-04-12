@@ -73,8 +73,9 @@ public abstract class DatasourceBasicController {
     public DefaultCommonResult<List<String>> getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllColumn(connectType, dataSourceName, dataBaseName, tableName));
     }
+
     /**
-     * 获取column字段列表
+     * 根据guid获取column字段列表
      *
      * @param tableGuid 表的guid
      * @return DefaultCommonResult
