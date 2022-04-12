@@ -18,7 +18,7 @@ public abstract class DatasourceBasicController {
 
 
    @Autowired
-   private DataBaseService dataBaseService;
+   protected DataBaseService dataBaseService;
     /**
      * 获取数据源连接类型
      *
@@ -31,12 +31,12 @@ public abstract class DatasourceBasicController {
 
     /**
      * 获取数据源连接
-     * @param connectType
+     * @param type
      * @return DefaultCommonResult<List<String>>
      */
     @GetMapping("/connect/{type}")
-    public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSourceByType(@PathVariable("type") String connectType) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getResultDataSourceByType(connectType));
+    public DefaultCommonResult<List<ResultDatasourceInfo>> getResultDataSource(@PathVariable final String type) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getResultDataSourceByType(type));
     }
 
     /**
@@ -74,8 +74,9 @@ public abstract class DatasourceBasicController {
     public DefaultCommonResult<List<String>> getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllColumn(connectType, dataSourceName, dataBaseName, tableName));
     }
+
     /**
-     * 获取column字段列表
+     * 根据guid获取column字段列表
      *
      * @param tableGuid 表的guid
      * @return DefaultCommonResult
