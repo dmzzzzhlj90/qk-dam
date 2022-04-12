@@ -76,8 +76,26 @@ public class DisMigrationBaseInfo implements Serializable {
     private String targetConnect;
 
     /**
-     * 目标数据库
+     * 当要读取的文件路径，
+     * 数据源为hive时显示且必填
      */
+    @Column(name = "source_path")
+    private String sourcePath;
+
+    /**
+     * Hadoop hdfs文件系统namenode节点地址
+     * 数据源为hive时显示且必填
+     */
+    @Column(name = "source_default_fs")
+    private String sourceDefaultFS;
+
+    /**
+     * 文件的类型，目前只支持用户配置为"text"、"orc"、"rc"、"seq"、"csv"
+     * 当数据源为hive时显示且必填
+     */
+    @Column(name = "source_file_type")
+    private String sourceFileType;
+
     @Column(name = "target_database", nullable = false)
     private String targetDatabase;
 
@@ -94,10 +112,46 @@ public class DisMigrationBaseInfo implements Serializable {
     private String targetTable;
 
     /**
+     * 存储到Hadoop hdfs文件系统的路径信息
+     * 当数据源是hive时显示且必填
+     */
+    @Column(name = "target_path")
+    private String targetPath;
+
+    /**
+     * Hadoop hdfs文件系统namenode节点地址
+     * 当数据源为hive时显示且是必填
+     */
+    @Column(name = "target_default_fs")
+    private String targetDefaultFS;
+
+    /**
+     * 文件的类型，目前只支持用户配置为"text"或"orc"。
+     * 当数据源是hive是显示且必填
+     */
+    @Column(name = "target_file_type")
+    private String targetFileType;
+
+    /**
+     * hdfswriter写入前数据清理处理模式
+     * 数据源是hive是显示且必填
+     */
+    @Column(name = "target_write_node")
+    private String targetWriteMode;
+
+    /**
+     * hdfswriter写入时的字段分隔符
+     * 数据源是hive是显示且必填
+     */
+    @Column(name = "target_field_delimiter")
+    private String targetFieldDelimiter;
+
+
+    /**
      * 导入前类型（导入前是否清除数据）
      */
-    @Column(name = "befor_import_type")
-    private String beforImportType;
+    @Column(name = "before_import_type")
+    private String beforeImportType;
 
     /**
      * 主键或分区字段

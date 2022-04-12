@@ -1,7 +1,11 @@
 package com.qk.dm.dataingestion.model.hive;
 
+import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
+@Builder
 @Data
 public class HiveBasePara {
     /**
@@ -24,10 +28,11 @@ public class HiveBasePara {
     /**
      * 字段信息
      */
-    private Column[] column;
+    private List<Column> column;
 
     @Data
-    static class Column{
+    @Builder
+    public static class Column{
         private String name;
         private String type;
     }

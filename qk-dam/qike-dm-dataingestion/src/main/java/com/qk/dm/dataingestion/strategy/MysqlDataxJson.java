@@ -45,7 +45,7 @@ public class MysqlDataxJson implements DataxJson{
                 .jdbcUrl(jdbcUrl(dataSourceServer,baseInfo.getSourceDatabase()))
                 .table(tables).build());
 
-        ReaderPara reader = new ReaderPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getColumnList(dataMigrationVO.getColumnList()),
+        ReaderPara reader = new ReaderPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getSourceColumnList(dataMigrationVO.getColumnList()),
                 conn, "id");
 
         return DataxChannel.builder().name(MYSQL_READER).parameter(reader).build();
@@ -60,7 +60,7 @@ public class MysqlDataxJson implements DataxJson{
         ArrayList<BasePara.Connection> conn = Lists.newArrayList(BasePara.Connection.builder()
                 .jdbcUrl(jdbcUrl(dataSourceServer,baseInfo.getTargetDatabase()))
                 .table(Lists.newArrayList(baseInfo.getTargetTable())).build());
-        WriterPara writer = new WriterPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getColumnList(dataMigrationVO.getColumnList()),
+        WriterPara writer = new WriterPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getTargetColumnList(dataMigrationVO.getColumnList()),
                 conn, "insert");
         return DataxChannel.builder().name(MYSQL_WRITER).parameter(writer).build();
     }
@@ -71,9 +71,17 @@ public class MysqlDataxJson implements DataxJson{
     }
 
 
-    private List<String> getColumnList(List<DisColumnInfoVO> columnList){
+    private List<String> getSourceColumnList(List<DisColumnInfoVO> columnList){
         if(!CollectionUtils.isEmpty(columnList)){
             return columnList.stream().map(DisColumnInfoVO::getSourceName).collect(Collectors.toList());
+        }
+
+        return List.of();
+    }
+
+    private List<String> getTargetColumnList(List<DisColumnInfoVO> columnList){
+        if(!CollectionUtils.isEmpty(columnList)){
+            return columnList.stream().map(DisColumnInfoVO::getTargetName).collect(Collectors.toList());
         }
 
         return List.of();

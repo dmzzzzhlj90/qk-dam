@@ -48,6 +48,22 @@ public class DisMigrationBaseInfoVO {
     private String sourceTable;
 
     /**
+     * 当要读取的文件路径，
+     * 数据源为hive时显示且必填
+     */
+    private String sourcePath;
+    /**
+     * Hadoop hdfs文件系统namenode节点地址
+     * 数据源为hive时显示且必填
+     */
+    private String sourceDefaultFS;
+    /**
+     * 文件的类型，目前只支持用户配置为"text"、"orc"、"rc"、"seq"、"csv"
+     * 当数据源为hive时显示且必填
+     */
+    private String sourceFileType;
+
+    /**
      * 目标数据库类型
      */
     private String targetDbType;
@@ -63,6 +79,35 @@ public class DisMigrationBaseInfoVO {
     private String targetDatabase;
 
     /**
+     * 存储到Hadoop hdfs文件系统的路径信息
+     * 当数据源是hive时显示且必填
+     */
+    private String targetPath;
+
+    /**
+     * Hadoop hdfs文件系统namenode节点地址
+     * 当数据源为hive时显示且是必填
+     */
+    private String targetDefaultFS;
+
+    /**
+     * 文件的类型，目前只支持用户配置为"text"或"orc"。
+     * 当数据源是hive是显示且必填
+     */
+    private String targetFileType;
+
+    /**
+     * hdfswriter写入前数据清理处理模式
+     * 数据源是hive是显示且必填
+     */
+    private String targetWriteMode;
+    /**
+     * hdfswriter写入时的字段分隔符
+     * 数据源是hive是显示且必填
+     */
+    private String targetFieldDelimiter;
+
+    /**
      * 表不存在时是否自动创建表
      */
     private String autoCreate;
@@ -76,7 +121,7 @@ public class DisMigrationBaseInfoVO {
      * 导入前类型（导入前是否清除数据）
      */
 
-    private String beforImportType;
+    private String beforeImportType;
 
     /**
      * 主键或分区字段

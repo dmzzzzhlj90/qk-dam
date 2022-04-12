@@ -64,8 +64,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
-
-        System.out.println(dataSyncFactory.transJson(dataMigrationVO,IngestionType.MYSQL,IngestionType.HIVE));
+       dataSyncFactory.transJson(dataMigrationVO,IngestionType.MYSQL,IngestionType.HIVE);
 
 
     }

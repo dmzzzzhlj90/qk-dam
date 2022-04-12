@@ -57,7 +57,12 @@ public interface DataBaseService {
      */
     List getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName);
 
-
+    /**
+     * 通过表guid获取表字段信息
+     * @param tableGuid
+     * @return
+     */
+    List getColumnListByTableGuid(String tableGuid);
     /**
      * 获取db库列表
      * @param connectType
