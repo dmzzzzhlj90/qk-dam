@@ -63,6 +63,12 @@ public class DataBaseServiceImpl implements DataBaseService {
   public List getAllColumn(String connectType, String dataSourceName, String dataBaseName, String tableName) {
     return dataBaseInfoDefaultApi.getAllColumn(connectType, getServer(dataSourceName), dataBaseName, tableName);
   }
+
+  @Override
+  public List getColumnListByTableGuid(String tableGuid) {
+    return dataBaseInfoDefaultApi.getColumnListByTableGuid(tableGuid);
+  }
+
   @Override
   public List<MtdApiDb> getAllDataBase(String connectType, String dataSourceName, Integer limit, Integer offset) {
     return dataBaseInfoDefaultApi.getAllDataBase(connectType,getServer(dataSourceName),limit,offset);
