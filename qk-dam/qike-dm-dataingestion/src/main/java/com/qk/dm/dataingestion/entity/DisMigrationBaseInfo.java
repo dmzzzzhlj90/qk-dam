@@ -32,10 +32,10 @@ public class DisMigrationBaseInfo implements Serializable {
     private Long ruleClassId;
 
     /**
-     * 作业id
+     * 调度实例code
      */
-    @Column(name = "job_id")
-    private String jobId;
+    @Column(name = "task_code")
+    private Long taskCode;
 
     /**
      * 作业名称

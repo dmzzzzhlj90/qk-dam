@@ -38,6 +38,17 @@ public class DataBaseServiceImpl implements DataBaseService {
     this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
   }
 
+
+  @Override
+  public List<ResultDatasourceInfo> getResultDataSourceByType(String type) {
+    return dataBaseInfoDefaultApi.getResultDataSourceByType(type);
+  }
+
+  @Override
+  public List<String> getAllConnType() {
+    return dataBaseInfoDefaultApi.getAllConnType();
+  }
+
   @Override
   public List<String> getAllConnectType() {
     return dataBaseInfoDefaultApi.getAllConnType();

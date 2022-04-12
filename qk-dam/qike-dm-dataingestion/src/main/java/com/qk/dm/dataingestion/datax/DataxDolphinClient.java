@@ -30,6 +30,13 @@ public class DataxDolphinClient {
         } catch (CodeGenerateUtils.CodeGenerateException e) {
             e.printStackTrace();
         }
+        return createProcessDefinition(projectId,name,taskCode,dataxJson);
+
+    }
+    public Result createProcessDefinition(Long projectId,
+                                          String name,
+                                          long taskCode,
+                                          String dataxJson) throws ApiException {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(taskCode, name, dataxJson, dolphinTaskDefinitionPropertiesBean);
         Result result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(processDefinition.getLocations(),
                 processDefinition.getName(),
