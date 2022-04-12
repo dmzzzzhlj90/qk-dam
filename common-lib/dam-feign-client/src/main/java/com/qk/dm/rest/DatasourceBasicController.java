@@ -18,7 +18,7 @@ public abstract class DatasourceBasicController {
 
 
    @Autowired
-   private DataBaseService dataBaseService;
+   protected DataBaseService dataBaseService;
     /**
      * 获取数据源连接类型
      *
