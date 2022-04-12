@@ -1,5 +1,6 @@
 package com.qk.dm.service;
 
+import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.entity.DataStandardTreeVO;
 import com.qk.dam.entity.DsdBasicInfoParamsDTO;
 import com.qk.dam.entity.DsdBasicinfoParamsVO;
@@ -16,6 +17,10 @@ import java.util.Map;
  * @since 1.0.0
  */
 public interface DataBaseService {
+
+    List<ResultDatasourceInfo> getResultDataSourceByType(String type);
+
+    List<String> getAllConnType();
 
     /**
      * 获取数据源连接类型

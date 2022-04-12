@@ -18,11 +18,10 @@ public class DisMigrationBaseInfoVO {
      * 规则分类id
      */
     private Long ruleClassId;
-
     /**
-     * 作业id
+     * 调度实例code
      */
-    private String jobId;
+    private Long taskCode;
 
     /**
      * 作业名称

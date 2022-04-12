@@ -6,6 +6,7 @@ import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.service.DataBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,9 @@ import java.util.List;
 
 public abstract class DatasourceBasicController {
 
-    @Autowired
-    protected   DataBaseInfoDefaultApi dataBaseService;
 
+   @Autowired
+   private DataBaseService dataBaseService;
     /**
      * 获取数据源连接类型
      *

@@ -3,6 +3,7 @@ package com.qk.dm.dataingestion.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.datacenter.client.ApiException;
 import com.qk.dm.dataingestion.service.DataMigrationService;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
@@ -32,7 +33,7 @@ public class DataMigrationController {
      * @return DefaultCommonResult
      */
     @PostMapping("")
-    public DefaultCommonResult add(@RequestBody @Validated DataMigrationVO dataMigrationVO){
+    public DefaultCommonResult add(@RequestBody @Validated DataMigrationVO dataMigrationVO) throws ApiException {
         dataMigrationService.insert(dataMigrationVO);
         return DefaultCommonResult.success();
     }

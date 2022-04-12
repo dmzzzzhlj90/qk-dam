@@ -2,7 +2,9 @@ package com.qk.dm.dataingestion.service.impl;
 
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.CodeGenerateUtils;
 import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.datacenter.client.ApiException;
 import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
@@ -53,8 +55,11 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insert(DataMigrationVO dataMigrationVO) {
+    public void insert(DataMigrationVO dataMigrationVO) throws ApiException {
+        long taskCode = getTaskCode();
         //添加基础信息
+        DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
+        baseInfo.setTaskCode(taskCode);
         Long baseInfoId = baseInfoService.add(dataMigrationVO.getBaseInfo());
         List<DisColumnInfoVO> columnList = dataMigrationVO.getColumnList();
         columnList.forEach(e->e.setBaseInfoId(baseInfoId));
@@ -64,7 +69,13 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
-       dataSyncFactory.transJson(dataMigrationVO,IngestionType.MYSQL,IngestionType.HIVE);
+
+        String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
+                IngestionType.getVal(baseInfo.getSourceDbType()),
+                IngestionType.getVal(baseInfo.getTargetDbType()));
+
+        dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"),baseInfo.getJobName(),
+                taskCode,dataxJson);
 
 
     }
@@ -137,5 +148,14 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         }
     }
 
+   private long getTaskCode(){
+       long taskCode =0L;
+       try {
+           taskCode = CodeGenerateUtils.getInstance().genCode();
+       } catch (CodeGenerateUtils.CodeGenerateException e) {
+           e.printStackTrace();
+       }
+       return taskCode;
+   }
 
 }
