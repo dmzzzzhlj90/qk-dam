@@ -81,7 +81,7 @@ public class DasApiCreateSqlScriptController {
      */
     @PostMapping("/debug/model")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<DebugApiResultVO> debugModel(@RequestBody DasApiCreateSqlScriptVO dasApiCreateConfigVO) {
+    public DefaultCommonResult debugModel(@RequestBody DasApiCreateSqlScriptVO dasApiCreateConfigVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSqlScriptService.debugModel(dasApiCreateConfigVO));
     }
 }

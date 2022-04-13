@@ -190,7 +190,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
     }
 
     @Override
-    public DebugApiResultVO debugModel(DasApiCreateSqlScriptVO apiCreateSqlScriptVO) {
+    public Object debugModel(DasApiCreateSqlScriptVO apiCreateSqlScriptVO) {
         // 1.生成查询SQL(根据数据源类型)
         //数据源连接类型
         DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO = apiCreateSqlScriptVO.getApiCreateDefinitionVO();
@@ -206,8 +206,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateSqlScriptDefinitionVO.getDataSourceName());
 
         //执行SQL 查询数据
-        List<Map<String, Object>> searchData = getSearchData(apiCreateSqlScriptDefinitionVO, reqParams, connectBasicInfo);
-        return DebugApiResultVO.builder().resultData(searchData).build();
+        return getSearchData(apiCreateSqlScriptDefinitionVO, reqParams, connectBasicInfo);
     }
 
     /**
@@ -216,11 +215,10 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
      * @param connectBasicInfo
      * @return
      */
-    private List<Map<String, Object>> getSearchData(DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO,
+    private Object getSearchData(DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO,
                                                     Map<String, String> reqParams,
                                                     ConnectBasicInfo connectBasicInfo) {
-        List<Map<String, Object>> searchData = null;
-
+        Object resSearchData = null;
         // schema
         String connectType = apiCreateSqlScriptDefinitionVO.getConnectType();
         // 数据库
@@ -230,6 +228,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         // 排序查询,默认使用首个参数的排序方式
         String orderByStr = getOrderByParaSqlStr(apiCreateSqlScriptDefinitionVO);
 
+        List<Map<String, Object>> searchData = null;
         if (ConnTypeEnum.MYSQL.getName().equalsIgnoreCase(connectType)) {
             // mysql 执行sql获取查询结果集
             searchData = new MysqlSqlExecutor(connectBasicInfo, dataBaseName, reqParams, null)
@@ -239,7 +238,14 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
             searchData = new HiveSqlExecutor(connectBasicInfo, dataBaseName, reqParams, null)
                     .hiveExecuteSQL(null, sqlPara, null).searchDataSqlPara();
         }
-        return searchData;
+
+        // 是否为详情单表数据
+        if (null != searchData && searchData.size() == 1) {
+            resSearchData = searchData.stream().findFirst().get();
+        } else {
+            resSearchData = searchData;
+        }
+        return resSearchData;
     }
 
     /**

@@ -29,7 +29,7 @@ public interface DasApiCreateSqlScriptService {
 
     LinkedList<Map<String, Object>> getParamHeaderInfo();
 
-    DebugApiResultVO debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
+    Object debugModel(DasApiCreateSqlScriptVO dasApiCreateSqlScriptVO);
 
     DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(DasApiBasicInfo dasApiBasicInfo);
 
