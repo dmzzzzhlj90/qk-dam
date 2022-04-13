@@ -1,7 +1,9 @@
 package com.qk.dm.dataservice.utils;
 
+import com.qk.dm.dataservice.constant.DataBaseDataTypeEnum;
 import com.qk.dm.dataservice.constant.OperationSymbolEnum;
 import com.qk.dm.dataservice.vo.DasApiCreateRequestParasVO;
+import com.qk.dm.dataservice.vo.DasApiCreateResponseParasVO;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class SqlExecuteUtils {
     public static final String PERCENT_SIGN = "%";
     public static final String LIKE = " like ";
     public static final String SPACE = " ";
+
     /**
      * 分页
      */
@@ -40,6 +43,7 @@ public class SqlExecuteUtils {
     public static final String DOLLAR_SYMBOL = "$";
     public static final String LEFT_BIG_BRACKETS = "{";
     public static final String RIGHT_BIG_BRACKETS = "}";
+    public static final String AS = "as";
 
 
     /*********************************************MYSQL******************************************************/
@@ -48,29 +52,80 @@ public class SqlExecuteUtils {
      *
      * @param tableName     表名称
      * @param reqParams     请求参数
-     * @param resParaMap    响应参数
+     * @param responseParas 响应参数
      * @param mappingParams 参数字段映射关系
      * @param orderByStr    排序SQL
      * @return
      */
     public static String mysqlExecuteSQL(String tableName,
                                          Map<String, String> reqParams,
-                                         Map<String, String> resParaMap,
+                                         List<DasApiCreateResponseParasVO> responseParas,
                                          Map<String, List<DasApiCreateRequestParasVO>> mappingParams,
                                          String orderByStr) {
         String sql = SINGLE_TABLE_SELECT_SQL_TEMPLATE;
         // 表名称
         sql = sql.replace(TAB_KEY, tableName);
-
         // 查询字段
-        if (resParaMap.size() > 0) {
-            sql = sql.replace(COL_LIST_KEY, String.join(",", resParaMap.keySet()));
-        }
-        sql = sql.replace(COL_LIST_KEY, COL_LIST_DEFAULT);
-
+        sql = sqlSelectResCol(responseParas, sql);
         // where条件
+        sql = sql + sqlWherePara(reqParams, mappingParams);
+        //排序
+        sql = sql + orderByStr;
+        //分页查询
+        sql = sql + getPageSqlPart(reqParams);
+        return sql;
+    }
+
+    /**
+     * 查询字段
+     *
+     * @param responseParas
+     * @param sql
+     * @return
+     */
+    private static String sqlSelectResCol(List<DasApiCreateResponseParasVO> responseParas, String sql) {
+        if (responseParas.size() > 0) {
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < responseParas.size(); i++) {
+                DasApiCreateResponseParasVO responsePara = responseParas.get(i);
+                if (DataBaseDataTypeEnum.DATE.getCode().equalsIgnoreCase(responsePara.getParaType())) {
+                    // date
+                    strBuilder.append(" date_format(")
+                            .append(responsePara.getMappingName())
+                            .append(",'")
+                            .append(DataBaseDataTypeEnum.DATE.getValue()).append("') " + AS + " ")
+                            .append(responsePara.getParaName()).append(" ");
+                } else if (DataBaseDataTypeEnum.DATETIME.getCode().equalsIgnoreCase(responsePara.getParaType())) {
+                    // datetime
+                    strBuilder.append(" date_format(")
+                            .append(responsePara.getMappingName()).append(",'")
+                            .append(DataBaseDataTypeEnum.DATETIME.getValue()).append("') ").append(AS).append(" ")
+                            .append(responsePara.getParaName()).append(" ");
+                } else {
+                    strBuilder.append(" ").append(responsePara.getMappingName()).append(" ");
+                }
+                // 逗号
+                if (i != responseParas.size() - 1) {
+                    strBuilder.append(",");
+                }
+            }
+            sql = sql.replace(COL_LIST_KEY, strBuilder.toString());
+        }
+        // 默认全部字段查询
+        sql = sql.replace(COL_LIST_KEY, COL_LIST_DEFAULT);
+        return sql;
+    }
+
+    /**
+     * where条件
+     *
+     * @param reqParams
+     * @param mappingParams
+     * @return
+     */
+    private static StringBuilder sqlWherePara(Map<String, String> reqParams, Map<String, List<DasApiCreateRequestParasVO>> mappingParams) {
+        StringBuilder whereBuffer = new StringBuilder();
         if (mappingParams.size() > 0) {
-            StringBuilder whereBuffer = new StringBuilder();
             for (String paraName : mappingParams.keySet()) {
                 DasApiCreateRequestParasVO apiCreateRequestParasVO = mappingParams.get(paraName).get(0);
                 // 数据库对应字段
@@ -82,15 +137,8 @@ public class SqlExecuteUtils {
                 //字段映射操作比较符号
                 mysqlSwitchOperationSymbol(whereBuffer, column, value, conditionType);
             }
-            sql = sql + whereBuffer;
         }
-
-        //排序
-        sql = sql + orderByStr;
-
-        //分页查询
-        sql = sql + getPageSqlPart(reqParams);
-        return sql;
+        return whereBuffer;
     }
 
     /**
@@ -186,22 +234,37 @@ public class SqlExecuteUtils {
      *
      * @param tableName     表名称
      * @param reqParams     请求参数
-     * @param resParaMap    响应参数
+     * @param responseParas 响应参数
      * @param mappingParams 参数字段映射关系
      * @return
      */
     public static String hiveExecuteSQL(String tableName,
                                         Map<String, String> reqParams,
-                                        Map<String, String> resParaMap,
+                                        List<DasApiCreateResponseParasVO> responseParas,
                                         Map<String, List<DasApiCreateRequestParasVO>> mappingParams) {
         String sql = SINGLE_TABLE_SELECT_SQL_TEMPLATE;
         // 表名称
         sql = sql.replace(TAB_KEY, tableName);
 
         // 查询字段
-        if (resParaMap.size() > 0) {
-            sql = sql.replace(COL_LIST_KEY, String.join(",", resParaMap.keySet()));
+        if (responseParas.size() > 0) {
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < responseParas.size(); i++) {
+                //是否为date
+                DasApiCreateResponseParasVO responsePara = responseParas.get(i);
+                if (responsePara.getParaType().equals("datetime")) {
+                    strBuilder.append("date_format(" + responsePara.getMappingName() + ",'%Y-%m-%d')");
+                } else {
+                    strBuilder.append(" " + responsePara.getMappingName() + " ");
+                }
+                // 逗号
+                if (i != responseParas.size() - 1) {
+                    strBuilder.append(",");
+                }
+            }
+            sql = sql.replace(COL_LIST_KEY, strBuilder.toString());
         }
+        // 默认全部字段查询
         sql = sql.replace(COL_LIST_KEY, COL_LIST_DEFAULT);
 
         // where条件

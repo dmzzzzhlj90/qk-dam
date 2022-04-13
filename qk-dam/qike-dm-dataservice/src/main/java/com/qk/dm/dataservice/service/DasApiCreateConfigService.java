@@ -41,7 +41,7 @@ public interface DasApiCreateConfigService {
 
     LinkedList<Map<String, Object>> getParamHeaderInfo();
 
-    DebugApiResultVO debugModel(DasApiCreateConfigVO dasApiCreateConfigVO);
+    Object debugModel(DasApiCreateConfigVO dasApiCreateConfigVO);
 
     DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(DasApiBasicInfo dasApiBasicInfo);
 

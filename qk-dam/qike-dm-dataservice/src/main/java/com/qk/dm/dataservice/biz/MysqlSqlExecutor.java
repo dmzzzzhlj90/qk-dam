@@ -9,6 +9,7 @@ import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dm.dataservice.utils.SqlExecuteUtils;
 import com.qk.dm.dataservice.vo.DasApiCreateOrderParasVO;
 import com.qk.dm.dataservice.vo.DasApiCreateRequestParasVO;
+import com.qk.dm.dataservice.vo.DasApiCreateResponseParasVO;
 import org.springframework.util.ObjectUtils;
 
 import java.util.HashMap;
@@ -29,10 +30,12 @@ public class MysqlSqlExecutor {
     private final String db;
     private String sql;
     private Map<String, String> reqParams;
-    private Map<String, String> resParaMap;
+    private List<DasApiCreateResponseParasVO> responseParas;
 
-    public MysqlSqlExecutor(ConnectBasicInfo connectBasicInfo, String dataBaseName,
-                            Map<String, String> reqParams, Map<String, String> resParaMap) {
+    public MysqlSqlExecutor(ConnectBasicInfo connectBasicInfo,
+                            String dataBaseName,
+                            Map<String, String> reqParams,
+                            List<DasApiCreateResponseParasVO> responseParas) {
         this.use =
                 Db.use(
                         new SimpleDataSource(
@@ -48,7 +51,7 @@ public class MysqlSqlExecutor {
         this.host = connectBasicInfo.getServer();
         this.db = dataBaseName;
         this.reqParams = reqParams;
-        this.resParaMap = resParaMap;
+        this.responseParas = responseParas;
     }
 
     /**
@@ -65,7 +68,7 @@ public class MysqlSqlExecutor {
                                             String orderByStr) {
         if (ObjectUtils.isEmpty(sqlPara)) {
             //生成查询sql
-            this.sql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, resParaMap, mappingParams,orderByStr);
+            this.sql = SqlExecuteUtils.mysqlExecuteSQL(tableName, reqParams, responseParas, mappingParams,orderByStr);
         } else {
             this.sql = SqlExecuteUtils.mysqlSqlPara(sqlPara, reqParams,orderByStr);
         }
@@ -85,7 +88,7 @@ public class MysqlSqlExecutor {
             result =
                     searchDataList.stream()
                             .map(entity ->
-                                    buildResponseData(entity, resParaMap)
+                                    buildResponseData(entity, responseParas)
                             )
                             .collect(Collectors.toList());
         } catch (Exception e) {
@@ -99,15 +102,16 @@ public class MysqlSqlExecutor {
      * 根据响应参数构建查询数据信息
      *
      * @param entity
-     * @param resParamMap
+     * @param responseParas
      * @return
      */
-    private Map<String, Object> buildResponseData(Entity entity, Map<String, String> resParamMap) {
+    private Map<String, Object> buildResponseData(Entity entity, List<DasApiCreateResponseParasVO> responseParas) {
         HashMap<String, Object> resultMap = Maps.newHashMap();
 
-        for (String col : resParamMap.keySet()) {
+        for (DasApiCreateResponseParasVO responsePara : responseParas) {
+            String mappingName = responsePara.getMappingName();
             // key设置为响应参数信息,value通过字段获取到查询信息
-            resultMap.put(resParamMap.get(col), entity.get(col));
+            resultMap.put(mappingName, entity.get(mappingName));
         }
         return resultMap;
     }

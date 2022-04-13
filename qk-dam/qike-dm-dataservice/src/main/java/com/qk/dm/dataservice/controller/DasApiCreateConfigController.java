@@ -135,7 +135,7 @@ public class DasApiCreateConfigController {
      */
     @PostMapping("/debug/model")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<DebugApiResultVO> debugModel(@RequestBody DasApiCreateConfigVO dasApiCreateConfigVO) {
+    public DefaultCommonResult debugModel(@RequestBody DasApiCreateConfigVO dasApiCreateConfigVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateConfigService.debugModel(dasApiCreateConfigVO));
     }
 

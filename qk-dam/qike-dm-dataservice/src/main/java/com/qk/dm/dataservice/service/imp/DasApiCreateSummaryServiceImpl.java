@@ -87,8 +87,8 @@ public class DasApiCreateSummaryServiceImpl implements DasApiCreateSummaryServic
     }
 
     @Override
-    public DebugApiResultVO remoteSearchData(String apiId, String paramData) {
-        DebugApiResultVO debugApiResultVO = null;
+    public Object remoteSearchData(String apiId, String paramData) {
+        Object resData = null;
         //校验转换调试参数
         List<DebugApiParasVO> debugApiParasVO = useDebugApiParasVO(apiId, paramData);
         // 查询新建API
@@ -101,16 +101,16 @@ public class DasApiCreateSummaryServiceImpl implements DasApiCreateSummaryServic
             //设置请求参数 DEBUG调试参数
             apiCreateConfigVO.setDebugApiParasVOS(debugApiParasVO);
             //调用数据查询
-            debugApiResultVO = dasApiCreateConfigService.debugModel(apiCreateConfigVO);
+            resData = dasApiCreateConfigService.debugModel(apiCreateConfigVO);
         } else if (createTypeSet.contains(CreateTypeEnum.CREATE_API_SQL_SCRIPT_TYPE.getCode())) {
             // 取数方式
             DasApiCreateSqlScriptVO apiCreateSqlScriptVO = (DasApiCreateSqlScriptVO) createApiMap.get(CreateTypeEnum.CREATE_API_SQL_SCRIPT_TYPE.getCode());
             //设置请求参数 DEBUG调试参数
             apiCreateSqlScriptVO.setDebugApiParasVOS(debugApiParasVO);
             //调用数据查询
-            debugApiResultVO = dasApiCreateSqlScriptService.debugModel(apiCreateSqlScriptVO);
+            resData = dasApiCreateSqlScriptService.debugModel(apiCreateSqlScriptVO);
         }
-        return debugApiResultVO;
+        return resData;
     }
 
     /**

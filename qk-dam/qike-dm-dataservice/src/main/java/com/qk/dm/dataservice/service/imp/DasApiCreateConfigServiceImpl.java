@@ -215,7 +215,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     }
 
     @Override
-    public DebugApiResultVO debugModel(DasApiCreateConfigVO apiCreateConfigVO) {
+    public Object debugModel(DasApiCreateConfigVO apiCreateConfigVO) {
         // 1.生成查询SQL(根据数据源类型)
         //数据源连接类型
         DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO = apiCreateConfigVO.getApiCreateDefinitionVO();
@@ -230,17 +230,12 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
                         DebugApiParasVO::getParaName, DebugApiParasVO::getValue));
 
         // 响应参数(SQL返回值映射查询数据)
-        Map<String, String> resParaMap = apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS()
-                .stream().collect(Collectors.toMap(
-                        DasApiCreateResponseParasVO::getMappingName, DasApiCreateResponseParasVO::getParaName));
+        List<DasApiCreateResponseParasVO> responseParas = apiCreateConfigDefinitionVO.getApiCreateResponseParasVOS();
         // 2.执行查询SQL(根据数据源类型)
         // 获取数据库连接信息
         ConnectBasicInfo connectBasicInfo = getConnectBasicInfo(apiCreateConfigDefinitionVO);
         //执行SQL 查询数据
-        List<Map<String, Object>> searchData =
-                getSearchData(apiCreateConfigDefinitionVO, mappingParams, reqParams, resParaMap, connectBasicInfo);
-
-        return DebugApiResultVO.builder().resultData(searchData).build();
+        return getSearchData(apiCreateConfigDefinitionVO, mappingParams, reqParams, responseParas, connectBasicInfo);
     }
 
     /**
@@ -249,14 +244,16 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
      * @param apiCreateConfigDefinitionVO
      * @param mappingParams
      * @param reqParams
-     * @param resParaMap
+     * @param responseParas
      * @param connectBasicInfo
      * @return
      */
-    private List<Map<String, Object>> getSearchData(DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO,
-                                                    Map<String, List<DasApiCreateRequestParasVO>> mappingParams,
-                                                    Map<String, String> reqParams, Map<String, String> resParaMap,
-                                                    ConnectBasicInfo connectBasicInfo) {
+    private Object getSearchData(DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO,
+                                 Map<String, List<DasApiCreateRequestParasVO>> mappingParams,
+                                 Map<String, String> reqParams,
+                                 List<DasApiCreateResponseParasVO> responseParas,
+                                 ConnectBasicInfo connectBasicInfo) {
+        Object resSearchData = null;
         //schema
         String connectType = apiCreateConfigDefinitionVO.getConnectType();
         //数据库
@@ -269,14 +266,21 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         List<Map<String, Object>> searchData = null;
         if (ConnTypeEnum.MYSQL.getName().equalsIgnoreCase(connectType)) {
             // mysql 执行sql获取查询结果集
-            searchData = new MysqlSqlExecutor(connectBasicInfo, dataBaseName, reqParams, resParaMap)
+            searchData = new MysqlSqlExecutor(connectBasicInfo, dataBaseName, reqParams, responseParas)
                     .mysqlExecuteSQL(tableName, null, mappingParams, orderByStr).searchData();
         } else if (ConnTypeEnum.HIVE.getName().equalsIgnoreCase(connectType)) {
             // hive 执行sql获取查询结果集
-            searchData = new HiveSqlExecutor(connectBasicInfo, dataBaseName, reqParams, resParaMap)
+            searchData = new HiveSqlExecutor(connectBasicInfo, dataBaseName, reqParams, responseParas)
                     .hiveExecuteSQL(tableName, null, mappingParams).searchData();
         }
-        return searchData;
+
+        // 是否为详情单表数据
+        if (null != searchData && searchData.size() == 1) {
+            resSearchData = searchData.stream().findFirst().get();
+        } else {
+            resSearchData = searchData;
+        }
+        return resSearchData;
     }
 
     /**
@@ -292,13 +296,13 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
             // 默认使用首个参数的排序方式
             DasApiCreateOrderParasVO orderParasVO = orderParas.stream().findFirst().get();
             String orderType = orderParasVO.getOrderType();
-                if (CreateParamSortStyleEnum.ASC.getCode().equalsIgnoreCase(orderType) ||
-                        CreateParamSortStyleEnum.DESC.getCode().equalsIgnoreCase(orderType)) {
-                    //排序字段
-                    List<String> orderCols = orderParas.stream().map(DasApiCreateOrderParasVO::getColumnName).collect(Collectors.toList());
-                    String orderColStr = String.join(",", orderCols);
-                    orderByStr += SqlExecuteUtils.ORDER_BY + orderColStr + " " + orderType;
-                }
+            if (CreateParamSortStyleEnum.ASC.getCode().equalsIgnoreCase(orderType) ||
+                    CreateParamSortStyleEnum.DESC.getCode().equalsIgnoreCase(orderType)) {
+                //排序字段
+                List<String> orderCols = orderParas.stream().map(DasApiCreateOrderParasVO::getColumnName).collect(Collectors.toList());
+                String orderColStr = String.join(",", orderCols);
+                orderByStr += SqlExecuteUtils.ORDER_BY + orderColStr + " " + orderType;
+            }
         }
         return orderByStr;
     }

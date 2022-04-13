@@ -43,8 +43,7 @@ public class DasApiCreateRemoteController {
      */
     @PostMapping(value = "/search/{apiId}")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult<DebugApiResultVO> remoteSearchData(@PathVariable("apiId") String apiId,
-                                                                  @RequestParam("paramData") String paramData) {
+    public DefaultCommonResult remoteSearchData(@PathVariable("apiId") String apiId, @RequestParam("paramData") String paramData) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSummaryService.remoteSearchData(apiId,paramData));
     }
 
