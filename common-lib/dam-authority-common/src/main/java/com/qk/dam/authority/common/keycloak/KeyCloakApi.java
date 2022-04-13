@@ -28,6 +28,10 @@ public class KeyCloakApi {
         this.keycloak = keycloak;
     }
 
+    public String getToken(){
+         return keycloak.tokenManager().getAccessToken().getToken();
+    }
+
     /**
      * 所有域
      *

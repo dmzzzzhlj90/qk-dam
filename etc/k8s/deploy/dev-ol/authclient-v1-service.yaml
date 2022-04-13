@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: authclient
+  namespace: java-backend
+  labels:
+    app: authclient
+  annotations:
+    kubesphere.io/alias-name: 权限客户端后端服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8765
+      protocol: TCP
+      port: 8765
+      targetPort: 8765
+  selector:
+    app: authclient-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None
