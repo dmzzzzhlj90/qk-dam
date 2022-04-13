@@ -1,6 +1,7 @@
 package com.qk.dm.dataingestion.strategy;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
@@ -10,10 +11,7 @@ import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 /**
  * 离线数据同步工厂
@@ -58,8 +56,9 @@ public class DataSyncFactory {
 
         DataxJob dataxJob = DataxJob.builder().content(contents)
                 .setting(new DataxSetting(dataMigrationVO.getSchedulerConfig())).build();
-
-        return parseJson(GsonUtil.toJsonString(dataxJob));
+        HashMap<String, Object> map = Maps.newHashMap();
+        map.put("job",dataxJob);
+        return parseJson(GsonUtil.toJsonString(map));
     }
 
     /**

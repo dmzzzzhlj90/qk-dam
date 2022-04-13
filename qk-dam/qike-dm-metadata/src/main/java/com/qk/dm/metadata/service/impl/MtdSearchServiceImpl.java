@@ -75,7 +75,7 @@ public class MtdSearchServiceImpl implements MtdSearchService {
     }
 
     private MtdAttributes buildColumnDetail(Map<String, Object> attr, String typeName){
-        return MtdAttributes.builder().dataType(getColumnDataType(attr.get(AtlasBaseProperty.DATA_TYPE),attr.get(AtlasBaseProperty.TYPE)))
+        return MtdAttributes.builder().dataType(getNullElse(attr.get(AtlasBaseProperty.DATA_TYPE),attr.get(AtlasBaseProperty.TYPE)))
                 .name(transformation(attr.get(AtlasBaseProperty.NAME)))
                 .owner(transformation(attr.get(AtlasBaseProperty.OWNER)))
                 .type(typeName)
@@ -111,13 +111,15 @@ public class MtdSearchServiceImpl implements MtdSearchService {
         return atlasEntityHeaderList.stream().map(e -> MtdAttributes.builder()
                 .type(e.getTypeName())
                 .owner(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER),AtlasBaseProperty.EMPTY).toString())
-                .comment(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),AtlasBaseProperty.EMPTY).toString())
+                .comment(getNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),
+                        e.getAttribute(AtlasSearchProperty.AttributeName.COMMENT))
+                 )
                 .name(e.getDisplayText())
-                .dataType(getColumnDataType(e.getAttribute(AtlasBaseProperty.DATA_TYPE),e.getAttribute(AtlasBaseProperty.TYPE)))
+                .dataType(getNullElse(e.getAttribute(AtlasBaseProperty.DATA_TYPE),e.getAttribute(AtlasBaseProperty.TYPE)))
                 .build()).collect(Collectors.toList());
     }
 
-    public String getColumnDataType(Object sourceValue,Object defaultValue){
+    public String getNullElse(Object sourceValue,Object defaultValue){
         return transformation(Objects.isNull(sourceValue)? defaultValue:sourceValue);
     }
 

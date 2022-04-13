@@ -8,7 +8,6 @@ import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.dataingestion.model.DataSourceServer;
 import com.qk.dm.dataingestion.model.DataxChannel;
 import com.qk.dm.dataingestion.model.IngestionType;
-import com.qk.dm.dataingestion.model.mysql.BasePara;
 import com.qk.dm.dataingestion.model.mysql.ReaderPara;
 import com.qk.dm.dataingestion.model.mysql.WriterPara;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
@@ -41,7 +40,7 @@ public class MysqlDataxJson implements DataxJson{
         DataSourceServer dataSourceServer = getDataSource(baseInfo.getSourceConnect());
 
         ArrayList<String> tables = Lists.newArrayList(baseInfo.getSourceTable());
-        ArrayList<BasePara.Connection> conn = Lists.newArrayList(BasePara.Connection.builder()
+        ArrayList<ReaderPara.Connection> conn = Lists.newArrayList(ReaderPara.Connection.builder()
                 .jdbcUrl(jdbcUrl(dataSourceServer,baseInfo.getSourceDatabase()))
                 .table(tables).build());
 
@@ -57,8 +56,8 @@ public class MysqlDataxJson implements DataxJson{
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
         DataSourceServer dataSourceServer  = getDataSource(baseInfo.getTargetConnect());
 
-        ArrayList<BasePara.Connection> conn = Lists.newArrayList(BasePara.Connection.builder()
-                .jdbcUrl(jdbcUrl(dataSourceServer,baseInfo.getTargetDatabase()))
+        ArrayList<WriterPara.Connection> conn = Lists.newArrayList(WriterPara.Connection.builder()
+                .jdbcUrl(jdbcUrlString(dataSourceServer,baseInfo.getTargetDatabase()))
                 .table(Lists.newArrayList(baseInfo.getTargetTable())).build());
         WriterPara writer = new WriterPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getTargetColumnList(dataMigrationVO.getColumnList()),
                 conn, "insert");
@@ -96,7 +95,11 @@ public class MysqlDataxJson implements DataxJson{
     }
 
     private List<String> jdbcUrl(DataSourceServer dataSourceServer,String dataBaseName){
-        return Lists.newArrayList("jdbc:mysql://"+dataSourceServer.getServer()+":"
-                +dataSourceServer.getPort()+"/"+dataBaseName+"?useUnicode=true&characterEncoding=utf-8&useSSL=false");
+        return Lists.newArrayList(jdbcUrlString(dataSourceServer,dataBaseName));
+    }
+
+    private String jdbcUrlString(DataSourceServer dataSourceServer,String dataBaseName){
+        return "jdbc:mysql://"+dataSourceServer.getServer()+":"
+                +dataSourceServer.getPort()+"/"+dataBaseName+"?useUnicode=true&characterEncoding=utf-8&useSSL=false";
     }
 }

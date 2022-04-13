@@ -76,8 +76,6 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
         dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"),baseInfo.getJobName(),
                 taskCode,dataxJson);
-
-
     }
 
     @Override
