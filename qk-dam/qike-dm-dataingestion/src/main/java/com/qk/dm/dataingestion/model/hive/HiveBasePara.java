@@ -35,6 +35,7 @@ public class HiveBasePara {
     public static class Column{
         private String name;
         private String type;
+        private Integer index;
     }
 
 }

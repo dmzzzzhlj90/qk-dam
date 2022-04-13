@@ -16,6 +16,7 @@ public class AtlasSearchProperty {
     public static final String DESCRIPTION = "description";
     public static final String STATUS = "status";
     public static final String OWNER = "owner";
+    public static final String COMMENT = "comment";
   }
 
   public static class Operator {
