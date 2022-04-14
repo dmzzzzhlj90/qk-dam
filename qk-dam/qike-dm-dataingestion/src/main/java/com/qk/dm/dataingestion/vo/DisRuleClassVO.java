@@ -18,6 +18,11 @@ public class DisRuleClassVO {
     private Long id;
 
     /**
+     * 规则分类id
+     */
+    private String dirId;
+
+    /**
      * 规则分类名称
      */
     @NotBlank(message = "规则目录名称不能为空！")
@@ -27,13 +32,7 @@ public class DisRuleClassVO {
     /**
      * 父id
      */
-    @NotNull(message = "parentId不能为空！")
-    private Long parentId;
-    /**
-     * 描述
-     */
-    private String description;
-
+    private String parentId;
     /**
      * 子节点
      */

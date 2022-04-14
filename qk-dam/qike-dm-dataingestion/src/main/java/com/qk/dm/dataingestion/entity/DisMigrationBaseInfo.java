@@ -29,7 +29,7 @@ public class DisMigrationBaseInfo implements Serializable {
      * 规则分类id
      */
     @Column(name = "rule_class_id")
-    private Long ruleClassId;
+    private String ruleClassId;
 
     /**
      * 调度实例code

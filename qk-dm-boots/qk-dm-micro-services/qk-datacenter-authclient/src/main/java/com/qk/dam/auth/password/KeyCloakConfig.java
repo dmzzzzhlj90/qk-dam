@@ -1,13 +1,10 @@
 package com.qk.dam.auth.password;
 
-import com.qk.dam.commons.exception.BizException;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-
-import javax.ws.rs.NotAuthorizedException;
 
 /**
  * @author shenpj
@@ -38,16 +35,21 @@ public class KeyCloakConfig {
                 ).build();
     }
 
-    public TokenInfoVO getToken(String userName, String password) {
+    public String getToken(String userName, String password) {
+        return keycloak(userName, password)
+                .tokenManager()
+                .getAccessToken()
+                .getToken();
+    }
+
+    public TokenInfoVO getTokenInfo(String userName, String password) {
 //        try {
-            return TokenInfoVO
-                    .builder()
-                    .access_token(
-                            keycloak(userName, password)
-                                    .tokenManager()
-                                    .getAccessToken()
-                                    .getToken())
-                    .build();
+        return TokenInfoVO
+                .builder()
+                .access_token(
+                        getToken(userName, password)
+                )
+                .build();
 //        } catch (NotAuthorizedException n) {
 //            throw new BizException("账户或密码错误");
 //        } catch (Exception e) {

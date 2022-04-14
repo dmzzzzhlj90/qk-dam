@@ -150,6 +150,9 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         if (Objects.nonNull(paramsVO.getJobName())) {
             booleanBuilder.and(qDisMigrationBaseInfo.jobName.contains(paramsVO.getJobName()));
         }
+        if (Objects.nonNull(paramsVO.getRuleClassId())) {
+            booleanBuilder.and(qDisMigrationBaseInfo.ruleClassId.contains(paramsVO.getRuleClassId()));
+        }
     }
 
 }
