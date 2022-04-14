@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(value = "dm-metadata-test")
+@FeignClient(value = "dm-metadata-${spring.profiles.active}")
 @Component
 public interface MetaDataFeign {
 
