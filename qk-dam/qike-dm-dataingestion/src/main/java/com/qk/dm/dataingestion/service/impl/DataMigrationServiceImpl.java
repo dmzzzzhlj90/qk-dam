@@ -3,7 +3,6 @@ package com.qk.dm.dataingestion.service.impl;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.commons.util.CodeGenerateUtils;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
@@ -59,10 +58,9 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(DataMigrationVO dataMigrationVO) throws ApiException {
-        long taskCode = getTaskCode();
         //添加基础信息
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-        baseInfo.setTaskCode(taskCode);
+
         Long baseInfoId = baseInfoService.add(dataMigrationVO.getBaseInfo());
         List<DisColumnInfoVO> columnList = dataMigrationVO.getColumnList();
         columnList.forEach(e->e.setBaseInfoId(baseInfoId));
@@ -72,14 +70,18 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
-
         String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
                 IngestionType.getVal(baseInfo.getSourceDbType()),
                 IngestionType.getVal(baseInfo.getTargetDbType()));
 
         Result result = dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
-                taskCode, dataxJson);
+                dataxJson);
+        DolphinTaskDefinitionPropertiesBean data =  new Gson().fromJson(GsonUtil.toJsonString(result.getData())
+                ,DolphinTaskDefinitionPropertiesBean.class);
 
+        baseInfo.setTaskCode(data.getCode());
+        baseInfo.setId(baseInfoId);
+        baseInfoService.update(baseInfo);
     }
 
     @Override
@@ -149,15 +151,5 @@ public class DataMigrationServiceImpl implements DataMigrationService {
             booleanBuilder.and(qDisMigrationBaseInfo.jobName.contains(paramsVO.getJobName()));
         }
     }
-
-   private long getTaskCode(){
-       long taskCode =0L;
-       try {
-           taskCode = CodeGenerateUtils.getInstance().genCode();
-       } catch (CodeGenerateUtils.CodeGenerateException e) {
-           e.printStackTrace();
-       }
-       return taskCode;
-   }
 
 }
