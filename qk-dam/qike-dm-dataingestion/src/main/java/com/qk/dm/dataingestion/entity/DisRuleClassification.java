@@ -24,13 +24,19 @@ public class DisRuleClassification implements Serializable {
     private Long id;
 
     /**
+     * 规则分类id
+     */
+    @Column(name = "dir_id", nullable = false)
+    private String dirId;
+
+    /**
      * 规则分类名称
      */
-    @Column(name = "classification_name", nullable = false)
-    private String classificationName;
+    @Column(name = "dir_name", nullable = false)
+    private String dirName;
 
     @Column(name = "parent_id", nullable = false)
-    private Long parentId;
+    private String parentId;
 
     @Column(name = "description")
     private String description;
