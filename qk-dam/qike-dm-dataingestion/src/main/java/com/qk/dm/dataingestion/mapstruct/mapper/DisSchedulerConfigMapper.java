@@ -2,9 +2,7 @@ package com.qk.dm.dataingestion.mapstruct.mapper;
 
 import com.qk.dm.dataingestion.entity.DisSchedulerConfig;
 import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -13,7 +11,11 @@ import java.util.List;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface DisSchedulerConfigMapper {
     DisSchedulerConfigMapper INSTANCE = Mappers.getMapper(DisSchedulerConfigMapper.class);
-
+    @Mappings({
+            @Mapping(target = "gmtCreate",ignore = true),
+            @Mapping(target = "gmtModified",ignore = true),
+            @Mapping(target = "delFlag",ignore = true),
+    })
     DisSchedulerConfig of(DisSchedulerConfigVO disSchedulerConfigVO);
 
     List<DisSchedulerConfig> list(List<DisSchedulerConfigVO> disSchedulerConfigVOList);
