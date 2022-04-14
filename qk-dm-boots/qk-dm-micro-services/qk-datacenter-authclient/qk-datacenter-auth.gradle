@@ -27,6 +27,7 @@ docker {
 dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":commons-core")
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
