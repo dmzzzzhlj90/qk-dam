@@ -50,7 +50,7 @@ public class DataSyncFactory {
      */
     public String transJson(DataMigrationVO dataMigrationVO, IngestionType readerType, IngestionType writerType){
 
-        ArrayList<DataxContent> contents = Lists.newArrayList(DataxContent.builder()
+        List<DataxContent> contents = List.of(DataxContent.builder()
                 .reader(getIngestionTyp(readerType).getReader(dataMigrationVO))
                 .writer(getIngestionTyp(writerType).getWriter(dataMigrationVO)).build());
 

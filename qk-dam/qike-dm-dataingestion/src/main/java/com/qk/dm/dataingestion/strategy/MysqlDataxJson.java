@@ -39,10 +39,9 @@ public class MysqlDataxJson implements DataxJson{
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
         DataSourceServer dataSourceServer = getDataSource(baseInfo.getSourceConnect());
 
-        ArrayList<String> tables = Lists.newArrayList(baseInfo.getSourceTable());
-        ArrayList<ReaderPara.Connection> conn = Lists.newArrayList(ReaderPara.Connection.builder()
+        List<ReaderPara.Connection> conn = List.of(ReaderPara.Connection.builder()
                 .jdbcUrl(jdbcUrl(dataSourceServer,baseInfo.getSourceDatabase()))
-                .table(tables).build());
+                .table(List.of(baseInfo.getSourceTable())).build());
 
         ReaderPara reader = new ReaderPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getSourceColumnList(dataMigrationVO.getColumnList()),
                 conn, "id");
@@ -56,9 +55,9 @@ public class MysqlDataxJson implements DataxJson{
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
         DataSourceServer dataSourceServer  = getDataSource(baseInfo.getTargetConnect());
 
-        ArrayList<WriterPara.Connection> conn = Lists.newArrayList(WriterPara.Connection.builder()
+        List<WriterPara.Connection> conn = List.of(WriterPara.Connection.builder()
                 .jdbcUrl(jdbcUrlString(dataSourceServer,baseInfo.getTargetDatabase()))
-                .table(Lists.newArrayList(baseInfo.getTargetTable())).build());
+                .table(List.of(baseInfo.getTargetTable())).build());
         WriterPara writer = new WriterPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getTargetColumnList(dataMigrationVO.getColumnList()),
                 conn, "insert");
         return DataxChannel.builder().name(MYSQL_WRITER).parameter(writer).build();

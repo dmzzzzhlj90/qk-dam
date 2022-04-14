@@ -26,6 +26,15 @@ public class HiveBasePara {
      */
     private String fieldDelimiter;
     /**
+     * 文件名称
+     */
+    private String fileName;
+    /**
+     * append，写入前不做任何处理，DataX hdfswriter直接使用filename写入，并保证文件名不冲突。
+     * nonConflict，如果目录下有fileName前缀的文件，直接报错。
+     */
+    private String writeMode;
+    /**
      * 字段信息
      */
     private List<Column> column;
