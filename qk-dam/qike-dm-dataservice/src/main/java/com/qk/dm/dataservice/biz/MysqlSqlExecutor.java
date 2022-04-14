@@ -83,13 +83,12 @@ public class MysqlSqlExecutor {
      */
     public List<Map<String, Object>> searchData() {
         List<Map<String, Object>> result = null;
+        use.setCaseInsensitive(false);
         try {
             List<Entity> searchDataList = use.query(sql);
             result =
                     searchDataList.stream()
-                            .map(entity ->
-                                    buildResponseData(entity, responseParas)
-                            )
+                            .map(this::buildSelectData)
                             .collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,23 +97,23 @@ public class MysqlSqlExecutor {
         return result;
     }
 
-    /**
-     * 根据响应参数构建查询数据信息
-     *
-     * @param entity
-     * @param responseParas
-     * @return
-     */
-    private Map<String, Object> buildResponseData(Entity entity, List<DasApiCreateResponseParasVO> responseParas) {
-        HashMap<String, Object> resultMap = Maps.newHashMap();
-
-        for (DasApiCreateResponseParasVO responsePara : responseParas) {
-            String mappingName = responsePara.getMappingName();
-            // key设置为响应参数信息,value通过字段获取到查询信息
-            resultMap.put(mappingName, entity.get(mappingName));
-        }
-        return resultMap;
-    }
+//    /**
+//     * 根据响应参数构建查询数据信息
+//     *
+//     * @param entity
+//     * @param responseParas
+//     * @return
+//     */
+//    private Map<String, Object> buildResponseData(Entity entity, List<DasApiCreateResponseParasVO> responseParas) {
+//        HashMap<String, Object> resultMap = Maps.newHashMap();
+//
+//        for (DasApiCreateResponseParasVO responsePara : responseParas) {
+//            String mappingName = responsePara.getMappingName();
+//            // key设置为响应参数信息,value通过字段获取到查询信息
+//            resultMap.put(mappingName, entity.get(mappingName));
+//        }
+//        return resultMap;
+//    }
 
     /**
      * 执行sql片段获取查询结果集,不需要处理返回值信息
@@ -123,6 +122,7 @@ public class MysqlSqlExecutor {
      */
     public List<Map<String, Object>> searchDataSqlPara() {
         List<Map<String, Object>> result = null;
+        use.setCaseInsensitive(false);
         try {
             List<Entity> searchDataList = use.query(sql);
             result =

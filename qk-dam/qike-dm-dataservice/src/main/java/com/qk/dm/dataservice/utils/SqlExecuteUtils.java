@@ -102,7 +102,7 @@ public class SqlExecuteUtils {
                             .append(DataBaseDataTypeEnum.DATETIME.getValue()).append("') ").append(AS).append(" ")
                             .append(responsePara.getParaName()).append(" ");
                 } else {
-                    strBuilder.append(" ").append(responsePara.getMappingName()).append(" ");
+                    strBuilder.append(" ").append(responsePara.getMappingName()).append(" ").append(AS).append(" ").append(responsePara.getParaName());
                 }
                 // 逗号
                 if (i != responseParas.size() - 1) {
