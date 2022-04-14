@@ -1,10 +1,13 @@
 package com.qk.dm.dataingestion.service.impl;
 
 import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.CodeGenerateUtils;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
+import com.qk.datacenter.model.Result;
 import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
@@ -74,8 +77,9 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                 IngestionType.getVal(baseInfo.getSourceDbType()),
                 IngestionType.getVal(baseInfo.getTargetDbType()));
 
-        dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"),baseInfo.getJobName(),
-                taskCode,dataxJson);
+        Result result = dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
+                taskCode, dataxJson);
+
     }
 
     @Override

@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dataingestion
+  namespace: java-backend
+  labels:
+    app: dataingestion
+  annotations:
+    kubesphere.io/alias-name: 数据引入后台服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8788
+      protocol: TCP
+      port: 8788
+      targetPort: 8788
+  selector:
+    app: dataingestion-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None
