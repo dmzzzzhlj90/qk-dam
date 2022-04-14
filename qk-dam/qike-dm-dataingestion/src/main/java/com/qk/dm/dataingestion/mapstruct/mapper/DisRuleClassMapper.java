@@ -13,8 +13,8 @@ public interface DisRuleClassMapper {
     DisRuleClassMapper INSTANCE = Mappers.getMapper(DisRuleClassMapper.class);
 
     @Mappings({
-            @Mapping(source = "classificationName", target = "title"),
-            @Mapping(source = "classificationName", target = "value"),
+            @Mapping(source = "dirName", target = "title"),
+            @Mapping(source = "dirName", target = "value"),
             @Mapping(target = "children",ignore = true),
     })
     DisRuleClassVO of(DisRuleClassification disRuleClassification);
@@ -22,7 +22,7 @@ public interface DisRuleClassMapper {
     List<DisRuleClassVO> list(List<DisRuleClassification> disRuleClassificationList);
 
     @Mappings({
-            @Mapping(source = "title", target = "classificationName"),
+            @Mapping(source = "title", target = "dirName"),
             @Mapping(target = "gmtCreate",ignore = true),
             @Mapping(target = "gmtModified",ignore = true),
             @Mapping(target = "delFlag",ignore = true),
@@ -30,7 +30,7 @@ public interface DisRuleClassMapper {
     DisRuleClassification of(DisRuleClassVO disRuleClassVO);
 
     @Mappings({
-            @Mapping(source = "title", target = "classificationName")
+            @Mapping(source = "title", target = "dirName")
     })
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void of(DisRuleClassVO disRuleClassVO, @MappingTarget DisRuleClassification disRuleClassification);
