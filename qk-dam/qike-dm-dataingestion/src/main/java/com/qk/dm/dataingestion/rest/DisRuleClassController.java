@@ -32,7 +32,7 @@ public class DisRuleClassController {
      * @return DefaultCommonResult<List<DisRuleClassVO>>
      */
     @GetMapping("/list")
-    public DefaultCommonResult<DisRuleClassVO> list(){
+    public DefaultCommonResult<List<DisRuleClassVO>> list(){
         return  DefaultCommonResult.success(ResultCodeEnum.OK,DisRuleClassService.list());
     }
 
