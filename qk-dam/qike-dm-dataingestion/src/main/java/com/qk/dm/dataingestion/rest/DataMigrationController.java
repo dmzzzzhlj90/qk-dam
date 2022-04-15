@@ -46,7 +46,7 @@ public class DataMigrationController {
      * @return DefaultCommonResult
      */
     @PutMapping("")
-    public DefaultCommonResult update(@RequestBody @Validated DataMigrationVO dataMigrationVO){
+    public DefaultCommonResult update(@RequestBody @Validated DataMigrationVO dataMigrationVO)throws ApiException {
         dataMigrationService.update(dataMigrationVO);
         return DefaultCommonResult.success();
     }

@@ -17,7 +17,11 @@ public class DisMigrationBaseInfoVO {
     /**
      * 规则分类id
      */
-    private String ruleClassId;
+    private String dirId;
+    /**
+     * 规则分类名称
+     */
+    private String dirName;
     /**
      * 调度实例code
      */

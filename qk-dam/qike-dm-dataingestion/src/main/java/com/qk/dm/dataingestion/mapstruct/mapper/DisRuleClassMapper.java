@@ -25,12 +25,17 @@ public interface DisRuleClassMapper {
             @Mapping(source = "title", target = "dirName"),
             @Mapping(target = "gmtCreate",ignore = true),
             @Mapping(target = "gmtModified",ignore = true),
-            @Mapping(target = "delFlag",ignore = true),
+            @Mapping(target = "description",ignore = true),
+            @Mapping(target = "delFlag",ignore = true)
     })
     DisRuleClassification of(DisRuleClassVO disRuleClassVO);
 
     @Mappings({
-            @Mapping(source = "title", target = "dirName")
+            @Mapping(source = "title", target = "dirName"),
+            @Mapping(target = "gmtCreate",ignore = true),
+            @Mapping(target = "gmtModified",ignore = true),
+            @Mapping(target = "description",ignore = true),
+            @Mapping(target = "delFlag",ignore = true)
     })
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void of(DisRuleClassVO disRuleClassVO, @MappingTarget DisRuleClassification disRuleClassification);

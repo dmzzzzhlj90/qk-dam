@@ -86,13 +86,20 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(DataMigrationVO dataMigrationVO) {
+    public void update(DataMigrationVO dataMigrationVO) throws ApiException {
+        DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
         //修改作业基础信息
-        baseInfoService.update(dataMigrationVO.getBaseInfo());
+        baseInfoService.update(baseInfo);
         //修改作业字段信息
         columnInfoService.update(dataMigrationVO.getBaseInfo().getId(),dataMigrationVO.getColumnList());
         //修改任务配置信息
         schedulerConfigService.update(dataMigrationVO.getSchedulerConfig());
+        String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
+                IngestionType.getVal(baseInfo.getSourceDbType()),
+                IngestionType.getVal(baseInfo.getTargetDbType()));
+
+        dataxDolphinClient.updateProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
+                baseInfo.getTaskCode(),dataxJson,new DolphinTaskDefinitionPropertiesBean());
     }
 
     @Override
@@ -174,8 +181,8 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         if (Objects.nonNull(paramsVO.getJobName())) {
             booleanBuilder.and(qDisMigrationBaseInfo.jobName.contains(paramsVO.getJobName()));
         }
-        if (Objects.nonNull(paramsVO.getRuleClassId())) {
-            booleanBuilder.and(qDisMigrationBaseInfo.ruleClassId.contains(paramsVO.getRuleClassId()));
+        if (Objects.nonNull(paramsVO.getDirId())) {
+            booleanBuilder.and(qDisMigrationBaseInfo.dirId.contains(paramsVO.getDirId()));
         }
     }
 
