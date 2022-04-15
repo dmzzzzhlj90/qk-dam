@@ -60,6 +60,9 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     public void insert(DataMigrationVO dataMigrationVO) throws ApiException {
         //添加基础信息
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
+        if(baseInfoService.exists(baseInfo)){
+            throw new BizException("作业名称"+baseInfo.getJobName()+"已存在！！！");
+        }
 
         Long baseInfoId = baseInfoService.add(dataMigrationVO.getBaseInfo());
         List<DisColumnInfoVO> columnList = dataMigrationVO.getColumnList();
@@ -70,18 +73,8 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
-        String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
-                IngestionType.getVal(baseInfo.getSourceDbType()),
-                IngestionType.getVal(baseInfo.getTargetDbType()));
-
-        Result result = dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
-                dataxJson);
-        DolphinTaskDefinitionPropertiesBean data =  new Gson().fromJson(GsonUtil.toJsonString(result.getData())
-                ,DolphinTaskDefinitionPropertiesBean.class);
-
-        baseInfo.setTaskCode(data.getCode());
-        baseInfo.setId(baseInfoId);
-        baseInfoService.update(baseInfo);
+        //生产dataxjson
+        createDataxJson(dataMigrationVO,baseInfoId);
     }
 
     @Override
@@ -108,6 +101,22 @@ public class DataMigrationServiceImpl implements DataMigrationService {
        return DataMigrationVO.builder().baseInfo(baseInfoService.detail(id))
         .columnList(columnInfoService.list(id))
         .schedulerConfig(schedulerConfigService.detail(id)).build();
+    }
+
+    @Override
+    public Map<String,Object> jsonDetail(Long id) {
+        DisMigrationBaseInfoVO baseInfo = baseInfoService.detail(id);
+        DataMigrationVO dataMigrationVO = DataMigrationVO.builder().baseInfo(baseInfo)
+                .columnList(columnInfoService.list(id))
+                .schedulerConfig(schedulerConfigService.detail(id)).build();
+        Map<String, Object> map = Maps.newHashMap();
+        String json = dataSyncFactory.transJson(dataMigrationVO,
+                IngestionType.getVal(baseInfo.getSourceDbType()),
+                IngestionType.getVal(baseInfo.getTargetDbType()));
+
+        map.put("dataxJson",json);
+        return map;
+
     }
 
     @Override
@@ -144,6 +153,21 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         result.put("list", baseInfoList);
         result.put("total", count);
         return result;
+    }
+    private void createDataxJson(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
+       DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
+        String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
+                IngestionType.getVal(baseInfo.getSourceDbType()),
+                IngestionType.getVal(baseInfo.getTargetDbType()));
+
+        Result result = dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
+                dataxJson);
+        DolphinTaskDefinitionPropertiesBean data =  new Gson().fromJson(GsonUtil.toJsonString(result.getData())
+                ,DolphinTaskDefinitionPropertiesBean.class);
+
+        baseInfo.setTaskCode(data.getCode());
+        baseInfo.setId(baseInfoId);
+        baseInfoService.update(baseInfo);
     }
 
     public void checkCondition(BooleanBuilder booleanBuilder, DisParamsVO paramsVO) {
