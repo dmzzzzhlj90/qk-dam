@@ -28,8 +28,13 @@ public class DisMigrationBaseInfo implements Serializable {
     /**
      * 规则分类id
      */
-    @Column(name = "rule_class_id")
-    private String ruleClassId;
+    @Column(name = "dir_id")
+    private String dirId;
+    /**
+     * 规则分类名称
+     */
+    @Column(name = "dir_name")
+    private String dirName;
 
     /**
      * 调度实例code

@@ -26,7 +26,7 @@ public interface DataMigrationService {
      * 修改作业信息
      * @param dataMigrationVO
      */
-    void update(DataMigrationVO dataMigrationVO);
+    void update(DataMigrationVO dataMigrationVO) throws ApiException;
 
     /**
      * 查看作业详情
