@@ -28,7 +28,7 @@ public class DisRuleClassServiceImpl implements DisRuleClassService {
     }
 
     @Override
-    public DisRuleClassVO list() {
+    public List<DisRuleClassVO> list() {
 
         List<DisRuleClassVO> list = DisRuleClassMapper.INSTANCE.list((List<DisRuleClassification>) disRuleClassificationRepository.findAll(
                 qDisRuleClassification.delFlag.eq(0)));
@@ -36,8 +36,8 @@ public class DisRuleClassServiceImpl implements DisRuleClassService {
                 .filter(e -> Objects.equals(e.getParentId(),  "-1"))
                 .peek(e -> e.setChildren(getChildren(e, list)))
                 .collect(Collectors.toList());
-        return DisRuleClassVO.builder().dirId("-1").parentId("-1")
-                .title("跟目录").value("根目录").children(childrenList).build();
+        return List.of(DisRuleClassVO.builder().dirId("-1").parentId("-1")
+                .title("跟目录").value("根目录").children(childrenList).build());
     }
 
     @Override

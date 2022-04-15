@@ -6,6 +6,8 @@ import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
 import com.qk.dm.dataingestion.vo.DisParamsVO;
 
+import java.util.Map;
+
 
 public interface DataMigrationService {
     /**
@@ -32,6 +34,13 @@ public interface DataMigrationService {
      * @return
      */
     DataMigrationVO detail(Long id);
+
+    /**
+     * 查看datax json详情
+     * @param id
+     * @return
+     */
+    Map<String,Object> jsonDetail(Long id);
 
     /**
      * 查询作业列表

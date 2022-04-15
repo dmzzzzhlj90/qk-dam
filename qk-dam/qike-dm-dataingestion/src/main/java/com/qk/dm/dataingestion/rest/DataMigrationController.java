@@ -11,6 +11,8 @@ import com.qk.dm.dataingestion.vo.DisParamsVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * 数据引入
  * @author wangzp
@@ -57,6 +59,15 @@ public class DataMigrationController {
     @GetMapping("/detail/{id}")
     public DefaultCommonResult<DataMigrationVO> detail(@PathVariable("id") Long id){
         return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.detail(id));
+    }
+    /**
+     * 查询json详情
+     * @param id 作业id
+     * @return DefaultCommonResult<Map<String,Object>>
+     */
+    @GetMapping("/json/detail/{id}")
+    public DefaultCommonResult<Map<String,Object>> jsonDetail(@PathVariable("id") Long id){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.jsonDetail(id));
     }
 
     /**
