@@ -1,6 +1,9 @@
 package com.qk.dam.auth.password;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author shenpj
@@ -8,7 +11,11 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginInfoVO {
-    String username;
-    String password;
+    private String username;
+    private String password;
+    private String url;
 }
