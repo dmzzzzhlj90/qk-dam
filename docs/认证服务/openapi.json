@@ -1,90 +1,27 @@
 {
   "components": {
     "schemas": {
-      "_auth_logoutRequest": {},
-      "_auth_current_accessTokenResponse": {
+      "_auth_current_principal_userinforequest": {},
+      "_auth_current_logoutrequest": {},
+      "_auth_password_loginresponse": {},
+      "_auth_current_accessTokenrequest": {},
+      "_auth_current_authoritiesrequest": {},
+      "_oauth2_auth__registerId_request": {},
+      "_auth_password_loginrequest": {
         "properties": {
-          "tokenValue": {
+          "username": {
             "format": "string",
             "description": "No comments found.",
             "type": "string"
           },
-          "issuedAt": {
-            "description": "No comments found.(object)",
-            "type": "object",
-            "properties": {
-              "seconds": {
-                "format": "int64",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "nanos": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              }
-            }
-          },
-          "expiresAt": {
-            "description": "No comments found.(object)",
-            "type": "object",
-            "properties": {
-              "seconds": {
-                "format": "int64",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "nanos": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              }
-            }
-          },
-          "tokenType": {
-            "description": "No comments found.(object)",
-            "type": "object",
-            "properties": {
-              "value": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              }
-            }
-          },
-          "scopes": {
+          "password": {
+            "format": "string",
             "description": "No comments found.",
-            "type": "array",
-            "items": {}
+            "type": "string"
           }
         }
       },
-      "_auth_current_credentialsRequest": {},
-      "_oauth2_auth_logoutResponse": {},
-      "_auth_current_principal_userinfoRequest": {},
-      "_oauth2_auth_logoutRequest": {},
-      "_auth_current_authoritiesResponse": {
-        "properties": {
-          "anyObject": {
-            "description": "any object.(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_auth_current_accessTokenRequest": {},
-      "_auth_current_authoritiesRequest": {},
-      "_auth_current_principal_idTokenRequest": {},
-      "_oauth2_auth__registerId_Request": {},
-      "_auth_current_credentialsResponse": {
-        "properties": {
-          "anyObject": {
-            "description": "any object.(object)",
-            "type": "object"
-          }
-        }
-      },
-      "_auth_logoutResponse": {},
-      "_auth_current_principal_userinfoResponse": {
+      "_auth_current_principal_userinforesponse": {
         "properties": {
           "subject": {
             "format": "string",
@@ -214,306 +151,33 @@
           },
           "updatedAt": {
             "description": "Returns the time the user\u0027s information was last updated {@code (updated_at)}.(object)",
-            "type": "object",
-            "properties": {
-              "seconds": {
-                "format": "int64",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "nanos": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              }
-            }
+            "type": "object"
           },
           "claims": {
-            "description": "No comments found.(map data)",
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "anyObject": {
+                "description": "anyObject.(object)",
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "_oauth2_auth_logoutrequest": {},
+      "_auth_current_accessTokenresponse": {
+        "properties": {
+          "anyObject": {
+            "description": "anyObject.(object)",
             "type": "object"
           }
         }
       },
-      "_oauth2_auth__registerId_Response": {},
-      "_auth_current_principal_idTokenResponse": {
-        "properties": {
-          "tokenValue": {
-            "format": "string",
-            "description": "No comments found.",
-            "type": "string"
-          },
-          "issuedAt": {
-            "description": "No comments found.(object)",
-            "type": "object",
-            "properties": {
-              "seconds": {
-                "format": "int64",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "nanos": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              }
-            }
-          },
-          "expiresAt": {
-            "description": "No comments found.(object)",
-            "type": "object",
-            "properties": {
-              "seconds": {
-                "format": "int64",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "nanos": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              }
-            }
-          },
-          "issuer": {
-            "description": "Returns the Issuer identifier {@code (iss)}.(object)",
-            "type": "object",
-            "properties": {
-              "protocol": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "host": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "port": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "file": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "authority": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "ref": {
-                "format": "string",
-                "description": "No comments found.",
-                "type": "string"
-              },
-              "hashCode": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              }
-            }
-          },
-          "subject": {
-            "format": "string",
-            "description": "Returns the Subject identifier {@code (sub)}.",
-            "type": "string"
-          },
-          "audience": {
-            "description": "Returns the Audience(s) {@code (aud)} that this ID Token is intended for.",
-            "type": "array",
-            "items": {}
-          },
-          "authenticatedAt": {
-            "description": "Returns the time when the End-User authentication occurred {@code (auth_time)}.(object)",
-            "type": "object",
-            "properties": {
-              "seconds": {
-                "format": "int64",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "nanos": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              }
-            }
-          },
-          "nonce": {
-            "format": "string",
-            "description": "Returns a {@code String} value {@code (nonce)} used to associate a Client session\u003cbr\u003ewith an ID Token, and to mitigate replay attacks.",
-            "type": "string"
-          },
-          "authenticationContextClass": {
-            "format": "string",
-            "description": "Returns the Authentication Context Class Reference {@code (acr)}.",
-            "type": "string"
-          },
-          "authenticationMethods": {
-            "description": "Returns the Authentication Methods References {@code (amr)}.",
-            "type": "array",
-            "items": {}
-          },
-          "authorizedParty": {
-            "format": "string",
-            "description": "Returns the Authorized party {@code (azp)} to which the ID Token was issued.",
-            "type": "string"
-          },
-          "accessTokenHash": {
-            "format": "string",
-            "description": "Returns the Access Token hash value {@code (at_hash)}.",
-            "type": "string"
-          },
-          "authorizationCodeHash": {
-            "format": "string",
-            "description": "Returns the Authorization Code hash value {@code (c_hash)}.",
-            "type": "string"
-          },
-          "fullName": {
-            "format": "string",
-            "description": "Returns the user\u0027s full name {@code (name)} in displayable form.",
-            "type": "string"
-          },
-          "givenName": {
-            "format": "string",
-            "description": "Returns the user\u0027s given name(s) or first name(s) {@code (given_name)}.",
-            "type": "string"
-          },
-          "familyName": {
-            "format": "string",
-            "description": "Returns the user\u0027s surname(s) or last name(s) {@code (family_name)}.",
-            "type": "string"
-          },
-          "middleName": {
-            "format": "string",
-            "description": "Returns the user\u0027s middle name(s) {@code (middle_name)}.",
-            "type": "string"
-          },
-          "nickName": {
-            "format": "string",
-            "description": "Returns the user\u0027s nick name {@code (nickname)} that may or may not be the same as\u003cbr\u003ethe {@code (given_name)}.",
-            "type": "string"
-          },
-          "preferredUsername": {
-            "format": "string",
-            "description": "Returns the preferred username {@code (preferred_username)} that the user wishes to\u003cbr\u003ebe referred to.",
-            "type": "string"
-          },
-          "profile": {
-            "format": "string",
-            "description": "Returns the URL of the user\u0027s profile page {@code (profile)}.",
-            "type": "string"
-          },
-          "picture": {
-            "format": "string",
-            "description": "Returns the URL of the user\u0027s profile picture {@code (picture)}.",
-            "type": "string"
-          },
-          "website": {
-            "format": "string",
-            "description": "Returns the URL of the user\u0027s web page or blog {@code (website)}.",
-            "type": "string"
-          },
-          "email": {
-            "format": "string",
-            "description": "Returns the user\u0027s preferred e-mail address {@code (email)}.",
-            "type": "string"
-          },
-          "emailVerified": {
-            "format": "boolean",
-            "description": "Returns {@code true} if the user\u0027s e-mail address has been verified\u003cbr\u003e{@code (email_verified)}, otherwise {@code false}.",
-            "type": "boolean"
-          },
-          "gender": {
-            "format": "string",
-            "description": "Returns the user\u0027s gender {@code (gender)}.",
-            "type": "string"
-          },
-          "birthdate": {
-            "format": "string",
-            "description": "Returns the user\u0027s birth date {@code (birthdate)}.",
-            "type": "string"
-          },
-          "zoneInfo": {
-            "format": "string",
-            "description": "Returns the user\u0027s time zone {@code (zoneinfo)}.",
-            "type": "string"
-          },
-          "locale": {
-            "format": "string",
-            "description": "Returns the user\u0027s locale {@code (locale)}.",
-            "type": "string"
-          },
-          "phoneNumber": {
-            "format": "string",
-            "description": "Returns the user\u0027s preferred phone number {@code (phone_number)}.",
-            "type": "string"
-          },
-          "phoneNumberVerified": {
-            "format": "boolean",
-            "description": "Returns {@code true} if the user\u0027s phone number has been verified\u003cbr\u003e{@code (phone_number_verified)}, otherwise {@code false}.",
-            "type": "boolean"
-          },
-          "address": {
-            "description": "Returns the user\u0027s preferred postal address {@code (address)}.(object)",
-            "type": "object",
-            "properties": {
-              "formatted": {
-                "format": "string",
-                "description": "Returns the full mailing address, formatted for display.",
-                "type": "string"
-              },
-              "streetAddress": {
-                "format": "string",
-                "description": "Returns the full street address, which may include house number, street name, P.O.\u003cbr\u003eBox, etc.",
-                "type": "string"
-              },
-              "locality": {
-                "format": "string",
-                "description": "Returns the city or locality.",
-                "type": "string"
-              },
-              "region": {
-                "format": "string",
-                "description": "Returns the state, province, prefecture, or region.",
-                "type": "string"
-              },
-              "postalCode": {
-                "format": "string",
-                "description": "Returns the zip code or postal code.",
-                "type": "string"
-              },
-              "country": {
-                "format": "string",
-                "description": "Returns the country.",
-                "type": "string"
-              }
-            }
-          },
-          "updatedAt": {
-            "description": "Returns the time the user\u0027s information was last updated {@code (updated_at)}.(object)",
-            "type": "object",
-            "properties": {
-              "seconds": {
-                "format": "int64",
-                "description": "No comments found.",
-                "type": "integer"
-              },
-              "nanos": {
-                "format": "int32",
-                "description": "No comments found.",
-                "type": "integer"
-              }
-            }
-          },
-          "claims": {
-            "description": "No comments found.(map data)",
-            "type": "object"
-          }
-        }
-      }
+      "_oauth2_auth__registerId_response": {},
+      "_oauth2_auth_logoutresponse": {},
+      "_auth_current_logoutresponse": {},
+      "_auth_current_authoritiesresponse": {}
     }
   },
   "servers": [
@@ -527,6 +191,7 @@
       "get": {
         "summary": "",
         "deprecated": false,
+        "description": "",
         "tags": [
           "OAuth2ClientController"
         ],
@@ -536,12 +201,12 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/_oauth2_auth__registerId_response"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": ""
+                    "value": "Return void."
                   }
                 }
               }
@@ -557,7 +222,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "82",
+            "example": "197",
             "name": "registerId"
           },
           {
@@ -567,7 +232,93 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "michele.rosenbaum",
+            "example": "trista.stanton",
+            "name": "principalName"
+          }
+        ]
+      }
+    },
+    "/auth/password/login": {
+      "post": {
+        "summary": "密码登陆",
+        "deprecated": false,
+        "description": "密码登陆",
+        "tags": [
+          "PasswordController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_auth_password_loginrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"username\": \"trista.stanton\",\n  \"password\": \"g1fem3\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "1e7g3t"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "password_login",
+        "parameters": []
+      }
+    },
+    "/auth/current/logout": {
+      "get": {
+        "summary": "",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "OAuth2ClientController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_auth_current_logoutresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "logout",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "trista.stanton",
             "name": "principalName"
           }
         ]
@@ -587,12 +338,12 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_auth_current_accessTokenResponse"
+                  "$ref": "#/components/schemas/_auth_current_accessTokenresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"tokenValue\": \"z6m3f8\",\n  \"issuedAt\": {\n    \"seconds\": 920,\n    \"nanos\": 427\n  },\n  \"expiresAt\": {\n    \"seconds\": 430,\n    \"nanos\": 160\n  },\n  \"tokenType\": {\n    \"value\": \"behhwr\"\n  },\n  \"scopes\": [\n    \"c7obpt\"\n  ]\n}"
+                    "value": "{\n  \"mapKey\": {\n    \"waring\": \"You may use java.util.Object for Map value; smart-doc can\u0027t be handle.\"\n  }\n}"
                   }
                 }
               }
@@ -608,7 +359,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "michele.rosenbaum",
+            "example": "trista.stanton",
             "name": "principalName"
           }
         ]
@@ -628,12 +379,12 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_auth_current_principal_userinfoResponse"
+                  "$ref": "#/components/schemas/_auth_current_principal_userinforesponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"subject\": \"a0wkte\",\n  \"fullName\": \"michele.rosenbaum\",\n  \"givenName\": \"michele.rosenbaum\",\n  \"familyName\": \"michele.rosenbaum\",\n  \"middleName\": \"michele.rosenbaum\",\n  \"nickName\": \"patrick.bayer\",\n  \"preferredUsername\": \"michele.rosenbaum\",\n  \"profile\": \"4vo585\",\n  \"picture\": \"fl5q4f\",\n  \"website\": \"8fzhmf\",\n  \"email\": \"dino.shields@hotmail.com\",\n  \"emailVerified\": true,\n  \"gender\": \"640zj4\",\n  \"birthdate\": \"2021-09-09\",\n  \"zoneInfo\": \"eq4joe\",\n  \"locale\": \"les3lh\",\n  \"phoneNumber\": \"v5s6cg\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"h6mwno\",\n    \"streetAddress\": \"Suite 350 62423 Ritchie Club， Lake Alphonso， NE 78846-2634\",\n    \"locality\": \"3b27mx\",\n    \"region\": \"cb772r\",\n    \"postalCode\": \"4073\",\n    \"country\": \"9w96s0\"\n  },\n  \"updatedAt\": {\n    \"seconds\": 836,\n    \"nanos\": 846\n  },\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
+                    "value": "{\n  \"subject\": \"3btke5\",\n  \"fullName\": \"trista.stanton\",\n  \"givenName\": \"trista.stanton\",\n  \"familyName\": \"trista.stanton\",\n  \"middleName\": \"trista.stanton\",\n  \"nickName\": \"alec.dooley\",\n  \"preferredUsername\": \"trista.stanton\",\n  \"profile\": \"ju6c5n\",\n  \"picture\": \"mhcgnn\",\n  \"website\": \"0opwka\",\n  \"email\": \"lauren.ankunding@hotmail.com\",\n  \"emailVerified\": true,\n  \"gender\": \"jzjp6c\",\n  \"birthdate\": \"2022-04-14\",\n  \"zoneInfo\": \"2vaiqw\",\n  \"locale\": \"vpe2mp\",\n  \"phoneNumber\": \"u7h3ex\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"rj61di\",\n    \"streetAddress\": \"Apt. 423 7730 Casper Parkways， Naborough， RI 16657\",\n    \"locality\": \"l653yl\",\n    \"region\": \"0a7k3l\",\n    \"postalCode\": \"54853\",\n    \"country\": \"jorf5k\"\n  },\n  \"updatedAt\": {},\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
                   }
                 }
               }
@@ -644,95 +395,11 @@
         "parameters": []
       }
     },
-    "/auth/current/credentials": {
-      "get": {
-        "summary": "查询认证信息",
-        "deprecated": false,
-        "description": "查询认证信息",
-        "tags": [
-          "UserInfoController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_auth_current_credentialsResponse"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "credentials",
-        "parameters": []
-      }
-    },
-    "/auth/logout": {
-      "put": {
-        "summary": "",
-        "deprecated": false,
-        "tags": [
-          "OAuth2ClientController"
-        ],
-        "requestBody": {
-          "content": {
-            "application/x-www-form-urlencoded;charset\u003dutf-8": {
-              "schema": {
-                "$ref": "#/components/schemas/_auth_logoutRequest"
-              },
-              "examples": {
-                "json": {
-                  "summary": "test data",
-                  "value": "curl -X PUT -i http://172.20.0.13:8765/authclient/auth/logout --data \u0027accessToken.expiresAt.nanos\u003d401\u0026clientRegistration.registrationId\u003d82\u0026clientRegistration.clientSecret\u003dheyqfr\u0026refreshToken.tokenValue\u003d8jb7m7\u0026accessToken.tokenValue\u003db5wiq5\u0026accessToken.issuedAt.seconds\u003d350\u0026clientRegistration.authorizationGrantType.value\u003dlu3uw6\u0026refreshToken.issuedAt.seconds\u003d932\u0026clientRegistration.clientId\u003d82\u0026refreshToken.issuedAt.nanos\u003d213\u0026accessToken.issuedAt.nanos\u003d871\u0026clientRegistration.redirectUri\u003dg6s9py\u0026accessToken.expiresAt.seconds\u003d305\u0026clientRegistration.clientAuthenticationMethod.value\u003dfvbfl6\u0026clientRegistration.clientName\u003dmichele.rosenbaum\u0026principalName\u003dmichele.rosenbaum\u0026refreshToken.expiresAt.seconds\u003d654\u0026refreshToken.expiresAt.nanos\u003d519\u0027"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": ""
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "logout",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "description": "No comments found.",
-            "required": false,
-            "example": "michele.rosenbaum",
-            "name": "principalName"
-          }
-        ]
-      }
-    },
     "/oauth2/auth/logout": {
       "get": {
         "summary": "",
         "deprecated": false,
+        "description": "",
         "tags": [
           "OAuth2ClientController"
         ],
@@ -742,12 +409,12 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/_oauth2_auth_logoutresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": ""
+                    "value": "Return void."
                   }
                 }
               }
@@ -772,12 +439,12 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/_auth_current_authoritiesResponse"
+                  "$ref": "#/components/schemas/_auth_current_authoritiesresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{}"
+                    "value": "[\n  {}\n]"
                   }
                 }
               }
@@ -785,36 +452,6 @@
           }
         },
         "operationId": "getAuthorities",
-        "parameters": []
-      }
-    },
-    "/auth/current/principal/idToken": {
-      "get": {
-        "summary": "查询ID token",
-        "deprecated": false,
-        "description": "查询ID token",
-        "tags": [
-          "UserInfoController"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/_auth_current_principal_idTokenResponse"
-                },
-                "examples": {
-                  "json": {
-                    "summary": "test data",
-                    "value": "{\n  \"tokenValue\": \"e37sen\",\n  \"issuedAt\": {\n    \"seconds\": 344,\n    \"nanos\": 65\n  },\n  \"expiresAt\": {\n    \"seconds\": 486,\n    \"nanos\": 859\n  },\n  \"issuer\": {\n    \"protocol\": \"1x0gsr\",\n    \"host\": \"mhy9oq\",\n    \"port\": 352,\n    \"file\": \"k17iyh\",\n    \"authority\": \"fillzy\",\n    \"ref\": \"q8x32s\",\n    \"hashCode\": 948\n  },\n  \"subject\": \"vcss1l\",\n  \"audience\": [\n    \"627c7g\"\n  ],\n  \"authenticatedAt\": {\n    \"seconds\": 250,\n    \"nanos\": 423\n  },\n  \"nonce\": \"7ie1md\",\n  \"authenticationContextClass\": \"4s32qg\",\n  \"authenticationMethods\": [\n    \"ps668l\"\n  ],\n  \"authorizedParty\": \"zczk5q\",\n  \"accessTokenHash\": \"iq7pb8\",\n  \"authorizationCodeHash\": \"lueper\",\n  \"fullName\": \"michele.rosenbaum\",\n  \"givenName\": \"michele.rosenbaum\",\n  \"familyName\": \"michele.rosenbaum\",\n  \"middleName\": \"michele.rosenbaum\",\n  \"nickName\": \"patrick.bayer\",\n  \"preferredUsername\": \"michele.rosenbaum\",\n  \"profile\": \"hdzdv9\",\n  \"picture\": \"3m56ml\",\n  \"website\": \"769x5u\",\n  \"email\": \"dino.shields@hotmail.com\",\n  \"emailVerified\": true,\n  \"gender\": \"nviqe8\",\n  \"birthdate\": \"2021-09-09\",\n  \"zoneInfo\": \"f5ujtp\",\n  \"locale\": \"j81kyy\",\n  \"phoneNumber\": \"1zhr78\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"gmx5ta\",\n    \"streetAddress\": \"Suite 350 62423 Ritchie Club， Lake Alphonso， NE 78846-2634\",\n    \"locality\": \"s41mup\",\n    \"region\": \"55k5ns\",\n    \"postalCode\": \"4073\",\n    \"country\": \"ep8zir\"\n  },\n  \"updatedAt\": {\n    \"seconds\": 501,\n    \"nanos\": 179\n  },\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "idToken",
         "parameters": []
       }
     }

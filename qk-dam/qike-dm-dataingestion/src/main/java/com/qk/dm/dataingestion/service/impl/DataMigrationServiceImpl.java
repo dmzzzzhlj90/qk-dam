@@ -1,10 +1,13 @@
 package com.qk.dm.dataingestion.service.impl;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.commons.util.CodeGenerateUtils;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
+import com.qk.datacenter.model.Result;
 import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
@@ -16,6 +19,7 @@ import com.qk.dm.dataingestion.service.DisColumnInfoService;
 import com.qk.dm.dataingestion.service.DisSchedulerConfigService;
 import com.qk.dm.dataingestion.strategy.DataSyncFactory;
 import com.qk.dm.dataingestion.vo.*;
+import com.qk.dm.service.DataBaseService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
@@ -37,6 +41,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     private final DisSchedulerConfigService schedulerConfigService;
     private final DataSyncFactory dataSyncFactory;
     private final DataxDolphinClient dataxDolphinClient;
+    private final DataBaseService dataBaseService;
 
     @PostConstruct
     public void initFactory() {
@@ -44,38 +49,35 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     }
 
     public DataMigrationServiceImpl(EntityManager entityManager, DisBaseInfoService baseInfoService, DisColumnInfoService columnInfoService,
-                                    DisSchedulerConfigService schedulerConfigService, DataSyncFactory dataSyncFactory, DataxDolphinClient dataxDolphinClient) {
+                                    DisSchedulerConfigService schedulerConfigService, DataSyncFactory dataSyncFactory, DataxDolphinClient dataxDolphinClient, DataBaseService dataBaseService) {
         this.entityManager = entityManager;
         this.baseInfoService = baseInfoService;
         this.columnInfoService = columnInfoService;
         this.schedulerConfigService = schedulerConfigService;
         this.dataSyncFactory = dataSyncFactory;
         this.dataxDolphinClient = dataxDolphinClient;
+        this.dataBaseService = dataBaseService;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(DataMigrationVO dataMigrationVO) throws ApiException {
-        long taskCode = getTaskCode();
         //添加基础信息
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-        baseInfo.setTaskCode(taskCode);
+        if(baseInfoService.exists(baseInfo)){
+            throw new BizException("作业名称"+baseInfo.getJobName()+"已存在！！！");
+        }
         Long baseInfoId = baseInfoService.add(dataMigrationVO.getBaseInfo());
-        List<DisColumnInfoVO> columnList = dataMigrationVO.getColumnList();
-        columnList.forEach(e->e.setBaseInfoId(baseInfoId));
+//        List<DisColumnInfoVO> columnList = dataMigrationVO.getColumnList();
+//        columnList.forEach(e->e.setBaseInfoId(baseInfoId));
         //添加字段信息
-        columnInfoService.batchAdd(columnList);
+        columnInfoService.batchAdd(columnMerge(dataMigrationVO,baseInfoId));
         //添加任务信息
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
-
-        String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
-                IngestionType.getVal(baseInfo.getSourceDbType()),
-                IngestionType.getVal(baseInfo.getTargetDbType()));
-
-        dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"),baseInfo.getJobName(),
-                taskCode,dataxJson);
+        //生成dataxjson
+        createDataxJson(dataMigrationVO,baseInfoId);
     }
 
     @Override
@@ -87,13 +89,20 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(DataMigrationVO dataMigrationVO) {
+    public void update(DataMigrationVO dataMigrationVO) throws ApiException {
+        DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
         //修改作业基础信息
-        baseInfoService.update(dataMigrationVO.getBaseInfo());
+        baseInfoService.update(baseInfo);
         //修改作业字段信息
-        columnInfoService.update(dataMigrationVO.getBaseInfo().getId(),dataMigrationVO.getColumnList());
+        columnInfoService.update(baseInfo.getId(),columnMerge(dataMigrationVO,baseInfo.getId()));
         //修改任务配置信息
         schedulerConfigService.update(dataMigrationVO.getSchedulerConfig());
+        String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
+                IngestionType.getVal(baseInfo.getSourceConnectType()),
+                IngestionType.getVal(baseInfo.getTargetConnectType()));
+
+        dataxDolphinClient.updateProcessDefinition(baseInfo.getJobName(),
+                baseInfo.getTaskCode(),dataxJson,new DolphinTaskDefinitionPropertiesBean());
     }
 
     @Override
@@ -102,6 +111,35 @@ public class DataMigrationServiceImpl implements DataMigrationService {
        return DataMigrationVO.builder().baseInfo(baseInfoService.detail(id))
         .columnList(columnInfoService.list(id))
         .schedulerConfig(schedulerConfigService.detail(id)).build();
+    }
+
+    @Override
+    public Map<String,Object> jsonDetail(Long id) {
+        DisMigrationBaseInfoVO baseInfo = baseInfoService.detail(id);
+        DataMigrationVO dataMigrationVO = DataMigrationVO.builder().baseInfo(baseInfo)
+                .columnList(columnInfoService.list(id))
+                .schedulerConfig(schedulerConfigService.detail(id)).build();
+        Map<String, Object> map = Maps.newHashMap();
+        String json = dataSyncFactory.transJson(dataMigrationVO,
+                IngestionType.getVal(baseInfo.getSourceConnectType()),
+                IngestionType.getVal(baseInfo.getTargetConnectType()));
+
+        map.put("dataxJson",json);
+        return map;
+
+    }
+    private List<DisColumnInfoVO> columnMerge(DataMigrationVO dataMigrationVO, Long baseInfoId){
+        List<ColumnVO.Column> sourceColumnList = dataMigrationVO.getSourceColumnList();
+        List<ColumnVO.Column> targetColumnList = dataMigrationVO.getTargetColumnList();
+        List<DisColumnInfoVO> columnList = Lists.newArrayList();
+       for(int i=0;i<sourceColumnList.size();i++){
+           ColumnVO.Column sourceColumn = sourceColumnList.get(i);
+           ColumnVO.Column targetColumn = targetColumnList.get(i);
+           columnList.add(DisColumnInfoVO.builder().sourceName(sourceColumn.getName())
+                   .sourceType(sourceColumn.getDataType()).targetName(targetColumn.getName())
+                   .targetType(targetColumn.getDataType()).baseInfoId(baseInfoId).build());
+       }
+       return columnList;
     }
 
     @Override
@@ -122,6 +160,40 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                 voList);
     }
 
+    @Override
+    public ColumnVO getColumnList(DisMigrationBaseInfoVO vo) {
+            List<DisColumnInfoVO> columnList = columnInfoService.list(vo.getId());
+
+        return ColumnVO.builder().sourceColumnList(sourceList(vo,columnList))
+                .targetColumnList(targetList(vo,columnList)).build();
+    }
+
+    private List<ColumnVO.Column> sourceList(DisMigrationBaseInfoVO vo,List<DisColumnInfoVO> columnList){
+        if(baseInfoService.sourceExists(vo)){
+            return columnList.stream().map(e ->
+                    ColumnVO.Column.builder().dataType(e.getSourceType())
+                            .name(e.getSourceName()).build()).collect(Collectors.toList());
+        }else {
+            List sourceColumnList = dataBaseService.getAllColumn(vo.getSourceConnectType(), vo.getSourceConnect(),
+                    vo.getSourceDatabase(), vo.getSourceTable());
+            //return MetaDataColumnMapper.INSTANCE.of(sourceColumnList);
+            return null;
+        }
+    }
+
+    private List<ColumnVO.Column> targetList(DisMigrationBaseInfoVO vo,List<DisColumnInfoVO> columnList){
+        if(baseInfoService.targetExists(vo)){
+            return columnList.stream().map(e ->
+                    ColumnVO.Column.builder().dataType(e.getTargetType())
+                            .name(e.getTargetName()).build()).collect(Collectors.toList());
+        }else {
+            List targetColumnList = dataBaseService.getAllColumn(vo.getTargetConnectType(), vo.getTargetConnect(),
+                    vo.getTargetDatabase(), vo.getTargetTable());
+            //return MetaDataColumnMapper.INSTANCE.of(targetColumnList);
+            return null;
+        }
+    }
+
     private Map<String, Object> queryByParams(DisParamsVO paramsVO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, paramsVO);
@@ -139,21 +211,29 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         result.put("total", count);
         return result;
     }
+    private void createDataxJson(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
+       DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
+        String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
+                IngestionType.getVal(baseInfo.getSourceConnectType()),
+                IngestionType.getVal(baseInfo.getTargetConnectType()));
+
+        Result result = dataxDolphinClient.createProcessDefinition(baseInfo.getJobName(),
+                dataxJson);
+        DolphinTaskDefinitionPropertiesBean data =  new Gson().fromJson(GsonUtil.toJsonString(result.getData())
+                ,DolphinTaskDefinitionPropertiesBean.class);
+
+        baseInfo.setTaskCode(data.getCode());
+        baseInfo.setId(baseInfoId);
+        baseInfoService.update(baseInfo);
+    }
 
     public void checkCondition(BooleanBuilder booleanBuilder, DisParamsVO paramsVO) {
         if (Objects.nonNull(paramsVO.getJobName())) {
             booleanBuilder.and(qDisMigrationBaseInfo.jobName.contains(paramsVO.getJobName()));
         }
+        if (Objects.nonNull(paramsVO.getDirId())&&!Objects.equals(paramsVO.getDirId(),"-1")) {
+            booleanBuilder.and(qDisMigrationBaseInfo.dirId.contains(paramsVO.getDirId()));
+        }
     }
-
-   private long getTaskCode(){
-       long taskCode =0L;
-       try {
-           taskCode = CodeGenerateUtils.getInstance().genCode();
-       } catch (CodeGenerateUtils.CodeGenerateException e) {
-           e.printStackTrace();
-       }
-       return taskCode;
-   }
 
 }

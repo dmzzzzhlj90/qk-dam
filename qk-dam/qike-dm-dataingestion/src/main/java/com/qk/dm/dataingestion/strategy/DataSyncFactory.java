@@ -1,6 +1,5 @@
 package com.qk.dm.dataingestion.strategy;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +49,7 @@ public class DataSyncFactory {
      */
     public String transJson(DataMigrationVO dataMigrationVO, IngestionType readerType, IngestionType writerType){
 
-        ArrayList<DataxContent> contents = Lists.newArrayList(DataxContent.builder()
+        List<DataxContent> contents = List.of(DataxContent.builder()
                 .reader(getIngestionTyp(readerType).getReader(dataMigrationVO))
                 .writer(getIngestionTyp(writerType).getWriter(dataMigrationVO)).build());
 

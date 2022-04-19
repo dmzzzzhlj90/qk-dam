@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service;
 
+import com.qk.dm.dataservice.vo.DasApiRegisterDefinitionVO;
 import com.qk.dm.dataservice.vo.DasApiRegisterVO;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +29,7 @@ public interface DasApiRegisterService {
     void bulkAddDasApiRegister(List<DasApiRegisterVO> dasApiRegisterVOList);
 
     List<DasApiRegisterVO> findAll();
+
+    List<DasApiRegisterDefinitionVO> searchRegisterByApiId(List<String> apiIds);
+
 }

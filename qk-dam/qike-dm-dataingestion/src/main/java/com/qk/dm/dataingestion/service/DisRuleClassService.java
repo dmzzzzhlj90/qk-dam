@@ -6,4 +6,10 @@ import java.util.List;
 
 public interface DisRuleClassService {
     List<DisRuleClassVO> list();
+
+    void  insert(DisRuleClassVO vo);
+
+    void update(DisRuleClassVO vo);
+
+    void delete(String id);
 }

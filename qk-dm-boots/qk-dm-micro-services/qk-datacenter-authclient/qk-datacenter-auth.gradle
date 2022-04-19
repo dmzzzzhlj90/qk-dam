@@ -33,8 +33,8 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:${springCloudAlibabaVersion}"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:${springCloudAlibabaVersion}"
     annotationProcessor 'org.projectlombok:lombok'
-    implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '17.0.0'
-    implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1.1'
+//    implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '17.0.0'
+//    implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1.1'
 
 }
 

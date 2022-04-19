@@ -1,14 +1,5 @@
 package com.qk.dm.dataquality.groovy;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.qk.dam.groovy.facts.RuleFunctionGenerator;
-import com.qk.dam.groovy.model.FactModel;
-import com.qk.dam.groovy.model.RuleFunctionInfo;
-
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author wjq
  * @date 2021/12/17

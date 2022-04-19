@@ -8,7 +8,6 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasApiCreateSqlScriptService;
 import com.qk.dm.dataservice.vo.DasApiCreateSqlScriptVO;
-import com.qk.dm.dataservice.vo.DebugApiResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -81,7 +80,7 @@ public class DasApiCreateSqlScriptController {
      */
     @PostMapping("/debug/model")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
-    public DefaultCommonResult<DebugApiResultVO> debugModel(@RequestBody DasApiCreateSqlScriptVO dasApiCreateConfigVO) {
+    public DefaultCommonResult debugModel(@RequestBody DasApiCreateSqlScriptVO dasApiCreateConfigVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSqlScriptService.debugModel(dasApiCreateConfigVO));
     }
 }

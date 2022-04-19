@@ -28,66 +28,60 @@ public class DataxTaskDefineController {
 
     /**
      * 创建datax 任务定义
-     * @param projectId 项目id
      * @param dataxJson datax配置脚本
      * @return  DefaultCommonResult
      * @throws ApiException api异常
      */
-    @PostMapping("/projects/{projectId}")
-    public DefaultCommonResult<Result> createProcessDefinition(@PathVariable final Long projectId,
-                                                               final String dataxName,
+    @PostMapping("/projects")
+    public DefaultCommonResult<Result> createProcessDefinition(final String dataxName,
                                                                @RequestBody final String dataxJson) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                dataxDolphinClient.createProcessDefinition(projectId,dataxName,dataxJson));
+                dataxDolphinClient.createProcessDefinition(dataxName,dataxJson));
     }
 
     /**
      * 更新datax 任务定义
-     * @param projectId 项目id
      * @param dataxJson datax配置脚本
      * @param taskCode 任务code
      * @param taskParam 环境配置
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
-    @PutMapping("/projects/{projectId}/process/{taskCode}")
-    public DefaultCommonResult<Result> putProcessDefinition(@PathVariable final Long projectId,
-                                                            @PathVariable final long taskCode,
+    @PutMapping("/projects/process/{taskCode}")
+    public DefaultCommonResult<Result> putProcessDefinition(@PathVariable final long taskCode,
                                                             final String dataxName,
                                                             @RequestParam(defaultValue = "{}") final String taskParam,
                                                             @RequestBody final String dataxJson
                                                                ) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                dataxDolphinClient.updateProcessDefinition(projectId,dataxName,taskCode,dataxJson,new Gson().fromJson(taskParam, DolphinTaskDefinitionPropertiesBean.class)));
+                dataxDolphinClient.updateProcessDefinition(dataxName,taskCode,dataxJson,new Gson().fromJson(taskParam, DolphinTaskDefinitionPropertiesBean.class)));
     }
 
 
     /**
      * 上线
-     * @param projectId  项目id
      * @param taskCode 任务code
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
     @PostMapping("/process/online")
-    public DefaultCommonResult<Result> processReleaseOnline(final Long projectId,
-                                                      final long taskCode) throws ApiException {
+    public DefaultCommonResult<Result> processReleaseOnline(
+            final long taskCode) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                dataxDolphinClient.dolphinProcessRelease(taskCode,projectId,ProcessDefinition.ReleaseStateEnum.ONLINE));
+                dataxDolphinClient.dolphinProcessRelease(taskCode,ProcessDefinition.ReleaseStateEnum.ONLINE));
     }
 
     /**
      * 下线
-     * @param projectId  项目id
      * @param taskCode 任务code
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
     @PostMapping("/process/offline")
-    public DefaultCommonResult<Result> processRelease(final Long projectId,
-                                                      final long taskCode) throws ApiException {
+    public DefaultCommonResult<Result> processRelease(
+            final long taskCode) throws ApiException {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                dataxDolphinClient.dolphinProcessRelease(taskCode,projectId,ProcessDefinition.ReleaseStateEnum.OFFLINE));
+                dataxDolphinClient.dolphinProcessRelease(taskCode,ProcessDefinition.ReleaseStateEnum.OFFLINE));
     }
 
     /**
@@ -96,12 +90,11 @@ public class DataxTaskDefineController {
      * @throws ApiException api异常
      */
     @PostMapping("/executors/start")
-    public DefaultCommonResult<Result> processRunning( final long projectId,
-                                                       final long taskCode,
+    public DefaultCommonResult<Result> processRunning(final long taskCode,
                                                       Long environmentCode) throws ApiException {
 
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                dataxDolphinClient.runing(projectId,taskCode,environmentCode));
+                dataxDolphinClient.runing(taskCode,environmentCode));
     }
 
 }

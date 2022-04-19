@@ -1,0 +1,15 @@
+metadata:
+  - name: job1
+    dataConnectType: mysql
+    serverinfo:
+      applicationName: 141开发数据源
+      owner: zhudaoming
+      description: 141_qk_ministry
+      displayName: qk_ministry
+    dataConnect:
+      db: qk_ministry
+      table: "all"
+      host: 172.21.33.141
+      port: 3306
+      username: root
+      password: JMFIuOx2

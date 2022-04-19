@@ -1,43 +1,38 @@
 package com.qk.dm.dataingestion.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DisRuleClassVO {
 
     private Long id;
 
     /**
+     * 规则分类id
+     */
+    private String dirId;
+
+    /**
      * 规则分类名称
      */
-    private String classificationName;
+    @NotBlank(message = "规则目录名称不能为空！")
+    private String title;
+
+    private String value;
     /**
      * 父id
      */
-    private Long parentId;
-    /**
-     * 描述
-     */
-    private String description;
-    /**
-     * 创建时间
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date gmtCreate;
-
-    /**
-     * 修改时间
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date gmtModified;
-
+    private String parentId;
     /**
      * 子节点
      */

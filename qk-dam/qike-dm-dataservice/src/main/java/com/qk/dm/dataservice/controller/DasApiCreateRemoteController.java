@@ -4,16 +4,12 @@ package com.qk.dm.dataservice.controller;
 //import com.qk.dam.authorization.BizResource;
 //import com.qk.dam.authorization.RestActionType;
 
-import com.qk.dam.commons.enums.ResultCodeEnum;
-import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.commons.enums.DataCenterResultCodeEnum;
+import com.qk.dam.commons.http.result.DataCenterResult;
 import com.qk.dm.dataservice.service.DasApiCreateSummaryService;
-import com.qk.dm.dataservice.vo.DebugApiParasVO;
-import com.qk.dm.dataservice.vo.DebugApiResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 新建API 对外提供数据查询唯一入口
@@ -43,8 +39,8 @@ public class DasApiCreateRemoteController {
      */
     @PostMapping(value = "/search/{apiId}")
 //  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.DETAIL)
-    public DefaultCommonResult remoteSearchData(@PathVariable("apiId") String apiId, @RequestParam("paramData") String paramData) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiCreateSummaryService.remoteSearchData(apiId,paramData));
+    public DataCenterResult remoteSearchData(@PathVariable("apiId") String apiId, @RequestParam("paramData") String paramData) {
+        return DataCenterResult.success(DataCenterResultCodeEnum.OK, dasApiCreateSummaryService.remoteSearchData(apiId,paramData));
     }
 
 }

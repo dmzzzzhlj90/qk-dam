@@ -47,9 +47,11 @@ public class HiveDataxJson implements DataxJson{
     public DataxChannel getWriter(DataMigrationVO dataMigrationVO) {
 
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-        HiveBasePara hiveWriter = HiveBasePara.builder().column(getTargetColumnList(dataMigrationVO.getColumnList()))
+        HiveBasePara hiveWriter = HiveBasePara.builder().fileName(baseInfo.getTargetTable())
+                .column(getTargetColumnList(dataMigrationVO.getColumnList()))
                 .defaultFS(baseInfo.getTargetDefaultFS()).fileType(baseInfo.getTargetFileType())
-                .path(baseInfo.getTargetPath()).fieldDelimiter(baseInfo.getTargetFieldDelimiter()).build();
+                .path(baseInfo.getTargetPath()).fieldDelimiter(baseInfo.getTargetFieldDelimiter())
+                .writeMode(baseInfo.getTargetWriteMode()).build();
 
         return DataxChannel.builder().name(HIVE_WRITER).parameter(hiveWriter).build();
     }

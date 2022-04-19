@@ -10,8 +10,6 @@ import com.qk.dm.datamodel.service.ModelFactTableService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * 事实表
  * @author wangzp

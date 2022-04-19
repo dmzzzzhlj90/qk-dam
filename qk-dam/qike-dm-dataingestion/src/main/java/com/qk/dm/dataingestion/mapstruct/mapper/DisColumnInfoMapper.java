@@ -2,9 +2,7 @@ package com.qk.dm.dataingestion.mapstruct.mapper;
 
 import com.qk.dm.dataingestion.entity.DisColumnInfo;
 import com.qk.dm.dataingestion.vo.DisColumnInfoVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -13,7 +11,11 @@ import java.util.List;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface DisColumnInfoMapper {
     DisColumnInfoMapper INSTANCE = Mappers.getMapper(DisColumnInfoMapper.class);
-
+    @Mappings({
+            @Mapping(target = "gmtCreate",ignore = true),
+            @Mapping(target = "gmtModified",ignore = true),
+            @Mapping(target = "delFlag",ignore = true),
+    })
     DisColumnInfo of(DisColumnInfoVO disColumnInfoVO);
 
     List<DisColumnInfo> list(List<DisColumnInfoVO> disColumnInfoVOList);

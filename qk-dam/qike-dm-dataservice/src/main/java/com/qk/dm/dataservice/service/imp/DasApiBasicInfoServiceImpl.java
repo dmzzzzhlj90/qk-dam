@@ -296,6 +296,22 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DebugApiParamHeaderInfoEnum.getAllValue();
     }
 
+    @Override
+    public List<DasApiBasicInfoVO> searchBasicInfoDataByDirId(String dirDId) {
+        List<DasApiBasicInfoVO> apiBasicInfoVOList = new ArrayList<>();
+
+        Iterable<DasApiBasicInfo> basicInfos = dasApiBasicinfoRepository.findAll(qDasApiBasicInfo.dirId.eq(dirDId));
+        basicInfos.forEach(
+                dasApiBasicInfo -> {
+                    DasApiBasicInfoVO apiBasicInfoVO = transformToVO(dasApiBasicInfo);
+//                    setDelInputParamVO(dasApiBasicInfo, dasApiBasicinfoVO);
+                    apiBasicInfoVO.setRequestParasJSON(dasApiBasicInfo.getDefInputParam());
+                    apiBasicInfoVOList.add(apiBasicInfoVO);
+                });
+
+        return apiBasicInfoVOList;
+    }
+
     /**
      * 参数为空,不存null值
      *

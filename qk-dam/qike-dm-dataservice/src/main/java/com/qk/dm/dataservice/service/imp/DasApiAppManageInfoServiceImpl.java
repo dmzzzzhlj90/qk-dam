@@ -14,7 +14,6 @@ import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.repositories.DasApiAppManageInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.service.DasApiAppManageInfoService;
-import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiAppManageInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiAppManageInfoVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;

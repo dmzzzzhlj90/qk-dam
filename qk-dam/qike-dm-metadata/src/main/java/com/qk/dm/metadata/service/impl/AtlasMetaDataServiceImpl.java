@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.metedata.AtlasClient;
-import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
 import com.qk.dam.metedata.property.AtlasBaseProperty;
 import com.qk.dam.metedata.property.AtlasSearchProperty;
@@ -27,7 +26,6 @@ import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 

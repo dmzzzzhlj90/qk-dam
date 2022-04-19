@@ -13,4 +13,10 @@ public interface DisBaseInfoService {
     void update(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
 
     DisMigrationBaseInfoVO detail(Long id);
+
+    Boolean exists(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
+
+    Boolean sourceExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
+
+    Boolean targetExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
 }

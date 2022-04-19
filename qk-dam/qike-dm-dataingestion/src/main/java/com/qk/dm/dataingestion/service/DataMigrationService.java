@@ -2,9 +2,12 @@ package com.qk.dm.dataingestion.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
+import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
 import com.qk.dm.dataingestion.vo.DisParamsVO;
+
+import java.util.Map;
 
 
 public interface DataMigrationService {
@@ -24,7 +27,7 @@ public interface DataMigrationService {
      * 修改作业信息
      * @param dataMigrationVO
      */
-    void update(DataMigrationVO dataMigrationVO);
+    void update(DataMigrationVO dataMigrationVO) throws ApiException;
 
     /**
      * 查看作业详情
@@ -34,9 +37,23 @@ public interface DataMigrationService {
     DataMigrationVO detail(Long id);
 
     /**
+     * 查看datax json详情
+     * @param id
+     * @return
+     */
+    Map<String,Object> jsonDetail(Long id);
+
+    /**
      * 查询作业列表
      * @param paramsVO
      * @return
      */
     PageResultVO<DisMigrationBaseInfoVO> pageList(DisParamsVO paramsVO);
+
+    /**
+     * 获取字段列表
+     * @param vo
+     * @return
+     */
+    ColumnVO getColumnList(DisMigrationBaseInfoVO vo);
 }

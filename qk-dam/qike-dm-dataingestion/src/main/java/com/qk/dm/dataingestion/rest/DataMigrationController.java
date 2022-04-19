@@ -5,11 +5,14 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
 import com.qk.dm.dataingestion.service.DataMigrationService;
+import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
 import com.qk.dm.dataingestion.vo.DisParamsVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * 数据引入
@@ -44,7 +47,7 @@ public class DataMigrationController {
      * @return DefaultCommonResult
      */
     @PutMapping("")
-    public DefaultCommonResult update(@RequestBody @Validated DataMigrationVO dataMigrationVO){
+    public DefaultCommonResult update(@RequestBody @Validated DataMigrationVO dataMigrationVO)throws ApiException {
         dataMigrationService.update(dataMigrationVO);
         return DefaultCommonResult.success();
     }
@@ -57,6 +60,15 @@ public class DataMigrationController {
     @GetMapping("/detail/{id}")
     public DefaultCommonResult<DataMigrationVO> detail(@PathVariable("id") Long id){
         return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.detail(id));
+    }
+    /**
+     * 查询json详情
+     * @param id 作业id
+     * @return DefaultCommonResult<Map<String,Object>>
+     */
+    @GetMapping("/json/detail/{id}")
+    public DefaultCommonResult<Map<String,Object>> jsonDetail(@PathVariable("id") Long id){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.jsonDetail(id));
     }
 
     /**
@@ -78,6 +90,11 @@ public class DataMigrationController {
     @PostMapping("/list")
     public DefaultCommonResult<PageResultVO<DisMigrationBaseInfoVO>> list(@RequestBody @Validated DisParamsVO paramsVO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.pageList(paramsVO));
+    }
+
+    public DefaultCommonResult<ColumnVO> getColumnList(@RequestBody @Validated DisMigrationBaseInfoVO vo){
+
+        return null;
     }
 
 

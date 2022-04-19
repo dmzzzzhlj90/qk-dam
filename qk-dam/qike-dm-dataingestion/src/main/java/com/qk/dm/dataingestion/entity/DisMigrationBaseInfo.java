@@ -28,8 +28,13 @@ public class DisMigrationBaseInfo implements Serializable {
     /**
      * 规则分类id
      */
-    @Column(name = "rule_class_id")
-    private Long ruleClassId;
+    @Column(name = "dir_id")
+    private String dirId;
+    /**
+     * 规则分类名称
+     */
+    @Column(name = "dir_name")
+    private String dirName;
 
     /**
      * 调度实例code
@@ -43,10 +48,10 @@ public class DisMigrationBaseInfo implements Serializable {
     @Column(name = "job_name", nullable = false)
     private String jobName;
     /**
-     * 源数据库类型
+     * 源数据连接类型
      */
-    @Column(name = "source_db_type", nullable = false)
-    private String sourceDbType;
+    @Column(name = "source_connect_type", nullable = false)
+    private String sourceConnectType;
     /**
      * 源连接
      */
@@ -67,8 +72,8 @@ public class DisMigrationBaseInfo implements Serializable {
     /**
      * 目标数据库类型
      */
-    @Column(name = "target_db_type")
-    private String targetDbType;
+    @Column(name = "target_connect_type")
+    private String targetConnectType;
     /**
      * 目标连接
      */

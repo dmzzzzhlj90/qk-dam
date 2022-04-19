@@ -15,7 +15,6 @@ import com.qk.dam.dataservice.spi.server.ServerService;
 import com.qk.dam.dataservice.spi.upstream.UpstreamContext;
 import com.qk.dam.dataservice.spi.upstream.UpstreamFactory;
 import com.qk.dam.dataservice.spi.upstream.UpstreamService;
-import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

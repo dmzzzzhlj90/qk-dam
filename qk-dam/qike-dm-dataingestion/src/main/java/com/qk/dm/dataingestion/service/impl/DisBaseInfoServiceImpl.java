@@ -2,10 +2,12 @@ package com.qk.dm.dataingestion.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
+import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisBaseInfoMapper;
 import com.qk.dm.dataingestion.repositories.DisMigrationBaseInfoRepository;
 import com.qk.dm.dataingestion.service.DisBaseInfoService;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
+import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class DisBaseInfoServiceImpl implements DisBaseInfoService {
 
+    private final QDisMigrationBaseInfo qDisMigrationBaseInfo = QDisMigrationBaseInfo.disMigrationBaseInfo;
     private final DisMigrationBaseInfoRepository disMigrationBaseInfoRepository;
 
     public DisBaseInfoServiceImpl(DisMigrationBaseInfoRepository disMigrationBaseInfoRepository) {
@@ -52,6 +55,34 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
     public DisMigrationBaseInfoVO detail(Long id) {
         DisMigrationBaseInfo disMigrationBaseInfo = disMigrationBaseInfoRepository.getById(id);
         return DisBaseInfoMapper.INSTANCE.of(disMigrationBaseInfo);
+    }
+
+    @Override
+    public Boolean exists(DisMigrationBaseInfoVO disMigrationBaseInfoVO) {
+
+        Predicate predicate = qDisMigrationBaseInfo.jobName.eq(disMigrationBaseInfoVO.getJobName());
+        return disMigrationBaseInfoRepository.exists(predicate);
+    }
+
+    @Override
+    public Boolean sourceExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO) {
+        Predicate predicate = qDisMigrationBaseInfo.sourceConnect.eq(disMigrationBaseInfoVO.getSourceConnect())
+                .and(qDisMigrationBaseInfo.sourceConnectType.eq(disMigrationBaseInfoVO.getSourceConnectType()))
+                .and(qDisMigrationBaseInfo.sourceDatabase.eq(disMigrationBaseInfoVO.getSourceDatabase()))
+                .and(qDisMigrationBaseInfo.sourceTable.eq(disMigrationBaseInfoVO.getSourceTable()))
+                .and(qDisMigrationBaseInfo.id.eq(disMigrationBaseInfoVO.getId()));
+          return disMigrationBaseInfoRepository.exists(predicate);
+    }
+
+    @Override
+    public Boolean targetExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO) {
+        Predicate predicate = qDisMigrationBaseInfo.targetConnect.eq(disMigrationBaseInfoVO.getTargetConnect())
+                .and(qDisMigrationBaseInfo.targetConnectType.eq(disMigrationBaseInfoVO.getTargetConnectType()))
+                .and(qDisMigrationBaseInfo.targetDatabase.eq(disMigrationBaseInfoVO.getTargetDatabase()))
+                .and(qDisMigrationBaseInfo.targetTable.eq(disMigrationBaseInfoVO.getTargetTable()))
+                .and(qDisMigrationBaseInfo.id.eq(disMigrationBaseInfoVO.getId()));
+
+        return disMigrationBaseInfoRepository.exists(predicate);
     }
 
 }

@@ -18,5 +18,5 @@ public class DisParamsVO {
     /**
      * 规则分类id
      */
-    private Long ruleClassId;
+    private String dirId;
 }
