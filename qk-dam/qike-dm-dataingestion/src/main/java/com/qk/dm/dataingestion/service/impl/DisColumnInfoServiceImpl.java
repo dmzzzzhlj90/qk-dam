@@ -8,6 +8,7 @@ import com.qk.dm.dataingestion.vo.DisColumnInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DisColumnInfoServiceImpl implements DisColumnInfoService {
@@ -37,6 +38,9 @@ public class DisColumnInfoServiceImpl implements DisColumnInfoService {
 
     @Override
     public List<DisColumnInfoVO> list(Long baseInfoId) {
-        return DisColumnInfoMapper.INSTANCE.listVO(disColumnInfoRepository.findByBaseInfoId(baseInfoId));
+        if(Objects.nonNull(baseInfoId)) {
+            return DisColumnInfoMapper.INSTANCE.listVO(disColumnInfoRepository.findByBaseInfoId(baseInfoId));
+        }
+        return List.of();
     }
 }

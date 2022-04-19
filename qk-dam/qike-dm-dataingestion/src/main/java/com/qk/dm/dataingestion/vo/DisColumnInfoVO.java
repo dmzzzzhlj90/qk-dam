@@ -1,17 +1,16 @@
 package com.qk.dm.dataingestion.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class DisColumnInfoVO {
-
-
-    private Long id;
 
     /**
      * 迁移基础表id
