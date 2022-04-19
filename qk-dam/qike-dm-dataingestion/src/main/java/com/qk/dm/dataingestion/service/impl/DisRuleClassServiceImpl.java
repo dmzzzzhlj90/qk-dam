@@ -37,7 +37,7 @@ public class DisRuleClassServiceImpl implements DisRuleClassService {
                 .peek(e -> e.setChildren(getChildren(e, list)))
                 .collect(Collectors.toList());
         return List.of(DisRuleClassVO.builder().dirId("-1").parentId("-1")
-                .title("跟目录").value("根目录").children(childrenList).build());
+                .title("规则分类").value("规则分类").children(childrenList).build());
     }
 
     @Override

@@ -16,13 +16,13 @@ public class DataxDolphinClient {
 
     private final DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean;
 
+
     public DataxDolphinClient(DolphinschedulerManager dolphinschedulerManager, DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean) {
         this.dolphinschedulerManager = dolphinschedulerManager;
         this.dolphinTaskDefinitionPropertiesBean = dolphinTaskDefinitionPropertiesBean;
     }
 
-    public Result createProcessDefinition(Long projectId,
-                                          String name,
+    public Result createProcessDefinition(String name,
                                           String dataxJson) throws ApiException {
         long taskCode =0L;
         try {
@@ -30,17 +30,16 @@ public class DataxDolphinClient {
         } catch (CodeGenerateUtils.CodeGenerateException e) {
             e.printStackTrace();
         }
-        return createProcessDefinition(projectId,name,taskCode,dataxJson);
+        return createProcessDefinition(name,taskCode,dataxJson);
 
     }
-    public Result createProcessDefinition(Long projectId,
-                                          String name,
+    public Result createProcessDefinition(String name,
                                           long taskCode,
                                           String dataxJson) throws ApiException {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(taskCode, name, dataxJson, dolphinTaskDefinitionPropertiesBean);
         Result result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(processDefinition.getLocations(),
                 processDefinition.getName(),
-                projectId,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                 processDefinition.getTaskDefinitionJson(),
                 processDefinition.getTaskRelationJson(),
                 processDefinition.getTenantCode(),
@@ -53,8 +52,7 @@ public class DataxDolphinClient {
 
     }
 
-    public Result updateProcessDefinition(Long projectId,
-                                          String name,
+    public Result updateProcessDefinition(String name,
                                           long taskCode,
                                           String dataxJson,
                                           DolphinTaskDefinitionPropertiesBean taskParam) throws ApiException {
@@ -68,7 +66,7 @@ public class DataxDolphinClient {
                 taskCode,
                 processDefinition.getLocations(),
                 processDefinition.getName(),
-                projectId,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                 processDefinition.getTaskDefinitionJson(),
                 processDefinition.getTaskRelationJson(),
                 processDefinition.getTenantCode(),
@@ -83,19 +81,19 @@ public class DataxDolphinClient {
 
     }
 
-    public Result dolphinProcessRelease(Long code, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().releaseProcessDefinitionUsingPOST(code, projectCode, releaseState);
+    public Result dolphinProcessRelease(Long code, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().releaseProcessDefinitionUsingPOST(code, dolphinTaskDefinitionPropertiesBean.getProjectCode(), releaseState);
         if (Boolean.TRUE.equals(result.getFailed())){
             throw new ApiException(400, result.getMsg());
         }
         return result;
     }
-    public Result runing(Long projectCode, Long processDefinitionCode, Long environmentCode) throws ApiException {
+    public Result runing(Long processDefinitionCode, Long environmentCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().startProcessInstanceUsingPOST(
                 ProcessInstance.FailureStrategyEnum.CONTINUE,
                 processDefinitionCode,
                 ProcessInstance.ProcessInstancePriorityEnum.MEDIUM,
-                projectCode,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                 "",
                 0,
                 ProcessInstance.WarningTypeEnum.NONE,
