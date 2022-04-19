@@ -44,18 +44,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DasApiExcelServiceImpl implements DasApiExcelService {
-    /**
-     * 获取response
-     */
-    public static HttpServletResponse getResponse() {
-        return getRequestAttributes().getResponse();
-    }
-
-    public static ServletRequestAttributes getRequestAttributes() {
-        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-        return (ServletRequestAttributes) attributes;
-    }
-
     private static final Log LOG = LogFactory.get("数据标准excel导入导出");
 
     private final DasApiBasicInfoService dasApiBasicInfoService;
@@ -120,8 +108,7 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
     }
 
     @Override
-    public void apiDataDownload(String dirId) throws IOException {
-        HttpServletResponse response = getResponse();
+    public void apiDataDownload(String dirId,HttpServletResponse response) throws IOException {
         // 根据目录设置文件名称
         String dirName = searchDirName(dirId);
         String name = "目录为" + dirName + "的API接口信息";
