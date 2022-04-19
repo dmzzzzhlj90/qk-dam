@@ -18,6 +18,6 @@ public interface DasApiExcelService {
 
   void apiDataUpload(MultipartFile file, String dirId);
 
-  void apiDataDownload(String dirId) throws IOException;
+  void apiDataDownload(String dirId,HttpServletResponse response) throws IOException;
 
 }

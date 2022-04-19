@@ -54,8 +54,8 @@ public class DasApiExcelController {
      */
     @GetMapping("/api/data/download")
 //  @Auth(bizType = BizResource.DSD_EXCEL_DOWNLOAD, actionType = RestActionType.EXPORT)
-    public void apiDataDownload(@RequestParam("dirId") String dirId) throws IOException {
-        dasApiExcelService.apiDataDownload(dirId);
+    public void apiDataDownload(@RequestParam("dirId") String dirId,HttpServletResponse response) throws IOException {
+        dasApiExcelService.apiDataDownload(dirId,response);
     }
 
 }
