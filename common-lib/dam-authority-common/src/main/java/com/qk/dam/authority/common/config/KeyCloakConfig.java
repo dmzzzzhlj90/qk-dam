@@ -1,7 +1,6 @@
 package com.qk.dam.authority.common.config;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +31,11 @@ public class KeyCloakConfig {
     @Value("${keycloak.master.realm.name}")
     private String masterRealm;
 
+//    @Value("${keycloak.master.realm.client_secret}")
+//    private String clientSecret;
+
+
+
     @Bean
     public Keycloak keycloak() {
         return KeycloakBuilder.builder()
@@ -40,6 +44,7 @@ public class KeyCloakConfig {
                 .username(userName)
                 .password(password)
                 .clientId(clientId)
+//                .clientSecret(clientSecret)
                 .resteasyClient(
                         new ResteasyClientBuilder()
                                 .connectionPoolSize(10).build()

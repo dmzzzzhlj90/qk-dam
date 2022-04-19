@@ -16,4 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TokenInfoVO {
     String access_token;
+    String refresh_token;
+    long expires_in;
 }
