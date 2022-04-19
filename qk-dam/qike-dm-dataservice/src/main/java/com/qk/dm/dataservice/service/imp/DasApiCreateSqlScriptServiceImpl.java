@@ -13,9 +13,11 @@ import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.CreateParamSortStyleEnum;
 import com.qk.dm.dataservice.constant.CreateSqlRequestParamHeaderInfoEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.entity.DasApiCreateConfig;
 import com.qk.dm.dataservice.entity.DasApiCreateSqlScript;
 import com.qk.dm.dataservice.entity.QDasApiCreateSqlScript;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
+import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateConfigMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateSqlScriptMapper;
 import com.qk.dm.dataservice.repositories.DasApiCreateSqlScriptRepository;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
@@ -93,6 +95,26 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
                             }.getType()));
         }
         return dasApiBasicInfoVO;
+    }
+
+    @Override
+    public List<DasApiCreateSqlScriptDefinitionVO> searchCreateSqlScriptByApiId(List<String> apiIds) {
+        List<DasApiCreateSqlScriptDefinitionVO> createSqlScriptVOList = Lists.newArrayList();
+
+        Iterable<DasApiCreateSqlScript> apiCreateSqlScripts = dasApiCreateSqlScriptRepository.findAll(qDasApiCreateSqlScript.apiId.in(apiIds));
+
+        apiCreateSqlScripts.forEach(apiCreateSqlScript -> {
+            DasApiCreateSqlScriptDefinitionVO createSqlScriptDefinitionVO =
+                    DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScriptDefinitionVO(apiCreateSqlScript);
+
+            createSqlScriptDefinitionVO.setCreateSqlRequestParasJson(apiCreateSqlScript.getApiRequestParas());
+            createSqlScriptDefinitionVO.setCreateOrderParasJson(apiCreateSqlScript.getApiOrderParas());
+
+            createSqlScriptVOList.add(createSqlScriptDefinitionVO);
+
+        });
+
+        return createSqlScriptVOList;
     }
 
     private void setDasApiCreateSqlScriptVOParams(DasApiCreateSqlScript dasApiCreateSqlScript,
