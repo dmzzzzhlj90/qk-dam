@@ -3,6 +3,7 @@ package com.qk.dm.dataservice.service;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateConfig;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
+import com.qk.dm.dataservice.vo.DasApiCreateConfigDefinitionVO;
 import com.qk.dm.dataservice.vo.DasApiCreateConfigVO;
 import com.qk.dm.dataservice.vo.DebugApiResultVO;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,9 @@ public interface DasApiCreateConfigService {
     Object debugModel(DasApiCreateConfigVO dasApiCreateConfigVO);
 
     DasApiBasicInfoVO setDasApiBasicInfoDelInputParam(DasApiBasicInfo dasApiBasicInfo);
+
+    List<DasApiCreateConfigDefinitionVO> searchCreateConfigByApiId(List<String> apiIds);
+
 
 //  // ========================数据源服务API调用=====================================
 //  List<String> getAllConnType();

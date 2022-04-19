@@ -51,7 +51,7 @@ dependencies {
     implementation project(":dam-log")
     implementation project(":qk-dataservice-spi")
     implementation project(":gateway-apisix")
-    implementation project(":dm-feign-client")
+    implementation project(":dm-metadata-feign")
     implementation project(":datasource-common-core")
     implementation project(":metadata-common-core")
     implementation project(":qk-openapi-lib")
@@ -67,6 +67,7 @@ dependencies {
     implementation group: 'org.openapi4j', name: 'openapi-parser', version: '1.0.7'
 
     implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
+    implementation 'com.alibaba:easyexcel'
 
 //    implementation "com.github.ben-manes.caffeine:caffeine"
 //    compile project(":qk-authorization")

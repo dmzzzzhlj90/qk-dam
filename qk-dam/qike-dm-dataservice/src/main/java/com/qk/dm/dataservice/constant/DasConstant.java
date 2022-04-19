@@ -1,13 +1,18 @@
 package com.qk.dm.dataservice.constant;
 
-import java.util.LinkedList;
-import java.util.List;
-
+/**
+ * 数据服务常量定义
+ *
+ * @author wjq
+ * @date 2021/8/01
+ * @since 1.0.0
+ */
 public class DasConstant {
     /**
      * 目录顶级层级父级id
      */
     public static final String TREE_DIR_TOP_PARENT_ID = "-1";
+    public static final String TREE_DIR_TOP_PARENT_NAME = "根目录";
 
     // API路由匹配,无API_ROUTE_ID,默认值为0
     public static final String DEFAULT_API_ROUTE_ID = "0";

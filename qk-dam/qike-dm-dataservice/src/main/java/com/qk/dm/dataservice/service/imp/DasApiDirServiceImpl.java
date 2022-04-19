@@ -1,6 +1,7 @@
 package com.qk.dm.dataservice.service.imp;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.dataservice.constant.DasConstant;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiDir;
 import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class DasApiDirServiceImpl implements DasApiDirService {
     private static final QDasApiDir qDasApiDir = QDasApiDir.dasApiDir;
   private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
+    public static final String DIR_NAME = "dirName";
 
     private final DasApiDirRepository dasApiDirRepository;
     private final DasApiBasicInfoRepository dasApiBasicInfoRepository;
@@ -43,7 +45,7 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     @Override
     public List<DasApiDirTreeVO> searchList() {
         Predicate predicate = qDasApiDir.delFlag.eq(0);
-        List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate, Sort.by("dirName"));
+        List<DasApiDir> dasApiDirList = (List<DasApiDir>) dasApiDirRepository.findAll(predicate, Sort.by(DIR_NAME));
         List<DasApiDirTreeVO> respList = new ArrayList<>();
         for (DasApiDir dasApiDir : dasApiDirList) {
             DasApiDirTreeVO dirTreeVO = DasApiDirTreeMapper.INSTANCE.useDasApiDirTreeVO(dasApiDir);
@@ -53,7 +55,12 @@ public class DasApiDirServiceImpl implements DasApiDirService {
     }
 
     public static List<DasApiDirTreeVO> buildByRecursive(List<DasApiDirTreeVO> respList) {
-        DasApiDirTreeVO topParent = DasApiDirTreeVO.builder().dirId("-1").title("根目录").value("根目录").parentId("-1").build();
+        DasApiDirTreeVO topParent = DasApiDirTreeVO.builder()
+                .dirId(DasConstant.TREE_DIR_TOP_PARENT_ID)
+                .title(DasConstant.TREE_DIR_TOP_PARENT_NAME)
+                .value(DasConstant.TREE_DIR_TOP_PARENT_NAME)
+                .parentId(DasConstant.TREE_DIR_TOP_PARENT_ID)
+                .build();
         List<DasApiDirTreeVO> trees = new ArrayList<>();
         trees.add(findChildren(topParent, respList));
 
