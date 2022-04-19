@@ -1,6 +1,5 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.authority.common"

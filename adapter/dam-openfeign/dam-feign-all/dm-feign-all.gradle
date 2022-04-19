@@ -6,10 +6,9 @@ version "${commonLibVersion}"
 group "com.qk.dm"
 
 dependencies {
-    compile project(":commons-core")
-    compile project(":metadata-common-core")
-    implementation project(":datastandards-common-core")
-
+    compile project(":dm-metadata-feign")
+    compile project(":dm-datasource-feign")
+    compile project(":dm-datastandard-feign")
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 

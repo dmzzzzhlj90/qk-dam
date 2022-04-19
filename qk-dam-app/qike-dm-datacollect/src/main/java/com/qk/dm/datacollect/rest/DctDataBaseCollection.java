@@ -3,7 +3,7 @@ package com.qk.dm.datacollect.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datacollect.service.DctDataSourceService;
-import com.qk.dm.service.DataBaseService;
+import com.qk.dm.DataBaseService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;

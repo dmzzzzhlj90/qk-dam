@@ -8,7 +8,8 @@ group "com.qk.dm"
 dependencies {
     compile project(":commons-core")
     compile project(":metadata-common-core")
-    implementation project(":datastandards-common-core")
+    compile project(":datasource-common-core")
+    compile project(":dm-metadata-feign")
 
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"

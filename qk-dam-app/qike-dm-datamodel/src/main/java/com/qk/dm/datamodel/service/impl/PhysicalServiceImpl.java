@@ -29,7 +29,8 @@ import com.qk.dm.datamodel.repositories.ModelSqlRepository;
 import com.qk.dm.datamodel.service.ModelSqlService;
 import com.qk.dm.datamodel.service.PhysicalService;
 import com.qk.dm.datamodel.util.CheckUtil;
-import com.qk.dm.service.DataBaseService;
+import com.qk.dm.DataBaseService;
+import com.qk.dm.service.DsdBasicinfoService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -57,17 +58,18 @@ public class PhysicalServiceImpl implements PhysicalService {
   private JPAQueryFactory jpaQueryFactory;
   private final EntityManager entityManager;
   private final DataBaseService dataBaseService;
+  private final DsdBasicinfoService dsdBasicinfoService;
   @PostConstruct
   public void initFactory() {
     jpaQueryFactory = new JPAQueryFactory(entityManager);
   }
 
   public PhysicalServiceImpl(ModelSqlService modelSqlService,
-      ModelPhysicalTableRepository modelPhysicalTableRepository,
-      ModelPhysicalColumnRepository modelPhysicalColumnRepository,
-      ModelPhysicalRelationRepository modelPhysicalRelationRepository,
-      ModelSqlRepository modelSqlRepository, EntityManager entityManager,
-      DataBaseService dataBaseService) {
+                             ModelPhysicalTableRepository modelPhysicalTableRepository,
+                             ModelPhysicalColumnRepository modelPhysicalColumnRepository,
+                             ModelPhysicalRelationRepository modelPhysicalRelationRepository,
+                             ModelSqlRepository modelSqlRepository, EntityManager entityManager,
+                             DataBaseService dataBaseService, DsdBasicinfoService dsdBasicinfoService) {
     this.modelSqlService = modelSqlService;
     this.modelPhysicalTableRepository = modelPhysicalTableRepository;
     this.modelPhysicalColumnRepository = modelPhysicalColumnRepository;
@@ -75,6 +77,7 @@ public class PhysicalServiceImpl implements PhysicalService {
     this.modelSqlRepository = modelSqlRepository;
     this.entityManager = entityManager;
     this.dataBaseService = dataBaseService;
+    this.dsdBasicinfoService = dsdBasicinfoService;
   }
 
   /**
@@ -694,7 +697,7 @@ public class PhysicalServiceImpl implements PhysicalService {
 
   @Override
   public List<DataStandardInfoVO> getTree() {
-    List<DataStandardTreeVO> tree = dataBaseService.getTree();
+    List<DataStandardTreeVO> tree = dsdBasicinfoService.getTree();
     List<DataStandardTreeVO> dealList = tree.stream().peek(dataStandardTreeVO -> {
           if (StringUtils.isEmpty(dataStandardTreeVO.getParentId())) {
             dataStandardTreeVO.setDirDsdName(ModelStatus.DIRNAME);

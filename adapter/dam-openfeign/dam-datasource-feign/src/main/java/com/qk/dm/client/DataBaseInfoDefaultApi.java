@@ -7,10 +7,6 @@ import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dam.datasource.entity.DsDatasourceVO;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
-import com.qk.dam.entity.DataStandardTreeVO;
-import com.qk.dam.entity.DsdBasicInfoParamsDTO;
-import com.qk.dam.entity.DsdBasicInfoVO;
-import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.*;
 import com.qk.dam.metedata.vo.AtlasPagination;
 import com.qk.dam.metedata.vo.MtdColumnSearchVO;
@@ -18,7 +14,6 @@ import com.qk.dam.metedata.vo.MtdDbSearchVO;
 import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.feign.DataSourceFeign;
 import com.qk.dm.feign.DataSourceV2Feign;
-import com.qk.dm.feign.DatastandardsFeign;
 import com.qk.dm.feign.MetaDataFeign;
 import org.springframework.stereotype.Component;
 
@@ -38,15 +33,12 @@ public class DataBaseInfoDefaultApi {
     private final DataSourceFeign dataSourceFeign;
     private final MetaDataFeign metaDataFeign;
     private final DataSourceV2Feign dataSourceV2Feign;
-    private final DatastandardsFeign datastandardsFeign;
 
     public DataBaseInfoDefaultApi(DataSourceFeign dataSourceFeign, MetaDataFeign metaDataFeign,
-                                  DataSourceV2Feign dataSourceV2Feign,
-                                  DatastandardsFeign datastandardsFeign) {
+                                  DataSourceV2Feign dataSourceV2Feign) {
         this.dataSourceFeign = dataSourceFeign;
         this.metaDataFeign = metaDataFeign;
         this.dataSourceV2Feign = dataSourceV2Feign;
-        this.datastandardsFeign = datastandardsFeign;
     }
 
     // ========================数据源服务_API调用=====================================
@@ -186,28 +178,6 @@ public class DataBaseInfoDefaultApi {
         return dataSourceV2Feign.getDataSourceByDsname(id).getData();
     }
 
-    /**
-     * 通过条件查询数据标准
-     *
-     * @param dsdBasicInfoParamsDTO
-     * @return
-     */
-    public PageResultVO<DsdBasicInfoVO> getStandard(DsdBasicInfoParamsDTO dsdBasicInfoParamsDTO) {
-        DefaultCommonResult<PageResultVO<DsdBasicInfoVO>> pageResultVODefaultCommonResult = datastandardsFeign.searchList(dsdBasicInfoParamsDTO);
-        if (pageResultVODefaultCommonResult != null) {
-            return pageResultVODefaultCommonResult.getData();
-        }
-        return null;
-    }
-
-    /**
-     * 获取主题数据
-     *
-     * @return
-     */
-    public List<DataStandardTreeVO> getTree() {
-        return datastandardsFeign.searchList().getData();
-    }
 
     /**
      * 根据表的guid获取表的字段信息

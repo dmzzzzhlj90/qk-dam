@@ -5,13 +5,14 @@ plugins {
 version "${commonLibVersion}"
 group "com.qk.dam.datastandards.common"
 dependencies {
-    implementation project(":qk-data-jpa")
     compile group: 'org.projectlombok', name: 'lombok'
+    compile project(":commons-core")
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
+    implementation 'org.springframework:spring-context'
     annotationProcessor 'org.projectlombok:lombok'
 }
 dependencyManagement {

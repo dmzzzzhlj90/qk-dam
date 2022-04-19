@@ -9,7 +9,8 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.datamodel.service.PhysicalService;
-import com.qk.dm.service.DataBaseService;
+import com.qk.dm.DataBaseService;
+import com.qk.dm.service.DsdBasicinfoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,14 @@ import java.util.Map;
 public class ModelDataBaseController {
 
     private final DataBaseService dataBaseService;
+    private final DsdBasicinfoService dsdBasicinfoService;
 
     private final PhysicalService physicalService;
 
     public ModelDataBaseController(DataBaseService dataBaseService,
-        PhysicalService physicalService){
+                                   DsdBasicinfoService dsdBasicinfoService, PhysicalService physicalService){
         this.dataBaseService = dataBaseService;
+        this.dsdBasicinfoService = dsdBasicinfoService;
         this.physicalService = physicalService;
     }
     /**
@@ -98,7 +101,7 @@ public class ModelDataBaseController {
     @PostMapping("/standard")
     public DefaultCommonResult<PageResultVO<DsdBasicinfoParamsVO>>getStandard(@RequestBody DsdBasicInfoParamsDTO dsdBasicInfoParamsDTO){
         return DefaultCommonResult.success(
-            ResultCodeEnum.OK, dataBaseService.getStandard(dsdBasicInfoParamsDTO));
+            ResultCodeEnum.OK, dsdBasicinfoService.getStandard(dsdBasicInfoParamsDTO));
     }
 
     /**

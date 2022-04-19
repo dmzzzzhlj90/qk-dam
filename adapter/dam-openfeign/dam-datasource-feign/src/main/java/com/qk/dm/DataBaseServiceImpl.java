@@ -1,20 +1,13 @@
-package com.qk.dm.service;
+package com.qk.dm;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.DsDatasourceVO;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.entity.DataStandardTreeVO;
-import com.qk.dam.entity.DsdBasicInfoParamsDTO;
-import com.qk.dam.entity.DsdBasicInfoVO;
-import com.qk.dam.entity.DsdBasicinfoParamsVO;
-import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -111,31 +104,6 @@ public class DataBaseServiceImpl implements DataBaseService {
     List<DsDatasourceVO> resultDataSourceById = dataBaseInfoDefaultApi.getResultDataSourceById(id);
     return resultDataSourceById.stream().filter(Objects::nonNull).findFirst().map(DsDatasourceVO::getConnectBasicInfo).orElse(null).toString();
   }
-
-  @Override
-  public PageResultVO<DsdBasicinfoParamsVO> getStandard(DsdBasicInfoParamsDTO dsdBasicInfoParamsDTO){
-    PageResultVO<DsdBasicinfoParamsVO> resultPag = new PageResultVO<>();
-    PageResultVO<DsdBasicInfoVO> dsdBasicInfoVOPageResultVO = dataBaseInfoDefaultApi.getStandard(dsdBasicInfoParamsDTO);
-    if (dsdBasicInfoVOPageResultVO !=null && !CollectionUtils.isEmpty(dsdBasicInfoVOPageResultVO.getList())){
-      List<DsdBasicinfoParamsVO> collect = dsdBasicInfoVOPageResultVO.getList()
-          .stream().map(dsdBasicInfoVO -> {
-            DsdBasicinfoParamsVO dsdBasicinfoParamsVO = new DsdBasicinfoParamsVO();
-            dsdBasicinfoParamsVO.setId(dsdBasicInfoVO.getId());
-            dsdBasicinfoParamsVO.setDsdCode(dsdBasicInfoVO.getDsdCode());
-            dsdBasicinfoParamsVO.setDsdName(dsdBasicInfoVO.getDsdName());
-            return dsdBasicinfoParamsVO;
-          }).collect(Collectors.toList());
-      BeanUtils.copyProperties(dsdBasicInfoVOPageResultVO,resultPag);
-      resultPag.setList(collect);
-    }
-    return resultPag;
-  }
-
-  @Override
-  public List<DataStandardTreeVO> getTree() {
-    return dataBaseInfoDefaultApi.getTree();
-  }
-
   private String getServer(String dataSourceName) {
     ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getDataSource(dataSourceName);
     Map<String, String> map = GsonUtil.fromJsonString(resultDataSourceByConnectName.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {

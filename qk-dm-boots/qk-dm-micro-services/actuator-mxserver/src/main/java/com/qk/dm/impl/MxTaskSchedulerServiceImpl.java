@@ -1,4 +1,4 @@
-package com.qk.dm.service.impl;
+package com.qk.dm.impl;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -6,7 +6,7 @@ import com.qk.dam.sqlloader.constant.LongGovConstant;
 import com.qk.dam.sqlloader.repo.DolphinSchedulerAgg;
 import com.qk.dam.sqlloader.vo.DolphinProcessInstanceVO;
 import com.qk.dm.constant.CustomMetricsConstant;
-import com.qk.dm.service.MxTaskSchedulerService;
+import com.qk.dm.MxTaskSchedulerService;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.text.SimpleDateFormat;

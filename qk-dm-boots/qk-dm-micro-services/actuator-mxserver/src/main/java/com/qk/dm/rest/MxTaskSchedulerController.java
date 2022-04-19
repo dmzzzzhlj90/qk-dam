@@ -1,9 +1,9 @@
-package com.qk.dm.controller;
+package com.qk.dm.rest;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.service.MxTaskSchedulerService;
+import com.qk.dm.MxTaskSchedulerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

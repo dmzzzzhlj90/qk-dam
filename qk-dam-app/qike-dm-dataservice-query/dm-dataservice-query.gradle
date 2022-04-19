@@ -39,6 +39,7 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
     implementation project(":qk-datasource")
+    implementation project(":dm-datasource-feign")
 
     implementation 'org.mybatis:mybatis:3.5.9'
 

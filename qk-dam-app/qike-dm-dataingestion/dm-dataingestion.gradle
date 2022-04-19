@@ -30,7 +30,7 @@ dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
-    implementation project(":dm-metadata-feign")
+    implementation project(":dm-feign-all")
     implementation project(":dolphinscheduler-starter-client")
     implementation group: 'com.github.shalousun', name: 'smart-doc', version: '2.3.6'
     implementation 'org.springframework.boot:spring-boot-starter-web'

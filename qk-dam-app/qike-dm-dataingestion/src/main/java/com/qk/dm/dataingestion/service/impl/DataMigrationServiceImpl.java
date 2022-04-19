@@ -19,7 +19,7 @@ import com.qk.dm.dataingestion.service.DisColumnInfoService;
 import com.qk.dm.dataingestion.service.DisSchedulerConfigService;
 import com.qk.dm.dataingestion.strategy.DataSyncFactory;
 import com.qk.dm.dataingestion.vo.*;
-import com.qk.dm.service.DataBaseService;
+import com.qk.dm.DataBaseService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;

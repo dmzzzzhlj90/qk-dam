@@ -1,5 +1,6 @@
 package com.qk.dm.dataquery.config;
 
+import com.qk.dm.DataBaseService;
 import com.qk.dm.dataquery.mybatis.DataServiceSqlSessionFactory;
 import com.qk.dm.dataquery.mybatis.MybatisDatasource;
 import com.qk.dm.dataquery.mybatis.MybatisEnvironment;
@@ -11,6 +12,8 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 
 /**
  * @author zhudaoming
@@ -18,13 +21,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MybatisConfiguration {
 
-    MybatisConfiguration(){
-        throw new IllegalStateException("Utility class");
-    }
-
     @Bean
-    MybatisDatasource mybatisDatasourceContext(){
+    MybatisDatasource mybatisDatasourceContext(final DataBaseService dataBaseService){
         // 对接数据源管理，且定时扫描新数据源，时间为2分钟
+        List<String> allConnType = dataBaseService.getAllConnType();
+
+        List<String> allDataSource = dataBaseService.getAllDataSource("");
+
         return new MybatisDatasource();
     }
 

@@ -1,4 +1,4 @@
-package com.qk.dm.service;
+package com.qk.dm;
 
 import org.springframework.stereotype.Service;
 
