@@ -176,4 +176,22 @@ public class AccessTokenResponse {
         this.errorUri = errorUri;
     }
 
+    @Override
+    public String toString() {
+        return "AccessTokenResponse{" +
+                "token='" + token + '\'' +
+                ", expiresIn=" + expiresIn +
+                ", refreshExpiresIn=" + refreshExpiresIn +
+                ", refreshToken='" + refreshToken + '\'' +
+                ", tokenType='" + tokenType + '\'' +
+                ", idToken='" + idToken + '\'' +
+                ", notBeforePolicy=" + notBeforePolicy +
+                ", sessionState='" + sessionState + '\'' +
+                ", otherClaims=" + otherClaims +
+                ", scope='" + scope + '\'' +
+                ", error='" + error + '\'' +
+                ", errorDescription='" + errorDescription + '\'' +
+                ", errorUri='" + errorUri + '\'' +
+                '}';
+    }
 }

@@ -1,9 +1,10 @@
 package com.qk.dam.auth.password;
 
+import com.google.gson.JsonObject;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import org.springframework.beans.factory.annotation.Value;
+import com.qk.dam.commons.util.GsonUtil;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +22,12 @@ import org.springframework.web.client.RestTemplate;
 @RefreshScope
 public class PasswordController {
     final RestTemplate restTemplate = new RestTemplate();
-    @Value("${spring.security.oauth2.client.provider.qkdatacenter.issuer-uri}")
-    private String issuer_uri;
-    @Value("${spring.security.oauth2.client.registration.qkdatacenter.client-id}")
-    private String clientId;
+    private String openid_connect = KeyCloakUrlProperty.issuer_uri + "/protocol/openid-connect";
+    private String logout = openid_connect + "/logout";
+    private String token = openid_connect + "/token";
+    private String introspect = token + "/introspect";
+    private String parameter = "client_secret=" + KeyCloakUrlProperty.clientSecret + "&client_id=" + KeyCloakUrlProperty.clientId;
+
 
     /**
      * 密码登陆
@@ -35,63 +38,81 @@ public class PasswordController {
     @RequestMapping(value = "/auth/password/login", method = RequestMethod.POST)
     public DefaultCommonResult<TokenInfoVO> password_login(@RequestBody LoginInfoVO loginInfoVO) {
         try {
-            TokenInfoVO tokenInfoVO = TokenInfoVO
-                    .builder()
-                    .access_token(login(loginInfoVO).getToken())
-                    .build();
-            return DefaultCommonResult.success(ResultCodeEnum.OK, tokenInfoVO);
+            return DefaultCommonResult.success(ResultCodeEnum.OK, login(loginInfoVO));
         } catch (BizException n) {
             return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST, n.getMessage());
         }
     }
 
-    @RequestMapping(value = "/auth/password/login2", method = RequestMethod.GET)
-    public void password_login2(String token)  {
+    //todo 底下几个都需要更改请求方法及参数封装
+    /**
+     * 验证token
+     * @param token
+     */
+    @RequestMapping(value = "/auth/token/introspect", method = RequestMethod.GET)
+    public void token_introspect(String token)  {
         introspect(token);
     }
 
-    @RequestMapping(value = "/auth/password/login3", method = RequestMethod.GET)
-    public void password_login3(String refresh_token) {
-        refresh(null, refresh_token);
+    /**
+     * 刷新token
+     * @param refresh_token
+     */
+    @RequestMapping(value = "/auth/token/refresh", method = RequestMethod.GET)
+    public void token_refresh(String refresh_token) {
+        refresh(refresh_token);
     }
 
-    @RequestMapping(value = "/auth/password/login4", method = RequestMethod.GET)
-    public void password_login4(String refresh_token) {
-        logout(null, refresh_token);
+    /**
+     * 退出
+     * @param refresh_token
+     */
+    @RequestMapping(value = "/auth/token/logout", method = RequestMethod.GET)
+    public void token_logout(String refresh_token) {
+        logout(refresh_token);
     }
 
-    public AccessTokenResponse login(LoginInfoVO loginInfoVO) {
-        String uri = issuer_uri + "/protocol/openid-connect/token";
-        String data = "grant_type=password" +
+
+    public TokenInfoVO login(LoginInfoVO loginInfoVO) {
+        String data = parameter + "&grant_type=password" +
                 "&username=" + loginInfoVO.getUsername() +
-                "&password=" + loginInfoVO.getPassword() +
-                "&client_id=" + clientId;
-        return keycloakPost(uri, data, AccessTokenResponse.class);
+                "&password=" + loginInfoVO.getPassword();
+        AccessTokenResponse accessToken = keycloakPost(token, data, AccessTokenResponse.class);
+        return TokenInfoVO
+                .builder()
+                .access_token(accessToken.getToken())
+                .refresh_token(accessToken.getRefreshToken())
+                .expires_in(accessToken.getExpiresIn())
+                .build();
     }
 
-    public void introspect(String token) {
-        String uri = issuer_uri + "/protocol/openid-connect/token/introspect";
-        String data = "client_secret=" + "6fdfce20-1f50-43a2-bbbe-62337e35c3d9" +
-                "&token=" + token +
-                "&client_id=" + clientId;
-        keycloakPost(uri, data, String.class);
+    public Boolean introspect(String token) {
+        String data = parameter + "&token=" + token;
+        String introspectResult = keycloakPost(introspect, data, String.class);
+        JsonObject jsonObject = GsonUtil.toJsonObject(introspectResult);
+        Boolean active = jsonObject.get("active").getAsBoolean();
+        if(active){
+            System.out.println("有效");
+        }else{
+            System.out.println("无效");
+        }
+        return active;
     }
 
-    public void refresh(String client_secret, String refresh_token) {
-        String uri = issuer_uri + "/protocol/openid-connect/token";
-        String data = "grant_type=refresh_token" +
-                "&client_secret=" + "6fdfce20-1f50-43a2-bbbe-62337e35c3d9" +
-                "&refresh_token=" + refresh_token +
-                "&client_id=" + clientId;
-        keycloakPost(uri, data, String.class);
+    public TokenInfoVO refresh(String refresh_token) {
+        String data = parameter + "grant_type=refresh_token&refresh_token=" + refresh_token;
+        AccessTokenResponse accessToken = keycloakPost(token, data, AccessTokenResponse.class);
+        return TokenInfoVO
+                .builder()
+                .access_token(accessToken.getToken())
+                .refresh_token(accessToken.getRefreshToken())
+                .expires_in(accessToken.getExpiresIn())
+                .build();
     }
 
-    public void logout(String client_secret, String refresh_token) {
-        String uri = issuer_uri + "/protocol/openid-connect/logout";
-        String data = "client_secret=" + "6fdfce20-1f50-43a2-bbbe-62337e35c3d9" +
-                "&refresh_token=" + refresh_token +
-                "&client_id=" + clientId;
-        keycloakPost(uri, data, String.class);
+    public void logout(String refresh_token) {
+        String data = parameter + "&refresh_token=" + refresh_token;
+        keycloakPost(logout, data, String.class);
     }
 
 
@@ -101,24 +122,17 @@ public class PasswordController {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Content-Type", "application/x-www-form-urlencoded");
             HttpEntity<String> entity = new HttpEntity<>(data, headers);
-            response = restTemplate.exchange(uri,
-                    HttpMethod.POST, entity, clazz);
-            System.out.println("retult:" + response.getBody().toString());
+            response = restTemplate.exchange(uri, HttpMethod.POST, entity, clazz);
+            System.out.println("retult:" + response.getBody());
         }catch (Exception e){
             throw new BizException("内部错误，请联系管理员");
         }
-        if (response.getStatusCode().value() != HttpStatus.OK.value()) {
+        if (response.getStatusCode().value() != HttpStatus.OK.value()
+                && response.getStatusCode().value() != HttpStatus.NO_CONTENT.value()) {
             throw new BizException("账号或密码错误");
         }
         return response.getBody();
     }
-
-
-//    http://10.80.27.69:8180/auth/realms/quickstart/protocol/openid-connect/token/introspect
-//    client_id=app-springboot-confidential&client_secret=3acf7692-49cb-4c45-9943-6f3dba512dae
-
-//    http://10.80.27.69:8180/auth/realms/quickstart/protocol/openid-connect/token
-//    client_id=app-springboot-confidential&client_secret=3acf7692-49cb-4c45-9943-6f3dba512dae&grant_type=refresh_token&refresh_token=asdfasd
 
 
 //    @RequestMapping(value = "/auth/password/login2", method = RequestMethod.GET)
