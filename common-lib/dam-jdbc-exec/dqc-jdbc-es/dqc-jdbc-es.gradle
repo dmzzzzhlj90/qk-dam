@@ -35,16 +35,16 @@ dependencyManagement {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     }
 }
-jar {
-    archiveVersion = "${commonLibVersion}"
-    String someString = ''
-    configurations.runtimeClasspath.each {someString = someString + " lib//"+it.name}
-    manifest {
-        attributes 'Main-Class': 'com.qk.dam.es.ElasticSearchMain'
-        attributes 'Class-Path': someString
-    }
-    task copyJar(type:Copy){
-        from configurations.runtimeClasspath
-        into ('build/libs/lib')
-    }
-}
+//jar {
+//    archiveVersion = "${commonLibVersion}"
+//    String someString = ''
+//    configurations.runtimeClasspath.each {someString = someString + " lib//"+it.name}
+//    manifest {
+//        attributes 'Main-Class': 'com.qk.dam.es.ElasticSearchMain'
+//        attributes 'Class-Path': someString
+//    }
+//    task copyJar(type:Copy){
+//        from configurations.runtimeClasspath
+//        into ('build/libs/lib')
+//    }
+//}
