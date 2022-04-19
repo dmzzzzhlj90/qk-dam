@@ -1,7 +1,5 @@
 package com.qk.dam.metadata.catacollect.pojo;
 
-import lombok.*;
-
 import java.util.List;
 
 /**
