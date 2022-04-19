@@ -34,6 +34,7 @@ public class DolphinTaskDefinitionPropertiesBean {
     private String timeout;
     private String delayTime;
     private String environmentCode;
+    private Long projectCode;
     @Data
     public static class TaskParams {
         private Integer customConfig;
