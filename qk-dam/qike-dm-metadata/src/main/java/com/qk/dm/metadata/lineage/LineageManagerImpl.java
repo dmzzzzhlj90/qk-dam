@@ -8,7 +8,6 @@ import com.google.common.collect.Lists;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dam.metedata.AtlasClient;
-import com.qk.dam.metedata.config.AtlasConfig;
 import com.qk.dm.metadata.vo.LineageSearchVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.atlas.AtlasClientV2;

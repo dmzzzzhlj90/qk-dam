@@ -2,7 +2,6 @@ package com.qk.dm.dataservice.service;
 
 import com.qk.dam.dataservice.spi.pojo.RouteData;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.dataservice.vo.BulkDeleteParamVO;
 import com.qk.dm.dataservice.vo.DasApiAppManageInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiAppManageInfoVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;

@@ -13,7 +13,6 @@ import com.qk.dm.dataservice.constant.RegisterConstantParamHeaderInfoEnum;
 import com.qk.dm.dataservice.dto.ApiRegisterDTO;
 import com.qk.dm.dataservice.entity.*;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
-import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateSqlScriptMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiRegisterMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;

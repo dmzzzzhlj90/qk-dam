@@ -7,7 +7,7 @@ import com.qk.dm.metadata.service.MetaDataLineageService;
 import com.qk.dm.metadata.vo.*;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.apache.atlas.AtlasClientV2;
+
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;

@@ -4,7 +4,6 @@ import com.qk.dam.datasource.entity.ConnectBasicInfo;
 import com.qk.dm.dataquality.dolphinapi.config.DolphinSchedulerInfoConfig;
 import com.qk.dm.dataquality.dolphinapi.dto.TaskDefinitionDTO;
 import com.qk.dm.dataquality.dolphinapi.dto.ResourceDTO;
-import com.qk.dm.dataquality.dolphinapi.dto.TenantDTO;
 import com.qk.dm.dataquality.dolphinapi.handler.impl.DqcTaskDefinitionDataHandler;
 import com.qk.dm.dataquality.vo.DqcSchedulerBasicInfoVO;
 

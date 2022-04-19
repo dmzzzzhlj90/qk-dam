@@ -2,7 +2,6 @@ package com.qk.dm.dataservice.rest.controller.base;
 
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
-import com.google.common.io.BaseEncoding;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.rest.mapping.DataServiceEnum;

@@ -5,8 +5,6 @@ import com.qk.dm.datamodel.params.dto.ModelFactQueryDTO;
 import com.qk.dm.datamodel.params.dto.ModelFactTableDTO;
 import com.qk.dm.datamodel.params.vo.ModelFactTableVO;
 
-import java.util.List;
-
 public interface ModelFactTableService {
     void insert(ModelFactTableDTO modelFactTableDTO);
 

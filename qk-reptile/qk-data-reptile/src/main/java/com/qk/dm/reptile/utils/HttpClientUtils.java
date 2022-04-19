@@ -2,7 +2,6 @@ package com.qk.dm.reptile.utils;
 
 
 import com.alibaba.cloud.commons.lang.StringUtils;
-import com.qk.dam.commons.util.GsonUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;

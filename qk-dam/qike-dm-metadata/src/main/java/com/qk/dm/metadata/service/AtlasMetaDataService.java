@@ -1,8 +1,6 @@
 package com.qk.dm.metadata.service;
 
 import com.qk.dam.metedata.entity.MtdAtlasEntityType;
-import com.qk.dam.metedata.entity.MtdTables;
-import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.metadata.vo.*;
 import java.util.List;
 import java.util.Map;

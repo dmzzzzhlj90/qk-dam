@@ -7,7 +7,6 @@ import com.qk.dam.metedata.vo.MtdColumnSearchVO;
 import com.qk.dam.metedata.vo.MtdDbSearchVO;
 import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.metadata.service.MtdSearchService;
-import com.qk.dm.metadata.vo.MtdTableDetailVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

@@ -15,7 +15,6 @@ import com.qk.dm.dataservice.manager.ApiGatewayManager;
 import com.qk.plugin.dataservice.apisix.consumer.ApiSixConsumerInfo;
 import com.qk.plugin.dataservice.apisix.route.ApiSixRouteInfo;
 import com.qk.plugin.dataservice.apisix.route.constant.ApiSixConstant;
-import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
