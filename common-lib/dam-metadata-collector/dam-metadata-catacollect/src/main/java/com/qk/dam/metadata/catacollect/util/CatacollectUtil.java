@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * @date 2022/4/14 20:04
  * @since 1.0.0
  */
-public class Util {
+public class CatacollectUtil {
   /**
    * MYSQL数据库
    */
