@@ -8,8 +8,8 @@ import com.qk.dam.metadata.catacollect.repo.HiveDbToTableAgg;
 import com.qk.dam.metadata.catacollect.repo.MysqlAtlasEntity;
 import com.qk.dam.metadata.catacollect.repo.MysqlDbToTableAgg;
 import com.qk.dam.metadata.catacollect.service.MetadataApiService;
-import com.qk.dam.metadata.catacollect.util.SourcesUtil;
 import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
+import com.qk.dam.metadata.catacollect.util.SourcesUtil;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.springframework.stereotype.Service;
 

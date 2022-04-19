@@ -10,8 +10,8 @@ import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
 import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlColumnType;
 import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlDbType;
 import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlTableType;
-import com.qk.dam.metadata.catacollect.util.SourcesUtil;
 import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
+import com.qk.dam.metadata.catacollect.util.SourcesUtil;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.commons.lang.StringUtils;
 
