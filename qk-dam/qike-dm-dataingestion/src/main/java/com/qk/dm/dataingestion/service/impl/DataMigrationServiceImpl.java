@@ -98,7 +98,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                 IngestionType.getVal(baseInfo.getSourceConnectType()),
                 IngestionType.getVal(baseInfo.getTargetConnectType()));
 
-        dataxDolphinClient.updateProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
+        dataxDolphinClient.updateProcessDefinition(baseInfo.getJobName(),
                 baseInfo.getTaskCode(),dataxJson,new DolphinTaskDefinitionPropertiesBean());
     }
 
@@ -167,7 +167,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                 IngestionType.getVal(baseInfo.getSourceConnectType()),
                 IngestionType.getVal(baseInfo.getTargetConnectType()));
 
-        Result result = dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
+        Result result = dataxDolphinClient.createProcessDefinition(baseInfo.getJobName(),
                 dataxJson);
         DolphinTaskDefinitionPropertiesBean data =  new Gson().fromJson(GsonUtil.toJsonString(result.getData())
                 ,DolphinTaskDefinitionPropertiesBean.class);
@@ -181,7 +181,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         if (Objects.nonNull(paramsVO.getJobName())) {
             booleanBuilder.and(qDisMigrationBaseInfo.jobName.contains(paramsVO.getJobName()));
         }
-        if (Objects.nonNull(paramsVO.getDirId())) {
+        if (Objects.nonNull(paramsVO.getDirId())&&!Objects.equals(paramsVO.getDirId(),"-1")) {
             booleanBuilder.and(qDisMigrationBaseInfo.dirId.contains(paramsVO.getDirId()));
         }
     }
