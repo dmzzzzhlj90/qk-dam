@@ -73,7 +73,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
-        //生产dataxjson
+        //生成dataxjson
         createDataxJson(dataMigrationVO,baseInfoId);
     }
 
@@ -95,8 +95,8 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         //修改任务配置信息
         schedulerConfigService.update(dataMigrationVO.getSchedulerConfig());
         String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
-                IngestionType.getVal(baseInfo.getSourceDbType()),
-                IngestionType.getVal(baseInfo.getTargetDbType()));
+                IngestionType.getVal(baseInfo.getSourceConnectType()),
+                IngestionType.getVal(baseInfo.getTargetConnectType()));
 
         dataxDolphinClient.updateProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
                 baseInfo.getTaskCode(),dataxJson,new DolphinTaskDefinitionPropertiesBean());
@@ -118,8 +118,8 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                 .schedulerConfig(schedulerConfigService.detail(id)).build();
         Map<String, Object> map = Maps.newHashMap();
         String json = dataSyncFactory.transJson(dataMigrationVO,
-                IngestionType.getVal(baseInfo.getSourceDbType()),
-                IngestionType.getVal(baseInfo.getTargetDbType()));
+                IngestionType.getVal(baseInfo.getSourceConnectType()),
+                IngestionType.getVal(baseInfo.getTargetConnectType()));
 
         map.put("dataxJson",json);
         return map;
@@ -164,8 +164,8 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     private void createDataxJson(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
        DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
         String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
-                IngestionType.getVal(baseInfo.getSourceDbType()),
-                IngestionType.getVal(baseInfo.getTargetDbType()));
+                IngestionType.getVal(baseInfo.getSourceConnectType()),
+                IngestionType.getVal(baseInfo.getTargetConnectType()));
 
         Result result = dataxDolphinClient.createProcessDefinition(Long.parseLong("3877993028896"), baseInfo.getJobName(),
                 dataxJson);
