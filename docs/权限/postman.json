@@ -1,0 +1,74 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "f32eedf5-fa12-40a3-9b5f-1d810868c583",
+    "name": "dm-authority"
+  },
+  "item": [
+    {
+      "name": "数据源连接",
+      "item": [
+        {
+          "name": "获取数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/types",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接类型",
+            "header": []
+          },
+          "description": "获取数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/:type",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接",
+            "header": []
+          },
+          "description": "获取数据源连接"
+        }
+      ]
+    }
+  ]
+}
