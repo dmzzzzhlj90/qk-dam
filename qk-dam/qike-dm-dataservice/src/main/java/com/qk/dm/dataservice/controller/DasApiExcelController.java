@@ -38,10 +38,10 @@ public class DasApiExcelController {
      * @param file
      * @return DefaultCommonResult
      */
-    @PostMapping("/api/data/upload/{dirId}")
+    @PostMapping("/api/data/upload")
     @ResponseBody
 //  @Auth(bizType = BizResource.DSD_EXCEL_UPLOAD, actionType = RestActionType.IMPORT)
-    public DefaultCommonResult apiDataUpload(MultipartFile file, @PathVariable("dirId") String dirId) {
+    public DefaultCommonResult apiDataUpload(MultipartFile file, @RequestParam("dirId") String dirId) {
         dasApiExcelService.apiDataUpload(file, dirId);
         return DefaultCommonResult.success();
     }
@@ -49,12 +49,13 @@ public class DasApiExcelController {
     /**
      * API导出
      *
-     * @param response
+     * @param dirId
+     * @throws IOException
      */
-    @PostMapping("/api/data/download/{dirId}")
+    @GetMapping("/api/data/download")
 //  @Auth(bizType = BizResource.DSD_EXCEL_DOWNLOAD, actionType = RestActionType.EXPORT)
-    public void apiDataDownload(@PathVariable("dirId") String dirId, HttpServletResponse response) throws IOException {
-        dasApiExcelService.apiDataDownload(dirId, response);
+    public void apiDataDownload(@RequestParam("dirId") String dirId) throws IOException {
+        dasApiExcelService.apiDataDownload(dirId);
     }
 
 }

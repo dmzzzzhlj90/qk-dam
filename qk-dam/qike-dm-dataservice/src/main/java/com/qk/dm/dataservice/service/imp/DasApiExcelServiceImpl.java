@@ -23,6 +23,9 @@ import com.qk.dm.dataservice.vo.DasApiRegisterDefinitionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +44,18 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DasApiExcelServiceImpl implements DasApiExcelService {
+    /**
+     * 获取response
+     */
+    public static HttpServletResponse getResponse() {
+        return getRequestAttributes().getResponse();
+    }
+
+    public static ServletRequestAttributes getRequestAttributes() {
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        return (ServletRequestAttributes) attributes;
+    }
+
     private static final Log LOG = LogFactory.get("数据标准excel导入导出");
 
     private final DasApiBasicInfoService dasApiBasicInfoService;
@@ -105,10 +120,11 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
     }
 
     @Override
-    public void apiDataDownload(String dirId, HttpServletResponse response) throws IOException {
+    public void apiDataDownload(String dirId) throws IOException {
+        HttpServletResponse response = getResponse();
         // 根据目录设置文件名称
         String dirName = searchDirName(dirId);
-        String name = "目录为"+dirName+"的API接口信息";
+        String name = "目录为" + dirName + "的API接口信息";
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode(name, "UTF-8").replaceAll("\\+", "%20");
