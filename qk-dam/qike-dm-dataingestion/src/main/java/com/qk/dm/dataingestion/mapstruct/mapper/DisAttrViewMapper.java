@@ -3,9 +3,7 @@ package com.qk.dm.dataingestion.mapstruct.mapper;
 
 import com.qk.dm.dataingestion.entity.DisAttrView;
 import com.qk.dm.dataingestion.vo.DisAttrViewVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -15,6 +13,9 @@ import java.util.List;
 public interface DisAttrViewMapper {
     DisAttrViewMapper INSTANCE = Mappers.getMapper(DisAttrViewMapper.class);
 
+    @Mappings({
+            @Mapping(source = "defaultValue", target = "initialValue")
+    })
     DisAttrViewVO of(DisAttrView disAttrView);
 
     List<DisAttrViewVO> of(List<DisAttrView> disAttrViewList);

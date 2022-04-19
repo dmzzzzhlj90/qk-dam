@@ -36,6 +36,6 @@ public class DisAttrViewVO {
     /**
      * 默认值
      */
-    private String defaultValue;
+    private String initialValue;
 
 }
