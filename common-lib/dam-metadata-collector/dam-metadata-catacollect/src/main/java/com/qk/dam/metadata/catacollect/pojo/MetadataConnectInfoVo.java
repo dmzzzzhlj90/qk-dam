@@ -1,5 +1,10 @@
 package com.qk.dam.metadata.catacollect.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 /**
