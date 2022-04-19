@@ -1,0 +1,2605 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "9e65a6c7-b812-405c-8f94-26b62e15d38d",
+    "name": "dm-reptile"
+  },
+  "item": [
+    {
+      "name": "execel数据导出导入接口",
+      "item": [
+        {
+          "name": "待配列基本信息excel__模板下载",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/excel/basic/info/upload/template",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "excel",
+                "basic",
+                "info",
+                "upload",
+                "template"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "待配列基本信息excel__模板下载",
+            "header": []
+          },
+          "description": "待配列基本信息excel__模板下载"
+        },
+        {
+          "name": "待配列基本信息excel__导入数据",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "No comments found.",
+                  "value": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/excel/basic/info/upload",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "excel",
+                "basic",
+                "info",
+                "upload"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [
+                {
+                  "key": "file",
+                  "value": "",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "待配列基本信息excel__导入数据",
+            "header": []
+          },
+          "description": "待配列基本信息excel__导入数据"
+        }
+      ]
+    },
+    {
+      "name": "可视化_维度信息",
+      "item": [
+        {
+          "name": "数据采集-维度新增",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 790,\n  \"dimensionId\": 883,\n  \"description\": \"7ryspy\",\n  \"dimensionColumnName\": \"hobert.shanahan\",\n  \"gmtModified\": \"2022-02-23 10:40:29\",\n  \"gmtCreate\": \"2022-02-23 10:40:29\",\n  \"createUserid\": 310,\n  \"updateUserid\": 230,\n  \"createUsername\": \"hobert.shanahan\",\n  \"updateUsername\": \"hobert.shanahan\",\n  \"dimensionColumnCode\": \"35162\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dimension/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dimension",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据采集-维度新增",
+            "header": []
+          },
+          "description": "数据采集-维度新增"
+        },
+        {
+          "name": "数据采集-维度删除",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "ids[]",
+                  "type": "text",
+                  "description": "ID數組",
+                  "value": "xrffkd"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dimension/?ids\u003dxrffkd\u0026ids\u003dxrffkd",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dimension",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [
+                {
+                  "key": "ids",
+                  "value": "760",
+                  "description": "ID數組,[array of int64]"
+                }
+              ],
+              "variable": []
+            },
+            "description": "数据采集-维度删除",
+            "header": []
+          },
+          "description": "数据采集-维度删除"
+        },
+        {
+          "name": "数据采集-维度修改",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 669,\n  \"dimensionId\": 213,\n  \"description\": \"kiimea\",\n  \"dimensionColumnName\": \"hobert.shanahan\",\n  \"gmtModified\": \"2022-02-23 10:40:29\",\n  \"gmtCreate\": \"2022-02-23 10:40:29\",\n  \"createUserid\": 662,\n  \"updateUserid\": 377,\n  \"createUsername\": \"hobert.shanahan\",\n  \"updateUsername\": \"hobert.shanahan\",\n  \"dimensionColumnCode\": \"35162\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dimension/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dimension",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据采集-维度修改",
+            "header": []
+          },
+          "description": "数据采集-维度修改"
+        },
+        {
+          "name": "数据采集-维度查询",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"k3j267\"\n  },\n  \"id\": 705,\n  \"createUsername\": \"hobert.shanahan\",\n  \"dimensionColumnCode\": \"35162\",\n  \"dimensionColumnName\": \"hobert.shanahan\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dimension/query",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dimension",
+                "query"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据采集-维度查询",
+            "header": []
+          },
+          "description": "数据采集-维度查询"
+        },
+        {
+          "name": "数据采集-根据维度目录查询维度字段",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 615,\n  \"dimensionColumnCodeList\": [\n    \"sd30x7\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dimension/commons",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dimension",
+                "commons"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据采集-根据维度目录查询维度字段",
+            "header": []
+          },
+          "description": "数据采集-根据维度目录查询维度字段"
+        }
+      ]
+    },
+    {
+      "name": "可视化_维度目录",
+      "item": [
+        {
+          "name": "数据采集-目录查询",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dir/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dir",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据采集-目录查询",
+            "header": []
+          },
+          "description": "数据采集-目录查询"
+        },
+        {
+          "name": "数据采集-目录新增",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 105,\n  \"dimensionName\": \"hobert.shanahan\",\n  \"fid\": 510,\n  \"description\": \"d7qu9q\",\n  \"gmtModified\": \"2022-02-23 10:40:29\",\n  \"gmtCreate\": \"2022-02-23 10:40:29\",\n  \"createUserid\": 226,\n  \"updateUserid\": 466,\n  \"createUsername\": \"hobert.shanahan\",\n  \"updateUsername\": \"hobert.shanahan\",\n  \"dimensionCode\": \"35162\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dir/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dir",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据采集-目录新增",
+            "header": []
+          },
+          "description": "数据采集-目录新增"
+        },
+        {
+          "name": "数据采集-目录删除",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dir/21",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dir",
+                ":id"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "149",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "数据采集-目录删除",
+            "header": []
+          },
+          "description": "数据采集-目录删除"
+        },
+        {
+          "name": "数据采集-目录修改",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 972,\n  \"dimensionName\": \"hobert.shanahan\",\n  \"fid\": 46,\n  \"description\": \"72ja84\",\n  \"gmtModified\": \"2022-02-23 10:40:29\",\n  \"gmtCreate\": \"2022-02-23 10:40:29\",\n  \"createUserid\": 115,\n  \"updateUserid\": 523,\n  \"createUsername\": \"hobert.shanahan\",\n  \"updateUsername\": \"hobert.shanahan\",\n  \"dimensionCode\": \"35162\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dir/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dir",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据采集-目录修改",
+            "header": []
+          },
+          "description": "数据采集-目录修改"
+        },
+        {
+          "name": "数据采集-获取维度目录名称",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dir/dirname",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dir",
+                "dirname"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "数据采集-获取维度目录名称",
+            "header": []
+          },
+          "description": "数据采集-获取维度目录名称"
+        }
+      ]
+    },
+    {
+      "name": "字典信息（省市区）",
+      "item": [
+        {
+          "name": "获取省市区级联列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/dict/list/502",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "dict",
+                "list",
+                ":pid"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "pid",
+                  "value": "319",
+                  "description": "父id,初次请求为0"
+                }
+              ]
+            },
+            "description": "获取省市区级联列表",
+            "header": []
+          },
+          "description": "获取省市区级联列表"
+        }
+      ]
+    },
+    {
+      "name": "数据采集选择器配置",
+      "item": [
+        {
+          "name": "添加选择器信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configId\": 179,\n  \"columnName\": \"hobert.shanahan\",\n  \"columnCode\": \"35162\",\n  \"selector\": 667,\n  \"selectorVal\": \"ersr28\",\n  \"elementType\": 681,\n  \"beforePrefix\": \"vszrkt\",\n  \"afterPrefix\": \"jc61cu\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/selector/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "selector",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "添加选择器信息",
+            "header": []
+          },
+          "description": "添加选择器信息"
+        },
+        {
+          "name": "修改选择器信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configId\": 481,\n  \"columnName\": \"hobert.shanahan\",\n  \"columnCode\": \"35162\",\n  \"selector\": 53,\n  \"selectorVal\": \"ar5k7g\",\n  \"elementType\": 671,\n  \"beforePrefix\": \"27urj2\",\n  \"afterPrefix\": \"kfnfz7\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/selector/680",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "selector",
+                ":id"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "432",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "修改选择器信息",
+            "header": []
+          },
+          "description": "修改选择器信息"
+        },
+        {
+          "name": "根据配置id 批量修改选择器信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"configId\": 310,\n    \"columnName\": \"hobert.shanahan\",\n    \"columnCode\": \"35162\",\n    \"selector\": 803,\n    \"selectorVal\": \"5w25lb\",\n    \"elementType\": 725,\n    \"beforePrefix\": \"jmowb7\",\n    \"afterPrefix\": \"39ij9k\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/selector/batch/57",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "selector",
+                "batch",
+                ":configId"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "configId",
+                  "value": "236",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "根据配置id 批量修改选择器信息",
+            "header": []
+          },
+          "description": "根据配置id 批量修改选择器信息"
+        },
+        {
+          "name": "选择器列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/selector/list/869",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "selector",
+                "list",
+                ":configId"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "configId",
+                  "value": "7",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "选择器列表",
+            "header": []
+          },
+          "description": "选择器列表"
+        },
+        {
+          "name": "详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/selector/detail/928",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "selector",
+                "detail",
+                ":id"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "404",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "详情",
+            "header": []
+          },
+          "description": "详情"
+        },
+        {
+          "name": "删除选择器",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/selector/d64smx",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "selector",
+                ":ids"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "9b0y2l",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除选择器",
+            "header": []
+          },
+          "description": "删除选择器"
+        }
+      ]
+    },
+    {
+      "name": "数据采集配置信息",
+      "item": [
+        {
+          "name": "添加配置信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 853,\n  \"baseInfoId\": 828,\n  \"parentId\": 107,\n  \"raw\": {\n    \"mapKey\": {}\n  },\n  \"formUrlencoded\": {\n    \"mapKey\": {}\n  },\n  \"formData\": {\n    \"mapKey\": {}\n  },\n  \"cookies\": {\n    \"mapKey\": {}\n  },\n  \"headers\": {\n    \"mapKey\": {}\n  },\n  \"dimensionId\": 524,\n  \"dimensionName\": \"hobert.shanahan\",\n  \"dimensionCode\": \"35162\",\n  \"startoverJs\": 415,\n  \"startoverIp\": 899,\n  \"requestUrl\": \"www.leif-bruen.name\",\n  \"requestType\": \"9f8zd0\",\n  \"selectorList\": [\n    {\n      \"configId\": 325,\n      \"columnName\": \"hobert.shanahan\",\n      \"columnCode\": \"35162\",\n      \"selector\": 663,\n      \"selectorVal\": \"14dwvv\",\n      \"elementType\": 193,\n      \"beforePrefix\": \"j1jqsw\",\n      \"afterPrefix\": \"leymp6\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/config/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "config",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "添加配置信息",
+            "header": []
+          },
+          "description": "添加配置信息"
+        },
+        {
+          "name": "结束并启动",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 215,\n  \"baseInfoId\": 766,\n  \"parentId\": 6,\n  \"raw\": {\n    \"mapKey\": {}\n  },\n  \"formUrlencoded\": {\n    \"mapKey\": {}\n  },\n  \"formData\": {\n    \"mapKey\": {}\n  },\n  \"cookies\": {\n    \"mapKey\": {}\n  },\n  \"headers\": {\n    \"mapKey\": {}\n  },\n  \"dimensionId\": 585,\n  \"dimensionName\": \"hobert.shanahan\",\n  \"dimensionCode\": \"35162\",\n  \"startoverJs\": 625,\n  \"startoverIp\": 329,\n  \"requestUrl\": \"www.leif-bruen.name\",\n  \"requestType\": \"y34m1x\",\n  \"selectorList\": [\n    {\n      \"configId\": 140,\n      \"columnName\": \"hobert.shanahan\",\n      \"columnCode\": \"35162\",\n      \"selector\": 53,\n      \"selectorVal\": \"wbdl68\",\n      \"elementType\": 273,\n      \"beforePrefix\": \"o61g3a\",\n      \"afterPrefix\": \"1g0zpo\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/config/complete/start",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "config",
+                "complete",
+                "start"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "结束并启动",
+            "header": []
+          },
+          "description": "结束并启动"
+        },
+        {
+          "name": "修改配置信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 529,\n  \"baseInfoId\": 480,\n  \"parentId\": 193,\n  \"raw\": {\n    \"mapKey\": {}\n  },\n  \"formUrlencoded\": {\n    \"mapKey\": {}\n  },\n  \"formData\": {\n    \"mapKey\": {}\n  },\n  \"cookies\": {\n    \"mapKey\": {}\n  },\n  \"headers\": {\n    \"mapKey\": {}\n  },\n  \"dimensionId\": 896,\n  \"dimensionName\": \"hobert.shanahan\",\n  \"dimensionCode\": \"35162\",\n  \"startoverJs\": 222,\n  \"startoverIp\": 208,\n  \"requestUrl\": \"www.leif-bruen.name\",\n  \"requestType\": \"zrdpib\",\n  \"selectorList\": [\n    {\n      \"configId\": 479,\n      \"columnName\": \"hobert.shanahan\",\n      \"columnCode\": \"35162\",\n      \"selector\": 369,\n      \"selectorVal\": \"e3r9d1\",\n      \"elementType\": 53,\n      \"beforePrefix\": \"q0omyn\",\n      \"afterPrefix\": \"8r9hb7\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/config/830",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "config",
+                ":id"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "538",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "修改配置信息",
+            "header": []
+          },
+          "description": "修改配置信息"
+        },
+        {
+          "name": "配置列表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/config/list/600",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "config",
+                "list",
+                ":baseInfoId"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "baseInfoId",
+                  "value": "189",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "配置列表",
+            "header": []
+          },
+          "description": "配置列表"
+        },
+        {
+          "name": "详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/config/122",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "config",
+                ":id"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "16",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "详情",
+            "header": []
+          },
+          "description": "详情"
+        },
+        {
+          "name": "根据待配列表或爬虫列表id获取配置信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 516,\n  \"firstFloor\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/config/detail",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "config",
+                "detail"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "根据待配列表或爬虫列表id获取配置信息",
+            "header": []
+          },
+          "description": "根据待配列表或爬虫列表id获取配置信息"
+        },
+        {
+          "name": "根据配置id获取选择器信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/config/selector/13",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "config",
+                "selector",
+                ":configId"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "configId",
+                  "value": "551",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "根据配置id获取选择器信息",
+            "header": []
+          },
+          "description": "根据配置id获取选择器信息"
+        },
+        {
+          "name": "删除",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/config/l2klv8",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "config",
+                ":ids"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "unscdk",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除",
+            "header": []
+          },
+          "description": "删除"
+        }
+      ]
+    },
+    {
+      "name": "爬虫数据采集基础配置信息",
+      "item": [
+        {
+          "name": "添加基础信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"50fbe0\"\n  },\n  \"id\": 478,\n  \"websiteName\": \"hobert.shanahan\",\n  \"websiteUrl\": \"www.leif-bruen.name\",\n  \"runPeriod\": \"9plh78\",\n  \"status\": 113,\n  \"runStatus\": 711,\n  \"configId\": 943,\n  \"configName\": \"hobert.shanahan\",\n  \"jobId\": \"153\",\n  \"gmtFunction\": \"2022-02-23 10:40:28\",\n  \"createUsername\": \"hobert.shanahan\",\n  \"gmtCreate\": \"2022-02-23 10:40:28\",\n  \"distributionDate\": \"2022-02-23\",\n  \"deliveryDate\": \"2022-02-23\",\n  \"secondSiteType\": \"9mhqcv\",\n  \"listPageAddress\": \"7423 Chung Courts， Port Mozelle， UT 93262\",\n  \"differentTypeMixed\": \"2hhg0i\",\n  \"infoReleaseLevel\": \"c0bodb\",\n  \"provinceCode\": \"35162\",\n  \"cityCode\": \"35162\",\n  \"areaCode\": \"35162\",\n  \"websiteNameCorrection\": \"17wecv\",\n  \"websiteUrlCorrection\": \"hcslie\",\n  \"regionCode\": \"35162\",\n  \"executor\": \"c6dxsh\",\n  \"executorId\": 983,\n  \"timeInterval\": \"1fdmtk\",\n  \"assignedPersonName\": \"hobert.shanahan\",\n  \"responsiblePersonName\": \"hobert.shanahan\",\n  \"configStatus\": true,\n  \"startDate\": \"2022-02-23\",\n  \"endDate\": \"2022-02-23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "添加基础信息",
+            "header": []
+          },
+          "description": "添加基础信息"
+        },
+        {
+          "name": "修改基础信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"5ha66t\"\n  },\n  \"id\": 456,\n  \"websiteName\": \"hobert.shanahan\",\n  \"websiteUrl\": \"www.leif-bruen.name\",\n  \"runPeriod\": \"q9575j\",\n  \"status\": 453,\n  \"runStatus\": 656,\n  \"configId\": 784,\n  \"configName\": \"hobert.shanahan\",\n  \"jobId\": \"153\",\n  \"gmtFunction\": \"2022-02-23 10:40:28\",\n  \"createUsername\": \"hobert.shanahan\",\n  \"gmtCreate\": \"2022-02-23 10:40:28\",\n  \"distributionDate\": \"2022-02-23\",\n  \"deliveryDate\": \"2022-02-23\",\n  \"secondSiteType\": \"is2e4g\",\n  \"listPageAddress\": \"7423 Chung Courts， Port Mozelle， UT 93262\",\n  \"differentTypeMixed\": \"qzxyc9\",\n  \"infoReleaseLevel\": \"puu2s0\",\n  \"provinceCode\": \"35162\",\n  \"cityCode\": \"35162\",\n  \"areaCode\": \"35162\",\n  \"websiteNameCorrection\": \"tvoqlp\",\n  \"websiteUrlCorrection\": \"922uxn\",\n  \"regionCode\": \"35162\",\n  \"executor\": \"lbnb0n\",\n  \"executorId\": 64,\n  \"timeInterval\": \"enqm9e\",\n  \"assignedPersonName\": \"hobert.shanahan\",\n  \"responsiblePersonName\": \"hobert.shanahan\",\n  \"configStatus\": true,\n  \"startDate\": \"2022-02-23\",\n  \"endDate\": \"2022-02-23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/756",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                ":id"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "595",
+                  "description": "基础信息id"
+                }
+              ]
+            },
+            "description": "修改基础信息",
+            "header": []
+          },
+          "description": "修改基础信息"
+        },
+        {
+          "name": "修改运行状态(启动或关闭)",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 118,\n  \"runStatus\": 537\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/run/status",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "run",
+                "status"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "修改运行状态(启动或关闭)",
+            "header": []
+          },
+          "description": "修改运行状态(启动或关闭)"
+        },
+        {
+          "name": "待配列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"loqosf\"\n  },\n  \"id\": 929,\n  \"websiteName\": \"hobert.shanahan\",\n  \"websiteUrl\": \"www.leif-bruen.name\",\n  \"runPeriod\": \"m3xdyn\",\n  \"status\": 949,\n  \"runStatus\": 458,\n  \"configId\": 860,\n  \"configName\": \"hobert.shanahan\",\n  \"jobId\": \"153\",\n  \"gmtFunction\": \"2022-02-23 10:40:28\",\n  \"createUsername\": \"hobert.shanahan\",\n  \"gmtCreate\": \"2022-02-23 10:40:28\",\n  \"distributionDate\": \"2022-02-23\",\n  \"deliveryDate\": \"2022-02-23\",\n  \"secondSiteType\": \"0dpjl3\",\n  \"listPageAddress\": \"7423 Chung Courts， Port Mozelle， UT 93262\",\n  \"differentTypeMixed\": \"cad1ck\",\n  \"infoReleaseLevel\": \"al8eld\",\n  \"provinceCode\": \"35162\",\n  \"cityCode\": \"35162\",\n  \"areaCode\": \"35162\",\n  \"websiteNameCorrection\": \"di0jpj\",\n  \"websiteUrlCorrection\": \"smq788\",\n  \"regionCode\": \"35162\",\n  \"executor\": \"9gj5vv\",\n  \"executorId\": 845,\n  \"timeInterval\": \"09aar1\",\n  \"assignedPersonName\": \"hobert.shanahan\",\n  \"responsiblePersonName\": \"hobert.shanahan\",\n  \"configStatus\": true,\n  \"startDate\": \"2022-02-23\",\n  \"endDate\": \"2022-02-23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/waiting?clientRegistration.redirectUri\u003d8r47xb\u0026refreshToken.expiresAt.seconds\u003d800\u0026clientRegistration.registrationId\u003d153\u0026accessToken.tokenValue\u003d2dgytg\u0026refreshToken.tokenValue\u003dutsmru\u0026refreshToken.issuedAt.seconds\u003d585\u0026clientRegistration.authorizationGrantType.value\u003dqta049\u0026accessToken.issuedAt.seconds\u003d361\u0026accessToken.issuedAt.nanos\u003d887\u0026clientRegistration.clientName\u003dhobert.shanahan\u0026accessToken.expiresAt.seconds\u003d61\u0026refreshToken.expiresAt.nanos\u003d128\u0026principalName\u003dhobert.shanahan\u0026refreshToken.issuedAt.nanos\u003d617\u0026clientRegistration.clientAuthenticationMethod.value\u003dkv3k67\u0026clientRegistration.clientId\u003d153\u0026accessToken.expiresAt.nanos\u003d443\u0026clientRegistration.clientSecret\u003da5x5lg",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "waiting"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "待配列表",
+            "header": []
+          },
+          "description": "待配列表"
+        },
+        {
+          "name": "爬虫列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1ofbuw\"\n  },\n  \"id\": 958,\n  \"websiteName\": \"hobert.shanahan\",\n  \"websiteUrl\": \"www.leif-bruen.name\",\n  \"runPeriod\": \"zfbe09\",\n  \"status\": 824,\n  \"runStatus\": 426,\n  \"configId\": 484,\n  \"configName\": \"hobert.shanahan\",\n  \"jobId\": \"153\",\n  \"gmtFunction\": \"2022-02-23 10:40:28\",\n  \"createUsername\": \"hobert.shanahan\",\n  \"gmtCreate\": \"2022-02-23 10:40:28\",\n  \"distributionDate\": \"2022-02-23\",\n  \"deliveryDate\": \"2022-02-23\",\n  \"secondSiteType\": \"14frcl\",\n  \"listPageAddress\": \"7423 Chung Courts， Port Mozelle， UT 93262\",\n  \"differentTypeMixed\": \"qvazez\",\n  \"infoReleaseLevel\": \"szfmvi\",\n  \"provinceCode\": \"35162\",\n  \"cityCode\": \"35162\",\n  \"areaCode\": \"35162\",\n  \"websiteNameCorrection\": \"i5ji7p\",\n  \"websiteUrlCorrection\": \"y5mke2\",\n  \"regionCode\": \"35162\",\n  \"executor\": \"topo54\",\n  \"executorId\": 336,\n  \"timeInterval\": \"f69foy\",\n  \"assignedPersonName\": \"hobert.shanahan\",\n  \"responsiblePersonName\": \"hobert.shanahan\",\n  \"configStatus\": true,\n  \"startDate\": \"2022-02-23\",\n  \"endDate\": \"2022-02-23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/reptile?clientRegistration.clientName\u003dhobert.shanahan\u0026accessToken.issuedAt.nanos\u003d2\u0026accessToken.expiresAt.nanos\u003d747\u0026clientRegistration.clientSecret\u003ds75yje\u0026refreshToken.issuedAt.nanos\u003d32\u0026clientRegistration.clientId\u003d153\u0026clientRegistration.clientAuthenticationMethod.value\u003dfcdoed\u0026clientRegistration.authorizationGrantType.value\u003dod762w\u0026accessToken.issuedAt.seconds\u003d46\u0026accessToken.tokenValue\u003ds4ds56\u0026refreshToken.expiresAt.nanos\u003d709\u0026principalName\u003dhobert.shanahan\u0026clientRegistration.redirectUri\u003dobkc40\u0026accessToken.expiresAt.seconds\u003d199\u0026refreshToken.tokenValue\u003d5cfhw1\u0026refreshToken.expiresAt.seconds\u003d161\u0026refreshToken.issuedAt.seconds\u003d668\u0026clientRegistration.registrationId\u003d153",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "reptile"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "爬虫列表",
+            "header": []
+          },
+          "description": "爬虫列表"
+        },
+        {
+          "name": "历史列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"k7n1w3\"\n  },\n  \"id\": 802,\n  \"websiteName\": \"hobert.shanahan\",\n  \"websiteUrl\": \"www.leif-bruen.name\",\n  \"runPeriod\": \"0bu9qb\",\n  \"status\": 624,\n  \"runStatus\": 550,\n  \"configId\": 218,\n  \"configName\": \"hobert.shanahan\",\n  \"jobId\": \"153\",\n  \"gmtFunction\": \"2022-02-23 10:40:28\",\n  \"createUsername\": \"hobert.shanahan\",\n  \"gmtCreate\": \"2022-02-23 10:40:28\",\n  \"distributionDate\": \"2022-02-23\",\n  \"deliveryDate\": \"2022-02-23\",\n  \"secondSiteType\": \"1iw3w5\",\n  \"listPageAddress\": \"7423 Chung Courts， Port Mozelle， UT 93262\",\n  \"differentTypeMixed\": \"lcfk55\",\n  \"infoReleaseLevel\": \"v1filj\",\n  \"provinceCode\": \"35162\",\n  \"cityCode\": \"35162\",\n  \"areaCode\": \"35162\",\n  \"websiteNameCorrection\": \"mf8nsk\",\n  \"websiteUrlCorrection\": \"zc6jzj\",\n  \"regionCode\": \"35162\",\n  \"executor\": \"7lzqfs\",\n  \"executorId\": 617,\n  \"timeInterval\": \"bxtdlu\",\n  \"assignedPersonName\": \"hobert.shanahan\",\n  \"responsiblePersonName\": \"hobert.shanahan\",\n  \"configStatus\": true,\n  \"startDate\": \"2022-02-23\",\n  \"endDate\": \"2022-02-23\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/history?principalName\u003dhobert.shanahan\u0026refreshToken.expiresAt.seconds\u003d891\u0026refreshToken.expiresAt.nanos\u003d833\u0026clientRegistration.registrationId\u003d153\u0026accessToken.tokenValue\u003ddo8k9l\u0026accessToken.issuedAt.nanos\u003d45\u0026refreshToken.tokenValue\u003dwapebg\u0026accessToken.issuedAt.seconds\u003d269\u0026accessToken.expiresAt.nanos\u003d254\u0026refreshToken.issuedAt.nanos\u003d549\u0026clientRegistration.redirectUri\u003d2ssfxl\u0026clientRegistration.clientAuthenticationMethod.value\u003dojorsp\u0026clientRegistration.authorizationGrantType.value\u003drcdsbz\u0026refreshToken.issuedAt.seconds\u003d760\u0026clientRegistration.clientName\u003dhobert.shanahan\u0026clientRegistration.clientSecret\u003dfyzf02\u0026clientRegistration.clientId\u003d153\u0026accessToken.expiresAt.seconds\u003d84",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "history"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "历史列表",
+            "header": []
+          },
+          "description": "历史列表"
+        },
+        {
+          "name": "详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/79",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                ":id"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "675",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "详情",
+            "header": []
+          },
+          "description": "详情"
+        },
+        {
+          "name": "删除",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/mditmz",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                ":ids"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "7h4iuz",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除",
+            "header": []
+          },
+          "description": "删除"
+        },
+        {
+          "name": "手动执行调用爬虫接口",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/execution/232",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "execution",
+                ":id"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "63",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "手动执行调用爬虫接口",
+            "header": []
+          },
+          "description": "手动执行调用爬虫接口"
+        },
+        {
+          "name": "定时执行调用爬虫接口",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/timed/execution",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "timed",
+                "execution"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "定时执行调用爬虫接口",
+            "header": []
+          },
+          "description": "定时执行调用爬虫接口"
+        },
+        {
+          "name": "配置复制",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceId\": 349,\n  \"targetId\": 281\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/copy/config",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "copy",
+                "config"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "配置复制",
+            "header": []
+          },
+          "description": "配置复制"
+        },
+        {
+          "name": "获取定时时间间隔",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata"
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/time/interval",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "time",
+                "interval"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "获取定时时间间隔",
+            "header": []
+          },
+          "description": "获取定时时间间隔"
+        },
+        {
+          "name": "修改定时时间间隔",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 548,\n  \"timeInterval\": \"n9wvax\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/time/interval",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "time",
+                "interval"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "修改定时时间间隔",
+            "header": []
+          },
+          "description": "修改定时时间间隔"
+        },
+        {
+          "name": "分配任务",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": \"wi05eo\",\n  \"responsiblePersonName\": \"hobert.shanahan\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/base/info/assigned/task",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "base",
+                "info",
+                "assigned",
+                "task"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "分配任务",
+            "header": []
+          },
+          "description": "分配任务"
+        }
+      ]
+    },
+    {
+      "name": "爬虫用户信息",
+      "item": [
+        {
+          "name": "用户列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xmnixi\"\n  },\n  \"userName\": \"hobert.shanahan\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/user/list",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "user",
+                "list"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "用户列表",
+            "header": []
+          },
+          "description": "用户列表"
+        },
+        {
+          "name": "菜单权限",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "clientRegistration.registrationId",
+                  "type": "text",
+                  "value": "153"
+                },
+                {
+                  "key": "clientRegistration.clientId",
+                  "type": "text",
+                  "value": "153"
+                },
+                {
+                  "key": "clientRegistration.clientSecret",
+                  "type": "text",
+                  "value": "l0w04i"
+                },
+                {
+                  "key": "clientRegistration.clientAuthenticationMethod.value",
+                  "type": "text",
+                  "value": "hwjfxw"
+                },
+                {
+                  "key": "clientRegistration.authorizationGrantType.value",
+                  "type": "text",
+                  "value": "jr4l98"
+                },
+                {
+                  "key": "clientRegistration.redirectUri",
+                  "type": "text",
+                  "value": "9tmrsm"
+                },
+                {
+                  "key": "clientRegistration.clientName",
+                  "type": "text",
+                  "value": "hobert.shanahan"
+                },
+                {
+                  "key": "principalName",
+                  "type": "text",
+                  "value": "hobert.shanahan"
+                },
+                {
+                  "key": "accessToken.tokenValue",
+                  "type": "text",
+                  "value": "ss3pbw"
+                },
+                {
+                  "key": "accessToken.issuedAt.seconds",
+                  "type": "text",
+                  "value": "109"
+                },
+                {
+                  "key": "accessToken.issuedAt.nanos",
+                  "type": "text",
+                  "value": "280"
+                },
+                {
+                  "key": "accessToken.expiresAt.seconds",
+                  "type": "text",
+                  "value": "108"
+                },
+                {
+                  "key": "accessToken.expiresAt.nanos",
+                  "type": "text",
+                  "value": "446"
+                },
+                {
+                  "key": "refreshToken.tokenValue",
+                  "type": "text",
+                  "value": "i3tm4s"
+                },
+                {
+                  "key": "refreshToken.issuedAt.seconds",
+                  "type": "text",
+                  "value": "524"
+                },
+                {
+                  "key": "refreshToken.issuedAt.nanos",
+                  "type": "text",
+                  "value": "511"
+                },
+                {
+                  "key": "refreshToken.expiresAt.seconds",
+                  "type": "text",
+                  "value": "915"
+                },
+                {
+                  "key": "refreshToken.expiresAt.nanos",
+                  "type": "text",
+                  "value": "68"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/user/menu/permissions?clientRegistration.clientName\u003dhobert.shanahan\u0026accessToken.expiresAt.seconds\u003d108\u0026clientRegistration.registrationId\u003d153\u0026accessToken.expiresAt.nanos\u003d446\u0026clientRegistration.redirectUri\u003d9tmrsm\u0026accessToken.tokenValue\u003dss3pbw\u0026refreshToken.issuedAt.nanos\u003d511\u0026refreshToken.expiresAt.nanos\u003d68\u0026refreshToken.tokenValue\u003di3tm4s\u0026clientRegistration.clientAuthenticationMethod.value\u003dhwjfxw\u0026clientRegistration.authorizationGrantType.value\u003djr4l98\u0026principalName\u003dhobert.shanahan\u0026clientRegistration.clientSecret\u003dl0w04i\u0026refreshToken.expiresAt.seconds\u003d915\u0026accessToken.issuedAt.seconds\u003d109\u0026clientRegistration.clientId\u003d153\u0026accessToken.issuedAt.nanos\u003d280\u0026refreshToken.issuedAt.seconds\u003d524",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "user",
+                "menu",
+                "permissions"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [
+                {
+                  "key": "clientRegistration",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─registrationId",
+                  "value": "153",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientId",
+                  "value": "153",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientSecret",
+                  "value": "gnqiwf",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientAuthenticationMethod",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "8b57y8",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─authorizationGrantType",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "rdq0gn",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─redirectUri",
+                  "value": "k1je07",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─scopes",
+                  "value": "orjxxi,amb1z9",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─providerDetails",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─authorizationUri",
+                  "value": "z884cz",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─tokenUri",
+                  "value": "24ftvi",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─userInfoEndpoint",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─uri",
+                  "value": "jc0t7m",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─authenticationMethod",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "r3drtm",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─userNameAttributeName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─jwkSetUri",
+                  "value": "46bwye",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─issuerUri",
+                  "value": "j8g120",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─configurationMetadata",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─any object",
+                  "value": "",
+                  "description": "any object."
+                },
+                {
+                  "key": "└─clientName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "principalName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "accessToken",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenValue",
+                  "value": "c86o26",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─issuedAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "288",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "782",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─expiresAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "305",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "925",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenType",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "inu29g",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─scopes",
+                  "value": "kushky,ac4svq",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "refreshToken",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenValue",
+                  "value": "b42sky",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─issuedAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "260",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "122",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─expiresAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "853",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "887",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "菜单权限",
+            "header": []
+          },
+          "description": "菜单权限"
+        },
+        {
+          "name": "按钮权限",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "clientRegistration.registrationId",
+                  "type": "text",
+                  "value": "153"
+                },
+                {
+                  "key": "clientRegistration.clientId",
+                  "type": "text",
+                  "value": "153"
+                },
+                {
+                  "key": "clientRegistration.clientSecret",
+                  "type": "text",
+                  "value": "l2n5j3"
+                },
+                {
+                  "key": "clientRegistration.clientAuthenticationMethod.value",
+                  "type": "text",
+                  "value": "ljhda7"
+                },
+                {
+                  "key": "clientRegistration.authorizationGrantType.value",
+                  "type": "text",
+                  "value": "w25t55"
+                },
+                {
+                  "key": "clientRegistration.redirectUri",
+                  "type": "text",
+                  "value": "qe1szx"
+                },
+                {
+                  "key": "clientRegistration.clientName",
+                  "type": "text",
+                  "value": "hobert.shanahan"
+                },
+                {
+                  "key": "principalName",
+                  "type": "text",
+                  "value": "hobert.shanahan"
+                },
+                {
+                  "key": "accessToken.tokenValue",
+                  "type": "text",
+                  "value": "ixnq79"
+                },
+                {
+                  "key": "accessToken.issuedAt.seconds",
+                  "type": "text",
+                  "value": "987"
+                },
+                {
+                  "key": "accessToken.issuedAt.nanos",
+                  "type": "text",
+                  "value": "289"
+                },
+                {
+                  "key": "accessToken.expiresAt.seconds",
+                  "type": "text",
+                  "value": "287"
+                },
+                {
+                  "key": "accessToken.expiresAt.nanos",
+                  "type": "text",
+                  "value": "33"
+                },
+                {
+                  "key": "refreshToken.tokenValue",
+                  "type": "text",
+                  "value": "natdep"
+                },
+                {
+                  "key": "refreshToken.issuedAt.seconds",
+                  "type": "text",
+                  "value": "696"
+                },
+                {
+                  "key": "refreshToken.issuedAt.nanos",
+                  "type": "text",
+                  "value": "316"
+                },
+                {
+                  "key": "refreshToken.expiresAt.seconds",
+                  "type": "text",
+                  "value": "111"
+                },
+                {
+                  "key": "refreshToken.expiresAt.nanos",
+                  "type": "text",
+                  "value": "559"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/user/button/permissions?clientRegistration.registrationId\u003d153\u0026accessToken.expiresAt.nanos\u003d33\u0026clientRegistration.clientId\u003d153\u0026clientRegistration.clientAuthenticationMethod.value\u003dljhda7\u0026clientRegistration.authorizationGrantType.value\u003dw25t55\u0026accessToken.tokenValue\u003dixnq79\u0026refreshToken.issuedAt.nanos\u003d316\u0026refreshToken.expiresAt.nanos\u003d559\u0026accessToken.issuedAt.seconds\u003d987\u0026principalName\u003dhobert.shanahan\u0026refreshToken.expiresAt.seconds\u003d111\u0026clientRegistration.redirectUri\u003dqe1szx\u0026refreshToken.tokenValue\u003dnatdep\u0026accessToken.expiresAt.seconds\u003d287\u0026clientRegistration.clientName\u003dhobert.shanahan\u0026accessToken.issuedAt.nanos\u003d289\u0026clientRegistration.clientSecret\u003dl2n5j3\u0026refreshToken.issuedAt.seconds\u003d696",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "user",
+                "button",
+                "permissions"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [
+                {
+                  "key": "clientRegistration",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─registrationId",
+                  "value": "153",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientId",
+                  "value": "153",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientSecret",
+                  "value": "ivnvws",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientAuthenticationMethod",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "mmeme6",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─authorizationGrantType",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "jjgtmj",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─redirectUri",
+                  "value": "61digz",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─scopes",
+                  "value": "qa0jmn,dshadw",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─providerDetails",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─authorizationUri",
+                  "value": "uou1wu",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─tokenUri",
+                  "value": "sjp7qu",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─userInfoEndpoint",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─uri",
+                  "value": "zqr90h",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─authenticationMethod",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "gtdnww",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─userNameAttributeName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─jwkSetUri",
+                  "value": "0azphi",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─issuerUri",
+                  "value": "708vgb",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─configurationMetadata",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─any object",
+                  "value": "",
+                  "description": "any object."
+                },
+                {
+                  "key": "└─clientName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "principalName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "accessToken",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenValue",
+                  "value": "ghfhcx",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─issuedAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "466",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "926",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─expiresAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "869",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "166",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenType",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "eim0pc",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─scopes",
+                  "value": "ftiiph,5o7bs7",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "refreshToken",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenValue",
+                  "value": "azkp6f",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─issuedAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "473",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "427",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─expiresAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "826",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "68",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "按钮权限",
+            "header": []
+          },
+          "description": "按钮权限"
+        },
+        {
+          "name": "查询用户信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/user/info",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "user",
+                "info"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "查询用户信息",
+            "header": []
+          },
+          "description": "查询用户信息"
+        }
+      ]
+    },
+    {
+      "name": "退出接口和登陆成功后的首页",
+      "item": [
+        {
+          "name": "登录成功后的首页",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                ""
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [],
+              "variable": []
+            },
+            "description": "登录成功后的首页",
+            "header": []
+          },
+          "description": "登录成功后的首页"
+        },
+        {
+          "name": "退出",
+          "request": {
+            "method": "GET",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "clientRegistration.registrationId",
+                  "type": "text",
+                  "value": "153"
+                },
+                {
+                  "key": "clientRegistration.clientId",
+                  "type": "text",
+                  "value": "153"
+                },
+                {
+                  "key": "clientRegistration.clientSecret",
+                  "type": "text",
+                  "value": "hyymfx"
+                },
+                {
+                  "key": "clientRegistration.clientAuthenticationMethod.value",
+                  "type": "text",
+                  "value": "o01hvo"
+                },
+                {
+                  "key": "clientRegistration.authorizationGrantType.value",
+                  "type": "text",
+                  "value": "jvgqxg"
+                },
+                {
+                  "key": "clientRegistration.redirectUri",
+                  "type": "text",
+                  "value": "b3030n"
+                },
+                {
+                  "key": "clientRegistration.clientName",
+                  "type": "text",
+                  "value": "hobert.shanahan"
+                },
+                {
+                  "key": "principalName",
+                  "type": "text",
+                  "value": "hobert.shanahan"
+                },
+                {
+                  "key": "accessToken.tokenValue",
+                  "type": "text",
+                  "value": "40injx"
+                },
+                {
+                  "key": "accessToken.issuedAt.seconds",
+                  "type": "text",
+                  "value": "597"
+                },
+                {
+                  "key": "accessToken.issuedAt.nanos",
+                  "type": "text",
+                  "value": "445"
+                },
+                {
+                  "key": "accessToken.expiresAt.seconds",
+                  "type": "text",
+                  "value": "67"
+                },
+                {
+                  "key": "accessToken.expiresAt.nanos",
+                  "type": "text",
+                  "value": "796"
+                },
+                {
+                  "key": "refreshToken.tokenValue",
+                  "type": "text",
+                  "value": "beq0pf"
+                },
+                {
+                  "key": "refreshToken.issuedAt.seconds",
+                  "type": "text",
+                  "value": "352"
+                },
+                {
+                  "key": "refreshToken.issuedAt.nanos",
+                  "type": "text",
+                  "value": "268"
+                },
+                {
+                  "key": "refreshToken.expiresAt.seconds",
+                  "type": "text",
+                  "value": "174"
+                },
+                {
+                  "key": "refreshToken.expiresAt.nanos",
+                  "type": "text",
+                  "value": "346"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://172.21.32.3:8885/rpt/current/logout?accessToken.issuedAt.nanos\u003d445\u0026refreshToken.tokenValue\u003dbeq0pf\u0026clientRegistration.redirectUri\u003db3030n\u0026clientRegistration.registrationId\u003d153\u0026principalName\u003dhobert.shanahan\u0026refreshToken.issuedAt.seconds\u003d352\u0026accessToken.expiresAt.nanos\u003d796\u0026clientRegistration.clientId\u003d153\u0026clientRegistration.clientAuthenticationMethod.value\u003do01hvo\u0026clientRegistration.authorizationGrantType.value\u003djvgqxg\u0026refreshToken.expiresAt.seconds\u003d174\u0026accessToken.expiresAt.seconds\u003d67\u0026accessToken.issuedAt.seconds\u003d597\u0026clientRegistration.clientSecret\u003dhyymfx\u0026refreshToken.issuedAt.nanos\u003d268\u0026refreshToken.expiresAt.nanos\u003d346\u0026clientRegistration.clientName\u003dhobert.shanahan\u0026accessToken.tokenValue\u003d40injx",
+              "protocol": "http",
+              "path": [
+                "",
+                "rpt",
+                "current",
+                "logout"
+              ],
+              "host": [
+                "172.21.32.3"
+              ],
+              "port": "8885",
+              "query": [
+                {
+                  "key": "clientRegistration",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─registrationId",
+                  "value": "153",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientId",
+                  "value": "153",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientSecret",
+                  "value": "11c3hp",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─clientAuthenticationMethod",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "2c9dnb",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─authorizationGrantType",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "zx5cb3",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─redirectUri",
+                  "value": "d0w7ie",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─scopes",
+                  "value": "pgxd08,u26gr2",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─providerDetails",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─authorizationUri",
+                  "value": "4jbgmo",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─tokenUri",
+                  "value": "v9v1hy",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─userInfoEndpoint",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─uri",
+                  "value": "87pk6g",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─authenticationMethod",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "137cs4",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─userNameAttributeName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─jwkSetUri",
+                  "value": "pz3kri",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─issuerUri",
+                  "value": "wq1gpy",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─configurationMetadata",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─any object",
+                  "value": "",
+                  "description": "any object."
+                },
+                {
+                  "key": "└─clientName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "principalName",
+                  "value": "hobert.shanahan",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "accessToken",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenValue",
+                  "value": "v0yd1d",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─issuedAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "561",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "303",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─expiresAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "560",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "318",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenType",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─value",
+                  "value": "41f3yi",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─scopes",
+                  "value": "0zndad,zqsfbm",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "refreshToken",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─tokenValue",
+                  "value": "bya4sn",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─issuedAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "801",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "504",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─expiresAt",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─seconds",
+                  "value": "616",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;\u0026nbsp;└─nanos",
+                  "value": "312",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "退出",
+            "header": []
+          },
+          "description": "退出"
+        }
+      ]
+    }
+  ]
+}

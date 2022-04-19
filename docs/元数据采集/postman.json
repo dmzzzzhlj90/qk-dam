@@ -1,0 +1,111 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "cde75ee4-c4f7-4073-8c4c-ce5734db48b9",
+    "name": "dm-datacollect"
+  },
+  "item": [
+    {
+      "name": "数据源连接",
+      "item": [
+        {
+          "name": "获取数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/types",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接类型",
+            "header": []
+          },
+          "description": "获取数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/:type",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接",
+            "header": []
+          },
+          "description": "获取数据源连接"
+        },
+        {
+          "name": "根据数据源连接名称获取数据库",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/db/edgar.brown",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                "db",
+                ":dataSourceName"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "dataSourceName",
+                  "value": "edgar.brown",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "根据数据源连接名称获取数据库",
+            "header": []
+          },
+          "description": "根据数据源连接名称获取数据库"
+        }
+      ]
+    }
+  ]
+}
