@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface DbDataSource {
+public interface DctDataSourceService {
   List<String> getResultDb(String dataSourceName);
+
+  List<String> getResultTable(String dataSourceName, String db);
 }

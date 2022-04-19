@@ -9,7 +9,7 @@ import com.qk.dam.metadata.catacollect.repo.MysqlAtlasEntity;
 import com.qk.dam.metadata.catacollect.repo.MysqlDbToTableAgg;
 import com.qk.dam.metadata.catacollect.service.MetadataApiService;
 import com.qk.dam.metadata.catacollect.util.SourcesUtil;
-import com.qk.dam.metadata.catacollect.util.Util;
+import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.springframework.stereotype.Service;
 
@@ -37,11 +37,11 @@ public class MetadataApiServiceImpl implements MetadataApiService {
       switch (connectInfoVo.getType()){
         case SourcesUtil.MYSQL:
           list =new MysqlDbToTableAgg(connectInfoVo).searchMysqlDB(list);
-          dbList = Util.getDbResult(list,SourcesUtil.MYSQL);
+          dbList = CatacollectUtil.getDbResult(list,SourcesUtil.MYSQL);
           break;
         case SourcesUtil.HIVE:
           list = new HiveDbToTableAgg(connectInfoVo).searchHiveDB(list);
-          dbList = Util.getDbResult(list,SourcesUtil.HIVE);
+          dbList = CatacollectUtil.getDbResult(list,SourcesUtil.HIVE);
           break;
         default:
           break;
@@ -62,11 +62,11 @@ public class MetadataApiServiceImpl implements MetadataApiService {
       switch (connectInfoVo.getType()){
         case SourcesUtil.MYSQL:
           list =new MysqlDbToTableAgg(connectInfoVo).searchMysqlTable(list);
-          dbList = Util.getTableResult(list,SourcesUtil.MYSQL);
+          dbList = CatacollectUtil.getTableResult(list,SourcesUtil.MYSQL);
           break;
         case SourcesUtil.HIVE:
           list = new HiveDbToTableAgg(connectInfoVo).searchHiveTable(list);
-          dbList = Util.getTableResult(list,SourcesUtil.HIVE);
+          dbList = CatacollectUtil.getTableResult(list,SourcesUtil.HIVE);
           break;
         default:
           break;

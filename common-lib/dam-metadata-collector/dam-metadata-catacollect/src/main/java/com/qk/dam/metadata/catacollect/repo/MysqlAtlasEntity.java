@@ -11,7 +11,7 @@ import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlColumnType;
 import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlDbType;
 import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlTableType;
 import com.qk.dam.metadata.catacollect.util.SourcesUtil;
-import com.qk.dam.metadata.catacollect.util.Util;
+import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.commons.lang.StringUtils;
 
@@ -77,7 +77,7 @@ public class MysqlAtlasEntity {
         list = use.query("select * from TABLES im where im.table_schema=?", db);
     }else {
       if (CollectionUtil.isNotEmpty(tableList)){
-        String s = Util.convertListToString(tableList);
+        String s = CatacollectUtil.convertListToString(tableList);
         list = use.query("select * from TABLES im where im.TABLE_NAME in"+"("+s+")");
       }
     }
