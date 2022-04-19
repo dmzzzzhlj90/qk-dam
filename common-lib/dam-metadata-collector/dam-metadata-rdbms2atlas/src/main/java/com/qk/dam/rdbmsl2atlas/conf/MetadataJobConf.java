@@ -1,7 +1,6 @@
 package com.qk.dam.rdbmsl2atlas.conf;
 
 import cn.hutool.core.io.resource.ResourceUtil;
-import com.qk.dam.rdbmsl2atlas.QuickStart;
 import com.qk.dam.rdbmsl2atlas.pojo.MetadataJobYamlVO;
 import com.qk.dam.rdbmsl2atlas.pojo.MetadataYamlVO;
 import java.util.Objects;

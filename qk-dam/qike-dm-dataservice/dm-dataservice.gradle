@@ -51,7 +51,7 @@ dependencies {
     implementation project(":dam-log")
     implementation project(":qk-dataservice-spi")
     implementation project(":gateway-apisix")
-    implementation project(":dm-feign-client")
+    implementation project(":dm-metadata-feign")
     implementation project(":datasource-common-core")
     implementation project(":metadata-common-core")
     implementation project(":qk-openapi-lib")
