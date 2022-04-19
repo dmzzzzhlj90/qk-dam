@@ -2,6 +2,7 @@ package com.qk.dm.dataingestion.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
+import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
 import com.qk.dm.dataingestion.vo.DisParamsVO;
@@ -48,4 +49,11 @@ public interface DataMigrationService {
      * @return
      */
     PageResultVO<DisMigrationBaseInfoVO> pageList(DisParamsVO paramsVO);
+
+    /**
+     * 获取字段列表
+     * @param vo
+     * @return
+     */
+    ColumnVO getColumnList(DisMigrationBaseInfoVO vo);
 }

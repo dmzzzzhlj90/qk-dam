@@ -5,6 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
 import com.qk.dm.dataingestion.service.DataMigrationService;
+import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
 import com.qk.dm.dataingestion.vo.DisParamsVO;
@@ -89,6 +90,11 @@ public class DataMigrationController {
     @PostMapping("/list")
     public DefaultCommonResult<PageResultVO<DisMigrationBaseInfoVO>> list(@RequestBody @Validated DisParamsVO paramsVO){
         return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.pageList(paramsVO));
+    }
+
+    public DefaultCommonResult<ColumnVO> getColumnList(@RequestBody @Validated DisMigrationBaseInfoVO vo){
+
+        return null;
     }
 
 
