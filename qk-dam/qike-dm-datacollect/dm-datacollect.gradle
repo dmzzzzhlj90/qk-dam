@@ -46,6 +46,7 @@ dependencies {
     implementation project(":dm-feign-client")
     //implementation project(":catacollect")
 //    implementation project(":dolphinscheduler-client")
+    implementation project(":dolphinscheduler-starter-client")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
