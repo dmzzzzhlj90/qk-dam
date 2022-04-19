@@ -121,6 +121,25 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     }
 
     @Override
+    public List<DasApiCreateConfigDefinitionVO> searchCreateConfigByApiId(List<String> apiIds) {
+        List<DasApiCreateConfigDefinitionVO> configDefinitionVOList = Lists.newArrayList();
+
+        Iterable<DasApiCreateConfig> createConfigs = dasApiCreateConfigRepository.findAll(qDasApiCreateConfig.apiId.in(apiIds));
+        createConfigs.forEach(apiCreateConfig -> {
+            DasApiCreateConfigDefinitionVO createConfigDefinitionVO = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfigDefinitionVO(apiCreateConfig);
+
+            createConfigDefinitionVO.setCreateRequestParasJson(apiCreateConfig.getApiRequestParas());
+            createConfigDefinitionVO.setCreateResponseParasJson(apiCreateConfig.getApiResponseParas());
+            createConfigDefinitionVO.setCreateOrderParasJson(apiCreateConfig.getApiOrderParas());
+
+            configDefinitionVOList.add(createConfigDefinitionVO);
+
+        });
+
+        return configDefinitionVOList;
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(DasApiCreateConfigVO dasApiCreateConfigVO) {
         String apiId = UUID.randomUUID().toString().replaceAll("-", "");
@@ -316,8 +335,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
     private ConnectBasicInfo getConnectBasicInfo(DasApiCreateConfigDefinitionVO apiCreateConfigDefinitionVO) {
         Map<String, ConnectBasicInfo> dataSourceInfo = dataBaseInfoDefaultApi
                 .getDataSourceMap(Lists.newArrayList(apiCreateConfigDefinitionVO.getDataSourceName()));
-        ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateConfigDefinitionVO.getDataSourceName());
-        return connectBasicInfo;
+        return dataSourceInfo.get(apiCreateConfigDefinitionVO.getDataSourceName());
     }
 
 

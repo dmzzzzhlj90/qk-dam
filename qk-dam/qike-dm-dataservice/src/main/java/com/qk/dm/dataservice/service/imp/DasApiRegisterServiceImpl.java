@@ -11,11 +11,9 @@ import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.RegisterBackendParamHeaderInfoEnum;
 import com.qk.dm.dataservice.constant.RegisterConstantParamHeaderInfoEnum;
 import com.qk.dm.dataservice.dto.ApiRegisterDTO;
-import com.qk.dm.dataservice.entity.DasApiBasicInfo;
-import com.qk.dm.dataservice.entity.DasApiRegister;
-import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
-import com.qk.dm.dataservice.entity.QDasApiRegister;
+import com.qk.dm.dataservice.entity.*;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
+import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateSqlScriptMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiRegisterMapper;
 import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
 import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
@@ -311,6 +309,26 @@ public class DasApiRegisterServiceImpl implements DasApiRegisterService {
                     dasApiRegisterVOList.add(dasApiRegisterVOBuilder.build());
                 });
         return dasApiRegisterVOList;
+    }
+
+    @Override
+    public List<DasApiRegisterDefinitionVO> searchRegisterByApiId(List<String> apiIds) {
+        List<DasApiRegisterDefinitionVO> registerDefinitionVOList = Lists.newArrayList();
+
+        Iterable<DasApiRegister> apiRegisters = dasApiRegisterRepository.findAll(qDasApiRegister.apiId.in(apiIds));
+
+        apiRegisters.forEach(apiRegister -> {
+            DasApiRegisterDefinitionVO registerDefinitionVO = transformToRegisterDefinitionVO(apiRegister);
+
+            registerDefinitionVO.setRegisterBackendParasJson(apiRegister.getBackendRequestParas());
+            registerDefinitionVO.setRegisterConstantParasJson(apiRegister.getBackendConstants());
+
+            registerDefinitionVOList.add(registerDefinitionVO);
+
+        });
+
+        return registerDefinitionVOList;
+
     }
 
     /**
