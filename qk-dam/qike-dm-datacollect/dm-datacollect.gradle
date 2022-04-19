@@ -6,7 +6,7 @@ plugins {
 }
 
 version "${dmDataqualityVersion}"
-group "com.qk.dm.authority"
+group "com.qk.dm.datacollect"
 configurations {
     [apiElements, runtimeElements].each {
         it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
@@ -43,14 +43,16 @@ compileJava {
 dependencies {
 //    implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
+    implementation project(":dm-feign-client")
+    //implementation project(":catacollect")
 //    implementation project(":dolphinscheduler-client")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
-    implementation 'org.mapstruct:mapstruct'
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
 
 
