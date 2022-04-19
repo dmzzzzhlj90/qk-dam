@@ -64,4 +64,25 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
         return disMigrationBaseInfoRepository.exists(predicate);
     }
 
+    @Override
+    public Boolean sourceExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO) {
+        Predicate predicate = qDisMigrationBaseInfo.sourceConnect.eq(disMigrationBaseInfoVO.getSourceConnect())
+                .and(qDisMigrationBaseInfo.sourceConnectType.eq(disMigrationBaseInfoVO.getSourceConnectType()))
+                .and(qDisMigrationBaseInfo.sourceDatabase.eq(disMigrationBaseInfoVO.getSourceDatabase()))
+                .and(qDisMigrationBaseInfo.sourceTable.eq(disMigrationBaseInfoVO.getSourceTable()))
+                .and(qDisMigrationBaseInfo.id.eq(disMigrationBaseInfoVO.getId()));
+          return disMigrationBaseInfoRepository.exists(predicate);
+    }
+
+    @Override
+    public Boolean targetExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO) {
+        Predicate predicate = qDisMigrationBaseInfo.targetConnect.eq(disMigrationBaseInfoVO.getTargetConnect())
+                .and(qDisMigrationBaseInfo.targetConnectType.eq(disMigrationBaseInfoVO.getTargetConnectType()))
+                .and(qDisMigrationBaseInfo.targetDatabase.eq(disMigrationBaseInfoVO.getTargetDatabase()))
+                .and(qDisMigrationBaseInfo.targetTable.eq(disMigrationBaseInfoVO.getTargetTable()))
+                .and(qDisMigrationBaseInfo.id.eq(disMigrationBaseInfoVO.getId()));
+
+        return disMigrationBaseInfoRepository.exists(predicate);
+    }
+
 }

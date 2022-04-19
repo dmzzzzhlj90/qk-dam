@@ -15,4 +15,8 @@ public interface DisBaseInfoService {
     DisMigrationBaseInfoVO detail(Long id);
 
     Boolean exists(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
+
+    Boolean sourceExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
+
+    Boolean targetExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
 }
