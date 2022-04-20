@@ -3,24 +3,15 @@ plugins {
     id 'java'
 }
 version "${commonLibVersion}"
-group "com.qk.dm.dataservice"
+group "com.qk.dm"
 
 dependencies {
-    implementation project(":commons-core")
+    compile project(":commons-core")
+    compile project(":qk-dataservice-common")
 
-    compile 'com.alibaba:easyexcel'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
-    implementation 'org.mapstruct:mapstruct'
-    annotationProcessor(
-            "javax.persistence:javax.persistence-api",
-            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
-            "javax.annotation:javax.annotation-api",
-            "org.projectlombok:lombok",
-            'org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
     imports {

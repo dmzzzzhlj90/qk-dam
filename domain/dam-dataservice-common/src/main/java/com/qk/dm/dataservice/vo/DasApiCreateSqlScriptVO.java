@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
- * 新建API_配置方式VO
+ * 新建API_取数SQL方式VO
  *
  * @author wjq
  * @date 20210907
@@ -20,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DasApiCreateConfigVO {
+public class DasApiCreateSqlScriptVO {
 
     /**
      * API基础信息
@@ -29,10 +28,10 @@ public class DasApiCreateConfigVO {
     private DasApiBasicInfoVO apiBasicInfoVO;
 
     /**
-     * 新建API_配置方式_配置信息定义类
+     * 新建API__取数SQL方式__配置信息定义类
      */
     @Valid
-    private DasApiCreateConfigDefinitionVO apiCreateDefinitionVO;
+    private DasApiCreateSqlScriptDefinitionVO apiCreateDefinitionVO;
 
     /**
      * DEBUG调试参数

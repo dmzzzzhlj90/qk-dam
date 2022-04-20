@@ -54,7 +54,7 @@ public class ModelDataBaseController {
      * @return DefaultCommonResult<List < ResultDatasourceInfo>>
      */
     @GetMapping("/connect/{type}")
-    public DefaultCommonResult<Map<Integer,String>> getResultDataSourceByType(@PathVariable("type") String connectType) {
+    public DefaultCommonResult<Map<String,String>> getResultDataSourceByType(@PathVariable("type") String connectType) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSources(connectType));
     }
 
