@@ -38,6 +38,9 @@ public class MysqlAtlasEntity {
   private final String description;
   private final String displayName;
   private final String owner;
+  /**采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）*/
+  private final String strategy;
+
   public MysqlAtlasEntity(MetadataConnectInfoVo metadataConnectInfoVo) {
     this.use =
         Db.use(
@@ -57,6 +60,7 @@ public class MysqlAtlasEntity {
     description=metadataConnectInfoVo.getDescription();
     displayName=metadataConnectInfoVo.getDisplayName();
     owner=metadataConnectInfoVo.getOwner();
+    strategy = metadataConnectInfoVo.getStrategy();
   }
 
   public List<AtlasEntity.AtlasEntitiesWithExtInfo> searchMysqlAtals(
