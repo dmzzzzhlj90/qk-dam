@@ -1,5 +1,6 @@
 package com.qk.dm.dataingestion.mapstruct.mapper;
 
+import com.qk.dam.metedata.entity.MtdAttributes;
 import com.qk.dm.dataingestion.vo.ColumnVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface MetaDataColumnMapper {
     MetaDataColumnMapper INSTANCE = Mappers.getMapper(MetaDataColumnMapper.class);
 
-//    ColumnVO.Column of(Object o);
-//
-//    List<ColumnVO.Column> of(List list);
+    ColumnVO.Column of(MtdAttributes o);
+
+    List<ColumnVO.Column> of(List<MtdAttributes> list);
 }

@@ -92,9 +92,15 @@ public class DataMigrationController {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.pageList(paramsVO));
     }
 
+    /**
+     * 获取作业字段列表
+     * @param vo 参数信息
+     * @return DefaultCommonResult<ColumnVO>
+     */
+    @PostMapping("/column/list")
     public DefaultCommonResult<ColumnVO> getColumnList(@RequestBody @Validated DisMigrationBaseInfoVO vo){
 
-        return null;
+        return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.getColumnList(vo));
     }
 
 
