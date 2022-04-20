@@ -4,6 +4,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.context.WriteContext;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataservice.constant.DasConstant;
@@ -106,6 +107,8 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
 
     @Override
     public void apiDataDownload(String dirId,HttpServletResponse response) throws IOException {
+        LOG.info("============================开始导出API!============================");
+        LOG.info("dirId【{}】",dirId);
         // 根据目录设置文件名称
         String dirName = searchDirName(dirId);
         String name = "目录为" + dirName + "的API接口信息";
@@ -148,7 +151,10 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
                 .build();
         excelWriter.write(registerDefinitionVOList, registerSheet);
 
+        WriteContext writeContext = excelWriter.writeContext();
+        LOG.info("writeContext【{}】",writeContext);
         excelWriter.finish();
+        LOG.info("============================结束导出API!============================");
     }
 
 
