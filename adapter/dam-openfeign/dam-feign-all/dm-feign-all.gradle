@@ -7,6 +7,7 @@ group "com.qk.dm"
 
 dependencies {
     compile project(":dm-metadata-feign")
+    compile project(":dm-das-feign")
     compile project(":dm-datasource-feign")
     compile project(":dm-datastandard-feign")
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"

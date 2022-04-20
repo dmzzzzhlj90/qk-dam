@@ -9,7 +9,7 @@ metadata:
   annotations:
     deployment.kubernetes.io/revision: '1'
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: dataservice-deploy

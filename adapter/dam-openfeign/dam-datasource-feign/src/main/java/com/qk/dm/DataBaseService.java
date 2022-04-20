@@ -109,7 +109,7 @@ public interface DataBaseService {
      * 获取数据源连接名称，id
      * @return
      */
-    Map<Integer,String> getAllDataSources(String connectType);
+    Map<String,String> getAllDataSources(String connectType);
 
     /**
      * 根据id获取数据源连接
