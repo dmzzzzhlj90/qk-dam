@@ -12,6 +12,7 @@ import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisBaseInfoMapper;
+import com.qk.dm.dataingestion.mapstruct.mapper.MetaDataColumnMapper;
 import com.qk.dm.dataingestion.model.*;
 import com.qk.dm.dataingestion.service.DataMigrationService;
 import com.qk.dm.dataingestion.service.DisBaseInfoService;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -68,8 +70,6 @@ public class DataMigrationServiceImpl implements DataMigrationService {
             throw new BizException("作业名称"+baseInfo.getJobName()+"已存在！！！");
         }
         Long baseInfoId = baseInfoService.add(dataMigrationVO.getBaseInfo());
-//        List<DisColumnInfoVO> columnList = dataMigrationVO.getColumnList();
-//        columnList.forEach(e->e.setBaseInfoId(baseInfoId));
         //添加字段信息
         columnInfoService.batchAdd(columnMerge(dataMigrationVO,baseInfoId));
         //添加任务信息
@@ -107,30 +107,35 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     public DataMigrationVO detail(Long id) {
-
-       return DataMigrationVO.builder().baseInfo(baseInfoService.detail(id))
-        .columnList(columnInfoService.list(id))
-        .schedulerConfig(schedulerConfigService.detail(id)).build();
+        DisMigrationBaseInfoVO baseDetail = baseInfoService.detail(id);
+        List<DisColumnInfoVO> columnList = columnInfoService.list(id);
+       return DataMigrationVO.builder().baseInfo(baseDetail)
+               .columnList(ColumnVO.builder().sourceColumnList(sourceList(baseDetail,columnList))
+               .targetColumnList(targetList(baseDetail,columnList)).build())
+               .schedulerConfig(schedulerConfigService.detail(id)).build();
     }
 
     @Override
     public Map<String,Object> jsonDetail(Long id) {
-        DisMigrationBaseInfoVO baseInfo = baseInfoService.detail(id);
-        DataMigrationVO dataMigrationVO = DataMigrationVO.builder().baseInfo(baseInfo)
-                .columnList(columnInfoService.list(id))
+        DisMigrationBaseInfoVO baseDetail = baseInfoService.detail(id);
+        List<DisColumnInfoVO> columnList = columnInfoService.list(id);
+        DataMigrationVO dataMigrationVO = DataMigrationVO.builder().baseInfo(baseDetail)
+                .columnList(ColumnVO.builder().sourceColumnList(sourceList(baseDetail,columnList))
+                        .targetColumnList(targetList(baseDetail,columnList)).build())
                 .schedulerConfig(schedulerConfigService.detail(id)).build();
         Map<String, Object> map = Maps.newHashMap();
         String json = dataSyncFactory.transJson(dataMigrationVO,
-                IngestionType.getVal(baseInfo.getSourceConnectType()),
-                IngestionType.getVal(baseInfo.getTargetConnectType()));
+                IngestionType.getVal(baseDetail.getSourceConnectType()),
+                IngestionType.getVal(baseDetail.getTargetConnectType()));
 
         map.put("dataxJson",json);
         return map;
 
     }
     private List<DisColumnInfoVO> columnMerge(DataMigrationVO dataMigrationVO, Long baseInfoId){
-        List<ColumnVO.Column> sourceColumnList = dataMigrationVO.getSourceColumnList();
-        List<ColumnVO.Column> targetColumnList = dataMigrationVO.getTargetColumnList();
+         ColumnVO column = dataMigrationVO.getColumnList();
+        List<ColumnVO.Column> sourceColumnList = column.getSourceColumnList();
+        List<ColumnVO.Column> targetColumnList = column.getTargetColumnList();
         List<DisColumnInfoVO> columnList = Lists.newArrayList();
        for(int i=0;i<sourceColumnList.size();i++){
            ColumnVO.Column sourceColumn = sourceColumnList.get(i);
@@ -176,8 +181,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         }else {
             List sourceColumnList = dataBaseService.getAllColumn(vo.getSourceConnectType(), vo.getSourceConnect(),
                     vo.getSourceDatabase(), vo.getSourceTable());
-            //return MetaDataColumnMapper.INSTANCE.of(sourceColumnList);
-            return null;
+            return MetaDataColumnMapper.INSTANCE.of(sourceColumnList);
         }
     }
 
@@ -189,8 +193,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         }else {
             List targetColumnList = dataBaseService.getAllColumn(vo.getTargetConnectType(), vo.getTargetConnect(),
                     vo.getTargetDatabase(), vo.getTargetTable());
-            //return MetaDataColumnMapper.INSTANCE.of(targetColumnList);
-            return null;
+            return MetaDataColumnMapper.INSTANCE.of(targetColumnList);
         }
     }
 
