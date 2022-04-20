@@ -110,7 +110,8 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
         String dirName = searchDirName(dirId);
         String name = "目录为" + dirName + "的API接口信息";
 //        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setContentType("application/json;charset=utf-8");
+//        response.setContentType("application/json;charset=utf-8");
+        response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode(name, "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");

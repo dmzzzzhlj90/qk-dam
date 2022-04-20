@@ -34,7 +34,7 @@ dependencies {
         api "com.querydsl:querydsl-core:5.0.0"
         api "com.querydsl:querydsl-jpa:5.0.0"
         api "com.querydsl:querydsl-apt:5.0.0"
-        api group: 'com.alibaba', name: 'easyexcel', version: '3.0.5'
+        api group: 'com.alibaba', name: 'easyexcel', version: '2.2.10'
         api 'commons-io:commons-io:2.9.0'
         api 'org.apache.curator:curator-recipes:5.1.0'
         api group: 'mysql', name: 'mysql-connector-java',version:'8.0.25'
