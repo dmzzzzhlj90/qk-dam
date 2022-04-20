@@ -51,7 +51,7 @@ public class DisSchedulerConfigVO {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date effectiveTimeEnt;
+    private Date effectiveTimeEnd;
 
     /**
      * 周期时间

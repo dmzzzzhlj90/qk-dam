@@ -1,9 +1,11 @@
 package com.qk.dm.dataingestion.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.dataingestion.entity.DisSchedulerConfig;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisSchedulerConfigMapper;
 import com.qk.dm.dataingestion.repositories.DisSchedulerConfigRepository;
 import com.qk.dm.dataingestion.service.DisSchedulerConfigService;
+import com.qk.dm.dataingestion.util.CronUtil;
 import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,9 @@ public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService 
 
     @Override
     public void add(DisSchedulerConfigVO disSchedulerConfigVO) {
-        disSchedulerConfigRepository.save(DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigVO));
+        DisSchedulerConfig disSchedulerConfig = DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigVO);
+        disSchedulerConfig.setCron(createCron(disSchedulerConfig));
+        disSchedulerConfigRepository.save(disSchedulerConfig);
     }
 
     @Override
@@ -41,5 +45,14 @@ public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService 
     public DisSchedulerConfigVO detail(Long baseId) {
 
         return DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigRepository.findByBaseInfoId(baseId));
+    }
+    /**
+     * 方法摘要：构建Cron表达式
+     */
+    public static String createCron(DisSchedulerConfig disSchedulerConfig) {
+
+        return CronUtil.createCron(disSchedulerConfig.getSchedulerCycle(),
+                disSchedulerConfig.getSchedulerIntervalTime(),
+                disSchedulerConfig.getSchedulerTime());
     }
 }

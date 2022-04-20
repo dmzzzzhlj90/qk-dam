@@ -62,8 +62,8 @@ public class DisSchedulerConfig implements Serializable {
     /**
      * 生效日期结束
      */
-    @Column(name = "effective_time_ent")
-    private Date effectiveTimeEnt;
+    @Column(name = "effective_time_end")
+    private Date effectiveTimeEnd;
 
     /**
      * 周期时间
