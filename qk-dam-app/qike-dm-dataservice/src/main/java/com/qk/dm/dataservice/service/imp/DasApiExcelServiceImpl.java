@@ -108,7 +108,6 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
     @Override
     public void apiDataDownload(String dirId,HttpServletResponse response) throws IOException {
         LOG.info("============================开始导出API!============================");
-        LOG.info("dirId【{}】",dirId);
         // 根据目录设置文件名称
         String dirName = searchDirName(dirId);
         String name = "目录为" + dirName + "的API接口信息";
@@ -151,8 +150,6 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
                 .build();
         excelWriter.write(registerDefinitionVOList, registerSheet);
 
-        WriteContext writeContext = excelWriter.writeContext();
-        LOG.info("writeContext【{}】",writeContext);
         excelWriter.finish();
         LOG.info("============================结束导出API!============================");
     }
