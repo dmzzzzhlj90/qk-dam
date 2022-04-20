@@ -1,0 +1,182 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "7ea5b2da-34e4-40eb-a829-bc05b4ea0b58",
+    "name": "dm-datacollect"
+  },
+  "item": [
+    {
+      "name": "数据源连接",
+      "item": [
+        {
+          "name": "获取数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/types",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接类型",
+            "header": []
+          },
+          "description": "获取数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/:type",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接",
+            "header": []
+          },
+          "description": "获取数据源连接"
+        },
+        {
+          "name": "根据数据源连接名称获取数据库",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/db?dataSourceName\u003ddustin.dubuque",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceName",
+                  "value": "dustin.dubuque",
+                  "description": "数据源连接名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "根据数据源连接名称获取数据库",
+            "header": []
+          },
+          "description": "根据数据源连接名称获取数据库"
+        },
+        {
+          "name": "根据数据源连接、库名称获取表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/connect/table?dataSourceName\u003ddustin.dubuque\u0026db\u003dwggfjl",
+              "protocol": "http",
+              "path": [
+                "db",
+                "connect",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceName",
+                  "value": "dustin.dubuque",
+                  "description": "数据源连接名称"
+                },
+                {
+                  "key": "db",
+                  "value": "m0pa1x",
+                  "description": "数据库名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "根据数据源连接、库名称获取表",
+            "header": []
+          },
+          "description": "根据数据源连接、库名称获取表"
+        },
+        {
+          "name": "dolphin任务回调接口",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"p7z45r\",\n  \"dataSourceName\": \"dustin.dubuque\",\n  \"tableList\": [\n    \"c8nbkp\"\n  ],\n  \"allNums\": \"kznao7\",\n  \"applicationName\": \"dustin.dubuque\",\n  \"displayName\": \"dustin.dubuque\",\n  \"owner\": \"p360kc\",\n  \"db\": \"a8xdpb\",\n  \"strategy\": \"yui1jk\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/",
+              "protocol": "http",
+              "path": [
+                "db",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "dolphin任务回调接口",
+            "header": []
+          },
+          "description": "dolphin任务回调接口"
+        }
+      ]
+    }
+  ]
+}

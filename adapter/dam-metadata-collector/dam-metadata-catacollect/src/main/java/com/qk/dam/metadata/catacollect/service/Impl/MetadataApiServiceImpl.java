@@ -24,6 +24,11 @@ import java.util.List;
  */
 @Service
 public class MetadataApiServiceImpl implements MetadataApiService {
+  /*private final BaseClientConf baseClientConf;
+
+  public MetadataApiServiceImpl(BaseClientConf baseClientConf) {
+    this.baseClientConf = baseClientConf;
+  }*/
 
   /**
    * 根据数据源连接获取库信息
@@ -99,6 +104,13 @@ public class MetadataApiServiceImpl implements MetadataApiService {
         sqlException.printStackTrace();
       }
     }
+   /* list.forEach(e->{
+      try {
+        baseClientConf.atlasClientV2.createEntities(e);
+      } catch (AtlasServiceException atlasServiceException) {
+        atlasServiceException.printStackTrace();
+      }
+    });*/
     return list;
   }
 

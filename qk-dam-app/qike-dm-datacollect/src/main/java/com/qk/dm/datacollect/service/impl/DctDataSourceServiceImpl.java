@@ -5,9 +5,12 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
+import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
 import com.qk.dam.metadata.catacollect.service.MetadataApiService;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.datacollect.mapstruct.DctDataBaseMapper;
 import com.qk.dm.datacollect.service.DctDataSourceService;
+import com.qk.dm.datacollect.vo.DctBaseInfoVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,6 +54,19 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
       return metadataApiService.queryTable(connectInfoVo);
     }else {
       throw  new BizException("根据连接名称获取连接信息失败");
+    }
+  }
+
+  @Override
+  public void dolphinCallback(DctBaseInfoVO dctBaseInfoVO) {
+    ResultDatasourceInfo dataSource = dataBaseInfoDefaultApi.getDataSource(dctBaseInfoVO.getDataSourceName());
+    if (Objects.nonNull(dataSource)){
+      MetadataConnectInfoVo metadataConnectInfoVo =new MetadataConnectInfoVo();
+      metadataConnectInfoVo = GsonUtil.fromJsonString(dataSource.getConnectBasicInfoJson(), new TypeToken<MetadataConnectInfoVo>() {}.getType());
+      DctDataBaseMapper.INSTANCE.from(dctBaseInfoVO,metadataConnectInfoVo);
+      metadataApiService.extractorAtlasEntitiesWith(metadataConnectInfoVo);
+    }else {
+      throw new BizException("根据连接名称获取连接信息失败");
     }
   }
 }

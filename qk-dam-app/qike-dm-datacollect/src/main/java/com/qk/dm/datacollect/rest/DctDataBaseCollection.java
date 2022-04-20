@@ -4,6 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.datacollect.service.DctDataSourceService;
 import com.qk.dm.DataBaseService;
+import com.qk.dm.datacollect.vo.DctBaseInfoVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -67,4 +68,15 @@ public class DctDataBaseCollection {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultTable(dataSourceName,db));
   }
 
+
+  /**
+   * dolphin任务回调接口
+   * @param dctBaseInfoVO 回调atals接口参数
+   * @return
+   */
+  @PostMapping
+   public DefaultCommonResult dolphinCallback(@RequestBody DctBaseInfoVO dctBaseInfoVO){
+     dctDataSourceService.dolphinCallback(dctBaseInfoVO);
+     return DefaultCommonResult.success();
+   }
 }
