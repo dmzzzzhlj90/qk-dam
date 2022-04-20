@@ -10,7 +10,7 @@ dependencies {
     compile "com.querydsl:querydsl-jpa:5.0.0"
     implementation 'javax.persistence:javax.persistence-api:2.2'
     compile project(":qk-datasource")
-    implementation "org.springframework.cloud:spring-cloud-context"
+    implementation 'org.springframework:spring-context'
 }
 
 dependencyManagement {
