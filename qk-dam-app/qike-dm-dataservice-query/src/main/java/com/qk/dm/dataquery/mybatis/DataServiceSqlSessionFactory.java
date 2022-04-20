@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -34,15 +35,19 @@ public class DataServiceSqlSessionFactory {
 
         sqlSessionFactoryMap.forEach((connectName,sqlSessionFactory)->{
             Mapper mapper = mybatisMapperContainer.getMapper(connectName);
-            Configuration configuration = sqlSessionFactory.getConfiguration();
-            bindMybatisConfiguration(configuration,mapper);
+            if (Objects.nonNull(mapper)){
+                Configuration configuration = sqlSessionFactory.getConfiguration();
+                bindMybatisConfiguration(configuration,mapper);
+            }
         });
 
     }
 
     private void bindMybatisConfiguration(Configuration configuration,Mapper mapper) {
+        String mapperXmlStr = MapperUtil.getMapperXmlStr(mapper);
+        byte[] mapperXmlStrBytes = mapperXmlStr.getBytes(StandardCharsets.UTF_8);
         XMLMapperBuilder mapperParser = new XMLMapperBuilder(
-                new ByteArrayInputStream(MapperUtil.getMapperXmlStr(mapper).getBytes(StandardCharsets.UTF_8))
+                new ByteArrayInputStream(mapperXmlStrBytes)
                 , configuration
                 , null
                 , configuration.getSqlFragments());

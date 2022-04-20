@@ -10,6 +10,7 @@ import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.DataBaseService;
 import com.qk.dm.dataquery.domain.Mapper;
 import com.qk.dm.dataquery.domain.MapperSelect;
+import com.qk.dm.dataquery.domain.ResultMap;
 import com.qk.dm.dataquery.mybatis.DataServiceSqlSessionFactory;
 import com.qk.dm.dataquery.mybatis.MybatisDatasourceManager;
 import com.qk.dm.dataquery.mybatis.MybatisEnvironmentManager;
@@ -58,6 +59,7 @@ public class MybatisConfiguration {
         resultDataSource.forEach(resultDatasourceInfo -> {
             try {
                 MysqlInfo mysqlInfo = objectMapper.readValue(resultDatasourceInfo.getConnectBasicInfoJson(), MysqlInfo.class);
+                //todo 这里还需要加查询具体对应数据库的接口
                 mybatisDatasourceManager.regDatasource(ConnTypeEnum.MYSQL, resultDatasourceInfo.getDataSourceName(), mysqlInfo);
                 log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceName());
 
@@ -84,8 +86,9 @@ public class MybatisConfiguration {
 
         mybatisDatasourceManager.bindDatasource((connectName, dataSource) -> {
             JdbcTransactionFactory jdbcTransactionFactory = new JdbcTransactionFactory();
+            Environment environment = new Environment(connectName, jdbcTransactionFactory, dataSource);
             mybatisEnvironmentManager.registerJdbcTransactionFactory(connectName, jdbcTransactionFactory);
-            mybatisEnvironmentManager.registerEnvironment(connectName, new Environment(connectName, jdbcTransactionFactory, dataSource));
+            mybatisEnvironmentManager.registerEnvironment(connectName, environment);
         });
 
         return mybatisEnvironmentManager;
@@ -131,7 +134,8 @@ public class MybatisConfiguration {
 
         dataQueryInfoVOS.stream().collect(
                         // 按照数据连接名称分组
-                        Collectors.groupingBy(it -> Optional.ofNullable(it.getDasApiCreateSqlScript().getDataSourceName()).orElse("")))
+                        Collectors.groupingBy(it -> getStrNonNull(it.getDasApiCreateSqlScript().getDataSourceName())
+                        ))
                 //生成mapper
                 .forEach(generatedMappers(mybatisMapperContainer, mapperBuilder));
 
@@ -154,8 +158,28 @@ public class MybatisConfiguration {
             Mapper.MapperBuilder mapperBuilderTemp = mapperBuilder.namespace(namespace);
 
             // 相同数据源生产mapper select 查询
-            List<MapperSelect> mapperSelects = dataQueryInfoVOList.stream().map(dataQueryInfoVO -> MapperSelect.builder().id(dataQueryInfoVO.getDasApiBasicInfo().getApiId()).resultType("java.util.HashMap").sqlContent(dataQueryInfoVO.getDasApiCreateSqlScript().getSqlPara()).build()).collect(Collectors.toList());
+            List<MapperSelect> mapperSelects = dataQueryInfoVOList.stream().map(dataQueryInfoVO ->
+                    MapperSelect.builder()
+                            .id(dataQueryInfoVO.getDasApiBasicInfo().getApiId())
+                            .resultType("java.util.HashMap")
+                            .sqlContent(dataQueryInfoVO.getDasApiCreateSqlScript().getSqlPara()).build())
+                    .collect(Collectors.toList());
+            dataQueryInfoVOList.forEach(dataQueryInfoVO -> {
+                mybatisMapperContainer.addApiIdDbNameMap(
+                        dataQueryInfoVO.getDasApiCreateSqlScript().getApiId(),
+                        dataQueryInfoVO.getDasApiCreateSqlScript().getDataBaseName());
+            });
             // 相同数据连接配置mapper
+            mapperBuilderTemp.resultMap(List.of(
+                    ResultMap.builder()
+                            .autoMapping(true)
+                            .id(namespace+":"+"rt")
+                            .type("HashMap")
+                            .result(List.of(
+                                    //todo 此处为页面配置持久化关系映射
+                                    new ResultMap.Result("id", "id", "Integer")
+                            )).build()
+            ));
             mapperBuilderTemp.select(mapperSelects);
             Mapper mapper = mapperBuilderTemp.build();
 
@@ -164,5 +188,8 @@ public class MybatisConfiguration {
         };
     }
 
+    String getStrNonNull(String n){
+       return Optional.ofNullable(n).orElse("");
+    }
 
 }

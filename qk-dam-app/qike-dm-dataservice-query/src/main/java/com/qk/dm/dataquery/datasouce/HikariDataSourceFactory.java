@@ -27,16 +27,19 @@ public class HikariDataSourceFactory{
     }
 
     public DataSource dataSourceInstance() {
-        final HikariDataSource hikariDataSource = new HikariDataSource();
-        hikariDataSource.setDataSource(new DriverDataSource(
-                config.getJdbcUrl(),
-                config.getDriverClassName(),
-                config.getDataSourceProperties(),
-                config.getUsername(),
-                config.getPassword()
-
-        ));
+        final HikariDataSource hikariDataSource = new HikariDataSource(config);
+//        hikariDataSource.setDataSource(new DriverDataSource(
+//                config.getJdbcUrl(),
+//                config.getDriverClassName(),
+//                config.getDataSourceProperties(),
+//                config.getUsername(),
+//                config.getPassword()
+//
+//        ));
         return hikariDataSource;
+    }
+    public HikariConfig getHikariConfig(){
+        return config;
     }
     public static class Builder{
         private HikariConfig config;

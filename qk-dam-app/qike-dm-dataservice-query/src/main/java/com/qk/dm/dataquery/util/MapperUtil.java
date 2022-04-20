@@ -1,15 +1,19 @@
 package com.qk.dm.dataquery.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.qk.dm.dataquery.domain.Mapper;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MapperUtil {
     public MapperUtil(){
     }
     public static String getMapperXmlStr(Mapper mapper){
-        ObjectMapper xmlMapper = new XmlMapper();
+        XmlMapper xmlMapper = new XmlMapper();
+
         StringBuilder headXml = new StringBuilder("<?xml version='1.0' encoding='UTF-8'?>");
         headXml.append("<!DOCTYPE mapper\n" +
                 "        PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"\n" +
@@ -17,6 +21,7 @@ public class MapperUtil {
         try {
             String xmlContent = headXml.append(xmlMapper.writeValueAsString(mapper)).toString();
             xmlContent = getEscapeContent(xmlContent);
+            log.info("生成mybatis mapper xml 【{}】",xmlContent);
             return xmlContent;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
