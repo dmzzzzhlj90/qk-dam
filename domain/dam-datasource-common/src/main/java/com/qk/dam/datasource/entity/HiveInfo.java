@@ -15,5 +15,5 @@ public class HiveInfo extends ConnectBasicInfo {
   private final String type = ConnTypeEnum.HIVE.getName();
 
   /** 连接驱动 */
-  private String driverInfo;
+  //private String driverInfo;
 }

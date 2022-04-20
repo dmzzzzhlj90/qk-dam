@@ -16,5 +16,5 @@ public class ElasticSearchVO extends ConnectBasicInfo {
   private final String type = ConnTypeEnum.ELASTICSEARCH.getName();
 
   /** 连接驱动 */
-  private String driverInfo;
+  //private String driverInfo;
 }
