@@ -10,6 +10,8 @@ import com.qk.dam.metadata.catacollect.repo.MysqlDbToTableAgg;
 import com.qk.dam.metadata.catacollect.service.MetadataApiService;
 import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
 import com.qk.dam.metadata.catacollect.util.SourcesUtil;
+import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +26,6 @@ import java.util.List;
  */
 @Service
 public class MetadataApiServiceImpl implements MetadataApiService {
-  /*private final BaseClientConf baseClientConf;
-
-  public MetadataApiServiceImpl(BaseClientConf baseClientConf) {
-    this.baseClientConf = baseClientConf;
-  }*/
 
   /**
    * 根据数据源连接获取库信息
@@ -79,39 +76,39 @@ public class MetadataApiServiceImpl implements MetadataApiService {
     }
     return dbList;
   }
-
   /**
    * 根据数据连接信息获取元数据信息
    * @param metadataConnectInfoVo
    * @return
    */
-  public  List<AtlasEntity.AtlasEntitiesWithExtInfo> extractorAtlasEntitiesWith(
-      MetadataConnectInfoVo metadataConnectInfoVo){
+  @Override
+  public List<AtlasEntity.AtlasEntitiesWithExtInfo> extractorAtlasEntitiesWith(
+      MetadataConnectInfoVo metadataConnectInfoVo,
+      AtlasClientV2 atlasClientV2) {
     List<AtlasEntity.AtlasEntitiesWithExtInfo> list = new ArrayList<>();
     if (metadataConnectInfoVo.getType() !=null){
       try {
-      switch (metadataConnectInfoVo.getType()){
-        case SourcesUtil.MYSQL:
+        switch (metadataConnectInfoVo.getType()){
+          case SourcesUtil.MYSQL:
             list =new MysqlAtlasEntity(metadataConnectInfoVo).searchMysqlAtals(list);
-          break;
-        case SourcesUtil.HIVE:
-          list = new HiveAtlasEntity(metadataConnectInfoVo).searchHiveAtals(list);
-          break;
-        default:
-          break;
-      }
+            break;
+          case SourcesUtil.HIVE:
+            list = new HiveAtlasEntity(metadataConnectInfoVo).searchHiveAtals(list);
+            break;
+          default:
+            break;
+        }
       } catch (SQLException sqlException) {
         sqlException.printStackTrace();
       }
     }
-   /* list.forEach(e->{
+    list.forEach(e->{
       try {
-        baseClientConf.atlasClientV2.createEntities(e);
+        atlasClientV2.createEntities(e);
       } catch (AtlasServiceException atlasServiceException) {
         atlasServiceException.printStackTrace();
       }
-    });*/
+    });
     return list;
   }
-
 }

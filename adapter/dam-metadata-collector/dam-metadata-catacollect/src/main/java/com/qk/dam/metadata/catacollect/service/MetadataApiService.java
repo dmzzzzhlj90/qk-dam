@@ -2,6 +2,7 @@ package com.qk.dam.metadata.catacollect.service;
 
 import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
 import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
+import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.model.instance.AtlasEntity;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface MetadataApiService {
   List<String> queryTable(ConnectInfoVo connectInfoVo);
   //获取元数据信息
   List<AtlasEntity.AtlasEntitiesWithExtInfo> extractorAtlasEntitiesWith(
-      MetadataConnectInfoVo metadataConnectInfoVo);
+      MetadataConnectInfoVo metadataConnectInfoVo, AtlasClientV2 atlasClientV2);
 }
