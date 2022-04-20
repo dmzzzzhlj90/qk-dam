@@ -38,7 +38,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
                 .on(QDasApiCreateSqlScript.dasApiCreateSqlScript.apiId
                         .eq(QDasApiBasicInfo.dasApiBasicInfo.apiId))
                 .where(
-                        QDasApiCreateSqlScript.dasApiCreateSqlScript.accessMethod.eq("CREATE-API-SQL-SCRIPT-TYPE")
+                        QDasApiCreateSqlScript.dasApiCreateSqlScript.accessMethod.eq("CREATE-API-MYBATIS-SQL-SCRIPT-TYPE")
                                 .and(QDasApiCreateSqlScript.dasApiCreateSqlScript.delFlag.eq(0))
                                 .and(QDasApiBasicInfo.dasApiBasicInfo.delFlag.eq(0))
                 );
