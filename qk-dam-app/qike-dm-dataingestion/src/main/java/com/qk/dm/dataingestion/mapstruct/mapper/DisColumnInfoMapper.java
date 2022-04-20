@@ -12,9 +12,11 @@ import java.util.List;
 public interface DisColumnInfoMapper {
     DisColumnInfoMapper INSTANCE = Mappers.getMapper(DisColumnInfoMapper.class);
     @Mappings({
+            @Mapping(target = "id",ignore = true),
             @Mapping(target = "gmtCreate",ignore = true),
             @Mapping(target = "gmtModified",ignore = true),
-            @Mapping(target = "delFlag",ignore = true),
+            @Mapping(target = "delFlag",ignore = true)
+
     })
     DisColumnInfo of(DisColumnInfoVO disColumnInfoVO);
 

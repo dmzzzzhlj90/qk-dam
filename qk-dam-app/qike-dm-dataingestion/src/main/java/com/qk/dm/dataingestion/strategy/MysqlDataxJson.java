@@ -10,6 +10,7 @@ import com.qk.dm.dataingestion.model.DataxChannel;
 import com.qk.dm.dataingestion.model.IngestionType;
 import com.qk.dm.dataingestion.model.mysql.ReaderPara;
 import com.qk.dm.dataingestion.model.mysql.WriterPara;
+import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisColumnInfoVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
@@ -43,7 +44,8 @@ public class MysqlDataxJson implements DataxJson{
                 .jdbcUrl(jdbcUrl(dataSourceServer,baseInfo.getSourceDatabase()))
                 .table(List.of(baseInfo.getSourceTable())).build());
 
-        ReaderPara reader = new ReaderPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getSourceColumnList(dataMigrationVO.getColumnList()),
+        ReaderPara reader = new ReaderPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(),
+                getColumnList(dataMigrationVO.getColumnList().getSourceColumnList()),
                 conn, "id");
 
         return DataxChannel.builder().name(MYSQL_READER).parameter(reader).build();
@@ -58,7 +60,8 @@ public class MysqlDataxJson implements DataxJson{
         List<WriterPara.Connection> conn = List.of(WriterPara.Connection.builder()
                 .jdbcUrl(jdbcUrlString(dataSourceServer,baseInfo.getTargetDatabase()))
                 .table(List.of(baseInfo.getTargetTable())).build());
-        WriterPara writer = new WriterPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(), getTargetColumnList(dataMigrationVO.getColumnList()),
+        WriterPara writer = new WriterPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(),
+                getColumnList(dataMigrationVO.getColumnList().getTargetColumnList()),
                 conn, "insert");
         return DataxChannel.builder().name(MYSQL_WRITER).parameter(writer).build();
     }
@@ -69,21 +72,14 @@ public class MysqlDataxJson implements DataxJson{
     }
 
 
-    private List<String> getSourceColumnList(List<DisColumnInfoVO> columnList){
+    private List<String> getColumnList(List<ColumnVO.Column> columnList){
         if(!CollectionUtils.isEmpty(columnList)){
-            return columnList.stream().map(DisColumnInfoVO::getSourceName).collect(Collectors.toList());
+            return columnList.stream().map(ColumnVO.Column::getName).collect(Collectors.toList());
         }
 
         return List.of();
     }
 
-    private List<String> getTargetColumnList(List<DisColumnInfoVO> columnList){
-        if(!CollectionUtils.isEmpty(columnList)){
-            return columnList.stream().map(DisColumnInfoVO::getTargetName).collect(Collectors.toList());
-        }
-
-        return List.of();
-    }
 
     private DataSourceServer getDataSource(String connectName){
         ResultDatasourceInfo sourceInfo= dataBaseService.getDataSource(connectName);

@@ -33,7 +33,7 @@ public class DisSchedulerConfig implements Serializable {
      * 定时是否开启 0开启 1关闭
      */
     @Column(name = "time_switch")
-    private Integer timeSwitch;
+    private Boolean timeSwitch;
 
     /**
      * 调度执行方式 "SCHEDULER_TYPE_SINGLE":"单次调度" "SCHEDULER_TYPE_CYCLE":周期调度;
@@ -46,6 +46,12 @@ public class DisSchedulerConfig implements Serializable {
      */
     @Column(name = "scheduler_cycle")
     private String schedulerCycle;
+
+    /**
+     * 间隔时间 调度周期为周 1-周一 2-周二 3-周三 4-周四 5-周五 6-周六 7-周日
+     */
+    @Column(name = "scheduler_interval_time")
+    private String schedulerIntervalTime;
 
     /**
      * 生效日期开始

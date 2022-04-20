@@ -18,6 +18,8 @@ public class ColumnVO {
 
     @Data
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Column{
         private String name;
         private String dataType;
