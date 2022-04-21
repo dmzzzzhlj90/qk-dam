@@ -49,19 +49,33 @@ public class MybatisConfiguration {
      * @return 多数据源管理器
      */
     @Bean
-    MybatisDatasourceManager mybatisDatasourceContext(final DataBaseService dataBaseService) {
+    MybatisDatasourceManager mybatisDatasourceContext(final DataBaseService dataBaseService, final DataQueryInfoFeign dataQueryInfoFeign) {
+        log.info("开始查询注册的sql数据查询！！");
+        DefaultCommonResult<List<DataQueryInfoVO>> listDefaultCommonResult = dataQueryInfoFeign.dataQueryInfo();
+        List<DataQueryInfoVO> dataQueryInfo = listDefaultCommonResult.getData();
+        log.info("查询注册的sql数据查询成功！！一共发现【{}】个sql查询", dataQueryInfo.size());
+
         // 对接数据源管理，且定时扫描新数据源，时间为2分钟
         MybatisDatasourceManager mybatisDatasourceManager = new MybatisDatasourceManager();
+        mybatisDatasourceManager.regDataQueryInfo(dataQueryInfo);
+        List<String> dsNames = dataQueryInfo.stream()
+                .map(dataQueryInfoVO ->
+                        dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName())
+                .collect(Collectors.toList());
+
         List<ResultDatasourceInfo> resultDataSource = dataBaseService.getResultDataSourceByType(ConnTypeEnum.MYSQL.getName());
 
         ObjectMapper objectMapper = new ObjectMapper();
 
         resultDataSource.forEach(resultDatasourceInfo -> {
             try {
-                MysqlInfo mysqlInfo = objectMapper.readValue(resultDatasourceInfo.getConnectBasicInfoJson(), MysqlInfo.class);
-                //todo 这里还需要加查询具体对应数据库的接口
-                mybatisDatasourceManager.regDatasource(ConnTypeEnum.MYSQL, resultDatasourceInfo.getDataSourceName(), mysqlInfo);
-                log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceName());
+                String dataSourceName = resultDatasourceInfo.getDataSourceName();
+                if (dsNames.contains(dataSourceName)){
+                    MysqlInfo mysqlInfo = objectMapper.readValue(resultDatasourceInfo.getConnectBasicInfoJson(), MysqlInfo.class);
+
+                    mybatisDatasourceManager.regDatasource(ConnTypeEnum.MYSQL, dataSourceName, mysqlInfo);
+                    log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceName());
+                }
 
             } catch (JsonProcessingException e) {
                 log.error("jackson 处理异常:【{}】！！", e.getLocalizedMessage());
@@ -122,17 +136,12 @@ public class MybatisConfiguration {
      * @return MybatisMapperContainer mapper管理容器
      */
     @Bean
-    MybatisMapperContainer mybatisMapper(final DataServiceSqlSessionFactory dataServiceSqlSessionFactory, final DataQueryInfoFeign dataQueryInfoFeign) {
+    MybatisMapperContainer mybatisMapper(final DataServiceSqlSessionFactory dataServiceSqlSessionFactory, final MybatisDatasourceManager mybatisDatasourceManager) {
         MybatisMapperContainer mybatisMapperContainer = new MybatisMapperContainer();
 
-        log.info("开始查询注册的sql数据查询！！");
-        DefaultCommonResult<List<DataQueryInfoVO>> listDefaultCommonResult = dataQueryInfoFeign.dataQueryInfo();
-        List<DataQueryInfoVO> dataQueryInfoVOS = listDefaultCommonResult.getData();
-        log.info("查询注册的sql数据查询成功！！一共发现【{}】个sql查询", dataQueryInfoVOS.size());
-
         final Mapper.MapperBuilder mapperBuilder = Mapper.builder();
-
-        dataQueryInfoVOS.stream().collect(
+        List<DataQueryInfoVO> dataQueryInfos = mybatisDatasourceManager.getDataQueryInfo();
+        dataQueryInfos.stream().collect(
                         // 按照数据连接名称分组
                         Collectors.groupingBy(it -> getStrNonNull(it.getDasApiCreateSqlScript().getDataSourceName())
                         ))
