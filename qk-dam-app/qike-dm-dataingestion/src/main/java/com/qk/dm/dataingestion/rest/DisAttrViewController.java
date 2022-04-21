@@ -3,11 +3,9 @@ package com.qk.dm.dataingestion.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataingestion.service.DisAttrViewService;
-import com.qk.dm.dataingestion.vo.DisAttrViewVO;
-import com.qk.dm.dataingestion.vo.DisViewParamsVO;
+import com.qk.dm.dataingestion.vo.disAttrVO;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * 高级属性前端展示接口
@@ -26,12 +24,11 @@ public class DisAttrViewController {
 
     /**
      * 获取高级属性展示列表
-     * @param disViewParamsVO
-     * @return DefaultCommonResult<List<DisColumnViewVO>>
+     * @return DefaultCommonResult<disAttrVO>
      */
     @PostMapping("/list")
-    public DefaultCommonResult<List<DisAttrViewVO>> list(@RequestBody DisViewParamsVO disViewParamsVO){
-       return DefaultCommonResult.success(ResultCodeEnum.OK,disColumnViewService.list(disViewParamsVO));
+    public DefaultCommonResult<disAttrVO> list(){
+       return DefaultCommonResult.success(ResultCodeEnum.OK,disColumnViewService.list());
     }
 
 }

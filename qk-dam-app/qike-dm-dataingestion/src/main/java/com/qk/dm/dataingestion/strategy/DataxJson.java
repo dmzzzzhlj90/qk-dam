@@ -1,7 +1,7 @@
 package com.qk.dm.dataingestion.strategy;
 
+import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.model.DataxChannel;
-import com.qk.dm.dataingestion.model.IngestionType;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 
 public interface DataxJson {

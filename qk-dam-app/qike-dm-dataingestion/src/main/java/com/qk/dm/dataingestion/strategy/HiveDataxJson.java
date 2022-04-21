@@ -1,11 +1,10 @@
 package com.qk.dm.dataingestion.strategy;
 
+import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.model.DataxChannel;
-import com.qk.dm.dataingestion.model.IngestionType;
 import com.qk.dm.dataingestion.model.hive.HiveBasePara;
 import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
-import com.qk.dm.dataingestion.vo.DisColumnInfoVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

@@ -11,6 +11,7 @@ import com.qk.datacenter.model.Result;
 import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
+import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisBaseInfoMapper;
 import com.qk.dm.dataingestion.mapstruct.mapper.MetaDataColumnMapper;
 import com.qk.dm.dataingestion.model.*;
@@ -25,10 +26,8 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -97,6 +96,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         columnInfoService.update(baseInfo.getId(),columnMerge(dataMigrationVO,baseInfo.getId()));
         //修改任务配置信息
         schedulerConfigService.update(dataMigrationVO.getSchedulerConfig());
+        //生成datax json
         String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
                 IngestionType.getVal(baseInfo.getSourceConnectType()),
                 IngestionType.getVal(baseInfo.getTargetConnectType()));
@@ -132,6 +132,13 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         return map;
 
     }
+
+    /**
+     * 合并组装字段信息，根据索引下标一一对应
+     * @param dataMigrationVO
+     * @param baseInfoId
+     * @return
+     */
     private List<DisColumnInfoVO> columnMerge(DataMigrationVO dataMigrationVO, Long baseInfoId){
          ColumnVO column = dataMigrationVO.getColumnList();
         List<ColumnVO.Column> sourceColumnList = column.getSourceColumnList();
@@ -173,7 +180,15 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                 .targetColumnList(targetList(vo,columnList)).build();
     }
 
+    /**
+     * 组装源字段列表
+     * @param vo
+     * @param columnList
+     * @return
+     */
     private List<ColumnVO.Column> sourceList(DisMigrationBaseInfoVO vo,List<DisColumnInfoVO> columnList){
+       // 如果是编辑根据连接类型、数据库、表条件查看数据库是否存在
+        // 存在获取数据中的字段，如果不存在获取元数据的字段信息
         if(baseInfoService.sourceExists(vo)){
             return columnList.stream().map(e ->
                     ColumnVO.Column.builder().dataType(e.getSourceType())
