@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.model.*;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import lombok.extern.slf4j.Slf4j;

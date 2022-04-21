@@ -5,14 +5,14 @@ import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.model.DataSourceServer;
 import com.qk.dm.dataingestion.model.DataxChannel;
-import com.qk.dm.dataingestion.model.IngestionType;
+
 import com.qk.dm.dataingestion.model.mysql.ReaderPara;
 import com.qk.dm.dataingestion.model.mysql.WriterPara;
 import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
-import com.qk.dm.dataingestion.vo.DisColumnInfoVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

@@ -15,6 +15,15 @@ public class DisAttrViewVO {
      * 字段前端显示名称
      */
     private String title;
+    /**
+     * 类型 source 源 target 目标
+     */
+    private String type;
+
+    /**
+     * 数据库类型 如 mysql  hive
+     */
+    private String connectType;
 
     /**
      * 前端请求后端接口传递的参数名称
