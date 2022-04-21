@@ -3,7 +3,7 @@ package com.qk.dm.dataingestion.service.impl;
 import com.qk.dam.commons.enums.DataTypeEnum;
 import com.qk.dam.commons.enums.DataTypeMappingEnum;
 import com.qk.dam.commons.enums.MysqlDataTypeEnum;
-import com.qk.dm.dataingestion.model.IngestionType;
+import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.service.DisDataTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

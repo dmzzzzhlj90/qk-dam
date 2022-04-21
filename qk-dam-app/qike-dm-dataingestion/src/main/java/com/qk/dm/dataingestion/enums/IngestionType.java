@@ -1,4 +1,4 @@
-package com.qk.dm.dataingestion.model;
+package com.qk.dm.dataingestion.enums;
 
 import java.util.stream.Stream;
 
