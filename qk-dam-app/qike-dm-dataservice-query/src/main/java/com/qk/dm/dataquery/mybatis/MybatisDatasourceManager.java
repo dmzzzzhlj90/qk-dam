@@ -6,10 +6,12 @@ import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.dataquery.datasouce.HikariDataSourceFactory;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import com.zaxxer.hikari.HikariConfig;
+import net.sf.cglib.beans.BeanMap;
 
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -27,17 +29,21 @@ public class MybatisDatasourceManager {
         dataQueryInfo.addAll(dataQueryInfoVOList);
     }
 
-    public void regDatasource(ConnTypeEnum connType, String dataSourceName, ConnectBasicInfo connectBasicInfo) {
+    public void regDatasource(ConnTypeEnum connType, HikariConfig hikariConfigDefault, String dataSourceName, ConnectBasicInfo connectBasicInfo) {
         HikariConfig hc = new HikariConfig();
         hc.setJdbcUrl("jdbc:" + connType.getName() + "://"
                 + connectBasicInfo.getServer() + ":"
                 + connectBasicInfo.getPort()
-//                + "/"
-//                + "hd_court"
         );
         hc.setDriverClassName(connectBasicInfo.getDriverInfo());
         hc.setUsername(connectBasicInfo.getUserName());
         hc.setPassword(connectBasicInfo.getPassword());
+        BeanMap hcBeanMap = BeanMap.create(hc);
+        BeanMap.create(hikariConfigDefault).forEach((k,v)->{
+            if (Objects.nonNull(v)){
+                hcBeanMap.put(k,v);
+            }
+        });
 
         HikariDataSourceFactory hikariDataSourceFactory = HikariDataSourceFactory.builder().config(hc)
                 // hikariConfig 默认参数配置

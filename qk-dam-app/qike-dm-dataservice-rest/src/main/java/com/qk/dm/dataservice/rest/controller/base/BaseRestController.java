@@ -4,9 +4,9 @@ import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dam.model.HttpDataParamModel;
+import com.qk.dm.dataservice.mapping.DataServiceMapping;
 import com.qk.dm.dataservice.rest.mapping.DataServiceEnum;
-import com.qk.dm.dataservice.rest.mapping.DataServiceMapping;
-import com.qk.dm.dataservice.rest.model.HttpDataParam;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.PathContainer;
 import org.springframework.web.bind.annotation.*;
@@ -24,27 +24,29 @@ import java.util.regex.Pattern;
  */
 @RestController
 public abstract class BaseRestController {
-        private static final PathPatternParser PATH_PATTERN_PARSER = new PathPatternParser();
+    private static final PathPatternParser PATH_PATTERN_PARSER = new PathPatternParser();
 
         private static final Pattern PATTERN_PATH_VAR = Pattern.compile("\\{([^}])*}");
 
         private static final Hasher HASHER_SHA256 = Hashing.sha256().newHasher();
         private static final Base64.Encoder BASE64 = Base64.getEncoder();
+    public static final String TIPS = "数据查询服务返回查询结果！";
 
-        @DataServiceMapping(value = DataServiceEnum.MATCH_ALL,method = RequestMethod.GET)
+    @DataServiceMapping(value = DataServiceEnum.MATCH_ALL,method = RequestMethod.GET)
         public DefaultCommonResult<Object> getHandler(HttpServletRequest request,
                                                                           @RequestParam(required = false) Map<String,Object> param,
                                                                           @RequestBody(required = false) Object bodyData,
                                                                           @RequestHeader(required = false) HttpHeaders headers
         ){
-            restHandler(request,HttpDataParam.builder()
-                    .headerParam(headers)
-                    .requestParam(param)
-                    .requestBodyData(bodyData)
-                    .requestMethod(RequestMethod.GET)
-                    .uriRouteCode(uriRouteCode(request))
+            Object data = restHandler(request, HttpDataParamModel.builder()
+                    .headers(headers)
+                    .params(param)
+                    .body(bodyData)
+                    .method(RequestMethod.GET)
+                    
                     .build());
-            return DefaultCommonResult.success(ResultCodeEnum.OK,"hello world");
+            return  DefaultCommonResult.success(ResultCodeEnum.OK,data, TIPS);
+
         }
 
         @DataServiceMapping(value = DataServiceEnum.MATCH_ALL,method = RequestMethod.POST)
@@ -52,14 +54,14 @@ public abstract class BaseRestController {
                                   @RequestParam(required = false) Map<String,Object> param,
                                   @RequestBody(required = false) Object bodyData,
                                   @RequestHeader(required = false) HttpHeaders headers){
-            restHandler(request,HttpDataParam.builder()
-                    .headerParam(headers)
-                    .requestParam(param)
-                    .requestBodyData(bodyData)
-                    .requestMethod(RequestMethod.POST)
-                    .uriRouteCode(uriRouteCode(request))
+            Object data = restHandler(request, HttpDataParamModel.builder()
+                    .headers(headers)
+                    .params(param)
+                    .body(bodyData)
+                    .method(RequestMethod.GET)
+                    
                     .build());
-            return DefaultCommonResult.success(ResultCodeEnum.OK,"hello world");
+            return  DefaultCommonResult.success(ResultCodeEnum.OK,data, TIPS);
         }
 
         @DataServiceMapping(value = DataServiceEnum.MATCH_ALL,method = RequestMethod.PUT)
@@ -68,14 +70,14 @@ public abstract class BaseRestController {
                                  @RequestBody(required = false) Object bodyData,
                                  @RequestHeader(required = false) HttpHeaders headers
         ){
-            restHandler(request,HttpDataParam.builder()
-                    .headerParam(headers)
-                    .requestParam(param)
-                    .requestBodyData(bodyData)
-                    .requestMethod(RequestMethod.PUT)
-                    .uriRouteCode(uriRouteCode(request))
+            Object data = restHandler(request, HttpDataParamModel.builder()
+                    .headers(headers)
+                    .params(param)
+                    .body(bodyData)
+                    .method(RequestMethod.GET)
+                    
                     .build());
-            return DefaultCommonResult.success(ResultCodeEnum.OK,"hello world");
+            return  DefaultCommonResult.success(ResultCodeEnum.OK,data, TIPS);
         }
 
         @DataServiceMapping(value = DataServiceEnum.MATCH_ALL,method = RequestMethod.DELETE)
@@ -84,14 +86,14 @@ public abstract class BaseRestController {
                                     @RequestBody(required = false) Object bodyData,
                                     @RequestHeader(required = false) HttpHeaders headers
         ){
-            restHandler(request,HttpDataParam.builder()
-                    .headerParam(headers)
-                    .requestParam(param)
-                    .requestBodyData(bodyData)
-                    .requestMethod(RequestMethod.DELETE)
-                    .uriRouteCode(uriRouteCode(request))
+            Object data = restHandler(request, HttpDataParamModel.builder()
+                    .headers(headers)
+                    .params(param)
+                    .body(bodyData)
+                    .method(RequestMethod.GET)
+                    
                     .build());
-            return DefaultCommonResult.success(ResultCodeEnum.OK,"hello world");
+            return  DefaultCommonResult.success(ResultCodeEnum.OK,data, TIPS);
         }
 
         @DataServiceMapping(value = DataServiceEnum.MATCH_ALL,method = RequestMethod.PATCH)
@@ -100,14 +102,13 @@ public abstract class BaseRestController {
                                    @RequestBody(required = false) Object bodyData,
                                    @RequestHeader(required = false) HttpHeaders headers)
         {
-            restHandler(request,HttpDataParam.builder()
-                    .headerParam(headers)
-                    .requestParam(param)
-                    .requestBodyData(bodyData)
-                    .requestMethod(RequestMethod.PATCH)
-                    .uriRouteCode(uriRouteCode(request))
-                    .build());
-            return DefaultCommonResult.success(ResultCodeEnum.OK,"hello world");
+            return DefaultCommonResult.success(ResultCodeEnum.OK,restHandler(request, HttpDataParamModel.builder()
+                    .headers(headers)
+                    .params(param)
+                    .body(bodyData)
+                    .method(RequestMethod.GET)
+                    
+                    .build()));
         }
 
         @DataServiceMapping(value = DataServiceEnum.MATCH_ALL,method = RequestMethod.HEAD)
@@ -116,14 +117,13 @@ public abstract class BaseRestController {
                                   @RequestBody(required = false) Object bodyData,
                                   @RequestHeader(required = false) HttpHeaders headers
         ){
-            restHandler(request,HttpDataParam.builder()
-                    .headerParam(headers)
-                    .requestParam(param)
-                    .requestBodyData(bodyData)
-                    .requestMethod(RequestMethod.HEAD)
-                    .uriRouteCode(uriRouteCode(request))
-                    .build());
-            return DefaultCommonResult.success(ResultCodeEnum.OK,"hello world");
+            return DefaultCommonResult.success(ResultCodeEnum.OK,restHandler(request, HttpDataParamModel.builder()
+                    .headers(headers)
+                    .params(param)
+                    .body(bodyData)
+                    .method(RequestMethod.GET)
+                    
+                    .build()));
         }
 
         @DataServiceMapping(value = DataServiceEnum.MATCH_ALL,method = RequestMethod.OPTIONS)
@@ -133,14 +133,13 @@ public abstract class BaseRestController {
                                      @RequestHeader(required = false) HttpHeaders headers
         )
         {
-            restHandler(request,HttpDataParam.builder()
-                    .headerParam(headers)
-                    .requestParam(param)
-                    .requestBodyData(bodyData)
-                    .requestMethod(RequestMethod.OPTIONS)
-                    .uriRouteCode(uriRouteCode(request))
-                    .build());
-            return DefaultCommonResult.success(ResultCodeEnum.OK,"hello world");
+            return DefaultCommonResult.success(ResultCodeEnum.OK,restHandler(request, HttpDataParamModel.builder()
+                    .headers(headers)
+                    .params(param)
+                    .body(bodyData)
+                    .method(RequestMethod.GET)
+                    
+                    .build()));
         }
 
     /**
@@ -159,6 +158,10 @@ public abstract class BaseRestController {
         return Map.of();
     }
 
+    public Boolean matchUriPath(String restPath,String pathPattern){
+        return PATH_PATTERN_PARSER.parse(pathPattern).matches(PathContainer.parsePath(restPath));
+    }
+
     protected String uriRouteCode(HttpServletRequest request){
         String rowPath = matchRowPath(request);
         //FIXME 是否使用sha不可逆处理?? return HASHER_SHA256.putString(rowPath, Charsets.UTF_8).hash().toString();
@@ -173,8 +176,8 @@ public abstract class BaseRestController {
      * 处理所有rest请求的handler
      *
      * @param request 请求 request
-     * @param httpDataParam http传递的参数集合
+     * @param httpDataParamModel http传递的参数集合
      */
 
-    protected abstract void restHandler(HttpServletRequest request,HttpDataParam httpDataParam);
+    protected abstract Object restHandler(HttpServletRequest request, HttpDataParamModel httpDataParamModel);
 }

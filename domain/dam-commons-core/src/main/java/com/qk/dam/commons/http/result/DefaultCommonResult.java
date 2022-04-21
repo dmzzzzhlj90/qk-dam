@@ -44,10 +44,6 @@ public class DefaultCommonResult<T> extends BaseResult<T> {
     return new DefaultCommonResult<>(codeEnum, data, tips);
   }
 
-  public static <T> DefaultCommonResult<T> success(T data, String retCode, String retMsg) {
-    return new DefaultCommonResult(data, retCode, retMsg);
-  }
-
   public static <T> DefaultCommonResult<T> fail() {
     return fail(ResultCodeEnum.BAD_REQUEST);
   }

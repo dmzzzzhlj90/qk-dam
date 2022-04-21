@@ -1,5 +1,6 @@
-package com.qk.dm.dataservice.rest.mapping;
+package com.qk.dm.dataservice.mapping;
 
+import com.qk.dm.dataservice.rest.mapping.DataServiceEnum;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMethod;

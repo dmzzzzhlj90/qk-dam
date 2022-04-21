@@ -1,11 +1,12 @@
 package com.qk.dm.dataquery.controller;
 
+import com.qk.dam.model.HttpDataParamModel;
 import com.qk.dm.dataquery.mybatis.DataServiceSqlSessionFactory;
 import com.qk.dm.dataquery.mybatis.MybatisDatasourceManager;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.List;
  * 数据查询服务
  *
  * @author zhudaoming
- * @since 1.5.0
  * @date 20220419
+ * @since 1.5.0
  */
 @RestController
 public class QueryDataRestController {
@@ -27,14 +28,14 @@ public class QueryDataRestController {
         this.mybatisDatasourceManager = mybatisDatasourceManager;
     }
 
-    @GetMapping("/app/query/{apiId}")
-    public List<Object> query(
-                        @PathVariable String apiId){
+    @PostMapping("/app/query")
+    public List<Object> query( @RequestBody HttpDataParamModel httpDataParamModel) {
+        String apiId = httpDataParamModel.getApiId();
         String dsName = mybatisDatasourceManager.getDsName(apiId);
         SqlSessionFactory sqlSessionFactory = dataServiceSqlSessionFactory.getSqlSessionFactory(dsName);
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<Object> objects = sqlSession.selectList(apiId);
+        List<Object> objects = sqlSession.selectList(apiId,httpDataParamModel);
 
         sqlSession.close();
         return objects;

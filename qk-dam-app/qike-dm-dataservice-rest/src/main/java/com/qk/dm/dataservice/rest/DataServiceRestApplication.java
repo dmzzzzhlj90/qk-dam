@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableFeignClients(basePackages =  "com.qk")
 @ComponentScan(basePackages = "com.qk")
 public class DataServiceRestApplication {
     public static void main(String[] args) {

@@ -1,8 +1,8 @@
-package com.qk.dm.dataservice.rest.mapping;
+package com.qk.dm.dataservice.mapping;
 
+import com.qk.dm.dataservice.rest.mapping.DataServiceEnum;
 import org.springframework.context.EmbeddedValueResolverAware;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.server.PathContainer;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -20,7 +20,6 @@ import org.springframework.web.util.pattern.PathPattern;
 import org.springframework.web.util.pattern.PathPatternParser;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Priority;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;

@@ -17,11 +17,13 @@ import com.qk.dm.dataquery.mybatis.MybatisEnvironmentManager;
 import com.qk.dm.dataquery.mybatis.MybatisMapperContainer;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import com.qk.dm.feign.DataQueryInfoFeign;
+import com.zaxxer.hikari.HikariConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,6 +43,7 @@ import java.util.stream.Collectors;
 @Configuration
 @Slf4j
 public class MybatisConfiguration {
+
 
     /**
      * 获取数据连接服务的数据源信息
@@ -66,14 +69,16 @@ public class MybatisConfiguration {
         List<ResultDatasourceInfo> resultDataSource = dataBaseService.getResultDataSourceByType(ConnTypeEnum.MYSQL.getName());
 
         ObjectMapper objectMapper = new ObjectMapper();
-
+        HikariConfig hikariConfigDefault = hikariConfigDefault();
         resultDataSource.forEach(resultDatasourceInfo -> {
             try {
                 String dataSourceName = resultDatasourceInfo.getDataSourceName();
                 if (dsNames.contains(dataSourceName)){
                     MysqlInfo mysqlInfo = objectMapper.readValue(resultDatasourceInfo.getConnectBasicInfoJson(), MysqlInfo.class);
 
-                    mybatisDatasourceManager.regDatasource(ConnTypeEnum.MYSQL, dataSourceName, mysqlInfo);
+                    mybatisDatasourceManager.regDatasource(ConnTypeEnum.MYSQL,
+                            hikariConfigDefault,
+                            dataSourceName, mysqlInfo);
                     log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceName());
                 }
 
@@ -132,7 +137,7 @@ public class MybatisConfiguration {
     /**
      * mybatis mapper管理容器 绑定DataServiceSqlSessionFactory 的mybatis config
      * @param dataServiceSqlSessionFactory mybatis数据查询工厂
-     * @param dataQueryInfoFeign 查询数据服务管理的配置信息
+     * @param mybatisDatasourceManager 查询数据服务管理的配置信息
      * @return MybatisMapperContainer mapper管理容器
      */
     @Bean
@@ -196,7 +201,11 @@ public class MybatisConfiguration {
 
         };
     }
-
+    @Bean
+    @ConfigurationProperties(value = "hikari", ignoreInvalidFields = true)
+    HikariConfig hikariConfigDefault(){
+        return new HikariConfig();
+    }
     String getStrNonNull(String n){
        return Optional.ofNullable(n).orElse("");
     }

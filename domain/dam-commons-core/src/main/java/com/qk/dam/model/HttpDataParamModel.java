@@ -1,5 +1,4 @@
-package com.qk.dm.dataservice.rest.model;
-
+package com.qk.dam.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +16,11 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class HttpDataParam {
-    Map<String,Object> requestParam;
-    Object requestBodyData;
-    HttpHeaders headerParam;
-    RequestMethod requestMethod;
-    String uriRouteCode;
+public class HttpDataParamModel {
+    String apiId;
+    Map<String,Object> params;
+    Object body;
+    HttpHeaders headers;
+    RequestMethod method;
+
 }

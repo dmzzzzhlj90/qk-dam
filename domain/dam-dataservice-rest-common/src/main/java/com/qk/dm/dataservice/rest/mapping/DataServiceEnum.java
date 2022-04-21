@@ -8,7 +8,7 @@ public enum DataServiceEnum {
     /**
      * path 匹配规则
      */
-    MATCH_ALL("/ac/**");
+    MATCH_ALL("/**");
 
     private final String value;
 
