@@ -22,43 +22,43 @@ public enum DataTypeMappingEnum {
     EMPTY("","","","");
 
 
-    public static Map<String,String> getDataType(String name, String code){
+    public static Map<String,String> getDataType(String name, String type){
         String dataType = Stream.of(values()).filter(e -> e.getSourceName().equals(name)
-                &&e.getSourceCode().equals(code)).
-                findAny().orElse(EMPTY).getTargetCode();
+                &&e.getSourceType().equals(type)).
+                findAny().orElse(EMPTY).getTargetType();
         if(StringUtils.isEmpty(dataType)){
             dataType = Stream.of(values()).filter(e -> e.targetName.equals(name)
-                    &&e.getTargetCode().equals(code)).
-                    findAny().orElse(EMPTY).getSourceCode();
+                    &&e.getTargetType().equals(type)).
+                    findAny().orElse(EMPTY).getSourceType();
         }
         return Map.of("dataType",dataType);
     }
 
     private final String sourceName;
-    private final String sourceCode;
+    private final String sourceType;
     private final String targetName;
-    private final String targetCode;
+    private final String targetType;
 
-    DataTypeMappingEnum(String sourceName, String sourceCode, String targetName, String targetCode) {
+    DataTypeMappingEnum(String sourceName, String sourceType, String targetName, String targetType) {
         this.sourceName = sourceName;
-        this.sourceCode = sourceCode;
+        this.sourceType = sourceType;
         this.targetName = targetName;
-        this.targetCode = targetCode;
+        this.targetType = targetType;
     }
 
     public String getSourceName() {
         return sourceName;
     }
 
-    public String getSourceCode() {
-        return sourceCode;
+    public String getSourceType() {
+        return sourceType;
     }
 
     public String getTargetName() {
         return targetName;
     }
 
-    public String getTargetCode() {
-        return targetCode;
+    public String getTargetType() {
+        return targetType;
     }
 }

@@ -1,12 +1,11 @@
 package com.qk.dm.dataingestion.rest;
 
-import com.qk.dam.commons.enums.DataTypeEnum;
-import com.qk.dam.commons.enums.DataTypeMappingEnum;
-import com.qk.dam.commons.enums.MysqlDataTypeEnum;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
+import com.qk.dm.dataingestion.service.DisDataTypeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -20,33 +19,35 @@ import java.util.Map;
 @RestController
 @RequestMapping("/data/type")
 public class DataTypeController {
-    /**
-     * 获取hive所有的数据类型
-     * @return DefaultCommonResult<Map<String, String>>
-     */
-    @GetMapping(value = "/hive")
-    public DefaultCommonResult<Map<String, String>> getHiveDataType() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, DataTypeEnum.getAllValue());
+
+    private final DisDataTypeService disDataTypeService;
+
+    public DataTypeController(DisDataTypeService disDataTypeService) {
+        this.disDataTypeService = disDataTypeService;
     }
 
     /**
-     * 获取mysql所有的数据类型
+     * 获取数据库的数据类型
+     * @param connectType 连接类型
      * @return DefaultCommonResult<Map<String, String>>
      */
-    @GetMapping(value = "/mysql")
-    public DefaultCommonResult<Map<String, String>> getMysqlDataType() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, MysqlDataTypeEnum.getAllType());
+    @GetMapping("")
+    public DefaultCommonResult<Map<String, String>> getDataType(@RequestParam("connectType") String connectType) {
+
+        return DefaultCommonResult.success(ResultCodeEnum.OK,
+                disDataTypeService.getDataType(connectType));
     }
 
     /**
      * hive与mysql 数据类型映射
      * @param connectType 连接类型 mysql或hive
      * @param dataType 数据类型
-     * @return
+     * @return DefaultCommonResult<Map<String, String>>
      */
     @GetMapping(value = "/mapping")
-    public DefaultCommonResult<Map<String, String>> getDataTypeMapping(String connectType,
-                                                                       String dataType){
-        return DefaultCommonResult.success(ResultCodeEnum.OK, DataTypeMappingEnum.getDataType(connectType,dataType));
+    public DefaultCommonResult<Map<String, String>> getDataTypeMapping(@RequestParam("connectType") String connectType,
+                                                                       @RequestParam("dataType") String dataType){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,
+                disDataTypeService.getDataTypeMapping(connectType,dataType));
     }
 }
