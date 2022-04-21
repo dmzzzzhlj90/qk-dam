@@ -55,9 +55,8 @@ public class DataSyncFactory {
 
         DataxJob dataxJob = DataxJob.builder().content(contents)
                 .setting(new DataxSetting(dataMigrationVO.getSchedulerConfig())).build();
-        HashMap<String, Object> map = Maps.newHashMap();
-        map.put("job",dataxJob);
-        return parseJson(GsonUtil.toJsonString(map));
+
+        return parseJson(GsonUtil.toJsonString(Map.of("job",dataxJob)));
     }
 
     /**
