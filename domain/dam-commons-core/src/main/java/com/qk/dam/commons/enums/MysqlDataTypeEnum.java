@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * mysql数据类型
+ *mysql字段类型
+ * @author wangzp
+ * @date 2022/04/20 19:58
+ * @since 1.0.0
  */
 public enum MysqlDataTypeEnum {
 

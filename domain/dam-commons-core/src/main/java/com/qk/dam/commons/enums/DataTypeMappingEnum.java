@@ -6,6 +6,9 @@ import java.util.stream.Stream;
 
 /**
  * hive与mysql字段类型映射
+ * @author wangzp
+ * @date 2022/04/20 19:53
+ * @since 1.0.0
  */
 public enum DataTypeMappingEnum {
 
