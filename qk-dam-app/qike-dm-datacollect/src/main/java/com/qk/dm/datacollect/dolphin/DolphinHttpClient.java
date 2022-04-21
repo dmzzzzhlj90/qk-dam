@@ -17,20 +17,26 @@ public class DolphinHttpClient {
         this.dolphinTaskDefinitionPropertiesBean = dolphinTaskDefinitionPropertiesBean;
     }
 
-    public Result createProcessDefinition(Long projectId,
-                                          String name,
-                                          String url,
-                                          Object httpParams,
-                                          String httpMethod,
-                                          String description) throws ApiException {
+    private long getTaskCode() {
         long taskCode = 0L;
         try {
             taskCode = CodeGenerateUtils.getInstance().genCode();
         } catch (CodeGenerateUtils.CodeGenerateException e) {
             e.printStackTrace();
         }
-        return createProcessDefinition(projectId, name, taskCode, url, httpParams, httpMethod, description);
+        return taskCode;
     }
+
+    public Result createProcessDefinition(Long projectId,
+                                          String name,
+                                          String url,
+                                          Object httpParams,
+                                          String httpMethod,
+                                          String description) throws ApiException {
+        return createProcessDefinition(projectId, name, getTaskCode(), url, httpParams, httpMethod, description);
+    }
+
+
 
     private Result createProcessDefinition(Long projectId,
                                            String name,
@@ -57,18 +63,18 @@ public class DolphinHttpClient {
         return result;
     }
 
-    public Result updateProcessDefinition(Long projectId,
+    public Result updateProcessDefinition(Long processDefinitionCode,
+                                          Long projectId,
                                           String name,
-                                          long taskCode,
                                           String url,
                                           Object httpParams,
                                           String httpMethod,
                                           String description,
                                           DolphinTaskDefinitionPropertiesBean taskParam) throws ApiException {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
-                taskCode, name, url, httpParams, httpMethod, taskParam, dolphinTaskDefinitionPropertiesBean);
+                getTaskCode(), name, url, httpParams, httpMethod, taskParam, dolphinTaskDefinitionPropertiesBean);
         Result result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
-                taskCode,
+                processDefinitionCode,
                 processDefinition.getLocations(),
                 processDefinition.getName(),
                 projectId,

@@ -1,6 +1,10 @@
 package com.qk.dm.datacollect.service;
 
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
+import com.qk.dm.datacollect.vo.DctSchedulerInfoVO;
+import com.qk.dm.datacollect.vo.DctSchedulerReleaseVO;
+import com.qk.dm.datacollect.vo.DqcSchedulerInfoParamsVO;
 
 /**
  * @author shenpj
@@ -10,5 +14,15 @@ import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
 public interface DctDolphinService {
     void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO);
 
-    void delete();
+    void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO);
+
+    void delete(Long processDefinitionCode);
+
+    void release(DctSchedulerReleaseVO dctSchedulerReleaseVO);
+
+    void runing(Long processDefinitionCode);
+
+    PageResultVO<DctSchedulerInfoVO> searchPageList(DqcSchedulerInfoParamsVO schedulerInfoParamsVO);
+
+    DctSchedulerBasicInfoVO detail(Long code);
 }

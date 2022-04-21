@@ -1,13 +1,19 @@
 package com.qk.dm.datacollect.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datacollect.dto.ProcessDefinitionDTO;
+import com.qk.dm.datacollect.dto.ProcessDefinitionResultDTO;
 import com.qk.dm.datacollect.service.DctDolphinService;
 import com.qk.dm.datacollect.service.DolphinProcessService;
-import com.qk.dm.datacollect.service.DolphinScheduleService;
-import com.qk.dm.datacollect.service.ProcessInstanceService;
-import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
-import com.qk.dm.datacollect.vo.HttpParamsVO;
+import com.qk.dm.datacollect.util.DctConstant;
+import com.qk.dm.datacollect.vo.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author shenpj
@@ -18,28 +24,24 @@ import org.springframework.stereotype.Service;
 public class DctDolphinServiceImpl implements DctDolphinService {
 
     private final DolphinProcessService dolphinProcessService;
-    private final DolphinScheduleService dolphinScheduleService;
-    private final ProcessInstanceService processInstanceService;
 
-    public DctDolphinServiceImpl(DolphinProcessService dolphinProcessService,
-                                 DolphinScheduleService dolphinScheduleService,
-                                 ProcessInstanceService processInstanceService) {
+    @Value("${dolphinscheduler.task.projectCode}")
+    private Long projectCode;
+
+    public DctDolphinServiceImpl(DolphinProcessService dolphinProcessService) {
         this.dolphinProcessService = dolphinProcessService;
-        this.dolphinScheduleService = dolphinScheduleService;
-        this.processInstanceService = processInstanceService;
     }
 
     @Override
     public void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        Long projectId = 5262418498656L;
         String name = dctSchedulerBasicInfoVO.getJobName();
         String url = "http://10.0.18.48:7001/#/metadatacollection/dataoverview";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String httpMethod = "POST";
         String description = dctSchedulerBasicInfoVO.getDescription();
 
-        ProcessDefinitionDTO processDefinition = dolphinProcessService.createProcessDefinition(projectId, name, url, httpParams, httpMethod, description);
-        System.out.println("processDefinition:"+processDefinition);
+        ProcessDefinitionDTO processDefinition = dolphinProcessService.createProcessDefinition(projectCode, name, url, httpParams, httpMethod, description);
+        System.out.println("processDefinition:" + processDefinition);
 
 
         //创建完流程实例后保存到本地，方便根据分类查询
@@ -47,12 +49,56 @@ public class DctDolphinServiceImpl implements DctDolphinService {
     }
 
     @Override
-    public void delete() {
-        Long projectId = 3908755011744L;
-
+    public void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
+        String name = dctSchedulerBasicInfoVO.getJobName();
+        String url = "http://10.0.18.48:7001/#/metadatacollection/dataoverview";
+        Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
+        String httpMethod = "POST";
+        String description = dctSchedulerBasicInfoVO.getDescription();
+        dolphinProcessService.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), projectCode, name, url, httpParams, httpMethod, description);
     }
 
+    @Override
+    public void delete(Long processDefinitionCode) {
+        dolphinProcessService.delete(processDefinitionCode, projectCode);
+    }
 
+    @Override
+    public void release(DctSchedulerReleaseVO dctSchedulerReleaseVO) {
+        dolphinProcessService.release(dctSchedulerReleaseVO.getProcessDefinitionCode(), projectCode, dctSchedulerReleaseVO.getReleaseState());
+    }
+
+    @Override
+    public void runing(Long processDefinitionCode) {
+        dolphinProcessService.runing(processDefinitionCode, projectCode, null);
+    }
+
+    @Override
+    public PageResultVO<DctSchedulerInfoVO> searchPageList(DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
+        ProcessDefinitionResultDTO processDefinitionResultDTO =
+                dolphinProcessService.list(projectCode, schedulerInfoParamsVO.getJobName(),
+                        schedulerInfoParamsVO.getPagination().getPage(), schedulerInfoParamsVO.getPagination().getSize());
+        List<ProcessDefinitionDTO> processDefinitionDTOS = processDefinitionResultDTO.getTotalList();
+        List<DctSchedulerInfoVO> basicInfoVOList = processDefinitionDTOS.stream().map(
+                i -> {
+                    try {
+                        return DctConstant.changeObjectToClass(i, DctSchedulerInfoVO.class);
+                    } catch (JsonProcessingException a) {
+                        throw new BizException("dolphin process toClass error :" + a.getMessage());
+                    }
+                }).collect(Collectors.toList());
+        return new PageResultVO<>(
+                processDefinitionResultDTO.getTotal(),
+                schedulerInfoParamsVO.getPagination().getPage(),
+                schedulerInfoParamsVO.getPagination().getSize(),
+                basicInfoVOList);
+    }
+
+    @Override
+    public DctSchedulerBasicInfoVO detail(Long code) {
+
+        return null;
+    }
 
 
 }

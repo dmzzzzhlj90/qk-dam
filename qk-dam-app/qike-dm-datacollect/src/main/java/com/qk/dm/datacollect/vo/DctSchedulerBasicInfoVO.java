@@ -25,7 +25,7 @@ public class DctSchedulerBasicInfoVO {
     /**
      * 调度流程实例code,修改时必填
      */
-    private Long processDefinitionCode;
+    private Long code;
 
     /**
      * 作业名称
@@ -55,6 +55,11 @@ public class DctSchedulerBasicInfoVO {
      */
     @Valid
     private DctSchedulerConfigVO schedulerConfig;
+
+    /**
+     * 修改时间
+     */
+    private String updateTime;
 
 
 //

@@ -12,11 +12,15 @@ import com.qk.dm.datacollect.dto.ProcessDefinitionResultDTO;
 public interface DolphinProcessService {
     ProcessDefinitionDTO createProcessDefinition(Long projectId, String name, String url, Object httpParams, String httpMethod, String description);
 
-    void updateProcessDefinition(Long projectId, String name, long taskCode, String url, Object httpParams, String httpMethod, String description);
+    void updateProcessDefinition(Long processDefinitionCode, Long projectId, String name, String url, Object httpParams, String httpMethod, String description);
 
-    void release(Long code, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState);
+    void release(Long processDefinitionCode, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState);
 
-    void runing(Long projectCode, Long processDefinitionCode, Long environmentCode);
+    void runing(Long processDefinitionCode, Long projectCode, Long environmentCode);
 
     ProcessDefinitionResultDTO list(Long projectCode, String searchVal, Integer pageNo, Integer pageSize);
+
+    void delete(Long processDefinitionCode, Long projectCode);
+
+    void detail(Long processDefinitionCode, Long projectCode);
 }

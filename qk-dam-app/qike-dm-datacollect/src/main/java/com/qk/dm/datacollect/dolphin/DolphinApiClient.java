@@ -24,8 +24,24 @@ public class DolphinApiClient {
     }
 
     /**
+     * 删除流程定义
+     * @param code
+     * @param projectCode
+     * @return
+     * @throws ApiException
+     */
+    public Result dolphin_process_delete(Long code, Long projectCode) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().deleteProcessDefinitionByCodeUsingDELETE(code, projectCode);
+        if (Boolean.TRUE.equals(result.getFailed())) {
+            throw new ApiException(400, result.getMsg());
+        }
+        return result;
+    }
+
+    /**
      * 流程定义上下线
-     * @param code 流程定义编码
+     *
+     * @param code         流程定义编码
      * @param projectCode
      * @param releaseState
      * @return
@@ -41,12 +57,13 @@ public class DolphinApiClient {
 
     /**
      * 检查流程定义
+     *
      * @param processDefinitionCode
      * @param projectCode
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_check(Long projectCode,Long processDefinitionCode) throws ApiException {
+    public Result dolphin_process_check(Long processDefinitionCode, Long projectCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().startCheckProcessDefinitionUsingPOST(
                 processDefinitionCode,
                 projectCode);
@@ -58,13 +75,14 @@ public class DolphinApiClient {
 
     /**
      * 流程定义运行
+     *
      * @param projectCode
      * @param processDefinitionCode
      * @param environmentCode
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_runing(Long projectCode, Long processDefinitionCode, Long environmentCode) throws ApiException {
+    public Result dolphin_process_runing(Long processDefinitionCode, Long projectCode, Long environmentCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().startProcessInstanceUsingPOST(
                 ProcessInstance.FailureStrategyEnum.CONTINUE,
                 processDefinitionCode,
@@ -92,12 +110,13 @@ public class DolphinApiClient {
 
     /**
      * 流程定义详情
+     *
      * @param processDefinitionCode
      * @param projectCode
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_detail(Long processDefinitionCode,Long projectCode) throws ApiException {
+    public Result dolphin_process_detail(Long processDefinitionCode, Long projectCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionByCodeUsingGET(
                 processDefinitionCode,
                 projectCode
@@ -110,6 +129,7 @@ public class DolphinApiClient {
 
     /**
      * 流程定义列表
+     *
      * @param projectCode
      * @param searchVal
      * @param pageNo
@@ -118,9 +138,9 @@ public class DolphinApiClient {
      * @throws ApiException
      */
     public Result dolphin_process_list(Long projectCode,
-                                        String searchVal,
-                                        Integer pageNo,
-                                        Integer pageSize) throws ApiException {
+                                       String searchVal,
+                                       Integer pageNo,
+                                       Integer pageSize) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionListPagingUsingGET(
                 pageNo,
                 pageSize,
@@ -138,6 +158,7 @@ public class DolphinApiClient {
 
     /**
      * 创建定时
+     *
      * @param processDefinitionCode
      * @param projectCode
      * @param effectiveTimeStart
@@ -169,6 +190,7 @@ public class DolphinApiClient {
 
     /**
      * 修改定时
+     *
      * @param scheduleId
      * @param projectCode
      * @param effectiveTimeStart
@@ -201,6 +223,7 @@ public class DolphinApiClient {
 
     /**
      * 定时上线
+     *
      * @param scheduleId
      * @param projectCode
      * @throws ApiException
@@ -214,6 +237,7 @@ public class DolphinApiClient {
 
     /**
      * 定时下线
+     *
      * @param scheduleId
      * @param projectCode
      * @throws ApiException
@@ -227,6 +251,7 @@ public class DolphinApiClient {
 
     /**
      * 定时删除
+     *
      * @param scheduleId
      * @param projectCode
      * @throws ApiException
@@ -256,6 +281,7 @@ public class DolphinApiClient {
 
     /**
      * 查询某流程定义的定时
+     *
      * @param processDefinitionCode
      * @param projectCode
      * @param pageNo
@@ -303,6 +329,7 @@ public class DolphinApiClient {
 
     /**
      * 流程实例查询
+     *
      * @param projectCode
      * @param instanceSearchDTO
      * @return
@@ -331,6 +358,7 @@ public class DolphinApiClient {
 
     /**
      * 流程实例详情
+     *
      * @param processInstanceId
      * @param projectCode
      * @return
@@ -350,6 +378,7 @@ public class DolphinApiClient {
 
     /**
      * 根据流程实例查询任务实例
+     *
      * @param processInstanceId
      * @param projectCode
      * @return
@@ -370,6 +399,7 @@ public class DolphinApiClient {
 
     /**
      * 任务执行日志
+     *
      * @param taskInstanceId
      * @param limit
      * @param skipLineNum

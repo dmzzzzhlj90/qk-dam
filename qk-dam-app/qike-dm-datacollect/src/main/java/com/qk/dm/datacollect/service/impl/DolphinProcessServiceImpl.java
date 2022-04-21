@@ -30,7 +30,12 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
     }
 
     @Override
-    public ProcessDefinitionDTO createProcessDefinition(Long projectId, String name, String url, Object httpParams, String httpMethod, String description) {
+    public ProcessDefinitionDTO createProcessDefinition(Long projectId,
+                                                        String name,
+                                                        String url,
+                                                        Object httpParams,
+                                                        String httpMethod,
+                                                        String description) {
         try {
             Result result = dolphinHttpClient.createProcessDefinition(projectId, name, url, httpParams, httpMethod, description);
             return DctConstant.changeObjectToClass(result.getData(), ProcessDefinitionDTO.class);
@@ -42,34 +47,36 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
     }
 
     @Override
-    public void updateProcessDefinition(Long projectId, String name, long taskCode, String url, Object httpParams, String httpMethod, String description) {
+    public void updateProcessDefinition(Long processDefinitionCode,
+                                        Long projectId,
+                                        String name,
+                                        String url,
+                                        Object httpParams,
+                                        String httpMethod,
+                                        String description) {
         try {
-            Result result = dolphinApiClient.dolphin_process_detail(taskCode, projectId);
-            DolphinTaskDefinitionPropertiesBean propertiesBean = DctConstant.changeObjectToClass(result.getData(), DolphinTaskDefinitionPropertiesBean.class);
-            dolphinHttpClient.updateProcessDefinition(projectId, name, taskCode, url, httpParams, httpMethod, description, propertiesBean);
+            dolphinHttpClient.updateProcessDefinition(processDefinitionCode, projectId, name, url, httpParams, httpMethod, description, new DolphinTaskDefinitionPropertiesBean());
         } catch (ApiException a) {
             throw new BizException("dolphin process search error :" + a.getMessage());
-        } catch (JsonProcessingException a) {
-            throw new BizException("dolphin process toClass error :" + a.getMessage());
         } catch (Exception a) {
             throw new BizException("dolphin process exception error :" + a.getMessage());
         }
     }
 
     @Override
-    public void release(Long code, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState) {
+    public void release(Long processDefinitionCode, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState) {
         try {
-            dolphinApiClient.dolphin_process_release(code, projectCode, releaseState);
+            dolphinApiClient.dolphin_process_release(processDefinitionCode, projectCode, releaseState);
         } catch (ApiException a) {
             throw new BizException("dolphin process search error :" + a.getMessage());
         }
     }
 
     @Override
-    public void runing(Long projectCode, Long processDefinitionCode, Long environmentCode) {
+    public void runing(Long processDefinitionCode, Long projectCode, Long environmentCode) {
         try {
-            dolphinApiClient.dolphin_process_check(projectCode, processDefinitionCode);
-            dolphinApiClient.dolphin_process_runing(projectCode, processDefinitionCode, null);
+            dolphinApiClient.dolphin_process_check(processDefinitionCode, projectCode);
+            dolphinApiClient.dolphin_process_runing(processDefinitionCode, projectCode, environmentCode);
         } catch (ApiException a) {
             throw new BizException("dolphin process search error :" + a.getMessage());
         }
@@ -88,4 +95,24 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
             throw new BizException("dolphin process exception error :" + a.getMessage());
         }
     }
+
+    @Override
+    public void delete(Long processDefinitionCode, Long projectCode) {
+        try {
+            dolphinApiClient.dolphin_process_delete(processDefinitionCode, projectCode);
+        } catch (ApiException a) {
+            throw new BizException("dolphin process search error :" + a.getMessage());
+        }
+    }
+
+    @Override
+    public void detail(Long processDefinitionCode, Long projectCode) {
+        try {
+            Result result = dolphinApiClient.dolphin_process_detail(processDefinitionCode, projectCode);
+        } catch (ApiException a) {
+            throw new BizException("dolphin process search error :" + a.getMessage());
+        }
+    }
+
+
 }
