@@ -19,3 +19,47 @@ spring:
 #      resourceserver:
 #        jwt:
 #          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
+dolphinscheduler:
+  client:
+    enabled: true
+    defaultBaseUrl: http://dolphinscheduler.qk.cc:31352/dolphinscheduler
+    tokenKey: token
+    tokenValue: 278f7dd1ce2f50b514d5b709688ea34c
+  task:
+    code: 5172696944352
+    name: http-work
+    description: 'http work 配置'
+    taskType: HTTP
+    tenantCode: root
+    taskParams:
+      httpParams: [
+        {
+          "prop": "name111",
+          "httpParametersType": "PARAMETER",
+          "value": "1234"
+        }
+      ]
+      localParams: []
+      url: http://baidu.com
+      httpMethod: POST
+      httpCheckCondition: STATUS_CODE_DEFAULT
+      condition: ''
+      connectTimeout: 60000
+      socketTimeout: 60000
+      dependence: {}
+      conditionResult:
+        successNode: []
+        failedNode: []
+      waitStartTimeout: {}
+      switchResult: {}
+    flag: 'YES'
+    taskPriority: MEDIUM
+    workerGroup: default
+    failRetryTimes: '0'
+    failRetryInterval: '1'
+    timeoutFlag: CLOSE
+    timeoutNotifyStrategy: ''
+    timeout: 0
+    delayTime: '0'
+    environmentCode: 5172696944352
+    projectCode: 3877993028896

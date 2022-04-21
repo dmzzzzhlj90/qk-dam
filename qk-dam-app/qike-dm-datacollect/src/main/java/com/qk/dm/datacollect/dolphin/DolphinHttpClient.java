@@ -3,17 +3,16 @@ package com.qk.dm.datacollect.dolphin;
 import com.dolphinscheduler.client.DolphinschedulerManager;
 import com.qk.dam.commons.util.CodeGenerateUtils;
 import com.qk.datacenter.client.ApiException;
-import com.qk.datacenter.model.ProcessDefinition;
-import com.qk.datacenter.model.ProcessInstance;
 import com.qk.datacenter.model.Result;
+import org.springframework.stereotype.Service;
 
-//@Service
-public class DolphinClient {
+@Service
+public class DolphinHttpClient {
     private final DolphinschedulerManager dolphinschedulerManager;
 
     private final DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean;
 
-    public DolphinClient(DolphinschedulerManager dolphinschedulerManager, DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean) {
+    public DolphinHttpClient(DolphinschedulerManager dolphinschedulerManager, DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean) {
         this.dolphinschedulerManager = dolphinschedulerManager;
         this.dolphinTaskDefinitionPropertiesBean = dolphinTaskDefinitionPropertiesBean;
     }
@@ -22,38 +21,40 @@ public class DolphinClient {
                                           String name,
                                           String url,
                                           Object httpParams,
-                                          String httpMethod) throws ApiException {
-        long taskCode =0L;
+                                          String httpMethod,
+                                          String description) throws ApiException {
+        long taskCode = 0L;
         try {
             taskCode = CodeGenerateUtils.getInstance().genCode();
         } catch (CodeGenerateUtils.CodeGenerateException e) {
             e.printStackTrace();
         }
-        return createProcessDefinition(projectId,name,taskCode,url,httpParams,httpMethod);
-
+        return createProcessDefinition(projectId, name, taskCode, url, httpParams, httpMethod, description);
     }
-    public Result createProcessDefinition(Long projectId,
-                                          String name,
-                                          long taskCode,
-                                          String url,
-                                          Object httpParams,
-                                          String httpMethod) throws ApiException {
+
+    private Result createProcessDefinition(Long projectId,
+                                           String name,
+                                           long taskCode,
+                                           String url,
+                                           Object httpParams,
+                                           String httpMethod
+            , String description) throws ApiException {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
-                taskCode, name, url,httpParams,httpMethod, dolphinTaskDefinitionPropertiesBean);
-        Result result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(processDefinition.getLocations(),
+                taskCode, name, url, httpParams, httpMethod, dolphinTaskDefinitionPropertiesBean);
+        Result result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(
+                processDefinition.getLocations(),
                 processDefinition.getName(),
                 projectId,
                 processDefinition.getTaskDefinitionJson(),
                 processDefinition.getTaskRelationJson(),
                 processDefinition.getTenantCode(),
-                "",
+                description,
                 "[]",
                 0);
-        if (Boolean.TRUE.equals(result.getFailed())){
+        if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
         return result;
-
     }
 
     public Result updateProcessDefinition(Long projectId,
@@ -62,6 +63,7 @@ public class DolphinClient {
                                           String url,
                                           Object httpParams,
                                           String httpMethod,
+                                          String description,
                                           DolphinTaskDefinitionPropertiesBean taskParam) throws ApiException {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
                 taskCode, name, url, httpParams, httpMethod, taskParam, dolphinTaskDefinitionPropertiesBean);
@@ -73,46 +75,11 @@ public class DolphinClient {
                 processDefinition.getTaskDefinitionJson(),
                 processDefinition.getTaskRelationJson(),
                 processDefinition.getTenantCode(),
-                "",
+                description,
                 "[]",
                 processDefinition.getReleaseState(),
                 0);
-        if (Boolean.TRUE.equals(result.getFailed())){
-            throw new ApiException(400, result.getMsg());
-        }
-        return result;
-
-    }
-
-    public Result dolphinProcessRelease(Long code, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().releaseProcessDefinitionUsingPOST(code, projectCode, releaseState);
-        if (Boolean.TRUE.equals(result.getFailed())){
-            throw new ApiException(400, result.getMsg());
-        }
-        return result;
-    }
-
-    public Result runing(Long projectCode, Long processDefinitionCode, Long environmentCode) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().startProcessInstanceUsingPOST(
-                ProcessInstance.FailureStrategyEnum.CONTINUE,
-                processDefinitionCode,
-                ProcessInstance.ProcessInstancePriorityEnum.MEDIUM,
-                projectCode,
-                "",
-                0,
-                ProcessInstance.WarningTypeEnum.NONE,
-                null,
-                environmentCode,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        if (Boolean.TRUE.equals(result.getFailed())){
+        if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
         return result;
