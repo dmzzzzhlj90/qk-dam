@@ -26,7 +26,7 @@ public class DisAttrViewController {
      * 获取高级属性展示列表
      * @return DefaultCommonResult<disAttrVO>
      */
-    @PostMapping("/list")
+    @GetMapping("/list")
     public DefaultCommonResult<disAttrVO> list(){
        return DefaultCommonResult.success(ResultCodeEnum.OK,disColumnViewService.list());
     }
