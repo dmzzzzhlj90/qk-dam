@@ -19,6 +19,7 @@ import java.util.Map;
 public class HttpDataParamModel {
     String apiId;
     Map<String,Object> params;
+    Map<String,String> uriPathParam;
     Object body;
     HttpHeaders headers;
     RequestMethod method;

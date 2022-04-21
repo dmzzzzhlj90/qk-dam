@@ -44,7 +44,7 @@ public class GlobalExceptionAdvice {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public <T> BaseResult<T> sendErrorResponse(Exception exception) {
     log.error("后台服务异常: {}", getStackTrace(exception));
-    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST);
+    return DefaultCommonResult.fail(ResultCodeEnum.HTTP_MESSAGE_CONVERTER);
   }
 
   /**
@@ -65,7 +65,7 @@ public class GlobalExceptionAdvice {
       return DefaultCommonResult.fail(ResultCodeEnum.HTTP_MESSAGE_CONVERTER);
     }
 
-    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST);
+    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST,exception.getLocalizedMessage());
   }
 
   /**

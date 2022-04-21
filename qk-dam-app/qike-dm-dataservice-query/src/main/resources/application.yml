@@ -24,8 +24,8 @@ hikari:
   minimum-idle: 3
   maximum-pool-size: 100
   # 池中连接最长生命周期  5 分钟
-  max-lifetime: 300000
-  connection-timeout: 60000
+  max-lifetime: 10000
+  connection-timeout: 10000
   connection-test-query: SELECT 1
   pool-name: DataQueryConnPool
   read-only: true

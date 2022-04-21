@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * 数据查询服务
@@ -35,10 +35,35 @@ public class QueryDataRestController {
         SqlSessionFactory sqlSessionFactory = dataServiceSqlSessionFactory.getSqlSessionFactory(dsName);
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<Object> objects = sqlSession.selectList(apiId,httpDataParamModel);
+
+        Map<String, Object> mybatisDataParam = getMybatisDataParam(httpDataParamModel);
+
+        List<Object> objects = sqlSession.selectList(apiId,mybatisDataParam);
 
         sqlSession.close();
         return objects;
+    }
+
+    private Map<String, Object> getMybatisDataParam(HttpDataParamModel httpDataParamModel) {
+        Map<String,Object> mybatisDataParam = new HashMap<>();
+        Object body = httpDataParamModel.getBody();
+        if (Objects.nonNull(httpDataParamModel.getParams())){
+            mybatisDataParam.putAll(httpDataParamModel.getParams());
+        }
+        if (Objects.nonNull(httpDataParamModel.getUriPathParam())){
+            mybatisDataParam.putAll(httpDataParamModel.getUriPathParam());
+        }
+
+        if (Objects.nonNull(body)){
+            if (body instanceof Map){
+                mybatisDataParam.putAll((Map)body);
+            }
+            if (body instanceof Collection||
+                    body.getClass().isArray()){
+                mybatisDataParam.put("body",body);
+            }
+        }
+        return mybatisDataParam;
     }
 
 }

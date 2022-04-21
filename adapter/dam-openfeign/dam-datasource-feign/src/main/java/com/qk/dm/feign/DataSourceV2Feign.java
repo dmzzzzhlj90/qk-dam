@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(value = "dm-datasource-${spring.profiles.active}", path = "/ds/datasource")
+@FeignClient(value = "dm-datasource-zdm-${spring.profiles.active}", path = "/ds/datasource")
 @Component
 public interface DataSourceV2Feign {
     /**
