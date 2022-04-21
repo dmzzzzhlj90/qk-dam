@@ -18,11 +18,11 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/db")
-public class DctDataBaseCollection {
+public class DctDataBaseController {
   private final DataBaseService dataBaseService;
   private final DctDataSourceService dctDataSourceService;
 
-  public DctDataBaseCollection(DataBaseService dataBaseService,DctDataSourceService dctDataSourceService) {
+  public DctDataBaseController(DataBaseService dataBaseService,DctDataSourceService dctDataSourceService) {
     this.dataBaseService = dataBaseService;
     this.dctDataSourceService = dctDataSourceService;
   }

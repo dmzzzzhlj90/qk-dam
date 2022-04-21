@@ -30,10 +30,11 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
   private final MetadataApiService metadataApiService;
 
-  public DctDataSourceServiceImpl(DataBaseInfoDefaultApi dataBaseInfoDefaultApi,
-      MetadataApiService metadataApiService, AtlasClient atlasClient) {
+  public DctDataSourceServiceImpl(AtlasClient atlasClient,
+      DataBaseInfoDefaultApi dataBaseInfoDefaultApi,
+      MetadataApiService metadataApiService) {
     this.atlasClient = atlasClient;
-    this.atlasClientV2=atlasClient.instance();
+    this.atlasClientV2= this.atlasClient.instance();
     this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
     this.metadataApiService = metadataApiService;
   }
