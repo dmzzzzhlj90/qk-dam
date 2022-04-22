@@ -13,6 +13,7 @@ import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlTableType;
 import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
 import com.qk.dam.metadata.catacollect.util.SourcesUtil;
 import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.commons.lang.StringUtils;
 
@@ -66,7 +67,8 @@ public class MysqlAtlasEntity {
 
   public List<AtlasEntity.AtlasEntitiesWithExtInfo> searchMysqlAtals(
       List<AtlasEntity.AtlasEntitiesWithExtInfo> list,
-      AtlasClientV2 atlasClientV2, String atalsEnum) throws SQLException {
+      AtlasClientV2 atlasClientV2, String atalsEnum)
+      throws SQLException, AtlasServiceException {
     List<Entity> tableList = getTableEntity();
     //处理策略问题并返回处理后的表信息
     List<Entity> checkTableList = CatacollectUtil.checkTable(tableList,db,atlasClientV2,strategy,atalsEnum);

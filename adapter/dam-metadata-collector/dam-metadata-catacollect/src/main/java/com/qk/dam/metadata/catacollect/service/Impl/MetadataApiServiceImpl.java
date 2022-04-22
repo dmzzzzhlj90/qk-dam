@@ -16,7 +16,6 @@ import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +82,11 @@ public class MetadataApiServiceImpl implements MetadataApiService {
    * @return
    */
   @Override
-  public List<AtlasEntity.AtlasEntitiesWithExtInfo> extractorAtlasEntitiesWith(
+  public void extractorAtlasEntitiesWith(
       MetadataConnectInfoVo metadataConnectInfoVo,
-      AtlasClientV2 atlasClientV2) {
+      AtlasClientV2 atlasClientV2) throws Exception {
     List<AtlasEntity.AtlasEntitiesWithExtInfo> list = new ArrayList<>();
     if (metadataConnectInfoVo.getType() !=null){
-      try {
         switch (metadataConnectInfoVo.getType()){
           case SourcesUtil.MYSQL:
             list =new MysqlAtlasEntity(metadataConnectInfoVo).searchMysqlAtals(list,atlasClientV2,
@@ -101,9 +99,6 @@ public class MetadataApiServiceImpl implements MetadataApiService {
           default:
             break;
         }
-      } catch (SQLException sqlException) {
-        sqlException.printStackTrace();
-      }
     }
     list.forEach(e->{
       try {
@@ -118,6 +113,5 @@ public class MetadataApiServiceImpl implements MetadataApiService {
         atlasServiceException.printStackTrace();
       }
     });
-    return list;
   }
 }

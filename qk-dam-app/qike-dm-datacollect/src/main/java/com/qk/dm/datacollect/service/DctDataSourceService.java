@@ -7,9 +7,9 @@ import java.util.List;
 
 @Service
 public interface DctDataSourceService {
-  List<String> getResultDb(String dataSourceName);
+  List<String> getResultDb(String dataSourceId);
 
-  List<String> getResultTable(String dataSourceName, String db);
+  List<String> getResultTable(String dataSourceId, String db);
 
-  void dolphinCallback(DctBaseInfoVO dctBaseInfoVO);
+  void dolphinCallback(DctBaseInfoVO dctBaseInfoVO) throws Exception;
 }

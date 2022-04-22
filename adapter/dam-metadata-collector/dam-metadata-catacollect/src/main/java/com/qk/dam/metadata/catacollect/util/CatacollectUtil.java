@@ -7,11 +7,10 @@ import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.discovery.AtlasSearchResult;
 import org.apache.atlas.model.discovery.SearchParameters;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -93,12 +92,14 @@ public class CatacollectUtil {
    * @return
    */
   public static List<Entity> checkTable(List<Entity> tableList, String db,
-      AtlasClientV2 atlasClientV2, String strategy, String atalsEnum) {
+      AtlasClientV2 atlasClientV2, String strategy, String atalsEnum)
+      throws AtlasServiceException {
     List<Entity> resultTableList = new ArrayList<>();
-  //1判断当前新采集的库是否已经存在atals中，如果存在就执行策略，如果不存在就直接添加
-  List<String> dbList = getDbList(atalsEnum,atlasClientV2);
-  if (dbList.stream().filter(w->w.equals(db)).findAny().isPresent()){
-    //2当采集的库已经存在atals中，执行策略，对添加的表进行赛选，并且删除atals中符合条件的表
+    //1判断当前新采集的库是否已经存在atals中，如果存在就执行策略，如果不存在就直接添加
+    Map<String,String> dbMap = getDbList(atalsEnum, atlasClientV2);
+    if (MapUtils.isNotEmpty(dbMap) && StringUtils.isNotEmpty(dbMap.get(db))){
+      //2当采集的库已经存在atals中，执行策略，对添加的表进行赛选，并且删除atals中符合条件的表
+      resultTableList=getTableList(dbMap.get(db),atlasClientV2,tableList,strategy);
     System.out.println("当前数据库已经存在，需要走策略模式");
   }else {
     resultTableList.addAll(tableList);
@@ -107,28 +108,86 @@ public class CatacollectUtil {
   }
 
   /**
+   * 策略模式返回需要同步的表信息
+   * @param dbGuid atals中库的guid
+   * @param atlasClientV2 atals操作对象
+   * @param tableList 传入需要新增或修改的表名称
+   * @param strategy （策略编码 1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）
+   * @return
+   */
+  private static List<Entity> getTableList(String dbGuid, AtlasClientV2 atlasClientV2, List<Entity> tableList, String strategy) {
+    List<Entity> returnTableList = new ArrayList<>();
+    switch (strategy) {
+      case SourcesUtil.UPDATE_ONLY:
+        returnTableList = getUpdateOnly(dbGuid,atlasClientV2,tableList);
+        break;
+      case SourcesUtil.ADD_ONLY:
+        returnTableList = getAddOnly(dbGuid,atlasClientV2,tableList);
+        break;
+      case SourcesUtil.UPDATE_ADD:
+        returnTableList = getUpdateAdd(dbGuid,atlasClientV2,tableList);
+        break;
+      default:
+        break;
+    }
+    return returnTableList;
+  }
+
+  /**
+   * 既更新又添加
+   * @param dbGuid atals中数据库guid
+   * @param atlasClientV2 atals操作对象
+   * @param tableList 传入的待添加或更新的表
+   * @return
+   */
+  private static List<Entity> getUpdateAdd(String dbGuid, AtlasClientV2 atlasClientV2, List<Entity> tableList) {
+    return null;
+  }
+
+  /**
+   * 仅添加
+   * @param dbGuid atals中数据库guid
+   * @param atlasClientV2 atals操作对象
+   * @param tableList 传入的待添加或更新的表
+   * @return
+   */
+  private static List<Entity> getAddOnly(String dbGuid, AtlasClientV2 atlasClientV2, List<Entity> tableList) {
+    return null;
+  }
+
+  /**
+   * 仅更新
+   * @param dbGuid atals中数据库guid
+   * @param atlasClientV2 atals操作对象
+   * @param tableList 传入的待添加或更新的表
+   * @return
+   */
+  private static List<Entity> getUpdateOnly(String dbGuid, AtlasClientV2 atlasClientV2, List<Entity> tableList) {
+    return null;
+  }
+
+  /**
    * 查询atlas中对应类型的数据库
    * @param atalsEnum
    * @param atlasClientV2
    * @return
    */
-  private static List<String> getDbList(String atalsEnum, AtlasClientV2 atlasClientV2) {
-    List<String> list = new ArrayList<>();
+  private static Map<String,String> getDbList(String atalsEnum, AtlasClientV2 atlasClientV2)
+      throws AtlasServiceException {
+    Map<String,String> map  = new HashMap<>();
     AtlasBaseSearchVO atlasBaseSearchVO = new AtlasBaseSearchVO();
     String[] type = new String[]{atalsEnum};
     atlasBaseSearchVO.setTypeNameValue(type);
-    try {
       AtlasSearchResult atlasSearchResult = atlasClientV2.basicSearch(atlasBaseSearchVO.getTypeName(), getFilterCriteria(atlasBaseSearchVO), atlasBaseSearchVO.getClassification(), atlasBaseSearchVO.getQuery(),
               true, atlasBaseSearchVO.getLimit(), atlasBaseSearchVO.getOffset());
       if (Objects.nonNull(atlasSearchResult.getEntities())){
         atlasSearchResult.getEntities().forEach(e->{
-          list.add((String) e.getAttribute(SourcesUtil.DB_NAME));
+          String dbName = (String) e.getAttribute(SourcesUtil.DB_NAME);
+          String guid = e.getGuid();
+          map.put(dbName,guid);
         });
       }
-    } catch (AtlasServiceException e) {
-      e.printStackTrace();
-    }
-    return list;
+    return map;
   }
 
   private static SearchParameters.FilterCriteria getFilterCriteria(
@@ -175,10 +234,6 @@ public class CatacollectUtil {
     SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
     entity.setCriterion(getFilterCriteriaList(typeNameValue, typename, eq));
     entity.setCondition(or);
-    //    entity.setCondition(
-    //        typeNameValue.length > 1
-    //            ? SearchParameters.FilterCriteria.Condition.OR
-    //            : SearchParameters.FilterCriteria.Condition.AND);
     return entity;
   }
 

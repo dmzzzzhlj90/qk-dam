@@ -248,8 +248,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   @Override
-  public List<DsDatasourceVO> getDataSourceByDsname(String id) {
-    List<DsDatasourceVO> resultDataList = new ArrayList<>();
+  public DsDatasourceVO getDataSourceById(String id) {
     Optional<DsDatasource> datasourceList = dsDatasourceRepository.findById(id);
     if (!datasourceList.isEmpty()) {
       DsDatasource dsDatasource = datasourceList.get();
@@ -257,8 +256,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
       ConnectBasicInfo dsConnectBasicInfo =
           getConnectInfo(dsDatasource.getLinkType(), dsDatasource);
       dsDatasourceVO.setConnectBasicInfo(dsConnectBasicInfo);
-      resultDataList.add(dsDatasourceVO);
-      return resultDataList;
+      return dsDatasourceVO;
     } else {
       throw new BizException("根据数据源名称获取数据源连接信息为空");
     }

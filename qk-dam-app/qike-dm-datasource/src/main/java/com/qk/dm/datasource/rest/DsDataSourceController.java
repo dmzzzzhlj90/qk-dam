@@ -108,13 +108,13 @@ public class DsDataSourceController {
    * 数据源连接——根据数据源id获取数据源信息
    *
    * @param id 数据源名称
-   * @return DefaultCommonResult<List<DsDatasource>> 数据源信息
+   * @return DefaultCommonResult<DsDatasourceVO> 数据源信息
    */
   @GetMapping("/{id}")
-  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByDsname(
+  public DefaultCommonResult<DsDatasourceVO> getDataSourceById(
       @PathVariable("id") String id) {
     return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByDsname(id));
+        ResultCodeEnum.OK, dsDataSourceService.getDataSourceById(id));
   }
 
   /**
