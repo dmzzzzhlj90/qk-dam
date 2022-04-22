@@ -16,4 +16,8 @@ public interface DasDataQueryInfoService {
      * @return List<DataQueryInfoVO> 聚合类
      */
     List<DataQueryInfoVO> dataQueryInfo();
+
+    List<DataQueryInfoVO> dataQueryInfo(Long id);
+
+    List<DataQueryInfoVO> dataQueryInfoLast(Long id);
 }

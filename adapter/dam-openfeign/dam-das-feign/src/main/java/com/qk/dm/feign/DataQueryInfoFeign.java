@@ -4,6 +4,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -17,5 +18,11 @@ public interface DataQueryInfoFeign {
      */
     @PostMapping("/data/query/info")
     DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfo();
+
+    @PostMapping("/data/query/info/{id}")
+    DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoById(@PathVariable("id") Long id);
+
+    @PostMapping("/data/query/info/last/{id}")
+    DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoLast(@PathVariable("id") Long id);
 
 }

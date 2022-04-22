@@ -11,6 +11,7 @@ dependencies {
     compile group: 'javax.validation', name: 'validation-api'
     compile 'org.springframework.boot:spring-boot-starter-validation'
     compile 'org.springframework.boot:spring-boot-starter-web'
+    implementation "io.github.openfeign:feign-core"
     implementation 'com.google.code.gson:gson'
     annotationProcessor 'org.projectlombok:lombok'
 }
@@ -20,6 +21,9 @@ dependencyManagement {
     }
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 

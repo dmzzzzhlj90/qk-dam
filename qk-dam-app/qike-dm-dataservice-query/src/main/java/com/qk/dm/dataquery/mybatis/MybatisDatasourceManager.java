@@ -1,85 +1,127 @@
 package com.qk.dm.dataquery.mybatis;
 
-import com.google.common.collect.Lists;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dam.datasource.entity.MysqlInfo;
+import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dm.dataquery.datasouce.HikariDataSourceFactory;
+import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import com.zaxxer.hikari.HikariConfig;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.beans.BeanMap;
+import org.joda.time.DateTime;
+import org.springframework.context.event.EventListener;
 
 import javax.sql.DataSource;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 /**
  * @author zhudaoming
  */
+@Slf4j
 public class MybatisDatasourceManager {
+  private final Map<String, DataSource> datasourceMap = new ConcurrentHashMap<>(256);
+  private final Map<String, HikariDataSourceFactory> hikariDataSourceFactoryMap =
+      new ConcurrentHashMap<>(256);
+  private final ConnTypeEnum connType;
+  private final HikariConfig hikariConfigDefault;
+  private final List<ResultDatasourceInfo> resultDataSource;
 
-    private final List<DataQueryInfoVO> dataQueryInfo = Lists.newArrayList();
-    private final Map<String, DataSource> datasource = new ConcurrentHashMap<>(256);
-    private final Map<String, HikariDataSourceFactory> hikariDataSourceFactoryMap = new ConcurrentHashMap<>(256);
+  public MybatisDatasourceManager(
+      ConnTypeEnum connType,
+      HikariConfig hikariConfigDefault,
+      List<ResultDatasourceInfo> resultDataSource) {
+    this.connType = connType;
+    this.hikariConfigDefault = hikariConfigDefault;
+    this.resultDataSource = resultDataSource;
+  }
 
-    public void regDataQueryInfo(List<DataQueryInfoVO> dataQueryInfoVOList) {
-        dataQueryInfo.addAll(dataQueryInfoVOList);
-    }
+  @EventListener
+  public void onDatasourceInsert(DatasourceEvent.DatasourceInsertEvent datasourceEvent) {
+    List<DataQueryInfoVO> queryInfoList = datasourceEvent.getQueryInfoList();
+    log.info(
+        "数据API SQL配置发生变化,时间：{}", new DateTime(datasourceEvent.getTimestamp()).toLocalDateTime());
 
-    public void regDatasource(ConnTypeEnum connType, HikariConfig hikariConfigDefault, String dataSourceName, ConnectBasicInfo connectBasicInfo) {
-        HikariConfig hc = new HikariConfig();
-        hc.setJdbcUrl("jdbc:" + connType.getName() + "://"
-                + connectBasicInfo.getServer() + ":"
-                + connectBasicInfo.getPort()
-        );
-        hc.setDriverClassName(connectBasicInfo.getDriverInfo());
-        hc.setUsername(connectBasicInfo.getUserName());
-        hc.setPassword(connectBasicInfo.getPassword());
-        BeanMap hcBeanMap = BeanMap.create(hc);
-        BeanMap.create(hikariConfigDefault).forEach((k,v)->{
-            if (Objects.nonNull(v)){
-                hcBeanMap.put(k,v);
-            }
-        });
+    refreshDatasource(queryInfoList, datasourceEvent.getResultDatasourceInfos());
+    log.info("数据数据API SQL配置完成，共新增：【{}】个配置", queryInfoList.size());
+  }
 
-        HikariDataSourceFactory hikariDataSourceFactory = HikariDataSourceFactory.builder().config(hc)
-                // hikariConfig 默认参数配置
-                .dataSourceProperties(new Properties()).build();
+  public void initDataSource(List<DataQueryInfoVO> dataQueryInfos) {
+    refreshDatasource(dataQueryInfos, resultDataSource);
+  }
 
-        hikariDataSourceFactoryMap.put(dataSourceName, hikariDataSourceFactory);
-        datasource.put(dataSourceName, hikariDataSourceFactory.dataSourceInstance());
-    }
+  private void refreshDatasource(
+      List<DataQueryInfoVO> dataQueryInfo, List<ResultDatasourceInfo> resultDataSource) {
+    Map<String, ResultDatasourceInfo> datasourceInfoMap =
+        resultDataSource.stream()
+            .collect(Collectors.toMap(ResultDatasourceInfo::getDataSourceName, (v -> v)));
+    log.info("查询数据源服务成功！共获取【{}】个mysql数据源", resultDataSource.size());
+    ObjectMapper objectMapper = new ObjectMapper();
 
-    public DataSource dataSource(String connectName) {
-        return datasource.get(connectName);
+    dataQueryInfo.forEach(
+        (dataQueryInfoVO -> {
+          String dataSourceName = dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName();
+          ResultDatasourceInfo resultDatasourceInfo = datasourceInfoMap.get(dataSourceName);
 
-    }
-    public List<DataQueryInfoVO> getDataQueryInfo() {
-        return dataQueryInfo;
-    }
+          String connectBasicInfoJson = resultDatasourceInfo.getConnectBasicInfoJson();
+          try {
+            MysqlInfo mysqlInfo = objectMapper.readValue(connectBasicInfoJson, MysqlInfo.class);
+            this.regDatasource(dataSourceName, mysqlInfo);
+            log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceName());
+          } catch (Exception e) {
+            throw new BizException("错误的json处理！");
+          }
+        }));
+  }
 
-    public String getDsName(String apiId){
-       return dataQueryInfo.stream().filter(dataQueryInfoVO ->
-                apiId.equals(dataQueryInfoVO.getDasApiCreateSqlScript().getApiId()))
-               .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName())
-               .findFirst()
-               .orElse("");
-    }
+  public void regDatasource(String dataSourceName, ConnectBasicInfo connectBasicInfo) {
+    HikariConfig hc = new HikariConfig();
+    hc.setJdbcUrl(
+        "jdbc:"
+            + connType.getName()
+            + "://"
+            + connectBasicInfo.getServer()
+            + ":"
+            + connectBasicInfo.getPort());
+    hc.setDriverClassName(connectBasicInfo.getDriverInfo());
+    hc.setUsername(connectBasicInfo.getUserName());
+    hc.setPassword(connectBasicInfo.getPassword());
+    BeanMap hcBeanMap = BeanMap.create(hc);
+    BeanMap.create(hikariConfigDefault)
+        .forEach(
+            (k, v) -> {
+              if (Objects.nonNull(v)) {
+                hcBeanMap.put(k, v);
+              }
+            });
 
-    public String getDbName(String apiId){
-        return dataQueryInfo.stream().filter(dataQueryInfoVO ->
-                        apiId.equals(dataQueryInfoVO.getDasApiCreateSqlScript().getApiId()))
-                .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getDataBaseName())
-                .findFirst()
-                .orElse("");
-    }
+    HikariDataSourceFactory hikariDataSourceFactory =
+        HikariDataSourceFactory.builder()
+            .config(hc)
+            // hikariConfig 默认参数配置
+            .dataSourceProperties(new Properties())
+            .build();
+
+    hikariDataSourceFactoryMap.put(dataSourceName, hikariDataSourceFactory);
+    datasourceMap.put(dataSourceName, hikariDataSourceFactory.dataSourceInstance());
+  }
+
+  public Boolean containsDataSource(String connectName) {
+    return Objects.isNull(datasourceMap.get(connectName));
+  }
+
+  public DataSource getDataSource(String connectName) {
+    return datasourceMap.get(connectName);
+  }
 
 
-    public void bindDatasource(BiConsumer<String, DataSource> biConsumer) {
-        datasource.forEach(biConsumer);
-    }
-
+  public void bindDatasource(BiConsumer<String, DataSource> biConsumer) {
+    datasourceMap.forEach(biConsumer);
+  }
 }
