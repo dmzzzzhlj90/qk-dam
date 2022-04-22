@@ -2,13 +2,14 @@ package com.qk.dm.datacollect.rest;
 
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
-import com.qk.dm.datacollect.service.DctDataSourceService;
 import com.qk.dm.DataBaseService;
+import com.qk.dm.datacollect.service.DctDataSourceService;
 import com.qk.dm.datacollect.vo.DctBaseInfoVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据源连接
@@ -18,11 +19,11 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/db")
-public class DctDataBaseCollection {
+public class DctDataBaseController {
   private final DataBaseService dataBaseService;
   private final DctDataSourceService dctDataSourceService;
 
-  public DctDataBaseCollection(DataBaseService dataBaseService,DctDataSourceService dctDataSourceService) {
+  public DctDataBaseController(DataBaseService dataBaseService,DctDataSourceService dctDataSourceService) {
     this.dataBaseService = dataBaseService;
     this.dctDataSourceService = dctDataSourceService;
   }
@@ -43,29 +44,29 @@ public class DctDataBaseCollection {
    * @return DefaultCommonResult<List<String>> 数据源连接名称
    */
   @GetMapping("/connect/{type}")
-  public DefaultCommonResult<List<String>> getResultDataSourceByType(@PathVariable("type") String dbType) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSource(dbType));
+  public DefaultCommonResult<Map<String,String>> getResultDataSourceByType(@PathVariable("type") String dbType) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSources(dbType));
   }
 
   /**
    * 根据数据源连接名称获取数据库
-   * @param dataSourceName 数据源连接名称
+   * @param dataSourceId 数据源连接id
    * @return DefaultCommonResult<List<String>> 数据库信息
    */
   @GetMapping("/connect/db")
-  public DefaultCommonResult<List<String>> getResultDb(@NotBlank @RequestParam String dataSourceName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultDb(dataSourceName));
+  public DefaultCommonResult<List<String>> getResultDb(@NotBlank @RequestParam String dataSourceId) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultDb(dataSourceId));
   }
 
   /**
    * 根据数据源连接、库名称获取表
-   * @param dataSourceName 数据源连接名称
+   * @param dataSourceId 数据源连接id
    * @param db 数据库名称
    * @return DefaultCommonResult<List<String>> 表信息
    */
   @GetMapping("/connect/table")
-  public DefaultCommonResult<List<String>> getResultTable(@NotBlank @RequestParam String dataSourceName,@NotBlank @RequestParam String db) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultTable(dataSourceName,db));
+  public DefaultCommonResult<List<String>> getResultTable(@NotBlank @RequestParam String dataSourceId,@NotBlank @RequestParam String db) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultTable(dataSourceId,db));
   }
 
 
@@ -75,7 +76,8 @@ public class DctDataBaseCollection {
    * @return
    */
   @PostMapping
-   public DefaultCommonResult dolphinCallback(@RequestBody DctBaseInfoVO dctBaseInfoVO){
+   public DefaultCommonResult dolphinCallback(@RequestBody DctBaseInfoVO dctBaseInfoVO)
+      throws Exception {
      dctDataSourceService.dolphinCallback(dctBaseInfoVO);
      return DefaultCommonResult.success();
    }

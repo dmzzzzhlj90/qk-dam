@@ -1,3 +1,7 @@
+atlas:
+  rest:
+    address: http://172.21.32.2:21000
+    basicAuth: admin,admin
 spring:
   application:
     name: ${name}-\${spring.profiles.active}

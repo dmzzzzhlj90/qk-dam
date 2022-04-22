@@ -3,6 +3,7 @@ package com.qk.dam.metadata.catacollect.repo;
 import cn.hutool.db.Db;
 import cn.hutool.db.ds.simple.SimpleDataSource;
 import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
+import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.model.instance.AtlasEntity;
 
 import java.util.List;
@@ -31,7 +32,8 @@ public class HiveAtlasEntity {
   }
 
   public List<AtlasEntity.AtlasEntitiesWithExtInfo> searchHiveAtals(
-      List<AtlasEntity.AtlasEntitiesWithExtInfo> list) {
+      List<AtlasEntity.AtlasEntitiesWithExtInfo> list,
+      AtlasClientV2 atlasClientV2, String atalsEnum) {
     return list;
   }
 }

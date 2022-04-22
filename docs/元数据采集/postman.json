@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "7ea5b2da-34e4-40eb-a829-bc05b4ea0b58",
+    "_postman_id": "640cfa97-649c-49e4-8059-9f865afb3074",
     "name": "dm-datacollect"
   },
   "item": [
@@ -80,7 +80,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/db/connect/db?dataSourceName\u003ddustin.dubuque",
+              "raw": "http://::server/db/connect/db?dataSourceId\u003d148",
               "protocol": "http",
               "path": [
                 "db",
@@ -92,9 +92,9 @@
               ],
               "query": [
                 {
-                  "key": "dataSourceName",
-                  "value": "dustin.dubuque",
-                  "description": "数据源连接名称"
+                  "key": "dataSourceId",
+                  "value": "148",
+                  "description": "数据源连接id"
                 }
               ],
               "variable": []
@@ -116,7 +116,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/db/connect/table?dataSourceName\u003ddustin.dubuque\u0026db\u003dwggfjl",
+              "raw": "http://::server/db/connect/table?dataSourceId\u003d148\u0026db\u003dmq1d74",
               "protocol": "http",
               "path": [
                 "db",
@@ -128,13 +128,13 @@
               ],
               "query": [
                 {
-                  "key": "dataSourceName",
-                  "value": "dustin.dubuque",
-                  "description": "数据源连接名称"
+                  "key": "dataSourceId",
+                  "value": "148",
+                  "description": "数据源连接id"
                 },
                 {
                   "key": "db",
-                  "value": "m0pa1x",
+                  "value": "q3fox3",
                   "description": "数据库名称"
                 }
               ],
@@ -151,7 +151,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"description\": \"p7z45r\",\n  \"dataSourceName\": \"dustin.dubuque\",\n  \"tableList\": [\n    \"c8nbkp\"\n  ],\n  \"allNums\": \"kznao7\",\n  \"applicationName\": \"dustin.dubuque\",\n  \"displayName\": \"dustin.dubuque\",\n  \"owner\": \"p360kc\",\n  \"db\": \"a8xdpb\",\n  \"strategy\": \"yui1jk\"\n}",
+              "raw": "{\n  \"description\": \"17rvpl\",\n  \"dataSourceName\": \"hugo.walter\",\n  \"dataSourceId\": \"148\",\n  \"tableList\": [\n    \"h45k60\"\n  ],\n  \"allNums\": \"ix12wt\",\n  \"applicationName\": \"hugo.walter\",\n  \"displayName\": \"hugo.walter\",\n  \"owner\": \"ytwina\",\n  \"db\": \"teas3k\",\n  \"strategy\": \"gf9577\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

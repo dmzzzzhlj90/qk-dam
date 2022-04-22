@@ -116,7 +116,7 @@ public interface DataBaseService {
      * @param id
      * @return
      */
-    String getResultDataSourceByid(int id);
+    String getResultDataSourceByid(String id);
 
 
 }

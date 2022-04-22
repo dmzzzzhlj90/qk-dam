@@ -3,7 +3,7 @@ package com.qk.dm.datacollect.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
+import com.qk.dam.datasource.entity.DsDatasourceVO;
 import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
 import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
 import com.qk.dam.metadata.catacollect.service.MetadataApiService;
@@ -30,20 +30,21 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
   private final MetadataApiService metadataApiService;
 
-  public DctDataSourceServiceImpl(DataBaseInfoDefaultApi dataBaseInfoDefaultApi,
-      MetadataApiService metadataApiService, AtlasClient atlasClient) {
+  public DctDataSourceServiceImpl(AtlasClient atlasClient,
+      DataBaseInfoDefaultApi dataBaseInfoDefaultApi,
+      MetadataApiService metadataApiService) {
     this.atlasClient = atlasClient;
-    this.atlasClientV2=atlasClient.instance();
+    this.atlasClientV2= this.atlasClient.instance();
     this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
     this.metadataApiService = metadataApiService;
   }
 
   @Override
-  public List<String> getResultDb(String dataSourceName) {
-    ResultDatasourceInfo dataSource = dataBaseInfoDefaultApi.getDataSource(dataSourceName);
-    if (Objects.nonNull(dataSource)){
+  public List<String> getResultDb(String dataSourceId) {
+    DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
+    if (Objects.nonNull(dsDatasourceVO)){
       ConnectInfoVo connectInfoVo = new ConnectInfoVo();
-      connectInfoVo = GsonUtil.fromJsonString(dataSource.getConnectBasicInfoJson(), new TypeToken<ConnectInfoVo>() {}.getType());
+      connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfo().toString(), new TypeToken<ConnectInfoVo>() {}.getType());
      return metadataApiService.queryDB(connectInfoVo);
     }else {
       throw  new BizException("根据连接名称获取连接信息失败");
@@ -51,11 +52,11 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   }
 
   @Override
-  public List<String> getResultTable(String dataSourceName, String db) {
-    ResultDatasourceInfo dataSource = dataBaseInfoDefaultApi.getDataSource(dataSourceName);
-    if (Objects.nonNull(dataSource)){
+  public List<String> getResultTable(String dataSourceId, String db) {
+    DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
+    if (Objects.nonNull(dsDatasourceVO)){
       ConnectInfoVo connectInfoVo = new ConnectInfoVo();
-      connectInfoVo = GsonUtil.fromJsonString(dataSource.getConnectBasicInfoJson(), new TypeToken<ConnectInfoVo>() {}.getType());
+      connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfo().toString(), new TypeToken<ConnectInfoVo>() {}.getType());
       connectInfoVo.setDb(db);
       return metadataApiService.queryTable(connectInfoVo);
     }else {
@@ -64,11 +65,11 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   }
 
   @Override
-  public void dolphinCallback(DctBaseInfoVO dctBaseInfoVO) {
-    ResultDatasourceInfo dataSource = dataBaseInfoDefaultApi.getDataSource(dctBaseInfoVO.getDataSourceName());
-    if (Objects.nonNull(dataSource)){
+  public void dolphinCallback(DctBaseInfoVO dctBaseInfoVO) throws Exception {
+    DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dctBaseInfoVO.getDataSourceId());
+    if (Objects.nonNull(dsDatasourceVO)){
       MetadataConnectInfoVo metadataConnectInfoVo =new MetadataConnectInfoVo();
-      metadataConnectInfoVo = GsonUtil.fromJsonString(dataSource.getConnectBasicInfoJson(), new TypeToken<MetadataConnectInfoVo>() {}.getType());
+      metadataConnectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfo().toString(), new TypeToken<MetadataConnectInfoVo>() {}.getType());
       DctDataBaseMapper.INSTANCE.from(dctBaseInfoVO,metadataConnectInfoVo);
       metadataApiService.extractorAtlasEntitiesWith(metadataConnectInfoVo,atlasClientV2);
     }else {

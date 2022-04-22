@@ -46,6 +46,7 @@ dependencies {
     implementation project(":catacollect")
     implementation project(":dolphinscheduler-starter-client")
     implementation 'org.mapstruct:mapstruct'
+    implementation project(":metadata-common-core")
 
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

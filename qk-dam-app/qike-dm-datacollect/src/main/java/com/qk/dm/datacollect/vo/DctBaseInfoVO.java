@@ -24,6 +24,9 @@ public class DctBaseInfoVO {
   /** 数据连接名称 */
   private String dataSourceName;
 
+  /** 数据连接名称 */
+  private String dataSourceId;
+
   /** 表名称 */
   private List<String> tableList;
 
