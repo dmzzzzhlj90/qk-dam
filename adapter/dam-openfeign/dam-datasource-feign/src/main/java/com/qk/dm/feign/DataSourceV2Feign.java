@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
-@FeignClient(value = "dm-datasource-zdm-${spring.profiles.active}", path = "/ds/datasource")
+@FeignClient(value = "dm-datasource-${spring.profiles.active}", path = "/ds/datasource")
 @Component
 public interface DataSourceV2Feign {
     /**

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@FeignClient(value = "dm-dataservice-zdm-${spring.profiles.active}",path = "das")
+@FeignClient(value = "dm-dataservice-${spring.profiles.active}",path = "das")
 @Component
 public interface DataQueryInfoFeign {
     /**
