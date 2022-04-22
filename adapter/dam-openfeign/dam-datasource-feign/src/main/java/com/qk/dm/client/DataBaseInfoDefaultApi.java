@@ -174,8 +174,8 @@ public class DataBaseInfoDefaultApi {
         return existData.getData();
     }
 
-    public List<DsDatasourceVO> getResultDataSourceById(int id) {
-        return dataSourceV2Feign.getDataSourceByDsname(id).getData();
+    public DsDatasourceVO getResultDataSourceById(String id) {
+        return dataSourceV2Feign.getDataSourceById(id).getData();
     }
 
 

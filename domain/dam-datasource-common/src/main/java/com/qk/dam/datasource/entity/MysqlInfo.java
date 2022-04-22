@@ -14,6 +14,5 @@ public class MysqlInfo extends ConnectBasicInfo {
   /** 数据源类型 */
   private final String type = ConnTypeEnum.MYSQL.getName();
 
-  /** 连接驱动 */
-  private String driverInfo;
+
 }

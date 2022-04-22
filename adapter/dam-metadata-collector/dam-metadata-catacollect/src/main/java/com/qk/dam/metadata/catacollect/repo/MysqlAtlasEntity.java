@@ -12,6 +12,8 @@ import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlDbType;
 import com.qk.dam.metadata.catacollect.pojo.mysql.MysqlTableType;
 import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
 import com.qk.dam.metadata.catacollect.util.SourcesUtil;
+import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.commons.lang.StringUtils;
 
@@ -38,6 +40,9 @@ public class MysqlAtlasEntity {
   private final String description;
   private final String displayName;
   private final String owner;
+  /**采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）*/
+  private final String strategy;
+
   public MysqlAtlasEntity(MetadataConnectInfoVo metadataConnectInfoVo) {
     this.use =
         Db.use(
@@ -57,13 +62,18 @@ public class MysqlAtlasEntity {
     description=metadataConnectInfoVo.getDescription();
     displayName=metadataConnectInfoVo.getDisplayName();
     owner=metadataConnectInfoVo.getOwner();
+    strategy = metadataConnectInfoVo.getStrategy();
   }
 
   public List<AtlasEntity.AtlasEntitiesWithExtInfo> searchMysqlAtals(
-      List<AtlasEntity.AtlasEntitiesWithExtInfo> list) throws SQLException {
+      List<AtlasEntity.AtlasEntitiesWithExtInfo> list,
+      AtlasClientV2 atlasClientV2, String atalsEnum)
+      throws SQLException, AtlasServiceException {
     List<Entity> tableList = getTableEntity();
-    if (CollectionUtil.isNotEmpty(tableList)){
-      List<List<Entity>> entityList = Lists.partition(tableList, 2);
+    //处理策略问题并返回处理后的表信息
+    List<Entity> checkTableList = CatacollectUtil.checkTable(tableList,db,atlasClientV2,strategy,atalsEnum);
+    if (CollectionUtil.isNotEmpty(checkTableList)){
+      List<List<Entity>> entityList = Lists.partition(checkTableList, 2);
       list=getAtlasMessage(entityList);
     }
 
@@ -134,6 +144,8 @@ public class MysqlAtlasEntity {
                           .displayName(entity.getStr(TABLE_COMMENT))
                           .qualifiedName(db + "." + entity.getStr(TABLE_NAME) + "@" + host)
                           .build();
+                  AtlasEntity tableEntity = new AtlasEntity();
+                  tableEntity.setGuid("5aba66ea-e891-4536-8c6a-27312998202d");
                   try {
                     List<Entity> column =
                         use.query(

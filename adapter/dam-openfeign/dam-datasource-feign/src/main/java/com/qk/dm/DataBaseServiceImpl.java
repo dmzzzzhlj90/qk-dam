@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -94,15 +93,15 @@ public class DataBaseServiceImpl implements DataBaseService {
   }
 
   @Override
-  public Map<Integer,String> getAllDataSources(String connectType) {
+  public Map<String,String> getAllDataSources(String connectType) {
     List<ResultDatasourceInfo> resultDataSourceByType = dataBaseInfoDefaultApi.getResultDataSourceByType(connectType);
     return resultDataSourceByType.stream().collect(Collectors.toMap(ResultDatasourceInfo::getId,ResultDatasourceInfo::getDataSourceName));
   }
 
   @Override
-  public String getResultDataSourceByid(int id) {
-    List<DsDatasourceVO> resultDataSourceById = dataBaseInfoDefaultApi.getResultDataSourceById(id);
-    return resultDataSourceById.stream().filter(Objects::nonNull).findFirst().map(DsDatasourceVO::getConnectBasicInfo).orElse(null).toString();
+  public String getResultDataSourceByid(String id) {
+    DsDatasourceVO resultDataSourceById = dataBaseInfoDefaultApi.getResultDataSourceById(id);
+    return (String) resultDataSourceById.getConnectBasicInfo();
   }
   private String getServer(String dataSourceName) {
     ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getDataSource(dataSourceName);

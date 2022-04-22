@@ -14,5 +14,5 @@ public class PostgresqlInfo extends ConnectBasicInfo {
 //  private final String type = ConnTypeEnum.POSTGRESQL.getName();
 
   /** 连接驱动 */
-  private String driverInfo;
+ // private String driverInfo;
 }

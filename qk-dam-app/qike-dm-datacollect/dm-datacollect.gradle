@@ -41,19 +41,19 @@ compileJava {
 }
 
 dependencies {
-//    implementation project(":qk-data-jpa")
     implementation project(":dam-mvc-validation")
     implementation project(":dm-feign-all")
     implementation project(":catacollect")
-//    implementation project(":dolphinscheduler-client")
     implementation project(":dolphinscheduler-starter-client")
+    implementation 'org.mapstruct:mapstruct'
+    implementation project(":metadata-common-core")
+
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
-    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
 
 

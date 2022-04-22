@@ -3,9 +3,7 @@ package com.qk.dam.metadata.catacollect.catacollect;
 import cn.hutool.db.Entity;
 import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
 import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
-import com.qk.dam.metadata.catacollect.repo.HiveAtlasEntity;
 import com.qk.dam.metadata.catacollect.repo.HiveDbToTableAgg;
-import com.qk.dam.metadata.catacollect.repo.MysqlAtlasEntity;
 import com.qk.dam.metadata.catacollect.repo.MysqlDbToTableAgg;
 import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
 import com.qk.dam.metadata.catacollect.util.SourcesUtil;
@@ -84,10 +82,10 @@ public class MysqlMetadataApi {
     if (metadataConnectInfoVo.getType() !=null){
       switch (metadataConnectInfoVo.getType()){
         case SourcesUtil.MYSQL:
-          list =new MysqlAtlasEntity(metadataConnectInfoVo).searchMysqlAtals(list);
+          //list =new MysqlAtlasEntity(metadataConnectInfoVo).searchMysqlAtals(list,atlasClientV2);
           break;
         case SourcesUtil.HIVE:
-          list = new HiveAtlasEntity(metadataConnectInfoVo).searchHiveAtals(list);
+          //list = new HiveAtlasEntity(metadataConnectInfoVo).searchHiveAtals(list,atlasClientV2);
           break;
         default:
           break;

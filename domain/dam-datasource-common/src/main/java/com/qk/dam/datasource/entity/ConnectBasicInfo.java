@@ -9,7 +9,8 @@ import lombok.Data;
  */
 @Data
 public class ConnectBasicInfo {
-
+  /** 连接驱动 */
+  private String driverInfo;
   /** 数据源连接服务地址 */
   private String server;
 

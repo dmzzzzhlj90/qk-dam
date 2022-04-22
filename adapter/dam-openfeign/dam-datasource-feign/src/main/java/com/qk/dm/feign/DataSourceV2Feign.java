@@ -7,16 +7,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
-
 @FeignClient(value = "dm-datasource-${spring.profiles.active}", path = "/ds/datasource")
 @Component
 public interface DataSourceV2Feign {
     /**
      * 根据id查询数据源连接信息
      * @param id
-     * @return DefaultCommonResult<List<DsDatasourceVO>>
+     * @return DefaultCommonResult<DsDatasourceVO>
      */
     @GetMapping("/{id}")
-    DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByDsname(@PathVariable("id") Integer id);
+    DefaultCommonResult<DsDatasourceVO> getDataSourceById(@PathVariable("id") String id);
 }

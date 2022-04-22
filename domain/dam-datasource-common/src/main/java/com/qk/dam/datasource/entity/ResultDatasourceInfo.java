@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResultDatasourceInfo {
   /** 数据源主键id */
-  private Integer id;
+  private String id;
 
   /** 系统名称 */
   private String dataSourceName;

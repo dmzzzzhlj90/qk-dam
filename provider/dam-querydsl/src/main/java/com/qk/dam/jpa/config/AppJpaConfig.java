@@ -3,8 +3,11 @@ package com.qk.dam.jpa.config;
 import com.qk.dam.datasource.config.DatasourceActive;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -56,5 +59,10 @@ public class AppJpaConfig {
     lemfb.setJpaVendorAdapter(jpaVendorAdapter());
     lemfb.setPackagesToScan("com.qk");
     return lemfb;
+  }
+
+  @Bean
+  public JPAQueryFactory jpaQueryFactory(final EntityManager entityManager) {
+    return new JPAQueryFactory(entityManager);
   }
 }

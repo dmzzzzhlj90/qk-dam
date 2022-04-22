@@ -3,7 +3,6 @@ package com.qk.dm.dataquery.mybatis;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
-import javax.sql.DataSource;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -11,7 +10,7 @@ import java.util.function.BiConsumer;
 /**
  * @author zhudaoming
  */
-public class MybatisEnvironment {
+public class MybatisEnvironmentManager {
     /**
      * 事务管理器
      */

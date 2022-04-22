@@ -30,7 +30,7 @@ public interface DsDataSourceService {
 
   List<String> getDataType();
 
-  List<DsDatasourceVO> getDataSourceByDsname(String id);
+  DsDatasourceVO getDataSourceById(String id);
 
   ConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource);
 }

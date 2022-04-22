@@ -26,4 +26,7 @@ public class MetadataConnectInfoVo extends ConnectInfoVo {
    * 全选字段
    */
   private String allNums;
+
+  /**采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）*/
+  private String strategy;
 }

@@ -1,6 +1,7 @@
 package com.qk.dam.metadata.catacollect.service.Impl;
 
 import cn.hutool.db.Entity;
+import com.qk.dam.metadata.catacollect.enums.AtalsEnum;
 import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
 import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
 import com.qk.dam.metadata.catacollect.repo.HiveAtlasEntity;
@@ -10,10 +11,11 @@ import com.qk.dam.metadata.catacollect.repo.MysqlDbToTableAgg;
 import com.qk.dam.metadata.catacollect.service.MetadataApiService;
 import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
 import com.qk.dam.metadata.catacollect.util.SourcesUtil;
+import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,32 +76,42 @@ public class MetadataApiServiceImpl implements MetadataApiService {
     }
     return dbList;
   }
-
   /**
    * 根据数据连接信息获取元数据信息
    * @param metadataConnectInfoVo
    * @return
    */
-  public  List<AtlasEntity.AtlasEntitiesWithExtInfo> extractorAtlasEntitiesWith(
-      MetadataConnectInfoVo metadataConnectInfoVo){
+  @Override
+  public void extractorAtlasEntitiesWith(
+      MetadataConnectInfoVo metadataConnectInfoVo,
+      AtlasClientV2 atlasClientV2) throws Exception {
     List<AtlasEntity.AtlasEntitiesWithExtInfo> list = new ArrayList<>();
     if (metadataConnectInfoVo.getType() !=null){
-      try {
-      switch (metadataConnectInfoVo.getType()){
-        case SourcesUtil.MYSQL:
-            list =new MysqlAtlasEntity(metadataConnectInfoVo).searchMysqlAtals(list);
-          break;
-        case SourcesUtil.HIVE:
-          list = new HiveAtlasEntity(metadataConnectInfoVo).searchHiveAtals(list);
-          break;
-        default:
-          break;
-      }
-      } catch (SQLException sqlException) {
-        sqlException.printStackTrace();
-      }
+        switch (metadataConnectInfoVo.getType()){
+          case SourcesUtil.MYSQL:
+            list =new MysqlAtlasEntity(metadataConnectInfoVo).searchMysqlAtals(list,atlasClientV2,
+                AtalsEnum.fromValue(metadataConnectInfoVo.getType()).getValue());
+            break;
+          case SourcesUtil.HIVE:
+            list = new HiveAtlasEntity(metadataConnectInfoVo).searchHiveAtals(list,atlasClientV2,
+                AtalsEnum.fromValue(metadataConnectInfoVo.getType()).getValue());
+            break;
+          default:
+            break;
+        }
     }
-    return list;
+    list.forEach(e->{
+      try {
+        atlasClientV2.createEntities(e);
+        //Set<String> set = new HashSet<>();
+        //set.add("1e5bf085-52aa-410a-947e-2b3463f0005c");
+        //set.add("c82984b2-8acd-488e-9e99-3564a9c04103");
+        //物理删除
+        //atlasClientV2.purgeEntitiesByGuids(set);
+        //atlasClientV2.updateEntities(e);
+      } catch (AtlasServiceException atlasServiceException) {
+        atlasServiceException.printStackTrace();
+      }
+    });
   }
-
 }

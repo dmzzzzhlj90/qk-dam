@@ -3,6 +3,7 @@ package com.qk.dm.dataingestion.strategy;
 import com.qk.dm.dataingestion.model.DataxChannel;
 import com.qk.dm.dataingestion.model.IngestionType;
 import com.qk.dm.dataingestion.model.hive.HiveBasePara;
+import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisColumnInfoVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
@@ -26,17 +27,18 @@ public class HiveDataxJson implements DataxJson{
     @Override
     public DataxChannel getReader(DataMigrationVO dataMigrationVO) {
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-        HiveBasePara hiveReader = HiveBasePara.builder().column(getSourceColumnList(dataMigrationVO.getColumnList()))
+        HiveBasePara hiveReader = HiveBasePara.builder().column(getColumnList(dataMigrationVO
+                .getColumnList().getSourceColumnList()))
                 .defaultFS(baseInfo.getSourceDefaultFS()).path(baseInfo.getSourcePath())
                 .fileType(baseInfo.getSourceFileType()).build();
         return DataxChannel.builder().name(HIVE_READER).parameter(hiveReader).build();
 
     }
 
-    private List<HiveBasePara.Column> getSourceColumnList(List<DisColumnInfoVO> columnList){
+    private List<HiveBasePara.Column> getColumnList(List<ColumnVO.Column> columnList){
         if(!CollectionUtils.isEmpty(columnList)){
-            return columnList.stream().map(e-> HiveBasePara.Column.builder().name(e.getSourceName())
-                     .type(e.getSourceType()).build()).collect(Collectors.toList());
+            return columnList.stream().map(e-> HiveBasePara.Column.builder().name(e.getName())
+                     .type(e.getDataType()).build()).collect(Collectors.toList());
         }
 
         return List.of();
@@ -48,7 +50,7 @@ public class HiveDataxJson implements DataxJson{
 
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
         HiveBasePara hiveWriter = HiveBasePara.builder().fileName(baseInfo.getTargetTable())
-                .column(getTargetColumnList(dataMigrationVO.getColumnList()))
+                .column(getColumnList(dataMigrationVO.getColumnList().getTargetColumnList()))
                 .defaultFS(baseInfo.getTargetDefaultFS()).fileType(baseInfo.getTargetFileType())
                 .path(baseInfo.getTargetPath()).fieldDelimiter(baseInfo.getTargetFieldDelimiter())
                 .writeMode(baseInfo.getTargetWriteMode()).build();
@@ -56,14 +58,7 @@ public class HiveDataxJson implements DataxJson{
         return DataxChannel.builder().name(HIVE_WRITER).parameter(hiveWriter).build();
     }
 
-    private List<HiveBasePara.Column> getTargetColumnList(List<DisColumnInfoVO> columnList){
-        if(!CollectionUtils.isEmpty(columnList)){
-            return columnList.stream().map(e-> HiveBasePara.Column.builder().name(e.getTargetName())
-                    .type(e.getTargetType()).build()).collect(Collectors.toList());
-        }
 
-        return List.of();
-    }
 
     @Override
     public IngestionType ingestionType() {

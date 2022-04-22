@@ -61,7 +61,7 @@ class SqlSessionFactoryTest {
         Mapper mapper1 = mapperBuilder.namespace("xx")
                 .select(List.of(
                         //fixme 此处为查询语句适配
-                        new MapperSelect("findAll", "mmm", " select * from qk_source where 1=1 \n <if test='pid==2'> and id=#{pid}</if>")
+                        new MapperSelect("findAll", "mmm",null, " select * from qk_source where 1=1 \n <if test='pid==2'> and id=#{pid}</if>")
                 ))
                 .resultMap(List.of(
                         //fixme 配置返回类型

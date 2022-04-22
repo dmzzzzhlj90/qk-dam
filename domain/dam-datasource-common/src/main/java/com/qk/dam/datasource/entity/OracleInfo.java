@@ -1,6 +1,7 @@
 package com.qk.dam.datasource.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 数据源连接信息_ORACLE
@@ -11,8 +12,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 public class OracleInfo extends ConnectBasicInfo {
   /** 数据源类型 */
-//  private final String type = ConnTypeEnum.ORACLE.getName();
+  //private final String type = ConnTypeEnum.ORACLE.getName();
 
   /** 连接驱动 */
-  private String driverInfo;
+  //private String driverInfo;
 }

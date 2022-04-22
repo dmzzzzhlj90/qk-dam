@@ -4,6 +4,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.context.WriteContext;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataservice.constant.DasConstant;
@@ -106,11 +107,13 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
 
     @Override
     public void apiDataDownload(String dirId,HttpServletResponse response) throws IOException {
+        LOG.info("============================开始导出API!============================");
         // 根据目录设置文件名称
         String dirName = searchDirName(dirId);
         String name = "目录为" + dirName + "的API接口信息";
 //        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setContentType("application/json;charset=utf-8");
+//        response.setContentType("application/json;charset=utf-8");
+        response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode(name, "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
@@ -148,6 +151,7 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
         excelWriter.write(registerDefinitionVOList, registerSheet);
 
         excelWriter.finish();
+        LOG.info("============================结束导出API!============================");
     }
 
 
