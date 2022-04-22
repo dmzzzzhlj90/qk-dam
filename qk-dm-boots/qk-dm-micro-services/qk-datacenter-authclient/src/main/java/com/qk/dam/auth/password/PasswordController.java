@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -124,13 +125,18 @@ public class PasswordController {
             HttpEntity<String> entity = new HttpEntity<>(data, headers);
             response = restTemplate.exchange(uri, HttpMethod.POST, entity, clazz);
             System.out.println("retult:" + response.getBody());
+            if (response.getStatusCode().value() != HttpStatus.OK.value()
+                    && response.getStatusCode().value() != HttpStatus.NO_CONTENT.value()) {
+                throw new BizException("账号或密码错误");
+            }
+        }catch (HttpClientErrorException e){
+            throw new BizException("账号或密码错误");
+        }catch (BizException e){
+            throw new BizException(e.getMessage());
         }catch (Exception e){
             throw new BizException("内部错误，请联系管理员");
         }
-        if (response.getStatusCode().value() != HttpStatus.OK.value()
-                && response.getStatusCode().value() != HttpStatus.NO_CONTENT.value()) {
-            throw new BizException("账号或密码错误");
-        }
+
         return response.getBody();
     }
 

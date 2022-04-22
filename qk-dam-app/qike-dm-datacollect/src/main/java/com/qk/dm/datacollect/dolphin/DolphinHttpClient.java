@@ -37,7 +37,6 @@ public class DolphinHttpClient {
     }
 
 
-
     private Result createProcessDefinition(Long projectId,
                                            String name,
                                            long taskCode,
@@ -65,6 +64,7 @@ public class DolphinHttpClient {
 
     public Result updateProcessDefinition(Long processDefinitionCode,
                                           Long projectId,
+                                          long taskCode,
                                           String name,
                                           String url,
                                           Object httpParams,
@@ -72,7 +72,7 @@ public class DolphinHttpClient {
                                           String description,
                                           DolphinTaskDefinitionPropertiesBean taskParam) throws ApiException {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
-                getTaskCode(), name, url, httpParams, httpMethod, taskParam, dolphinTaskDefinitionPropertiesBean);
+                taskCode, name, url, httpParams, httpMethod, taskParam, dolphinTaskDefinitionPropertiesBean);
         Result result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
                 processDefinitionCode,
                 processDefinition.getLocations(),

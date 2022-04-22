@@ -2,6 +2,7 @@ package com.qk.dm.datacollect.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datacollect.dto.ProcessDefinitionDTO;
 import com.qk.dm.datacollect.dto.ProcessDefinitionResultDTO;
@@ -35,7 +36,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
     @Override
     public void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         String name = dctSchedulerBasicInfoVO.getJobName();
-        String url = "http://10.0.18.48:7001/#/metadatacollection/dataoverview";
+        String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String httpMethod = "POST";
         String description = dctSchedulerBasicInfoVO.getDescription();
@@ -51,11 +52,15 @@ public class DctDolphinServiceImpl implements DctDolphinService {
     @Override
     public void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         String name = dctSchedulerBasicInfoVO.getJobName();
-        String url = "http://10.0.18.48:7001/#/metadatacollection/dataoverview";
+        String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String httpMethod = "POST";
         String description = dctSchedulerBasicInfoVO.getDescription();
-        dolphinProcessService.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), projectCode, name, url, httpParams, httpMethod, description);
+
+        ProcessDefinitionDTO processDefinitionDTO = dolphinProcessService.detailToProcess(dctSchedulerBasicInfoVO.getCode(), projectCode);
+        long taskCode = GsonUtil.toJsonArray(processDefinitionDTO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
+
+        dolphinProcessService.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), projectCode,taskCode, name, url, httpParams, httpMethod, description);
     }
 
     @Override
@@ -96,8 +101,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     @Override
     public DctSchedulerBasicInfoVO detail(Long code) {
-
-        return null;
+        return dolphinProcessService.detail(code,projectCode);
     }
 
 

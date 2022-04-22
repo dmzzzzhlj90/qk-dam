@@ -3,10 +3,8 @@ package com.qk.dm.datacollect.dolphin;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.datacenter.model.ProcessInstance;
-import com.qk.dm.datacollect.util.DateUtil;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -28,7 +26,7 @@ public class DolphinScheduleDefinition {
     String warningType;
     String workerGroup;
 
-    public DolphinScheduleDefinition(Date effectiveTimeStart,Date effectiveTimeEnt,String cron) {
+    public DolphinScheduleDefinition(String effectiveTimeStart,String effectiveTimeEnt,String cron) {
         this.failureStrategy = ProcessInstance.FailureStrategyEnum.CONTINUE.getValue();
         this.processInstancePriority = ProcessInstance.ProcessInstancePriorityEnum.MEDIUM.getValue();
         this.schedule = schedule(effectiveTimeStart, effectiveTimeEnt, cron);
@@ -37,13 +35,13 @@ public class DolphinScheduleDefinition {
         this.workerGroup = "default";
     }
 
-    private static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+    private static String schedule(String effectiveTimeStart, String effectiveTimeEnt, String cron) {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, String> m = Map.of(
                 SCHEDULE_TIME_START,
-                DateUtil.toStr(effectiveTimeStart),
+                effectiveTimeStart,
                 SCHEDULE_TIME_END,
-                DateUtil.toStr(effectiveTimeEnt),
+                effectiveTimeEnt,
                 SCHEDULE_CRON,
                 cron,
                 "timezoneId",

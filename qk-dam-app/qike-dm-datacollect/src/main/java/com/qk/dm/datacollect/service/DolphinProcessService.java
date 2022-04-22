@@ -3,6 +3,7 @@ package com.qk.dm.datacollect.service;
 import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.dm.datacollect.dto.ProcessDefinitionDTO;
 import com.qk.dm.datacollect.dto.ProcessDefinitionResultDTO;
+import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
 
 /**
  * @author shenpj
@@ -12,7 +13,7 @@ import com.qk.dm.datacollect.dto.ProcessDefinitionResultDTO;
 public interface DolphinProcessService {
     ProcessDefinitionDTO createProcessDefinition(Long projectId, String name, String url, Object httpParams, String httpMethod, String description);
 
-    void updateProcessDefinition(Long processDefinitionCode, Long projectId, String name, String url, Object httpParams, String httpMethod, String description);
+    void updateProcessDefinition(Long processDefinitionCode, Long projectId, long taskCode, String name, String url, Object httpParams, String httpMethod, String description);
 
     void release(Long processDefinitionCode, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState);
 
@@ -22,5 +23,7 @@ public interface DolphinProcessService {
 
     void delete(Long processDefinitionCode, Long projectCode);
 
-    void detail(Long processDefinitionCode, Long projectCode);
+    DctSchedulerBasicInfoVO detail(Long processDefinitionCode, Long projectCode);
+
+    ProcessDefinitionDTO detailToProcess(Long processDefinitionCode, Long projectCode);
 }

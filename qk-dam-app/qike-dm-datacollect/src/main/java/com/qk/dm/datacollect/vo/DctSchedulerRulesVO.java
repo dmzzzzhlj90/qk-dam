@@ -68,4 +68,9 @@ public class DctSchedulerRulesVO {
      * 采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）
      */
     private String strategy;
+
+    /**
+     * 数据源Id
+     */
+    private String dataSourceId;
 }

@@ -8,8 +8,6 @@ import com.qk.datacenter.model.Result;
 import com.qk.datacenter.model.Resultstring;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 /**
  * @author shenpj
  * @date 2022/4/21 14:41
@@ -168,8 +166,8 @@ public class DolphinApiClient {
      */
     public void schedule_create(Long processDefinitionCode,
                                 Long projectCode,
-                                Date effectiveTimeStart,
-                                Date effectiveTimeEnt,
+                                String effectiveTimeStart,
+                                String effectiveTimeEnt,
                                 String cron) throws ApiException {
         DolphinScheduleDefinition dolphinScheduleDefinition = new DolphinScheduleDefinition(effectiveTimeStart, effectiveTimeEnt, cron);
         Result result =
@@ -200,8 +198,8 @@ public class DolphinApiClient {
      */
     public void schedule_update(Integer scheduleId,
                                 Long projectCode,
-                                Date effectiveTimeStart,
-                                Date effectiveTimeEnt,
+                                String effectiveTimeStart,
+                                String effectiveTimeEnt,
                                 String cron) throws ApiException {
         DolphinScheduleDefinition dolphinScheduleDefinition = new DolphinScheduleDefinition(effectiveTimeStart, effectiveTimeEnt, cron);
         Result result =
