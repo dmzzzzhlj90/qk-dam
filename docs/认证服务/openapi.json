@@ -2,11 +2,54 @@
   "components": {
     "schemas": {
       "_auth_current_principal_userinforequest": {},
+      "_auth_token_introspectrequest": {},
+      "_auth_token_refreshresponse": {},
       "_auth_current_logoutrequest": {},
-      "_auth_password_loginresponse": {},
+      "_auth_password_loginresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "access_token": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "refresh_token": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "expires_in": {
+                "format": "int64",
+                "description": "No comments found.",
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
       "_auth_current_accessTokenrequest": {},
+      "_auth_token_introspectresponse": {},
       "_auth_current_authoritiesrequest": {},
       "_oauth2_auth__registerId_request": {},
+      "_auth_token_refreshrequest": {},
       "_auth_password_loginrequest": {
         "properties": {
           "username": {
@@ -15,6 +58,11 @@
             "type": "string"
           },
           "password": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "url": {
             "format": "string",
             "description": "No comments found.",
             "type": "string"
@@ -175,9 +223,11 @@
         }
       },
       "_oauth2_auth__registerId_response": {},
+      "_auth_token_logoutresponse": {},
       "_oauth2_auth_logoutresponse": {},
       "_auth_current_logoutresponse": {},
-      "_auth_current_authoritiesresponse": {}
+      "_auth_current_authoritiesresponse": {},
+      "_auth_token_logoutrequest": {}
     }
   },
   "servers": [
@@ -222,7 +272,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "197",
+            "example": "179",
             "name": "registerId"
           },
           {
@@ -232,8 +282,49 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "trista.stanton",
+            "example": "edyth.schultz",
             "name": "principalName"
+          }
+        ]
+      }
+    },
+    "/auth/token/logout": {
+      "get": {
+        "summary": "退出",
+        "deprecated": false,
+        "description": "退出",
+        "tags": [
+          "PasswordController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_auth_token_logoutresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "token_logout",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "52v6i0",
+            "name": "refresh_token"
           }
         ]
       }
@@ -255,7 +346,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"username\": \"trista.stanton\",\n  \"password\": \"g1fem3\"\n}"
+                  "value": "{\n  \"username\": \"edyth.schultz\",\n  \"password\": \"ahcg2s\",\n  \"url\": \"www.angla-abernathy.io\"\n}"
                 }
               }
             }
@@ -267,12 +358,12 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/_auth_password_loginresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "1e7g3t"
+                    "value": "{\n  \"retCode\": \"59004\",\n  \"retMsg\": \"vy2xlu\",\n  \"tips\": \"qkfvpm\",\n  \"data\": {\n    \"access_token\": \"qgybry\",\n    \"refresh_token\": \"nma72w\",\n    \"expires_in\": 60\n  }\n}"
                   }
                 }
               }
@@ -281,6 +372,47 @@
         },
         "operationId": "password_login",
         "parameters": []
+      }
+    },
+    "/auth/token/introspect": {
+      "get": {
+        "summary": "验证token",
+        "deprecated": false,
+        "description": "验证token",
+        "tags": [
+          "PasswordController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_auth_token_introspectresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "token_introspect",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "vo1f4o",
+            "name": "token"
+          }
+        ]
       }
     },
     "/auth/current/logout": {
@@ -318,7 +450,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "trista.stanton",
+            "example": "edyth.schultz",
             "name": "principalName"
           }
         ]
@@ -359,7 +491,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "trista.stanton",
+            "example": "edyth.schultz",
             "name": "principalName"
           }
         ]
@@ -384,7 +516,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"subject\": \"3btke5\",\n  \"fullName\": \"trista.stanton\",\n  \"givenName\": \"trista.stanton\",\n  \"familyName\": \"trista.stanton\",\n  \"middleName\": \"trista.stanton\",\n  \"nickName\": \"alec.dooley\",\n  \"preferredUsername\": \"trista.stanton\",\n  \"profile\": \"ju6c5n\",\n  \"picture\": \"mhcgnn\",\n  \"website\": \"0opwka\",\n  \"email\": \"lauren.ankunding@hotmail.com\",\n  \"emailVerified\": true,\n  \"gender\": \"jzjp6c\",\n  \"birthdate\": \"2022-04-14\",\n  \"zoneInfo\": \"2vaiqw\",\n  \"locale\": \"vpe2mp\",\n  \"phoneNumber\": \"u7h3ex\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"rj61di\",\n    \"streetAddress\": \"Apt. 423 7730 Casper Parkways， Naborough， RI 16657\",\n    \"locality\": \"l653yl\",\n    \"region\": \"0a7k3l\",\n    \"postalCode\": \"54853\",\n    \"country\": \"jorf5k\"\n  },\n  \"updatedAt\": {},\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
+                    "value": "{\n  \"subject\": \"vk8w42\",\n  \"fullName\": \"edyth.schultz\",\n  \"givenName\": \"edyth.schultz\",\n  \"familyName\": \"edyth.schultz\",\n  \"middleName\": \"edyth.schultz\",\n  \"nickName\": \"rashad.connelly\",\n  \"preferredUsername\": \"edyth.schultz\",\n  \"profile\": \"8e3yiq\",\n  \"picture\": \"ckj51p\",\n  \"website\": \"98wc8z\",\n  \"email\": \"matthew.maggio@yahoo.com\",\n  \"emailVerified\": true,\n  \"gender\": \"hnupnj\",\n  \"birthdate\": \"2022-04-22\",\n  \"zoneInfo\": \"ol6hii\",\n  \"locale\": \"p5nt2h\",\n  \"phoneNumber\": \"l3f8f2\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"6e7dh2\",\n    \"streetAddress\": \"75465 Nick Knolls， North Lorinebury， LA 99945\",\n    \"locality\": \"ykwaoi\",\n    \"region\": \"k39piy\",\n    \"postalCode\": \"59004\",\n    \"country\": \"1n9c57\"\n  },\n  \"updatedAt\": {},\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
                   }
                 }
               }
@@ -453,6 +585,47 @@
         },
         "operationId": "getAuthorities",
         "parameters": []
+      }
+    },
+    "/auth/token/refresh": {
+      "get": {
+        "summary": "刷新token",
+        "deprecated": false,
+        "description": "刷新token",
+        "tags": [
+          "PasswordController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_auth_token_refreshresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "token_refresh",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "8uzifx",
+            "name": "refresh_token"
+          }
+        ]
       }
     }
   },

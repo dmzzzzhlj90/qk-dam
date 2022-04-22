@@ -35,7 +35,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     @Override
     public void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        String name = dctSchedulerBasicInfoVO.getJobName();
+        String name = dctSchedulerBasicInfoVO.getName();
         String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String httpMethod = "POST";
@@ -51,7 +51,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     @Override
     public void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        String name = dctSchedulerBasicInfoVO.getJobName();
+        String name = dctSchedulerBasicInfoVO.getName();
         String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String httpMethod = "POST";
