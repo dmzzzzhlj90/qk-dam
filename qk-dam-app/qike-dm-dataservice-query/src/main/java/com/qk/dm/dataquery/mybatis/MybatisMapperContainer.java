@@ -98,8 +98,7 @@ public class MybatisMapperContainer {
                   .type("HashMap")
                   .result(
                       List.of(
-                          // todo 此处为页面配置持久化关系映射
-                          new ResultMap.Result("id", "id", "Integer")))
+                          new ResultMap.Result("id", "id")))
                   .build()));
       mapperBuilderTemp.select(mapperSelects);
       Mapper mapper = mapperBuilderTemp.build();

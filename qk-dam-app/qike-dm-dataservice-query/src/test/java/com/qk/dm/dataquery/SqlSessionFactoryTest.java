@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DmDataServiceQueryApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class SqlSessionFactoryTest {
@@ -71,8 +70,8 @@ class SqlSessionFactoryTest {
                                 .type("HashMap")
                                 .result(List.of(
                                         //todo 此处为页面配置持久化关系映射
-                                        new ResultMap.Result("id", "cc", "Integer"),
-                                        new ResultMap.Result("name", "nn", "String")
+                                        new ResultMap.Result("id", "cc"),
+                                        new ResultMap.Result("name", "nn")
                                 )).build()
                 ))
                 .build();

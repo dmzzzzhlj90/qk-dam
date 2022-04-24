@@ -1,0 +1,31 @@
+server:
+  port: 8000
+spring:
+  messages:
+    basename: i18n/messages
+  mvc:
+    message-codes-resolver-format: postfix_error_code
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    servlet:
+      path: /
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    show-sql: true
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
+hikari:
+  allow-pool-suspension: on
+  # 池中维护的最小空闲连接数
+  minimum-idle: 3
+  maximum-pool-size: 100
+  # 池中连接最长生命周期  5 分钟
+  max-lifetime: 10000
+  connection-timeout: 10000
+  connection-test-query: SELECT 1
+  pool-name: DataQueryConnPool
+  read-only: true

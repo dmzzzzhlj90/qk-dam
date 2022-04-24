@@ -2,25 +2,26 @@ package com.qk.dam.sqlparser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.sf.jsqlparser.JSQLParserException;
-import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
-import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
-import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.insert.Insert;
-import net.sf.jsqlparser.statement.select.*;
+import net.sf.jsqlparser.statement.select.SelectItem;
 import net.sf.jsqlparser.util.validation.Validation;
 import net.sf.jsqlparser.util.validation.ValidationError;
 import net.sf.jsqlparser.util.validation.feature.DatabaseType;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class TestJava {
+  private static final Pattern PATTERN_PATH_VAR = Pattern.compile("([$#])\\{([^}])*}");
+  private static final Pattern PATTERN_PATH_VAR_TAG = Pattern.compile("<.*([^(</>)])*</.*>");
   public static void main(String[] args) throws JsonProcessingException {
+    System.out.println(PATTERN_PATH_VAR.matcher("/asdasd/#{asd}/ww/${cc}").replaceAll("1"));
+    System.out.println(PATTERN_PATH_VAR_TAG.matcher("/asdasd/#{asd}/ww/${cc}").replaceAll("1"));
     // result ===> INSERT INTO accc (a, b) VALUES (1, 2)
     Insert insert = new Insert();
     insert
@@ -38,30 +39,14 @@ public class TestJava {
 
     // parse select get columns
 
-    Select stmt = null;
-    try {
-      stmt =
-          (Select)
-              CCJSqlParserUtil.parse(
-                  "SELECT t.id as 列1,t.name as 列2,q.entid as 列3,q.entname FROM tab1 t left join tab2 q on t.id =q.id where t.id=12 and t.name='zzd';");
-    } catch (JSQLParserException e) {
-      throw new RuntimeException("解析SQL语句失败！");
-    }
-    PlainSelect plainSelect = (PlainSelect) stmt.getSelectBody();
+    String sqlContent = "SELECT t.id as 列1 FROM tab1 t left join tab2 q on t.id =q.id where t.id=${enum} and t.we in <foreach asda asd as>sada</foreach> and t.name='zzd';";
 
-    Map<String, String> colAndAliasMap =
-        plainSelect.getSelectItems().stream()
-            .filter(SelectExpressionItem.class::isInstance)
-            .distinct()
-            .collect(
-                Collectors.toMap(
-                    k -> ((Column) ((SelectExpressionItem) k).getExpression()).getColumnName(),
-                    v ->
-                        Objects.nonNull(((SelectExpressionItem) v).getAlias())
-                            ? ((SelectExpressionItem) v).getAlias().getName()
-                            : ""));
+    sqlContent = PATTERN_PATH_VAR.matcher(sqlContent).replaceAll("1");
+    sqlContent = PATTERN_PATH_VAR_TAG.matcher(sqlContent).replaceAll("1");
 
-    System.out.println(colAndAliasMap);
-    System.out.println(new ObjectMapper().writeValueAsString(plainSelect.getSelectItems()));
+    System.out.println("sqlContent===>"+sqlContent);
+    List<SelectItem> selectItems = JSqlParserUtil.selectBody(sqlContent);
+
+    System.out.println(new ObjectMapper().writeValueAsString(selectItems));
   }
 }
