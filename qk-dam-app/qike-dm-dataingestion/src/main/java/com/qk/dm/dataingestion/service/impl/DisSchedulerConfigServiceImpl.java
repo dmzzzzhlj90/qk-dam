@@ -40,11 +40,10 @@ public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService 
     }
 
     @Override
-    public void update(DisSchedulerConfigVO disSchedulerConfigVO) {
-        if(Objects.isNull(disSchedulerConfigVO.getId())){
-            throw new BizException("修改任务配置时id不能为空！！！");
-        }
-        disSchedulerConfigRepository.saveAndFlush(DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigVO));
+    public void update(Long baseInfoId,DisSchedulerConfigVO disSchedulerConfigVO) {
+        DisSchedulerConfig disSchedulerConfig = disSchedulerConfigRepository.findByBaseInfoId(baseInfoId);
+        DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigVO,disSchedulerConfig);
+        disSchedulerConfigRepository.saveAndFlush(disSchedulerConfig);
     }
 
     @Override

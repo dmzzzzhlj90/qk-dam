@@ -6,7 +6,6 @@ import com.qk.dm.dataingestion.mapstruct.mapper.DisAttrViewMapper;
 import com.qk.dm.dataingestion.repositories.DisColumnViewRepository;
 import com.qk.dm.dataingestion.service.DisAttrViewService;
 import com.qk.dm.dataingestion.vo.DisAttrViewVO;
-import com.qk.dm.dataingestion.vo.DisViewParamsVO;
 import com.qk.dm.dataingestion.vo.disAttrVO;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

@@ -90,8 +90,11 @@ public class DataxDolphinClient {
         }
         return result;
     }
-    public Result runing(Long processDefinitionCode, Long environmentCode) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().startProcessInstanceUsingPOST(
+
+    public Result runing(Long processDefinitionCode, Long environmentCode){
+        Result result;
+        try {
+         result = dolphinschedulerManager.defaultApi().startProcessInstanceUsingPOST(
                 ProcessInstance.FailureStrategyEnum.CONTINUE,
                 processDefinitionCode,
                 ProcessInstance.ProcessInstancePriorityEnum.MEDIUM,
@@ -113,6 +116,10 @@ public class DataxDolphinClient {
         if (Boolean.TRUE.equals(result.getFailed())){
             throw new ApiException(400, result.getMsg());
         }
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new BizException("dolphin runing error【{}】," + e.getMessage());
+    }
         return result;
     }
 
