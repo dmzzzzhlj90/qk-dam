@@ -27,16 +27,7 @@ public class HikariDataSourceFactory{
     }
 
     public DataSource dataSourceInstance() {
-        final HikariDataSource hikariDataSource = new HikariDataSource(config);
-//        hikariDataSource.setDataSource(new DriverDataSource(
-//                config.getJdbcUrl(),
-//                config.getDriverClassName(),
-//                config.getDataSourceProperties(),
-//                config.getUsername(),
-//                config.getPassword()
-//
-//        ));
-        return hikariDataSource;
+        return  new HikariDataSource(config);
     }
     public HikariConfig getHikariConfig(){
         return config;

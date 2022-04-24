@@ -22,7 +22,7 @@ public interface DataQueryInfoFeign {
     @PostMapping("/data/query/info/{id}")
     DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoById(@PathVariable("id") Long id);
 
-    @PostMapping("/data/query/info/last/{id}")
-    DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoLast(@PathVariable("id") Long id);
+    @PostMapping("/data/query/info/last/{time}")
+    DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoLast(@PathVariable("time") Long time);
 
 }

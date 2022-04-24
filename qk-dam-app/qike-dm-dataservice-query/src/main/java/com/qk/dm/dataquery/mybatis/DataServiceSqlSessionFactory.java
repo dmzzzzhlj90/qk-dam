@@ -1,6 +1,8 @@
 package com.qk.dm.dataquery.mybatis;
 
 import com.qk.dm.dataquery.domain.Mapper;
+import com.qk.dm.dataquery.domain.MapperSelect;
+import com.qk.dm.dataquery.domain.ResultMap;
 import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataquery.util.MapperUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +17,9 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author zhudaoming
@@ -46,28 +50,37 @@ public class DataServiceSqlSessionFactory {
   }
 
   public void scanMappers(MybatisMapperContainer mybatisMapperContainer) {
-
     sqlSessionFactoryMap.forEach(
-        (connectName, sqlSessionFactory) -> {
-          Mapper mapper = mybatisMapperContainer.getMapper(connectName);
-          if (Objects.nonNull(mapper)) {
-            Configuration configuration = sqlSessionFactory.getConfiguration();
-            log.info("bind mybatis mapper to =====> configuration");
-            bindMybatisConfiguration(configuration, mapper);
-          }
-        });
+            (connectName2, sqlSessionFactory) -> scanMapper(mybatisMapperContainer, connectName2));
+
+  }
+
+  public void scanMapper(MybatisMapperContainer mybatisMapperContainer, String connectName) {
+    SqlSessionFactory sqlSessionFactory = sqlSessionFactoryMap.get(connectName);
+    Mapper mapper = mybatisMapperContainer.getMapper(connectName);
+    if (Objects.nonNull(mapper)) {
+      Configuration configuration = sqlSessionFactory.getConfiguration();
+      log.info("bind mybatis mapper to =====> configuration");
+      bindMybatisConfiguration(configuration, mapper);
+    }
   }
 
   private void bindMybatisConfiguration(Configuration configuration, Mapper mapper) {
+    final String namespace = mapper.getNamespace();
+    configuration.getMappedStatementNames().removeAll(mapper.getSelect().stream().map(mapperSelect -> namespace+"."+mapperSelect.getId()).collect(Collectors.toList()));
+    configuration.getMappedStatementNames().removeAll(mapper.getSelect().stream().map(MapperSelect::getId).collect(Collectors.toList()));
+    configuration.getResultMapNames().removeAll(mapper.getResultMap().stream().map(ResultMap::getId).collect(Collectors.toList()));
+    configuration.getResultMapNames().removeAll(mapper.getResultMap().stream().map(resultMap -> namespace+"."+resultMap.getId()).collect(Collectors.toList()));
+
     String mapperXmlStr = MapperUtil.getMapperXmlStr(mapper);
-    log.info("bind mybatis mapper to =====> configuration mapper xml content:{}",mapperXmlStr);
     byte[] mapperXmlStrBytes = mapperXmlStr.getBytes(StandardCharsets.UTF_8);
     XMLMapperBuilder mapperParser =
         new XMLMapperBuilder(
             new ByteArrayInputStream(mapperXmlStrBytes),
             configuration,
-            null,
+                UUID.randomUUID().toString(),
             configuration.getSqlFragments());
     mapperParser.parse();
+
   }
 }

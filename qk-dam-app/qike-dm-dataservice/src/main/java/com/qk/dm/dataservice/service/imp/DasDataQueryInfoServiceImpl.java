@@ -10,6 +10,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,11 +57,10 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
   }
 
   @Override
-  public List<DataQueryInfoVO> dataQueryInfoLast(Long id) {
+  public List<DataQueryInfoVO> dataQueryInfoLast(Long time) {
     BooleanExpression whereCondition =
-        QDasApiCreateSqlScript.dasApiCreateSqlScript
-            .id
-            .gt(id)
+        QDasApiCreateSqlScript.dasApiCreateSqlScript.gmtModified
+            .gt(new Date(time))
             .and(
                 QDasApiCreateSqlScript.dasApiCreateSqlScript.accessMethod.eq(
                     CREATE_API_MYBATIS_SQL_SCRIPT_TYPE))

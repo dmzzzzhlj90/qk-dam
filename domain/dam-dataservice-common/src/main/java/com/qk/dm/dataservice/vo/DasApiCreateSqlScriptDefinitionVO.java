@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -113,4 +114,7 @@ public class DasApiCreateSqlScriptDefinitionVO {
      */
     @ExcelProperty(value = {"描述"}, index = 8)
     private String description;
+
+    @ExcelIgnore
+    private Date gmtModified;
 }

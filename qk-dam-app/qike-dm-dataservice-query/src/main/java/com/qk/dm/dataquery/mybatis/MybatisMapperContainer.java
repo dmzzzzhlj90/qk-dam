@@ -5,8 +5,6 @@ import com.qk.dm.dataquery.domain.MapperSelect;
 import com.qk.dm.dataquery.domain.ResultMap;
 import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 
@@ -35,12 +33,18 @@ public class MybatisMapperContainer {
     this.dataServiceSqlSessionFactory = dataServiceSqlSessionFactory;
     this.dataQueryInfos = dataQueryInfos;
     this.initMappers(dataQueryInfos);
+    // 扫描注册生成的mapper
+    dataServiceSqlSessionFactory.scanMappers(this);
   }
 
   @EventListener
   public void onMapperInsert(DatasourceEvent.MapperInsertEvent mapperInsertEvent) {
     log.info("开始添加新增mappers");
     initMappers(mapperInsertEvent.getDataQueryInfos());
+    mapperInsertEvent.getDataQueryInfos().forEach((dataQueryInfoVO)->{
+      dataServiceSqlSessionFactory.scanMapper(this,dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName());
+    });
+
     log.info("添加新增mappers完成");
   }
 
@@ -55,8 +59,6 @@ public class MybatisMapperContainer {
         // 生成mapper
         .forEach(generatedMappers(mapperBuilder));
 
-    // 扫描注册生成的mapper
-    dataServiceSqlSessionFactory.scanMappers(this);
   }
 
   /**
@@ -92,7 +94,7 @@ public class MybatisMapperContainer {
           List.of(
               ResultMap.builder()
                   .autoMapping(true)
-                  .id(namespace + ":" + "rt")
+                  .id("rt")
                   .type("HashMap")
                   .result(
                       List.of(
@@ -140,9 +142,9 @@ public class MybatisMapperContainer {
             .orElse("");
   }
 
-  public Long getDsLastDasCreateApiId() {
+  public Long getDsLastDasCreateApi() {
     return dataQueryInfos.stream()
-            .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getId())
+            .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getGmtModified().getTime())
             .max(Comparator.comparing(Long::longValue))
             .orElse(0L);
   }

@@ -45,7 +45,7 @@ public abstract class BaseRestController {
       @RequestParam(required = false) Map<String, Object> param,
       @RequestBody(required = false) Object bodyData,
       @RequestHeader(required = false) HttpHeaders headers) {
-    DataQueryInfoVO queryInfoVO = getDataQueryInfoVO(request);
+    DataQueryInfoVO queryInfoVO = matchDataQueryInfo(request);
 
     Object data =
         restHandler(
@@ -67,7 +67,7 @@ public abstract class BaseRestController {
       @RequestParam(required = false) Map<String, Object> param,
       @RequestBody(required = false) Object bodyData,
       @RequestHeader(required = false) HttpHeaders headers) {
-    DataQueryInfoVO queryInfoVO = getDataQueryInfoVO(request);
+    DataQueryInfoVO queryInfoVO = matchDataQueryInfo(request);
     Object data =
         restHandler(
             queryInfoVO,
@@ -88,7 +88,7 @@ public abstract class BaseRestController {
       @RequestParam(required = false) Map<String, Object> param,
       @RequestBody(required = false) Object bodyData,
       @RequestHeader(required = false) HttpHeaders headers) {
-    DataQueryInfoVO queryInfoVO = getDataQueryInfoVO(request);
+    DataQueryInfoVO queryInfoVO = matchDataQueryInfo(request);
     Object data =
         restHandler(
             queryInfoVO,
@@ -103,7 +103,13 @@ public abstract class BaseRestController {
     return DefaultCommonResult.success(ResultCodeEnum.OK, data, TIPS);
   }
 
-  private DataQueryInfoVO getDataQueryInfoVO(HttpServletRequest request) {
+  /**
+   * 匹配请求的数据查询
+   *
+   * @param request 请求
+   * @return DataQueryInfoVO 查询数据
+   */
+  private DataQueryInfoVO matchDataQueryInfo(HttpServletRequest request) {
     DataQueryInfoVO queryInfoVO =
         dataQueryInfoVOList.stream()
             .filter(

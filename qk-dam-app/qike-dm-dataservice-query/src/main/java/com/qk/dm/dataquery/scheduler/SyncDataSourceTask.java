@@ -51,7 +51,7 @@ public class SyncDataSourceTask {
   @Scheduled(cron = "0/30 * * * * ? ")
   public void syncLastUpdate() {
     DefaultCommonResult<List<DataQueryInfoVO>> listDefaultCommonResult =
-        dataQueryInfoFeign.dataQueryInfoLast(mybatisMapperContainer.getDsLastDasCreateApiId());
+        dataQueryInfoFeign.dataQueryInfoLast(mybatisMapperContainer.getDsLastDasCreateApi());
     List<DataQueryInfoVO> queryInfoList = listDefaultCommonResult.getData();
     if (CollectionUtils.isNotEmpty(queryInfoList)) {
       mybatisMapperContainer.addDataQueryInfos(queryInfoList);

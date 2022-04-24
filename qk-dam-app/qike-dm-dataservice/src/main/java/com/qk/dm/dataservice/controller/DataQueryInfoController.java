@@ -30,10 +30,10 @@ public class DataQueryInfoController {
                dasDataQueryInfoService.dataQueryInfo());
     }
 
-    @PostMapping("/data/query/info/last/{id}")
-    public DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoLast(@PathVariable Long id){
+    @PostMapping("/data/query/info/last/{time}")
+    public DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoLast(@PathVariable Long time){
        return DefaultCommonResult.success(ResultCodeEnum.OK,
-               dasDataQueryInfoService.dataQueryInfoLast(id));
+               dasDataQueryInfoService.dataQueryInfoLast(time));
     }
 
 }
