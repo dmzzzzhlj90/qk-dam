@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * 数据引入
+ * 离线数据引入
  * @author wangzp
  * @date 2022/04/08 15:31
  * @since 1.0.0
@@ -103,10 +103,15 @@ public class DataMigrationController {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.getColumnList(vo));
     }
 
+    /**
+     * 运行
+     * @param ids 作业id，多个使用英文逗号分割
+     * @return DefaultCommonResult
+     */
     @PostMapping("/executors/start")
     public DefaultCommonResult processRunning(@RequestParam("ids") String ids){
-
-        return null;
+        dataMigrationService.processRunning(ids);
+        return DefaultCommonResult.success();
     }
 
 
