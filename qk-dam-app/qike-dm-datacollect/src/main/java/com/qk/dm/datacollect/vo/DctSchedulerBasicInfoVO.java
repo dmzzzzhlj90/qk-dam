@@ -1,5 +1,6 @@
 package com.qk.dm.datacollect.vo;
 
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.BeanMapUtils;
 import com.qk.dam.commons.util.GsonUtil;
 import lombok.Data;
@@ -63,38 +64,38 @@ public class DctSchedulerBasicInfoVO {
     private String updateTime;
 
 
-//
-//    /**
-//     * 调度状态 "OFFLINE":"下线","ONLINE":"上线"
-//     */
-//    private String schedulerState;
-//
-//    /**
-//     * 运行实例状态 0-初始状态 1-运行中 2-停止 3-成功 4-失败
-//     */
-//    private Integer runInstanceState;
-
     public static DctSchedulerBasicInfoVO getDctSchedulerBasicInfoVO(Object resultData) {
-        Map<String, Object> data = (Map<String, Object>) resultData;
-        Map<String, Object> processDefinition = (Map<String, Object>) data.get("processDefinition");
-        DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO = BeanMapUtils.changeMapToBean(processDefinition, new DctSchedulerBasicInfoVO());
-
-        List<Map<String, Object>> taskDefinitionList = (List<Map<String, Object>>) data.get("taskDefinitionList");
-        Map<String, Object> taskParams = (Map<String, Object>) taskDefinitionList.get(taskDefinitionList.size()-1).get("taskParams");
-        List<Map<String, Object>> httpParams = (List<Map<String, Object>>) taskParams.get("httpParams");
-
-        Map<String, Object> schedulerRulesMap = httpParams.stream().filter(hp -> hp.get("prop").toString().equals("schedulerRules")).findAny().orElse(null);
-
-        DctSchedulerRulesVO dctSchedulerRulesVO = BeanMapUtils.changeMapToBean((Map<String, Object>) GsonUtil.fromJsonString(schedulerRulesMap.get("value").toString()), new DctSchedulerRulesVO());
-        dctSchedulerBasicInfoVO.setSchedulerRules(dctSchedulerRulesVO);
-
-        Map<String, Object> schedulerConfigMap = httpParams.stream().filter(hp -> hp.get("prop").toString().equals("schedulerConfig")).findAny().orElse(null);
-        DctSchedulerConfigVO dctSchedulerConfigVO = BeanMapUtils.changeMapToBean((Map<String, Object>) GsonUtil.fromJsonString(schedulerConfigMap.get("value").toString()), new DctSchedulerConfigVO());
-        dctSchedulerBasicInfoVO.setSchedulerConfig(dctSchedulerConfigVO);
-
-        Map<String, Object> dirIdMap = httpParams.stream().filter(hp -> hp.get("prop").toString().equals("dirId")).findAny().orElse(null);
-        dctSchedulerBasicInfoVO.setDirId(dirIdMap.get("value").toString());
-
-        return dctSchedulerBasicInfoVO;
+        try {
+            Map<String, Object> data = (Map<String, Object>) resultData;
+            //封装dctSchedulerBasicInfoVO
+            Map<String, Object> processDefinition = (Map<String, Object>) data.get("processDefinition");
+            DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO = BeanMapUtils.changeMapToBean(processDefinition, new DctSchedulerBasicInfoVO());
+            List<Map<String, Object>> taskDefinitionList = (List<Map<String, Object>>) data.get("taskDefinitionList");
+            Map<String, Object> taskParams = (Map<String, Object>) taskDefinitionList.get(taskDefinitionList.size()-1).get("taskParams");
+            List<Map<String, Object>> httpParams = (List<Map<String, Object>>) taskParams.get("httpParams");
+            for (Map<String, Object> httpParam : httpParams) {
+                String value = httpParam.get("value").toString();
+                switch (httpParam.get("prop").toString()) {
+                    case "schedulerRules":
+                        dctSchedulerBasicInfoVO.setSchedulerRules(
+                                BeanMapUtils.changeMapToBean(
+                                        (Map<String, Object>) GsonUtil.fromJsonString(value),
+                                        new DctSchedulerRulesVO()));
+                        break;
+                    case "schedulerConfig":
+                        dctSchedulerBasicInfoVO.setSchedulerConfig(
+                                BeanMapUtils.changeMapToBean(
+                                        (Map<String, Object>) GsonUtil.fromJsonString(value),
+                                        new DctSchedulerConfigVO()));
+                        break;
+                    case "dirId":
+                        dctSchedulerBasicInfoVO.setDirId(value);
+                        break;
+                }
+            }
+            return dctSchedulerBasicInfoVO;
+        } catch (Exception a) {
+            throw new BizException("dolphin detail error :" + a.getMessage());
+        }
     }
 }

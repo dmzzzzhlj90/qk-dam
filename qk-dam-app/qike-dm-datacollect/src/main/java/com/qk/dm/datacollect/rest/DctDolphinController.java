@@ -54,7 +54,7 @@ public class DctDolphinController {
         return DefaultCommonResult.success();
     }
 
-    @GetMapping("/page/list")
+    @PostMapping("/page/list")
     public DefaultCommonResult<PageResultVO<DctSchedulerInfoVO>> searchPageList(@RequestBody DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dctDolphinService.searchPageList(schedulerInfoParamsVO));
     }

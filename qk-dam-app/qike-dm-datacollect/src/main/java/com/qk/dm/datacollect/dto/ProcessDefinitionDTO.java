@@ -36,9 +36,9 @@ public class ProcessDefinitionDTO implements Serializable {
 
     private Map<String, String> globalParamMap;
 
-//    private Date createTime;
-//
-//    private Date updateTime;
+    private String createTime;
+
+    private String updateTime;
 
     private String flag;
 

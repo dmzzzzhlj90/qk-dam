@@ -10,9 +10,9 @@ import com.qk.dm.datacollect.vo.DctSchedulerConfigVO;
  * @since 1.0.0
  */
 public interface DolphinScheduleService {
-    void insert(Long projectCode,Long processDefinitionCode,DctSchedulerConfigVO dqcSchedulerConfigVO);
+    void insert(Long processDefinitionCode, Long projectCode, DctSchedulerConfigVO dqcSchedulerConfigVO);
 
-    void update(Long projectCode,Integer scheduleId, DctSchedulerConfigVO dqcDctSchedulerConfigVO);
+    void update(Integer scheduleId, Long projectCode, DctSchedulerConfigVO dqcDctSchedulerConfigVO);
 
     void execute(Integer scheduleId, Long projectCode, ProcessDefinition.ReleaseStateEnum state);
 

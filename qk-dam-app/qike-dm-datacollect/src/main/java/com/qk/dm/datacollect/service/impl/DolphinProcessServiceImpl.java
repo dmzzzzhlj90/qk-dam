@@ -3,7 +3,6 @@ package com.qk.dm.datacollect.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.BeanMapUtils;
-import com.qk.dam.commons.util.GsonUtil;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.datacenter.model.Result;
@@ -14,12 +13,10 @@ import com.qk.dm.datacollect.dto.ProcessDefinitionDTO;
 import com.qk.dm.datacollect.dto.ProcessDefinitionResultDTO;
 import com.qk.dm.datacollect.service.DolphinProcessService;
 import com.qk.dm.datacollect.util.DctConstant;
-import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
-import com.qk.dm.datacollect.vo.DctSchedulerConfigVO;
-import com.qk.dm.datacollect.vo.DctSchedulerRulesVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +26,7 @@ import java.util.Map;
  */
 @Service
 public class DolphinProcessServiceImpl implements DolphinProcessService {
+    private static final Logger LOG = LoggerFactory.getLogger(DolphinProcessServiceImpl.class);
     private final DolphinApiClient dolphinApiClient;
     private final DolphinHttpClient dolphinHttpClient;
 
@@ -46,11 +44,14 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
                                                         String description) {
         try {
             Result result = dolphinHttpClient.createProcessDefinition(projectId, name, url, httpParams, httpMethod, description);
-            return BeanMapUtils.changeMapToBean((Map<String, Object>) result.getData(), new ProcessDefinitionDTO());
+            ProcessDefinitionDTO processDefinition = BeanMapUtils.changeMapToBean((Map<String, Object>) result.getData(), new ProcessDefinitionDTO());
+            return processDefinition;
         } catch (ApiException a) {
-            throw new BizException("dolphin process search error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 创建流程失败，原因为[{}]", projectId, a.getMessage());
+            throw new BizException("dolphin process create error");
         } catch (Exception a) {
-            throw new BizException("dolphin process exception error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 创建流程成功，解析时失败，原因为[{}]", projectId, a.getMessage());
+            throw new BizException("dolphin process analysis error");
         }
     }
 
@@ -66,9 +67,11 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
         try {
             dolphinHttpClient.updateProcessDefinition(processDefinitionCode, projectId, taskCode, name, url, httpParams, httpMethod, description, new DolphinTaskDefinitionPropertiesBean());
         } catch (ApiException a) {
-            throw new BizException("dolphin process search error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 修改流程[{}] 失败，原因为[{}]", projectId, processDefinitionCode, a.getMessage());
+            throw new BizException("dolphin process update error");
         } catch (Exception a) {
-            throw new BizException("dolphin process exception error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 修改流程[{}] 成功，解析时失败，原因为[{}]", projectId, processDefinitionCode, a.getMessage());
+            throw new BizException("dolphin process analysis error");
         }
     }
 
@@ -77,7 +80,8 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
         try {
             dolphinApiClient.dolphin_process_release(processDefinitionCode, projectCode, releaseState);
         } catch (ApiException a) {
-            throw new BizException("dolphin process search error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 流程[{}] 上下线失败，原因为[{}]", projectCode, processDefinitionCode, a.getMessage());
+            throw new BizException("dolphin process release error");
         }
     }
 
@@ -87,7 +91,8 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
             dolphinApiClient.dolphin_process_check(processDefinitionCode, projectCode);
             dolphinApiClient.dolphin_process_runing(processDefinitionCode, projectCode, environmentCode);
         } catch (ApiException a) {
-            throw new BizException("dolphin process search error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 流程[{}] 运行失败，原因为[{}]", projectCode, processDefinitionCode, a.getMessage());
+            throw new BizException("dolphin process runing error");
         }
     }
 
@@ -97,11 +102,14 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
             Result result = dolphinApiClient.dolphin_process_list(projectCode, searchVal, pageNo, pageSize);
             return DctConstant.changeObjectToClass(result.getData(), ProcessDefinitionResultDTO.class);
         } catch (ApiException a) {
-            throw new BizException("dolphin process search error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 查询流程列表失败，原因为[{}]", projectCode, a.getMessage());
+            throw new BizException("dolphin process search error");
         } catch (JsonProcessingException a) {
-            throw new BizException("dolphin process toClass error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 查询流程成功，解析时失败，原因为[{}]", projectCode, a.getMessage());
+            throw new BizException("dolphin process toClass error");
         } catch (Exception a) {
-            throw new BizException("dolphin process exception error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 查询流程报错，原因为[{}]", projectCode, a.getMessage());
+            throw new BizException("dolphin process search exception error");
         }
     }
 
@@ -110,54 +118,19 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
         try {
             dolphinApiClient.dolphin_process_delete(processDefinitionCode, projectCode);
         } catch (ApiException a) {
-            throw new BizException("dolphin process search error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 流程[{}] 删除失败，原因为[{}]", projectCode, processDefinitionCode, a.getMessage());
+            throw new BizException("dolphin process delete error");
         }
     }
 
     @Override
-    public DctSchedulerBasicInfoVO detail(Long processDefinitionCode, Long projectCode) {
+    public Object detail(Long processDefinitionCode, Long projectCode) {
         try {
             Result result = dolphinApiClient.dolphin_process_detail(processDefinitionCode, projectCode);
-            return getDctSchedulerBasicInfoVO(result.getData());
+            return result.getData();
         } catch (ApiException a) {
-            throw new BizException("dolphin process search error :" + a.getMessage());
-        }
-    }
-
-    private DctSchedulerBasicInfoVO getDctSchedulerBasicInfoVO(Object resultData) {
-        try {
-            Map<String, Object> data = (Map<String, Object>) resultData;
-            //封装dctSchedulerBasicInfoVO
-            Map<String, Object> processDefinition = (Map<String, Object>) data.get("processDefinition");
-            DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO = BeanMapUtils.changeMapToBean(processDefinition, new DctSchedulerBasicInfoVO());
-            List<Map<String, Object>> taskDefinitionList = (List<Map<String, Object>>) data.get("taskDefinitionList");
-            Map<String, Object> taskParams = (Map<String, Object>) taskDefinitionList.get(taskDefinitionList.size()-1).get("taskParams");
-            List<Map<String, Object>> httpParams = (List<Map<String, Object>>) taskParams.get("httpParams");
-
-            for (Map<String, Object> httpParam : httpParams) {
-                String value = httpParam.get("value").toString();
-                switch (httpParam.get("prop").toString()) {
-                    case "schedulerRules":
-                        dctSchedulerBasicInfoVO.setSchedulerRules(
-                                BeanMapUtils.changeMapToBean(
-                                        (Map<String, Object>) GsonUtil.fromJsonString(value),
-                                        new DctSchedulerRulesVO()));
-                        break;
-                    case "schedulerConfig":
-                        dctSchedulerBasicInfoVO.setSchedulerConfig(
-                                BeanMapUtils.changeMapToBean(
-                                        (Map<String, Object>) GsonUtil.fromJsonString(value),
-                                        new DctSchedulerConfigVO()));
-                        break;
-                    case "dirId":
-                        dctSchedulerBasicInfoVO.setDirId(value);
-                        break;
-                }
-            }
-
-            return dctSchedulerBasicInfoVO;
-        } catch (Exception a) {
-            throw new BizException("dolphin detail error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 流程[{}] 查询详情失败，原因为[{}]", projectCode, processDefinitionCode, a.getMessage());
+            throw new BizException("dolphin process detail error");
         }
     }
 
@@ -169,7 +142,11 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
             Map<String, Object> processDefinition = (Map<String, Object>) data.get("processDefinition");
             return BeanMapUtils.changeMapToBean(processDefinition, new ProcessDefinitionDTO());
         } catch (ApiException a) {
-            throw new BizException("dolphin process search error :" + a.getMessage());
+            LOG.error("Dolphin 项目[{}] 流程[{}] 查询详情失败，原因为[{}]", projectCode, processDefinitionCode, a.getMessage());
+            throw new BizException("dolphin process detail error");
+        } catch (Exception a) {
+            LOG.error("Dolphin 项目[{}] 流程[{}] 查询详情成功，解析时失败，原因为[{}]", projectCode, processDefinitionCode, a.getMessage());
+            throw new BizException("dolphin process detail exception error");
         }
     }
 }
