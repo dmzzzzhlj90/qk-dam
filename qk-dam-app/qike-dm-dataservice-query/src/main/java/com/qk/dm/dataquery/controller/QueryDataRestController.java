@@ -35,18 +35,30 @@ public class QueryDataRestController {
   public List<Object> query(@RequestBody HttpDataParamModel httpDataParamModel) {
     String apiId = httpDataParamModel.getApiId();
     String dsName = mybatisMapperContainer.getDsName(apiId);
-    SqlSessionFactory sqlSessionFactory = dataServiceSqlSessionFactory.getSqlSessionFactory(dsName);
-    Objects.requireNonNull(sqlSessionFactory,"未能获取数据源连接,请检查是否配置数据源！");
-    SqlSession sqlSession = sqlSessionFactory.openSession();
+    SqlSession sqlSession = getSqlSession(dsName);
 
-    Map<String, Object> mybatisDataParam = getMybatisDataParam(httpDataParamModel);
+    List<Object> objects = sqlSession.selectList(apiId, getMybatisDataParam(httpDataParamModel));
 
-    List<Object> objects = sqlSession.selectList(apiId, mybatisDataParam);
+    sqlSession.close();
+    return objects;
+  }
+  @PostMapping("/app/query")
+  public Object queryOne(@RequestBody HttpDataParamModel httpDataParamModel) {
+    String apiId = httpDataParamModel.getApiId();
+    String dsName = mybatisMapperContainer.getDsName(apiId);
+    SqlSession sqlSession = getSqlSession(dsName);
+
+    Object objects = sqlSession.selectOne(apiId, getMybatisDataParam(httpDataParamModel));
 
     sqlSession.close();
     return objects;
   }
 
+  private SqlSession getSqlSession(String dsName) {
+    SqlSessionFactory sqlSessionFactory = dataServiceSqlSessionFactory.getSqlSessionFactory(dsName);
+    Objects.requireNonNull(sqlSessionFactory,"未能获取数据源连接,请检查是否配置数据源！");
+    return sqlSessionFactory.openSession();
+  }
 
   private Map<String, Object> getMybatisDataParam(HttpDataParamModel httpDataParamModel) {
     Map<String, Object> mybatisDataParam = new HashMap<>();
