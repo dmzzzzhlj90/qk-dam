@@ -17,6 +17,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * 作业高级属性接口
+ * @author wangzp
+ * @date 2022/04/19 20:07
+ * @since 1.0.0
+ */
 @Service
 public class DisAttrViewServiceImpl implements DisAttrViewService {
     private static final String HIVE = "hive";

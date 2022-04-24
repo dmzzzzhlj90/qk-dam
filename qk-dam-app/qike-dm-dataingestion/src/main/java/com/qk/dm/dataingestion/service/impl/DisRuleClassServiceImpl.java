@@ -15,7 +15,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+/**
+ * 作业高级属性接口
+ * @author wangzp
+ * @date 2022/04/09 11:29
+ * @since 1.0.0
+ */
 @Service
 public class DisRuleClassServiceImpl implements DisRuleClassService {
 

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,14 +41,14 @@ public class DataTypeController {
 
     /**
      * hive与mysql 数据类型映射
-     * @param connectType 连接类型 mysql或hive
-     * @param dataType 数据类型
-     * @return DefaultCommonResult<Map<String, String>>
+     * @param sourceConnectType 源连接类型
+     * @param targetConnectType 目标连接类型
+     * @return DefaultCommonResult<Map<String,  List<String>>>>
      */
     @GetMapping(value = "/mapping")
-    public DefaultCommonResult<Map<String, String>> getDataTypeMapping(@RequestParam("connectType") String connectType,
-                                                                       @RequestParam("dataType") String dataType){
+    public DefaultCommonResult<Map<String, List<String>>> getDataTypeMapping(@RequestParam("sourceConnectType") String sourceConnectType,
+                                                                             @RequestParam("targetConnectType") String targetConnectType){
         return DefaultCommonResult.success(ResultCodeEnum.OK,
-                disDataTypeService.getDataTypeMapping(connectType,dataType));
+                disDataTypeService.getDataTypeMapping(sourceConnectType,targetConnectType));
     }
 }
