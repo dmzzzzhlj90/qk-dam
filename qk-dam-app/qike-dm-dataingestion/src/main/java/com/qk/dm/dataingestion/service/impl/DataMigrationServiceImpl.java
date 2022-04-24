@@ -1,5 +1,7 @@
 package com.qk.dm.dataingestion.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
@@ -7,6 +9,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
+import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.datacenter.model.Result;
 import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
@@ -24,13 +27,17 @@ import com.qk.dm.dataingestion.vo.*;
 import com.qk.dm.DataBaseService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class DataMigrationServiceImpl implements DataMigrationService {
 
@@ -75,8 +82,11 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
         schedulerConfig.setBaseInfoId(baseInfoId);
         schedulerConfigService.add(schedulerConfig);
-        //生成dataxjson
+        //生成dataxjson,创建流程定义
         createDataxJson(dataMigrationVO,baseInfoId);
+        //上线
+        dataxDolphinClient.dolphinProcessRelease(dataMigrationVO.getBaseInfo().getTaskCode(),
+                ProcessDefinition.ReleaseStateEnum.ONLINE);
     }
 
     @Override
@@ -100,9 +110,15 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
                 IngestionType.getVal(baseInfo.getSourceConnectType()),
                 IngestionType.getVal(baseInfo.getTargetConnectType()));
-
+        //下线
+        dataxDolphinClient.dolphinProcessRelease(dataMigrationVO.getBaseInfo().getTaskCode(),
+                ProcessDefinition.ReleaseStateEnum.OFFLINE);
+        //修改流程定义
         dataxDolphinClient.updateProcessDefinition(baseInfo.getJobName(),
                 baseInfo.getTaskCode(),dataxJson,new DolphinTaskDefinitionPropertiesBean());
+        //上线
+        dataxDolphinClient.dolphinProcessRelease(dataMigrationVO.getBaseInfo().getTaskCode(),
+                ProcessDefinition.ReleaseStateEnum.ONLINE);
     }
 
     @Override
@@ -164,12 +180,34 @@ public class DataMigrationServiceImpl implements DataMigrationService {
             throw new BizException("查询失败!!!");
         }
         List<DisMigrationBaseInfo> list = (List<DisMigrationBaseInfo>) map.get("list");
-        List<DisMigrationBaseInfoVO > voList = DisBaseInfoMapper.INSTANCE.listVO(list);
+        List<DisMigrationBaseInfoVO > voList = process(DisBaseInfoMapper.INSTANCE.listVO(list));
         return new PageResultVO<>(
                 (long) map.get("total"),
                 paramsVO.getPagination().getPage(),
                 paramsVO.getPagination().getSize(),
                 voList);
+    }
+
+    private List<DisMigrationBaseInfoVO> process(List<DisMigrationBaseInfoVO> list){
+        list.forEach(e->{
+            DisBaseInfoMapper.INSTANCE.of(processInstance(e.getTaskCode()),e);;
+        });
+        return list;
+    }
+
+    /**
+     * 获取流程
+     * @param processDefinitionCode
+     * @return
+     */
+    private ProcessInstanceVO processInstance(Long processDefinitionCode){
+        Result instance = dataxDolphinClient.getProcessInstance(processDefinitionCode);
+
+            ProcessInstanceResultVO processInstanceResult =  new Gson().fromJson(
+                    GsonUtil.toJsonString(instance.getData()),ProcessInstanceResultVO.class);
+
+            return CollectionUtils.firstElement(processInstanceResult.getTotalList());
+
     }
 
     @Override
@@ -178,6 +216,13 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
         return ColumnVO.builder().sourceColumnList(sourceList(vo,columnList))
                 .targetColumnList(targetList(vo,columnList)).build();
+    }
+
+    @Override
+    public void processRunning(String ids) {
+        log.info("运行任务参数【{}】",ids);
+        List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        //baseInfoService
     }
 
     /**

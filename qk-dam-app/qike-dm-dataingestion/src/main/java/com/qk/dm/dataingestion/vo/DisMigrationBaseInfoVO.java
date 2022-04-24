@@ -134,7 +134,7 @@ public class DisMigrationBaseInfoVO {
     /**
      * 耗时（单位秒）
      */
-    private Integer timeConsuming;
+    private String timeConsuming;
 
     /**
      * 待迁移数量

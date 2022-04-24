@@ -20,6 +20,9 @@ public enum IngestionType {
         return Stream.of(values()).filter(t -> t.type.equalsIgnoreCase(value)).findAny().orElse(null);
     }
 
+    public String getType() {
+        return type;
+    }
 
     @Override
     public String toString() {

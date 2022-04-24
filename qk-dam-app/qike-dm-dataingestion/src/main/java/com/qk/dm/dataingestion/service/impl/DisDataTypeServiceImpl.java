@@ -4,10 +4,12 @@ import com.qk.dam.commons.enums.DataTypeEnum;
 import com.qk.dam.commons.enums.DataTypeMappingEnum;
 import com.qk.dam.commons.enums.MysqlDataTypeEnum;
 import com.qk.dm.dataingestion.enums.IngestionType;
+import com.qk.dm.dataingestion.model.DataType;
 import com.qk.dm.dataingestion.service.DisDataTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,7 +36,7 @@ public class DisDataTypeServiceImpl implements DisDataTypeService {
     }
 
     @Override
-    public Map<String, String> getDataTypeMapping(String connectType, String dataType) {
-        return DataTypeMappingEnum.getDataType(connectType,dataType);
+    public Map<String, List<String>> getDataTypeMapping(String sourceConnectType, String targetConnectType) {
+        return DataType.TypeMapper.getDataType(sourceConnectType,targetConnectType);
     }
 }

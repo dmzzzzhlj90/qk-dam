@@ -1,6 +1,7 @@
 package com.qk.dm.dataingestion.datax;
 
 import com.dolphinscheduler.client.DolphinschedulerManager;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.CodeGenerateUtils;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.ProcessDefinition;
@@ -8,8 +9,9 @@ import com.qk.datacenter.model.ProcessInstance;
 import com.qk.datacenter.model.Result;
 import com.qk.dm.dataingestion.model.DolphinProcessDefinition;
 import com.qk.dm.dataingestion.model.DolphinTaskDefinitionPropertiesBean;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 public class DataxDolphinClient {
     private final DolphinschedulerManager dolphinschedulerManager;
@@ -111,6 +113,33 @@ public class DataxDolphinClient {
         if (Boolean.TRUE.equals(result.getFailed())){
             throw new ApiException(400, result.getMsg());
         }
+        return result;
+    }
+
+
+    public Result getProcessInstance(Long processDefinitionCode) {
+        Result result;
+        try {
+            result = dolphinschedulerManager.defaultApi().queryProcessInstanceListUsingGET(
+                    1,
+                    1,
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                    null,
+                    null,
+                    null,
+                    processDefinitionCode,
+                    null,
+                    null,
+                    null
+            );
+            if (Boolean.TRUE.equals(result.getFailed())) {
+                throw new ApiException(400, result.getMsg());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BizException("dolphin error【{}】," + e.getMessage());
+        }
+
         return result;
     }
 }

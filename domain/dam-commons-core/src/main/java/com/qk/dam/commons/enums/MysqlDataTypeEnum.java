@@ -1,6 +1,7 @@
 package com.qk.dam.commons.enums;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,14 +17,10 @@ public enum MysqlDataTypeEnum {
     SMALLINT("smallint","smallint"),
     MEDIUMINT("mediumint","mediumint"),
     INT("int","int"),
-    INTEGER("integer","integer"),
     BIGINT("bigint","bigint"),
-    BIT("bit","bit"),
-    REAL("real","real"),
     DOUBLE("double","double"),
     FLOAT("float","float"),
     DECIMAL("decimal","decimal"),
-    NUMERIC("numeric","numeric"),
     CHAR("char","char"),
     VARCHAR("varchar","varchar"),
     DATE("date","date"),
@@ -42,6 +39,9 @@ public enum MysqlDataTypeEnum {
     }
 
 
+    public static List<MysqlDataTypeEnum> getList(){
+        return Arrays.stream(values()).collect(Collectors.toList());
+    }
 
 
 

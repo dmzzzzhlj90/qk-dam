@@ -56,4 +56,10 @@ public interface DataMigrationService {
      * @return
      */
     ColumnVO getColumnList(DisMigrationBaseInfoVO vo);
+
+    /**
+     * 运行
+     * @param ids
+     */
+    void processRunning(String ids);
 }

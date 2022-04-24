@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 作业任务配置
+ * @author wangzp
+ * @date 2022/04/07 14:27
+ * @since 1.0.0
+ */
 @Service
 public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService {
 

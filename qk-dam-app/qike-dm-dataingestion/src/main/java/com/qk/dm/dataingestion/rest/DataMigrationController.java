@@ -103,5 +103,11 @@ public class DataMigrationController {
         return DefaultCommonResult.success(ResultCodeEnum.OK,dataMigrationService.getColumnList(vo));
     }
 
+    @PostMapping("/executors/start")
+    public DefaultCommonResult processRunning(@RequestParam("ids") String ids){
+
+        return null;
+    }
+
 
 }

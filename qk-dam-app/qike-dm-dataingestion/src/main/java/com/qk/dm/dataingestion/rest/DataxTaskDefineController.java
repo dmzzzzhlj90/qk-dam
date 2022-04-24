@@ -97,4 +97,16 @@ public class DataxTaskDefineController {
                 dataxDolphinClient.runing(taskCode,environmentCode));
     }
 
+    /**
+     * 获取流程实例信息
+     * @param taskCode  任务编码（流程定义编码）
+     * @return DefaultCommonResult<Result>
+     */
+    @GetMapping("/process/instance")
+    public DefaultCommonResult<Result>  getProcessInstance(@RequestParam("taskCode")
+                                                                   Long taskCode){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,
+                dataxDolphinClient.getProcessInstance(taskCode));
+    }
+
 }
