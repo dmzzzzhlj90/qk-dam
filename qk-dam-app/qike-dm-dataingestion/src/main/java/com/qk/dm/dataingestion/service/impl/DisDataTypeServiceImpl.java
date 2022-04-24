@@ -2,8 +2,8 @@ package com.qk.dm.dataingestion.service.impl;
 
 import com.qk.dam.commons.enums.DataTypeEnum;
 import com.qk.dam.commons.enums.MysqlDataTypeEnum;
+import com.qk.dm.dataingestion.enums.DataTypeMapping;
 import com.qk.dm.dataingestion.enums.IngestionType;
-import com.qk.dm.dataingestion.model.DataType;
 import com.qk.dm.dataingestion.service.DisDataTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,6 +36,6 @@ public class DisDataTypeServiceImpl implements DisDataTypeService {
 
     @Override
     public Map<String, List<String>> getDataTypeMapping(String sourceConnectType, String targetConnectType) {
-        return DataType.TypeMapper.getDataType(sourceConnectType,targetConnectType);
+        return DataTypeMapping.getDataType(sourceConnectType,targetConnectType);
     }
 }

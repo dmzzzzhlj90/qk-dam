@@ -21,6 +21,10 @@ public interface DisBaseInfoMapper {
     DisMigrationBaseInfoVO of(DisMigrationBaseInfo baseInfo);
 
     List<DisMigrationBaseInfoVO> listVO(List<DisMigrationBaseInfo> disMigrationBaseInfoList);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void of(DisMigrationBaseInfoVO disMigrationBaseInfoVO,@MappingTarget DisMigrationBaseInfo disMigrationBaseInfo);
+
     @Mappings({
             @Mapping(source = "duration", target = "timeConsuming")
     })

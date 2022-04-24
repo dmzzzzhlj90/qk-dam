@@ -45,8 +45,8 @@ public enum MysqlDataTypeEnum {
 
 
 
-    private String code;
-    private String value;
+    private final String code;
+    private final String value;
 
     MysqlDataTypeEnum(String code, String value) {
         this.code = code;

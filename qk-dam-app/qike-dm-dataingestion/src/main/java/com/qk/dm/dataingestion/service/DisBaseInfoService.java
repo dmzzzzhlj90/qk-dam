@@ -10,7 +10,7 @@ public interface DisBaseInfoService {
 
     void delete(List<Long> ids);
 
-    void update(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
+    Long update(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
 
     DisMigrationBaseInfoVO detail(Long id);
 
@@ -19,4 +19,6 @@ public interface DisBaseInfoService {
     Boolean sourceExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
 
     Boolean targetExists(DisMigrationBaseInfoVO disMigrationBaseInfoVO);
+
+    List<DisMigrationBaseInfoVO> list(List<Long> ids);
 }

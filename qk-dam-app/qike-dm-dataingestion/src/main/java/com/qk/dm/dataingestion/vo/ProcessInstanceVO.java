@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class ProcessInstanceVO {
-    private Long id;
     private Long processDefinitionCode;
     private Long processDefinitionVersion;
     private String state;

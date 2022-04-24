@@ -10,7 +10,7 @@ public interface DisSchedulerConfigService {
 
     void delete(List<Long> baseId);
 
-    void update(DisSchedulerConfigVO disSchedulerConfigVO);
+    void update(Long baseInfoId,DisSchedulerConfigVO disSchedulerConfigVO);
 
     DisSchedulerConfigVO detail(Long baseId);
 }
