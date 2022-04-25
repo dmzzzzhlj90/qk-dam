@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author shenpj
  * @date 2022/4/21 21:42
@@ -16,7 +18,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DctSchedulerReleaseVO {
-    Long processDefinitionCode;
+    @NotNull(message = "code为必填项")
+    Long code;
+    @NotNull(message = "状态为必填项")
     ProcessDefinition.ReleaseStateEnum releaseState;
 
     public void setReleaseState(String releaseState) {

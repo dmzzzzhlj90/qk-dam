@@ -4,7 +4,7 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
 import com.qk.dm.datacollect.vo.DctSchedulerInfoVO;
 import com.qk.dm.datacollect.vo.DctSchedulerReleaseVO;
-import com.qk.dm.datacollect.vo.DqcSchedulerInfoParamsVO;
+import com.qk.dm.datacollect.vo.DctSchedulerInfoParamsVO;
 
 /**
  * @author shenpj
@@ -22,7 +22,7 @@ public interface DctDolphinService {
 
     void runing(Long processDefinitionCode);
 
-    PageResultVO<DctSchedulerInfoVO> searchPageList(DqcSchedulerInfoParamsVO schedulerInfoParamsVO);
+    PageResultVO<DctSchedulerInfoVO> searchPageList(DctSchedulerInfoParamsVO schedulerInfoParamsVO);
 
     DctSchedulerBasicInfoVO detail(Long code);
 }

@@ -2,9 +2,7 @@ package com.qk.dm.datacollect.service;
 
 import com.qk.datacenter.model.ProcessInstance;
 import com.qk.dm.datacollect.dolphin.ProcessInstanceSearchDTO;
-import com.qk.dm.datacollect.dto.ProcessInstanceDTO;
-import com.qk.dm.datacollect.dto.ProcessInstanceResultDTO;
-import com.qk.dm.datacollect.dto.TaskInstanceResultDTO;
+import com.qk.dm.datacollect.dto.*;
 
 /**
  * @author shenpj
@@ -18,7 +16,9 @@ public interface ProcessInstanceService {
 
     ProcessInstanceDTO detail(Integer processInstanceId, Long projectCode);
 
-    TaskInstanceResultDTO taskByProcessId(Integer processInstanceId, Long projectCode);
+    TaskInstanceListResultDTO taskByProcessId(Integer processInstanceId, Long projectCode);
 
     String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum);
+
+    TaskInstanceResultDTO taskPageByProcessId(Long projectCode, TaskInstanceSearchDTO instanceSearchDTO);
 }

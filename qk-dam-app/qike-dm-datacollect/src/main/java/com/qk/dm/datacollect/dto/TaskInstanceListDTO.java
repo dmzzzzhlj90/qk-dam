@@ -1,10 +1,12 @@
 package com.qk.dm.datacollect.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TaskInstanceDTO implements Serializable {
+public class TaskInstanceListDTO implements Serializable {
     private Boolean taskComplete;
     private String taskDefine;
     private Boolean firstRun;
@@ -35,8 +37,8 @@ public class TaskInstanceDTO implements Serializable {
     private String logPath;
     private Boolean switchTask;
     private String host;
-    //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
     private String environmentConfig;
     private Long id;
@@ -50,8 +52,8 @@ public class TaskInstanceDTO implements Serializable {
     private String alertFlag;
     private String dependentResult;
     private String executePath;
-    //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date firstSubmitTime;
     private TaskSwitchDependency switchDependency;
     private String resources;
@@ -60,19 +62,19 @@ public class TaskInstanceDTO implements Serializable {
     private String executorName;
     private Boolean subProcess;
     private String varPool;
-    //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date submitTime;
     private Boolean dependTask;
     private String name;
     private Long taskDefinitionVersion;
     private Long delayTime;
     private Long retryInterval;
-    //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date endTime;
     private String processInstanceName;
-
+    private Boolean taskSuccess;
 
 
 }

@@ -6,6 +6,7 @@ import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.datacenter.model.ProcessInstance;
 import com.qk.datacenter.model.Result;
 import com.qk.datacenter.model.Resultstring;
+import com.qk.dm.datacollect.dto.TaskInstanceSearchDTO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -391,7 +392,35 @@ public class DolphinApiClient {
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
-        //ProcessTaskInstanceResultDTO
+        return result;
+    }
+
+    /**
+     * 分页查询任务实例
+     * @param projectCode
+     * @param TaskInstanceSearch
+     * @return
+     * @throws ApiException
+     */
+    public Result taskPageByProcessId(Long projectCode, TaskInstanceSearchDTO TaskInstanceSearch) throws ApiException {
+        Result result =
+                dolphinschedulerManager.defaultApi().queryTaskListPagingUsingGET(
+                        TaskInstanceSearch.getPageNo(),
+                        TaskInstanceSearch.getPageSize(),
+                        projectCode,
+                        TaskInstanceSearch.getEndDate(),
+                        TaskInstanceSearch.getExecutorName(),
+                        TaskInstanceSearch.getHost(),
+                        TaskInstanceSearch.getProcessInstanceId(),
+                        TaskInstanceSearch.getProcessInstanceName(),
+                        TaskInstanceSearch.getSearchVal(),
+                        TaskInstanceSearch.getStartDate(),
+                        TaskInstanceSearch.getStateType(),
+                        TaskInstanceSearch.getTaskName()
+                );
+        if (Boolean.TRUE.equals(result.getFailed())) {
+            throw new ApiException(400, result.getMsg());
+        }
         return result;
     }
 

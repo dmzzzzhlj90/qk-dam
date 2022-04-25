@@ -17,14 +17,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DqcSchedulerInfoParamsVO {
+public class DctSchedulerInfoParamsVO {
 
     private Pagination pagination;
 
     /**
      * 作业名称
      */
-    private String jobName;
+    private String name;
 
     /**
      * 分类目录

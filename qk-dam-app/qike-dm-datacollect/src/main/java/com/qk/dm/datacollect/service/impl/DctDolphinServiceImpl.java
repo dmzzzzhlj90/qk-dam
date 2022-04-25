@@ -44,7 +44,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
         String name = dctSchedulerBasicInfoVO.getName();
         String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
-        String httpMethod = "POST";
+        String httpMethod = "GET";
         String description = dctSchedulerBasicInfoVO.getDescription();
 
         ProcessDefinitionDTO processDefinition = dolphinProcessService.createProcessDefinition(projectCode, name, url, httpParams, httpMethod, description);
@@ -59,7 +59,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
         String name = dctSchedulerBasicInfoVO.getName();
         String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
-        String httpMethod = "POST";
+        String httpMethod = "GET";
         String description = dctSchedulerBasicInfoVO.getDescription();
 
         ProcessDefinitionDTO processDefinitionDTO = dolphinProcessService.detailToProcess(dctSchedulerBasicInfoVO.getCode(), projectCode);
@@ -126,10 +126,16 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     @Override
     public void release(DctSchedulerReleaseVO dctSchedulerReleaseVO) {
-        dolphinProcessService.release(dctSchedulerReleaseVO.getProcessDefinitionCode(), projectCode, dctSchedulerReleaseVO.getReleaseState());
+        dolphinProcessService.release(dctSchedulerReleaseVO.getCode(), projectCode, dctSchedulerReleaseVO.getReleaseState());
 
         //todo 如果是上线，顺便上定时器
-
+        if (Objects.equals(dctSchedulerReleaseVO.getReleaseState(), ProcessDefinition.ReleaseStateEnum.ONLINE)) {
+            ScheduleDTO scheduleDTO = dolphinScheduleService.detail(dctSchedulerReleaseVO.getCode(), projectCode);
+            if (scheduleDTO != null) {
+                //定时器上线
+                dolphinScheduleService.execute(scheduleDTO.getId(),projectCode,ProcessDefinition.ReleaseStateEnum.ONLINE);
+            }
+        }
 
     }
 
@@ -139,9 +145,9 @@ public class DctDolphinServiceImpl implements DctDolphinService {
     }
 
     @Override
-    public PageResultVO<DctSchedulerInfoVO> searchPageList(DqcSchedulerInfoParamsVO schedulerInfoParamsVO) {
+    public PageResultVO<DctSchedulerInfoVO> searchPageList(DctSchedulerInfoParamsVO schedulerInfoParamsVO) {
         ProcessDefinitionResultDTO processDefinitionResultDTO =
-                dolphinProcessService.list(projectCode, schedulerInfoParamsVO.getJobName(),
+                dolphinProcessService.list(projectCode, schedulerInfoParamsVO.getName(),
                         schedulerInfoParamsVO.getPagination().getPage(), schedulerInfoParamsVO.getPagination().getSize());
         List<ProcessDefinitionDTO> processDefinitionList = processDefinitionResultDTO.getTotalList();
         List<Map<String, Object>> processDefinitionListMap = BeanMapUtils.changeBeansToList(processDefinitionList);

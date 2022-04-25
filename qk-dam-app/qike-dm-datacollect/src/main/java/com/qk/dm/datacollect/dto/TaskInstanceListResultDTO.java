@@ -18,11 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TaskInstanceResultDTO implements Serializable {
-    private Long total;
-    private Long currentPage;
-    private Long totalPage;
-    private Long pageSize;
-    private Long start;
-    private List<TaskInstanceDTO> totalList;
+public class TaskInstanceListResultDTO implements Serializable {
+    private String processInstanceState;
+    private List<TaskInstanceListDTO> taskList;
 }

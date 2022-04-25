@@ -47,7 +47,7 @@ public class ProcessInstanceDTO implements Serializable {
   private String scheduleTime;
   private String commandStartTime;
   private String globalParams;
-  private String dagData;
+  private Object dagData;
   private Long executorId;
   private String executorName;
   private String tenantCode;

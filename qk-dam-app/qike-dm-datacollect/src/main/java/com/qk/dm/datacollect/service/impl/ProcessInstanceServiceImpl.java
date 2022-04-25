@@ -7,9 +7,7 @@ import com.qk.datacenter.model.ProcessInstance;
 import com.qk.datacenter.model.Result;
 import com.qk.dm.datacollect.dolphin.DolphinApiClient;
 import com.qk.dm.datacollect.dolphin.ProcessInstanceSearchDTO;
-import com.qk.dm.datacollect.dto.ProcessInstanceDTO;
-import com.qk.dm.datacollect.dto.ProcessInstanceResultDTO;
-import com.qk.dm.datacollect.dto.TaskInstanceResultDTO;
+import com.qk.dm.datacollect.dto.*;
 import com.qk.dm.datacollect.service.ProcessInstanceService;
 import com.qk.dm.datacollect.util.DctConstant;
 import org.slf4j.Logger;
@@ -76,10 +74,10 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     }
 
     @Override
-    public TaskInstanceResultDTO taskByProcessId(Integer processInstanceId, Long projectCode) {
+    public TaskInstanceListResultDTO taskByProcessId(Integer processInstanceId, Long projectCode) {
         try {
             Result result = dolphinApiClient.taskByProcessId(processInstanceId, projectCode);
-            return DctConstant.changeObjectToClass(result.getData(), TaskInstanceResultDTO.class);
+            return DctConstant.changeObjectToClass(result.getData(), TaskInstanceListResultDTO.class);
         } catch (ApiException a) {
             LOG.error("Dolphin 项目[{}] 任务实例[{}] 根据流程实例id查询失败，原因为[{}]", projectCode, processInstanceId, a.getMessage());
             throw new BizException("dolphin task search error :" + a.getMessage());
@@ -88,6 +86,23 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
             throw new BizException("dolphin task toClass error :" + a.getMessage());
         } catch (Exception a) {
             LOG.error("Dolphin 项目[{}] 任务实例[{}] 根据流程实例id查询报错，原因为[{}]", projectCode, processInstanceId, a.getMessage());
+            throw new BizException("dolphin task exception error :" + a.getMessage());
+        }
+    }
+
+    @Override
+    public TaskInstanceResultDTO taskPageByProcessId(Long projectCode, TaskInstanceSearchDTO instanceSearchDTO) {
+        try {
+            Result result = dolphinApiClient.taskPageByProcessId(projectCode, instanceSearchDTO);
+            return DctConstant.changeObjectToClass(result.getData(), TaskInstanceResultDTO.class);
+        } catch (ApiException a) {
+            LOG.error("Dolphin 项目[{}] 任务实例[{}] 根据流程实例id查询失败，原因为[{}]", projectCode, instanceSearchDTO.getProcessInstanceId(), a.getMessage());
+            throw new BizException("dolphin task search error :" + a.getMessage());
+        } catch (JsonProcessingException a) {
+            LOG.error("Dolphin 项目[{}] 任务实例[{}] 根据流程实例id查询成功，解析时失败，原因为[{}]", projectCode, instanceSearchDTO.getProcessInstanceId(), a.getMessage());
+            throw new BizException("dolphin task toClass error :" + a.getMessage());
+        } catch (Exception a) {
+            LOG.error("Dolphin 项目[{}] 任务实例[{}] 根据流程实例id查询报错，原因为[{}]", projectCode, instanceSearchDTO.getProcessInstanceId(), a.getMessage());
             throw new BizException("dolphin task exception error :" + a.getMessage());
         }
     }
