@@ -5,10 +5,7 @@ import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
 import com.qk.dm.dataingestion.service.DataMigrationService;
-import com.qk.dm.dataingestion.vo.ColumnVO;
-import com.qk.dm.dataingestion.vo.DataMigrationVO;
-import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
-import com.qk.dm.dataingestion.vo.DisParamsVO;
+import com.qk.dm.dataingestion.vo.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -111,6 +108,18 @@ public class DataMigrationController {
     @PostMapping("/executors/start")
     public DefaultCommonResult processRunning(@RequestParam("ids") String ids){
         dataMigrationService.processRunning(ids);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 修改datax Json
+     * @param disJsonParamsVO 参数
+     * @return DefaultCommonResult
+     */
+    @PutMapping("/datax/json")
+    public DefaultCommonResult updateDataxJson(@RequestBody @Validated
+                                                           DisJsonParamsVO disJsonParamsVO){
+        dataMigrationService.updateDataxJson(disJsonParamsVO);
         return DefaultCommonResult.success();
     }
 

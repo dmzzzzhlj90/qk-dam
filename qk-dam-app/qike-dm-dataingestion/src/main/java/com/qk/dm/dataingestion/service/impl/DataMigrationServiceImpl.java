@@ -169,6 +169,11 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         }
     }
 
+    @Override
+    public void updateDataxJson(DisJsonParamsVO disJsonParamsVO) {
+
+    }
+
 
     private List<DisMigrationBaseInfoVO> process(List<DisMigrationBaseInfoVO> list){
         list.forEach(e->{
