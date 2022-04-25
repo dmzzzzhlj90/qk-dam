@@ -14,10 +14,9 @@ public enum DataTypeMapping {
 
     STRING(List.of("varchar","char","tinytext","text","mediumtext","longtext",
             "tinyblob","mediumblob","blob","longblob","varbinary"), DataType.STRING.getDataType(),List.of("string","varchar","char")),
-    BOOL(List.of("int","tinyint","smallint","mediumint","int","bigint","year"), DataType.BOOL.getDataType(),List.of("boolean")),
+    BOOL(List.of("tinyint","smallint","mediumint","int","bigint","year"), DataType.BOOL.getDataType(),
+            List.of("tinyint","smallint","int","bigint","boolean")),
     DOUBLE(List.of("float","double","decimal"), DataType.DOUBLE.getDataType(),List.of("float","double","decimal")),
-    LONG(List.of("int","tinyint","smallint","bigint","year"), DataType.LONG.getDataType(),
-            List.of("tinyint","smallint","int","bigint")),
     DATE(List.of("date","datetime","timestamp","time"),DataType.DATE.getDataType(),List.of("date","timestamp"));
 
 
