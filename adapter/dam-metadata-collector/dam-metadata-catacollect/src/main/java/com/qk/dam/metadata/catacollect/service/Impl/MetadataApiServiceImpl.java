@@ -1,13 +1,11 @@
 package com.qk.dam.metadata.catacollect.service.Impl;
 
 import cn.hutool.db.Entity;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.metadata.catacollect.enums.AtalsEnum;
 import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
 import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
-import com.qk.dam.metadata.catacollect.repo.HiveAtlasEntity;
-import com.qk.dam.metadata.catacollect.repo.HiveDbToTableAgg;
-import com.qk.dam.metadata.catacollect.repo.MysqlAtlasEntity;
-import com.qk.dam.metadata.catacollect.repo.MysqlDbToTableAgg;
+import com.qk.dam.metadata.catacollect.repo.*;
 import com.qk.dam.metadata.catacollect.service.MetadataApiService;
 import com.qk.dam.metadata.catacollect.util.CatacollectUtil;
 import com.qk.dam.metadata.catacollect.util.SourcesUtil;
@@ -26,6 +24,11 @@ import java.util.List;
  */
 @Service
 public class MetadataApiServiceImpl implements MetadataApiService {
+  protected final AtlasAgg atlasAgg;
+
+  public MetadataApiServiceImpl(AtlasAgg atlasAgg) {
+    this.atlasAgg = atlasAgg;
+  }
 
   /**
    * 根据数据源连接获取库信息
@@ -89,12 +92,12 @@ public class MetadataApiServiceImpl implements MetadataApiService {
     if (metadataConnectInfoVo.getType() !=null){
         switch (metadataConnectInfoVo.getType()){
           case SourcesUtil.MYSQL:
-            list =new MysqlAtlasEntity(metadataConnectInfoVo).searchMysqlAtals(list,atlasClientV2,
-                AtalsEnum.fromValue(metadataConnectInfoVo.getType()).getValue());
+            list =new MysqlAtlasEntity(metadataConnectInfoVo,atlasAgg).searchMysqlAtals(list,atlasClientV2,
+                AtalsEnum.fromValue(metadataConnectInfoVo.getType()).getValue(),SourcesUtil.MYSQL_NAME);
             break;
           case SourcesUtil.HIVE:
             list = new HiveAtlasEntity(metadataConnectInfoVo).searchHiveAtals(list,atlasClientV2,
-                AtalsEnum.fromValue(metadataConnectInfoVo.getType()).getValue());
+                AtalsEnum.fromValue(metadataConnectInfoVo.getType()).getValue(),SourcesUtil.HIVE_NAME);
             break;
           default:
             break;
@@ -103,14 +106,11 @@ public class MetadataApiServiceImpl implements MetadataApiService {
     list.forEach(e->{
       try {
         atlasClientV2.createEntities(e);
-        //Set<String> set = new HashSet<>();
-        //set.add("1e5bf085-52aa-410a-947e-2b3463f0005c");
-        //set.add("c82984b2-8acd-488e-9e99-3564a9c04103");
-        //物理删除
-        //atlasClientV2.purgeEntitiesByGuids(set);
-        //atlasClientV2.updateEntities(e);
       } catch (AtlasServiceException atlasServiceException) {
         atlasServiceException.printStackTrace();
+        throw  new BizException("atlasClientV2更新添加操作失败");
+      } finally {
+          atlasClientV2.close();
       }
     });
   }

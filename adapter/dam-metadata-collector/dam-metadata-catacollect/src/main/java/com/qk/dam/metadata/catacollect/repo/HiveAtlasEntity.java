@@ -33,7 +33,7 @@ public class HiveAtlasEntity {
 
   public List<AtlasEntity.AtlasEntitiesWithExtInfo> searchHiveAtals(
       List<AtlasEntity.AtlasEntitiesWithExtInfo> list,
-      AtlasClientV2 atlasClientV2, String atalsEnum) {
+      AtlasClientV2 atlasClientV2,String atalsEnum, String value) {
     return list;
   }
 }

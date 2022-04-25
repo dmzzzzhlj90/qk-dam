@@ -43,7 +43,11 @@ public class MysqlAtlasEntity {
   /**采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）*/
   private final String strategy;
 
-  public MysqlAtlasEntity(MetadataConnectInfoVo metadataConnectInfoVo) {
+  private final AtlasAgg atlasAgg;
+
+
+  public MysqlAtlasEntity(MetadataConnectInfoVo metadataConnectInfoVo,
+      AtlasAgg atlasAgg) {
     this.use =
         Db.use(
             new SimpleDataSource(
@@ -63,20 +67,22 @@ public class MysqlAtlasEntity {
     displayName=metadataConnectInfoVo.getDisplayName();
     owner=metadataConnectInfoVo.getOwner();
     strategy = metadataConnectInfoVo.getStrategy();
+    this.atlasAgg = atlasAgg;
   }
+
+
 
   public List<AtlasEntity.AtlasEntitiesWithExtInfo> searchMysqlAtals(
       List<AtlasEntity.AtlasEntitiesWithExtInfo> list,
-      AtlasClientV2 atlasClientV2, String atalsEnum)
+      AtlasClientV2 atlasClientV2,String atalsEnum,String value)
       throws SQLException, AtlasServiceException {
     List<Entity> tableList = getTableEntity();
     //处理策略问题并返回处理后的表信息
-    List<Entity> checkTableList = CatacollectUtil.checkTable(tableList,db,atlasClientV2,strategy,atalsEnum);
+    List<Entity> checkTableList = atlasAgg.checkTable(tableList,db,atlasClientV2,strategy,atalsEnum,value);
     if (CollectionUtil.isNotEmpty(checkTableList)){
       List<List<Entity>> entityList = Lists.partition(checkTableList, 2);
       list=getAtlasMessage(entityList);
     }
-
     return list;
   }
 
