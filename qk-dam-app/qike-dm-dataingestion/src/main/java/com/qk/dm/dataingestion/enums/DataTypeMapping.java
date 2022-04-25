@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public enum DataTypeMapping {
 
     STRING(List.of("varchar","char","tinytext","text","mediumtext","longtext",
-            "tinyblob","mediumblob","blob","longblob","varbinary"), DataType.STRING.getDataType(),List.of("string")),
+            "tinyblob","mediumblob","blob","longblob","varbinary"), DataType.STRING.getDataType(),List.of("string","varchar")),
     BOOL(List.of("int","tinyint","smallint","mediumint","int","bigint","year"), DataType.BOOL.getDataType(),List.of("boolean")),
     DOUBLE(List.of("float","double","decimal"), DataType.DOUBLE.getDataType(),List.of("float","double","decimal")),
     LONG(List.of("int","tinyint","smallint","mediumint","int","bigint","year"), DataType.LONG.getDataType(),
