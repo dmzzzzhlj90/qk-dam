@@ -1,7 +1,7 @@
 package com.qk.dm.datacollect.vo;
 
-import com.qk.dm.datacollect.dto.SchedulerCycleEnum;
-import com.qk.dm.datacollect.service.cron.CronService;
+import com.qk.dm.datacollect.dolphin.dto.SchedulerCycleEnum;
+import com.qk.dm.datacollect.dolphin.service.cron.CronService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

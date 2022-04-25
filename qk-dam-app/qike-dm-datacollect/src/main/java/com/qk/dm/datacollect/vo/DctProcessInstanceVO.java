@@ -2,8 +2,8 @@ package com.qk.dm.datacollect.vo;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dam.jpa.pojo.Pagination;
-import com.qk.dm.datacollect.dto.InstanceStateTypeEnum;
-import com.qk.dm.datacollect.dto.ProcessInstanceDTO;
+import com.qk.dm.datacollect.dolphin.dto.InstanceStateTypeEnum;
+import com.qk.dm.datacollect.dolphin.dto.ProcessInstanceDTO;
 import com.qk.dm.datacollect.mapstruct.DctProcessInstanceMapper;
 import lombok.Data;
 
