@@ -8,9 +8,14 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class DisJsonParamsVO {
-
+    /**
+     * 作业id
+     */
     @NotNull(message = "作业id不能为空")
     private Long id;
+    /**
+     * datax json数据
+     */
     @NotNull(message = "dataxJson不能为空")
     private String dataxJson;
 }

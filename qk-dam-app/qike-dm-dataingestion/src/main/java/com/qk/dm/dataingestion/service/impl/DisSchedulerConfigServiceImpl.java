@@ -1,6 +1,5 @@
 package com.qk.dm.dataingestion.service.impl;
 
-import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataingestion.entity.DisSchedulerConfig;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisSchedulerConfigMapper;
 import com.qk.dm.dataingestion.repositories.DisSchedulerConfigRepository;
@@ -10,7 +9,6 @@ import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 作业任务配置

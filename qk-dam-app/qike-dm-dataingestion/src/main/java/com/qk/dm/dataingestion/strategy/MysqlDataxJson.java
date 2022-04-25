@@ -33,8 +33,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class MysqlDataxJson implements DataxJson{
-    public static String MYSQL_READER = "mysqlreader";
-    public static String MYSQL_WRITER = "mysqlwriter";
+    private static final String MYSQL_READER = "mysqlreader";
+    private static final String MYSQL_WRITER = "mysqlwriter";
+    //自动创建表
+    private static final String AUTO_CREATE = "1";
     private final DataBaseInfoDefaultApi dataBaseService;
 
     public MysqlDataxJson(DataBaseInfoDefaultApi dataBaseService) {
@@ -69,10 +71,13 @@ public class MysqlDataxJson implements DataxJson{
         WriterPara writer = new WriterPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(),
                 getColumnList(dataMigrationVO.getColumnList().getTargetColumnList()),
                 conn, "insert");
-        //组装建表SQL
-        String sqlScript = generateSql(baseInfo.getTargetTable(),dataMigrationVO.getColumnList().getTargetColumnList());
-        log.info("数据库类型【{}】，生成表SQL【{}】",baseInfo.getTargetTable(),sqlScript);
-        createTable(dataSourceServer,baseInfo.getTargetDatabase(),sqlScript);
+        //判断是否自动创建表
+        if(Objects.equals(baseInfo.getAutoCreate(),AUTO_CREATE)) {
+            //组装建表SQL
+            String sqlScript = generateSql(baseInfo.getTargetTable(), dataMigrationVO.getColumnList().getTargetColumnList());
+            log.info("数据库类型【{}】，生成表SQL【{}】", baseInfo.getTargetTable(), sqlScript);
+            createTable(dataSourceServer, baseInfo.getTargetDatabase(), sqlScript);
+        }
         return DataxChannel.builder().name(MYSQL_WRITER).parameter(writer).build();
     }
 
@@ -117,7 +122,7 @@ public class MysqlDataxJson implements DataxJson{
                         jdbcUrlString(dataSourceServer,dataBaseName),
                         dataSourceServer.getUserName(),
                         dataSourceServer.getPassword(),
-                        dataSourceServer.getServer()));
+                        dataSourceServer.getDriverInfo()));
     }
 
     private List<String> getColumnList(List<ColumnVO.Column> columnList){
