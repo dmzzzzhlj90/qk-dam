@@ -23,6 +23,7 @@ dependencies {
     implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
     implementation project(":qk-data-jpa")
     implementation project(":commons-core")
+    implementation project(":metadata-common-core")
     compile group: 'org.projectlombok', name: 'lombok'
 
 
