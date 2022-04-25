@@ -12,6 +12,7 @@ import com.qk.dm.dataquery.mybatis.MybatisMapperContainer;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import com.qk.dm.feign.DataQueryInfoFeign;
 import com.zaxxer.hikari.HikariConfig;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,13 +29,10 @@ import java.util.Optional;
  * @date 20220411
  */
 @Configuration
+@RequiredArgsConstructor
 @Slf4j
 public class MybatisConfiguration {
   private final List<DataQueryInfoVO> dataQueryInfos;
-
-  public MybatisConfiguration(List<DataQueryInfoVO> dataQueryInfos) {
-    this.dataQueryInfos = dataQueryInfos;
-  }
 
   /**
    * 获取数据连接服务的数据源信息

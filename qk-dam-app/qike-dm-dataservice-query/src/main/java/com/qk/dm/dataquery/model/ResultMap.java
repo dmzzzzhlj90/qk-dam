@@ -1,4 +1,4 @@
-package com.qk.dm.dataquery.domain;
+package com.qk.dm.dataquery.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;

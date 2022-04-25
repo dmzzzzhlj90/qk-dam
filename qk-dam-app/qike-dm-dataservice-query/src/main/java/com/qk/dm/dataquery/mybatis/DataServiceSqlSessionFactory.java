@@ -1,8 +1,8 @@
 package com.qk.dm.dataquery.mybatis;
 
-import com.qk.dm.dataquery.domain.Mapper;
-import com.qk.dm.dataquery.domain.MapperSelect;
-import com.qk.dm.dataquery.domain.ResultMap;
+import com.qk.dm.dataquery.model.Mapper;
+import com.qk.dm.dataquery.model.MapperSelect;
+import com.qk.dm.dataquery.model.ResultMap;
 import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataquery.util.MapperUtil;
 import lombok.extern.slf4j.Slf4j;

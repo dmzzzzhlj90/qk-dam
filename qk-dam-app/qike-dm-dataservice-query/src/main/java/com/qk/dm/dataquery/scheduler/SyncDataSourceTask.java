@@ -10,6 +10,7 @@ import com.qk.dm.dataquery.mybatis.MybatisEnvironmentManager;
 import com.qk.dm.dataquery.mybatis.MybatisMapperContainer;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import com.qk.dm.feign.DataQueryInfoFeign;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.mapping.Environment;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
  * @author zhudaoming
  */
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class SyncDataSourceTask {
   private final MybatisDatasourceManager mybatisDatasourceManager;
@@ -34,19 +36,6 @@ public class SyncDataSourceTask {
   private final DataQueryInfoFeign dataQueryInfoFeign;
   private final DataBaseService dataBaseService;
   private final ApplicationEventPublisher publisher;
-
-  public SyncDataSourceTask(
-          MybatisDatasourceManager mybatisDatasourceManager,
-          MybatisEnvironmentManager mybatisEnvironmentManager,
-          MybatisMapperContainer mybatisMapperContainer, DataQueryInfoFeign dataQueryInfoFeign,
-          DataBaseService dataBaseService, ApplicationEventPublisher publisher) {
-    this.mybatisDatasourceManager = mybatisDatasourceManager;
-    this.mybatisEnvironmentManager = mybatisEnvironmentManager;
-    this.mybatisMapperContainer = mybatisMapperContainer;
-    this.dataQueryInfoFeign = dataQueryInfoFeign;
-    this.dataBaseService = dataBaseService;
-    this.publisher = publisher;
-  }
 
   @Scheduled(cron = "0/30 * * * * ? ")
   public void syncLastUpdate() {

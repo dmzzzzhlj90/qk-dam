@@ -4,6 +4,7 @@ import com.qk.dam.model.HttpDataParamModel;
 import com.qk.dm.dataquery.mybatis.DataServiceSqlSessionFactory;
 import com.qk.dm.dataquery.mybatis.MybatisDatasourceManager;
 import com.qk.dm.dataquery.mybatis.MybatisMapperContainer;
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,16 +21,10 @@ import java.util.*;
  * @since 1.5.0
  */
 @RestController
+@RequiredArgsConstructor
 public class QueryDataRestController {
   final DataServiceSqlSessionFactory dataServiceSqlSessionFactory;
   final MybatisMapperContainer mybatisMapperContainer;
-
-  public QueryDataRestController(
-      DataServiceSqlSessionFactory dataServiceSqlSessionFactory,
-      MybatisMapperContainer mybatisMapperContainer) {
-    this.dataServiceSqlSessionFactory = dataServiceSqlSessionFactory;
-    this.mybatisMapperContainer = mybatisMapperContainer;
-  }
 
   @PostMapping("/app/query")
   public List<Object> query(@RequestBody HttpDataParamModel httpDataParamModel) {

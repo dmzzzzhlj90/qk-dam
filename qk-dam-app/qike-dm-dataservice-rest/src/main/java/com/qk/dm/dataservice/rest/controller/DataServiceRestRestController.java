@@ -6,6 +6,7 @@ import com.qk.dam.model.HttpDataParamModel;
 import com.qk.dm.dataquery.feign.DataBackendQueryFeign;
 import com.qk.dm.dataservice.rest.controller.base.BaseRestController;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,16 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class DataServiceRestRestController extends BaseRestController {
-
     final DataBackendQueryFeign dataBackendQueryFeign;
-
-
-    public DataServiceRestRestController(DataBackendQueryFeign dataBackendQueryFeign) {
-        this.dataBackendQueryFeign = dataBackendQueryFeign;
-    }
-
-
 
     /**
      * 处理所有rest请求的handler

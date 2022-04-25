@@ -10,6 +10,7 @@ import com.qk.dm.dataquery.datasouce.HikariDataSourceFactory;
 import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import com.zaxxer.hikari.HikariConfig;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.beans.BeanMap;
 import org.joda.time.DateTime;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
  * @author zhudaoming
  */
 @Slf4j
+@RequiredArgsConstructor
 public class MybatisDatasourceManager {
   private final Map<String, DataSource> datasourceMap = new ConcurrentHashMap<>(256);
   private final Map<String, HikariDataSourceFactory> hikariDataSourceFactoryMap =
@@ -32,15 +34,6 @@ public class MybatisDatasourceManager {
   private final ConnTypeEnum connType;
   private final HikariConfig hikariConfigDefault;
   private final List<ResultDatasourceInfo> resultDataSource;
-
-  public MybatisDatasourceManager(
-      ConnTypeEnum connType,
-      HikariConfig hikariConfigDefault,
-      List<ResultDatasourceInfo> resultDataSource) {
-    this.connType = connType;
-    this.hikariConfigDefault = hikariConfigDefault;
-    this.resultDataSource = resultDataSource;
-  }
 
   @EventListener
   public void onDatasourceInsert(DatasourceEvent.DatasourceInsertEvent datasourceEvent) {
