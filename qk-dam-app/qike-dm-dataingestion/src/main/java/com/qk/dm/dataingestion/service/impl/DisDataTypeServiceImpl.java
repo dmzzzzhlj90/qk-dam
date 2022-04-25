@@ -1,7 +1,7 @@
 package com.qk.dm.dataingestion.service.impl;
 
-import com.qk.dam.commons.enums.DataTypeEnum;
 import com.qk.dm.dataingestion.enums.DataTypeMapping;
+import com.qk.dm.dataingestion.enums.HiveDataType;
 import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.enums.MysqlDataType;
 import com.qk.dm.dataingestion.service.DisDataTypeService;
@@ -26,7 +26,7 @@ public class DisDataTypeServiceImpl implements DisDataTypeService {
       log.info("数据库连接类型【{}】",connectType);
         switch (IngestionType.getVal(connectType)){
             case HIVE:
-               return DataTypeEnum.getAllValue();
+               return HiveDataType.getAllType();
             case MYSQL:
                return MysqlDataType.getAllType();
             default:

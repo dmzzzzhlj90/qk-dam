@@ -72,6 +72,7 @@ public class MysqlDataxJson implements DataxJson{
         //组装建表SQL
         String sqlScript = generateSql(baseInfo.getTargetTable(),dataMigrationVO.getColumnList().getTargetColumnList());
         log.info("数据库类型【{}】，生成表SQL【{}】",baseInfo.getTargetTable(),sqlScript);
+        createTable(dataSourceServer,baseInfo.getTargetDatabase(),sqlScript);
         return DataxChannel.builder().name(MYSQL_WRITER).parameter(writer).build();
     }
 
