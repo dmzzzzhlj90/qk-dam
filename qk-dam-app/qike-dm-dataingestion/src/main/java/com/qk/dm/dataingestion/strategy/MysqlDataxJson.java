@@ -6,6 +6,8 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
+import com.qk.dam.sqlbuilder.SqlBuilderFactory;
+import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.model.DataSourceServer;
@@ -16,9 +18,10 @@ import com.qk.dm.dataingestion.model.mysql.WriterPara;
 import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-
+import com.qk.dam.sqlbuilder.model.Column;
 import java.util.*;
 import java.util.stream.Collectors;
 /**
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
  * @date 2022/04/09 15:48
  * @since 1.0.0
  */
+@Slf4j
 @Component
 public class MysqlDataxJson implements DataxJson{
     public static String MYSQL_READER = "mysqlreader";
@@ -65,6 +69,9 @@ public class MysqlDataxJson implements DataxJson{
         WriterPara writer = new WriterPara(dataSourceServer.getUserName(), dataSourceServer.getPassword(),
                 getColumnList(dataMigrationVO.getColumnList().getTargetColumnList()),
                 conn, "insert");
+        //组装建表SQL
+        String sqlScript = generateSql(baseInfo.getTargetTable(),dataMigrationVO.getColumnList().getTargetColumnList());
+        log.info("数据库类型【{}】，生成表SQL【{}】",baseInfo.getTargetTable(),sqlScript);
         return DataxChannel.builder().name(MYSQL_WRITER).parameter(writer).build();
     }
 
@@ -85,6 +92,21 @@ public class MysqlDataxJson implements DataxJson{
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * 组装建表SQL语句
+     * @param tableName
+     * @param columnList
+     * @return
+     */
+    private String generateSql(String tableName,List<ColumnVO.Column> columnList){
+        List<Column> columns = new ArrayList<>();
+        columnList.forEach(column->{
+            columns.add(Column.builder().name(column.getName())
+                    .dataType(column.getDataType()).build());
+        });
+        return SqlBuilderFactory.creatTableSQL(Table.builder().name(tableName).columns(columns).build());
     }
 
 
