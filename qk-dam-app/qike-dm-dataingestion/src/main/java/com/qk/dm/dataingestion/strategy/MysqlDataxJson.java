@@ -1,5 +1,7 @@
 package com.qk.dm.dataingestion.strategy;
 
+import cn.hutool.db.Db;
+import cn.hutool.db.ds.simple.SimpleDataSource;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
@@ -71,6 +73,29 @@ public class MysqlDataxJson implements DataxJson{
         return IngestionType.MYSQL;
     }
 
+    /**
+     * 自动创建表
+     * @param dataSourceServer
+     * @param dataBaseName
+     */
+    private void createTable(DataSourceServer dataSourceServer,String dataBaseName,String sqlScript){
+        try {
+            getDb(dataSourceServer,dataBaseName).execute(sqlScript);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private Db getDb(DataSourceServer dataSourceServer,String dataBaseName){
+       return Db.use(
+               new SimpleDataSource(
+                        jdbcUrlString(dataSourceServer,dataBaseName),
+                        dataSourceServer.getUserName(),
+                        dataSourceServer.getPassword(),
+                        dataSourceServer.getServer()));
+    }
 
     private List<String> getColumnList(List<ColumnVO.Column> columnList){
         if(!CollectionUtils.isEmpty(columnList)){
@@ -94,7 +119,9 @@ public class MysqlDataxJson implements DataxJson{
     }
 
     private String jdbcUrlString(DataSourceServer dataSourceServer,String dataBaseName){
-        return "jdbc:mysql://"+dataSourceServer.getServer()+":"
-                +dataSourceServer.getPort()+"/"+dataBaseName+"?useUnicode=true&characterEncoding=utf-8&useSSL=false";
+        return "jdbc:mysql://"
+                +dataSourceServer.getServer()+":"
+                +dataSourceServer.getPort()+"/"
+                +dataBaseName+"?useUnicode=true&characterEncoding=utf-8&useSSL=false";
     }
 }

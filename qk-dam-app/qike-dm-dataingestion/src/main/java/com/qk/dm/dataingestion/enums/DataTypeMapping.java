@@ -15,12 +15,12 @@ import java.util.stream.Stream;
 public enum DataTypeMapping {
 
     STRING(List.of("varchar","char","tinytext","text","mediumtext","longtext",
-            "tinyblob","mediumblob","blob","longblob","varbinary"), DataType.STRING.getDataType(),List.of("STRING")),
-    BOOL(List.of("int","tinyint","smallint","mediumint","int","bigint","year"), DataType.BOOL.getDataType(),List.of("BOOLEAN")),
-    DOUBLE(List.of("float","double","decimal"), DataType.DOUBLE.getDataType(),List.of("FLOAT","DOUBLE")),
+            "tinyblob","mediumblob","blob","longblob","varbinary"), DataType.STRING.getDataType(),List.of("string")),
+    BOOL(List.of("int","tinyint","smallint","mediumint","int","bigint","year"), DataType.BOOL.getDataType(),List.of("boolean")),
+    DOUBLE(List.of("float","double","decimal"), DataType.DOUBLE.getDataType(),List.of("float","double","decimal")),
     LONG(List.of("int","tinyint","smallint","mediumint","int","bigint","year"), DataType.LONG.getDataType(),
-            List.of("TINYINT","SMALLINT","INT","BIGINT")),
-    DATE(List.of("date","datetime","timestamp","time"),DataType.DATE.getDataType(),List.of("DATE","TIMESTAMP"));
+            List.of("tinyint","smallint","int","bigint")),
+    DATE(List.of("date","datetime","timestamp","time"),DataType.DATE.getDataType(),List.of("date","timestamp"));
 
 
     private final List<String> mysqlTypeList;
@@ -61,9 +61,9 @@ public enum DataTypeMapping {
         Map<String,List<String>> map = Maps.newHashMap();
         List<DataTypeEnum> hiveList = DataTypeEnum.getList();
         hiveList.forEach(t-> {
-            DataTypeMapping mysqlType = Stream.of(values()).filter(e -> e.hiveTypeList.contains(t.getCode())).
+            DataTypeMapping mysqlType = Stream.of(values()).filter(e -> e.hiveTypeList.contains(t.getCode().toLowerCase())).
                     findAny().orElse(null);
-            map.put(t.getCode(), mysqlType == null ? List.of() : mysqlType.getMysqlTypeList());
+            map.put(t.getCode().toLowerCase(), mysqlType == null ? List.of() : mysqlType.getMysqlTypeList());
         });
         return map;
     }
@@ -82,9 +82,9 @@ public enum DataTypeMapping {
         Map<String,List<String>> map = Maps.newHashMap();
         List<DataTypeEnum> hiveList = DataTypeEnum.getList();
         hiveList.forEach(t-> {
-            DataTypeMapping hiveType = Stream.of(values()).filter(e -> e.hiveTypeList.contains(t.getCode())).
+            DataTypeMapping hiveType = Stream.of(values()).filter(e -> e.hiveTypeList.contains(t.getCode().toLowerCase())).
                     findAny().orElse(null);
-            map.put(t.getCode(), hiveType == null ? List.of() : hiveType.getHiveTypeList());
+            map.put(t.getCode().toLowerCase(), hiveType == null ? List.of() : hiveType.getHiveTypeList());
         });
         return map;
     }
