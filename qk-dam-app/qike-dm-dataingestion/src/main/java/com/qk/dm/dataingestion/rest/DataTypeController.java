@@ -3,10 +3,9 @@ package com.qk.dm.dataingestion.rest;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataingestion.service.DisDataTypeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.qk.dm.dataingestion.vo.DataTypeCheckVO;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -50,5 +49,15 @@ public class DataTypeController {
                                                                              @RequestParam("targetConnectType") String targetConnectType){
         return DefaultCommonResult.success(ResultCodeEnum.OK,
                 disDataTypeService.getDataTypeMapping(sourceConnectType,targetConnectType));
+    }
+
+    /**
+     * 数据类型校验
+     * @param dataTypeCheckVO
+     * @return DefaultCommonResult<DataTypeCheckVO>
+     */
+    @PostMapping(value = "/check")
+    public DefaultCommonResult<DataTypeCheckVO> checkDataType(@RequestBody @Validated DataTypeCheckVO dataTypeCheckVO){
+        return DefaultCommonResult.success(ResultCodeEnum.OK,disDataTypeService.checkDataType(dataTypeCheckVO));
     }
 }

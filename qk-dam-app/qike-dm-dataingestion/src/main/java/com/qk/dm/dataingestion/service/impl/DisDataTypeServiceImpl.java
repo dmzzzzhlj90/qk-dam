@@ -5,6 +5,7 @@ import com.qk.dm.dataingestion.enums.HiveDataType;
 import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.enums.MysqlDataType;
 import com.qk.dm.dataingestion.service.DisDataTypeService;
+import com.qk.dm.dataingestion.vo.DataTypeCheckVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,10 @@ public class DisDataTypeServiceImpl implements DisDataTypeService {
     @Override
     public Map<String, List<String>> getDataTypeMapping(String sourceConnectType, String targetConnectType) {
         return DataTypeMapping.getDataType(sourceConnectType,targetConnectType);
+    }
+
+    @Override
+    public DataTypeCheckVO checkDataType(DataTypeCheckVO dataTypeCheckVO) {
+        return DataTypeCheckVO.builder().build();
     }
 }
