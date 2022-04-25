@@ -1,4 +1,4 @@
-package com.qk.dam.commons.enums;
+package com.qk.dm.dataingestion.enums;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @date 2022/04/20 19:58
  * @since 1.0.0
  */
-public enum MysqlDataTypeEnum {
+public enum MysqlDataType {
 
     TINYINT("tinyint","tinyint"),
     SMALLINT("smallint","smallint"),
@@ -35,11 +35,11 @@ public enum MysqlDataTypeEnum {
 
     public static Map<String,String> getAllType(){
         return Arrays.stream(values()).collect(Collectors.
-                toMap(MysqlDataTypeEnum::getCode, MysqlDataTypeEnum::getValue));
+                toMap(MysqlDataType::getCode, MysqlDataType::getValue));
     }
 
 
-    public static List<MysqlDataTypeEnum> getList(){
+    public static List<MysqlDataType> getList(){
         return Arrays.stream(values()).collect(Collectors.toList());
     }
 
@@ -48,7 +48,7 @@ public enum MysqlDataTypeEnum {
     private final String code;
     private final String value;
 
-    MysqlDataTypeEnum(String code, String value) {
+    MysqlDataType(String code, String value) {
         this.code = code;
         this.value = value;
     }
