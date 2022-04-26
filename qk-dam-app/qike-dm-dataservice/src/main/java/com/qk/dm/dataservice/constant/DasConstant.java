@@ -27,4 +27,8 @@ public class DasConstant {
     public static final String PARAM_REQUIRED = "required";
 
 
+    // DAM_DATA_SERVICE
+    public static final String DAM_DATA_SERVICE = "DAM_DATA_SERVICE";
+
+
 }

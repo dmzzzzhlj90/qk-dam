@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component;
 @Component(value = "openApiConnectInfo")
 public class OpenApiConnectInfo {
 
-  private String url;
+  private String version;
 
-  //  private String host;
-  //
-  //  private String protocolType;
+    private String url;
+
+    private String serverUrl;
+
 }
