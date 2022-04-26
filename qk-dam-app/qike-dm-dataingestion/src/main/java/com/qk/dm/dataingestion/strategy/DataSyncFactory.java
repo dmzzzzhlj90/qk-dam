@@ -59,20 +59,10 @@ public class DataSyncFactory {
 
         DataxJob dataxJob = DataxJob.builder().content(contents)
                 .setting(new DataxSetting(dataMigrationVO.getSchedulerConfig())).build();
-        String jsonString = parseJson(GsonUtil.toJsonString(Map.of("job", dataxJob)));
+        String jsonString = GsonUtil.toJsonString(Map.of("job", dataxJob));
         log.info("生成的datax json: {}",jsonString);
         return jsonString;
     }
 
-    /**
-     * 格式化json字符串
-     * @param jsonString
-     * @return
-     */
-    private String parseJson(String jsonString){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(JsonParser.parseString(jsonString));
-
-    }
 
 }
