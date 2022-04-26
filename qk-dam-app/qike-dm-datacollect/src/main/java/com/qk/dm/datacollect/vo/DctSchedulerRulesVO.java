@@ -1,5 +1,7 @@
 package com.qk.dm.datacollect.vo;
 
+import com.qk.dam.commons.util.BeanMapUtils;
+import com.qk.dam.commons.util.GsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据质量_规则调度_规则信息VO
@@ -73,4 +76,13 @@ public class DctSchedulerRulesVO {
      * 数据源Id
      */
     private String dataSourceId;
+
+    /**
+     * 描述
+     */
+    private String description;
+
+    public static DctSchedulerRulesVO jsonStringChangeRules(String value) {
+        return BeanMapUtils.changeMapToBean((Map<String, Object>) GsonUtil.fromJsonString(value), new DctSchedulerRulesVO());
+    }
 }

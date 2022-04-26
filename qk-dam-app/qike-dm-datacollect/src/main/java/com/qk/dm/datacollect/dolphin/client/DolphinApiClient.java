@@ -147,8 +147,6 @@ public class DolphinApiClient {
                 projectCode,
                 searchVal,
                 null);
-
-//        ProcessDefinitionResultDTO processDefinitionResultDTO = DctConstant.changeObjectToClass(result.getData(), ProcessDefinitionResultDTO.class);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -303,7 +301,6 @@ public class DolphinApiClient {
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
-//        return DctConstant.changeObjectToClass(result.getData(), ScheduleResultDTO.class);
         return result;
     }
 
@@ -352,7 +349,6 @@ public class DolphinApiClient {
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
-//        return DctConstant.changeObjectToClass(result.getData(), ProcessInstanceResultDTO.class);
         return result;
     }
 
@@ -372,7 +368,6 @@ public class DolphinApiClient {
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
-//        return DctConstant.changeObjectToClass(result.getData(), ProcessInstanceDTO.class);
         return result;
     }
 

@@ -2,7 +2,6 @@ package com.qk.dm.datacollect.vo;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.BeanMapUtils;
-import com.qk.dam.commons.util.GsonUtil;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -78,15 +77,13 @@ public class DctSchedulerBasicInfoVO {
                 switch (httpParam.get("prop").toString()) {
                     case "schedulerRules":
                         dctSchedulerBasicInfoVO.setSchedulerRules(
-                                BeanMapUtils.changeMapToBean(
-                                        (Map<String, Object>) GsonUtil.fromJsonString(value),
-                                        new DctSchedulerRulesVO()));
+                                DctSchedulerRulesVO.jsonStringChangeRules(value)
+                        );
                         break;
                     case "schedulerConfig":
                         dctSchedulerBasicInfoVO.setSchedulerConfig(
-                                BeanMapUtils.changeMapToBean(
-                                        (Map<String, Object>) GsonUtil.fromJsonString(value),
-                                        new DctSchedulerConfigVO()));
+                                DctSchedulerConfigVO.jsonStringChangeConfig(value)
+                        );
                         break;
                     case "dirId":
                         dctSchedulerBasicInfoVO.setDirId(value);

@@ -16,4 +16,6 @@ public interface DctInstanceService {
     void execute(DctInstanceExecuteVO instanceExecute);
 
     PageResultVO<DctTaskInstanceVO> searchTask(DctTaskInstanceParamsVO dctTaskInstanceParamsVO);
+
+    Object taskLogDownload(Integer taskInstanceId);
 }

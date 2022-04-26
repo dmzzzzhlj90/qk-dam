@@ -64,12 +64,27 @@ public class DctInstanceServiceImpl implements DctInstanceService {
     @Override
     public PageResultVO<DctTaskInstanceVO> searchTask(DctTaskInstanceParamsVO dctTaskInstanceParamsVO) {
         TaskInstanceSearchDTO instanceSearchDTO = DctProcessInstanceMapper.INSTANCE.taskInstanceSearchDTO(dctTaskInstanceParamsVO);
-        TaskInstanceResultDTO taskInstanceResultDTO = processInstanceService.taskPageByProcessId(projectCode,instanceSearchDTO);
+        TaskInstanceResultDTO taskInstanceResultDTO = processInstanceService.taskPageByProcessId(projectCode, instanceSearchDTO);
         return new PageResultVO<>(
                 taskInstanceResultDTO.getTotal(),
                 dctTaskInstanceParamsVO.getPagination().getPage(),
                 dctTaskInstanceParamsVO.getPagination().getSize(),
                 DctProcessInstanceMapper.INSTANCE.userDqcProcessTaskInstanceVO(taskInstanceResultDTO.getTotalList()));
     }
+
+    @Override
+    public Object taskLogDownload(Integer taskInstanceId) {
+        StringBuilder result = new StringBuilder();
+        int skipLineNum = 0;
+        int limit = 1000;
+        String log;
+        do {
+            log = processInstanceService.taskLog(taskInstanceId, limit, skipLineNum);
+            result.append(log);
+            skipLineNum += limit;
+        } while (!"".equals(log));
+        return result.toString();
+    }
+
 
 }

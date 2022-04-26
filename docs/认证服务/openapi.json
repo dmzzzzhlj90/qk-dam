@@ -46,7 +46,29 @@
         }
       },
       "_auth_current_accessTokenrequest": {},
-      "_auth_token_introspectresponse": {},
+      "_auth_token_introspectresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
       "_auth_current_authoritiesrequest": {},
       "_oauth2_auth__registerId_request": {},
       "_auth_token_refreshrequest": {},
@@ -272,7 +294,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "179",
+            "example": "133",
             "name": "registerId"
           },
           {
@@ -282,7 +304,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "edyth.schultz",
+            "example": "graham.weissnat",
             "name": "principalName"
           }
         ]
@@ -323,7 +345,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "52v6i0",
+            "example": "78i5to",
             "name": "refresh_token"
           }
         ]
@@ -346,7 +368,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"username\": \"edyth.schultz\",\n  \"password\": \"ahcg2s\",\n  \"url\": \"www.angla-abernathy.io\"\n}"
+                  "value": "{\n  \"username\": \"graham.weissnat\",\n  \"password\": \"yrtgry\",\n  \"url\": \"www.virgilio-zboncak.co\"\n}"
                 }
               }
             }
@@ -363,7 +385,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"59004\",\n  \"retMsg\": \"vy2xlu\",\n  \"tips\": \"qkfvpm\",\n  \"data\": {\n    \"access_token\": \"qgybry\",\n    \"refresh_token\": \"nma72w\",\n    \"expires_in\": 60\n  }\n}"
+                    "value": "{\n  \"retCode\": \"33659\",\n  \"retMsg\": \"isj3fs\",\n  \"tips\": \"ff936f\",\n  \"data\": {\n    \"access_token\": \"x200xm\",\n    \"refresh_token\": \"y4d49l\",\n    \"expires_in\": 492\n  }\n}"
                   }
                 }
               }
@@ -375,13 +397,28 @@
       }
     },
     "/auth/token/introspect": {
-      "get": {
+      "post": {
         "summary": "验证token",
         "deprecated": false,
         "description": "验证token",
         "tags": [
           "PasswordController"
         ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_auth_token_introspectrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.20.0.13:8765/authclient/auth/token/introspect"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -393,7 +430,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "Return void."
+                    "value": "{\n  \"retCode\": \"33659\",\n  \"retMsg\": \"thuj7c\",\n  \"tips\": \"2gz4zf\",\n  \"data\": true\n}"
                   }
                 }
               }
@@ -401,18 +438,7 @@
           }
         },
         "operationId": "token_introspect",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "description": "No comments found.",
-            "required": false,
-            "example": "vo1f4o",
-            "name": "token"
-          }
-        ]
+        "parameters": []
       }
     },
     "/auth/current/logout": {
@@ -450,7 +476,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "edyth.schultz",
+            "example": "graham.weissnat",
             "name": "principalName"
           }
         ]
@@ -491,7 +517,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "edyth.schultz",
+            "example": "graham.weissnat",
             "name": "principalName"
           }
         ]
@@ -516,7 +542,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"subject\": \"vk8w42\",\n  \"fullName\": \"edyth.schultz\",\n  \"givenName\": \"edyth.schultz\",\n  \"familyName\": \"edyth.schultz\",\n  \"middleName\": \"edyth.schultz\",\n  \"nickName\": \"rashad.connelly\",\n  \"preferredUsername\": \"edyth.schultz\",\n  \"profile\": \"8e3yiq\",\n  \"picture\": \"ckj51p\",\n  \"website\": \"98wc8z\",\n  \"email\": \"matthew.maggio@yahoo.com\",\n  \"emailVerified\": true,\n  \"gender\": \"hnupnj\",\n  \"birthdate\": \"2022-04-22\",\n  \"zoneInfo\": \"ol6hii\",\n  \"locale\": \"p5nt2h\",\n  \"phoneNumber\": \"l3f8f2\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"6e7dh2\",\n    \"streetAddress\": \"75465 Nick Knolls， North Lorinebury， LA 99945\",\n    \"locality\": \"ykwaoi\",\n    \"region\": \"k39piy\",\n    \"postalCode\": \"59004\",\n    \"country\": \"1n9c57\"\n  },\n  \"updatedAt\": {},\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
+                    "value": "{\n  \"subject\": \"ym21zo\",\n  \"fullName\": \"graham.weissnat\",\n  \"givenName\": \"graham.weissnat\",\n  \"familyName\": \"graham.weissnat\",\n  \"middleName\": \"graham.weissnat\",\n  \"nickName\": \"reggie.klocko\",\n  \"preferredUsername\": \"graham.weissnat\",\n  \"profile\": \"53cg9y\",\n  \"picture\": \"4fatk5\",\n  \"website\": \"rdoob7\",\n  \"email\": \"lizbeth.schamberger@yahoo.com\",\n  \"emailVerified\": true,\n  \"gender\": \"x157mh\",\n  \"birthdate\": \"2022-04-26\",\n  \"zoneInfo\": \"p6lz7b\",\n  \"locale\": \"cwzcal\",\n  \"phoneNumber\": \"c3oll1\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"hdys7x\",\n    \"streetAddress\": \"481 Dewayne Center， Calvinchester， NV 65695\",\n    \"locality\": \"3x02c8\",\n    \"region\": \"mq1n18\",\n    \"postalCode\": \"33659\",\n    \"country\": \"p76gjj\"\n  },\n  \"updatedAt\": {},\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
                   }
                 }
               }
@@ -622,7 +648,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "8uzifx",
+            "example": "h1u38y",
             "name": "refresh_token"
           }
         ]

@@ -4,9 +4,14 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datacollect.service.DctInstanceService;
+import com.qk.dm.datacollect.util.DateUtil;
+import com.qk.dm.datacollect.util.ExportTextUtil;
 import com.qk.dm.datacollect.vo.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * @author shenpj
@@ -14,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/dolphin/instance")
+@RequestMapping("/dolphin")
 public class DctInstanceController {
     private final DctInstanceService dctInstanceService;
 
@@ -29,7 +34,7 @@ public class DctInstanceController {
      * @param dctSchedulerInstanceParamsDTO
      * @return DefaultCommonResult<List < DqcProcessInstanceVO>>
      */
-    @PostMapping("/page/list")
+    @PostMapping("/instance/page/list")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<PageResultVO<DctProcessInstanceVO>> search(@RequestBody DctSchedulerInstanceParamsDTO dctSchedulerInstanceParamsDTO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dctInstanceService.search(dctSchedulerInstanceParamsDTO));
@@ -37,10 +42,11 @@ public class DctInstanceController {
 
     /**
      * 实例详情
+     *
      * @param instanceId
      * @return
      */
-    @GetMapping("/{instanceId}")
+    @GetMapping("/instance/{instanceId}")
     //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<DctProcessInstanceVO> detail(@PathVariable Integer instanceId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dctInstanceService.detail(instanceId));
@@ -52,7 +58,7 @@ public class DctInstanceController {
      * @param instanceExecute
      * @return
      */
-    @PutMapping("/execute")
+    @PutMapping("/instance/execute")
     public DefaultCommonResult execute(@RequestBody @Validated DctInstanceExecuteVO instanceExecute) {
         dctInstanceService.execute(instanceExecute);
         return DefaultCommonResult.success();
@@ -69,29 +75,16 @@ public class DctInstanceController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dctInstanceService.searchTask(dctTaskInstanceParamsVO));
     }
 
-//
-//    /**
-//     * 任务实例日志
-//     *
-//     * @param taskInstanceLogDTO
-//     * @return DefaultCommonResult<String>
-//     */
-//    @PostMapping("/task/log")
-//    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
-//    public DefaultCommonResult<Object> searchTaskLog(@RequestBody DqcSchedulerTaskInstanceLogDTO taskInstanceLogDTO) {
-//        return DefaultCommonResult.success(ResultCodeEnum.OK, dqcSchedulerInstanceService.searchTaskLog(taskInstanceLogDTO));
-//    }
-//
-//    /**
-//     * 下载任务实例日志
-//     *
-//     * @param response
-//     * @param taskInstanceId
-//     */
-//    @PostMapping("/task/log/download")
-//    @ResponseBody
-//    public void taskLogDownload(HttpServletResponse response, Integer taskInstanceId) {
-//        Object log = dqcSchedulerInstanceService.taskLogDownload(taskInstanceId);
-//        ExportTextUtil.writeToTxt(response, log.toString(), "任务实例日志_" + taskInstanceId + "_" + DateUtil.toStr(new Date(), "yyyyMMddHHmm"));
-//    }
+    /**
+     * 下载任务实例日志
+     *
+     * @param response
+     * @param taskInstanceId
+     */
+    @PostMapping("/task/log/download")
+    @ResponseBody
+    public void taskLogDownload(HttpServletResponse response, Integer taskInstanceId) {
+        Object log = dctInstanceService.taskLogDownload(taskInstanceId);
+        ExportTextUtil.writeToTxt(response, log.toString(), "任务实例日志_" + taskInstanceId + "_" + DateUtil.toStr(new Date(), "yyyyMMddHHmm"));
+    }
 }
