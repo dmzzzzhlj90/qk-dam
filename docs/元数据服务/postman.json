@@ -1,0 +1,1499 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "dd3cef6e-9ddd-4401-a41f-03f61788f3bb",
+    "name": "dm-metadata"
+  },
+  "item": [
+    {
+      "name": "元数据分类相关基础接口",
+      "item": [
+        {
+          "name": "新增元数据分类",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"thomas.jacobson\",\n  \"description\": \"1td16z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/classify/",
+              "protocol": "http",
+              "path": [
+                "classify",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增元数据分类",
+            "header": []
+          },
+          "description": "新增元数据分类"
+        },
+        {
+          "name": "修改元数据分类",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"thomas.jacobson\",\n  \"description\": \"9znze5\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/classify/773",
+              "protocol": "http",
+              "path": [
+                "classify",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "141",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "修改元数据分类",
+            "header": []
+          },
+          "description": "修改元数据分类"
+        },
+        {
+          "name": "删除元数据分类",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/classify/sgmik0",
+              "protocol": "http",
+              "path": [
+                "classify",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "bbcri1",
+                  "description": "id集合，String类型"
+                }
+              ]
+            },
+            "description": "删除元数据分类",
+            "header": []
+          },
+          "description": "删除元数据分类"
+        },
+        {
+          "name": "分页查询元数据分类",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/classify/page?name\u003dthomas.jacobson\u0026pagination.size\u003d10\u0026pagination.page\u003d1\u0026endDay\u003dk12z3u\u0026beginDay\u003doqah2n\u0026pagination.sortField\u003dkdapnz",
+              "protocol": "http",
+              "path": [
+                "classify",
+                "page"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "pagination",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─page",
+                  "value": "1",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─size",
+                  "value": "10",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─sortField",
+                  "value": "7bbf4c",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "beginDay",
+                  "value": "jxbmhe",
+                  "description": "开始时间"
+                },
+                {
+                  "key": "endDay",
+                  "value": "5mndoo",
+                  "description": "结束时间"
+                },
+                {
+                  "key": "name",
+                  "value": "thomas.jacobson",
+                  "description": "名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "分页查询元数据分类",
+            "header": []
+          },
+          "description": "分页查询元数据分类"
+        },
+        {
+          "name": "查询元数据分类",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/classify/?description\u003dda60d1\u0026name\u003dthomas.jacobson",
+              "protocol": "http",
+              "path": [
+                "classify",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "thomas.jacobson",
+                  "description": "名称"
+                },
+                {
+                  "key": "description",
+                  "value": "m0fdkz",
+                  "description": "描述"
+                }
+              ],
+              "variable": []
+            },
+            "description": "查询元数据分类",
+            "header": []
+          },
+          "description": "查询元数据分类"
+        }
+      ]
+    },
+    {
+      "name": "元数据分类绑定相关接口",
+      "item": [
+        {
+          "name": "新增元数据分类绑定关系",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guid\": \"89\",\n  \"classify\": \"6xmgy3\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/classify/bind/",
+              "protocol": "http",
+              "path": [
+                "classify",
+                "bind",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增元数据分类绑定关系",
+            "header": []
+          },
+          "description": "新增元数据分类绑定关系"
+        },
+        {
+          "name": "修改元数据分类绑定关系",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guid\": \"89\",\n  \"classify\": \"fmfnne\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/classify/bind/",
+              "protocol": "http",
+              "path": [
+                "classify",
+                "bind",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "修改元数据分类绑定关系",
+            "header": []
+          },
+          "description": "修改元数据分类绑定关系"
+        },
+        {
+          "name": "查询元数据分类绑定关系",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/classify/bind/89",
+              "protocol": "http",
+              "path": [
+                "classify",
+                "bind",
+                ":guid"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guid",
+                  "value": "89",
+                  "description": "元数据guid"
+                }
+              ]
+            },
+            "description": "查询元数据分类绑定关系",
+            "header": []
+          },
+          "description": "查询元数据分类绑定关系"
+        }
+      ]
+    },
+    {
+      "name": "元数据查询",
+      "item": [
+        {
+          "name": "获取数据库列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"thomas.jacobson\",\n  \"server\": \"uj48mn\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/database/list",
+              "protocol": "http",
+              "path": [
+                "database",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据库列表",
+            "header": []
+          },
+          "description": "获取数据库列表"
+        },
+        {
+          "name": "获取数据库下的表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"thomas.jacobson\",\n  \"server\": \"xwg88n\",\n  \"dbName\": \"thomas.jacobson\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/table/list",
+              "protocol": "http",
+              "path": [
+                "table",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据库下的表",
+            "header": []
+          },
+          "description": "获取数据库下的表"
+        },
+        {
+          "name": "获取表下的字段",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeName\": \"thomas.jacobson\",\n  \"server\": \"lb2g8b\",\n  \"dbName\": \"thomas.jacobson\",\n  \"tableName\": \"thomas.jacobson\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/column/list",
+              "protocol": "http",
+              "path": [
+                "column",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取表下的字段",
+            "header": []
+          },
+          "description": "获取表下的字段"
+        },
+        {
+          "name": "通过属性字段查询数据库信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"typeName\": \"thomas.jacobson\",\n  \"attrName\": \"thomas.jacobson\",\n  \"attrValue\": \"hytzbs\",\n  \"limit\": 10,\n  \"offset\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/attr/list",
+              "protocol": "http",
+              "path": [
+                "db",
+                "attr",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "通过属性字段查询数据库信息",
+            "header": []
+          },
+          "description": "通过属性字段查询数据库信息"
+        },
+        {
+          "name": "Interface name is not set.",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/column/list/89",
+              "protocol": "http",
+              "path": [
+                "column",
+                "list",
+                ":guid"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guid",
+                  "value": "89",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "",
+            "header": []
+          },
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "元数据查询相关接口（元数据列表查询、元数据详情、元数据类型等接口）",
+      "item": [
+        {
+          "name": "获取所有的基础类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/basic/types",
+              "protocol": "http",
+              "path": [
+                "basic",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取所有的基础类型",
+            "header": []
+          },
+          "description": "获取所有的基础类型"
+        },
+        {
+          "name": "查询元数据列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"5tgckz\",\n  \"typeName\": \"thomas.jacobson\",\n  \"classification\": \"be9agz\",\n  \"limit\": 10,\n  \"offse\": 988\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/list",
+              "protocol": "http",
+              "path": [
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "查询元数据列表",
+            "header": []
+          },
+          "description": "查询元数据列表"
+        },
+        {
+          "name": "多条件查询元数据列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"aql57k\",\n  \"typeName\": \"thomas.jacobson\",\n  \"classification\": \"h9mi3n\",\n  \"limit\": 10,\n  \"offset\": 1,\n  \"typeNameValue\": [\n    \"0r5ngg\"\n  ],\n  \"nameValue\": [\n    \"n61obw\"\n  ],\n  \"labelsValue\": [\n    \"tvfden\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/criteria/list",
+              "protocol": "http",
+              "path": [
+                "criteria",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "多条件查询元数据列表",
+            "header": []
+          },
+          "description": "多条件查询元数据列表"
+        },
+        {
+          "name": "根据guid获取数据库的元数据信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/db/89",
+              "protocol": "http",
+              "path": [
+                "db",
+                ":guid"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guid",
+                  "value": "89",
+                  "description": "元数据唯一id"
+                }
+              ]
+            },
+            "description": "根据guid获取数据库的元数据信息",
+            "header": []
+          },
+          "description": "根据guid获取数据库的元数据信息"
+        },
+        {
+          "name": "根据guid获取表的元数据详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/table/89",
+              "protocol": "http",
+              "path": [
+                "table",
+                ":guid"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guid",
+                  "value": "89",
+                  "description": "元数据唯一id"
+                }
+              ]
+            },
+            "description": "根据guid获取表的元数据详情",
+            "header": []
+          },
+          "description": "根据guid获取表的元数据详情"
+        },
+        {
+          "name": "根据guid获取列元数据详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/column/89",
+              "protocol": "http",
+              "path": [
+                "column",
+                ":guid"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guid",
+                  "value": "89",
+                  "description": "元数据唯一id"
+                }
+              ]
+            },
+            "description": "根据guid获取列元数据详情",
+            "header": []
+          },
+          "description": "根据guid获取列元数据详情"
+        },
+        {
+          "name": "获取数据库下的表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"typeName\": \"thomas.jacobson\",\n  \"server\": \"t8c8t4\",\n  \"dbName\": \"thomas.jacobson\",\n  \"limit\": 10,\n  \"offset\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/table/info/list",
+              "protocol": "http",
+              "path": [
+                "table",
+                "info",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据库下的表",
+            "header": []
+          },
+          "description": "获取数据库下的表"
+        },
+        {
+          "name": "根据guid删除元数据,多个guid 使用英文逗号分割",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dg1hsc",
+              "protocol": "http",
+              "path": [
+                ":guids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guids",
+                  "value": "ajm0q2",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "根据guid删除元数据,多个guid 使用英文逗号分割",
+            "header": []
+          },
+          "description": "根据guid删除元数据,多个guid 使用英文逗号分割"
+        },
+        {
+          "name": "根据guid获取元数据技术数据详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/detail/qname/thomas.jacobson/thomas.jacobson",
+              "protocol": "http",
+              "path": [
+                "detail",
+                "qname",
+                ":qualifiedName",
+                ":typename"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "qualifiedName",
+                  "value": "thomas.jacobson",
+                  "description": "元数据"
+                },
+                {
+                  "key": "typename",
+                  "value": "thomas.jacobson",
+                  "description": "类型名称"
+                }
+              ]
+            },
+            "description": "根据guid获取元数据技术数据详情",
+            "header": []
+          },
+          "description": "根据guid获取元数据技术数据详情"
+        },
+        {
+          "name": "根据guid获取数据库的技术数据操作信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/audit/89",
+              "protocol": "http",
+              "path": [
+                "audit",
+                ":guid"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guid",
+                  "value": "89",
+                  "description": "实体id"
+                }
+              ]
+            },
+            "description": "根据guid获取数据库的技术数据操作信息",
+            "header": []
+          },
+          "description": "根据guid获取数据库的技术数据操作信息"
+        }
+      ]
+    },
+    {
+      "name": "元数据标签功能",
+      "item": [
+        {
+          "name": "新增元数据标签",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"thomas.jacobson\",\n  \"description\": \"neg9gy\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/",
+              "protocol": "http",
+              "path": [
+                "labels",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增元数据标签",
+            "header": []
+          },
+          "description": "新增元数据标签"
+        },
+        {
+          "name": "修改元数据标签",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"thomas.jacobson\",\n  \"description\": \"2op1va\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/360",
+              "protocol": "http",
+              "path": [
+                "labels",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "548",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "修改元数据标签",
+            "header": []
+          },
+          "description": "修改元数据标签"
+        },
+        {
+          "name": "删除元数据标签",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/c02e6c",
+              "protocol": "http",
+              "path": [
+                "labels",
+                ":ids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": "4gsf72",
+                  "description": "id字符串"
+                }
+              ]
+            },
+            "description": "删除元数据标签",
+            "header": []
+          },
+          "description": "删除元数据标签"
+        },
+        {
+          "name": "分页查询元数据标签",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/page?pagination.size\u003d10\u0026endDay\u003d98j90f\u0026name\u003dthomas.jacobson\u0026pagination.sortField\u003dxliicy\u0026pagination.page\u003d1\u0026beginDay\u003db58sft",
+              "protocol": "http",
+              "path": [
+                "labels",
+                "page"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "pagination",
+                  "value": "",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─page",
+                  "value": "1",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─size",
+                  "value": "10",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "└─sortField",
+                  "value": "ldt5bn",
+                  "description": "No comments found."
+                },
+                {
+                  "key": "beginDay",
+                  "value": "3q259h",
+                  "description": "开始时间"
+                },
+                {
+                  "key": "endDay",
+                  "value": "lu0sxn",
+                  "description": "结束时间"
+                },
+                {
+                  "key": "name",
+                  "value": "thomas.jacobson",
+                  "description": "名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "分页查询元数据标签",
+            "header": []
+          },
+          "description": "分页查询元数据标签"
+        },
+        {
+          "name": "查询元数据标签",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/?name\u003dthomas.jacobson\u0026description\u003djkrnj8",
+              "protocol": "http",
+              "path": [
+                "labels",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "thomas.jacobson",
+                  "description": "名称 label should contain alphanumeric characters, _ or -"
+                },
+                {
+                  "key": "description",
+                  "value": "636p4m",
+                  "description": "描述"
+                }
+              ],
+              "variable": []
+            },
+            "description": "查询元数据标签",
+            "header": []
+          },
+          "description": "查询元数据标签"
+        }
+      ]
+    },
+    {
+      "name": "元数据标签绑定功能",
+      "item": [
+        {
+          "name": "新增元数据标签绑定关系",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guid\": \"89\",\n  \"labels\": \"m0iu7t\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/bind/",
+              "protocol": "http",
+              "path": [
+                "labels",
+                "bind",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增元数据标签绑定关系",
+            "header": []
+          },
+          "description": "新增元数据标签绑定关系"
+        },
+        {
+          "name": "修改元数据标签绑定关系",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guid\": \"89\",\n  \"labels\": \"4xe569\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/bind/",
+              "protocol": "http",
+              "path": [
+                "labels",
+                "bind",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "修改元数据标签绑定关系",
+            "header": []
+          },
+          "description": "修改元数据标签绑定关系"
+        },
+        {
+          "name": "查询元数据标签绑定关系",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/bind/89",
+              "protocol": "http",
+              "path": [
+                "labels",
+                "bind",
+                ":guid"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guid",
+                  "value": "89",
+                  "description": "元数据唯一标识"
+                }
+              ]
+            },
+            "description": "查询元数据标签绑定关系",
+            "header": []
+          },
+          "description": "查询元数据标签绑定关系"
+        },
+        {
+          "name": "批量绑定元数据标签",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guids\": [\n    \"4440o4\"\n  ],\n  \"labels\": \"tjup5a\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/labels/bind/bulk",
+              "protocol": "http",
+              "path": [
+                "labels",
+                "bind",
+                "bulk"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "批量绑定元数据标签",
+            "header": []
+          },
+          "description": "批量绑定元数据标签"
+        }
+      ]
+    },
+    {
+      "name": "元数据血缘",
+      "item": [
+        {
+          "name": "获取元数据血缘,展示血缘关系图",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guid\": \"89\",\n  \"direction\": \"jnwo33\",\n  \"depth\": 78\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/lineage",
+              "protocol": "http",
+              "path": [
+                "lineage"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取元数据血缘,展示血缘关系图",
+            "header": []
+          },
+          "description": "获取元数据血缘,展示血缘关系图"
+        },
+        {
+          "name": "获取元数据过程 input output",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/relation/89",
+              "protocol": "http",
+              "path": [
+                "relation",
+                ":guid"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "guid",
+                  "value": "89",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "获取元数据过程 input output",
+            "header": []
+          },
+          "description": "获取元数据过程 input output"
+        },
+        {
+          "name": "血缘分页查询",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"o4yutj\"\n  },\n  \"typeName\": \"thomas.jacobson\",\n  \"qualifiedName\": \"thomas.jacobson\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/lineage/process",
+              "protocol": "http",
+              "path": [
+                "lineage",
+                "process"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "血缘分页查询",
+            "header": []
+          },
+          "description": "血缘分页查询"
+        },
+        {
+          "name": "血缘创建",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "excel temp",
+                  "value": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/lineage/template/import",
+              "protocol": "http",
+              "path": [
+                "lineage",
+                "template",
+                "import"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "血缘创建",
+            "header": []
+          },
+          "description": "血缘创建"
+        },
+        {
+          "name": "血缘删除清理",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/lineage/guids?guids\u003dcbh9q3\u0026deleteFl\u003dtrue",
+              "protocol": "http",
+              "path": [
+                "lineage",
+                "guids"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "guids",
+                  "value": "xb6jba",
+                  "description": "guids"
+                },
+                {
+                  "key": "deleteFl",
+                  "value": "true",
+                  "description": "No comments found."
+                }
+              ],
+              "variable": []
+            },
+            "description": "血缘删除清理",
+            "header": []
+          },
+          "description": "血缘删除清理"
+        },
+        {
+          "name": "血缘删除清理",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/lineage/template/import?file\u003d\u0026deleteFl\u003dtrue",
+              "protocol": "http",
+              "path": [
+                "lineage",
+                "template",
+                "import"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "file",
+                  "value": "",
+                  "description": "文件模板"
+                },
+                {
+                  "key": "deleteFl",
+                  "value": "true",
+                  "description": "是否真删除"
+                }
+              ],
+              "variable": []
+            },
+            "description": "血缘删除清理",
+            "header": []
+          },
+          "description": "血缘删除清理"
+        }
+      ]
+    },
+    {
+      "name": "其它服务调用的元数据接口（数据服务）",
+      "item": [
+        {
+          "name": "获取所有的类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/entity/types",
+              "protocol": "http",
+              "path": [
+                "entity",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取所有的类型",
+            "header": []
+          },
+          "description": "获取所有的类型"
+        },
+        {
+          "name": "获取元数据详情信息",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"typeName\": \"thomas.jacobson\",\n  \"dbName\": \"thomas.jacobson\",\n  \"tableName\": \"thomas.jacobson\",\n  \"server\": \"xm15i3\",\n  \"limit\": 10,\n  \"offset\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/entity/detail",
+              "protocol": "http",
+              "path": [
+                "entity",
+                "detail"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取元数据详情信息",
+            "header": []
+          },
+          "description": "获取元数据详情信息"
+        },
+        {
+          "name": "查询表中是否存在数据",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"typeName\": \"thomas.jacobson\",\n  \"dbName\": \"thomas.jacobson\",\n  \"tableName\": \"thomas.jacobson\",\n  \"server\": \"6awsax\",\n  \"limit\": 10,\n  \"offset\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/entity/exist/data",
+              "protocol": "http",
+              "path": [
+                "entity",
+                "exist",
+                "data"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "查询表中是否存在数据",
+            "header": []
+          },
+          "description": "查询表中是否存在数据"
+        }
+      ]
+    }
+  ]
+}
