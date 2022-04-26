@@ -186,17 +186,9 @@ public class SqlBuilderFactory {
         });
         List<Column> collects = columns.stream().filter(Column::getPrimaryKey).collect(Collectors.toList());
         collects.forEach(e->{
-            sb.append("   " +" PRIMARY KEY (`").append(e.getName()).append("`)"+ '\n');
+            sb.append("   " +" PRIMARY KEY (`").append(e.getName()).append("`),"+ '\n');
         });
-        sb.append(");");
-        return sb.toString();
+        return  sb.substring(0,sb.lastIndexOf(",\n"))+"\n);";
     }
 
-  public static void main(String[] args) {
-      Table table = new Table();
-      table.setName("user");
-      table.addColumn(Column.builder().name("id").primaryKey(true).dataType("BIGINT").comments("主键").length(64).build());
-      table.addColumn(Column.builder().name("name").primaryKey(false).dataType("VARCHAR").empty(true).comments("名称").length(50).build());
-      System.out.println(creatTableSQL(table));
-  }
 }
