@@ -3,6 +3,8 @@ package com.qk.dm.dataingestion.service.impl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
@@ -129,7 +131,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                     IngestionType.getVal(baseDetail.getTargetConnectType()));
         }
 
-        return Map.of("dataxJson",json);
+        return Map.of("dataxJson",parseJson(json));
 
     }
 
@@ -257,6 +259,17 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                 IngestionType.getVal(baseInfo.getSourceConnectType()),
                 IngestionType.getVal(baseInfo.getTargetConnectType()));
         updateProcessDefinition(baseInfo.getJobName(),taskCode,dataxJson);
+    }
+
+    /**
+     * 格式化json字符串
+     * @param jsonString
+     * @return
+     */
+    private String parseJson(String jsonString){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(JsonParser.parseString(jsonString));
+
     }
 
     /**
