@@ -105,6 +105,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
             DasApiCreateSqlScriptDefinitionVO createSqlScriptDefinitionVO =
                     DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScriptDefinitionVO(apiCreateSqlScript);
 
+            setDasApiCreateSqlScriptVOParams(apiCreateSqlScript,createSqlScriptDefinitionVO);
             createSqlScriptDefinitionVO.setCreateSqlRequestParasJson(apiCreateSqlScript.getApiRequestParas());
             createSqlScriptDefinitionVO.setCreateOrderParasJson(apiCreateSqlScript.getApiOrderParas());
 

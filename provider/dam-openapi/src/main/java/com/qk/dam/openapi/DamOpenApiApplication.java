@@ -59,6 +59,6 @@ public class DamOpenApiApplication {
   public static void main(String[] args)
       throws MalformedURLException, ResolutionException, ValidationException, EncodeException {
     System.out.println(test1());
-    System.out.println(test2());
+//    System.out.println(test2());
   }
 }

@@ -3,23 +3,26 @@ package com.qk.dm.dataservice.service.imp;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.openapi.ComponentField;
 import com.qk.dam.openapi.OpenapiBuilder;
+import com.qk.dm.dataservice.biz.CreateConfigApiOpenApiBuilder;
+import com.qk.dm.dataservice.biz.CreateSqlScriptApiOpenApiBuilder;
+import com.qk.dm.dataservice.biz.RegisterApiOpenApiBuilder;
+import com.qk.dm.dataservice.config.OpenApiConnectInfo;
 import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.DasConstant;
-import com.qk.dm.dataservice.constant.RequestParamPositionEnum;
-import com.qk.dm.dataservice.service.DasApiBasicInfoService;
-import com.qk.dm.dataservice.service.DasApiRegisterService;
-import com.qk.dm.dataservice.service.DasGenerateOpenApiService;
-import com.qk.dm.dataservice.utils.StringFormatUtils;
-import com.qk.dm.dataservice.vo.*;
+import com.qk.dm.dataservice.entity.DasApiDir;
+import com.qk.dm.dataservice.service.*;
+import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
+import com.qk.dm.dataservice.vo.DasApiCreateConfigDefinitionVO;
+import com.qk.dm.dataservice.vo.DasApiCreateSqlScriptDefinitionVO;
+import com.qk.dm.dataservice.vo.DasApiRegisterDefinitionVO;
+import org.apache.commons.compress.utils.Lists;
 import org.openapi4j.parser.model.SerializationFlag;
 import org.openapi4j.parser.model.v3.OpenApi3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -36,39 +39,64 @@ import java.util.stream.Collectors;
 public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService {
     private static final Log LOG = LogFactory.get("数据服务_根据数据服务API生成OpenApiJson操作");
 
-    public static final String OPEN_API_REQUEST_BODY_REF_SUFFIX = "Payload";
-    public static final String OPEN_API_PARAMETER_TYPE_QUERY = "query";
+    private final DasApiDirService dasApiDirService;
     private final DasApiBasicInfoService dasApiBasicInfoService;
+    private final DasApiCreateConfigService dasApiCreateConfigService;
+    private final DasApiCreateSqlScriptService dasApiCreateSqlScriptService;
     private final DasApiRegisterService dasApiRegisterService;
 
+    private final CreateConfigApiOpenApiBuilder createConfigApiOpenApiBuilder;
+    private final CreateSqlScriptApiOpenApiBuilder createSqlScriptApiOpenApiBuilder;
+    private final RegisterApiOpenApiBuilder registerApiOpenApiBuilder;
+
+    private final OpenApiConnectInfo openApiConnectInfo;
+
     @Autowired
-    public DasGenerateOpenApiServiceImpl(
-            DasApiBasicInfoService dasApiBasicInfoService, DasApiRegisterService dasApiRegisterService) {
+    public DasGenerateOpenApiServiceImpl(DasApiDirService dasApiDirService,
+                                         DasApiBasicInfoService dasApiBasicInfoService,
+                                         DasApiCreateConfigService dasApiCreateConfigService,
+                                         DasApiCreateSqlScriptService dasApiCreateSqlScriptService,
+                                         DasApiRegisterService dasApiRegisterService,
+                                         CreateConfigApiOpenApiBuilder createConfigApiOpenApiBuilder,
+                                         CreateSqlScriptApiOpenApiBuilder createSqlScriptApiOpenApiBuilder,
+                                         RegisterApiOpenApiBuilder registerApiOpenApiBuilder,
+                                         OpenApiConnectInfo openApiConnectInfo) {
+        this.dasApiDirService = dasApiDirService;
         this.dasApiBasicInfoService = dasApiBasicInfoService;
+        this.dasApiCreateConfigService = dasApiCreateConfigService;
+        this.dasApiCreateSqlScriptService = dasApiCreateSqlScriptService;
         this.dasApiRegisterService = dasApiRegisterService;
+        this.createConfigApiOpenApiBuilder = createConfigApiOpenApiBuilder;
+        this.createSqlScriptApiOpenApiBuilder = createSqlScriptApiOpenApiBuilder;
+        this.registerApiOpenApiBuilder = registerApiOpenApiBuilder;
+        this.openApiConnectInfo = openApiConnectInfo;
     }
 
     @Override
-    public String generateOpenApiRegister() {
-        // TODO 后期考虑版本,目录进行不同API的测试接口生成
+    public String generateOpenApi(String dirId) {
+        //根据目录分类,进行不同API的测试接口生成
         LOG.info("开始执行生成OpenApiJson操作!");
         String openApi3Json = null;
         try {
-            // 获取所有注册API信息
-            List<DasApiRegisterVO> dasApiRegisterList = dasApiRegisterService.findAll();
-            LOG.info("获取到注册API个数为: 【{}】", dasApiRegisterList.size());
-            if (!ObjectUtils.isEmpty(dasApiRegisterList)) {
+            // 获取API分类目录信息
+            DasApiDir apiDirInfo = getApiDirInfo(dirId);
+            // 获取API基础信息
+            List<DasApiBasicInfoVO> apiBasicInfoVOList = dasApiBasicInfoService.findAllByApiDirId(apiDirInfo.getDirId());
+            LOG.info("获取到API信息个数为: 【{}】", apiBasicInfoVOList.size());
+            if (!ObjectUtils.isEmpty(apiBasicInfoVOList)) {
                 // 构建OpenApi3
-                OpenapiBuilder openapiBuilder = getOpenApiBuilder(ApiTypeEnum.REGISTER_API.getCode(), "数据服务-注册Api-TEST", "3.0.3");
-                openApiRegisterBuilder(dasApiRegisterList, openapiBuilder);
+                OpenapiBuilder openapiBuilder = getOpenApiBuilder("数据服务-" + apiDirInfo.getDirName());
+                openApiBuilder(apiBasicInfoVOList, openapiBuilder);
                 // 构建完成,获取OpenApi3
                 OpenApi3 openApi3 = openapiBuilder.getOpenApi3();
                 LOG.info("成功获取OpenApi3!");
                 EnumSet<SerializationFlag> enumSet = EnumSet.of(SerializationFlag.OUT_AS_JSON);
                 openApi3Json = openApi3.toString(enumSet);
                 LOG.info("成功生成OpenApiJson!");
+            } else {
+                LOG.info("数据服务注册API信息为空!");
+                throw new BizException("数据服务注册API信息为空!!!");
             }
-            LOG.info("数据服务注册API信息为空!");
         } catch (Exception e) {
             e.printStackTrace();
             throw new BizException("生成OpenApi失败!!!");
@@ -76,155 +104,60 @@ public class DasGenerateOpenApiServiceImpl implements DasGenerateOpenApiService 
         return openApi3Json;
     }
 
-    private void openApiRegisterBuilder(List<DasApiRegisterVO> dasApiRegisterList, OpenapiBuilder openapiBuilder) {
-        for (DasApiRegisterVO dasApiRegisterVO : dasApiRegisterList) {
-            //注册API定义信息
-            DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO = dasApiRegisterVO.getApiRegisterDefinitionVO();
-            List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList = dasApiRegisterDefinitionVO.getApiRegisterBackendParaVOS();
-            // registerComponentsBuilder 请求参数
-            if (!ObjectUtils.isEmpty(apiRegisterBackendParaVOList)) {
-                // 获取基础信定义参数信息
-                Map<String, List<DasApiBasicInfoRequestParasVO>> basicInfoRequestParasMap = getBasicRequestParas(dasApiRegisterVO);
-                // registerRequestComponentsBuilder TODO registerResponseComponentsBuilder响应参数
-                String requestCompKey =
-                        registerRequestComponentsBuilder(
-                                openapiBuilder,
-                                dasApiRegisterDefinitionVO,
-                                apiRegisterBackendParaVOList,
-                                basicInfoRequestParasMap);
-                // pathsBuilder
-                pathsBuilder(openapiBuilder,
-                        dasApiRegisterDefinitionVO.getBackendPath(),
-                        dasApiRegisterDefinitionVO.getRequestType(),
-                        dasApiRegisterDefinitionVO.getDescription());
-                // 参数位置
-                if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY
-                        .getTypeName()
-                        .equalsIgnoreCase(apiRegisterBackendParaVOList.get(0).getBackendParaPosition())) {
-                    // form,Request body
-                    openapiBuilder.requestBody(
-                            dasApiRegisterDefinitionVO.getBackendPath(),
-                            dasApiRegisterDefinitionVO.getRequestType().toLowerCase(),
-                            true,
-                            OpenapiBuilder.MEDIA_CONTENT_FORM,
-                            requestCompKey);
-                } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_PATH
-                        .getTypeName()
-                        .equalsIgnoreCase(apiRegisterBackendParaVOList.get(0).getBackendParaPosition())) {
-                    // path,Parameters
-                    parameterRegisterBuilder(
-                            openapiBuilder,
-                            dasApiRegisterDefinitionVO.getBackendPath(),
-                            dasApiRegisterDefinitionVO.getRequestType(),
-                            apiRegisterBackendParaVOList,
-                            basicInfoRequestParasMap);
-                }
-            } else {
-                // pathsBuilder
-                pathsBuilder(
-                        openapiBuilder,
-                        dasApiRegisterDefinitionVO.getBackendPath(),
-                        dasApiRegisterDefinitionVO.getRequestType(),
-                        dasApiRegisterDefinitionVO.getDescription());
-            }
-            // response todo response  ref
-            openapiBuilder.response(
-                    dasApiRegisterDefinitionVO.getBackendPath(),
-                    dasApiRegisterDefinitionVO.getRequestType().toLowerCase(),
-                    "200",
-                    "ok");
+    /**
+     * 获取API分类目录信息
+     *
+     * @param dirId
+     * @return
+     */
+    private DasApiDir getApiDirInfo(String dirId) {
+        DasApiDir apiDir = dasApiDirService.searchApiDirInfoByDirId(dirId);
+        if (apiDir == null) {
+            apiDir = new DasApiDir();
+            apiDir.setDirId(DasConstant.TREE_DIR_TOP_PARENT_ID);
+            apiDir.setDirName(DasConstant.TREE_DIR_TOP_PARENT_NAME);
+        }
+        return apiDir;
+    }
+
+    private void openApiBuilder(List<DasApiBasicInfoVO> apiBasicInfoVOList, OpenapiBuilder openapiBuilder) {
+        if (null != apiBasicInfoVOList && apiBasicInfoVOList.size() > 0) {
+            Map<String, List<DasApiBasicInfoVO>> apiTypeMap = apiBasicInfoVOList.stream().collect(Collectors.groupingBy(DasApiBasicInfoVO::getApiType));
+            // 新建API
+            List<DasApiBasicInfoVO> createApi = apiTypeMap.get(ApiTypeEnum.CREATE_API.getCode());
+            Map<String, List<DasApiBasicInfoVO>> createApiMap = createApi.stream().collect(Collectors.groupingBy(DasApiBasicInfoVO::getApiId));
+            // 注册API
+            List<DasApiBasicInfoVO> registerApi = apiTypeMap.get(ApiTypeEnum.REGISTER_API.getCode());
+            Map<String, List<DasApiBasicInfoVO>> registerApiMap = registerApi.stream().collect(Collectors.groupingBy(DasApiBasicInfoVO::getApiId));
+
+            // 新建API配置信息
+            List<String> createApiIds = Lists.newArrayList();
+            createApiIds.addAll(createApiMap.keySet());
+            List<DasApiCreateConfigDefinitionVO> createConfigDefinitions = dasApiCreateConfigService.searchCreateConfigByApiId(createApiIds);
+            createConfigApiOpenApiBuilder.openApiBuilder(createConfigDefinitions, createApiMap, openapiBuilder);
+            // 新建API脚本信息
+            List<DasApiCreateSqlScriptDefinitionVO> createSqlScriptDefinitions = dasApiCreateSqlScriptService.searchCreateSqlScriptByApiId(createApiIds);
+            createSqlScriptApiOpenApiBuilder.openApiBuilder(createSqlScriptDefinitions, createApiMap, openapiBuilder);
+            // 注册API
+            List<String> registerApiIds = Lists.newArrayList();
+            registerApiIds.addAll(registerApiMap.keySet());
+            List<DasApiRegisterDefinitionVO> registerDefinitions = dasApiRegisterService.searchRegisterByApiId(registerApiIds);
+            registerApiOpenApiBuilder.openApiBuilder(registerDefinitions, registerApiMap, openapiBuilder);
         }
     }
 
-    private OpenapiBuilder getOpenApiBuilder(String title, String description, String version) {
-        return OpenapiBuilder.builder().build().info(title, description, version);
+    /**
+     * 构建OpenApi3
+     *
+     * @param description
+     * @return
+     */
+    private OpenapiBuilder getOpenApiBuilder(String description) {
+        return OpenapiBuilder.builder().build()
+                .context(openApiConnectInfo.getVersion(), openApiConnectInfo.getUrl())
+                .server(openApiConnectInfo.getServerUrl())
+                .info(DasConstant.DAM_DATA_SERVICE, description, openApiConnectInfo.getVersion());
     }
 
-    private void pathsBuilder(
-            OpenapiBuilder openapiBuilder, String pathName, String httpMethod, String summary) {
-        openapiBuilder.path(pathName, httpMethod.toLowerCase(), summary);
-    }
 
-    private String registerRequestComponentsBuilder(OpenapiBuilder openapiBuilder,
-                                                    DasApiRegisterDefinitionVO dasApiRegisterDefinitionVO,
-                                                    List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList,
-                                                    Map<String, List<DasApiBasicInfoRequestParasVO>> basicInfoRequestParasMap) {
-        List<ComponentField> componentFields = new ArrayList<>();
-        // 构建components
-        for (DasApiRegisterBackendParaVO backendParaVO : apiRegisterBackendParaVOList) {
-            DasApiBasicInfoRequestParasVO basicInfoRequestParasVO =
-                    basicInfoRequestParasMap.get(backendParaVO.getParaName()).get(0);
-            ComponentField componentField =
-                    getComponentField(
-                            basicInfoRequestParasVO.getParaType(),
-                            backendParaVO.getBackendParaName(),
-                            basicInfoRequestParasVO.getParaCHNName(),
-                            basicInfoRequestParasVO.getDefaultValue(),
-                            basicInfoRequestParasVO.getNecessary());
-            componentFields.add(componentField);
-        }
-        String backendPath = dasApiRegisterDefinitionVO.getBackendPath();
-        String requestCompKey =
-                StringFormatUtils.camelName(backendPath.split("/")[backendPath.split("/").length - 1])
-                        + OPEN_API_REQUEST_BODY_REF_SUFFIX;
-        openapiBuilder.components(requestCompKey, componentFields);
-        return requestCompKey;
-    }
-
-    private Map<String, List<DasApiBasicInfoRequestParasVO>> getBasicRequestParas(DasApiRegisterVO dasApiRegisterVO) {
-        // 获取API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dasApiRegisterVO.getApiBasicInfoVO();
-        // 获取基础信定义参数信息
-        List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOList = dasApiBasicInfoVO.getApiBasicInfoRequestParasVOS();
-        return basicInfoRequestParasVOList.stream()
-                .collect(Collectors.groupingBy(DasApiBasicInfoRequestParasVO::getParaName));
-    }
-
-    private ComponentField getComponentField(
-            String paraType,
-            String fieldName,
-            String description,
-            Object defaultValue,
-            boolean required) {
-        ComponentField.ComponentFieldBuilder componentFieldBuilder =
-                ComponentField.builder()
-                        .fieldName(fieldName)
-                        .desc(description)
-                        .defaultValue(defaultValue)
-                        .required(required);
-        // 参数类型设置
-        componentFieldType(paraType, componentFieldBuilder);
-        return componentFieldBuilder.build();
-    }
-
-    private void componentFieldType(
-            String paraType, ComponentField.ComponentFieldBuilder componentFieldBuilder) {
-        if (DasConstant.DAS_API_PARA_COL_TYPE_STRING.equalsIgnoreCase(paraType)) {
-            componentFieldBuilder.type(DasConstant.DAS_API_PARA_COL_TYPE_STRING.toLowerCase());
-        } else if (DasConstant.DAS_API_PARA_COL_TYPE_INTEGER.equalsIgnoreCase(paraType)) {
-            componentFieldBuilder.type(DasConstant.DAS_API_PARA_COL_TYPE_INTEGER.toLowerCase());
-        } else {
-            // 默认
-            componentFieldBuilder.type(DasConstant.DAS_API_PARA_COL_TYPE_STRING.toLowerCase());
-        }
-    }
-
-    private void parameterRegisterBuilder(
-            OpenapiBuilder openapiBuilder,
-            String backendPath,
-            String httpMethod,
-            List<DasApiRegisterBackendParaVO> apiRegisterBackendParaVOList,
-            Map<String, List<DasApiBasicInfoRequestParasVO>> basicInfoRequestParasMap) {
-        for (DasApiRegisterBackendParaVO backendParaVO : apiRegisterBackendParaVOList) {
-            DasApiBasicInfoRequestParasVO requestParasVO =
-                    basicInfoRequestParasMap.get(backendParaVO.getParaName()).get(0);
-            openapiBuilder.parameter(
-                    backendPath,
-                    httpMethod.toLowerCase(),
-                    OPEN_API_PARAMETER_TYPE_QUERY,
-                    backendParaVO.getBackendParaName(),
-                    requestParasVO.getNecessary(),
-                    requestParasVO.getParaType().toLowerCase());
-        }
-    }
 }
