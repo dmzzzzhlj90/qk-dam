@@ -100,11 +100,6 @@ public class DisMigrationBaseInfoVO {
     private String targetFileType;
 
     /**
-     * hdfswriter写入前数据清理处理模式
-     * 数据源是hive是显示且必填
-     */
-    private String targetWriteMode;
-    /**
      * hdfswriter写入时的字段分隔符
      * 数据源是hive是显示且必填
      */
@@ -121,15 +116,19 @@ public class DisMigrationBaseInfoVO {
     private String targetTable;
 
     /**
-     * 导入前类型（导入前是否清除数据）
+     *导入前 （0 不清除 1清除）
      */
-
-    private String beforeImportType;
+    private String targetWriteMode;
 
     /**
      * 主键或分区字段
      */
     private String primaryField;
+
+    /**
+     * where条件
+     */
+    private String whereCondition;
 
     /**
      * 耗时（单位秒）

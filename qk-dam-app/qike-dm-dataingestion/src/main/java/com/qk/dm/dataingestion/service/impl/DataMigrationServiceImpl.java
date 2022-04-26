@@ -17,10 +17,7 @@ import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisBaseInfoMapper;
 import com.qk.dm.dataingestion.mapstruct.mapper.MetaDataColumnMapper;
 import com.qk.dm.dataingestion.model.*;
-import com.qk.dm.dataingestion.service.DataMigrationService;
-import com.qk.dm.dataingestion.service.DisBaseInfoService;
-import com.qk.dm.dataingestion.service.DisColumnInfoService;
-import com.qk.dm.dataingestion.service.DisSchedulerConfigService;
+import com.qk.dm.dataingestion.service.*;
 import com.qk.dm.dataingestion.strategy.DataSyncFactory;
 import com.qk.dm.dataingestion.vo.*;
 import com.qk.dm.DataBaseService;
@@ -55,6 +52,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     private final DataSyncFactory dataSyncFactory;
     private final DataxDolphinClient dataxDolphinClient;
     private final DataBaseService dataBaseService;
+    private final DisDataxJsonService disDataxJsonService;
 
     @PostConstruct
     public void initFactory() {
@@ -62,7 +60,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     }
 
     public DataMigrationServiceImpl(EntityManager entityManager, DisBaseInfoService baseInfoService, DisColumnInfoService columnInfoService,
-                                    DisSchedulerConfigService schedulerConfigService, DataSyncFactory dataSyncFactory, DataxDolphinClient dataxDolphinClient, DataBaseService dataBaseService) {
+                                    DisSchedulerConfigService schedulerConfigService, DataSyncFactory dataSyncFactory, DataxDolphinClient dataxDolphinClient, DataBaseService dataBaseService, DisDataxJsonService disDataxJsonService) {
         this.entityManager = entityManager;
         this.baseInfoService = baseInfoService;
         this.columnInfoService = columnInfoService;
@@ -70,6 +68,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         this.dataSyncFactory = dataSyncFactory;
         this.dataxDolphinClient = dataxDolphinClient;
         this.dataBaseService = dataBaseService;
+        this.disDataxJsonService = disDataxJsonService;
     }
 
     @Override
@@ -117,15 +116,18 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     public Map<String,Object> jsonDetail(Long id) {
-        DisMigrationBaseInfoVO baseDetail = baseInfoService.detail(id);
-        List<DisColumnInfoVO> columnList = columnInfoService.list(id);
-        DataMigrationVO dataMigrationVO = DataMigrationVO.builder().baseInfo(baseDetail)
-                .columnList(ColumnVO.builder().sourceColumnList(sourceList(baseDetail,columnList))
-                        .targetColumnList(targetList(baseDetail,columnList)).build())
-                .schedulerConfig(schedulerConfigService.detail(id)).build();
-        String json = dataSyncFactory.transJson(dataMigrationVO,
-                IngestionType.getVal(baseDetail.getSourceConnectType()),
-                IngestionType.getVal(baseDetail.getTargetConnectType()));
+        String json = disDataxJsonService.findDataxJson(id);
+        if (Objects.isNull(json)) {
+            DisMigrationBaseInfoVO baseDetail = baseInfoService.detail(id);
+            List<DisColumnInfoVO> columnList = columnInfoService.list(id);
+            DataMigrationVO dataMigrationVO = DataMigrationVO.builder().baseInfo(baseDetail)
+                    .columnList(ColumnVO.builder().sourceColumnList(sourceList(baseDetail, columnList))
+                            .targetColumnList(targetList(baseDetail, columnList)).build())
+                    .schedulerConfig(schedulerConfigService.detail(id)).build();
+            json = dataSyncFactory.transJson(dataMigrationVO,
+                    IngestionType.getVal(baseDetail.getSourceConnectType()),
+                    IngestionType.getVal(baseDetail.getTargetConnectType()));
+        }
 
         return Map.of("dataxJson",json);
 
@@ -170,8 +172,15 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     }
 
     @Override
-    public void updateDataxJson(DisJsonParamsVO disJsonParamsVO) {
-
+    public void updateDataxJson(DisJsonParamsVO disJsonParamsVO){
+        disDataxJsonService.update(disJsonParamsVO.getId(),disJsonParamsVO.getDataxJson());
+        DisMigrationBaseInfoVO baseInfo = baseInfoService.detail(disJsonParamsVO.getId());
+        try {
+            updateProcessDefinition(baseInfo.getJobName(),baseInfo.getTaskCode(),disJsonParamsVO.getDataxJson());
+        } catch (ApiException e) {
+            log.error("调用dolphinscheduler 出错【{}】",e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 
@@ -247,11 +256,21 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
                 IngestionType.getVal(baseInfo.getSourceConnectType()),
                 IngestionType.getVal(baseInfo.getTargetConnectType()));
+        updateProcessDefinition(baseInfo.getJobName(),taskCode,dataxJson);
+    }
+
+    /**
+     * 修改流程定义（datax json数据）
+     * @param jobName
+     * @param taskCode
+     * @param dataxJson
+     */
+    private void updateProcessDefinition(String jobName, Long taskCode,String dataxJson)throws ApiException{
         //下线
         dataxDolphinClient.dolphinProcessRelease(taskCode,
                 ProcessDefinition.ReleaseStateEnum.OFFLINE);
         //修改流程定义
-        dataxDolphinClient.updateProcessDefinition(baseInfo.getJobName(),
+        dataxDolphinClient.updateProcessDefinition(jobName,
                 taskCode,dataxJson,new DolphinTaskDefinitionPropertiesBean());
         //上线
         dataxDolphinClient.dolphinProcessRelease(taskCode,
