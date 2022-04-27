@@ -1,0 +1,2411 @@
+{
+  "components": {
+    "schemas": {
+      "_dolphin_process_page_listresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "code": {
+                      "format": "int64",
+                      "description": "调度流程实例code,修改时必填",
+                      "type": "integer"
+                    },
+                    "name": {
+                      "format": "string",
+                      "description": "作业名称",
+                      "type": "string"
+                    },
+                    "description": {
+                      "format": "string",
+                      "description": "描述",
+                      "type": "string"
+                    },
+                    "releaseState": {
+                      "format": "string",
+                      "description": "状态",
+                      "type": "string"
+                    },
+                    "updateTime": {
+                      "format": "string",
+                      "description": "修改时间",
+                      "type": "string"
+                    },
+                    "userName": {
+                      "format": "string",
+                      "description": "创建人",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_dir_listrequest": {},
+      "_dolphin_instance_page_listresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int64",
+                      "description": "No comments found.",
+                      "type": "integer"
+                    },
+                    "processDefinitionCode": {
+                      "format": "int64",
+                      "description": "流程code",
+                      "type": "integer"
+                    },
+                    "state": {
+                      "format": "string",
+                      "description": "状态",
+                      "type": "string"
+                    },
+                    "recovery": {
+                      "format": "string",
+                      "description": "容错标示",
+                      "type": "string"
+                    },
+                    "startTime": {
+                      "format": "string",
+                      "description": "开始时间",
+                      "type": "string"
+                    },
+                    "endTime": {
+                      "format": "string",
+                      "description": "结束时间",
+                      "type": "string"
+                    },
+                    "runTimes": {
+                      "format": "int64",
+                      "description": "运行次数",
+                      "type": "integer"
+                    },
+                    "name": {
+                      "format": "string",
+                      "description": "工作流名称",
+                      "type": "string"
+                    },
+                    "host": {
+                      "format": "string",
+                      "description": "机器地址",
+                      "type": "string"
+                    },
+                    "commandType": {
+                      "format": "string",
+                      "description": "运行类型",
+                      "type": "string"
+                    },
+                    "executorName": {
+                      "format": "string",
+                      "description": "执行用户",
+                      "type": "string"
+                    },
+                    "duration": {
+                      "format": "string",
+                      "description": "运行时长",
+                      "type": "string"
+                    },
+                    "stateName": {
+                      "format": "string",
+                      "description": "状态名称",
+                      "type": "string"
+                    },
+                    "taskInstanceId": {
+                      "format": "int64",
+                      "description": "任务实例id",
+                      "type": "integer"
+                    },
+                    "dependenceScheduleTimes": {
+                      "format": "string",
+                      "description": "No comments found.",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datasource_connect_tableresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/_datasource_connect_tableresponse"
+            }
+          }
+        }
+      },
+      "_dolphin_process_page_listrequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "name": {
+            "format": "string",
+            "description": "作业名称",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          },
+          "beginDay": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDay": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          }
+        }
+      },
+      "_datasource_connect_tablerequest": {},
+      "_dolphin_process__code_request": {},
+      "_dolphin_process_releaseresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dolphin_process_request": {
+        "properties": {
+          "code": {
+            "format": "int64",
+            "description": "调度流程实例code,修改时必填",
+            "type": "integer"
+          },
+          "name": {
+            "format": "string",
+            "description": "作业名称",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          },
+          "schedulerRules": {
+            "description": "调度_规则信息(object)",
+            "type": "object",
+            "properties": {
+              "engineType": {
+                "format": "string",
+                "description": "适用引擎 MYSQL HIVE ORACLE",
+                "type": "string"
+              },
+              "dataSourceName": {
+                "format": "string",
+                "description": "数据连接",
+                "type": "string"
+              },
+              "databaseName": {
+                "format": "string",
+                "description": "数据库名称",
+                "type": "string"
+              },
+              "tableList": {
+                "description": "表名称",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/_dolphin_process_request"
+                }
+              },
+              "allNums": {
+                "format": "string",
+                "description": "全选所有的表时候赋值为（all）",
+                "type": "string"
+              },
+              "applicationName": {
+                "format": "string",
+                "description": "应用名称",
+                "type": "string"
+              },
+              "displayName": {
+                "format": "string",
+                "description": "显示名称",
+                "type": "string"
+              },
+              "owner": {
+                "format": "string",
+                "description": "创建人名称",
+                "type": "string"
+              },
+              "strategy": {
+                "format": "string",
+                "description": "采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）",
+                "type": "string"
+              },
+              "dataSourceId": {
+                "format": "string",
+                "description": "数据源Id",
+                "type": "string"
+              },
+              "description": {
+                "format": "string",
+                "description": "描述",
+                "type": "string"
+              }
+            }
+          },
+          "schedulerConfig": {
+            "description": "调度_配置信息(object)",
+            "type": "object",
+            "properties": {
+              "schedulerType": {
+                "format": "string",
+                "description": "调度执行方式 \"SCHEDULER_TYPE_SINGLE\":\"单次调度\" \"SCHEDULER_TYPE_CYCLE\":周期调度;",
+                "type": "string"
+              },
+              "effectiveTimeStart": {
+                "format": "string",
+                "description": "有效日期开始",
+                "type": "string"
+              },
+              "effectiveTimeEnt": {
+                "format": "string",
+                "description": "有效日期结束",
+                "type": "string"
+              },
+              "schedulerCycle": {
+                "format": "string",
+                "description": "调度周期 分钟 小时 天 周",
+                "type": "string"
+              },
+              "schedulerIntervalTime": {
+                "format": "string",
+                "description": "间隔时间 调度周期为周 周一 周二 周三 周四 周五 周六 周日",
+                "type": "string"
+              },
+              "schedulerTime": {
+                "format": "string",
+                "description": "调度时间",
+                "type": "string"
+              },
+              "cron": {
+                "format": "string",
+                "description": "调度执行cron表达式",
+                "type": "string"
+              },
+              "schedulerId": {
+                "format": "int32",
+                "description": "调度定时id",
+                "type": "integer"
+              }
+            }
+          },
+          "updateTime": {
+            "format": "string",
+            "description": "修改时间",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "dirId"
+        ]
+      },
+      "_datasource_connect_dbrequest": {},
+      "_dolphin_instance_executeresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_datasource_connect__type_request": {},
+      "_dir__id_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_datasource_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dir_bulkresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dolphin_task_listrequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "processInstanceId": {
+            "format": "int32",
+            "description": "流程实例ID",
+            "type": "integer"
+          },
+          "processInstanceName": {
+            "format": "string",
+            "description": "流程实例名称",
+            "type": "string"
+          },
+          "startDate": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDate": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          },
+          "searchVal": {
+            "format": "string",
+            "description": "名称",
+            "type": "string"
+          },
+          "stateType": {
+            "format": "string",
+            "description": "工作流和任务节点的运行状态",
+            "type": "string"
+          },
+          "executorName": {
+            "format": "string",
+            "description": "执行用户",
+            "type": "string"
+          },
+          "taskName": {
+            "format": "string",
+            "description": "任务实例名称",
+            "type": "string"
+          }
+        }
+      },
+      "_datasource_connect_dbresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/_datasource_connect_dbresponse"
+            }
+          }
+        }
+      },
+      "_dolphin_task__taskInstanceId__log_downloadrequest": {},
+      "_dolphin_process_runing__code_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dir_request": {
+        "properties": {
+          "id": {
+            "format": "int64",
+            "description": "主键ID",
+            "type": "integer"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "规则分类目录ID",
+            "type": "string"
+          },
+          "title": {
+            "format": "string",
+            "description": "规则分类目录名称 title",
+            "type": "string"
+          },
+          "value": {
+            "format": "string",
+            "description": "规则分类目录名称 value",
+            "type": "string"
+          },
+          "parentId": {
+            "format": "string",
+            "description": "父级id",
+            "type": "string"
+          },
+          "description": {
+            "format": "string",
+            "description": "描述",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "description": "创建时间(object)",
+            "type": "object"
+          },
+          "gmtModified": {
+            "description": "修改时间(object)",
+            "type": "object"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "是否删除；0逻辑删除，1物理删除；",
+            "type": "integer"
+          },
+          "type": {
+            "format": "string",
+            "description": "分类；",
+            "type": "string"
+          }
+        }
+      },
+      "_dolphin_instance__instanceId_request": {},
+      "_dir_listresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "int64",
+                  "description": "No comments found.",
+                  "type": "integer"
+                },
+                "dirId": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "title": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "value": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "parentId": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "type": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "children": {
+                  "description": "No comments found.",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/_dir_listresponse"
+                  },
+                  "example": [
+                    {
+                      "$ref": "..."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "_dolphin_task__taskInstanceId__logrequest": {},
+      "_dolphin_task_listresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "int64",
+                      "description": "No comments found.",
+                      "type": "integer"
+                    },
+                    "processDefinitionId": {
+                      "format": "int64",
+                      "description": "流程id",
+                      "type": "integer"
+                    },
+                    "processInstanceId": {
+                      "format": "int64",
+                      "description": "实例id",
+                      "type": "integer"
+                    },
+                    "processInstanceName": {
+                      "format": "string",
+                      "description": "工作流名称",
+                      "type": "string"
+                    },
+                    "name": {
+                      "format": "string",
+                      "description": "任务实例名称",
+                      "type": "string"
+                    },
+                    "executorName": {
+                      "format": "string",
+                      "description": "执行用户",
+                      "type": "string"
+                    },
+                    "taskType": {
+                      "format": "string",
+                      "description": "节点类型",
+                      "type": "string"
+                    },
+                    "state": {
+                      "format": "string",
+                      "description": "状态",
+                      "type": "string"
+                    },
+                    "submitTime": {
+                      "description": "提交时间(object)",
+                      "type": "object"
+                    },
+                    "startTime": {
+                      "description": "开始时间(object)",
+                      "type": "object"
+                    },
+                    "endTime": {
+                      "description": "结束时间(object)",
+                      "type": "object"
+                    },
+                    "host": {
+                      "format": "string",
+                      "description": "机器地址",
+                      "type": "string"
+                    },
+                    "duration": {
+                      "format": "string",
+                      "description": "运行时长",
+                      "type": "string"
+                    },
+                    "retryTimes": {
+                      "format": "int32",
+                      "description": "重试次数",
+                      "type": "integer"
+                    },
+                    "stateName": {
+                      "format": "string",
+                      "description": "状态名称",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_dolphin_task__taskInstanceId__log_downloadresponse": {},
+      "_dir_bulkrequest": {},
+      "_dolphin_instance_page_listrequest": {
+        "properties": {
+          "pagination": {
+            "description": "No comments found.(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "processDefineCode": {
+            "format": "int64",
+            "description": "流程定义code",
+            "type": "integer"
+          },
+          "startDate": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDate": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          },
+          "searchVal": {
+            "format": "string",
+            "description": "名称",
+            "type": "string"
+          },
+          "stateType": {
+            "format": "string",
+            "description": "工作流和任务节点的运行状态",
+            "type": "string"
+          },
+          "executorName": {
+            "format": "string",
+            "description": "执行用户",
+            "type": "string"
+          },
+          "dirId": {
+            "format": "string",
+            "description": "分类目录",
+            "type": "string"
+          }
+        }
+      },
+      "_dir__id_request": {},
+      "_dir_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dolphin_process_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dolphin_process__code_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "code": {
+                "format": "int64",
+                "description": "调度流程实例code,修改时必填",
+                "type": "integer"
+              },
+              "name": {
+                "format": "string",
+                "description": "作业名称",
+                "type": "string"
+              },
+              "dirId": {
+                "format": "string",
+                "description": "分类目录",
+                "type": "string"
+              },
+              "description": {
+                "format": "string",
+                "description": "描述",
+                "type": "string"
+              },
+              "schedulerRules": {
+                "description": "调度_规则信息(object)",
+                "type": "object",
+                "properties": {
+                  "engineType": {
+                    "format": "string",
+                    "description": "适用引擎 MYSQL HIVE ORACLE",
+                    "type": "string"
+                  },
+                  "dataSourceName": {
+                    "format": "string",
+                    "description": "数据连接",
+                    "type": "string"
+                  },
+                  "databaseName": {
+                    "format": "string",
+                    "description": "数据库名称",
+                    "type": "string"
+                  },
+                  "tableList": {
+                    "description": "表名称",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/_dolphin_process__code_response"
+                    }
+                  },
+                  "allNums": {
+                    "format": "string",
+                    "description": "全选所有的表时候赋值为（all）",
+                    "type": "string"
+                  },
+                  "applicationName": {
+                    "format": "string",
+                    "description": "应用名称",
+                    "type": "string"
+                  },
+                  "displayName": {
+                    "format": "string",
+                    "description": "显示名称",
+                    "type": "string"
+                  },
+                  "owner": {
+                    "format": "string",
+                    "description": "创建人名称",
+                    "type": "string"
+                  },
+                  "strategy": {
+                    "format": "string",
+                    "description": "采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）",
+                    "type": "string"
+                  },
+                  "dataSourceId": {
+                    "format": "string",
+                    "description": "数据源Id",
+                    "type": "string"
+                  },
+                  "description": {
+                    "format": "string",
+                    "description": "描述",
+                    "type": "string"
+                  }
+                }
+              },
+              "schedulerConfig": {
+                "description": "调度_配置信息(object)",
+                "type": "object",
+                "properties": {
+                  "schedulerType": {
+                    "format": "string",
+                    "description": "调度执行方式 \"SCHEDULER_TYPE_SINGLE\":\"单次调度\" \"SCHEDULER_TYPE_CYCLE\":周期调度;",
+                    "type": "string"
+                  },
+                  "effectiveTimeStart": {
+                    "format": "string",
+                    "description": "有效日期开始",
+                    "type": "string"
+                  },
+                  "effectiveTimeEnt": {
+                    "format": "string",
+                    "description": "有效日期结束",
+                    "type": "string"
+                  },
+                  "schedulerCycle": {
+                    "format": "string",
+                    "description": "调度周期 分钟 小时 天 周",
+                    "type": "string"
+                  },
+                  "schedulerIntervalTime": {
+                    "format": "string",
+                    "description": "间隔时间 调度周期为周 周一 周二 周三 周四 周五 周六 周日",
+                    "type": "string"
+                  },
+                  "schedulerTime": {
+                    "format": "string",
+                    "description": "调度时间",
+                    "type": "string"
+                  },
+                  "cron": {
+                    "format": "string",
+                    "description": "调度执行cron表达式",
+                    "type": "string"
+                  },
+                  "schedulerId": {
+                    "format": "int32",
+                    "description": "调度定时id",
+                    "type": "integer"
+                  }
+                }
+              },
+              "updateTime": {
+                "format": "string",
+                "description": "修改时间",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_dolphin_instance_executerequest": {
+        "properties": {
+          "executeType": {
+            "format": "enum",
+            "description": "执行类型，可用值:NONE,REPEAT_RUNNING,RECOVER_SUSPENDED_PROCESS,START_FAILURE_TASK_PROCESS,STOP,PAUSE\u003cbr/\u003eSTART_PROCESS -(\"START_PROCESS\")\u003cbr/\u003eSTART_CURRENT_TASK_PROCESS -(\"START_CURRENT_TASK_PROCESS\")\u003cbr/\u003eRECOVER_TOLERANCE_FAULT_PROCESS -(\"RECOVER_TOLERANCE_FAULT_PROCESS\")\u003cbr/\u003eRECOVER_SUSPENDED_PROCESS -(\"RECOVER_SUSPENDED_PROCESS\")\u003cbr/\u003eSTART_FAILURE_TASK_PROCESS -(\"START_FAILURE_TASK_PROCESS\")\u003cbr/\u003eCOMPLEMENT_DATA -(\"COMPLEMENT_DATA\")\u003cbr/\u003eSCHEDULER -(\"SCHEDULER\")\u003cbr/\u003eREPEAT_RUNNING -(\"REPEAT_RUNNING\")\u003cbr/\u003ePAUSE -(\"PAUSE\")\u003cbr/\u003eSTOP -(\"STOP\")\u003cbr/\u003eRECOVER_WAITING_THREAD -(\"RECOVER_WAITING_THREAD\")\u003cbr/\u003e",
+            "type": "string"
+          },
+          "instanceId": {
+            "format": "int32",
+            "description": "流程实例ID",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "executeType",
+          "instanceId"
+        ]
+      },
+      "_datasource_connect_typesresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/_datasource_connect_typesresponse"
+            }
+          }
+        }
+      },
+      "_datasource_connect__type_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_dolphin_process_runing__code_request": {},
+      "_datasource_connect_typesrequest": {},
+      "_datasource_request": {},
+      "_dolphin_instance__instanceId_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int64",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "processDefinitionCode": {
+                "format": "int64",
+                "description": "流程code",
+                "type": "integer"
+              },
+              "state": {
+                "format": "string",
+                "description": "状态",
+                "type": "string"
+              },
+              "recovery": {
+                "format": "string",
+                "description": "容错标示",
+                "type": "string"
+              },
+              "startTime": {
+                "format": "string",
+                "description": "开始时间",
+                "type": "string"
+              },
+              "endTime": {
+                "format": "string",
+                "description": "结束时间",
+                "type": "string"
+              },
+              "runTimes": {
+                "format": "int64",
+                "description": "运行次数",
+                "type": "integer"
+              },
+              "name": {
+                "format": "string",
+                "description": "工作流名称",
+                "type": "string"
+              },
+              "host": {
+                "format": "string",
+                "description": "机器地址",
+                "type": "string"
+              },
+              "commandType": {
+                "format": "string",
+                "description": "运行类型",
+                "type": "string"
+              },
+              "executorName": {
+                "format": "string",
+                "description": "执行用户",
+                "type": "string"
+              },
+              "duration": {
+                "format": "string",
+                "description": "运行时长",
+                "type": "string"
+              },
+              "stateName": {
+                "format": "string",
+                "description": "状态名称",
+                "type": "string"
+              },
+              "taskInstanceId": {
+                "format": "int64",
+                "description": "任务实例id",
+                "type": "integer"
+              },
+              "dependenceScheduleTimes": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_dolphin_task__taskInstanceId__logresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "anyObject": {
+                "description": "anyObject.(object)",
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "_dolphin_process_releaserequest": {
+        "properties": {
+          "code": {
+            "format": "int64",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "releaseState": {
+            "format": "enum",
+            "description": "null\u003cbr/\u003eOFFLINE -(\r\n\r\n  \r\n     \r\n    \"OFFLINE\")\u003cbr/\u003eONLINE -(\"ONLINE\")\u003cbr/\u003e",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "releaseState"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://{{server}}"
+    }
+  ],
+  "openapi": "3.0.3",
+  "paths": {
+    "/datasource/connect/{type}": {
+      "get": {
+        "summary": "获取数据源连接",
+        "deprecated": false,
+        "description": "获取数据源连接",
+        "tags": [
+          "DctDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_connect__type_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"ooay8k\",\n  \"tips\": \"jmwb0k\",\n  \"data\": {\n    \"mapKey1\": \"14i6hi\",\n    \"mapKey2\": \"ulg7jl\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getResultDataSourceByType",
+        "parameters": []
+      }
+    },
+    "/dolphin/task/{taskInstanceId}/log/download": {
+      "post": {
+        "summary": "下载任务实例日志",
+        "deprecated": false,
+        "description": "下载任务实例日志",
+        "tags": [
+          "DctInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_task__taskInstanceId__log_downloadrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://{{server}}/dolphin/task/727/log/download"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_task__taskInstanceId__log_downloadresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "taskLogDownload",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "597",
+            "name": "taskInstanceId"
+          }
+        ]
+      }
+    },
+    "/dolphin/process/release": {
+      "put": {
+        "summary": "流程定义上下线",
+        "deprecated": false,
+        "description": "流程定义上下线",
+        "tags": [
+          "DctDolphinController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_process_releaserequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"code\": 352,\n  \"releaseState\": \"OFFLINE\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_process_releaseresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"fe0c90\",\n  \"tips\": \"w0g77l\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "release",
+        "parameters": []
+      }
+    },
+    "/dir/list": {
+      "get": {
+        "summary": "获取任务目录",
+        "deprecated": false,
+        "description": "获取任务目录",
+        "tags": [
+          "DctTaskDirController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir_listresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"julbhw\",\n  \"tips\": \"a63evf\",\n  \"data\": [\n    {\n      \"id\": 172,\n      \"dirId\": \"70\",\n      \"title\": \"jzcq6t\",\n      \"value\": \"4egjo2\",\n      \"parentId\": \"70\",\n      \"type\": \"otf1n9\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchList",
+        "parameters": []
+      }
+    },
+    "/datasource/connect/table": {
+      "get": {
+        "summary": "根据数据源连接、库名称获取表",
+        "deprecated": false,
+        "description": "根据数据源连接、库名称获取表",
+        "tags": [
+          "DctDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_connect_tableresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"1p1oug\",\n  \"tips\": \"v07c32\",\n  \"data\": [\n    \"6964lf\",\n    \"s4zm8l\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getResultTable",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "数据源连接id",
+            "required": true,
+            "example": "70",
+            "name": "dataSourceId"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "数据库名称",
+            "required": true,
+            "example": "gayle.hilpert",
+            "name": "databaseName"
+          }
+        ]
+      }
+    },
+    "/dolphin/task/list": {
+      "post": {
+        "summary": "任务实例列表（暂时不用）",
+        "deprecated": false,
+        "description": "任务实例列表（暂时不用）",
+        "tags": [
+          "DctInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_task_listrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"faexzt\"\n  },\n  \"processInstanceId\": 500,\n  \"processInstanceName\": \"gayle.hilpert\",\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"sxbz9l\",\n  \"stateType\": \"6icl9t\",\n  \"executorName\": \"gayle.hilpert\",\n  \"taskName\": \"gayle.hilpert\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_task_listresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"iybvyv\",\n  \"tips\": \"lbl0sg\",\n  \"data\": {\n    \"total\": 756,\n    \"pageNum\": 302,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 460,\n        \"processDefinitionId\": 624,\n        \"processInstanceId\": 537,\n        \"processInstanceName\": \"gayle.hilpert\",\n        \"name\": \"gayle.hilpert\",\n        \"executorName\": \"gayle.hilpert\",\n        \"taskType\": \"trvapk\",\n        \"state\": \"khv7iz\",\n        \"submitTime\": \"2022-04-27 17:25:22\",\n        \"startTime\": \"2022-04-27 17:25:22\",\n        \"endTime\": \"2022-04-27 17:25:22\",\n        \"host\": \"limkh7\",\n        \"duration\": \"pnyxya\",\n        \"retryTimes\": 53,\n        \"stateName\": \"gayle.hilpert\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchTask",
+        "parameters": []
+      }
+    },
+    "/dolphin/process/runing/{code}": {
+      "post": {
+        "summary": "运行流程定义",
+        "deprecated": false,
+        "description": "运行流程定义",
+        "tags": [
+          "DctDolphinController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_process_runing__code_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://{{server}}/dolphin/process/runing/931"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_process_runing__code_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"ltp267\",\n  \"tips\": \"s33017\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "runing",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "844",
+            "name": "code"
+          }
+        ]
+      }
+    },
+    "/dolphin/instance/execute": {
+      "put": {
+        "summary": "实例操作",
+        "deprecated": false,
+        "description": "实例操作",
+        "tags": [
+          "DctInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_instance_executerequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 215\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_instance_executeresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"33omgu\",\n  \"tips\": \"ad6vxz\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "execute",
+        "parameters": []
+      }
+    },
+    "/dir/bulk": {
+      "delete": {
+        "summary": "批量删除—任务目录单子节点级联删除方式",
+        "deprecated": false,
+        "description": "批量删除—任务目录单子节点级联删除方式",
+        "tags": [
+          "DctTaskDirController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir_bulkresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"x2dqg5\",\n  \"tips\": \"y44kwv\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteBulk",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "批量删除入参",
+            "required": true,
+            "example": "ol5cw6",
+            "name": "ids"
+          }
+        ]
+      }
+    },
+    "/datasource/connect/types": {
+      "get": {
+        "summary": "获取数据源连接类型",
+        "deprecated": false,
+        "description": "获取数据源连接类型",
+        "tags": [
+          "DctDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_connect_typesresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"txsunw\",\n  \"tips\": \"0qfz0i\",\n  \"data\": [\n    \"6z71uo\",\n    \"e79xfz\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllConnType",
+        "parameters": []
+      }
+    },
+    "/dolphin/instance/page/list": {
+      "post": {
+        "summary": "实例列表",
+        "deprecated": false,
+        "description": "实例列表",
+        "tags": [
+          "DctInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_instance_page_listrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ffhjza\"\n  },\n  \"processDefineCode\": 435,\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"j3no7z\",\n  \"stateType\": \"3okfa6\",\n  \"executorName\": \"gayle.hilpert\",\n  \"dirId\": \"70\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_instance_page_listresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"x6b6dq\",\n  \"tips\": \"fxoq8g\",\n  \"data\": {\n    \"total\": 319,\n    \"pageNum\": 791,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 977,\n        \"processDefinitionCode\": 524,\n        \"state\": \"0v3jpf\",\n        \"recovery\": \"81ar19\",\n        \"startTime\": \"2022-04-27 16:48:30\",\n        \"endTime\": \"2022-04-27 16:48:30\",\n        \"runTimes\": 406,\n        \"name\": \"gayle.hilpert\",\n        \"host\": \"oamtdr\",\n        \"commandType\": \"hr6qw9\",\n        \"executorName\": \"gayle.hilpert\",\n        \"duration\": \"6oqoqf\",\n        \"stateName\": \"gayle.hilpert\",\n        \"taskInstanceId\": 524,\n        \"dependenceScheduleTimes\": \"cnnotk\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "search",
+        "parameters": []
+      }
+    },
+    "/dir/": {
+      "post": {
+        "summary": "新增任务目录",
+        "deprecated": false,
+        "description": "新增任务目录",
+        "tags": [
+          "DctTaskDirController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dir_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 729,\n  \"dirId\": \"70\",\n  \"title\": \"ftlg3r\",\n  \"value\": \"h5iy7a\",\n  \"parentId\": \"70\",\n  \"description\": \"1j2c4l\",\n  \"gmtCreate\": \"2022-04-27 17:25:22\",\n  \"gmtModified\": \"2022-04-27 17:25:22\",\n  \"delFlag\": 9,\n  \"type\": \"a3jvnf\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"mxp9sm\",\n  \"tips\": \"pzv4yu\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "insert",
+        "parameters": []
+      },
+      "put": {
+        "summary": "编辑任务目录",
+        "deprecated": false,
+        "description": "编辑任务目录",
+        "tags": [
+          "DctTaskDirController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dir_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": 690,\n  \"dirId\": \"70\",\n  \"title\": \"r9f650\",\n  \"value\": \"x3dstf\",\n  \"parentId\": \"70\",\n  \"description\": \"eufn8n\",\n  \"gmtCreate\": \"2022-04-27 17:25:22\",\n  \"gmtModified\": \"2022-04-27 17:25:22\",\n  \"delFlag\": 9,\n  \"type\": \"po90uh\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"dnmegv\",\n  \"tips\": \"9yo9vb\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "update",
+        "parameters": []
+      }
+    },
+    "/datasource/": {
+      "post": {
+        "summary": "dolphin任务回调接口",
+        "deprecated": false,
+        "description": "dolphin任务回调接口",
+        "tags": [
+          "DctDataBaseController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasource_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "x11mho"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"tenkhl\",\n  \"tips\": \"meni6l\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "dolphinCallback",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "回调atals接口参数",
+            "required": true,
+            "example": "wqezzu",
+            "name": "schedulerRules"
+          }
+        ]
+      }
+    },
+    "/dolphin/process/page/list": {
+      "post": {
+        "summary": "流程定义列表",
+        "deprecated": false,
+        "description": "流程定义列表",
+        "tags": [
+          "DctDolphinController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_process_page_listrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"o308r7\"\n  },\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"beginDay\": \"jwutd3\",\n  \"endDay\": \"5w3klq\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_process_page_listresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"gvi7yo\",\n  \"tips\": \"739p4v\",\n  \"data\": {\n    \"total\": 996,\n    \"pageNum\": 471,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"code\": 767,\n        \"name\": \"gayle.hilpert\",\n        \"description\": \"w2t2q9\",\n        \"releaseState\": \"1bgu0f\",\n        \"updateTime\": \"2022-04-27 16:48:30\",\n        \"userName\": \"gayle.hilpert\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchPageList",
+        "parameters": []
+      }
+    },
+    "/dolphin/task/{taskInstanceId}/log": {
+      "post": {
+        "summary": "任务实例日志",
+        "deprecated": false,
+        "description": "任务实例日志",
+        "tags": [
+          "DctInstanceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_task__taskInstanceId__logrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://{{server}}/dolphin/task/44/log"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_task__taskInstanceId__logresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"8z0r4l\",\n  \"tips\": \"daeo9b\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "taskLog",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "141",
+            "name": "taskInstanceId"
+          }
+        ]
+      }
+    },
+    "/dir/{id}": {
+      "delete": {
+        "summary": "单个删除—任务目录单子节点级联删除方式",
+        "deprecated": false,
+        "description": "单个删除—任务目录单子节点级联删除方式",
+        "tags": [
+          "DctTaskDirController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dir__id_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"eue9qc\",\n  \"tips\": \"e3tfs9\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "delete",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "删除入参",
+            "required": true,
+            "example": "70",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/dolphin/process/{code}": {
+      "delete": {
+        "summary": "删除流程定义",
+        "deprecated": false,
+        "description": "删除流程定义",
+        "tags": [
+          "DctDolphinController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_process__code_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"ud94pr\",\n  \"tips\": \"wt6my1\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "delete",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "42",
+            "name": "code"
+          }
+        ]
+      },
+      "get": {
+        "summary": "流程定义详情",
+        "deprecated": false,
+        "description": "流程定义详情",
+        "tags": [
+          "DctDolphinController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_process__code_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"lsruv3\",\n  \"tips\": \"faj29m\",\n  \"data\": {\n    \"code\": 191,\n    \"name\": \"gayle.hilpert\",\n    \"dirId\": \"70\",\n    \"description\": \"ckbg2d\",\n    \"schedulerRules\": {\n      \"engineType\": \"s3c90h\",\n      \"dataSourceName\": \"gayle.hilpert\",\n      \"databaseName\": \"gayle.hilpert\",\n      \"tableList\": [\n        \"xhab33\"\n      ],\n      \"allNums\": \"x6fmoa\",\n      \"applicationName\": \"gayle.hilpert\",\n      \"displayName\": \"gayle.hilpert\",\n      \"owner\": \"b625d9\",\n      \"strategy\": \"oteqga\",\n      \"dataSourceId\": \"70\",\n      \"description\": \"wdqooj\"\n    },\n    \"schedulerConfig\": {\n      \"schedulerType\": \"rikctz\",\n      \"effectiveTimeStart\": \"gjei1b\",\n      \"effectiveTimeEnt\": \"sx4t5u\",\n      \"schedulerCycle\": \"t15vby\",\n      \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n      \"schedulerTime\": \"2022-04-27 16:48:30\",\n      \"cron\": \"hsb4hz\",\n      \"schedulerId\": 76\n    },\n    \"updateTime\": \"2022-04-27 16:48:30\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "detail",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "105",
+            "name": "code"
+          }
+        ]
+      }
+    },
+    "/dolphin/process/": {
+      "post": {
+        "summary": "新增流程定义",
+        "deprecated": false,
+        "description": "新增流程定义",
+        "tags": [
+          "DctDolphinController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_process_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"code\": 69,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"bz9az9\",\n  \"schedulerRules\": {\n    \"engineType\": \"nuxdl1\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"ekbxys\"\n    ],\n    \"allNums\": \"n2qdz3\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"go5fz2\",\n    \"strategy\": \"ykpx07\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"try6q6\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"icfwjr\",\n    \"effectiveTimeStart\": \"xoq43u\",\n    \"effectiveTimeEnt\": \"l7hpip\",\n    \"schedulerCycle\": \"3suwqj\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"fm9sxq\",\n    \"schedulerId\": 432\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_process_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"o9pb08\",\n  \"tips\": \"hs26g0\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "insert",
+        "parameters": []
+      },
+      "put": {
+        "summary": "修改流程定义",
+        "deprecated": false,
+        "description": "修改流程定义",
+        "tags": [
+          "DctDolphinController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_dolphin_process_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"code\": 307,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"vfzaok\",\n  \"schedulerRules\": {\n    \"engineType\": \"kzt2tr\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"w5ffll\"\n    ],\n    \"allNums\": \"hgqplf\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"vrrilp\",\n    \"strategy\": \"31l3bt\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"tjgef3\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"tfz0mx\",\n    \"effectiveTimeStart\": \"20vg9m\",\n    \"effectiveTimeEnt\": \"teom2e\",\n    \"schedulerCycle\": \"btk98a\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"c9435y\",\n    \"schedulerId\": 406\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_process_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"gg2pi5\",\n  \"tips\": \"794j09\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "update",
+        "parameters": []
+      }
+    },
+    "/datasource/connect/db": {
+      "get": {
+        "summary": "根据数据源连接名称获取数据库",
+        "deprecated": false,
+        "description": "根据数据源连接名称获取数据库",
+        "tags": [
+          "DctDataBaseController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_connect_dbresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"nubtd8\",\n  \"tips\": \"q6veg2\",\n  \"data\": [\n    \"wbnhme\",\n    \"419th9\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getResultDb",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "数据源连接id",
+            "required": true,
+            "example": "70",
+            "name": "dataSourceId"
+          }
+        ]
+      }
+    },
+    "/dolphin/instance/{instanceId}": {
+      "get": {
+        "summary": "实例详情",
+        "deprecated": false,
+        "description": "实例详情",
+        "tags": [
+          "DctInstanceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_dolphin_instance__instanceId_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"3lefqs\",\n  \"tips\": \"5fbc8e\",\n  \"data\": {\n    \"id\": 751,\n    \"processDefinitionCode\": 470,\n    \"state\": \"6ozqln\",\n    \"recovery\": \"kegm8i\",\n    \"startTime\": \"2022-04-27 16:48:30\",\n    \"endTime\": \"2022-04-27 16:48:30\",\n    \"runTimes\": 174,\n    \"name\": \"gayle.hilpert\",\n    \"host\": \"almzgf\",\n    \"commandType\": \"dw3802\",\n    \"executorName\": \"gayle.hilpert\",\n    \"duration\": \"ygbnv8\",\n    \"stateName\": \"gayle.hilpert\",\n    \"taskInstanceId\": 688,\n    \"dependenceScheduleTimes\": \"h7q51i\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "detail",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "39",
+            "name": "instanceId"
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "dm-datacollect",
+    "version": "1.0.0"
+  }
+}
