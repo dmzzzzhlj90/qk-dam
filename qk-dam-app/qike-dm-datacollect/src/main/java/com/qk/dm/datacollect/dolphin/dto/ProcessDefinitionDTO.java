@@ -61,5 +61,4 @@ public class ProcessDefinitionDTO implements Serializable {
     private String modifyBy;
 
     private Integer warningGroupId;
-
 }

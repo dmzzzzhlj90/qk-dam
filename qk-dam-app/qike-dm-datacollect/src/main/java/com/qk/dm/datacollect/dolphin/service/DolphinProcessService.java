@@ -4,6 +4,8 @@ import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.dm.datacollect.dolphin.dto.ProcessDefinitionDTO;
 import com.qk.dm.datacollect.dolphin.dto.ProcessDefinitionResultDTO;
 
+import java.util.List;
+
 /**
  * @author shenpj
  * @date 2022/4/21 15:46
@@ -18,11 +20,13 @@ public interface DolphinProcessService {
 
     void runing(Long processDefinitionCode, Long projectCode, Long environmentCode);
 
-    ProcessDefinitionResultDTO list(Long projectCode, String searchVal, Integer pageNo, Integer pageSize);
+    ProcessDefinitionResultDTO pageList(Long projectCode, String searchVal, Integer pageNo, Integer pageSize);
 
     void delete(Long processDefinitionCode, Long projectCode);
 
     Object detail(Long processDefinitionCode, Long projectCode);
 
     ProcessDefinitionDTO detailToProcess(Long processDefinitionCode, Long projectCode);
+
+    List<ProcessDefinitionDTO> list(Long projectCode);
 }

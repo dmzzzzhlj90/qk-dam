@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 数据质量_规则调度_基础信息VO
  *
@@ -47,4 +49,14 @@ public class DctSchedulerInfoVO {
      * 创建人
      */
     private String userName;
+
+    public static void changeName(List<DctSchedulerInfoVO> infoList){
+        if (infoList != null) {
+            infoList.forEach(info ->
+                    info.setName(
+                            info.getName().split("_")[1]
+                    )
+            );
+        }
+    }
 }

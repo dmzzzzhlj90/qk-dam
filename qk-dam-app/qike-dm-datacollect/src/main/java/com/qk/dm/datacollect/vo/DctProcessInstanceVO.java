@@ -86,4 +86,14 @@ public class DctProcessInstanceVO {
                 DctProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(list)
         );
     }
+
+    public static void changeName(List<DctProcessInstanceVO> infoList) {
+        if (infoList != null) {
+            infoList.forEach(info -> {
+                if (info.getName().split("_").length > 1) {
+                    info.setName(info.getName().split("_")[1]);
+                }
+            });
+        }
+    }
 }

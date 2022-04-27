@@ -25,6 +25,7 @@ public class DolphinApiClient {
 
     /**
      * 删除流程定义
+     *
      * @param code
      * @param projectCode
      * @return
@@ -137,7 +138,7 @@ public class DolphinApiClient {
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_list(Long projectCode,
+    public Result dolphin_process_page(Long projectCode,
                                        String searchVal,
                                        Integer pageNo,
                                        Integer pageSize) throws ApiException {
@@ -147,6 +148,21 @@ public class DolphinApiClient {
                 projectCode,
                 searchVal,
                 null);
+        if (Boolean.TRUE.equals(result.getFailed())) {
+            throw new ApiException(400, result.getMsg());
+        }
+        return result;
+    }
+
+    /**
+     * 流程定义列表
+     *
+     * @param projectCode
+     * @return
+     * @throws ApiException
+     */
+    public Result dolphin_process_list(Long projectCode) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionListUsingGET(projectCode);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -393,6 +409,7 @@ public class DolphinApiClient {
 
     /**
      * 分页查询任务实例
+     *
      * @param projectCode
      * @param TaskInstanceSearch
      * @return

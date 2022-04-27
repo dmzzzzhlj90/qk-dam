@@ -5,10 +5,14 @@ import com.qk.dam.commons.util.BeanMapUtils;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.model.ProcessDefinition;
-import com.qk.dm.datacollect.dolphin.dto.*;
-import com.qk.dm.datacollect.service.DctDolphinService;
+import com.qk.dm.datacollect.dolphin.dto.ProcessDefinitionDTO;
+import com.qk.dm.datacollect.dolphin.dto.ProcessDefinitionResultDTO;
+import com.qk.dm.datacollect.dolphin.dto.ScheduleDTO;
+import com.qk.dm.datacollect.dolphin.dto.SchedulerTypeEnum;
 import com.qk.dm.datacollect.dolphin.service.DolphinProcessService;
 import com.qk.dm.datacollect.dolphin.service.DolphinScheduleService;
+import com.qk.dm.datacollect.service.DctDolphinService;
+import com.qk.dm.datacollect.util.Pager;
 import com.qk.dm.datacollect.vo.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author shenpj
@@ -38,7 +43,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     @Override
     public void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        String name = dctSchedulerBasicInfoVO.getName();
+        String name = dctSchedulerBasicInfoVO.getDirId() + "_" + dctSchedulerBasicInfoVO.getName();
         String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String httpMethod = "GET";
@@ -53,7 +58,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     @Override
     public void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        String name = dctSchedulerBasicInfoVO.getName();
+        String name = dctSchedulerBasicInfoVO.getDirId() + "_" + dctSchedulerBasicInfoVO.getName();
         String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String httpMethod = "GET";
@@ -130,7 +135,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
             ScheduleDTO scheduleDTO = dolphinScheduleService.detail(dctSchedulerReleaseVO.getCode(), projectCode);
             if (scheduleDTO != null) {
                 //定时器上线
-                dolphinScheduleService.execute(scheduleDTO.getId(),projectCode,ProcessDefinition.ReleaseStateEnum.ONLINE);
+                dolphinScheduleService.execute(scheduleDTO.getId(), projectCode, ProcessDefinition.ReleaseStateEnum.ONLINE);
             }
         }
 
@@ -143,14 +148,38 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     @Override
     public PageResultVO<DctSchedulerInfoVO> searchPageList(DctSchedulerInfoParamsVO schedulerInfoParamsVO) {
-        ProcessDefinitionResultDTO processDefinitionResultDTO =
-                dolphinProcessService.list(projectCode, schedulerInfoParamsVO.getName(),
-                        schedulerInfoParamsVO.getPagination().getPage(), schedulerInfoParamsVO.getPagination().getSize());
-        List<ProcessDefinitionDTO> processDefinitionList = processDefinitionResultDTO.getTotalList();
+        ProcessDefinitionResultDTO processDefinitionResultDTO;
+        List<ProcessDefinitionDTO> processDefinitionList;
+        long size;
+        if (schedulerInfoParamsVO.getDirId() != null && schedulerInfoParamsVO.getName() != null) {
+            processDefinitionList = dolphinProcessService.list(projectCode);
+            processDefinitionList =
+                    processDefinitionList
+                            .stream()
+                            .filter(processDefinition -> processDefinition.getName().contains(schedulerInfoParamsVO.getDirId()))
+                            .filter(processDefinition -> processDefinition.getName().contains(schedulerInfoParamsVO.getName()))
+                            .collect(Collectors.toList());
+            size = processDefinitionList.size();
+            processDefinitionList = Pager.getList(schedulerInfoParamsVO.getPagination(), processDefinitionList);
+        }else {
+            if(schedulerInfoParamsVO.getDirId() != null){
+                schedulerInfoParamsVO.setName(schedulerInfoParamsVO.getDirId());
+            }
+            processDefinitionResultDTO =
+                    dolphinProcessService.pageList(projectCode, schedulerInfoParamsVO.getName(),
+                            schedulerInfoParamsVO.getPagination().getPage(), schedulerInfoParamsVO.getPagination().getSize());
+            processDefinitionList = processDefinitionResultDTO.getTotalList();
+            size = processDefinitionResultDTO.getTotal();
+        }
         List<Map<String, Object>> processDefinitionListMap = BeanMapUtils.changeBeansToList(processDefinitionList);
         List<DctSchedulerInfoVO> basicInfoList = BeanMapUtils.changeListToBeans(processDefinitionListMap, DctSchedulerInfoVO.class);
+
+        //把name中的分类去除
+        DctSchedulerInfoVO.changeName(basicInfoList);
+
+
         return new PageResultVO<>(
-                processDefinitionResultDTO.getTotal(),
+                size,
                 schedulerInfoParamsVO.getPagination().getPage(),
                 schedulerInfoParamsVO.getPagination().getSize(),
                 basicInfoList);

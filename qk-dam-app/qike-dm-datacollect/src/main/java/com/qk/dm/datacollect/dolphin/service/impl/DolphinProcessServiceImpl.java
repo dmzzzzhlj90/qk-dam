@@ -17,7 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author shenpj
@@ -97,9 +99,9 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
     }
 
     @Override
-    public ProcessDefinitionResultDTO list(Long projectCode, String searchVal, Integer pageNo, Integer pageSize) {
+    public ProcessDefinitionResultDTO pageList(Long projectCode, String searchVal, Integer pageNo, Integer pageSize) {
         try {
-            Result result = dolphinApiClient.dolphin_process_list(projectCode, searchVal, pageNo, pageSize);
+            Result result = dolphinApiClient.dolphin_process_page(projectCode, searchVal, pageNo, pageSize);
             return DctConstant.changeObjectToClass(result.getData(), ProcessDefinitionResultDTO.class);
         } catch (ApiException a) {
             LOG.error("Dolphin 项目[{}] 查询流程列表失败，原因为[{}]", projectCode, a.getMessage());
@@ -107,6 +109,22 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
         } catch (JsonProcessingException a) {
             LOG.error("Dolphin 项目[{}] 查询流程成功，解析时失败，原因为[{}]", projectCode, a.getMessage());
             throw new BizException("dolphin process toClass error");
+        } catch (Exception a) {
+            LOG.error("Dolphin 项目[{}] 查询流程报错，原因为[{}]", projectCode, a.getMessage());
+            throw new BizException("dolphin process search exception error");
+        }
+    }
+
+    @Override
+    public List<ProcessDefinitionDTO> list(Long projectCode) {
+        try {
+            Result result = dolphinApiClient.dolphin_process_list(projectCode);
+            List<Map<String, Object>> data = (List<Map<String, Object>>) result.getData();
+            List<Map<String, Object>> processDefinitionList = data.stream().map(da -> (Map<String, Object>) da.get("processDefinition")).collect(Collectors.toList());
+            return BeanMapUtils.changeListToBeans(processDefinitionList, ProcessDefinitionDTO.class);
+        } catch (ApiException a) {
+            LOG.error("Dolphin 项目[{}] 查询流程列表失败，原因为[{}]", projectCode, a.getMessage());
+            throw new BizException("dolphin process search error");
         } catch (Exception a) {
             LOG.error("Dolphin 项目[{}] 查询流程报错，原因为[{}]", projectCode, a.getMessage());
             throw new BizException("dolphin process search exception error");

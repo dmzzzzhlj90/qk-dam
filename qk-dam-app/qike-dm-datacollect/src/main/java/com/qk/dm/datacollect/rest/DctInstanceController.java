@@ -35,7 +35,6 @@ public class DctInstanceController {
      * @return DefaultCommonResult<List < DqcProcessInstanceVO>>
      */
     @PostMapping("/instance/page/list")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<PageResultVO<DctProcessInstanceVO>> search(@RequestBody DctSchedulerInstanceParamsDTO dctSchedulerInstanceParamsDTO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dctInstanceService.search(dctSchedulerInstanceParamsDTO));
     }
@@ -47,7 +46,6 @@ public class DctInstanceController {
      * @return
      */
     @GetMapping("/instance/{instanceId}")
-    //  @Auth(bizType = BizResource.DSD_DIR, actionType = RestActionType.LIST)
     public DefaultCommonResult<DctProcessInstanceVO> detail(@PathVariable Integer instanceId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dctInstanceService.detail(instanceId));
     }
@@ -81,10 +79,20 @@ public class DctInstanceController {
      * @param response
      * @param taskInstanceId
      */
-    @PostMapping("/task/log/download")
+    @PostMapping("/task/{taskInstanceId}/log/download")
     @ResponseBody
-    public void taskLogDownload(HttpServletResponse response, Integer taskInstanceId) {
+    public void taskLogDownload(HttpServletResponse response, @PathVariable Integer taskInstanceId) {
         Object log = dctInstanceService.taskLogDownload(taskInstanceId);
         ExportTextUtil.writeToTxt(response, log.toString(), "任务实例日志_" + taskInstanceId + "_" + DateUtil.toStr(new Date(), "yyyyMMddHHmm"));
+    }
+
+    /**
+     * 任务实例日志
+     * @param taskInstanceId
+     * @return
+     */
+    @PostMapping("/task/{taskInstanceId}/log")
+    public DefaultCommonResult<Object> taskLog(@PathVariable Integer taskInstanceId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dctInstanceService.taskLogDownload(taskInstanceId));
     }
 }
