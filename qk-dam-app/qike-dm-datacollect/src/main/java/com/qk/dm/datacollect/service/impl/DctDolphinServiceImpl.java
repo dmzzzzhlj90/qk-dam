@@ -42,14 +42,9 @@ public class DctDolphinServiceImpl implements DctDolphinService {
     @Override
     public void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         String name = dctSchedulerBasicInfoVO.getDirId() + "_" + dctSchedulerBasicInfoVO.getName();
-        String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
-        String httpMethod = "GET";
         String description = dctSchedulerBasicInfoVO.getDescription();
-
-        ProcessDefinitionDTO processDefinition = dolphinProcessService.createProcessDefinition(projectCode, name, url, httpParams, httpMethod, description);
-        System.out.println("processDefinition:" + processDefinition);
-
+        ProcessDefinitionDTO processDefinition = dolphinProcessService.createProcessDefinition(projectCode, name, null, httpParams, null, description);
         //创建定时
         createScheduler(dctSchedulerBasicInfoVO.getSchedulerConfig(), processDefinition.getCode());
     }
@@ -57,16 +52,12 @@ public class DctDolphinServiceImpl implements DctDolphinService {
     @Override
     public void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         String name = dctSchedulerBasicInfoVO.getDirId() + "_" + dctSchedulerBasicInfoVO.getName();
-        String url = "http://www.baidu.com";
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
-        String httpMethod = "GET";
         String description = dctSchedulerBasicInfoVO.getDescription();
-
+        //获取详情，拿到taskCode
         ProcessDefinitionDTO processDefinitionDTO = dolphinProcessService.detailToProcess(dctSchedulerBasicInfoVO.getCode(), projectCode);
         long taskCode = GsonUtil.toJsonArray(processDefinitionDTO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
-
-        dolphinProcessService.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), projectCode, taskCode, name, url, httpParams, httpMethod, description);
-
+        dolphinProcessService.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), projectCode, taskCode, name, null, httpParams, null, description);
         //修改定时
         updateScheduler(dctSchedulerBasicInfoVO.getSchedulerConfig(), dctSchedulerBasicInfoVO.getCode());
 

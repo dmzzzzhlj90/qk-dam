@@ -53,8 +53,12 @@ public class DolphinTaskDefinitionPropertiesBean {
 
     public String taskDefinitionJson(long taskCode,String url,Object httpParams,String httpMethod,DolphinTaskDefinitionPropertiesBean taskParam) {
         this.getTaskParams().setHttpParams(httpParams);
-        this.getTaskParams().setUrl(url);
-        this.getTaskParams().setHttpMethod(httpMethod);
+        if(url != null) {
+            this.getTaskParams().setUrl(url);
+        }
+        if(httpMethod != null) {
+            this.getTaskParams().setHttpMethod(httpMethod);
+        }
         this.setCode(taskCode);
         BeanMap abean = BeanMap.create(this);
         BeanMap bbean = BeanMap.create(taskParam);
@@ -80,8 +84,12 @@ public class DolphinTaskDefinitionPropertiesBean {
     public String taskDefinitionJson(long taskCode,String url,Object httpParams,String httpMethod) {
         this.setCode(taskCode);
         this.getTaskParams().setHttpParams(httpParams);
-        this.getTaskParams().setUrl(url);
-        this.getTaskParams().setHttpMethod(httpMethod);
+        if(url != null) {
+            this.getTaskParams().setUrl(url);
+        }
+        if(httpMethod != null) {
+            this.getTaskParams().setHttpMethod(httpMethod);
+        }
         return new Gson().toJson(List.of(this));
     }
 }
