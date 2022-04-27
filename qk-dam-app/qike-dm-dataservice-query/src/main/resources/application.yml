@@ -1,8 +1,6 @@
 server:
   port: 8000
 spring:
-  cache:
-    red
   messages:
     basename: i18n/messages
   mvc:
