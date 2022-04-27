@@ -9,7 +9,7 @@ import com.qk.dm.datacollect.vo.*;
  * @since 1.0.0
  */
 public interface DctInstanceService {
-    PageResultVO<DctProcessInstanceVO> search(DctSchedulerInstanceParamsDTO dctInstanceParamsVO);
+    PageResultVO<DctProcessInstanceVO> search(DctInstanceParamsVO dctInstanceParamsVO);
 
     DctProcessInstanceVO detail(Integer instanceId);
 

@@ -3,11 +3,11 @@ package com.qk.dm.datacollect.mapstruct;
 import com.qk.dm.datacollect.dolphin.dto.ProcessInstanceSearchDTO;
 import com.qk.dm.datacollect.dolphin.dto.ProcessInstanceDTO;
 import com.qk.dm.datacollect.dolphin.dto.TaskInstanceDTO;
+import com.qk.dm.datacollect.vo.DctInstanceParamsVO;
 import com.qk.dm.datacollect.vo.DctProcessInstanceVO;
 import com.qk.dm.datacollect.vo.DctTaskInstanceParamsVO;
 import com.qk.dm.datacollect.dolphin.dto.TaskInstanceSearchDTO;
 import com.qk.dm.datacollect.vo.DctTaskInstanceVO;
-import com.qk.dm.datacollect.vo.DctSchedulerInstanceParamsDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -39,7 +39,7 @@ public interface DctProcessInstanceMapper {
             @Mapping(source = "pagination.page",target = "pageNo"),
             @Mapping(source = "pagination.size",target = "pageSize")
     })
-    ProcessInstanceSearchDTO instanceSearchDTO(DctSchedulerInstanceParamsDTO instanceParamsDTO);
+    ProcessInstanceSearchDTO instanceSearchDTO(DctInstanceParamsVO instanceParamsDTO);
 //
 //    List<TaskInstanceVO> taskInstanceVO(List<TaskInstanceDTO> taskInstanceDTOs);
 }

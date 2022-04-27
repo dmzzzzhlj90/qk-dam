@@ -40,4 +40,12 @@ public class DctSchedulerInfoParamsVO {
      * 结束时间
      */
     private String endDay;
+
+    public static void changeSearchValAndDir(DctSchedulerInfoParamsVO schedulerInfoParamsVO) {
+        if (schedulerInfoParamsVO.getDirId() != null && schedulerInfoParamsVO.getName() != null) {
+            schedulerInfoParamsVO.setName(schedulerInfoParamsVO.getDirId() + "_" + schedulerInfoParamsVO.getName());
+        }else if(schedulerInfoParamsVO.getDirId() != null ){
+            schedulerInfoParamsVO.setName(schedulerInfoParamsVO.getDirId());
+        }
+    }
 }

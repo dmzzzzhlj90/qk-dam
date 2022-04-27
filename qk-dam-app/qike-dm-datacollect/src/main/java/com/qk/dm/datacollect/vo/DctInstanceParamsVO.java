@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DctSchedulerInstanceParamsDTO {
+public class DctInstanceParamsVO {
 
     Pagination pagination;
 
@@ -53,4 +53,12 @@ public class DctSchedulerInstanceParamsDTO {
      * 分类目录
      */
     String dirId;
+
+    public static void changeSearchValAndDir(DctInstanceParamsVO instanceParams) {
+        if (instanceParams.getDirId() != null && instanceParams.getSearchVal() != null) {
+            instanceParams.setSearchVal(instanceParams.getDirId() + "_" + instanceParams.getSearchVal());
+        } else if (instanceParams.getDirId() != null) {
+            instanceParams.setSearchVal(instanceParams.getDirId());
+        }
+    }
 }

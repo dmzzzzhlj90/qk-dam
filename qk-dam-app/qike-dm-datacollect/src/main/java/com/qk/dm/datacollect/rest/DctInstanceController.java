@@ -35,7 +35,7 @@ public class DctInstanceController {
      * @return DefaultCommonResult<List < DqcProcessInstanceVO>>
      */
     @PostMapping("/instance/page/list")
-    public DefaultCommonResult<PageResultVO<DctProcessInstanceVO>> search(@RequestBody DctSchedulerInstanceParamsDTO dctSchedulerInstanceParamsDTO) {
+    public DefaultCommonResult<PageResultVO<DctProcessInstanceVO>> search(@RequestBody DctInstanceParamsVO dctSchedulerInstanceParamsDTO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dctInstanceService.search(dctSchedulerInstanceParamsDTO));
     }
 
