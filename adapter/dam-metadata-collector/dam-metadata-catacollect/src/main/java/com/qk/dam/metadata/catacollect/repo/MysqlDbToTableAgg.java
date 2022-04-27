@@ -27,7 +27,7 @@ public class MysqlDbToTableAgg {
                     + "/information_schema",
                 connectInfoVo.getUserName(),
                 connectInfoVo.getPassword()));
-    db = connectInfoVo.getDb();
+    db = connectInfoVo.getDatabaseName();
   }
 
   public List<Entity> searchMysqlDB(List<Entity> list) {

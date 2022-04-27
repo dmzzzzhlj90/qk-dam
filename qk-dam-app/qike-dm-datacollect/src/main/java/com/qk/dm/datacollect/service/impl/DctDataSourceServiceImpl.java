@@ -11,7 +11,7 @@ import com.qk.dam.metedata.AtlasClient;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.datacollect.mapstruct.DctDataBaseMapper;
 import com.qk.dm.datacollect.service.DctDataSourceService;
-import com.qk.dm.datacollect.vo.DctBaseInfoVO;
+import com.qk.dm.datacollect.vo.DctSchedulerRulesVO;
 import org.apache.atlas.AtlasClientV2;
 import org.springframework.stereotype.Service;
 
@@ -52,12 +52,12 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   }
 
   @Override
-  public List<String> getResultTable(String dataSourceId, String db) {
+  public List<String> getResultTable(String dataSourceId, String databaseName) {
     DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
     if (Objects.nonNull(dsDatasourceVO)){
       ConnectInfoVo connectInfoVo = new ConnectInfoVo();
       connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfo().toString(), new TypeToken<ConnectInfoVo>() {}.getType());
-      connectInfoVo.setDb(db);
+      connectInfoVo.setDatabaseName(databaseName);
       return metadataApiService.queryTable(connectInfoVo);
     }else {
       throw  new BizException("根据连接名称获取连接信息失败");
@@ -65,12 +65,13 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   }
 
   @Override
-  public void dolphinCallback(DctBaseInfoVO dctBaseInfoVO) throws Exception {
-    DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dctBaseInfoVO.getDataSourceId());
+  public void dolphinCallback(String schedulerRules) throws Exception {
+    DctSchedulerRulesVO dctSchedulerRulesVO = GsonUtil.fromJsonString(schedulerRules, new TypeToken<DctSchedulerRulesVO>() {}.getType());
+    DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dctSchedulerRulesVO.getDataSourceId());
     if (Objects.nonNull(dsDatasourceVO)){
       MetadataConnectInfoVo metadataConnectInfoVo =new MetadataConnectInfoVo();
       metadataConnectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfo().toString(), new TypeToken<MetadataConnectInfoVo>() {}.getType());
-      DctDataBaseMapper.INSTANCE.from(dctBaseInfoVO,metadataConnectInfoVo);
+      DctDataBaseMapper.INSTANCE.from(dctSchedulerRulesVO,metadataConnectInfoVo);
       metadataApiService.extractorAtlasEntitiesWith(metadataConnectInfoVo,atlasClientV2);
     }else {
       throw new BizException("根据连接名称获取连接信息失败");

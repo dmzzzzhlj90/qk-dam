@@ -15,8 +15,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @ComponentScan(basePackages = "com.qk")
 @EnableFeignClients(basePackages = "com.qk.dm.*")
-public class DmDatacollectApplication {
+public class DmDataCollectApplication {
   public static void main(String[] args) {
-    SpringApplication.run(DmDatacollectApplication.class, args);
+    SpringApplication.run(DmDataCollectApplication.class, args);
   }
 }

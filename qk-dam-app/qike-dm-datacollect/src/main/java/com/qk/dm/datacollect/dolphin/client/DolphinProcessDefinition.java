@@ -1,4 +1,4 @@
-package com.qk.dm.datacollect.dolphin;
+package com.qk.dm.datacollect.dolphin.client;
 
 import lombok.Data;
 

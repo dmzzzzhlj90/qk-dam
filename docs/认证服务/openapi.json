@@ -2,11 +2,76 @@
   "components": {
     "schemas": {
       "_auth_current_principal_userinforequest": {},
+      "_auth_token_introspectrequest": {},
+      "_auth_token_refreshresponse": {},
       "_auth_current_logoutrequest": {},
-      "_auth_password_loginresponse": {},
+      "_auth_password_loginresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "access_token": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "refresh_token": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              },
+              "expires_in": {
+                "format": "int64",
+                "description": "No comments found.",
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
       "_auth_current_accessTokenrequest": {},
+      "_auth_token_introspectresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
       "_auth_current_authoritiesrequest": {},
       "_oauth2_auth__registerId_request": {},
+      "_auth_token_refreshrequest": {},
       "_auth_password_loginrequest": {
         "properties": {
           "username": {
@@ -15,6 +80,11 @@
             "type": "string"
           },
           "password": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "url": {
             "format": "string",
             "description": "No comments found.",
             "type": "string"
@@ -175,9 +245,11 @@
         }
       },
       "_oauth2_auth__registerId_response": {},
+      "_auth_token_logoutresponse": {},
       "_oauth2_auth_logoutresponse": {},
       "_auth_current_logoutresponse": {},
-      "_auth_current_authoritiesresponse": {}
+      "_auth_current_authoritiesresponse": {},
+      "_auth_token_logoutrequest": {}
     }
   },
   "servers": [
@@ -222,7 +294,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "197",
+            "example": "133",
             "name": "registerId"
           },
           {
@@ -232,8 +304,49 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "trista.stanton",
+            "example": "graham.weissnat",
             "name": "principalName"
+          }
+        ]
+      }
+    },
+    "/auth/token/logout": {
+      "get": {
+        "summary": "退出",
+        "deprecated": false,
+        "description": "退出",
+        "tags": [
+          "PasswordController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_auth_token_logoutresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "token_logout",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "78i5to",
+            "name": "refresh_token"
           }
         ]
       }
@@ -255,7 +368,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"username\": \"trista.stanton\",\n  \"password\": \"g1fem3\"\n}"
+                  "value": "{\n  \"username\": \"graham.weissnat\",\n  \"password\": \"yrtgry\",\n  \"url\": \"www.virgilio-zboncak.co\"\n}"
                 }
               }
             }
@@ -267,12 +380,12 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/_auth_password_loginresponse"
                 },
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "1e7g3t"
+                    "value": "{\n  \"retCode\": \"33659\",\n  \"retMsg\": \"isj3fs\",\n  \"tips\": \"ff936f\",\n  \"data\": {\n    \"access_token\": \"x200xm\",\n    \"refresh_token\": \"y4d49l\",\n    \"expires_in\": 492\n  }\n}"
                   }
                 }
               }
@@ -280,6 +393,51 @@
           }
         },
         "operationId": "password_login",
+        "parameters": []
+      }
+    },
+    "/auth/token/introspect": {
+      "post": {
+        "summary": "验证token",
+        "deprecated": false,
+        "description": "验证token",
+        "tags": [
+          "PasswordController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_auth_token_introspectrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://172.20.0.13:8765/authclient/auth/token/introspect"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_auth_token_introspectresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"33659\",\n  \"retMsg\": \"thuj7c\",\n  \"tips\": \"2gz4zf\",\n  \"data\": true\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "token_introspect",
         "parameters": []
       }
     },
@@ -318,7 +476,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "trista.stanton",
+            "example": "graham.weissnat",
             "name": "principalName"
           }
         ]
@@ -359,7 +517,7 @@
             "in": "query",
             "description": "No comments found.",
             "required": false,
-            "example": "trista.stanton",
+            "example": "graham.weissnat",
             "name": "principalName"
           }
         ]
@@ -384,7 +542,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"subject\": \"3btke5\",\n  \"fullName\": \"trista.stanton\",\n  \"givenName\": \"trista.stanton\",\n  \"familyName\": \"trista.stanton\",\n  \"middleName\": \"trista.stanton\",\n  \"nickName\": \"alec.dooley\",\n  \"preferredUsername\": \"trista.stanton\",\n  \"profile\": \"ju6c5n\",\n  \"picture\": \"mhcgnn\",\n  \"website\": \"0opwka\",\n  \"email\": \"lauren.ankunding@hotmail.com\",\n  \"emailVerified\": true,\n  \"gender\": \"jzjp6c\",\n  \"birthdate\": \"2022-04-14\",\n  \"zoneInfo\": \"2vaiqw\",\n  \"locale\": \"vpe2mp\",\n  \"phoneNumber\": \"u7h3ex\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"rj61di\",\n    \"streetAddress\": \"Apt. 423 7730 Casper Parkways， Naborough， RI 16657\",\n    \"locality\": \"l653yl\",\n    \"region\": \"0a7k3l\",\n    \"postalCode\": \"54853\",\n    \"country\": \"jorf5k\"\n  },\n  \"updatedAt\": {},\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
+                    "value": "{\n  \"subject\": \"ym21zo\",\n  \"fullName\": \"graham.weissnat\",\n  \"givenName\": \"graham.weissnat\",\n  \"familyName\": \"graham.weissnat\",\n  \"middleName\": \"graham.weissnat\",\n  \"nickName\": \"reggie.klocko\",\n  \"preferredUsername\": \"graham.weissnat\",\n  \"profile\": \"53cg9y\",\n  \"picture\": \"4fatk5\",\n  \"website\": \"rdoob7\",\n  \"email\": \"lizbeth.schamberger@yahoo.com\",\n  \"emailVerified\": true,\n  \"gender\": \"x157mh\",\n  \"birthdate\": \"2022-04-26\",\n  \"zoneInfo\": \"p6lz7b\",\n  \"locale\": \"cwzcal\",\n  \"phoneNumber\": \"c3oll1\",\n  \"phoneNumberVerified\": true,\n  \"address\": {\n    \"formatted\": \"hdys7x\",\n    \"streetAddress\": \"481 Dewayne Center， Calvinchester， NV 65695\",\n    \"locality\": \"3x02c8\",\n    \"region\": \"mq1n18\",\n    \"postalCode\": \"33659\",\n    \"country\": \"p76gjj\"\n  },\n  \"updatedAt\": {},\n  \"claims\": {\n    \"mapKey\": {}\n  }\n}"
                   }
                 }
               }
@@ -453,6 +611,47 @@
         },
         "operationId": "getAuthorities",
         "parameters": []
+      }
+    },
+    "/auth/token/refresh": {
+      "get": {
+        "summary": "刷新token",
+        "deprecated": false,
+        "description": "刷新token",
+        "tags": [
+          "PasswordController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_auth_token_refreshresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "Return void."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "token_refresh",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "No comments found.",
+            "required": false,
+            "example": "h1u38y",
+            "name": "refresh_token"
+          }
+        ]
       }
     }
   },

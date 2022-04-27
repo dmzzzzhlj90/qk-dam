@@ -1,4 +1,4 @@
-package com.qk.dm.datacollect.dolphin;
+package com.qk.dm.datacollect.dolphin.client;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
@@ -13,9 +13,9 @@ import java.util.Objects;
 /**
  * @author zhudaoming
  */
-//@Component
+@Component
 @Data
-//@ConfigurationProperties("dolphinscheduler.task")
+@ConfigurationProperties("dolphinscheduler.task")
 public class DolphinTaskDefinitionPropertiesBean {
     private Long code;
     private String name;
@@ -38,8 +38,8 @@ public class DolphinTaskDefinitionPropertiesBean {
     public static class TaskParams {
         private Object httpParams;
         private String url;
-        private String httpMethod = "GET";
-        private String httpCheckCondition = "STATUS_CODE_DEFAULT";
+        private String httpMethod;
+        private String httpCheckCondition;
         private String condition;
         private Integer connectTimeout;
         private Integer socketTimeout;
@@ -51,12 +51,14 @@ public class DolphinTaskDefinitionPropertiesBean {
         private Object switchResult;
     }
 
-    public String taskDefinitionJson(long taskCode,
-                                     String url,Object httpParams,String httpMethod,
-                                     DolphinTaskDefinitionPropertiesBean taskParam) {
+    public String taskDefinitionJson(long taskCode,String url,Object httpParams,String httpMethod,DolphinTaskDefinitionPropertiesBean taskParam) {
         this.getTaskParams().setHttpParams(httpParams);
-        this.getTaskParams().setUrl(url);
-        this.getTaskParams().setHttpMethod(httpMethod);
+        if(url != null) {
+            this.getTaskParams().setUrl(url);
+        }
+        if(httpMethod != null) {
+            this.getTaskParams().setHttpMethod(httpMethod);
+        }
         this.setCode(taskCode);
         BeanMap abean = BeanMap.create(this);
         BeanMap bbean = BeanMap.create(taskParam);
@@ -82,8 +84,12 @@ public class DolphinTaskDefinitionPropertiesBean {
     public String taskDefinitionJson(long taskCode,String url,Object httpParams,String httpMethod) {
         this.setCode(taskCode);
         this.getTaskParams().setHttpParams(httpParams);
-        this.getTaskParams().setUrl(url);
-        this.getTaskParams().setHttpMethod(httpMethod);
+        if(url != null) {
+            this.getTaskParams().setUrl(url);
+        }
+        if(httpMethod != null) {
+            this.getTaskParams().setHttpMethod(httpMethod);
+        }
         return new Gson().toJson(List.of(this));
     }
 }

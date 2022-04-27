@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * 创建任务vo
+ * 回调参数vo
  * @author zys
  * @date 2022/4/20 10:50
  * @since 1.0.0
@@ -43,7 +43,7 @@ public class DctBaseInfoVO {
   private String owner;
 
   /** 数据库名称 */
-  private String db;
+  private String databaseName;
 
   /**采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）*/
   private String strategy;
