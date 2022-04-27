@@ -1,0 +1,769 @@
+{
+  "info": {
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "14832d26-2eaa-430c-9c42-ae44c0e93287",
+    "name": "dm-datasource"
+  },
+  "item": [
+    {
+      "name": "数据源服务对外提供接口",
+      "item": [
+        {
+          "name": "查询所有数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/type/all",
+              "protocol": "http",
+              "path": [
+                "api",
+                "type",
+                "all"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "查询所有数据源连接类型",
+            "header": []
+          },
+          "description": "查询所有数据源连接类型"
+        },
+        {
+          "name": "根据数据库类型获取数据源连接信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/database/eqrnc5",
+              "protocol": "http",
+              "path": [
+                "api",
+                "database",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "type",
+                  "value": "nbd32g",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "根据数据库类型获取数据源连接信息",
+            "header": []
+          },
+          "description": "根据数据库类型获取数据源连接信息"
+        },
+        {
+          "name": "根据数据源名称获取数据源连接信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/thomas.jacobson",
+              "protocol": "http",
+              "path": [
+                "api",
+                ":dataSourceName"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "dataSourceName",
+                  "value": "thomas.jacobson",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "根据数据源名称获取数据源连接信息",
+            "header": []
+          },
+          "description": "根据数据源名称获取数据源连接信息"
+        },
+        {
+          "name": "获取数据源集合",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/api/dataSource/list?dataSourceNames\u003d",
+              "protocol": "http",
+              "path": [
+                "api",
+                "dataSource",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceNames",
+                  "value": "c45nl5",
+                  "description": "No comments found.,[array of object]"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取数据源集合",
+            "header": []
+          },
+          "description": "获取数据源集合"
+        }
+      ]
+    },
+    {
+      "name": "数据源管理__应用系统录入接口",
+      "item": [
+        {
+          "name": "数据源管理—查询应用系统",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"68tke9\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/directory/query",
+              "protocol": "http",
+              "path": [
+                "directory",
+                "query"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源管理—查询应用系统",
+            "header": []
+          },
+          "description": "数据源管理—查询应用系统"
+        },
+        {
+          "name": "数据管理—新增应用系统新",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"89\",\n  \"sysName\": \"thomas.jacobson\",\n  \"sysShortName\": \"thomas.jacobson\",\n  \"area\": \"36vs11\",\n  \"itDepartment\": \"k4qtuv\",\n  \"busiDepartment\": \"ty6vex\",\n  \"importance\": 395,\n  \"leader\": \"iv1qnw\",\n  \"deployPlace\": \"wbdf7y\",\n  \"gmtCreate\": \"2022-04-22 16:04:00\",\n  \"gmtModified\": \"2022-04-22 16:04:00\",\n  \"createUserid\": 215,\n  \"updateUserid\": 303,\n  \"delFlag\": 0,\n  \"versionConsumer\": \"ok25w5\",\n  \"sysDesc\": \"m6e7rd\",\n  \"tagNames\": \"rmnp89\",\n  \"tagIds\": \"y65azq\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/directory/add",
+              "protocol": "http",
+              "path": [
+                "directory",
+                "add"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据管理—新增应用系统新",
+            "header": []
+          },
+          "description": "数据管理—新增应用系统新"
+        },
+        {
+          "name": "数据源管理—删除应用系统信息",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/directory/delete/89",
+              "protocol": "http",
+              "path": [
+                "directory",
+                "delete",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "89",
+                  "description": "应用系统id"
+                }
+              ]
+            },
+            "description": "数据源管理—删除应用系统信息",
+            "header": []
+          },
+          "description": "数据源管理—删除应用系统信息"
+        },
+        {
+          "name": "数据源管理—修改应用系统信息",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"89\",\n  \"sysName\": \"thomas.jacobson\",\n  \"sysShortName\": \"thomas.jacobson\",\n  \"area\": \"ilv151\",\n  \"itDepartment\": \"zz2ncf\",\n  \"busiDepartment\": \"n1jqqz\",\n  \"importance\": 585,\n  \"leader\": \"t2t5cw\",\n  \"deployPlace\": \"adk54t\",\n  \"gmtCreate\": \"2022-04-22 16:04:00\",\n  \"gmtModified\": \"2022-04-22 16:04:00\",\n  \"createUserid\": 549,\n  \"updateUserid\": 699,\n  \"delFlag\": 0,\n  \"versionConsumer\": \"4epyt5\",\n  \"sysDesc\": \"d3xvxl\",\n  \"tagNames\": \"487vmj\",\n  \"tagIds\": \"sacrfv\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/directory/",
+              "protocol": "http",
+              "path": [
+                "directory",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源管理—修改应用系统信息",
+            "header": []
+          },
+          "description": "数据源管理—修改应用系统信息"
+        },
+        {
+          "name": "数据源管理—查询应用系统名称",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/directory/sysname",
+              "protocol": "http",
+              "path": [
+                "directory",
+                "sysname"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源管理—查询应用系统名称",
+            "header": []
+          },
+          "description": "数据源管理—查询应用系统名称"
+        }
+      ]
+    },
+    {
+      "name": "数据源管理—数据源连接目录",
+      "item": [
+        {
+          "name": "数据源分类目录-查询",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/datasorce/dir/query",
+              "protocol": "http",
+              "path": [
+                "datasorce",
+                "dir",
+                "query"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源分类目录-查询",
+            "header": []
+          },
+          "description": "数据源分类目录-查询"
+        },
+        {
+          "name": "数据源分类目录-查询（带数据源连接信息）",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/datasorce/dir/query/dsdir/datasource",
+              "protocol": "http",
+              "path": [
+                "datasorce",
+                "dir",
+                "query",
+                "dsdir",
+                "datasource"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源分类目录-查询（带数据源连接信息）",
+            "header": []
+          },
+          "description": "数据源分类目录-查询（带数据源连接信息）"
+        },
+        {
+          "name": "数据源分类目录-新增",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"89\",\n  \"dicName\": \"thomas.jacobson\",\n  \"parentId\": \"89\",\n  \"dsDirCode\": \"38674\",\n  \"gmtCreate\": \"2022-04-22 16:04:00\",\n  \"gmtModified\": \"2022-04-22 16:04:00\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"5xqsdw\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasorce/dir/add",
+              "protocol": "http",
+              "path": [
+                "datasorce",
+                "dir",
+                "add"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源分类目录-新增",
+            "header": []
+          },
+          "description": "数据源分类目录-新增"
+        },
+        {
+          "name": "数据源目录支持根节点关联删除子节点方式-删除",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasorce/dir/delete/89",
+              "protocol": "http",
+              "path": [
+                "datasorce",
+                "dir",
+                "delete",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "89",
+                  "description": "目录id"
+                }
+              ]
+            },
+            "description": "数据源目录支持根节点关联删除子节点方式-删除",
+            "header": []
+          },
+          "description": "数据源目录支持根节点关联删除子节点方式-删除"
+        },
+        {
+          "name": "数据源分类目录-修改",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"89\",\n  \"dicName\": \"thomas.jacobson\",\n  \"parentId\": \"89\",\n  \"dsDirCode\": \"38674\",\n  \"gmtCreate\": \"2022-04-22 16:04:00\",\n  \"gmtModified\": \"2022-04-22 16:04:00\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"ezt3ie\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasorce/dir/",
+              "protocol": "http",
+              "path": [
+                "datasorce",
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源分类目录-修改",
+            "header": []
+          },
+          "description": "数据源分类目录-修改"
+        }
+      ]
+    },
+    {
+      "name": "数据管理—数据源连接",
+      "item": [
+        {
+          "name": "数据源连接——统一查询接口",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"bwbtc3\"\n  },\n  \"dataSourceName\": \"thomas.jacobson\",\n  \"linkType\": \"o2dtkg\",\n  \"dicId\": \"89\",\n  \"beginDay\": \"u4uxul\",\n  \"endDay\": \"4vttyg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/query",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "query"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源连接——统一查询接口",
+            "header": []
+          },
+          "description": "数据源连接——统一查询接口"
+        },
+        {
+          "name": "数据源连接——新增接口",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"89\",\n  \"dataSourceName\": \"thomas.jacobson\",\n  \"homeSystem\": \"snwezn\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"9uvwyn\",\n  \"tagNames\": \"pawh7o\",\n  \"tagIds\": \"dync16\",\n  \"use\": \"ogp8nk\",\n  \"deployPlace\": \"x8noq9\",\n  \"status\": 857,\n  \"gmtModified\": \"2022-04-22 16:04:00\",\n  \"gmtCreate\": \"2022-04-22 16:04:00\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"15e2ct\",\n  \"dicId\": \"89\",\n  \"remark\": \"ah2o8x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源连接——新增接口",
+            "header": []
+          },
+          "description": "数据源连接——新增接口"
+        },
+        {
+          "name": "数据源连接——删除接口",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/89",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "89",
+                  "description": "数据源id"
+                }
+              ]
+            },
+            "description": "数据源连接——删除接口",
+            "header": []
+          },
+          "description": "数据源连接——删除接口"
+        },
+        {
+          "name": "数据源连接——修改接口",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"89\",\n  \"dataSourceName\": \"thomas.jacobson\",\n  \"homeSystem\": \"idj1lx\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"ya5ity\",\n  \"tagNames\": \"kcp1yl\",\n  \"tagIds\": \"l1owz1\",\n  \"use\": \"a3vklx\",\n  \"deployPlace\": \"f4gzjv\",\n  \"status\": 313,\n  \"gmtModified\": \"2022-04-22 16:04:00\",\n  \"gmtCreate\": \"2022-04-22 16:04:00\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"uit9ie\",\n  \"dicId\": \"89\",\n  \"remark\": \"xrbwli\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源连接——修改接口",
+            "header": []
+          },
+          "description": "数据源连接——修改接口"
+        },
+        {
+          "name": "数据源连接——获取数据源类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/type",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源连接——获取数据源类型",
+            "header": []
+          },
+          "description": "数据源连接——获取数据源类型"
+        },
+        {
+          "name": "数据源连接——根据数据库类型获取数据源连接信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/database/08248k",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "database",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "type",
+                  "value": "qlnsjo",
+                  "description": "数据连接类型"
+                }
+              ]
+            },
+            "description": "数据源连接——根据数据库类型获取数据源连接信息",
+            "header": []
+          },
+          "description": "数据源连接——根据数据库类型获取数据源连接信息"
+        },
+        {
+          "name": "数据源连接——根据数据源id获取数据源信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/89",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "89",
+                  "description": "数据源名称"
+                }
+              ]
+            },
+            "description": "数据源连接——根据数据源id获取数据源信息",
+            "header": []
+          },
+          "description": "数据源连接——根据数据源id获取数据源信息"
+        },
+        {
+          "name": "数据源连接——测试连接",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"89\",\n  \"dataSourceName\": \"thomas.jacobson\",\n  \"homeSystem\": \"kzhy30\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"twcif4\",\n  \"tagNames\": \"df3obr\",\n  \"tagIds\": \"wtcu4g\",\n  \"use\": \"phygwd\",\n  \"deployPlace\": \"yv93jb\",\n  \"status\": 964,\n  \"gmtModified\": \"2022-04-22 16:04:00\",\n  \"gmtCreate\": \"2022-04-22 16:04:00\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"trhhas\",\n  \"dicId\": \"89\",\n  \"remark\": \"s2yqzl\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/connecting",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "connecting"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源连接——测试连接",
+            "header": []
+          },
+          "description": "数据源连接——测试连接"
+        },
+        {
+          "name": "数据源连接——获取所有数据源类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/alltype",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "alltype"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "数据源连接——获取所有数据源类型",
+            "header": []
+          },
+          "description": "数据源连接——获取所有数据源类型"
+        }
+      ]
+    }
+  ]
+}

@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author shenpj
@@ -45,17 +48,24 @@ public class PasswordController {
     }
 
     //todo 底下几个都需要更改请求方法及参数封装
+
     /**
      * 验证token
-     * @param token
+     *
+     * @param request
      */
-    @RequestMapping(value = "/auth/token/introspect", method = RequestMethod.GET)
-    public void token_introspect(String token)  {
-        introspect(token);
+    @RequestMapping(value = "/auth/token/introspect", method = RequestMethod.POST)
+    public DefaultCommonResult<Boolean> token_introspect(HttpServletRequest request) {
+        try {
+            return DefaultCommonResult.success(ResultCodeEnum.OK, introspect(request.getHeader("access_token")));
+        } catch (Exception n) {
+            return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST, n.getMessage());
+        }
     }
 
     /**
      * 刷新token
+     *
      * @param refresh_token
      */
     @RequestMapping(value = "/auth/token/refresh", method = RequestMethod.GET)
@@ -65,6 +75,7 @@ public class PasswordController {
 
     /**
      * 退出
+     *
      * @param refresh_token
      */
     @RequestMapping(value = "/auth/token/logout", method = RequestMethod.GET)
@@ -91,11 +102,11 @@ public class PasswordController {
         String introspectResult = keycloakPost(introspect, data, String.class);
         JsonObject jsonObject = GsonUtil.toJsonObject(introspectResult);
         Boolean active = jsonObject.get("active").getAsBoolean();
-        if(active){
-            System.out.println("有效");
-        }else{
-            System.out.println("无效");
-        }
+//        if(active){
+//            System.out.println("有效");
+//        }else{
+//            System.out.println("无效");
+//        }
         return active;
     }
 
@@ -123,13 +134,17 @@ public class PasswordController {
             headers.set("Content-Type", "application/x-www-form-urlencoded");
             HttpEntity<String> entity = new HttpEntity<>(data, headers);
             response = restTemplate.exchange(uri, HttpMethod.POST, entity, clazz);
-            System.out.println("retult:" + response.getBody());
-        }catch (Exception e){
-            throw new BizException("内部错误，请联系管理员");
-        }
-        if (response.getStatusCode().value() != HttpStatus.OK.value()
-                && response.getStatusCode().value() != HttpStatus.NO_CONTENT.value()) {
+//            System.out.println("retult:" + response.getBody());
+            if (response.getStatusCode().value() != HttpStatus.OK.value()
+                    && response.getStatusCode().value() != HttpStatus.NO_CONTENT.value()) {
+                throw new BizException("账号或密码错误");
+            }
+        } catch (HttpClientErrorException e) {
             throw new BizException("账号或密码错误");
+        } catch (BizException e) {
+            throw new BizException(e.getMessage());
+        } catch (Exception e) {
+            throw new BizException("内部错误，请联系管理员");
         }
         return response.getBody();
     }

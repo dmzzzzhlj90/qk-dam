@@ -11,5 +11,5 @@ public interface DisRuleClassService {
 
     void update(DisRuleClassVO vo);
 
-    void delete(String id);
+    void delete(String ids);
 }

@@ -25,13 +25,13 @@ public final class SourcesUtil {
   public static final String TABLE_NUMS="all";
 
   /**
-   * altas常量
+   * MYSQL数据库
    */
-  public static final String TYPENAME = "__typeName";
-  public static final String NAME = "name";
-  public static final String LABELS = "__labels";
-  public static final String EQ = "eq";
-  public static final String CONTAINS = "contains";
-  public static final String DB_NAME = "name";
-
+  public static final String MYSQL_SCHEMA = "table_schema";
+  public static final String MYSQL_NAME = "table_name";
+  /**
+   * HIVE数据库
+   */
+  public static final String HIVE_SCHEMA = "database_name";
+  public static final String HIVE_NAME = "tab_name";
 }

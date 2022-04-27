@@ -4,7 +4,6 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.DataBaseService;
 import com.qk.dm.datacollect.service.DctDataSourceService;
-import com.qk.dm.datacollect.vo.DctBaseInfoVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -40,12 +39,12 @@ public class DctDataBaseController {
 
   /**
    * 获取数据源连接
-   * @param dbType 数据库类型
+   * @param engineType 适用引擎
    * @return DefaultCommonResult<List<String>> 数据源连接名称
    */
   @GetMapping("/connect/{type}")
-  public DefaultCommonResult<Map<String,String>> getResultDataSourceByType(@PathVariable("type") String dbType) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSources(dbType));
+  public DefaultCommonResult<Map<String,String>> getResultDataSourceByType(@PathVariable("type") String engineType) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dataBaseService.getAllDataSources(engineType));
   }
 
   /**
@@ -61,24 +60,24 @@ public class DctDataBaseController {
   /**
    * 根据数据源连接、库名称获取表
    * @param dataSourceId 数据源连接id
-   * @param db 数据库名称
+   * @param databaseName 数据库名称
    * @return DefaultCommonResult<List<String>> 表信息
    */
   @GetMapping("/connect/table")
-  public DefaultCommonResult<List<String>> getResultTable(@NotBlank @RequestParam String dataSourceId,@NotBlank @RequestParam String db) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultTable(dataSourceId,db));
+  public DefaultCommonResult<List<String>> getResultTable(@NotBlank @RequestParam String dataSourceId,@NotBlank @RequestParam String databaseName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultTable(dataSourceId,databaseName));
   }
 
 
   /**
    * dolphin任务回调接口
-   * @param dctBaseInfoVO 回调atals接口参数
+   * @param schedulerRules 回调atals接口参数
    * @return
    */
   @PostMapping
-   public DefaultCommonResult dolphinCallback(@RequestBody DctBaseInfoVO dctBaseInfoVO)
+   public DefaultCommonResult dolphinCallback(@NotBlank @RequestParam String schedulerRules)
       throws Exception {
-     dctDataSourceService.dolphinCallback(dctBaseInfoVO);
+     dctDataSourceService.dolphinCallback(schedulerRules);
      return DefaultCommonResult.success();
    }
 }

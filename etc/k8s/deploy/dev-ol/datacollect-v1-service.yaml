@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: datacollect
+  namespace: java-backend
+  labels:
+    app: datacollect
+  annotations:
+    kubesphere.io/alias-name: 数据采集后端服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8791
+      protocol: TCP
+      port: 8791
+      targetPort: 8791
+  selector:
+    app: datacollect-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None

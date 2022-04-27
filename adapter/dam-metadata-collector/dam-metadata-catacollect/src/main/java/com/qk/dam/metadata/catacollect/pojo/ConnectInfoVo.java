@@ -49,5 +49,5 @@ public class ConnectInfoVo {
    * 数据库名称
    * @return
    */
-  private String db;
+  private String databaseName;
 }
