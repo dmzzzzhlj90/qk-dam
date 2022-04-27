@@ -21,14 +21,11 @@ public class RedisConfig {
 
     @Bean
     @Primary
-    public CacheManager dynamicTtlCacheManager(final RedisCacheInfoConf redisCacheInfoConf,
-                                               final RedisConnectionFactory factory) {
+    public CacheManager dynamicTtlCacheManager(final RedisConnectionFactory factory) {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.lockingRedisCacheWriter(factory);
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
         return new DynamicTtlRedisCacheManager(
                 redisCacheWriter,
-                config,
-                redisCacheInfoConf.getRedisMinSecond(),
-                redisCacheInfoConf.getRedisMaxSecond());
+                config);
     }
 }

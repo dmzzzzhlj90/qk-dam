@@ -17,8 +17,12 @@ processResources {
     }
 }
 docker {
+    dockerCreateDockerfile {
+        environmentVariable 'TimeZone', 'Asia/Shanghai'
+        instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
+    }
     springBootApplication {
-        baseImage = "openjdk:11.0.12-jre-slim-buster"
+        baseImage = "${jre11Image}"
         ports = [8765]
         images = ["${imagePush}/${project.name}:${version}"]
         jvmArgs = ['-Xmx248m']

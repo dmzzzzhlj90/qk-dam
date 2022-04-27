@@ -9,18 +9,10 @@ public class DynamicTtlRedisCacheManager extends RedisCacheManager {
 
     private RedisCacheWriter cacheWriter;
 
-    private int minSecond;
-
-    private int maxSecond;
-
     public DynamicTtlRedisCacheManager(RedisCacheWriter cacheWriter,
-                                       RedisCacheConfiguration defaultCacheConfiguration,
-                                       int minSecond,
-                                       int maxSecond) {
+                                       RedisCacheConfiguration defaultCacheConfiguration\) {
         super(cacheWriter, defaultCacheConfiguration);
         this.cacheWriter = cacheWriter;
-        this.minSecond = minSecond;
-        this.maxSecond = maxSecond;
     }
 
     /**
