@@ -58,7 +58,7 @@ public class MysqlAtlasEntity {
                     + "/information_schema",
                 metadataConnectInfoVo.getUserName(),
                 metadataConnectInfoVo.getPassword()));
-    db = metadataConnectInfoVo.getDb();
+    db = metadataConnectInfoVo.getDatabaseName();
     allNums= metadataConnectInfoVo.getAllNums();
     tableList=metadataConnectInfoVo.getTableList();
     host=metadataConnectInfoVo.getServer();

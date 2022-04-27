@@ -1,0 +1,2940 @@
+{
+  "components": {
+    "schemas": {
+      "_datasource__id_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "string",
+                "description": "数据源主键id",
+                "type": "string"
+              },
+              "dataSourceName": {
+                "format": "string",
+                "description": "数据源名称（返回值显示）",
+                "type": "string"
+              },
+              "homeSystem": {
+                "format": "string",
+                "description": "所属系统（返回值显示）",
+                "type": "string"
+              },
+              "connectBasicInfo": {
+                "description": "数据源连接信息（返回值显示）(object)",
+                "type": "object"
+              },
+              "linkType": {
+                "format": "string",
+                "description": "连接方式 （返回值显示）",
+                "type": "string"
+              },
+              "tagNames": {
+                "format": "string",
+                "description": "标签（名称用逗号隔开）",
+                "type": "string"
+              },
+              "tagIds": {
+                "format": "string",
+                "description": "标签id组合（ID用逗号隔开）",
+                "type": "string"
+              },
+              "use": {
+                "format": "string",
+                "description": "用途",
+                "type": "string"
+              },
+              "deployPlace": {
+                "format": "string",
+                "description": "部署地",
+                "type": "string"
+              },
+              "status": {
+                "format": "int32",
+                "description": "状态设置状态值",
+                "type": "integer"
+              },
+              "gmtModified": {
+                "description": "修改时间 （返回值显示）(object)",
+                "type": "object"
+              },
+              "gmtCreate": {
+                "description": "创建时间（返回值显示）(object)",
+                "type": "object"
+              },
+              "createUserid": {
+                "format": "string",
+                "description": "创建人id（后期设置为必填）（返回值显示）",
+                "type": "string"
+              },
+              "updateUserid": {
+                "format": "string",
+                "description": "修改人id",
+                "type": "string"
+              },
+              "delFlag": {
+                "format": "int32",
+                "description": "删除标识(0-保留 1-删除，后期设置为非空，默认为0)",
+                "type": "integer"
+              },
+              "versionConsumer": {
+                "format": "string",
+                "description": "多租户标识",
+                "type": "string"
+              },
+              "dicId": {
+                "format": "string",
+                "description": "目录归属id",
+                "type": "string"
+              },
+              "remark": {
+                "format": "string",
+                "description": "备注",
+                "type": "string"
+              }
+            }
+          },
+          "anyObject": {
+            "description": "anyObject.(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "string",
+                "description": "数据源主键id",
+                "type": "string"
+              },
+              "dataSourceName": {
+                "format": "string",
+                "description": "数据源名称（返回值显示）",
+                "type": "string"
+              },
+              "homeSystem": {
+                "format": "string",
+                "description": "所属系统（返回值显示）",
+                "type": "string"
+              },
+              "connectBasicInfo": {
+                "description": "数据源连接信息（返回值显示）(object)",
+                "type": "object"
+              },
+              "linkType": {
+                "format": "string",
+                "description": "连接方式 （返回值显示）",
+                "type": "string"
+              },
+              "tagNames": {
+                "format": "string",
+                "description": "标签（名称用逗号隔开）",
+                "type": "string"
+              },
+              "tagIds": {
+                "format": "string",
+                "description": "标签id组合（ID用逗号隔开）",
+                "type": "string"
+              },
+              "use": {
+                "format": "string",
+                "description": "用途",
+                "type": "string"
+              },
+              "deployPlace": {
+                "format": "string",
+                "description": "部署地",
+                "type": "string"
+              },
+              "status": {
+                "format": "int32",
+                "description": "状态设置状态值",
+                "type": "integer"
+              },
+              "gmtModified": {
+                "description": "修改时间 （返回值显示）(object)",
+                "type": "object"
+              },
+              "gmtCreate": {
+                "description": "创建时间（返回值显示）(object)",
+                "type": "object"
+              },
+              "createUserid": {
+                "format": "string",
+                "description": "创建人id（后期设置为必填）（返回值显示）",
+                "type": "string"
+              },
+              "updateUserid": {
+                "format": "string",
+                "description": "修改人id",
+                "type": "string"
+              },
+              "delFlag": {
+                "format": "int32",
+                "description": "删除标识(0-保留 1-删除，后期设置为非空，默认为0)",
+                "type": "integer"
+              },
+              "versionConsumer": {
+                "format": "string",
+                "description": "多租户标识",
+                "type": "string"
+              },
+              "dicId": {
+                "format": "string",
+                "description": "目录归属id",
+                "type": "string"
+              },
+              "remark": {
+                "format": "string",
+                "description": "备注",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_datasorce_dir_query_dsdir_datasourcerequest": {},
+      "_datasource_connectingresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_api_type_allrequest": {},
+      "_api_database__type_request": {},
+      "_datasorce_dir_request": {
+        "properties": {
+          "id": {
+            "format": "string",
+            "description": "主键ID",
+            "type": "string"
+          },
+          "dicName": {
+            "format": "string",
+            "description": "目录名称",
+            "type": "string"
+          },
+          "parentId": {
+            "format": "string",
+            "description": "父级id",
+            "type": "string"
+          },
+          "dsDirCode": {
+            "format": "string",
+            "description": "目录编码",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "description": "创建时间(object)",
+            "type": "object"
+          },
+          "gmtModified": {
+            "description": "修改时间(object)",
+            "type": "object"
+          },
+          "createUserid": {
+            "format": "string",
+            "description": "创建人(后期设计为非空)",
+            "type": "string"
+          },
+          "updateUserid": {
+            "format": "string",
+            "description": "修改人",
+            "type": "string"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "删除标识(0-保留 1-删除，后期设置为非空，默认是0)",
+            "type": "integer"
+          },
+          "versionConsumer": {
+            "format": "string",
+            "description": "多租户标识",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dicName",
+          "parentId",
+          "dsDirCode"
+        ]
+      },
+      "_datasorce_dir_delete__id_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_directory_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_datasorce_dir_addresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_directory_addresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_datasorce_dir_query_dsdir_datasourceresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "key": {
+                  "format": "string",
+                  "description": "主键ID",
+                  "type": "string"
+                },
+                "title": {
+                  "format": "string",
+                  "description": "目录名称",
+                  "type": "string"
+                },
+                "parentId": {
+                  "format": "string",
+                  "description": "父级id",
+                  "type": "string"
+                },
+                "dsDirCode": {
+                  "format": "string",
+                  "description": "目录编码",
+                  "type": "string"
+                },
+                "children": {
+                  "description": "子类目录",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/_datasorce_dir_query_dsdir_datasourceresponse"
+                  },
+                  "example": [
+                    {
+                      "$ref": "..."
+                    }
+                  ]
+                },
+                "dataType": {
+                  "format": "string",
+                  "description": "类型（用于区分数据源和文件夹/dir表示文件夹，datasource表示数据）",
+                  "type": "string"
+                },
+                "conType": {
+                  "format": "string",
+                  "description": "返回数据源类型",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datasource_database__type_request": {},
+      "_datasource_connectingrequest": {
+        "properties": {
+          "id": {
+            "format": "string",
+            "description": "数据源主键id",
+            "type": "string"
+          },
+          "dataSourceName": {
+            "format": "string",
+            "description": "数据源名称（返回值显示）",
+            "type": "string"
+          },
+          "homeSystem": {
+            "format": "string",
+            "description": "所属系统（返回值显示）",
+            "type": "string"
+          },
+          "connectBasicInfo": {
+            "description": "数据源连接信息（返回值显示）(object)",
+            "type": "object"
+          },
+          "anyObject": {
+            "description": "anyObject.(object)",
+            "type": "object"
+          },
+          "linkType": {
+            "format": "string",
+            "description": "连接方式 （返回值显示）",
+            "type": "string"
+          },
+          "tagNames": {
+            "format": "string",
+            "description": "标签（名称用逗号隔开）",
+            "type": "string"
+          },
+          "tagIds": {
+            "format": "string",
+            "description": "标签id组合（ID用逗号隔开）",
+            "type": "string"
+          },
+          "use": {
+            "format": "string",
+            "description": "用途",
+            "type": "string"
+          },
+          "deployPlace": {
+            "format": "string",
+            "description": "部署地",
+            "type": "string"
+          },
+          "status": {
+            "format": "int32",
+            "description": "状态设置状态值",
+            "type": "integer"
+          },
+          "gmtModified": {
+            "description": "修改时间 （返回值显示）(object)",
+            "type": "object"
+          },
+          "gmtCreate": {
+            "description": "创建时间（返回值显示）(object)",
+            "type": "object"
+          },
+          "createUserid": {
+            "format": "string",
+            "description": "创建人id（后期设置为必填）（返回值显示）",
+            "type": "string"
+          },
+          "updateUserid": {
+            "format": "string",
+            "description": "修改人id",
+            "type": "string"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "删除标识(0-保留 1-删除，后期设置为非空，默认为0)",
+            "type": "integer"
+          },
+          "versionConsumer": {
+            "format": "string",
+            "description": "多租户标识",
+            "type": "string"
+          },
+          "dicId": {
+            "format": "string",
+            "description": "目录归属id",
+            "type": "string"
+          },
+          "remark": {
+            "format": "string",
+            "description": "备注",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dataSourceName",
+          "connectBasicInfo",
+          "linkType"
+        ]
+      },
+      "_datasorce_dir_queryrequest": {},
+      "_datasource_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_directory_queryresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "string",
+                      "description": "主键ID",
+                      "type": "string"
+                    },
+                    "sysName": {
+                      "format": "string",
+                      "description": "应用系统名称(返回值显示)",
+                      "type": "string"
+                    },
+                    "sysShortName": {
+                      "format": "string",
+                      "description": "应用系统名称简称(返回值显示)",
+                      "type": "string"
+                    },
+                    "area": {
+                      "format": "string",
+                      "description": "区域(返回值显示)",
+                      "type": "string"
+                    },
+                    "itDepartment": {
+                      "format": "string",
+                      "description": "IT部门",
+                      "type": "string"
+                    },
+                    "busiDepartment": {
+                      "format": "string",
+                      "description": "业务部门 (返回值显示)",
+                      "type": "string"
+                    },
+                    "importance": {
+                      "format": "int32",
+                      "description": "重要性(1-高 2-中 3-低)",
+                      "type": "integer"
+                    },
+                    "leader": {
+                      "format": "string",
+                      "description": "负责人(返回值显示)",
+                      "type": "string"
+                    },
+                    "deployPlace": {
+                      "format": "string",
+                      "description": "部署地 (返回值显示)",
+                      "type": "string"
+                    },
+                    "gmtCreate": {
+                      "description": "创建时间 (返回值显示)(object)",
+                      "type": "object"
+                    },
+                    "gmtModified": {
+                      "description": "修改时间(object)",
+                      "type": "object"
+                    },
+                    "createUserid": {
+                      "format": "int32",
+                      "description": "创建人id（后期设置为非空）",
+                      "type": "integer"
+                    },
+                    "updateUserid": {
+                      "format": "int32",
+                      "description": "修改人",
+                      "type": "integer"
+                    },
+                    "delFlag": {
+                      "format": "int32",
+                      "description": "删除标识(0-保留 1-删除，后期设置为非空默认为0)",
+                      "type": "integer"
+                    },
+                    "versionConsumer": {
+                      "format": "string",
+                      "description": "多租户标识",
+                      "type": "string"
+                    },
+                    "sysDesc": {
+                      "format": "string",
+                      "description": "描述 (返回值显示)",
+                      "type": "string"
+                    },
+                    "tagNames": {
+                      "format": "string",
+                      "description": "标签名称组合(ETL,PII)名称用逗号隔开",
+                      "type": "string"
+                    },
+                    "tagIds": {
+                      "format": "string",
+                      "description": "标签ID组合(1,2,3)ID逗号隔开",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datasource_alltyperequest": {},
+      "_api_dataSource_listresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "string",
+                  "description": "数据源主键id",
+                  "type": "string"
+                },
+                "dataSourceName": {
+                  "format": "string",
+                  "description": "系统名称",
+                  "type": "string"
+                },
+                "homeSystem": {
+                  "format": "string",
+                  "description": "所属系统",
+                  "type": "string"
+                },
+                "connectBasicInfoJson": {
+                  "format": "string",
+                  "description": "数据源连接返回JSON信息",
+                  "type": "string"
+                },
+                "dbType": {
+                  "format": "string",
+                  "description": "连接方式",
+                  "type": "string"
+                },
+                "status": {
+                  "format": "int32",
+                  "description": "状态设置状态值",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datasorce_dir_delete__id_request": {},
+      "_datasource_typerequest": {},
+      "_directory_delete__id_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_directory_addrequest": {
+        "properties": {
+          "id": {
+            "format": "string",
+            "description": "主键ID",
+            "type": "string"
+          },
+          "sysName": {
+            "format": "string",
+            "description": "应用系统名称(返回值显示)",
+            "type": "string"
+          },
+          "sysShortName": {
+            "format": "string",
+            "description": "应用系统名称简称(返回值显示)",
+            "type": "string"
+          },
+          "area": {
+            "format": "string",
+            "description": "区域(返回值显示)",
+            "type": "string"
+          },
+          "itDepartment": {
+            "format": "string",
+            "description": "IT部门",
+            "type": "string"
+          },
+          "busiDepartment": {
+            "format": "string",
+            "description": "业务部门 (返回值显示)",
+            "type": "string"
+          },
+          "importance": {
+            "format": "int32",
+            "description": "重要性(1-高 2-中 3-低)",
+            "type": "integer"
+          },
+          "leader": {
+            "format": "string",
+            "description": "负责人(返回值显示)",
+            "type": "string"
+          },
+          "deployPlace": {
+            "format": "string",
+            "description": "部署地 (返回值显示)",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "description": "创建时间 (返回值显示)(object)",
+            "type": "object"
+          },
+          "gmtModified": {
+            "description": "修改时间(object)",
+            "type": "object"
+          },
+          "createUserid": {
+            "format": "int32",
+            "description": "创建人id（后期设置为非空）",
+            "type": "integer"
+          },
+          "updateUserid": {
+            "format": "int32",
+            "description": "修改人",
+            "type": "integer"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "删除标识(0-保留 1-删除，后期设置为非空默认为0)",
+            "type": "integer"
+          },
+          "versionConsumer": {
+            "format": "string",
+            "description": "多租户标识",
+            "type": "string"
+          },
+          "sysDesc": {
+            "format": "string",
+            "description": "描述 (返回值显示)",
+            "type": "string"
+          },
+          "tagNames": {
+            "format": "string",
+            "description": "标签名称组合(ETL,PII)名称用逗号隔开",
+            "type": "string"
+          },
+          "tagIds": {
+            "format": "string",
+            "description": "标签ID组合(1,2,3)ID逗号隔开",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sysName",
+          "sysShortName"
+        ]
+      },
+      "_datasource__id_request": {},
+      "_api_dataSource_listrequest": {},
+      "_api_type_allresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/_api_type_allresponse"
+            }
+          }
+        }
+      },
+      "_directory_queryrequest": {
+        "properties": {
+          "page": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "size": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "sortField": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          }
+        }
+      },
+      "_api__dataSourceName_request": {},
+      "_directory_delete__id_request": {},
+      "_directory_sysnameresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/_directory_sysnameresponse"
+            }
+          }
+        }
+      },
+      "_datasorce_dir_addrequest": {
+        "properties": {
+          "id": {
+            "format": "string",
+            "description": "主键ID",
+            "type": "string"
+          },
+          "dicName": {
+            "format": "string",
+            "description": "目录名称",
+            "type": "string"
+          },
+          "parentId": {
+            "format": "string",
+            "description": "父级id",
+            "type": "string"
+          },
+          "dsDirCode": {
+            "format": "string",
+            "description": "目录编码",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "description": "创建时间(object)",
+            "type": "object"
+          },
+          "gmtModified": {
+            "description": "修改时间(object)",
+            "type": "object"
+          },
+          "createUserid": {
+            "format": "string",
+            "description": "创建人(后期设计为非空)",
+            "type": "string"
+          },
+          "updateUserid": {
+            "format": "string",
+            "description": "修改人",
+            "type": "string"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "删除标识(0-保留 1-删除，后期设置为非空，默认是0)",
+            "type": "integer"
+          },
+          "versionConsumer": {
+            "format": "string",
+            "description": "多租户标识",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dicName",
+          "parentId",
+          "dsDirCode"
+        ]
+      },
+      "_api__dataSourceName_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "string",
+                "description": "数据源主键id",
+                "type": "string"
+              },
+              "dataSourceName": {
+                "format": "string",
+                "description": "系统名称",
+                "type": "string"
+              },
+              "homeSystem": {
+                "format": "string",
+                "description": "所属系统",
+                "type": "string"
+              },
+              "connectBasicInfoJson": {
+                "format": "string",
+                "description": "数据源连接返回JSON信息",
+                "type": "string"
+              },
+              "dbType": {
+                "format": "string",
+                "description": "连接方式",
+                "type": "string"
+              },
+              "status": {
+                "format": "int32",
+                "description": "状态设置状态值",
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "_directory_request": {
+        "properties": {
+          "id": {
+            "format": "string",
+            "description": "主键ID",
+            "type": "string"
+          },
+          "sysName": {
+            "format": "string",
+            "description": "应用系统名称(返回值显示)",
+            "type": "string"
+          },
+          "sysShortName": {
+            "format": "string",
+            "description": "应用系统名称简称(返回值显示)",
+            "type": "string"
+          },
+          "area": {
+            "format": "string",
+            "description": "区域(返回值显示)",
+            "type": "string"
+          },
+          "itDepartment": {
+            "format": "string",
+            "description": "IT部门",
+            "type": "string"
+          },
+          "busiDepartment": {
+            "format": "string",
+            "description": "业务部门 (返回值显示)",
+            "type": "string"
+          },
+          "importance": {
+            "format": "int32",
+            "description": "重要性(1-高 2-中 3-低)",
+            "type": "integer"
+          },
+          "leader": {
+            "format": "string",
+            "description": "负责人(返回值显示)",
+            "type": "string"
+          },
+          "deployPlace": {
+            "format": "string",
+            "description": "部署地 (返回值显示)",
+            "type": "string"
+          },
+          "gmtCreate": {
+            "description": "创建时间 (返回值显示)(object)",
+            "type": "object"
+          },
+          "gmtModified": {
+            "description": "修改时间(object)",
+            "type": "object"
+          },
+          "createUserid": {
+            "format": "int32",
+            "description": "创建人id（后期设置为非空）",
+            "type": "integer"
+          },
+          "updateUserid": {
+            "format": "int32",
+            "description": "修改人",
+            "type": "integer"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "删除标识(0-保留 1-删除，后期设置为非空默认为0)",
+            "type": "integer"
+          },
+          "versionConsumer": {
+            "format": "string",
+            "description": "多租户标识",
+            "type": "string"
+          },
+          "sysDesc": {
+            "format": "string",
+            "description": "描述 (返回值显示)",
+            "type": "string"
+          },
+          "tagNames": {
+            "format": "string",
+            "description": "标签名称组合(ETL,PII)名称用逗号隔开",
+            "type": "string"
+          },
+          "tagIds": {
+            "format": "string",
+            "description": "标签ID组合(1,2,3)ID逗号隔开",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sysName",
+          "sysShortName"
+        ]
+      },
+      "_datasource_database__type_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "string",
+                  "description": "数据源主键id",
+                  "type": "string"
+                },
+                "dataSourceName": {
+                  "format": "string",
+                  "description": "数据源名称（返回值显示）",
+                  "type": "string"
+                },
+                "homeSystem": {
+                  "format": "string",
+                  "description": "所属系统（返回值显示）",
+                  "type": "string"
+                },
+                "connectBasicInfo": {
+                  "description": "数据源连接信息（返回值显示）(object)",
+                  "type": "object"
+                },
+                "linkType": {
+                  "format": "string",
+                  "description": "连接方式 （返回值显示）",
+                  "type": "string"
+                },
+                "tagNames": {
+                  "format": "string",
+                  "description": "标签（名称用逗号隔开）",
+                  "type": "string"
+                },
+                "tagIds": {
+                  "format": "string",
+                  "description": "标签id组合（ID用逗号隔开）",
+                  "type": "string"
+                },
+                "use": {
+                  "format": "string",
+                  "description": "用途",
+                  "type": "string"
+                },
+                "deployPlace": {
+                  "format": "string",
+                  "description": "部署地",
+                  "type": "string"
+                },
+                "status": {
+                  "format": "int32",
+                  "description": "状态设置状态值",
+                  "type": "integer"
+                },
+                "gmtModified": {
+                  "description": "修改时间 （返回值显示）(object)",
+                  "type": "object"
+                },
+                "gmtCreate": {
+                  "description": "创建时间（返回值显示）(object)",
+                  "type": "object"
+                },
+                "createUserid": {
+                  "format": "string",
+                  "description": "创建人id（后期设置为必填）（返回值显示）",
+                  "type": "string"
+                },
+                "updateUserid": {
+                  "format": "string",
+                  "description": "修改人id",
+                  "type": "string"
+                },
+                "delFlag": {
+                  "format": "int32",
+                  "description": "删除标识(0-保留 1-删除，后期设置为非空，默认为0)",
+                  "type": "integer"
+                },
+                "versionConsumer": {
+                  "format": "string",
+                  "description": "多租户标识",
+                  "type": "string"
+                },
+                "dicId": {
+                  "format": "string",
+                  "description": "目录归属id",
+                  "type": "string"
+                },
+                "remark": {
+                  "format": "string",
+                  "description": "备注",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "anyObject": {
+            "description": "anyObject.(object)",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "string",
+                "description": "数据源主键id",
+                "type": "string"
+              },
+              "dataSourceName": {
+                "format": "string",
+                "description": "数据源名称（返回值显示）",
+                "type": "string"
+              },
+              "homeSystem": {
+                "format": "string",
+                "description": "所属系统（返回值显示）",
+                "type": "string"
+              },
+              "connectBasicInfo": {
+                "description": "数据源连接信息（返回值显示）(object)",
+                "type": "object"
+              },
+              "linkType": {
+                "format": "string",
+                "description": "连接方式 （返回值显示）",
+                "type": "string"
+              },
+              "tagNames": {
+                "format": "string",
+                "description": "标签（名称用逗号隔开）",
+                "type": "string"
+              },
+              "tagIds": {
+                "format": "string",
+                "description": "标签id组合（ID用逗号隔开）",
+                "type": "string"
+              },
+              "use": {
+                "format": "string",
+                "description": "用途",
+                "type": "string"
+              },
+              "deployPlace": {
+                "format": "string",
+                "description": "部署地",
+                "type": "string"
+              },
+              "status": {
+                "format": "int32",
+                "description": "状态设置状态值",
+                "type": "integer"
+              },
+              "gmtModified": {
+                "description": "修改时间 （返回值显示）(object)",
+                "type": "object"
+              },
+              "gmtCreate": {
+                "description": "创建时间（返回值显示）(object)",
+                "type": "object"
+              },
+              "createUserid": {
+                "format": "string",
+                "description": "创建人id（后期设置为必填）（返回值显示）",
+                "type": "string"
+              },
+              "updateUserid": {
+                "format": "string",
+                "description": "修改人id",
+                "type": "string"
+              },
+              "delFlag": {
+                "format": "int32",
+                "description": "删除标识(0-保留 1-删除，后期设置为非空，默认为0)",
+                "type": "integer"
+              },
+              "versionConsumer": {
+                "format": "string",
+                "description": "多租户标识",
+                "type": "string"
+              },
+              "dicId": {
+                "format": "string",
+                "description": "目录归属id",
+                "type": "string"
+              },
+              "remark": {
+                "format": "string",
+                "description": "备注",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "_api_database__type_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "id": {
+                  "format": "string",
+                  "description": "数据源主键id",
+                  "type": "string"
+                },
+                "dataSourceName": {
+                  "format": "string",
+                  "description": "系统名称",
+                  "type": "string"
+                },
+                "homeSystem": {
+                  "format": "string",
+                  "description": "所属系统",
+                  "type": "string"
+                },
+                "connectBasicInfoJson": {
+                  "format": "string",
+                  "description": "数据源连接返回JSON信息",
+                  "type": "string"
+                },
+                "dbType": {
+                  "format": "string",
+                  "description": "连接方式",
+                  "type": "string"
+                },
+                "status": {
+                  "format": "int32",
+                  "description": "状态设置状态值",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datasource_request": {
+        "properties": {
+          "id": {
+            "format": "string",
+            "description": "数据源主键id",
+            "type": "string"
+          },
+          "dataSourceName": {
+            "format": "string",
+            "description": "数据源名称（返回值显示）",
+            "type": "string"
+          },
+          "homeSystem": {
+            "format": "string",
+            "description": "所属系统（返回值显示）",
+            "type": "string"
+          },
+          "connectBasicInfo": {
+            "description": "数据源连接信息（返回值显示）(object)",
+            "type": "object"
+          },
+          "anyObject": {
+            "description": "anyObject.(object)",
+            "type": "object"
+          },
+          "linkType": {
+            "format": "string",
+            "description": "连接方式 （返回值显示）",
+            "type": "string"
+          },
+          "tagNames": {
+            "format": "string",
+            "description": "标签（名称用逗号隔开）",
+            "type": "string"
+          },
+          "tagIds": {
+            "format": "string",
+            "description": "标签id组合（ID用逗号隔开）",
+            "type": "string"
+          },
+          "use": {
+            "format": "string",
+            "description": "用途",
+            "type": "string"
+          },
+          "deployPlace": {
+            "format": "string",
+            "description": "部署地",
+            "type": "string"
+          },
+          "status": {
+            "format": "int32",
+            "description": "状态设置状态值",
+            "type": "integer"
+          },
+          "gmtModified": {
+            "description": "修改时间 （返回值显示）(object)",
+            "type": "object"
+          },
+          "gmtCreate": {
+            "description": "创建时间（返回值显示）(object)",
+            "type": "object"
+          },
+          "createUserid": {
+            "format": "string",
+            "description": "创建人id（后期设置为必填）（返回值显示）",
+            "type": "string"
+          },
+          "updateUserid": {
+            "format": "string",
+            "description": "修改人id",
+            "type": "string"
+          },
+          "delFlag": {
+            "format": "int32",
+            "description": "删除标识(0-保留 1-删除，后期设置为非空，默认为0)",
+            "type": "integer"
+          },
+          "versionConsumer": {
+            "format": "string",
+            "description": "多租户标识",
+            "type": "string"
+          },
+          "dicId": {
+            "format": "string",
+            "description": "目录归属id",
+            "type": "string"
+          },
+          "remark": {
+            "format": "string",
+            "description": "备注",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dataSourceName",
+          "connectBasicInfo",
+          "linkType"
+        ]
+      },
+      "_directory_sysnamerequest": {},
+      "_datasource_typeresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/_datasource_typeresponse"
+            }
+          }
+        }
+      },
+      "_datasorce_dir_response": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_datasource_queryresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "string",
+                      "description": "数据源主键id",
+                      "type": "string"
+                    },
+                    "dataSourceName": {
+                      "format": "string",
+                      "description": "数据源名称（返回值显示）",
+                      "type": "string"
+                    },
+                    "homeSystem": {
+                      "format": "string",
+                      "description": "所属系统（返回值显示）",
+                      "type": "string"
+                    },
+                    "connectBasicInfo": {
+                      "description": "数据源连接信息（返回值显示）(object)",
+                      "type": "object"
+                    },
+                    "linkType": {
+                      "format": "string",
+                      "description": "连接方式 （返回值显示）",
+                      "type": "string"
+                    },
+                    "tagNames": {
+                      "format": "string",
+                      "description": "标签（名称用逗号隔开）",
+                      "type": "string"
+                    },
+                    "tagIds": {
+                      "format": "string",
+                      "description": "标签id组合（ID用逗号隔开）",
+                      "type": "string"
+                    },
+                    "use": {
+                      "format": "string",
+                      "description": "用途",
+                      "type": "string"
+                    },
+                    "deployPlace": {
+                      "format": "string",
+                      "description": "部署地",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "状态设置状态值",
+                      "type": "integer"
+                    },
+                    "gmtModified": {
+                      "description": "修改时间 （返回值显示）(object)",
+                      "type": "object"
+                    },
+                    "gmtCreate": {
+                      "description": "创建时间（返回值显示）(object)",
+                      "type": "object"
+                    },
+                    "createUserid": {
+                      "format": "string",
+                      "description": "创建人id（后期设置为必填）（返回值显示）",
+                      "type": "string"
+                    },
+                    "updateUserid": {
+                      "format": "string",
+                      "description": "修改人id",
+                      "type": "string"
+                    },
+                    "delFlag": {
+                      "format": "int32",
+                      "description": "删除标识(0-保留 1-删除，后期设置为非空，默认为0)",
+                      "type": "integer"
+                    },
+                    "versionConsumer": {
+                      "format": "string",
+                      "description": "多租户标识",
+                      "type": "string"
+                    },
+                    "dicId": {
+                      "format": "string",
+                      "description": "目录归属id",
+                      "type": "string"
+                    },
+                    "remark": {
+                      "format": "string",
+                      "description": "备注",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "anyObject": {
+            "description": "anyObject.(object)",
+            "type": "object",
+            "properties": {
+              "total": {
+                "format": "int64",
+                "description": "数据总量",
+                "type": "integer"
+              },
+              "pageNum": {
+                "format": "int32",
+                "description": "当前页",
+                "type": "integer"
+              },
+              "pageSize": {
+                "format": "int32",
+                "description": "每页大小",
+                "type": "integer"
+              },
+              "list": {
+                "description": "返回数据data",
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "format": "string",
+                      "description": "数据源主键id",
+                      "type": "string"
+                    },
+                    "dataSourceName": {
+                      "format": "string",
+                      "description": "数据源名称（返回值显示）",
+                      "type": "string"
+                    },
+                    "homeSystem": {
+                      "format": "string",
+                      "description": "所属系统（返回值显示）",
+                      "type": "string"
+                    },
+                    "connectBasicInfo": {
+                      "description": "数据源连接信息（返回值显示）(object)",
+                      "type": "object"
+                    },
+                    "linkType": {
+                      "format": "string",
+                      "description": "连接方式 （返回值显示）",
+                      "type": "string"
+                    },
+                    "tagNames": {
+                      "format": "string",
+                      "description": "标签（名称用逗号隔开）",
+                      "type": "string"
+                    },
+                    "tagIds": {
+                      "format": "string",
+                      "description": "标签id组合（ID用逗号隔开）",
+                      "type": "string"
+                    },
+                    "use": {
+                      "format": "string",
+                      "description": "用途",
+                      "type": "string"
+                    },
+                    "deployPlace": {
+                      "format": "string",
+                      "description": "部署地",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "状态设置状态值",
+                      "type": "integer"
+                    },
+                    "gmtModified": {
+                      "description": "修改时间 （返回值显示）(object)",
+                      "type": "object"
+                    },
+                    "gmtCreate": {
+                      "description": "创建时间（返回值显示）(object)",
+                      "type": "object"
+                    },
+                    "createUserid": {
+                      "format": "string",
+                      "description": "创建人id（后期设置为必填）（返回值显示）",
+                      "type": "string"
+                    },
+                    "updateUserid": {
+                      "format": "string",
+                      "description": "修改人id",
+                      "type": "string"
+                    },
+                    "delFlag": {
+                      "format": "int32",
+                      "description": "删除标识(0-保留 1-删除，后期设置为非空，默认为0)",
+                      "type": "integer"
+                    },
+                    "versionConsumer": {
+                      "format": "string",
+                      "description": "多租户标识",
+                      "type": "string"
+                    },
+                    "dicId": {
+                      "format": "string",
+                      "description": "目录归属id",
+                      "type": "string"
+                    },
+                    "remark": {
+                      "format": "string",
+                      "description": "备注",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datasource_alltyperesponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_datasorce_dir_queryresponse": {
+        "properties": {
+          "retCode": {
+            "format": "string",
+            "description": "返回码",
+            "type": "string"
+          },
+          "retMsg": {
+            "format": "string",
+            "description": "返回说明",
+            "type": "string"
+          },
+          "tips": {
+            "format": "string",
+            "description": "提示",
+            "type": "string"
+          },
+          "data": {
+            "description": "返回数据",
+            "type": "array",
+            "items": {
+              "properties": {
+                "key": {
+                  "format": "string",
+                  "description": "主键ID",
+                  "type": "string"
+                },
+                "title": {
+                  "format": "string",
+                  "description": "目录名称",
+                  "type": "string"
+                },
+                "parentId": {
+                  "format": "string",
+                  "description": "父级id",
+                  "type": "string"
+                },
+                "dsDirCode": {
+                  "format": "string",
+                  "description": "目录编码",
+                  "type": "string"
+                },
+                "children": {
+                  "description": "子类目录",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/_datasorce_dir_queryresponse"
+                  },
+                  "example": [
+                    {
+                      "$ref": "..."
+                    }
+                  ]
+                },
+                "dataType": {
+                  "format": "string",
+                  "description": "类型（用于区分数据源和文件夹/dir表示文件夹，datasource表示数据）",
+                  "type": "string"
+                },
+                "conType": {
+                  "format": "string",
+                  "description": "返回数据源类型",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "_datasource_queryrequest": {
+        "properties": {
+          "pagination": {
+            "description": "分页信息(object)",
+            "type": "object",
+            "properties": {
+              "page": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "size": {
+                "format": "int32",
+                "description": "No comments found.",
+                "type": "integer"
+              },
+              "sortField": {
+                "format": "string",
+                "description": "No comments found.",
+                "type": "string"
+              }
+            }
+          },
+          "dataSourceName": {
+            "format": "string",
+            "description": "数据连接名称",
+            "type": "string"
+          },
+          "linkType": {
+            "format": "string",
+            "description": "数据源连接类型",
+            "type": "string"
+          },
+          "dicId": {
+            "format": "string",
+            "description": "数据源连接目录层级ID",
+            "type": "string"
+          },
+          "beginDay": {
+            "format": "string",
+            "description": "开始时间",
+            "type": "string"
+          },
+          "endDay": {
+            "format": "string",
+            "description": "结束时间",
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://{{server}}"
+    }
+  ],
+  "openapi": "3.0.3",
+  "paths": {
+    "/datasorce/dir/add": {
+      "post": {
+        "summary": "数据源分类目录-新增",
+        "deprecated": false,
+        "description": "数据源分类目录-新增",
+        "tags": [
+          "DsDirController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasorce_dir_addrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": \"89\",\n  \"dicName\": \"thomas.jacobson\",\n  \"parentId\": \"89\",\n  \"dsDirCode\": \"38674\",\n  \"gmtCreate\": \"2022-04-22 16:02:35\",\n  \"gmtModified\": \"2022-04-22 16:02:35\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"6h799v\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasorce_dir_addresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"zx628d\",\n  \"tips\": \"sdp6x6\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "addDsDir",
+        "parameters": []
+      }
+    },
+    "/api/dataSource/list": {
+      "get": {
+        "summary": "获取数据源集合",
+        "deprecated": false,
+        "description": "获取数据源集合",
+        "tags": [
+          "DataSourceApiController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/_api_dataSource_listresponse"
+                  }
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"izcmbc\",\n  \"tips\": \"cebaqw\",\n  \"data\": [\n    {\n      \"id\": \"89\",\n      \"dataSourceName\": \"thomas.jacobson\",\n      \"homeSystem\": \"hbe43f\",\n      \"connectBasicInfoJson\": \"3vj451\",\n      \"dbType\": \"c8xhmm\",\n      \"status\": 995\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDataSourceList",
+        "parameters": [
+          {
+            "schema": {
+              "type": "array",
+              "items": {}
+            },
+            "in": "query",
+            "description": "No comments found.,[array of object]",
+            "required": true,
+            "example": "uy2ghy",
+            "name": "dataSourceNames"
+          }
+        ]
+      }
+    },
+    "/datasource/type": {
+      "get": {
+        "summary": "数据源连接——获取数据源类型",
+        "deprecated": false,
+        "description": "数据源连接——获取数据源类型",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_typeresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"z2teva\",\n  \"tips\": \"vrvcfd\",\n  \"data\": [\n    \"1a7oit\",\n    \"0ej077\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDataType",
+        "parameters": []
+      }
+    },
+    "/datasorce/dir/": {
+      "put": {
+        "summary": "数据源分类目录-修改",
+        "deprecated": false,
+        "description": "数据源分类目录-修改",
+        "tags": [
+          "DsDirController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasorce_dir_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": \"89\",\n  \"dicName\": \"thomas.jacobson\",\n  \"parentId\": \"89\",\n  \"dsDirCode\": \"38674\",\n  \"gmtCreate\": \"2022-04-22 16:02:35\",\n  \"gmtModified\": \"2022-04-22 16:02:35\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"kyvzeu\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasorce_dir_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"h312z0\",\n  \"tips\": \"wd35yf\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateDsDir",
+        "parameters": []
+      }
+    },
+    "/directory/query": {
+      "post": {
+        "summary": "数据源管理—查询应用系统",
+        "deprecated": false,
+        "description": "数据源管理—查询应用系统",
+        "tags": [
+          "DsDirectoryController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_directory_queryrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"i7wl6v\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_directory_queryresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"d262nl\",\n  \"tips\": \"6od2gr\",\n  \"data\": {\n    \"total\": 156,\n    \"pageNum\": 409,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": \"89\",\n        \"sysName\": \"thomas.jacobson\",\n        \"sysShortName\": \"thomas.jacobson\",\n        \"area\": \"we2kcx\",\n        \"itDepartment\": \"ot1kao\",\n        \"busiDepartment\": \"vytlvy\",\n        \"importance\": 208,\n        \"leader\": \"ujxa2z\",\n        \"deployPlace\": \"7vtrt5\",\n        \"gmtCreate\": \"2022-04-22 16:02:35\",\n        \"gmtModified\": \"2022-04-22 16:02:35\",\n        \"createUserid\": 597,\n        \"updateUserid\": 342,\n        \"delFlag\": 0,\n        \"versionConsumer\": \"4hi5bk\",\n        \"sysDesc\": \"cwjzi5\",\n        \"tagNames\": \"3z67cs\",\n        \"tagIds\": \"3tz4fh\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDsDirectory",
+        "parameters": []
+      }
+    },
+    "/datasource/query": {
+      "post": {
+        "summary": "数据源连接——统一查询接口",
+        "deprecated": false,
+        "description": "数据源连接——统一查询接口",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasource_queryrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"j2zxwe\"\n  },\n  \"dataSourceName\": \"thomas.jacobson\",\n  \"linkType\": \"j0ymdt\",\n  \"dicId\": \"89\",\n  \"beginDay\": \"v2swxt\",\n  \"endDay\": \"dj09ym\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_queryresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"ci1xh8\",\n  \"tips\": \"j9ko8a\",\n  \"data\": {\n    \"total\": 313,\n    \"pageNum\": 682,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": \"89\",\n        \"dataSourceName\": \"thomas.jacobson\",\n        \"homeSystem\": \"hgwj2u\",\n        \"connectBasicInfo\": {\n          \"object\": \"anyObject\"\n        },\n        \"linkType\": \"eresuz\",\n        \"tagNames\": \"sl6xkj\",\n        \"tagIds\": \"817bak\",\n        \"use\": \"zmx3n7\",\n        \"deployPlace\": \"gsc8z7\",\n        \"status\": 8,\n        \"gmtModified\": \"2022-04-22 16:02:35\",\n        \"gmtCreate\": \"2022-04-22 16:02:35\",\n        \"createUserid\": \"89\",\n        \"updateUserid\": \"89\",\n        \"delFlag\": 0,\n        \"versionConsumer\": \"rx4i0g\",\n        \"dicId\": \"89\",\n        \"remark\": \"14cki8\"\n      }\n    ]\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDsDataSource",
+        "parameters": []
+      }
+    },
+    "/directory/sysname": {
+      "get": {
+        "summary": "数据源管理—查询应用系统名称",
+        "deprecated": false,
+        "description": "数据源管理—查询应用系统名称",
+        "tags": [
+          "DsDirectoryController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_directory_sysnameresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"l10ctm\",\n  \"tips\": \"jp0dt2\",\n  \"data\": [\n    \"eqos66\",\n    \"cioabr\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getSysName",
+        "parameters": []
+      }
+    },
+    "/datasource/connecting": {
+      "post": {
+        "summary": "数据源连接——测试连接",
+        "deprecated": false,
+        "description": "数据源连接——测试连接",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasource_connectingrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": \"89\",\n  \"dataSourceName\": \"thomas.jacobson\",\n  \"homeSystem\": \"788gly\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"nnz8pw\",\n  \"tagNames\": \"8ov13p\",\n  \"tagIds\": \"iyapog\",\n  \"use\": \"c9msmi\",\n  \"deployPlace\": \"pzve8w\",\n  \"status\": 252,\n  \"gmtModified\": \"2022-04-22 16:02:35\",\n  \"gmtCreate\": \"2022-04-22 16:02:35\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"c1rjn6\",\n  \"dicId\": \"89\",\n  \"remark\": \"p3lc6k\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_connectingresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"tfj76c\",\n  \"tips\": \"68nafp\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "dataSourceConnect",
+        "parameters": []
+      }
+    },
+    "/api/{dataSourceName}": {
+      "get": {
+        "summary": "根据数据源名称获取数据源连接信息",
+        "deprecated": false,
+        "description": "根据数据源名称获取数据源连接信息",
+        "tags": [
+          "DataSourceApiController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_api__dataSourceName_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"o458e2\",\n  \"tips\": \"sxa6ox\",\n  \"data\": {\n    \"id\": \"89\",\n    \"dataSourceName\": \"thomas.jacobson\",\n    \"homeSystem\": \"xvf6lh\",\n    \"connectBasicInfoJson\": \"4mi9ui\",\n    \"dbType\": \"f72a9a\",\n    \"status\": 703\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDataSource",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "thomas.jacobson",
+            "name": "dataSourceName"
+          }
+        ]
+      }
+    },
+    "/directory/delete/{id}": {
+      "delete": {
+        "summary": "数据源管理—删除应用系统信息",
+        "deprecated": false,
+        "description": "数据源管理—删除应用系统信息",
+        "tags": [
+          "DsDirectoryController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_directory_delete__id_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"1gs54m\",\n  \"tips\": \"s108bd\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteDsDirectory",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "应用系统id",
+            "required": true,
+            "example": "89",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/directory/add": {
+      "post": {
+        "summary": "数据管理—新增应用系统新",
+        "deprecated": false,
+        "description": "数据管理—新增应用系统新",
+        "tags": [
+          "DsDirectoryController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_directory_addrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": \"89\",\n  \"sysName\": \"thomas.jacobson\",\n  \"sysShortName\": \"thomas.jacobson\",\n  \"area\": \"zhtdmy\",\n  \"itDepartment\": \"xp4hms\",\n  \"busiDepartment\": \"ulghpw\",\n  \"importance\": 509,\n  \"leader\": \"p8ar8g\",\n  \"deployPlace\": \"m6adfx\",\n  \"gmtCreate\": \"2022-04-22 16:02:35\",\n  \"gmtModified\": \"2022-04-22 16:02:35\",\n  \"createUserid\": 72,\n  \"updateUserid\": 322,\n  \"delFlag\": 0,\n  \"versionConsumer\": \"khno2w\",\n  \"sysDesc\": \"f9gj2n\",\n  \"tagNames\": \"n1ntzp\",\n  \"tagIds\": \"eu04ay\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_directory_addresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"biuhb7\",\n  \"tips\": \"jhhv8u\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "addDsDirentory",
+        "parameters": []
+      }
+    },
+    "/datasource/{id}": {
+      "delete": {
+        "summary": "数据源连接——删除接口",
+        "deprecated": false,
+        "description": "数据源连接——删除接口",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource__id_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"ye1mw5\",\n  \"tips\": \"286wzc\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteDsDataSource",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "数据源id",
+            "required": true,
+            "example": "89",
+            "name": "id"
+          }
+        ]
+      },
+      "get": {
+        "summary": "数据源连接——根据数据源id获取数据源信息",
+        "deprecated": false,
+        "description": "数据源连接——根据数据源id获取数据源信息",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource__id_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"shsw0p\",\n  \"tips\": \"3qivye\",\n  \"data\": {\n    \"id\": \"89\",\n    \"dataSourceName\": \"thomas.jacobson\",\n    \"homeSystem\": \"16kjea\",\n    \"connectBasicInfo\": {\n      \"object\": \"anyObject\"\n    },\n    \"linkType\": \"3m9jlk\",\n    \"tagNames\": \"havr8f\",\n    \"tagIds\": \"gnh9gp\",\n    \"use\": \"7v2zb0\",\n    \"deployPlace\": \"4nlqey\",\n    \"status\": 478,\n    \"gmtModified\": \"2022-04-22 16:02:35\",\n    \"gmtCreate\": \"2022-04-22 16:02:35\",\n    \"createUserid\": \"89\",\n    \"updateUserid\": \"89\",\n    \"delFlag\": 0,\n    \"versionConsumer\": \"xlhcin\",\n    \"dicId\": \"89\",\n    \"remark\": \"b2fpnf\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDataSourceById",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "数据源名称",
+            "required": true,
+            "example": "89",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/datasource/": {
+      "post": {
+        "summary": "数据源连接——新增接口",
+        "deprecated": false,
+        "description": "数据源连接——新增接口",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasource_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": \"89\",\n  \"dataSourceName\": \"thomas.jacobson\",\n  \"homeSystem\": \"ewhsiv\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"el6094\",\n  \"tagNames\": \"cwgch8\",\n  \"tagIds\": \"pkp79o\",\n  \"use\": \"wsqfey\",\n  \"deployPlace\": \"8u3vj0\",\n  \"status\": 180,\n  \"gmtModified\": \"2022-04-22 16:02:35\",\n  \"gmtCreate\": \"2022-04-22 16:02:35\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"vvplk6\",\n  \"dicId\": \"89\",\n  \"remark\": \"kkwzlo\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"h8prop\",\n  \"tips\": \"js80vc\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "addDsDataSource",
+        "parameters": []
+      },
+      "put": {
+        "summary": "数据源连接——修改接口",
+        "deprecated": false,
+        "description": "数据源连接——修改接口",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasource_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": \"89\",\n  \"dataSourceName\": \"thomas.jacobson\",\n  \"homeSystem\": \"qyic5w\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"h0t42k\",\n  \"tagNames\": \"tw0mo9\",\n  \"tagIds\": \"65j2uf\",\n  \"use\": \"mc50z2\",\n  \"deployPlace\": \"m8cf9z\",\n  \"status\": 756,\n  \"gmtModified\": \"2022-04-22 16:02:35\",\n  \"gmtCreate\": \"2022-04-22 16:02:35\",\n  \"createUserid\": \"89\",\n  \"updateUserid\": \"89\",\n  \"delFlag\": 0,\n  \"versionConsumer\": \"hks6wd\",\n  \"dicId\": \"89\",\n  \"remark\": \"9kdzuw\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"lbepzc\",\n  \"tips\": \"k9tmmq\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateDsDataSource",
+        "parameters": []
+      }
+    },
+    "/datasorce/dir/query/dsdir/datasource": {
+      "post": {
+        "summary": "数据源分类目录-查询（带数据源连接信息）",
+        "deprecated": false,
+        "description": "数据源分类目录-查询（带数据源连接信息）",
+        "tags": [
+          "DsDirController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasorce_dir_query_dsdir_datasourcerequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://{{server}}/datasorce/dir/query/dsdir/datasource"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasorce_dir_query_dsdir_datasourceresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"18ef32\",\n  \"tips\": \"t02hty\",\n  \"data\": [\n    {\n      \"key\": \"we3dep\",\n      \"title\": \"53z55e\",\n      \"parentId\": \"89\",\n      \"dsDirCode\": \"38674\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ],\n      \"dataType\": \"oeoqym\",\n      \"conType\": \"w3gw8u\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDsDirDataSource",
+        "parameters": []
+      }
+    },
+    "/datasource/database/{type}": {
+      "get": {
+        "summary": "数据源连接——根据数据库类型获取数据源连接信息",
+        "deprecated": false,
+        "description": "数据源连接——根据数据库类型获取数据源连接信息",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_database__type_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"khbn7p\",\n  \"tips\": \"1vxdod\",\n  \"data\": [\n    {\n      \"id\": \"89\",\n      \"dataSourceName\": \"thomas.jacobson\",\n      \"homeSystem\": \"e0n8fz\",\n      \"connectBasicInfo\": {\n        \"object\": \"anyObject\"\n      },\n      \"linkType\": \"frsls5\",\n      \"tagNames\": \"xeecyc\",\n      \"tagIds\": \"z6d1eb\",\n      \"use\": \"qcdd7j\",\n      \"deployPlace\": \"0veprc\",\n      \"status\": 851,\n      \"gmtModified\": \"2022-04-22 16:02:35\",\n      \"gmtCreate\": \"2022-04-22 16:02:35\",\n      \"createUserid\": \"89\",\n      \"updateUserid\": \"89\",\n      \"delFlag\": 0,\n      \"versionConsumer\": \"hqncj0\",\n      \"dicId\": \"89\",\n      \"remark\": \"sdfxqx\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDataSourceByType",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "数据连接类型",
+            "required": true,
+            "example": "pcl0ll",
+            "name": "type"
+          }
+        ]
+      }
+    },
+    "/directory/": {
+      "put": {
+        "summary": "数据源管理—修改应用系统信息",
+        "deprecated": false,
+        "description": "数据源管理—修改应用系统信息",
+        "tags": [
+          "DsDirectoryController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json; charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_directory_request"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "{\n  \"id\": \"89\",\n  \"sysName\": \"thomas.jacobson\",\n  \"sysShortName\": \"thomas.jacobson\",\n  \"area\": \"j7g1wg\",\n  \"itDepartment\": \"4lxvws\",\n  \"busiDepartment\": \"ww68va\",\n  \"importance\": 238,\n  \"leader\": \"ssokip\",\n  \"deployPlace\": \"puvp4q\",\n  \"gmtCreate\": \"2022-04-22 16:02:36\",\n  \"gmtModified\": \"2022-04-22 16:02:36\",\n  \"createUserid\": 516,\n  \"updateUserid\": 411,\n  \"delFlag\": 0,\n  \"versionConsumer\": \"pip0ms\",\n  \"sysDesc\": \"p4a98a\",\n  \"tagNames\": \"85yxt7\",\n  \"tagIds\": \"hw9u7i\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_directory_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"w2rask\",\n  \"tips\": \"bxigkr\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "updateDsDirectory",
+        "parameters": []
+      }
+    },
+    "/datasource/alltype": {
+      "get": {
+        "summary": "数据源连接——获取所有数据源类型",
+        "deprecated": false,
+        "description": "数据源连接——获取所有数据源类型",
+        "tags": [
+          "DsDataSourceController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasource_alltyperesponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"dwsosb\",\n  \"tips\": \"xgqu29\",\n  \"data\": {\n    \"mapKey1\": \"jbmljv\",\n    \"mapKey2\": \"6x98dh\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllType",
+        "parameters": []
+      }
+    },
+    "/api/database/{type}": {
+      "get": {
+        "summary": "根据数据库类型获取数据源连接信息",
+        "deprecated": false,
+        "description": "根据数据库类型获取数据源连接信息",
+        "tags": [
+          "DataSourceApiController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_api_database__type_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"tttpxq\",\n  \"tips\": \"ft4mwr\",\n  \"data\": [\n    {\n      \"id\": \"89\",\n      \"dataSourceName\": \"thomas.jacobson\",\n      \"homeSystem\": \"10dquz\",\n      \"connectBasicInfoJson\": \"a7z2u5\",\n      \"dbType\": \"jbnlhu\",\n      \"status\": 152\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getResultDataSourceByType",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "No comments found.",
+            "required": true,
+            "example": "xjb02u",
+            "name": "type"
+          }
+        ]
+      }
+    },
+    "/datasorce/dir/delete/{id}": {
+      "delete": {
+        "summary": "数据源目录支持根节点关联删除子节点方式-删除",
+        "deprecated": false,
+        "description": "数据源目录支持根节点关联删除子节点方式-删除",
+        "tags": [
+          "DsDirController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasorce_dir_delete__id_response"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"qcoufh\",\n  \"tips\": \"3bx0gg\",\n  \"data\": {}\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "deleteDsDir",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "目录id",
+            "required": true,
+            "example": "89",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/api/type/all": {
+      "get": {
+        "summary": "查询所有数据源连接类型",
+        "deprecated": false,
+        "description": "查询所有数据源连接类型",
+        "tags": [
+          "DataSourceApiController"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_api_type_allresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"ro29xz\",\n  \"tips\": \"3iw39c\",\n  \"data\": [\n    \"gokl2p\",\n    \"exdfe2\"\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAllConnType",
+        "parameters": []
+      }
+    },
+    "/datasorce/dir/query": {
+      "post": {
+        "summary": "数据源分类目录-查询",
+        "deprecated": false,
+        "description": "数据源分类目录-查询",
+        "tags": [
+          "DsDirController"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded;charset\u003dutf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/_datasorce_dir_queryrequest"
+              },
+              "examples": {
+                "json": {
+                  "summary": "test data",
+                  "value": "curl -X POST -i http://{{server}}/datasorce/dir/query"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_datasorce_dir_queryresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"retCode\": \"38674\",\n  \"retMsg\": \"1wo4c7\",\n  \"tips\": \"9ejdvj\",\n  \"data\": [\n    {\n      \"key\": \"tjqjdc\",\n      \"title\": \"rnsqs5\",\n      \"parentId\": \"89\",\n      \"dsDirCode\": \"38674\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ],\n      \"dataType\": \"j6vd6p\",\n      \"conType\": \"4zx83k\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getDsDir",
+        "parameters": []
+      }
+    }
+  },
+  "info": {
+    "title": "dm-datasource",
+    "version": "1.0.0"
+  }
+}

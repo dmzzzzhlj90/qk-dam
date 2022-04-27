@@ -28,7 +28,7 @@ public class HiveAtlasEntity {
                     + "/information_schema",
                 metadataConnectInfoVo.getUserName(),
                 metadataConnectInfoVo.getPassword()));
-    db = metadataConnectInfoVo.getDb();
+    db = metadataConnectInfoVo.getDatabaseName();
   }
 
   public List<AtlasEntity.AtlasEntitiesWithExtInfo> searchHiveAtals(

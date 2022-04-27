@@ -1,10 +1,423 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "640cfa97-649c-49e4-8059-9f865afb3074",
+    "_postman_id": "d49048a2-6891-4286-9201-601f83caee11",
     "name": "dm-datacollect"
   },
   "item": [
+    {
+      "name": "Interface name is not set.",
+      "item": [
+        {
+          "name": "新增流程定义",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": 541,\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"description\": \"cm8ju9\",\n  \"schedulerRules\": {\n    \"engineType\": \"ealsmw\",\n    \"dataSourceName\": \"galen.lakin\",\n    \"databaseName\": \"galen.lakin\",\n    \"tableList\": [\n      \"yfkc9e\"\n    ],\n    \"allNums\": \"xehtye\",\n    \"applicationName\": \"galen.lakin\",\n    \"displayName\": \"galen.lakin\",\n    \"owner\": \"5h4fv2\",\n    \"strategy\": \"p715gb\",\n    \"dataSourceId\": \"14\",\n    \"description\": \"iz77uv\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"il6lcg\",\n    \"effectiveTimeStart\": \"jk6hcf\",\n    \"effectiveTimeEnt\": \"wxk9xt\",\n    \"schedulerCycle\": \"afb75m\",\n    \"schedulerIntervalTime\": \"2022-04-26 16:52:54\",\n    \"schedulerTime\": \"2022-04-26 16:52:54\",\n    \"cron\": \"bu42re\",\n    \"schedulerId\": 76\n  },\n  \"updateTime\": \"2022-04-26 16:52:54\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增流程定义",
+            "header": []
+          },
+          "description": "新增流程定义"
+        },
+        {
+          "name": "修改流程定义",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": 59,\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"description\": \"p50yhw\",\n  \"schedulerRules\": {\n    \"engineType\": \"lwhkf7\",\n    \"dataSourceName\": \"galen.lakin\",\n    \"databaseName\": \"galen.lakin\",\n    \"tableList\": [\n      \"er32ed\"\n    ],\n    \"allNums\": \"n8dsbx\",\n    \"applicationName\": \"galen.lakin\",\n    \"displayName\": \"galen.lakin\",\n    \"owner\": \"wl6uv4\",\n    \"strategy\": \"sormku\",\n    \"dataSourceId\": \"14\",\n    \"description\": \"zarasx\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"caln7a\",\n    \"effectiveTimeStart\": \"pf5yjb\",\n    \"effectiveTimeEnt\": \"l73a93\",\n    \"schedulerCycle\": \"rj4bf7\",\n    \"schedulerIntervalTime\": \"2022-04-26 16:52:54\",\n    \"schedulerTime\": \"2022-04-26 16:52:54\",\n    \"cron\": \"8sby21\",\n    \"schedulerId\": 908\n  },\n  \"updateTime\": \"2022-04-26 16:52:54\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "修改流程定义",
+            "header": []
+          },
+          "description": "修改流程定义"
+        },
+        {
+          "name": "删除流程定义",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/279",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                ":code"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "19",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除流程定义",
+            "header": []
+          },
+          "description": "删除流程定义"
+        },
+        {
+          "name": "流程定义上下线",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": 74,\n  \"releaseState\": \"OFFLINE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/release",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                "release"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "流程定义上下线",
+            "header": []
+          },
+          "description": "流程定义上下线"
+        },
+        {
+          "name": "运行流程定义",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/runing/178",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                "runing",
+                ":code"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "455",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "运行流程定义",
+            "header": []
+          },
+          "description": "运行流程定义"
+        },
+        {
+          "name": "流程定义列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"t0uc32\"\n  },\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"beginDay\": \"pf82o6\",\n  \"endDay\": \"kyo6he\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/page/list",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                "page",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "流程定义列表",
+            "header": []
+          },
+          "description": "流程定义列表"
+        },
+        {
+          "name": "流程定义详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/810",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                ":code"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "638",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "流程定义详情",
+            "header": []
+          },
+          "description": "流程定义详情"
+        }
+      ]
+    },
+    {
+      "name": "Interface name is not set.",
+      "item": [
+        {
+          "name": "实例列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"rtkyaj\"\n  },\n  \"processDefineCode\": 316,\n  \"startDate\": \"2022-04-26\",\n  \"endDate\": \"2022-04-26\",\n  \"searchVal\": \"nfmbfw\",\n  \"stateType\": \"mq9sik\",\n  \"executorName\": \"galen.lakin\",\n  \"dirId\": \"14\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/instance/page/list",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "instance",
+                "page",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "实例列表",
+            "header": []
+          },
+          "description": "实例列表"
+        },
+        {
+          "name": "实例详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/instance/842",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "instance",
+                ":instanceId"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "instanceId",
+                  "value": "310",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "实例详情",
+            "header": []
+          },
+          "description": "实例详情"
+        },
+        {
+          "name": "实例操作",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 142\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/instance/execute",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "instance",
+                "execute"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "实例操作",
+            "header": []
+          },
+          "description": "实例操作"
+        },
+        {
+          "name": "任务实例列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xjxytr\"\n  },\n  \"processInstanceId\": 293,\n  \"processInstanceName\": \"galen.lakin\",\n  \"startDate\": \"2022-04-26\",\n  \"endDate\": \"2022-04-26\",\n  \"searchVal\": \"2q1bjw\",\n  \"stateType\": \"by3jbx\",\n  \"executorName\": \"galen.lakin\",\n  \"taskName\": \"galen.lakin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/task/list",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "task",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "任务实例列表",
+            "header": []
+          },
+          "description": "任务实例列表"
+        },
+        {
+          "name": "下载任务实例日志",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "taskInstanceId",
+                  "type": "text",
+                  "description": "No comments found.",
+                  "value": "913"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/dolphin/task/log/download",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "task",
+                "log",
+                "download"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "下载任务实例日志",
+            "header": []
+          },
+          "description": "下载任务实例日志"
+        }
+      ]
+    },
     {
       "name": "数据源连接",
       "item": [
@@ -80,7 +493,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/db/connect/db?dataSourceId\u003d148",
+              "raw": "http://::server/db/connect/db?dataSourceId\u003d14",
               "protocol": "http",
               "path": [
                 "db",
@@ -93,7 +506,7 @@
               "query": [
                 {
                   "key": "dataSourceId",
-                  "value": "148",
+                  "value": "14",
                   "description": "数据源连接id"
                 }
               ],
@@ -116,7 +529,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/db/connect/table?dataSourceId\u003d148\u0026db\u003dmq1d74",
+              "raw": "http://::server/db/connect/table?dataSourceId\u003d14\u0026databaseName\u003dgalen.lakin",
               "protocol": "http",
               "path": [
                 "db",
@@ -129,12 +542,12 @@
               "query": [
                 {
                   "key": "dataSourceId",
-                  "value": "148",
+                  "value": "14",
                   "description": "数据源连接id"
                 },
                 {
-                  "key": "db",
-                  "value": "q3fox3",
+                  "key": "databaseName",
+                  "value": "galen.lakin",
                   "description": "数据库名称"
                 }
               ],
@@ -150,13 +563,15 @@
           "request": {
             "method": "POST",
             "body": {
-              "mode": "raw",
-              "raw": "{\n  \"description\": \"17rvpl\",\n  \"dataSourceName\": \"hugo.walter\",\n  \"dataSourceId\": \"148\",\n  \"tableList\": [\n    \"h45k60\"\n  ],\n  \"allNums\": \"ix12wt\",\n  \"applicationName\": \"hugo.walter\",\n  \"displayName\": \"hugo.walter\",\n  \"owner\": \"ytwina\",\n  \"db\": \"teas3k\",\n  \"strategy\": \"gf9577\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "schedulerRules",
+                  "type": "string",
+                  "description": "回调atals接口参数",
+                  "value": "aztf4g"
                 }
-              }
+              ]
             },
             "url": {
               "raw": "http://::server/db/",

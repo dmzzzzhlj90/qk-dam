@@ -29,7 +29,7 @@ public class HiveDbToTableAgg {
                 connectInfoVo.getPassword(),
                 connectInfoVo.getDriverInfo()));
     host = connectInfoVo.getHiveServer2();
-    db = connectInfoVo.getDb();
+    db = connectInfoVo.getDatabaseName();
   }
 
   public List<Entity> searchHiveDB(List<Entity> list) {
