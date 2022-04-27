@@ -14,7 +14,7 @@ import org.springframework.data.redis.core.mapping.RedisMappingContext;
  */
 @Configuration
 @Order(-1)
-public class RedisMappingConfig {
+class RedisMappingConfig {
   @Bean
   public RedisMappingContext keyValueMappingContext() {
     return new RedisMappingContext(
