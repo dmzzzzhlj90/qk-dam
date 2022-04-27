@@ -1,5 +1,6 @@
 package com.qk.dam.sqlbuilder;
 import com.alibaba.druid.DbType;
+import com.qk.dam.sqlbuilder.enums.DataType;
 import com.qk.dam.sqlbuilder.model.Column;
 import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
@@ -157,12 +158,12 @@ public class SqlBuilderFactory {
         StringBuffer sb = new StringBuffer();
         List<Column> columns = table.getColumns();
         // 表名
-        sb.append("CREATE TABLE ").append(QUOTES).append(table.getName()).append(QUOTES).append(" (").append(NEW_LINE);
+        sb.append("CREATE TABLE IF NOT EXISTS ").append(QUOTES).append(table.getName())
+                .append(QUOTES).append(" (").append(NEW_LINE);
         columns.forEach(column -> {
             assemblyColumn(column,sb);
             // 字段主键
             if (column.getPrimaryKey()) {
-                //sb.append(" ").append("PRIMARY KEY");
                 sb.append(BLANK).append( "AUTO_INCREMENT" );
             }
             // 字段注解
@@ -176,9 +177,9 @@ public class SqlBuilderFactory {
         });
         List<Column> collects = columns.stream().filter(Column::getPrimaryKey).collect(Collectors.toList());
         collects.forEach(e->{
-            sb.append("   " +" PRIMARY KEY (`").append(e.getName()).append("`),"+ '\n');
+            sb.append("   " +" PRIMARY KEY (`").append(e.getName()).append("`)"+COMMA+ NEW_LINE);
         });
-        return  sb.substring(0,sb.lastIndexOf(",\n"))+"\n);";
+        return  sb.substring(0,sb.lastIndexOf(COMMA+NEW_LINE))+NEW_LINE+");";
     }
 
     /**
@@ -186,7 +187,7 @@ public class SqlBuilderFactory {
      * @param column
      * @return
      */
-    private static String assemblyColumn(Column column,StringBuffer sb){
+    private static void assemblyColumn(Column column,StringBuffer sb){
         sb.append("    ");
         // 字段名
         sb.append(QUOTES).append(column.getName()).append(QUOTES);
@@ -202,7 +203,6 @@ public class SqlBuilderFactory {
         } else {
             sb.append(BLANK).append("NOT NULL");
         }
-        return sb.toString();
     }
 
 }
