@@ -59,12 +59,12 @@ public class DisRuleClassController {
 
     /**
      * 根据id级联删除（包括下面的子节点）
-     * @param id 规则分类id
+     * @param ids 规则分类ids
      * @return DefaultCommonResult
      */
-    @DeleteMapping("/{id}")
-    public DefaultCommonResult cascadeDelete(@PathVariable("id") String id) {
-        DisRuleClassService.delete(id);
+    @DeleteMapping("/{ids}")
+    public DefaultCommonResult cascadeDelete(@PathVariable("ids") String ids) {
+        DisRuleClassService.delete(ids);
         return DefaultCommonResult.success();
     }
 }
