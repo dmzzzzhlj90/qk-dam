@@ -1,6 +1,8 @@
 server:
   port: 8000
 spring:
+  cache:
+    red
   messages:
     basename: i18n/messages
   mvc:
@@ -18,14 +20,3 @@ spring:
 #      resourceserver:
 #        jwt:
 #          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
-hikari:
-  allow-pool-suspension: on
-  # 池中维护的最小空闲连接数
-  minimum-idle: 3
-  maximum-pool-size: 100
-  # 池中连接最长生命周期  5 分钟
-  max-lifetime: 10000
-  connection-timeout: 10000
-  connection-test-query: SELECT 1
-  pool-name: DataQueryConnPool
-  read-only: true

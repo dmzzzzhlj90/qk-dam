@@ -37,7 +37,7 @@ public class QueryDataRestController {
     sqlSession.close();
     return objects;
   }
-  @PostMapping("/app/query")
+  @PostMapping("/app/query/one")
   public Object queryOne(@RequestBody HttpDataParamModel httpDataParamModel) {
     String apiId = httpDataParamModel.getApiId();
     String dsName = mybatisMapperContainer.getDsName(apiId);

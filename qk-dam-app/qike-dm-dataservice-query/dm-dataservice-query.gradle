@@ -41,6 +41,7 @@ dependencies {
     implementation project(":qk-datasource")
     implementation project(":dm-das-feign")
     implementation project(":dm-datasource-feign")
+    implementation project(":dam-boot-cache-starter")
 
     implementation 'org.mybatis:mybatis:3.5.9'
 

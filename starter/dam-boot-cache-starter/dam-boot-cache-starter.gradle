@@ -4,7 +4,7 @@ plugins {
 version "${commonLibVersion}"
 group "com.qk.dam.cache"
 dependencies {
-    implementation project(":qk-data-redis")
+    compile project(":qk-data-redis")
     implementation "org.springframework.boot:spring-boot-starter-cache"
     compile group: 'com.github.ben-manes.caffeine', name: 'caffeine'
     implementation group: 'org.springframework', name: 'spring-context-support'
