@@ -1,11 +1,13 @@
 package com.qk.dm.dataquery.mybatis;
 
+import com.qk.dm.dataquery.cache.MybatisRedisCacheManager;
 import com.qk.dm.dataquery.model.Mapper;
 import com.qk.dm.dataquery.model.MapperSelect;
 import com.qk.dm.dataquery.model.ResultMap;
 import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 
 import java.util.Comparator;
@@ -27,6 +29,8 @@ public class MybatisMapperContainer {
   private final Map<String, Mapper> mapperMap = new ConcurrentHashMap<>(256);
   private final Map<String, String> apiIdDbNameMap = new ConcurrentHashMap<>(256);
 
+  @Autowired MybatisRedisCacheManager mybatisRedisCacheManager;
+
   public MybatisMapperContainer(
       DataServiceSqlSessionFactory dataServiceSqlSessionFactory,
       List<DataQueryInfoVO> dataQueryInfos) {
@@ -41,9 +45,13 @@ public class MybatisMapperContainer {
   public void onMapperInsert(DatasourceEvent.MapperInsertEvent mapperInsertEvent) {
     log.info("开始添加新增mappers");
     initMappers(mapperInsertEvent.getDataQueryInfos());
-    mapperInsertEvent.getDataQueryInfos().forEach((dataQueryInfoVO)->{
-      dataServiceSqlSessionFactory.scanMapper(this,dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName());
-    });
+    mapperInsertEvent
+        .getDataQueryInfos()
+        .forEach(
+            (dataQueryInfoVO) -> {
+              dataServiceSqlSessionFactory.scanMapper(
+                  this, dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName());
+            });
 
     log.info("添加新增mappers完成");
   }
@@ -58,7 +66,6 @@ public class MybatisMapperContainer {
                 it -> getStrNonNull(it.getDasApiCreateSqlScript().getDataSourceName())))
         // 生成mapper
         .forEach(generatedMappers(mapperBuilder));
-
   }
 
   /**
@@ -96,14 +103,12 @@ public class MybatisMapperContainer {
                   .autoMapping(true)
                   .id("rt")
                   .type("HashMap")
-                  .result(
-                      List.of(
-                          new ResultMap.Result("id", "id")))
+                  .result(List.of(new ResultMap.Result("id", "id")))
                   .build()));
       mapperBuilderTemp.select(mapperSelects);
       Mapper mapper = mapperBuilderTemp.build();
 
-      log.info("mybatis mapper=====>【{}】",mapper);
+      log.info("mybatis mapper=====>【{}】", mapper);
       this.addMapper(namespace, mapper);
     };
   }
@@ -134,26 +139,28 @@ public class MybatisMapperContainer {
 
   public String getDsName(String apiId) {
     return dataQueryInfos.stream()
-            .filter(
-                    dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getDasApiCreateSqlScript().getApiId()))
-            .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName())
-            .findFirst()
-            .orElse("");
+        .filter(
+            dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getDasApiCreateSqlScript().getApiId()))
+        .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName())
+        .findFirst()
+        .orElse("");
   }
 
   public Long getDsLastDasCreateApi() {
     return dataQueryInfos.stream()
-            .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getGmtModified().getTime())
-            .max(Comparator.comparing(Long::longValue))
-            .orElse(0L);
+        .map(
+            dataQueryInfoVO ->
+                dataQueryInfoVO.getDasApiCreateSqlScript().getGmtModified().getTime())
+        .max(Comparator.comparing(Long::longValue))
+        .orElse(0L);
   }
 
   public String getDbName(String apiId) {
     return dataQueryInfos.stream()
-            .filter(
-                    dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getDasApiCreateSqlScript().getApiId()))
-            .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getDataBaseName())
-            .findFirst()
-            .orElse("");
+        .filter(
+            dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getDasApiCreateSqlScript().getApiId()))
+        .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateSqlScript().getDataBaseName())
+        .findFirst()
+        .orElse("");
   }
 }

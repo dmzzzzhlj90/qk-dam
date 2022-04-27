@@ -14,8 +14,12 @@ import java.util.List;
 @JsonRootName("mapper")
 @JacksonXmlRootElement(localName = "mapper")
 public class Mapper {
+
     @JacksonXmlProperty(localName = "namespace",isAttribute = true)
     private String namespace;
+
+    @JacksonXmlElementWrapper(localName = "cache",useWrapping = false)
+    private Cache cache;
 
     @JacksonXmlElementWrapper(localName = "resultMap",useWrapping = false)
     private List<ResultMap> resultMap;

@@ -59,7 +59,8 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
   @Override
   public List<DataQueryInfoVO> dataQueryInfoLast(Long time) {
     BooleanExpression whereCondition =
-        QDasApiCreateSqlScript.dasApiCreateSqlScript.gmtModified
+        QDasApiCreateSqlScript.dasApiCreateSqlScript
+            .gmtModified
             .gt(new Date(time))
             .and(
                 QDasApiCreateSqlScript.dasApiCreateSqlScript.accessMethod.eq(
