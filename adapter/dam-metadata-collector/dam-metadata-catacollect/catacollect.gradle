@@ -19,7 +19,7 @@ compileJava {
 dependencies {
     implementation 'org.apache.atlas:atlas-client-v2:2.2.0'
     implementation group: 'mysql', name: 'mysql-connector-java',version:'8.0.25'
-    implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
+//    implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
     implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
     implementation project(":qk-data-jpa")
     implementation project(":commons-core")
