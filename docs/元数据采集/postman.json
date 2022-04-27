@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "d49048a2-6891-4286-9201-601f83caee11",
+    "_postman_id": "6a0c4566-464e-4ac0-a8d5-a886518a6ca3",
     "name": "dm-datacollect"
   },
   "item": [
@@ -14,7 +14,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 541,\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"description\": \"cm8ju9\",\n  \"schedulerRules\": {\n    \"engineType\": \"ealsmw\",\n    \"dataSourceName\": \"galen.lakin\",\n    \"databaseName\": \"galen.lakin\",\n    \"tableList\": [\n      \"yfkc9e\"\n    ],\n    \"allNums\": \"xehtye\",\n    \"applicationName\": \"galen.lakin\",\n    \"displayName\": \"galen.lakin\",\n    \"owner\": \"5h4fv2\",\n    \"strategy\": \"p715gb\",\n    \"dataSourceId\": \"14\",\n    \"description\": \"iz77uv\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"il6lcg\",\n    \"effectiveTimeStart\": \"jk6hcf\",\n    \"effectiveTimeEnt\": \"wxk9xt\",\n    \"schedulerCycle\": \"afb75m\",\n    \"schedulerIntervalTime\": \"2022-04-26 16:52:54\",\n    \"schedulerTime\": \"2022-04-26 16:52:54\",\n    \"cron\": \"bu42re\",\n    \"schedulerId\": 76\n  },\n  \"updateTime\": \"2022-04-26 16:52:54\"\n}",
+              "raw": "{\n  \"code\": 91,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"n2n83g\",\n  \"schedulerRules\": {\n    \"engineType\": \"m5q0kt\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"tnmcor\"\n    ],\n    \"allNums\": \"9gjl17\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"jk04v9\",\n    \"strategy\": \"ss8epe\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"0zomq5\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"8wk0un\",\n    \"effectiveTimeStart\": \"37ihse\",\n    \"effectiveTimeEnt\": \"mygrf9\",\n    \"schedulerCycle\": \"lpvchv\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"sb1akd\",\n    \"schedulerId\": 840\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -46,7 +46,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 59,\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"description\": \"p50yhw\",\n  \"schedulerRules\": {\n    \"engineType\": \"lwhkf7\",\n    \"dataSourceName\": \"galen.lakin\",\n    \"databaseName\": \"galen.lakin\",\n    \"tableList\": [\n      \"er32ed\"\n    ],\n    \"allNums\": \"n8dsbx\",\n    \"applicationName\": \"galen.lakin\",\n    \"displayName\": \"galen.lakin\",\n    \"owner\": \"wl6uv4\",\n    \"strategy\": \"sormku\",\n    \"dataSourceId\": \"14\",\n    \"description\": \"zarasx\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"caln7a\",\n    \"effectiveTimeStart\": \"pf5yjb\",\n    \"effectiveTimeEnt\": \"l73a93\",\n    \"schedulerCycle\": \"rj4bf7\",\n    \"schedulerIntervalTime\": \"2022-04-26 16:52:54\",\n    \"schedulerTime\": \"2022-04-26 16:52:54\",\n    \"cron\": \"8sby21\",\n    \"schedulerId\": 908\n  },\n  \"updateTime\": \"2022-04-26 16:52:54\"\n}",
+              "raw": "{\n  \"code\": 451,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"colu35\",\n  \"schedulerRules\": {\n    \"engineType\": \"76thdp\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"gzbnv9\"\n    ],\n    \"allNums\": \"gua0we\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"ic8123\",\n    \"strategy\": \"j0w59u\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"a9egw3\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"tladf5\",\n    \"effectiveTimeStart\": \"b1nqaq\",\n    \"effectiveTimeEnt\": \"t2er74\",\n    \"schedulerCycle\": \"p2ct2o\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"7n3mxu\",\n    \"schedulerId\": 880\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -84,7 +84,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/279",
+              "raw": "http://::server/dolphin/process/678",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -98,7 +98,7 @@
               "variable": [
                 {
                   "key": "code",
-                  "value": "19",
+                  "value": "872",
                   "description": "No comments found."
                 }
               ]
@@ -114,7 +114,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 74,\n  \"releaseState\": \"OFFLINE\"\n}",
+              "raw": "{\n  \"code\": 82,\n  \"releaseState\": \"OFFLINE\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -149,7 +149,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dolphin/process/runing/178",
+              "raw": "http://::server/dolphin/process/runing/809",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -164,7 +164,7 @@
               "variable": [
                 {
                   "key": "code",
-                  "value": "455",
+                  "value": "536",
                   "description": "No comments found."
                 }
               ]
@@ -180,7 +180,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"t0uc32\"\n  },\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"beginDay\": \"pf82o6\",\n  \"endDay\": \"kyo6he\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"tvr5b2\"\n  },\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"beginDay\": \"o92a3e\",\n  \"endDay\": \"iv3s1s\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -219,7 +219,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/810",
+              "raw": "http://::server/dolphin/process/65",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -233,7 +233,7 @@
               "variable": [
                 {
                   "key": "code",
-                  "value": "638",
+                  "value": "115",
                   "description": "No comments found."
                 }
               ]
@@ -254,7 +254,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"rtkyaj\"\n  },\n  \"processDefineCode\": 316,\n  \"startDate\": \"2022-04-26\",\n  \"endDate\": \"2022-04-26\",\n  \"searchVal\": \"nfmbfw\",\n  \"stateType\": \"mq9sik\",\n  \"executorName\": \"galen.lakin\",\n  \"dirId\": \"14\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"l033at\"\n  },\n  \"processDefineCode\": 196,\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"fxb5hh\",\n  \"stateType\": \"muf8ho\",\n  \"executorName\": \"gayle.hilpert\",\n  \"dirId\": \"70\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -293,7 +293,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/instance/842",
+              "raw": "http://::server/dolphin/instance/440",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -307,7 +307,7 @@
               "variable": [
                 {
                   "key": "instanceId",
-                  "value": "310",
+                  "value": "988",
                   "description": "No comments found."
                 }
               ]
@@ -323,7 +323,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 142\n}",
+              "raw": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 216\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -355,7 +355,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xjxytr\"\n  },\n  \"processInstanceId\": 293,\n  \"processInstanceName\": \"galen.lakin\",\n  \"startDate\": \"2022-04-26\",\n  \"endDate\": \"2022-04-26\",\n  \"searchVal\": \"2q1bjw\",\n  \"stateType\": \"by3jbx\",\n  \"executorName\": \"galen.lakin\",\n  \"taskName\": \"galen.lakin\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"c8ub83\"\n  },\n  \"processInstanceId\": 488,\n  \"processInstanceName\": \"gayle.hilpert\",\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"dopnm8\",\n  \"stateType\": \"vdm4nk\",\n  \"executorName\": \"gayle.hilpert\",\n  \"taskName\": \"gayle.hilpert\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -392,7 +392,7 @@
                   "key": "taskInstanceId",
                   "type": "text",
                   "description": "No comments found.",
-                  "value": "913"
+                  "value": "610"
                 }
               ]
             },
@@ -419,6 +419,172 @@
       ]
     },
     {
+      "name": "任务目录",
+      "item": [
+        {
+          "name": "获取任务目录",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/list",
+              "protocol": "http",
+              "path": [
+                "dir",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取任务目录",
+            "header": []
+          },
+          "description": "获取任务目录"
+        },
+        {
+          "name": "新增任务目录",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 909,\n  \"dirId\": \"70\",\n  \"title\": \"an6uy5\",\n  \"value\": \"f66qx3\",\n  \"parentId\": \"70\",\n  \"description\": \"38aye8\",\n  \"gmtCreate\": \"2022-04-27 17:02:50\",\n  \"gmtModified\": \"2022-04-27 17:02:50\",\n  \"delFlag\": 9,\n  \"type\": \"44d2zy\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增任务目录",
+            "header": []
+          },
+          "description": "新增任务目录"
+        },
+        {
+          "name": "编辑任务目录",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 30,\n  \"dirId\": \"70\",\n  \"title\": \"8sr1y1\",\n  \"value\": \"dsww2q\",\n  \"parentId\": \"70\",\n  \"description\": \"sm4hwk\",\n  \"gmtCreate\": \"2022-04-27 17:02:50\",\n  \"gmtModified\": \"2022-04-27 17:02:50\",\n  \"delFlag\": 9,\n  \"type\": \"bdwweu\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑任务目录",
+            "header": []
+          },
+          "description": "编辑任务目录"
+        },
+        {
+          "name": "单个删除—任务目录单子节点级联删除方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/70",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ":id"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "70",
+                  "description": "删除入参"
+                }
+              ]
+            },
+            "description": "单个删除—任务目录单子节点级联删除方式",
+            "header": []
+          },
+          "description": "单个删除—任务目录单子节点级联删除方式"
+        },
+        {
+          "name": "批量删除—任务目录单子节点级联删除方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/bulk?ids\u003d6wr49j",
+              "protocol": "http",
+              "path": [
+                "dir",
+                "bulk"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "ids",
+                  "value": "299p7g",
+                  "description": "批量删除入参"
+                }
+              ],
+              "variable": []
+            },
+            "description": "批量删除—任务目录单子节点级联删除方式",
+            "header": []
+          },
+          "description": "批量删除—任务目录单子节点级联删除方式"
+        }
+      ]
+    },
+    {
       "name": "数据源连接",
       "item": [
         {
@@ -433,10 +599,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/db/connect/types",
+              "raw": "http://::server/datasource/connect/types",
               "protocol": "http",
               "path": [
-                "db",
+                "datasource",
                 "connect",
                 "types"
               ],
@@ -463,10 +629,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/db/connect/:type",
+              "raw": "http://::server/datasource/connect/:type",
               "protocol": "http",
               "path": [
-                "db",
+                "datasource",
                 "connect",
                 ":type"
               ],
@@ -493,10 +659,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/db/connect/db?dataSourceId\u003d14",
+              "raw": "http://::server/datasource/connect/db?dataSourceId\u003d70",
               "protocol": "http",
               "path": [
-                "db",
+                "datasource",
                 "connect",
                 "db"
               ],
@@ -506,7 +672,7 @@
               "query": [
                 {
                   "key": "dataSourceId",
-                  "value": "14",
+                  "value": "70",
                   "description": "数据源连接id"
                 }
               ],
@@ -529,10 +695,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/db/connect/table?dataSourceId\u003d14\u0026databaseName\u003dgalen.lakin",
+              "raw": "http://::server/datasource/connect/table?dataSourceId\u003d70\u0026databaseName\u003dgayle.hilpert",
               "protocol": "http",
               "path": [
-                "db",
+                "datasource",
                 "connect",
                 "table"
               ],
@@ -542,12 +708,12 @@
               "query": [
                 {
                   "key": "dataSourceId",
-                  "value": "14",
+                  "value": "70",
                   "description": "数据源连接id"
                 },
                 {
                   "key": "databaseName",
-                  "value": "galen.lakin",
+                  "value": "gayle.hilpert",
                   "description": "数据库名称"
                 }
               ],
@@ -569,15 +735,15 @@
                   "key": "schedulerRules",
                   "type": "string",
                   "description": "回调atals接口参数",
-                  "value": "aztf4g"
+                  "value": "ek6210"
                 }
               ]
             },
             "url": {
-              "raw": "http://::server/db/",
+              "raw": "http://::server/datasource/",
               "protocol": "http",
               "path": [
-                "db",
+                "datasource",
                 ""
               ],
               "host": [
