@@ -79,6 +79,8 @@ public class DisRuleClassServiceImpl implements DisRuleClassService {
     }
 
     private void deleteChildren(Long id,String parentId){
+        DisRuleClassification disRuleClassification = disRuleClassificationRepository.findById(id).orElse(null);
+        if(Objects.isNull(disRuleClassification)){return;}
         disRuleClassificationRepository.deleteById(id);
        List<DisRuleClassification>  childrenList = disRuleClassificationRepository.findAllByParentId(parentId);
         if(CollectionUtils.isEmpty(childrenList)){
