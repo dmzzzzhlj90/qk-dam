@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
+ * 调度流程定义管理
+ *
  * @author shenpj
  * @date 2022/4/21 16:54
  * @since 1.0.0
@@ -28,8 +30,9 @@ public class DctDolphinController {
 
     /**
      * 新增流程定义
+     *
      * @param dctSchedulerBasicInfoVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
@@ -39,8 +42,9 @@ public class DctDolphinController {
 
     /**
      * 修改流程定义
+     *
      * @param dctSchedulerBasicInfoVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping("")
     public DefaultCommonResult update(@RequestBody DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
@@ -50,8 +54,9 @@ public class DctDolphinController {
 
     /**
      * 删除流程定义
+     *
      * @param code
-     * @return
+     * @return DefaultCommonResult
      */
     @DeleteMapping("/{code}")
     public DefaultCommonResult delete(@PathVariable Long code) {
@@ -61,8 +66,9 @@ public class DctDolphinController {
 
     /**
      * 流程定义上下线
+     *
      * @param dctSchedulerReleaseVO
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping("/release")
     public DefaultCommonResult release(@RequestBody @Valid DctSchedulerReleaseVO dctSchedulerReleaseVO) {
@@ -72,8 +78,9 @@ public class DctDolphinController {
 
     /**
      * 运行流程定义
+     *
      * @param code
-     * @return
+     * @return DefaultCommonResult
      */
     @PostMapping("/runing/{code}")
     public DefaultCommonResult runing(@PathVariable Long code) {
@@ -83,22 +90,24 @@ public class DctDolphinController {
 
     /**
      * 流程定义列表
+     *
      * @param schedulerInfoParamsVO
-     * @return
+     * @return DefaultCommonResult<PageResultVO<DctSchedulerInfoVO>>
      */
     @PostMapping("/page/list")
     public DefaultCommonResult<PageResultVO<DctSchedulerInfoVO>> searchPageList(@RequestBody DctSchedulerInfoParamsVO schedulerInfoParamsVO) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dctDolphinService.searchPageList(schedulerInfoParamsVO));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dctDolphinService.searchPageList(schedulerInfoParamsVO));
     }
 
     /**
      * 流程定义详情
+     *
      * @param code
-     * @return
+     * @return DefaultCommonResult<DctSchedulerBasicInfoVO>
      */
     @GetMapping("/{code}")
     public DefaultCommonResult<DctSchedulerBasicInfoVO> detail(@PathVariable Long code) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,dctDolphinService.detail(code));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dctDolphinService.detail(code));
     }
 
 }
