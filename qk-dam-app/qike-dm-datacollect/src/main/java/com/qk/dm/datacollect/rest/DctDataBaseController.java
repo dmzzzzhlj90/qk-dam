@@ -17,7 +17,7 @@ import java.util.Map;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/db")
+@RequestMapping("/datasource")
 public class DctDataBaseController {
   private final DataBaseService dataBaseService;
   private final DctDataSourceService dctDataSourceService;

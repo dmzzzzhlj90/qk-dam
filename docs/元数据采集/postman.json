@@ -1,214 +1,15 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "d49048a2-6891-4286-9201-601f83caee11",
+    "_postman_id": "7164d730-643f-4f26-acde-ee6bba8d7f78",
     "name": "dm-datacollect"
   },
   "item": [
     {
-      "name": "Interface name is not set.",
+      "name": "任务目录",
       "item": [
         {
-          "name": "新增流程定义",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"code\": 541,\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"description\": \"cm8ju9\",\n  \"schedulerRules\": {\n    \"engineType\": \"ealsmw\",\n    \"dataSourceName\": \"galen.lakin\",\n    \"databaseName\": \"galen.lakin\",\n    \"tableList\": [\n      \"yfkc9e\"\n    ],\n    \"allNums\": \"xehtye\",\n    \"applicationName\": \"galen.lakin\",\n    \"displayName\": \"galen.lakin\",\n    \"owner\": \"5h4fv2\",\n    \"strategy\": \"p715gb\",\n    \"dataSourceId\": \"14\",\n    \"description\": \"iz77uv\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"il6lcg\",\n    \"effectiveTimeStart\": \"jk6hcf\",\n    \"effectiveTimeEnt\": \"wxk9xt\",\n    \"schedulerCycle\": \"afb75m\",\n    \"schedulerIntervalTime\": \"2022-04-26 16:52:54\",\n    \"schedulerTime\": \"2022-04-26 16:52:54\",\n    \"cron\": \"bu42re\",\n    \"schedulerId\": 76\n  },\n  \"updateTime\": \"2022-04-26 16:52:54\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/dolphin/process/",
-              "protocol": "http",
-              "path": [
-                "dolphin",
-                "process",
-                ""
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "新增流程定义",
-            "header": []
-          },
-          "description": "新增流程定义"
-        },
-        {
-          "name": "修改流程定义",
-          "request": {
-            "method": "PUT",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"code\": 59,\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"description\": \"p50yhw\",\n  \"schedulerRules\": {\n    \"engineType\": \"lwhkf7\",\n    \"dataSourceName\": \"galen.lakin\",\n    \"databaseName\": \"galen.lakin\",\n    \"tableList\": [\n      \"er32ed\"\n    ],\n    \"allNums\": \"n8dsbx\",\n    \"applicationName\": \"galen.lakin\",\n    \"displayName\": \"galen.lakin\",\n    \"owner\": \"wl6uv4\",\n    \"strategy\": \"sormku\",\n    \"dataSourceId\": \"14\",\n    \"description\": \"zarasx\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"caln7a\",\n    \"effectiveTimeStart\": \"pf5yjb\",\n    \"effectiveTimeEnt\": \"l73a93\",\n    \"schedulerCycle\": \"rj4bf7\",\n    \"schedulerIntervalTime\": \"2022-04-26 16:52:54\",\n    \"schedulerTime\": \"2022-04-26 16:52:54\",\n    \"cron\": \"8sby21\",\n    \"schedulerId\": 908\n  },\n  \"updateTime\": \"2022-04-26 16:52:54\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/dolphin/process/",
-              "protocol": "http",
-              "path": [
-                "dolphin",
-                "process",
-                ""
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "修改流程定义",
-            "header": []
-          },
-          "description": "修改流程定义"
-        },
-        {
-          "name": "删除流程定义",
-          "request": {
-            "method": "DELETE",
-            "body": {
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/dolphin/process/279",
-              "protocol": "http",
-              "path": [
-                "dolphin",
-                "process",
-                ":code"
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "code",
-                  "value": "19",
-                  "description": "No comments found."
-                }
-              ]
-            },
-            "description": "删除流程定义",
-            "header": []
-          },
-          "description": "删除流程定义"
-        },
-        {
-          "name": "流程定义上下线",
-          "request": {
-            "method": "PUT",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"code\": 74,\n  \"releaseState\": \"OFFLINE\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/dolphin/process/release",
-              "protocol": "http",
-              "path": [
-                "dolphin",
-                "process",
-                "release"
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "流程定义上下线",
-            "header": []
-          },
-          "description": "流程定义上下线"
-        },
-        {
-          "name": "运行流程定义",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "formdata",
-              "formdata": []
-            },
-            "url": {
-              "raw": "http://::server/dolphin/process/runing/178",
-              "protocol": "http",
-              "path": [
-                "dolphin",
-                "process",
-                "runing",
-                ":code"
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "key": "code",
-                  "value": "455",
-                  "description": "No comments found."
-                }
-              ]
-            },
-            "description": "运行流程定义",
-            "header": []
-          },
-          "description": "运行流程定义"
-        },
-        {
-          "name": "流程定义列表",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"t0uc32\"\n  },\n  \"name\": \"galen.lakin\",\n  \"dirId\": \"14\",\n  \"beginDay\": \"pf82o6\",\n  \"endDay\": \"kyo6he\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/dolphin/process/page/list",
-              "protocol": "http",
-              "path": [
-                "dolphin",
-                "process",
-                "page",
-                "list"
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "流程定义列表",
-            "header": []
-          },
-          "description": "流程定义列表"
-        },
-        {
-          "name": "流程定义详情",
+          "name": "获取任务目录",
           "request": {
             "method": "GET",
             "body": {
@@ -219,12 +20,102 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/810",
+              "raw": "http://::server/dir/list",
               "protocol": "http",
               "path": [
-                "dolphin",
-                "process",
-                ":code"
+                "dir",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取任务目录",
+            "header": []
+          },
+          "description": "获取任务目录"
+        },
+        {
+          "name": "新增任务目录",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 476,\n  \"dirId\": \"70\",\n  \"title\": \"fbmh01\",\n  \"value\": \"nwdga6\",\n  \"parentId\": \"70\",\n  \"description\": \"xe2559\",\n  \"gmtCreate\": \"2022-04-27 17:24:59\",\n  \"gmtModified\": \"2022-04-27 17:24:59\",\n  \"delFlag\": 9,\n  \"type\": \"f7rrdc\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "新增任务目录",
+            "header": []
+          },
+          "description": "新增任务目录"
+        },
+        {
+          "name": "编辑任务目录",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 109,\n  \"dirId\": \"70\",\n  \"title\": \"t5cw3x\",\n  \"value\": \"2u26ur\",\n  \"parentId\": \"70\",\n  \"description\": \"lapiay\",\n  \"gmtCreate\": \"2022-04-27 17:24:59\",\n  \"gmtModified\": \"2022-04-27 17:24:59\",\n  \"delFlag\": 9,\n  \"type\": \"4ly91t\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "编辑任务目录",
+            "header": []
+          },
+          "description": "编辑任务目录"
+        },
+        {
+          "name": "单个删除—任务目录单子节点级联删除方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/70",
+              "protocol": "http",
+              "path": [
+                "dir",
+                ":id"
               ],
               "host": [
                 "{{server}}"
@@ -232,21 +123,231 @@
               "query": [],
               "variable": [
                 {
-                  "key": "code",
-                  "value": "638",
-                  "description": "No comments found."
+                  "key": "id",
+                  "value": "70",
+                  "description": "删除入参"
                 }
               ]
             },
-            "description": "流程定义详情",
+            "description": "单个删除—任务目录单子节点级联删除方式",
             "header": []
           },
-          "description": "流程定义详情"
+          "description": "单个删除—任务目录单子节点级联删除方式"
+        },
+        {
+          "name": "批量删除—任务目录单子节点级联删除方式",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dir/bulk?ids\u003dffa8z4",
+              "protocol": "http",
+              "path": [
+                "dir",
+                "bulk"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "ids",
+                  "value": "0cayzh",
+                  "description": "批量删除入参"
+                }
+              ],
+              "variable": []
+            },
+            "description": "批量删除—任务目录单子节点级联删除方式",
+            "header": []
+          },
+          "description": "批量删除—任务目录单子节点级联删除方式"
         }
       ]
     },
     {
-      "name": "Interface name is not set.",
+      "name": "数据源连接",
+      "item": [
+        {
+          "name": "获取数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/connect/types",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "connect",
+                "types"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接类型",
+            "header": []
+          },
+          "description": "获取数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/connect/:type",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "connect",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取数据源连接",
+            "header": []
+          },
+          "description": "获取数据源连接"
+        },
+        {
+          "name": "根据数据源连接名称获取数据库",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/connect/db?dataSourceId\u003d70",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "connect",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceId",
+                  "value": "70",
+                  "description": "数据源连接id"
+                }
+              ],
+              "variable": []
+            },
+            "description": "根据数据源连接名称获取数据库",
+            "header": []
+          },
+          "description": "根据数据源连接名称获取数据库"
+        },
+        {
+          "name": "根据数据源连接、库名称获取表",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/datasource/connect/table?dataSourceId\u003d70\u0026databaseName\u003dgayle.hilpert",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                "connect",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceId",
+                  "value": "70",
+                  "description": "数据源连接id"
+                },
+                {
+                  "key": "databaseName",
+                  "value": "gayle.hilpert",
+                  "description": "数据库名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "根据数据源连接、库名称获取表",
+            "header": []
+          },
+          "description": "根据数据源连接、库名称获取表"
+        },
+        {
+          "name": "dolphin任务回调接口",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "schedulerRules",
+                  "type": "string",
+                  "description": "回调atals接口参数",
+                  "value": "fu4agk"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://::server/datasource/",
+              "protocol": "http",
+              "path": [
+                "datasource",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "dolphin任务回调接口",
+            "header": []
+          },
+          "description": "dolphin任务回调接口"
+        }
+      ]
+    },
+    {
+      "name": "调度实例管理",
       "item": [
         {
           "name": "实例列表",
@@ -254,7 +355,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"rtkyaj\"\n  },\n  \"processDefineCode\": 316,\n  \"startDate\": \"2022-04-26\",\n  \"endDate\": \"2022-04-26\",\n  \"searchVal\": \"nfmbfw\",\n  \"stateType\": \"mq9sik\",\n  \"executorName\": \"galen.lakin\",\n  \"dirId\": \"14\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"g9a57q\"\n  },\n  \"processDefineCode\": 788,\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"p4ye2h\",\n  \"stateType\": \"xo1ppv\",\n  \"executorName\": \"gayle.hilpert\",\n  \"dirId\": \"70\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -293,7 +394,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/instance/842",
+              "raw": "http://::server/dolphin/instance/145",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -307,7 +408,7 @@
               "variable": [
                 {
                   "key": "instanceId",
-                  "value": "310",
+                  "value": "902",
                   "description": "No comments found."
                 }
               ]
@@ -323,7 +424,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 142\n}",
+              "raw": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 160\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -350,12 +451,12 @@
           "description": "实例操作"
         },
         {
-          "name": "任务实例列表",
+          "name": "任务实例列表（暂时不用）",
           "request": {
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"xjxytr\"\n  },\n  \"processInstanceId\": 293,\n  \"processInstanceName\": \"galen.lakin\",\n  \"startDate\": \"2022-04-26\",\n  \"endDate\": \"2022-04-26\",\n  \"searchVal\": \"2q1bjw\",\n  \"stateType\": \"by3jbx\",\n  \"executorName\": \"galen.lakin\",\n  \"taskName\": \"galen.lakin\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"y7og35\"\n  },\n  \"processInstanceId\": 521,\n  \"processInstanceName\": \"gayle.hilpert\",\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"1wm3zt\",\n  \"stateType\": \"ag8n98\",\n  \"executorName\": \"gayle.hilpert\",\n  \"taskName\": \"gayle.hilpert\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -376,10 +477,10 @@
               "query": [],
               "variable": []
             },
-            "description": "任务实例列表",
+            "description": "任务实例列表（暂时不用）",
             "header": []
           },
-          "description": "任务实例列表"
+          "description": "任务实例列表（暂时不用）"
         },
         {
           "name": "下载任务实例日志",
@@ -387,21 +488,15 @@
             "method": "POST",
             "body": {
               "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "taskInstanceId",
-                  "type": "text",
-                  "description": "No comments found.",
-                  "value": "913"
-                }
-              ]
+              "formdata": []
             },
             "url": {
-              "raw": "http://::server/dolphin/task/log/download",
+              "raw": "http://::server/dolphin/task/106/log/download",
               "protocol": "http",
               "path": [
                 "dolphin",
                 "task",
+                ":taskInstanceId",
                 "log",
                 "download"
               ],
@@ -409,175 +504,77 @@
                 "{{server}}"
               ],
               "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "taskInstanceId",
+                  "value": "284",
+                  "description": "No comments found."
+                }
+              ]
             },
             "description": "下载任务实例日志",
             "header": []
           },
           "description": "下载任务实例日志"
-        }
-      ]
-    },
-    {
-      "name": "数据源连接",
-      "item": [
-        {
-          "name": "获取数据源连接类型",
-          "request": {
-            "method": "GET",
-            "body": {
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/db/connect/types",
-              "protocol": "http",
-              "path": [
-                "db",
-                "connect",
-                "types"
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "获取数据源连接类型",
-            "header": []
-          },
-          "description": "获取数据源连接类型"
         },
         {
-          "name": "获取数据源连接",
-          "request": {
-            "method": "GET",
-            "body": {
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/db/connect/:type",
-              "protocol": "http",
-              "path": [
-                "db",
-                "connect",
-                ":type"
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "description": "获取数据源连接",
-            "header": []
-          },
-          "description": "获取数据源连接"
-        },
-        {
-          "name": "根据数据源连接名称获取数据库",
-          "request": {
-            "method": "GET",
-            "body": {
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/db/connect/db?dataSourceId\u003d14",
-              "protocol": "http",
-              "path": [
-                "db",
-                "connect",
-                "db"
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [
-                {
-                  "key": "dataSourceId",
-                  "value": "14",
-                  "description": "数据源连接id"
-                }
-              ],
-              "variable": []
-            },
-            "description": "根据数据源连接名称获取数据库",
-            "header": []
-          },
-          "description": "根据数据源连接名称获取数据库"
-        },
-        {
-          "name": "根据数据源连接、库名称获取表",
-          "request": {
-            "method": "GET",
-            "body": {
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://::server/db/connect/table?dataSourceId\u003d14\u0026databaseName\u003dgalen.lakin",
-              "protocol": "http",
-              "path": [
-                "db",
-                "connect",
-                "table"
-              ],
-              "host": [
-                "{{server}}"
-              ],
-              "query": [
-                {
-                  "key": "dataSourceId",
-                  "value": "14",
-                  "description": "数据源连接id"
-                },
-                {
-                  "key": "databaseName",
-                  "value": "galen.lakin",
-                  "description": "数据库名称"
-                }
-              ],
-              "variable": []
-            },
-            "description": "根据数据源连接、库名称获取表",
-            "header": []
-          },
-          "description": "根据数据源连接、库名称获取表"
-        },
-        {
-          "name": "dolphin任务回调接口",
+          "name": "任务实例日志",
           "request": {
             "method": "POST",
             "body": {
               "mode": "formdata",
-              "formdata": [
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dolphin/task/534/log",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "task",
+                ":taskInstanceId",
+                "log"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
                 {
-                  "key": "schedulerRules",
-                  "type": "string",
-                  "description": "回调atals接口参数",
-                  "value": "aztf4g"
+                  "key": "taskInstanceId",
+                  "value": "246",
+                  "description": "No comments found."
                 }
               ]
             },
+            "description": "任务实例日志",
+            "header": []
+          },
+          "description": "任务实例日志"
+        }
+      ]
+    },
+    {
+      "name": "调度流程定义管理",
+      "item": [
+        {
+          "name": "新增流程定义",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": 18,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"evm7v1\",\n  \"schedulerRules\": {\n    \"engineType\": \"2netjz\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"ugb5se\"\n    ],\n    \"allNums\": \"x4d33w\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"y92okv\",\n    \"strategy\": \"x90yii\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"mtinei\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"sa4ow0\",\n    \"effectiveTimeStart\": \"dou6j1\",\n    \"effectiveTimeEnt\": \"u6qw5a\",\n    \"schedulerCycle\": \"ap2ohf\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"hd6nxz\",\n    \"schedulerId\": 845\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://::server/db/",
+              "raw": "http://::server/dolphin/process/",
               "protocol": "http",
               "path": [
-                "db",
+                "dolphin",
+                "process",
                 ""
               ],
               "host": [
@@ -586,10 +583,213 @@
               "query": [],
               "variable": []
             },
-            "description": "dolphin任务回调接口",
+            "description": "新增流程定义",
             "header": []
           },
-          "description": "dolphin任务回调接口"
+          "description": "新增流程定义"
+        },
+        {
+          "name": "修改流程定义",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": 338,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"tpo586\",\n  \"schedulerRules\": {\n    \"engineType\": \"2chfq3\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"1gchh1\"\n    ],\n    \"allNums\": \"ho02bn\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"czslhy\",\n    \"strategy\": \"ddhqoj\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"wahv38\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"ew4jyv\",\n    \"effectiveTimeStart\": \"91g7ar\",\n    \"effectiveTimeEnt\": \"5vyuvj\",\n    \"schedulerCycle\": \"bwejyy\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"e81pnt\",\n    \"schedulerId\": 373\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                ""
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "修改流程定义",
+            "header": []
+          },
+          "description": "修改流程定义"
+        },
+        {
+          "name": "删除流程定义",
+          "request": {
+            "method": "DELETE",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/60",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                ":code"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "16",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "删除流程定义",
+            "header": []
+          },
+          "description": "删除流程定义"
+        },
+        {
+          "name": "流程定义上下线",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": 643,\n  \"releaseState\": \"OFFLINE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/release",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                "release"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "流程定义上下线",
+            "header": []
+          },
+          "description": "流程定义上下线"
+        },
+        {
+          "name": "运行流程定义",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/runing/652",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                "runing",
+                ":code"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "393",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "运行流程定义",
+            "header": []
+          },
+          "description": "运行流程定义"
+        },
+        {
+          "name": "流程定义列表",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1rex5r\"\n  },\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"beginDay\": \"ra9yvs\",\n  \"endDay\": \"ejginb\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/page/list",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                "page",
+                "list"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "流程定义列表",
+            "header": []
+          },
+          "description": "流程定义列表"
+        },
+        {
+          "name": "流程定义详情",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dolphin/process/301",
+              "protocol": "http",
+              "path": [
+                "dolphin",
+                "process",
+                ":code"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "314",
+                  "description": "No comments found."
+                }
+              ]
+            },
+            "description": "流程定义详情",
+            "header": []
+          },
+          "description": "流程定义详情"
         }
       ]
     }

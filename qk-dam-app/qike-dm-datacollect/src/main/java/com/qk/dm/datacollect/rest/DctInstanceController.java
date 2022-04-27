@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 /**
+ * 调度实例管理
+ *
  * @author shenpj
  * @date 2022/4/25 11:21
  * @since 1.0.0
@@ -43,7 +45,7 @@ public class DctInstanceController {
      * 实例详情
      *
      * @param instanceId
-     * @return
+     * @return DefaultCommonResult<DctProcessInstanceVO>
      */
     @GetMapping("/instance/{instanceId}")
     public DefaultCommonResult<DctProcessInstanceVO> detail(@PathVariable Integer instanceId) {
@@ -54,7 +56,7 @@ public class DctInstanceController {
      * 实例操作
      *
      * @param instanceExecute
-     * @return
+     * @return DefaultCommonResult
      */
     @PutMapping("/instance/execute")
     public DefaultCommonResult execute(@RequestBody @Validated DctInstanceExecuteVO instanceExecute) {
@@ -63,7 +65,7 @@ public class DctInstanceController {
     }
 
     /**
-     * 任务实例列表
+     * 任务实例列表（暂时不用）
      *
      * @param dctTaskInstanceParamsVO
      * @return DefaultCommonResult<PageResultVO < DctTaskInstanceVO>>
@@ -88,8 +90,9 @@ public class DctInstanceController {
 
     /**
      * 任务实例日志
+     *
      * @param taskInstanceId
-     * @return
+     * @return DefaultCommonResult<Object>
      */
     @PostMapping("/task/{taskInstanceId}/log")
     public DefaultCommonResult<Object> taskLog(@PathVariable Integer taskInstanceId) {
