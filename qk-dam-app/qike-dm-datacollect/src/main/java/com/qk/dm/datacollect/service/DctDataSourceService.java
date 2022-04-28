@@ -9,7 +9,7 @@ import java.util.List;
 public interface DctDataSourceService {
   List<String> getResultDb(String dataSourceId);
 
-  DctTableDataVO getResultTable(String dataSourceId, String db);
+  List<DctTableDataVO> getResultTable(String dataSourceId, String db);
 
   void dolphinCallback(String dctBaseInfoVO) throws Exception;
 }

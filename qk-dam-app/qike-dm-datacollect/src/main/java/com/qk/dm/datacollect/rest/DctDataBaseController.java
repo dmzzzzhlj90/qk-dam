@@ -65,7 +65,7 @@ public class DctDataBaseController {
    * @return DefaultCommonResult<List<String>> 表信息
    */
   @GetMapping("/connect/table")
-  public DefaultCommonResult<DctTableDataVO> getResultTable(@NotBlank @RequestParam String dataSourceId,@NotBlank @RequestParam String databaseName) {
+  public DefaultCommonResult<List<DctTableDataVO>> getResultTable(@NotBlank @RequestParam String dataSourceId,@NotBlank @RequestParam String databaseName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultTable(dataSourceId,databaseName));
   }
 

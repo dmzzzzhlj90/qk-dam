@@ -56,7 +56,7 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   }
 
   @Override
-  public DctTableDataVO getResultTable(String dataSourceId, String databaseName) {
+  public List<DctTableDataVO> getResultTable(String dataSourceId, String databaseName) {
     ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
     if (Objects.nonNull(dsDatasourceVO)){
       ConnectInfoVo connectInfoVo = new ConnectInfoVo();
@@ -69,7 +69,8 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
     }
   }
 
-  private DctTableDataVO getDctTableDataVO(List<String> list) {
+  private List<DctTableDataVO> getDctTableDataVO(List<String> list) {
+    List<DctTableDataVO> tableLists = new ArrayList<>();
     DctTableDataVO dctTableDataVOS= DctTableDataVO.builder().dirId(
         SourcesUtil.TABLE_NUMS).title(SourcesUtil.TABLE_NAME_ALL)
         .value(SourcesUtil.TABLE_NAME_ALL).build();
@@ -79,7 +80,8 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
       return dctTableDataVO;
     }).collect(Collectors.toList());
     dctTableDataVOS.setChildren(tableList);
-    return dctTableDataVOS;
+    tableLists.add(dctTableDataVOS);
+    return tableLists;
   }
 
   @Override
