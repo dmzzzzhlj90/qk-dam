@@ -34,7 +34,7 @@ public class DsDatasourceVO {
     /**
      * 数据源标识id
      */
-    @NotBlank(message = "数据源标识id不为空")
+//    @NotBlank(message = "数据源标识id不为空")
     private String connId;
 
     /**

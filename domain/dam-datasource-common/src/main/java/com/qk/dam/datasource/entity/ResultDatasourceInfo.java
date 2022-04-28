@@ -11,8 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ResultDatasourceInfo {
-  /** 数据源主键id */
-  private String id;
+
+  /**
+   * 数据源标识id
+   */
+  private String connId;
 
   /** 系统名称 */
   private String dataSourceName;
