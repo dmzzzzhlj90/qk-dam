@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "7164d730-643f-4f26-acde-ee6bba8d7f78",
+    "_postman_id": "9f12a1a1-a0ee-441d-9afc-3504f0e4bccd",
     "name": "dm-datacollect"
   },
   "item": [
@@ -43,7 +43,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 476,\n  \"dirId\": \"70\",\n  \"title\": \"fbmh01\",\n  \"value\": \"nwdga6\",\n  \"parentId\": \"70\",\n  \"description\": \"xe2559\",\n  \"gmtCreate\": \"2022-04-27 17:24:59\",\n  \"gmtModified\": \"2022-04-27 17:24:59\",\n  \"delFlag\": 9,\n  \"type\": \"f7rrdc\"\n}",
+              "raw": "{\n  \"id\": 160,\n  \"dirId\": \"114\",\n  \"title\": \"kl2cr4\",\n  \"value\": \"m7vhgs\",\n  \"parentId\": \"114\",\n  \"description\": \"4ik93v\",\n  \"gmtCreate\": \"2022-04-28 18:20:22\",\n  \"gmtModified\": \"2022-04-28 18:20:22\",\n  \"delFlag\": 2,\n  \"type\": \"17uykp\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -74,7 +74,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 109,\n  \"dirId\": \"70\",\n  \"title\": \"t5cw3x\",\n  \"value\": \"2u26ur\",\n  \"parentId\": \"70\",\n  \"description\": \"lapiay\",\n  \"gmtCreate\": \"2022-04-27 17:24:59\",\n  \"gmtModified\": \"2022-04-27 17:24:59\",\n  \"delFlag\": 9,\n  \"type\": \"4ly91t\"\n}",
+              "raw": "{\n  \"id\": 369,\n  \"dirId\": \"114\",\n  \"title\": \"5p5w0q\",\n  \"value\": \"16bagt\",\n  \"parentId\": \"114\",\n  \"description\": \"82qxnh\",\n  \"gmtCreate\": \"2022-04-28 18:20:22\",\n  \"gmtModified\": \"2022-04-28 18:20:22\",\n  \"delFlag\": 2,\n  \"type\": \"4b3pet\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -111,7 +111,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dir/70",
+              "raw": "http://::server/dir/114",
               "protocol": "http",
               "path": [
                 "dir",
@@ -124,7 +124,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "70",
+                  "value": "114",
                   "description": "删除入参"
                 }
               ]
@@ -146,7 +146,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dir/bulk?ids\u003dffa8z4",
+              "raw": "http://::server/dir/bulk?ids\u003d93jifj",
               "protocol": "http",
               "path": [
                 "dir",
@@ -158,7 +158,7 @@
               "query": [
                 {
                   "key": "ids",
-                  "value": "0cayzh",
+                  "value": "c0bsut",
                   "description": "批量删除入参"
                 }
               ],
@@ -246,7 +246,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/connect/db?dataSourceId\u003d70",
+              "raw": "http://::server/datasource/connect/db?dataSourceId\u003d114",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -259,7 +259,7 @@
               "query": [
                 {
                   "key": "dataSourceId",
-                  "value": "70",
+                  "value": "114",
                   "description": "数据源连接id"
                 }
               ],
@@ -282,7 +282,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/connect/table?dataSourceId\u003d70\u0026databaseName\u003dgayle.hilpert",
+              "raw": "http://::server/datasource/connect/table?dataSourceId\u003d114\u0026databaseName\u003dkeren.schumm",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -295,12 +295,12 @@
               "query": [
                 {
                   "key": "dataSourceId",
-                  "value": "70",
+                  "value": "114",
                   "description": "数据源连接id"
                 },
                 {
                   "key": "databaseName",
-                  "value": "gayle.hilpert",
+                  "value": "keren.schumm",
                   "description": "数据库名称"
                 }
               ],
@@ -322,7 +322,7 @@
                   "key": "schedulerRules",
                   "type": "string",
                   "description": "回调atals接口参数",
-                  "value": "fu4agk"
+                  "value": "72u76c"
                 }
               ]
             },
@@ -355,7 +355,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"g9a57q\"\n  },\n  \"processDefineCode\": 788,\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"p4ye2h\",\n  \"stateType\": \"xo1ppv\",\n  \"executorName\": \"gayle.hilpert\",\n  \"dirId\": \"70\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"uup5jy\"\n  },\n  \"processDefineCode\": 999,\n  \"startDate\": \"2022-04-28\",\n  \"endDate\": \"2022-04-28\",\n  \"searchVal\": \"038zhj\",\n  \"stateType\": \"37iaie\",\n  \"executorName\": \"keren.schumm\",\n  \"dirId\": \"114\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -394,7 +394,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/instance/145",
+              "raw": "http://::server/dolphin/instance/481",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -408,7 +408,7 @@
               "variable": [
                 {
                   "key": "instanceId",
-                  "value": "902",
+                  "value": "542",
                   "description": "No comments found."
                 }
               ]
@@ -424,7 +424,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 160\n}",
+              "raw": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 909\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -456,7 +456,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"y7og35\"\n  },\n  \"processInstanceId\": 521,\n  \"processInstanceName\": \"gayle.hilpert\",\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"1wm3zt\",\n  \"stateType\": \"ag8n98\",\n  \"executorName\": \"gayle.hilpert\",\n  \"taskName\": \"gayle.hilpert\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"hbvvp4\"\n  },\n  \"processInstanceId\": 938,\n  \"processInstanceName\": \"keren.schumm\",\n  \"startDate\": \"2022-04-28\",\n  \"endDate\": \"2022-04-28\",\n  \"searchVal\": \"chln8e\",\n  \"stateType\": \"mx4lt7\",\n  \"executorName\": \"keren.schumm\",\n  \"taskName\": \"keren.schumm\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -491,7 +491,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dolphin/task/106/log/download",
+              "raw": "http://::server/dolphin/task/272/log/download",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -507,7 +507,7 @@
               "variable": [
                 {
                   "key": "taskInstanceId",
-                  "value": "284",
+                  "value": "298",
                   "description": "No comments found."
                 }
               ]
@@ -526,7 +526,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dolphin/task/534/log",
+              "raw": "http://::server/dolphin/task/48/log",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -541,7 +541,7 @@
               "variable": [
                 {
                   "key": "taskInstanceId",
-                  "value": "246",
+                  "value": "58",
                   "description": "No comments found."
                 }
               ]
@@ -562,7 +562,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 18,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"evm7v1\",\n  \"schedulerRules\": {\n    \"engineType\": \"2netjz\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"ugb5se\"\n    ],\n    \"allNums\": \"x4d33w\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"y92okv\",\n    \"strategy\": \"x90yii\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"mtinei\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"sa4ow0\",\n    \"effectiveTimeStart\": \"dou6j1\",\n    \"effectiveTimeEnt\": \"u6qw5a\",\n    \"schedulerCycle\": \"ap2ohf\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"hd6nxz\",\n    \"schedulerId\": 845\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}",
+              "raw": "{\n  \"code\": 731,\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"description\": \"rzhe8o\",\n  \"schedulerRules\": {\n    \"engineType\": \"nfa5um\",\n    \"dataSourceName\": \"keren.schumm\",\n    \"databaseName\": \"keren.schumm\",\n    \"tableList\": [\n      \"zd0agz\"\n    ],\n    \"allNums\": \"4lzxku\",\n    \"applicationName\": \"keren.schumm\",\n    \"displayName\": \"keren.schumm\",\n    \"owner\": \"8uumks\",\n    \"strategy\": \"191u72\",\n    \"dataSourceId\": \"114\",\n    \"description\": \"d7wrxu\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"mq7zs2\",\n    \"effectiveTimeStart\": \"3veq3v\",\n    \"effectiveTimeEnt\": \"39qgeu\",\n    \"schedulerCycle\": \"3fjqfu\",\n    \"schedulerIntervalTime\": \"2022-04-28 15:23:34\",\n    \"schedulerTime\": \"2022-04-28 15:23:34\",\n    \"cron\": \"mh0pha\",\n    \"schedulerId\": 912\n  },\n  \"updateTime\": \"2022-04-28 15:23:34\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -594,7 +594,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 338,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"tpo586\",\n  \"schedulerRules\": {\n    \"engineType\": \"2chfq3\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"1gchh1\"\n    ],\n    \"allNums\": \"ho02bn\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"czslhy\",\n    \"strategy\": \"ddhqoj\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"wahv38\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"ew4jyv\",\n    \"effectiveTimeStart\": \"91g7ar\",\n    \"effectiveTimeEnt\": \"5vyuvj\",\n    \"schedulerCycle\": \"bwejyy\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"e81pnt\",\n    \"schedulerId\": 373\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}",
+              "raw": "{\n  \"code\": 605,\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"description\": \"w0t3u5\",\n  \"schedulerRules\": {\n    \"engineType\": \"pizr5n\",\n    \"dataSourceName\": \"keren.schumm\",\n    \"databaseName\": \"keren.schumm\",\n    \"tableList\": [\n      \"hgztm6\"\n    ],\n    \"allNums\": \"w9wi42\",\n    \"applicationName\": \"keren.schumm\",\n    \"displayName\": \"keren.schumm\",\n    \"owner\": \"196ay4\",\n    \"strategy\": \"x2qgnp\",\n    \"dataSourceId\": \"114\",\n    \"description\": \"rsbu7f\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"2w7eyz\",\n    \"effectiveTimeStart\": \"qqnl6m\",\n    \"effectiveTimeEnt\": \"ff48dr\",\n    \"schedulerCycle\": \"c2bfld\",\n    \"schedulerIntervalTime\": \"2022-04-28 15:23:34\",\n    \"schedulerTime\": \"2022-04-28 15:23:34\",\n    \"cron\": \"g0yadt\",\n    \"schedulerId\": 13\n  },\n  \"updateTime\": \"2022-04-28 15:23:34\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -632,7 +632,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/60",
+              "raw": "http://::server/dolphin/process/782",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -646,7 +646,7 @@
               "variable": [
                 {
                   "key": "code",
-                  "value": "16",
+                  "value": "488",
                   "description": "No comments found."
                 }
               ]
@@ -662,7 +662,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 643,\n  \"releaseState\": \"OFFLINE\"\n}",
+              "raw": "{\n  \"code\": 793,\n  \"releaseState\": \"OFFLINE\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -697,7 +697,7 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dolphin/process/runing/652",
+              "raw": "http://::server/dolphin/process/runing/684",
               "protocol": "http",
               "path": [
                 "dolphin",
@@ -712,7 +712,7 @@
               "variable": [
                 {
                   "key": "code",
-                  "value": "393",
+                  "value": "386",
                   "description": "No comments found."
                 }
               ]
@@ -728,7 +728,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"1rex5r\"\n  },\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"beginDay\": \"ra9yvs\",\n  \"endDay\": \"ejginb\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"qjuh1l\"\n  },\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"beginDay\": \"gbu3cl\",\n  \"endDay\": \"54y6hj\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -767,7 +767,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/301",
+              "raw": "http://::server/dolphin/process/634",
               "protocol": "http",
               "path": [
                 "dolphin",

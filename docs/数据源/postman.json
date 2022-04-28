@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "dc9cf460-6021-4315-a959-e10cc5f5f070",
+    "_postman_id": "d260b66a-0e46-470e-aa54-1d386d20adb5",
     "name": "dm-datasource"
   },
   "item": [
@@ -50,7 +50,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/database/eitbm0",
+              "raw": "http://::server/api/database/p4jzfm",
               "protocol": "http",
               "path": [
                 "api",
@@ -64,7 +64,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "ol366u",
+                  "value": "p8ihm7",
                   "description": "No comments found."
                 }
               ]
@@ -134,7 +134,7 @@
               "query": [
                 {
                   "key": "dataSourceNames",
-                  "value": "iur47f",
+                  "value": "n9ckg3",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -157,10 +157,12 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/114",
+              "raw": "http://::server/api/data/sources/114",
               "protocol": "http",
               "path": [
                 "api",
+                "data",
+                "sources",
                 ":connId"
               ],
               "host": [
@@ -205,7 +207,7 @@
               "query": [
                 {
                   "key": "connIds",
-                  "value": "j1rdmt",
+                  "value": "r62uiy",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -227,7 +229,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"58b3hq\"\n  },\n  \"dataSourceName\": \"keren.schumm\",\n  \"linkType\": \"3cjbo1\",\n  \"dicId\": \"114\",\n  \"beginDay\": \"n9x4zg\",\n  \"endDay\": \"05lase\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"a69yi8\"\n  },\n  \"dataSourceName\": \"keren.schumm\",\n  \"linkType\": \"9qfraq\",\n  \"dicId\": \"114\",\n  \"beginDay\": \"ot3fdn\",\n  \"endDay\": \"3css1f\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -258,7 +260,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 438,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"t7tmuz\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"wk5dff\",\n  \"tagNames\": \"pzsjpb\",\n  \"tagIds\": \"4iag1g\",\n  \"use\": \"bl91u1\",\n  \"deployPlace\": \"v8lf7v\",\n  \"status\": 760,\n  \"gmtModified\": \"2022-04-28 15:23:34\",\n  \"gmtCreate\": \"2022-04-28 15:23:34\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"xc3hpy\",\n  \"dicId\": \"114\",\n  \"remark\": \"zwtfdy\"\n}",
+              "raw": "{\n  \"id\": 6,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"ct79ed\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"e9bsv5\",\n  \"tagNames\": \"u5l3g7\",\n  \"tagIds\": \"x5ipe5\",\n  \"use\": \"9ansh6\",\n  \"deployPlace\": \"8hk645\",\n  \"status\": 696,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"0x6inf\",\n  \"dicId\": \"114\",\n  \"remark\": \"x4v3tb\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -295,7 +297,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/248",
+              "raw": "http://::server/datasource/960",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -308,7 +310,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "102",
+                  "value": "468",
                   "description": "数据源id"
                 }
               ]
@@ -324,7 +326,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 301,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"5uml7v\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"fxewew\",\n  \"tagNames\": \"d2jpbe\",\n  \"tagIds\": \"2rg4o1\",\n  \"use\": \"3pu1r9\",\n  \"deployPlace\": \"2qpwr8\",\n  \"status\": 91,\n  \"gmtModified\": \"2022-04-28 15:23:34\",\n  \"gmtCreate\": \"2022-04-28 15:23:34\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"gvu98g\",\n  \"dicId\": \"114\",\n  \"remark\": \"0up3be\"\n}",
+              "raw": "{\n  \"id\": 86,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"mmnib9\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"kz5r0m\",\n  \"tagNames\": \"qezaqz\",\n  \"tagIds\": \"w00n0o\",\n  \"use\": \"khk27h\",\n  \"deployPlace\": \"yjuv5h\",\n  \"status\": 928,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"69wx0t\",\n  \"dicId\": \"114\",\n  \"remark\": \"hqqjtb\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -390,7 +392,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/database/sk9kph",
+              "raw": "http://::server/datasource/database/afw3xo",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -404,7 +406,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "ry5irk",
+                  "value": "q1n8a1",
                   "description": "数据连接类型"
                 }
               ]
@@ -426,7 +428,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/826",
+              "raw": "http://::server/datasource/180",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -439,7 +441,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "168",
+                  "value": "859",
                   "description": "数据源名称"
                 }
               ]
@@ -455,7 +457,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 865,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"z4b774\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"7yrjlr\",\n  \"tagNames\": \"ucvlkz\",\n  \"tagIds\": \"ivlljj\",\n  \"use\": \"1zgpo5\",\n  \"deployPlace\": \"475mkf\",\n  \"status\": 740,\n  \"gmtModified\": \"2022-04-28 15:23:34\",\n  \"gmtCreate\": \"2022-04-28 15:23:34\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"1h126r\",\n  \"dicId\": \"114\",\n  \"remark\": \"nvydg9\"\n}",
+              "raw": "{\n  \"id\": 914,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"0z0co9\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"9p3brs\",\n  \"tagNames\": \"8w513u\",\n  \"tagIds\": \"pfefvf\",\n  \"use\": \"t10lwr\",\n  \"deployPlace\": \"e3hkpb\",\n  \"status\": 690,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"s009p6\",\n  \"dicId\": \"114\",\n  \"remark\": \"t9492d\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -576,7 +578,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 15:23:34\",\n  \"gmtModified\": \"2022-04-28 15:23:34\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"x42ojr\"\n}",
+              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"juc64n\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -645,7 +647,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 15:23:34\",\n  \"gmtModified\": \"2022-04-28 15:23:34\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"e0w31k\"\n}",
+              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"yd7575\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -682,7 +684,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"a6izbw\"\n}",
+              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"5vg741\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -713,7 +715,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"au5tvc\",\n  \"itDepartment\": \"nwnbks\",\n  \"busiDepartment\": \"9riqs6\",\n  \"importance\": 903,\n  \"leader\": \"wzo87n\",\n  \"deployPlace\": \"nqrt96\",\n  \"gmtCreate\": \"2022-04-28 15:23:34\",\n  \"gmtModified\": \"2022-04-28 15:23:34\",\n  \"createUserid\": 444,\n  \"updateUserid\": 1,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"wshred\",\n  \"sysDesc\": \"v3n3vd\",\n  \"tagNames\": \"t9pjj9\",\n  \"tagIds\": \"4khevx\"\n}",
+              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"nc9g92\",\n  \"itDepartment\": \"ras0ms\",\n  \"busiDepartment\": \"ihpm43\",\n  \"importance\": 555,\n  \"leader\": \"u2e5kn\",\n  \"deployPlace\": \"5x0dzd\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": 922,\n  \"updateUserid\": 958,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"c514tj\",\n  \"sysDesc\": \"pyyz3s\",\n  \"tagNames\": \"7360qb\",\n  \"tagIds\": \"b2xf3y\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -780,7 +782,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"7s1xp0\",\n  \"itDepartment\": \"w9n788\",\n  \"busiDepartment\": \"wa5j8j\",\n  \"importance\": 595,\n  \"leader\": \"pt5avq\",\n  \"deployPlace\": \"cj7x4t\",\n  \"gmtCreate\": \"2022-04-28 15:23:34\",\n  \"gmtModified\": \"2022-04-28 15:23:34\",\n  \"createUserid\": 226,\n  \"updateUserid\": 384,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"aqlpf2\",\n  \"sysDesc\": \"7rqyh2\",\n  \"tagNames\": \"dwnic0\",\n  \"tagIds\": \"nragc8\"\n}",
+              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"w0zxed\",\n  \"itDepartment\": \"pr7266\",\n  \"busiDepartment\": \"reo550\",\n  \"importance\": 264,\n  \"leader\": \"nliz0h\",\n  \"deployPlace\": \"9nnv3p\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": 64,\n  \"updateUserid\": 930,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"ydcjm1\",\n  \"sysDesc\": \"6zzc6w\",\n  \"tagNames\": \"tb9s1o\",\n  \"tagIds\": \"0vhpmt\"\n}",
               "options": {
                 "raw": {
                   "language": "json"

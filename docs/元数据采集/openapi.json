@@ -224,7 +224,35 @@
             "description": "返回数据",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/_datasource_connect_tableresponse"
+              "properties": {
+                "dirId": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "title": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "value": {
+                  "format": "string",
+                  "description": "No comments found.",
+                  "type": "string"
+                },
+                "children": {
+                  "description": "No comments found.",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/_datasource_connect_tableresponse"
+                  },
+                  "example": [
+                    {
+                      "$ref": "..."
+                    }
+                  ]
+                }
+              }
             }
           }
         }
@@ -1406,7 +1434,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"ooay8k\",\n  \"tips\": \"jmwb0k\",\n  \"data\": {\n    \"mapKey1\": \"14i6hi\",\n    \"mapKey2\": \"ulg7jl\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"oc0m1d\",\n  \"tips\": \"lpm180\",\n  \"data\": {\n    \"mapKey1\": \"evpfoq\",\n    \"mapKey2\": \"918pae\"\n  }\n}"
                   }
                 }
               }
@@ -1434,7 +1462,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/dolphin/task/727/log/download"
+                  "value": "curl -X POST -i http://{{server}}/dolphin/task/801/log/download"
                 }
               }
             }
@@ -1468,7 +1496,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "597",
+            "example": "381",
             "name": "taskInstanceId"
           }
         ]
@@ -1491,7 +1519,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"code\": 352,\n  \"releaseState\": \"OFFLINE\"\n}"
+                  "value": "{\n  \"code\": 418,\n  \"releaseState\": \"OFFLINE\"\n}"
                 }
               }
             }
@@ -1508,7 +1536,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"fe0c90\",\n  \"tips\": \"w0g77l\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"chjtat\",\n  \"tips\": \"q161mi\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -1538,7 +1566,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"julbhw\",\n  \"tips\": \"a63evf\",\n  \"data\": [\n    {\n      \"id\": 172,\n      \"dirId\": \"70\",\n      \"title\": \"jzcq6t\",\n      \"value\": \"4egjo2\",\n      \"parentId\": \"70\",\n      \"type\": \"otf1n9\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"grg54o\",\n  \"tips\": \"uvssge\",\n  \"data\": [\n    {\n      \"id\": 127,\n      \"dirId\": \"114\",\n      \"title\": \"zsfune\",\n      \"value\": \"qgs88d\",\n      \"parentId\": \"114\",\n      \"type\": \"qvu635\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
@@ -1568,7 +1596,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"1p1oug\",\n  \"tips\": \"v07c32\",\n  \"data\": [\n    \"6964lf\",\n    \"s4zm8l\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"g2f8g1\",\n  \"tips\": \"r389kc\",\n  \"data\": [\n    {\n      \"dirId\": \"114\",\n      \"title\": \"grekv1\",\n      \"value\": \"oxyf46\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ]\n    }\n  ]\n}"
                   }
                 }
               }
@@ -1584,7 +1612,7 @@
             "in": "query",
             "description": "数据源连接id",
             "required": true,
-            "example": "70",
+            "example": "114",
             "name": "dataSourceId"
           },
           {
@@ -1594,7 +1622,7 @@
             "in": "query",
             "description": "数据库名称",
             "required": true,
-            "example": "gayle.hilpert",
+            "example": "keren.schumm",
             "name": "databaseName"
           }
         ]
@@ -1617,7 +1645,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"faexzt\"\n  },\n  \"processInstanceId\": 500,\n  \"processInstanceName\": \"gayle.hilpert\",\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"sxbz9l\",\n  \"stateType\": \"6icl9t\",\n  \"executorName\": \"gayle.hilpert\",\n  \"taskName\": \"gayle.hilpert\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ge4owd\"\n  },\n  \"processInstanceId\": 576,\n  \"processInstanceName\": \"keren.schumm\",\n  \"startDate\": \"2022-04-28\",\n  \"endDate\": \"2022-04-28\",\n  \"searchVal\": \"5sawog\",\n  \"stateType\": \"skwes1\",\n  \"executorName\": \"keren.schumm\",\n  \"taskName\": \"keren.schumm\"\n}"
                 }
               }
             }
@@ -1634,7 +1662,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"iybvyv\",\n  \"tips\": \"lbl0sg\",\n  \"data\": {\n    \"total\": 756,\n    \"pageNum\": 302,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 460,\n        \"processDefinitionId\": 624,\n        \"processInstanceId\": 537,\n        \"processInstanceName\": \"gayle.hilpert\",\n        \"name\": \"gayle.hilpert\",\n        \"executorName\": \"gayle.hilpert\",\n        \"taskType\": \"trvapk\",\n        \"state\": \"khv7iz\",\n        \"submitTime\": \"2022-04-27 17:25:22\",\n        \"startTime\": \"2022-04-27 17:25:22\",\n        \"endTime\": \"2022-04-27 17:25:22\",\n        \"host\": \"limkh7\",\n        \"duration\": \"pnyxya\",\n        \"retryTimes\": 53,\n        \"stateName\": \"gayle.hilpert\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"v18yll\",\n  \"tips\": \"sztdla\",\n  \"data\": {\n    \"total\": 614,\n    \"pageNum\": 615,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 257,\n        \"processDefinitionId\": 141,\n        \"processInstanceId\": 406,\n        \"processInstanceName\": \"keren.schumm\",\n        \"name\": \"keren.schumm\",\n        \"executorName\": \"keren.schumm\",\n        \"taskType\": \"gbkqvu\",\n        \"state\": \"ogd2sz\",\n        \"submitTime\": \"2022-04-28 18:23:30\",\n        \"startTime\": \"2022-04-28 18:23:30\",\n        \"endTime\": \"2022-04-28 18:23:30\",\n        \"host\": \"ubo4rc\",\n        \"duration\": \"5yrwzd\",\n        \"retryTimes\": 926,\n        \"stateName\": \"keren.schumm\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -1662,7 +1690,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/dolphin/process/runing/931"
+                  "value": "curl -X POST -i http://{{server}}/dolphin/process/runing/772"
                 }
               }
             }
@@ -1679,7 +1707,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"ltp267\",\n  \"tips\": \"s33017\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"erqjcg\",\n  \"tips\": \"b8gl2n\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -1696,7 +1724,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "844",
+            "example": "801",
             "name": "code"
           }
         ]
@@ -1719,7 +1747,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 215\n}"
+                  "value": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 782\n}"
                 }
               }
             }
@@ -1736,7 +1764,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"33omgu\",\n  \"tips\": \"ad6vxz\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"c318oz\",\n  \"tips\": \"7s832i\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -1766,7 +1794,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"x2dqg5\",\n  \"tips\": \"y44kwv\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"6rzhpu\",\n  \"tips\": \"ojmqcv\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -1782,7 +1810,7 @@
             "in": "query",
             "description": "批量删除入参",
             "required": true,
-            "example": "ol5cw6",
+            "example": "fuw2hz",
             "name": "ids"
           }
         ]
@@ -1807,7 +1835,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"txsunw\",\n  \"tips\": \"0qfz0i\",\n  \"data\": [\n    \"6z71uo\",\n    \"e79xfz\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"jkozl5\",\n  \"tips\": \"acyq5q\",\n  \"data\": [\n    \"0fn69t\",\n    \"8m709g\"\n  ]\n}"
                   }
                 }
               }
@@ -1835,7 +1863,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ffhjza\"\n  },\n  \"processDefineCode\": 435,\n  \"startDate\": \"2022-04-27\",\n  \"endDate\": \"2022-04-27\",\n  \"searchVal\": \"j3no7z\",\n  \"stateType\": \"3okfa6\",\n  \"executorName\": \"gayle.hilpert\",\n  \"dirId\": \"70\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"m3cyrg\"\n  },\n  \"processDefineCode\": 435,\n  \"startDate\": \"2022-04-28\",\n  \"endDate\": \"2022-04-28\",\n  \"searchVal\": \"001xzo\",\n  \"stateType\": \"xniqfr\",\n  \"executorName\": \"keren.schumm\",\n  \"dirId\": \"114\"\n}"
                 }
               }
             }
@@ -1852,7 +1880,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"x6b6dq\",\n  \"tips\": \"fxoq8g\",\n  \"data\": {\n    \"total\": 319,\n    \"pageNum\": 791,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 977,\n        \"processDefinitionCode\": 524,\n        \"state\": \"0v3jpf\",\n        \"recovery\": \"81ar19\",\n        \"startTime\": \"2022-04-27 16:48:30\",\n        \"endTime\": \"2022-04-27 16:48:30\",\n        \"runTimes\": 406,\n        \"name\": \"gayle.hilpert\",\n        \"host\": \"oamtdr\",\n        \"commandType\": \"hr6qw9\",\n        \"executorName\": \"gayle.hilpert\",\n        \"duration\": \"6oqoqf\",\n        \"stateName\": \"gayle.hilpert\",\n        \"taskInstanceId\": 524,\n        \"dependenceScheduleTimes\": \"cnnotk\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"9wmn72\",\n  \"tips\": \"bba9jz\",\n  \"data\": {\n    \"total\": 371,\n    \"pageNum\": 894,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 320,\n        \"processDefinitionCode\": 507,\n        \"state\": \"f87q0c\",\n        \"recovery\": \"ozmv7s\",\n        \"startTime\": \"2022-04-28 15:23:34\",\n        \"endTime\": \"2022-04-28 15:23:34\",\n        \"runTimes\": 728,\n        \"name\": \"keren.schumm\",\n        \"host\": \"m8h5j3\",\n        \"commandType\": \"26xnhq\",\n        \"executorName\": \"keren.schumm\",\n        \"duration\": \"70zkb6\",\n        \"stateName\": \"keren.schumm\",\n        \"taskInstanceId\": 714,\n        \"dependenceScheduleTimes\": \"nvugta\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -1880,7 +1908,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 729,\n  \"dirId\": \"70\",\n  \"title\": \"ftlg3r\",\n  \"value\": \"h5iy7a\",\n  \"parentId\": \"70\",\n  \"description\": \"1j2c4l\",\n  \"gmtCreate\": \"2022-04-27 17:25:22\",\n  \"gmtModified\": \"2022-04-27 17:25:22\",\n  \"delFlag\": 9,\n  \"type\": \"a3jvnf\"\n}"
+                  "value": "{\n  \"id\": 495,\n  \"dirId\": \"114\",\n  \"title\": \"bqoorv\",\n  \"value\": \"ahtpmb\",\n  \"parentId\": \"114\",\n  \"description\": \"1cd5gy\",\n  \"gmtCreate\": \"2022-04-28 18:23:30\",\n  \"gmtModified\": \"2022-04-28 18:23:30\",\n  \"delFlag\": 2,\n  \"type\": \"ceqzch\"\n}"
                 }
               }
             }
@@ -1897,7 +1925,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"mxp9sm\",\n  \"tips\": \"pzv4yu\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"6fq3xq\",\n  \"tips\": \"hh8k93\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -1923,7 +1951,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 690,\n  \"dirId\": \"70\",\n  \"title\": \"r9f650\",\n  \"value\": \"x3dstf\",\n  \"parentId\": \"70\",\n  \"description\": \"eufn8n\",\n  \"gmtCreate\": \"2022-04-27 17:25:22\",\n  \"gmtModified\": \"2022-04-27 17:25:22\",\n  \"delFlag\": 9,\n  \"type\": \"po90uh\"\n}"
+                  "value": "{\n  \"id\": 356,\n  \"dirId\": \"114\",\n  \"title\": \"tj6tj3\",\n  \"value\": \"8ky3pb\",\n  \"parentId\": \"114\",\n  \"description\": \"mck1da\",\n  \"gmtCreate\": \"2022-04-28 18:23:30\",\n  \"gmtModified\": \"2022-04-28 18:23:30\",\n  \"delFlag\": 2,\n  \"type\": \"mgl2yk\"\n}"
                 }
               }
             }
@@ -1940,7 +1968,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"dnmegv\",\n  \"tips\": \"9yo9vb\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"rw8tp3\",\n  \"tips\": \"xpvnkb\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -1968,7 +1996,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "x11mho"
+                  "value": "dpsb9k"
                 }
               }
             }
@@ -1985,7 +2013,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"tenkhl\",\n  \"tips\": \"meni6l\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"h4gmgs\",\n  \"tips\": \"lavqeu\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2001,7 +2029,7 @@
             "in": "query",
             "description": "回调atals接口参数",
             "required": true,
-            "example": "wqezzu",
+            "example": "jd2ckj",
             "name": "schedulerRules"
           }
         ]
@@ -2024,7 +2052,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"o308r7\"\n  },\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"beginDay\": \"jwutd3\",\n  \"endDay\": \"5w3klq\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"tob8nf\"\n  },\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"beginDay\": \"ya8wcq\",\n  \"endDay\": \"7qtcd1\"\n}"
                 }
               }
             }
@@ -2041,7 +2069,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"gvi7yo\",\n  \"tips\": \"739p4v\",\n  \"data\": {\n    \"total\": 996,\n    \"pageNum\": 471,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"code\": 767,\n        \"name\": \"gayle.hilpert\",\n        \"description\": \"w2t2q9\",\n        \"releaseState\": \"1bgu0f\",\n        \"updateTime\": \"2022-04-27 16:48:30\",\n        \"userName\": \"gayle.hilpert\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"osfl3t\",\n  \"tips\": \"0jl3w2\",\n  \"data\": {\n    \"total\": 962,\n    \"pageNum\": 642,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"code\": 610,\n        \"name\": \"keren.schumm\",\n        \"description\": \"403fgh\",\n        \"releaseState\": \"3k4xa2\",\n        \"updateTime\": \"2022-04-28 15:23:34\",\n        \"userName\": \"keren.schumm\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -2069,7 +2097,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "curl -X POST -i http://{{server}}/dolphin/task/44/log"
+                  "value": "curl -X POST -i http://{{server}}/dolphin/task/387/log"
                 }
               }
             }
@@ -2086,7 +2114,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"8z0r4l\",\n  \"tips\": \"daeo9b\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"c7kvjd\",\n  \"tips\": \"nfuiw9\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2103,7 +2131,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "141",
+            "example": "548",
             "name": "taskInstanceId"
           }
         ]
@@ -2128,7 +2156,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"eue9qc\",\n  \"tips\": \"e3tfs9\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"88js6n\",\n  \"tips\": \"l5ttjc\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2144,7 +2172,7 @@
             "in": "path",
             "description": "删除入参",
             "required": true,
-            "example": "70",
+            "example": "114",
             "name": "id"
           }
         ]
@@ -2169,7 +2197,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"ud94pr\",\n  \"tips\": \"wt6my1\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"a3gvk8\",\n  \"tips\": \"0fipru\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2186,7 +2214,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "42",
+            "example": "740",
             "name": "code"
           }
         ]
@@ -2209,7 +2237,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"lsruv3\",\n  \"tips\": \"faj29m\",\n  \"data\": {\n    \"code\": 191,\n    \"name\": \"gayle.hilpert\",\n    \"dirId\": \"70\",\n    \"description\": \"ckbg2d\",\n    \"schedulerRules\": {\n      \"engineType\": \"s3c90h\",\n      \"dataSourceName\": \"gayle.hilpert\",\n      \"databaseName\": \"gayle.hilpert\",\n      \"tableList\": [\n        \"xhab33\"\n      ],\n      \"allNums\": \"x6fmoa\",\n      \"applicationName\": \"gayle.hilpert\",\n      \"displayName\": \"gayle.hilpert\",\n      \"owner\": \"b625d9\",\n      \"strategy\": \"oteqga\",\n      \"dataSourceId\": \"70\",\n      \"description\": \"wdqooj\"\n    },\n    \"schedulerConfig\": {\n      \"schedulerType\": \"rikctz\",\n      \"effectiveTimeStart\": \"gjei1b\",\n      \"effectiveTimeEnt\": \"sx4t5u\",\n      \"schedulerCycle\": \"t15vby\",\n      \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n      \"schedulerTime\": \"2022-04-27 16:48:30\",\n      \"cron\": \"hsb4hz\",\n      \"schedulerId\": 76\n    },\n    \"updateTime\": \"2022-04-27 16:48:30\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"sgo1w0\",\n  \"tips\": \"q5yojr\",\n  \"data\": {\n    \"code\": 652,\n    \"name\": \"keren.schumm\",\n    \"dirId\": \"114\",\n    \"description\": \"jvkxw5\",\n    \"schedulerRules\": {\n      \"engineType\": \"85rvaw\",\n      \"dataSourceName\": \"keren.schumm\",\n      \"databaseName\": \"keren.schumm\",\n      \"tableList\": [\n        \"ubh61m\"\n      ],\n      \"allNums\": \"4yol8v\",\n      \"applicationName\": \"keren.schumm\",\n      \"displayName\": \"keren.schumm\",\n      \"owner\": \"a4nthf\",\n      \"strategy\": \"p0ccg3\",\n      \"dataSourceId\": \"114\",\n      \"description\": \"at42no\"\n    },\n    \"schedulerConfig\": {\n      \"schedulerType\": \"oei0d1\",\n      \"effectiveTimeStart\": \"54gnh8\",\n      \"effectiveTimeEnt\": \"cjxkqw\",\n      \"schedulerCycle\": \"5q55gz\",\n      \"schedulerIntervalTime\": \"2022-04-28 15:23:34\",\n      \"schedulerTime\": \"2022-04-28 15:23:34\",\n      \"cron\": \"2776ky\",\n      \"schedulerId\": 705\n    },\n    \"updateTime\": \"2022-04-28 15:23:34\"\n  }\n}"
                   }
                 }
               }
@@ -2226,7 +2254,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "105",
+            "example": "519",
             "name": "code"
           }
         ]
@@ -2249,7 +2277,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"code\": 69,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"bz9az9\",\n  \"schedulerRules\": {\n    \"engineType\": \"nuxdl1\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"ekbxys\"\n    ],\n    \"allNums\": \"n2qdz3\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"go5fz2\",\n    \"strategy\": \"ykpx07\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"try6q6\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"icfwjr\",\n    \"effectiveTimeStart\": \"xoq43u\",\n    \"effectiveTimeEnt\": \"l7hpip\",\n    \"schedulerCycle\": \"3suwqj\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"fm9sxq\",\n    \"schedulerId\": 432\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}"
+                  "value": "{\n  \"code\": 864,\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"description\": \"588hhr\",\n  \"schedulerRules\": {\n    \"engineType\": \"8ahfq4\",\n    \"dataSourceName\": \"keren.schumm\",\n    \"databaseName\": \"keren.schumm\",\n    \"tableList\": [\n      \"mim3nh\"\n    ],\n    \"allNums\": \"iqikio\",\n    \"applicationName\": \"keren.schumm\",\n    \"displayName\": \"keren.schumm\",\n    \"owner\": \"f1rcns\",\n    \"strategy\": \"2ye350\",\n    \"dataSourceId\": \"114\",\n    \"description\": \"d7inan\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"4ce4u7\",\n    \"effectiveTimeStart\": \"tu5jbf\",\n    \"effectiveTimeEnt\": \"jem61s\",\n    \"schedulerCycle\": \"7gdx26\",\n    \"schedulerIntervalTime\": \"2022-04-28 15:23:34\",\n    \"schedulerTime\": \"2022-04-28 15:23:34\",\n    \"cron\": \"0t3q3g\",\n    \"schedulerId\": 271\n  },\n  \"updateTime\": \"2022-04-28 15:23:34\"\n}"
                 }
               }
             }
@@ -2266,7 +2294,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"o9pb08\",\n  \"tips\": \"hs26g0\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"9uxwem\",\n  \"tips\": \"ru2hzi\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2292,7 +2320,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"code\": 307,\n  \"name\": \"gayle.hilpert\",\n  \"dirId\": \"70\",\n  \"description\": \"vfzaok\",\n  \"schedulerRules\": {\n    \"engineType\": \"kzt2tr\",\n    \"dataSourceName\": \"gayle.hilpert\",\n    \"databaseName\": \"gayle.hilpert\",\n    \"tableList\": [\n      \"w5ffll\"\n    ],\n    \"allNums\": \"hgqplf\",\n    \"applicationName\": \"gayle.hilpert\",\n    \"displayName\": \"gayle.hilpert\",\n    \"owner\": \"vrrilp\",\n    \"strategy\": \"31l3bt\",\n    \"dataSourceId\": \"70\",\n    \"description\": \"tjgef3\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"tfz0mx\",\n    \"effectiveTimeStart\": \"20vg9m\",\n    \"effectiveTimeEnt\": \"teom2e\",\n    \"schedulerCycle\": \"btk98a\",\n    \"schedulerIntervalTime\": \"2022-04-27 16:48:30\",\n    \"schedulerTime\": \"2022-04-27 16:48:30\",\n    \"cron\": \"c9435y\",\n    \"schedulerId\": 406\n  },\n  \"updateTime\": \"2022-04-27 16:48:30\"\n}"
+                  "value": "{\n  \"code\": 91,\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"description\": \"ztkrzz\",\n  \"schedulerRules\": {\n    \"engineType\": \"5zbpco\",\n    \"dataSourceName\": \"keren.schumm\",\n    \"databaseName\": \"keren.schumm\",\n    \"tableList\": [\n      \"f2ai34\"\n    ],\n    \"allNums\": \"48vmtw\",\n    \"applicationName\": \"keren.schumm\",\n    \"displayName\": \"keren.schumm\",\n    \"owner\": \"p1o6hw\",\n    \"strategy\": \"limwgq\",\n    \"dataSourceId\": \"114\",\n    \"description\": \"ffn03f\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"2lyj2w\",\n    \"effectiveTimeStart\": \"ork1gj\",\n    \"effectiveTimeEnt\": \"1hq29r\",\n    \"schedulerCycle\": \"zgneid\",\n    \"schedulerIntervalTime\": \"2022-04-28 15:23:34\",\n    \"schedulerTime\": \"2022-04-28 15:23:34\",\n    \"cron\": \"o3fddu\",\n    \"schedulerId\": 89\n  },\n  \"updateTime\": \"2022-04-28 15:23:34\"\n}"
                 }
               }
             }
@@ -2309,7 +2337,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"gg2pi5\",\n  \"tips\": \"794j09\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"64kb0c\",\n  \"tips\": \"2sstjg\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2339,7 +2367,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"nubtd8\",\n  \"tips\": \"q6veg2\",\n  \"data\": [\n    \"wbnhme\",\n    \"419th9\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"4yovbr\",\n  \"tips\": \"yj6mre\",\n  \"data\": [\n    \"ppftyl\",\n    \"j4vria\"\n  ]\n}"
                   }
                 }
               }
@@ -2355,7 +2383,7 @@
             "in": "query",
             "description": "数据源连接id",
             "required": true,
-            "example": "70",
+            "example": "114",
             "name": "dataSourceId"
           }
         ]
@@ -2380,7 +2408,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"19190\",\n  \"retMsg\": \"3lefqs\",\n  \"tips\": \"5fbc8e\",\n  \"data\": {\n    \"id\": 751,\n    \"processDefinitionCode\": 470,\n    \"state\": \"6ozqln\",\n    \"recovery\": \"kegm8i\",\n    \"startTime\": \"2022-04-27 16:48:30\",\n    \"endTime\": \"2022-04-27 16:48:30\",\n    \"runTimes\": 174,\n    \"name\": \"gayle.hilpert\",\n    \"host\": \"almzgf\",\n    \"commandType\": \"dw3802\",\n    \"executorName\": \"gayle.hilpert\",\n    \"duration\": \"ygbnv8\",\n    \"stateName\": \"gayle.hilpert\",\n    \"taskInstanceId\": 688,\n    \"dependenceScheduleTimes\": \"h7q51i\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"75687\",\n  \"retMsg\": \"jufl0m\",\n  \"tips\": \"v9p9mx\",\n  \"data\": {\n    \"id\": 510,\n    \"processDefinitionCode\": 176,\n    \"state\": \"desuz1\",\n    \"recovery\": \"8lbvu9\",\n    \"startTime\": \"2022-04-28 15:23:34\",\n    \"endTime\": \"2022-04-28 15:23:34\",\n    \"runTimes\": 114,\n    \"name\": \"keren.schumm\",\n    \"host\": \"ndlsmg\",\n    \"commandType\": \"kigq9z\",\n    \"executorName\": \"keren.schumm\",\n    \"duration\": \"gnj8mk\",\n    \"stateName\": \"keren.schumm\",\n    \"taskInstanceId\": 976,\n    \"dependenceScheduleTimes\": \"yqb16e\"\n  }\n}"
                   }
                 }
               }
@@ -2397,7 +2425,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "39",
+            "example": "400",
             "name": "instanceId"
           }
         ]
