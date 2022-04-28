@@ -186,7 +186,7 @@ public class DsDirServiceImpl implements DsDirService {
           dsDatasourceVO -> {
             DsDirReturnVO dsDirReturnVO = new DsDirReturnVO();
             // 赋值目录id
-            dsDirReturnVO.setKey(dsDatasourceVO.getId());
+            dsDirReturnVO.setKey(String.valueOf(dsDatasourceVO.getId()));
             // 赋值目录名称
             dsDirReturnVO.setTitle(dsDatasourceVO.getDataSourceName());
             // 赋值父类名称

@@ -20,7 +20,7 @@ public interface DsDataSourceService {
 
   void addDsDataSource(DsDatasourceVO dsDatasourceVO);
 
-  void deleteDsDataSource(String id);
+  void deleteDsDataSource(Long id);
 
   void updateDsDataSource(DsDatasourceVO dsDatasourceVO);
 
@@ -30,7 +30,7 @@ public interface DsDataSourceService {
 
   List<String> getDataType();
 
-  DsDatasourceVO getDataSourceById(String id);
+  DsDatasourceVO getDataSourceById(Long id);
 
   ConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource);
 }

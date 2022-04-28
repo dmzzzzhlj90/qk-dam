@@ -104,7 +104,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   public void addDsDataSource(DsDatasourceVO dsDatasourceVO) {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
     dsDatasource.setGmtCreate(new Date());
-    dsDatasource.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+    dsDatasource.setConnId(UUID.randomUUID().toString().replaceAll("-", ""));
     // 将传入的数据源连接信息转换赋值
     setDataSourceValues(dsDatasource, dsDatasourceVO);
     // dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
@@ -127,9 +127,8 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
    * @param id
    */
   @Override
-  public void deleteDsDataSource(String id) {
-    BooleanExpression predicate = qDsDatasource.id.eq(id);
-    boolean exists = dsDatasourceRepository.exists(predicate);
+  public void deleteDsDataSource(Long id) {
+    boolean exists = dsDatasourceRepository.exists(qDsDatasource.id.eq(id));
     if (exists) {
       dsDatasourceRepository.deleteById(id);
     } else {
@@ -248,7 +247,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   }
 
   @Override
-  public DsDatasourceVO getDataSourceById(String id) {
+  public DsDatasourceVO getDataSourceById(Long id) {
     Optional<DsDatasource> datasourceList = dsDatasourceRepository.findById(id);
     if (!datasourceList.isEmpty()) {
       DsDatasource dsDatasource = datasourceList.get();
