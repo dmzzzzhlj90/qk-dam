@@ -9,11 +9,12 @@ import com.qk.dm.datacollect.dolphin.dto.ProcessDefinitionDTO;
 import com.qk.dm.datacollect.dolphin.dto.ProcessDefinitionResultDTO;
 import com.qk.dm.datacollect.dolphin.dto.ScheduleDTO;
 import com.qk.dm.datacollect.dolphin.dto.SchedulerTypeEnum;
+import com.qk.dm.datacollect.dolphin.service.DolphinProcessDefinitionService;
 import com.qk.dm.datacollect.dolphin.service.DolphinProcessService;
 import com.qk.dm.datacollect.dolphin.service.DolphinScheduleService;
+import com.qk.dm.datacollect.dolphin.service.cron.CronService;
 import com.qk.dm.datacollect.service.DctDolphinService;
 import com.qk.dm.datacollect.vo.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,109 +31,90 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     private final DolphinProcessService dolphinProcessService;
     private final DolphinScheduleService dolphinScheduleService;
+    private final DolphinProcessDefinitionService dolphinProcessDefinitionService;
+    private final Map<String, CronService> cronServiceMap;
 
-    @Value("${dolphinscheduler.task.projectCode}")
-    private Long projectCode;
-
-    public DctDolphinServiceImpl(DolphinProcessService dolphinProcessService, DolphinScheduleService dolphinScheduleService) {
+    public DctDolphinServiceImpl(DolphinProcessService dolphinProcessService,
+                                 DolphinScheduleService dolphinScheduleService,
+                                 DolphinProcessDefinitionService dolphinProcessDefinitionService,
+                                 Map<String, CronService> cronServiceMap) {
         this.dolphinProcessService = dolphinProcessService;
         this.dolphinScheduleService = dolphinScheduleService;
+        this.dolphinProcessDefinitionService = dolphinProcessDefinitionService;
+        this.cronServiceMap = cronServiceMap;
     }
 
     @Override
     public void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         String name = dctSchedulerBasicInfoVO.getDirId() + "_" + dctSchedulerBasicInfoVO.getName();
-        Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String description = dctSchedulerBasicInfoVO.getDescription();
-        ProcessDefinitionDTO processDefinition = dolphinProcessService.createProcessDefinition(projectCode, name, null, httpParams, null, description);
-        //创建定时
-        createScheduler(dctSchedulerBasicInfoVO.getSchedulerConfig(), processDefinition.getCode());
+        //1、生成cron
+        dctSchedulerBasicInfoVO.getSchedulerConfig().generateCron(dctSchedulerBasicInfoVO.getSchedulerConfig(), cronServiceMap);
+        //2、生成参数
+        Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
+        //3、创建流程定义
+        dolphinProcessDefinitionService.createProcessDefinition(name, httpParams, description);
     }
 
     @Override
     public void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         String name = dctSchedulerBasicInfoVO.getDirId() + "_" + dctSchedulerBasicInfoVO.getName();
-        Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         String description = dctSchedulerBasicInfoVO.getDescription();
-        //获取详情，拿到taskCode
-        ProcessDefinitionDTO processDefinitionDTO = dolphinProcessService.detailToProcess(dctSchedulerBasicInfoVO.getCode(), projectCode);
+        //1、生成cron
+        dctSchedulerBasicInfoVO.getSchedulerConfig().generateCron(dctSchedulerBasicInfoVO.getSchedulerConfig(), cronServiceMap);
+        //2、生成参数
+        Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
+        //3、根据详情获取taskCode
+        ProcessDefinitionDTO processDefinitionDTO = dolphinProcessService.detailToProcess(dctSchedulerBasicInfoVO.getCode());
         long taskCode = GsonUtil.toJsonArray(processDefinitionDTO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
-        dolphinProcessService.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), projectCode, taskCode, name, null, httpParams, null, description);
-        //修改定时
-        updateScheduler(dctSchedulerBasicInfoVO.getSchedulerConfig(), dctSchedulerBasicInfoVO.getCode());
-
-    }
-
-
-    private void createScheduler(DctSchedulerConfigVO schedulerConfig, Long code) {
-        if (Objects.equals(schedulerConfig.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
-            //首先上线
-            dolphinProcessService.release(code, projectCode, ProcessDefinition.ReleaseStateEnum.ONLINE);
-            try {
-                //创建定时
-                dolphinScheduleService.insert(code, projectCode, schedulerConfig);
-                //下线
-                dolphinProcessService.release(code, projectCode, ProcessDefinition.ReleaseStateEnum.OFFLINE);
-            } catch (Exception e) {
-                //下线
-                dolphinProcessService.release(code, projectCode, ProcessDefinition.ReleaseStateEnum.OFFLINE);
-                throw new BizException(e.getMessage());
-            }
-        }
-    }
-
-    private void updateScheduler(DctSchedulerConfigVO schedulerConfig, Long code) {
-        ScheduleDTO scheduleDTO = dolphinScheduleService.detail(code, projectCode);
-        if (scheduleDTO != null) {
-            updateScheduler(schedulerConfig, code, scheduleDTO.getId());
-        } else {
-            //创建定时
-            createScheduler(schedulerConfig, code);
-        }
-    }
-
-    private void updateScheduler(DctSchedulerConfigVO schedulerConfig, Long code, Integer scheduleId) {
-        //上线
-        dolphinProcessService.release(code, projectCode, ProcessDefinition.ReleaseStateEnum.ONLINE);
-        try {
-            //修改定时
-            if (Objects.equals(schedulerConfig.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
-                dolphinScheduleService.update(scheduleId, projectCode, schedulerConfig);
-            } else {
-                dolphinScheduleService.delete(scheduleId, projectCode);
-            }
-            //下线
-            dolphinProcessService.release(code, projectCode, ProcessDefinition.ReleaseStateEnum.OFFLINE);
-        } catch (Exception e) {
-            //下线
-            dolphinProcessService.release(code, projectCode, ProcessDefinition.ReleaseStateEnum.OFFLINE);
-            throw new BizException(e.getMessage());
-        }
+        //4、修改流程定义
+        dolphinProcessDefinitionService.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, httpParams, description);
     }
 
     @Override
     public void delete(Long processDefinitionCode) {
-        dolphinProcessService.delete(processDefinitionCode, projectCode);
+        dolphinProcessService.delete(processDefinitionCode);
     }
 
     @Override
     public void release(DctSchedulerReleaseVO dctSchedulerReleaseVO) {
-        dolphinProcessService.release(dctSchedulerReleaseVO.getCode(), projectCode, dctSchedulerReleaseVO.getReleaseState());
+        dolphinProcessService.release(dctSchedulerReleaseVO.getCode(), dctSchedulerReleaseVO.getReleaseState());
+        //更新定时
+        updateScheduler(dctSchedulerReleaseVO);
+    }
 
-        //todo 如果是上线，顺便上定时器
-        if (Objects.equals(dctSchedulerReleaseVO.getReleaseState(), ProcessDefinition.ReleaseStateEnum.ONLINE)) {
-            ScheduleDTO scheduleDTO = dolphinScheduleService.detail(dctSchedulerReleaseVO.getCode(), projectCode);
-            if (scheduleDTO != null) {
-                //定时器上线
-                dolphinScheduleService.execute(scheduleDTO.getId(), projectCode, ProcessDefinition.ReleaseStateEnum.ONLINE);
+    private void updateScheduler(DctSchedulerReleaseVO dctSchedulerReleaseVO) {
+        try {
+            //如果是上线，更新定时器
+            if (Objects.equals(dctSchedulerReleaseVO.getReleaseState(), ProcessDefinition.ReleaseStateEnum.ONLINE)) {
+                //查询流程定义详情
+                DctSchedulerBasicInfoVO detail = detail(dctSchedulerReleaseVO.getCode());
+                DctSchedulerConfigVO schedulerConfig = detail.getSchedulerConfig();
+                ScheduleDTO scheduleDTO = dolphinScheduleService.detail(dctSchedulerReleaseVO.getCode());
+                if (Objects.equals(schedulerConfig.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
+                    if (scheduleDTO != null) {
+                        dolphinScheduleService.update(scheduleDTO.getId(),
+                                schedulerConfig.getEffectiveTimeStart(), schedulerConfig.getEffectiveTimeEnt(), schedulerConfig.getCron());
+                    } else {
+                        dolphinScheduleService.insert(dctSchedulerReleaseVO.getCode(),
+                                schedulerConfig.getEffectiveTimeStart(), schedulerConfig.getEffectiveTimeEnt(), schedulerConfig.getCron());
+                    }
+                    //定时器上线
+                    dolphinScheduleService.execute(scheduleDTO.getId(), ProcessDefinition.ReleaseStateEnum.ONLINE);
+                } else {
+                    //todo 暂时不删除
+                }
             }
+        } catch (Exception e) {
+            //下线
+            dolphinProcessService.release(dctSchedulerReleaseVO.getCode(), ProcessDefinition.ReleaseStateEnum.OFFLINE);
+            throw new BizException("流程定时更新失败");
         }
-
     }
 
     @Override
     public void runing(Long processDefinitionCode) {
-        dolphinProcessService.runing(processDefinitionCode, projectCode, null);
+        dolphinProcessService.runing(processDefinitionCode, null);
     }
 
     @Override
@@ -140,7 +122,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
         //更改查询条件
         DctSchedulerInfoParamsVO.changeSearchValAndDir(schedulerInfoParamsVO);
         ProcessDefinitionResultDTO processDefinitionResultDTO =
-                dolphinProcessService.pageList(projectCode, schedulerInfoParamsVO.getName(),
+                dolphinProcessService.pageList(schedulerInfoParamsVO.getName(),
                         schedulerInfoParamsVO.getPagination().getPage(), schedulerInfoParamsVO.getPagination().getSize());
         List<Map<String, Object>> processDefinitionListMap = BeanMapUtils.changeBeansToList(processDefinitionResultDTO.getTotalList());
         List<DctSchedulerInfoVO> basicInfoList = BeanMapUtils.changeListToBeans(processDefinitionListMap, DctSchedulerInfoVO.class);
@@ -155,7 +137,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     @Override
     public DctSchedulerBasicInfoVO detail(Long code) {
-        Object detail = dolphinProcessService.detail(code, projectCode);
+        Object detail = dolphinProcessService.detail(code);
         return DctSchedulerBasicInfoVO.getDctSchedulerBasicInfoVO(detail);
     }
 }

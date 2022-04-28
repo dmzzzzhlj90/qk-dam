@@ -3,6 +3,7 @@ package com.qk.dm.datacollect.vo;
 import com.qk.dam.commons.util.BeanMapUtils;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.datacollect.dolphin.dto.SchedulerCycleEnum;
+import com.qk.dm.datacollect.dolphin.dto.SchedulerTypeEnum;
 import com.qk.dm.datacollect.dolphin.service.cron.CronService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 数据质量_规则调度_配置信息VO
@@ -34,16 +36,19 @@ public class DctSchedulerConfigVO {
     /**
      * 有效日期开始
      */
+    @NotBlank(message = "有效日期不能为空！")
     private String effectiveTimeStart;
 
     /**
      * 有效日期结束
      */
+    @NotBlank(message = "有效日期不能为空！")
     private String effectiveTimeEnt;
 
     /**
      * 调度周期 分钟 小时 天 周
      */
+    @NotBlank(message = "调度周期不能为空！")
     private String schedulerCycle;
 
     /**
@@ -73,10 +78,12 @@ public class DctSchedulerConfigVO {
      * @param cronServiceMap
      * @return
      */
-    public String generateCron(DctSchedulerConfigVO dqcSchedulerConfigVO, Map<String, CronService> cronServiceMap) {
-        SchedulerCycleEnum schedulerCycleEnum = SchedulerCycleEnum.fromValue(dqcSchedulerConfigVO.getSchedulerCycle());
-        CronService cronService = cronServiceMap.get(schedulerCycleEnum.getName());
-        return cronService.createCronExpression(dqcSchedulerConfigVO);
+    public void generateCron(DctSchedulerConfigVO dqcSchedulerConfigVO, Map<String, CronService> cronServiceMap) {
+        if (Objects.equals(dqcSchedulerConfigVO.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
+            SchedulerCycleEnum schedulerCycleEnum = SchedulerCycleEnum.fromValue(dqcSchedulerConfigVO.getSchedulerCycle());
+            CronService cronService = cronServiceMap.get(schedulerCycleEnum.getName());
+            dqcSchedulerConfigVO.setCron(cronService.createCronExpression(dqcSchedulerConfigVO));
+        }
     }
 
     public static DctSchedulerConfigVO jsonStringChangeConfig(String value) {

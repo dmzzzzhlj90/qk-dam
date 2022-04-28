@@ -42,9 +42,9 @@ public class DctSchedulerInfoParamsVO {
     private String endDay;
 
     public static void changeSearchValAndDir(DctSchedulerInfoParamsVO schedulerInfoParamsVO) {
-        if (schedulerInfoParamsVO.getDirId() != null && schedulerInfoParamsVO.getName() != null) {
+        if (!"-1".equals(schedulerInfoParamsVO.getDirId()) && schedulerInfoParamsVO.getName() != null) {
             schedulerInfoParamsVO.setName(schedulerInfoParamsVO.getDirId() + "_" + schedulerInfoParamsVO.getName());
-        }else if(schedulerInfoParamsVO.getDirId() != null ){
+        } else if (!"-1".equals(schedulerInfoParamsVO.getDirId())) {
             schedulerInfoParamsVO.setName(schedulerInfoParamsVO.getDirId());
         }
     }

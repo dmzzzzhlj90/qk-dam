@@ -55,9 +55,9 @@ public class DctInstanceParamsVO {
     String dirId;
 
     public static void changeSearchValAndDir(DctInstanceParamsVO instanceParams) {
-        if (instanceParams.getDirId() != null && instanceParams.getSearchVal() != null) {
+        if (!"-1".equals(instanceParams.getDirId()) && instanceParams.getSearchVal() != null) {
             instanceParams.setSearchVal(instanceParams.getDirId() + "_" + instanceParams.getSearchVal());
-        } else if (instanceParams.getDirId() != null) {
+        } else if (!"-1".equals(instanceParams.getDirId())) {
             instanceParams.setSearchVal(instanceParams.getDirId());
         }
     }

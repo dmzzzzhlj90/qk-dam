@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class DolphinHttpClient {
     private final DolphinschedulerManager dolphinschedulerManager;
-
     private final DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean;
 
     public DolphinHttpClient(DolphinschedulerManager dolphinschedulerManager, DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean) {
@@ -17,39 +16,26 @@ public class DolphinHttpClient {
         this.dolphinTaskDefinitionPropertiesBean = dolphinTaskDefinitionPropertiesBean;
     }
 
-    private long getTaskCode() {
+    public Result createProcessDefinition(String name, Object httpParams, String description) throws ApiException {
         long taskCode = 0L;
         try {
             taskCode = CodeGenerateUtils.getInstance().genCode();
         } catch (CodeGenerateUtils.CodeGenerateException e) {
             e.printStackTrace();
         }
-        return taskCode;
+        return createProcessDefinition(name, taskCode, httpParams, description);
     }
 
-    public Result createProcessDefinition(Long projectId,
-                                          String name,
-                                          String url,
-                                          Object httpParams,
-                                          String httpMethod,
-                                          String description) throws ApiException {
-        return createProcessDefinition(projectId, name, getTaskCode(), url, httpParams, httpMethod, description);
-    }
-
-
-    private Result createProcessDefinition(Long projectId,
-                                           String name,
+    private Result createProcessDefinition(String name,
                                            long taskCode,
-                                           String url,
                                            Object httpParams,
-                                           String httpMethod
-            , String description) throws ApiException {
+                                           String description) throws ApiException {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
-                taskCode, name, url, httpParams, httpMethod, dolphinTaskDefinitionPropertiesBean);
+                taskCode, name,  httpParams,  dolphinTaskDefinitionPropertiesBean);
         Result result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(
                 processDefinition.getLocations(),
                 processDefinition.getName(),
-                projectId,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                 processDefinition.getTaskDefinitionJson(),
                 processDefinition.getTaskRelationJson(),
                 processDefinition.getTenantCode(),
@@ -63,21 +49,18 @@ public class DolphinHttpClient {
     }
 
     public Result updateProcessDefinition(Long processDefinitionCode,
-                                          Long projectId,
                                           long taskCode,
                                           String name,
-                                          String url,
                                           Object httpParams,
-                                          String httpMethod,
                                           String description,
                                           DolphinTaskDefinitionPropertiesBean taskParam) throws ApiException {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
-                taskCode, name, url, httpParams, httpMethod, taskParam, dolphinTaskDefinitionPropertiesBean);
+                taskCode, name,  httpParams,  taskParam, dolphinTaskDefinitionPropertiesBean);
         Result result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
                 processDefinitionCode,
                 processDefinition.getLocations(),
                 processDefinition.getName(),
-                projectId,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                 processDefinition.getTaskDefinitionJson(),
                 processDefinition.getTaskRelationJson(),
                 processDefinition.getTenantCode(),

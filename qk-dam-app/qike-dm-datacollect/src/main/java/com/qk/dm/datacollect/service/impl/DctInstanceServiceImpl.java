@@ -2,12 +2,10 @@ package com.qk.dm.datacollect.service.impl;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datacollect.dolphin.dto.*;
-import com.qk.dm.datacollect.dolphin.service.DolphinProcessService;
 import com.qk.dm.datacollect.dolphin.service.ProcessInstanceService;
 import com.qk.dm.datacollect.mapstruct.DctProcessInstanceMapper;
 import com.qk.dm.datacollect.service.DctInstanceService;
 import com.qk.dm.datacollect.vo.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,13 +18,9 @@ import java.util.List;
 @Service
 public class DctInstanceServiceImpl implements DctInstanceService {
     private final ProcessInstanceService processInstanceService;
-    private final DolphinProcessService dolphinProcessService;
-    @Value("${dolphinscheduler.task.projectCode}")
-    private Long projectCode;
 
-    public DctInstanceServiceImpl(ProcessInstanceService processInstanceService, DolphinProcessService dolphinProcessService) {
+    public DctInstanceServiceImpl(ProcessInstanceService processInstanceService) {
         this.processInstanceService = processInstanceService;
-        this.dolphinProcessService = dolphinProcessService;
     }
 
     @Override
@@ -35,13 +29,13 @@ public class DctInstanceServiceImpl implements DctInstanceService {
         DctInstanceParamsVO.changeSearchValAndDir(instanceParamsDTO);
         //dolphin查询
         ProcessInstanceSearchDTO instanceSearch = DctProcessInstanceMapper.INSTANCE.instanceSearchDTO(instanceParamsDTO);
-        ProcessInstanceResultDTO instance = processInstanceService.search(projectCode, instanceSearch);
+        ProcessInstanceResultDTO instance = processInstanceService.search(instanceSearch);
         List<DctProcessInstanceVO> dqcProcessInstanceList = DctProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(instance.getTotalList());
         //把name中的分类去除
         DctProcessInstanceVO.changeName(dqcProcessInstanceList);
         //查询任务实例并赋值
         dqcProcessInstanceList.forEach(processInstance -> {
-            TaskInstanceListResultDTO taskInstanceResultDTO = processInstanceService.taskByProcessId(processInstance.getId().intValue(), projectCode);
+            TaskInstanceListResultDTO taskInstanceResultDTO = processInstanceService.taskByProcessId(processInstance.getId().intValue());
             List<TaskInstanceListDTO> taskList = taskInstanceResultDTO.getTaskList();
             if (taskList.size() > 0) {
                 processInstance.setTaskInstanceId(taskList.get(0).getId());
@@ -58,19 +52,19 @@ public class DctInstanceServiceImpl implements DctInstanceService {
 
     @Override
     public DctProcessInstanceVO detail(Integer instanceId) {
-        ProcessInstanceDTO detail = processInstanceService.detail(instanceId, projectCode);
+        ProcessInstanceDTO detail = processInstanceService.detail(instanceId);
         return DctProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(detail);
     }
 
     @Override
     public void execute(DctInstanceExecuteVO instanceExecute) {
-        processInstanceService.execute(instanceExecute.getInstanceId(), projectCode, instanceExecute.getExecuteType());
+        processInstanceService.execute(instanceExecute.getInstanceId(), instanceExecute.getExecuteType());
     }
 
     @Override
     public PageResultVO<DctTaskInstanceVO> searchTask(DctTaskInstanceParamsVO dctTaskInstanceParamsVO) {
         TaskInstanceSearchDTO instanceSearchDTO = DctProcessInstanceMapper.INSTANCE.taskInstanceSearchDTO(dctTaskInstanceParamsVO);
-        TaskInstanceResultDTO taskInstanceResultDTO = processInstanceService.taskPageByProcessId(projectCode, instanceSearchDTO);
+        TaskInstanceResultDTO taskInstanceResultDTO = processInstanceService.taskPageByProcessId(instanceSearchDTO);
         return new PageResultVO<>(
                 taskInstanceResultDTO.getTotal(),
                 dctTaskInstanceParamsVO.getPagination().getPage(),

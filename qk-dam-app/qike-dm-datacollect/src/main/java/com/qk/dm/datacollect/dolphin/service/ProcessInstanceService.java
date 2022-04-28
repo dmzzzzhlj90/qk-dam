@@ -10,15 +10,15 @@ import com.qk.dm.datacollect.dolphin.dto.*;
  * @since 1.0.0
  */
 public interface ProcessInstanceService {
-    void execute(Integer processInstanceId, Long projectCode, ProcessInstance.CmdTypeIfComplementEnum executeType);
+    void execute(Integer processInstanceId,  ProcessInstance.CmdTypeIfComplementEnum executeType);
 
-    ProcessInstanceResultDTO search(Long projectCode, ProcessInstanceSearchDTO instanceSearchDTO);
+    ProcessInstanceResultDTO search( ProcessInstanceSearchDTO instanceSearchDTO);
 
-    ProcessInstanceDTO detail(Integer processInstanceId, Long projectCode);
+    ProcessInstanceDTO detail(Integer processInstanceId);
 
-    TaskInstanceListResultDTO taskByProcessId(Integer processInstanceId, Long projectCode);
+    TaskInstanceListResultDTO taskByProcessId(Integer processInstanceId);
 
     String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum);
 
-    TaskInstanceResultDTO taskPageByProcessId(Long projectCode, TaskInstanceSearchDTO instanceSearchDTO);
+    TaskInstanceResultDTO taskPageByProcessId(TaskInstanceSearchDTO instanceSearchDTO);
 }

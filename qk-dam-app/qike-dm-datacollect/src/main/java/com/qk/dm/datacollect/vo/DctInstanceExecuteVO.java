@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class DctInstanceExecuteVO {
 
     /**
-     * 执行类型，可用值:NONE,REPEAT_RUNNING,RECOVER_SUSPENDED_PROCESS,START_FAILURE_TASK_PROCESS,STOP,PAUSE
+     * 执行类型，REPEAT_RUNNING-重跑 STOP-停止 PAUSE-暂停
      */
     @NotNull(message = "执行类型不能为空！")
     ProcessInstance.CmdTypeIfComplementEnum executeType;

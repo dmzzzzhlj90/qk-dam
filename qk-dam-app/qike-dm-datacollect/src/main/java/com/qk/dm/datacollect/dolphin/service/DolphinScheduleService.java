@@ -2,7 +2,6 @@ package com.qk.dm.datacollect.dolphin.service;
 
 import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.dm.datacollect.dolphin.dto.ScheduleDTO;
-import com.qk.dm.datacollect.vo.DctSchedulerConfigVO;
 
 /**
  * @author shenpj
@@ -10,13 +9,13 @@ import com.qk.dm.datacollect.vo.DctSchedulerConfigVO;
  * @since 1.0.0
  */
 public interface DolphinScheduleService {
-    void insert(Long processDefinitionCode, Long projectCode, DctSchedulerConfigVO dqcSchedulerConfigVO);
+    void insert(Long processDefinitionCode, String effectiveTimeStart, String ffectiveTimeEnt, String cron);
 
-    void update(Integer scheduleId, Long projectCode, DctSchedulerConfigVO dqcDctSchedulerConfigVO);
+    void update(Integer scheduleId, String effectiveTimeStart, String ffectiveTimeEnt, String cron);
 
-    void execute(Integer scheduleId, Long projectCode, ProcessDefinition.ReleaseStateEnum state);
+    void execute(Integer scheduleId,  ProcessDefinition.ReleaseStateEnum state);
 
-    void delete(Integer scheduleId, Long projectCode);
+    void delete(Integer scheduleId);
 
-    ScheduleDTO detail(Long processDefinitionCode, Long projectCode);
+    ScheduleDTO detail(Long processDefinitionCode);
 }
