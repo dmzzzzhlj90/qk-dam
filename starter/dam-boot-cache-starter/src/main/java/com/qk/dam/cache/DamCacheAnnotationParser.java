@@ -8,6 +8,7 @@ import org.springframework.cache.interceptor.CacheableOperation;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.lang.Nullable;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
@@ -95,13 +96,24 @@ public class DamCacheAnnotationParser implements CacheAnnotationParser, Serializ
       AnnotatedElement ae, DefaultCacheConfig defaultConfig, RestCache restCache) {
 
     CacheableOperation.Builder builder = new CacheableOperation.Builder();
-    String[] cacheNames = Arrays.stream(restCache.cacheNames()).map(CacheManagerEnum::toString).toArray(String[]::new);
+    String[] cacheNames =
+        Arrays.stream(restCache.cacheNames())
+            .map(CacheManagerEnum::toString)
+            .toArray(String[]::new);
 
     builder.setName(ae.toString());
     builder.setCacheNames(cacheNames);
     builder.setCondition(restCache.condition());
     builder.setUnless(restCache.unless());
-    builder.setKey(restCache.key());
+    builder.setKey(
+            ObjectUtils.isEmpty(restCache.key())
+                    ? Objects.requireNonNull(
+                    Arrays.stream(restCache.value())
+                            .filter(Objects::nonNull)
+                            .map(CacheManagerEnum::getKeyExpression)
+                            .findFirst()
+                            .orElse(null))
+                    : restCache.key());
     builder.setKeyGenerator(restCache.keyGenerator());
     builder.setCacheManager(restCache.cacheManager());
     builder.setCacheResolver(restCache.cacheResolver());
@@ -115,16 +127,27 @@ public class DamCacheAnnotationParser implements CacheAnnotationParser, Serializ
   }
 
   private CacheableOperation parseCacheableAnnotation(
-          AnnotatedElement ae, DefaultCacheConfig defaultConfig, QueryCache queryCache) {
+      AnnotatedElement ae, DefaultCacheConfig defaultConfig, QueryCache queryCache) {
 
     CacheableOperation.Builder builder = new CacheableOperation.Builder();
-    String[] cacheNames = Arrays.stream(queryCache.cacheNames()).map(CacheManagerEnum::toString).toArray(String[]::new);
+    String[] cacheNames =
+        Arrays.stream(queryCache.cacheNames())
+            .map(CacheManagerEnum::toString)
+            .toArray(String[]::new);
 
     builder.setName(ae.toString());
     builder.setCacheNames(cacheNames);
     builder.setCondition(queryCache.condition());
     builder.setUnless(queryCache.unless());
-    builder.setKey(queryCache.key());
+    builder.setKey(
+        ObjectUtils.isEmpty(queryCache.key())
+            ? Objects.requireNonNull(
+                Arrays.stream(queryCache.value())
+                    .filter(Objects::nonNull)
+                    .map(CacheManagerEnum::getKeyExpression)
+                    .findFirst()
+                    .orElse(null))
+            : queryCache.key());
     builder.setKeyGenerator(queryCache.keyGenerator());
     builder.setCacheManager(queryCache.cacheManager());
     builder.setCacheResolver(queryCache.cacheResolver());

@@ -7,7 +7,6 @@ import com.qk.dam.model.HttpDataParamModel;
 public interface DataBackendQuerySerivce {
 
     @RestCache(
-            value = CacheManagerEnum.CACHE_NAME_DAS_REST,
-            key = "#httpDataParamModel.toString()")
+            value = CacheManagerEnum.CACHE_NAME_DAS_REST)
     Object dataBackendQuery(HttpDataParamModel httpDataParamModel);
 }

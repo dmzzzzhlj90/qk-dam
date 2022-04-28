@@ -1,19 +1,15 @@
 package com.qk.dm.dataservice.controller.base;
 
-import com.qk.dam.cache.CacheManagerEnum;
-import com.qk.dam.cache.RestCache;
-import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.model.HttpDataParamModel;
-import com.qk.dm.dataservice.mapping.DataServiceMapping;
-import com.qk.dm.dataservice.rest.mapping.DataServiceEnum;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import com.qk.dm.feign.DataQueryInfoFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.PathContainer;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.pattern.PathPattern;
 import org.springframework.web.util.pattern.PathPatternParser;
 

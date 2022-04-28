@@ -1,7 +1,5 @@
 package com.qk.dm.dataquery.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.page.PageMethod;
 import com.qk.dam.cache.CacheManagerEnum;
 import com.qk.dam.cache.QueryCache;
 import com.qk.dam.model.HttpDataParamModel;
@@ -31,7 +29,7 @@ public class QueryDataRestController {
   final MybatisMapperContainer mybatisMapperContainer;
 
   @PostMapping("/app/query")
-  @QueryCache(value = CacheManagerEnum.CACHE_NAME_DAS_QUERY_LIST,key = "#httpDataParamModel.toString()")
+  @QueryCache(value = CacheManagerEnum.CACHE_NAME_DAS_QUERY_LIST)
   public List<Object> query(@RequestBody HttpDataParamModel httpDataParamModel) {
     String apiId = httpDataParamModel.getApiId();
     String dsName = mybatisMapperContainer.getDsName(apiId);
@@ -45,7 +43,7 @@ public class QueryDataRestController {
     return objects;
   }
   @PostMapping("/app/query/one")
-  @QueryCache(value = CacheManagerEnum.CACHE_NAME_DAS_QUERY_ONE,key = "#httpDataParamModel.toString()")
+  @QueryCache(value = CacheManagerEnum.CACHE_NAME_DAS_QUERY_ONE)
   public Object queryOne(@RequestBody HttpDataParamModel httpDataParamModel) {
     String apiId = httpDataParamModel.getApiId();
     String dsName = mybatisMapperContainer.getDsName(apiId);

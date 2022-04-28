@@ -1,11 +1,8 @@
 package com.qk.dm.dataservice.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.dam.commons.enums.ResultCodeEnum;
-import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.model.HttpDataParamModel;
-import com.qk.dm.dataquery.feign.DataBackendQueryFeign;
 import com.qk.dm.dataservice.controller.base.BaseRestController;
 import com.qk.dm.dataservice.mapping.DataServiceMapping;
 import com.qk.dm.dataservice.rest.mapping.DataServiceEnum;
