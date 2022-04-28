@@ -3,8 +3,6 @@ package com.qk.dm.dataquery.datasouce;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import com.zaxxer.hikari.util.DriverDataSource;
-import lombok.Data;
 
 import javax.sql.DataSource;
 import java.util.Properties;

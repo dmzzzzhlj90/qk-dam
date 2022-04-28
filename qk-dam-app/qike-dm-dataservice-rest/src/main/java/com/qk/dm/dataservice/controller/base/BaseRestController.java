@@ -1,5 +1,7 @@
-package com.qk.dm.dataservice.rest.controller.base;
+package com.qk.dm.dataservice.controller.base;
 
+import com.qk.dam.cache.CacheManagerEnum;
+import com.qk.dam.cache.RestCache;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.model.HttpDataParamModel;
@@ -39,70 +41,19 @@ public abstract class BaseRestController {
     dataQueryInfoVOList.addAll(listDefaultCommonResult.getData());
   }
 
-  @DataServiceMapping(value = DataServiceEnum.MATCH_ALL, method = RequestMethod.GET)
-  public DefaultCommonResult<Object> getHandler(
-      HttpServletRequest request,
-      @RequestParam(required = false) Map<String, Object> param,
-      @RequestBody(required = false) Object bodyData,
-      @RequestHeader(required = false) HttpHeaders headers) {
+  protected HttpDataParamModel restModel(HttpServletRequest request, Map<String, Object> param, Object bodyData, HttpHeaders headers) {
     DataQueryInfoVO queryInfoVO = matchDataQueryInfo(request);
 
-    Object data =
-        restHandler(
-            queryInfoVO,
-            HttpDataParamModel.builder()
-                .uriPathParam(
+    return HttpDataParamModel.builder()
+            .apiId(queryInfoVO.getDasApiBasicInfo().getApiId())
+            .uriPathParam(
                     getUriPathParam(queryInfoVO.getDasApiBasicInfo().getApiPath(), request))
-                .headers(headers)
-                .params(param)
-                .body(bodyData)
-                .method(RequestMethod.GET)
-                .build());
-    return DefaultCommonResult.success(ResultCodeEnum.OK, data, TIPS);
+            .headers(headers)
+            .params(param)
+            .body(bodyData)
+            .method(RequestMethod.GET)
+            .build();
   }
-
-  @DataServiceMapping(value = DataServiceEnum.MATCH_ALL, method = RequestMethod.POST)
-  public DefaultCommonResult<Object> postHandler(
-      HttpServletRequest request,
-      @RequestParam(required = false) Map<String, Object> param,
-      @RequestBody(required = false) Object bodyData,
-      @RequestHeader(required = false) HttpHeaders headers) {
-    DataQueryInfoVO queryInfoVO = matchDataQueryInfo(request);
-    Object data =
-        restHandler(
-            queryInfoVO,
-            HttpDataParamModel.builder()
-                .uriPathParam(
-                    getUriPathParam(queryInfoVO.getDasApiBasicInfo().getApiPath(), request))
-                .headers(headers)
-                .params(param)
-                .body(bodyData)
-                .method(RequestMethod.GET)
-                .build());
-    return DefaultCommonResult.success(ResultCodeEnum.OK, data, TIPS);
-  }
-
-  @DataServiceMapping(value = DataServiceEnum.MATCH_ALL, method = RequestMethod.PUT)
-  public DefaultCommonResult<Object> putHandler(
-      HttpServletRequest request,
-      @RequestParam(required = false) Map<String, Object> param,
-      @RequestBody(required = false) Object bodyData,
-      @RequestHeader(required = false) HttpHeaders headers) {
-    DataQueryInfoVO queryInfoVO = matchDataQueryInfo(request);
-    Object data =
-        restHandler(
-            queryInfoVO,
-            HttpDataParamModel.builder()
-                .uriPathParam(
-                    getUriPathParam(queryInfoVO.getDasApiBasicInfo().getApiPath(), request))
-                .headers(headers)
-                .params(param)
-                .body(bodyData)
-                .method(RequestMethod.GET)
-                .build());
-    return DefaultCommonResult.success(ResultCodeEnum.OK, data, TIPS);
-  }
-
   /**
    * 匹配请求的数据查询
    *
@@ -162,9 +113,6 @@ public abstract class BaseRestController {
   /**
    * 处理所有rest请求的handler
    *
-   * @param queryInfoVO 请求 queryInfoVO
    * @param httpDataParamModel http传递的参数集合
    */
-  protected abstract Object restHandler(
-      DataQueryInfoVO queryInfoVO, HttpDataParamModel httpDataParamModel);
 }

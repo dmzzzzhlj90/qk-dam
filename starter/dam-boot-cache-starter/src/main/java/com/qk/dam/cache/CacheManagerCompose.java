@@ -20,16 +20,16 @@ public class CacheManagerCompose {
     public static final String REDIS = "redis";
     public static final String SLAVE = "slave";
     final RedisCacheManager redisCacheManager;
-    final SlaveCacheManager slaveCacheManager;
+    final CaffeineCacheManager caffeineCacheManager;
     final CacheProperties cacheProperties;
 
     private volatile String activeCache = REDIS;
 
     CacheManagerCompose(RedisCacheManager redisCacheManager,
-                        SlaveCacheManager slaveCacheManager,
+                        CaffeineCacheManager caffeineCacheManager,
                         CacheProperties cacheProperties) {
         this.redisCacheManager = redisCacheManager;
-        this.slaveCacheManager = slaveCacheManager;
+        this.caffeineCacheManager = caffeineCacheManager;
         this.cacheProperties = cacheProperties;
 
         final Cache redisCache = redisCacheManager.getCache(CacheManagerEnum.TEST.toString());
@@ -65,7 +65,7 @@ public class CacheManagerCompose {
            return redisCacheManager.getCache(cacheManagerEnum.toString());
         }
         if (SLAVE.equals(activeCache)){
-           return slaveCacheManager.getCache(cacheManagerEnum.toString());
+           return caffeineCacheManager.getCache(cacheManagerEnum.toString());
         }
         return null;
     }
@@ -75,7 +75,7 @@ public class CacheManagerCompose {
             return redisCacheManager.getCacheNames();
         }
         if (SLAVE.equals(activeCache)){
-            return slaveCacheManager.getCacheNames();
+            return caffeineCacheManager.getCacheNames();
         }
         return List.of();
     }

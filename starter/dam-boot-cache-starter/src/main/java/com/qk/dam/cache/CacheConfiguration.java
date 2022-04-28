@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.Cache;
-import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -33,19 +32,19 @@ class CacheConfiguration {
   }
 
   @Bean
-  SlaveCacheManager slaveCacheManager(
+  CaffeineCacheManager slaveCacheManager(
       CacheProperties cacheProperties,
       ObjectProvider<Caffeine<Object, Object>> caffeine,
       ObjectProvider<CaffeineSpec> caffeineSpec,
       ObjectProvider<CacheLoader<Object, Object>> cacheLoader) {
     // todo 此处manager需要支持自由切换 如果redis连接异常自动切换到 CaffeineCache
-    CaffeineCacheManager cacheManager =
+    org.springframework.cache.caffeine.CaffeineCacheManager cacheManager =
         createCacheManager(cacheProperties, caffeine, caffeineSpec, cacheLoader);
     List<String> cacheNames = getCacheNames();
     if (!CollectionUtils.isEmpty(cacheNames)) {
       cacheManager.setCacheNames(cacheNames);
     }
-    return new SlaveCacheManager() {
+    return new CaffeineCacheManager() {
 
       @Override
       public Cache getCache(String name) {
@@ -65,12 +64,12 @@ class CacheConfiguration {
         .collect(Collectors.toList());
   }
 
-  private CaffeineCacheManager createCacheManager(
+  private org.springframework.cache.caffeine.CaffeineCacheManager createCacheManager(
       CacheProperties cacheProperties,
       ObjectProvider<Caffeine<Object, Object>> caffeine,
       ObjectProvider<CaffeineSpec> caffeineSpec,
       ObjectProvider<CacheLoader<Object, Object>> cacheLoader) {
-    CaffeineCacheManager cacheManager = new CaffeineCacheManager();
+    org.springframework.cache.caffeine.CaffeineCacheManager cacheManager = new org.springframework.cache.caffeine.CaffeineCacheManager();
     setCacheBuilder(
         cacheProperties, caffeineSpec.getIfAvailable(), caffeine.getIfAvailable(), cacheManager);
     cacheLoader.ifAvailable(cacheManager::setCacheLoader);
@@ -81,7 +80,7 @@ class CacheConfiguration {
       CacheProperties cacheProperties,
       CaffeineSpec caffeineSpec,
       Caffeine<Object, Object> caffeine,
-      CaffeineCacheManager cacheManager) {
+      org.springframework.cache.caffeine.CaffeineCacheManager cacheManager) {
     String specification = cacheProperties.getCaffeine().getSpec();
     if (StringUtils.hasText(specification)) {
       cacheManager.setCacheSpecification(specification);

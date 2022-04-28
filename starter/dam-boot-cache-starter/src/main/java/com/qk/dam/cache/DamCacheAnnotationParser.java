@@ -23,6 +23,7 @@ public class DamCacheAnnotationParser implements CacheAnnotationParser, Serializ
   private static final long serialVersionUID = 3598039626439349544L;
 
   static {
+    CACHE_OPERATION_ANNOTATIONS.add(RestCache.class);
     CACHE_OPERATION_ANNOTATIONS.add(QueryCache.class);
     CACHE_OPERATION_ANNOTATIONS.add(CacheEvict.class);
     CACHE_OPERATION_ANNOTATIONS.add(CachePut.class);
@@ -79,6 +80,9 @@ public class DamCacheAnnotationParser implements CacheAnnotationParser, Serializ
         .filter(QueryCache.class::isInstance)
         .forEach(ann -> ops.add(parseCacheableAnnotation(ae, cachingConfig, (QueryCache) ann)));
     anns.stream()
+        .filter(RestCache.class::isInstance)
+        .forEach(ann -> ops.add(parseCacheableAnnotation(ae, cachingConfig, (RestCache) ann)));
+    anns.stream()
         .filter(CacheEvict.class::isInstance)
         .forEach(ann -> ops.add(parseEvictAnnotation(ae, cachingConfig, (CacheEvict) ann)));
     anns.stream()
@@ -88,7 +92,30 @@ public class DamCacheAnnotationParser implements CacheAnnotationParser, Serializ
   }
 
   private CacheableOperation parseCacheableAnnotation(
-      AnnotatedElement ae, DefaultCacheConfig defaultConfig, QueryCache queryCache) {
+      AnnotatedElement ae, DefaultCacheConfig defaultConfig, RestCache restCache) {
+
+    CacheableOperation.Builder builder = new CacheableOperation.Builder();
+    String[] cacheNames = Arrays.stream(restCache.cacheNames()).map(CacheManagerEnum::toString).toArray(String[]::new);
+
+    builder.setName(ae.toString());
+    builder.setCacheNames(cacheNames);
+    builder.setCondition(restCache.condition());
+    builder.setUnless(restCache.unless());
+    builder.setKey(restCache.key());
+    builder.setKeyGenerator(restCache.keyGenerator());
+    builder.setCacheManager(restCache.cacheManager());
+    builder.setCacheResolver(restCache.cacheResolver());
+    builder.setSync(restCache.sync());
+
+    defaultConfig.applyDefault(builder);
+    CacheableOperation op = builder.build();
+    validateCacheOperation(ae, op);
+
+    return op;
+  }
+
+  private CacheableOperation parseCacheableAnnotation(
+          AnnotatedElement ae, DefaultCacheConfig defaultConfig, QueryCache queryCache) {
 
     CacheableOperation.Builder builder = new CacheableOperation.Builder();
     String[] cacheNames = Arrays.stream(queryCache.cacheNames()).map(CacheManagerEnum::toString).toArray(String[]::new);

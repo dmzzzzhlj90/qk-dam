@@ -29,9 +29,12 @@ docker {
 dependencies {
     implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
+
     implementation project(":qk-dataservice-rest-common")
     implementation project(":dm-das-feign")
     implementation project(":dm-das-query-feign")
+    implementation project(":dam-boot-cache-starter")
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'

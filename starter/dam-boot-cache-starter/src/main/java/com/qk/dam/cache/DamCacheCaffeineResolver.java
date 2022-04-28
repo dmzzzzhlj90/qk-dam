@@ -17,15 +17,15 @@ import java.util.Set;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class DamCacheResolver implements CacheResolver {
-  final CacheManagerCompose cacheManagerCompose;
+public class DamCacheCaffeineResolver implements CacheResolver {
+  final CaffeineCacheManager caffeineCacheManager;
 
   @Override
   public Collection<? extends Cache> resolveCaches(CacheOperationInvocationContext<?> context) {
     Collection<Cache> result = new ArrayList<>();
     Set<String> cacheNames = context.getOperation().getCacheNames();
     for (String cacheName : cacheNames) {
-      Cache cache = cacheManagerCompose.getCache(CacheManagerEnum.getCacheManagerEnum(cacheName));
+      Cache cache = caffeineCacheManager.getCache(cacheName);
 
       result.add(cache);
     }

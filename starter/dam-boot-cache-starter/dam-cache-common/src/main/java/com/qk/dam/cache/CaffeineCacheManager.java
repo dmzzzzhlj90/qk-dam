@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
  * @author zhudaoming
  */
-public interface SlaveCacheManager {
+public interface CaffeineCacheManager {
 
 	@Nullable
 	Cache getCache(String name);

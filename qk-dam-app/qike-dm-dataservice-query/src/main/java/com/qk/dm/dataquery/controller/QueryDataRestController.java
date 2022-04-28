@@ -8,7 +8,6 @@ import com.qk.dm.dataquery.mybatis.MybatisMapperContainer;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +28,7 @@ public class QueryDataRestController {
   final MybatisMapperContainer mybatisMapperContainer;
 
   @PostMapping("/app/query")
-  @QueryCache(value = CacheManagerEnum.CACHE_NAME_DAS_QUERY_LIST,key = "#httpDataParamModel.toString()",cacheResolver = "damCacheResolver")
+  @QueryCache(value = CacheManagerEnum.CACHE_NAME_DAS_QUERY_LIST,key = "#httpDataParamModel.toString()")
   public List<Object> query(@RequestBody HttpDataParamModel httpDataParamModel) {
     String apiId = httpDataParamModel.getApiId();
     String dsName = mybatisMapperContainer.getDsName(apiId);

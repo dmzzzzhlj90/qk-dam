@@ -1,13 +1,11 @@
 package com.qk.dm.dataquery.mybatis;
 
-import com.qk.dm.dataquery.cache.MybatisCacheManager;
+import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataquery.model.Mapper;
 import com.qk.dm.dataquery.model.MapperSelect;
 import com.qk.dm.dataquery.model.ResultMap;
-import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 
 import java.util.Comparator;
@@ -29,8 +27,6 @@ public class MybatisMapperContainer {
   private final Map<String, Mapper> mapperMap = new ConcurrentHashMap<>(256);
   private final Map<String, String> apiIdDbNameMap = new ConcurrentHashMap<>(256);
 
-  @Autowired
-  MybatisCacheManager mybatisCacheManager;
 
   public MybatisMapperContainer(
       DataServiceSqlSessionFactory dataServiceSqlSessionFactory,

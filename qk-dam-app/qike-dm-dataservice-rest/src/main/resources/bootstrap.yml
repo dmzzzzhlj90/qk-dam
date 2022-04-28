@@ -14,5 +14,8 @@ spring:
       config:
         server-addr: ${nacosServerAddr}
         namespace: ${nacosServerNamespace}-\${spring.profiles.active}
+        extension-configs:
+          - dataId: qkdam-redis-\${spring.profiles.active}.yml
+            group: DAM
   profiles:
     active: ${damProfilesActive}
