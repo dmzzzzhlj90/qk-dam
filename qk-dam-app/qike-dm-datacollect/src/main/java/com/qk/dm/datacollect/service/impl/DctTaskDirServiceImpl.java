@@ -1,11 +1,17 @@
 package com.qk.dm.datacollect.service.impl;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.jpa.pojo.PageResultVO;
+import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dm.datacollect.entity.DctTaskDir;
 import com.qk.dm.datacollect.entity.QDctTaskDir;
 import com.qk.dm.datacollect.mapstruct.DctTaskDirTreeMapper;
 import com.qk.dm.datacollect.repositories.DctTaskDirRepository;
+import com.qk.dm.datacollect.service.DctDolphinService;
 import com.qk.dm.datacollect.service.DctTaskDirService;
+import com.qk.dm.datacollect.vo.DctSchedulerInfoParamsVO;
+import com.qk.dm.datacollect.vo.DctSchedulerInfoVO;
 import com.qk.dm.datacollect.vo.DctTaskDirTreeVO;
 import com.qk.dm.datacollect.vo.DctTaskDirVO;
 import com.querydsl.core.types.Predicate;
@@ -22,10 +28,13 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DctTaskDirServiceImpl implements DctTaskDirService {
+  private final DctDolphinService dctDolphinService;
   private final QDctTaskDir qdctTaskDir = QDctTaskDir.dctTaskDir;
   private final DctTaskDirRepository dctTaskDirRepository;
 
-  public DctTaskDirServiceImpl(DctTaskDirRepository dctTaskDirRepository) {
+  public DctTaskDirServiceImpl(DctDolphinService dctDolphinService,
+      DctTaskDirRepository dctTaskDirRepository) {
+    this.dctDolphinService = dctDolphinService;
     this.dctTaskDirRepository = dctTaskDirRepository;
   }
 
@@ -95,9 +104,27 @@ public class DctTaskDirServiceImpl implements DctTaskDirService {
       dirIsExistRulesList.add(dctTaskDir);
     }
     //todo 校验当前删除的目录是服存在任务，如果存在就提示不让删除
-    //deleteCheckIsRules(dirIsExistRulesList);
+    deleteCheckIsRules(dirIsExistRulesList);
     // 级联删除
     dctTaskDirRepository.deleteAll(delDirList);
+  }
+  //检验当前删除的目录是否存在任务或任务监控
+  private void deleteCheckIsRules(List<DctTaskDir> dctTaskDirList) {
+    if (CollectionUtils.isNotEmpty(dctTaskDirList)){
+      DctSchedulerInfoParamsVO dctSchedulerInfoParamsVO = new DctSchedulerInfoParamsVO();
+      Pagination pagination = new Pagination();
+      pagination.setPage(1);
+      pagination.setSize(10);
+      pagination.setSortField("1rex5r");
+      dctSchedulerInfoParamsVO.setPagination(pagination);
+      dctTaskDirList.forEach(dctTaskDir->{
+        dctSchedulerInfoParamsVO.setDirId(String.valueOf(dctTaskDir.getRuleDirId()));
+        PageResultVO<DctSchedulerInfoVO> dctSchedulerInfoVOPageResultVO = dctDolphinService.searchPageList(dctSchedulerInfoParamsVO);
+        if (CollectionUtils.isNotEmpty(dctSchedulerInfoVOPageResultVO.getList())){
+          throw  new BizException("当前删除的目录或其子目录下存在任务流程,请删除任务流程后再进行删除操作");
+        }
+      });
+    }
   }
 
   @Override
@@ -107,7 +134,7 @@ public class DctTaskDirServiceImpl implements DctTaskDirService {
     idList.forEach(id -> idSet.add(Long.valueOf(id)));
     List<DctTaskDir> dctTaskDirList = dctTaskDirRepository.findAllById(idSet);
     //todo 校验当前删除的目录是服存在任务，如果存在就提示不让删除
-    //deleteCheckIsRules(dctTaskDirList);
+    deleteCheckIsRules(dctTaskDirList);
     // 批量删除
     dctTaskDirRepository.deleteAll(dctTaskDirList);
   }
