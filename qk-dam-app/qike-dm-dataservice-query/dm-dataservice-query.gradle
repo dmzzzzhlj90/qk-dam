@@ -39,11 +39,13 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 
     implementation project(":qk-datasource")
+    implementation project(":qk-sqlparser")
     implementation project(":dm-das-feign")
     implementation project(":dm-datasource-feign")
     implementation project(":dam-boot-cache-starter")
 
     implementation 'org.mybatis:mybatis:3.5.9'
+    compile 'com.github.pagehelper:pagehelper:5.3.0'
 
     implementation 'org.mapstruct:mapstruct'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

@@ -1,11 +1,14 @@
 package com.qk.dm.dataquery.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.page.PageMethod;
 import com.qk.dam.cache.CacheManagerEnum;
 import com.qk.dam.cache.QueryCache;
 import com.qk.dam.model.HttpDataParamModel;
 import com.qk.dm.dataquery.mybatis.DataServiceSqlSessionFactory;
 import com.qk.dm.dataquery.mybatis.MybatisMapperContainer;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +35,11 @@ public class QueryDataRestController {
   public List<Object> query(@RequestBody HttpDataParamModel httpDataParamModel) {
     String apiId = httpDataParamModel.getApiId();
     String dsName = mybatisMapperContainer.getDsName(apiId);
+
     SqlSession sqlSession = getSqlSession(dsName);
 
-    List<Object> objects = sqlSession.selectList(apiId, getMybatisDataParam(httpDataParamModel));
+    // todo 需要判断是否需要分页
+    List<Object> objects = sqlSession.selectList(apiId, getMybatisDataParam(httpDataParamModel),new RowBounds(1, 10));
 
     sqlSession.close();
     return objects;
@@ -44,6 +49,7 @@ public class QueryDataRestController {
   public Object queryOne(@RequestBody HttpDataParamModel httpDataParamModel) {
     String apiId = httpDataParamModel.getApiId();
     String dsName = mybatisMapperContainer.getDsName(apiId);
+
     SqlSession sqlSession = getSqlSession(dsName);
 
     Object objects = sqlSession.selectOne(apiId, getMybatisDataParam(httpDataParamModel));

@@ -1,5 +1,6 @@
 package com.qk.dm.dataquery.mybatis;
 
+import com.github.pagehelper.PageInterceptor;
 import com.qk.dm.dataquery.event.DatasourceEvent;
 import com.qk.dm.dataquery.model.Mapper;
 import com.qk.dm.dataquery.model.MapperSelect;
@@ -17,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DataServiceSqlSessionFactory {
   private final Map<String, SqlSessionFactory> sqlSessionFactoryMap = new ConcurrentHashMap<>(256);
+  final PageInterceptor pageInterceptor = new PageInterceptor();
   @EventListener
   public void onEnvironmentInsert(DatasourceEvent.SqlSessionFactoryInsertEvent sqlSessionFactoryInsertEvent) {
     sqlSessionFactoryInsertEvent.getEnvironmentMap().forEach(this::registerEnvironment);
@@ -34,6 +37,12 @@ public class DataServiceSqlSessionFactory {
   public void registerEnvironment(String connectName, Environment environment) {
     org.apache.ibatis.session.Configuration configuration =
         new org.apache.ibatis.session.Configuration();
+
+    Properties pageProperties = new Properties();
+    pageProperties.setProperty("helperDialect", "mysql");
+    pageInterceptor.setProperties(pageProperties);
+    configuration.addInterceptor(pageInterceptor);
+
     configuration.setEnvironment(environment);
     SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
     sqlSessionFactoryMap.put(connectName, sqlSessionFactory);
