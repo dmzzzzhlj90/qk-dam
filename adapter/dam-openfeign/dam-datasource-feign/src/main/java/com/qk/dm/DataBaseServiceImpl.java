@@ -2,7 +2,6 @@ package com.qk.dm;
 
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.DsDatasourceVO;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdTables;
@@ -95,13 +94,13 @@ public class DataBaseServiceImpl implements DataBaseService {
   @Override
   public Map<String,String> getAllDataSources(String connectType) {
     List<ResultDatasourceInfo> resultDataSourceByType = dataBaseInfoDefaultApi.getResultDataSourceByType(connectType);
-    return resultDataSourceByType.stream().collect(Collectors.toMap(ResultDatasourceInfo::getId,ResultDatasourceInfo::getDataSourceName));
+    return resultDataSourceByType.stream().collect(Collectors.toMap(ResultDatasourceInfo::getConnId,ResultDatasourceInfo::getDataSourceName));
   }
 
   @Override
   public String getResultDataSourceByid(String id) {
-    DsDatasourceVO resultDataSourceById = dataBaseInfoDefaultApi.getResultDataSourceById(id);
-    return (String) resultDataSourceById.getConnectBasicInfo();
+    ResultDatasourceInfo resultDataSourceById = dataBaseInfoDefaultApi.getResultDataSourceById(id);
+    return  resultDataSourceById.getConnectBasicInfoJson();
   }
   private String getServer(String dataSourceName) {
     ResultDatasourceInfo resultDataSourceByConnectName = dataBaseInfoDefaultApi.getDataSource(dataSourceName);

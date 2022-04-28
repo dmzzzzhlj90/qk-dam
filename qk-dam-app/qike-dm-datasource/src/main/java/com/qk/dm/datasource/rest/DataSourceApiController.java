@@ -79,7 +79,7 @@ public class DataSourceApiController {
      * @param connId
      * @return DefaultCommonResult<ResultDatasourceInfo>
      */
-    @GetMapping("/{connId}")
+    @GetMapping("/data/sources/{connId}")
     public DefaultCommonResult<ResultDatasourceInfo> getDataSourceByConnId(@PathVariable("connId") String connId) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceByConnId(connId));
     }

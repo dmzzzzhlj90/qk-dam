@@ -55,7 +55,7 @@ public interface DataSourceFeign {
      * @param connId 数据源标识Id
      * @return DefaultCommonResult<ResultDatasourceInfo>
      */
-    @GetMapping("/{connId}")
+    @GetMapping("/data/sources/{connId}")
     DefaultCommonResult<ResultDatasourceInfo> getDataSourceByConnId(@PathVariable("connId") String connId);
 
     /**

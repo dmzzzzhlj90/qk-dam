@@ -3,7 +3,7 @@ package com.qk.dm.datacollect.service.impl;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.DsDatasourceVO;
+import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
 import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
 import com.qk.dam.metadata.catacollect.service.MetadataApiService;
@@ -41,10 +41,10 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
 
   @Override
   public List<String> getResultDb(String dataSourceId) {
-    DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
+    ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
     if (Objects.nonNull(dsDatasourceVO)){
       ConnectInfoVo connectInfoVo = new ConnectInfoVo();
-      connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfo().toString(), new TypeToken<ConnectInfoVo>() {}.getType());
+      connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfoJson(), new TypeToken<ConnectInfoVo>() {}.getType());
      return metadataApiService.queryDB(connectInfoVo);
     }else {
       throw  new BizException("根据连接名称获取连接信息失败");
@@ -53,10 +53,10 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
 
   @Override
   public List<String> getResultTable(String dataSourceId, String databaseName) {
-    DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
+    ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
     if (Objects.nonNull(dsDatasourceVO)){
       ConnectInfoVo connectInfoVo = new ConnectInfoVo();
-      connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfo().toString(), new TypeToken<ConnectInfoVo>() {}.getType());
+      connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfoJson(), new TypeToken<ConnectInfoVo>() {}.getType());
       connectInfoVo.setDatabaseName(databaseName);
       return metadataApiService.queryTable(connectInfoVo);
     }else {
@@ -67,10 +67,10 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   @Override
   public void dolphinCallback(String schedulerRules) throws Exception {
     DctSchedulerRulesVO dctSchedulerRulesVO = GsonUtil.fromJsonString(schedulerRules, new TypeToken<DctSchedulerRulesVO>() {}.getType());
-    DsDatasourceVO dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dctSchedulerRulesVO.getDataSourceId());
+    ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dctSchedulerRulesVO.getDataSourceId());
     if (Objects.nonNull(dsDatasourceVO)){
       MetadataConnectInfoVo metadataConnectInfoVo =new MetadataConnectInfoVo();
-      metadataConnectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfo().toString(), new TypeToken<MetadataConnectInfoVo>() {}.getType());
+      metadataConnectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfoJson(), new TypeToken<MetadataConnectInfoVo>() {}.getType());
       DctDataBaseMapper.INSTANCE.from(dctSchedulerRulesVO,metadataConnectInfoVo);
       metadataApiService.extractorAtlasEntitiesWith(metadataConnectInfoVo,atlasClientV2);
     }else {
