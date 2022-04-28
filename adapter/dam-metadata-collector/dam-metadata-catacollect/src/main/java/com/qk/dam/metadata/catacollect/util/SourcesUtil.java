@@ -23,6 +23,8 @@ public final class SourcesUtil {
    * 系统使用常量
    */
   public static final String TABLE_NUMS="all";
+  public static final String TABLE_NAME_ALL="全部表名";
+  public static final int TABLE_SIZE = 1;
 
   /**
    * MYSQL数据库
