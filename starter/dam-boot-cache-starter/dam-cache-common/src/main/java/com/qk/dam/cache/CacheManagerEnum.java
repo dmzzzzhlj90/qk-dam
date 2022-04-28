@@ -21,7 +21,9 @@ public enum CacheManagerEnum {
      * 数据质量 规则
      */
     DQC_RULE("dqc:rule", Duration.ofHours(12)),
-    CACHE_NAME_DAS_QUERY("dataservice:query", Duration.ofMinutes(15)),
+    CACHE_NAME_DAS_QUERY("dataservice:query", Duration.ofMinutes(10)),
+    CACHE_NAME_DAS_QUERY_LIST("dataservice:query:list", Duration.ofMinutes(15)),
+    CACHE_NAME_DAS_QUERY_ONE("dataservice:query:one", Duration.ofMinutes(15)),
     /**
      * 数据质量 统计
      */

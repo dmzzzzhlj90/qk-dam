@@ -3,12 +3,14 @@ package com.qk.dam.cache;
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.CaffeineSpec;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.cache.interceptor.CacheResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -16,20 +18,17 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureAfter({RedisCacheConfiguration.class})
 @EnableConfigurationProperties(CacheProperties.class)
+@Slf4j
 class CacheConfiguration {
-  final RedisCacheManager redisCacheManager;
   final CacheProperties cacheProperties;
 
-  CacheConfiguration(RedisCacheManager redisCacheManager, CacheProperties cacheProperties) {
-    this.redisCacheManager = redisCacheManager;
+  CacheConfiguration(CacheProperties cacheProperties) {
     this.cacheProperties = cacheProperties;
   }
 
@@ -42,10 +41,7 @@ class CacheConfiguration {
     // todo 此处manager需要支持自由切换 如果redis连接异常自动切换到 CaffeineCache
     CaffeineCacheManager cacheManager =
         createCacheManager(cacheProperties, caffeine, caffeineSpec, cacheLoader);
-    List<String> cacheNames =
-        Arrays.stream(CacheManagerEnum.values())
-            .map(CacheManagerEnum::toString)
-            .collect(Collectors.toList());
+    List<String> cacheNames = getCacheNames();
     if (!CollectionUtils.isEmpty(cacheNames)) {
       cacheManager.setCacheNames(cacheNames);
     }
@@ -61,6 +57,12 @@ class CacheConfiguration {
         return cacheManager.getCacheNames();
       }
     };
+  }
+
+  private List<String> getCacheNames() {
+    return Arrays.stream(CacheManagerEnum.values())
+        .map(CacheManagerEnum::toString)
+        .collect(Collectors.toList());
   }
 
   private CaffeineCacheManager createCacheManager(

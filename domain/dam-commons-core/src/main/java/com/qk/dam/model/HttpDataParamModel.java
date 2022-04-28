@@ -24,4 +24,14 @@ public class HttpDataParamModel {
     HttpHeaders headers;
     RequestMethod method;
 
+    @Override
+    public String toString() {
+        return "{" +
+                "apiId='" + apiId + '\'' +
+                ", params=" + params +
+                ", uriPathParam=" + uriPathParam +
+                ", body=" + body +
+                ", method=" + method +
+                '}';
+    }
 }

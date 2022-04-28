@@ -10,6 +10,8 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
+ * 通用缓存组合类
+ *
  * @author zhudaoming
  */
 @Component
@@ -44,7 +46,7 @@ public class CacheManagerCompose {
             public void run() {
                 testCache(redisCache);
             }
-        },new Date(),15*60*1000)).start();
+        },new Date(),3*60L*1000L)).start();
     }
 
     private void testCache(Cache cache) {

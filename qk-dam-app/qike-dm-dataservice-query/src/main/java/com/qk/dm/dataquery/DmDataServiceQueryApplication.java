@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableDiscoveryClient
-@EnableCaching
+@EnableCaching(proxyTargetClass = true)
 @EnableScheduling
 @EnableFeignClients(basePackages =  "com.qk")
 @ComponentScan(basePackages = "com.qk")

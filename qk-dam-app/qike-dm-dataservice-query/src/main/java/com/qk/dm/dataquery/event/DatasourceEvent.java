@@ -19,7 +19,8 @@ public class DatasourceEvent {
 
   public static class DatasourceInsertEvent extends ApplicationEvent {
 
-    private final List<ResultDatasourceInfo> resultDatasourceInfos;
+    private static final long serialVersionUID = 8874886007195076669L;
+    private final transient List<ResultDatasourceInfo> resultDatasourceInfos;
 
     public DatasourceInsertEvent(List<DataQueryInfoVO> queryInfoList, List<ResultDatasourceInfo> resultDatasourceInfos) {
       super(queryInfoList);
@@ -36,6 +37,8 @@ public class DatasourceEvent {
   }
 
   public static class EnvironmentInsertEvent extends ApplicationEvent {
+    private static final long serialVersionUID = 1676066931630715576L;
+
     public EnvironmentInsertEvent(Map<String, DataSource> dataSourceMap) {
       super(dataSourceMap);
     }
@@ -46,6 +49,8 @@ public class DatasourceEvent {
   }
 
   public static class SqlSessionFactoryInsertEvent extends ApplicationEvent {
+    private static final long serialVersionUID = 4618463133639961211L;
+
     public SqlSessionFactoryInsertEvent(Map<String, Environment> environmentMap) {
       super(environmentMap);
     }
@@ -56,6 +61,8 @@ public class DatasourceEvent {
   }
 
   public static class MapperInsertEvent extends ApplicationEvent {
+    private static final long serialVersionUID = -1123947838342858656L;
+
     public MapperInsertEvent(List<DataQueryInfoVO> dataQueryInfoVOList) {
       super(dataQueryInfoVOList);
     }
