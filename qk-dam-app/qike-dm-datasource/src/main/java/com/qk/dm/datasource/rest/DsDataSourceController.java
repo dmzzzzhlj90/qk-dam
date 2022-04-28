@@ -64,7 +64,7 @@ public class DsDataSourceController {
    * @return DefaultCommonResult
    */
   @DeleteMapping("/{id}")
-  public DefaultCommonResult deleteDsDataSource(@PathVariable("id") String id) {
+  public DefaultCommonResult deleteDsDataSource(@PathVariable("id") Long id) {
     dsDataSourceService.deleteDsDataSource(id);
     return DefaultCommonResult.success();
   }
@@ -112,7 +112,7 @@ public class DsDataSourceController {
    */
   @GetMapping("/{id}")
   public DefaultCommonResult<DsDatasourceVO> getDataSourceById(
-      @PathVariable("id") String id) {
+      @PathVariable("id") Long id) {
     return DefaultCommonResult.success(
         ResultCodeEnum.OK, dsDataSourceService.getDataSourceById(id));
   }
