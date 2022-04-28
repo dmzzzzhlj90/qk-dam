@@ -58,16 +58,23 @@ public class DasApiCreateSqlScriptDefinitionVO {
     private String connectType;
 
     /**
+     * 数据源标识id
+     */
+    @ExcelProperty(value = {"数据源标识id"}, index = 3)
+    @NotBlank(message = "数据源标识id不能为空！")
+    private String connId;
+
+    /**
      * 数据源连接名称
      */
-    @ExcelProperty(value = {"数据源连接名称"}, index = 3)
+    @ExcelProperty(value = {"数据源连接名称"}, index = 4)
     @NotBlank(message = "数据源连接不能为空！")
     private String dataSourceName;
 
     /**
      * 数据库
      */
-    @ExcelProperty(value = {"数据库"}, index = 4)
+    @ExcelProperty(value = {"数据库"}, index = 5)
     @NotBlank(message = "数据库不能为空！")
     private String dataBaseName;
 
@@ -75,13 +82,13 @@ public class DasApiCreateSqlScriptDefinitionVO {
      * 请求参数
      */
     @ExcelIgnore
-    @ExcelProperty(value = {"请求参数"}, index = 5)
+    @ExcelProperty(value = {"请求参数"}, index = 6)
     private List<DasApiCreateSqlRequestParasVO> apiCreateSqlRequestParasVOS;
 
     /**
      * 请求参数JSON
      */
-    @ExcelProperty(value = {"请求参数JSON"}, index = 5)
+    @ExcelProperty(value = {"请求参数JSON"}, index = 6)
     private String createSqlRequestParasJson;
 
 //    /**
@@ -93,26 +100,26 @@ public class DasApiCreateSqlScriptDefinitionVO {
      * 排序参数
      */
     @ExcelIgnore
-    @ExcelProperty(value = {"排序参数"}, index = 6)
+    @ExcelProperty(value = {"排序参数"}, index = 7)
     private List<DasApiCreateSqlScriptOrderParasVO> apiCreateOrderParasVOS;
 
     /**
      * 排序参数JSON
      */
-    @ExcelProperty(value = {"排序参数JSON"}, index = 6)
+    @ExcelProperty(value = {"排序参数JSON"}, index = 7)
     private String createOrderParasJson;
 
     /**
      * 取数脚本
      */
-    @ExcelProperty(value = {"取数脚本"}, index = 7)
+    @ExcelProperty(value = {"取数脚本"}, index = 8)
     @NotBlank(message = "取数脚本不能为空！")
     private String sqlPara;
 
     /**
      * 描述
      */
-    @ExcelProperty(value = {"描述"}, index = 8)
+    @ExcelProperty(value = {"描述"}, index = 9)
     private String description;
 
     @ExcelIgnore

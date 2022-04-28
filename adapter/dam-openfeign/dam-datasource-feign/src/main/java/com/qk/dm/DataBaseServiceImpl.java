@@ -95,7 +95,7 @@ public class DataBaseServiceImpl implements DataBaseService {
   @Override
   public Map<String,String> getAllDataSources(String connectType) {
     List<ResultDatasourceInfo> resultDataSourceByType = dataBaseInfoDefaultApi.getResultDataSourceByType(connectType);
-    return resultDataSourceByType.stream().collect(Collectors.toMap(ResultDatasourceInfo::getId,ResultDatasourceInfo::getDataSourceName));
+    return resultDataSourceByType.stream().collect(Collectors.toMap(ResultDatasourceInfo::getConnId,ResultDatasourceInfo::getDataSourceName));
   }
 
   @Override
