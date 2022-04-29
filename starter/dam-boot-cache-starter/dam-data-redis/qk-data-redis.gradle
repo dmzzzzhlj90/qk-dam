@@ -4,7 +4,8 @@ plugins {
 version "${commonLibVersion}"
 group "com.qk.dam.redis"
 dependencies {
-    compile 'org.springframework.data:spring-data-redis'
+    compile project(":qk-cache-common")
+    compile "org.springframework.boot:spring-boot-starter-data-redis"
     implementation 'io.lettuce:lettuce-core'
     implementation group: 'org.apache.commons', name: 'commons-pool2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'

@@ -127,11 +127,8 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         Iterable<DasApiCreateConfig> createConfigs = dasApiCreateConfigRepository.findAll(qDasApiCreateConfig.apiId.in(apiIds));
         createConfigs.forEach(apiCreateConfig -> {
             DasApiCreateConfigDefinitionVO createConfigDefinitionVO = DasApiCreateConfigMapper.INSTANCE.useDasApiCreateConfigDefinitionVO(apiCreateConfig);
-
-            createConfigDefinitionVO.setCreateRequestParasJson(apiCreateConfig.getApiRequestParas());
-            createConfigDefinitionVO.setCreateResponseParasJson(apiCreateConfig.getApiResponseParas());
-            createConfigDefinitionVO.setCreateOrderParasJson(apiCreateConfig.getApiOrderParas());
-
+            // 新建API配置信息,设置请求/响应/排序参数VO转换对象
+            setDasApiCreateVOParams(apiCreateConfig, createConfigDefinitionVO);
             configDefinitionVOList.add(createConfigDefinitionVO);
 
         });

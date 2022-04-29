@@ -44,11 +44,14 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
     }
 
     @Override
-    public void update(DisMigrationBaseInfoVO disMigrationBaseInfoVO) {
-        if(Objects.isNull(disMigrationBaseInfoVO.getId())){
-            throw new BizException("修改作业时id不能为空！！！");
+    public Long update(DisMigrationBaseInfoVO disMigrationBaseInfoVO) {
+        DisMigrationBaseInfo baseInfo = disMigrationBaseInfoRepository.findById(disMigrationBaseInfoVO.getId()).orElse(null);
+        if (Objects.isNull(baseInfo)) {
+            throw new BizException("当前要修改的基础信息id为：" + disMigrationBaseInfoVO.getId()+ " 的数据不存在！！！");
         }
-        disMigrationBaseInfoRepository.saveAndFlush(DisBaseInfoMapper.INSTANCE.of(disMigrationBaseInfoVO));
+        DisBaseInfoMapper.INSTANCE.of(disMigrationBaseInfoVO, baseInfo);
+        disMigrationBaseInfoRepository.saveAndFlush(baseInfo);
+        return baseInfo.getTaskCode();
     }
 
     @Override
@@ -83,6 +86,11 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
                 .and(qDisMigrationBaseInfo.id.eq(disMigrationBaseInfoVO.getId()));
 
         return disMigrationBaseInfoRepository.exists(predicate);
+    }
+
+    @Override
+    public List<DisMigrationBaseInfoVO> list(List<Long> ids) {
+       return DisBaseInfoMapper.INSTANCE.listVO(disMigrationBaseInfoRepository.findAllById(ids));
     }
 
 }

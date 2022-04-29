@@ -20,8 +20,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Table {
+    @Builder.Default
     private String name = "";
+    @Builder.Default
     private List<Column> columns = new ArrayList<>();
+    @Builder.Default
     private String comments = "";
 
     public String getName() {

@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.datasource.entity.ConnectBasicInfo;
-import com.qk.dam.datasource.entity.DsDatasourceVO;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.datasource.utils.ConnectInfoConvertUtils;
 import com.qk.dam.metedata.entity.*;
@@ -174,8 +173,8 @@ public class DataBaseInfoDefaultApi {
         return existData.getData();
     }
 
-    public DsDatasourceVO getResultDataSourceById(String id) {
-        return dataSourceV2Feign.getDataSourceById(id).getData();
+    public ResultDatasourceInfo getResultDataSourceById(String id) {
+        return dataSourceFeign.getDataSourceByConnId(id).getData();
     }
 
 

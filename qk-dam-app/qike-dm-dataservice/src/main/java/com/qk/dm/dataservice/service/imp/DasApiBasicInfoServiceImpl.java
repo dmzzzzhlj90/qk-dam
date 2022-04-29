@@ -297,14 +297,14 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     }
 
     @Override
-    public List<DasApiBasicInfoVO> searchBasicInfoDataByDirId(String dirDId) {
+    public List<DasApiBasicInfoVO> findAllByApiDirId(String dirDId) {
         List<DasApiBasicInfoVO> apiBasicInfoVOList = new ArrayList<>();
 
         Iterable<DasApiBasicInfo> basicInfos = dasApiBasicinfoRepository.findAll(qDasApiBasicInfo.dirId.eq(dirDId));
         basicInfos.forEach(
                 dasApiBasicInfo -> {
                     DasApiBasicInfoVO apiBasicInfoVO = transformToVO(dasApiBasicInfo);
-//                    setDelInputParamVO(dasApiBasicInfo, dasApiBasicinfoVO);
+                    setDelInputParamVO(dasApiBasicInfo, apiBasicInfoVO);
                     apiBasicInfoVO.setRequestParasJSON(dasApiBasicInfo.getDefInputParam());
                     apiBasicInfoVOList.add(apiBasicInfoVO);
                 });

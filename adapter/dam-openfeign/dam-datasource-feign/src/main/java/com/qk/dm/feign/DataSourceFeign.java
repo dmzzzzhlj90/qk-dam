@@ -49,4 +49,22 @@ public interface DataSourceFeign {
     @GetMapping("/dataSource/list")
     DefaultCommonResult<List<ResultDatasourceInfo>> getDataSourceList(@RequestParam("dataSourceNames") List<String> dataSourceNames);
 
+    /**
+     * 根据数据源标识id获取数据源连接信息
+     *
+     * @param connId 数据源标识Id
+     * @return DefaultCommonResult<ResultDatasourceInfo>
+     */
+    @GetMapping("/data/sources/{connId}")
+    DefaultCommonResult<ResultDatasourceInfo> getDataSourceByConnId(@PathVariable("connId") String connId);
+
+    /**
+     * 根据数据源标识id获取数据源集合
+     *
+     * @param connIds 数据源标识Id集合
+     * @return DefaultCommonResult<List<ResultDatasourceInfo>>
+     */
+    @GetMapping("/data/sources")
+    DefaultCommonResult<List<ResultDatasourceInfo>> getDataSourceListByConnId(@RequestParam("connIds") List<String> connIds);
+
 }

@@ -85,4 +85,34 @@ public class DataSourceApiServiceImpl implements DataSourceApiService {
         return datasourceInfoList;
     }
 
+    @Override
+    public ResultDatasourceInfo getDataSourceByConnId(String connId) {
+        Optional<DsDatasource> dsDatasourceOptional =
+                dsDatasourceRepository.findOne(QDsDatasource.dsDatasource.connId.eq(connId));
+        if (dsDatasourceOptional.isPresent()) {
+            DsDatasource dsDatasource = dsDatasourceOptional.get();
+            ResultDatasourceInfo resultDatasourceInfo =
+                    DSDatasourceMapper.INSTANCE.useResultDatasourceInfo(dsDatasource);
+            resultDatasourceInfo.setDbType(dsDatasource.getLinkType());
+            resultDatasourceInfo.setConnectBasicInfoJson(dsDatasource.getDataSourceValues());
+            return resultDatasourceInfo;
+        }
+        return null;
+    }
+
+    @Override
+    public List<ResultDatasourceInfo> getDataSourceListByConnId(List<String> connIds) {
+        List<ResultDatasourceInfo> datasourceInfoList = new ArrayList<>();
+        Iterable<DsDatasource> datasourceIterable = dsDatasourceRepository.findAll(QDsDatasource.dsDatasource.connId.in(connIds));
+
+        for (DsDatasource dsDatasource : datasourceIterable) {
+            ResultDatasourceInfo resultDatasourceInfo = DSDatasourceMapper.INSTANCE.useResultDatasourceInfo(dsDatasource);
+            resultDatasourceInfo.setDbType(dsDatasource.getLinkType());
+            resultDatasourceInfo.setConnectBasicInfoJson(dsDatasource.getDataSourceValues());
+            datasourceInfoList.add(resultDatasourceInfo);
+        }
+
+        return datasourceInfoList;
+    }
+
 }

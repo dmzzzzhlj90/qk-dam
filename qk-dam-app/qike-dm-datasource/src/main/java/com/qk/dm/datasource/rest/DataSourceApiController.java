@@ -73,4 +73,26 @@ public class DataSourceApiController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceList(dataSourceNames));
     }
 
+    /**
+     * 根据数据源标识id获取数据源连接信息
+     *
+     * @param connId
+     * @return DefaultCommonResult<ResultDatasourceInfo>
+     */
+    @GetMapping("/data/sources/{connId}")
+    public DefaultCommonResult<ResultDatasourceInfo> getDataSourceByConnId(@PathVariable("connId") String connId) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceByConnId(connId));
+    }
+
+    /**
+     * 根据数据源标识id获取数据源集合
+     *
+     * @param connIds
+     * @return DefaultCommonResult<ResultDatasourceInfo>
+     */
+    @GetMapping("/data/sources")
+    public DefaultCommonResult<List<ResultDatasourceInfo>> getDataSourceListByConnId(@RequestParam("connIds") List<String> connIds) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceListByConnId(connIds));
+    }
+
 }

@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
+
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -44,7 +46,7 @@ public class GlobalExceptionAdvice {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public <T> BaseResult<T> sendErrorResponse(Exception exception) {
     log.error("后台服务异常: {}", getStackTrace(exception));
-    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST);
+    return DefaultCommonResult.fail(ResultCodeEnum.HTTP_MESSAGE_CONVERTER);
   }
 
   /**
@@ -65,7 +67,32 @@ public class GlobalExceptionAdvice {
       return DefaultCommonResult.fail(ResultCodeEnum.HTTP_MESSAGE_CONVERTER);
     }
 
-    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST);
+    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST,exception.getLocalizedMessage());
+  }
+  /**
+   * 系统nullPointerException异常
+   *
+   * @param nullPointerException RuntimeException
+   * @return 返回消息
+   */
+  @ExceptionHandler(NullPointerException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public <T> BaseResult<T> sendErrorResponse(NullPointerException nullPointerException) {
+    log.error("系统运行时异常: {}", getStackTrace(nullPointerException));
+    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST,nullPointerException.getLocalizedMessage());
+  }
+
+  /**
+   * 系统FeignClientException异常
+   *
+   * @param feignException a
+   * @return 返回消息
+   */
+  @ExceptionHandler(FeignException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public <T> BaseResult<T> sendErrorResponse(FeignException feignException) {
+    log.error("系统运行时异常: {}", getStackTrace(feignException));
+    return DefaultCommonResult.fail(ResultCodeEnum.BAD_REQUEST,feignException.getLocalizedMessage());
   }
 
   /**

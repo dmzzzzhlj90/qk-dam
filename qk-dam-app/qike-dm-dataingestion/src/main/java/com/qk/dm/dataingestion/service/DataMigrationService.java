@@ -2,10 +2,7 @@ package com.qk.dm.dataingestion.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.datacenter.client.ApiException;
-import com.qk.dm.dataingestion.vo.ColumnVO;
-import com.qk.dm.dataingestion.vo.DataMigrationVO;
-import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
-import com.qk.dm.dataingestion.vo.DisParamsVO;
+import com.qk.dm.dataingestion.vo.*;
 
 import java.util.Map;
 
@@ -56,4 +53,12 @@ public interface DataMigrationService {
      * @return
      */
     ColumnVO getColumnList(DisMigrationBaseInfoVO vo);
+
+    /**
+     * 运行
+     * @param ids
+     */
+    void processRunning(String ids);
+
+    void updateDataxJson(DisJsonParamsVO disJsonParamsVO);
 }

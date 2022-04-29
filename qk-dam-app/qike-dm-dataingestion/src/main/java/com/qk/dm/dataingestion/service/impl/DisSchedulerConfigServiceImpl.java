@@ -1,6 +1,5 @@
 package com.qk.dm.dataingestion.service.impl;
 
-import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataingestion.entity.DisSchedulerConfig;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisSchedulerConfigMapper;
 import com.qk.dm.dataingestion.repositories.DisSchedulerConfigRepository;
@@ -10,8 +9,13 @@ import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
+/**
+ * 作业任务配置
+ * @author wangzp
+ * @date 2022/04/07 14:27
+ * @since 1.0.0
+ */
 @Service
 public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService {
 
@@ -34,11 +38,10 @@ public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService 
     }
 
     @Override
-    public void update(DisSchedulerConfigVO disSchedulerConfigVO) {
-        if(Objects.isNull(disSchedulerConfigVO.getId())){
-            throw new BizException("修改任务配置时id不能为空！！！");
-        }
-        disSchedulerConfigRepository.saveAndFlush(DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigVO));
+    public void update(Long baseInfoId,DisSchedulerConfigVO disSchedulerConfigVO) {
+        DisSchedulerConfig disSchedulerConfig = disSchedulerConfigRepository.findByBaseInfoId(baseInfoId);
+        DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigVO,disSchedulerConfig);
+        disSchedulerConfigRepository.saveAndFlush(disSchedulerConfig);
     }
 
     @Override

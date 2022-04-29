@@ -14,7 +14,8 @@ public interface DisAttrViewMapper {
     DisAttrViewMapper INSTANCE = Mappers.getMapper(DisAttrViewMapper.class);
 
     @Mappings({
-            @Mapping(source = "defaultValue", target = "initialValue")
+            @Mapping(source = "defaultValue", target = "initialValue"),
+            @Mapping(target = "valueEnum", ignore = true)
     })
     DisAttrViewVO of(DisAttrView disAttrView);
 

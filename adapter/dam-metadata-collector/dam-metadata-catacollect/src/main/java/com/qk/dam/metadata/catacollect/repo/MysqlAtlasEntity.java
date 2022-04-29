@@ -15,7 +15,6 @@ import com.qk.dam.metadata.catacollect.util.SourcesUtil;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
-import org.apache.commons.lang.StringUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -89,7 +88,7 @@ public class MysqlAtlasEntity {
   //根据输入条件获取表信息
   private List<Entity> getTableEntity() throws SQLException {
     List <Entity> list = new ArrayList<>();
-    if (StringUtils.isNotEmpty(allNums) && allNums.equals(SourcesUtil.TABLE_NUMS)){
+    if (CollectionUtil.isNotEmpty(tableList) && tableList.size()==SourcesUtil.TABLE_SIZE && tableList.get(0).equals(SourcesUtil.TABLE_NUMS)){
         list = use.query("select * from TABLES im where im.table_schema=?", db);
     }else {
       if (CollectionUtil.isNotEmpty(tableList)){

@@ -4,7 +4,6 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.context.WriteContext;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataservice.constant.DasConstant;
@@ -162,7 +161,7 @@ public class DasApiExcelServiceImpl implements DasApiExcelService {
      * @return
      */
     private List<DasApiBasicInfoVO> searchBasicInfoDataByDirId(String dirId) {
-        return dasApiBasicInfoService.searchBasicInfoDataByDirId(dirId);
+        return dasApiBasicInfoService.findAllByApiDirId(dirId);
     }
 
     /**

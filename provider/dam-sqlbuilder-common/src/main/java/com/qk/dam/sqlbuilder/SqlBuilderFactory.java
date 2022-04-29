@@ -1,5 +1,6 @@
 package com.qk.dam.sqlbuilder;
 import com.alibaba.druid.DbType;
+import com.qk.dam.sqlbuilder.enums.DataType;
 import com.qk.dam.sqlbuilder.model.Column;
 import com.qk.dam.sqlbuilder.model.Table;
 import com.qk.dam.sqlbuilder.sqlparser.SqlParserFactory;
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
  */
 public class SqlBuilderFactory {
     private static final String COMMA = ",";
+    private static final String QUOTES="`";
+    private static final String BLANK = " ";
+    public static final String NEW_LINE="\n";
 
     private static final ThreadLocal<StringSql> localSQL = new ThreadLocal<>();
 
@@ -154,49 +158,51 @@ public class SqlBuilderFactory {
         StringBuffer sb = new StringBuffer();
         List<Column> columns = table.getColumns();
         // 表名
-        sb.append("CREATE TABLE ").append("`").append(table.getName()).append("`").append(" (").append('\n');
+        sb.append("CREATE TABLE IF NOT EXISTS ").append(QUOTES).append(table.getName())
+                .append(QUOTES).append(" (").append(NEW_LINE);
         columns.forEach(column -> {
-            sb.append("    ");
-            // 字段名
-            sb.append("`").append(column.getName()).append("`");
-            // 字段数据类型
-            sb.append(" ").append(column.getDataType());
-            // 字段数据长度
-            if (column.getLength() != 0) {
-                sb.append("(").append(column.getLength()).append(")");
-            }
-            // 字段是否为空
-            if (column.getEmpty()) {
-                sb.append(" ").append("DEFAULT NULL");
-            } else {
-                sb.append(" ").append("NOT NULL");
-            }
+            assemblyColumn(column,sb);
             // 字段主键
             if (column.getPrimaryKey()) {
-                //sb.append(" ").append("PRIMARY KEY");
-                sb.append(" ").append( "AUTO_INCREMENT" );
+                sb.append(BLANK).append( "AUTO_INCREMENT" );
             }
-
             // 字段注解
             if (Objects.nonNull(column.getComments())) {
-                sb.append(" " + "COMMENT '").append(column.getComments()).append("',").append('\n');
+                sb.append(BLANK + "COMMENT ").append(QUOTES).append(column.getComments())
+                        .append(QUOTES)
+                        .append(COMMA).append(NEW_LINE);
             } else {
-                sb.append("," + '\n');
+                sb.append(COMMA +NEW_LINE);
             }
         });
         List<Column> collects = columns.stream().filter(Column::getPrimaryKey).collect(Collectors.toList());
         collects.forEach(e->{
-            sb.append("   " +" PRIMARY KEY (`").append(e.getName()).append("`)"+ '\n');
+            sb.append("   " +" PRIMARY KEY (`").append(e.getName()).append("`)"+COMMA+ NEW_LINE);
         });
-        sb.append(");");
-        return sb.toString();
+        return  sb.substring(0,sb.lastIndexOf(COMMA+NEW_LINE))+NEW_LINE+");";
     }
 
-  public static void main(String[] args) {
-      Table table = new Table();
-      table.setName("user");
-      table.addColumn(Column.builder().name("id").primaryKey(true).dataType("BIGINT").comments("主键").length(64).build());
-      table.addColumn(Column.builder().name("name").primaryKey(false).dataType("VARCHAR").empty(true).comments("名称").length(50).build());
-      System.out.println(creatTableSQL(table));
-  }
+    /**
+     * 组装字段
+     * @param column
+     * @return
+     */
+    private static void assemblyColumn(Column column,StringBuffer sb){
+        sb.append("    ");
+        // 字段名
+        sb.append(QUOTES).append(column.getName()).append(QUOTES);
+        // 字段数据类型
+        sb.append(BLANK).append(column.getDataType());
+        // 字段数据长度
+        if (column.getLength() != 0) {
+            sb.append("(").append(column.getLength()).append(")");
+        }
+        // 字段是否为空
+        if (column.getEmpty()) {
+            sb.append(BLANK).append("DEFAULT NULL");
+        } else {
+            sb.append(BLANK).append("NOT NULL");
+        }
+    }
+
 }

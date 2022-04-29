@@ -1,8 +1,8 @@
 package com.qk.dm.dataquery;
 
-import com.qk.dm.dataquery.domain.Mapper;
-import com.qk.dm.dataquery.domain.MapperSelect;
-import com.qk.dm.dataquery.domain.ResultMap;
+import com.qk.dm.dataquery.model.Mapper;
+import com.qk.dm.dataquery.model.MapperSelect;
+import com.qk.dm.dataquery.model.ResultMap;
 import com.qk.dm.dataquery.util.MapperUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.util.DriverDataSource;
@@ -17,9 +17,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
@@ -27,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DmDataServiceQueryApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class SqlSessionFactoryTest {
@@ -71,8 +68,8 @@ class SqlSessionFactoryTest {
                                 .type("HashMap")
                                 .result(List.of(
                                         //todo 此处为页面配置持久化关系映射
-                                        new ResultMap.Result("id", "cc", "Integer"),
-                                        new ResultMap.Result("name", "nn", "String")
+                                        new ResultMap.Result("id", "cc"),
+                                        new ResultMap.Result("name", "nn")
                                 )).build()
                 ))
                 .build();

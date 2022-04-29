@@ -1,8 +1,18 @@
 package com.qk.dm.dataingestion.strategy;
 
+import cn.hutool.db.Db;
+import cn.hutool.db.ds.simple.SimpleDataSource;
+import com.qk.dam.sqlbuilder.SqlBuilderFactory;
+import com.qk.dam.sqlbuilder.model.Column;
+import com.qk.dam.sqlbuilder.model.Table;
+import com.qk.dm.dataingestion.enums.IngestionType;
+import com.qk.dm.dataingestion.model.DataSourceServer;
 import com.qk.dm.dataingestion.model.DataxChannel;
-import com.qk.dm.dataingestion.model.IngestionType;
+import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface DataxJson {
     /**
@@ -21,4 +31,45 @@ public interface DataxJson {
 
 
     IngestionType ingestionType();
+
+
+    /**
+     * 自动创建表
+     * @param dataSourceServer
+     */
+    default void createTable(String jdbcUrl,DataSourceServer dataSourceServer,String sqlScript){
+        try {
+            getDb(jdbcUrl,dataSourceServer).execute(sqlScript);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    /**
+     * 组装建表SQL语句
+     * @param tableName
+     * @param columnList
+     * @return
+     */
+    default String generateSql(String tableName,List<ColumnVO.Column> columnList){
+        List<Column> columns = new ArrayList<>();
+        columnList.forEach(column->{
+            columns.add(Column.builder().name(column.getName())
+                    .dataType(column.getDataType()).build());
+        });
+        return SqlBuilderFactory.creatTableSQL(
+                Table.builder()
+                        .name(tableName)
+                        .columns(columns).build());
+    }
+
+
+    default Db getDb(String jdbcUrl,DataSourceServer dataSourceServer){
+        return Db.use(
+                new SimpleDataSource(
+                        jdbcUrl,
+                        dataSourceServer.getUserName(),
+                        dataSourceServer.getPassword(),
+                        dataSourceServer.getDriverInfo()));
+    }
 }

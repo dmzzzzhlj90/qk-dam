@@ -20,64 +20,106 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class DsDatasourceVO {
-  /** 数据源主键id */
-  private String id;
+    /**
+     * 数据源主键id
+     */
+    private Long id;
 
-  /** 数据源名称（返回值显示） */
-  @NotBlank(message = "连接名称不为空")
-  private String dataSourceName;
+    /**
+     * 数据源名称（返回值显示）
+     */
+    @NotBlank(message = "连接名称不为空")
+    private String dataSourceName;
 
-  /** 所属系统（返回值显示） */
-  private String homeSystem;
+    /**
+     * 数据源标识id
+     */
+//    @NotBlank(message = "数据源标识id不为空")
+    private String connId;
 
-  /** 数据源连接信息（返回值显示） */
-  @NotBlank(message = "数据源连接值")
-  private Object connectBasicInfo;
+    /**
+     * 所属系统（返回值显示）
+     */
+    private String homeSystem;
 
-  /** 连接方式 （返回值显示） */
-  @NotBlank(message = "连接方式")
-  private String linkType;
+    /**
+     * 数据源连接信息（返回值显示）
+     */
+    @NotBlank(message = "数据源连接值")
+    private Object connectBasicInfo;
 
-  /** 标签（名称用逗号隔开） */
-  private String tagNames;
+    /**
+     * 连接方式 （返回值显示）
+     */
+    @NotBlank(message = "连接方式")
+    private String linkType;
 
-  /** 标签id组合（ID用逗号隔开） */
-  private String tagIds;
+    /**
+     * 标签（名称用逗号隔开）
+     */
+    private String tagNames;
 
-  /** 用途 */
-  private String use;
+    /**
+     * 标签id组合（ID用逗号隔开）
+     */
+    private String tagIds;
 
-  /** 部署地 */
-  private String deployPlace;
+    /**
+     * 用途
+     */
+    private String use;
 
-  /** 状态设置状态值 */
-  private Integer status;
+    /**
+     * 部署地
+     */
+    private String deployPlace;
 
-  /** 修改时间 （返回值显示） */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date gmtModified;
+    /**
+     * 状态设置状态值
+     */
+    private Integer status;
 
-  /** 创建时间（返回值显示） */
-  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  private Date gmtCreate;
+    /**
+     * 修改时间 （返回值显示）
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date gmtModified;
 
-  /** 创建人id（后期设置为必填）（返回值显示） */
-  private String createUserid;
+    /**
+     * 创建时间（返回值显示）
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date gmtCreate;
 
-  /** 修改人id */
-  private String updateUserid;
+    /**
+     * 创建人id（后期设置为必填）（返回值显示）
+     */
+    private String createUserid;
 
-  /** 删除标识(0-保留 1-删除，后期设置为非空，默认为0) */
-  private Integer delFlag;
+    /**
+     * 修改人id
+     */
+    private String updateUserid;
 
-  /** 多租户标识 */
-  private String versionConsumer;
+    /**
+     * 删除标识(0-保留 1-删除，后期设置为非空，默认为0)
+     */
+    private Integer delFlag;
 
-  /** 目录归属id */
-  private String dicId;
+    /**
+     * 多租户标识
+     */
+    private String versionConsumer;
 
-  /** 备注 */
-  private String remark;
+    /**
+     * 目录归属id
+     */
+    private String dicId;
+
+    /**
+     * 备注
+     */
+    private String remark;
 }

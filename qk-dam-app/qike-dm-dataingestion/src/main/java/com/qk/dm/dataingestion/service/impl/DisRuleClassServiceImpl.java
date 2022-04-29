@@ -11,11 +11,17 @@ import com.qk.dm.dataingestion.vo.DisRuleClassVO;
 import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+/**
+ * 作业高级属性接口
+ * @author wangzp
+ * @date 2022/04/09 11:29
+ * @since 1.0.0
+ */
 @Service
 public class DisRuleClassServiceImpl implements DisRuleClassService {
 
@@ -63,15 +69,18 @@ public class DisRuleClassServiceImpl implements DisRuleClassService {
     }
 
     @Override
-    public void delete(String id) {
-       DisRuleClassification disRuleClassification = disRuleClassificationRepository.findById(Long.parseLong(id)).orElse(null);
-       if(Objects.isNull(disRuleClassification)){
-           throw new BizException("当前要删除的规则目录id:" + id + " 的数据，不存在！！！");
+    public void delete(String ids) {
+        List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
+        List<DisRuleClassification> list = disRuleClassificationRepository.findAllById(idList);
+       if(CollectionUtils.isEmpty(list)){
+           throw new BizException("当前要删除的规则目录id:" + ids + " 的数据，不存在！！！");
        }
-        deleteChildren(disRuleClassification.getId(),disRuleClassification.getDirId());
+        list.forEach(e->deleteChildren(e.getId(),e.getDirId()));
     }
 
     private void deleteChildren(Long id,String parentId){
+        DisRuleClassification disRuleClassification = disRuleClassificationRepository.findById(id).orElse(null);
+        if(Objects.isNull(disRuleClassification)){return;}
         disRuleClassificationRepository.deleteById(id);
        List<DisRuleClassification>  childrenList = disRuleClassificationRepository.findAllByParentId(parentId);
         if(CollectionUtils.isEmpty(childrenList)){

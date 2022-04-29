@@ -22,5 +22,6 @@ public interface DisSchedulerConfigMapper {
 
     DisSchedulerConfigVO of(DisSchedulerConfig disSchedulerConfig);
 
-    List<DisSchedulerConfigVO> listVO(List<DisSchedulerConfig> disSchedulerConfigList);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void of(DisSchedulerConfigVO disSchedulerConfigVO, @MappingTarget DisSchedulerConfig disSchedulerConfig);
 }

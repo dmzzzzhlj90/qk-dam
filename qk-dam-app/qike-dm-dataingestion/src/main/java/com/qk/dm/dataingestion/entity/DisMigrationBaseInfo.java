@@ -186,7 +186,7 @@ public class DisMigrationBaseInfo implements Serializable {
      * 状态 0未运行 1运行中2运行成功3失败
      */
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private Integer status =0;
 
     /**
      * 创建人

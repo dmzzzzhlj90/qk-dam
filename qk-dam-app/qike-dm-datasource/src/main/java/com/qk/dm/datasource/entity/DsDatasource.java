@@ -11,78 +11,122 @@ import java.util.Date;
 @Table(name = "qk_ds_datasource")
 public class DsDatasource implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /** 主键ID */
-  @Id
-  @Column(name = "id", nullable = false)
-  private String id;
+    /**
+     * 主键ID
+     */
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  /** 连接名称 */
-  @Column(name = "data_source_name", nullable = false)
-  private String dataSourceName;
+    /**
+     * 数据源标识id
+     */
+    @Column(name = "conn_id", nullable = false)
+    private String connId;
 
-  /** 所属系统 */
-  @Column(name = "home_system", nullable = false)
-  private String homeSystem;
+    /**
+     * 连接名称
+     */
+    @Column(name = "data_source_name", nullable = false)
+    private String dataSourceName;
 
-  /** 连接方式 */
-  @Column(name = "link_type")
-  private String linkType;
+    /**
+     * 所属系统
+     */
+    @Column(name = "home_system")
+    private String homeSystem;
 
-  /** 标签（名称用逗号隔开） */
-  @Column(name = "tag_names")
-  private String tagNames;
+    /**
+     * 连接方式
+     */
+    @Column(name = "link_type")
+    private String linkType;
 
-  /** 标签id组合（ID用逗号隔开） */
-  @Column(name = "tag_ids")
-  private String tagIds;
+    /**
+     * 标签（名称用逗号隔开）
+     */
+    @Column(name = "tag_names")
+    private String tagNames;
 
-  /** 用途 */
-  @Column(name = "purpose")
-  private String purpose;
+    /**
+     * 标签id组合（ID用逗号隔开）
+     */
+    @Column(name = "tag_ids")
+    private String tagIds;
 
-  /** 部署地 */
-  @Column(name = "deploy_place")
-  private String deployPlace;
+    /**
+     * 用途
+     */
+    @Column(name = "purpose")
+    private String purpose;
 
-  /** 状态设置状态值 */
-  @Column(name = "status")
-  private Integer status;
+    /**
+     * 部署地
+     */
+    @Column(name = "deploy_place")
+    private String deployPlace;
 
-  /** 创建时间（后期设置为必填值） */
-  @Column(name = "gmt_create")
-  private Date gmtCreate;
+    /**
+     * 状态设置状态值
+     */
+    @Column(name = "status")
+    private Integer status;
 
-  /** 修改时间 */
-  @Column(name = "gmt_modified")
-  private Date gmtModified;
+    /**
+     * 创建时间（后期设置为必填值）
+     */
+    @Column(name = "gmt_create")
+    private Date gmtCreate;
 
-  /** 创建人id（后期设置为必填） */
-  @Column(name = "create_userid")
-  private String createUserid;
+    /**
+     * 修改时间
+     */
+    @Column(name = "gmt_modified")
+    private Date gmtModified;
 
-  /** 修改人id */
-  @Column(name = "update_userid")
-  private String updateUserid;
+    /**
+     * 创建人id（后期设置为必填）
+     */
+    @Column(name = "create_userid")
+    private String createUserid;
 
-  /** 删除标识(0-保留 1-删除，后期设置为非空，默认为0) */
-  @Column(name = "del_flag")
-  private Integer delFlag;
+    /**
+     * 修改人id
+     */
+    @Column(name = "update_userid")
+    private String updateUserid;
 
-  /** 多租户标识 */
-  @Column(name = "tenant_identification")
-  private String tenantIdentification;
+    /**
+     * 删除标识(0-保留 1-删除，后期设置为非空，默认为0)
+     */
+    @Column(name = "del_flag")
+    private Integer delFlag;
 
-  /** 目录归属id */
-  @Column(name = "dic_id", nullable = false)
-  private String dicId;
+    /**
+     * 多租户标识
+     */
+    @Column(name = "tenant_identification")
+    private String tenantIdentification;
 
-  /** 数据 源连接值 */
-  @Column(name = "data_source_values")
-  private String dataSourceValues;
+    /**
+     * 目录归属id
+     */
+    @Column(name = "dic_id", nullable = false)
+    private String dicId;
 
-  /** 备注 */
-  @Column(name = "remark")
-  private String remark;
+    /**
+     * 数据 源连接值
+     */
+    @Column(name = "data_source_values")
+    private String dataSourceValues;
+
+    /**
+     * 备注
+     */
+    @Column(name = "remark")
+    private String remark;
+
 }

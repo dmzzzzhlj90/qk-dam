@@ -15,7 +15,7 @@ ext {
 }
 dependencies {
     implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
-    implementation 'com.github.jsqlparser:jsqlparser:4.3'
+    implementation 'com.github.jsqlparser:jsqlparser:4.4'
     implementation group: 'mysql', name: 'mysql-connector-java',version: '8.0.25'
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "ch.qos.logback:logback-core:$logback_version"

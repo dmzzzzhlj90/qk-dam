@@ -4,6 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.DataBaseService;
 import com.qk.dm.datacollect.service.DctDataSourceService;
+import com.qk.dm.datacollect.vo.DctTableDataVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -64,7 +65,7 @@ public class DctDataBaseController {
    * @return DefaultCommonResult<List<String>> 表信息
    */
   @GetMapping("/connect/table")
-  public DefaultCommonResult<List<String>> getResultTable(@NotBlank @RequestParam String dataSourceId,@NotBlank @RequestParam String databaseName) {
+  public DefaultCommonResult<List<DctTableDataVO>> getResultTable(@NotBlank @RequestParam String dataSourceId,@NotBlank @RequestParam String databaseName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultTable(dataSourceId,databaseName));
   }
 

@@ -1,8 +1,5 @@
 package com.qk.dam.redis.config;
 
-import static io.lettuce.core.ReadFrom.REPLICA_PREFERRED;
-
-import java.util.stream.Collectors;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -14,6 +11,10 @@ import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
+
+import java.util.stream.Collectors;
+
+import static io.lettuce.core.ReadFrom.REPLICA_PREFERRED;
 
 /**
  * 配置连接redis的连接工厂配置

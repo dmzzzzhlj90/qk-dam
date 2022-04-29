@@ -2,8 +2,11 @@ package com.qk.dam.commons.enums;
 
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 数据类型
@@ -54,8 +57,8 @@ public enum DataTypeEnum {
      */
     OTHER_TYPE("OTHER_TYPE", "其他数据类型(OTHER_TYPE)");
 
-    private String code;
-    private String value;
+    private final String code;
+    private final String value;
 
     DataTypeEnum(String code, String value) {
         this.code = code;
@@ -80,6 +83,10 @@ public enum DataTypeEnum {
             val.put(enums.code, enums.value);
         }
         return val;
+    }
+
+    public static List<DataTypeEnum> getList(){
+        return Arrays.stream(values()).collect(Collectors.toList());
     }
 
     public String getCode() {
