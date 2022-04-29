@@ -20,7 +20,7 @@ import javax.validation.Valid;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/dolphin/process")
+@RequestMapping("/scheduler")
 public class DctDolphinController {
     private final DctDolphinService dctDolphinService;
 
@@ -82,7 +82,7 @@ public class DctDolphinController {
      * @param code
      * @return DefaultCommonResult
      */
-    @PostMapping("/runing/{code}")
+    @PostMapping("/{code}/runing")
     public DefaultCommonResult runing(@PathVariable Long code) {
         dctDolphinService.runing(code);
         return DefaultCommonResult.success();
