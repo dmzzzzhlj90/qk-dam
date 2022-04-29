@@ -27,19 +27,16 @@ public class DctSchedulerRulesVO {
     /**
      * 适用引擎 MYSQL HIVE ORACLE
      */
-    @NotBlank(message = "适用引擎不能为空！")
     private String engineType;
 
     /**
      * 数据连接
      */
-    @NotBlank(message = "数据连接不能为空！")
     private String dataSourceName;
 
     /**
      * 数据库名称
      */
-    @NotBlank(message = "数据库名称不能为空！")
     private String databaseName;
 
     /**
@@ -70,13 +67,11 @@ public class DctSchedulerRulesVO {
     /**
      * 采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）
      */
-    @NotBlank(message = "元数据策略不能为空！")
     private String strategy;
 
     /**
      * 数据源Id
      */
-    @NotBlank(message = "数据源Id不能为空！")
     private String dataSourceId;
 
     /**
