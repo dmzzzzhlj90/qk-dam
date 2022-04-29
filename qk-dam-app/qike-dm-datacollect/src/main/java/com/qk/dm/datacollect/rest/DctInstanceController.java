@@ -21,7 +21,7 @@ import java.util.Date;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/dolphin")
+@RequestMapping("/scheduler")
 public class DctInstanceController {
     private final DctInstanceService dctInstanceService;
 
@@ -70,7 +70,7 @@ public class DctInstanceController {
      * @param dctTaskInstanceParamsVO
      * @return DefaultCommonResult<PageResultVO < DctTaskInstanceVO>>
      */
-    @PostMapping("/task/list")
+    @PostMapping("/task/page/list")
     public DefaultCommonResult<PageResultVO<DctTaskInstanceVO>> searchTask(@RequestBody DctTaskInstanceParamsVO dctTaskInstanceParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dctInstanceService.searchTask(dctTaskInstanceParamsVO));
     }

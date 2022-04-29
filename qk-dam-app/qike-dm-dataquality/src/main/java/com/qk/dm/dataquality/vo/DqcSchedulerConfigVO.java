@@ -30,7 +30,7 @@ public class DqcSchedulerConfigVO {
   @NotBlank(message = "作业id不能为空！")
   private String jobId;
 
-  /** 调度执行方式 "SCHEDULER_TYPE_SINGLE":"单次调度" "SCHEDULER_TYPE_CYCLE":周期调度; */
+  /** 调度执行方式 "SINGLE":"单次调度" "CYCLE":周期调度; */
   @NotBlank(message = "调度执行方式不能为空！")
   private String schedulerType;
 
