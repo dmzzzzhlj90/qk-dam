@@ -4,7 +4,6 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.BeanMapUtils;
 import lombok.Data;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -48,13 +47,11 @@ public class DctSchedulerBasicInfoVO {
     /**
      * 调度_规则信息
      */
-    @Valid
     private DctSchedulerRulesVO schedulerRules;
 
     /**
      * 调度_配置信息
      */
-    @Valid
     private DctSchedulerConfigVO schedulerConfig;
 
     /**

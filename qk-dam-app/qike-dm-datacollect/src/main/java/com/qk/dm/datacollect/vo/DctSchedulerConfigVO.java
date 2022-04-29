@@ -28,7 +28,7 @@ import java.util.Objects;
 public class DctSchedulerConfigVO {
 
     /**
-     * 调度执行方式 "SCHEDULER_TYPE_SINGLE":"单次调度" "SCHEDULER_TYPE_CYCLE":周期调度;
+     * 调度执行方式 "SINGLE":"单次调度" "CYCLE":周期调度;
      */
     @NotBlank(message = "调度执行方式不能为空！")
     private String schedulerType;
@@ -36,19 +36,16 @@ public class DctSchedulerConfigVO {
     /**
      * 有效日期开始
      */
-    @NotBlank(message = "有效日期不能为空！")
     private String effectiveTimeStart;
 
     /**
      * 有效日期结束
      */
-    @NotBlank(message = "有效日期不能为空！")
     private String effectiveTimeEnt;
 
     /**
      * 调度周期 分钟 小时 天 周
      */
-    @NotBlank(message = "调度周期不能为空！")
     private String schedulerCycle;
 
     /**
