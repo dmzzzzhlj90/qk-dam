@@ -1,2 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.dolphinscheduler.http.DolphinschedulerHttpAutoConfiguration
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+#  com.dolphinscheduler.http.DolphinschedulerHttpAutoConfiguration

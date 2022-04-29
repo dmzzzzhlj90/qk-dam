@@ -1,8 +1,8 @@
-{"properties": [
-  {
-    "name": "dolphinscheduler.http.enabled",
-    "type": "java.lang.Boolean",
-    "defaultValue": false,
-    "description": "dolphinscheduler http"
-  }
-]}
+//{"properties": [
+//  {
+//    "name": "dolphinscheduler.http.enabled",
+//    "type": "java.lang.Boolean",
+//    "defaultValue": false,
+//    "description": "dolphinscheduler http"
+//  }
+//]}
