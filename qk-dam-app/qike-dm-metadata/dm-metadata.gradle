@@ -43,7 +43,7 @@ dependencies {
     implementation project(":dam-log")
     implementation project(":metadata-common-core")
     implementation 'com.alibaba:easyexcel:3.0.5'
-//    compile project(":qk-authorization")
+//    api project(":qk-authorization")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"

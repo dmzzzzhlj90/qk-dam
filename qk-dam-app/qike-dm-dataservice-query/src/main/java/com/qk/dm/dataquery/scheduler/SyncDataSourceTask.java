@@ -37,7 +37,7 @@ public class SyncDataSourceTask {
   private final DataBaseService dataBaseService;
   private final ApplicationEventPublisher publisher;
 
-  @Scheduled(cron = "0/30 * * * * ? ")
+  @Scheduled(cron = "0/50 * * * * ? ")
   public void syncLastUpdate() {
     DefaultCommonResult<List<DataQueryInfoVO>> listDefaultCommonResult =
         dataQueryInfoFeign.dataQueryInfoLast(mybatisMapperContainer.getDsLastDasCreateApi());

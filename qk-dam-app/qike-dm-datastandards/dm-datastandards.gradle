@@ -49,7 +49,7 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
 //    implementation "com.github.ben-manes.caffeine:caffeine"
-//    compile project(":qk-authorization")
+//    api project(":qk-authorization")
 
     implementation 'com.alibaba:easyexcel'
     implementation 'org.mapstruct:mapstruct'

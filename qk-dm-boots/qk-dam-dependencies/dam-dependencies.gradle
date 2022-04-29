@@ -67,12 +67,3 @@ dependencies {
     }
 }
 
-publishing {
-    publications {
-        //以下maven并非关键字，可自定义
-        maven(MavenPublication) {
-            //通过java-platform生成BOM
-            from components.javaPlatform
-        }
-    }
-}

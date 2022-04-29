@@ -1,12 +1,13 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${damProfilesActive}-v${dmDatastandardsVersion}"
 group "com.dolphinscheduler"
 
 dependencies {
-    compile project(":dolphinscheduler-client")
+    api project(":dolphinscheduler-client")
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot'
@@ -21,7 +22,9 @@ compileJava {
         ]
     }
 }
-
+bootJar {
+    enabled = false
+}
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"

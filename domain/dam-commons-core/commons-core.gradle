@@ -1,14 +1,15 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.commons"
 dependencies {
-    compile "org.slf4j:slf4j-api"
-    compile 'org.projectlombok:lombok'
-    compile group: 'com.google.code.gson', name: 'gson'
-    compile 'joda-time:joda-time:2.10.14'
-    compile 'javax.servlet:javax.servlet-api'
+    api "org.slf4j:slf4j-api"
+    api 'org.projectlombok:lombok'
+    api group: 'com.google.code.gson', name: 'gson'
+    api 'joda-time:joda-time:2.10.14'
+    api 'javax.servlet:javax.servlet-api'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     implementation 'org.springframework:spring-web'
     implementation 'org.springframework:spring-context'

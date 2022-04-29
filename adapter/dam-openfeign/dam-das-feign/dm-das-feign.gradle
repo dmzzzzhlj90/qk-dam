@@ -1,13 +1,13 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dm"
 
 dependencies {
-    compile project(":commons-core")
-    compile project(":qk-dataservice-common")
+    api project(":commons-core")
+    api project(":qk-dataservice-common")
 
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"

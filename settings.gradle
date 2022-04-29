@@ -3,6 +3,7 @@ pluginManagement {
         repositories {
             maven {
                 url = "${nexusRepositories}"
+                allowInsecureProtocol=true
                 credentials {
                     username = "${nexusUsername}"
                     password = "${nexusPassword}"
@@ -31,6 +32,7 @@ pluginManagement {
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven {
             url = "${nexusRepositories}"
+            allowInsecureProtocol=true
             credentials {
                 username = "${nexusUsername}"
                 password = "${nexusPassword}"

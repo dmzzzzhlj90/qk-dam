@@ -1,11 +1,12 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.log"
 
 dependencies {
-    compile 'net.logstash.logback:logstash-logback-encoder'
+    api 'net.logstash.logback:logstash-logback-encoder'
     implementation 'javax.servlet:javax.servlet-api'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

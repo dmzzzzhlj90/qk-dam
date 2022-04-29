@@ -85,7 +85,6 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
-
 smartdoc {
     configFile = file("src/main/resources/smart-doc.json")
 }

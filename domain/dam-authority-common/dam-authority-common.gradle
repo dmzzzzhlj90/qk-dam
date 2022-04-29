@@ -1,5 +1,6 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.authority.common"
@@ -21,7 +22,7 @@ dependencies {
     implementation project(":commons-core")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compile group: 'org.projectlombok', name: 'lombok'
+    api group: 'org.projectlombok', name: 'lombok'
     implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '17.0.0'
     implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1.1'
     implementation 'org.mapstruct:mapstruct'

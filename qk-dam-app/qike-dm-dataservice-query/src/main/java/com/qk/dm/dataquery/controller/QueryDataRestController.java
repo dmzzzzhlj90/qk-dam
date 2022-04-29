@@ -39,7 +39,6 @@ public class QueryDataRestController {
     // todo 需要判断是否需要分页
     List<Object> objects = sqlSession.selectList(apiId, getMybatisDataParam(httpDataParamModel),new RowBounds(1, 10));
 
-    sqlSession.close();
     return objects;
   }
   @PostMapping("/app/query/one")
@@ -52,7 +51,6 @@ public class QueryDataRestController {
 
     Object objects = sqlSession.selectOne(apiId, getMybatisDataParam(httpDataParamModel));
 
-    sqlSession.close();
     return objects;
   }
 

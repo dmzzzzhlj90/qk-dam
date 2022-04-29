@@ -1,15 +1,16 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.jpa"
 dependencies {
-    compile 'org.springframework.data:spring-data-jpa'
-    compile group: 'org.hibernate', name: 'hibernate-core'
-    compile "com.querydsl:querydsl-core:5.0.0"
-    compile "com.querydsl:querydsl-jpa:5.0.0"
+    api 'org.springframework.data:spring-data-jpa'
+    api group: 'org.hibernate', name: 'hibernate-core'
+    api "com.querydsl:querydsl-core:5.0.0"
+    api "com.querydsl:querydsl-jpa:5.0.0"
     implementation 'javax.persistence:javax.persistence-api:2.2'
-    compile project(":qk-datasource")
+    api project(":qk-datasource")
     implementation 'org.springframework:spring-context'
 }
 

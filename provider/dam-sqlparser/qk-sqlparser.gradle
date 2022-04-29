@@ -1,11 +1,12 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.sqlparser"
 
 dependencies {
-    compile project(":commons-core")
+    api project(":commons-core")
     implementation 'com.github.jsqlparser:jsqlparser'
     implementation group: 'org.projectlombok', name: 'lombok'
     implementation 'org.springframework.boot:spring-boot-starter-web'

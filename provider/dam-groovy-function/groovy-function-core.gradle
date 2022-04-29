@@ -1,22 +1,22 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'groovy'
-    id 'java'
+    id 'java-library'
     id 'idea'
 }
 sourceSets {
     main {
         java { srcDirs = [] }    // no source dirs for the java compiler
-        groovy { srcDirs = ["src/main/java", "src/main/groovy"] }  // compile   everything in src/ with groovy
+        groovy { srcDirs = ["src/main/java", "src/main/groovy"] }  // api   everything in src/ with groovy
     }
 }
 version "${commonLibVersion}"
 group "com.qk.dam.groovy.function"
 dependencies {
-    compile group: 'org.projectlombok', name: 'lombok'
+    api group: 'org.projectlombok', name: 'lombok'
     implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
-    implementation 'org.codehaus.groovy:groovy-all:3.0.5'
-    implementation group: 'org.codehaus.groovy', name: 'groovy-dateutil', version: '3.0.5'
+    implementation 'org.apache.groovy:groovy-all:4.0.2'
+    implementation group: 'org.apache.groovy', name: 'groovy-dateutil', version: '4.0.2'
 
 
     annotationProcessor 'org.projectlombok:lombok'

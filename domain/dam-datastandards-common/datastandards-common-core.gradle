@@ -1,12 +1,12 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.datastandards.common"
 dependencies {
-    compile group: 'org.projectlombok', name: 'lombok'
-    compile project(":commons-core")
+    api group: 'org.projectlombok', name: 'lombok'
+    api project(":commons-core")
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'

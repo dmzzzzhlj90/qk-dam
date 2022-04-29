@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
+    id 'java-library'
 }
 version "${damProfilesActive}-v${dmDatastandardsVersion}"
 group "com.qk.dm.datamodel"
@@ -43,14 +44,14 @@ dependencies {
     implementation project(":qk-sqlbuilder")
     implementation project(":datasource-common-core")
     implementation project(":datastandards-common-core")
-    //compile project(":qk-authorization")
+    //api project(":qk-authorization")
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
-    compile('org.apache.hive:hive-jdbc:3.1.2'){
+    api('org.apache.hive:hive-jdbc:3.1.2'){
         exclude group: '*'
     }
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

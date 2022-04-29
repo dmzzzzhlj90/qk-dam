@@ -1,15 +1,16 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.mybatisplus"
 dependencies {
     implementation project(":qk-datasource")
-    compile "com.baomidou:mybatis-plus"
+    api "com.baomidou:mybatis-plus"
     implementation "org.springframework.boot:spring-boot"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     implementation "org.springframework.cloud:spring-cloud-context"
-    compile 'org.projectlombok:lombok'
+    api 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }
 

@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
+    id 'java-library'
 }
 version "${damProfilesActive}-v${dmDatastandardsVersion}"
 group "com.qk.dm.dataquery"
@@ -23,7 +24,7 @@ docker {
         baseImage = "${jre11Image}"
         ports = [8788]
         images = ["${imagePush}/${project.name}:${version}"]
-        jvmArgs = ['-Xmx248m']
+        jvmArgs = ['-Xmx512m -Xmx128m']
     }
 }
 dependencies {
@@ -45,12 +46,12 @@ dependencies {
     implementation project(":dam-boot-cache-starter")
 
     implementation 'org.mybatis:mybatis:3.5.9'
-    compile 'com.github.pagehelper:pagehelper:5.3.0'
+    api 'com.github.pagehelper:pagehelper:5.3.0'
 
     implementation 'org.mapstruct:mapstruct'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+    api 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")

@@ -1,14 +1,15 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dam.cache"
 dependencies {
-    compile project(":qk-data-redis")
-    compile project(":qk-cache-common")
+    api project(":qk-data-redis")
+    api project(":qk-cache-common")
     implementation 'org.projectlombok:lombok'
     implementation "org.springframework.boot:spring-boot-starter-cache"
-    compile group: 'com.github.ben-manes.caffeine', name: 'caffeine'
+    api group: 'com.github.ben-manes.caffeine', name: 'caffeine'
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     implementation group: 'org.springframework', name: 'spring-context-support'
 

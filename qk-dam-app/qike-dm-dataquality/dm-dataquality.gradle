@@ -2,7 +2,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
-    id 'java'
+    id 'java-library'
 }
 
 version "${dmDataqualityVersion}"

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.qk.dm.dataquery.model.ResultMap;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @SpringBootTest(classes = SpringBootTestContextBootstrapper.class)
 @Slf4j
+@Disabled
 class ResultMapTest {
     @Test
     void resultBuildTest() throws JsonProcessingException {

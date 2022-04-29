@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Map;
@@ -28,10 +29,10 @@ public class HttpDataParamModel {
     public String toString() {
         return "{" +
                 "apiId='" + apiId + '\'' +
-                ", params=" + params +
-                ", uriPathParam=" + uriPathParam +
-                ", body=" + body +
-                ", method=" + method +
+                (ObjectUtils.isEmpty(params)?", params=" + params:"")+
+                (ObjectUtils.isEmpty(uriPathParam)?", uriPathParam=" + uriPathParam:"")+
+                (ObjectUtils.isEmpty(body)?", body=" + body:"")+
+                (ObjectUtils.isEmpty(method)?", method=" + method:"")+
                 '}';
     }
 }

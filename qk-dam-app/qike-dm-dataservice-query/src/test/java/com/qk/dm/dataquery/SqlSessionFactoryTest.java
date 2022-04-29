@@ -13,10 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.ByteArrayInputStream;
@@ -27,6 +24,7 @@ import java.util.Properties;
 
 @SpringBootTest(classes = DmDataServiceQueryApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
+@Disabled
 class SqlSessionFactoryTest {
 
     static final HikariDataSource hikariDataSource = new HikariDataSource();

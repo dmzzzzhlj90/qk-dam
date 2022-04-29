@@ -21,15 +21,13 @@ docker {
     }
     springBootApplication {
         baseImage = "${jre11Image}"
-        ports = [8788]
+        ports = [8888]
         images = ["${imagePush}/${project.name}:${version}"]
-        jvmArgs = ['-Xmx248m']
+        jvmArgs = ['-Xmx512m -Xmx128m']
     }
 }
 dependencies {
-    implementation project(":dam-mvc-validation")
     implementation project(":dam-log")
-
     implementation project(":qk-dataservice-rest-common")
     implementation project(":dm-das-feign")
     implementation project(":dm-das-query-feign")

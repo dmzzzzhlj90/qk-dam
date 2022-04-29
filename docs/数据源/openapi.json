@@ -1855,7 +1855,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": \"104\",\n  \"dicName\": \"thaddeus.shanahan\",\n  \"parentId\": \"104\",\n  \"dsDirCode\": \"50197\",\n  \"gmtCreate\": \"2022-04-28 17:13:26\",\n  \"gmtModified\": \"2022-04-28 17:13:26\",\n  \"createUserid\": \"104\",\n  \"updateUserid\": \"104\",\n  \"delFlag\": 6,\n  \"versionConsumer\": \"k5ly1e\"\n}"
+                  "value": "{\n  \"id\": \"145\",\n  \"dicName\": \"harold.sanford\",\n  \"parentId\": \"145\",\n  \"dsDirCode\": \"64703\",\n  \"gmtCreate\": \"2022-04-29 12:52:07\",\n  \"gmtModified\": \"2022-04-29 12:52:07\",\n  \"createUserid\": \"145\",\n  \"updateUserid\": \"145\",\n  \"delFlag\": 4,\n  \"versionConsumer\": \"hwb78w\"\n}"
                 }
               }
             }
@@ -1872,7 +1872,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"82dee0\",\n  \"tips\": \"dm5422\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"qm8dxa\",\n  \"tips\": \"77hozz\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -1905,7 +1905,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"pzlwh3\",\n  \"tips\": \"nz24qf\",\n  \"data\": [\n    {\n      \"connId\": \"104\",\n      \"dataSourceName\": \"thaddeus.shanahan\",\n      \"homeSystem\": \"gqgtyh\",\n      \"connectBasicInfoJson\": \"nnp745\",\n      \"dbType\": \"iu01db\",\n      \"status\": 981\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"iynex8\",\n  \"tips\": \"l88ylw\",\n  \"data\": [\n    {\n      \"connId\": \"145\",\n      \"dataSourceName\": \"harold.sanford\",\n      \"homeSystem\": \"uzu3d0\",\n      \"connectBasicInfoJson\": \"ydai2s\",\n      \"dbType\": \"7lss1v\",\n      \"status\": 474\n    }\n  ]\n}"
                   }
                 }
               }
@@ -1922,7 +1922,7 @@
             "in": "query",
             "description": "No comments found.,[array of object]",
             "required": true,
-            "example": "huiza2",
+            "example": "tgeq0e",
             "name": "dataSourceNames"
           }
         ]
@@ -1947,7 +1947,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"rb4fgr\",\n  \"tips\": \"2yihls\",\n  \"data\": [\n    \"znocfu\",\n    \"kkfyrr\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"1iw47w\",\n  \"tips\": \"fgcp89\",\n  \"data\": [\n    \"kiehs8\",\n    \"tb59nt\"\n  ]\n}"
                   }
                 }
               }
@@ -1975,7 +1975,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": \"104\",\n  \"dicName\": \"thaddeus.shanahan\",\n  \"parentId\": \"104\",\n  \"dsDirCode\": \"50197\",\n  \"gmtCreate\": \"2022-04-28 17:13:26\",\n  \"gmtModified\": \"2022-04-28 17:13:26\",\n  \"createUserid\": \"104\",\n  \"updateUserid\": \"104\",\n  \"delFlag\": 6,\n  \"versionConsumer\": \"mc5hvl\"\n}"
+                  "value": "{\n  \"id\": \"145\",\n  \"dicName\": \"harold.sanford\",\n  \"parentId\": \"145\",\n  \"dsDirCode\": \"64703\",\n  \"gmtCreate\": \"2022-04-29 12:52:07\",\n  \"gmtModified\": \"2022-04-29 12:52:07\",\n  \"createUserid\": \"145\",\n  \"updateUserid\": \"145\",\n  \"delFlag\": 4,\n  \"versionConsumer\": \"tbvuwo\"\n}"
                 }
               }
             }
@@ -1992,7 +1992,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"qkeghw\",\n  \"tips\": \"j3mf57\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"4k7hph\",\n  \"tips\": \"oerzqy\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2022,7 +2022,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"e3xn8e\",\n  \"tips\": \"f2tk9n\",\n  \"data\": {\n    \"connId\": \"104\",\n    \"dataSourceName\": \"thaddeus.shanahan\",\n    \"homeSystem\": \"3susjb\",\n    \"connectBasicInfoJson\": \"n302eg\",\n    \"dbType\": \"irz4s3\",\n    \"status\": 558\n  }\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"zii0bt\",\n  \"tips\": \"66y1n2\",\n  \"data\": {\n    \"connId\": \"145\",\n    \"dataSourceName\": \"harold.sanford\",\n    \"homeSystem\": \"17uapl\",\n    \"connectBasicInfoJson\": \"f9vp2s\",\n    \"dbType\": \"glo4e5\",\n    \"status\": 851\n  }\n}"
                   }
                 }
               }
@@ -2038,7 +2038,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "104",
+            "example": "145",
             "name": "connId"
           }
         ]
@@ -2061,7 +2061,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"fecrdy\"\n}"
+                  "value": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"5gvk5h\"\n}"
                 }
               }
             }
@@ -2078,7 +2078,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"c83ffi\",\n  \"tips\": \"oizdbf\",\n  \"data\": {\n    \"total\": 858,\n    \"pageNum\": 499,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": \"104\",\n        \"sysName\": \"thaddeus.shanahan\",\n        \"sysShortName\": \"thaddeus.shanahan\",\n        \"area\": \"rx9mwg\",\n        \"itDepartment\": \"2l3nxq\",\n        \"busiDepartment\": \"8ahcyp\",\n        \"importance\": 25,\n        \"leader\": \"mg8gcg\",\n        \"deployPlace\": \"vsah14\",\n        \"gmtCreate\": \"2022-04-28 17:13:26\",\n        \"gmtModified\": \"2022-04-28 17:13:26\",\n        \"createUserid\": 588,\n        \"updateUserid\": 776,\n        \"delFlag\": 6,\n        \"versionConsumer\": \"kt4d7o\",\n        \"sysDesc\": \"zagikp\",\n        \"tagNames\": \"jh2vps\",\n        \"tagIds\": \"uqn0cz\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"s4e0al\",\n  \"tips\": \"rt4pxw\",\n  \"data\": {\n    \"total\": 657,\n    \"pageNum\": 337,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": \"145\",\n        \"sysName\": \"harold.sanford\",\n        \"sysShortName\": \"harold.sanford\",\n        \"area\": \"86sp62\",\n        \"itDepartment\": \"5gtz7w\",\n        \"busiDepartment\": \"mpmnfc\",\n        \"importance\": 47,\n        \"leader\": \"nscy5q\",\n        \"deployPlace\": \"seatya\",\n        \"gmtCreate\": \"2022-04-29 12:52:07\",\n        \"gmtModified\": \"2022-04-29 12:52:07\",\n        \"createUserid\": 454,\n        \"updateUserid\": 538,\n        \"delFlag\": 4,\n        \"versionConsumer\": \"k144da\",\n        \"sysDesc\": \"4ev20a\",\n        \"tagNames\": \"l3r1is\",\n        \"tagIds\": \"ongkum\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -2106,7 +2106,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"kdk8qo\"\n  },\n  \"dataSourceName\": \"thaddeus.shanahan\",\n  \"linkType\": \"p3xdf8\",\n  \"dicId\": \"104\",\n  \"beginDay\": \"waqznr\",\n  \"endDay\": \"w78c2d\"\n}"
+                  "value": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"iza57s\"\n  },\n  \"dataSourceName\": \"harold.sanford\",\n  \"linkType\": \"4np80h\",\n  \"dicId\": \"145\",\n  \"beginDay\": \"4ebbaa\",\n  \"endDay\": \"cc26zs\"\n}"
                 }
               }
             }
@@ -2123,7 +2123,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"49rgxu\",\n  \"tips\": \"q9uz6h\",\n  \"data\": {\n    \"total\": 250,\n    \"pageNum\": 14,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 482,\n        \"dataSourceName\": \"thaddeus.shanahan\",\n        \"connId\": \"104\",\n        \"homeSystem\": \"kwqx3g\",\n        \"connectBasicInfo\": {\n          \"object\": \"anyObject\"\n        },\n        \"linkType\": \"hyy2us\",\n        \"tagNames\": \"3tl5zu\",\n        \"tagIds\": \"k1uyg5\",\n        \"use\": \"nnkg60\",\n        \"deployPlace\": \"fglj44\",\n        \"status\": 116,\n        \"gmtModified\": \"2022-04-28 17:13:26\",\n        \"gmtCreate\": \"2022-04-28 17:13:26\",\n        \"createUserid\": \"104\",\n        \"updateUserid\": \"104\",\n        \"delFlag\": 6,\n        \"versionConsumer\": \"auwjvq\",\n        \"dicId\": \"104\",\n        \"remark\": \"5xl0wr\"\n      }\n    ]\n  }\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"hllpzm\",\n  \"tips\": \"9loakb\",\n  \"data\": {\n    \"total\": 765,\n    \"pageNum\": 163,\n    \"pageSize\": 10,\n    \"list\": [\n      {\n        \"id\": 152,\n        \"dataSourceName\": \"harold.sanford\",\n        \"connId\": \"145\",\n        \"homeSystem\": \"39b5s7\",\n        \"connectBasicInfo\": {\n          \"object\": \"anyObject\"\n        },\n        \"linkType\": \"wztxbz\",\n        \"tagNames\": \"vfd5n2\",\n        \"tagIds\": \"gf74ft\",\n        \"use\": \"guxh0n\",\n        \"deployPlace\": \"mwudkd\",\n        \"status\": 689,\n        \"gmtModified\": \"2022-04-29 12:52:07\",\n        \"gmtCreate\": \"2022-04-29 12:52:07\",\n        \"createUserid\": \"145\",\n        \"updateUserid\": \"145\",\n        \"delFlag\": 4,\n        \"versionConsumer\": \"npcq7z\",\n        \"dicId\": \"145\",\n        \"remark\": \"3fe1ct\"\n      }\n    ]\n  }\n}"
                   }
                 }
               }
@@ -2153,7 +2153,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"ysxl9v\",\n  \"tips\": \"rksmc1\",\n  \"data\": [\n    \"5fa4se\",\n    \"fsq637\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"cud32k\",\n  \"tips\": \"fkmu3v\",\n  \"data\": [\n    \"6owala\",\n    \"7v7vwc\"\n  ]\n}"
                   }
                 }
               }
@@ -2181,7 +2181,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 630,\n  \"dataSourceName\": \"thaddeus.shanahan\",\n  \"connId\": \"104\",\n  \"homeSystem\": \"ovd21n\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"c2d5wt\",\n  \"tagNames\": \"03yznb\",\n  \"tagIds\": \"dj41ji\",\n  \"use\": \"1xosq7\",\n  \"deployPlace\": \"gwgmff\",\n  \"status\": 249,\n  \"gmtModified\": \"2022-04-28 17:13:26\",\n  \"gmtCreate\": \"2022-04-28 17:13:26\",\n  \"createUserid\": \"104\",\n  \"updateUserid\": \"104\",\n  \"delFlag\": 6,\n  \"versionConsumer\": \"b4w4k0\",\n  \"dicId\": \"104\",\n  \"remark\": \"7cfwko\"\n}"
+                  "value": "{\n  \"id\": 621,\n  \"dataSourceName\": \"harold.sanford\",\n  \"connId\": \"145\",\n  \"homeSystem\": \"vun6kl\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"n54t00\",\n  \"tagNames\": \"f0cyws\",\n  \"tagIds\": \"3k29by\",\n  \"use\": \"imyt72\",\n  \"deployPlace\": \"ogz3c5\",\n  \"status\": 208,\n  \"gmtModified\": \"2022-04-29 12:52:07\",\n  \"gmtCreate\": \"2022-04-29 12:52:07\",\n  \"createUserid\": \"145\",\n  \"updateUserid\": \"145\",\n  \"delFlag\": 4,\n  \"versionConsumer\": \"x28qhf\",\n  \"dicId\": \"145\",\n  \"remark\": \"9uqpnb\"\n}"
                 }
               }
             }
@@ -2198,7 +2198,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"d1zlhx\",\n  \"tips\": \"je2zsq\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"us5wzq\",\n  \"tips\": \"ttowx8\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2231,7 +2231,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"mpzmb9\",\n  \"tips\": \"h6eprz\",\n  \"data\": [\n    {\n      \"connId\": \"104\",\n      \"dataSourceName\": \"thaddeus.shanahan\",\n      \"homeSystem\": \"tc1ia2\",\n      \"connectBasicInfoJson\": \"ujz9lz\",\n      \"dbType\": \"tz937o\",\n      \"status\": 634\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"2lod0d\",\n  \"tips\": \"91kmef\",\n  \"data\": [\n    {\n      \"connId\": \"145\",\n      \"dataSourceName\": \"harold.sanford\",\n      \"homeSystem\": \"dmvhqb\",\n      \"connectBasicInfoJson\": \"t9vl0g\",\n      \"dbType\": \"avgrk7\",\n      \"status\": 737\n    }\n  ]\n}"
                   }
                 }
               }
@@ -2248,7 +2248,7 @@
             "in": "query",
             "description": "No comments found.,[array of object]",
             "required": true,
-            "example": "k16v5g",
+            "example": "8k74hp",
             "name": "connIds"
           }
         ]
@@ -2273,7 +2273,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"l2ysia\",\n  \"tips\": \"n8ubpd\",\n  \"data\": {\n    \"connId\": \"104\",\n    \"dataSourceName\": \"thaddeus.shanahan\",\n    \"homeSystem\": \"n0u8s7\",\n    \"connectBasicInfoJson\": \"dvuuj8\",\n    \"dbType\": \"q9htpg\",\n    \"status\": 252\n  }\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"nt7dng\",\n  \"tips\": \"eb44uh\",\n  \"data\": {\n    \"connId\": \"145\",\n    \"dataSourceName\": \"harold.sanford\",\n    \"homeSystem\": \"ji8eii\",\n    \"connectBasicInfoJson\": \"kwhjpd\",\n    \"dbType\": \"v05anl\",\n    \"status\": 775\n  }\n}"
                   }
                 }
               }
@@ -2289,7 +2289,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "thaddeus.shanahan",
+            "example": "harold.sanford",
             "name": "dataSourceName"
           }
         ]
@@ -2314,7 +2314,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"yscm9t\",\n  \"tips\": \"wptqyh\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"pgskje\",\n  \"tips\": \"x35orp\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2330,7 +2330,7 @@
             "in": "path",
             "description": "应用系统id",
             "required": true,
-            "example": "104",
+            "example": "145",
             "name": "id"
           }
         ]
@@ -2353,7 +2353,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": \"104\",\n  \"sysName\": \"thaddeus.shanahan\",\n  \"sysShortName\": \"thaddeus.shanahan\",\n  \"area\": \"lnhxfa\",\n  \"itDepartment\": \"w4sahi\",\n  \"busiDepartment\": \"m4gxbn\",\n  \"importance\": 932,\n  \"leader\": \"hsztl0\",\n  \"deployPlace\": \"x0rfiz\",\n  \"gmtCreate\": \"2022-04-28 17:13:26\",\n  \"gmtModified\": \"2022-04-28 17:13:26\",\n  \"createUserid\": 433,\n  \"updateUserid\": 403,\n  \"delFlag\": 6,\n  \"versionConsumer\": \"6dibqm\",\n  \"sysDesc\": \"ofd0n9\",\n  \"tagNames\": \"gpz3he\",\n  \"tagIds\": \"87r8nc\"\n}"
+                  "value": "{\n  \"id\": \"145\",\n  \"sysName\": \"harold.sanford\",\n  \"sysShortName\": \"harold.sanford\",\n  \"area\": \"g72kjp\",\n  \"itDepartment\": \"ygrdf5\",\n  \"busiDepartment\": \"2av0o5\",\n  \"importance\": 282,\n  \"leader\": \"2ehx1a\",\n  \"deployPlace\": \"4vfdvp\",\n  \"gmtCreate\": \"2022-04-29 12:52:07\",\n  \"gmtModified\": \"2022-04-29 12:52:07\",\n  \"createUserid\": 835,\n  \"updateUserid\": 243,\n  \"delFlag\": 4,\n  \"versionConsumer\": \"4qvef6\",\n  \"sysDesc\": \"ehwcg1\",\n  \"tagNames\": \"ov0mjb\",\n  \"tagIds\": \"x7zklj\"\n}"
                 }
               }
             }
@@ -2370,7 +2370,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"18epwr\",\n  \"tips\": \"22vji1\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"kyi4d3\",\n  \"tips\": \"95wak7\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2400,7 +2400,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"m28q7r\",\n  \"tips\": \"n9rrg7\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"m9k7y9\",\n  \"tips\": \"nxsi55\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2417,7 +2417,7 @@
             "in": "path",
             "description": "数据源id",
             "required": true,
-            "example": "43",
+            "example": "219",
             "name": "id"
           }
         ]
@@ -2440,7 +2440,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"fji9q8\",\n  \"tips\": \"dq68qn\",\n  \"data\": {\n    \"id\": 768,\n    \"dataSourceName\": \"thaddeus.shanahan\",\n    \"connId\": \"104\",\n    \"homeSystem\": \"v8q0on\",\n    \"connectBasicInfo\": {\n      \"object\": \"anyObject\"\n    },\n    \"linkType\": \"ugohts\",\n    \"tagNames\": \"wrfeib\",\n    \"tagIds\": \"88kko3\",\n    \"use\": \"dwuw2t\",\n    \"deployPlace\": \"ygxub6\",\n    \"status\": 374,\n    \"gmtModified\": \"2022-04-28 17:13:26\",\n    \"gmtCreate\": \"2022-04-28 17:13:26\",\n    \"createUserid\": \"104\",\n    \"updateUserid\": \"104\",\n    \"delFlag\": 6,\n    \"versionConsumer\": \"2q7kd8\",\n    \"dicId\": \"104\",\n    \"remark\": \"1e6ghk\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"8ouqzp\",\n  \"tips\": \"ftts25\",\n  \"data\": {\n    \"id\": 533,\n    \"dataSourceName\": \"harold.sanford\",\n    \"connId\": \"145\",\n    \"homeSystem\": \"9hfo3n\",\n    \"connectBasicInfo\": {\n      \"object\": \"anyObject\"\n    },\n    \"linkType\": \"1sye7f\",\n    \"tagNames\": \"b73h0e\",\n    \"tagIds\": \"mn247n\",\n    \"use\": \"5gnush\",\n    \"deployPlace\": \"vwzirl\",\n    \"status\": 296,\n    \"gmtModified\": \"2022-04-29 12:52:07\",\n    \"gmtCreate\": \"2022-04-29 12:52:07\",\n    \"createUserid\": \"145\",\n    \"updateUserid\": \"145\",\n    \"delFlag\": 4,\n    \"versionConsumer\": \"jbnz8n\",\n    \"dicId\": \"145\",\n    \"remark\": \"bn0shp\"\n  }\n}"
                   }
                 }
               }
@@ -2457,7 +2457,7 @@
             "in": "path",
             "description": "数据源名称",
             "required": true,
-            "example": "480",
+            "example": "75",
             "name": "id"
           }
         ]
@@ -2480,7 +2480,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 278,\n  \"dataSourceName\": \"thaddeus.shanahan\",\n  \"connId\": \"104\",\n  \"homeSystem\": \"5k4l43\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"i0pgg2\",\n  \"tagNames\": \"qfckhh\",\n  \"tagIds\": \"85kcbh\",\n  \"use\": \"22fu6t\",\n  \"deployPlace\": \"55u0gy\",\n  \"status\": 527,\n  \"gmtModified\": \"2022-04-28 17:13:26\",\n  \"gmtCreate\": \"2022-04-28 17:13:26\",\n  \"createUserid\": \"104\",\n  \"updateUserid\": \"104\",\n  \"delFlag\": 6,\n  \"versionConsumer\": \"t9g5jp\",\n  \"dicId\": \"104\",\n  \"remark\": \"c7a1ct\"\n}"
+                  "value": "{\n  \"id\": 881,\n  \"dataSourceName\": \"harold.sanford\",\n  \"connId\": \"145\",\n  \"homeSystem\": \"0vcc36\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"bykkny\",\n  \"tagNames\": \"wkl30x\",\n  \"tagIds\": \"gqgsur\",\n  \"use\": \"papkdf\",\n  \"deployPlace\": \"e74h0y\",\n  \"status\": 439,\n  \"gmtModified\": \"2022-04-29 12:52:07\",\n  \"gmtCreate\": \"2022-04-29 12:52:07\",\n  \"createUserid\": \"145\",\n  \"updateUserid\": \"145\",\n  \"delFlag\": 4,\n  \"versionConsumer\": \"v9ul5u\",\n  \"dicId\": \"145\",\n  \"remark\": \"rgtcnb\"\n}"
                 }
               }
             }
@@ -2497,7 +2497,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"pye2wp\",\n  \"tips\": \"3j4qa2\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"80ojvb\",\n  \"tips\": \"hxqm5x\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2523,7 +2523,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": 214,\n  \"dataSourceName\": \"thaddeus.shanahan\",\n  \"connId\": \"104\",\n  \"homeSystem\": \"i7npvc\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"jescun\",\n  \"tagNames\": \"lt2le2\",\n  \"tagIds\": \"j7fop2\",\n  \"use\": \"xrgkow\",\n  \"deployPlace\": \"j4o7pm\",\n  \"status\": 162,\n  \"gmtModified\": \"2022-04-28 17:13:26\",\n  \"gmtCreate\": \"2022-04-28 17:13:26\",\n  \"createUserid\": \"104\",\n  \"updateUserid\": \"104\",\n  \"delFlag\": 6,\n  \"versionConsumer\": \"j1rdfk\",\n  \"dicId\": \"104\",\n  \"remark\": \"095mlz\"\n}"
+                  "value": "{\n  \"id\": 127,\n  \"dataSourceName\": \"harold.sanford\",\n  \"connId\": \"145\",\n  \"homeSystem\": \"w2va3e\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"jk45sp\",\n  \"tagNames\": \"oc3tjc\",\n  \"tagIds\": \"tfcac5\",\n  \"use\": \"wbu9q1\",\n  \"deployPlace\": \"hql7si\",\n  \"status\": 7,\n  \"gmtModified\": \"2022-04-29 12:52:07\",\n  \"gmtCreate\": \"2022-04-29 12:52:07\",\n  \"createUserid\": \"145\",\n  \"updateUserid\": \"145\",\n  \"delFlag\": 4,\n  \"versionConsumer\": \"hy10rx\",\n  \"dicId\": \"145\",\n  \"remark\": \"49cy50\"\n}"
                 }
               }
             }
@@ -2540,7 +2540,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"ud8opb\",\n  \"tips\": \"s1wskg\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"0ofyar\",\n  \"tips\": \"ybtc4l\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2585,7 +2585,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"j5eia3\",\n  \"tips\": \"1kvptk\",\n  \"data\": [\n    {\n      \"key\": \"h7qnqr\",\n      \"title\": \"gvf4vn\",\n      \"parentId\": \"104\",\n      \"dsDirCode\": \"50197\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ],\n      \"dataType\": \"135p9l\",\n      \"conType\": \"7dzlcx\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"ht66in\",\n  \"tips\": \"bbs391\",\n  \"data\": [\n    {\n      \"key\": \"9pu9dk\",\n      \"title\": \"vm6rip\",\n      \"parentId\": \"145\",\n      \"dsDirCode\": \"64703\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ],\n      \"dataType\": \"b7d64u\",\n      \"conType\": \"azbgg3\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -2615,7 +2615,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"wa2wx8\",\n  \"tips\": \"ydrd6j\",\n  \"data\": [\n    {\n      \"id\": 899,\n      \"dataSourceName\": \"thaddeus.shanahan\",\n      \"connId\": \"104\",\n      \"homeSystem\": \"82ong0\",\n      \"connectBasicInfo\": {\n        \"object\": \"anyObject\"\n      },\n      \"linkType\": \"yunvnc\",\n      \"tagNames\": \"pxre4w\",\n      \"tagIds\": \"8ckc2d\",\n      \"use\": \"0bvtft\",\n      \"deployPlace\": \"a8absf\",\n      \"status\": 221,\n      \"gmtModified\": \"2022-04-28 17:13:26\",\n      \"gmtCreate\": \"2022-04-28 17:13:26\",\n      \"createUserid\": \"104\",\n      \"updateUserid\": \"104\",\n      \"delFlag\": 6,\n      \"versionConsumer\": \"04djw0\",\n      \"dicId\": \"104\",\n      \"remark\": \"4dpa8x\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"h7anad\",\n  \"tips\": \"31yley\",\n  \"data\": [\n    {\n      \"id\": 23,\n      \"dataSourceName\": \"harold.sanford\",\n      \"connId\": \"145\",\n      \"homeSystem\": \"oxskza\",\n      \"connectBasicInfo\": {\n        \"object\": \"anyObject\"\n      },\n      \"linkType\": \"trwg0r\",\n      \"tagNames\": \"qekmm5\",\n      \"tagIds\": \"y3n6qm\",\n      \"use\": \"929aau\",\n      \"deployPlace\": \"j9l1sh\",\n      \"status\": 471,\n      \"gmtModified\": \"2022-04-29 12:52:07\",\n      \"gmtCreate\": \"2022-04-29 12:52:07\",\n      \"createUserid\": \"145\",\n      \"updateUserid\": \"145\",\n      \"delFlag\": 4,\n      \"versionConsumer\": \"pdvy2k\",\n      \"dicId\": \"145\",\n      \"remark\": \"2798vv\"\n    }\n  ]\n}"
                   }
                 }
               }
@@ -2631,7 +2631,7 @@
             "in": "path",
             "description": "数据连接类型",
             "required": true,
-            "example": "lpo882",
+            "example": "z5fix3",
             "name": "type"
           }
         ]
@@ -2654,7 +2654,7 @@
               "examples": {
                 "json": {
                   "summary": "test data",
-                  "value": "{\n  \"id\": \"104\",\n  \"sysName\": \"thaddeus.shanahan\",\n  \"sysShortName\": \"thaddeus.shanahan\",\n  \"area\": \"4m1gym\",\n  \"itDepartment\": \"1330vx\",\n  \"busiDepartment\": \"6w0ciz\",\n  \"importance\": 14,\n  \"leader\": \"chpeft\",\n  \"deployPlace\": \"vzbegl\",\n  \"gmtCreate\": \"2022-04-28 17:13:26\",\n  \"gmtModified\": \"2022-04-28 17:13:26\",\n  \"createUserid\": 491,\n  \"updateUserid\": 549,\n  \"delFlag\": 6,\n  \"versionConsumer\": \"v5been\",\n  \"sysDesc\": \"xhe65y\",\n  \"tagNames\": \"8bvnsw\",\n  \"tagIds\": \"1k5icv\"\n}"
+                  "value": "{\n  \"id\": \"145\",\n  \"sysName\": \"harold.sanford\",\n  \"sysShortName\": \"harold.sanford\",\n  \"area\": \"g4jjt2\",\n  \"itDepartment\": \"u5x0e8\",\n  \"busiDepartment\": \"fri07s\",\n  \"importance\": 848,\n  \"leader\": \"c1zsfi\",\n  \"deployPlace\": \"xyck5r\",\n  \"gmtCreate\": \"2022-04-29 12:52:07\",\n  \"gmtModified\": \"2022-04-29 12:52:07\",\n  \"createUserid\": 251,\n  \"updateUserid\": 434,\n  \"delFlag\": 4,\n  \"versionConsumer\": \"csgdrz\",\n  \"sysDesc\": \"93cohh\",\n  \"tagNames\": \"w5t0mo\",\n  \"tagIds\": \"gy13aw\"\n}"
                 }
               }
             }
@@ -2671,7 +2671,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"l4zijf\",\n  \"tips\": \"cwiaul\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"57pg7u\",\n  \"tips\": \"5za80b\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2701,7 +2701,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"sdi8og\",\n  \"tips\": \"cfek2t\",\n  \"data\": {\n    \"mapKey1\": \"3bopip\",\n    \"mapKey2\": \"f88maj\"\n  }\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"n0wtam\",\n  \"tips\": \"tln67o\",\n  \"data\": {\n    \"mapKey1\": \"kr60ai\",\n    \"mapKey2\": \"boj9do\"\n  }\n}"
                   }
                 }
               }
@@ -2731,7 +2731,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"6d3ea4\",\n  \"tips\": \"yt6n9t\",\n  \"data\": [\n    {\n      \"connId\": \"104\",\n      \"dataSourceName\": \"thaddeus.shanahan\",\n      \"homeSystem\": \"se7e1n\",\n      \"connectBasicInfoJson\": \"64dza4\",\n      \"dbType\": \"egdhqz\",\n      \"status\": 241\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"erzm9c\",\n  \"tips\": \"fqn00d\",\n  \"data\": [\n    {\n      \"connId\": \"145\",\n      \"dataSourceName\": \"harold.sanford\",\n      \"homeSystem\": \"zg62fj\",\n      \"connectBasicInfoJson\": \"rifdgx\",\n      \"dbType\": \"y6mc6w\",\n      \"status\": 282\n    }\n  ]\n}"
                   }
                 }
               }
@@ -2747,7 +2747,7 @@
             "in": "path",
             "description": "No comments found.",
             "required": true,
-            "example": "w8hlik",
+            "example": "i9f5pv",
             "name": "type"
           }
         ]
@@ -2772,7 +2772,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"l2jhar\",\n  \"tips\": \"u7guho\",\n  \"data\": {}\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"i47kfq\",\n  \"tips\": \"pb3cs1\",\n  \"data\": {}\n}"
                   }
                 }
               }
@@ -2788,7 +2788,7 @@
             "in": "path",
             "description": "目录id",
             "required": true,
-            "example": "104",
+            "example": "145",
             "name": "id"
           }
         ]
@@ -2813,7 +2813,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"dzbeds\",\n  \"tips\": \"htj36w\",\n  \"data\": [\n    \"nn4lmi\",\n    \"yldcpc\"\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"s1fowq\",\n  \"tips\": \"dnflm3\",\n  \"data\": [\n    \"mwx973\",\n    \"6qmnoq\"\n  ]\n}"
                   }
                 }
               }
@@ -2858,7 +2858,7 @@
                 "examples": {
                   "json": {
                     "summary": "test data",
-                    "value": "{\n  \"retCode\": \"50197\",\n  \"retMsg\": \"ont4gm\",\n  \"tips\": \"evd8fm\",\n  \"data\": [\n    {\n      \"key\": \"ub92oo\",\n      \"title\": \"cevqyd\",\n      \"parentId\": \"104\",\n      \"dsDirCode\": \"50197\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ],\n      \"dataType\": \"7djsn7\",\n      \"conType\": \"017lx2\"\n    }\n  ]\n}"
+                    "value": "{\n  \"retCode\": \"64703\",\n  \"retMsg\": \"kdkzm3\",\n  \"tips\": \"n6sz9w\",\n  \"data\": [\n    {\n      \"key\": \"46kz36\",\n      \"title\": \"9afetr\",\n      \"parentId\": \"145\",\n      \"dsDirCode\": \"64703\",\n      \"children\": [\n        {\n          \"$ref\": \"..\"\n        }\n      ],\n      \"dataType\": \"zaqj74\",\n      \"conType\": \"zlcask\"\n    }\n  ]\n}"
                   }
                 }
               }

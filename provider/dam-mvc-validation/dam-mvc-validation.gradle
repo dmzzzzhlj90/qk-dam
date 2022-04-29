@@ -1,16 +1,17 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.mvc.validation"
 
 dependencies {
-    compile project(":commons-core")
-    compile 'javax.el:javax.el-api:2.2.5'
-    compile 'org.glassfish.web:javax.el:2.2.6'
-    compile group: 'javax.validation', name: 'validation-api'
-    compile 'org.springframework.boot:spring-boot-starter-validation'
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    api project(":commons-core")
+    api 'javax.el:javax.el-api:2.2.5'
+    api 'org.glassfish.web:javax.el:2.2.6'
+    api group: 'javax.validation', name: 'validation-api'
+    api 'org.springframework.boot:spring-boot-starter-validation'
+    api 'org.springframework.boot:spring-boot-starter-web'
     implementation "io.github.openfeign:feign-core"
     implementation 'com.google.code.gson:gson'
     annotationProcessor 'org.projectlombok:lombok'

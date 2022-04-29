@@ -1,15 +1,15 @@
 plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
-    id 'java'
+    id 'java-library'
 }
 version "${commonLibVersion}"
 group "com.qk.dm"
 
 dependencies {
-    compile project(":dm-metadata-feign")
-    compile project(":dm-das-feign")
-    compile project(":dm-datasource-feign")
-    compile project(":dm-datastandard-feign")
+    api project(":dm-metadata-feign")
+    api project(":dm-das-feign")
+    api project(":dm-datasource-feign")
+    api project(":dm-datastandard-feign")
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 

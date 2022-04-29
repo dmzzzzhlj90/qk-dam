@@ -12,15 +12,15 @@ import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import com.zaxxer.hikari.HikariConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.cglib.beans.BeanMap;
 import org.joda.time.DateTime;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.context.event.EventListener;
 
 import javax.sql.DataSource;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
+import java.beans.PropertyDescriptor;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -88,14 +88,9 @@ public class MybatisDatasourceManager {
     hc.setDriverClassName(connectBasicInfo.getDriverInfo());
     hc.setUsername(connectBasicInfo.getUserName());
     hc.setPassword(connectBasicInfo.getPassword());
-    BeanMap hcBeanMap = BeanMap.create(hc);
-    BeanMap.create(hikariConfigDefault)
-        .forEach(
-            (k, v) -> {
-              if (Objects.nonNull(v)) {
-                hcBeanMap.put(k, v);
-              }
-            });
+
+    BeanUtils.copyProperties(hikariConfigDefault,hc,getNullPropertyNames(hikariConfigDefault));
+
 
     HikariDataSourceFactory hikariDataSourceFactory =
         HikariDataSourceFactory.builder()
@@ -107,7 +102,27 @@ public class MybatisDatasourceManager {
     hikariDataSourceFactoryMap.put(dataSourceName, hikariDataSourceFactory);
     datasourceMap.put(dataSourceName, hikariDataSourceFactory.dataSourceInstance());
   }
+  /**
+   * 获取需要忽略的属性
+   *
+   * @param source
+   * @return
+   */
+  public static String[] getNullPropertyNames (Object source) {
+    final BeanWrapper src = new BeanWrapperImpl(source);
+    PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
+    Set<String> emptyNames = new HashSet<>();
+    for(PropertyDescriptor pd : pds) {
+      Object srcValue = src.getPropertyValue(pd.getName());
+      // 此处判断可根据需求修改
+      if (srcValue == null) {
+        emptyNames.add(pd.getName());
+      }
+    }
+    String[] result = new String[emptyNames.size()];
+    return emptyNames.toArray(result);
+  }
   public Boolean containsDataSource(String connectName) {
     return Objects.isNull(datasourceMap.get(connectName));
   }
