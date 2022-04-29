@@ -69,8 +69,10 @@ public class DctSchedulerBasicInfoVO {
             //封装dctSchedulerBasicInfoVO
             Map<String, Object> processDefinition = (Map<String, Object>) data.get("processDefinition");
             DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO = BeanMapUtils.changeMapToBean(processDefinition, new DctSchedulerBasicInfoVO());
+            //名称去除前缀
+            DctSchedulerBasicInfoVO.changeName(dctSchedulerBasicInfoVO);
             List<Map<String, Object>> taskDefinitionList = (List<Map<String, Object>>) data.get("taskDefinitionList");
-            Map<String, Object> taskParams = (Map<String, Object>) taskDefinitionList.get(taskDefinitionList.size()-1).get("taskParams");
+            Map<String, Object> taskParams = (Map<String, Object>) taskDefinitionList.get(taskDefinitionList.size() - 1).get("taskParams");
             List<Map<String, Object>> httpParams = (List<Map<String, Object>>) taskParams.get("httpParams");
             for (Map<String, Object> httpParam : httpParams) {
                 String value = httpParam.get("value").toString();
@@ -93,6 +95,12 @@ public class DctSchedulerBasicInfoVO {
             return dctSchedulerBasicInfoVO;
         } catch (Exception a) {
             throw new BizException("dolphin detail error :" + a.getMessage());
+        }
+    }
+
+    public static void changeName(DctSchedulerBasicInfoVO info) {
+        if (info.getName().split("_").length > 1) {
+            info.setName(info.getName().split("_")[1]);
         }
     }
 }

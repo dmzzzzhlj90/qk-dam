@@ -53,7 +53,10 @@ public class DctInstanceServiceImpl implements DctInstanceService {
     @Override
     public DctProcessInstanceVO detail(Integer instanceId) {
         ProcessInstanceDTO detail = processInstanceService.detail(instanceId);
-        return DctProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(detail);
+        DctProcessInstanceVO instanceVO = DctProcessInstanceMapper.INSTANCE.userDqcProcessInstanceVO(detail);
+        //更改name
+        DctProcessInstanceVO.changeName(instanceVO);
+        return instanceVO;
     }
 
     @Override

@@ -91,7 +91,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
                 DctSchedulerBasicInfoVO detail = detail(dctSchedulerReleaseVO.getCode());
                 DctSchedulerConfigVO schedulerConfig = detail.getSchedulerConfig();
                 ScheduleDTO scheduleDTO = dolphinScheduleService.detail(dctSchedulerReleaseVO.getCode());
-                if (Objects.equals(schedulerConfig.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode())) {
+                if (Objects.equals(schedulerConfig.getSchedulerType(), SchedulerTypeEnum.CYCLE.getCode()) && schedulerConfig.getCron() != null) {
                     if (scheduleDTO != null) {
                         dolphinScheduleService.update(scheduleDTO.getId(),
                                 schedulerConfig.getEffectiveTimeStart(), schedulerConfig.getEffectiveTimeEnt(), schedulerConfig.getCron());
