@@ -42,7 +42,7 @@ compileJava {
 
 dependencies {
     implementation project(":qk-data-jpa")
-    implementation project(":dam-mvc-validation")
+    implementation project(":qk-mvc-validation")
     implementation project(":dm-feign-all")
     implementation project(":qk-sqlbuilder")
     implementation project(":dolphinscheduler-client")

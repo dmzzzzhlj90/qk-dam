@@ -7,7 +7,7 @@ group "com.qk.dm.dataservice"
 
 dependencies {
     api project(":commons-core")
-    api project(":dam-mvc-validation")
+    api project(":qk-mvc-validation")
     api group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"

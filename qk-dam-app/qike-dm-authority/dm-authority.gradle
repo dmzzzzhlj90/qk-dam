@@ -43,8 +43,8 @@ compileJava {
 dependencies {
     implementation 'com.alibaba:easyexcel'
     implementation project(":qk-data-jpa")
-    implementation project(":dam-mvc-validation")
-    implementation project(":dam-authority-common")
+    implementation project(":qk-mvc-validation")
+    implementation project(":qk-authority-common")
 //    implementation project(":dm-feign-all")
 //    implementation project(":qk-sqlbuilder")
 //    implementation project(":dolphinscheduler-client")

@@ -37,7 +37,7 @@ compileJava {
 dependencies {
     implementation project(":dm-feign-all")
     implementation project(":qk-data-jpa")
-    implementation project(":dam-mvc-validation")
+    implementation project(":qk-mvc-validation")
     implementation project(":dam-log")
     implementation project(":qk-model-common")
     implementation project(":metadata-common-core")
