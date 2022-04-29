@@ -1,8 +1,5 @@
 package com.qk.dm.dataingestion.strategy;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.model.*;
@@ -14,7 +11,7 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 /**
- * 离线数据同步工厂
+ * 离线数据同步策略工厂
  * @author wangzp
  * @date 2022/04/09 14:32
  * @since 1.0.0
@@ -34,14 +31,14 @@ public class DataSyncFactory {
     @PostConstruct
     private void init() {
         log.info("数据引入类型初始化开始");
-        maps = Optional.ofNullable(dataList).orElse(new ArrayList<>(0)).stream().collect(Collectors.toMap(
+        maps = Optional.ofNullable(dataList).orElse(List.of()).stream().collect(Collectors.toMap(
                 DataxJson::ingestionType, t -> t));
         log.info("数据引入类型初始化完成");
     }
 
 
-    public DataxJson getIngestionTyp(IngestionType ingestionTyp) {
-        return maps.get(ingestionTyp);
+    public DataxJson getIngestionType(IngestionType ingestionType) {
+        return maps.get(ingestionType);
     }
 
     /**
@@ -54,8 +51,8 @@ public class DataSyncFactory {
     public String transJson(DataMigrationVO dataMigrationVO, IngestionType readerType, IngestionType writerType){
         log.info("数据引入读类型【{}】,数据引入写入类型【{}】",readerType,writerType);
         List<DataxContent> contents = List.of(DataxContent.builder()
-                .reader(getIngestionTyp(readerType).getReader(dataMigrationVO))
-                .writer(getIngestionTyp(writerType).getWriter(dataMigrationVO)).build());
+                .reader(getIngestionType(readerType).getReader(dataMigrationVO))
+                .writer(getIngestionType(writerType).getWriter(dataMigrationVO)).build());
 
         DataxJob dataxJob = DataxJob.builder().content(contents)
                 .setting(new DataxSetting(dataMigrationVO.getSchedulerConfig())).build();

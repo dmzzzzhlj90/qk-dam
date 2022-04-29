@@ -21,6 +21,7 @@ import com.qk.dm.dataingestion.mapstruct.mapper.MetaDataColumnMapper;
 import com.qk.dm.dataingestion.model.*;
 import com.qk.dm.dataingestion.service.*;
 import com.qk.dm.dataingestion.strategy.DataSyncFactory;
+import com.qk.dm.dataingestion.util.CronUtil;
 import com.qk.dm.dataingestion.vo.*;
 import com.qk.dm.DataBaseService;
 import com.querydsl.core.BooleanBuilder;
@@ -241,9 +242,28 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         Long taskCode = baseInfoService.update(baseInfo);
         //修改作业字段信息
         columnInfoService.update(baseInfo.getId(),columnMerge(dataMigrationVO,baseInfo.getId()));
+        //修改任务定时
+        updateScheduler(taskCode,baseInfo.getId());
         //修改任务配置信息
-        schedulerConfigService.update(baseInfo.getId(),dataMigrationVO.getSchedulerConfig());
+        schedulerConfigService.update(baseInfo.getId(), dataMigrationVO.getSchedulerConfig());
+
         return taskCode;
+    }
+
+    /**
+     * 修改任务定时
+     * @param processDefinitionCode
+     * @param baseInfoId
+     */
+    private void updateScheduler(Long processDefinitionCode, Long baseInfoId){
+        DisSchedulerConfigVO disSchedulerConfig = schedulerConfigService.detail(baseInfoId);
+        if(Objects.isNull(disSchedulerConfig.getSchedulerId())){
+            //添加定时
+            createScheduler(disSchedulerConfig,processDefinitionCode,baseInfoId);
+        }else {
+            //修改定时
+
+        }
     }
 
     /**
@@ -298,10 +318,12 @@ public class DataMigrationServiceImpl implements DataMigrationService {
      */
     private void createProcessDefinition(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
         //生成dataxjson,创建流程定义
-        createDataxJson(dataMigrationVO,baseInfoId);
+        Long processDefinitionCode = createDataxJson(dataMigrationVO, baseInfoId);
         //上线
         dataxDolphinClient.dolphinProcessRelease(dataMigrationVO.getBaseInfo().getTaskCode(),
                 ProcessDefinition.ReleaseStateEnum.ONLINE);
+        //创建定时
+        createScheduler(dataMigrationVO.getSchedulerConfig(),processDefinitionCode,baseInfoId);
     }
 
     /**
@@ -380,7 +402,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         result.put("total", count);
         return result;
     }
-    private void createDataxJson(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
+    private Long createDataxJson(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
        DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
        //生成datax json
         String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
@@ -395,6 +417,35 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         baseInfo.setTaskCode(data.getCode());
         baseInfo.setId(baseInfoId);
         baseInfoService.update(baseInfo);
+        return data.getCode();
+    }
+
+   private void createScheduler(DisSchedulerConfigVO disSchedulerConfig,Long processDefinitionCode,
+                          Long baseInfoId){
+        Integer scheduleId = createSchedule(disSchedulerConfig, processDefinitionCode);
+        //将定时id保存至数据库
+        schedulerConfigService.update(baseInfoId,scheduleId);
+        //判断定时开关
+        if(disSchedulerConfig.getTimeSwitch()){
+            log.info("定时任务上线scheduleId【{}】",scheduleId);
+            dataxDolphinClient.onlineSchedule(scheduleId);
+        }
+    }
+    //创建定时
+    private Integer createSchedule(DisSchedulerConfigVO disSchedulerConfig,Long processDefinitionCode){
+        log.info("创建定时任务开始，流程定义id:【{}】",processDefinitionCode);
+        dataxDolphinClient.createSchedule(processDefinitionCode,disSchedulerConfig.getEffectiveTimeStart(),
+                disSchedulerConfig.getEffectiveTimeEnd(), CronUtil.createCron(disSchedulerConfig));
+        Result result = dataxDolphinClient.searchSchedule(processDefinitionCode);
+        ScheduleResultVO scheduleResultVO =  new Gson().fromJson(
+                GsonUtil.toJsonString(result.getData()),ScheduleResultVO.class);
+        ScheduleVO scheduleVO = CollectionUtils.firstElement(scheduleResultVO.getTotalList());
+        return  Objects.isNull(scheduleVO)?null:scheduleVO.getId();
+
+    }
+    //修改定时
+    public void updateSchedule(){
+        //修改
     }
 
     public void checkCondition(BooleanBuilder booleanBuilder, DisParamsVO paramsVO) {

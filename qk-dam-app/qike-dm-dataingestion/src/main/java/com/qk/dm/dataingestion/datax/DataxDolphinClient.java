@@ -7,10 +7,15 @@ import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.datacenter.model.ProcessInstance;
 import com.qk.datacenter.model.Result;
+import com.qk.dm.dataingestion.enums.FailureStrategy;
+import com.qk.dm.dataingestion.enums.ProcessInstancePriority;
 import com.qk.dm.dataingestion.model.DolphinProcessDefinition;
 import com.qk.dm.dataingestion.model.DolphinTaskDefinitionPropertiesBean;
+import com.qk.dm.dataingestion.util.CronUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import java.util.Date;
+
 @Slf4j
 @Service
 public class DataxDolphinClient {
@@ -83,8 +88,11 @@ public class DataxDolphinClient {
 
     }
 
-    public Result dolphinProcessRelease(Long code, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().releaseProcessDefinitionUsingPOST(code, dolphinTaskDefinitionPropertiesBean.getProjectCode(), releaseState);
+    public Result dolphinProcessRelease(Long processDefinitionCode, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().
+                releaseProcessDefinitionUsingPOST(processDefinitionCode,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                releaseState);
         if (Boolean.TRUE.equals(result.getFailed())){
             throw new ApiException(400, result.getMsg());
         }
@@ -149,4 +157,129 @@ public class DataxDolphinClient {
 
         return result;
     }
+
+    /**
+     * 创建定时
+     * @param processDefinitionCode
+     * @param effectiveTimeStart
+     * @param effectiveTimeEnt
+     * @param cron
+     */
+    public void createSchedule(Long processDefinitionCode, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+
+        try {
+            Result  result = dolphinschedulerManager.defaultApi().createScheduleUsingPOST(
+                            processDefinitionCode,
+                     dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                    dolphinTaskDefinitionPropertiesBean.getEnvironmentCode(),
+                    FailureStrategy.getVal(dolphinTaskDefinitionPropertiesBean.getFailureStrategy()).getCode(),
+                    ProcessInstancePriority.getVal(dolphinTaskDefinitionPropertiesBean.getTaskPriority()).getCode(),
+                            // 拼接定时时间
+                    CronUtil.schedule(effectiveTimeStart, effectiveTimeEnt, cron),
+                    dolphinTaskDefinitionPropertiesBean.getWarningGroupId(),
+                    "NONE",//发送策略
+                    "default"//Worker分组 默认 "default"
+            );
+            if (Boolean.TRUE.equals(result.getFailed())) {
+                throw new ApiException(400, result.getMsg());
+            }
+
+        } catch (ApiException e) {
+            e.printStackTrace();
+            log.error("创建定时接口入参：【{}】,【{}】,【{}】,【{}】",
+                    processDefinitionCode, effectiveTimeStart, effectiveTimeEnt, cron);
+            throw new BizException("dolphin error【{}】," + e.getMessage());
+        }
+    }
+
+    /**
+     * 修改定时
+     * @param scheduleId
+     * @param effectiveTimeStart
+     * @param effectiveTimeEnt
+     * @param cron
+     */
+    public void updateSchedule(Integer scheduleId, Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+
+        try {
+            Result result = dolphinschedulerManager.defaultApi().updateScheduleUsingPUT(
+                            scheduleId,
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                    dolphinTaskDefinitionPropertiesBean.getEnvironmentCode(),
+                    FailureStrategy.getVal(dolphinTaskDefinitionPropertiesBean.getFailureStrategy()).getCode(),
+                    ProcessInstancePriority.getVal(dolphinTaskDefinitionPropertiesBean.getTaskPriority()).getCode(),
+                    CronUtil.schedule(effectiveTimeStart, effectiveTimeEnt, cron),
+                    dolphinTaskDefinitionPropertiesBean.getWarningGroupId(),
+                    "NONE",//发送策略
+                    "default"//Worker分组 默认 "default"
+            );
+            if (Boolean.TRUE.equals(result.getFailed())) {
+                throw new ApiException(400, result.getMsg());
+            }
+        } catch (ApiException e) {
+            e.printStackTrace();
+            log.error("修改定时接口入参：【{}】,【{}】,【{}】,【{}】",
+                    scheduleId, effectiveTimeStart, effectiveTimeEnt, cron);
+            throw new BizException("dolphin error【{}】," + e.getMessage());
+        }
+    }
+
+    /**
+     * 查找定时
+     * @param processDefinitionCode
+     * @return
+     */
+    public Result searchSchedule(Long processDefinitionCode) {
+        Result result = null;
+        try {
+            result = dolphinschedulerManager.defaultApi().queryScheduleListPagingUsingGET(
+                    processDefinitionCode,
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                    1,
+                    100,
+                    null);
+            if (Boolean.TRUE.equals(result.getFailed())) {
+                throw new ApiException(400, result.getMsg());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("查询定时接口入参：【{}】", processDefinitionCode);
+            throw new BizException("dolphin error【{}】," + e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 定时任务上线
+     * @param scheduleId
+     * @return
+     */
+    public void onlineSchedule(Integer scheduleId){
+        try {
+            Result result = dolphinschedulerManager.defaultApi().onlineUsingPOST(scheduleId,
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode());
+            if (Boolean.TRUE.equals(result.getFailed())) {
+                throw new ApiException(400, result.getMsg());
+            }
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 定时任务下线
+     * @param scheduleId
+     */
+    public void offlineSchedule(Integer scheduleId){
+        try {
+            Result result = dolphinschedulerManager.defaultApi().offlineUsingPOST(scheduleId,
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode());
+            if (Boolean.TRUE.equals(result.getFailed())) {
+                throw new ApiException(400, result.getMsg());
+            }
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
