@@ -28,7 +28,7 @@ docker {
     }
 }
 dependencies {
-    implementation project(":dam-mvc-validation")
+    implementation project(":qk-mvc-validation")
     implementation project(":dam-log")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

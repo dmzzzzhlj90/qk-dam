@@ -51,7 +51,7 @@ configurations.all {
 
 dependencies {
     implementation project(":qk-data-jpa")
-    implementation project(":dam-mvc-validation")
+    implementation project(":qk-mvc-validation")
     implementation project(":commons-core")
     implementation project(":datasource-common-core")
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
