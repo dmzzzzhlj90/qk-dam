@@ -12,21 +12,17 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface DolphinProcessService {
-    ProcessDefinitionDTO createProcessDefinition(Long projectId, String name, String url, Object httpParams, String httpMethod, String description);
+    void release(Long processDefinitionCode, ProcessDefinition.ReleaseStateEnum releaseState);
 
-    void updateProcessDefinition(Long processDefinitionCode, Long projectId, long taskCode, String name, String url, Object httpParams, String httpMethod, String description);
+    void runing(Long processDefinitionCode, Long environmentCode);
 
-    void release(Long processDefinitionCode, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState);
+    ProcessDefinitionResultDTO pageList(String searchVal, Integer pageNo, Integer pageSize);
 
-    void runing(Long processDefinitionCode, Long projectCode, Long environmentCode);
+    void delete(Long processDefinitionCode);
 
-    ProcessDefinitionResultDTO pageList(Long projectCode, String searchVal, Integer pageNo, Integer pageSize);
+    Object detail(Long processDefinitionCode);
 
-    void delete(Long processDefinitionCode, Long projectCode);
+    ProcessDefinitionDTO detailToProcess(Long processDefinitionCode);
 
-    Object detail(Long processDefinitionCode, Long projectCode);
-
-    ProcessDefinitionDTO detailToProcess(Long processDefinitionCode, Long projectCode);
-
-    List<ProcessDefinitionDTO> list(Long projectCode);
+    List<ProcessDefinitionDTO> list();
 }

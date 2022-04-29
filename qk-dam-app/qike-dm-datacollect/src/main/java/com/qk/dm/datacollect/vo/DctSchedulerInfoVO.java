@@ -50,15 +50,13 @@ public class DctSchedulerInfoVO {
      */
     private String userName;
 
-    public static void changeName(List<DctSchedulerInfoVO> infoList){
+    public static void changeName(List<DctSchedulerInfoVO> infoList) {
         if (infoList != null) {
-            infoList.forEach(info ->
-                    info.setName(
-                            info.getName().split("_")[1]
-                    )
-            );
+            infoList.forEach(info -> {
+                if (info.getName().split("_").length > 1) {
+                    info.setName(info.getName().split("_")[1]);
+                }
+            });
         }
     }
-
-
 }

@@ -34,6 +34,7 @@ public class DolphinTaskDefinitionPropertiesBean {
     private String timeout;
     private String delayTime;
     private String environmentCode;
+    private Long projectCode;
     @Data
     public static class TaskParams {
         private Object httpParams;
@@ -51,14 +52,8 @@ public class DolphinTaskDefinitionPropertiesBean {
         private Object switchResult;
     }
 
-    public String taskDefinitionJson(long taskCode,String url,Object httpParams,String httpMethod,DolphinTaskDefinitionPropertiesBean taskParam) {
+    public String taskDefinitionJson(long taskCode,Object httpParams,DolphinTaskDefinitionPropertiesBean taskParam) {
         this.getTaskParams().setHttpParams(httpParams);
-        if(url != null) {
-            this.getTaskParams().setUrl(url);
-        }
-        if(httpMethod != null) {
-            this.getTaskParams().setHttpMethod(httpMethod);
-        }
         this.setCode(taskCode);
         BeanMap abean = BeanMap.create(this);
         BeanMap bbean = BeanMap.create(taskParam);
@@ -81,15 +76,9 @@ public class DolphinTaskDefinitionPropertiesBean {
         return new Gson().toJson(List.of(abean));
     }
 
-    public String taskDefinitionJson(long taskCode,String url,Object httpParams,String httpMethod) {
+    public String taskDefinitionJson(long taskCode,Object httpParams) {
         this.setCode(taskCode);
         this.getTaskParams().setHttpParams(httpParams);
-        if(url != null) {
-            this.getTaskParams().setUrl(url);
-        }
-        if(httpMethod != null) {
-            this.getTaskParams().setHttpMethod(httpMethod);
-        }
         return new Gson().toJson(List.of(this));
     }
 }

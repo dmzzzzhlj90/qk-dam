@@ -20,6 +20,9 @@ import javax.validation.constraints.NotNull;
 public class DctSchedulerReleaseVO {
     @NotNull(message = "code为必填项")
     Long code;
+    /**
+     * 状态：ONLINE-上线 OFFLINE-下线
+     */
     @NotNull(message = "状态为必填项")
     ProcessDefinition.ReleaseStateEnum releaseState;
 

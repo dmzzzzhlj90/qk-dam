@@ -18,21 +18,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class DolphinApiClient {
     private final DolphinschedulerManager dolphinschedulerManager;
+    private final DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean;
 
-    public DolphinApiClient(DolphinschedulerManager dolphinschedulerManager) {
+    public DolphinApiClient(DolphinschedulerManager dolphinschedulerManager, DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean) {
         this.dolphinschedulerManager = dolphinschedulerManager;
+        this.dolphinTaskDefinitionPropertiesBean = dolphinTaskDefinitionPropertiesBean;
     }
 
     /**
      * 删除流程定义
      *
      * @param code
-     * @param projectCode
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_delete(Long code, Long projectCode) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().deleteProcessDefinitionByCodeUsingDELETE(code, projectCode);
+    public Result dolphin_process_delete(Long code) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().deleteProcessDefinitionByCodeUsingDELETE(
+                code, dolphinTaskDefinitionPropertiesBean.getProjectCode());
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -43,13 +45,13 @@ public class DolphinApiClient {
      * 流程定义上下线
      *
      * @param code         流程定义编码
-     * @param projectCode
      * @param releaseState
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_release(Long code, Long projectCode, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().releaseProcessDefinitionUsingPOST(code, projectCode, releaseState);
+    public Result dolphin_process_release(Long code, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().releaseProcessDefinitionUsingPOST(
+                code, dolphinTaskDefinitionPropertiesBean.getProjectCode(), releaseState);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -60,14 +62,13 @@ public class DolphinApiClient {
      * 检查流程定义
      *
      * @param processDefinitionCode
-     * @param projectCode
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_check(Long processDefinitionCode, Long projectCode) throws ApiException {
+    public Result dolphin_process_check(Long processDefinitionCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().startCheckProcessDefinitionUsingPOST(
                 processDefinitionCode,
-                projectCode);
+                dolphinTaskDefinitionPropertiesBean.getProjectCode());
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -77,18 +78,17 @@ public class DolphinApiClient {
     /**
      * 流程定义运行
      *
-     * @param projectCode
      * @param processDefinitionCode
      * @param environmentCode
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_runing(Long processDefinitionCode, Long projectCode, Long environmentCode) throws ApiException {
+    public Result dolphin_process_runing(Long processDefinitionCode, Long environmentCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().startProcessInstanceUsingPOST(
                 ProcessInstance.FailureStrategyEnum.CONTINUE,
                 processDefinitionCode,
                 ProcessInstance.ProcessInstancePriorityEnum.MEDIUM,
-                projectCode,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                 "",
                 0,
                 ProcessInstance.WarningTypeEnum.NONE,
@@ -113,14 +113,13 @@ public class DolphinApiClient {
      * 流程定义详情
      *
      * @param processDefinitionCode
-     * @param projectCode
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_detail(Long processDefinitionCode, Long projectCode) throws ApiException {
+    public Result dolphin_process_detail(Long processDefinitionCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionByCodeUsingGET(
                 processDefinitionCode,
-                projectCode
+                dolphinTaskDefinitionPropertiesBean.getProjectCode()
         );
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
@@ -131,21 +130,19 @@ public class DolphinApiClient {
     /**
      * 流程定义列表
      *
-     * @param projectCode
      * @param searchVal
      * @param pageNo
      * @param pageSize
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_page(Long projectCode,
-                                       String searchVal,
+    public Result dolphin_process_page(String searchVal,
                                        Integer pageNo,
                                        Integer pageSize) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionListPagingUsingGET(
                 pageNo,
                 pageSize,
-                projectCode,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                 searchVal,
                 null);
         if (Boolean.TRUE.equals(result.getFailed())) {
@@ -157,12 +154,12 @@ public class DolphinApiClient {
     /**
      * 流程定义列表
      *
-     * @param projectCode
      * @return
      * @throws ApiException
      */
-    public Result dolphin_process_list(Long projectCode) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionListUsingGET(projectCode);
+    public Result dolphin_process_list() throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionListUsingGET(
+                dolphinTaskDefinitionPropertiesBean.getProjectCode());
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -174,22 +171,21 @@ public class DolphinApiClient {
      * 创建定时
      *
      * @param processDefinitionCode
-     * @param projectCode
      * @param effectiveTimeStart
      * @param effectiveTimeEnt
      * @param cron
      * @throws ApiException
      */
     public void schedule_create(Long processDefinitionCode,
-                                Long projectCode,
                                 String effectiveTimeStart,
                                 String effectiveTimeEnt,
                                 String cron) throws ApiException {
-        DolphinScheduleDefinition dolphinScheduleDefinition = new DolphinScheduleDefinition(effectiveTimeStart, effectiveTimeEnt, cron);
+        DolphinScheduleDefinition dolphinScheduleDefinition = new DolphinScheduleDefinition(
+                effectiveTimeStart, effectiveTimeEnt, cron);
         Result result =
                 dolphinschedulerManager.defaultApi().createScheduleUsingPOST(
                         processDefinitionCode,
-                        projectCode,
+                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                         dolphinScheduleDefinition.getEnvironmentCode(),
                         dolphinScheduleDefinition.getFailureStrategy(),
                         dolphinScheduleDefinition.getProcessInstancePriority(),
@@ -206,22 +202,21 @@ public class DolphinApiClient {
      * 修改定时
      *
      * @param scheduleId
-     * @param projectCode
      * @param effectiveTimeStart
      * @param effectiveTimeEnt
      * @param cron
      * @throws ApiException
      */
     public void schedule_update(Integer scheduleId,
-                                Long projectCode,
                                 String effectiveTimeStart,
                                 String effectiveTimeEnt,
                                 String cron) throws ApiException {
-        DolphinScheduleDefinition dolphinScheduleDefinition = new DolphinScheduleDefinition(effectiveTimeStart, effectiveTimeEnt, cron);
+        DolphinScheduleDefinition dolphinScheduleDefinition = new DolphinScheduleDefinition(
+                effectiveTimeStart, effectiveTimeEnt, cron);
         Result result =
                 dolphinschedulerManager.defaultApi().updateScheduleUsingPUT(
                         scheduleId,
-                        projectCode,
+                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                         dolphinScheduleDefinition.getEnvironmentCode(),
                         dolphinScheduleDefinition.getFailureStrategy(),
                         dolphinScheduleDefinition.getProcessInstancePriority(),
@@ -239,11 +234,11 @@ public class DolphinApiClient {
      * 定时上线
      *
      * @param scheduleId
-     * @param projectCode
      * @throws ApiException
      */
-    public void schedule_online(Integer scheduleId, Long projectCode) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().onlineUsingPOST(scheduleId, projectCode);
+    public void schedule_online(Integer scheduleId) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().onlineUsingPOST(
+                scheduleId, dolphinTaskDefinitionPropertiesBean.getProjectCode());
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -253,11 +248,11 @@ public class DolphinApiClient {
      * 定时下线
      *
      * @param scheduleId
-     * @param projectCode
      * @throws ApiException
      */
-    public void schedule_offline(Integer scheduleId, Long projectCode) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().offlineUsingPOST(scheduleId, projectCode);
+    public void schedule_offline(Integer scheduleId) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().offlineUsingPOST(
+                scheduleId, dolphinTaskDefinitionPropertiesBean.getProjectCode());
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -267,14 +262,13 @@ public class DolphinApiClient {
      * 定时删除
      *
      * @param scheduleId
-     * @param projectCode
      * @throws ApiException
      */
-    public void schedule_delete(Integer scheduleId, Long projectCode) throws ApiException {
+    public void schedule_delete(Integer scheduleId) throws ApiException {
         Result result =
                 dolphinschedulerManager.defaultApi().deleteScheduleByIdUsingDELETE(
                         scheduleId,
-                        projectCode,
+                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                         null,
                         null,
                         null,
@@ -297,20 +291,18 @@ public class DolphinApiClient {
      * 查询某流程定义的定时
      *
      * @param processDefinitionCode
-     * @param projectCode
      * @param pageNo
      * @param pageSize
      * @return
      * @throws ApiException
      */
     public Result schedule_search(Long processDefinitionCode,
-                                  Long projectCode,
                                   Integer pageNo,
                                   Integer pageSize) throws ApiException {
         Result result =
                 dolphinschedulerManager.defaultApi().queryScheduleListPagingUsingGET(
                         processDefinitionCode,
-                        projectCode,
+                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                         pageNo,
                         pageSize,
                         null);
@@ -324,16 +316,14 @@ public class DolphinApiClient {
      * 流程实例操作
      * executeType 执行类型 (required)
      * processInstanceId 流程实例ID (required)
-     * projectCode PROJECT_CODE (required)
      */
     public void instance_execute(Integer processInstanceId,
-                                 Long projectCode,
                                  ProcessInstance.CmdTypeIfComplementEnum executeType) throws ApiException {
         Result result =
                 dolphinschedulerManager.defaultApi().executeUsingPOST(
                         executeType,
                         processInstanceId,
-                        projectCode
+                        dolphinTaskDefinitionPropertiesBean.getProjectCode()
                 );
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
@@ -343,17 +333,16 @@ public class DolphinApiClient {
     /**
      * 流程实例查询
      *
-     * @param projectCode
      * @param instanceSearchDTO
      * @return
      * @throws ApiException
      */
-    public Result instance_search(Long projectCode, ProcessInstanceSearchDTO instanceSearchDTO) throws ApiException {
+    public Result instance_search(ProcessInstanceSearchDTO instanceSearchDTO) throws ApiException {
         Result result =
                 dolphinschedulerManager.defaultApi().queryProcessInstanceListUsingGET(
                         instanceSearchDTO.getPageNo(),
                         instanceSearchDTO.getPageSize(),
-                        projectCode,
+                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                         instanceSearchDTO.getEndDate(),
                         instanceSearchDTO.getExecutorName(),
                         instanceSearchDTO.getHost(),
@@ -372,14 +361,13 @@ public class DolphinApiClient {
      * 流程实例详情
      *
      * @param processInstanceId
-     * @param projectCode
      * @return
      * @throws ApiException
      */
-    public Result instance_detail(Integer processInstanceId, Long projectCode) throws ApiException {
+    public Result instance_detail(Integer processInstanceId) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().queryProcessInstanceByIdUsingGET(
                 processInstanceId,
-                projectCode
+                dolphinTaskDefinitionPropertiesBean.getProjectCode()
         );
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
@@ -391,15 +379,14 @@ public class DolphinApiClient {
      * 根据流程实例查询任务实例
      *
      * @param processInstanceId
-     * @param projectCode
      * @return
      * @throws ApiException
      */
-    public Result taskByProcessId(Integer processInstanceId, Long projectCode) throws ApiException {
+    public Result taskByProcessId(Integer processInstanceId) throws ApiException {
         Result result =
                 dolphinschedulerManager.defaultApi().queryTaskListByProcessIdUsingGET(
                         processInstanceId,
-                        projectCode
+                        dolphinTaskDefinitionPropertiesBean.getProjectCode()
                 );
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
@@ -410,17 +397,16 @@ public class DolphinApiClient {
     /**
      * 分页查询任务实例
      *
-     * @param projectCode
      * @param TaskInstanceSearch
      * @return
      * @throws ApiException
      */
-    public Result taskPageByProcessId(Long projectCode, TaskInstanceSearchDTO TaskInstanceSearch) throws ApiException {
+    public Result taskPageByProcessId(TaskInstanceSearchDTO TaskInstanceSearch) throws ApiException {
         Result result =
                 dolphinschedulerManager.defaultApi().queryTaskListPagingUsingGET(
                         TaskInstanceSearch.getPageNo(),
                         TaskInstanceSearch.getPageSize(),
-                        projectCode,
+                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
                         TaskInstanceSearch.getEndDate(),
                         TaskInstanceSearch.getExecutorName(),
                         TaskInstanceSearch.getHost(),

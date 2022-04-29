@@ -96,4 +96,10 @@ public class DctProcessInstanceVO {
             });
         }
     }
+
+    public static void changeName(DctProcessInstanceVO info) {
+        if (info.getName().split("_").length > 1) {
+            info.setName(info.getName().split("_")[1]);
+        }
+    }
 }

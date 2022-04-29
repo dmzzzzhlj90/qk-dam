@@ -70,11 +70,13 @@ public class DctSchedulerRulesVO {
     /**
      * 采集元数据策略（1：仅更新、2：仅添加、3：既更新又添加、4：忽略更新添加）
      */
+    @NotBlank(message = "元数据策略不能为空！")
     private String strategy;
 
     /**
      * 数据源Id
      */
+    @NotBlank(message = "数据源Id不能为空！")
     private String dataSourceId;
 
     /**

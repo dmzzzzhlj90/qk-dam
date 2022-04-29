@@ -35,7 +35,7 @@ public class DctDolphinController {
      * @return DefaultCommonResult
      */
     @PostMapping("")
-    public DefaultCommonResult insert(@RequestBody DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
+    public DefaultCommonResult insert(@RequestBody @Valid DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         dctDolphinService.insert(dctSchedulerBasicInfoVO);
         return DefaultCommonResult.success();
     }
@@ -47,7 +47,7 @@ public class DctDolphinController {
      * @return DefaultCommonResult
      */
     @PutMapping("")
-    public DefaultCommonResult update(@RequestBody DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
+    public DefaultCommonResult update(@RequestBody @Valid DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         dctDolphinService.update(dctSchedulerBasicInfoVO);
         return DefaultCommonResult.success();
     }
@@ -95,7 +95,7 @@ public class DctDolphinController {
      * @return DefaultCommonResult<PageResultVO<DctSchedulerInfoVO>>
      */
     @PostMapping("/page/list")
-    public DefaultCommonResult<PageResultVO<DctSchedulerInfoVO>> searchPageList(@RequestBody DctSchedulerInfoParamsVO schedulerInfoParamsVO) {
+    public DefaultCommonResult<PageResultVO<DctSchedulerInfoVO>> searchPageList(@RequestBody @Valid DctSchedulerInfoParamsVO schedulerInfoParamsVO) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dctDolphinService.searchPageList(schedulerInfoParamsVO));
     }
 
