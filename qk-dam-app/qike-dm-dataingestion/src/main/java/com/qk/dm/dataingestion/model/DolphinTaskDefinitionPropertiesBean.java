@@ -33,8 +33,12 @@ public class DolphinTaskDefinitionPropertiesBean {
     private String timeoutNotifyStrategy;
     private String timeout;
     private String delayTime;
-    private String environmentCode;
+    private Long environmentCode;
     private Long projectCode;
+    //失败策略
+    private String failureStrategy;
+    //发送组id 默认0
+    private Integer warningGroupId;
     @Data
     public static class TaskParams {
         private Integer customConfig;

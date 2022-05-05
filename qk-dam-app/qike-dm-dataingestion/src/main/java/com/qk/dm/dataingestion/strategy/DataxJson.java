@@ -39,7 +39,12 @@ public interface DataxJson {
      */
     default void createTable(String jdbcUrl,DataSourceServer dataSourceServer,String sqlScript){
         try {
-            getDb(jdbcUrl,dataSourceServer).execute(sqlScript);
+             Db.use(new SimpleDataSource(
+                            jdbcUrl,
+                            dataSourceServer.getUserName(),
+                            dataSourceServer.getPassword(),
+                            dataSourceServer.getDriverInfo()))
+                     .execute(sqlScript);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -57,19 +62,11 @@ public interface DataxJson {
             columns.add(Column.builder().name(column.getName())
                     .dataType(column.getDataType()).build());
         });
+
         return SqlBuilderFactory.creatTableSQL(
                 Table.builder()
                         .name(tableName)
                         .columns(columns).build());
     }
 
-
-    default Db getDb(String jdbcUrl,DataSourceServer dataSourceServer){
-        return Db.use(
-                new SimpleDataSource(
-                        jdbcUrl,
-                        dataSourceServer.getUserName(),
-                        dataSourceServer.getPassword(),
-                        dataSourceServer.getDriverInfo()));
-    }
 }

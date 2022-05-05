@@ -37,10 +37,7 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
         if(rptBaseInfoList.isEmpty()){
             throw new BizException("当前要删除的作业信息id为：" + ids + " 的数据不存在！！！");
         }
-        disMigrationBaseInfoRepository.saveAllAndFlush(rptBaseInfoList.stream().peek(e->{
-                    e.setDelFlag(1);
-                }
-        ).collect(Collectors.toList()));
+        disMigrationBaseInfoRepository.deleteAllById(ids);
     }
 
     @Override

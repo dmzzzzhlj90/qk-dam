@@ -13,7 +13,7 @@ dependencies {
         api "com.qk.dam.commons:commons-core:${commonLibVersion}"
         api "com.qk.dam.jpa:qk-data-jpa:${commonLibVersion}"
         api "com.qk.dam.redis:qk-data-redis:${commonLibVersion}"
-        api group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+        api group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
         api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springCloudAlibabaVersion}"
         api group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springCloudAlibabaVersion}"
         api group: 'com.google.code.gson', name: 'gson', version: '2.8.7'

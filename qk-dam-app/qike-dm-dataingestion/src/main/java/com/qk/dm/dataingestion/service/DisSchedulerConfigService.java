@@ -12,5 +12,7 @@ public interface DisSchedulerConfigService {
 
     void update(Long baseInfoId,DisSchedulerConfigVO disSchedulerConfigVO);
 
+    void update(Long baseInfoId,Integer schedulerId);
+
     DisSchedulerConfigVO detail(Long baseId);
 }
