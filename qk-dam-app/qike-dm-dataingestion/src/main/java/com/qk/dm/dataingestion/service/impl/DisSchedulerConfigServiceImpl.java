@@ -1,6 +1,7 @@
 package com.qk.dm.dataingestion.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisSchedulerConfig;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisSchedulerConfigMapper;
 import com.qk.dm.dataingestion.repositories.DisSchedulerConfigRepository;
@@ -22,9 +23,11 @@ import java.util.Objects;
 public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService {
 
     private final DisSchedulerConfigRepository disSchedulerConfigRepository;
+    private final DataxDolphinClient dataxDolphinClient;
 
-    public DisSchedulerConfigServiceImpl(DisSchedulerConfigRepository disSchedulerConfigRepository) {
+    public DisSchedulerConfigServiceImpl(DisSchedulerConfigRepository disSchedulerConfigRepository, DataxDolphinClient dataxDolphinClient) {
         this.disSchedulerConfigRepository = disSchedulerConfigRepository;
+        this.dataxDolphinClient = dataxDolphinClient;
     }
 
     @Override
@@ -37,7 +40,16 @@ public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService 
 
     @Override
     public void delete(List<Long> baseIdList) {
-        baseIdList.forEach(disSchedulerConfigRepository::deleteByBaseInfoId);
+
+        baseIdList.forEach(e->{
+            DisSchedulerConfig disSchedulerConfig = disSchedulerConfigRepository.findByBaseInfoId(e);
+            if(Objects.nonNull(disSchedulerConfig)) {
+                disSchedulerConfigRepository.delete(disSchedulerConfig);
+                if(Objects.nonNull(disSchedulerConfig.getSchedulerId())) {
+                    dataxDolphinClient.deleteSchedule(disSchedulerConfig.getSchedulerId());
+                }
+            }
+        });
     }
 
     @Override

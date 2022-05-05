@@ -95,6 +95,9 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     public void delete(String ids) {
         List<Long> idList = Arrays.stream(ids.split(",")).map(Long::valueOf).collect(Collectors.toList());
         baseInfoService.delete(idList);
+        columnInfoService.delete(idList);
+        schedulerConfigService.delete(idList);
+
     }
 
     @Override
@@ -120,19 +123,22 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     @Override
     public Map<String,Object> jsonDetail(Long id) {
         String json = disDataxJsonService.findDataxJson(id);
+
         if (Objects.isNull(json)) {
             DisMigrationBaseInfoVO baseDetail = baseInfoService.detail(id);
             List<DisColumnInfoVO> columnList = columnInfoService.list(id);
+
             DataMigrationVO dataMigrationVO = DataMigrationVO.builder().baseInfo(baseDetail)
                     .columnList(ColumnVO.builder().sourceColumnList(sourceList(baseDetail, columnList))
                             .targetColumnList(targetList(baseDetail, columnList)).build())
                     .schedulerConfig(schedulerConfigService.detail(id)).build();
+
             json = dataSyncFactory.transJson(dataMigrationVO,
                     IngestionType.getVal(baseDetail.getSourceConnectType()),
                     IngestionType.getVal(baseDetail.getTargetConnectType()));
         }
 
-        return Map.of("dataxJson",parseJson(json));
+        return Map.of("dataxJson", parseJson(json));
 
     }
 
@@ -243,9 +249,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         //修改作业字段信息
         columnInfoService.update(baseInfo.getId(),columnMerge(dataMigrationVO,baseInfo.getId()));
         //修改任务定时
-        updateScheduler(taskCode,baseInfo.getId());
-        //修改任务配置信息
-        schedulerConfigService.update(baseInfo.getId(), dataMigrationVO.getSchedulerConfig());
+        updateScheduler(taskCode,baseInfo.getId(),dataMigrationVO.getSchedulerConfig());
 
         return taskCode;
     }
@@ -254,16 +258,19 @@ public class DataMigrationServiceImpl implements DataMigrationService {
      * 修改任务定时
      * @param processDefinitionCode
      * @param baseInfoId
+     * @param schedulerConfig
      */
-    private void updateScheduler(Long processDefinitionCode, Long baseInfoId){
+    private void updateScheduler(Long processDefinitionCode, Long baseInfoId,DisSchedulerConfigVO schedulerConfig){
         DisSchedulerConfigVO disSchedulerConfig = schedulerConfigService.detail(baseInfoId);
         if(Objects.isNull(disSchedulerConfig.getSchedulerId())){
             //添加定时
             createScheduler(disSchedulerConfig,processDefinitionCode,baseInfoId);
         }else {
             //修改定时
-
+            updateSchedule(disSchedulerConfig);
         }
+        //修改任务配置信息
+        schedulerConfigService.update(baseInfoId, schedulerConfig);
     }
 
     /**
@@ -444,8 +451,18 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     }
     //修改定时
-    public void updateSchedule(){
-        //修改
+    public void updateSchedule(DisSchedulerConfigVO disSchedulerConfig){
+        //判断定时开关
+        if(disSchedulerConfig.getTimeSwitch()){
+            log.info("定时任务下线scheduleId【{}】",disSchedulerConfig.getSchedulerId());
+            dataxDolphinClient.offlineSchedule(disSchedulerConfig.getSchedulerId());
+        }
+        dataxDolphinClient.updateSchedule(disSchedulerConfig.getSchedulerId(),disSchedulerConfig.getEffectiveTimeStart(),
+                disSchedulerConfig.getEffectiveTimeEnd(),disSchedulerConfig.getCron());
+        log.info("定时任务上线scheduleId【{}】",disSchedulerConfig.getSchedulerId());
+        dataxDolphinClient.onlineSchedule(disSchedulerConfig.getSchedulerId());
+
+
     }
 
     public void checkCondition(BooleanBuilder booleanBuilder, DisParamsVO paramsVO) {

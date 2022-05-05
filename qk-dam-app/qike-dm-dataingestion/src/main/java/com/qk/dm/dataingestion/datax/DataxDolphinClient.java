@@ -278,6 +278,39 @@ public class DataxDolphinClient {
                 throw new ApiException(400, result.getMsg());
             }
         } catch (ApiException e) {
+            log.error("定时任务下线失败：【{}】", scheduleId);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 删除定时
+     * @param scheduleId
+     */
+    public void deleteSchedule(Integer scheduleId){
+        try {
+            Result result = dolphinschedulerManager.defaultApi().deleteScheduleByIdUsingDELETE(
+                    scheduleId,
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+            );
+
+            if (Boolean.TRUE.equals(result.getFailed())) {
+                throw new ApiException(400, result.getMsg());
+            }
+        } catch (ApiException e) {
             e.printStackTrace();
         }
     }

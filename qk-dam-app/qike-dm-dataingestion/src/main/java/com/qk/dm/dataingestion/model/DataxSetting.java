@@ -3,6 +3,9 @@ package com.qk.dm.dataingestion.model;
 import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
 import lombok.Builder;
 import lombok.Data;
+import org.checkerframework.checker.units.qual.Speed;
+
+import java.util.Objects;
 
 @Data
 public class DataxSetting {
@@ -11,7 +14,11 @@ public class DataxSetting {
     private ErrorLimit errorLimit;
 
     public DataxSetting(DisSchedulerConfigVO schedulerConfig) {
-        this.speed = Speed.builder().channel(schedulerConfig.getCurrChannel()).build();
+        if(Objects.nonNull(schedulerConfig.getCurrChannel())) {
+            this.speed = Speed.builder().channel(schedulerConfig.getCurrChannel()).build();
+        }else {
+            this.speed = Speed.builder().channel(2).build();
+        }
         this.errorLimit =  ErrorLimit.builder()
                 .percentage(schedulerConfig.getErrorPercent())
                 .record(schedulerConfig.getErrorRecord()).build();
