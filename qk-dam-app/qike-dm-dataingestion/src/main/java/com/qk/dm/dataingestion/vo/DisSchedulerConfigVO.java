@@ -62,6 +62,10 @@ public class DisSchedulerConfigVO {
      * 调度执行cron表达式
      */
     private String cron;
+    /**
+     * 调度定时id
+     */
+    private Integer schedulerId;
 
     /**
      * 并发通道

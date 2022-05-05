@@ -57,5 +57,5 @@ public class Column {
      * 是否不为空  DEFAULT NULL
      */
     @Builder.Default
-    private Boolean empty = false;
+    private Boolean empty = true;
 }

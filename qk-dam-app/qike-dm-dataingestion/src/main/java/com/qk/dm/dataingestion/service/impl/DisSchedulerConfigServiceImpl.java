@@ -1,5 +1,7 @@
 package com.qk.dm.dataingestion.service.impl;
 
+import com.qk.dam.commons.exception.BizException;
+import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisSchedulerConfig;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisSchedulerConfigMapper;
 import com.qk.dm.dataingestion.repositories.DisSchedulerConfigRepository;
@@ -9,6 +11,7 @@ import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 作业任务配置
@@ -20,21 +23,33 @@ import java.util.List;
 public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService {
 
     private final DisSchedulerConfigRepository disSchedulerConfigRepository;
+    private final DataxDolphinClient dataxDolphinClient;
 
-    public DisSchedulerConfigServiceImpl(DisSchedulerConfigRepository disSchedulerConfigRepository) {
+    public DisSchedulerConfigServiceImpl(DisSchedulerConfigRepository disSchedulerConfigRepository, DataxDolphinClient dataxDolphinClient) {
         this.disSchedulerConfigRepository = disSchedulerConfigRepository;
+        this.dataxDolphinClient = dataxDolphinClient;
     }
 
     @Override
     public void add(DisSchedulerConfigVO disSchedulerConfigVO) {
+        disSchedulerConfigVO.setCron(CronUtil.createCron(disSchedulerConfigVO));
         DisSchedulerConfig disSchedulerConfig = DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigVO);
-        disSchedulerConfig.setCron(createCron(disSchedulerConfig));
+
         disSchedulerConfigRepository.save(disSchedulerConfig);
     }
 
     @Override
     public void delete(List<Long> baseIdList) {
-        baseIdList.forEach(disSchedulerConfigRepository::deleteByBaseInfoId);
+
+        baseIdList.forEach(e->{
+            DisSchedulerConfig disSchedulerConfig = disSchedulerConfigRepository.findByBaseInfoId(e);
+            if(Objects.nonNull(disSchedulerConfig)) {
+                disSchedulerConfigRepository.delete(disSchedulerConfig);
+                if(Objects.nonNull(disSchedulerConfig.getSchedulerId())) {
+                    dataxDolphinClient.deleteSchedule(disSchedulerConfig.getSchedulerId());
+                }
+            }
+        });
     }
 
     @Override
@@ -45,17 +60,20 @@ public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService 
     }
 
     @Override
+    public void update(Long baseInfoId, Integer schedulerId) {
+        if(Objects.isNull(schedulerId)){ return; }
+        DisSchedulerConfig disSchedulerConfig = disSchedulerConfigRepository.findByBaseInfoId(baseInfoId);
+        if(Objects.isNull(disSchedulerConfig)){
+            throw new BizException("当前作业不存在定时:"+baseInfoId);
+        }
+        disSchedulerConfig.setSchedulerId(schedulerId);
+        disSchedulerConfigRepository.saveAndFlush(disSchedulerConfig);
+    }
+
+    @Override
     public DisSchedulerConfigVO detail(Long baseId) {
 
         return DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigRepository.findByBaseInfoId(baseId));
     }
-    /**
-     * 方法摘要：构建Cron表达式
-     */
-    public static String createCron(DisSchedulerConfig disSchedulerConfig) {
 
-        return CronUtil.createCron(disSchedulerConfig.getSchedulerCycle(),
-                disSchedulerConfig.getSchedulerIntervalTime(),
-                disSchedulerConfig.getSchedulerTime());
-    }
 }

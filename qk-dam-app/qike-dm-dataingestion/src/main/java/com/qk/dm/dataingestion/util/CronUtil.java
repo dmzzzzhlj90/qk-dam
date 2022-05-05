@@ -1,9 +1,13 @@
 package com.qk.dm.dataingestion.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataingestion.enums.SchedulerCycle;
+import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author shenpj
@@ -11,6 +15,10 @@ import java.util.Date;
  * @since 1.0.0
  */
 public class CronUtil {
+
+    private static final String SCHEDULE_TIME_START = "startTime";
+    private static final String SCHEDULE_TIME_END = "endTime";
+    private static final String SCHEDULE_CRON = "crontab";
 
     public static String createCron(String type, String interval, String time) {
         StringBuffer cronExp = new StringBuffer("");
@@ -77,5 +85,29 @@ public class CronUtil {
         } else {
             cronExp.append(interval);
         }
+    }
+
+    public static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, String> m = Map.of(SCHEDULE_TIME_START, DateUtil.toStr(effectiveTimeStart),
+                SCHEDULE_TIME_END, DateUtil.toStr(effectiveTimeEnt),
+                SCHEDULE_CRON, cron,
+                "timezoneId", "Asia/Shanghai");
+        try {
+            return objectMapper.writeValueAsString(m);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 构建Cron表达式
+     */
+    public static String createCron(DisSchedulerConfigVO disSchedulerConfig) {
+
+        return CronUtil.createCron(disSchedulerConfig.getSchedulerCycle(),
+                disSchedulerConfig.getSchedulerIntervalTime(),
+                disSchedulerConfig.getSchedulerTime());
     }
 }

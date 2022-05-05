@@ -72,7 +72,7 @@ public class DataMigrationController {
      * 批量删除作业
      * @param ids 作业id，如果多个使用英文逗号分割
      * @return DefaultCommonResult
-     */
+      */
     @DeleteMapping("/{ids}")
     public DefaultCommonResult batchDelete(@PathVariable("ids") String ids){
         dataMigrationService.delete(ids);

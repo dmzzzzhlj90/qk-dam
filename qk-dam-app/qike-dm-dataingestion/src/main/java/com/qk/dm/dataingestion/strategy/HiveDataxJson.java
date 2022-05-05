@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.dataingestion.enums.DataIntoType;
 import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.model.DataSourceServer;
 import com.qk.dm.dataingestion.model.DataxChannel;
@@ -30,8 +31,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class HiveDataxJson implements DataxJson{
-    private static final String HIVE_READER = "hdfsreader";
-    private static final String HIVE_WRITER = "hdfswriter";
     //自动创建表
     private static final String AUTO_CREATE = "1";
     private final DataBaseInfoDefaultApi dataBaseService;
@@ -49,7 +48,10 @@ public class HiveDataxJson implements DataxJson{
                 .defaultFS(baseInfo.getSourceDefaultFS())
                 .path(baseInfo.getSourcePath())
                 .fileType(baseInfo.getSourceFileType()).build();
-        return DataxChannel.builder().name(HIVE_READER).parameter(hiveReader).build();
+
+        return DataxChannel.builder()
+                .name(DataIntoType.HIVE_READER.getType())
+                .parameter(hiveReader).build();
 
     }
 
@@ -70,11 +72,16 @@ public class HiveDataxJson implements DataxJson{
         //判断是否自动创建表
         if(Objects.equals(baseInfo.getAutoCreate(),AUTO_CREATE)) {
             //组装建表SQL
-            String sqlScript = generateSql(baseInfo.getTargetTable(), dataMigrationVO.getColumnList().getTargetColumnList());
+            String sqlScript = generateSql(baseInfo.getTargetTable(),
+                    dataMigrationVO.getColumnList().getTargetColumnList());
             log.info("数据库类型【{}】，生成表SQL【{}】", baseInfo.getTargetTable(), sqlScript);
-            createTable(jdbcUrlString(dataSourceServer,baseInfo.getTargetDatabase()),dataSourceServer, sqlScript);
+            createTable(jdbcUrlString(dataSourceServer,
+                    baseInfo.getTargetDatabase()),
+                    dataSourceServer, sqlScript);
         }
-        return DataxChannel.builder().name(HIVE_WRITER).parameter(hiveWriter).build();
+        return DataxChannel.builder()
+                .name(DataIntoType.HIVE_WRITER.getType())
+                .parameter(hiveWriter).build();
     }
 
 

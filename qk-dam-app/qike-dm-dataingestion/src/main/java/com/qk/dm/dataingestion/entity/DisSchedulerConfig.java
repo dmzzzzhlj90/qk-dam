@@ -76,6 +76,11 @@ public class DisSchedulerConfig implements Serializable {
      */
     @Column(name = "cron")
     private String cron;
+    /**
+     * 调度定时id
+     */
+    @Column(name = "scheduler_id")
+    private Integer schedulerId;
 
     /**
      * 并发通道
