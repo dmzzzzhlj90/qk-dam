@@ -7,7 +7,7 @@ import com.qk.dm.datacollect.service.cron.CronService;
 import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
 import com.qk.dm.datacollect.vo.HttpParamsVO;
 import com.qk.dm.dolphin.common.dto.ProcessDefinitionDTO;
-import com.qk.dm.dolphin.common.service.DolphinProcessService;
+import com.qk.dm.dolphin.common.manager.DolphinProcessManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -21,14 +21,14 @@ import java.util.Map;
 public class DolphinHttpServiceImpl implements DolphinHttpService {
     private final DolphinHttpClient dolphinHttpClient;
     private final Map<String, CronService> cronServiceMap;
-    private final DolphinProcessService dolphinProcessService;
+    private final DolphinProcessManager dolphinProcessManager;
 
     public DolphinHttpServiceImpl(DolphinHttpClient dolphinHttpClient,
                                   Map<String, CronService> cronServiceMap,
-                                  DolphinProcessService dolphinProcessService) {
+                                  DolphinProcessManager dolphinProcessManager) {
         this.dolphinHttpClient = dolphinHttpClient;
         this.cronServiceMap = cronServiceMap;
-        this.dolphinProcessService = dolphinProcessService;
+        this.dolphinProcessManager = dolphinProcessManager;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DolphinHttpServiceImpl implements DolphinHttpService {
         //2、生成参数
         Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
         //3、根据详情获取taskCode
-        ProcessDefinitionDTO processDefinitionDTO = dolphinProcessService.detailToProcess(dctSchedulerBasicInfoVO.getCode());
+        ProcessDefinitionDTO processDefinitionDTO = dolphinProcessManager.detailToProcess(dctSchedulerBasicInfoVO.getCode());
         long taskCode = GsonUtil.toJsonArray(processDefinitionDTO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
         //4、修改流程定义
         dolphinHttpClient.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, httpParams, description);

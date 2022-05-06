@@ -46,8 +46,8 @@ dependencies {
     implementation project(":dm-feign-all")
     implementation project(":catacollect")
 
-    implementation project(":dolphinscheduler-starter-http")
     implementation project(":qk-dolphin-common")
+    implementation project(":dolphinscheduler-starter-http")
 
     implementation 'org.mapstruct:mapstruct'
     implementation project(":metadata-common-core")
