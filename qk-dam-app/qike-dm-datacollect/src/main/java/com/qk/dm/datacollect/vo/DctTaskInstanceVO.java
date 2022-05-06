@@ -1,7 +1,7 @@
 package com.qk.dm.datacollect.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.qk.dm.datacollect.dolphin.dto.InstanceStateTypeEnum;
+import com.qk.dm.dolphin.common.dto.InstanceStateTypeEnum;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

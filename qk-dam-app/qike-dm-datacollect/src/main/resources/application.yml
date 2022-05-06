@@ -19,3 +19,6 @@ spring:
 #      resourceserver:
 #        jwt:
 #          issuer-uri: http://172.20.0.9:8080/auth/realms/qkdatacenter
+dolphinscheduler:
+  http:
+    enabled: true

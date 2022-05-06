@@ -1,11 +1,11 @@
 package com.qk.dm.datacollect.service.impl;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.datacollect.dolphin.dto.*;
-import com.qk.dm.datacollect.dolphin.service.ProcessInstanceService;
 import com.qk.dm.datacollect.mapstruct.DctProcessInstanceMapper;
 import com.qk.dm.datacollect.service.DctInstanceService;
 import com.qk.dm.datacollect.vo.*;
+import com.qk.dm.dolphin.common.dto.*;
+import com.qk.dm.dolphin.common.service.ProcessInstanceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.qk.dm.datacollect.vo;
 
-import com.qk.dm.datacollect.dolphin.dto.InstanceStateTypeEnum;
+import com.qk.dm.dolphin.common.dto.InstanceStateTypeEnum;
 import lombok.Data;
 
 import java.util.Objects;
