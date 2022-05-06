@@ -40,16 +40,7 @@ public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService 
 
     @Override
     public void delete(List<Long> baseIdList) {
-
-        baseIdList.forEach(e->{
-            DisSchedulerConfig disSchedulerConfig = disSchedulerConfigRepository.findByBaseInfoId(e);
-            if(Objects.nonNull(disSchedulerConfig)) {
-                disSchedulerConfigRepository.delete(disSchedulerConfig);
-                if(Objects.nonNull(disSchedulerConfig.getSchedulerId())) {
-                    dataxDolphinClient.deleteSchedule(disSchedulerConfig.getSchedulerId());
-                }
-            }
-        });
+        baseIdList.forEach(disSchedulerConfigRepository::deleteByBaseInfoId);
     }
 
     @Override

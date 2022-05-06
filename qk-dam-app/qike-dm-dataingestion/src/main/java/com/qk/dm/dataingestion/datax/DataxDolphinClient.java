@@ -88,14 +88,20 @@ public class DataxDolphinClient {
 
     }
 
-    public Result dolphinProcessRelease(Long processDefinitionCode, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
-        Result result = dolphinschedulerManager.defaultApi().
-                releaseProcessDefinitionUsingPOST(processDefinitionCode,
-                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
-                releaseState);
-        if (Boolean.TRUE.equals(result.getFailed())){
-            throw new ApiException(400, result.getMsg());
+    public Result dolphinProcessRelease(Long processDefinitionCode, ProcessDefinition.ReleaseStateEnum releaseState) {
+        Result result = null;
+        try {
+            result = dolphinschedulerManager.defaultApi().
+                    releaseProcessDefinitionUsingPOST(processDefinitionCode,
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                    releaseState);
+            if (Boolean.TRUE.equals(result.getFailed())){
+                throw new ApiException(400, result.getMsg());
+            }
+        } catch (ApiException e) {
+            e.printStackTrace();
         }
+
         return result;
     }
 
@@ -281,6 +287,25 @@ public class DataxDolphinClient {
             log.error("定时任务下线失败：【{}】", scheduleId);
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 流程定义删除
+     * @param processDefinitionCodes
+     */
+    public void deleteProcessDefinition(String processDefinitionCodes){
+        try {
+            Result result = dolphinschedulerManager.defaultApi()
+                    .batchDeleteProcessDefinitionByCodesUsingPOST(processDefinitionCodes,
+                            dolphinTaskDefinitionPropertiesBean.getProjectCode());
+            if (Boolean.TRUE.equals(result.getFailed())) {
+                throw new ApiException(400, result.getMsg());
+            }
+        }catch (Exception e){
+            log.error("流程定义删除失败：【{}】", processDefinitionCodes);
+            e.printStackTrace();
+        }
+
     }
 
     /**

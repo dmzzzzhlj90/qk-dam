@@ -20,25 +20,25 @@ import java.util.stream.Collectors;
 @Component
 public class DataSyncFactory {
 
-    private final List<DataxJson> dataList;
+    private final List<DataxJson> dataXContainer;
 
-    private Map<IngestionType,DataxJson> maps;
+    private Map<IngestionType,DataxJson> dataXImpl;
 
-    public DataSyncFactory(List<DataxJson> dataList) {
-        this.dataList = dataList;
+    public DataSyncFactory(List<DataxJson> dataXContainer) {
+        this.dataXContainer = dataXContainer;
     }
 
     @PostConstruct
     private void init() {
         log.info("数据引入类型初始化开始");
-        maps = Optional.ofNullable(dataList).orElse(List.of()).stream().collect(Collectors.toMap(
+        dataXImpl = Optional.ofNullable(dataXContainer).orElse(List.of()).stream().collect(Collectors.toMap(
                 DataxJson::ingestionType, t -> t));
         log.info("数据引入类型初始化完成");
     }
 
 
     public DataxJson getIngestionType(IngestionType ingestionType) {
-        return maps.get(ingestionType);
+        return dataXImpl.get(ingestionType);
     }
 
     /**

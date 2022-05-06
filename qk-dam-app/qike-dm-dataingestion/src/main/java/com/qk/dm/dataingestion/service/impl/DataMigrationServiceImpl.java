@@ -122,9 +122,9 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     public Map<String,Object> jsonDetail(Long id) {
-        String json = disDataxJsonService.findDataxJson(id);
+        String dataXJson = disDataxJsonService.findDataxJson(id);
 
-        if (Objects.isNull(json)) {
+        if (Objects.isNull(dataXJson)) {
             DisMigrationBaseInfoVO baseDetail = baseInfoService.detail(id);
             List<DisColumnInfoVO> columnList = columnInfoService.list(id);
 
@@ -133,12 +133,12 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                             .targetColumnList(targetList(baseDetail, columnList)).build())
                     .schedulerConfig(schedulerConfigService.detail(id)).build();
 
-            json = dataSyncFactory.transJson(dataMigrationVO,
+            dataXJson = dataSyncFactory.transJson(dataMigrationVO,
                     IngestionType.getVal(baseDetail.getSourceConnectType()),
                     IngestionType.getVal(baseDetail.getTargetConnectType()));
         }
 
-        return Map.of("dataxJson", parseJson(json));
+        return Map.of("dataxJson", parseJson(dataXJson));
 
     }
 
@@ -435,7 +435,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         //判断定时开关
         if(disSchedulerConfig.getTimeSwitch()){
             log.info("定时任务上线scheduleId【{}】",scheduleId);
-            dataxDolphinClient.onlineSchedule(scheduleId);
+            //dataxDolphinClient.onlineSchedule(scheduleId);
         }
     }
     //创建定时
@@ -455,12 +455,12 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         //判断定时开关
         if(disSchedulerConfig.getTimeSwitch()){
             log.info("定时任务下线scheduleId【{}】",disSchedulerConfig.getSchedulerId());
-            dataxDolphinClient.offlineSchedule(disSchedulerConfig.getSchedulerId());
+            //dataxDolphinClient.offlineSchedule(disSchedulerConfig.getSchedulerId());
         }
         dataxDolphinClient.updateSchedule(disSchedulerConfig.getSchedulerId(),disSchedulerConfig.getEffectiveTimeStart(),
                 disSchedulerConfig.getEffectiveTimeEnd(),disSchedulerConfig.getCron());
         log.info("定时任务上线scheduleId【{}】",disSchedulerConfig.getSchedulerId());
-        dataxDolphinClient.onlineSchedule(disSchedulerConfig.getSchedulerId());
+        //dataxDolphinClient.onlineSchedule(disSchedulerConfig.getSchedulerId());
 
 
     }
