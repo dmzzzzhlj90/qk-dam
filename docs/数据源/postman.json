@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "d260b66a-0e46-470e-aa54-1d386d20adb5",
+    "_postman_id": "5bba3204-de49-4d37-8096-94926a9167b8",
     "name": "dm-datasource"
   },
   "item": [
@@ -50,7 +50,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/database/p4jzfm",
+              "raw": "http://::server/api/database/ova6h7",
               "protocol": "http",
               "path": [
                 "api",
@@ -64,7 +64,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "p8ihm7",
+                  "value": "h4hueb",
                   "description": "No comments found."
                 }
               ]
@@ -86,7 +86,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/keren.schumm",
+              "raw": "http://::server/api/marlene.luettgen",
               "protocol": "http",
               "path": [
                 "api",
@@ -99,7 +99,7 @@
               "variable": [
                 {
                   "key": "dataSourceName",
-                  "value": "keren.schumm",
+                  "value": "marlene.luettgen",
                   "description": "No comments found."
                 }
               ]
@@ -134,7 +134,7 @@
               "query": [
                 {
                   "key": "dataSourceNames",
-                  "value": "n9ckg3",
+                  "value": "qwz46e",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -157,7 +157,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/data/sources/114",
+              "raw": "http://::server/api/data/sources/107",
               "protocol": "http",
               "path": [
                 "api",
@@ -172,7 +172,7 @@
               "variable": [
                 {
                   "key": "connId",
-                  "value": "114",
+                  "value": "107",
                   "description": "No comments found."
                 }
               ]
@@ -207,7 +207,7 @@
               "query": [
                 {
                   "key": "connIds",
-                  "value": "r62uiy",
+                  "value": "r5ef7y",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -229,7 +229,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"a69yi8\"\n  },\n  \"dataSourceName\": \"keren.schumm\",\n  \"linkType\": \"9qfraq\",\n  \"dicId\": \"114\",\n  \"beginDay\": \"ot3fdn\",\n  \"endDay\": \"3css1f\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"13esjp\"\n  },\n  \"dataSourceName\": \"marlene.luettgen\",\n  \"linkType\": \"4lw6rf\",\n  \"dicId\": \"107\",\n  \"beginDay\": \"6nagdq\",\n  \"endDay\": \"vdr9mj\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -260,7 +260,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 6,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"ct79ed\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"e9bsv5\",\n  \"tagNames\": \"u5l3g7\",\n  \"tagIds\": \"x5ipe5\",\n  \"use\": \"9ansh6\",\n  \"deployPlace\": \"8hk645\",\n  \"status\": 696,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"0x6inf\",\n  \"dicId\": \"114\",\n  \"remark\": \"x4v3tb\"\n}",
+              "raw": "{\n  \"id\": 298,\n  \"dataSourceName\": \"marlene.luettgen\",\n  \"connId\": \"107\",\n  \"homeSystem\": \"y5j2ue\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"4uwc5v\",\n  \"tagNames\": \"853g07\",\n  \"tagIds\": \"t3zvo6\",\n  \"use\": \"ois0sn\",\n  \"deployPlace\": \"srd9hs\",\n  \"status\": 390,\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"ats3m3\",\n  \"dicId\": \"107\",\n  \"remark\": \"b4vve2\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -297,7 +297,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/960",
+              "raw": "http://::server/datasource/504",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -310,7 +310,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "468",
+                  "value": "894",
                   "description": "数据源id"
                 }
               ]
@@ -326,7 +326,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 86,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"mmnib9\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"kz5r0m\",\n  \"tagNames\": \"qezaqz\",\n  \"tagIds\": \"w00n0o\",\n  \"use\": \"khk27h\",\n  \"deployPlace\": \"yjuv5h\",\n  \"status\": 928,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"69wx0t\",\n  \"dicId\": \"114\",\n  \"remark\": \"hqqjtb\"\n}",
+              "raw": "{\n  \"id\": 820,\n  \"dataSourceName\": \"marlene.luettgen\",\n  \"connId\": \"107\",\n  \"homeSystem\": \"63nbnj\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"oeuoro\",\n  \"tagNames\": \"8hc8sa\",\n  \"tagIds\": \"a30j1r\",\n  \"use\": \"gtuuzf\",\n  \"deployPlace\": \"0blqc5\",\n  \"status\": 767,\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"po759h\",\n  \"dicId\": \"107\",\n  \"remark\": \"xs1v2o\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -392,7 +392,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/database/afw3xo",
+              "raw": "http://::server/datasource/database/xwhg6t",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -406,7 +406,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "q1n8a1",
+                  "value": "jhsqo4",
                   "description": "数据连接类型"
                 }
               ]
@@ -428,7 +428,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/180",
+              "raw": "http://::server/datasource/595",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -441,7 +441,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "859",
+                  "value": "302",
                   "description": "数据源名称"
                 }
               ]
@@ -457,7 +457,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 914,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"0z0co9\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"9p3brs\",\n  \"tagNames\": \"8w513u\",\n  \"tagIds\": \"pfefvf\",\n  \"use\": \"t10lwr\",\n  \"deployPlace\": \"e3hkpb\",\n  \"status\": 690,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"s009p6\",\n  \"dicId\": \"114\",\n  \"remark\": \"t9492d\"\n}",
+              "raw": "{\n  \"id\": 923,\n  \"dataSourceName\": \"marlene.luettgen\",\n  \"connId\": \"107\",\n  \"homeSystem\": \"bao2cz\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"9jtsjp\",\n  \"tagNames\": \"wc18lh\",\n  \"tagIds\": \"59p8mh\",\n  \"use\": \"xqajn9\",\n  \"deployPlace\": \"v0phis\",\n  \"status\": 373,\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"ie04or\",\n  \"dicId\": \"107\",\n  \"remark\": \"vg7fqw\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -578,7 +578,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"juc64n\"\n}",
+              "raw": "{\n  \"id\": \"107\",\n  \"dicName\": \"marlene.luettgen\",\n  \"parentId\": \"107\",\n  \"dsDirCode\": \"22285\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"mbk5et\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -616,7 +616,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasorce/dir/delete/114",
+              "raw": "http://::server/datasorce/dir/delete/107",
               "protocol": "http",
               "path": [
                 "datasorce",
@@ -631,7 +631,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "114",
+                  "value": "107",
                   "description": "目录id"
                 }
               ]
@@ -647,7 +647,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"yd7575\"\n}",
+              "raw": "{\n  \"id\": \"107\",\n  \"dicName\": \"marlene.luettgen\",\n  \"parentId\": \"107\",\n  \"dsDirCode\": \"22285\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"3ud5yh\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -684,7 +684,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"5vg741\"\n}",
+              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"r2qndr\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -715,7 +715,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"nc9g92\",\n  \"itDepartment\": \"ras0ms\",\n  \"busiDepartment\": \"ihpm43\",\n  \"importance\": 555,\n  \"leader\": \"u2e5kn\",\n  \"deployPlace\": \"5x0dzd\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": 922,\n  \"updateUserid\": 958,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"c514tj\",\n  \"sysDesc\": \"pyyz3s\",\n  \"tagNames\": \"7360qb\",\n  \"tagIds\": \"b2xf3y\"\n}",
+              "raw": "{\n  \"id\": \"107\",\n  \"sysName\": \"marlene.luettgen\",\n  \"sysShortName\": \"marlene.luettgen\",\n  \"area\": \"g8bda9\",\n  \"itDepartment\": \"0a0lj4\",\n  \"busiDepartment\": \"cz5zoi\",\n  \"importance\": 206,\n  \"leader\": \"uncqbw\",\n  \"deployPlace\": \"c6ls7m\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"createUserid\": 184,\n  \"updateUserid\": 695,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"9frb31\",\n  \"sysDesc\": \"2jmseo\",\n  \"tagNames\": \"z4r9fc\",\n  \"tagIds\": \"7ul9kn\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -752,7 +752,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/directory/delete/114",
+              "raw": "http://::server/directory/delete/107",
               "protocol": "http",
               "path": [
                 "directory",
@@ -766,7 +766,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "114",
+                  "value": "107",
                   "description": "应用系统id"
                 }
               ]
@@ -782,7 +782,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"w0zxed\",\n  \"itDepartment\": \"pr7266\",\n  \"busiDepartment\": \"reo550\",\n  \"importance\": 264,\n  \"leader\": \"nliz0h\",\n  \"deployPlace\": \"9nnv3p\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": 64,\n  \"updateUserid\": 930,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"ydcjm1\",\n  \"sysDesc\": \"6zzc6w\",\n  \"tagNames\": \"tb9s1o\",\n  \"tagIds\": \"0vhpmt\"\n}",
+              "raw": "{\n  \"id\": \"107\",\n  \"sysName\": \"marlene.luettgen\",\n  \"sysShortName\": \"marlene.luettgen\",\n  \"area\": \"zlgm4e\",\n  \"itDepartment\": \"pwiuvn\",\n  \"busiDepartment\": \"rcmo22\",\n  \"importance\": 303,\n  \"leader\": \"jdr4o1\",\n  \"deployPlace\": \"ruam7k\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"createUserid\": 515,\n  \"updateUserid\": 894,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"n6q0en\",\n  \"sysDesc\": \"hxyxza\",\n  \"tagNames\": \"9s2s0v\",\n  \"tagIds\": \"mya5x9\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -835,6 +835,298 @@
             "header": []
           },
           "description": "数据源管理—查询应用系统名称"
+        }
+      ]
+    },
+    {
+      "name": "统一数据源连接api",
+      "item": [
+        {
+          "name": "获取所有数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/unified/api/dbtype",
+              "protocol": "http",
+              "path": [
+                "unified",
+                "api",
+                "dbtype"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取所有数据源连接类型",
+            "header": []
+          },
+          "description": "获取所有数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接（根据数据库类型）",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/unified/api/connect/aij6o8",
+              "protocol": "http",
+              "path": [
+                "unified",
+                "api",
+                "connect",
+                ":engineType"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "engineType",
+                  "value": "q5dgvi",
+                  "description": "适用引擎"
+                }
+              ]
+            },
+            "description": "获取数据源连接（根据数据库类型）",
+            "header": []
+          },
+          "description": "获取数据源连接（根据数据库类型）"
+        },
+        {
+          "name": "获取mtd(元数据)中db库信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/unified/api/mtd/db?engineType\u003dmypq2w\u0026dataSourceConnId\u003d107",
+              "protocol": "http",
+              "path": [
+                "unified",
+                "api",
+                "mtd",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "engineType",
+                  "value": "8wttcw",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "107",
+                  "description": "数据源connId"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取mtd(元数据)中db库信息",
+            "header": []
+          },
+          "description": "获取mtd(元数据)中db库信息"
+        },
+        {
+          "name": "获取mtd(元数据)中表信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/unified/api/mtd/table?dataSourceConnId\u003d107\u0026dataBaseName\u003dmarlene.luettgen\u0026engineType\u003di3mdex",
+              "protocol": "http",
+              "path": [
+                "unified",
+                "api",
+                "mtd",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "engineType",
+                  "value": "i7roe7",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "107",
+                  "description": "数据源connId"
+                },
+                {
+                  "key": "dataBaseName",
+                  "value": "marlene.luettgen",
+                  "description": "数据库名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取mtd(元数据)中表信息",
+            "header": []
+          },
+          "description": "获取mtd(元数据)中表信息"
+        },
+        {
+          "name": "获取mtd(元数据)中字段信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/unified/api/mtd/column?engineType\u003d79dmj1\u0026dataBaseName\u003dmarlene.luettgen\u0026dataSourceConnId\u003d107\u0026tableName\u003dmarlene.luettgen",
+              "protocol": "http",
+              "path": [
+                "unified",
+                "api",
+                "mtd",
+                "column"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "engineType",
+                  "value": "jn4ftg",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "107",
+                  "description": "数据源connId"
+                },
+                {
+                  "key": "dataBaseName",
+                  "value": "marlene.luettgen",
+                  "description": "数据库名称"
+                },
+                {
+                  "key": "tableName",
+                  "value": "marlene.luettgen",
+                  "description": "表名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取mtd(元数据)中字段信息",
+            "header": []
+          },
+          "description": "获取mtd(元数据)中字段信息"
+        },
+        {
+          "name": "获取直连(dct)中db库信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/unified/api/dct/db?dataSourceConnId\u003d107",
+              "protocol": "http",
+              "path": [
+                "unified",
+                "api",
+                "dct",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceConnId",
+                  "value": "107",
+                  "description": "数据源连接id"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取直连(dct)中db库信息",
+            "header": []
+          },
+          "description": "获取直连(dct)中db库信息"
+        },
+        {
+          "name": "获取直连(dct)中表信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/unified/api/dct/table?dataSourceConnId\u003d107\u0026databaseName\u003dmarlene.luettgen",
+              "protocol": "http",
+              "path": [
+                "unified",
+                "api",
+                "dct",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceConnId",
+                  "value": "107",
+                  "description": "数据源连接id"
+                },
+                {
+                  "key": "databaseName",
+                  "value": "marlene.luettgen",
+                  "description": "数据库名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取直连(dct)中表信息",
+            "header": []
+          },
+          "description": "获取直连(dct)中表信息"
         }
       ]
     }

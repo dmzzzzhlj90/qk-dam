@@ -18,5 +18,8 @@ spring:
           - dataId: qkdam-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
+          - dataId: qkdam-datasource-\${spring.profiles.active}.yml
+            group: DAM
+            refresh: true
   profiles:
     active: ${damProfilesActive}
