@@ -21,11 +21,10 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/unified/api")
-public class DsSourceUnifiedApiController {
+public class DsUnifiedApiController {
   private final DsUnifiedApiService dsUnifiedApiService;
 
-  public DsSourceUnifiedApiController(
+  public DsUnifiedApiController(
       DsUnifiedApiService dsUnifiedApiService) {
     this.dsUnifiedApiService = dsUnifiedApiService;
   }
@@ -35,78 +34,78 @@ public class DsSourceUnifiedApiController {
    *
    * @return DefaultCommonResult<List < String>>
    */
-  @GetMapping("/dbtype")
+  @GetMapping("/dbtype/all")
   public DefaultCommonResult<List<String>> getAllConnType() {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllConnType());
   }
 
   /**
    * 获取数据源连接（根据数据库类型）
-   * @param engineType 适用引擎
+   * @param type 数据库类型
    * @return DefaultCommonResult<Map<String,String>> 数据源连接名称
    */
-  @GetMapping("/connect/{engineType}")
-  public DefaultCommonResult<Map<String,String>> getResultDataSourceByType(@NotBlank @PathVariable("engineType") String engineType) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllDataSourcesByType(engineType));
+  @GetMapping("/connect/info/{type}")
+  public DefaultCommonResult<Map<String,String>> getResultDataSourceByType(@NotBlank @PathVariable("type") String type) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllDataSourcesByType(type));
   }
   /**----------------------------------------------------获取atals库、表信息-------------------------------------------------------------*/
 
   /**
    * 获取mtd(元数据)中db库信息
-   * @param engineType 数据库类型
+   * @param type 数据库类型
    * @param dataSourceConnId 数据源connId
    * @return DefaultCommonResult<List<MtdApiDb>> 库信息
    */
   @GetMapping("/mtd/db")
-  public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@NotBlank @RequestParam String engineType,@NotBlank @RequestParam String dataSourceConnId) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllDataBase(engineType, dataSourceConnId));
+  public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@NotBlank @RequestParam String type,@NotBlank @RequestParam String dataSourceConnId) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllDataBase(type, dataSourceConnId));
   }
 
   /**
    * 获取mtd(元数据)中表信息
    * @param engineType 数据库类型
    * @param dataSourceConnId 数据源connId
-   * @param dataBaseName 数据库名称
+   * @param dbName 数据库名称
    * @return DefaultCommonResult<List<MtdTables>> 表信息
    */
   @GetMapping("/mtd/table")
-  public DefaultCommonResult<List<MtdTables>> getAllTable(String engineType, String dataSourceConnId, String dataBaseName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllTable(engineType, dataSourceConnId, dataBaseName));
+  public DefaultCommonResult<List<MtdTables>> getAllTable(String engineType, String dataSourceConnId, String dbName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllTable(engineType, dataSourceConnId, dbName));
   }
 
   /**
-   * 获取mtd(元数据)中字段信息
-   * @param engineType 数据库类型
+   * 获取元数据(mtd)中字段信息
+   * @param type 数据库类型
    * @param dataSourceConnId 数据源connId
-   * @param dataBaseName 数据库名称
+   * @param dbName 数据库名称
    * @param tableName 表名称
    * @return List<MtdAttributes> 字段信息
    */
   @GetMapping("/mtd/column")
-  public DefaultCommonResult<List<MtdAttributes>> getAllColumn(String engineType, String dataSourceConnId, String dataBaseName, String tableName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllColumn(engineType, dataSourceConnId, dataBaseName, tableName));
+  public DefaultCommonResult<List<MtdAttributes>> getAllColumn(String type, String dataSourceConnId, String dbName, String tableName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllColumn(type, dataSourceConnId, dbName, tableName));
   }
   /**----------------------------------------------------获取information_schema（直连direct）库、表信息-------------------------------------------------*/
 
   /**
-   * 获取直连(dct)中db库信息
+   * 获取直连(native)中db库信息
    * @param dataSourceConnId 数据源连接id
    * @return DefaultCommonResult<List<String>> 数据库信息
    */
-  @GetMapping("/dct/db")
+  @GetMapping("/native/db")
   public DefaultCommonResult<List<String>> getDctResultDb(@NotBlank @RequestParam String dataSourceConnId) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultDb(dataSourceConnId));
   }
 
   /**
-   * 获取直连(dct)中表信息
+   * 获取直连(native)中表信息
    * @param dataSourceConnId 数据源连接id
-   * @param databaseName 数据库名称
+   * @param dbName 数据库名称
    * @return DefaultCommonResult<List<String>> 表信息
    */
-  @GetMapping("/dct/table")
-  public DefaultCommonResult<List<String>> getDctResultTable(@NotBlank @RequestParam String dataSourceConnId,@NotBlank @RequestParam String databaseName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultTable(dataSourceConnId,databaseName));
+  @GetMapping("/native/table")
+  public DefaultCommonResult<List<String>> getDctResultTable(@NotBlank @RequestParam String dataSourceConnId,@NotBlank @RequestParam String dbName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultTable(dataSourceConnId,dbName));
   }
 
 

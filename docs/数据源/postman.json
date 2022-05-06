@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "5bba3204-de49-4d37-8096-94926a9167b8",
+    "_postman_id": "4ee28530-2307-43f2-b22c-3e5c50e27567",
     "name": "dm-datasource"
   },
   "item": [
@@ -50,7 +50,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/database/ova6h7",
+              "raw": "http://::server/api/database/f604sp",
               "protocol": "http",
               "path": [
                 "api",
@@ -64,7 +64,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "h4hueb",
+                  "value": "0jhtui",
                   "description": "No comments found."
                 }
               ]
@@ -86,7 +86,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/marlene.luettgen",
+              "raw": "http://::server/api/theodore.veum",
               "protocol": "http",
               "path": [
                 "api",
@@ -99,7 +99,7 @@
               "variable": [
                 {
                   "key": "dataSourceName",
-                  "value": "marlene.luettgen",
+                  "value": "theodore.veum",
                   "description": "No comments found."
                 }
               ]
@@ -134,7 +134,7 @@
               "query": [
                 {
                   "key": "dataSourceNames",
-                  "value": "qwz46e",
+                  "value": "ws3yxf",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -157,7 +157,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/data/sources/107",
+              "raw": "http://::server/api/data/sources/41",
               "protocol": "http",
               "path": [
                 "api",
@@ -172,7 +172,7 @@
               "variable": [
                 {
                   "key": "connId",
-                  "value": "107",
+                  "value": "41",
                   "description": "No comments found."
                 }
               ]
@@ -207,7 +207,7 @@
               "query": [
                 {
                   "key": "connIds",
-                  "value": "r5ef7y",
+                  "value": "szy83u",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -229,7 +229,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"13esjp\"\n  },\n  \"dataSourceName\": \"marlene.luettgen\",\n  \"linkType\": \"4lw6rf\",\n  \"dicId\": \"107\",\n  \"beginDay\": \"6nagdq\",\n  \"endDay\": \"vdr9mj\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"leipxj\"\n  },\n  \"dataSourceName\": \"theodore.veum\",\n  \"linkType\": \"3edtmj\",\n  \"dicId\": \"41\",\n  \"beginDay\": \"qgvs1x\",\n  \"endDay\": \"ixb7ey\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -260,7 +260,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 298,\n  \"dataSourceName\": \"marlene.luettgen\",\n  \"connId\": \"107\",\n  \"homeSystem\": \"y5j2ue\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"4uwc5v\",\n  \"tagNames\": \"853g07\",\n  \"tagIds\": \"t3zvo6\",\n  \"use\": \"ois0sn\",\n  \"deployPlace\": \"srd9hs\",\n  \"status\": 390,\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"ats3m3\",\n  \"dicId\": \"107\",\n  \"remark\": \"b4vve2\"\n}",
+              "raw": "{\n  \"id\": 790,\n  \"dataSourceName\": \"theodore.veum\",\n  \"connId\": \"41\",\n  \"homeSystem\": \"mb4ygo\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"mx6rsp\",\n  \"tagNames\": \"n8w69v\",\n  \"tagIds\": \"oq22hw\",\n  \"use\": \"alnare\",\n  \"deployPlace\": \"dwk752\",\n  \"status\": 226,\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"1tkjnt\",\n  \"dicId\": \"41\",\n  \"remark\": \"1uolxg\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -297,7 +297,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/504",
+              "raw": "http://::server/datasource/760",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -310,7 +310,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "894",
+                  "value": "405",
                   "description": "数据源id"
                 }
               ]
@@ -326,7 +326,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 820,\n  \"dataSourceName\": \"marlene.luettgen\",\n  \"connId\": \"107\",\n  \"homeSystem\": \"63nbnj\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"oeuoro\",\n  \"tagNames\": \"8hc8sa\",\n  \"tagIds\": \"a30j1r\",\n  \"use\": \"gtuuzf\",\n  \"deployPlace\": \"0blqc5\",\n  \"status\": 767,\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"po759h\",\n  \"dicId\": \"107\",\n  \"remark\": \"xs1v2o\"\n}",
+              "raw": "{\n  \"id\": 124,\n  \"dataSourceName\": \"theodore.veum\",\n  \"connId\": \"41\",\n  \"homeSystem\": \"ilwr26\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"cx002e\",\n  \"tagNames\": \"evrki0\",\n  \"tagIds\": \"q4lwvv\",\n  \"use\": \"2t2z0i\",\n  \"deployPlace\": \"5tky5w\",\n  \"status\": 942,\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"5us4nj\",\n  \"dicId\": \"41\",\n  \"remark\": \"ksaksw\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -392,7 +392,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/database/xwhg6t",
+              "raw": "http://::server/datasource/database/ngfjwq",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -406,7 +406,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "jhsqo4",
+                  "value": "07m1s8",
                   "description": "数据连接类型"
                 }
               ]
@@ -428,7 +428,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/595",
+              "raw": "http://::server/datasource/868",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -441,7 +441,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "302",
+                  "value": "694",
                   "description": "数据源名称"
                 }
               ]
@@ -457,7 +457,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 923,\n  \"dataSourceName\": \"marlene.luettgen\",\n  \"connId\": \"107\",\n  \"homeSystem\": \"bao2cz\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"9jtsjp\",\n  \"tagNames\": \"wc18lh\",\n  \"tagIds\": \"59p8mh\",\n  \"use\": \"xqajn9\",\n  \"deployPlace\": \"v0phis\",\n  \"status\": 373,\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"ie04or\",\n  \"dicId\": \"107\",\n  \"remark\": \"vg7fqw\"\n}",
+              "raw": "{\n  \"id\": 445,\n  \"dataSourceName\": \"theodore.veum\",\n  \"connId\": \"41\",\n  \"homeSystem\": \"mukbfh\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"48o8kq\",\n  \"tagNames\": \"3m1dn1\",\n  \"tagIds\": \"dnu6bc\",\n  \"use\": \"bf7gpb\",\n  \"deployPlace\": \"5w5pbl\",\n  \"status\": 618,\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"miyos5\",\n  \"dicId\": \"41\",\n  \"remark\": \"c066l5\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -578,7 +578,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"107\",\n  \"dicName\": \"marlene.luettgen\",\n  \"parentId\": \"107\",\n  \"dsDirCode\": \"22285\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"mbk5et\"\n}",
+              "raw": "{\n  \"id\": \"41\",\n  \"dicName\": \"theodore.veum\",\n  \"parentId\": \"41\",\n  \"dsDirCode\": \"52852\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"h9zqow\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -616,7 +616,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasorce/dir/delete/107",
+              "raw": "http://::server/datasorce/dir/delete/41",
               "protocol": "http",
               "path": [
                 "datasorce",
@@ -631,7 +631,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "107",
+                  "value": "41",
                   "description": "目录id"
                 }
               ]
@@ -647,7 +647,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"107\",\n  \"dicName\": \"marlene.luettgen\",\n  \"parentId\": \"107\",\n  \"dsDirCode\": \"22285\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"createUserid\": \"107\",\n  \"updateUserid\": \"107\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"3ud5yh\"\n}",
+              "raw": "{\n  \"id\": \"41\",\n  \"dicName\": \"theodore.veum\",\n  \"parentId\": \"41\",\n  \"dsDirCode\": \"52852\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"o7tng1\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -684,7 +684,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"r2qndr\"\n}",
+              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"sr2yv0\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -715,7 +715,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"107\",\n  \"sysName\": \"marlene.luettgen\",\n  \"sysShortName\": \"marlene.luettgen\",\n  \"area\": \"g8bda9\",\n  \"itDepartment\": \"0a0lj4\",\n  \"busiDepartment\": \"cz5zoi\",\n  \"importance\": 206,\n  \"leader\": \"uncqbw\",\n  \"deployPlace\": \"c6ls7m\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"createUserid\": 184,\n  \"updateUserid\": 695,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"9frb31\",\n  \"sysDesc\": \"2jmseo\",\n  \"tagNames\": \"z4r9fc\",\n  \"tagIds\": \"7ul9kn\"\n}",
+              "raw": "{\n  \"id\": \"41\",\n  \"sysName\": \"theodore.veum\",\n  \"sysShortName\": \"theodore.veum\",\n  \"area\": \"8r2e1l\",\n  \"itDepartment\": \"pwzfwl\",\n  \"busiDepartment\": \"v7tyfv\",\n  \"importance\": 422,\n  \"leader\": \"yiy3j1\",\n  \"deployPlace\": \"8brnqv\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"createUserid\": 549,\n  \"updateUserid\": 723,\n  \"delFlag\": 1,\n  \"versionConsumer\": \"yo0qmj\",\n  \"sysDesc\": \"ra3yza\",\n  \"tagNames\": \"ybrpag\",\n  \"tagIds\": \"tbybzt\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -752,7 +752,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/directory/delete/107",
+              "raw": "http://::server/directory/delete/41",
               "protocol": "http",
               "path": [
                 "directory",
@@ -766,7 +766,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "107",
+                  "value": "41",
                   "description": "应用系统id"
                 }
               ]
@@ -782,7 +782,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"107\",\n  \"sysName\": \"marlene.luettgen\",\n  \"sysShortName\": \"marlene.luettgen\",\n  \"area\": \"zlgm4e\",\n  \"itDepartment\": \"pwiuvn\",\n  \"busiDepartment\": \"rcmo22\",\n  \"importance\": 303,\n  \"leader\": \"jdr4o1\",\n  \"deployPlace\": \"ruam7k\",\n  \"gmtCreate\": \"2022-05-06 11:38:59\",\n  \"gmtModified\": \"2022-05-06 11:38:59\",\n  \"createUserid\": 515,\n  \"updateUserid\": 894,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"n6q0en\",\n  \"sysDesc\": \"hxyxza\",\n  \"tagNames\": \"9s2s0v\",\n  \"tagIds\": \"mya5x9\"\n}",
+              "raw": "{\n  \"id\": \"41\",\n  \"sysName\": \"theodore.veum\",\n  \"sysShortName\": \"theodore.veum\",\n  \"area\": \"ihgap1\",\n  \"itDepartment\": \"bhgjza\",\n  \"busiDepartment\": \"qh20f4\",\n  \"importance\": 63,\n  \"leader\": \"rtv0k5\",\n  \"deployPlace\": \"7px3pd\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"createUserid\": 151,\n  \"updateUserid\": 114,\n  \"delFlag\": 1,\n  \"versionConsumer\": \"0q3e6x\",\n  \"sysDesc\": \"ajrzmo\",\n  \"tagNames\": \"9cplms\",\n  \"tagIds\": \"lyjdlc\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -839,7 +839,7 @@
       ]
     },
     {
-      "name": "统一数据源连接api",
+      "name": "数据源连接统一api",
       "item": [
         {
           "name": "获取所有数据源连接类型",
@@ -853,12 +853,11 @@
               }
             },
             "url": {
-              "raw": "http://::server/unified/api/dbtype",
+              "raw": "http://::server/dbtype/all",
               "protocol": "http",
               "path": [
-                "unified",
-                "api",
-                "dbtype"
+                "dbtype",
+                "all"
               ],
               "host": [
                 "{{server}}"
@@ -883,13 +882,12 @@
               }
             },
             "url": {
-              "raw": "http://::server/unified/api/connect/aij6o8",
+              "raw": "http://::server/connect/info/xaixl3",
               "protocol": "http",
               "path": [
-                "unified",
-                "api",
                 "connect",
-                ":engineType"
+                "info",
+                ":type"
               ],
               "host": [
                 "{{server}}"
@@ -897,9 +895,9 @@
               "query": [],
               "variable": [
                 {
-                  "key": "engineType",
-                  "value": "q5dgvi",
-                  "description": "适用引擎"
+                  "key": "type",
+                  "value": "cmzcen",
+                  "description": "数据库类型"
                 }
               ]
             },
@@ -920,11 +918,9 @@
               }
             },
             "url": {
-              "raw": "http://::server/unified/api/mtd/db?engineType\u003dmypq2w\u0026dataSourceConnId\u003d107",
+              "raw": "http://::server/mtd/db?type\u003dp1dt3n\u0026dataSourceConnId\u003d41",
               "protocol": "http",
               "path": [
-                "unified",
-                "api",
                 "mtd",
                 "db"
               ],
@@ -933,13 +929,13 @@
               ],
               "query": [
                 {
-                  "key": "engineType",
-                  "value": "8wttcw",
+                  "key": "type",
+                  "value": "4c8b43",
                   "description": "数据库类型"
                 },
                 {
                   "key": "dataSourceConnId",
-                  "value": "107",
+                  "value": "41",
                   "description": "数据源connId"
                 }
               ],
@@ -962,11 +958,9 @@
               }
             },
             "url": {
-              "raw": "http://::server/unified/api/mtd/table?dataSourceConnId\u003d107\u0026dataBaseName\u003dmarlene.luettgen\u0026engineType\u003di3mdex",
+              "raw": "http://::server/mtd/table?dbName\u003dtheodore.veum\u0026dataSourceConnId\u003d41\u0026engineType\u003d7f986f",
               "protocol": "http",
               "path": [
-                "unified",
-                "api",
                 "mtd",
                 "table"
               ],
@@ -976,17 +970,17 @@
               "query": [
                 {
                   "key": "engineType",
-                  "value": "i7roe7",
+                  "value": "hs3p1k",
                   "description": "数据库类型"
                 },
                 {
                   "key": "dataSourceConnId",
-                  "value": "107",
+                  "value": "41",
                   "description": "数据源connId"
                 },
                 {
-                  "key": "dataBaseName",
-                  "value": "marlene.luettgen",
+                  "key": "dbName",
+                  "value": "theodore.veum",
                   "description": "数据库名称"
                 }
               ],
@@ -998,7 +992,7 @@
           "description": "获取mtd(元数据)中表信息"
         },
         {
-          "name": "获取mtd(元数据)中字段信息",
+          "name": "获取元数据(mtd)中字段信息",
           "request": {
             "method": "GET",
             "body": {
@@ -1009,11 +1003,9 @@
               }
             },
             "url": {
-              "raw": "http://::server/unified/api/mtd/column?engineType\u003d79dmj1\u0026dataBaseName\u003dmarlene.luettgen\u0026dataSourceConnId\u003d107\u0026tableName\u003dmarlene.luettgen",
+              "raw": "http://::server/mtd/column?tableName\u003dtheodore.veum\u0026dataSourceConnId\u003d41\u0026type\u003dehztho\u0026dbName\u003dtheodore.veum",
               "protocol": "http",
               "path": [
-                "unified",
-                "api",
                 "mtd",
                 "column"
               ],
@@ -1022,35 +1014,35 @@
               ],
               "query": [
                 {
-                  "key": "engineType",
-                  "value": "jn4ftg",
+                  "key": "type",
+                  "value": "o7byss",
                   "description": "数据库类型"
                 },
                 {
                   "key": "dataSourceConnId",
-                  "value": "107",
+                  "value": "41",
                   "description": "数据源connId"
                 },
                 {
-                  "key": "dataBaseName",
-                  "value": "marlene.luettgen",
+                  "key": "dbName",
+                  "value": "theodore.veum",
                   "description": "数据库名称"
                 },
                 {
                   "key": "tableName",
-                  "value": "marlene.luettgen",
+                  "value": "theodore.veum",
                   "description": "表名称"
                 }
               ],
               "variable": []
             },
-            "description": "获取mtd(元数据)中字段信息",
+            "description": "获取元数据(mtd)中字段信息",
             "header": []
           },
-          "description": "获取mtd(元数据)中字段信息"
+          "description": "获取元数据(mtd)中字段信息"
         },
         {
-          "name": "获取直连(dct)中db库信息",
+          "name": "获取直连(native)中db库信息",
           "request": {
             "method": "GET",
             "body": {
@@ -1061,12 +1053,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/unified/api/dct/db?dataSourceConnId\u003d107",
+              "raw": "http://::server/native/db?dataSourceConnId\u003d41",
               "protocol": "http",
               "path": [
-                "unified",
-                "api",
-                "dct",
+                "native",
                 "db"
               ],
               "host": [
@@ -1075,19 +1065,19 @@
               "query": [
                 {
                   "key": "dataSourceConnId",
-                  "value": "107",
+                  "value": "41",
                   "description": "数据源连接id"
                 }
               ],
               "variable": []
             },
-            "description": "获取直连(dct)中db库信息",
+            "description": "获取直连(native)中db库信息",
             "header": []
           },
-          "description": "获取直连(dct)中db库信息"
+          "description": "获取直连(native)中db库信息"
         },
         {
-          "name": "获取直连(dct)中表信息",
+          "name": "获取直连(native)中表信息",
           "request": {
             "method": "GET",
             "body": {
@@ -1098,12 +1088,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/unified/api/dct/table?dataSourceConnId\u003d107\u0026databaseName\u003dmarlene.luettgen",
+              "raw": "http://::server/native/table?dataSourceConnId\u003d41\u0026dbName\u003dtheodore.veum",
               "protocol": "http",
               "path": [
-                "unified",
-                "api",
-                "dct",
+                "native",
                 "table"
               ],
               "host": [
@@ -1112,21 +1100,21 @@
               "query": [
                 {
                   "key": "dataSourceConnId",
-                  "value": "107",
+                  "value": "41",
                   "description": "数据源连接id"
                 },
                 {
-                  "key": "databaseName",
-                  "value": "marlene.luettgen",
+                  "key": "dbName",
+                  "value": "theodore.veum",
                   "description": "数据库名称"
                 }
               ],
               "variable": []
             },
-            "description": "获取直连(dct)中表信息",
+            "description": "获取直连(native)中表信息",
             "header": []
           },
-          "description": "获取直连(dct)中表信息"
+          "description": "获取直连(native)中表信息"
         }
       ]
     }
