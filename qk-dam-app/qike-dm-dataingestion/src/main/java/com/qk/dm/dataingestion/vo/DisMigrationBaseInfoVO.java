@@ -39,7 +39,10 @@ public class DisMigrationBaseInfoVO {
      * 源连接
      */
     private String sourceConnect;
-
+    /**
+     * 数据源id
+     */
+    private String sourceConnectId;
     /**
      * 源数据库
      */
@@ -75,6 +78,11 @@ public class DisMigrationBaseInfoVO {
      * 目标连接
      */
     private String targetConnect;
+
+    /**
+     * 目标连接id
+     */
+    private String targetConnectId;
 
     /**
      * 目标数据库

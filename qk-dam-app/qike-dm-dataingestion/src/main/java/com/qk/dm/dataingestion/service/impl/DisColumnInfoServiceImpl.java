@@ -30,7 +30,7 @@ public class DisColumnInfoServiceImpl implements DisColumnInfoService {
 
     @Override
     public void update(Long baseId, List<DisColumnInfoVO> disColumnInfoList) {
-        //现将之前的字段数据删除
+        //先将之前的字段数据删除
         disColumnInfoRepository.deleteByBaseInfoId(baseId);
         disColumnInfoList.forEach(e->e.setBaseInfoId(baseId));
         disColumnInfoRepository.saveAllAndFlush(DisColumnInfoMapper.INSTANCE.list(disColumnInfoList));
