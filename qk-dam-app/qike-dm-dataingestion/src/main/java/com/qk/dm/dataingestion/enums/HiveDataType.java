@@ -1,6 +1,10 @@
 package com.qk.dm.dataingestion.enums;
 
 
+import com.qk.dm.dataingestion.vo.ColumnVO;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +63,10 @@ public enum HiveDataType {
     public static Map<String,String> getAllType(){
         return Arrays.stream(values()).collect(Collectors.
                 toMap(HiveDataType::getCode, HiveDataType::getValue));
+    }
+
+    public static List<ColumnVO.Column> checkColumn(List<ColumnVO.Column> columnList){
+      return List.of();
     }
 
     private final String code;

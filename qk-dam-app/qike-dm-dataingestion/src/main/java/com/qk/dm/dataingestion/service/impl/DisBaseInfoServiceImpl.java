@@ -1,6 +1,8 @@
 package com.qk.dm.dataingestion.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
+import com.qk.datacenter.model.ProcessDefinition;
+import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisBaseInfoMapper;
@@ -11,7 +13,6 @@ import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -19,9 +20,11 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
 
     private final QDisMigrationBaseInfo qDisMigrationBaseInfo = QDisMigrationBaseInfo.disMigrationBaseInfo;
     private final DisMigrationBaseInfoRepository disMigrationBaseInfoRepository;
+    private final DataxDolphinClient dataxDolphinClient;
 
-    public DisBaseInfoServiceImpl(DisMigrationBaseInfoRepository disMigrationBaseInfoRepository) {
+    public DisBaseInfoServiceImpl(DisMigrationBaseInfoRepository disMigrationBaseInfoRepository, DataxDolphinClient dataxDolphinClient) {
         this.disMigrationBaseInfoRepository = disMigrationBaseInfoRepository;
+        this.dataxDolphinClient = dataxDolphinClient;
     }
 
     @Override
@@ -37,6 +40,13 @@ public class DisBaseInfoServiceImpl implements DisBaseInfoService {
         if(rptBaseInfoList.isEmpty()){
             throw new BizException("当前要删除的作业信息id为：" + ids + " 的数据不存在！！！");
         }
+        rptBaseInfoList.forEach(e->{
+            //下线
+            dataxDolphinClient.dolphinProcessRelease(e.getTaskCode(),
+                    ProcessDefinition.ReleaseStateEnum.OFFLINE);
+            //删除流程定义
+            dataxDolphinClient.deleteProcessDefinition(e.getTaskCode().toString());
+        });
         disMigrationBaseInfoRepository.deleteAllById(ids);
     }
 
