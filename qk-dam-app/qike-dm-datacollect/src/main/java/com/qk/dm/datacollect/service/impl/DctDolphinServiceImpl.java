@@ -2,17 +2,13 @@ package com.qk.dm.datacollect.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.BeanMapUtils;
-import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.dm.datacollect.service.DctDolphinService;
-import com.qk.dm.datacollect.service.cron.CronService;
 import com.qk.dm.datacollect.vo.*;
-import com.qk.dm.dolphin.common.dto.ProcessDefinitionDTO;
 import com.qk.dm.dolphin.common.dto.ProcessDefinitionResultDTO;
 import com.qk.dm.dolphin.common.dto.ScheduleDTO;
-import com.qk.dm.dolphin.common.dto.SchedulerTypeEnum;
-import com.qk.dm.dolphin.common.service.DolphinProcessDefinitionService;
+import com.qk.dm.dolphin.common.enums.ReleaseStateEnum;
+import com.qk.dm.dolphin.common.enums.SchedulerTypeEnum;
 import com.qk.dm.dolphin.common.service.DolphinProcessService;
 import com.qk.dm.dolphin.common.service.DolphinScheduleService;
 import org.springframework.stereotype.Service;
@@ -31,44 +27,10 @@ public class DctDolphinServiceImpl implements DctDolphinService {
 
     private final DolphinProcessService dolphinProcessService;
     private final DolphinScheduleService dolphinScheduleService;
-    private final DolphinProcessDefinitionService dolphinProcessDefinitionService;
-    private final Map<String, CronService> cronServiceMap;
 
-    public DctDolphinServiceImpl(DolphinProcessService dolphinProcessService,
-                                 DolphinScheduleService dolphinScheduleService,
-                                 DolphinProcessDefinitionService dolphinProcessDefinitionService,
-                                 Map<String, CronService> cronServiceMap) {
+    public DctDolphinServiceImpl(DolphinProcessService dolphinProcessService, DolphinScheduleService dolphinScheduleService) {
         this.dolphinProcessService = dolphinProcessService;
         this.dolphinScheduleService = dolphinScheduleService;
-        this.dolphinProcessDefinitionService = dolphinProcessDefinitionService;
-        this.cronServiceMap = cronServiceMap;
-    }
-
-    @Override
-    public void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        String name = dctSchedulerBasicInfoVO.getDirId() + "_" + dctSchedulerBasicInfoVO.getName();
-        String description = dctSchedulerBasicInfoVO.getDescription();
-        //1、生成cron
-        dctSchedulerBasicInfoVO.getSchedulerConfig().generateCron(dctSchedulerBasicInfoVO.getSchedulerConfig(), cronServiceMap);
-        //2、生成参数
-        Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
-        //3、创建流程定义
-        dolphinProcessDefinitionService.createProcessDefinition(name, httpParams, description);
-    }
-
-    @Override
-    public void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        String name = dctSchedulerBasicInfoVO.getDirId() + "_" + dctSchedulerBasicInfoVO.getName();
-        String description = dctSchedulerBasicInfoVO.getDescription();
-        //1、生成cron
-        dctSchedulerBasicInfoVO.getSchedulerConfig().generateCron(dctSchedulerBasicInfoVO.getSchedulerConfig(), cronServiceMap);
-        //2、生成参数
-        Object httpParams = HttpParamsVO.createList(dctSchedulerBasicInfoVO);
-        //3、根据详情获取taskCode
-        ProcessDefinitionDTO processDefinitionDTO = dolphinProcessService.detailToProcess(dctSchedulerBasicInfoVO.getCode());
-        long taskCode = GsonUtil.toJsonArray(processDefinitionDTO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
-        //4、修改流程定义
-        dolphinProcessDefinitionService.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, httpParams, description);
     }
 
     @Override
@@ -86,7 +48,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
     private void updateScheduler(DctSchedulerReleaseVO dctSchedulerReleaseVO) {
         try {
             //如果是上线，更新定时器
-            if (Objects.equals(dctSchedulerReleaseVO.getReleaseState(), ProcessDefinition.ReleaseStateEnum.ONLINE)) {
+            if (Objects.equals(dctSchedulerReleaseVO.getReleaseState(), ReleaseStateEnum.ONLINE.getValue())) {
                 //查询流程定义详情
                 DctSchedulerBasicInfoVO detail = detail(dctSchedulerReleaseVO.getCode());
                 DctSchedulerConfigVO schedulerConfig = detail.getSchedulerConfig();
@@ -100,14 +62,14 @@ public class DctDolphinServiceImpl implements DctDolphinService {
                                 schedulerConfig.getEffectiveTimeStart(), schedulerConfig.getEffectiveTimeEnt(), schedulerConfig.getCron());
                     }
                     //定时器上线
-                    dolphinScheduleService.execute(scheduleDTO.getId(), ProcessDefinition.ReleaseStateEnum.ONLINE);
+                    dolphinScheduleService.execute(scheduleDTO.getId(), ReleaseStateEnum.ONLINE.getValue());
                 } else {
                     //todo 暂时不删除
                 }
             }
         } catch (Exception e) {
             //下线
-            dolphinProcessService.release(dctSchedulerReleaseVO.getCode(), ProcessDefinition.ReleaseStateEnum.OFFLINE);
+            dolphinProcessService.release(dctSchedulerReleaseVO.getCode(), ReleaseStateEnum.OFFLINE.getValue());
             throw new BizException("流程定时更新失败");
         }
     }

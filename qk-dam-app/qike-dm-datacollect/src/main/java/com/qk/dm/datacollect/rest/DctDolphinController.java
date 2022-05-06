@@ -4,10 +4,11 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datacollect.service.DctDolphinService;
+import com.qk.dm.datacollect.service.DolphinHttpService;
 import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
+import com.qk.dm.datacollect.vo.DctSchedulerInfoParamsVO;
 import com.qk.dm.datacollect.vo.DctSchedulerInfoVO;
 import com.qk.dm.datacollect.vo.DctSchedulerReleaseVO;
-import com.qk.dm.datacollect.vo.DctSchedulerInfoParamsVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,9 +24,11 @@ import javax.validation.Valid;
 @RequestMapping("/scheduler")
 public class DctDolphinController {
     private final DctDolphinService dctDolphinService;
+    private final DolphinHttpService dolphinProcessDefinitionService;
 
-    public DctDolphinController(DctDolphinService dctDolphinService) {
+    public DctDolphinController(DctDolphinService dctDolphinService, DolphinHttpService dolphinHttpService) {
         this.dctDolphinService = dctDolphinService;
+        this.dolphinProcessDefinitionService = dolphinHttpService;
     }
 
     /**
@@ -36,7 +39,7 @@ public class DctDolphinController {
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Valid DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        dctDolphinService.insert(dctSchedulerBasicInfoVO);
+        dolphinProcessDefinitionService.insert(dctSchedulerBasicInfoVO);
         return DefaultCommonResult.success();
     }
 
@@ -48,7 +51,7 @@ public class DctDolphinController {
      */
     @PutMapping("")
     public DefaultCommonResult update(@RequestBody @Valid DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        dctDolphinService.update(dctSchedulerBasicInfoVO);
+        dolphinProcessDefinitionService.update(dctSchedulerBasicInfoVO);
         return DefaultCommonResult.success();
     }
 

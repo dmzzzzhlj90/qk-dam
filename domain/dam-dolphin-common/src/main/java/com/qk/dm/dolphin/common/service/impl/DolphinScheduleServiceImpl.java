@@ -65,9 +65,9 @@ public class DolphinScheduleServiceImpl implements DolphinScheduleService {
     }
 
     @Override
-    public void execute(Integer scheduleId, ProcessDefinition.ReleaseStateEnum state) {
+    public void execute(Integer scheduleId, String state) {
         try {
-            if (Objects.equals(state, ProcessDefinition.ReleaseStateEnum.ONLINE)) {
+            if (Objects.equals(state, ProcessDefinition.ReleaseStateEnum.ONLINE.getValue())) {
                 dolphinApiClient.schedule_online(scheduleId);
             } else {
                 dolphinApiClient.schedule_offline(scheduleId);

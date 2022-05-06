@@ -1,7 +1,6 @@
 package com.qk.dm.dolphin.common.client;
 
 import com.dolphinscheduler.client.DolphinschedulerManager;
-import com.dolphinscheduler.http.DolphinTaskDefinitionPropertiesBean;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.datacenter.model.ProcessInstance;
@@ -9,6 +8,7 @@ import com.qk.datacenter.model.Result;
 import com.qk.datacenter.model.Resultstring;
 import com.qk.dm.dolphin.common.dto.ProcessInstanceSearchDTO;
 import com.qk.dm.dolphin.common.dto.TaskInstanceSearchDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,11 +19,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class DolphinApiClient {
     private final DolphinschedulerManager dolphinschedulerManager;
-    private final DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean;
+    
+    @Value("${dolphinscheduler.task.projectCode}")
+    private Long projectCode;
 
-    public DolphinApiClient(DolphinschedulerManager dolphinschedulerManager, DolphinTaskDefinitionPropertiesBean dolphinTaskDefinitionPropertiesBean) {
+    public DolphinApiClient(DolphinschedulerManager dolphinschedulerManager) {
         this.dolphinschedulerManager = dolphinschedulerManager;
-        this.dolphinTaskDefinitionPropertiesBean = dolphinTaskDefinitionPropertiesBean;
     }
 
     /**
@@ -35,7 +36,7 @@ public class DolphinApiClient {
      */
     public Result dolphin_process_delete(Long code) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().deleteProcessDefinitionByCodeUsingDELETE(
-                code, dolphinTaskDefinitionPropertiesBean.getProjectCode());
+                code, projectCode);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -52,7 +53,7 @@ public class DolphinApiClient {
      */
     public Result dolphin_process_release(Long code, ProcessDefinition.ReleaseStateEnum releaseState) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().releaseProcessDefinitionUsingPOST(
-                code, dolphinTaskDefinitionPropertiesBean.getProjectCode(), releaseState);
+                code, projectCode, releaseState);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -69,7 +70,7 @@ public class DolphinApiClient {
     public Result dolphin_process_check(Long processDefinitionCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().startCheckProcessDefinitionUsingPOST(
                 processDefinitionCode,
-                dolphinTaskDefinitionPropertiesBean.getProjectCode());
+                projectCode);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -89,7 +90,7 @@ public class DolphinApiClient {
                 ProcessInstance.FailureStrategyEnum.CONTINUE,
                 processDefinitionCode,
                 ProcessInstance.ProcessInstancePriorityEnum.MEDIUM,
-                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                projectCode,
                 "",
                 0,
                 ProcessInstance.WarningTypeEnum.NONE,
@@ -120,7 +121,7 @@ public class DolphinApiClient {
     public Result dolphin_process_detail(Long processDefinitionCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionByCodeUsingGET(
                 processDefinitionCode,
-                dolphinTaskDefinitionPropertiesBean.getProjectCode()
+                projectCode
         );
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
@@ -143,7 +144,7 @@ public class DolphinApiClient {
         Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionListPagingUsingGET(
                 pageNo,
                 pageSize,
-                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                projectCode,
                 searchVal,
                 null);
         if (Boolean.TRUE.equals(result.getFailed())) {
@@ -160,7 +161,7 @@ public class DolphinApiClient {
      */
     public Result dolphin_process_list() throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionListUsingGET(
-                dolphinTaskDefinitionPropertiesBean.getProjectCode());
+                projectCode);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -186,7 +187,7 @@ public class DolphinApiClient {
         Result result =
                 dolphinschedulerManager.defaultApi().createScheduleUsingPOST(
                         processDefinitionCode,
-                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                        projectCode,
                         dolphinScheduleDefinition.getEnvironmentCode(),
                         dolphinScheduleDefinition.getFailureStrategy(),
                         dolphinScheduleDefinition.getProcessInstancePriority(),
@@ -217,7 +218,7 @@ public class DolphinApiClient {
         Result result =
                 dolphinschedulerManager.defaultApi().updateScheduleUsingPUT(
                         scheduleId,
-                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                        projectCode,
                         dolphinScheduleDefinition.getEnvironmentCode(),
                         dolphinScheduleDefinition.getFailureStrategy(),
                         dolphinScheduleDefinition.getProcessInstancePriority(),
@@ -239,7 +240,7 @@ public class DolphinApiClient {
      */
     public void schedule_online(Integer scheduleId) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().onlineUsingPOST(
-                scheduleId, dolphinTaskDefinitionPropertiesBean.getProjectCode());
+                scheduleId, projectCode);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -253,7 +254,7 @@ public class DolphinApiClient {
      */
     public void schedule_offline(Integer scheduleId) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().offlineUsingPOST(
-                scheduleId, dolphinTaskDefinitionPropertiesBean.getProjectCode());
+                scheduleId, projectCode);
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
         }
@@ -269,7 +270,7 @@ public class DolphinApiClient {
         Result result =
                 dolphinschedulerManager.defaultApi().deleteScheduleByIdUsingDELETE(
                         scheduleId,
-                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                        projectCode,
                         null,
                         null,
                         null,
@@ -303,7 +304,7 @@ public class DolphinApiClient {
         Result result =
                 dolphinschedulerManager.defaultApi().queryScheduleListPagingUsingGET(
                         processDefinitionCode,
-                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                        projectCode,
                         pageNo,
                         pageSize,
                         null);
@@ -324,7 +325,7 @@ public class DolphinApiClient {
                 dolphinschedulerManager.defaultApi().executeUsingPOST(
                         executeType,
                         processInstanceId,
-                        dolphinTaskDefinitionPropertiesBean.getProjectCode()
+                        projectCode
                 );
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
@@ -343,7 +344,7 @@ public class DolphinApiClient {
                 dolphinschedulerManager.defaultApi().queryProcessInstanceListUsingGET(
                         instanceSearchDTO.getPageNo(),
                         instanceSearchDTO.getPageSize(),
-                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                        projectCode,
                         instanceSearchDTO.getEndDate(),
                         instanceSearchDTO.getExecutorName(),
                         instanceSearchDTO.getHost(),
@@ -368,7 +369,7 @@ public class DolphinApiClient {
     public Result instance_detail(Integer processInstanceId) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().queryProcessInstanceByIdUsingGET(
                 processInstanceId,
-                dolphinTaskDefinitionPropertiesBean.getProjectCode()
+                projectCode
         );
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
@@ -387,7 +388,7 @@ public class DolphinApiClient {
         Result result =
                 dolphinschedulerManager.defaultApi().queryTaskListByProcessIdUsingGET(
                         processInstanceId,
-                        dolphinTaskDefinitionPropertiesBean.getProjectCode()
+                        projectCode
                 );
         if (Boolean.TRUE.equals(result.getFailed())) {
             throw new ApiException(400, result.getMsg());
@@ -407,7 +408,7 @@ public class DolphinApiClient {
                 dolphinschedulerManager.defaultApi().queryTaskListPagingUsingGET(
                         TaskInstanceSearch.getPageNo(),
                         TaskInstanceSearch.getPageSize(),
-                        dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                        projectCode,
                         TaskInstanceSearch.getEndDate(),
                         TaskInstanceSearch.getExecutorName(),
                         TaskInstanceSearch.getHost(),

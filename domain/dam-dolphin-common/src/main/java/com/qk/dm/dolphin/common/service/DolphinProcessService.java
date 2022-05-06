@@ -1,6 +1,5 @@
 package com.qk.dm.dolphin.common.service;
 
-import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.dm.dolphin.common.dto.ProcessDefinitionDTO;
 import com.qk.dm.dolphin.common.dto.ProcessDefinitionResultDTO;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface DolphinProcessService {
-    void release(Long processDefinitionCode, ProcessDefinition.ReleaseStateEnum releaseState);
+    void release(Long processDefinitionCode, String releaseState);
 
     void runing(Long processDefinitionCode, Long environmentCode);
 

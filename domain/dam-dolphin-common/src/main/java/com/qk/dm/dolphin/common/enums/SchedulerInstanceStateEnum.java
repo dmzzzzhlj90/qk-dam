@@ -1,4 +1,4 @@
-package com.qk.dm.dolphin.common.dto;
+package com.qk.dm.dolphin.common.enums;
 
 /** @author shenpengjie */
 public enum SchedulerInstanceStateEnum {

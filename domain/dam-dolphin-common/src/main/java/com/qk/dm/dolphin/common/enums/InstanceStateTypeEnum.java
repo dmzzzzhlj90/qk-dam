@@ -1,4 +1,4 @@
-package com.qk.dm.dolphin.common.dto;
+package com.qk.dm.dolphin.common.enums;
 
 import java.util.HashMap;
 import java.util.Map;

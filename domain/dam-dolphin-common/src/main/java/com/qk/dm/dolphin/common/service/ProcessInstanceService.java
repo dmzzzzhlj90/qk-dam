@@ -1,6 +1,5 @@
 package com.qk.dm.dolphin.common.service;
 
-import com.qk.datacenter.model.ProcessInstance;
 import com.qk.dm.dolphin.common.dto.*;
 
 /**
@@ -9,7 +8,7 @@ import com.qk.dm.dolphin.common.dto.*;
  * @since 1.0.0
  */
 public interface ProcessInstanceService {
-    void execute(Integer processInstanceId,  ProcessInstance.CmdTypeIfComplementEnum executeType);
+    void execute(Integer processInstanceId,  String executeType);
 
     ProcessInstanceResultDTO search(ProcessInstanceSearchDTO instanceSearchDTO);
 

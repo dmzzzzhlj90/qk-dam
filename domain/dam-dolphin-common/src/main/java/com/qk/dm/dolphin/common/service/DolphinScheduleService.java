@@ -1,6 +1,5 @@
 package com.qk.dm.dolphin.common.service;
 
-import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.dm.dolphin.common.dto.ScheduleDTO;
 
 /**
@@ -13,7 +12,7 @@ public interface DolphinScheduleService {
 
     void update(Integer scheduleId, String effectiveTimeStart, String ffectiveTimeEnt, String cron);
 
-    void execute(Integer scheduleId,  ProcessDefinition.ReleaseStateEnum state);
+    void execute(Integer scheduleId,  String state);
 
     void delete(Integer scheduleId);
 

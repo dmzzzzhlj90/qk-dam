@@ -7,7 +7,6 @@ group "com.qk.dm.dolphin.common"
 
 dependencies {
     implementation project(":dolphinscheduler-starter-client")
-    implementation project(":dolphinscheduler-starter-http")
     implementation project(":dam-mvc-validation")
     implementation project(":datasource-common-core")
 

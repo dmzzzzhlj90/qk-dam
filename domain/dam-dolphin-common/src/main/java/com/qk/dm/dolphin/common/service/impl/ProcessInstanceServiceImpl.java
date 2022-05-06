@@ -29,9 +29,9 @@ public class ProcessInstanceServiceImpl implements ProcessInstanceService {
     }
 
     @Override
-    public void execute(Integer processInstanceId, ProcessInstance.CmdTypeIfComplementEnum executeType) {
+    public void execute(Integer processInstanceId, String executeType) {
         try {
-            dolphinApiClient.instance_execute(processInstanceId, executeType);
+            dolphinApiClient.instance_execute(processInstanceId, ProcessInstance.CmdTypeIfComplementEnum.fromValue(executeType));
         } catch (ApiException a) {
             LOG.error("Dolphin 流程实例[{}] 操作失败，原因为[{}]", processInstanceId, a.getMessage());
             throw new BizException("dolphin instance execute error ：" + a.getMessage());

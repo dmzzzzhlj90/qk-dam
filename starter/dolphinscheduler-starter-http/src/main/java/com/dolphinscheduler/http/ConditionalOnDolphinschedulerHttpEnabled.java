@@ -12,6 +12,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD })
-@ConditionalOnProperty(value = "dolphinscheduler.http.enabled")
+@ConditionalOnProperty(name = "dolphinscheduler.task.taskType",havingValue = "HTTP")
 public @interface ConditionalOnDolphinschedulerHttpEnabled {
 }

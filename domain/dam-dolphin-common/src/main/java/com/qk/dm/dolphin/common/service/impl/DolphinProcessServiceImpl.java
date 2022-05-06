@@ -35,9 +35,9 @@ public class DolphinProcessServiceImpl implements DolphinProcessService {
     }
 
     @Override
-    public void release(Long processDefinitionCode, ProcessDefinition.ReleaseStateEnum releaseState) {
+    public void release(Long processDefinitionCode, String releaseState) {
         try {
-            dolphinApiClient.dolphin_process_release(processDefinitionCode, releaseState);
+            dolphinApiClient.dolphin_process_release(processDefinitionCode, ProcessDefinition.ReleaseStateEnum.fromValue(releaseState));
         } catch (ApiException a) {
             LOG.error("Dolphin 流程[{}] 上下线失败，原因为[{}]", processDefinitionCode, a.getMessage());
             throw new BizException("dolphin process release error ：" + a.getMessage());

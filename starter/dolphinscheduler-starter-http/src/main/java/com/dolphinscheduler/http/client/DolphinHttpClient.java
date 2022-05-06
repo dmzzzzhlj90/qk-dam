@@ -2,6 +2,7 @@ package com.dolphinscheduler.http.client;
 
 import com.dolphinscheduler.client.DolphinschedulerManager;
 import com.dolphinscheduler.http.DolphinTaskDefinitionPropertiesBean;
+import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.CodeGenerateUtils;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.Result;
@@ -15,88 +16,101 @@ public class DolphinHttpClient {
         this.dolphinschedulerManager = dolphinschedulerManager;
     }
 
-    public Result createProcessDefinition(String name,
-                                          Object httpParams,
-                                          String description) throws ApiException {
+    public void createProcessDefinition(String name,
+                                        Object httpParams,
+                                        String description) {
         long taskCode = 0L;
         try {
             taskCode = CodeGenerateUtils.getInstance().genCode();
         } catch (CodeGenerateUtils.CodeGenerateException e) {
             e.printStackTrace();
         }
-        return createProcessDefinition(name, taskCode, httpParams, description);
+        createProcessDefinition(name, taskCode, httpParams, description);
     }
 
     private Result createProcessDefinition(String name,
                                            long taskCode,
                                            Object httpParams,
-                                           String description) throws ApiException {
+                                           String description) {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
                 taskCode, name, httpParams, dolphinTaskDefinitionPropertiesBean);
-        Result result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(
-                processDefinition.getLocations(),
-                processDefinition.getName(),
-                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
-                processDefinition.getTaskDefinitionJson(),
-                processDefinition.getTaskRelationJson(),
-                processDefinition.getTenantCode(),
-                description,
-                "[]",
-                0);
+        Result result = null;
+        try {
+            result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(
+                    processDefinition.getLocations(),
+                    processDefinition.getName(),
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                    processDefinition.getTaskDefinitionJson(),
+                    processDefinition.getTaskRelationJson(),
+                    processDefinition.getTenantCode(),
+                    description,
+                    "[]",
+                    0);
+        } catch (ApiException e) {
+            throw new BizException(e.getMessage());
+        }
         if (Boolean.TRUE.equals(result.getFailed())) {
-            throw new ApiException(400, result.getMsg());
+            throw new BizException(result.getMsg());
         }
         return result;
     }
 
-    public Result updateProcessDefinition(Long processDefinitionCode,
-                                          long taskCode,
-                                          String name,
-                                          Object httpParams,
-                                          String description) throws ApiException {
+    public void updateProcessDefinition(Long processDefinitionCode,
+                                        long taskCode,
+                                        String name,
+                                        Object httpParams,
+                                        String description) {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
                 taskCode, name, httpParams, dolphinTaskDefinitionPropertiesBean);
-        Result result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
-                processDefinitionCode,
-                processDefinition.getLocations(),
-                processDefinition.getName(),
-                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
-                processDefinition.getTaskDefinitionJson(),
-                processDefinition.getTaskRelationJson(),
-                processDefinition.getTenantCode(),
-                description,
-                "[]",
-                processDefinition.getReleaseState(),
-                0);
-        if (Boolean.TRUE.equals(result.getFailed())) {
-            throw new ApiException(400, result.getMsg());
+        Result result = null;
+        try {
+            result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
+                    processDefinitionCode,
+                    processDefinition.getLocations(),
+                    processDefinition.getName(),
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                    processDefinition.getTaskDefinitionJson(),
+                    processDefinition.getTaskRelationJson(),
+                    processDefinition.getTenantCode(),
+                    description,
+                    "[]",
+                    processDefinition.getReleaseState(),
+                    0);
+        } catch (ApiException e) {
+            throw new BizException(e.getMessage());
         }
-        return result;
+        if (Boolean.TRUE.equals(result.getFailed())) {
+            throw new BizException(result.getMsg());
+        }
     }
 
-    public Result updateProcessDefinition(Long processDefinitionCode,
-                                          long taskCode,
-                                          String name,
-                                          Object httpParams,
-                                          String description,
-                                          DolphinTaskDefinitionPropertiesBean taskParam) throws ApiException {
+    public void updateProcessDefinition(Long processDefinitionCode,
+                                        long taskCode,
+                                        String name,
+                                        Object httpParams,
+                                        String description,
+                                        DolphinTaskDefinitionPropertiesBean taskParam) {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
                 taskCode, name, httpParams, taskParam, dolphinTaskDefinitionPropertiesBean);
-        Result result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
-                processDefinitionCode,
-                processDefinition.getLocations(),
-                processDefinition.getName(),
-                dolphinTaskDefinitionPropertiesBean.getProjectCode(),
-                processDefinition.getTaskDefinitionJson(),
-                processDefinition.getTaskRelationJson(),
-                processDefinition.getTenantCode(),
-                description,
-                "[]",
-                processDefinition.getReleaseState(),
-                0);
-        if (Boolean.TRUE.equals(result.getFailed())) {
-            throw new ApiException(400, result.getMsg());
+        Result result = null;
+        try {
+            result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
+                    processDefinitionCode,
+                    processDefinition.getLocations(),
+                    processDefinition.getName(),
+                    dolphinTaskDefinitionPropertiesBean.getProjectCode(),
+                    processDefinition.getTaskDefinitionJson(),
+                    processDefinition.getTaskRelationJson(),
+                    processDefinition.getTenantCode(),
+                    description,
+                    "[]",
+                    processDefinition.getReleaseState(),
+                    0);
+        } catch (ApiException e) {
+            throw new BizException(e.getMessage());
         }
-        return result;
+        if (Boolean.TRUE.equals(result.getFailed())) {
+            throw new BizException(result.getMsg());
+        }
     }
 }
