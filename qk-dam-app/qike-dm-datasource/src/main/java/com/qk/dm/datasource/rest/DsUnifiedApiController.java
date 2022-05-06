@@ -63,14 +63,14 @@ public class DsUnifiedApiController {
 
   /**
    * 获取mtd(元数据)中表信息
-   * @param engineType 数据库类型
+   * @param type 数据库类型
    * @param dataSourceConnId 数据源connId
    * @param dbName 数据库名称
    * @return DefaultCommonResult<List<MtdTables>> 表信息
    */
   @GetMapping("/mtd/table")
-  public DefaultCommonResult<List<MtdTables>> getAllTable(String engineType, String dataSourceConnId, String dbName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllTable(engineType, dataSourceConnId, dbName));
+  public DefaultCommonResult<List<MtdTables>> getAllTable(String type, String dataSourceConnId, String dbName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllTable(type, dataSourceConnId, dbName));
   }
 
   /**
