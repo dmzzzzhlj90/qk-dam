@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "d260b66a-0e46-470e-aa54-1d386d20adb5",
+    "_postman_id": "4ee28530-2307-43f2-b22c-3e5c50e27567",
     "name": "dm-datasource"
   },
   "item": [
@@ -50,7 +50,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/database/p4jzfm",
+              "raw": "http://::server/api/database/f604sp",
               "protocol": "http",
               "path": [
                 "api",
@@ -64,7 +64,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "p8ihm7",
+                  "value": "0jhtui",
                   "description": "No comments found."
                 }
               ]
@@ -86,7 +86,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/keren.schumm",
+              "raw": "http://::server/api/theodore.veum",
               "protocol": "http",
               "path": [
                 "api",
@@ -99,7 +99,7 @@
               "variable": [
                 {
                   "key": "dataSourceName",
-                  "value": "keren.schumm",
+                  "value": "theodore.veum",
                   "description": "No comments found."
                 }
               ]
@@ -134,7 +134,7 @@
               "query": [
                 {
                   "key": "dataSourceNames",
-                  "value": "n9ckg3",
+                  "value": "ws3yxf",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -157,7 +157,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/data/sources/114",
+              "raw": "http://::server/api/data/sources/41",
               "protocol": "http",
               "path": [
                 "api",
@@ -172,7 +172,7 @@
               "variable": [
                 {
                   "key": "connId",
-                  "value": "114",
+                  "value": "41",
                   "description": "No comments found."
                 }
               ]
@@ -207,7 +207,7 @@
               "query": [
                 {
                   "key": "connIds",
-                  "value": "r62uiy",
+                  "value": "szy83u",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -229,7 +229,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"a69yi8\"\n  },\n  \"dataSourceName\": \"keren.schumm\",\n  \"linkType\": \"9qfraq\",\n  \"dicId\": \"114\",\n  \"beginDay\": \"ot3fdn\",\n  \"endDay\": \"3css1f\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"leipxj\"\n  },\n  \"dataSourceName\": \"theodore.veum\",\n  \"linkType\": \"3edtmj\",\n  \"dicId\": \"41\",\n  \"beginDay\": \"qgvs1x\",\n  \"endDay\": \"ixb7ey\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -260,7 +260,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 6,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"ct79ed\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"e9bsv5\",\n  \"tagNames\": \"u5l3g7\",\n  \"tagIds\": \"x5ipe5\",\n  \"use\": \"9ansh6\",\n  \"deployPlace\": \"8hk645\",\n  \"status\": 696,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"0x6inf\",\n  \"dicId\": \"114\",\n  \"remark\": \"x4v3tb\"\n}",
+              "raw": "{\n  \"id\": 790,\n  \"dataSourceName\": \"theodore.veum\",\n  \"connId\": \"41\",\n  \"homeSystem\": \"mb4ygo\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"mx6rsp\",\n  \"tagNames\": \"n8w69v\",\n  \"tagIds\": \"oq22hw\",\n  \"use\": \"alnare\",\n  \"deployPlace\": \"dwk752\",\n  \"status\": 226,\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"1tkjnt\",\n  \"dicId\": \"41\",\n  \"remark\": \"1uolxg\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -297,7 +297,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/960",
+              "raw": "http://::server/datasource/760",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -310,7 +310,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "468",
+                  "value": "405",
                   "description": "数据源id"
                 }
               ]
@@ -326,7 +326,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 86,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"mmnib9\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"kz5r0m\",\n  \"tagNames\": \"qezaqz\",\n  \"tagIds\": \"w00n0o\",\n  \"use\": \"khk27h\",\n  \"deployPlace\": \"yjuv5h\",\n  \"status\": 928,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"69wx0t\",\n  \"dicId\": \"114\",\n  \"remark\": \"hqqjtb\"\n}",
+              "raw": "{\n  \"id\": 124,\n  \"dataSourceName\": \"theodore.veum\",\n  \"connId\": \"41\",\n  \"homeSystem\": \"ilwr26\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"cx002e\",\n  \"tagNames\": \"evrki0\",\n  \"tagIds\": \"q4lwvv\",\n  \"use\": \"2t2z0i\",\n  \"deployPlace\": \"5tky5w\",\n  \"status\": 942,\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"5us4nj\",\n  \"dicId\": \"41\",\n  \"remark\": \"ksaksw\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -392,7 +392,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/database/afw3xo",
+              "raw": "http://::server/datasource/database/ngfjwq",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -406,7 +406,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "q1n8a1",
+                  "value": "07m1s8",
                   "description": "数据连接类型"
                 }
               ]
@@ -428,7 +428,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/180",
+              "raw": "http://::server/datasource/868",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -441,7 +441,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "859",
+                  "value": "694",
                   "description": "数据源名称"
                 }
               ]
@@ -457,7 +457,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 914,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"0z0co9\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"9p3brs\",\n  \"tagNames\": \"8w513u\",\n  \"tagIds\": \"pfefvf\",\n  \"use\": \"t10lwr\",\n  \"deployPlace\": \"e3hkpb\",\n  \"status\": 690,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"s009p6\",\n  \"dicId\": \"114\",\n  \"remark\": \"t9492d\"\n}",
+              "raw": "{\n  \"id\": 445,\n  \"dataSourceName\": \"theodore.veum\",\n  \"connId\": \"41\",\n  \"homeSystem\": \"mukbfh\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"48o8kq\",\n  \"tagNames\": \"3m1dn1\",\n  \"tagIds\": \"dnu6bc\",\n  \"use\": \"bf7gpb\",\n  \"deployPlace\": \"5w5pbl\",\n  \"status\": 618,\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"miyos5\",\n  \"dicId\": \"41\",\n  \"remark\": \"c066l5\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -578,7 +578,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"juc64n\"\n}",
+              "raw": "{\n  \"id\": \"41\",\n  \"dicName\": \"theodore.veum\",\n  \"parentId\": \"41\",\n  \"dsDirCode\": \"52852\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"h9zqow\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -616,7 +616,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasorce/dir/delete/114",
+              "raw": "http://::server/datasorce/dir/delete/41",
               "protocol": "http",
               "path": [
                 "datasorce",
@@ -631,7 +631,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "114",
+                  "value": "41",
                   "description": "目录id"
                 }
               ]
@@ -647,7 +647,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"yd7575\"\n}",
+              "raw": "{\n  \"id\": \"41\",\n  \"dicName\": \"theodore.veum\",\n  \"parentId\": \"41\",\n  \"dsDirCode\": \"52852\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"createUserid\": \"41\",\n  \"updateUserid\": \"41\",\n  \"delFlag\": 1,\n  \"versionConsumer\": \"o7tng1\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -684,7 +684,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"5vg741\"\n}",
+              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"sr2yv0\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -715,7 +715,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"nc9g92\",\n  \"itDepartment\": \"ras0ms\",\n  \"busiDepartment\": \"ihpm43\",\n  \"importance\": 555,\n  \"leader\": \"u2e5kn\",\n  \"deployPlace\": \"5x0dzd\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": 922,\n  \"updateUserid\": 958,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"c514tj\",\n  \"sysDesc\": \"pyyz3s\",\n  \"tagNames\": \"7360qb\",\n  \"tagIds\": \"b2xf3y\"\n}",
+              "raw": "{\n  \"id\": \"41\",\n  \"sysName\": \"theodore.veum\",\n  \"sysShortName\": \"theodore.veum\",\n  \"area\": \"8r2e1l\",\n  \"itDepartment\": \"pwzfwl\",\n  \"busiDepartment\": \"v7tyfv\",\n  \"importance\": 422,\n  \"leader\": \"yiy3j1\",\n  \"deployPlace\": \"8brnqv\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"createUserid\": 549,\n  \"updateUserid\": 723,\n  \"delFlag\": 1,\n  \"versionConsumer\": \"yo0qmj\",\n  \"sysDesc\": \"ra3yza\",\n  \"tagNames\": \"ybrpag\",\n  \"tagIds\": \"tbybzt\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -752,7 +752,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/directory/delete/114",
+              "raw": "http://::server/directory/delete/41",
               "protocol": "http",
               "path": [
                 "directory",
@@ -766,7 +766,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "114",
+                  "value": "41",
                   "description": "应用系统id"
                 }
               ]
@@ -782,7 +782,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"w0zxed\",\n  \"itDepartment\": \"pr7266\",\n  \"busiDepartment\": \"reo550\",\n  \"importance\": 264,\n  \"leader\": \"nliz0h\",\n  \"deployPlace\": \"9nnv3p\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": 64,\n  \"updateUserid\": 930,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"ydcjm1\",\n  \"sysDesc\": \"6zzc6w\",\n  \"tagNames\": \"tb9s1o\",\n  \"tagIds\": \"0vhpmt\"\n}",
+              "raw": "{\n  \"id\": \"41\",\n  \"sysName\": \"theodore.veum\",\n  \"sysShortName\": \"theodore.veum\",\n  \"area\": \"ihgap1\",\n  \"itDepartment\": \"bhgjza\",\n  \"busiDepartment\": \"qh20f4\",\n  \"importance\": 63,\n  \"leader\": \"rtv0k5\",\n  \"deployPlace\": \"7px3pd\",\n  \"gmtCreate\": \"2022-05-06 20:09:08\",\n  \"gmtModified\": \"2022-05-06 20:09:08\",\n  \"createUserid\": 151,\n  \"updateUserid\": 114,\n  \"delFlag\": 1,\n  \"versionConsumer\": \"0q3e6x\",\n  \"sysDesc\": \"ajrzmo\",\n  \"tagNames\": \"9cplms\",\n  \"tagIds\": \"lyjdlc\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -835,6 +835,286 @@
             "header": []
           },
           "description": "数据源管理—查询应用系统名称"
+        }
+      ]
+    },
+    {
+      "name": "数据源连接统一api",
+      "item": [
+        {
+          "name": "获取所有数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dbtype/all",
+              "protocol": "http",
+              "path": [
+                "dbtype",
+                "all"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取所有数据源连接类型",
+            "header": []
+          },
+          "description": "获取所有数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接（根据数据库类型）",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/connect/info/xaixl3",
+              "protocol": "http",
+              "path": [
+                "connect",
+                "info",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "type",
+                  "value": "cmzcen",
+                  "description": "数据库类型"
+                }
+              ]
+            },
+            "description": "获取数据源连接（根据数据库类型）",
+            "header": []
+          },
+          "description": "获取数据源连接（根据数据库类型）"
+        },
+        {
+          "name": "获取mtd(元数据)中db库信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/mtd/db?type\u003dp1dt3n\u0026dataSourceConnId\u003d41",
+              "protocol": "http",
+              "path": [
+                "mtd",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "4c8b43",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "41",
+                  "description": "数据源connId"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取mtd(元数据)中db库信息",
+            "header": []
+          },
+          "description": "获取mtd(元数据)中db库信息"
+        },
+        {
+          "name": "获取mtd(元数据)中表信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/mtd/table?dbName\u003dtheodore.veum\u0026dataSourceConnId\u003d41\u0026engineType\u003d7f986f",
+              "protocol": "http",
+              "path": [
+                "mtd",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "engineType",
+                  "value": "hs3p1k",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "41",
+                  "description": "数据源connId"
+                },
+                {
+                  "key": "dbName",
+                  "value": "theodore.veum",
+                  "description": "数据库名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取mtd(元数据)中表信息",
+            "header": []
+          },
+          "description": "获取mtd(元数据)中表信息"
+        },
+        {
+          "name": "获取元数据(mtd)中字段信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/mtd/column?tableName\u003dtheodore.veum\u0026dataSourceConnId\u003d41\u0026type\u003dehztho\u0026dbName\u003dtheodore.veum",
+              "protocol": "http",
+              "path": [
+                "mtd",
+                "column"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "o7byss",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "41",
+                  "description": "数据源connId"
+                },
+                {
+                  "key": "dbName",
+                  "value": "theodore.veum",
+                  "description": "数据库名称"
+                },
+                {
+                  "key": "tableName",
+                  "value": "theodore.veum",
+                  "description": "表名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取元数据(mtd)中字段信息",
+            "header": []
+          },
+          "description": "获取元数据(mtd)中字段信息"
+        },
+        {
+          "name": "获取直连(native)中db库信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/native/db?dataSourceConnId\u003d41",
+              "protocol": "http",
+              "path": [
+                "native",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceConnId",
+                  "value": "41",
+                  "description": "数据源连接id"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取直连(native)中db库信息",
+            "header": []
+          },
+          "description": "获取直连(native)中db库信息"
+        },
+        {
+          "name": "获取直连(native)中表信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/native/table?dataSourceConnId\u003d41\u0026dbName\u003dtheodore.veum",
+              "protocol": "http",
+              "path": [
+                "native",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceConnId",
+                  "value": "41",
+                  "description": "数据源连接id"
+                },
+                {
+                  "key": "dbName",
+                  "value": "theodore.veum",
+                  "description": "数据库名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取直连(native)中表信息",
+            "header": []
+          },
+          "description": "获取直连(native)中表信息"
         }
       ]
     }
