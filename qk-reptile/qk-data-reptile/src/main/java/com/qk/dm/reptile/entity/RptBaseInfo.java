@@ -210,7 +210,11 @@ public class RptBaseInfo implements Serializable {
      */
     @Column(name = "responsible_person_name")
     private String responsiblePersonName;
-
+    /**
+     * 备注
+     */
+    @Column(name = "remark")
+    private String remark;
     /**
      * 是否已经添加了配置
      */

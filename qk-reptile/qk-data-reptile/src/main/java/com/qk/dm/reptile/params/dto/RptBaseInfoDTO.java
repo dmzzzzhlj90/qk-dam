@@ -172,6 +172,10 @@ public class RptBaseInfoDTO {
    */
   private Boolean configStatus;
   /**
+   * 备注
+   */
+  private String remark;
+  /**
    * 开始时间
    */
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

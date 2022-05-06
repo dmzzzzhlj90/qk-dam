@@ -327,6 +327,9 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.nonNull(rptBaseInfoDTO.getDelUserName())){
             booleanBuilder.and(qRptBaseInfo.delUserName.contains(rptBaseInfoDTO.getDelUserName()));
         }
+        if(Objects.nonNull(rptBaseInfoDTO.getRunStatus())){
+            booleanBuilder.and(qRptBaseInfo.runStatus.eq(rptBaseInfoDTO.getRunStatus()));
+        }
 
     }
 
