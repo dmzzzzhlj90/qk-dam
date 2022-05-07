@@ -47,7 +47,8 @@ dependencies {
     implementation project(":catacollect")
 
     implementation project(":qk-dolphin-common")
-    implementation project(":dolphinscheduler-starter-http")
+//    implementation project(":dolphinscheduler-starter-http")
+    implementation project(":dolphinscheduler-starter-shell")
 
     implementation 'org.mapstruct:mapstruct'
     implementation project(":metadata-common-core")

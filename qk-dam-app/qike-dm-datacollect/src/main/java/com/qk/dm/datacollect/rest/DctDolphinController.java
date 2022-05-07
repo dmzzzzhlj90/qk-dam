@@ -4,7 +4,7 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datacollect.service.DctDolphinService;
-import com.qk.dm.datacollect.service.DolphinHttpService;
+import com.qk.dm.datacollect.service.DolphinProcessDefinitionService;
 import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
 import com.qk.dm.datacollect.vo.DctSchedulerInfoParamsVO;
 import com.qk.dm.datacollect.vo.DctSchedulerInfoVO;
@@ -24,11 +24,11 @@ import javax.validation.Valid;
 @RequestMapping("/scheduler")
 public class DctDolphinController {
     private final DctDolphinService dctDolphinService;
-    private final DolphinHttpService dolphinProcessDefinitionService;
+    private final DolphinProcessDefinitionService dolphinProcessDefinitionService;
 
-    public DctDolphinController(DctDolphinService dctDolphinService, DolphinHttpService dolphinHttpService) {
+    public DctDolphinController(DctDolphinService dctDolphinService, DolphinProcessDefinitionService dolphinProcessDefinitionService) {
         this.dctDolphinService = dctDolphinService;
-        this.dolphinProcessDefinitionService = dolphinHttpService;
+        this.dolphinProcessDefinitionService = dolphinProcessDefinitionService;
     }
 
     /**
