@@ -76,7 +76,7 @@ public class DctDataBaseController {
    * @return
    */
   @PostMapping
-   public DefaultCommonResult dolphinCallback(@NotBlank @RequestParam String schedulerRules)
+   public DefaultCommonResult dolphinCallback(@NotBlank @RequestBody String schedulerRules)
       throws Exception {
      dctDataSourceService.dolphinCallback(schedulerRules);
      return DefaultCommonResult.success();
