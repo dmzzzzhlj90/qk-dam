@@ -17,7 +17,6 @@ import org.apache.atlas.model.instance.AtlasEntity;
 import org.apache.atlas.model.instance.AtlasEntityHeader;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,7 +26,6 @@ import java.util.stream.Collectors;
  * @date 2022/4/25 14:17
  * @since 1.0.0
  */
-@Component
 public class AtlasAgg {
   private static final Log LOG = LogFactory.get("atals处理器");
   /**

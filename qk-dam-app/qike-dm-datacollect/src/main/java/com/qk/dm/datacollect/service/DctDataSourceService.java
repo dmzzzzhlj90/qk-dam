@@ -10,6 +10,4 @@ public interface DctDataSourceService {
   List<String> getResultDb(String dataSourceId);
 
   List<DctTableDataVO> getResultTable(String dataSourceId, String db);
-
-  void dolphinCallback(String dctBaseInfoVO) throws Exception;
 }

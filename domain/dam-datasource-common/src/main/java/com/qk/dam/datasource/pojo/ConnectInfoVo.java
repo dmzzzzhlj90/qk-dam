@@ -1,4 +1,4 @@
-package com.qk.dam.metadata.catacollect.pojo;
+package com.qk.dam.datasource.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
