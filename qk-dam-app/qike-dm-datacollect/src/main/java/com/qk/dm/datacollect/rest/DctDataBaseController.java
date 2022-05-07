@@ -68,17 +68,4 @@ public class DctDataBaseController {
   public DefaultCommonResult<List<DctTableDataVO>> getResultTable(@NotBlank @RequestParam String dataSourceId,@NotBlank @RequestParam String databaseName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dctDataSourceService.getResultTable(dataSourceId,databaseName));
   }
-
-
-  /**
-   * dolphin任务回调接口
-   * @param schedulerRules 回调atals接口参数
-   * @return
-   */
-  @PostMapping
-   public DefaultCommonResult dolphinCallback(@NotBlank @RequestParam String schedulerRules)
-      throws Exception {
-     dctDataSourceService.dolphinCallback(schedulerRules);
-     return DefaultCommonResult.success();
-   }
 }

@@ -4,15 +4,12 @@ import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
-import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
-import com.qk.dam.metadata.catacollect.service.MetadataApiService;
-import com.qk.dam.metadata.catacollect.util.SourcesUtil;
+import com.qk.dam.datasource.pojo.ConnectInfoVo;
+import com.qk.dam.datasource.service.MetadataApiService;
+import com.qk.dam.datasource.utils.SourcesUtil;
 import com.qk.dam.metedata.AtlasClient;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
-import com.qk.dm.datacollect.mapstruct.DctDataBaseMapper;
 import com.qk.dm.datacollect.service.DctDataSourceService;
-import com.qk.dm.datacollect.vo.DctSchedulerRulesVO;
 import com.qk.dm.datacollect.vo.DctTableDataVO;
 import org.apache.atlas.AtlasClientV2;
 import org.springframework.stereotype.Service;
@@ -82,19 +79,5 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
     dctTableDataVOS.setChildren(tableList);
     tableLists.add(dctTableDataVOS);
     return tableLists;
-  }
-
-  @Override
-  public void dolphinCallback(String schedulerRules) throws Exception {
-    DctSchedulerRulesVO dctSchedulerRulesVO = GsonUtil.fromJsonString(schedulerRules, new TypeToken<DctSchedulerRulesVO>() {}.getType());
-    ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dctSchedulerRulesVO.getDataSourceId());
-    if (Objects.nonNull(dsDatasourceVO)){
-      MetadataConnectInfoVo metadataConnectInfoVo =new MetadataConnectInfoVo();
-      metadataConnectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfoJson(), new TypeToken<MetadataConnectInfoVo>() {}.getType());
-      DctDataBaseMapper.INSTANCE.from(dctSchedulerRulesVO,metadataConnectInfoVo);
-      metadataApiService.extractorAtlasEntitiesWith(metadataConnectInfoVo,atlasClientV2);
-    }else {
-      throw new BizException("根据连接名称获取连接信息失败");
-    }
   }
 }

@@ -1,9 +1,9 @@
-package com.qk.dam.metadata.catacollect.repo;
+package com.qk.dam.datasource.repo;
 
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
 import cn.hutool.db.ds.simple.SimpleDataSource;
-import com.qk.dam.metadata.catacollect.pojo.ConnectInfoVo;
+import com.qk.dam.datasource.pojo.ConnectInfoVo;
 
 import java.sql.SQLException;
 import java.util.List;

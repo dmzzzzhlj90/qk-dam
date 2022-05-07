@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "9f12a1a1-a0ee-441d-9afc-3504f0e4bccd",
+    "_postman_id": "028ea7be-1264-4285-8a4a-7f54ba75d84e",
     "name": "dm-datacollect"
   },
   "item": [
@@ -43,7 +43,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 160,\n  \"dirId\": \"114\",\n  \"title\": \"kl2cr4\",\n  \"value\": \"m7vhgs\",\n  \"parentId\": \"114\",\n  \"description\": \"4ik93v\",\n  \"gmtCreate\": \"2022-04-28 18:20:22\",\n  \"gmtModified\": \"2022-04-28 18:20:22\",\n  \"delFlag\": 2,\n  \"type\": \"17uykp\"\n}",
+              "raw": "{\n  \"id\": 136,\n  \"dirId\": \"131\",\n  \"title\": \"sp3iqj\",\n  \"value\": \"81jug3\",\n  \"parentId\": \"131\",\n  \"description\": \"7kfv5w\",\n  \"gmtCreate\": \"2022-05-07 10:40:25\",\n  \"gmtModified\": \"2022-05-07 10:40:25\",\n  \"delFlag\": 8,\n  \"type\": \"lj05mt\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -74,7 +74,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 369,\n  \"dirId\": \"114\",\n  \"title\": \"5p5w0q\",\n  \"value\": \"16bagt\",\n  \"parentId\": \"114\",\n  \"description\": \"82qxnh\",\n  \"gmtCreate\": \"2022-04-28 18:20:22\",\n  \"gmtModified\": \"2022-04-28 18:20:22\",\n  \"delFlag\": 2,\n  \"type\": \"4b3pet\"\n}",
+              "raw": "{\n  \"id\": 700,\n  \"dirId\": \"131\",\n  \"title\": \"gf3r0w\",\n  \"value\": \"cbhv1d\",\n  \"parentId\": \"131\",\n  \"description\": \"1mpcsp\",\n  \"gmtCreate\": \"2022-05-07 10:40:25\",\n  \"gmtModified\": \"2022-05-07 10:40:25\",\n  \"delFlag\": 8,\n  \"type\": \"sonohh\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -111,7 +111,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dir/114",
+              "raw": "http://::server/dir/131",
               "protocol": "http",
               "path": [
                 "dir",
@@ -124,7 +124,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "114",
+                  "value": "131",
                   "description": "删除入参"
                 }
               ]
@@ -146,7 +146,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/dir/bulk?ids\u003d93jifj",
+              "raw": "http://::server/dir/bulk?ids\u003dyya2kc",
               "protocol": "http",
               "path": [
                 "dir",
@@ -158,7 +158,7 @@
               "query": [
                 {
                   "key": "ids",
-                  "value": "c0bsut",
+                  "value": "44tsk7",
                   "description": "批量删除入参"
                 }
               ],
@@ -246,7 +246,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/connect/db?dataSourceId\u003d114",
+              "raw": "http://::server/datasource/connect/db?dataSourceId\u003d131",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -259,7 +259,7 @@
               "query": [
                 {
                   "key": "dataSourceId",
-                  "value": "114",
+                  "value": "131",
                   "description": "数据源连接id"
                 }
               ],
@@ -282,7 +282,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/connect/table?dataSourceId\u003d114\u0026databaseName\u003dkeren.schumm",
+              "raw": "http://::server/datasource/connect/table?dataSourceId\u003d131\u0026databaseName\u003demeline.gutkowski",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -295,12 +295,12 @@
               "query": [
                 {
                   "key": "dataSourceId",
-                  "value": "114",
+                  "value": "131",
                   "description": "数据源连接id"
                 },
                 {
                   "key": "databaseName",
-                  "value": "keren.schumm",
+                  "value": "emeline.gutkowski",
                   "description": "数据库名称"
                 }
               ],
@@ -316,15 +316,13 @@
           "request": {
             "method": "POST",
             "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "schedulerRules",
-                  "type": "string",
-                  "description": "回调atals接口参数",
-                  "value": "72u76c"
+              "mode": "raw",
+              "raw": "a4nvaq",
+              "options": {
+                "raw": {
+                  "language": "json"
                 }
-              ]
+              }
             },
             "url": {
               "raw": "http://::server/datasource/",
@@ -355,7 +353,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"uup5jy\"\n  },\n  \"processDefineCode\": 999,\n  \"startDate\": \"2022-04-28\",\n  \"endDate\": \"2022-04-28\",\n  \"searchVal\": \"038zhj\",\n  \"stateType\": \"37iaie\",\n  \"executorName\": \"keren.schumm\",\n  \"dirId\": \"114\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"0pws10\"\n  },\n  \"processDefineCode\": 565,\n  \"startDate\": \"2022-05-07\",\n  \"endDate\": \"2022-05-07\",\n  \"searchVal\": \"95t4sp\",\n  \"stateType\": \"6id9g8\",\n  \"executorName\": \"emeline.gutkowski\",\n  \"dirId\": \"131\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -363,10 +361,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/instance/page/list",
+              "raw": "http://::server/scheduler/instance/page/list",
               "protocol": "http",
               "path": [
-                "dolphin",
+                "scheduler",
                 "instance",
                 "page",
                 "list"
@@ -394,10 +392,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/instance/481",
+              "raw": "http://::server/scheduler/instance/545",
               "protocol": "http",
               "path": [
-                "dolphin",
+                "scheduler",
                 "instance",
                 ":instanceId"
               ],
@@ -408,7 +406,7 @@
               "variable": [
                 {
                   "key": "instanceId",
-                  "value": "542",
+                  "value": "286",
                   "description": "No comments found."
                 }
               ]
@@ -424,7 +422,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"executeType\": \"START_PROCESS\",\n  \"instanceId\": 909\n}",
+              "raw": "{\n  \"executeType\": \"uw2nxp\",\n  \"instanceId\": 484\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -432,10 +430,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/instance/execute",
+              "raw": "http://::server/scheduler/instance/execute",
               "protocol": "http",
               "path": [
-                "dolphin",
+                "scheduler",
                 "instance",
                 "execute"
               ],
@@ -456,7 +454,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"hbvvp4\"\n  },\n  \"processInstanceId\": 938,\n  \"processInstanceName\": \"keren.schumm\",\n  \"startDate\": \"2022-04-28\",\n  \"endDate\": \"2022-04-28\",\n  \"searchVal\": \"chln8e\",\n  \"stateType\": \"mx4lt7\",\n  \"executorName\": \"keren.schumm\",\n  \"taskName\": \"keren.schumm\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"ooqy1d\"\n  },\n  \"processInstanceId\": 470,\n  \"processInstanceName\": \"emeline.gutkowski\",\n  \"startDate\": \"2022-05-07\",\n  \"endDate\": \"2022-05-07\",\n  \"searchVal\": \"worscw\",\n  \"stateType\": \"t7yynv\",\n  \"executorName\": \"emeline.gutkowski\",\n  \"taskName\": \"emeline.gutkowski\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -464,11 +462,12 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/task/list",
+              "raw": "http://::server/scheduler/task/page/list",
               "protocol": "http",
               "path": [
-                "dolphin",
+                "scheduler",
                 "task",
+                "page",
                 "list"
               ],
               "host": [
@@ -491,10 +490,10 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dolphin/task/272/log/download",
+              "raw": "http://::server/scheduler/task/73/log/download",
               "protocol": "http",
               "path": [
-                "dolphin",
+                "scheduler",
                 "task",
                 ":taskInstanceId",
                 "log",
@@ -507,7 +506,7 @@
               "variable": [
                 {
                   "key": "taskInstanceId",
-                  "value": "298",
+                  "value": "816",
                   "description": "No comments found."
                 }
               ]
@@ -526,10 +525,10 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dolphin/task/48/log",
+              "raw": "http://::server/scheduler/task/287/log",
               "protocol": "http",
               "path": [
-                "dolphin",
+                "scheduler",
                 "task",
                 ":taskInstanceId",
                 "log"
@@ -541,7 +540,7 @@
               "variable": [
                 {
                   "key": "taskInstanceId",
-                  "value": "58",
+                  "value": "465",
                   "description": "No comments found."
                 }
               ]
@@ -562,7 +561,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 731,\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"description\": \"rzhe8o\",\n  \"schedulerRules\": {\n    \"engineType\": \"nfa5um\",\n    \"dataSourceName\": \"keren.schumm\",\n    \"databaseName\": \"keren.schumm\",\n    \"tableList\": [\n      \"zd0agz\"\n    ],\n    \"allNums\": \"4lzxku\",\n    \"applicationName\": \"keren.schumm\",\n    \"displayName\": \"keren.schumm\",\n    \"owner\": \"8uumks\",\n    \"strategy\": \"191u72\",\n    \"dataSourceId\": \"114\",\n    \"description\": \"d7wrxu\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"mq7zs2\",\n    \"effectiveTimeStart\": \"3veq3v\",\n    \"effectiveTimeEnt\": \"39qgeu\",\n    \"schedulerCycle\": \"3fjqfu\",\n    \"schedulerIntervalTime\": \"2022-04-28 15:23:34\",\n    \"schedulerTime\": \"2022-04-28 15:23:34\",\n    \"cron\": \"mh0pha\",\n    \"schedulerId\": 912\n  },\n  \"updateTime\": \"2022-04-28 15:23:34\"\n}",
+              "raw": "{\n  \"code\": 979,\n  \"name\": \"emeline.gutkowski\",\n  \"dirId\": \"131\",\n  \"description\": \"nqizak\",\n  \"schedulerRules\": {\n    \"engineType\": \"2wejyh\",\n    \"dataSourceName\": \"emeline.gutkowski\",\n    \"databaseName\": \"emeline.gutkowski\",\n    \"tableList\": [\n      \"syogga\"\n    ],\n    \"allNums\": \"4rnj8d\",\n    \"applicationName\": \"emeline.gutkowski\",\n    \"displayName\": \"emeline.gutkowski\",\n    \"owner\": \"351iu9\",\n    \"strategy\": \"udwbsc\",\n    \"dataSourceId\": \"131\",\n    \"description\": \"9phsa3\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"bmh3tt\",\n    \"effectiveTimeStart\": \"8zi1b1\",\n    \"effectiveTimeEnt\": \"6tardq\",\n    \"schedulerCycle\": \"123p3l\",\n    \"schedulerIntervalTime\": \"2022-05-07 10:05:45\",\n    \"schedulerTime\": \"2022-05-07 10:05:45\",\n    \"cron\": \"m8er38\",\n    \"schedulerId\": 483\n  },\n  \"updateTime\": \"2022-05-07 10:05:45\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -570,11 +569,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/",
+              "raw": "http://::server/scheduler/",
               "protocol": "http",
               "path": [
-                "dolphin",
-                "process",
+                "scheduler",
                 ""
               ],
               "host": [
@@ -594,7 +592,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 605,\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"description\": \"w0t3u5\",\n  \"schedulerRules\": {\n    \"engineType\": \"pizr5n\",\n    \"dataSourceName\": \"keren.schumm\",\n    \"databaseName\": \"keren.schumm\",\n    \"tableList\": [\n      \"hgztm6\"\n    ],\n    \"allNums\": \"w9wi42\",\n    \"applicationName\": \"keren.schumm\",\n    \"displayName\": \"keren.schumm\",\n    \"owner\": \"196ay4\",\n    \"strategy\": \"x2qgnp\",\n    \"dataSourceId\": \"114\",\n    \"description\": \"rsbu7f\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"2w7eyz\",\n    \"effectiveTimeStart\": \"qqnl6m\",\n    \"effectiveTimeEnt\": \"ff48dr\",\n    \"schedulerCycle\": \"c2bfld\",\n    \"schedulerIntervalTime\": \"2022-04-28 15:23:34\",\n    \"schedulerTime\": \"2022-04-28 15:23:34\",\n    \"cron\": \"g0yadt\",\n    \"schedulerId\": 13\n  },\n  \"updateTime\": \"2022-04-28 15:23:34\"\n}",
+              "raw": "{\n  \"code\": 7,\n  \"name\": \"emeline.gutkowski\",\n  \"dirId\": \"131\",\n  \"description\": \"bpd4eu\",\n  \"schedulerRules\": {\n    \"engineType\": \"moz93p\",\n    \"dataSourceName\": \"emeline.gutkowski\",\n    \"databaseName\": \"emeline.gutkowski\",\n    \"tableList\": [\n      \"mc8m3r\"\n    ],\n    \"allNums\": \"vgp1t3\",\n    \"applicationName\": \"emeline.gutkowski\",\n    \"displayName\": \"emeline.gutkowski\",\n    \"owner\": \"kelltl\",\n    \"strategy\": \"ybmx6g\",\n    \"dataSourceId\": \"131\",\n    \"description\": \"8lpceo\"\n  },\n  \"schedulerConfig\": {\n    \"schedulerType\": \"4s07ww\",\n    \"effectiveTimeStart\": \"4a3957\",\n    \"effectiveTimeEnt\": \"yp5j60\",\n    \"schedulerCycle\": \"ip8axl\",\n    \"schedulerIntervalTime\": \"2022-05-07 10:05:45\",\n    \"schedulerTime\": \"2022-05-07 10:05:45\",\n    \"cron\": \"7ngywa\",\n    \"schedulerId\": 225\n  },\n  \"updateTime\": \"2022-05-07 10:05:45\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -602,11 +600,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/",
+              "raw": "http://::server/scheduler/",
               "protocol": "http",
               "path": [
-                "dolphin",
-                "process",
+                "scheduler",
                 ""
               ],
               "host": [
@@ -632,11 +629,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/782",
+              "raw": "http://::server/scheduler/547",
               "protocol": "http",
               "path": [
-                "dolphin",
-                "process",
+                "scheduler",
                 ":code"
               ],
               "host": [
@@ -646,7 +642,7 @@
               "variable": [
                 {
                   "key": "code",
-                  "value": "488",
+                  "value": "952",
                   "description": "No comments found."
                 }
               ]
@@ -662,7 +658,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": 793,\n  \"releaseState\": \"OFFLINE\"\n}",
+              "raw": "{\n  \"code\": 249,\n  \"releaseState\": \"s7mec6\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -670,11 +666,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/release",
+              "raw": "http://::server/scheduler/release",
               "protocol": "http",
               "path": [
-                "dolphin",
-                "process",
+                "scheduler",
                 "release"
               ],
               "host": [
@@ -697,13 +692,12 @@
               "formdata": []
             },
             "url": {
-              "raw": "http://::server/dolphin/process/runing/684",
+              "raw": "http://::server/scheduler/155/runing",
               "protocol": "http",
               "path": [
-                "dolphin",
-                "process",
-                "runing",
-                ":code"
+                "scheduler",
+                ":code",
+                "runing"
               ],
               "host": [
                 "{{server}}"
@@ -712,7 +706,7 @@
               "variable": [
                 {
                   "key": "code",
-                  "value": "386",
+                  "value": "675",
                   "description": "No comments found."
                 }
               ]
@@ -728,7 +722,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"qjuh1l\"\n  },\n  \"name\": \"keren.schumm\",\n  \"dirId\": \"114\",\n  \"beginDay\": \"gbu3cl\",\n  \"endDay\": \"54y6hj\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"emottd\"\n  },\n  \"name\": \"emeline.gutkowski\",\n  \"dirId\": \"131\",\n  \"beginDay\": \"8z8zzc\",\n  \"endDay\": \"a4w52v\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -736,11 +730,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/page/list",
+              "raw": "http://::server/scheduler/page/list",
               "protocol": "http",
               "path": [
-                "dolphin",
-                "process",
+                "scheduler",
                 "page",
                 "list"
               ],
@@ -767,11 +760,10 @@
               }
             },
             "url": {
-              "raw": "http://::server/dolphin/process/634",
+              "raw": "http://::server/scheduler/743",
               "protocol": "http",
               "path": [
-                "dolphin",
-                "process",
+                "scheduler",
                 ":code"
               ],
               "host": [
@@ -781,7 +773,7 @@
               "variable": [
                 {
                   "key": "code",
-                  "value": "314",
+                  "value": "852",
                   "description": "No comments found."
                 }
               ]
