@@ -142,7 +142,7 @@ public class AtlasAgg {
    */
   private  void removeAtalsTables(List<String> tableGuidList, AtlasClientV2 atlasClientV2)
       throws AtlasServiceException {
-    if (Objects.nonNull(tableGuidList)){
+    if (CollectionUtil.isNotEmpty(tableGuidList)){
       atlasClientV2.deleteEntitiesByGuids(tableGuidList);
     }else {
       LOG.info("无需要删除的Atals表");
