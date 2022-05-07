@@ -1,0 +1,30 @@
+plugins {
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'java'
+}
+version "${commonLibVersion}"
+group "com.qk.dm.dolphin.common"
+
+dependencies {
+    implementation project(":dolphinscheduler-starter-client")
+    implementation project(":dam-mvc-validation")
+    implementation project(":datasource-common-core")
+
+    annotationProcessor(
+            "javax.persistence:javax.persistence-api",
+            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa",
+            "javax.annotation:javax.annotation-api",
+            "org.projectlombok:lombok",
+            'org.mapstruct:mapstruct-processor')
+}
+dependencyManagement {
+    imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
