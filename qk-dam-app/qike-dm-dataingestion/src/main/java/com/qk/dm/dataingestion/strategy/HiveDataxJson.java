@@ -68,7 +68,7 @@ public class HiveDataxJson implements DataxJson{
                 .fileType(baseInfo.getTargetFileType())
                 .path(baseInfo.getTargetPath())
                 .fieldDelimiter(baseInfo.getTargetFieldDelimiter())
-                .writeMode(baseInfo.getTargetWriteMode()).build();
+                .writeMode(Objects.equals(baseInfo.getTargetWriteMode(),"0")?"append":"nonConflict").build();
 
         //判断是否自动创建表
         if(Objects.equals(baseInfo.getAutoCreate(),AUTO_CREATE)) {
