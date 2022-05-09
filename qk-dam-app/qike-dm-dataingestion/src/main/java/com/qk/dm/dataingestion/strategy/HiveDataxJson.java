@@ -19,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -105,12 +106,11 @@ public class HiveDataxJson implements DataxJson{
     }
 
     private List<HiveBasePara.Column> getWriterColumnList(List<ColumnVO.Column> columnList){
-        if(!CollectionUtils.isEmpty(columnList)){
-            return columnList.stream().map(e-> HiveBasePara.Column.builder().name(e.getName())
-                    .type(e.getDataType()).build()).collect(Collectors.toList());
-        }
-
-        return List.of();
+            return Optional.ofNullable(columnList).orElse(List.of())
+                    .stream()
+                    .map(e-> HiveBasePara.Column.builder().name(e.getName())
+                    .type(e.getDataType()).build())
+                    .collect(Collectors.toList());
     }
 
 

@@ -1,7 +1,6 @@
 package com.qk.dm.dataingestion.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dm.dataingestion.datax.DataxDolphinClient;
 import com.qk.dm.dataingestion.entity.DisSchedulerConfig;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisSchedulerConfigMapper;
 import com.qk.dm.dataingestion.repositories.DisSchedulerConfigRepository;
@@ -23,11 +22,9 @@ import java.util.Objects;
 public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService {
 
     private final DisSchedulerConfigRepository disSchedulerConfigRepository;
-    private final DataxDolphinClient dataxDolphinClient;
 
-    public DisSchedulerConfigServiceImpl(DisSchedulerConfigRepository disSchedulerConfigRepository, DataxDolphinClient dataxDolphinClient) {
+    public DisSchedulerConfigServiceImpl(DisSchedulerConfigRepository disSchedulerConfigRepository) {
         this.disSchedulerConfigRepository = disSchedulerConfigRepository;
-        this.dataxDolphinClient = dataxDolphinClient;
     }
 
     @Override

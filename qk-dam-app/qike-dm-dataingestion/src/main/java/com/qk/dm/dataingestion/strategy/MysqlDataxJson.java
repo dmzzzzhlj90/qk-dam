@@ -1,6 +1,5 @@
 package com.qk.dm.dataingestion.strategy;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
@@ -17,7 +16,6 @@ import com.qk.dm.dataingestion.vo.DataMigrationVO;
 import com.qk.dm.dataingestion.vo.DisMigrationBaseInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -92,11 +90,11 @@ public class MysqlDataxJson implements DataxJson {
 
 
     private List<String> getColumnList(List<ColumnVO.Column> columnList) {
-        if (!CollectionUtils.isEmpty(columnList)) {
-            return columnList.stream().map(ColumnVO.Column::getName).collect(Collectors.toList());
-        }
 
-        return List.of();
+        return Optional.ofNullable(columnList).orElse(List.of())
+                .stream()
+                .map(ColumnVO.Column::getName)
+                .collect(Collectors.toList());
     }
 
 
@@ -109,7 +107,7 @@ public class MysqlDataxJson implements DataxJson {
     }
 
     private List<String> jdbcUrl(DataSourceServer dataSourceServer, String dataBaseName) {
-        return Lists.newArrayList(jdbcUrlString(dataSourceServer, dataBaseName));
+        return List.of(jdbcUrlString(dataSourceServer, dataBaseName));
     }
 
     private String jdbcUrlString(DataSourceServer dataSourceServer, String dataBaseName) {
