@@ -263,7 +263,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
      */
     private void updateScheduler(Long processDefinitionCode, Long baseInfoId,DisSchedulerConfigVO schedulerConfig){
         //判断是否是周期调度
-        if(!Objects.equals(schedulerConfig.getSchedulerType(), SchedulerType.CYCLE.getCode())){return;}
+        if(!Objects.equals(schedulerConfig.getSchedulerType(), SchedulerType.SINGLE.getCode())){return;}
         DisSchedulerConfigVO disSchedulerConfig = schedulerConfigService.detail(baseInfoId);
         if(Objects.isNull(disSchedulerConfig.getSchedulerId())){
             //添加定时
@@ -433,7 +433,6 @@ public class DataMigrationServiceImpl implements DataMigrationService {
    private void createScheduler(DisSchedulerConfigVO disSchedulerConfig,Long processDefinitionCode,
                           Long baseInfoId){
         //判断是否是周期调度
-        if(!Objects.equals(disSchedulerConfig.getSchedulerType(), SchedulerType.CYCLE.getCode())){return;}
         Integer scheduleId = createSchedule(disSchedulerConfig, processDefinitionCode);
         //将定时id保存至数据库
         schedulerConfigService.update(baseInfoId,scheduleId);
