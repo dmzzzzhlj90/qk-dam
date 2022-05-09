@@ -56,7 +56,7 @@ public enum MysqlDataType {
 
         return  columnList.stream()
                 .filter(e->!isMatch(e.getDataType())&&!List.of("int","bigint",
-                        "date","text","year","time","blob").contains(e.getDataType()))
+                        "date","text","year","time","blob","datetime","timestamp").contains(e.getDataType()))
                 .collect(Collectors.toList());
 
     }
