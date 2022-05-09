@@ -18,9 +18,9 @@ spring:
           - dataId: qkdam-mysql-\${spring.profiles.active}.yml
             group: DAM
             refresh: true
-#          - dataId: qkdam-datacollect-\${spring.profiles.active}.yml
-#            group: DEFAULT_GROUP
-#            refresh: true
+          - dataId: qkdam-datacollect-\${spring.profiles.active}.yml
+            group: DEFAULT_GROUP
+            refresh: true
 #          - dataId: qkdam-keycloak-\${spring.profiles.active}.yml
 #            group: DAM
 #            refresh: true

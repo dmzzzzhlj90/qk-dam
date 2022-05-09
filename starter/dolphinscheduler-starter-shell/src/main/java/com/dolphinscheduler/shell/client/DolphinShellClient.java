@@ -18,7 +18,6 @@ public class DolphinShellClient {
 
     public void createProcessDefinition(String name,
                                         Object params,
-                                        Object resourceList,
                                         String rawScript,
                                         String description) {
         long taskCode = 0L;
@@ -27,17 +26,16 @@ public class DolphinShellClient {
         } catch (CodeGenerateUtils.CodeGenerateException e) {
             e.printStackTrace();
         }
-        createProcessDefinition(name, taskCode, params, resourceList, rawScript, description);
+        createProcessDefinition(name, taskCode, params, rawScript, description);
     }
 
     private Result createProcessDefinition(String name,
                                            long taskCode,
                                            Object params,
-                                           Object resourceList,
                                            String rawScript,
                                            String description) {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
-                taskCode, name, params, resourceList, rawScript, dolphinTaskDefinitionPropertiesBean);
+                taskCode, name, params, rawScript, dolphinTaskDefinitionPropertiesBean);
         Result result = null;
         try {
             result = dolphinschedulerManager.defaultApi().createProcessDefinitionUsingPOST(
@@ -63,11 +61,10 @@ public class DolphinShellClient {
                                         long taskCode,
                                         String name,
                                         Object params,
-                                        Object resourceList,
                                         String rawScript,
                                         String description) {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
-                taskCode, name, params, resourceList, rawScript, dolphinTaskDefinitionPropertiesBean);
+                taskCode, name, params, rawScript, dolphinTaskDefinitionPropertiesBean);
         Result result = null;
         try {
             result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
@@ -94,12 +91,11 @@ public class DolphinShellClient {
                                         long taskCode,
                                         String name,
                                         Object params,
-                                        Object resourceList,
                                         String rawScript,
                                         String description,
                                         DolphinTaskDefinitionPropertiesBean taskParam) {
         DolphinProcessDefinition processDefinition = new DolphinProcessDefinition(
-                taskCode, name, params, resourceList, rawScript, taskParam, dolphinTaskDefinitionPropertiesBean);
+                taskCode, name, params, rawScript, taskParam, dolphinTaskDefinitionPropertiesBean);
         Result result = null;
         try {
             result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(

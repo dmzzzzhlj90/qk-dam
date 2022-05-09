@@ -2,11 +2,12 @@ package com.qk.dm.datacollect.service.impl;
 
 import com.dolphinscheduler.shell.client.DolphinShellClient;
 import com.google.gson.reflect.TypeToken;
+import com.qk.dam.catacollect.vo.MetadataConnectInfoVo;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.datacollect.config.AtlasInfoConfig;
 import com.qk.dm.datacollect.mapstruct.DctDataBaseMapper;
 import com.qk.dm.datacollect.service.DolphinProcessDefinitionService;
 import com.qk.dm.datacollect.service.cron.CronService;
@@ -26,11 +27,6 @@ import java.util.Objects;
  */
 @Service
 public class DolphinShellServiceImpl implements DolphinProcessDefinitionService {
-    private final DolphinShellClient dolphinShellClient;
-    private final Map<String, CronService> cronServiceMap;
-    private final DolphinProcessManager dolphinProcessManager;
-    private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
-
     /**
      * 空值占位符
      */
@@ -39,14 +35,20 @@ public class DolphinShellServiceImpl implements DolphinProcessDefinitionService 
      * 空值占位符
      */
     public static final String SINGLE_QUOTE = "'";
+    private final DolphinShellClient dolphinShellClient;
+    private final Map<String, CronService> cronServiceMap;
+    private final DolphinProcessManager dolphinProcessManager;
+    private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
+    private final AtlasInfoConfig atlasInfoConfig;
 
     public DolphinShellServiceImpl(DolphinShellClient dolphinShellClient,
                                    Map<String, CronService> cronServiceMap,
-                                   DolphinProcessManager dolphinProcessManager, DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
+                                   DolphinProcessManager dolphinProcessManager, DataBaseInfoDefaultApi dataBaseInfoDefaultApi, AtlasInfoConfig atlasInfoConfig) {
         this.dolphinShellClient = dolphinShellClient;
         this.cronServiceMap = cronServiceMap;
         this.dolphinProcessManager = dolphinProcessManager;
         this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
+        this.atlasInfoConfig = atlasInfoConfig;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class DolphinShellServiceImpl implements DolphinProcessDefinitionService 
         //3、生成rawScript参数
         String rawScript = createRawScript(dctSchedulerBasicInfoVO);
         //4、创建流程定义
-        dolphinShellClient.createProcessDefinition(name, params, null, rawScript, description);
+        dolphinShellClient.createProcessDefinition(name, params, rawScript, description);
     }
 
     @Override
@@ -77,10 +79,8 @@ public class DolphinShellServiceImpl implements DolphinProcessDefinitionService 
         ProcessDefinitionDTO processDefinitionDTO = dolphinProcessManager.detailToProcess(dctSchedulerBasicInfoVO.getCode());
         long taskCode = GsonUtil.toJsonArray(processDefinitionDTO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
         //5、修改流程定义
-        dolphinShellClient.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, params, null, rawScript, description);
+        dolphinShellClient.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, params, rawScript, description);
     }
-
-
 
     private String createRawScript(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
         ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dctSchedulerBasicInfoVO.getSchedulerRules().getDataSourceId());
@@ -88,8 +88,10 @@ public class DolphinShellServiceImpl implements DolphinProcessDefinitionService 
             MetadataConnectInfoVo metadataConnectInfoVo = GsonUtil.fromJsonString(
                     dsDatasourceVO.getConnectBasicInfoJson(), new TypeToken<MetadataConnectInfoVo>() {
                     }.getType());
-            DctDataBaseMapper.INSTANCE.from(dctSchedulerBasicInfoVO.getSchedulerRules(), metadataConnectInfoVo);
-            return SPACE_PLACEHOLDER+SINGLE_QUOTE+GsonUtil.toJsonString(metadataConnectInfoVo)+SINGLE_QUOTE;
+            DctDataBaseMapper.INSTANCE.schedulerRulesToConnect(dctSchedulerBasicInfoVO.getSchedulerRules(), metadataConnectInfoVo);
+            metadataConnectInfoVo.setAuth(atlasInfoConfig.getBasicAuth());
+            metadataConnectInfoVo.setAtalsServer(atlasInfoConfig.getAddress());
+            return SPACE_PLACEHOLDER + SINGLE_QUOTE + GsonUtil.toJsonString(metadataConnectInfoVo) + SINGLE_QUOTE;
         } else {
             throw new BizException("根据连接名称获取连接信息失败");
         }

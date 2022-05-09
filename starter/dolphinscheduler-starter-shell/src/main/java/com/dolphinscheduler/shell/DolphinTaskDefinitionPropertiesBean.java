@@ -235,11 +235,8 @@ public class DolphinTaskDefinitionPropertiesBean {
     }
 
 
-    public String taskDefinitionJson(long taskCode, Object params, Object resourceList, String rawScript, DolphinTaskDefinitionPropertiesBean taskParam) {
+    public String taskDefinitionJson(long taskCode, Object params, String rawScript, DolphinTaskDefinitionPropertiesBean taskParam) {
         this.setCode(taskCode);
-        if (resourceList != null) {
-            this.getTaskParams().setResourceList(resourceList);
-        }
         this.getTaskParams().setRawScript(this.getTaskParams().getRawScript() + rawScript);
         this.getTaskParams().setLocalParams(params);
         BeanMap abean = BeanMap.create(this);
@@ -263,11 +260,8 @@ public class DolphinTaskDefinitionPropertiesBean {
         return new Gson().toJson(List.of(abean));
     }
 
-    public String taskDefinitionJson(long taskCode, Object params, Object resourceList, String rawScript) {
+    public String taskDefinitionJson(long taskCode, Object params,  String rawScript) {
         this.setCode(taskCode);
-        if (resourceList != null) {
-            this.getTaskParams().setResourceList(resourceList);
-        }
         this.getTaskParams().setRawScript(this.getTaskParams().getRawScript() + rawScript);
         this.getTaskParams().setLocalParams(params);
         return new Gson().toJson(List.of(this));

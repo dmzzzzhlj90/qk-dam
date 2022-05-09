@@ -60,6 +60,7 @@ public class DctDolphinServiceImpl implements DctDolphinService {
                     } else {
                         dolphinScheduleManager.insert(dctSchedulerReleaseVO.getCode(),
                                 schedulerConfig.getEffectiveTimeStart(), schedulerConfig.getEffectiveTimeEnt(), schedulerConfig.getCron());
+                        scheduleDTO = dolphinScheduleManager.detail(dctSchedulerReleaseVO.getCode());
                     }
                     //定时器上线
                     dolphinScheduleManager.execute(scheduleDTO.getId(), ReleaseStateEnum.ONLINE.getValue());
@@ -70,7 +71,8 @@ public class DctDolphinServiceImpl implements DctDolphinService {
         } catch (Exception e) {
             //下线
             dolphinProcessManager.release(dctSchedulerReleaseVO.getCode(), ReleaseStateEnum.OFFLINE.getValue());
-            throw new BizException("流程定时更新失败");
+            e.printStackTrace();
+            throw new BizException("流程定时操作失败");
         }
     }
 
