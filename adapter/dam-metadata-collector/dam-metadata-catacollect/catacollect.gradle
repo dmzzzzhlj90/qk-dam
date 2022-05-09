@@ -35,7 +35,7 @@ dependencies {
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ch.qos.logback:logback-core:1.2.3'
-    implementation 'org.apache.atlas:atlas-client-v2:2.2.0'
+    compile('org.apache.atlas:atlas-client-v2')
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
@@ -48,13 +48,12 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.1.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.0")
 
-}
-sourceSets {
-    main {
-        resources {
-            srcDirs = ["src/main/resources"]
-        }
-    }
+    //start fixme!这段为了兼容升级spring cloud导致jackson版本2.12.5+version atlas返回数据json错误
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.12.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.12.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.5'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.12.5'
+
 }
 dependencyManagement {
     imports {

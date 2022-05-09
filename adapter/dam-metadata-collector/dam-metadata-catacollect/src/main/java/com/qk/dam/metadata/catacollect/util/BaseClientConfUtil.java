@@ -1,10 +1,8 @@
 package com.qk.dam.metadata.catacollect.util;
 
-import org.apache.atlas.ApplicationProperties;
+import com.qk.dam.commons.exception.BizException;
 import org.apache.atlas.AtlasClientV2;
-import org.apache.atlas.AtlasException;
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author zys
@@ -12,27 +10,25 @@ import org.apache.commons.lang.ArrayUtils;
  * @since 1.0.0
  */
 public class BaseClientConfUtil {
-  public static AtlasClientV2 getAtalsV2(String atalsServer, String auth)
-      throws AtlasException {
-    String[] urls = getServerUrl(atalsServer);
-    String[] basicAuthUsernamePassword = getBasicAuthenticationInput(auth);
+  public static AtlasClientV2 getAtalsV2(String atalsServer, String auth){
+    String[] urls = getUrl(atalsServer);
+    String[] basicAuthUsernamePassword = getAuth(auth);
      return  new AtlasClientV2(urls, basicAuthUsernamePassword);
   }
 
-  private static String[] getBasicAuthenticationInput(String auth)
-      throws AtlasException {
-    Configuration configuration = ApplicationProperties.get();
-    return configuration.getStringArray(auth);
+  private static String[] getAuth(String auth) {
+    if (StringUtils.isNotEmpty(auth)){
+      return auth.split(",");
+    }else {
+      throw  new BizException("atals的auth为空");
+    }
   }
 
-  private static String[] getServerUrl(String atalsServer)
-      throws AtlasException {
-    Configuration configuration = ApplicationProperties.get();
-    String[] urls = configuration.getStringArray(atalsServer);
-
-    if (ArrayUtils.isEmpty(urls)) {
-      System.exit(-1);
+  private static String[] getUrl(String atalsServer) {
+    if (StringUtils.isNotEmpty(atalsServer)){
+      return new String[]{atalsServer};
+    }else {
+      throw new BizException("atals的atalsServer为空");
     }
-    return urls;
   }
 }

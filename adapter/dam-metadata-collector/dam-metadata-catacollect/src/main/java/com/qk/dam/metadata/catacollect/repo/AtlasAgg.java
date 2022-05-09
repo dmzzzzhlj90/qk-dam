@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 /**
  * @author zys
  * @date 2022/4/25 14:17
@@ -28,6 +29,8 @@ import java.util.stream.Collectors;
  */
 public class AtlasAgg {
   private static final Log LOG = LogFactory.get("atals处理器");
+  //private AtlasMetaDataService atlasMetaDataService;
+
   /**
    * 处理元数据采集策略问题
    * @param tableList （导入的表）
@@ -230,7 +233,7 @@ public class AtlasAgg {
       String displayText = attributes.get(AtlasBaseProperty.NAME).toString();
       String serverInfo = attributes.get(AtlasSearchProperty.AttributeName.SERVER_INFO).toString();
       List<AtlasEntityHeader> tableList = AtlasSearchUtil
-          .getTableList(transTypeName(typeName),displayText, serverInfo, 1000, 0);
+          .getTables(atlasClientV2,transTypeName(typeName),displayText, serverInfo, 1000, 0);
       if (CollectionUtil.isNotEmpty(tableList)){
         return tableList.stream().collect(Collectors
             .toMap(e -> e.getAttribute(AtlasSearchProperty.AttributeName.NAME).toString(),e -> e.getGuid(), (k1, k2) -> k2));
@@ -271,7 +274,7 @@ public class AtlasAgg {
     if (mtdAtlasParamsVO.getTypeNameValue() != null
         && mtdAtlasParamsVO.getTypeNameValue().length > 0) {
       filterCriteriaList.add(
-          getFilterCriterias(
+          getFilterCriteria(
               mtdAtlasParamsVO.getTypeNameValue(),
               AtlasSearchProperty.AttributeName.TYPENAME,
               AtlasSearchProperty.Operator.EQ,
@@ -279,7 +282,7 @@ public class AtlasAgg {
     }
     if (mtdAtlasParamsVO.getNameValue() != null && mtdAtlasParamsVO.getNameValue().length > 0) {
       filterCriteriaList.add(
-          getFilterCriterias(
+          getFilterCriteria(
               mtdAtlasParamsVO.getNameValue(),
               AtlasSearchProperty.AttributeName.NAME,
               AtlasSearchProperty.Operator.CONTAINS,
@@ -290,7 +293,7 @@ public class AtlasAgg {
       entity.setCondition(SearchParameters.FilterCriteria.Condition.AND);
       entity.setCriterion(
           Arrays.asList(
-              getFilterCriterias(
+              getFilterCriteria(
                   mtdAtlasParamsVO.getLabelsValue(),
                   AtlasSearchProperty.AttributeName.LABELS,
                   AtlasSearchProperty.Operator.CONTAINS,
@@ -301,25 +304,27 @@ public class AtlasAgg {
     return entityFilters;
   }
 
-  private  SearchParameters.FilterCriteria getFilterCriterias(
-      String[] typeNameValue, String typename, String eq,
-      SearchParameters.FilterCriteria.Condition or) {
+  public SearchParameters.FilterCriteria getFilterCriteria(
+      String[] typeNameValue,
+      String attributeName,
+      String operator,
+      SearchParameters.FilterCriteria.Condition condition) {
     SearchParameters.FilterCriteria entity = new SearchParameters.FilterCriteria();
-    entity.setCriterion(getFilterCriteriaList(typeNameValue, typename, eq));
-    entity.setCondition(or);
+    entity.setCriterion(getFilterCriteriaList(typeNameValue, attributeName, operator));
+    entity.setCondition(condition);
     return entity;
   }
 
-  private  List<SearchParameters.FilterCriteria> getFilterCriteriaList(
-      String[] typeNameValue, String typename, String eq) {
+  public List<SearchParameters.FilterCriteria> getFilterCriteriaList(
+      String[] attributeValue, String attributeName, String operator) {
     List<SearchParameters.FilterCriteria> entityList = new ArrayList<>();
-    Arrays.stream(typeNameValue)
+    Arrays.stream(attributeValue)
         .forEach(
             i -> {
               SearchParameters.FilterCriteria criteria = new SearchParameters.FilterCriteria();
               criteria.setAttributeValue(i);
-              criteria.setAttributeName(typename);
-              criteria.setOperator(SearchParameters.Operator.fromString(eq));
+              criteria.setAttributeName(attributeName);
+              criteria.setOperator(SearchParameters.Operator.fromString(operator));
               entityList.add(criteria);
             });
     return entityList;

@@ -22,12 +22,6 @@ import java.util.List;
  * @since 1.0.0
  */
 public class MysqlMetadataApi {
-  private static AtlasAgg atlasAgg;
-
-  public MysqlMetadataApi(AtlasAgg atlasAgg) {
-    this.atlasAgg = atlasAgg;
-  }
-
   /**
    * 根据数据连接信息获取元数据信息
    * @param metadataConnectInfoVo
@@ -41,7 +35,7 @@ public class MysqlMetadataApi {
     if (metadataConnectInfoVo.getType() !=null){
       switch (metadataConnectInfoVo.getType()){
         case SourcesUtil.MYSQL:
-          list =new MysqlAtlasEntity(metadataConnectInfoVo,atlasAgg).searchMysqlAtals(list,atlasClientV2,
+          list =new MysqlAtlasEntity(metadataConnectInfoVo,new AtlasAgg()).searchMysqlAtals(list,atlasClientV2,
               AtalsEnum.fromValue(metadataConnectInfoVo.getType()).getValue(),SourcesUtil.MYSQL_NAME);
           break;
         case SourcesUtil.HIVE:
