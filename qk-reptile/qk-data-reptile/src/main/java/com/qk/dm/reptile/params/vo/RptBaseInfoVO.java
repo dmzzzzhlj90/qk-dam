@@ -221,6 +221,11 @@ public class RptBaseInfoVO {
   @ExcelIgnore
   private String responsiblePersonName;
   /**
+   * 备注
+   */
+  @ExcelIgnore
+  private String remark;
+  /**
    * 配置时间
    */
   @ExcelIgnore
