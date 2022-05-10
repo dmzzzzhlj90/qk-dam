@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataingestion.enums.SchedulerCycle;
+import com.qk.dm.dataingestion.enums.SchedulerType;
 import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author shenpj
@@ -105,9 +107,12 @@ public class CronUtil {
      * 构建Cron表达式
      */
     public static String createCron(DisSchedulerConfigVO disSchedulerConfig) {
-
-        return CronUtil.createCron(disSchedulerConfig.getSchedulerCycle(),
-                disSchedulerConfig.getSchedulerIntervalTime(),
-                disSchedulerConfig.getSchedulerTime());
+        //判断是否是周期调度
+        if(Objects.equals(disSchedulerConfig.getSchedulerType(), SchedulerType.CYCLE.getCode())) {
+            return CronUtil.createCron(disSchedulerConfig.getSchedulerCycle(),
+                    disSchedulerConfig.getSchedulerIntervalTime(),
+                    disSchedulerConfig.getSchedulerTime());
+        }
+        return null;
     }
 }

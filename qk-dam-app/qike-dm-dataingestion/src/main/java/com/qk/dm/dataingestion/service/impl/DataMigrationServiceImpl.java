@@ -183,7 +183,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     public void updateDataxJson(DisJsonParamsVO disJsonParamsVO){
-        disDataxJsonService.update(disJsonParamsVO.getId(),disJsonParamsVO.getDataxJson());
+        disDataxJsonService.update(disJsonParamsVO.getId(),new Gson().toJson(disJsonParamsVO.getDataxJson()));
         DisMigrationBaseInfoVO baseInfo = baseInfoService.detail(disJsonParamsVO.getId());
         try {
             updateProcessDefinition(baseInfo.getJobName(),baseInfo.getTaskCode(),disJsonParamsVO.getDataxJson());

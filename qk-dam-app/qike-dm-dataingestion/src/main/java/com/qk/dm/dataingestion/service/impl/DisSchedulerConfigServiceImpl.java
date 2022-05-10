@@ -2,7 +2,6 @@ package com.qk.dm.dataingestion.service.impl;
 
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataingestion.entity.DisSchedulerConfig;
-import com.qk.dm.dataingestion.enums.SchedulerType;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisSchedulerConfigMapper;
 import com.qk.dm.dataingestion.repositories.DisSchedulerConfigRepository;
 import com.qk.dm.dataingestion.service.DisSchedulerConfigService;
@@ -30,10 +29,8 @@ public class DisSchedulerConfigServiceImpl implements DisSchedulerConfigService 
 
     @Override
     public void add(DisSchedulerConfigVO disSchedulerConfigVO) {
-        //判断是否是周期调度
-        if(!Objects.equals(disSchedulerConfigVO.getSchedulerType(), SchedulerType.CYCLE.getCode())) {
-            disSchedulerConfigVO.setCron(CronUtil.createCron(disSchedulerConfigVO));
-        }
+
+        disSchedulerConfigVO.setCron(CronUtil.createCron(disSchedulerConfigVO));
         DisSchedulerConfig disSchedulerConfig = DisSchedulerConfigMapper.INSTANCE.of(disSchedulerConfigVO);
 
         disSchedulerConfigRepository.save(disSchedulerConfig);
