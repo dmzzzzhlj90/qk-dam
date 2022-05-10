@@ -1,7 +1,6 @@
 package com.qk.dam.metadata.catacollect.catacollect;
 
 import com.qk.dam.catacollect.vo.MetadataConnectInfoVo;
-import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.metadata.catacollect.enums.AtalsEnum;
 import com.qk.dam.metadata.catacollect.repo.AtlasAgg;
 import com.qk.dam.metadata.catacollect.repo.HiveAtlasEntity;
@@ -10,6 +9,8 @@ import com.qk.dam.metadata.catacollect.util.SourcesUtil;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.AtlasServiceException;
 import org.apache.atlas.model.instance.AtlasEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public class MysqlMetadataApi {
+  private static final Logger LOG = LoggerFactory.getLogger(MysqlMetadataApi.class);
   /**
    * 根据数据连接信息获取元数据信息
    * @param metadataConnectInfoVo
@@ -51,7 +53,7 @@ public class MysqlMetadataApi {
         atlasClientV2.createEntities(e);
       } catch (AtlasServiceException atlasServiceException) {
         atlasServiceException.printStackTrace();
-        throw  new BizException("atlasClientV2更新添加操作失败");
+        LOG.error("atlasClientV2更新添加操作失败");
       } finally {
         atlasClientV2.close();
       }

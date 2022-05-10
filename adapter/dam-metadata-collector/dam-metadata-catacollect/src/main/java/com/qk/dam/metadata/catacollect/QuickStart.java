@@ -1,5 +1,6 @@
 package com.qk.dam.metadata.catacollect;
 
+import cn.hutool.core.lang.Assert;
 import com.google.gson.Gson;
 import com.qk.dam.catacollect.vo.MetadataConnectInfoVo;
 import com.qk.dam.metadata.catacollect.catacollect.MysqlMetadataApi;
@@ -20,8 +21,11 @@ import java.sql.SQLException;
 public class QuickStart {
   private static final Logger LOG = LoggerFactory.getLogger(QuickStart.class);
   public static void main(String[] args) throws Exception {
-    String jsonconfig = args[0];
-    MetadataConnectInfoVo metadataConnectInfoVo = new Gson().fromJson(jsonconfig, MetadataConnectInfoVo.class);
+    Assert.notEmpty(args, "任务参数不能为空！");
+    String arg = args[0];
+    LOG.info("获取参数成功"+arg);
+    MetadataConnectInfoVo metadataConnectInfoVo = new Gson().fromJson(arg, MetadataConnectInfoVo.class);
+    LOG.info("数据转换成功"+metadataConnectInfoVo.toString());
     new QuickStart().runQuickstart(metadataConnectInfoVo);
   }
 

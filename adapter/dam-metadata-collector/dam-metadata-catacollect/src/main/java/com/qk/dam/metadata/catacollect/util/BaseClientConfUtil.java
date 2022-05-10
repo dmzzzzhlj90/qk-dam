@@ -1,8 +1,9 @@
 package com.qk.dam.metadata.catacollect.util;
 
-import com.qk.dam.commons.exception.BizException;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author zys
@@ -10,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
  * @since 1.0.0
  */
 public class BaseClientConfUtil {
+  private static final Logger LOG = LoggerFactory.getLogger(BaseClientConfUtil.class);
   public static AtlasClientV2 getAtalsV2(String atalsServer, String auth){
     String[] urls = getUrl(atalsServer);
     String[] basicAuthUsernamePassword = getAuth(auth);
@@ -20,7 +22,8 @@ public class BaseClientConfUtil {
     if (StringUtils.isNotEmpty(auth)){
       return auth.split(",");
     }else {
-      throw  new BizException("atals的auth为空");
+      LOG.error("atals的auth为空");
+      return null;
     }
   }
 
@@ -28,7 +31,8 @@ public class BaseClientConfUtil {
     if (StringUtils.isNotEmpty(atalsServer)){
       return new String[]{atalsServer};
     }else {
-      throw new BizException("atals的atalsServer为空");
+      LOG.error("atals的atalsServer为空");
+      return null;
     }
   }
 }
