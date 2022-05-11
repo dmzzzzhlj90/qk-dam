@@ -23,7 +23,12 @@ public enum CreateTypeEnum {
     /**
      * API类型-新建API_取数方式
      */
-    CREATE_API_SQL_SCRIPT_TYPE("CREATE-API-SQL-SCRIPT-TYPE","API类型-新建API_取数方式");
+    CREATE_API_SQL_SCRIPT_TYPE("CREATE-API-SQL-SCRIPT-TYPE","API类型-新建API_取数方式"),
+
+    /**
+     * API类型-新建API_高级SQL方式
+     */
+    CREATE_API_MYBATIS_SQL_SCRIPT_TYPE("CREATE-API-MYBATIS-SQL-SCRIPT-TYPE","API类型-新建API_高级SQL方式");
 
     private String code;
     private String value;

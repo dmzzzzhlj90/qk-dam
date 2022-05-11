@@ -16,7 +16,7 @@ public interface DataQueryInfoFeign {
      * 获取数据查询服务的Sql方式
      * @return
      */
-    @PostMapping("/data/query/info")
+    @PostMapping("/data/query/info/all")
     DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfo();
 
     @PostMapping("/data/query/info/{id}")

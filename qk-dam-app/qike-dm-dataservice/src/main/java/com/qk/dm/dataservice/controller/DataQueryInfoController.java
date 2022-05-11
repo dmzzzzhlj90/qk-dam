@@ -4,11 +4,12 @@ import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasDataQueryInfoService;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据查询管理
@@ -17,6 +18,7 @@ import java.util.List;
  * @since 1.5.0
  */
 @RestController
+@RequestMapping("/data/query/info")
 public class DataQueryInfoController {
     private final DasDataQueryInfoService dasDataQueryInfoService;
 
@@ -24,16 +26,100 @@ public class DataQueryInfoController {
         this.dasDataQueryInfoService = dasDataQueryInfoService;
     }
 
-    @PostMapping("/data/query/info")
-    public DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfo(){
-       return DefaultCommonResult.success(ResultCodeEnum.OK,
-               dasDataQueryInfoService.dataQueryInfo());
+    @PostMapping("/all")
+    public DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,
+                dasDataQueryInfoService.dataQueryInfo());
     }
 
-    @PostMapping("/data/query/info/last/{time}")
-    public DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoLast(@PathVariable Long time){
-       return DefaultCommonResult.success(ResultCodeEnum.OK,
-               dasDataQueryInfoService.dataQueryInfoLast(time));
+    @PostMapping("/last/{time}")
+    public DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoLast(@PathVariable Long time) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK,
+                dasDataQueryInfoService.dataQueryInfoLast(time));
+    }
+
+    /**
+     * 新增
+     *
+     * @param dataQueryInfoVO
+     * @return DefaultCommonResult
+     */
+    @PostMapping("")
+    public DefaultCommonResult insert(@RequestBody @Validated DataQueryInfoVO dataQueryInfoVO) {
+        dasDataQueryInfoService.insert(dataQueryInfoVO);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 编辑
+     *
+     * @param dataQueryInfoVO
+     * @return DefaultCommonResult
+     */
+    @PutMapping("")
+    public DefaultCommonResult update(@RequestBody @Validated DataQueryInfoVO dataQueryInfoVO) {
+        dasDataQueryInfoService.update(dataQueryInfoVO);
+        return DefaultCommonResult.success();
+    }
+
+    /**
+     * 根据SQL生成返回参数
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/generate/response/params")
+    public DefaultCommonResult<Object> generateResponseParam(@RequestParam("sqlPara") String sqlPara) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.generateResponseParam(sqlPara));
+    }
+
+    /**
+     * 参数设置: 表头信息
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/param/header/info")
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> paramHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.paramHeaderInfo());
+    }
+
+    /**
+     * 返回参数: 表头信息
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/response/param/header/infos")
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> responseParamHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.responseParamHeaderInfo());
+    }
+
+    /**
+     * 排序参数: 表头信息
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/order/param/header/info")
+    public DefaultCommonResult<LinkedList<Map<String, Object>>> orderParamHeaderInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.orderParamHeaderInfo());
+    }
+
+    /**
+     * 是否开启分页
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/page/flags")
+    public DefaultCommonResult<Map<Boolean, String>> pageFlags() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.pageFlags());
+    }
+
+    /**
+     * 是否开启缓存
+     *
+     * @return DefaultCommonResult
+     */
+    @GetMapping("/cache/levels")
+    public DefaultCommonResult<Map<Integer, String>> cacheLevels() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.cacheLevels());
     }
 
 }
