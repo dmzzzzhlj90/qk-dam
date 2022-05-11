@@ -39,7 +39,7 @@ public interface DasApiBasicInfoService {
     /******************************************** 页面展示参数获取 *********************************************************/
     Map<String, String> getApiType();
 
-    Map<String, String> getDMSourceType();
+    Map<String, String> createTypeInfo();
 
     LinkedList<Map<String, Object>> getRequestParasHeaderInfos();
 

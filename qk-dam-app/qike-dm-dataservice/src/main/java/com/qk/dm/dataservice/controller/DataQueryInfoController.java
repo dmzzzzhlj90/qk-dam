@@ -26,12 +26,23 @@ public class DataQueryInfoController {
         this.dasDataQueryInfoService = dasDataQueryInfoService;
     }
 
+    /**
+     * 查询所有新建API 高级SQL配置信息
+     *
+     * @return DefaultCommonResult<List < DataQueryInfoVO>>
+     */
     @PostMapping("/all")
     public DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfo() {
         return DefaultCommonResult.success(ResultCodeEnum.OK,
                 dasDataQueryInfoService.dataQueryInfo());
     }
 
+    /**
+     * 根据最近修改时间查询新建API 高级SQL配置信息
+     *
+     * @param time
+     * @return DefaultCommonResult<List < DataQueryInfoVO>>
+     */
     @PostMapping("/last/{time}")
     public DefaultCommonResult<List<DataQueryInfoVO>> dataQueryInfoLast(@PathVariable Long time) {
         return DefaultCommonResult.success(ResultCodeEnum.OK,

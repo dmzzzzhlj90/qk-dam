@@ -17,9 +17,9 @@ import java.util.Objects;
 @Builder
 public class DataQueryInfoVO {
     @Valid
-    private DasApiCreateMybatisSqlScriptDefinitionVO dasApiCreateMybatisSqlScript;
+    private DasApiCreateMybatisSqlScriptDefinitionVO apiCreateDefinitionVO;
     @Valid
-    private DasApiBasicInfoVO dasApiBasicInfo;
+    private DasApiBasicInfoVO apiBasicInfoVO;
 
     @Override
     public boolean equals(Object o) {
@@ -30,11 +30,11 @@ public class DataQueryInfoVO {
             return false;
         }
         DataQueryInfoVO that = (DataQueryInfoVO) o;
-        return getDasApiCreateMybatisSqlScript().getApiId().equals(that.getDasApiCreateMybatisSqlScript().getApiId());
+        return getApiCreateDefinitionVO().getApiId().equals(that.getApiCreateDefinitionVO().getApiId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDasApiCreateMybatisSqlScript().getApiId());
+        return Objects.hash(getApiCreateDefinitionVO().getApiId());
     }
 }

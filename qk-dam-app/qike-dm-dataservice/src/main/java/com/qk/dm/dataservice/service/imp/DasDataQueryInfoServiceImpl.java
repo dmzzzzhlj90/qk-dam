@@ -106,7 +106,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
     public void insert(DataQueryInfoVO dataQueryInfoVO) {
         String apiId = UUID.randomUUID().toString().replaceAll("-", "");
         // 保存API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dataQueryInfoVO.getDasApiBasicInfo();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dataQueryInfoVO.getApiBasicInfoVO();
         Objects.requireNonNull(dasApiBasicInfoVO, "当前新增的API所对应的基础信息为空!!!");
 
         dasApiBasicInfoVO.setApiId(apiId);
@@ -115,7 +115,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
 
         // 保存新建API信息
         DasApiCreateMybatisSqlScriptDefinitionVO mybatisSqlScriptDefinitionVO =
-                dataQueryInfoVO.getDasApiCreateMybatisSqlScript();
+                dataQueryInfoVO.getApiCreateDefinitionVO();
         DasApiCreateMybatisSqlScript mybatisSqlScript =
                 DasApiCreateMybatisSqlScriptMapper.INSTANCE.useDasApiCreateMybatisSqlScript(mybatisSqlScriptDefinitionVO);
 
@@ -133,12 +133,12 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
     @Transactional(rollbackFor = Exception.class)
     public void update(DataQueryInfoVO dataQueryInfoVO) {
         // 更新API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = dataQueryInfoVO.getDasApiBasicInfo();
+        DasApiBasicInfoVO dasApiBasicInfoVO = dataQueryInfoVO.getApiBasicInfoVO();
         dasApiBasicInfoVO.setApiType(ApiTypeEnum.CREATE_API.getCode());
         dasApiBasicInfoService.update(dasApiBasicInfoVO);
         // 更新新建API
         DasApiCreateMybatisSqlScriptDefinitionVO mybatisSqlScriptDefinitionVO =
-                dataQueryInfoVO.getDasApiCreateMybatisSqlScript();
+                dataQueryInfoVO.getApiCreateDefinitionVO();
         DasApiCreateMybatisSqlScript mybatisSqlScript =
                 DasApiCreateMybatisSqlScriptMapper.INSTANCE.useDasApiCreateMybatisSqlScript(mybatisSqlScriptDefinitionVO);
 
@@ -173,7 +173,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
         // API基础信息
         DasApiBasicInfoVO dasApiBasicInfoVO = DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
         dasApiBasicInfoService.setDelInputParamVO(dasApiBasicInfo, dasApiBasicInfoVO);
-        dataQueryInfoVO.setDasApiBasicInfo(dasApiBasicInfoVO);
+        dataQueryInfoVO.setApiBasicInfoVO(dasApiBasicInfoVO);
 
         // 新建API脚本方式,配置信息
         DasApiCreateMybatisSqlScriptDefinitionVO mybatisSqlScriptDefinitionVO =
@@ -181,7 +181,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
 
         // 新建API配置信息,设置请求/响应/排序参数VO转换对象
         setParamsVO(createMybatisSqlScript, mybatisSqlScriptDefinitionVO);
-        dataQueryInfoVO.setDasApiCreateMybatisSqlScript(mybatisSqlScriptDefinitionVO);
+        dataQueryInfoVO.setApiCreateDefinitionVO(mybatisSqlScriptDefinitionVO);
 
         return dataQueryInfoVO;
     }
