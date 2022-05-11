@@ -104,10 +104,10 @@ public class DasApiBasicInfoController {
      *
      * @return DefaultCommonResult<PageResultVO < DasApiBasicInfoVO>>
      */
-    @GetMapping(value = "/query/dm/source/type")
+    @GetMapping(value = "/create/api/type/info")
 //  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
-    public DefaultCommonResult<Map<String, String>> getDMSourceType() {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getDMSourceType());
+    public DefaultCommonResult<Map<String, String>> createTypeInfo() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.createTypeInfo());
     }
 
     /**

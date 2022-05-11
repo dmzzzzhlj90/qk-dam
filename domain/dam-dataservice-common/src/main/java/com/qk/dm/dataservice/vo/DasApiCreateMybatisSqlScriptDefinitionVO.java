@@ -71,12 +71,12 @@ public class DasApiCreateMybatisSqlScriptDefinitionVO {
     @NotBlank(message = "数据源连接不能为空！")
     private String dataSourceName;
 
-    /**
-     * 数据库
-     */
-    @ExcelProperty(value = {"数据库"}, index = 5)
-    @NotBlank(message = "数据库不能为空！")
-    private String dataBaseName;
+//    /**
+//     * 数据库
+//     */
+//    @ExcelProperty(value = {"数据库"}, index = 5)
+//    @NotBlank(message = "数据库不能为空！")
+//    private String dataBaseName;
 
     /**
      * 请求参数

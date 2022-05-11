@@ -238,8 +238,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     }
 
     @Override
-    public Map<String, String> getDMSourceType() {
-        return DMSourceTypeEnum.getAllValue();
+    public Map<String, String> createTypeInfo() {
+        return CreateTypeEnum.getAllValue();
     }
 
     @Override
