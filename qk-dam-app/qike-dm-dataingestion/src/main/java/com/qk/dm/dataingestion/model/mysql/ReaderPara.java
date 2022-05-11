@@ -26,5 +26,6 @@ public class ReaderPara extends BasePara{
     public static class Connection{
         private List<String> table;
         private List<String> jdbcUrl;
+        private List<String> querySql;
     }
 }

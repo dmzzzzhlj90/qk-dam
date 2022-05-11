@@ -70,6 +70,16 @@ public class SqlBuilderFactory {
     }
 
     /**
+     * 组装删除语句
+     * @param tableName 表名称
+     * @return String 删除语句
+     */
+    public static String deleteSql(String tableName){
+        builder().deleteFrom(tableName).where("1=1");
+        return sql();
+    }
+
+    /**
      * 生成业务SQL，条件限定
      *
      * @param expression 查询的字段或函数
