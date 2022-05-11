@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
+import com.qk.dm.dataingestion.constant.IngestionConstant;
 import com.qk.dm.dataingestion.enums.DataIntoType;
 import com.qk.dm.dataingestion.enums.IngestionType;
 import com.qk.dm.dataingestion.model.DataSourceServer;
@@ -32,8 +33,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class HiveDataxJson implements DataxJson{
-    //自动创建表
-    private static final String AUTO_CREATE = "1";
+
     private final DataBaseInfoDefaultApi dataBaseService;
 
     public HiveDataxJson(DataBaseInfoDefaultApi dataBaseService) {
@@ -69,9 +69,9 @@ public class HiveDataxJson implements DataxJson{
                 .path(baseInfo.getTargetPath())
                 .fieldDelimiter(baseInfo.getTargetFieldDelimiter())
                 .writeMode(Objects.equals(baseInfo.getTargetWriteMode(),"0")?"append":"nonConflict").build();
-
+        log.info("写入hive，作业名称【{}】,是否自动创建表参数【{}】",baseInfo.getJobName(),baseInfo.getAutoCreate());
         //判断是否自动创建表
-        if(Objects.equals(baseInfo.getAutoCreate(),AUTO_CREATE)) {
+        if(Objects.equals(baseInfo.getAutoCreate(), IngestionConstant.AUTO_CREATE)) {
             //组装建表SQL
             String sqlScript = generateSql(baseInfo.getTargetTable(),
                     dataMigrationVO.getColumnList().getTargetColumnList());
