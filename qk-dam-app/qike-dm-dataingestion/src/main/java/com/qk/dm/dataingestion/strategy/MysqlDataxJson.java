@@ -3,8 +3,6 @@ package com.qk.dm.dataingestion.strategy;
 import com.google.gson.Gson;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.sqlbuilder.SqlBuilderFactory;
-import com.qk.dam.sqlbuilder.mybatis.GenerateSqlFactory;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.dataingestion.constant.IngestionConstant;
 import com.qk.dm.dataingestion.enums.DataIntoType;
@@ -122,7 +120,7 @@ public class MysqlDataxJson implements DataxJson {
             return new WriterPara(dataSourceServer.getUserName(),
                     dataSourceServer.getPassword(),
                     getColumnList(columnList),
-                    connect, "insert",List.of(SqlBuilderFactory.deleteSql(baseInfo.getTargetTable())));
+                    connect, "insert",List.of("delete from "+baseInfo.getTargetTable()));
         }else {
             return new WriterPara(dataSourceServer.getUserName(),
                     dataSourceServer.getPassword(),
@@ -179,7 +177,13 @@ public class MysqlDataxJson implements DataxJson {
         String expression = columnList.stream().map(ColumnVO.Column::getName)
                 .collect(Collectors.joining(","));
         log.info("导入前的SQL表达式【{}】,表名称【{}】，where条件【{}】",expression,tableName,whereCondition);
-       return GenerateSqlFactory.derived(expression, tableName,whereCondition);
+       return String.join(" ",
+               "select",
+               expression,
+               "from",
+               tableName,
+               "where",
+               whereCondition);
     }
 
     private String jdbcUrlString(DataSourceServer dataSourceServer, String dataBaseName) {

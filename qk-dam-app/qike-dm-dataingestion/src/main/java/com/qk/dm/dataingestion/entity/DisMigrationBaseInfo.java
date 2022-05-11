@@ -100,6 +100,11 @@ public class DisMigrationBaseInfo implements Serializable {
      */
     @Column(name = "source_file_type")
     private String sourceFileType;
+    /**
+     * where条件
+     */
+    @Column(name = "where_condition")
+    private String whereCondition;
 
     @Column(name = "target_database", nullable = false)
     private String targetDatabase;
