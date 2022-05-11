@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
+ * 实例管理
  * @author shenpj
  * @date 2022/4/21 15:15
  * @since 1.0.0
@@ -27,6 +28,11 @@ public class ProcessInstanceManager {
         this.dolphinApiClient = dolphinApiClient;
     }
 
+    /**
+     * 实例操作
+     * @param processInstanceId 流程实例Id
+     * @param executeType 操作状态
+     */
     public void execute(Integer processInstanceId, String executeType) {
         try {
             dolphinApiClient.instance_execute(processInstanceId, ProcessInstance.CmdTypeIfComplementEnum.fromValue(executeType));
@@ -36,6 +42,11 @@ public class ProcessInstanceManager {
         }
     }
 
+    /**
+     * 流程实例分页列表
+     * @param instanceSearchDTO
+     * @return
+     */
     public ProcessInstanceResultDTO search(ProcessInstanceSearchDTO instanceSearchDTO) {
         try {
             Result result = dolphinApiClient.instance_search(instanceSearchDTO);
@@ -52,6 +63,11 @@ public class ProcessInstanceManager {
         }
     }
 
+    /**
+     * 流程实例详情
+     * @param processInstanceId 流程实例Id
+     * @return
+     */
     public ProcessInstanceDTO detail(Integer processInstanceId) {
         try {
             Result result = dolphinApiClient.instance_detail(processInstanceId);
@@ -68,6 +84,11 @@ public class ProcessInstanceManager {
         }
     }
 
+    /**
+     * 任务实例列表
+     * @param processInstanceId 流程实例Id
+     * @return
+     */
     public TaskInstanceListResultDTO taskByProcessId(Integer processInstanceId) {
         try {
             Result result = dolphinApiClient.taskByProcessId(processInstanceId);
@@ -84,6 +105,11 @@ public class ProcessInstanceManager {
         }
     }
 
+    /**
+     * 任务实例分页列表
+     * @param instanceSearchDTO
+     * @return
+     */
     public TaskInstanceResultDTO taskPageByProcessId(TaskInstanceSearchDTO instanceSearchDTO) {
         try {
             Result result = dolphinApiClient.taskPageByProcessId(instanceSearchDTO);
@@ -100,6 +126,13 @@ public class ProcessInstanceManager {
         }
     }
 
+    /**
+     * 任务实例日志
+     * @param taskInstanceId 任务实例id
+     * @param limit 页码
+     * @param skipLineNum 条数
+     * @return
+     */
     public String taskLog(Integer taskInstanceId, Integer limit, Integer skipLineNum) {
         try {
             return dolphinApiClient.taskLog(taskInstanceId, limit, skipLineNum).getData();

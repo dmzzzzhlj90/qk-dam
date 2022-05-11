@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * 流程定义管理
  * @author shenpj
  * @date 2022/4/21 15:46
  * @since 1.0.0
@@ -32,6 +33,11 @@ public class DolphinProcessManager{
         this.dolphinApiClient = dolphinApiClient;
     }
 
+    /**
+     * 流程定义上下线
+     * @param processDefinitionCode 流程定义code
+     * @param releaseState 上下线状态 ONLINE-上线 OFFLINE-下线
+     */
     public void release(Long processDefinitionCode, String releaseState) {
         try {
             dolphinApiClient.dolphin_process_release(processDefinitionCode, ProcessDefinition.ReleaseStateEnum.fromValue(releaseState));
@@ -41,6 +47,11 @@ public class DolphinProcessManager{
         }
     }
 
+    /**
+     * 流程定义运行
+     * @param processDefinitionCode 流程定义code
+     * @param environmentCode
+     */
     public void runing(Long processDefinitionCode,  Long environmentCode) {
         try {
             dolphinApiClient.dolphin_process_check(processDefinitionCode);
@@ -51,6 +62,13 @@ public class DolphinProcessManager{
         }
     }
 
+    /**
+     * 流程定义分页列表
+     * @param searchVal 查询字段，包含名称及详情
+     * @param pageNo 页码
+     * @param pageSize 条数
+     * @return
+     */
     public ProcessDefinitionResultDTO pageList(String searchVal, Integer pageNo, Integer pageSize) {
         try {
             Result result = dolphinApiClient.dolphin_process_page(searchVal, pageNo, pageSize);
@@ -67,6 +85,10 @@ public class DolphinProcessManager{
         }
     }
 
+    /**
+     * 流程定义列表
+     * @return
+     */
     public List<ProcessDefinitionDTO> list() {
         try {
             Result result = dolphinApiClient.dolphin_process_list();
@@ -82,6 +104,10 @@ public class DolphinProcessManager{
         }
     }
 
+    /**
+     * 流程定义删除
+     * @param processDefinitionCode 流程定义code
+     */
     public void delete(Long processDefinitionCode) {
         try {
             dolphinApiClient.dolphin_process_delete(processDefinitionCode);
@@ -91,6 +117,11 @@ public class DolphinProcessManager{
         }
     }
 
+    /**
+     * 流程定义详情
+     * @param processDefinitionCode 流程定义code
+     * @return 全部信息
+     */
     public Object detail(Long processDefinitionCode) {
         try {
             Result result = dolphinApiClient.dolphin_process_detail(processDefinitionCode);
@@ -101,6 +132,11 @@ public class DolphinProcessManager{
         }
     }
 
+    /**
+     * 流程定义详情
+     * @param processDefinitionCode 流程定义code
+     * @return processDefinition信息
+     */
     public ProcessDefinitionDTO detailToProcess(Long processDefinitionCode) {
         try {
             Result result = dolphinApiClient.dolphin_process_detail(processDefinitionCode);

@@ -35,6 +35,7 @@ public class DolphinTaskDefinitionPropertiesBean {
     public static class TaskParams {
         private Object resourceList;
         private String rawScript;
+        private String rawScriptInit;
         private Object localParams;
         private Object dependence;
         private Object conditionResult;
@@ -55,6 +56,14 @@ public class DolphinTaskDefinitionPropertiesBean {
 
         public void setRawScript(String rawScript) {
             this.rawScript = rawScript;
+        }
+
+        public String getRawScriptInit() {
+            return rawScriptInit;
+        }
+
+        public void setRawScriptInit(String rawScriptInit) {
+            this.rawScriptInit = rawScriptInit;
         }
 
         public Object getLocalParams() {
@@ -237,7 +246,7 @@ public class DolphinTaskDefinitionPropertiesBean {
 
     public String taskDefinitionJson(long taskCode, Object params, String rawScript, DolphinTaskDefinitionPropertiesBean taskParam) {
         this.setCode(taskCode);
-        this.getTaskParams().setRawScript(this.getTaskParams().getRawScript() + rawScript);
+        this.getTaskParams().setRawScript(this.getTaskParams().getRawScriptInit() + rawScript);
         this.getTaskParams().setLocalParams(params);
         BeanMap abean = BeanMap.create(this);
         BeanMap bbean = BeanMap.create(taskParam);
@@ -262,7 +271,7 @@ public class DolphinTaskDefinitionPropertiesBean {
 
     public String taskDefinitionJson(long taskCode, Object params,  String rawScript) {
         this.setCode(taskCode);
-        this.getTaskParams().setRawScript(this.getTaskParams().getRawScript() + rawScript);
+        this.getTaskParams().setRawScript(this.getTaskParams().getRawScriptInit() + rawScript);
         this.getTaskParams().setLocalParams(params);
         return new Gson().toJson(List.of(this));
     }
