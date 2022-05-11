@@ -1,6 +1,5 @@
 package com.qk.dm.datacollect.vo;
 
-import com.qk.datacenter.model.ProcessDefinition;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,9 +23,9 @@ public class DctSchedulerReleaseVO {
      * 状态：ONLINE-上线 OFFLINE-下线
      */
     @NotNull(message = "状态为必填项")
-    ProcessDefinition.ReleaseStateEnum releaseState;
+    String releaseState;
 
-    public void setReleaseState(String releaseState) {
-        this.releaseState = ProcessDefinition.ReleaseStateEnum.fromValue(releaseState);
-    }
+//    public void setReleaseState(String releaseState) {
+//        this.releaseState = ProcessDefinition.ReleaseStateEnum.fromValue(releaseState);
+//    }
 }

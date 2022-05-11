@@ -1,13 +1,13 @@
 package com.qk.dm.datacollect.mapstruct;
 
-import com.qk.dm.datacollect.dolphin.dto.ProcessInstanceSearchDTO;
-import com.qk.dm.datacollect.dolphin.dto.ProcessInstanceDTO;
-import com.qk.dm.datacollect.dolphin.dto.TaskInstanceDTO;
 import com.qk.dm.datacollect.vo.DctInstanceParamsVO;
 import com.qk.dm.datacollect.vo.DctProcessInstanceVO;
 import com.qk.dm.datacollect.vo.DctTaskInstanceParamsVO;
-import com.qk.dm.datacollect.dolphin.dto.TaskInstanceSearchDTO;
 import com.qk.dm.datacollect.vo.DctTaskInstanceVO;
+import com.qk.dm.dolphin.common.dto.ProcessInstanceDTO;
+import com.qk.dm.dolphin.common.dto.ProcessInstanceSearchDTO;
+import com.qk.dm.dolphin.common.dto.TaskInstanceDTO;
+import com.qk.dm.dolphin.common.dto.TaskInstanceSearchDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 

@@ -1,6 +1,9 @@
 plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'com.bmuschko.docker-spring-boot-application' version "${bmuschkoDocker}"
     id 'java-library'
+
 }
 version "${commonLibVersion}"
 group "com.qk.dam.metadata.catacollect"
@@ -15,29 +18,53 @@ compileJava {
         ]
     }
 }
-
+configurations.all {
+    exclude group: 'org.springframework',module: 'spring'
+    exclude group: 'org.springframework',module: 'spring-core'
+    exclude group: 'org.springframework',module: 'spring-web'
+    exclude group: 'org.springframework',module: 'spring-beans'
+    exclude group: 'org.springframework',module: 'spring-aop'
+    exclude group: 'org.springframework',module: 'spring-context'
+    exclude group: 'org.springframework',module: 'spring-expression'
+}
 dependencies {
-    implementation 'org.apache.atlas:atlas-client-v2:2.2.0'
-    implementation group: 'mysql', name: 'mysql-connector-java',version:'8.0.25'
-//    implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
+    api group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
     implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
-    implementation project(":qk-data-jpa")
     implementation project(":commons-core")
     implementation project(":metadata-common-core")
-    api group: 'org.projectlombok', name: 'lombok'
+    implementation project(":catacollect-common")
+    //implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'ch.qos.logback:logback-core:1.2.3'
+    compile('org.apache.atlas:atlas-client-v2')
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8',version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310',version: '2.12.1'
+    implementation group: 'mysql', name: 'mysql-connector-java',version:'8.0.25'
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.29'
+    implementation 'com.zaxxer:HikariCP:3.4.5'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.1.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.0")
 
+    //start fixme!这段为了兼容升级spring cloud导致jackson版本2.12.5+version atlas返回数据json错误
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.12.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.12.5'
+    implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.12.5'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.12.5'
 
-    annotationProcessor(
-            "org.projectlombok:lombok",
-            'org.mapstruct:mapstruct-processor')
-    annotationProcessor 'org.projectlombok:lombok'
-    testAnnotationProcessor('org.mapstruct:mapstruct-processor')
 }
 dependencyManagement {
     imports {
         mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
     }
     imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
+}
+
+test {
+    useJUnitPlatform()
 }

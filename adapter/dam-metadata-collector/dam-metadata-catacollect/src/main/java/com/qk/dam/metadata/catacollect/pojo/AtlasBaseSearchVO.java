@@ -18,7 +18,7 @@ public class AtlasBaseSearchVO {
   private String query;
   @Builder.Default private String typeName = "Asset";
   private String classification;
-  @Builder.Default private int limit = 100;
+  @Builder.Default private int limit = 200;
   @Builder.Default private int offset = 0;
   private String[] typeNameValue;
   private String[] nameValue;

@@ -44,8 +44,13 @@ dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":qk-mvc-validation")
     implementation project(":dm-feign-all")
-    implementation project(":catacollect")
-    implementation project(":dolphinscheduler-starter-client")
+    implementation project(":datasource-common-core")
+    implementation project(":catacollect-common")
+
+    implementation project(":qk-dolphin-common")
+//    implementation project(":dolphinscheduler-starter-http")
+    implementation project(":dolphinscheduler-starter-shell")
+
     implementation 'org.mapstruct:mapstruct'
     implementation project(":metadata-common-core")
 

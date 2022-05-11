@@ -71,6 +71,38 @@ public class AtlasSearchUtil {
   }
 
   /**
+   * 获取数据库下所有的表(元数据采集使用)
+   *
+   *
+   * @param atlasClientV2
+   * @param typeName
+   * @param dbName
+   * @param server
+   * @return
+   */
+  public static List<AtlasEntityHeader> getTables(AtlasClientV2 atlasClientV2,
+      String typeName, String dbName, String server, Integer limit, Integer offset) {
+    List<SearchParameters.FilterCriteria> criterion = new ArrayList<>();
+    criterion.add(getFilterCriteria(QUALIFIED_NAME,String.join(SPOT,dbName,EMPTY),
+        SearchParameters.Operator.STARTS_WITH));
+    criterion.add(getFilterCriteria(QUALIFIED_NAME,server,SearchParameters.Operator.ENDS_WITH));
+    return getPageEntitieList(atlasClientV2,typeName, getFilterCriteria(criterion,SearchParameters.FilterCriteria.Condition.AND),limit,offset);
+  }
+
+  private static List<AtlasEntityHeader> getPageEntitieList(
+      AtlasClientV2 atlasClientV2, String typeName, SearchParameters.FilterCriteria filterCriteria, Integer limit,
+      Integer offset) {
+    try {
+      AtlasSearchResult atlasSearchResult = atlasClientV2.basicSearch(typeName, filterCriteria, null, null, false,
+          Objects.isNull(limit)?1000:limit, Objects.isNull(offset)?0:offset);
+      return atlasSearchResult.getEntities();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  /**
    * 获取某张表中所有的字段
    * @param typeName
    * @param dbName

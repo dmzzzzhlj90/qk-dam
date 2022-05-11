@@ -12,10 +12,6 @@ import com.qk.dm.datacollect.vo.DctSchedulerInfoParamsVO;
  * @since 1.0.0
  */
 public interface DctDolphinService {
-    void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO);
-
-    void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO);
-
     void delete(Long processDefinitionCode);
 
     void release(DctSchedulerReleaseVO dctSchedulerReleaseVO);

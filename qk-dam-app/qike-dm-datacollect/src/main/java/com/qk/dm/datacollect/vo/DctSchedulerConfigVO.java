@@ -2,9 +2,9 @@ package com.qk.dm.datacollect.vo;
 
 import com.qk.dam.commons.util.BeanMapUtils;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dm.datacollect.dolphin.dto.SchedulerCycleEnum;
-import com.qk.dm.datacollect.dolphin.dto.SchedulerTypeEnum;
-import com.qk.dm.datacollect.dolphin.service.cron.CronService;
+import com.qk.dm.datacollect.service.cron.CronService;
+import com.qk.dm.dolphin.common.enums.SchedulerCycleEnum;
+import com.qk.dm.dolphin.common.enums.SchedulerTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

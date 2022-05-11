@@ -1,6 +1,6 @@
 package com.qk.dm.datacollect.mapstruct;
 
-import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
+import com.qk.dam.catacollect.vo.MetadataConnectInfoVo;
 import com.qk.dm.datacollect.vo.DctSchedulerRulesVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -13,5 +13,5 @@ import org.mapstruct.factory.Mappers;
 public interface DctDataBaseMapper {
   DctDataBaseMapper INSTANCE = Mappers.getMapper(DctDataBaseMapper.class);
 
-  void from(DctSchedulerRulesVO dctSchedulerRulesVO, @MappingTarget MetadataConnectInfoVo metadataConnectInfoVo);
+  void schedulerRulesToConnect(DctSchedulerRulesVO dctSchedulerRulesVO, @MappingTarget MetadataConnectInfoVo metadataConnectInfoVo);
 }
