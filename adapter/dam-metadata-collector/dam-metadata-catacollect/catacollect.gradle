@@ -31,7 +31,7 @@ dependencies {
     implementation project(":commons-core")
     implementation project(":metadata-common-core")
     implementation project(":catacollect-common")
-    implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
+    //implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ch.qos.logback:logback-core:1.2.3'
