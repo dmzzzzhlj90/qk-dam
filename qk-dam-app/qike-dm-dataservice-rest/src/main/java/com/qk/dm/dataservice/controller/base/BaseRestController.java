@@ -45,8 +45,8 @@ public abstract class BaseRestController {
             .uriPathParam(
                     getUriPathParam(queryInfoVO.getDasApiBasicInfo().getApiPath(), request))
             .headers(headers)
-            .params(param)
             .body(bodyData)
+            .params(param)
             .method(RequestMethod.GET)
             .build();
   }

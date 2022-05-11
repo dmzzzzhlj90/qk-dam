@@ -1,9 +1,11 @@
 package com.qk.dm.dataservice.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import java.util.Objects;
 
 /**
@@ -12,20 +14,27 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class DataQueryInfoVO {
-    private DasApiCreateSqlScriptDefinitionVO dasApiCreateSqlScript;
+    @Valid
+    private DasApiCreateMybatisSqlScriptDefinitionVO dasApiCreateMybatisSqlScript;
+    @Valid
     private DasApiBasicInfoVO dasApiBasicInfo;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){ return true;}
-        if (!(o instanceof DataQueryInfoVO)){ return false;}
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DataQueryInfoVO)) {
+            return false;
+        }
         DataQueryInfoVO that = (DataQueryInfoVO) o;
-        return getDasApiCreateSqlScript().getApiId().equals(that.getDasApiCreateSqlScript().getApiId());
+        return getDasApiCreateMybatisSqlScript().getApiId().equals(that.getDasApiCreateMybatisSqlScript().getApiId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDasApiCreateSqlScript().getApiId());
+        return Objects.hash(getDasApiCreateMybatisSqlScript().getApiId());
     }
 }

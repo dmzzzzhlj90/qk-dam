@@ -328,8 +328,9 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
     }
 
-    private void setDelInputParamVO(DasApiBasicInfo dasApiBasicInfo, DasApiBasicInfoVO dasApiBasicinfoVO) {
-        if (!ObjectUtils.isEmpty(dasApiBasicInfo.getDefInputParam())) {
+    @Override
+    public void setDelInputParamVO(DasApiBasicInfo dasApiBasicInfo, DasApiBasicInfoVO dasApiBasicinfoVO) {
+        if (Objects.nonNull(dasApiBasicInfo.getDefInputParam())) {
             dasApiBasicinfoVO.setApiBasicInfoRequestParasVOS(
                     GsonUtil.fromJsonString(dasApiBasicInfo.getDefInputParam(),
                             new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {
