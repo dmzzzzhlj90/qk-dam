@@ -36,7 +36,7 @@ dependencies {
     //implementation group: 'org.apache.hive', name: 'hive-jdbc', version: '2.3.9'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ch.qos.logback:logback-core:1.2.3'
-    compile('org.apache.atlas:atlas-client-v2')
+    implementation 'org.apache.atlas:atlas-client-v2:2.2.0'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind',version: '2.12.1'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations',version: '2.12.1'
