@@ -458,6 +458,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     }
     //修改定时
     public void updateSchedule(DisSchedulerConfigVO disSchedulerConfig){
+        if(Objects.equals(disSchedulerConfig.getSchedulerType(), SchedulerType.SINGLE.getCode())){return;}
         //判断定时开关
         if(disSchedulerConfig.getTimeSwitch()){
             log.info("定时任务下线scheduleId【{}】",disSchedulerConfig.getSchedulerId());
