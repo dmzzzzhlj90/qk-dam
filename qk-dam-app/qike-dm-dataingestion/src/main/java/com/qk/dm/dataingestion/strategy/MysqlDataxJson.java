@@ -176,9 +176,10 @@ public class MysqlDataxJson implements DataxJson {
     }
 
     private String generateSql(List<ColumnVO.Column> columnList,String tableName,String whereCondition){
-       return GenerateSqlFactory.derived(columnList.stream().map(ColumnVO.Column::getName)
-                        .collect(Collectors.joining(",")),
-                tableName,whereCondition);
+        String expression = columnList.stream().map(ColumnVO.Column::getName)
+                .collect(Collectors.joining(","));
+        log.info("导入前的SQL表达式【{}】,表名称【{}】，where条件【{}】",expression,tableName,whereCondition);
+       return GenerateSqlFactory.derived(expression, tableName,whereCondition);
     }
 
     private String jdbcUrlString(DataSourceServer dataSourceServer, String dataBaseName) {
