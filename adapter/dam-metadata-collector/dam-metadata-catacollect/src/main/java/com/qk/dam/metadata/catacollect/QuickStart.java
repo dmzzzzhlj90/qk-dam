@@ -20,13 +20,23 @@ import java.sql.SQLException;
 
 public class QuickStart {
   private static final Logger LOG = LoggerFactory.getLogger(QuickStart.class);
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args){
     Assert.notEmpty(args, "任务参数不能为空！");
     String arg = args[0];
     LOG.info("获取参数成功"+arg);
     MetadataConnectInfoVo metadataConnectInfoVo = new Gson().fromJson(arg, MetadataConnectInfoVo.class);
     LOG.info("数据转换成功"+metadataConnectInfoVo.toString());
-    new QuickStart().runQuickstart(metadataConnectInfoVo);
+    try {
+      new QuickStart().runQuickstart(metadataConnectInfoVo);
+    } catch (AtlasServiceException e) {
+      e.printStackTrace();
+      LOG.error("执行采集结果数据失败:【{}】",e.getLocalizedMessage());
+      System.exit(-1);
+    } catch (SQLException sqlException) {
+      sqlException.printStackTrace();
+    }finally {
+      System.exit(0);
+    }
   }
 
 /**

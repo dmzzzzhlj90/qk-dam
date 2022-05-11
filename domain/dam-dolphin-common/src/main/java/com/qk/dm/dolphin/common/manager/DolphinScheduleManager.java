@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 /**
+ * 定时管理
  * @author shenpj
  * @date 2022/4/20 17:42
  * @since 1.0.0
@@ -29,6 +30,13 @@ public class DolphinScheduleManager {
         this.dolphinApiClient = dolphinApiClient;
     }
 
+    /**
+     * 新增定时
+     * @param processDefinitionCode 流程定义code
+     * @param effectiveTimeStart 开始时间
+     * @param ffectiveTimeEnt 结束时间
+     * @param cron crom表达式
+     */
     public void insert(Long processDefinitionCode, String effectiveTimeStart, String ffectiveTimeEnt, String cron) {
         try {
             dolphinApiClient.schedule_create(
@@ -45,6 +53,13 @@ public class DolphinScheduleManager {
         }
     }
 
+    /**
+     * 修改定时
+     * @param scheduleId 定时id
+     * @param effectiveTimeStart 开始时间
+     * @param ffectiveTimeEnt 结束时间
+     * @param cron crom表达式
+     */
     public void update(Integer scheduleId, String effectiveTimeStart, String ffectiveTimeEnt, String cron) {
         try {
             dolphinApiClient.schedule_update(
@@ -61,6 +76,11 @@ public class DolphinScheduleManager {
         }
     }
 
+    /**
+     * 定时上下线
+     * @param scheduleId 定时id
+     * @param state 上下线状态 ONLINE-上线 OFFLINE-下线
+     */
     public void execute(Integer scheduleId, String state) {
         try {
             if (Objects.equals(state, ProcessDefinition.ReleaseStateEnum.ONLINE.getValue())) {
@@ -74,6 +94,10 @@ public class DolphinScheduleManager {
         }
     }
 
+    /**
+     * 删除定时
+     * @param scheduleId 定时id
+     */
     public void delete(Integer scheduleId) {
         try {
             dolphinApiClient.schedule_delete(scheduleId);
@@ -83,6 +107,11 @@ public class DolphinScheduleManager {
         }
     }
 
+    /**
+     * 定时详情
+     * @param processDefinitionCode 流程定义code
+     * @return ScheduleDTO
+     */
     public ScheduleDTO detail(Long processDefinitionCode) {
         try {
             Result result = dolphinApiClient.schedule_search(processDefinitionCode, 1, 1);
