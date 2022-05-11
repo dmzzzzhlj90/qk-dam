@@ -139,7 +139,7 @@ public class DataMigrationServiceImpl implements DataMigrationService {
                     IngestionType.getVal(baseDetail.getTargetConnectType()));
         }
 
-        return Map.of("dataxJson", parseJson(dataXJson));
+        return Map.of("dataxJson", dataXJson);
 
     }
 
