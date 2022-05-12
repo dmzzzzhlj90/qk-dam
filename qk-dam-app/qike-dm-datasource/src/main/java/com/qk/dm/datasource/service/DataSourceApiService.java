@@ -24,7 +24,7 @@ public interface DataSourceApiService {
 
     List<ResultDatasourceInfo> getDataSourceList(List<String> dataSourceNames);
 
-    ResultDatasourceInfo getDataSourceByConnId(String connId);
+    ResultDatasourceInfo getDataSourceByCode(String dataSourceCode);
 
-    List<ResultDatasourceInfo> getDataSourceListByConnId(List<String> connIds);
+    List<ResultDatasourceInfo> getDataSourceListByCode(List<String> dataSourceCodes);
 }

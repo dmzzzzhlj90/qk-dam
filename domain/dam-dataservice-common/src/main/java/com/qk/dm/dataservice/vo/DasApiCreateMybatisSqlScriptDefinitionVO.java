@@ -68,7 +68,7 @@ public class DasApiCreateMybatisSqlScriptDefinitionVO {
      * 数据源连接名称
      */
     @ExcelProperty(value = {"数据源连接名称"}, index = 4)
-    @NotBlank(message = "数据源连接不能为空！")
+//    @NotBlank(message = "数据源连接不能为空！")
     private String dataSourceName;
 
 //    /**

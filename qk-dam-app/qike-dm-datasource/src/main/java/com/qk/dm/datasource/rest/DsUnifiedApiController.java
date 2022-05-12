@@ -53,59 +53,59 @@ public class DsUnifiedApiController {
   /**
    * 获取mtd(元数据)中db库信息
    * @param type 数据库类型
-   * @param dataSourceConnId 数据源connId
+   * @param dataSourceCode 数据源connId
    * @return DefaultCommonResult<List<MtdApiDb>> 库信息
    */
   @GetMapping("/mtd/db")
-  public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@NotBlank @RequestParam String type,@NotBlank @RequestParam String dataSourceConnId) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllDataBase(type, dataSourceConnId));
+  public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@NotBlank @RequestParam String type,@NotBlank @RequestParam String dataSourceCode) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllDataBase(type, dataSourceCode));
   }
 
   /**
    * 获取mtd(元数据)中表信息
    * @param type 数据库类型
-   * @param dataSourceConnId 数据源connId
+   * @param dataSourceCode 数据源标识code编码
    * @param dbName 数据库名称
    * @return DefaultCommonResult<List<MtdTables>> 表信息
    */
   @GetMapping("/mtd/table")
-  public DefaultCommonResult<List<MtdTables>> getAllTable(String type, String dataSourceConnId, String dbName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllTable(type, dataSourceConnId, dbName));
+  public DefaultCommonResult<List<MtdTables>> getAllTable(String type, String dataSourceCode, String dbName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllTable(type, dataSourceCode, dbName));
   }
 
   /**
    * 获取元数据(mtd)中字段信息
    * @param type 数据库类型
-   * @param dataSourceConnId 数据源connId
+   * @param dataSourceCode 数据源标识code编码
    * @param dbName 数据库名称
    * @param tableName 表名称
    * @return List<MtdAttributes> 字段信息
    */
   @GetMapping("/mtd/column")
-  public DefaultCommonResult<List<MtdAttributes>> getAllColumn(String type, String dataSourceConnId, String dbName, String tableName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllColumn(type, dataSourceConnId, dbName, tableName));
+  public DefaultCommonResult<List<MtdAttributes>> getAllColumn(String type, String dataSourceCode, String dbName, String tableName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllColumn(type, dataSourceCode, dbName, tableName));
   }
   /**----------------------------------------------------获取information_schema（直连direct）库、表信息-------------------------------------------------*/
 
   /**
    * 获取直连(native)中db库信息
-   * @param dataSourceConnId 数据源连接id
+   * @param dataSourceCode 数据源标识code编码
    * @return DefaultCommonResult<List<String>> 数据库信息
    */
   @GetMapping("/native/db")
-  public DefaultCommonResult<List<String>> getDctResultDb(@NotBlank @RequestParam String dataSourceConnId) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultDb(dataSourceConnId));
+  public DefaultCommonResult<List<String>> getDctResultDb(@NotBlank @RequestParam String dataSourceCode) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultDb(dataSourceCode));
   }
 
   /**
    * 获取直连(native)中表信息
-   * @param dataSourceConnId 数据源连接id
+   * @param dataSourceCode 数据源标识code编码
    * @param dbName 数据库名称
    * @return DefaultCommonResult<List<String>> 表信息
    */
   @GetMapping("/native/table")
-  public DefaultCommonResult<List<String>> getDctResultTable(@NotBlank @RequestParam String dataSourceConnId,@NotBlank @RequestParam String dbName) {
-    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultTable(dataSourceConnId,dbName));
+  public DefaultCommonResult<List<String>> getDctResultTable(@NotBlank @RequestParam String dataSourceCode,@NotBlank @RequestParam String dbName) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultTable(dataSourceCode,dbName));
   }
 
 

@@ -32,10 +32,10 @@ public class DsDatasourceVO {
     private String dataSourceName;
 
     /**
-     * 数据源标识id
+     * 数据源标识code编码
      */
-//    @NotBlank(message = "数据源标识id不为空")
-    private String connId;
+//    @NotBlank(message = "数据源标识code编码不为空")
+    private String dataSourceCode;
 
     /**
      * 所属系统（返回值显示）
