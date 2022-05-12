@@ -1,12 +1,12 @@
-package com.qk.dam.datasource.service.Impl;
+package com.qk.dm.datasource.service.impl;
 
 import cn.hutool.db.Entity;
-import com.qk.dam.datasource.pojo.ConnectInfoVo;
-import com.qk.dam.datasource.repo.HiveDbToTableAgg;
-import com.qk.dam.datasource.repo.MysqlDbToTableAgg;
-import com.qk.dam.datasource.service.MetadataApiService;
-import com.qk.dam.datasource.utils.CatacollectUtil;
-import com.qk.dam.datasource.utils.SourcesUtil;
+import com.qk.dm.datasource.pojo.ConnectInfoVo;
+import com.qk.dm.datasource.repo.HiveDbToTableAgg;
+import com.qk.dm.datasource.repo.MysqlDbToTableAgg;
+import com.qk.dm.datasource.service.MetadataApiService;
+import com.qk.dm.datasource.util.CatacollectUtil;
+import com.qk.dm.datasource.util.SourcesUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

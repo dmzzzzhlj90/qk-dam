@@ -1,4 +1,4 @@
-package com.qk.dam.datasource.utils;
+package com.qk.dm.datasource.util;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.db.Entity;

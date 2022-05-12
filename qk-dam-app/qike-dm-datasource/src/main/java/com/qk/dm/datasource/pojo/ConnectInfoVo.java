@@ -1,4 +1,4 @@
-package com.qk.dam.datasource.pojo;
+package com.qk.dm.datasource.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
