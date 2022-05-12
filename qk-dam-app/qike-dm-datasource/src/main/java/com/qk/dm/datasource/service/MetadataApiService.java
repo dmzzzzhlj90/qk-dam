@@ -1,9 +1,10 @@
-package com.qk.dam.datasource.service;
+package com.qk.dm.datasource.service;
 
-import com.qk.dam.datasource.pojo.ConnectInfoVo;
+import com.qk.dam.catacollect.vo.ConnectInfoVo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface MetadataApiService {
   //获取库名称信息
   List<String> queryDB(ConnectInfoVo connectInfoVo);

@@ -1,12 +1,12 @@
-package com.qk.dam.datasource.service.Impl;
+package com.qk.dm.datasource.service.impl;
 
 import cn.hutool.db.Entity;
-import com.qk.dam.datasource.pojo.ConnectInfoVo;
-import com.qk.dam.datasource.repo.HiveDbToTableAgg;
-import com.qk.dam.datasource.repo.MysqlDbToTableAgg;
-import com.qk.dam.datasource.service.MetadataApiService;
-import com.qk.dam.datasource.utils.CatacollectUtil;
-import com.qk.dam.datasource.utils.SourcesUtil;
+import com.qk.dam.catacollect.util.SourcesUtil;
+import com.qk.dam.catacollect.vo.ConnectInfoVo;
+import com.qk.dm.datasource.repo.HiveDbToTableAgg;
+import com.qk.dm.datasource.repo.MysqlDbToTableAgg;
+import com.qk.dm.datasource.service.MetadataApiService;
+import com.qk.dm.datasource.util.CatacollectUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class MetadataApiServiceImpl implements MetadataApiService {
    * @param connectInfoVo
    * @return
    */
-  public  List<String> queryTable(ConnectInfoVo connectInfoVo){
+  public List<String> queryTable(ConnectInfoVo connectInfoVo){
     List<Entity> list = new ArrayList<>();
     List<String> dbList = new ArrayList<>();
     if (connectInfoVo.getType()!=null){

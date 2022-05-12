@@ -11,8 +11,6 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
-    implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'
-    implementation project(":qk-data-jpa")
     annotationProcessor 'org.projectlombok:lombok'
 }
 dependencyManagement {

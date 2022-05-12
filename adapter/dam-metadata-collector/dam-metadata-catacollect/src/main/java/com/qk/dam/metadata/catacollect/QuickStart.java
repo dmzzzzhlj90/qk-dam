@@ -28,12 +28,10 @@ public class QuickStart {
     LOG.info("数据转换成功"+metadataConnectInfoVo.toString());
     try {
       new QuickStart().runQuickstart(metadataConnectInfoVo);
-    } catch (AtlasServiceException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       LOG.error("执行采集结果数据失败:【{}】",e.getLocalizedMessage());
       System.exit(-1);
-    } catch (SQLException sqlException) {
-      sqlException.printStackTrace();
     }finally {
       System.exit(0);
     }
