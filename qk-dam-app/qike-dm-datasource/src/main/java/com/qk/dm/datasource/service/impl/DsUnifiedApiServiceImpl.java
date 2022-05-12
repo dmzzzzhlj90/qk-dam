@@ -52,60 +52,60 @@ public class DsUnifiedApiServiceImpl implements DsUnifiedApiService {
   public Map<String,String> getAllDataSourcesByType(String engineType) {
     List<ResultDatasourceInfo> resultDataSourceByType = dataSourceApiService.getResultDataSourceByType(engineType);
     return resultDataSourceByType.stream().collect(
-        Collectors.toMap(ResultDatasourceInfo::getConnId,ResultDatasourceInfo::getDataSourceName));
+        Collectors.toMap(ResultDatasourceInfo::getDataSourceCode,ResultDatasourceInfo::getDataSourceName));
   }
 
   @Override
   public List<MtdApiDb> getAllDataBase(String engineType,
-      String dataSourceConnId) {
-    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByConnId(dataSourceConnId);
+      String dataSourceCode) {
+    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByCode(dataSourceCode);
     if (Objects.nonNull(dataSourceByConnId)){
       List<AtlasEntityHeader> atlasEntityHeaderList = AtlasSearchUtil.getDataBaseList(getDbTypeName(engineType),getService(dataSourceByConnId), AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
       return buildMataDataList(atlasEntityHeaderList);
     }
-    throw  new BizException("connId为"+dataSourceConnId+"的数据源为空");
+    throw  new BizException("dataSourceCode为"+dataSourceCode+"的数据源为空");
   }
 
   @Override
-  public List<MtdTables> getAllTable(String engineType, String dataSourceConnId,String dataBaseName) {
-    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByConnId(dataSourceConnId);
+  public List<MtdTables> getAllTable(String engineType, String dataSourceCode,String dataBaseName) {
+    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByCode(dataSourceCode);
     if (Objects.nonNull(dataSourceByConnId)){
       List<AtlasEntityHeader> atlasEntityHeaderList = AtlasSearchUtil.getTableList(getTableTypeName(engineType), dataBaseName, getService(dataSourceByConnId),
           AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
       return builderMtdTables(atlasEntityHeaderList);
     }
-    throw  new BizException("connId为"+dataSourceConnId+"的数据源为空");
+    throw  new BizException("dataSourceCode为"+dataSourceCode+"的数据源为空");
   }
 
   @Override
-  public List<MtdAttributes> getAllColumn(String engineType, String dataSourceConnId,
+  public List<MtdAttributes> getAllColumn(String engineType, String dataSourceCode,
       String dataBaseName, String tableName) {
-    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByConnId(dataSourceConnId);
+    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByCode(dataSourceCode);
     if (Objects.nonNull(dataSourceByConnId)){
       List<AtlasEntityHeader> atlasEntityHeaderList = AtlasSearchUtil.getColumnList(getTypeName(engineType), dataBaseName,
           tableName,getService(dataSourceByConnId),
           AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
       return builderMtdAttributes(atlasEntityHeaderList);
     }
-    throw  new BizException("connId为"+dataSourceConnId+"的数据源为空");
+    throw  new BizException("dataSourceCode为"+dataSourceCode+"的数据源为空");
   }
 
   @Override
-  public List<String> getDctResultDb(String dataSourceConnId) {
-    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByConnId(dataSourceConnId);
+  public List<String> getDctResultDb(String dataSourceCode) {
+    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByCode(dataSourceCode);
     if (Objects.nonNull(dataSourceByConnId)){
       ConnectInfoVo connectInfoVo = new ConnectInfoVo();
       connectInfoVo = GsonUtil.fromJsonString(dataSourceByConnId.getConnectBasicInfoJson(), new TypeToken<ConnectInfoVo>() {}.getType());
       return metadataApiService.queryDB(connectInfoVo);
     }else {
-      throw  new BizException("connId为"+dataSourceConnId+"的数据源为空");
+      throw  new BizException("dataSourceCode为"+dataSourceCode+"的数据源为空");
     }
   }
 
   @Override
-  public List<String> getDctResultTable(String dataSourceConnId,
+  public List<String> getDctResultTable(String dataSourceCode,
       String databaseName) {
-    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByConnId(dataSourceConnId);
+    ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByCode(dataSourceCode);
     if (Objects.nonNull(dataSourceByConnId)){
       ConnectInfoVo connectInfoVo = new ConnectInfoVo();
       connectInfoVo = GsonUtil.fromJsonString(dataSourceByConnId.getConnectBasicInfoJson(), new TypeToken<ConnectInfoVo>() {}.getType());
@@ -165,8 +165,8 @@ public class DsUnifiedApiServiceImpl implements DsUnifiedApiService {
     }
   }
 
-  private String getService(ResultDatasourceInfo dataSourceConnId) {
-    Map<String, String> map = GsonUtil.fromJsonString(dataSourceConnId.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {
+  private String getService(ResultDatasourceInfo dataSourceCode) {
+    Map<String, String> map = GsonUtil.fromJsonString(dataSourceCode.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {
     }.getType());
     return map.get(DsConstant.SERVER);
   }

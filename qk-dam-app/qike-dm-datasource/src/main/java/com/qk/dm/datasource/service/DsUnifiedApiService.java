@@ -12,13 +12,13 @@ public interface DsUnifiedApiService {
 
   Map<String,String> getAllDataSourcesByType(String engineType);
 
-  List<MtdApiDb> getAllDataBase(String engineType, String dataSourceConnId);
+  List<MtdApiDb> getAllDataBase(String engineType, String dataSourceCode);
 
-  List<MtdTables> getAllTable(String engineType, String dataSourceConnId, String dataBaseName);
+  List<MtdTables> getAllTable(String engineType, String dataSourceCode, String dataBaseName);
 
-  List<MtdAttributes> getAllColumn(String engineType, String dataSourceConnId, String dataBaseName, String tableName);
+  List<MtdAttributes> getAllColumn(String engineType, String dataSourceCode, String dataBaseName, String tableName);
 
-  List<String> getDctResultDb(String dataSourceConnId);
+  List<String> getDctResultDb(String dataSourceCode);
 
-  List<String> getDctResultTable(String dataSourceConnId, String databaseName);
+  List<String> getDctResultTable(String dataSourceCode, String databaseName);
 }

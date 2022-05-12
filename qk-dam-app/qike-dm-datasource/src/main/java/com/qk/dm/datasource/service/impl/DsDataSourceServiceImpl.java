@@ -104,7 +104,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   public void addDsDataSource(DsDatasourceVO dsDatasourceVO) {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
     dsDatasource.setGmtCreate(new Date());
-    dsDatasource.setConnId(UUID.randomUUID().toString().replaceAll("-", ""));
+    dsDatasource.setDataSourceCode(UUID.randomUUID().toString().replaceAll("-", ""));
     // 将传入的数据源连接信息转换赋值
     setDataSourceValues(dsDatasource, dsDatasourceVO);
     // dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());

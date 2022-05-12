@@ -15,7 +15,7 @@ public class ResultDatasourceInfo {
   /**
    * 数据源标识id
    */
-  private String connId;
+  private String dataSourceCode;
 
   /** 系统名称 */
   private String dataSourceName;

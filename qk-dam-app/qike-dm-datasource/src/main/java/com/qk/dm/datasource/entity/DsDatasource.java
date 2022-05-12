@@ -22,10 +22,10 @@ public class DsDatasource implements Serializable {
     private Long id;
 
     /**
-     * 数据源标识id
+     * 数据源标识code编码
      */
-    @Column(name = "conn_id", nullable = false)
-    private String connId;
+    @Column(name = "data_source_code", nullable = false)
+    private String dataSourceCode;
 
     /**
      * 连接名称
