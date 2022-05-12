@@ -5,7 +5,10 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.sqlparser.JSqlParserUtil;
 import com.qk.dm.dataservice.constant.*;
-import com.qk.dm.dataservice.entity.*;
+import com.qk.dm.dataservice.entity.DasApiBasicInfo;
+import com.qk.dm.dataservice.entity.DasApiCreateMybatisSqlScript;
+import com.qk.dm.dataservice.entity.QDasApiBasicInfo;
+import com.qk.dm.dataservice.entity.QDasApiCreateMybatisSqlScript;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiCreateMybatisSqlScriptMapper;
 import com.qk.dm.dataservice.repositories.DasApiCreateMybatisSqlScriptRepository;
@@ -16,6 +19,10 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import net.sf.jsqlparser.expression.Alias;
+import net.sf.jsqlparser.schema.Column;
+import net.sf.jsqlparser.schema.Table;
+import net.sf.jsqlparser.statement.select.SelectExpressionItem;
 import net.sf.jsqlparser.statement.select.SelectItem;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +42,7 @@ import java.util.stream.Collectors;
 public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
     private final static QDasApiCreateMybatisSqlScript qDasApiCreateMybatisSqlScript =
             QDasApiCreateMybatisSqlScript.dasApiCreateMybatisSqlScript;
-    
+
     private final JPAQueryFactory jpaQueryFactory;
     private final DasApiBasicInfoService dasApiBasicInfoService;
     private final DasApiCreateMybatisSqlScriptRepository mybatisSqlScriptRepository;
@@ -75,8 +82,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
                                 qDasApiCreateMybatisSqlScript.accessMethod.eq(
                                         CreateTypeEnum.CREATE_API_MYBATIS_SQL_SCRIPT_TYPE.getCode()))
                         .and(qDasApiCreateMybatisSqlScript.delFlag.eq(0))
-                        .and(QDasApiBasicInfo.dasApiBasicInfo.delFlag.eq(0))
-                ;
+                        .and(QDasApiBasicInfo.dasApiBasicInfo.delFlag.eq(0));
         return dataQueryInfo(whereCondition);
     }
 
@@ -159,11 +165,31 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
 
     @Override
     public Object generateResponseParam(String sqlPara) {
+        List<DasApiCreateResponseParasVO> responseParasVOList = new ArrayList<>();
+
         sqlPara = JSqlParserUtil.PATTERN_PATH_VAR.matcher(sqlPara).replaceAll("1");
         sqlPara = JSqlParserUtil.PATTERN_PATH_VAR_TAG.matcher(sqlPara).replaceAll("1");
 
-        System.out.println("sqlPara===>"+sqlPara);
-        return JSqlParserUtil.selectBody(sqlPara);
+        System.out.println("sqlPara===>" + sqlPara);
+        List<SelectItem> selectItems = JSqlParserUtil.selectBody(sqlPara);
+
+        selectItems.forEach(selectItem -> {
+            DasApiCreateResponseParasVO.DasApiCreateResponseParasVOBuilder builder = DasApiCreateResponseParasVO.builder();
+
+            Column column = (Column) ((SelectExpressionItem) selectItem).getExpression();
+            String columnName = column.getColumnName();
+            Alias alias = ((SelectExpressionItem) selectItem).getAlias();
+            String aliasName = alias.getName();
+
+            builder
+                    .paraName(aliasName)
+                    .mappingName(columnName)
+                    .paraType(DasConstant.DAS_API_PARA_COL_TYPE_STRING)
+                    .description(aliasName);
+            responseParasVOList.add(builder.build());
+        });
+
+        return responseParasVOList;
     }
 
     @Override
