@@ -1,5 +1,6 @@
 package com.qk.dm.datacollect.service.impl;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.qk.dam.catacollect.util.SourcesUtil;
 import com.qk.dam.metedata.AtlasClient;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
@@ -44,16 +45,18 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
 
   private List<DctTableDataVO> getDctTableDataVO(List<String> list) {
     List<DctTableDataVO> tableLists = new ArrayList<>();
-    DctTableDataVO dctTableDataVOS= DctTableDataVO.builder().dirId(
-        SourcesUtil.TABLE_NUMS).title(SourcesUtil.TABLE_NAME_ALL)
-        .value(SourcesUtil.TABLE_NAME_ALL).build();
-    List<DctTableDataVO> tableList = list.stream().map(e -> {
-      DctTableDataVO dctTableDataVO = DctTableDataVO.builder().dirId(e).title(e)
-          .value(e).children(new ArrayList<>()).build();
-      return dctTableDataVO;
-    }).collect(Collectors.toList());
-    dctTableDataVOS.setChildren(tableList);
-    tableLists.add(dctTableDataVOS);
+    if (CollectionUtils.isNotEmpty(list)){
+      DctTableDataVO dctTableDataVOS= DctTableDataVO.builder().dirId(
+          SourcesUtil.TABLE_NUMS).title(SourcesUtil.TABLE_NAME_ALL)
+          .value(SourcesUtil.TABLE_NAME_ALL).build();
+      List<DctTableDataVO> tableList = list.stream().map(e -> {
+        DctTableDataVO dctTableDataVO = DctTableDataVO.builder().dirId(e).title(e)
+            .value(e).children(new ArrayList<>()).build();
+        return dctTableDataVO;
+      }).collect(Collectors.toList());
+      dctTableDataVOS.setChildren(tableList);
+      tableLists.add(dctTableDataVOS);
+    }
     return tableLists;
   }
 }
