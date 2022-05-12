@@ -183,10 +183,12 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     public void updateDataxJson(DisJsonParamsVO disJsonParamsVO){
-        disDataxJsonService.update(disJsonParamsVO.getId(),disJsonParamsVO.getDataxJson());
+        String dataXJson = disJsonParamsVO.getDataxJson().replaceAll("\r", "")
+                .replaceAll("\t", "").replaceAll("\n","");
+        disDataxJsonService.update(disJsonParamsVO.getId(),dataXJson);
         DisMigrationBaseInfoVO baseInfo = baseInfoService.detail(disJsonParamsVO.getId());
         try {
-            updateProcessDefinition(baseInfo.getJobName(),baseInfo.getTaskCode(),disJsonParamsVO.getDataxJson());
+            updateProcessDefinition(baseInfo.getJobName(),baseInfo.getTaskCode(),dataXJson);
         } catch (ApiException e) {
             log.error("调用dolphinscheduler 出错【{}】",e.getMessage());
             e.printStackTrace();
