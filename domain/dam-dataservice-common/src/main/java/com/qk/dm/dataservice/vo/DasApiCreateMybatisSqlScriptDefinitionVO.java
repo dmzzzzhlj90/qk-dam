@@ -125,7 +125,6 @@ public class DasApiCreateMybatisSqlScriptDefinitionVO {
      * 每页显示数量
      */
     @ExcelProperty(value = {"每页显示数量"}, index = 8)
-    @NotBlank(message = "每页显示数量不能为空！")
     private Integer pageSize;
 
     /**
