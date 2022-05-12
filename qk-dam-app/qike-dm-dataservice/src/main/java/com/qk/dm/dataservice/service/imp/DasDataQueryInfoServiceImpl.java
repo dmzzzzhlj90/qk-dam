@@ -164,7 +164,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
     }
 
     @Override
-    public Object generateResponseParam(String sqlPara) {
+    public List<DasApiCreateResponseParasVO> generateResponseParam(String sqlPara) {
         List<DasApiCreateResponseParasVO> responseParasVOList = new ArrayList<>();
 
         sqlPara = JSqlParserUtil.PATTERN_PATH_VAR.matcher(sqlPara).replaceAll("1");

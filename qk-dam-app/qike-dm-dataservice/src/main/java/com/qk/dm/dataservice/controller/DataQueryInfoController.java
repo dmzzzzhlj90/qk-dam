@@ -3,6 +3,7 @@ package com.qk.dm.dataservice.controller;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.dm.dataservice.service.DasDataQueryInfoService;
+import com.qk.dm.dataservice.vo.DasApiCreateResponseParasVO;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -79,7 +80,7 @@ public class DataQueryInfoController {
      * @return DefaultCommonResult
      */
     @GetMapping("/generate/response/params")
-    public DefaultCommonResult<Object> generateResponseParam(@RequestParam("sqlPara") String sqlPara) {
+    public DefaultCommonResult<List<DasApiCreateResponseParasVO>> generateResponseParam(@RequestParam("sqlPara") String sqlPara) {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.generateResponseParam(sqlPara));
     }
 

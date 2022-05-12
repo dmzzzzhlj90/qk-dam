@@ -2,6 +2,7 @@ package com.qk.dm.dataservice.service;
 
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateMybatisSqlScript;
+import com.qk.dm.dataservice.vo.DasApiCreateResponseParasVO;
 import com.qk.dm.dataservice.vo.DataQueryInfoVO;
 
 import java.util.LinkedList;
@@ -31,7 +32,7 @@ public interface DasDataQueryInfoService {
 
     void update(DataQueryInfoVO dataQueryInfoVO);
 
-    Object generateResponseParam(String sqlPara);
+    List<DasApiCreateResponseParasVO> generateResponseParam(String sqlPara);
 
     Object detail(DasApiBasicInfo dasApiBasicInfo, DasApiCreateMybatisSqlScript apiCreateMybatisSqlScript);
 
