@@ -52,7 +52,7 @@ public class DsUnifiedApiServiceImpl implements DsUnifiedApiService {
   public Map<String,String> getAllDataSourcesByType(String engineType) {
     List<ResultDatasourceInfo> resultDataSourceByType = dataSourceApiService.getResultDataSourceByType(engineType);
     return resultDataSourceByType.stream().collect(
-        Collectors.toMap(ResultDatasourceInfo::getConnId,ResultDatasourceInfo::getDataSourceName));
+        Collectors.toMap(ResultDatasourceInfo::getDataSourceCode,ResultDatasourceInfo::getDataSourceName));
   }
 
   @Override
