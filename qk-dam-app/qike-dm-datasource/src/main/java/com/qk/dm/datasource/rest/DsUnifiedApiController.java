@@ -57,7 +57,7 @@ public class DsUnifiedApiController {
    * @return DefaultCommonResult<List<MtdApiDb>> 库信息
    */
   @GetMapping("/mtd/db")
-  public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@NotBlank @RequestParam String type,@NotBlank @RequestParam String dataSourceCode) {
+  public DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@NotBlank @RequestParam("type") String type,@NotBlank @RequestParam("dataSourceCode") String dataSourceCode) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllDataBase(type, dataSourceCode));
   }
 
@@ -69,7 +69,7 @@ public class DsUnifiedApiController {
    * @return DefaultCommonResult<List<MtdTables>> 表信息
    */
   @GetMapping("/mtd/table")
-  public DefaultCommonResult<List<MtdTables>> getAllTable(String type, String dataSourceCode, String dbName) {
+  public DefaultCommonResult<List<MtdTables>> getAllTable(@RequestParam ("type") String type, @RequestParam ("dataSourceCode") String dataSourceCode, @RequestParam("dbName") String dbName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllTable(type, dataSourceCode, dbName));
   }
 
@@ -82,7 +82,7 @@ public class DsUnifiedApiController {
    * @return List<MtdAttributes> 字段信息
    */
   @GetMapping("/mtd/column")
-  public DefaultCommonResult<List<MtdAttributes>> getAllColumn(String type, String dataSourceCode, String dbName, String tableName) {
+  public DefaultCommonResult<List<MtdAttributes>> getAllColumn(@RequestParam ("type") String type, @RequestParam ("dataSourceCode") String dataSourceCode, @RequestParam("dbName") String dbName, @RequestParam ("tableName") String tableName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getAllColumn(type, dataSourceCode, dbName, tableName));
   }
   /**----------------------------------------------------获取information_schema（直连direct）库、表信息-------------------------------------------------*/
@@ -93,7 +93,7 @@ public class DsUnifiedApiController {
    * @return DefaultCommonResult<List<String>> 数据库信息
    */
   @GetMapping("/native/db")
-  public DefaultCommonResult<List<String>> getDctResultDb(@NotBlank @RequestParam String dataSourceCode) {
+  public DefaultCommonResult<List<String>> getDctResultDb(@NotBlank @RequestParam ("dataSourceCode") String dataSourceCode) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultDb(dataSourceCode));
   }
 
@@ -104,7 +104,7 @@ public class DsUnifiedApiController {
    * @return DefaultCommonResult<List<String>> 表信息
    */
   @GetMapping("/native/table")
-  public DefaultCommonResult<List<String>> getDctResultTable(@NotBlank @RequestParam String dataSourceCode,@NotBlank @RequestParam String dbName) {
+  public DefaultCommonResult<List<String>> getDctResultTable(@NotBlank @RequestParam ("dataSourceCode") String dataSourceCode,@NotBlank @RequestParam ("dbName") String dbName) {
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsUnifiedApiService.getDctResultTable(dataSourceCode,dbName));
   }
 
