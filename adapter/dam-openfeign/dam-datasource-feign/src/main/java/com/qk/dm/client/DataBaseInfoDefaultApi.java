@@ -12,6 +12,7 @@ import com.qk.dam.metedata.vo.MtdColumnSearchVO;
 import com.qk.dam.metedata.vo.MtdDbSearchVO;
 import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.feign.DataSourceFeign;
+import com.qk.dm.feign.DataSourceUnifiedFeign;
 import com.qk.dm.feign.DataSourceV2Feign;
 import com.qk.dm.feign.MetaDataFeign;
 import org.springframework.stereotype.Component;
@@ -32,12 +33,15 @@ public class DataBaseInfoDefaultApi {
     private final DataSourceFeign dataSourceFeign;
     private final MetaDataFeign metaDataFeign;
     private final DataSourceV2Feign dataSourceV2Feign;
+    private final DataSourceUnifiedFeign dataSourceUnifiedFeign;
 
     public DataBaseInfoDefaultApi(DataSourceFeign dataSourceFeign, MetaDataFeign metaDataFeign,
-                                  DataSourceV2Feign dataSourceV2Feign) {
+        DataSourceV2Feign dataSourceV2Feign,
+        DataSourceUnifiedFeign dataSourceUnifiedFeign) {
         this.dataSourceFeign = dataSourceFeign;
         this.metaDataFeign = metaDataFeign;
         this.dataSourceV2Feign = dataSourceV2Feign;
+        this.dataSourceUnifiedFeign = dataSourceUnifiedFeign;
     }
 
     // ========================数据源服务_API调用=====================================
@@ -243,4 +247,74 @@ public class DataBaseInfoDefaultApi {
         return columnList.getData();
     }
 
+    /**----------------------------------------------------统一获取数据类型、根据数据源连接---------------------------------------------------*/
+    /**
+     * 获取所有数据源连接类型
+     * @return
+     */
+    public List<String> getUnifiedAllConnType() {
+       return dataSourceUnifiedFeign.getAllConnType().getData();
+    }
+
+    /**
+     *  获取数据源连接（根据数据库类型）
+     * @param type 数据库类型
+     * @return
+     */
+    public Map<String,String> getUnifiedResultDataSourceByType( String type){
+       return dataSourceUnifiedFeign.getResultDataSourceByType(type).getData();
+    }
+    /**----------------------------------------------------获取atals库、表信息-------------------------------------------------------------*/
+
+    /**
+     * 获取mtd(元数据)中db库信息
+     * @param type 数据库类型
+     * @param dataSourceCode 数据源connId
+     * @return DefaultCommonResult<List<MtdApiDb>> 库信息
+     */
+    public List<MtdApiDb> getUnifiedAllDataBase( String type,String dataSourceCode) {
+        return dataSourceUnifiedFeign.getAllDataBase(type,dataSourceCode).getData();
+    }
+    /**
+     * 获取mtd(元数据)中表信息
+     * @param type 数据库类型
+     * @param dataSourceCode 数据源标识code编码
+     * @param dbName 数据库名称
+     * @return DefaultCommonResult<List<MtdTables>> 表信息
+     */
+
+    public List<MtdTables> getUnifiedAllTable(String type, String dataSourceCode, String dbName) {
+        return dataSourceUnifiedFeign.getAllTable(type,dataSourceCode,dbName).getData();
+    }
+
+    /**
+     * 获取元数据(mtd)中字段信息
+     * @param type 数据库类型
+     * @param dataSourceCode 数据源标识code编码
+     * @param dbName 数据库名称
+     * @param tableName 表名称
+     * @return List<MtdAttributes> 字段信息
+     */
+    public List<MtdAttributes> getUnifiedAllColumn(String type, String dataSourceCode, String dbName, String tableName) {
+        return dataSourceUnifiedFeign.getAllColumn(type,dataSourceCode,dbName,tableName).getData();
+    }
+    /**----------------------------------------------------获取information_schema（直连direct）库、表信息-------------------------------------------------*/
+    /**
+     * 获取直连(native)中db库信息
+     * @param dataSourceCode 数据源标识code编码
+     * @return DefaultCommonResult<List<String>> 数据库信息
+     */
+   public List<String> getUnifiedDctResultDb(String dataSourceCode) {
+       return dataSourceUnifiedFeign.getDctResultDb(dataSourceCode).getData();
+   }
+
+    /**
+     * 获取直连(native)中表信息
+     * @param dataSourceCode 数据源标识code编码
+     * @param dbName 数据库名称
+     * @return DefaultCommonResult<List<String>> 表信息
+     */
+   public List<String> getUnifiedDctResultTable(String dataSourceCode,String dbName) {
+       return dataSourceUnifiedFeign.getDctResultTable(dataSourceCode,dbName).getData();
+   }
 }

@@ -1,6 +1,7 @@
 package com.qk.dm.datasource.service.impl;
 
 import com.google.gson.reflect.TypeToken;
+import com.qk.dam.catacollect.vo.ConnectInfoVo;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.datasource.entity.ResultDatasourceInfo;
@@ -12,7 +13,6 @@ import com.qk.dam.metedata.property.AtlasSearchProperty;
 import com.qk.dam.metedata.util.AtlasSearchUtil;
 import com.qk.dam.metedata.vo.AtlasPagination;
 import com.qk.dm.datasource.constant.DsConstant;
-import com.qk.dm.datasource.pojo.ConnectInfoVo;
 import com.qk.dm.datasource.service.DataSourceApiService;
 import com.qk.dm.datasource.service.DsUnifiedApiService;
 import com.qk.dm.datasource.service.MetadataApiService;

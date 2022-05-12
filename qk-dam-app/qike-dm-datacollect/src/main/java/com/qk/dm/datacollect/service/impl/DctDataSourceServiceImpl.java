@@ -1,12 +1,6 @@
 package com.qk.dm.datacollect.service.impl;
 
-import com.google.gson.reflect.TypeToken;
-import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.ResultDatasourceInfo;
-import com.qk.dam.datasource.pojo.ConnectInfoVo;
-import com.qk.dam.datasource.service.MetadataApiService;
-import com.qk.dam.datasource.utils.SourcesUtil;
+import com.qk.dam.catacollect.util.SourcesUtil;
 import com.qk.dam.metedata.AtlasClient;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.datacollect.service.DctDataSourceService;
@@ -16,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -29,41 +22,24 @@ public class DctDataSourceServiceImpl implements DctDataSourceService {
   private AtlasClientV2 atlasClientV2;
   private final AtlasClient atlasClient;
   private final DataBaseInfoDefaultApi dataBaseInfoDefaultApi;
-  private final MetadataApiService metadataApiService;
+
 
   public DctDataSourceServiceImpl(AtlasClient atlasClient,
-      DataBaseInfoDefaultApi dataBaseInfoDefaultApi,
-      MetadataApiService metadataApiService) {
+      DataBaseInfoDefaultApi dataBaseInfoDefaultApi) {
     this.atlasClient = atlasClient;
     this.atlasClientV2= this.atlasClient.instance();
     this.dataBaseInfoDefaultApi = dataBaseInfoDefaultApi;
-    this.metadataApiService = metadataApiService;
   }
 
   @Override
   public List<String> getResultDb(String dataSourceId) {
-    ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
-    if (Objects.nonNull(dsDatasourceVO)){
-      ConnectInfoVo connectInfoVo = new ConnectInfoVo();
-      connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfoJson(), new TypeToken<ConnectInfoVo>() {}.getType());
-     return metadataApiService.queryDB(connectInfoVo);
-    }else {
-      throw  new BizException("根据连接名称获取连接信息失败");
-    }
+    return dataBaseInfoDefaultApi.getUnifiedDctResultDb(dataSourceId);
   }
 
   @Override
   public List<DctTableDataVO> getResultTable(String dataSourceId, String databaseName) {
-    ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dataSourceId);
-    if (Objects.nonNull(dsDatasourceVO)){
-      ConnectInfoVo connectInfoVo = new ConnectInfoVo();
-      connectInfoVo = GsonUtil.fromJsonString(dsDatasourceVO.getConnectBasicInfoJson(), new TypeToken<ConnectInfoVo>() {}.getType());
-      connectInfoVo.setDatabaseName(databaseName);
-      List<String> list = metadataApiService.queryTable(connectInfoVo);
-      return getDctTableDataVO(list);
-    }else {
-      throw  new BizException("根据连接名称获取连接信息失败");
-    }
+    List<String> list = dataBaseInfoDefaultApi.getUnifiedDctResultTable(dataSourceId,databaseName);
+    return getDctTableDataVO(list);
   }
 
   private List<DctTableDataVO> getDctTableDataVO(List<String> list) {

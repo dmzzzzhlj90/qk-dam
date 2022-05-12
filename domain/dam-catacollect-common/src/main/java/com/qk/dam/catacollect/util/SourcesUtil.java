@@ -1,4 +1,4 @@
-package com.qk.dm.datasource.util;
+package com.qk.dam.catacollect.util;
 
 /**
  * @author zys

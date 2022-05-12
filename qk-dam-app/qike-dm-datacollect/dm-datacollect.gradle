@@ -44,7 +44,6 @@ dependencies {
     implementation project(":qk-data-jpa")
     implementation project(":qk-mvc-validation")
     implementation project(":dm-feign-all")
-    implementation project(":datasource-common-core")
     implementation project(":catacollect-common")
 
     implementation project(":qk-dolphin-common")
