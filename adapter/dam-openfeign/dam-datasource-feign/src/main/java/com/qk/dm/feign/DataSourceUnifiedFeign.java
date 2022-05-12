@@ -32,7 +32,7 @@ public interface DataSourceUnifiedFeign {
    * @return DefaultCommonResult<Map<String,String>> 数据源连接名称
    */
   @GetMapping("/connect/info/{type}")
-  DefaultCommonResult<Map<String,String>> getResultDataSourceByType(@NotBlank @PathVariable("type") String type);
+  DefaultCommonResult<Map<String,String>> getResultDataSourceByType(@PathVariable("type") String type);
 
   /**----------------------------------------------------获取atals库、表信息-------------------------------------------------------------*/
 
@@ -43,7 +43,7 @@ public interface DataSourceUnifiedFeign {
    * @return DefaultCommonResult<List<MtdApiDb>> 库信息
    */
   @GetMapping("/mtd/db")
-  DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@NotBlank @RequestParam String type,@NotBlank @RequestParam String dataSourceCode);
+  DefaultCommonResult<List<MtdApiDb>> getAllDataBase(@NotBlank @RequestParam("type") String type,@NotBlank @RequestParam("dataSourceCode") String dataSourceCode);
 
   /**
    * 获取mtd(元数据)中表信息
@@ -53,7 +53,7 @@ public interface DataSourceUnifiedFeign {
    * @return DefaultCommonResult<List<MtdTables>> 表信息
    */
   @GetMapping("/mtd/table")
-  DefaultCommonResult<List<MtdTables>> getAllTable(String type, String dataSourceCode, String dbName);
+  DefaultCommonResult<List<MtdTables>> getAllTable(@RequestParam ("type") String type, @RequestParam ("dataSourceCode") String dataSourceCode, @RequestParam("dbName") String dbName);
 
   /**
    * 获取元数据(mtd)中字段信息
@@ -64,7 +64,7 @@ public interface DataSourceUnifiedFeign {
    * @return List<MtdAttributes> 字段信息
    */
   @GetMapping("/mtd/column")
-  DefaultCommonResult<List<MtdAttributes>>getAllColumn(String type, String dataSourceCode, String dbName, String tableName);
+  DefaultCommonResult<List<MtdAttributes>>getAllColumn(@RequestParam ("type") String type, @RequestParam ("dataSourceCode") String dataSourceCode, @RequestParam("dbName") String dbName, @RequestParam ("tableName") String tableName);
   /**----------------------------------------------------获取information_schema（直连direct）库、表信息-------------------------------------------------*/
   /**
    * 获取直连(native)中db库信息
@@ -72,7 +72,7 @@ public interface DataSourceUnifiedFeign {
    * @return DefaultCommonResult<List<String>> 数据库信息
    */
   @GetMapping("/native/db")
-  DefaultCommonResult<List<String>> getDctResultDb(@NotBlank @RequestParam String dataSourceCode);
+  DefaultCommonResult<List<String>> getDctResultDb(@NotBlank @RequestParam ("dataSourceCode") String dataSourceCode);
 
   /**
    * 获取直连(native)中表信息
@@ -81,5 +81,5 @@ public interface DataSourceUnifiedFeign {
    * @return DefaultCommonResult<List<String>> 表信息
    */
   @GetMapping("/native/table")
-  DefaultCommonResult<List<String>> getDctResultTable(@NotBlank @RequestParam String dataSourceCode,@NotBlank @RequestParam String dbName);
+  DefaultCommonResult<List<String>> getDctResultTable(@NotBlank @RequestParam ("dataSourceCode") String dataSourceCode,@NotBlank @RequestParam ("dbName") String dbName);
 }
