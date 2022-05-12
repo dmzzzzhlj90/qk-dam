@@ -183,7 +183,8 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     public void updateDataxJson(DisJsonParamsVO disJsonParamsVO){
-        String dataXJson = disJsonParamsVO.getDataxJson().replace("\r", "").replace("\t", "");
+        String dataXJson = disJsonParamsVO.getDataxJson().replaceAll("\r", "")
+                .replaceAll("\t", "").replaceAll("\n","");
         disDataxJsonService.update(disJsonParamsVO.getId(),dataXJson);
         DisMigrationBaseInfoVO baseInfo = baseInfoService.detail(disJsonParamsVO.getId());
         try {
