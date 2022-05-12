@@ -15,7 +15,7 @@ import java.util.Date;
 public class CronWeeksServiceImpl implements CronService{
     @Override
     public String createCronExpression(DctSchedulerConfigVO taskScheduleModel) {
-        StringBuffer cronExp = new StringBuffer("");
+        StringBuffer cronExp = new StringBuffer();
         //MON TUE WED THU FRI SAT SUN
         Date parse = DateUtil.parseDate(taskScheduleModel.getSchedulerTime(), "HH:mm:ss");
         cronExp.append(DateUtil.second(parse)).append(" ");
@@ -23,7 +23,8 @@ public class CronWeeksServiceImpl implements CronService{
         cronExp.append(DateUtil.hour(parse)).append(" ");
         cronExp.append("? ");
         cronExp.append("* ");
-        cronExp.append(taskScheduleModel.getSchedulerIntervalTime().split(",").length == 7 ? "* " : taskScheduleModel.getSchedulerIntervalTime());
+        cronExp.append(taskScheduleModel.getSchedulerIntervalTime().split(",").length == 7 ? "*" : taskScheduleModel.getSchedulerIntervalTime());
+        cronExp.append(" *");
         return cronExp.toString();
     }
 }

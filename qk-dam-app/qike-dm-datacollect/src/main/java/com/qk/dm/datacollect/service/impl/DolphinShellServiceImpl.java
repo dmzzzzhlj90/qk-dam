@@ -15,6 +15,7 @@ import com.qk.dm.datacollect.vo.DctSchedulerBasicInfoVO;
 import com.qk.dm.datacollect.vo.ShellParamsVO;
 import com.qk.dm.dolphin.common.dto.ProcessDefinitionDTO;
 import com.qk.dm.dolphin.common.manager.DolphinProcessManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.Objects;
  * @since 1.0.0
  */
 @Service
+@Slf4j
 public class DolphinShellServiceImpl implements DolphinProcessDefinitionService {
     /**
      * 空值占位符
@@ -61,8 +63,13 @@ public class DolphinShellServiceImpl implements DolphinProcessDefinitionService 
         Object params = ShellParamsVO.createList(dctSchedulerBasicInfoVO);
         //3、生成rawScript参数
         String rawScript = createRawScript(dctSchedulerBasicInfoVO);
-        //4、创建流程定义
-        dolphinShellClient.createProcessDefinition(name, params, rawScript, description);
+        try {
+            //4、创建流程定义
+            dolphinShellClient.createProcessDefinition(name, params, rawScript, description);
+        } catch (Exception e) {
+            log.error("创建流程定义失败[{}]", e.getMessage());
+            throw new BizException("创建流程定义失败");
+        }
     }
 
     @Override
@@ -78,8 +85,13 @@ public class DolphinShellServiceImpl implements DolphinProcessDefinitionService 
         //4、根据详情获取taskCode
         ProcessDefinitionDTO processDefinitionDTO = dolphinProcessManager.detailToProcess(dctSchedulerBasicInfoVO.getCode());
         long taskCode = GsonUtil.toJsonArray(processDefinitionDTO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
-        //5、修改流程定义
-        dolphinShellClient.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, params, rawScript, description);
+        try {
+            //5、修改流程定义
+            dolphinShellClient.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, params, rawScript, description);
+        } catch (Exception e) {
+            log.error("修改流程定义失败[{}]", e.getMessage());
+            throw new BizException("修改流程定义失败");
+        }
     }
 
     private String createRawScript(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {

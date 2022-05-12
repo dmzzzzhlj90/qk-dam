@@ -1,8 +1,6 @@
 package com.qk.dm.dolphin.common.manager;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.datacenter.model.Result;
 import com.qk.dm.dolphin.common.client.DolphinApiClient;
@@ -44,12 +42,9 @@ public class DolphinScheduleManager {
                     effectiveTimeStart,
                     ffectiveTimeEnt,
                     cron);
-        } catch (ApiException a) {
-            LOG.error("Dolphin 流程[{}] 创建定时失败，原因为[{}]", processDefinitionCode, a.getMessage());
-            throw new BizException("dolphin schedule insert error ：" + a.getMessage());
         } catch (Exception a) {
             LOG.error("Dolphin 流程[{}] 创建定时报错，原因为[{}]", processDefinitionCode, a.getMessage());
-            throw new BizException("dolphin schedule insert exception error");
+            throw new BizException("创建失败");
         }
     }
 
@@ -67,12 +62,9 @@ public class DolphinScheduleManager {
                     effectiveTimeStart,
                     ffectiveTimeEnt,
                     cron);
-        } catch (ApiException a) {
-            LOG.error("Dolphin 定时[{}] 修改失败，原因为[{}]", scheduleId, a.getMessage());
-            throw new BizException("dolphin schedule update error ：" + a.getMessage());
         } catch (Exception a) {
             LOG.error("Dolphin 定时[{}] 修改报错，原因为[{}]", scheduleId, a.getMessage());
-            throw new BizException("dolphin schedule update exception error");
+            throw new BizException("修改失败");
         }
     }
 
@@ -88,9 +80,9 @@ public class DolphinScheduleManager {
             } else {
                 dolphinApiClient.schedule_offline(scheduleId);
             }
-        } catch (ApiException a) {
+        } catch (Exception a) {
             LOG.error("Dolphin 定时[{}] 更改状态失败，原因为[{}]", scheduleId, a.getMessage());
-            throw new BizException("dolphin schedule execute error ：" + a.getMessage());
+            throw new BizException("操作失败");
         }
     }
 
@@ -101,9 +93,9 @@ public class DolphinScheduleManager {
     public void delete(Integer scheduleId) {
         try {
             dolphinApiClient.schedule_delete(scheduleId);
-        } catch (ApiException a) {
+        } catch (Exception a) {
             LOG.error("Dolphin 定时[{}] 删除失败，原因为[{}]", scheduleId, a.getMessage());
-            throw new BizException("dolphin schedule delete error ：" + a.getMessage());
+            throw new BizException("删除失败");
         }
     }
 
@@ -117,15 +109,9 @@ public class DolphinScheduleManager {
             Result result = dolphinApiClient.schedule_search(processDefinitionCode, 1, 1);
             ScheduleResultDTO scheduleResultDTO = ConstantUtil.changeObjectToClass(result.getData(), ScheduleResultDTO.class);
             return scheduleResultDTO.getTotalList().size() > 0 ? scheduleResultDTO.getTotalList().get(0) : null;
-        } catch (ApiException a) {
-            LOG.error("Dolphin 流程[{}] 查询定时失败，原因为[{}]", processDefinitionCode, a.getMessage());
-            throw new BizException("dolphin schedule detail error ：" + a.getMessage());
-        } catch (JsonProcessingException a) {
-            LOG.error("Dolphin 流程[{}] 查询定时成功，解析时失败，原因为[{}]", processDefinitionCode, a.getMessage());
-            throw new BizException("dolphin schedule toClass error");
         } catch (Exception a) {
             LOG.error("Dolphin 流程[{}] 查询定时报错，原因为[{}]", processDefinitionCode, a.getMessage());
-            throw new BizException("dolphin schedule detail exception error");
+            throw new BizException("查询失败");
         }
     }
 }

@@ -87,14 +87,14 @@ public class DolphinApiClient {
      */
     public Result dolphin_process_runing(Long processDefinitionCode, Long environmentCode) throws ApiException {
         Result result = dolphinschedulerManager.defaultApi().startProcessInstanceUsingPOST(
-                ProcessInstance.FailureStrategyEnum.CONTINUE,
+                ProcessInstance.FailureStrategyEnum.END,
                 processDefinitionCode,
                 ProcessInstance.ProcessInstancePriorityEnum.MEDIUM,
                 projectCode,
                 "",
                 0,
                 ProcessInstance.WarningTypeEnum.NONE,
-                null,
+                0,
                 environmentCode,
                 null,
                 null,

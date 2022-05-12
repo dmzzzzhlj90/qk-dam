@@ -15,14 +15,15 @@ import java.util.Date;
 public class CronDayServiceImpl implements CronService{
     @Override
     public String createCronExpression(DctSchedulerConfigVO taskScheduleModel) {
-        StringBuffer cronExp = new StringBuffer("");
+        StringBuffer cronExp = new StringBuffer();
         Date parse = DateUtil.parseDate(taskScheduleModel.getSchedulerTime(), "HH:mm:ss");
         cronExp.append(DateUtil.second(parse)).append(" ");
         cronExp.append(DateUtil.minute(parse)).append(" ");
         cronExp.append(DateUtil.hour(parse)).append(" ");
         cronExp.append("* ");
         cronExp.append("* ");
-        cronExp.append("?");
+        cronExp.append("? ");
+        cronExp.append("*");
         return cronExp.toString();
     }
 }
