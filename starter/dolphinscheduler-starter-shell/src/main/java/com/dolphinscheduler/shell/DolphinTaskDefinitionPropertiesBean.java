@@ -31,6 +31,7 @@ public class DolphinTaskDefinitionPropertiesBean {
     private String delayTime;
     private String environmentCode;
     private Long projectCode;
+    private Integer version;
 
     public static class TaskParams {
         private Object resourceList;
@@ -105,6 +106,7 @@ public class DolphinTaskDefinitionPropertiesBean {
         public void setSwitchResult(Object switchResult) {
             this.switchResult = switchResult;
         }
+
     }
 
     public Long getCode() {
@@ -243,33 +245,44 @@ public class DolphinTaskDefinitionPropertiesBean {
         this.projectCode = projectCode;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
     public String taskDefinitionJson(long taskCode, Object params, String rawScript, DolphinTaskDefinitionPropertiesBean taskParam) {
         this.setCode(taskCode);
         this.getTaskParams().setRawScript(this.getTaskParams().getRawScriptInit() + rawScript);
         this.getTaskParams().setLocalParams(params);
-        BeanMap abean = BeanMap.create(this);
-        BeanMap bbean = BeanMap.create(taskParam);
-        abean.forEach((k, v) -> {
-            if (Objects.nonNull(bbean.get(k))) {
-                Object tv = bbean.get(k);
-                if (tv instanceof TaskParams) {
-                    BeanMap taskBean = BeanMap.create(abean.get(k));
-                    BeanMap targetTaskBean = BeanMap.create(tv);
-                    taskBean.forEach((kk, vv) -> {
-                        taskBean.put(kk, Objects.nonNull(targetTaskBean.get(kk)) ? targetTaskBean.get(kk) : vv);
-                    });
-
-                } else {
-                    abean.put(k, tv);
+        this.setVersion(1);
+        if (taskParam != null) {
+            //转变成map没有顺序
+            BeanMap abean = BeanMap.create(this);
+            BeanMap bbean = BeanMap.create(taskParam);
+            abean.forEach((k, v) -> {
+                if (Objects.nonNull(bbean.get(k))) {
+                    Object tv = bbean.get(k);
+                    if (tv instanceof TaskParams) {
+                        BeanMap taskBean = BeanMap.create(abean.get(k));
+                        BeanMap targetTaskBean = BeanMap.create(tv);
+                        taskBean.forEach((kk, vv) -> {
+                            taskBean.put(kk, Objects.nonNull(targetTaskBean.get(kk)) ? targetTaskBean.get(kk) : vv);
+                        });
+                    } else {
+                        abean.put(k, tv);
+                    }
                 }
-
-            }
-        });
-        return new Gson().toJson(List.of(abean));
+            });
+            return new Gson().toJson(List.of(abean));
+        } else {
+            return new Gson().toJson(List.of(this));
+        }
     }
 
-    public String taskDefinitionJson(long taskCode, Object params,  String rawScript) {
+    public String taskDefinitionJson(long taskCode, Object params, String rawScript) {
         this.setCode(taskCode);
         this.getTaskParams().setRawScript(this.getTaskParams().getRawScriptInit() + rawScript);
         this.getTaskParams().setLocalParams(params);

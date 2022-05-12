@@ -87,7 +87,7 @@ public class DolphinShellServiceImpl implements DolphinProcessDefinitionService 
         long taskCode = GsonUtil.toJsonArray(processDefinitionDTO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
         try {
             //5、修改流程定义
-            dolphinShellClient.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, params, rawScript, description);
+            dolphinShellClient.updateProcessDefinition(dctSchedulerBasicInfoVO.getCode(), taskCode, name, params, rawScript, description, null);
         } catch (Exception e) {
             log.error("修改流程定义失败[{}]", e.getMessage());
             throw new BizException("修改流程定义失败");

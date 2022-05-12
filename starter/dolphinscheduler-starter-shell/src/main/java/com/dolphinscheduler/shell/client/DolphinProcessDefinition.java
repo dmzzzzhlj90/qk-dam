@@ -22,7 +22,7 @@ public class DolphinProcessDefinition {
         this.locations = "[{\"taskCode\":" + taskCode + ",\"x\":63,\"y\":97}]";
         this.name = name;
         this.taskDefinitionJson = definitionPropertiesBean.taskDefinitionJson(taskCode, params, rawScript);
-        this.taskRelationJson = "[{\"name\":\"\",\"postTaskCode\":" + taskCode + "}]";
+        this.taskRelationJson = "[{\"name\":\"\",\"preTaskCode\":0,\"preTaskVersion\":0,\"postTaskCode\":" + taskCode + ",\"postTaskVersion\":0,\"conditionType\":0,\"conditionParams\":{}}]";
         this.tenantCode = definitionPropertiesBean.getTenantCode();
     }
 
@@ -35,7 +35,7 @@ public class DolphinProcessDefinition {
         this.locations = "[{\"taskCode\":" + taskCode + ",\"x\":63,\"y\":97}]";
         this.name = name;
         this.taskDefinitionJson = dolphinTaskDefinitionPropertiesBean.taskDefinitionJson(taskCode, params, rawScript, taskParam);
-        this.taskRelationJson = "[{\"name\":\"\",\"postTaskCode\":" + taskCode + "}]";
+        this.taskRelationJson = "[{\"name\":\"\",\"preTaskCode\":0,\"preTaskVersion\":0,\"postTaskCode\":" + taskCode + ",\"postTaskVersion\":1,\"conditionType\":0,\"conditionParams\":{}}]";
         this.tenantCode = dolphinTaskDefinitionPropertiesBean.getTenantCode();
     }
 
