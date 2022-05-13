@@ -260,7 +260,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
                     .hiveExecuteSQL(null, sqlPara, null).searchDataSqlPara();
         }
 
-        // 是否为详情单表数据
+        // TODO 是否为详情单表数据
         if (null != searchData && searchData.size() == 1) {
             resSearchData = searchData.stream().findFirst().get();
         } else {

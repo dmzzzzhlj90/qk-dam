@@ -3,7 +3,9 @@ package com.qk.dm.dataservice.service.imp;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.model.HttpDataParamModel;
 import com.qk.dam.sqlparser.JSqlParserUtil;
+import com.qk.dm.dataquery.feign.DataBackendQueryFeign;
 import com.qk.dm.dataservice.constant.*;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateMybatisSqlScript;
@@ -46,6 +48,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
     private final JPAQueryFactory jpaQueryFactory;
     private final DasApiBasicInfoService dasApiBasicInfoService;
     private final DasApiCreateMybatisSqlScriptRepository mybatisSqlScriptRepository;
+    private final DataBackendQueryFeign dataBackendQueryFeign;;
 
     @Override
     public List<DataQueryInfoVO> dataQueryInfo() {
@@ -176,10 +179,22 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
         selectItems.forEach(selectItem -> {
             DasApiCreateResponseParasVO.DasApiCreateResponseParasVOBuilder builder = DasApiCreateResponseParasVO.builder();
 
-            Column column = (Column) ((SelectExpressionItem) selectItem).getExpression();
-            String columnName = column.getColumnName();
             Alias alias = ((SelectExpressionItem) selectItem).getAlias();
             String aliasName = alias.getName();
+
+            Column column = null;
+            try {
+                column = (Column) ((SelectExpressionItem) selectItem).getExpression();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String columnName;
+            if (Objects.nonNull(column)) {
+                columnName = column.getColumnName();
+            } else {
+                columnName = aliasName;
+            }
 
             builder
                     .paraName(aliasName)
@@ -237,12 +252,20 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
         return MybatisSqlCacheLevelEnum.getAllValue();
     }
 
+    @Override
+    public Object debugModel(DataQueryInfoVO dataQueryInfoVO) {
+        // TODO 高级SQL调试模式
+        HttpDataParamModel httpDataParamModel = HttpDataParamModel.builder().build();
+        String s = dataBackendQueryFeign.dataBackendQuery(httpDataParamModel);
+        return null;
+    }
+
     private void setParamsVO(DasApiCreateMybatisSqlScript createMybatisSqlScript,
                              DasApiCreateMybatisSqlScriptDefinitionVO mybatisSqlScriptDefinitionVO) {
         // 请求参数
         if (Objects.nonNull(createMybatisSqlScript.getApiRequestParas())) {
             mybatisSqlScriptDefinitionVO.setApiCreateSqlRequestParasVOS(
-                    GsonUtil.fromJsonString(createMybatisSqlScript.getApiRequestParas(), new TypeToken<List<DasApiCreateRequestParasVO>>() {
+                    GsonUtil.fromJsonString(createMybatisSqlScript.getApiRequestParas(), new TypeToken<List<DasApiCreateSqlRequestParasVO>>() {
                     }.getType()));
         }
 

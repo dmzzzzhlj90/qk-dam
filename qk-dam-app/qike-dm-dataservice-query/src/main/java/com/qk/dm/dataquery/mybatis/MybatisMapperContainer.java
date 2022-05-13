@@ -25,7 +25,7 @@ public class MybatisMapperContainer {
   private final DataServiceSqlSessionFactory dataServiceSqlSessionFactory;
   private final List<DataQueryInfoVO> dataQueryInfos;
   private final Map<String, Mapper> mapperMap = new ConcurrentHashMap<>(256);
-  private final Map<String, String> apiIdDbNameMap = new ConcurrentHashMap<>(256);
+//  private final Map<String, String> apiIdDbNameMap = new ConcurrentHashMap<>(256);
 
 
   public MybatisMapperContainer(
@@ -47,7 +47,7 @@ public class MybatisMapperContainer {
         .forEach(
             (dataQueryInfoVO) -> {
               dataServiceSqlSessionFactory.scanMapper(
-                  this, dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getDataSourceName());
+                  this, dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceName());
             });
 
     log.info("添加新增mappers完成");
@@ -60,7 +60,7 @@ public class MybatisMapperContainer {
         .collect(
             // 按照数据连接名称分组
             Collectors.groupingBy(
-                it -> getStrNonNull(it.getDasApiCreateMybatisSqlScript().getDataSourceName())))
+                it -> getStrNonNull(it.getApiCreateDefinitionVO().getDataSourceName())))
         // 生成mapper
         .forEach(generatedMappers(mapperBuilder));
   }
@@ -83,16 +83,16 @@ public class MybatisMapperContainer {
               .map(
                   dataQueryInfoVO ->
                       MapperSelect.builder()
-                          .id(dataQueryInfoVO.getDasApiBasicInfo().getApiId())
+                          .id(dataQueryInfoVO.getApiBasicInfoVO().getApiId())
                           .resultType("java.util.HashMap")
-                          .sqlContent(dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getSqlPara())
+                          .sqlContent(dataQueryInfoVO.getApiCreateDefinitionVO().getSqlPara())
                           .build())
               .collect(Collectors.toList());
-      dataQueryInfoVOList.forEach(
-          dataQueryInfoVO ->
-              this.addApiIdDbNameMap(
-                  dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getApiId(),
-                  dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getDataBaseName()));
+//      dataQueryInfoVOList.forEach(
+//          dataQueryInfoVO ->
+//              this.addApiIdDbNameMap(
+//                  dataQueryInfoVO.getApiCreateDefinitionVO().getApiId(),
+//                  "hd_court"));
       // 相同数据连接配置mapper
       mapperBuilderTemp.resultMap(
           List.of(
@@ -114,9 +114,9 @@ public class MybatisMapperContainer {
     mapperMap.put(namespace, mapper);
   }
 
-  public void addApiIdDbNameMap(String apiId, String dbname) {
-    apiIdDbNameMap.put(apiId, dbname);
-  }
+//  public void addApiIdDbNameMap(String apiId, String dbname) {
+//    apiIdDbNameMap.put(apiId, dbname);
+//  }
 
   public Mapper getMapper(String namespace) {
     return mapperMap.get(namespace);
@@ -137,8 +137,8 @@ public class MybatisMapperContainer {
   public String getDsName(String apiId) {
     return dataQueryInfos.stream()
         .filter(
-            dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getApiId()))
-        .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getDataSourceName())
+            dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getApiCreateDefinitionVO().getApiId()))
+        .map(dataQueryInfoVO -> dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceName())
         .findFirst()
         .orElse("");
   }
@@ -147,17 +147,17 @@ public class MybatisMapperContainer {
     return dataQueryInfos.stream()
         .map(
             dataQueryInfoVO ->
-                dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getGmtModified().getTime())
+                dataQueryInfoVO.getApiCreateDefinitionVO().getGmtModified().getTime())
         .max(Comparator.comparing(Long::longValue))
         .orElse(0L);
   }
 
-  public String getDbName(String apiId) {
-    return dataQueryInfos.stream()
-        .filter(
-            dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getApiId()))
-        .map(dataQueryInfoVO -> dataQueryInfoVO.getDasApiCreateMybatisSqlScript().getDataBaseName())
-        .findFirst()
-        .orElse("");
-  }
+//  public String getDbName(String apiId) {
+//    return dataQueryInfos.stream()
+//        .filter(
+//            dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getApiCreateDefinitionVO().getApiId()))
+//        .map(dataQueryInfoVO -> dataQueryInfoVO.getApiCreateDefinitionVO().getDataBaseName())
+//        .findFirst()
+//        .orElse("");
+//  }
 }
