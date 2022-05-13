@@ -31,6 +31,7 @@ public class DolphinTaskDefinitionPropertiesBean {
     private String delayTime;
     private String environmentCode;
     private Long projectCode;
+    private Integer version;
 
     public static class TaskParams {
         private Object httpParams;
@@ -279,9 +280,18 @@ public class DolphinTaskDefinitionPropertiesBean {
         this.projectCode = projectCode;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     public String taskDefinitionJson(long taskCode, Object httpParams, DolphinTaskDefinitionPropertiesBean taskParam) {
         this.getTaskParams().setHttpParams(httpParams);
         this.setCode(taskCode);
+        this.setVersion(1);
         BeanMap abean = BeanMap.create(this);
         BeanMap bbean = BeanMap.create(taskParam);
         abean.forEach((k, v) -> {
