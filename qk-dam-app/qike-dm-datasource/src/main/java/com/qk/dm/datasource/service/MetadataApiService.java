@@ -1,6 +1,6 @@
 package com.qk.dm.datasource.service;
 
-import com.qk.dam.catacollect.vo.ConnectInfoVo;
+import com.qk.dam.datasource.entity.ConnectInfoVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

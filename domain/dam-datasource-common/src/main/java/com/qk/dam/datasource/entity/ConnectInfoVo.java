@@ -1,4 +1,4 @@
-package com.qk.dam.catacollect.vo;
+package com.qk.dam.datasource.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
