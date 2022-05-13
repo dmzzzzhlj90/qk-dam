@@ -134,4 +134,15 @@ public class DataQueryInfoController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.cacheLevels());
     }
 
+    /**
+     * 高级SQL: 调试接口功能
+     *
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/debug/model")
+//  @Auth(bizType = BizResource.DAS_API_CREATE_CONFIG, actionType = RestActionType.GET)
+    public DefaultCommonResult debugModel(@RequestBody DataQueryInfoVO dataQueryInfoVO) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasDataQueryInfoService.debugModel(dataQueryInfoVO));
+    }
+
 }

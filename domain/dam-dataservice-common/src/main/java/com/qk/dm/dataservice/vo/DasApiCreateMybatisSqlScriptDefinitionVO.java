@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -111,14 +112,14 @@ public class DasApiCreateMybatisSqlScriptDefinitionVO {
      * 是否开启缓存,0:不开启 1:开启一级缓存 2:开启二级缓存;
      */
     @ExcelProperty(value = {"是否开启缓存,0:不开启 1:开启一级缓存 2:开启二级缓存;"}, index = 8)
-    @NotBlank(message = "是否开启缓存不能为空！")
+    @NotNull(message = "是否开启缓存不能为空！")
     private Integer cacheLevel;
 
     /**
      * 是否开启分页功能
      */
     @ExcelProperty(value = {"是否开启分页功能"}, index = 8)
-    @NotBlank(message = "是否开启分页功能不能为空！")
+    @NotNull(message = "是否开启分页功能不能为空！")
     private Boolean pageFlag;
 
     /**
