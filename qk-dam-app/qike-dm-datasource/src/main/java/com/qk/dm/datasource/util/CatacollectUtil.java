@@ -2,7 +2,7 @@ package com.qk.dm.datasource.util;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.db.Entity;
-import com.qk.dam.catacollect.util.SourcesUtil;
+import com.qk.dam.datasource.utils.SourcesUtil;
 
 import java.util.ArrayList;
 import java.util.List;

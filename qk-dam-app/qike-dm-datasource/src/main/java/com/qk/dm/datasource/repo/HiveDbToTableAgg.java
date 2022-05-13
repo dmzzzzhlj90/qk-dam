@@ -3,7 +3,7 @@ package com.qk.dm.datasource.repo;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
 import cn.hutool.db.ds.simple.SimpleDataSource;
-import com.qk.dam.catacollect.vo.ConnectInfoVo;
+import com.qk.dam.datasource.entity.ConnectInfoVo;
 
 import java.sql.SQLException;
 import java.util.List;

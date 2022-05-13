@@ -1,7 +1,7 @@
 package com.qk.dm.datacollect.service.impl;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
-import com.qk.dam.catacollect.util.SourcesUtil;
+import com.qk.dam.datasource.utils.SourcesUtil;
 import com.qk.dam.metedata.AtlasClient;
 import com.qk.dm.client.DataBaseInfoDefaultApi;
 import com.qk.dm.datacollect.service.DctDataSourceService;
