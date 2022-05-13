@@ -1,13 +1,11 @@
 package com.qk.dm.dataingestion.rest;
 
-import com.google.gson.Gson;
 import com.qk.dam.commons.enums.ResultCodeEnum;
 import com.qk.dam.commons.http.result.DefaultCommonResult;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.ProcessDefinition;
 import com.qk.datacenter.model.Result;
 import com.qk.dm.dataingestion.datax.DataxDolphinClient;
-import com.qk.dm.dataingestion.model.DolphinTaskDefinitionPropertiesBean;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -47,15 +45,15 @@ public class DataxTaskDefineController {
      * @return DefaultCommonResult
      * @throws ApiException api异常
      */
-    @PutMapping("/projects/process/{taskCode}")
-    public DefaultCommonResult<Result> putProcessDefinition(@PathVariable final long taskCode,
-                                                            final String dataxName,
-                                                            @RequestParam(defaultValue = "{}") final String taskParam,
-                                                            @RequestBody final String dataxJson
-                                                               ) throws ApiException {
-        return DefaultCommonResult.success(ResultCodeEnum.OK,
-                dataxDolphinClient.updateProcessDefinition(dataxName,taskCode,dataxJson,new Gson().fromJson(taskParam, DolphinTaskDefinitionPropertiesBean.class)));
-    }
+//    @PutMapping("/projects/process/{taskCode}")
+//    public DefaultCommonResult<Result> putProcessDefinition(@PathVariable final long taskCode,
+//                                                            final String dataxName,
+//                                                            @RequestParam(defaultValue = "{}") final String taskParam,
+//                                                            @RequestBody final String dataxJson
+//                                                               ) throws ApiException {
+//        return DefaultCommonResult.success(ResultCodeEnum.OK,
+//                dataxDolphinClient.updateProcessDefinition(dataxName,taskCode,dataxJson,new Gson().fromJson(taskParam, DolphinTaskDefinitionPropertiesBean.class)));
+//    }
 
 
     /**
@@ -84,7 +82,7 @@ public class DataxTaskDefineController {
                 dataxDolphinClient.dolphinProcessRelease(taskCode,ProcessDefinition.ReleaseStateEnum.OFFLINE));
     }
 
-    /**
+     /**
      * 运行
      * @return DefaultCommonResult
      * @throws ApiException api异常
