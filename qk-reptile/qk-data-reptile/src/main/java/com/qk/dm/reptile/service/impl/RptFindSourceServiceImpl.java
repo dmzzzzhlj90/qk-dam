@@ -3,10 +3,12 @@ package com.qk.dm.reptile.service.impl;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.entity.QRptFindSource;
 import com.qk.dm.reptile.entity.RptFindSource;
+import com.qk.dm.reptile.factory.ReptileServerFactory;
 import com.qk.dm.reptile.mapstruct.mapper.RptFindSourceMapper;
 import com.qk.dm.reptile.params.dto.RptFindSourceDTO;
 import com.qk.dm.reptile.params.vo.RptFindSourceVO;
@@ -14,6 +16,7 @@ import com.qk.dm.reptile.repositories.RptFindSourceRepository;
 import com.qk.dm.reptile.service.RptFindSourceService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -27,12 +30,17 @@ import java.util.stream.Collectors;
  * @date 2021/5/09 15:05
  * @since 1.0.0
  */
+@Slf4j
 @Service
 public class RptFindSourceServiceImpl implements RptFindSourceService {
     private JPAQueryFactory jpaQueryFactory;
     private final EntityManager entityManager;
     private final QRptFindSource qRptFindSource = QRptFindSource.rptFindSource;
     private final RptFindSourceRepository rptFindSourceRepository;
+    //数据未对比状态
+    private static Integer NO_CONTRAST = 0;
+    //数据不存在
+    public static Integer NO_EXIST = 2;
 
     public RptFindSourceServiceImpl(EntityManager entityManager, RptFindSourceRepository rptFindSourceRepository) {
         this.entityManager = entityManager;
@@ -45,9 +53,33 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
 
     @Override
     public void insert(RptFindSourceDTO rptFindSourceDTO) {
+        RptFindSource rptFindSource = RptFindSourceMapper.INSTANCE.of(rptFindSourceDTO);
+        //判断数据是否存在
+        Boolean result = ReptileServerFactory.dataCheck(rptFindSourceDTO.getTitle(),
+                rptFindSourceDTO.getPublishTime());
+        rptFindSource.setStatus(result?1:2);
+        rptFindSourceRepository.save(rptFindSource);
 
-        rptFindSourceRepository.save(RptFindSourceMapper.INSTANCE.of(rptFindSourceDTO));
     }
+
+    @Override
+    public void requestCrawler(RptFindSourceDTO rptFindSourceDTO) {
+
+    }
+
+    @Override
+    public void dataContrast() {
+        List<RptFindSource> list = rptFindSourceRepository.findAllByStatus(NO_CONTRAST);
+        Optional.ofNullable(list).orElse(List.of()).forEach(e->{
+            Boolean result = ReptileServerFactory.dataCheck(e.getTitle(),
+                    e.getPublishTime());
+            if(result){
+                e.setStatus(2);
+                rptFindSourceRepository.saveAndFlush(e);
+            }
+        });
+    }
+
 
     @Override
     public void update(Long id, RptFindSourceDTO rptFindSourceDTO) {

@@ -1,14 +1,19 @@
 package com.qk.dm.reptile.params.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qk.dam.jpa.pojo.Pagination;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Data
 public class RptFindSourceDTO {
 
@@ -17,7 +22,6 @@ public class RptFindSourceDTO {
     /**
      * 标题
      */
-    @NotBlank(message = "标题不能为空")
     private String title;
 
 
@@ -39,6 +43,8 @@ public class RptFindSourceDTO {
     /**
      * 发布时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date publishTime;
 
     /**
@@ -55,6 +61,18 @@ public class RptFindSourceDTO {
      * 修改人
      */
     private String updateUsername;
+
+    private String keywords;
+
+    private String timeType;
+    /**
+     * 开始时间 当时间为自定义时不可为空
+     */
+    private String beginTime;
+    /**
+     * 结束时间 当时间为自定义时不可为空
+     */
+    private String endTime;
 
 
 }

@@ -4,12 +4,15 @@ import com.google.common.collect.Maps;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.params.builder.RptConfigBuilder;
 import com.qk.dm.reptile.params.builder.RptSelectorBuilder;
+import com.qk.dm.reptile.params.dto.RptFindSourceDTO;
 import com.qk.dm.reptile.params.vo.RptConfigInfoVO;
 import com.qk.dm.reptile.params.vo.RptSelectorColumnInfoVO;
 import com.qk.dm.reptile.utils.HttpClientUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.util.CollectionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
  * @date 2021/12/8 14:32
  * @since 1.0.0
  */
+@Slf4j
 public class ReptileServerFactory {
     private static final Integer CONN_TIMEOUT = 30000;
     private static final Integer READ_TIMEOUT = 30000;
@@ -35,6 +39,10 @@ public class ReptileServerFactory {
     private static final String TIMING_URL = "http://172.21.3.211:6800/schedule.json";
     //手动抓取地址
     private static final String MANUAL_URL = "http://172.21.3.191:6800/schedule.json";
+    //爬虫验证数据是否存在接口
+    public static final String RPT_FIND_SOURCE = "http://pythonapi-uat.qk.com:18920/api/bid_info/bid_search/";
+    //找源爬虫接口
+    public static final String GRAB_DATA_URL = "";
 
     /**
      * 手动执行
@@ -144,6 +152,77 @@ public class ReptileServerFactory {
                 .before(Objects.requireNonNullElse(selector.getBeforePrefix(), EMPTY))
                 .after(Objects.requireNonNullElse(selector.getAfterPrefix(), EMPTY))
                 .build(), (k1, k2) -> k1));
+    }
+
+    /**
+     * 根据标题查询数据是否已经在库中存在
+     * @return 返回结果
+     */
+    public static Boolean dataCheck(String title,Date publishTime){
+        log.info("dataCheck 数据对比：title【{}】,发布时间【{}】",title,publishTime);
+        try {
+            String result = HttpClientUtils.postForm(
+                    RPT_FIND_SOURCE,
+                    Map.of("search_field", "1",
+                            "search_type", "1",
+                            "search_keyword", GsonUtil.toJsonString(List.of(title)),
+                            "bid_pubtime_start", new SimpleDateFormat("yyyy-MM-dd").format(publishTime),
+                            "bid_pubtime_end", new SimpleDateFormat("yyyy-MM-dd").format(publishTime)),
+                    Map.of("Content-Type", "application/x-www-form-urlencoded"),
+                    CONN_TIMEOUT,
+                    READ_TIMEOUT);
+            Map<String,Object> map = GsonUtil.fromJsonString(result, Map.class);
+            log.info("dataCheck 数据对比接口返回结果【{}】",map);
+            return Integer.parseInt(map.getOrDefault("total",0).toString())>0;
+
+         } catch (Exception e) {
+            log.error("dataCheck 数据对比接口异常【{}】",e.getMessage());
+            e.printStackTrace();
+        }
+
+        return Boolean.FALSE;
+    }
+
+    /**
+     * 抓取数据接口
+     * @return
+     */
+    public static String grabData(RptFindSourceDTO rptFindSourceDTO){
+        try {
+            return HttpClientUtils.postForm(
+                    MANUAL_URL,
+                    grabDataPara(rptFindSourceDTO),
+                    null,
+                    CONN_TIMEOUT,
+                    READ_TIMEOUT);
+        }catch (Exception e){
+            log.error("grabData 爬虫数据接口异常【{}】",e.getMessage());
+            e.printStackTrace();
+        }
+        return Strings.EMPTY;
+    }
+
+    private static Map<String, String> grabDataPara(RptFindSourceDTO rptFindSourceDTO) {
+        Map<String, String> requestPara = Maps.newHashMap();
+        requestPara.put(PROJECT, "horse");
+        requestPara.put(SPIDER, "qianlima3");
+        requestPara.put(ORG_VALUE, GsonUtil.toJsonString(findSourceData(rptFindSourceDTO)));
+        return requestPara;
+    }
+
+    public static Map<String,Object> findSourceData(RptFindSourceDTO rptFindSourceDTO){
+        Map<String,Object> map = new HashMap<>();
+        map.put("newAreas",Objects.requireNonNullElse(rptFindSourceDTO.getCityCode(), EMPTY));
+        map.put("allType",Objects.requireNonNullElse(rptFindSourceDTO.getInfoType(),EMPTY));
+        map.put("keywords",Objects.requireNonNullElse(rptFindSourceDTO.getKeywords(),EMPTY));
+        map.put("timeType",Objects.requireNonNullElse(rptFindSourceDTO.getTimeType(),EMPTY));
+        map.put("types",Objects.requireNonNullElse(rptFindSourceDTO.getInfoType(),EMPTY));
+        return map;
+    }
+
+    public static void main(String[] args) {
+       // RptFindSourceDTO.builder().cityCode("1140,1141").build();
+        grabData(RptFindSourceDTO.builder().cityCode("1140,1141").build());
     }
 
 }
