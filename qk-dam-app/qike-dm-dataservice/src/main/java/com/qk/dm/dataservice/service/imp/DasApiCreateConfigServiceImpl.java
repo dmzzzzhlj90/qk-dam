@@ -251,7 +251,8 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         // 获取数据库连接信息
         ConnectBasicInfo connectBasicInfo = getConnectBasicInfo(apiCreateConfigDefinitionVO);
         //执行SQL 查询数据
-        return getSearchData(apiCreateConfigDefinitionVO, mappingParams, reqParams, responseParas, connectBasicInfo);
+        Integer resultDataType = Integer.valueOf(apiCreateConfigVO.getApiBasicInfoVO().getResultDataType());
+        return getSearchData(apiCreateConfigDefinitionVO, mappingParams, reqParams, responseParas, connectBasicInfo, resultDataType);
     }
 
     /**
@@ -268,7 +269,8 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
                                  Map<String, List<DasApiCreateRequestParasVO>> mappingParams,
                                  Map<String, String> reqParams,
                                  List<DasApiCreateResponseParasVO> responseParas,
-                                 ConnectBasicInfo connectBasicInfo) {
+                                 ConnectBasicInfo connectBasicInfo,
+                                 Integer resultDataType) {
         Object resSearchData = null;
         //schema
         String connectType = apiCreateConfigDefinitionVO.getConnectType();
@@ -291,11 +293,14 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         }
 
         // 是否为详情单表数据
-        if (null != searchData && searchData.size() == 1) {
-            resSearchData = searchData.stream().findFirst().get();
-        } else {
-            resSearchData = searchData;
+        if (Objects.nonNull(searchData)) {
+            if (ResultDataTypeEnum.RESULT_DATA_TYPE_MAP.getCode().equals(resultDataType)) {
+                resSearchData = searchData.stream().findFirst().orElse(null);
+            } else if (ResultDataTypeEnum.RESULT_DATA_TYPE_LIST.getCode().equals(resultDataType)) {
+                resSearchData = searchData;
+            }
         }
+
         return resSearchData;
     }
 
