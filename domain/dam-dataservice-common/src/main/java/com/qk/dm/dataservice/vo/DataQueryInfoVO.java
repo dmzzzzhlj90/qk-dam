@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -20,6 +21,11 @@ public class DataQueryInfoVO {
     private DasApiCreateMybatisSqlScriptDefinitionVO apiCreateDefinitionVO;
     @Valid
     private DasApiBasicInfoVO apiBasicInfoVO;
+
+    /**
+     * DEBUG调试参数
+     */
+    private List<DebugApiParasVO> debugApiParasVOS;
 
     @Override
     public boolean equals(Object o) {

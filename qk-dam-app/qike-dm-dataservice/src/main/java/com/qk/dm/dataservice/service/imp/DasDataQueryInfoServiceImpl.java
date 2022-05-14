@@ -1,5 +1,6 @@
 package com.qk.dm.dataservice.service.imp;
 
+import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
@@ -23,11 +24,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import net.sf.jsqlparser.expression.Alias;
 import net.sf.jsqlparser.schema.Column;
-import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.select.SelectExpressionItem;
 import net.sf.jsqlparser.statement.select.SelectItem;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,7 +50,8 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
     private final JPAQueryFactory jpaQueryFactory;
     private final DasApiBasicInfoService dasApiBasicInfoService;
     private final DasApiCreateMybatisSqlScriptRepository mybatisSqlScriptRepository;
-    private final DataBackendQueryFeign dataBackendQueryFeign;;
+    private final DataBackendQueryFeign dataBackendQueryFeign;
+    ;
 
     @Override
     public List<DataQueryInfoVO> dataQueryInfo() {
@@ -106,7 +109,7 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
                                         DasApiCreateMybatisSqlScriptMapper.INSTANCE.useDasApiCreateMybatisSqlScriptDefinitionVO(
                                                 tuple.get(qDasApiCreateMybatisSqlScript)),
                                         DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(
-                                                tuple.get(QDasApiBasicInfo.dasApiBasicInfo))))
+                                                tuple.get(QDasApiBasicInfo.dasApiBasicInfo)),null))
                 .collect(Collectors.toList());
     }
 
@@ -254,10 +257,50 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
 
     @Override
     public Object debugModel(DataQueryInfoVO dataQueryInfoVO) {
-        // TODO 高级SQL调试模式
-        HttpDataParamModel httpDataParamModel = HttpDataParamModel.builder().build();
-        String s = dataBackendQueryFeign.dataBackendQuery(httpDataParamModel);
-        return null;
+        // 请求参数解析
+        Map<String, String> uriPathParam = Maps.newHashMap();
+        Map<String, Object> params = Maps.newHashMap();
+        Map<String, Object> body = Maps.newHashMap();
+        RequestMethod method = getRequestMethod(dataQueryInfoVO.getApiBasicInfoVO().getRequestType());
+        HttpHeaders headers = null;
+
+        DasApiBasicInfoVO apiBasicInfoVO = dataQueryInfoVO.getApiBasicInfoVO();
+        List<DasApiBasicInfoRequestParasVO> basicInfoRequestParas = apiBasicInfoVO.getApiBasicInfoRequestParasVOS();
+        Map<String, String> requestParaPositionMap = basicInfoRequestParas.stream()
+                .collect(Collectors.toMap(DasApiBasicInfoRequestParasVO::getParaName, DasApiBasicInfoRequestParasVO::getParaPosition));
+
+        List<DebugApiParasVO> debugApiParas = dataQueryInfoVO.getDebugApiParasVOS();
+        if (Objects.nonNull(debugApiParas)) {
+            debugApiParas.forEach(para -> {
+                String paraName = para.getParaName();
+                String paraPosition = requestParaPositionMap.get(paraName);
+                if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_PATH.getTypeName().equalsIgnoreCase(paraPosition)) {
+                    // PATH
+                    uriPathParam.put(paraName, para.getValue());
+                } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY.getTypeName().equalsIgnoreCase(paraPosition)) {
+                    // QUERY
+                    params.put(paraName, para.getValue());
+                } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_BODY.getTypeName().equalsIgnoreCase(paraPosition)) {
+                    // BODY
+                    body.put(paraName, para.getValue());
+                } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_HEADER.getTypeName().equalsIgnoreCase(paraPosition)) {
+                    // TODO HEADER
+                }
+            });
+        }
+
+        HttpDataParamModel httpDataParamModel = HttpDataParamModel.builder()
+                .apiId(dataQueryInfoVO.getApiBasicInfoVO().getApiId())
+                .uriPathParam(uriPathParam)
+                .headers(headers)
+                .body(body)
+                .params(params)
+                .method(method)
+                .cacheLevel(dataQueryInfoVO.getApiCreateDefinitionVO().getCacheLevel())
+                .pageFlag(dataQueryInfoVO.getApiCreateDefinitionVO().getPageFlag())
+                .build();
+        return dataBackendQueryFeign
+                .dataBackendQuery(httpDataParamModel);
     }
 
     private void setParamsVO(DasApiCreateMybatisSqlScript createMybatisSqlScript,
@@ -303,6 +346,40 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
 //            mybatisSqlScript.setApiOrderParas(
 //                    GsonUtil.toJsonString(mybatisSqlScriptDefinitionVO.getApiCreateOrderParasVOS()));
 //        }
+    }
+
+    private Map<String, String> getUriPathParam(DataQueryInfoVO dataQueryInfoVO) {
+        Map<String, String> uriPathParam = Maps.newHashMap();
+
+        DasApiBasicInfoVO apiBasicInfoVO = dataQueryInfoVO.getApiBasicInfoVO();
+        List<DasApiBasicInfoRequestParasVO> basicInfoRequestParasVOS = apiBasicInfoVO.getApiBasicInfoRequestParasVOS();
+        Map<String, String> requestParaMap = basicInfoRequestParasVOS.stream()
+                .collect(Collectors.toMap(DasApiBasicInfoRequestParasVO::getParaName, DasApiBasicInfoRequestParasVO::getParaPosition));
+
+        DasApiCreateMybatisSqlScriptDefinitionVO createDefinitionVO = dataQueryInfoVO.getApiCreateDefinitionVO();
+        List<DasApiCreateSqlRequestParasVO> requestParasVOS = createDefinitionVO.getApiCreateSqlRequestParasVOS();
+        if (Objects.nonNull(requestParasVOS)) {
+            requestParasVOS.forEach(requestParasVO -> {
+                String paraName = requestParasVO.getParaName();
+
+            });
+        }
+
+        return uriPathParam;
+    }
+
+    private RequestMethod getRequestMethod(String requestType) {
+        if (RequestMethodTypeEnum.GET.getValue().equalsIgnoreCase(requestType)) {
+            return RequestMethod.GET;
+        } else if (RequestMethodTypeEnum.POST.getValue().equalsIgnoreCase(requestType)) {
+            return RequestMethod.POST;
+        } else if (RequestMethodTypeEnum.PUT.getValue().equalsIgnoreCase(requestType)) {
+            return RequestMethod.PUT;
+        } else if (RequestMethodTypeEnum.DELETE.getValue().equalsIgnoreCase(requestType)) {
+            return RequestMethod.DELETE;
+        } else {
+            return RequestMethod.GET;
+        }
     }
 
 }
