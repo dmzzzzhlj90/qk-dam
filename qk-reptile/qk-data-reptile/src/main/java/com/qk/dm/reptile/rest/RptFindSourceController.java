@@ -25,13 +25,24 @@ public class RptFindSourceController {
     }
 
     /**
+     * 爬虫抓取
+     * @param findSourceDTO
+     * @return DefaultCommonResult
+     */
+    @PostMapping("/request/crawler")
+    public DefaultCommonResult requestCrawler(@RequestBody @Validated RptFindSourceDTO findSourceDTO){
+        findSourceService.requestCrawler(findSourceDTO);
+        return DefaultCommonResult.success();
+    }
+
+    /**
      * 添加找源信息
      * @param findSourceDTO
      * @return DefaultCommonResult
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated RptFindSourceDTO findSourceDTO){
-        findSourceService.insert(findSourceDTO);
+        findSourceService.requestCrawler(findSourceDTO);
         return DefaultCommonResult.success();
     }
 

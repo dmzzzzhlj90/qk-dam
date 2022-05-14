@@ -3,7 +3,6 @@ package com.qk.dm.reptile.service.impl;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
-import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.client.ClientUserInfo;
 import com.qk.dm.reptile.entity.QRptFindSource;
@@ -37,10 +36,6 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
     private final EntityManager entityManager;
     private final QRptFindSource qRptFindSource = QRptFindSource.rptFindSource;
     private final RptFindSourceRepository rptFindSourceRepository;
-    //数据未对比状态
-    private static Integer NO_CONTRAST = 0;
-    //数据不存在
-    public static Integer NO_EXIST = 2;
 
     public RptFindSourceServiceImpl(EntityManager entityManager, RptFindSourceRepository rptFindSourceRepository) {
         this.entityManager = entityManager;
@@ -52,6 +47,14 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
     }
 
     @Override
+    public void requestCrawler(RptFindSourceDTO rptFindSourceDTO) {
+        /**
+         * 调用爬虫接口
+         */
+        ReptileServerFactory.grabData(rptFindSourceDTO);
+    }
+
+    @Override
     public void insert(RptFindSourceDTO rptFindSourceDTO) {
         RptFindSource rptFindSource = RptFindSourceMapper.INSTANCE.of(rptFindSourceDTO);
         //判断数据是否存在
@@ -59,17 +62,11 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
                 rptFindSourceDTO.getPublishTime());
         rptFindSource.setStatus(result?1:2);
         rptFindSourceRepository.save(rptFindSource);
-
     }
 
     @Override
-    public void requestCrawler(RptFindSourceDTO rptFindSourceDTO) {
-
-    }
-
-    @Override
-    public void dataContrast() {
-        List<RptFindSource> list = rptFindSourceRepository.findAllByStatus(NO_CONTRAST);
+    public void dataContrast(Integer status) {
+        List<RptFindSource> list = rptFindSourceRepository.findAllByStatus(status);
         Optional.ofNullable(list).orElse(List.of()).forEach(e->{
             Boolean result = ReptileServerFactory.dataCheck(e.getTitle(),
                     e.getPublishTime());

@@ -210,7 +210,7 @@ public class ReptileServerFactory {
         return requestPara;
     }
 
-    public static Map<String,Object> findSourceData(RptFindSourceDTO rptFindSourceDTO){
+    private static Map<String,Object> findSourceData(RptFindSourceDTO rptFindSourceDTO){
         Map<String,Object> map = new HashMap<>();
         map.put("newAreas",Objects.requireNonNullElse(rptFindSourceDTO.getCityCode(), EMPTY));
         map.put("allType",Objects.requireNonNullElse(rptFindSourceDTO.getInfoType(),EMPTY));
