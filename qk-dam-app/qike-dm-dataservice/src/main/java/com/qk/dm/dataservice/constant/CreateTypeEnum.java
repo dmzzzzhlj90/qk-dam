@@ -23,7 +23,7 @@ public enum CreateTypeEnum {
     /**
      * API类型-新建API_取数方式
      */
-    CREATE_API_SQL_SCRIPT_TYPE("CREATE-API-SQL-SCRIPT-TYPE","取数方式"),
+    CREATE_API_SQL_SCRIPT_TYPE("CREATE-API-SQL-SCRIPT-TYPE","脚本方式"),
 
     /**
      * API类型-新建API_高级SQL方式

@@ -1,8 +1,8 @@
 package com.qk.dm.datasource.service.impl;
 
 import cn.hutool.db.Entity;
-import com.qk.dam.catacollect.util.SourcesUtil;
-import com.qk.dam.catacollect.vo.ConnectInfoVo;
+import com.qk.dam.datasource.entity.ConnectInfoVo;
+import com.qk.dam.datasource.utils.SourcesUtil;
 import com.qk.dm.datasource.repo.HiveDbToTableAgg;
 import com.qk.dm.datasource.repo.MysqlDbToTableAgg;
 import com.qk.dm.datasource.service.MetadataApiService;
