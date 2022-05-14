@@ -43,6 +43,12 @@ public class DasApiCreateSqlScript implements Serializable {
     private String connectType;
 
     /**
+     * 数据源标识code编码
+     */
+    @Column(name = "data_source_code", nullable = false)
+    private String dataSourceCode;
+
+    /**
      * 数据源连接名称
      */
     @Column(name = "data_source_name", nullable = false)

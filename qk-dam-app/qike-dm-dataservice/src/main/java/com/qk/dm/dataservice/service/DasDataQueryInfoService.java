@@ -46,4 +46,6 @@ public interface DasDataQueryInfoService {
 
     Map<Integer, String> cacheLevels();
 
+    Object debugModel(DataQueryInfoVO dataQueryInfoVO);
+
 }

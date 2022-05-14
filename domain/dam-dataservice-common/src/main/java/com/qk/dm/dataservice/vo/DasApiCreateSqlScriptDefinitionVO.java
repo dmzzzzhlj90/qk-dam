@@ -58,17 +58,17 @@ public class DasApiCreateSqlScriptDefinitionVO {
     private String connectType;
 
     /**
-     * 数据源标识id
+     * 数据源标识code编码
      */
-    @ExcelProperty(value = {"数据源标识id"}, index = 3)
-    @NotBlank(message = "数据源标识id不能为空！")
-    private String connId;
+    @ExcelProperty(value = {"数据源标识code编码"}, index = 3)
+    @NotBlank(message = "数据源标识code编码不能为空！")
+    private String dataSourceCode;
 
     /**
      * 数据源连接名称
      */
     @ExcelProperty(value = {"数据源连接名称"}, index = 4)
-    @NotBlank(message = "数据源连接不能为空！")
+//    @NotBlank(message = "数据源连接不能为空！")
     private String dataSourceName;
 
     /**

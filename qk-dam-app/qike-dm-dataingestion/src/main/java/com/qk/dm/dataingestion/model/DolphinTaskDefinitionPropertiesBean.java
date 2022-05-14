@@ -39,6 +39,7 @@ public class DolphinTaskDefinitionPropertiesBean {
     private String failureStrategy;
     //发送组id 默认0
     private Integer warningGroupId;
+    private Integer version;
     @Data
     public static class TaskParams {
         private Integer customConfig;
@@ -57,6 +58,7 @@ public class DolphinTaskDefinitionPropertiesBean {
                                      DolphinTaskDefinitionPropertiesBean taskParam) {
         this.getTaskParams().setJson(dataxJson);
         this.setCode(taskCode);
+        this.setVersion(1);
         BeanMap abean = BeanMap.create(this);
         BeanMap bbean = BeanMap.create(taskParam);
         abean.forEach((k,v)->{
