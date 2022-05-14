@@ -42,8 +42,7 @@ public class DsDirectoryController {
       @RequestBody Pagination pagination) {
     // 默认设置id为查询排序
     pagination.setSortField("id");
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDirectoryService.getSysDirectory(pagination));
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsDirectoryService.getSysDirectory(pagination));
   }
 
   /**
@@ -77,8 +76,7 @@ public class DsDirectoryController {
    * @return DefaultCommonResult 成功
    */
   @PutMapping
-  public DefaultCommonResult updateDsDirectory(
-      @RequestBody @Validated DsDirectoryVO dsDirectoryVO) {
+  public DefaultCommonResult updateDsDirectory(@RequestBody @Validated DsDirectoryVO dsDirectoryVO) {
     dsDirectoryService.updateDsDirectory(dsDirectoryVO);
     return DefaultCommonResult.success();
   }
@@ -90,7 +88,6 @@ public class DsDirectoryController {
    */
   @GetMapping("/sysname")
   public DefaultCommonResult<List<String>> getSysName() {
-    List<String> sysNameList = dsDirectoryService.getSysName();
-    return DefaultCommonResult.success(ResultCodeEnum.OK, sysNameList);
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsDirectoryService.getSysName());
   }
 }
