@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -61,9 +59,13 @@ public class RptFindSourceDTO {
      * 修改人
      */
     private String updateUsername;
-
+    /**
+     * 关键字
+     */
     private String keywords;
-
+    /**
+     * 时间类型
+     */
     private String timeType;
     /**
      * 开始时间 当时间为自定义时不可为空
