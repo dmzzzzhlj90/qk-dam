@@ -40,9 +40,9 @@ public class DisMigrationBaseInfoVO {
      */
     private String sourceConnect;
     /**
-     * 数据源id
+     * 数据源唯一code
      */
-    private String sourceConnectId;
+    private String sourceCode;
     /**
      * 源数据库
      */
@@ -80,9 +80,9 @@ public class DisMigrationBaseInfoVO {
     private String targetConnect;
 
     /**
-     * 目标连接id
+     * 目标连接唯一code
      */
-    private String targetConnectId;
+    private String targetCode;
 
     /**
      * 目标数据库
