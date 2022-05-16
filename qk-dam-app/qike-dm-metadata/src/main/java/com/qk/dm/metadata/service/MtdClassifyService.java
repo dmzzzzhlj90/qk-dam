@@ -1,7 +1,6 @@
 package com.qk.dm.metadata.service;
 
 import com.qk.dam.jpa.pojo.PageResultVO;
-import com.qk.dm.metadata.vo.MtdClassifyInfoVO;
 import com.qk.dm.metadata.vo.MtdClassifyListVO;
 import com.qk.dm.metadata.vo.MtdClassifyVO;
 
@@ -26,10 +25,8 @@ public interface MtdClassifyService {
 
   /**
    * 删除
-   *
-   * @param ids
    */
-  void delete(String ids);
+  void delete(MtdClassifyVO mtdClassifyVO);
 
   /**
    * 分页查询
@@ -37,7 +34,7 @@ public interface MtdClassifyService {
    * @param mtdClassifyListVO
    * @return
    */
-  PageResultVO<MtdClassifyInfoVO> listByPage(MtdClassifyListVO mtdClassifyListVO);
+  PageResultVO<MtdClassifyVO> listByPage(MtdClassifyListVO mtdClassifyListVO);
 
   /**
    * 列表查询
@@ -45,5 +42,5 @@ public interface MtdClassifyService {
    * @param mtdClassifyVO
    * @return
    */
-  List<MtdClassifyInfoVO> listByAll(MtdClassifyVO mtdClassifyVO);
+  List<MtdClassifyVO> listByAll(MtdClassifyVO mtdClassifyVO);
 }

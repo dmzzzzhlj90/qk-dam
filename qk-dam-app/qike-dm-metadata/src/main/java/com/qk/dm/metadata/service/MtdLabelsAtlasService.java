@@ -15,4 +15,6 @@ public interface MtdLabelsAtlasService {
   void bulk(MtdLabelsAtlasBulkVO mtdLabelsVO);
 
   List<MtdLabelsAtlasVO> getByBulk(List<String> guids);
+
+  void delete(MtdLabelsAtlasVO mtdLabelsVO);
 }
