@@ -151,5 +151,17 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
         if(Objects.nonNull(rptFindSourceDTO.getTitle())){
             booleanBuilder.and(qRptFindSource.title.contains(rptFindSourceDTO.getTitle()));
         }
+        if(Objects.nonNull(rptFindSourceDTO.getKeywords())){
+            booleanBuilder.and(qRptFindSource.title.contains(rptFindSourceDTO.getKeywords()));
+        }
+        if(Objects.nonNull(rptFindSourceDTO.getInfoType())){
+            booleanBuilder.and(qRptFindSource.infoType.contains(rptFindSourceDTO.getInfoType()));
+        }
+        if(Objects.nonNull(rptFindSourceDTO.getProvinceCode())){
+            booleanBuilder.and(qRptFindSource.provinceCode.in(rptFindSourceDTO.getProvinceCode().split(",")));
+        }
+        if(Objects.nonNull(rptFindSourceDTO.getCityCode())){
+            booleanBuilder.and(qRptFindSource.cityCode.in(rptFindSourceDTO.getCityCode().split(",")));
+        }
     }
 }
