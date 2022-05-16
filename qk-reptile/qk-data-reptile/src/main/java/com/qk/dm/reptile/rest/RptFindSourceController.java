@@ -79,6 +79,7 @@ public class RptFindSourceController {
     @PostMapping("/list")
     public DefaultCommonResult<PageResultVO<RptFindSourceVO>> list(
             @RequestBody RptFindSourceDTO rptFindSourceDTO) {
+        rptFindSourceDTO.setStatus(2);
         return DefaultCommonResult.success(ResultCodeEnum.OK, findSourceService.list(rptFindSourceDTO));
     }
 
