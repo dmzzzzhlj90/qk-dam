@@ -42,7 +42,7 @@ public class RptFindSourceController {
      */
     @PostMapping("")
     public DefaultCommonResult insert(@RequestBody @Validated RptFindSourceDTO findSourceDTO){
-        findSourceService.requestCrawler(findSourceDTO);
+        findSourceService.insert(findSourceDTO);
         return DefaultCommonResult.success();
     }
 
