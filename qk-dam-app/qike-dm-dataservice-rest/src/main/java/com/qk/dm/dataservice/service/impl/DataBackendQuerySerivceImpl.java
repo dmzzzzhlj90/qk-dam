@@ -19,7 +19,7 @@ public class DataBackendQuerySerivceImpl implements DataBackendQuerySerivce {
     public Object dataBackendQuery(HttpDataParamModel httpDataParamModel) {
         try {
             ObjectMapper om = new ObjectMapper();
-            return om.readTree(dataBackendQueryFeign.dataBackendQuery(httpDataParamModel));
+            return om.readTree((byte[]) dataBackendQueryFeign.dataBackendQuery(httpDataParamModel));
         } catch (Exception e) {
             throw new BizException(e);
         }

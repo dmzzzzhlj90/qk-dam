@@ -12,6 +12,7 @@ import com.qk.dm.dataservice.biz.MysqlSqlExecutor;
 import com.qk.dm.dataservice.constant.ApiTypeEnum;
 import com.qk.dm.dataservice.constant.CreateParamSortStyleEnum;
 import com.qk.dm.dataservice.constant.CreateSqlRequestParamHeaderInfoEnum;
+import com.qk.dm.dataservice.constant.ResultDataTypeEnum;
 import com.qk.dm.dataservice.entity.DasApiBasicInfo;
 import com.qk.dm.dataservice.entity.DasApiCreateSqlScript;
 import com.qk.dm.dataservice.entity.QDasApiCreateSqlScript;
@@ -105,7 +106,7 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
             DasApiCreateSqlScriptDefinitionVO createSqlScriptDefinitionVO =
                     DasApiCreateSqlScriptMapper.INSTANCE.useDasApiCreateSqlScriptDefinitionVO(apiCreateSqlScript);
 
-            setDasApiCreateSqlScriptVOParams(apiCreateSqlScript,createSqlScriptDefinitionVO);
+            setDasApiCreateSqlScriptVOParams(apiCreateSqlScript, createSqlScriptDefinitionVO);
             createSqlScriptDefinitionVO.setCreateSqlRequestParasJson(apiCreateSqlScript.getApiRequestParas());
             createSqlScriptDefinitionVO.setCreateOrderParasJson(apiCreateSqlScript.getApiOrderParas());
 
@@ -227,18 +228,21 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
         ConnectBasicInfo connectBasicInfo = dataSourceInfo.get(apiCreateSqlScriptDefinitionVO.getDataSourceName());
 
         //执行SQL 查询数据
-        return getSearchData(apiCreateSqlScriptDefinitionVO, reqParams, connectBasicInfo);
+        Integer resultDataType = Integer.valueOf(apiCreateSqlScriptVO.getApiBasicInfoVO().getResultDataType());
+        return getSearchData(apiCreateSqlScriptDefinitionVO, reqParams, connectBasicInfo, resultDataType);
     }
 
     /**
      * @param apiCreateSqlScriptDefinitionVO
      * @param reqParams
      * @param connectBasicInfo
+     * @param resultDataType
      * @return
      */
     private Object getSearchData(DasApiCreateSqlScriptDefinitionVO apiCreateSqlScriptDefinitionVO,
-                                                    Map<String, String> reqParams,
-                                                    ConnectBasicInfo connectBasicInfo) {
+                                 Map<String, String> reqParams,
+                                 ConnectBasicInfo connectBasicInfo,
+                                 Integer resultDataType) {
         Object resSearchData = null;
         // schema
         String connectType = apiCreateSqlScriptDefinitionVO.getConnectType();
@@ -260,11 +264,13 @@ public class DasApiCreateSqlScriptServiceImpl implements DasApiCreateSqlScriptSe
                     .hiveExecuteSQL(null, sqlPara, null).searchDataSqlPara();
         }
 
-        // TODO 是否为详情单表数据
-        if (null != searchData && searchData.size() == 1) {
-            resSearchData = searchData.stream().findFirst().get();
-        } else {
-            resSearchData = searchData;
+        // 是否为详情单表数据
+        if (Objects.nonNull(searchData)) {
+            if (ResultDataTypeEnum.RESULT_DATA_TYPE_MAP.getCode().equals(resultDataType)) {
+                resSearchData = searchData.stream().findFirst().orElse(null);
+            } else if (ResultDataTypeEnum.RESULT_DATA_TYPE_LIST.getCode().equals(resultDataType)) {
+                resSearchData = searchData;
+            }
         }
         return resSearchData;
     }

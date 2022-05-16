@@ -166,6 +166,17 @@ public class DasApiBasicInfoController {
     }
 
     /**
+     * 结果集数据格式类型
+     *
+     * @return DefaultCommonResult<Map < String, String>>
+     */
+    @GetMapping(value = "/result/data/type")
+//  @Auth(bizType = BizResource.DAS_API_BASIC_INFO, actionType = RestActionType.GET)
+    public DefaultCommonResult<Map<Integer, String>> getResultDataType() {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dasApiBasicInfoService.getResultDataType());
+    }
+
+    /**
      * API调试__请求参数表头信息
      *
      * @return DefaultCommonResult<Map < String, String>>

@@ -58,6 +58,6 @@ public interface DasApiBasicInfoService {
     LinkedList<Map<String, Object>> getDebugParamHeaderInfo();
 
     List<DasApiBasicInfoVO> findAllByApiDirId(String dirDId);
-
+    Map<Integer, String> getResultDataType();
 
 }

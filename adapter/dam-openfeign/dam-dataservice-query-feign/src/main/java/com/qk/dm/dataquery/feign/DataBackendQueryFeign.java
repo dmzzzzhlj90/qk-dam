@@ -20,5 +20,5 @@ public interface DataBackendQueryFeign {
      * @return
      */
     @PostMapping("/app/query")
-    String dataBackendQuery(@RequestBody HttpDataParamModel httpDataParamModel);
+    Object dataBackendQuery(@RequestBody HttpDataParamModel httpDataParamModel);
 }
