@@ -173,7 +173,7 @@ public class ReptileServerFactory {
                     READ_TIMEOUT);
             Map<String,Object> map = GsonUtil.fromJsonString(result, Map.class);
             log.info("dataCheck 数据对比接口返回结果【{}】",map);
-            return Integer.parseInt(map.getOrDefault("total",0).toString())>0;
+            return Double.parseDouble(map.getOrDefault("total",0).toString())>0;
 
          } catch (Exception e) {
             log.error("dataCheck 数据对比接口异常【{}】",e.getMessage());

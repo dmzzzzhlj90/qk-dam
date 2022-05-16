@@ -71,8 +71,13 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
             Boolean result = ReptileServerFactory.dataCheck(e.getTitle(),
                     e.getPublishTime());
             if(result){
-                e.setStatus(2);
+                e.setStatus(1);
                 rptFindSourceRepository.saveAndFlush(e);
+            }else {
+                if(e.getStatus()==0){
+                    e.setStatus(2);
+                    rptFindSourceRepository.saveAndFlush(e);
+                }
             }
         });
     }
