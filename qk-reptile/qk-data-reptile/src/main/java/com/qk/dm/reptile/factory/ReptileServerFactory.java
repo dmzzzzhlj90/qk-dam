@@ -189,12 +189,15 @@ public class ReptileServerFactory {
      */
     public static String grabData(RptFindSourceDTO rptFindSourceDTO){
         try {
-            return HttpClientUtils.postForm(
+            log.info("爬虫竞品数据抓取参数【{}】",rptFindSourceDTO);
+            String result = HttpClientUtils.postForm(
                     MANUAL_URL,
                     grabDataPara(rptFindSourceDTO),
                     null,
                     CONN_TIMEOUT,
                     READ_TIMEOUT);
+            log.info("爬虫竞品爬虫接口抓取结果【{}】",result);
+            return result;
         }catch (Exception e){
             log.error("grabData 爬虫数据接口异常【{}】",e.getMessage());
             e.printStackTrace();
@@ -212,7 +215,8 @@ public class ReptileServerFactory {
 
     private static Map<String,Object> findSourceData(RptFindSourceDTO rptFindSourceDTO){
         Map<String,Object> map = new HashMap<>();
-        map.put("newAreas",Objects.requireNonNullElse(rptFindSourceDTO.getCityCode(), EMPTY));
+        map.put("newAreas",Objects.requireNonNullElse(String.join(",",rptFindSourceDTO.getProvinceCode(),
+                rptFindSourceDTO.getCityCode()), EMPTY));
         map.put("allType",Objects.requireNonNullElse(rptFindSourceDTO.getInfoType(),EMPTY));
         map.put("keywords",Objects.requireNonNullElse(rptFindSourceDTO.getKeywords(),EMPTY));
         map.put("timeType",Objects.requireNonNullElse(rptFindSourceDTO.getTimeType(),EMPTY));
@@ -222,7 +226,11 @@ public class ReptileServerFactory {
 
     public static void main(String[] args) {
        // RptFindSourceDTO.builder().cityCode("1140,1141").build();
-        grabData(RptFindSourceDTO.builder().cityCode("1140,1141").build());
+        grabData(RptFindSourceDTO.builder().cityCode("")
+                .infoType("0")
+                .provinceCode("2703")
+                .timeType("7")
+                .build());
     }
 
 }

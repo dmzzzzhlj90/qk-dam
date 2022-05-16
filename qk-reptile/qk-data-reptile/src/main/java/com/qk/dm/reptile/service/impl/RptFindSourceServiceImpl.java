@@ -48,9 +48,7 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
 
     @Override
     public void requestCrawler(RptFindSourceDTO rptFindSourceDTO) {
-        /**
-         * 调用爬虫接口
-         */
+        //调用爬虫接口
         ReptileServerFactory.grabData(rptFindSourceDTO);
     }
 
@@ -58,9 +56,9 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
     public void insert(RptFindSourceDTO rptFindSourceDTO) {
         RptFindSource rptFindSource = RptFindSourceMapper.INSTANCE.of(rptFindSourceDTO);
         //判断数据是否存在
-        Boolean result = ReptileServerFactory.dataCheck(rptFindSourceDTO.getTitle(),
-                rptFindSourceDTO.getPublishTime());
-        rptFindSource.setStatus(result?1:2);
+//        Boolean result = ReptileServerFactory.dataCheck(rptFindSourceDTO.getTitle(),
+//                rptFindSourceDTO.getPublishTime());
+        rptFindSource.setStatus(2);
         rptFindSourceRepository.save(rptFindSource);
     }
 
@@ -151,16 +149,13 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
         if(Objects.nonNull(rptFindSourceDTO.getTitle())){
             booleanBuilder.and(qRptFindSource.title.contains(rptFindSourceDTO.getTitle()));
         }
-        if(Objects.nonNull(rptFindSourceDTO.getKeywords())){
+        if(StringUtils.isNotBlank(rptFindSourceDTO.getKeywords())){
             booleanBuilder.and(qRptFindSource.title.contains(rptFindSourceDTO.getKeywords()));
         }
-        if(Objects.nonNull(rptFindSourceDTO.getInfoType())){
-            booleanBuilder.and(qRptFindSource.infoType.contains(rptFindSourceDTO.getInfoType()));
-        }
-        if(Objects.nonNull(rptFindSourceDTO.getProvinceCode())){
+        if(StringUtils.isNotBlank(rptFindSourceDTO.getProvinceCode())){
             booleanBuilder.and(qRptFindSource.provinceCode.in(rptFindSourceDTO.getProvinceCode().split(",")));
         }
-        if(Objects.nonNull(rptFindSourceDTO.getCityCode())){
+        if(StringUtils.isNotBlank(rptFindSourceDTO.getCityCode())){
             booleanBuilder.and(qRptFindSource.cityCode.in(rptFindSourceDTO.getCityCode().split(",")));
         }
     }
