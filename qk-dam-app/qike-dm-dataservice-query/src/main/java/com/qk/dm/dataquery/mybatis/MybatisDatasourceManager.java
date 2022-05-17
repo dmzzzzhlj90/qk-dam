@@ -66,8 +66,10 @@ public class MybatisDatasourceManager {
           ResultDatasourceInfo resultDatasourceInfo = datasourceInfoMap.get(dataSourceCode);
 
           String connectBasicInfoJson = resultDatasourceInfo.getConnectBasicInfoJson();
+          log.info("TODO查看连接信息: " + connectBasicInfoJson + " *****code:" + dataSourceCode);
           try {
             MysqlInfo mysqlInfo = objectMapper.readValue(connectBasicInfoJson, MysqlInfo.class);
+            log.info("TODO MysqlInfo信息: " + mysqlInfo);
             this.regDatasource(dataSourceCode, mysqlInfo);
             log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceCode());
           } catch (Exception e) {
