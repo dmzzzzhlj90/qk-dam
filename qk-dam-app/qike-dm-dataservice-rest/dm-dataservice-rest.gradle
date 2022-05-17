@@ -23,7 +23,7 @@ docker {
         baseImage = "${jre11Image}"
         ports = [8888]
         images = ["${imagePush}/${project.name}:${version}"]
-        jvmArgs = ['-Xmx512m -Xmx128m']
+        jvmArgs = ['-Xmx512m']
     }
 }
 dependencies {

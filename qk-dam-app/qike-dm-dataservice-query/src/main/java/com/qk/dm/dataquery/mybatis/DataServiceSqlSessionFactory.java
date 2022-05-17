@@ -36,7 +36,7 @@ public class DataServiceSqlSessionFactory {
         sqlSessionFactoryInsertEvent.getEnvironmentMap().forEach(this::registerEnvironment);
     }
 
-    public void registerEnvironment(String connectName, Environment environment) {
+    public void registerEnvironment(String dataSourceCode, Environment environment) {
         org.apache.ibatis.session.Configuration configuration =
                 new org.apache.ibatis.session.Configuration();
 
@@ -47,28 +47,28 @@ public class DataServiceSqlSessionFactory {
 
         configuration.setEnvironment(environment);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
-        sqlSessionFactoryMap.put(connectName, sqlSessionFactory);
+        sqlSessionFactoryMap.put(dataSourceCode, sqlSessionFactory);
     }
 
     public SqlSessionFactory getSqlSessionFactory(String connectName) {
         return sqlSessionFactoryMap.get(connectName);
     }
 
-    public Configuration getConfiguration(String connectName) {
-        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryMap.get(connectName);
+    public Configuration getConfiguration(String dataSourceCode) {
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryMap.get(dataSourceCode);
 
         return sqlSessionFactory.getConfiguration();
     }
 
     public void scanMappers(MybatisMapperContainer mybatisMapperContainer) {
         sqlSessionFactoryMap.forEach(
-                (connectName2, sqlSessionFactory) -> scanMapper(mybatisMapperContainer, connectName2));
+                (dataSourceCode, sqlSessionFactory) -> scanMapper(mybatisMapperContainer, dataSourceCode));
 
     }
 
-    public void scanMapper(MybatisMapperContainer mybatisMapperContainer, String connectName) {
-        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryMap.get(connectName);
-        Mapper mapper = mybatisMapperContainer.getMapper(connectName);
+    public void scanMapper(MybatisMapperContainer mybatisMapperContainer, String dataSourceCode) {
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryMap.get(dataSourceCode);
+        Mapper mapper = mybatisMapperContainer.getMapper(dataSourceCode);
         if (Objects.nonNull(mapper)) {
             Configuration configuration = sqlSessionFactory.getConfiguration();
             log.info("bind mybatis mapper to =====> configuration");

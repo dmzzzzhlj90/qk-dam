@@ -56,27 +56,27 @@ public class MybatisDatasourceManager {
       List<DataQueryInfoVO> dataQueryInfo, List<ResultDatasourceInfo> resultDataSource) {
     Map<String, ResultDatasourceInfo> datasourceInfoMap =
         resultDataSource.stream()
-            .collect(Collectors.toMap(ResultDatasourceInfo::getDataSourceName, (v -> v)));
+            .collect(Collectors.toMap(ResultDatasourceInfo::getDataSourceCode, (v -> v)));
     log.info("查询数据源服务成功！共获取【{}】个mysql数据源", resultDataSource.size());
     ObjectMapper objectMapper = new ObjectMapper();
 
     dataQueryInfo.forEach(
         (dataQueryInfoVO -> {
-          String dataSourceName = dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceName();
-          ResultDatasourceInfo resultDatasourceInfo = datasourceInfoMap.get(dataSourceName);
+          String dataSourceCode = dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceCode();
+          ResultDatasourceInfo resultDatasourceInfo = datasourceInfoMap.get(dataSourceCode);
 
           String connectBasicInfoJson = resultDatasourceInfo.getConnectBasicInfoJson();
           try {
             MysqlInfo mysqlInfo = objectMapper.readValue(connectBasicInfoJson, MysqlInfo.class);
-            this.regDatasource(dataSourceName, mysqlInfo);
-            log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceName());
+            this.regDatasource(dataSourceCode, mysqlInfo);
+            log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceCode());
           } catch (Exception e) {
             throw new BizException("错误的json处理！");
           }
         }));
   }
 
-  public void regDatasource(String dataSourceName, ConnectBasicInfo connectBasicInfo) {
+  public void regDatasource(String dataSourceCode, ConnectBasicInfo connectBasicInfo) {
     HikariConfig hc = new HikariConfig();
     hc.setJdbcUrl(
         "jdbc:"
@@ -99,8 +99,8 @@ public class MybatisDatasourceManager {
             .dataSourceProperties(new Properties())
             .build();
 
-    hikariDataSourceFactoryMap.put(dataSourceName, hikariDataSourceFactory);
-    datasourceMap.put(dataSourceName, hikariDataSourceFactory.dataSourceInstance());
+    hikariDataSourceFactoryMap.put(dataSourceCode, hikariDataSourceFactory);
+    datasourceMap.put(dataSourceCode, hikariDataSourceFactory.dataSourceInstance());
   }
   /**
    * 获取需要忽略的属性
@@ -127,8 +127,8 @@ public class MybatisDatasourceManager {
     return Objects.isNull(datasourceMap.get(connectName));
   }
 
-  public DataSource getDataSource(String connectName) {
-    return datasourceMap.get(connectName);
+  public DataSource getDataSource(String connectCode) {
+    return datasourceMap.get(connectCode);
   }
 
 
