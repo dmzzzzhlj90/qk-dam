@@ -70,11 +70,11 @@ public class RptFindSourceDTO {
     /**
      * 开始时间 当时间为自定义时不可为空
      */
-    private String beginTime;
+    private Date beginTime;
     /**
      * 结束时间 当时间为自定义时不可为空
      */
-    private String endTime;
+    private Date endTime;
 
 
 }

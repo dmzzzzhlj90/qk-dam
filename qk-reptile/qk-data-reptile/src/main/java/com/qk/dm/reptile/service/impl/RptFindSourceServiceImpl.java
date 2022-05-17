@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.client.ClientUserInfo;
+import com.qk.dm.reptile.client.CrawlerCall;
 import com.qk.dm.reptile.entity.QRptFindSource;
 import com.qk.dm.reptile.entity.RptFindSource;
 import com.qk.dm.reptile.factory.ReptileServerFactory;
@@ -13,6 +14,7 @@ import com.qk.dm.reptile.params.dto.RptFindSourceDTO;
 import com.qk.dm.reptile.params.vo.RptFindSourceVO;
 import com.qk.dm.reptile.repositories.RptFindSourceRepository;
 import com.qk.dm.reptile.service.RptFindSourceService;
+import com.qk.dm.reptile.utils.DateUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +38,11 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
     private final EntityManager entityManager;
     private final QRptFindSource qRptFindSource = QRptFindSource.rptFindSource;
     private final RptFindSourceRepository rptFindSourceRepository;
-
-    public RptFindSourceServiceImpl(EntityManager entityManager, RptFindSourceRepository rptFindSourceRepository) {
+    private final CrawlerCall crawlerCall;
+    public RptFindSourceServiceImpl(EntityManager entityManager, RptFindSourceRepository rptFindSourceRepository, CrawlerCall crawlerCall) {
         this.entityManager = entityManager;
         this.rptFindSourceRepository = rptFindSourceRepository;
+        this.crawlerCall = crawlerCall;
     }
     @PostConstruct
     public void initFactory() {
@@ -49,7 +52,7 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
     @Override
     public void requestCrawler(RptFindSourceDTO rptFindSourceDTO) {
         //调用爬虫接口
-        ReptileServerFactory.grabData(rptFindSourceDTO);
+        ReptileServerFactory.grabData(crawlerCall.getManualUrl(),rptFindSourceDTO);
     }
 
     @Override
@@ -66,7 +69,7 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
     public void dataContrast(Integer status) {
         List<RptFindSource> list = rptFindSourceRepository.findAllByStatus(status);
         Optional.ofNullable(list).orElse(List.of()).forEach(e->{
-            Boolean result = ReptileServerFactory.dataCheck(e.getTitle(),
+            Boolean result = ReptileServerFactory.dataCheck(crawlerCall.getDataCheckUrl(),e.getTitle(),
                     e.getPublishTime());
             if(result){
                 e.setStatus(1);
@@ -157,6 +160,17 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
         }
         if(StringUtils.isNotBlank(rptFindSourceDTO.getCityCode())){
             booleanBuilder.and(qRptFindSource.cityCode.in(rptFindSourceDTO.getCityCode().split(",")));
+        }
+        if(StringUtils.isNotBlank(rptFindSourceDTO.getTimeType())){
+            Date date = DateUtil.getDate(rptFindSourceDTO.getTimeType());
+            if(Objects.nonNull(date)) {
+                booleanBuilder.and(qRptFindSource.publishTime.goe(date)).and(qRptFindSource.publishTime.loe(new Date()));
+            }
+        }
+        if(Objects.nonNull(rptFindSourceDTO.getBeginTime())
+                &&Objects.nonNull(rptFindSourceDTO.getEndTime())){
+            booleanBuilder.and(qRptFindSource.publishTime.goe(rptFindSourceDTO.getBeginTime()))
+                    .and(qRptFindSource.publishTime.loe(rptFindSourceDTO.getEndTime()));
         }
     }
 }

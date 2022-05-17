@@ -35,14 +35,6 @@ public class ReptileServerFactory {
     private static final String START_URL = "start_url";
     private static final String LIST = "list";
     private static final String EMPTY = "";
-    //todo 目前在测试，地址暂时写此，之后提到Nacos上
-    private static final String TIMING_URL = "http://172.21.3.211:6800/schedule.json";
-    //手动抓取地址
-    private static final String MANUAL_URL = "http://172.21.3.191:6800/schedule.json";
-    //爬虫验证数据是否存在接口
-    public static final String RPT_FIND_SOURCE = "http://pythonapi-uat.qk.com:18920/api/bid_info/bid_search/";
-    //找源爬虫接口
-    public static final String GRAB_DATA_URL = "";
 
     /**
      * 手动执行
@@ -50,8 +42,8 @@ public class ReptileServerFactory {
      * @param rptConfigInfoList
      * @return
      */
-    public static String manual(List<RptConfigInfoVO> rptConfigInfoList) {
-        return requestServer(rptConfigInfoList, MANUAL_URL, 0);
+    public static String manual(String manualUrl,List<RptConfigInfoVO> rptConfigInfoList) {
+        return requestServer(rptConfigInfoList, manualUrl, 0);
     }
 
     /**
@@ -60,8 +52,8 @@ public class ReptileServerFactory {
      * @param rptConfigInfoList
      * @return
      */
-    public static String timing(List<RptConfigInfoVO> rptConfigInfoList) {
-        return requestServer(rptConfigInfoList, TIMING_URL, 1);
+    public static String timing(String timingUrl,List<RptConfigInfoVO> rptConfigInfoList) {
+        return requestServer(rptConfigInfoList, timingUrl, 1);
     }
 
     private static String requestServer(List<RptConfigInfoVO> rptConfigInfoList, String url, Integer in) {
@@ -158,11 +150,11 @@ public class ReptileServerFactory {
      * 根据标题查询数据是否已经在库中存在
      * @return 返回结果
      */
-    public static Boolean dataCheck(String title,Date publishTime){
+    public static Boolean dataCheck(String dataCheckUrl,String title,Date publishTime){
         log.info("dataCheck 数据对比：title【{}】,发布时间【{}】",title,publishTime);
         try {
             String result = HttpClientUtils.postForm(
-                    RPT_FIND_SOURCE,
+                    dataCheckUrl,
                     Map.of("search_field", "1",
                             "search_type", "1",
                             "search_keyword", GsonUtil.toJsonString(List.of(title)),
@@ -187,11 +179,11 @@ public class ReptileServerFactory {
      * 抓取数据接口
      * @return
      */
-    public static String grabData(RptFindSourceDTO rptFindSourceDTO){
+    public static String grabData(String manualUrl,RptFindSourceDTO rptFindSourceDTO){
         try {
             log.info("爬虫竞品数据抓取参数【{}】",rptFindSourceDTO);
             String result = HttpClientUtils.postForm(
-                    MANUAL_URL,
+                    manualUrl,
                     grabDataPara(rptFindSourceDTO),
                     null,
                     CONN_TIMEOUT,
@@ -224,13 +216,5 @@ public class ReptileServerFactory {
         return map;
     }
 
-    public static void main(String[] args) {
-       // RptFindSourceDTO.builder().cityCode("1140,1141").build();
-        grabData(RptFindSourceDTO.builder().cityCode("")
-                .infoType("0")
-                .provinceCode("2703")
-                .timeType("7")
-                .build());
-    }
 
 }
