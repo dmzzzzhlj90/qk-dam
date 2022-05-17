@@ -2,6 +2,7 @@ package com.qk.dm.dataingestion.datax;
 
 import com.dolphinscheduler.client.DolphinschedulerManager;
 import com.qk.dam.commons.exception.BizException;
+import com.qk.dam.commons.util.BeanMapUtils;
 import com.qk.dam.commons.util.CodeGenerateUtils;
 import com.qk.datacenter.client.ApiException;
 import com.qk.datacenter.model.ProcessDefinition;
@@ -12,9 +13,11 @@ import com.qk.dm.dataingestion.enums.ProcessInstancePriority;
 import com.qk.dm.dataingestion.model.DolphinProcessDefinition;
 import com.qk.dm.dataingestion.model.DolphinTaskDefinitionPropertiesBean;
 import com.qk.dm.dataingestion.util.CronUtil;
+import com.qk.dm.dataingestion.vo.ProcessDefinitionVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.Date;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -59,7 +62,8 @@ public class DataxDolphinClient {
 
     }
 
-    public Result updateProcessDefinition(String name,
+    public Result updateProcessDefinition(Long processDefinitionCode,
+                                          String name,
                                           long taskCode,
                                           String dataxJson,
                                           DolphinTaskDefinitionPropertiesBean taskParam) throws ApiException {
@@ -70,7 +74,7 @@ public class DataxDolphinClient {
                 taskParam,
                 dolphinTaskDefinitionPropertiesBean);
         Result result = dolphinschedulerManager.defaultApi().updateProcessDefinitionUsingPUT(
-                taskCode,
+                processDefinitionCode,
                 processDefinition.getLocations(),
                 processDefinition.getName(),
                 dolphinTaskDefinitionPropertiesBean.getProjectCode(),
@@ -86,6 +90,26 @@ public class DataxDolphinClient {
         }
         return result;
 
+    }
+
+    /**
+     * 获取流程定义详情
+     *
+     * @param processDefinitionCode
+     * @return
+     * @throws ApiException
+     */
+    public ProcessDefinitionVO processDefinitionDetail(Long processDefinitionCode) throws ApiException {
+        Result result = dolphinschedulerManager.defaultApi().queryProcessDefinitionByCodeUsingGET(
+                processDefinitionCode,
+                dolphinTaskDefinitionPropertiesBean.getProjectCode()
+        );
+        if (Boolean.TRUE.equals(result.getFailed())) {
+            throw new ApiException(400, result.getMsg());
+        }
+        Map<String, Object> data = (Map<String, Object>) result.getData();
+        Map<String, Object> processDefinition = (Map<String, Object>) data.get("processDefinition");
+        return BeanMapUtils.changeMapToBean(processDefinition, new ProcessDefinitionVO());
     }
 
     public Result dolphinProcessRelease(Long processDefinitionCode, ProcessDefinition.ReleaseStateEnum releaseState) {

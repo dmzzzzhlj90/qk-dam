@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -105,6 +106,14 @@ public class DasApiBasicInfoVO {
     @ExcelIgnore
     @ExcelProperty(value = {"入参定义"}, index = 9)
     private List<DasApiBasicInfoRequestParasVO> apiBasicInfoRequestParasVOS;
+
+
+    /**
+     * 结果集数据格式类型: 0单条,1列表
+     */
+    @ExcelProperty(value = {"结果集数据格式类型"}, index = 2)
+    @NotNull(message = "结果集数据格式类型不能为空！")
+    private String resultDataType;
 
     /**
      * 入参定义 JSON

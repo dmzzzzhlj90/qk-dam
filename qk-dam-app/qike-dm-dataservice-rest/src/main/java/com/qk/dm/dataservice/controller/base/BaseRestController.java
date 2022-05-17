@@ -41,13 +41,15 @@ public abstract class BaseRestController {
     DataQueryInfoVO queryInfoVO = matchDataQueryInfo(request);
 
     return HttpDataParamModel.builder()
-            .apiId(queryInfoVO.getDasApiBasicInfo().getApiId())
+            .apiId(queryInfoVO.getApiBasicInfoVO().getApiId())
             .uriPathParam(
-                    getUriPathParam(queryInfoVO.getDasApiBasicInfo().getApiPath(), request))
+                    getUriPathParam(queryInfoVO.getApiBasicInfoVO().getApiPath(), request))
             .headers(headers)
-            .params(param)
             .body(bodyData)
+            .params(param)
             .method(RequestMethod.GET)
+            .cacheLevel(queryInfoVO.getApiCreateDefinitionVO().getCacheLevel())
+            .pageFlag(queryInfoVO.getApiCreateDefinitionVO().getPageFlag())
             .build();
   }
   /**
@@ -61,7 +63,7 @@ public abstract class BaseRestController {
         dataQueryInfoVOList.stream()
             .filter(
                 dataQueryInfoVO -> {
-                  DasApiBasicInfoVO dasApiBasicInfo = dataQueryInfoVO.getDasApiBasicInfo();
+                  DasApiBasicInfoVO dasApiBasicInfo = dataQueryInfoVO.getApiBasicInfoVO();
                   return request.getMethod().equals(dasApiBasicInfo.getRequestType())
                       && matchUriPath(request.getRequestURI(), dasApiBasicInfo.getApiPath());
                 })

@@ -2,7 +2,7 @@ package com.qk.dam.metadata.catacollect.repo;
 
 import cn.hutool.db.Db;
 import cn.hutool.db.ds.simple.SimpleDataSource;
-import com.qk.dam.metadata.catacollect.pojo.MetadataConnectInfoVo;
+import com.qk.dam.catacollect.vo.MetadataConnectInfoVo;
 import org.apache.atlas.AtlasClientV2;
 import org.apache.atlas.model.instance.AtlasEntity;
 

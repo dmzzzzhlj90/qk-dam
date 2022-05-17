@@ -55,7 +55,8 @@ public enum MysqlDataType {
         if(CollectionUtils.isEmpty(columnList)){return List.of();}
 
         return  columnList.stream()
-                .filter(e->!isMatch(e.getDataType()))
+                .filter(e->!isMatch(e.getDataType())&&!List.of("int","bigint",
+                        "date","text","year","time","blob","datetime","timestamp").contains(e.getDataType()))
                 .collect(Collectors.toList());
 
     }
@@ -66,6 +67,7 @@ public enum MysqlDataType {
      * @return
      */
     public static boolean isMatch(String content) {
+
         return Pattern.compile("^[a-z].*\\([0-9]+\\)").matcher(content).matches();
     }
 

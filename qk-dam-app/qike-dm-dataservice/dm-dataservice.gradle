@@ -57,6 +57,9 @@ dependencies {
     implementation project(":datasource-common-core")
     implementation project(":metadata-common-core")
     implementation project(":qk-openapi-lib")
+    implementation project(":qk-sqlparser")
+    implementation project(":dm-das-query-feign")
+
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"

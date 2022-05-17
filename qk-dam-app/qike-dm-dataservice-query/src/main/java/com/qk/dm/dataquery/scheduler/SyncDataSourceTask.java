@@ -50,7 +50,7 @@ public class SyncDataSourceTask {
               .filter(
                   dataQueryInfoVO ->
                       mybatisDatasourceManager.containsDataSource(
-                          dataQueryInfoVO.getDasApiCreateSqlScript().getConnId()))
+                          dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceCode()))
               .collect(Collectors.toList());
       if (CollectionUtils.isNotEmpty(dataQueryInfoVOList)) {
         // 1. 触发新增数据源事件
@@ -73,19 +73,19 @@ public class SyncDataSourceTask {
     return queryInfoList.stream()
         .collect(
             Collectors.toMap(
-                k -> k.getDasApiCreateSqlScript().getConnId(),
+                k -> k.getApiCreateDefinitionVO().getDataSourceCode(),
                 v ->
                     mybatisDatasourceManager.getDataSource(
-                        v.getDasApiCreateSqlScript().getConnId())));
+                        v.getApiCreateDefinitionVO().getDataSourceCode())));
   }
 
   private Map<String, Environment> getEnvironmentMap(List<DataQueryInfoVO> queryInfoList) {
     return queryInfoList.stream()
         .collect(
             Collectors.toMap(
-                k -> k.getDasApiCreateSqlScript().getConnId(),
+                k -> k.getApiCreateDefinitionVO().getDataSourceCode(),
                 v ->
                     mybatisEnvironmentManager.getEnvironment(
-                        v.getDasApiCreateSqlScript().getConnId())));
+                        v.getApiCreateDefinitionVO().getDataSourceCode())));
   }
 }

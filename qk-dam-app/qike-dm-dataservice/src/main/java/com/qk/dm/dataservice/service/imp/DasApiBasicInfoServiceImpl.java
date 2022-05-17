@@ -9,12 +9,8 @@ import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.dataservice.constant.*;
 import com.qk.dm.dataservice.entity.*;
 import com.qk.dm.dataservice.mapstruct.mapper.DasApiBasicInfoMapper;
-import com.qk.dm.dataservice.repositories.DasApiBasicInfoRepository;
-import com.qk.dm.dataservice.repositories.DasApiCreateConfigRepository;
-import com.qk.dm.dataservice.repositories.DasApiCreateSqlScriptRepository;
-import com.qk.dm.dataservice.repositories.DasApiRegisterRepository;
+import com.qk.dm.dataservice.repositories.*;
 import com.qk.dm.dataservice.service.DasApiBasicInfoService;
-import com.qk.dm.dataservice.service.DasApiDirService;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoParamsVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoRequestParasVO;
 import com.qk.dm.dataservice.vo.DasApiBasicInfoVO;
@@ -23,8 +19,8 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.compress.utils.Lists;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -38,36 +34,21 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Service
+@RequiredArgsConstructor
 public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     private static final QDasApiBasicInfo qDasApiBasicInfo = QDasApiBasicInfo.dasApiBasicInfo;
     private static final QDasApiRegister qDasApiRegister = QDasApiRegister.dasApiRegister;
     private static final QDasApiCreateConfig qDasApiCreateConfig = QDasApiCreateConfig.dasApiCreateConfig;
     private static final QDasApiCreateSqlScript qDasApiCreateSqlScript = QDasApiCreateSqlScript.dasApiCreateSqlScript;
+    private static final QDasApiCreateMybatisSqlScript qDasApiCreateMybatisSqlScript = QDasApiCreateMybatisSqlScript.dasApiCreateMybatisSqlScript;
 
-    private final DasApiDirService dasApiDirService;
     private final DasApiBasicInfoRepository dasApiBasicinfoRepository;
     private final DasApiRegisterRepository dasApiRegisterRepository;
     private final DasApiCreateConfigRepository dasApiCreateConfigRepository;
     private final DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository;
+    private final DasApiCreateMybatisSqlScriptRepository dasApiCreateMybatisSqlScriptRepository;
 
     private final JPAQueryFactory jpaQueryFactory;
-
-    @Autowired
-    public DasApiBasicInfoServiceImpl(
-            DasApiDirService dasApiDirService,
-            DasApiBasicInfoRepository dasApiBasicinfoRepository,
-            DasApiRegisterRepository dasApiRegisterRepository,
-            DasApiCreateConfigRepository dasApiCreateConfigRepository,
-            DasApiCreateSqlScriptRepository dasApiCreateSqlScriptRepository,
-            JPAQueryFactory jpaQueryFactory) {
-        this.dasApiDirService = dasApiDirService;
-        this.dasApiBasicinfoRepository = dasApiBasicinfoRepository;
-        this.dasApiRegisterRepository = dasApiRegisterRepository;
-        this.dasApiCreateConfigRepository = dasApiCreateConfigRepository;
-        this.dasApiCreateSqlScriptRepository = dasApiCreateSqlScriptRepository;
-        this.jpaQueryFactory = jpaQueryFactory;
-
-    }
 
     @Override
     public PageResultVO<DasApiBasicInfoVO> searchList(
@@ -225,11 +206,14 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
 
         // 批量删除新建API配置信息
         // 新建配置
-        Iterable<DasApiCreateConfig> dasApiCreateConfigRepositoryAll = dasApiCreateConfigRepository.findAll(qDasApiCreateConfig.apiId.in(createApiIds));
-        dasApiCreateConfigRepository.deleteAll(dasApiCreateConfigRepositoryAll);
+        Iterable<DasApiCreateConfig> createConfigs = dasApiCreateConfigRepository.findAll(qDasApiCreateConfig.apiId.in(createApiIds));
+        dasApiCreateConfigRepository.deleteAll(createConfigs);
         // 新建脚本
-        Iterable<DasApiCreateSqlScript> dasApiCreateSqlScriptRepositoryAll = dasApiCreateSqlScriptRepository.findAll(qDasApiCreateSqlScript.apiId.in(createApiIds));
-        dasApiCreateSqlScriptRepository.deleteAll(dasApiCreateSqlScriptRepositoryAll);
+        Iterable<DasApiCreateSqlScript> sqlScripts = dasApiCreateSqlScriptRepository.findAll(qDasApiCreateSqlScript.apiId.in(createApiIds));
+        dasApiCreateSqlScriptRepository.deleteAll(sqlScripts);
+        // 高级SQL
+        Iterable<DasApiCreateMybatisSqlScript> mybatisSqlScripts = dasApiCreateMybatisSqlScriptRepository.findAll(qDasApiCreateMybatisSqlScript.apiId.in(createApiIds));
+        dasApiCreateMybatisSqlScriptRepository.deleteAll(mybatisSqlScripts);
     }
 
     @Override
@@ -238,8 +222,8 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     }
 
     @Override
-    public Map<String, String> getDMSourceType() {
-        return DMSourceTypeEnum.getAllValue();
+    public Map<String, String> createTypeInfo() {
+        return CreateTypeEnum.getAllValue();
     }
 
     @Override
@@ -297,6 +281,11 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
     }
 
     @Override
+    public Map<Integer, String> getResultDataType() {
+        return ResultDataTypeEnum.getAllValue();
+    }
+
+    @Override
     public List<DasApiBasicInfoVO> findAllByApiDirId(String dirDId) {
         List<DasApiBasicInfoVO> apiBasicInfoVOList = new ArrayList<>();
 
@@ -328,8 +317,9 @@ public class DasApiBasicInfoServiceImpl implements DasApiBasicInfoService {
         return DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
     }
 
-    private void setDelInputParamVO(DasApiBasicInfo dasApiBasicInfo, DasApiBasicInfoVO dasApiBasicinfoVO) {
-        if (!ObjectUtils.isEmpty(dasApiBasicInfo.getDefInputParam())) {
+    @Override
+    public void setDelInputParamVO(DasApiBasicInfo dasApiBasicInfo, DasApiBasicInfoVO dasApiBasicinfoVO) {
+        if (Objects.nonNull(dasApiBasicInfo.getDefInputParam())) {
             dasApiBasicinfoVO.setApiBasicInfoRequestParasVOS(
                     GsonUtil.fromJsonString(dasApiBasicInfo.getDefInputParam(),
                             new TypeToken<List<DasApiBasicInfoRequestParasVO>>() {

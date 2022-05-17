@@ -1,7 +1,7 @@
 {
   "info": {
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_postman_id": "d260b66a-0e46-470e-aa54-1d386d20adb5",
+    "_postman_id": "e5f13351-edc8-46f5-bbac-76ab68e2774b",
     "name": "dm-datasource"
   },
   "item": [
@@ -50,7 +50,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/database/p4jzfm",
+              "raw": "http://::server/api/database/wfkhjk",
               "protocol": "http",
               "path": [
                 "api",
@@ -64,7 +64,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "p8ihm7",
+                  "value": "673o1y",
                   "description": "No comments found."
                 }
               ]
@@ -86,7 +86,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/keren.schumm",
+              "raw": "http://::server/api/emeline.gutkowski",
               "protocol": "http",
               "path": [
                 "api",
@@ -99,7 +99,7 @@
               "variable": [
                 {
                   "key": "dataSourceName",
-                  "value": "keren.schumm",
+                  "value": "emeline.gutkowski",
                   "description": "No comments found."
                 }
               ]
@@ -134,7 +134,7 @@
               "query": [
                 {
                   "key": "dataSourceNames",
-                  "value": "n9ckg3",
+                  "value": "6pkh3o",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -157,7 +157,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/api/data/sources/114",
+              "raw": "http://::server/api/data/sources/131",
               "protocol": "http",
               "path": [
                 "api",
@@ -172,7 +172,7 @@
               "variable": [
                 {
                   "key": "connId",
-                  "value": "114",
+                  "value": "131",
                   "description": "No comments found."
                 }
               ]
@@ -207,7 +207,7 @@
               "query": [
                 {
                   "key": "connIds",
-                  "value": "r62uiy",
+                  "value": "oayqko",
                   "description": "No comments found.,[array of object]"
                 }
               ],
@@ -229,7 +229,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"a69yi8\"\n  },\n  \"dataSourceName\": \"keren.schumm\",\n  \"linkType\": \"9qfraq\",\n  \"dicId\": \"114\",\n  \"beginDay\": \"ot3fdn\",\n  \"endDay\": \"3css1f\"\n}",
+              "raw": "{\n  \"pagination\": {\n    \"page\": 1,\n    \"size\": 10,\n    \"sortField\": \"orlsi9\"\n  },\n  \"dataSourceName\": \"emeline.gutkowski\",\n  \"linkType\": \"3g5cpr\",\n  \"dicId\": \"131\",\n  \"beginDay\": \"3qhqkh\",\n  \"endDay\": \"ospso8\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -260,7 +260,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 6,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"ct79ed\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"e9bsv5\",\n  \"tagNames\": \"u5l3g7\",\n  \"tagIds\": \"x5ipe5\",\n  \"use\": \"9ansh6\",\n  \"deployPlace\": \"8hk645\",\n  \"status\": 696,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"0x6inf\",\n  \"dicId\": \"114\",\n  \"remark\": \"x4v3tb\"\n}",
+              "raw": "{\n  \"id\": 994,\n  \"dataSourceName\": \"emeline.gutkowski\",\n  \"connId\": \"131\",\n  \"homeSystem\": \"w59dak\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"hfw0wu\",\n  \"tagNames\": \"7hlvc2\",\n  \"tagIds\": \"vyvrrz\",\n  \"use\": \"0wnzaq\",\n  \"deployPlace\": \"6jd0nl\",\n  \"status\": 412,\n  \"gmtModified\": \"2022-05-07 10:05:45\",\n  \"gmtCreate\": \"2022-05-07 10:05:45\",\n  \"createUserid\": \"131\",\n  \"updateUserid\": \"131\",\n  \"delFlag\": 8,\n  \"versionConsumer\": \"akeyni\",\n  \"dicId\": \"131\",\n  \"remark\": \"goqnwi\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -297,7 +297,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/960",
+              "raw": "http://::server/datasource/381",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -310,7 +310,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "468",
+                  "value": "896",
                   "description": "数据源id"
                 }
               ]
@@ -326,7 +326,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 86,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"mmnib9\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"kz5r0m\",\n  \"tagNames\": \"qezaqz\",\n  \"tagIds\": \"w00n0o\",\n  \"use\": \"khk27h\",\n  \"deployPlace\": \"yjuv5h\",\n  \"status\": 928,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"69wx0t\",\n  \"dicId\": \"114\",\n  \"remark\": \"hqqjtb\"\n}",
+              "raw": "{\n  \"id\": 568,\n  \"dataSourceName\": \"emeline.gutkowski\",\n  \"connId\": \"131\",\n  \"homeSystem\": \"v2od6x\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"kbac55\",\n  \"tagNames\": \"brj6em\",\n  \"tagIds\": \"qp57j9\",\n  \"use\": \"jfkhyh\",\n  \"deployPlace\": \"klbsls\",\n  \"status\": 562,\n  \"gmtModified\": \"2022-05-07 10:05:45\",\n  \"gmtCreate\": \"2022-05-07 10:05:45\",\n  \"createUserid\": \"131\",\n  \"updateUserid\": \"131\",\n  \"delFlag\": 8,\n  \"versionConsumer\": \"ut7t1n\",\n  \"dicId\": \"131\",\n  \"remark\": \"eo1n6m\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -392,7 +392,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/database/afw3xo",
+              "raw": "http://::server/datasource/database/lhj7e7",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -406,7 +406,7 @@
               "variable": [
                 {
                   "key": "type",
-                  "value": "q1n8a1",
+                  "value": "3wdq6r",
                   "description": "数据连接类型"
                 }
               ]
@@ -428,7 +428,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasource/180",
+              "raw": "http://::server/datasource/634",
               "protocol": "http",
               "path": [
                 "datasource",
@@ -441,7 +441,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "859",
+                  "value": "914",
                   "description": "数据源名称"
                 }
               ]
@@ -457,7 +457,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": 914,\n  \"dataSourceName\": \"keren.schumm\",\n  \"connId\": \"114\",\n  \"homeSystem\": \"0z0co9\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"9p3brs\",\n  \"tagNames\": \"8w513u\",\n  \"tagIds\": \"pfefvf\",\n  \"use\": \"t10lwr\",\n  \"deployPlace\": \"e3hkpb\",\n  \"status\": 690,\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"s009p6\",\n  \"dicId\": \"114\",\n  \"remark\": \"t9492d\"\n}",
+              "raw": "{\n  \"id\": 534,\n  \"dataSourceName\": \"emeline.gutkowski\",\n  \"connId\": \"131\",\n  \"homeSystem\": \"l7uc8v\",\n  \"connectBasicInfo\": {\n    \"object\": \"anyObject\"\n  },\n  \"linkType\": \"ikgao0\",\n  \"tagNames\": \"ec8kag\",\n  \"tagIds\": \"ybziyx\",\n  \"use\": \"x4i62i\",\n  \"deployPlace\": \"f9fxau\",\n  \"status\": 860,\n  \"gmtModified\": \"2022-05-07 10:05:45\",\n  \"gmtCreate\": \"2022-05-07 10:05:45\",\n  \"createUserid\": \"131\",\n  \"updateUserid\": \"131\",\n  \"delFlag\": 8,\n  \"versionConsumer\": \"73py17\",\n  \"dicId\": \"131\",\n  \"remark\": \"l394kk\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -578,7 +578,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"juc64n\"\n}",
+              "raw": "{\n  \"id\": \"131\",\n  \"dicName\": \"emeline.gutkowski\",\n  \"parentId\": \"131\",\n  \"dsDirCode\": \"65818\",\n  \"gmtCreate\": \"2022-05-07 10:05:45\",\n  \"gmtModified\": \"2022-05-07 10:05:45\",\n  \"createUserid\": \"131\",\n  \"updateUserid\": \"131\",\n  \"delFlag\": 8,\n  \"versionConsumer\": \"zyxz9e\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -616,7 +616,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/datasorce/dir/delete/114",
+              "raw": "http://::server/datasorce/dir/delete/131",
               "protocol": "http",
               "path": [
                 "datasorce",
@@ -631,7 +631,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "114",
+                  "value": "131",
                   "description": "目录id"
                 }
               ]
@@ -647,7 +647,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"dicName\": \"keren.schumm\",\n  \"parentId\": \"114\",\n  \"dsDirCode\": \"75687\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": \"114\",\n  \"updateUserid\": \"114\",\n  \"delFlag\": 2,\n  \"versionConsumer\": \"yd7575\"\n}",
+              "raw": "{\n  \"id\": \"131\",\n  \"dicName\": \"emeline.gutkowski\",\n  \"parentId\": \"131\",\n  \"dsDirCode\": \"65818\",\n  \"gmtCreate\": \"2022-05-07 10:05:45\",\n  \"gmtModified\": \"2022-05-07 10:05:45\",\n  \"createUserid\": \"131\",\n  \"updateUserid\": \"131\",\n  \"delFlag\": 8,\n  \"versionConsumer\": \"ojjmnr\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -684,7 +684,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"5vg741\"\n}",
+              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"sortField\": \"ycjrxk\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -715,7 +715,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"nc9g92\",\n  \"itDepartment\": \"ras0ms\",\n  \"busiDepartment\": \"ihpm43\",\n  \"importance\": 555,\n  \"leader\": \"u2e5kn\",\n  \"deployPlace\": \"5x0dzd\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": 922,\n  \"updateUserid\": 958,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"c514tj\",\n  \"sysDesc\": \"pyyz3s\",\n  \"tagNames\": \"7360qb\",\n  \"tagIds\": \"b2xf3y\"\n}",
+              "raw": "{\n  \"id\": \"131\",\n  \"sysName\": \"emeline.gutkowski\",\n  \"sysShortName\": \"emeline.gutkowski\",\n  \"area\": \"f9ki3p\",\n  \"itDepartment\": \"hoj8e1\",\n  \"busiDepartment\": \"gu9t7m\",\n  \"importance\": 693,\n  \"leader\": \"v37zpn\",\n  \"deployPlace\": \"jdkyhw\",\n  \"gmtCreate\": \"2022-05-07 10:05:45\",\n  \"gmtModified\": \"2022-05-07 10:05:45\",\n  \"createUserid\": 613,\n  \"updateUserid\": 661,\n  \"delFlag\": 8,\n  \"versionConsumer\": \"9wztaq\",\n  \"sysDesc\": \"x49mgn\",\n  \"tagNames\": \"1e55yt\",\n  \"tagIds\": \"xi6veb\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -752,7 +752,7 @@
               }
             },
             "url": {
-              "raw": "http://::server/directory/delete/114",
+              "raw": "http://::server/directory/delete/131",
               "protocol": "http",
               "path": [
                 "directory",
@@ -766,7 +766,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "114",
+                  "value": "131",
                   "description": "应用系统id"
                 }
               ]
@@ -782,7 +782,7 @@
             "method": "PUT",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"114\",\n  \"sysName\": \"keren.schumm\",\n  \"sysShortName\": \"keren.schumm\",\n  \"area\": \"w0zxed\",\n  \"itDepartment\": \"pr7266\",\n  \"busiDepartment\": \"reo550\",\n  \"importance\": 264,\n  \"leader\": \"nliz0h\",\n  \"deployPlace\": \"9nnv3p\",\n  \"gmtCreate\": \"2022-04-28 17:14:28\",\n  \"gmtModified\": \"2022-04-28 17:14:28\",\n  \"createUserid\": 64,\n  \"updateUserid\": 930,\n  \"delFlag\": 2,\n  \"versionConsumer\": \"ydcjm1\",\n  \"sysDesc\": \"6zzc6w\",\n  \"tagNames\": \"tb9s1o\",\n  \"tagIds\": \"0vhpmt\"\n}",
+              "raw": "{\n  \"id\": \"131\",\n  \"sysName\": \"emeline.gutkowski\",\n  \"sysShortName\": \"emeline.gutkowski\",\n  \"area\": \"943ryu\",\n  \"itDepartment\": \"n3runk\",\n  \"busiDepartment\": \"ipfey8\",\n  \"importance\": 60,\n  \"leader\": \"usqp1k\",\n  \"deployPlace\": \"53wsnw\",\n  \"gmtCreate\": \"2022-05-07 10:05:45\",\n  \"gmtModified\": \"2022-05-07 10:05:45\",\n  \"createUserid\": 235,\n  \"updateUserid\": 490,\n  \"delFlag\": 8,\n  \"versionConsumer\": \"9x3o7l\",\n  \"sysDesc\": \"r7luz6\",\n  \"tagNames\": \"bgzy03\",\n  \"tagIds\": \"uoa4jd\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -835,6 +835,286 @@
             "header": []
           },
           "description": "数据源管理—查询应用系统名称"
+        }
+      ]
+    },
+    {
+      "name": "数据源连接统一api",
+      "item": [
+        {
+          "name": "获取所有数据源连接类型",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/dbtype/all",
+              "protocol": "http",
+              "path": [
+                "dbtype",
+                "all"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "description": "获取所有数据源连接类型",
+            "header": []
+          },
+          "description": "获取所有数据源连接类型"
+        },
+        {
+          "name": "获取数据源连接（根据数据库类型）",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/connect/info/m6ekcz",
+              "protocol": "http",
+              "path": [
+                "connect",
+                "info",
+                ":type"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "type",
+                  "value": "24vrrk",
+                  "description": "数据库类型"
+                }
+              ]
+            },
+            "description": "获取数据源连接（根据数据库类型）",
+            "header": []
+          },
+          "description": "获取数据源连接（根据数据库类型）"
+        },
+        {
+          "name": "获取mtd(元数据)中db库信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/mtd/db?type\u003d8p2m8b\u0026dataSourceConnId\u003d131",
+              "protocol": "http",
+              "path": [
+                "mtd",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "03unkd",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "131",
+                  "description": "数据源connId"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取mtd(元数据)中db库信息",
+            "header": []
+          },
+          "description": "获取mtd(元数据)中db库信息"
+        },
+        {
+          "name": "获取mtd(元数据)中表信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/mtd/table?dataSourceConnId\u003d131\u0026type\u003defgkti\u0026dbName\u003demeline.gutkowski",
+              "protocol": "http",
+              "path": [
+                "mtd",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "ql2tc8",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "131",
+                  "description": "数据源connId"
+                },
+                {
+                  "key": "dbName",
+                  "value": "emeline.gutkowski",
+                  "description": "数据库名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取mtd(元数据)中表信息",
+            "header": []
+          },
+          "description": "获取mtd(元数据)中表信息"
+        },
+        {
+          "name": "获取元数据(mtd)中字段信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/mtd/column?type\u003dnq11p2\u0026dbName\u003demeline.gutkowski\u0026dataSourceConnId\u003d131\u0026tableName\u003demeline.gutkowski",
+              "protocol": "http",
+              "path": [
+                "mtd",
+                "column"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "eglfkn",
+                  "description": "数据库类型"
+                },
+                {
+                  "key": "dataSourceConnId",
+                  "value": "131",
+                  "description": "数据源connId"
+                },
+                {
+                  "key": "dbName",
+                  "value": "emeline.gutkowski",
+                  "description": "数据库名称"
+                },
+                {
+                  "key": "tableName",
+                  "value": "emeline.gutkowski",
+                  "description": "表名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取元数据(mtd)中字段信息",
+            "header": []
+          },
+          "description": "获取元数据(mtd)中字段信息"
+        },
+        {
+          "name": "获取直连(native)中db库信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/native/db?dataSourceConnId\u003d131",
+              "protocol": "http",
+              "path": [
+                "native",
+                "db"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceConnId",
+                  "value": "131",
+                  "description": "数据源连接id"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取直连(native)中db库信息",
+            "header": []
+          },
+          "description": "获取直连(native)中db库信息"
+        },
+        {
+          "name": "获取直连(native)中表信息",
+          "request": {
+            "method": "GET",
+            "body": {
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://::server/native/table?dataSourceConnId\u003d131\u0026dbName\u003demeline.gutkowski",
+              "protocol": "http",
+              "path": [
+                "native",
+                "table"
+              ],
+              "host": [
+                "{{server}}"
+              ],
+              "query": [
+                {
+                  "key": "dataSourceConnId",
+                  "value": "131",
+                  "description": "数据源连接id"
+                },
+                {
+                  "key": "dbName",
+                  "value": "emeline.gutkowski",
+                  "description": "数据库名称"
+                }
+              ],
+              "variable": []
+            },
+            "description": "获取直连(native)中表信息",
+            "header": []
+          },
+          "description": "获取直连(native)中表信息"
         }
       ]
     }

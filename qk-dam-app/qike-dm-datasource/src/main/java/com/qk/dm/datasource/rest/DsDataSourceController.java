@@ -31,6 +31,7 @@ public class DsDataSourceController {
   public DsDataSourceController(DsDataSourceService dsDataSourceService) {
     this.dsDataSourceService = dsDataSourceService;
   }
+
   /**
    * 数据源连接——统一查询接口
    *
@@ -38,10 +39,8 @@ public class DsDataSourceController {
    * @return DefaultCommonResult<PageResultVO<DsDatasourceVO>> 分页查询数据源信息
    */
   @PostMapping("/query")
-  public DefaultCommonResult<PageResultVO<DsDatasourceVO>> getDsDataSource(
-      @RequestBody DsDataSourceParamsVO dsDataSourceParamsVO) {
-    PageResultVO<DsDatasourceVO> dsDataSource =
-        dsDataSourceService.getDsDataSource(dsDataSourceParamsVO);
+  public DefaultCommonResult<PageResultVO<DsDatasourceVO>> getDsDataSource(@RequestBody DsDataSourceParamsVO dsDataSourceParamsVO) {
+    PageResultVO<DsDatasourceVO> dsDataSource = dsDataSourceService.getDsDataSource(dsDataSourceParamsVO);
     return DefaultCommonResult.success(ResultCodeEnum.OK, dsDataSource);
   }
 
@@ -98,10 +97,8 @@ public class DsDataSourceController {
    * @return DefaultCommonResult<List<DsDatasourceVO>> 数据源信息
    */
   @GetMapping("/database/{type}")
-  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByType(
-      @PathVariable("type") String type) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.getDataSourceByType(type));
+  public DefaultCommonResult<List<DsDatasourceVO>> getDataSourceByType(@PathVariable("type") String type) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsDataSourceService.getDataSourceByType(type));
   }
 
   /**
@@ -111,10 +108,8 @@ public class DsDataSourceController {
    * @return DefaultCommonResult<DsDatasourceVO> 数据源信息
    */
   @GetMapping("/{id}")
-  public DefaultCommonResult<DsDatasourceVO> getDataSourceById(
-      @PathVariable("id") Long id) {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, dsDataSourceService.getDataSourceById(id));
+  public DefaultCommonResult<DsDatasourceVO> getDataSourceById(@PathVariable("id") Long id) {
+    return DefaultCommonResult.success(ResultCodeEnum.OK, dsDataSourceService.getDataSourceById(id));
   }
 
   /**
@@ -124,8 +119,7 @@ public class DsDataSourceController {
    * @return DefaultCommonResult<Boolean> true:连接成功，false:连接失败
    */
   @PostMapping("/connecting")
-  public DefaultCommonResult dataSourceConnect(
-      @RequestBody DsDatasourceVO dsDatasourceVO) {
+  public DefaultCommonResult dataSourceConnect(@RequestBody DsDatasourceVO dsDatasourceVO) {
     dsDataSourceService.dataSourceConnect(dsDatasourceVO);
     return DefaultCommonResult.success();
   }
@@ -137,7 +131,6 @@ public class DsDataSourceController {
    */
   @GetMapping("/alltype")
   public DefaultCommonResult<Map<String, String>> getAllType() {
-    return DefaultCommonResult.success(
-        ResultCodeEnum.OK, DsDataSouurceConnectUtil.getDataSourceType());
+    return DefaultCommonResult.success(ResultCodeEnum.OK, DsDataSouurceConnectUtil.getDataSourceType());
   }
 }

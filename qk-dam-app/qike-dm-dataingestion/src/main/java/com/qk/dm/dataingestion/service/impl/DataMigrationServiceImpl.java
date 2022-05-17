@@ -16,6 +16,7 @@ import com.qk.dm.dataingestion.entity.DisMigrationBaseInfo;
 import com.qk.dm.dataingestion.entity.QDisMigrationBaseInfo;
 import com.qk.dm.dataingestion.enums.IngestionStatusType;
 import com.qk.dm.dataingestion.enums.IngestionType;
+import com.qk.dm.dataingestion.enums.SchedulerType;
 import com.qk.dm.dataingestion.mapstruct.mapper.DisBaseInfoMapper;
 import com.qk.dm.dataingestion.mapstruct.mapper.MetaDataColumnMapper;
 import com.qk.dm.dataingestion.model.*;
@@ -27,6 +28,7 @@ import com.qk.dm.DataBaseService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -182,10 +184,12 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
     @Override
     public void updateDataxJson(DisJsonParamsVO disJsonParamsVO){
-        disDataxJsonService.update(disJsonParamsVO.getId(),disJsonParamsVO.getDataxJson());
+        String dataXJson = disJsonParamsVO.getDataxJson().replaceAll("\r", "")
+                .replaceAll("\t", "").replaceAll("\n","");
+        disDataxJsonService.update(disJsonParamsVO.getId(),dataXJson);
         DisMigrationBaseInfoVO baseInfo = baseInfoService.detail(disJsonParamsVO.getId());
         try {
-            updateProcessDefinition(baseInfo.getJobName(),baseInfo.getTaskCode(),disJsonParamsVO.getDataxJson());
+            updateProcessDefinition(baseInfo.getJobName(),baseInfo.getTaskCode(),dataXJson);
         } catch (ApiException e) {
             log.error("调用dolphinscheduler 出错【{}】",e.getMessage());
             e.printStackTrace();
@@ -261,13 +265,15 @@ public class DataMigrationServiceImpl implements DataMigrationService {
      * @param schedulerConfig
      */
     private void updateScheduler(Long processDefinitionCode, Long baseInfoId,DisSchedulerConfigVO schedulerConfig){
+        //判断是否是周期调度
+        if(Objects.equals(schedulerConfig.getSchedulerType(), SchedulerType.SINGLE.getCode())){return;}
         DisSchedulerConfigVO disSchedulerConfig = schedulerConfigService.detail(baseInfoId);
         if(Objects.isNull(disSchedulerConfig.getSchedulerId())){
             //添加定时
-            createScheduler(disSchedulerConfig,processDefinitionCode,baseInfoId);
+            createScheduler(schedulerConfig,processDefinitionCode,baseInfoId);
         }else {
             //修改定时
-            updateSchedule(disSchedulerConfig);
+            //updateSchedule(schedulerConfig);
         }
         //修改任务配置信息
         schedulerConfigService.update(baseInfoId, schedulerConfig);
@@ -281,11 +287,11 @@ public class DataMigrationServiceImpl implements DataMigrationService {
      */
     public void updateProcessDefinition(DataMigrationVO dataMigrationVO,Long taskCode) throws ApiException {
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-        //生成datax json
-        String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
+        //生成dataX json
+        String dataXJson = dataSyncFactory.transJson(dataMigrationVO,
                 IngestionType.getVal(baseInfo.getSourceConnectType()),
                 IngestionType.getVal(baseInfo.getTargetConnectType()));
-        updateProcessDefinition(baseInfo.getJobName(),taskCode,dataxJson);
+        updateProcessDefinition(baseInfo.getJobName(),taskCode,dataXJson);
     }
 
     /**
@@ -302,18 +308,21 @@ public class DataMigrationServiceImpl implements DataMigrationService {
     /**
      * 修改流程定义（datax json数据）
      * @param jobName
-     * @param taskCode
+     * @param processDefinitionCode
      * @param dataxJson
      */
-    private void updateProcessDefinition(String jobName, Long taskCode,String dataxJson)throws ApiException{
+    private void updateProcessDefinition(String jobName, Long processDefinitionCode,String dataxJson)throws ApiException{
         //下线
-        dataxDolphinClient.dolphinProcessRelease(taskCode,
+        dataxDolphinClient.dolphinProcessRelease(processDefinitionCode,
                 ProcessDefinition.ReleaseStateEnum.OFFLINE);
+        ProcessDefinitionVO processDefinitionVO = dataxDolphinClient.processDefinitionDetail(processDefinitionCode);
+
+        long taskCode = GsonUtil.toJsonArray(processDefinitionVO.getLocations()).get(0).getAsJsonObject().get("taskCode").getAsLong();
         //修改流程定义
-        dataxDolphinClient.updateProcessDefinition(jobName,
+        dataxDolphinClient.updateProcessDefinition(processDefinitionCode,jobName,
                 taskCode,dataxJson,new DolphinTaskDefinitionPropertiesBean());
         //上线
-        dataxDolphinClient.dolphinProcessRelease(taskCode,
+        dataxDolphinClient.dolphinProcessRelease(processDefinitionCode,
                 ProcessDefinition.ReleaseStateEnum.ONLINE);
     }
 
@@ -324,13 +333,17 @@ public class DataMigrationServiceImpl implements DataMigrationService {
      * @throws ApiException
      */
     private void createProcessDefinition(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
-        //生成dataxjson,创建流程定义
-        Long processDefinitionCode = createDataxJson(dataMigrationVO, baseInfoId);
+        //生成dataXJson,创建流程定义
+        Long processDefinitionCode = createDataXJson(dataMigrationVO, baseInfoId);
         //上线
         dataxDolphinClient.dolphinProcessRelease(dataMigrationVO.getBaseInfo().getTaskCode(),
                 ProcessDefinition.ReleaseStateEnum.ONLINE);
-        //创建定时
-        createScheduler(dataMigrationVO.getSchedulerConfig(),processDefinitionCode,baseInfoId);
+         DisSchedulerConfigVO schedulerConfig = dataMigrationVO.getSchedulerConfig();
+         //判断定时开关
+         if(schedulerConfig.getTimeSwitch()) {
+             //创建定时
+             createScheduler(schedulerConfig, processDefinitionCode, baseInfoId);
+         }
     }
 
     /**
@@ -409,9 +422,9 @@ public class DataMigrationServiceImpl implements DataMigrationService {
         result.put("total", count);
         return result;
     }
-    private Long createDataxJson(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
+    private Long createDataXJson(DataMigrationVO dataMigrationVO,Long baseInfoId) throws ApiException {
        DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-       //生成datax json
+       //生成dataX json
         String dataxJson = dataSyncFactory.transJson(dataMigrationVO,
                 IngestionType.getVal(baseInfo.getSourceConnectType()),
                 IngestionType.getVal(baseInfo.getTargetConnectType()));
@@ -429,33 +442,35 @@ public class DataMigrationServiceImpl implements DataMigrationService {
 
    private void createScheduler(DisSchedulerConfigVO disSchedulerConfig,Long processDefinitionCode,
                           Long baseInfoId){
-        Integer scheduleId = createSchedule(disSchedulerConfig, processDefinitionCode);
+
+       ScheduleVO scheduleVO = createSchedule(disSchedulerConfig, processDefinitionCode);
+       if(Objects.isNull(scheduleVO)){return;}
         //将定时id保存至数据库
-        schedulerConfigService.update(baseInfoId,scheduleId);
-        //判断定时开关
-        if(disSchedulerConfig.getTimeSwitch()){
-            log.info("定时任务上线scheduleId【{}】",scheduleId);
-            //dataxDolphinClient.onlineSchedule(scheduleId);
-        }
+        schedulerConfigService.update(baseInfoId,scheduleVO.getId());
+        log.info("定时任务上线scheduleId【{}】",scheduleVO.getId());
+        dataxDolphinClient.onlineSchedule(scheduleVO.getId());
+
     }
     //创建定时
-    private Integer createSchedule(DisSchedulerConfigVO disSchedulerConfig,Long processDefinitionCode){
+    private ScheduleVO createSchedule(DisSchedulerConfigVO disSchedulerConfig,Long processDefinitionCode){
         log.info("创建定时任务开始，流程定义id:【{}】",processDefinitionCode);
+        String cron = CronUtil.createCron(disSchedulerConfig);
+        if(StringUtils.isBlank(cron)){return null;}
         dataxDolphinClient.createSchedule(processDefinitionCode,disSchedulerConfig.getEffectiveTimeStart(),
-                disSchedulerConfig.getEffectiveTimeEnd(), CronUtil.createCron(disSchedulerConfig));
+                disSchedulerConfig.getEffectiveTimeEnd(), cron);
         Result result = dataxDolphinClient.searchSchedule(processDefinitionCode);
         ScheduleResultVO scheduleResultVO =  new Gson().fromJson(
                 GsonUtil.toJsonString(result.getData()),ScheduleResultVO.class);
-        ScheduleVO scheduleVO = CollectionUtils.firstElement(scheduleResultVO.getTotalList());
-        return  Objects.isNull(scheduleVO)?null:scheduleVO.getId();
+        return CollectionUtils.firstElement(scheduleResultVO.getTotalList());
 
     }
     //修改定时
     public void updateSchedule(DisSchedulerConfigVO disSchedulerConfig){
+        if(Objects.equals(disSchedulerConfig.getSchedulerType(), SchedulerType.SINGLE.getCode())){return;}
         //判断定时开关
         if(disSchedulerConfig.getTimeSwitch()){
             log.info("定时任务下线scheduleId【{}】",disSchedulerConfig.getSchedulerId());
-            //dataxDolphinClient.offlineSchedule(disSchedulerConfig.getSchedulerId());
+            dataxDolphinClient.offlineSchedule(disSchedulerConfig.getSchedulerId());
         }
         dataxDolphinClient.updateSchedule(disSchedulerConfig.getSchedulerId(),disSchedulerConfig.getEffectiveTimeStart(),
                 disSchedulerConfig.getEffectiveTimeEnd(),disSchedulerConfig.getCron());

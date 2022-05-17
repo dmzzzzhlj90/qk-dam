@@ -81,7 +81,7 @@ public class DataSourceApiController {
      */
     @GetMapping("/data/sources/{connId}")
     public DefaultCommonResult<ResultDatasourceInfo> getDataSourceByConnId(@PathVariable("connId") String connId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceByConnId(connId));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceByCode(connId));
     }
 
     /**
@@ -92,7 +92,7 @@ public class DataSourceApiController {
      */
     @GetMapping("/data/sources")
     public DefaultCommonResult<List<ResultDatasourceInfo>> getDataSourceListByConnId(@RequestParam("connIds") List<String> connIds) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceListByConnId(connIds));
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceListByCode(connIds));
     }
 
 }

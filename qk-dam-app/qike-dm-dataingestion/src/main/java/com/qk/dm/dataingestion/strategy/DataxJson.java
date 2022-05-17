@@ -10,9 +10,8 @@ import com.qk.dm.dataingestion.model.DataSourceServer;
 import com.qk.dm.dataingestion.model.DataxChannel;
 import com.qk.dm.dataingestion.vo.ColumnVO;
 import com.qk.dm.dataingestion.vo.DataMigrationVO;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public interface DataxJson {
     /**
@@ -57,11 +56,10 @@ public interface DataxJson {
      * @return
      */
     default String generateSql(String tableName,List<ColumnVO.Column> columnList){
-        List<Column> columns = new ArrayList<>();
-        columnList.forEach(column->{
-            columns.add(Column.builder().name(column.getName())
-                    .dataType(column.getDataType()).build());
-        });
+        List<Column> columns = columnList.stream()
+                .map(e -> Column.builder()
+                .name(e.getName()).dataType(e.getDataType()).build())
+                .collect(Collectors.toList());
 
         return SqlBuilderFactory.creatTableSQL(
                 Table.builder()

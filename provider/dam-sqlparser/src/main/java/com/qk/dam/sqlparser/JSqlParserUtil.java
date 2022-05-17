@@ -7,6 +7,7 @@ import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.*;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * 操作解析Sql 工具类
@@ -14,6 +15,9 @@ import java.util.List;
  * @author zhudaoming
  */
 public class JSqlParserUtil {
+  public static final Pattern PATTERN_PATH_VAR = Pattern.compile("([$#])\\{([^}])*}");
+  public static final Pattern PATTERN_PATH_VAR_TAG = Pattern.compile("<.*([^(</>)])*</.*>");
+
   /**
    * 查询select语句的内容-包括了列，列别名，前缀库表名等
    *

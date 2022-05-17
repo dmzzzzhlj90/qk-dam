@@ -1,9 +1,12 @@
 package com.qk.dm.dataservice.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,20 +15,32 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class DataQueryInfoVO {
-    private DasApiCreateSqlScriptDefinitionVO dasApiCreateSqlScript;
-    private DasApiBasicInfoVO dasApiBasicInfo;
+    @Valid
+    private DasApiCreateMybatisSqlScriptDefinitionVO apiCreateDefinitionVO;
+    @Valid
+    private DasApiBasicInfoVO apiBasicInfoVO;
+
+    /**
+     * DEBUG调试参数
+     */
+    private List<DebugApiParasVO> debugApiParasVOS;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){ return true;}
-        if (!(o instanceof DataQueryInfoVO)){ return false;}
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DataQueryInfoVO)) {
+            return false;
+        }
         DataQueryInfoVO that = (DataQueryInfoVO) o;
-        return getDasApiCreateSqlScript().getApiId().equals(that.getDasApiCreateSqlScript().getApiId());
+        return getApiCreateDefinitionVO().getApiId().equals(that.getApiCreateDefinitionVO().getApiId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDasApiCreateSqlScript().getApiId());
+        return Objects.hash(getApiCreateDefinitionVO().getApiId());
     }
 }

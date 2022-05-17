@@ -86,9 +86,9 @@ public class DataSourceApiServiceImpl implements DataSourceApiService {
     }
 
     @Override
-    public ResultDatasourceInfo getDataSourceByConnId(String connId) {
+    public ResultDatasourceInfo getDataSourceByCode(String dataSourceCode) {
         Optional<DsDatasource> dsDatasourceOptional =
-                dsDatasourceRepository.findOne(QDsDatasource.dsDatasource.connId.eq(connId));
+                dsDatasourceRepository.findOne(QDsDatasource.dsDatasource.dataSourceCode.eq(dataSourceCode));
         if (dsDatasourceOptional.isPresent()) {
             DsDatasource dsDatasource = dsDatasourceOptional.get();
             ResultDatasourceInfo resultDatasourceInfo =
@@ -101,9 +101,9 @@ public class DataSourceApiServiceImpl implements DataSourceApiService {
     }
 
     @Override
-    public List<ResultDatasourceInfo> getDataSourceListByConnId(List<String> connIds) {
+    public List<ResultDatasourceInfo> getDataSourceListByCode(List<String> dataSourceCodes) {
         List<ResultDatasourceInfo> datasourceInfoList = new ArrayList<>();
-        Iterable<DsDatasource> datasourceIterable = dsDatasourceRepository.findAll(QDsDatasource.dsDatasource.connId.in(connIds));
+        Iterable<DsDatasource> datasourceIterable = dsDatasourceRepository.findAll(QDsDatasource.dsDatasource.dataSourceCode.in(dataSourceCodes));
 
         for (DsDatasource dsDatasource : datasourceIterable) {
             ResultDatasourceInfo resultDatasourceInfo = DSDatasourceMapper.INSTANCE.useResultDatasourceInfo(dsDatasource);

@@ -70,10 +70,10 @@ public class DctSchedulerBasicInfoVO {
             DctSchedulerBasicInfoVO.changeName(dctSchedulerBasicInfoVO);
             List<Map<String, Object>> taskDefinitionList = (List<Map<String, Object>>) data.get("taskDefinitionList");
             Map<String, Object> taskParams = (Map<String, Object>) taskDefinitionList.get(taskDefinitionList.size() - 1).get("taskParams");
-            List<Map<String, Object>> httpParams = (List<Map<String, Object>>) taskParams.get("httpParams");
-            for (Map<String, Object> httpParam : httpParams) {
-                String value = httpParam.get("value").toString();
-                switch (httpParam.get("prop").toString()) {
+            List<Map<String, Object>> params = (List<Map<String, Object>>) taskParams.get("localParams");
+            for (Map<String, Object> param : params) {
+                String value = param.get("value").toString();
+                switch (param.get("prop").toString()) {
                     case "schedulerRules":
                         dctSchedulerBasicInfoVO.setSchedulerRules(
                                 DctSchedulerRulesVO.jsonStringChangeRules(value)

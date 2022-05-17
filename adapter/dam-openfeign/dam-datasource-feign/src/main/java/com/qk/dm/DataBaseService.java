@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 内部调用-准备废弃（能不用此类尽量别用）
  * @author shenpj
  * @date 2021/11/29 12:08 下午
  * @since 1.0.0

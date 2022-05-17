@@ -12,17 +12,35 @@ import com.qk.dm.datacollect.vo.DctSchedulerInfoParamsVO;
  * @since 1.0.0
  */
 public interface DctDolphinService {
-    void insert(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO);
-
-    void update(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO);
-
+    /**
+     * 流程定义删除
+     * @param processDefinitionCode
+     */
     void delete(Long processDefinitionCode);
 
+    /**
+     * 流程定义上下线
+     * @param dctSchedulerReleaseVO
+     */
     void release(DctSchedulerReleaseVO dctSchedulerReleaseVO);
 
+    /**
+     * 运行流程定义
+     * @param processDefinitionCode
+     */
     void runing(Long processDefinitionCode);
 
+    /**
+     * 流程定义列表
+     * @param schedulerInfoParamsVO
+     * @return
+     */
     PageResultVO<DctSchedulerInfoVO> searchPageList(DctSchedulerInfoParamsVO schedulerInfoParamsVO);
 
+    /**
+     * 流程定义详情
+     * @param code
+     * @return
+     */
     DctSchedulerBasicInfoVO detail(Long code);
 }

@@ -20,7 +20,7 @@ docker {
         instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
     }
     springBootApplication {
-        baseImage = "${jre11Image}"
+        baseImage = "${jre11OracleImage}"
         ports = [8780]
         images = ["${imagePush}/${project.name}:${version}"]
         jvmArgs = ['-Xmx248m']

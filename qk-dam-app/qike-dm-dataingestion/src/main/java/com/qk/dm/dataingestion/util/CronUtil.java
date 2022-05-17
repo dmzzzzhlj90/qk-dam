@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dm.dataingestion.enums.SchedulerCycle;
+import com.qk.dm.dataingestion.enums.SchedulerType;
 import com.qk.dm.dataingestion.vo.DisSchedulerConfigVO;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author shenpj
@@ -50,7 +52,8 @@ public class CronUtil {
         cronExp.append("* "); // 时
         cronExp.append("* "); // 日
         cronExp.append("* "); // 月
-        cronExp.append("?"); // 周
+        cronExp.append("? "); // 周
+        cronExp.append("*"); // 年
     }
 
     private static void hour(String interval, StringBuffer cronExp) {
@@ -59,7 +62,8 @@ public class CronUtil {
         cronExp.append("0/").append(interval).append(" ");
         cronExp.append("* ");
         cronExp.append("* ");
-        cronExp.append("?");
+        cronExp.append("? ");
+        cronExp.append("*");
     }
 
     private static void day(String time, StringBuffer cronExp) {
@@ -69,7 +73,8 @@ public class CronUtil {
         cronExp.append(DateUtil.hour(parse)).append(" ");
         cronExp.append("* ");
         cronExp.append("* ");
-        cronExp.append("?");
+        cronExp.append("? ");
+        cronExp.append("*");
     }
 
     private static void weeks(String interval, String time, StringBuffer cronExp) {
@@ -80,11 +85,8 @@ public class CronUtil {
         cronExp.append(DateUtil.hour(parse)).append(" ");
         cronExp.append("? ");
         cronExp.append("* ");
-        if (interval.split(",").length == 7) {
-            cronExp.append("* ");
-        } else {
-            cronExp.append(interval);
-        }
+        cronExp.append(interval.split(",").length == 7?cronExp.append("*"):interval);
+        cronExp.append(" *");
     }
 
     public static String schedule(Date effectiveTimeStart, Date effectiveTimeEnt, String cron) {
@@ -105,9 +107,12 @@ public class CronUtil {
      * 构建Cron表达式
      */
     public static String createCron(DisSchedulerConfigVO disSchedulerConfig) {
-
-        return CronUtil.createCron(disSchedulerConfig.getSchedulerCycle(),
-                disSchedulerConfig.getSchedulerIntervalTime(),
-                disSchedulerConfig.getSchedulerTime());
+        //判断是否是周期调度
+        if(Objects.equals(disSchedulerConfig.getSchedulerType(), SchedulerType.CYCLE.getCode())) {
+            return CronUtil.createCron(disSchedulerConfig.getSchedulerCycle(),
+                    disSchedulerConfig.getSchedulerIntervalTime(),
+                    disSchedulerConfig.getSchedulerTime());
+        }
+        return null;
     }
 }

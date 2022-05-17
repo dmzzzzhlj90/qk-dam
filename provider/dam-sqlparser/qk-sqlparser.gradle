@@ -7,7 +7,7 @@ group "com.qk.dam.sqlparser"
 
 dependencies {
     api project(":commons-core")
-    implementation 'com.github.jsqlparser:jsqlparser'
+    api 'com.github.jsqlparser:jsqlparser'
     implementation group: 'org.projectlombok', name: 'lombok'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-aop'

@@ -43,6 +43,12 @@ public class DasApiCreateConfig implements Serializable {
     private String connectType;
 
     /**
+     * 数据源标识code编码
+     */
+    @Column(name = "data_source_code", nullable = false)
+    private String dataSourceCode;
+
+    /**
      * 数据源连接名称
      */
     @Column(name = "data_source_name", nullable = false)
@@ -59,24 +65,6 @@ public class DasApiCreateConfig implements Serializable {
      */
     @Column(name = "table_name", nullable = false)
     private String tableName;
-
-    /**
-     * 请求参数
-     */
-    @Column(name = "api_request_paras")
-    private String apiRequestParas;
-
-    /**
-     * 响应参数
-     */
-    @Column(name = "api_response_paras")
-    private String apiResponseParas;
-
-    /**
-     * 排序参数
-     */
-    @Column(name = "api_order_paras")
-    private String apiOrderParas;
 
     /**
      * 描述
@@ -101,5 +89,23 @@ public class DasApiCreateConfig implements Serializable {
      */
     @Column(name = "del_flag", nullable = false)
     private Integer delFlag;
+
+    /**
+     * 请求参数
+     */
+    @Column(name = "api_request_paras")
+    private String apiRequestParas;
+
+    /**
+     * 响应参数
+     */
+    @Column(name = "api_response_paras")
+    private String apiResponseParas;
+
+    /**
+     * 排序参数
+     */
+    @Column(name = "api_order_paras")
+    private String apiOrderParas;
 
 }

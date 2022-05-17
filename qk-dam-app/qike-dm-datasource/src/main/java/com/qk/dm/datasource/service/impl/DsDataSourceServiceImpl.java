@@ -5,7 +5,10 @@ import com.alibaba.nacos.common.utils.StringUtils;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
-import com.qk.dam.datasource.entity.*;
+import com.qk.dam.datasource.entity.ConnectBasicInfo;
+import com.qk.dam.datasource.entity.ElasticSearchVO;
+import com.qk.dam.datasource.entity.HiveInfo;
+import com.qk.dam.datasource.entity.MysqlInfo;
 import com.qk.dam.datasource.enums.ConnTypeEnum;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.datasource.entity.DsDatasource;
@@ -30,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -65,8 +69,8 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
 
   @Override
   public PageResultVO<DsDatasourceVO> getDsDataSource(DsDataSourceParamsVO dsDataSourceParamsVO) {
-    List<DsDatasourceVO> dsDataSourceVOList = new ArrayList<DsDatasourceVO>();
-    Map<String, Object> map = null;
+    List<DsDatasourceVO> dsDataSourceVOList = new ArrayList<>();
+    Map<String, Object> map;
     try {
       map = queryDsDataSourceByParams(dsDataSourceParamsVO);
     } catch (ParseException e) {
@@ -104,7 +108,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   public void addDsDataSource(DsDatasourceVO dsDatasourceVO) {
     DsDatasource dsDatasource = DSDatasourceMapper.INSTANCE.useDsDatasource(dsDatasourceVO);
     dsDatasource.setGmtCreate(new Date());
-    dsDatasource.setConnId(UUID.randomUUID().toString().replaceAll("-", ""));
+    dsDatasource.setDataSourceCode(UUID.randomUUID().toString().replaceAll("-", ""));
     // 将传入的数据源连接信息转换赋值
     setDataSourceValues(dsDatasource, dsDatasourceVO);
     // dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
@@ -217,33 +221,22 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
 
   @Override
   public ConnectBasicInfo getConnectInfo(String type, DsDatasource dsDatasource) {
-    ConnectBasicInfo connectBasicInfo = null;
-    if (type.equalsIgnoreCase(ConnTypeEnum.MYSQL.getName())) {
-      String dataSourceValues = dsDatasource.getDataSourceValues();
-      connectBasicInfo =
-          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<MysqlInfo>() {}.getType());
+    String dataSourceValues = dsDatasource.getDataSourceValues();
+    Type typeToken;
+    switch (ConnTypeEnum.locateEnum(type)) {
+      case MYSQL:
+        typeToken = new TypeToken<MysqlInfo>() {}.getType();
+        break;
+      case HIVE:
+        typeToken = new TypeToken<HiveInfo>() {}.getType();
+        break;
+      case ELASTICSEARCH:
+        typeToken = new TypeToken<ElasticSearchVO>() {}.getType();
+        break;
+      default:
+        typeToken = new TypeToken<MysqlInfo>() {}.getType();
     }
-    if (type.equalsIgnoreCase(ConnTypeEnum.HIVE.getName())) {
-      String dataSourceValues = dsDatasource.getDataSourceValues();
-      connectBasicInfo =
-          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<HiveInfo>() {}.getType());
-    }
-//    if (type.equalsIgnoreCase(ConnTypeEnum.ORACLE.getName())) {
-//      String dataSourceValues = dsDatasource.getDataSourceValues();
-//      connectBasicInfo =
-//          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<OracleInfo>() {}.getType());
-//    }
-//    if (type.equalsIgnoreCase(ConnTypeEnum.POSTGRESQL.getName())) {
-//      String dataSourceValues = dsDatasource.getDataSourceValues();
-//      connectBasicInfo =
-//          GsonUtil.fromJsonString(dataSourceValues, new TypeToken<PostgresqlInfo>() {}.getType());
-//    }
-    if (type.equalsIgnoreCase(ConnTypeEnum.ELASTICSEARCH.getName())) {
-      String dataSourceValues = dsDatasource.getDataSourceValues();
-      connectBasicInfo =
-              GsonUtil.fromJsonString(dataSourceValues, new TypeToken<ElasticSearchVO>() {}.getType());
-    }
-    return connectBasicInfo;
+    return GsonUtil.fromJsonString(dataSourceValues, typeToken);
   }
 
   @Override
@@ -305,25 +298,21 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
       QDsDatasource qDsDatasource,
       DsDataSourceParamsVO dsDataSourceParamsVO) {
     if (!StringUtils.isEmpty(dsDataSourceParamsVO.getDicId())) {
-      Set<String> dsDicIdSet = new HashSet<>();
-      dsDicIdSet.add(dsDataSourceParamsVO.getDicId());
+      Set<String> dsDicIdSet = new HashSet<>(List.of(dsDataSourceParamsVO.getDicId()));
       dsDirService.getDsdId(dsDicIdSet, dsDataSourceParamsVO.getDicId());
       booleanBuilder.and(qDsDatasource.dicId.in(dsDicIdSet));
     }
     if (!StringUtils.isEmpty(dsDataSourceParamsVO.getDataSourceName())) {
-      booleanBuilder.and(
-          qDsDatasource.dataSourceName.contains(dsDataSourceParamsVO.getDataSourceName()));
+      booleanBuilder.and(qDsDatasource.dataSourceName.contains(dsDataSourceParamsVO.getDataSourceName()));
     }
     if (!StringUtils.isEmpty(dsDataSourceParamsVO.getLinkType())) {
       booleanBuilder.and(qDsDatasource.linkType.contains(dsDataSourceParamsVO.getLinkType()));
     }
-    if (!StringUtils.isEmpty(dsDataSourceParamsVO.getBeginDay())
-        && !StringUtils.isEmpty(dsDataSourceParamsVO.getEndDay())) {
+    if (!StringUtils.isEmpty(dsDataSourceParamsVO.getBeginDay()) && !StringUtils.isEmpty(dsDataSourceParamsVO.getEndDay())) {
       StringTemplate dateExpr =
           Expressions.stringTemplate(
               "DATE_FORMAT({0},'%Y-%m-%d %H:%i:%S')", qDsDatasource.gmtModified);
-      booleanBuilder.and(
-          dateExpr.between(dsDataSourceParamsVO.getBeginDay(), dsDataSourceParamsVO.getEndDay()));
+      booleanBuilder.and(dateExpr.between(dsDataSourceParamsVO.getBeginDay(), dsDataSourceParamsVO.getEndDay()));
     }
   }
 }

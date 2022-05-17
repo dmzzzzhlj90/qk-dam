@@ -19,6 +19,7 @@ import java.util.Optional;
 @Service
 public interface DasApiBasicInfoService {
 
+    /******************************************** API基础信息 CRUD *********************************************************/
     PageResultVO<DasApiBasicInfoVO> searchList(DasApiBasicInfoParamsVO dasApiBasicInfoParamsVO);
 
     void insert(DasApiBasicInfoVO dasApiBasicInfoVO);
@@ -33,9 +34,12 @@ public interface DasApiBasicInfoService {
 
     void deleteBulk(String ids);
 
+    void setDelInputParamVO(DasApiBasicInfo dasApiBasicInfo, DasApiBasicInfoVO dasApiBasicinfoVO);
+
+    /******************************************** 页面展示参数获取 *********************************************************/
     Map<String, String> getApiType();
 
-    Map<String, String> getDMSourceType();
+    Map<String, String> createTypeInfo();
 
     LinkedList<Map<String, Object>> getRequestParasHeaderInfos();
 
@@ -54,5 +58,6 @@ public interface DasApiBasicInfoService {
     LinkedList<Map<String, Object>> getDebugParamHeaderInfo();
 
     List<DasApiBasicInfoVO> findAllByApiDirId(String dirDId);
+    Map<Integer, String> getResultDataType();
 
 }

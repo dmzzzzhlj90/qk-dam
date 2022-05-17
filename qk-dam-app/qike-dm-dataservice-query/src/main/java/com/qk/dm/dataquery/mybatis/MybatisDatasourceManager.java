@@ -62,7 +62,7 @@ public class MybatisDatasourceManager {
 
     dataQueryInfo.forEach(
         (dataQueryInfoVO -> {
-          String dataSourceName = dataQueryInfoVO.getDasApiCreateSqlScript().getDataSourceName();
+          String dataSourceName = dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceName();
           ResultDatasourceInfo resultDatasourceInfo = datasourceInfoMap.get(dataSourceName);
 
           String connectBasicInfoJson = resultDatasourceInfo.getConnectBasicInfoJson();
