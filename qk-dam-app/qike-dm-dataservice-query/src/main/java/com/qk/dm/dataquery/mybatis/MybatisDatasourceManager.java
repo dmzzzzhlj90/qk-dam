@@ -73,6 +73,7 @@ public class MybatisDatasourceManager {
             this.regDatasource(dataSourceCode, mysqlInfo);
             log.info("注册mysql数据源连接:【{}】！！", resultDatasourceInfo.getDataSourceCode());
           } catch (Exception e) {
+            e.printStackTrace();
             throw new BizException("错误的json处理！");
           }
         }));
