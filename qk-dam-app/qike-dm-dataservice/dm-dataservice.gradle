@@ -18,6 +18,10 @@ processResources {
 }
 
 docker {
+    dockerCreateDockerfile {
+        environmentVariable 'TimeZone', 'Asia/Shanghai'
+        instruction 'RUN ln -snf /usr/share/zoneinfo/$TimeZone /etc/localtime && echo $TimeZone > /etc/timezone'
+    }
     springBootApplication {
         baseImage = "${jre11OracleImage}"
         ports = [8786]
