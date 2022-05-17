@@ -166,6 +166,7 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
             if(Objects.nonNull(date)) {
                 booleanBuilder.and(qRptFindSource.publishTime.goe(date)).and(qRptFindSource.publishTime.loe(new Date()));
             }
+
         }
         if(Objects.nonNull(rptFindSourceDTO.getBeginTime())
                 &&Objects.nonNull(rptFindSourceDTO.getEndTime())){
