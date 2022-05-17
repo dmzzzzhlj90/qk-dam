@@ -22,7 +22,7 @@ docker {
         baseImage = "${jre11OracleImage}"
         ports = [8786]
         images = ["${imagePush}/${project.name}:${version}"]
-        jvmArgs = ['-Xmx248m']
+        jvmArgs = ['-Xmx512m']
     }
 }
 
