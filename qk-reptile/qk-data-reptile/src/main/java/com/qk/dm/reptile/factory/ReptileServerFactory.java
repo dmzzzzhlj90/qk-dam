@@ -160,7 +160,8 @@ public class ReptileServerFactory {
                             "search_keyword", GsonUtil.toJsonString(List.of(title)),
                             "bid_pubtime_start", new SimpleDateFormat("yyyy-MM-dd").format(publishTime),
                             "bid_pubtime_end", new SimpleDateFormat("yyyy-MM-dd").format(publishTime)),
-                    Map.of("Content-Type", "application/x-www-form-urlencoded"),
+                    Map.of("Content-Type", "application/x-www-form-urlencoded",
+                            "apikey","$2a$10$ucmK9tcKdyLpzeYYeNxBfeDWgtLjFq5UYiyLFfaJYMyHloaOi3AB."),
                     CONN_TIMEOUT,
                     READ_TIMEOUT);
             Map<String,Object> map = GsonUtil.fromJsonString(result, Map.class);
