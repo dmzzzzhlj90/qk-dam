@@ -1,10 +1,5 @@
 package com.qk.dm.datasource.vo;
 
-import com.alibaba.excel.annotation.ExcelIgnore;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.alibaba.excel.annotation.write.style.ContentRowHeight;
-import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,9 +19,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ContentRowHeight(20)
-@HeadRowHeight(20)
-@ColumnWidth(25)
 public class DsDirectoryVO {
   /** 主键ID */
   private String id;
@@ -58,15 +50,11 @@ public class DsDirectoryVO {
   private String deployPlace;
 
   /** 创建时间 (返回值显示) */
-  @ExcelIgnore
-  @ExcelProperty("创建时间")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtCreate;
 
   /** 修改时间 */
-  @ExcelIgnore
-  @ExcelProperty("修改时间")
   @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date gmtModified;
