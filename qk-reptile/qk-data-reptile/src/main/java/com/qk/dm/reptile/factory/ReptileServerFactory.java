@@ -91,7 +91,7 @@ public class ReptileServerFactory {
      */
     private static Map<String, Object> assembleData(List<RptConfigInfoVO> rptConfigInfoList, Integer in) {
         if (CollectionUtils.isEmpty(rptConfigInfoList)) {
-            return Collections.emptyMap();
+            return Map.of();
         }
         List<RptConfigBuilder> rptConfigBuilderList = rptConfigInfoList.stream().map(ReptileServerFactory::rptConfigBuilder).collect(Collectors.toList());
         Map<String, Object> map = Maps.newHashMap();
@@ -130,7 +130,7 @@ public class ReptileServerFactory {
      */
     private static Map<String, RptSelectorBuilder> selectorBuilder(List<RptSelectorColumnInfoVO> selectorList) {
         if (CollectionUtils.isEmpty(selectorList)) {
-            return Collections.emptyMap();
+            return Map.of();
         }
 
         return selectorList.stream().collect(Collectors.toMap(RptSelectorColumnInfoVO::getColumnCode, selector -> RptSelectorBuilder.builder()

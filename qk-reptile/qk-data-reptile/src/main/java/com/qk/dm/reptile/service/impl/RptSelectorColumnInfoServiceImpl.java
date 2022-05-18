@@ -103,7 +103,7 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
     @Override
     public List<RptSelectorColumnInfoVO> list(Long configId) {
         List<RptSelectorColumnInfo> list = rptSelectorColumnInfoRepository.findAllByConfigId(configId);
-        if(CollectionUtils.isEmpty(list)){return Collections.emptyList(); }
+        if(CollectionUtils.isEmpty(list)){return List.of(); }
         return RptSelectorColumnInfoMapper.INSTANCE.of(list);
     }
 
@@ -123,7 +123,7 @@ public class RptSelectorColumnInfoServiceImpl implements RptSelectorColumnInfoSe
     @Override
     public List<String> findByConfigIds(List<Long> configIds) {
         List<RptSelectorColumnInfo> rptSelectorColumnInfoList = rptSelectorColumnInfoRepository.findAllByConfigIdIn(configIds);
-        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){ return Collections.emptyList(); }
+        if(CollectionUtils.isEmpty(rptSelectorColumnInfoList)){ return List.of(); }
         return rptSelectorColumnInfoList.stream().map(RptSelectorColumnInfo::getColumnCode).collect(Collectors.toList());
     }
 }

@@ -19,6 +19,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -125,11 +126,8 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
     private Map<String, Object> queryByParams(RptFindSourceDTO rptFindSourceDTO) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptFindSourceDTO);
-        Map<String, Object> result = Maps.newHashMap();
         if(StringUtils.isBlank(ClientUserInfo.getUserName())){
-            result.put("list", Collections.emptyList());
-            result.put("total", (long)0);
-            return result;
+            return Map.of("list", List.of(),"total",(long)0);
         }
         long count = jpaQueryFactory.select(qRptFindSource.count()).from(qRptFindSource).where(booleanBuilder).fetchOne();
         List<RptFindSource> rptBaseInfoList = jpaQueryFactory
@@ -140,9 +138,7 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
                 .offset((long) (rptFindSourceDTO.getPagination().getPage() - 1)
                         * rptFindSourceDTO.getPagination().getSize())
                 .limit(rptFindSourceDTO.getPagination().getSize()).fetch();
-        result.put("list", rptBaseInfoList);
-        result.put("total", count);
-        return result;
+        return Map.of("list", rptBaseInfoList,"total",count);
     }
 
     public void checkCondition(BooleanBuilder booleanBuilder, RptFindSourceDTO rptFindSourceDTO) {
@@ -156,10 +152,15 @@ public class RptFindSourceServiceImpl implements RptFindSourceService {
             booleanBuilder.and(qRptFindSource.title.contains(rptFindSourceDTO.getKeywords()));
         }
         if(StringUtils.isNotBlank(rptFindSourceDTO.getProvinceCode())){
-            booleanBuilder.and(qRptFindSource.provinceCode.in(rptFindSourceDTO.getProvinceCode().split(",")));
-        }
-        if(StringUtils.isNotBlank(rptFindSourceDTO.getCityCode())){
-            booleanBuilder.and(qRptFindSource.cityCode.in(rptFindSourceDTO.getCityCode().split(",")));
+            List<String> codeList = Arrays.stream(rptFindSourceDTO.getProvinceCode().split(","))
+                    .collect(Collectors.toList());
+            List<String> cityList = Arrays.stream(rptFindSourceDTO.getCityCode().split(","))
+                    .collect(Collectors.toList());
+            if(!CollectionUtils.isEmpty(cityList)) {
+                codeList.addAll(cityList);
+            }
+            booleanBuilder.and(qRptFindSource.provinceCode.in(codeList)
+                    .or(qRptFindSource.cityCode.in(codeList)));
         }
         if(StringUtils.isNotBlank(rptFindSourceDTO.getTimeType())){
             Date date = DateUtil.getDate(rptFindSourceDTO.getTimeType());
