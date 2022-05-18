@@ -42,7 +42,7 @@ public class MysqlDataxJson implements DataxJson {
     @Override
     public DataxChannel getReader(DataMigrationVO dataMigrationVO) {
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-        DataSourceServer dataSourceServer = getDataSource(baseInfo.getSourceConnect());
+        DataSourceServer dataSourceServer = getDataSource(baseInfo.getSourceCode());
         ReaderPara readerPara;
         if(StringUtils.isNotBlank(baseInfo.getWhereCondition())){
             readerPara =  whereCondition(baseInfo,dataSourceServer,dataMigrationVO.getColumnList().getSourceColumnList());
@@ -60,7 +60,7 @@ public class MysqlDataxJson implements DataxJson {
     @Override
     public DataxChannel getWriter(DataMigrationVO dataMigrationVO) {
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-        DataSourceServer dataSourceServer = getDataSource(baseInfo.getTargetConnect());
+        DataSourceServer dataSourceServer = getDataSource(baseInfo.getTargetCode());
 
         List<WriterPara.Connection> connect = List.of(WriterPara.Connection.builder()
                 .jdbcUrl(jdbcUrlString(dataSourceServer, baseInfo.getTargetDatabase()))
@@ -97,10 +97,10 @@ public class MysqlDataxJson implements DataxJson {
     }
 
 
-    private DataSourceServer getDataSource(String connectName) {
-        ResultDatasourceInfo sourceInfo = dataBaseService.getDataSource(connectName);
+    private DataSourceServer getDataSource(String dataSourceCode) {
+        ResultDatasourceInfo sourceInfo = dataBaseService.getResultDataSourceByCode(dataSourceCode);
         if (Objects.isNull(sourceInfo)) {
-            throw new BizException("数据源" + connectName + "不存在");
+            throw new BizException("数据源" + dataSourceCode + "不存在");
         }
         return new Gson().fromJson(sourceInfo.getConnectBasicInfoJson(), DataSourceServer.class);
     }

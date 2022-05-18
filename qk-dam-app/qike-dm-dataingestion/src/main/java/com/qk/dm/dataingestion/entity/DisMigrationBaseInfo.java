@@ -53,11 +53,10 @@ public class DisMigrationBaseInfo implements Serializable {
     @Column(name = "source_connect_type", nullable = false)
     private String sourceConnectType;
     /**
-     * 源连接
+     * 数据源唯一code
      */
-    @Column(name = "source_connect", nullable = false)
-    private String sourceConnect;
-
+    @Column(name = "source_code")
+    private String sourceCode;
     /**
      * 源数据库
      */
@@ -75,11 +74,10 @@ public class DisMigrationBaseInfo implements Serializable {
     @Column(name = "target_connect_type")
     private String targetConnectType;
     /**
-     * 目标连接
+     * 目标连接唯一code
      */
-    @Column(name = "target_connect", nullable = false)
-    private String targetConnect;
-
+    @Column(name = "target_code")
+    private String targetCode;
     /**
      * 当要读取的文件路径，
      * 数据源为hive时显示且必填

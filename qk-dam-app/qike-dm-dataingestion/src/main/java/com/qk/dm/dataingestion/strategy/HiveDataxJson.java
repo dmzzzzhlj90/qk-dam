@@ -60,7 +60,7 @@ public class HiveDataxJson implements DataxJson{
     public DataxChannel getWriter(DataMigrationVO dataMigrationVO) {
 
         DisMigrationBaseInfoVO baseInfo = dataMigrationVO.getBaseInfo();
-        DataSourceServer dataSourceServer  = getDataSource(baseInfo.getTargetConnect());
+        DataSourceServer dataSourceServer  = getDataSource(baseInfo.getTargetCode());
         HiveBasePara hiveWriter = HiveBasePara.builder()
                 .fileName(baseInfo.getTargetTable())
                 .column(getWriterColumnList(dataMigrationVO.getColumnList().getTargetColumnList()))
@@ -114,10 +114,10 @@ public class HiveDataxJson implements DataxJson{
     }
 
 
-    private DataSourceServer getDataSource(String connectName){
-        ResultDatasourceInfo sourceInfo= dataBaseService.getDataSource(connectName);
+    private DataSourceServer getDataSource(String dataSourceCode){
+        ResultDatasourceInfo sourceInfo= dataBaseService.getResultDataSourceByCode(dataSourceCode);
         if(Objects.isNull(sourceInfo)){
-            throw new BizException("数据源"+connectName+"不存在");
+            throw new BizException("数据源"+dataSourceCode+"不存在");
         }
         return new Gson().fromJson(sourceInfo.getConnectBasicInfoJson(),DataSourceServer.class);
     }
