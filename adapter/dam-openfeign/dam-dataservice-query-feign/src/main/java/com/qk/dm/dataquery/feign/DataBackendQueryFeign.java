@@ -15,10 +15,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Component
 public interface DataBackendQueryFeign {
     /**
-     * 获取数据查询服务的Sql方式
+     * 获取数据查询服务的Sql方式,列表多值
      *
      * @return
      */
     @PostMapping("/app/query")
     Object dataBackendQuery(@RequestBody HttpDataParamModel httpDataParamModel);
+
+
+    /**
+     * 获取数据查询服务的Sql方式,单值
+     *
+     * @return
+     */
+    @PostMapping("/app/query/one")
+    Object dataBackendQueryOne(@RequestBody HttpDataParamModel httpDataParamModel);
+
 }

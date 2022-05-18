@@ -27,6 +27,7 @@ public class HttpDataParamModel {
     RequestMethod method;
     int cacheLevel;
     boolean pageFlag;
+    int resultDataType;
     Pagination pagination;
 
 
@@ -40,6 +41,7 @@ public class HttpDataParamModel {
                 (ObjectUtils.isEmpty(method) ? ", method=" + method : "") +
                 "cacheLevel='" + cacheLevel +
                 "pageFlag='" + pageFlag +
+                "resultDataType='" + resultDataType +
                 (ObjectUtils.isEmpty(pagination) ? ", pagination=" + pagination : "") +
                 '}';
     }

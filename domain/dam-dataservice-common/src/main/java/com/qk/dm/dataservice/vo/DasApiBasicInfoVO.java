@@ -113,7 +113,7 @@ public class DasApiBasicInfoVO {
      */
     @ExcelProperty(value = {"结果集数据格式类型"}, index = 2)
     @NotNull(message = "结果集数据格式类型不能为空！")
-    private String resultDataType;
+    private Integer resultDataType;
 
     /**
      * 入参定义 JSON

@@ -39,11 +39,11 @@ public class QueryDataRestController {
         List<Object> objects;
         // 是否需要分页
         if (httpDataParamModel.isPageFlag()) {
-            objects = sqlSession.selectList(dsCode+"."+apiId, getMybatisDataParam(httpDataParamModel),
+            objects = sqlSession.selectList(apiId, getMybatisDataParam(httpDataParamModel),
                     new RowBounds(
                             httpDataParamModel.getPagination().getPage() - 1, httpDataParamModel.getPagination().getSize()));
         } else {
-            objects = sqlSession.selectList(dsCode+"."+apiId, getMybatisDataParam(httpDataParamModel));
+            objects = sqlSession.selectList(apiId, getMybatisDataParam(httpDataParamModel));
         }
         return objects;
     }
@@ -56,9 +56,7 @@ public class QueryDataRestController {
 
         SqlSession sqlSession = getSqlSession(dsCode);
 
-        Object objects = sqlSession.selectOne(apiId, getMybatisDataParam(httpDataParamModel));
-
-        return objects;
+        return sqlSession.selectOne(apiId, getMybatisDataParam(httpDataParamModel));
     }
 
     private SqlSession getSqlSession(String dsCode) {

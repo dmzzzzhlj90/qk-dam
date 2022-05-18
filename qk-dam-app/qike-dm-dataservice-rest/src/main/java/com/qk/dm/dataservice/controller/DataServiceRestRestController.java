@@ -33,7 +33,7 @@ public class DataServiceRestRestController extends BaseRestController {
           @RequestParam(required = false) Map<String, Object> param,
           @RequestBody(required = false) Object bodyData,
           @RequestHeader(required = false) HttpHeaders headers) {
-    HttpDataParamModel httpDataParamModel = restModel(request, param, bodyData, headers);
+    HttpDataParamModel httpDataParamModel = restModel(request, param, bodyData, headers,RequestMethod.GET);
 
     return DefaultCommonResult.success(ResultCodeEnum.OK,
             dataBackendQuery.dataBackendQuery(httpDataParamModel)
@@ -46,7 +46,7 @@ public class DataServiceRestRestController extends BaseRestController {
           @RequestParam(required = false) Map<String, Object> param,
           @RequestBody(required = false) Object bodyData,
           @RequestHeader(required = false) HttpHeaders headers) {
-    HttpDataParamModel httpDataParamModel = restModel(request, param, bodyData, headers);
+    HttpDataParamModel httpDataParamModel = restModel(request, param, bodyData, headers, RequestMethod.POST);
 
     return DefaultCommonResult.success(ResultCodeEnum.OK,
             dataBackendQuery.dataBackendQuery(httpDataParamModel)
@@ -59,7 +59,7 @@ public class DataServiceRestRestController extends BaseRestController {
           @RequestParam(required = false) Map<String, Object> param,
           @RequestBody(required = false) Object bodyData,
           @RequestHeader(required = false) HttpHeaders headers) {
-    HttpDataParamModel httpDataParamModel = restModel(request, param, bodyData, headers);
+    HttpDataParamModel httpDataParamModel = restModel(request, param, bodyData, headers, RequestMethod.PUT);
     return DefaultCommonResult.success(ResultCodeEnum.OK,
             dataBackendQuery.dataBackendQuery(httpDataParamModel), TIPS);
   }
