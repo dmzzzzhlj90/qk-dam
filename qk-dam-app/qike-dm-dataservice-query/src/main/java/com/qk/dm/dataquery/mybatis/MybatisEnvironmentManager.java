@@ -23,20 +23,20 @@ public class MybatisEnvironmentManager {
   public void onEnvironmentInsert(DatasourceEvent.EnvironmentInsertEvent environmentInsertEvent) {
     environmentInsertEvent.getDataSourceMap().forEach(this::registerEnvironment);
   }
-  public void registerEnvironment(String connId, DataSource dataSource) {
+  public void registerEnvironment(String dataSourceCode, DataSource dataSource) {
     JdbcTransactionFactory jdbcTransactionFactory = new JdbcTransactionFactory();
     Environment environment =
-            new Environment(connId, jdbcTransactionFactory, dataSource);
-    envIdDatasource.put(connId, environment);
-    jdbcTransactionFactoryMap.put(connId, jdbcTransactionFactory);
+            new Environment(dataSourceCode, jdbcTransactionFactory, dataSource);
+    envIdDatasource.put(dataSourceCode, environment);
+    jdbcTransactionFactoryMap.put(dataSourceCode, jdbcTransactionFactory);
   }
 
-  public JdbcTransactionFactory getJdbcTransactionFactory(String connId){
-    return jdbcTransactionFactoryMap.get(connId);
+  public JdbcTransactionFactory getJdbcTransactionFactory(String dataSourceCode){
+    return jdbcTransactionFactoryMap.get(dataSourceCode);
   }
 
-  public Environment getEnvironment(String connId){
-    return envIdDatasource.get(connId);
+  public Environment getEnvironment(String dataSourceCode){
+    return envIdDatasource.get(dataSourceCode);
   }
   public void bindEnvironment(BiConsumer<String, Environment> biConsumer) {
     envIdDatasource.forEach(biConsumer);

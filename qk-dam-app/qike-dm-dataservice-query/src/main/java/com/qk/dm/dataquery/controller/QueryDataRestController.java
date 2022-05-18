@@ -32,18 +32,18 @@ public class QueryDataRestController {
     @QueryCache(value = CacheManagerEnum.CACHE_NAME_DAS_QUERY_LIST, unless = "#httpDataParamModel.cacheLevel != 2")
     public List<Object> query(@RequestBody HttpDataParamModel httpDataParamModel) {
         String apiId = httpDataParamModel.getApiId();
-        String dsName = mybatisMapperContainer.getDsName(apiId);
+        String dsCode = mybatisMapperContainer.getDsCode(apiId);
 
-        SqlSession sqlSession = getSqlSession(dsName);
+        SqlSession sqlSession = getSqlSession(dsCode);
 
         List<Object> objects;
         // 是否需要分页
         if (httpDataParamModel.isPageFlag()) {
-            objects = sqlSession.selectList(apiId, getMybatisDataParam(httpDataParamModel),
+            objects = sqlSession.selectList(dsCode+"."+apiId, getMybatisDataParam(httpDataParamModel),
                     new RowBounds(
                             httpDataParamModel.getPagination().getPage() - 1, httpDataParamModel.getPagination().getSize()));
         } else {
-            objects = sqlSession.selectList(apiId, getMybatisDataParam(httpDataParamModel));
+            objects = sqlSession.selectList(dsCode+"."+apiId, getMybatisDataParam(httpDataParamModel));
         }
         return objects;
     }
@@ -52,17 +52,17 @@ public class QueryDataRestController {
     @QueryCache(value = CacheManagerEnum.CACHE_NAME_DAS_QUERY_ONE)
     public Object queryOne(@RequestBody HttpDataParamModel httpDataParamModel) {
         String apiId = httpDataParamModel.getApiId();
-        String dsName = mybatisMapperContainer.getDsName(apiId);
+        String dsCode = mybatisMapperContainer.getDsCode(apiId);
 
-        SqlSession sqlSession = getSqlSession(dsName);
+        SqlSession sqlSession = getSqlSession(dsCode);
 
         Object objects = sqlSession.selectOne(apiId, getMybatisDataParam(httpDataParamModel));
 
         return objects;
     }
 
-    private SqlSession getSqlSession(String dsName) {
-        SqlSessionFactory sqlSessionFactory = dataServiceSqlSessionFactory.getSqlSessionFactory(dsName);
+    private SqlSession getSqlSession(String dsCode) {
+        SqlSessionFactory sqlSessionFactory = dataServiceSqlSessionFactory.getSqlSessionFactory(dsCode);
         Objects.requireNonNull(sqlSessionFactory, "未能获取数据源连接,请检查是否配置数据源！");
         return sqlSessionFactory.openSession();
     }

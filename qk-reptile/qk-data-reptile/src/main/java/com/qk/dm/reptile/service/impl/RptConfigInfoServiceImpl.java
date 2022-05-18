@@ -3,6 +3,7 @@ package com.qk.dm.reptile.service.impl;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.client.ClientUserInfo;
+import com.qk.dm.reptile.client.CrawlerCall;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.RptBaseInfo;
@@ -43,13 +44,15 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
     private final RptBaseInfoRepository rptBaseInfoRepository;
 
     private final RptSelectorColumnInfoService rptSelectorColumnInfoService;
+    private final CrawlerCall crawlerCall;
 
     public RptConfigInfoServiceImpl(RptConfigInfoRepository rptConfigInfoRepository,
                                     RptBaseInfoRepository rptBaseInfoRepository,
-                                    RptSelectorColumnInfoService rptSelectorColumnInfoService){
+                                    RptSelectorColumnInfoService rptSelectorColumnInfoService, CrawlerCall crawlerCall){
         this.rptConfigInfoRepository = rptConfigInfoRepository;
         this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.rptSelectorColumnInfoService = rptSelectorColumnInfoService;
+        this.crawlerCall = crawlerCall;
     }
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -81,7 +84,7 @@ public class RptConfigInfoServiceImpl implements RptConfigInfoService {
         RptConfigInfo config = addConfigAndSelector(rptConfigInfoDTO);
        // 修改基础信息表状态为爬虫,调用爬虫接口
         start(rptConfigInfoDTO.getBaseInfoId(),
-        ReptileServerFactory.manual(rptList(config.getBaseInfoId())));
+        ReptileServerFactory.manual(crawlerCall.getManualUrl(),rptList(config.getBaseInfoId())));
         return config.getId();
     }
 

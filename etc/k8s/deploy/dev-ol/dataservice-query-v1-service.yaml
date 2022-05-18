@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dataservice-query
+  namespace: java-backend
+  labels:
+    app: dataservice-query
+  annotations:
+    kubesphere.io/alias-name: 数据服务后端查询服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8000
+      protocol: TCP
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: dataservice-query-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None

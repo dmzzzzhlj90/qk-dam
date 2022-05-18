@@ -47,7 +47,7 @@ public class MybatisMapperContainer {
         .forEach(
             (dataQueryInfoVO) -> {
               dataServiceSqlSessionFactory.scanMapper(
-                  this, dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceName());
+                  this, dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceCode());
             });
 
     log.info("添加新增mappers完成");
@@ -60,7 +60,8 @@ public class MybatisMapperContainer {
         .collect(
             // 按照数据连接名称分组
             Collectors.groupingBy(
-                it -> getStrNonNull(it.getApiCreateDefinitionVO().getDataSourceName())))
+                it ->
+                        getStrNonNull(it.getApiCreateDefinitionVO().getDataSourceCode())))
         // 生成mapper
         .forEach(generatedMappers(mapperBuilder));
   }
@@ -134,11 +135,11 @@ public class MybatisMapperContainer {
     dataQueryInfos.addAll(dataQueryInfoVOList);
   }
 
-  public String getDsName(String apiId) {
+  public String getDsCode(String apiId) {
     return dataQueryInfos.stream()
         .filter(
             dataQueryInfoVO -> apiId.equals(dataQueryInfoVO.getApiCreateDefinitionVO().getApiId()))
-        .map(dataQueryInfoVO -> dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceName())
+        .map(dataQueryInfoVO -> dataQueryInfoVO.getApiCreateDefinitionVO().getDataSourceCode())
         .findFirst()
         .orElse("");
   }

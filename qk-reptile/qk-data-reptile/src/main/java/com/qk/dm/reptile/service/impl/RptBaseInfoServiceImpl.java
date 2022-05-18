@@ -6,6 +6,7 @@ import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
 import com.qk.dm.reptile.client.ClientUserInfo;
+import com.qk.dm.reptile.client.CrawlerCall;
 import com.qk.dm.reptile.constant.RptConstant;
 import com.qk.dm.reptile.constant.RptRunStatusConstant;
 import com.qk.dm.reptile.entity.QRptBaseInfo;
@@ -51,6 +52,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private final RptConfigInfoService rptConfigInfoService;
     private final JwtDecoder jwtDecoder;
     private final BloomFliterServer bloomFliterServer;
+    private final CrawlerCall crawlerCall;
 
     @PostConstruct
     public void initFactory() {
@@ -60,12 +62,13 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     public RptBaseInfoServiceImpl(RptBaseInfoRepository rptBaseInfoRepository,
                                   EntityManager entityManager,
                                   RptConfigInfoService rptConfigInfoService,
-                                  JwtDecoder jwtDecoder, BloomFliterServer bloomFliterServer){
+                                  JwtDecoder jwtDecoder, BloomFliterServer bloomFliterServer, CrawlerCall crawlerCall){
         this.rptBaseInfoRepository = rptBaseInfoRepository;
         this.entityManager = entityManager;
         this.rptConfigInfoService = rptConfigInfoService;
         this.jwtDecoder = jwtDecoder;
         this.bloomFliterServer = bloomFliterServer;
+        this.crawlerCall = crawlerCall;
     }
 
 
@@ -122,7 +125,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         }
         rptBaseInfo.setRunStatus(runStatus);
         if(Objects.equals(RptConstant.START,runStatus)){
-            updateBaseInfo(rptBaseInfo, ReptileServerFactory.timing(rptConfigInfoService.rptList(rptBaseInfo.getId())));
+            updateBaseInfo(rptBaseInfo, ReptileServerFactory.timing(crawlerCall.getTimingUrl(),rptConfigInfoService.rptList(rptBaseInfo.getId())));
         }else {
             rptBaseInfoRepository.saveAndFlush(rptBaseInfo);
         }
@@ -200,7 +203,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
        if(CollectionUtils.isEmpty(list)){return;}
 
             list.forEach(e -> {
-                  updateBaseInfo(e, ReptileServerFactory.timing(rptConfigInfoService.rptList(e.getId())));
+                  updateBaseInfo(e, ReptileServerFactory.timing(crawlerCall.getTimingUrl(),rptConfigInfoService.rptList(e.getId())));
           });
 
     }
@@ -242,7 +245,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
         if(Objects.isNull(rptBaseInfo)){
             throw new BizException("当前要修改的基础信息id为：" + id + " 的数据不存在！！！");
         }
-        updateBaseInfo(rptBaseInfo, ReptileServerFactory.manual(rptConfigInfoService.rptList(rptBaseInfo.getId())));
+        updateBaseInfo(rptBaseInfo, ReptileServerFactory.manual(crawlerCall.getManualUrl(),rptConfigInfoService.rptList(rptBaseInfo.getId())));
 
     }
 

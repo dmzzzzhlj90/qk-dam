@@ -106,12 +106,12 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
                 .map(
                         tuple ->
                                 new DataQueryInfoVO(
-                                        DasApiCreateMybatisSqlScriptMapper.INSTANCE.useDasApiCreateMybatisSqlScriptDefinitionVO(
-                                                tuple.get(qDasApiCreateMybatisSqlScript)),
-                                        DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(
-                                                tuple.get(QDasApiBasicInfo.dasApiBasicInfo)),null))
+                                        getMybatisSqlScriptDefinitionVO(tuple.get(qDasApiCreateMybatisSqlScript)),
+                                        getApiBasicInfoVO(tuple.get(QDasApiBasicInfo.dasApiBasicInfo)),
+                                        null))
                 .collect(Collectors.toList());
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -215,17 +215,12 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
         DataQueryInfoVO dataQueryInfoVO = DataQueryInfoVO.builder().build();
 
         // API基础信息
-        DasApiBasicInfoVO dasApiBasicInfoVO = DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
-        dasApiBasicInfoService.setDelInputParamVO(dasApiBasicInfo, dasApiBasicInfoVO);
-        dataQueryInfoVO.setApiBasicInfoVO(dasApiBasicInfoVO);
+        dataQueryInfoVO.setApiBasicInfoVO(
+                getApiBasicInfoVO(dasApiBasicInfo));
 
         // 新建API脚本方式,配置信息
-        DasApiCreateMybatisSqlScriptDefinitionVO mybatisSqlScriptDefinitionVO =
-                DasApiCreateMybatisSqlScriptMapper.INSTANCE.useDasApiCreateMybatisSqlScriptDefinitionVO(createMybatisSqlScript);
-
-        // 新建API配置信息,设置请求/响应/排序参数VO转换对象
-        setParamsVO(createMybatisSqlScript, mybatisSqlScriptDefinitionVO);
-        dataQueryInfoVO.setApiCreateDefinitionVO(mybatisSqlScriptDefinitionVO);
+        dataQueryInfoVO.setApiCreateDefinitionVO(
+                getMybatisSqlScriptDefinitionVO(createMybatisSqlScript));
 
         return dataQueryInfoVO;
     }
@@ -301,6 +296,21 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
                 .build();
         return dataBackendQueryFeign
                 .dataBackendQuery(httpDataParamModel);
+    }
+
+    private DasApiBasicInfoVO getApiBasicInfoVO(DasApiBasicInfo dasApiBasicInfo) {
+        DasApiBasicInfoVO dasApiBasicInfoVO = DasApiBasicInfoMapper.INSTANCE.useDasApiBasicInfoVO(dasApiBasicInfo);
+        dasApiBasicInfoService.setDelInputParamVO(dasApiBasicInfo, dasApiBasicInfoVO);
+        return dasApiBasicInfoVO;
+    }
+
+    private DasApiCreateMybatisSqlScriptDefinitionVO getMybatisSqlScriptDefinitionVO(DasApiCreateMybatisSqlScript createMybatisSqlScript) {
+        DasApiCreateMybatisSqlScriptDefinitionVO mybatisSqlScriptDefinitionVO =
+                DasApiCreateMybatisSqlScriptMapper.INSTANCE.useDasApiCreateMybatisSqlScriptDefinitionVO(createMybatisSqlScript);
+
+        // 新建API配置信息,设置请求/响应/排序参数VO转换对象
+        setParamsVO(createMybatisSqlScript, mybatisSqlScriptDefinitionVO);
+        return mybatisSqlScriptDefinitionVO;
     }
 
     private void setParamsVO(DasApiCreateMybatisSqlScript createMybatisSqlScript,

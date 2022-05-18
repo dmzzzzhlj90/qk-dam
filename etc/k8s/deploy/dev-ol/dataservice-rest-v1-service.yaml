@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dataservice-rest
+  namespace: java-backend
+  labels:
+    app: dataservice-rest
+  annotations:
+    kubesphere.io/alias-name: 数据服务后端应用服务
+    kubesphere.io/creator: admin
+spec:
+  ports:
+    - name: http-8888
+      protocol: TCP
+      port: 8888
+      targetPort: 8888
+  selector:
+    app: dataservice-rest-deploy
+    version: v1
+  type: ClusterIP
+  sessionAffinity: None
