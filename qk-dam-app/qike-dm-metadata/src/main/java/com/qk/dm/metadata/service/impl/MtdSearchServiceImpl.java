@@ -94,7 +94,9 @@ public class MtdSearchServiceImpl implements MtdSearchService {
 
     private List<MtdTables> builderMtdTables(List<AtlasEntityHeader> atlasEntityHeaderList) {
         if (CollectionUtils.isEmpty(atlasEntityHeaderList)) { return null; }
-        return atlasEntityHeaderList.stream().map(e -> MtdTables.builder()
+        return atlasEntityHeaderList.stream()
+                .filter(e -> e.getStatus().equals(AtlasEntity.Status.ACTIVE))
+                .map(e -> MtdTables.builder()
                 .displayText(e.getDisplayText())
                 .guid(e.getGuid())
                 .typeName(e.getTypeName())

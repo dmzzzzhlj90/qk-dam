@@ -54,12 +54,16 @@ dependencies {
     implementation project(":qk-mvc-validation")
 //    implementation project(":commons-core")
     implementation project(":datasource-common-core")
-    implementation project(":metadata-common-core")
+//    implementation project(":metadata-common-core")
+    implementation project(":dm-metadata-feign")
+
 //    implementation 'javax.servlet:javax.servlet-api:4.0.1'
 //    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation "org.springframework.cloud:spring-cloud-loadbalancer"
 //    implementation 'com.alibaba:easyexcel'
     implementation 'mysql:mysql-connector-java'
     implementation group: 'cn.hutool', name: 'hutool-db',version: '5.6.6'

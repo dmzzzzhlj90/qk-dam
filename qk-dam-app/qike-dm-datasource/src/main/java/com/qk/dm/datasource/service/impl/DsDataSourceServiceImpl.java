@@ -110,6 +110,17 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
     dsDatasource.setGmtCreate(new Date());
     dsDatasource.setDataSourceCode(UUID.randomUUID().toString().replaceAll("-", ""));
     // 将传入的数据源连接信息转换赋值
+//    Object baseDataSourceTypeInfo = dsDatasourceVO.getConnectBasicInfo();
+//    if (baseDataSourceTypeInfo != null) {
+//      ConnectBasicInfo connectBasicInfo = new ObjectMapper().convertValue(baseDataSourceTypeInfo, ConnectBasicInfo.class);
+//      try {
+//        connectBasicInfo.setPassword(RsaUtil.encryptByPublicKey(connectBasicInfo.getPassword(), RsaUtil.PUBLIC_KEY));
+//      } catch (Exception e) {
+//        e.printStackTrace();
+//      }
+//      String baseDataInfo = DsDataSouurceConnectUtil.addDriverinfo(connectBasicInfo, dsDatasource.getLinkType());
+//      dsDatasource.setDataSourceValues(baseDataInfo);
+//    }
     setDataSourceValues(dsDatasource, dsDatasourceVO);
     // dsDatasource.setDataSourceValues(dsDatasourceVO.getConnectBasicInfoJson());
     BooleanExpression predicate = qDsDatasource.dataSourceName.eq(dsDatasource.getDataSourceName());
@@ -168,9 +179,7 @@ public class DsDataSourceServiceImpl implements DsDataSourceService {
   private void setDataSourceValues(DsDatasource dsDatasource, DsDatasourceVO dsDatasourceVO) {
     Object baseDataSourceTypeInfo = dsDatasourceVO.getConnectBasicInfo();
     if (baseDataSourceTypeInfo != null) {
-      String baseDataInfo =
-          DsDataSouurceConnectUtil.addDriverinfo(
-              baseDataSourceTypeInfo, dsDatasource.getLinkType());
+      String baseDataInfo = DsDataSouurceConnectUtil.addDriverinfo(baseDataSourceTypeInfo, dsDatasource.getLinkType());
       dsDatasource.setDataSourceValues(baseDataInfo);
     }
   }

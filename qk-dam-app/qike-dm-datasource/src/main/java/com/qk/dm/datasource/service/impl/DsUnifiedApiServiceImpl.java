@@ -8,19 +8,17 @@ import com.qk.dam.datasource.entity.ResultDatasourceInfo;
 import com.qk.dam.metedata.entity.MtdApiDb;
 import com.qk.dam.metedata.entity.MtdAttributes;
 import com.qk.dam.metedata.entity.MtdTables;
-import com.qk.dam.metedata.property.AtlasBaseProperty;
-import com.qk.dam.metedata.property.AtlasSearchProperty;
-import com.qk.dam.metedata.util.AtlasSearchUtil;
 import com.qk.dam.metedata.vo.AtlasPagination;
+import com.qk.dam.metedata.vo.MtdColumnSearchVO;
+import com.qk.dam.metedata.vo.MtdDbSearchVO;
+import com.qk.dam.metedata.vo.MtdTableSearchVO;
 import com.qk.dm.datasource.constant.DsConstant;
 import com.qk.dm.datasource.service.DataSourceApiService;
 import com.qk.dm.datasource.service.DsUnifiedApiService;
 import com.qk.dm.datasource.service.MetadataApiService;
-import org.apache.atlas.model.instance.AtlasEntityHeader;
+import com.qk.dm.feign.MetaDataFeign;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -37,11 +35,14 @@ import java.util.stream.Collectors;
 public class DsUnifiedApiServiceImpl implements DsUnifiedApiService {
     private final DataSourceApiService dataSourceApiService;
     private final MetadataApiService metadataApiService;
+    private final MetaDataFeign metaDataFeign;
 
     public DsUnifiedApiServiceImpl(DataSourceApiService dataSourceApiService,
-                                   MetadataApiService metadataApiService) {
+                                   MetadataApiService metadataApiService,
+                                   MetaDataFeign metaDataFeign) {
         this.dataSourceApiService = dataSourceApiService;
         this.metadataApiService = metadataApiService;
+        this.metaDataFeign = metaDataFeign;
     }
 
     @Override
@@ -61,10 +62,13 @@ public class DsUnifiedApiServiceImpl implements DsUnifiedApiService {
     public List<MtdApiDb> getAllDataBase(String engineType, String dataSourceCode) {
         ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByCode(dataSourceCode);
         if (Objects.nonNull(dataSourceByConnId)) {
-            List<AtlasEntityHeader> atlasEntityHeaderList =
-                    AtlasSearchUtil.getDataBaseList(
-                            getDbTypeName(engineType), getService(dataSourceByConnId), AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
-            return buildMataDataList(atlasEntityHeaderList);
+            MtdDbSearchVO mtdDbSearchVO =
+                    new MtdDbSearchVO(
+                            AtlasPagination.DEF_LIMIT,
+                            AtlasPagination.DEF_OFFSET,
+                            getDbTypeName(engineType),
+                            getService(dataSourceByConnId));
+            return metaDataFeign.getDataBaseList(mtdDbSearchVO).getData();
         }
         throw new BizException("dataSourceCode为" + dataSourceCode + "的数据源为空");
     }
@@ -73,10 +77,14 @@ public class DsUnifiedApiServiceImpl implements DsUnifiedApiService {
     public List<MtdTables> getAllTable(String engineType, String dataSourceCode, String dataBaseName) {
         ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByCode(dataSourceCode);
         if (Objects.nonNull(dataSourceByConnId)) {
-            List<AtlasEntityHeader> atlasEntityHeaderList =
-                    AtlasSearchUtil.getTableList(
-                            getTableTypeName(engineType), dataBaseName, getService(dataSourceByConnId), AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
-            return builderMtdTables(atlasEntityHeaderList);
+            MtdTableSearchVO mtdTableSearchVO =
+                    new MtdTableSearchVO(
+                            AtlasPagination.DEF_LIMIT,
+                            AtlasPagination.DEF_OFFSET,
+                            getTableTypeName(engineType),
+                            dataBaseName,
+                            getService(dataSourceByConnId));
+            return metaDataFeign.getTableList(mtdTableSearchVO).getData();
         }
         throw new BizException("dataSourceCode为" + dataSourceCode + "的数据源为空");
     }
@@ -85,10 +93,14 @@ public class DsUnifiedApiServiceImpl implements DsUnifiedApiService {
     public List<MtdAttributes> getAllColumn(String engineType, String dataSourceCode, String dataBaseName, String tableName) {
         ResultDatasourceInfo dataSourceByConnId = dataSourceApiService.getDataSourceByCode(dataSourceCode);
         if (Objects.nonNull(dataSourceByConnId)) {
-            List<AtlasEntityHeader> atlasEntityHeaderList =
-                    AtlasSearchUtil.getColumnList(
-                            getTypeName(engineType), dataBaseName, tableName, getService(dataSourceByConnId), AtlasPagination.DEF_LIMIT, AtlasPagination.DEF_OFFSET);
-            return builderMtdAttributes(atlasEntityHeaderList);
+            MtdColumnSearchVO mtdColumnSearchVO = new MtdColumnSearchVO(
+                    AtlasPagination.DEF_LIMIT,
+                    AtlasPagination.DEF_OFFSET,
+                    getTypeName(engineType),
+                    dataBaseName,
+                    getService(dataSourceByConnId),
+                    tableName);
+            return metaDataFeign.getColumnList(mtdColumnSearchVO).getData();
         }
         throw new BizException("dataSourceCode为" + dataSourceCode + "的数据源为空");
     }
@@ -121,66 +133,9 @@ public class DsUnifiedApiServiceImpl implements DsUnifiedApiService {
         }
     }
 
-    private List<MtdAttributes> builderMtdAttributes(List<AtlasEntityHeader> atlasEntityHeaderList) {
-        if (CollectionUtils.isEmpty(atlasEntityHeaderList)) {
-            return null;
-        }
-        return atlasEntityHeaderList.stream().map(e -> MtdAttributes.builder()
-                .type(e.getTypeName())
-                .owner(Objects.requireNonNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.OWNER), AtlasBaseProperty.EMPTY).toString())
-                .comment(getNullElse(e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION),
-                        e.getAttribute(AtlasSearchProperty.AttributeName.COMMENT)))
-                .name(e.getDisplayText())
-                .dataType(getNullElse(e.getAttribute(AtlasBaseProperty.DATA_TYPE), e.getAttribute(AtlasBaseProperty.TYPE)))
-                .build()).collect(Collectors.toList());
-    }
-
-    public String getNullElse(Object sourceValue, Object defaultValue) {
-        return transformation(Objects.isNull(sourceValue) ? defaultValue : sourceValue);
-    }
-
-    private String transformation(Object obj) {
-        return String.valueOf(Objects.requireNonNullElse(obj, AtlasBaseProperty.EMPTY));
-    }
-
-    private List<MtdTables> builderMtdTables(List<AtlasEntityHeader> atlasEntityHeaderList) {
-        if (CollectionUtils.isEmpty(atlasEntityHeaderList)) {
-            return new ArrayList<>();
-        }
-        List<AtlasEntityHeader> checkList =
-                atlasEntityHeaderList
-                        .stream()
-                        .filter(e -> e.getStatus().toString().equals(DsConstant.STATUS))
-                        .collect(Collectors.toList());
-        return checkList
-                .stream()
-                .map(e ->
-                        MtdTables.builder()
-                                .displayText(e.getDisplayText())
-                                .guid(e.getGuid())
-                                .typeName(e.getTypeName())
-                                .comment(Objects.requireNonNullElse(
-                                        e.getAttribute(AtlasSearchProperty.AttributeName.DESCRIPTION), AtlasBaseProperty.EMPTY).toString())
-                                .entityStatus(Objects.requireNonNullElse(
-                                        e.getAttribute(AtlasSearchProperty.AttributeName.STATUS), AtlasBaseProperty.EMPTY).toString())
-                                .build()).collect(Collectors.toList());
-    }
-
-    private List<MtdApiDb> buildMataDataList(List<AtlasEntityHeader> entities) {
-        if (CollectionUtils.isEmpty(entities)) {
-            return new ArrayList<>();
-        }
-        return entities.stream().map(e -> MtdApiDb.builder()
-                .guid(e.getGuid())
-                .typeName(e.getTypeName())
-                .displayText(e.getDisplayText())
-                .description(Objects.requireNonNullElse(e.getAttribute(
-                        AtlasSearchProperty.AttributeName.DESCRIPTION), AtlasBaseProperty.EMPTY).toString())
-                .build()).collect(Collectors.toList());
-    }
-
     private String getService(ResultDatasourceInfo dataSourceCode) {
-        Map<String, String> map = GsonUtil.fromJsonString(dataSourceCode.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {}.getType());
+        Map<String, String> map =
+                GsonUtil.fromJsonString(dataSourceCode.getConnectBasicInfoJson(), new TypeToken<Map<String, String>>() {}.getType());
         return map.get(DsConstant.SERVER);
     }
 
