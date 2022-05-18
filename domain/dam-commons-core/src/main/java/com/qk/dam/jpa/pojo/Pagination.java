@@ -19,6 +19,12 @@ public class Pagination {
     public static final int PAGE_DEFAULT_SIZE = 10;
     public static final String PAGE_DEFAULT_SORT = "id";
 
+    /**
+     * 接口调用分页
+     */
+    public static final String PAGE_NUM = "page_num";
+    public static final String PAGE_SIZE = "page_size";
+
     private int page;
     private int size;
     private String sortField;

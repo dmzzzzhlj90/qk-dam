@@ -47,11 +47,12 @@ public class DataServiceSqlSessionFactory {
 
         configuration.setEnvironment(environment);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
+        sqlSessionFactory.getConfiguration().setCallSettersOnNulls(true);
         sqlSessionFactoryMap.put(dataSourceCode, sqlSessionFactory);
     }
 
-    public SqlSessionFactory getSqlSessionFactory(String connectName) {
-        return sqlSessionFactoryMap.get(connectName);
+    public SqlSessionFactory getSqlSessionFactory(String dsCode) {
+        return sqlSessionFactoryMap.get(dsCode);
     }
 
     public Configuration getConfiguration(String dataSourceCode) {
