@@ -52,11 +52,11 @@ public interface DataSourceFeign {
     /**
      * 根据数据源标识id获取数据源连接信息
      *
-     * @param connId 数据源标识Id
+     * @param dataSourceCode 数据源标识code
      * @return DefaultCommonResult<ResultDatasourceInfo>
      */
-    @GetMapping("/data/sources/{connId}")
-    DefaultCommonResult<ResultDatasourceInfo> getDataSourceByConnId(@PathVariable("connId") String connId);
+    @GetMapping("/data/sources/{dataSourceCode}")
+    DefaultCommonResult<ResultDatasourceInfo> getDataSourceByCode(@PathVariable("dataSourceCode") String dataSourceCode);
 
     /**
      * 根据数据源标识id获取数据源集合

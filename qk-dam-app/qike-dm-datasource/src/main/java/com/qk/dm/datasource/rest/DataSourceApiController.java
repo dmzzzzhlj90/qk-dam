@@ -76,12 +76,12 @@ public class DataSourceApiController {
     /**
      * 根据数据源标识id获取数据源连接信息
      *
-     * @param connId
+     * @param dataSourceCode
      * @return DefaultCommonResult<ResultDatasourceInfo>
      */
-    @GetMapping("/data/sources/{connId}")
-    public DefaultCommonResult<ResultDatasourceInfo> getDataSourceByConnId(@PathVariable("connId") String connId) {
-        return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceByCode(connId));
+    @GetMapping("/data/sources/{dataSourceCode}")
+    public DefaultCommonResult<ResultDatasourceInfo> getDataSourceByCode(@PathVariable("dataSourceCode") String dataSourceCode) {
+        return DefaultCommonResult.success(ResultCodeEnum.OK, dataSourceApiService.getDataSourceByCode(dataSourceCode));
     }
 
     /**

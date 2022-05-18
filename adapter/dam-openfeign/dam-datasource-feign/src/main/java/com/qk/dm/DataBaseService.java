@@ -32,6 +32,7 @@ public interface DataBaseService {
      */
     List<String> getAllDataSource(String connectType);
 
+
     /**
      * 获取db库列表
      * @param connectType
@@ -112,12 +113,6 @@ public interface DataBaseService {
      */
     Map<String,String> getAllDataSources(String connectType);
 
-    /**
-     * 根据id获取数据源连接
-     * @param id
-     * @return
-     */
-    String getResultDataSourceByid(String id);
 
 
 }

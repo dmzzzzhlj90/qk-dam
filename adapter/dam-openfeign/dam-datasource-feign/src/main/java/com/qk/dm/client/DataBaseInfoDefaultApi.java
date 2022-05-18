@@ -177,8 +177,8 @@ public class DataBaseInfoDefaultApi {
         return existData.getData();
     }
 
-    public ResultDatasourceInfo getResultDataSourceById(String id) {
-        return dataSourceFeign.getDataSourceByConnId(id).getData();
+    public ResultDatasourceInfo getResultDataSourceByCode(String dataSourceCode) {
+        return dataSourceFeign.getDataSourceByCode(dataSourceCode).getData();
     }
 
 

@@ -95,7 +95,7 @@ public class DolphinShellServiceImpl implements DolphinProcessDefinitionService 
     }
 
     private String createRawScript(DctSchedulerBasicInfoVO dctSchedulerBasicInfoVO) {
-        ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceById(dctSchedulerBasicInfoVO.getSchedulerRules().getDataSourceId());
+        ResultDatasourceInfo dsDatasourceVO = dataBaseInfoDefaultApi.getResultDataSourceByCode(dctSchedulerBasicInfoVO.getSchedulerRules().getDataSourceId());
         if (Objects.nonNull(dsDatasourceVO)) {
             MetadataConnectInfoVo metadataConnectInfoVo = GsonUtil.fromJsonString(
                     dsDatasourceVO.getConnectBasicInfoJson(), new TypeToken<MetadataConnectInfoVo>() {
