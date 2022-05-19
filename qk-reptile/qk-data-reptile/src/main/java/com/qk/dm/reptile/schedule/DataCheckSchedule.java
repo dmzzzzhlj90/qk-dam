@@ -25,11 +25,11 @@ public class DataCheckSchedule {
     /**
      * 对比数据库中是否存在
      */
-    @Scheduled(fixedDelay = 1000*60*30)
+    @Scheduled(fixedDelay = 1000*60*5)
     public void noExistDataContrast(){
-        LOG.info("三十分钟间隔数据对比任务开始执行");
+        LOG.info("五分钟间隔数据对比任务开始执行");
         rptFindSourceService.dataContrast(NO_CONTRAST);
-        LOG.info("三十分钟间隔数据对比任务执行结束");
+        LOG.info("五分钟间隔数据对比任务执行结束");
     }
 
     /**

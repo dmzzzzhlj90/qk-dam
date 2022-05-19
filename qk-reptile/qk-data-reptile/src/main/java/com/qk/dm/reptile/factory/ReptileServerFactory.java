@@ -1,5 +1,6 @@
 package com.qk.dm.reptile.factory;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.params.builder.RptConfigBuilder;
@@ -208,14 +209,18 @@ public class ReptileServerFactory {
 
     private static Map<String,Object> findSourceData(RptFindSourceDTO rptFindSourceDTO){
         Map<String,Object> map = new HashMap<>();
-        map.put("newAreas",Objects.requireNonNullElse(String.join(",",rptFindSourceDTO.getProvinceCode(),
-                rptFindSourceDTO.getCityCode()), EMPTY));
+        if(StringUtils.isNotBlank(rptFindSourceDTO.getProvinceCode())
+                &&StringUtils.isNotBlank(rptFindSourceDTO.getCityCode())){
+            map.put("newAreas",String.join(",",rptFindSourceDTO.getProvinceCode(),
+                    rptFindSourceDTO.getCityCode()));
+        }else {
+            map.put("newAreas",rptFindSourceDTO.getProvinceCode()+ rptFindSourceDTO.getCityCode());
+        }
         map.put("allType",Objects.requireNonNullElse(rptFindSourceDTO.getInfoType(),EMPTY));
         map.put("keywords",Objects.requireNonNullElse(rptFindSourceDTO.getKeywords(),EMPTY));
         map.put("timeType",Objects.requireNonNullElse(rptFindSourceDTO.getTimeType(),EMPTY));
         map.put("types",Objects.requireNonNullElse(rptFindSourceDTO.getInfoType(),EMPTY));
         return map;
     }
-
 
 }
