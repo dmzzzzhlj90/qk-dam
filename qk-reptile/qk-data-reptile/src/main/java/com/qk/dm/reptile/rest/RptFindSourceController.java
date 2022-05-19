@@ -83,4 +83,15 @@ public class RptFindSourceController {
         return DefaultCommonResult.success(ResultCodeEnum.OK, findSourceService.list(rptFindSourceDTO));
     }
 
+    /**
+     * 找源数据对比
+     * @param status
+     * @return
+     */
+    @PostMapping("/data/contrast/{status}")
+    public DefaultCommonResult dataContrast(@PathVariable("status") Integer status){
+        findSourceService.dataContrast(status);
+        return DefaultCommonResult.success();
+    }
+
 }
