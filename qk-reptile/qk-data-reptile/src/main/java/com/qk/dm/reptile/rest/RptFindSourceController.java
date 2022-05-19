@@ -88,7 +88,7 @@ public class RptFindSourceController {
      * @param status
      * @return
      */
-    @PostMapping("/data/contrast/{status}")
+    @GetMapping("/data/contrast/{status}")
     public DefaultCommonResult dataContrast(@PathVariable("status") Integer status){
         findSourceService.dataContrast(status);
         return DefaultCommonResult.success();
