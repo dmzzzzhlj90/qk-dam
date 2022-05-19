@@ -25,7 +25,7 @@ public class DataCheckSchedule {
     /**
      * 对比数据库中是否存在
      */
-    @Scheduled(fixedDelay = 1000*60*5)
+    @Scheduled(fixedDelay = 1000*60*2)
     public void noExistDataContrast(){
         LOG.info("五分钟间隔数据对比任务开始执行");
         rptFindSourceService.dataContrast(NO_CONTRAST);
@@ -35,7 +35,7 @@ public class DataCheckSchedule {
     /**
      * 不存在的数据定时查看是否已存在
      */
-    @Scheduled(fixedDelay = 1000*60*60)
+    @Scheduled(fixedDelay = 1000*60*10)
     public void sixtyDataContrast(){
         LOG.info("六十分钟间隔数据对比任务开始执行");
         rptFindSourceService.dataContrast(NO_EXIST);
