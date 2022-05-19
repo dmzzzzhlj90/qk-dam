@@ -1,10 +1,10 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: datacollect-deploy
+  name: metadata-collect-deploy
   namespace: java-backend
   labels:
-    app: datacollect-deploy
+    app: metadata-collect-deploy
     version: v1
   annotations:
     deployment.kubernetes.io/revision: '1'
@@ -12,16 +12,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: datacollect-deploy
+      app: metadata-collect-deploy
       version: v1
   template:
     metadata:
       labels:
-        app: datacollect-deploy
+        app: metadata-collect-deploy
         version: v1
     spec:
       containers:
-        - name: $BUILD_NUMBER-dgc$BRANCH_NAME
+        - name: $BUILD_NUMBER-$PROJECT_NAME-$BRANCH_NAME
           image: $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$BRANCH_NAME-1.0.0-$BUILD_NUMBER
           ports:
             - name: tcp-8791
