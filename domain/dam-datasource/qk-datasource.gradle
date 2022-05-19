@@ -15,6 +15,9 @@ dependencies {
 
 dependencyManagement {
     imports {
+        mavenBom "com.qk.dam:dam-dependencies:${damDependenciesVersion}"
+    }
+    imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     }
     imports {
