@@ -251,7 +251,7 @@ public class DasApiCreateConfigServiceImpl implements DasApiCreateConfigService 
         // 获取数据库连接信息
         ConnectBasicInfo connectBasicInfo = getConnectBasicInfo(apiCreateConfigDefinitionVO);
         //执行SQL 查询数据
-        Integer resultDataType = Integer.valueOf(apiCreateConfigVO.getApiBasicInfoVO().getResultDataType());
+        Integer resultDataType = apiCreateConfigVO.getApiBasicInfoVO().getResultDataType();
         return getSearchData(apiCreateConfigDefinitionVO, mappingParams, reqParams, responseParas, connectBasicInfo, resultDataType);
     }
 
