@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.google.gson.reflect.TypeToken;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
+import com.qk.dam.jpa.pojo.Pagination;
 import com.qk.dam.model.HttpDataParamModel;
 import com.qk.dam.sqlparser.JSqlParserUtil;
 import com.qk.dm.dataquery.feign.DataBackendQueryFeign;
@@ -253,36 +254,23 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
     @Override
     public Object debugModel(DataQueryInfoVO dataQueryInfoVO) {
         // 请求参数解析
+        Boolean pageFlag = dataQueryInfoVO.getApiCreateDefinitionVO().getPageFlag();
         Map<String, String> uriPathParam = Maps.newHashMap();
         Map<String, Object> params = Maps.newHashMap();
         Map<String, Object> body = Maps.newHashMap();
-        RequestMethod method = getRequestMethod(dataQueryInfoVO.getApiBasicInfoVO().getRequestType());
+
         HttpHeaders headers = null;
 
         DasApiBasicInfoVO apiBasicInfoVO = dataQueryInfoVO.getApiBasicInfoVO();
         List<DasApiBasicInfoRequestParasVO> basicInfoRequestParas = apiBasicInfoVO.getApiBasicInfoRequestParasVOS();
         Map<String, String> requestParaPositionMap = basicInfoRequestParas.stream()
-                .collect(Collectors.toMap(DasApiBasicInfoRequestParasVO::getParaName, DasApiBasicInfoRequestParasVO::getParaPosition));
+                .collect(Collectors.toMap(
+                        DasApiBasicInfoRequestParasVO::getParaName,
+                        DasApiBasicInfoRequestParasVO::getParaPosition));
 
         List<DebugApiParasVO> debugApiParas = dataQueryInfoVO.getDebugApiParasVOS();
-        if (Objects.nonNull(debugApiParas)) {
-            debugApiParas.forEach(para -> {
-                String paraName = para.getParaName();
-                String paraPosition = requestParaPositionMap.get(paraName);
-                if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_PATH.getTypeName().equalsIgnoreCase(paraPosition)) {
-                    // PATH
-                    uriPathParam.put(paraName, para.getValue());
-                } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY.getTypeName().equalsIgnoreCase(paraPosition)) {
-                    // QUERY
-                    params.put(paraName, para.getValue());
-                } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_BODY.getTypeName().equalsIgnoreCase(paraPosition)) {
-                    // BODY
-                    body.put(paraName, para.getValue());
-                } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_HEADER.getTypeName().equalsIgnoreCase(paraPosition)) {
-                    // TODO HEADER
-                }
-            });
-        }
+
+        requestParams(uriPathParam, params, body, requestParaPositionMap, debugApiParas);
 
         HttpDataParamModel httpDataParamModel = HttpDataParamModel.builder()
                 .apiId(dataQueryInfoVO.getApiBasicInfoVO().getApiId())
@@ -290,12 +278,30 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
                 .headers(headers)
                 .body(body)
                 .params(params)
-                .method(method)
+                .method(
+                        getRequestMethod(
+                                dataQueryInfoVO.getApiBasicInfoVO().getRequestType()))
                 .cacheLevel(dataQueryInfoVO.getApiCreateDefinitionVO().getCacheLevel())
-                .pageFlag(dataQueryInfoVO.getApiCreateDefinitionVO().getPageFlag())
+                .pageFlag(pageFlag)
+                .resultDataType(dataQueryInfoVO.getApiBasicInfoVO().getResultDataType())
+                .pagination(
+                        pagination(
+                                pageInfo(debugApiParas, Pagination.PAGE_NUM),
+                                pageInfo(debugApiParas, Pagination.PAGE_SIZE),
+                                pageFlag))
                 .build();
+
         return dataBackendQueryFeign
                 .dataBackendQuery(httpDataParamModel);
+    }
+
+    private String pageInfo(List<DebugApiParasVO> debugApiParas, String flag) {
+        return Objects.requireNonNull(
+                debugApiParas.stream()
+                        .filter(debugApiParasVO ->
+                                debugApiParasVO.getParaName().equalsIgnoreCase(flag))
+                        .findFirst()
+                        .orElse(null)).getValue();
     }
 
     private DasApiBasicInfoVO getApiBasicInfoVO(DasApiBasicInfo dasApiBasicInfo) {
@@ -378,6 +384,12 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
         return uriPathParam;
     }
 
+    /**
+     * 请求方法
+     *
+     * @param requestType
+     * @return
+     */
     private RequestMethod getRequestMethod(String requestType) {
         if (RequestMethodTypeEnum.GET.getValue().equalsIgnoreCase(requestType)) {
             return RequestMethod.GET;
@@ -392,4 +404,61 @@ public class DasDataQueryInfoServiceImpl implements DasDataQueryInfoService {
         }
     }
 
+    /**
+     * 请求参数
+     *
+     * @param uriPathParam
+     * @param params
+     * @param body
+     * @param requestParaPositionMap
+     * @param debugApiParas
+     */
+    private void requestParams(Map<String, String> uriPathParam,
+                               Map<String, Object> params,
+                               Map<String, Object> body,
+                               Map<String, String> requestParaPositionMap,
+                               List<DebugApiParasVO> debugApiParas) {
+        debugApiParas.forEach(para -> {
+            String paraName = para.getParaName();
+            String paraPosition = requestParaPositionMap.get(paraName);
+            if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_PATH.getTypeName().equalsIgnoreCase(paraPosition)) {
+                // PATH
+                uriPathParam.put(paraName, para.getValue());
+            } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_QUERY.getTypeName().equalsIgnoreCase(paraPosition)) {
+                // QUERY
+                params.put(paraName, para.getValue());
+            } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_BODY.getTypeName().equalsIgnoreCase(paraPosition)) {
+                // BODY
+                body.put(paraName, para.getValue());
+            } else if (RequestParamPositionEnum.REQUEST_PARAMETER_POSITION_HEADER.getTypeName().equalsIgnoreCase(paraPosition)) {
+                // TODO HEADER
+            }
+        });
+    }
+
+    /**
+     * 分页参数设置
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param pageFlag
+     * @return
+     */
+    private Pagination pagination(String pageNum, String pageSize, Boolean pageFlag) {
+        Pagination pagination = new Pagination();
+        pagination.setSortField("");
+        if (pageFlag) {
+            if (Objects.nonNull(pageNum)) {
+                pagination.setPage(Integer.parseInt(pageNum));
+            } else {
+                pagination.setPage(Pagination.PAGE_DEFAULT_NUM);
+            }
+            if (Objects.nonNull(pageSize)) {
+                pagination.setSize(Integer.parseInt(pageSize));
+            } else {
+                pagination.setSize(Pagination.PAGE_DEFAULT_SIZE);
+            }
+        }
+        return pagination;
+    }
 }
