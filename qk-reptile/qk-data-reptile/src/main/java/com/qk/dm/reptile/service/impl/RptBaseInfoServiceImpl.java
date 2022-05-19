@@ -1,7 +1,6 @@
 package com.qk.dm.reptile.service.impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
-import com.google.common.collect.Maps;
 import com.qk.dam.commons.exception.BizException;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dam.jpa.pojo.PageResultVO;
@@ -270,11 +269,8 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
     private Map<String, Object> queryByParams(RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         checkCondition(booleanBuilder, rptBaseInfoDTO,authorizedClient);
-        Map<String, Object> result = Maps.newHashMap();
         if(StringUtils.isBlank(ClientUserInfo.getUserName())){
-            result.put("list", Collections.emptyList());
-            result.put("total", (long)0);
-            return result;
+            return Map.of("list", List.of(),"total",(long)0);
         }
         long count = jpaQueryFactory.select(qRptBaseInfo.count()).from(qRptBaseInfo).where(booleanBuilder).fetchOne();
         List<RptBaseInfo> rptBaseInfoList = jpaQueryFactory
@@ -285,9 +281,7 @@ public class RptBaseInfoServiceImpl implements RptBaseInfoService {
                         .offset((long) (rptBaseInfoDTO.getPagination().getPage() - 1)
                                         * rptBaseInfoDTO.getPagination().getSize())
                         .limit(rptBaseInfoDTO.getPagination().getSize()).fetch();
-        result.put("list", rptBaseInfoList);
-        result.put("total", count);
-        return result;
+        return Map.of("list", rptBaseInfoList,"total",count);
     }
 
     public void checkCondition(BooleanBuilder booleanBuilder, RptBaseInfoDTO rptBaseInfoDTO,OAuth2AuthorizedClient authorizedClient) {

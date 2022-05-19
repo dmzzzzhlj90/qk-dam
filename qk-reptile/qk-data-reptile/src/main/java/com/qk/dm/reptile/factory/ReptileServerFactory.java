@@ -1,5 +1,6 @@
 package com.qk.dm.reptile.factory;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.google.common.collect.Maps;
 import com.qk.dam.commons.util.GsonUtil;
 import com.qk.dm.reptile.params.builder.RptConfigBuilder;
@@ -91,7 +92,7 @@ public class ReptileServerFactory {
      */
     private static Map<String, Object> assembleData(List<RptConfigInfoVO> rptConfigInfoList, Integer in) {
         if (CollectionUtils.isEmpty(rptConfigInfoList)) {
-            return Collections.emptyMap();
+            return Map.of();
         }
         List<RptConfigBuilder> rptConfigBuilderList = rptConfigInfoList.stream().map(ReptileServerFactory::rptConfigBuilder).collect(Collectors.toList());
         Map<String, Object> map = Maps.newHashMap();
@@ -130,7 +131,7 @@ public class ReptileServerFactory {
      */
     private static Map<String, RptSelectorBuilder> selectorBuilder(List<RptSelectorColumnInfoVO> selectorList) {
         if (CollectionUtils.isEmpty(selectorList)) {
-            return Collections.emptyMap();
+            return Map.of();
         }
 
         return selectorList.stream().collect(Collectors.toMap(RptSelectorColumnInfoVO::getColumnCode, selector -> RptSelectorBuilder.builder()
@@ -208,14 +209,18 @@ public class ReptileServerFactory {
 
     private static Map<String,Object> findSourceData(RptFindSourceDTO rptFindSourceDTO){
         Map<String,Object> map = new HashMap<>();
-        map.put("newAreas",Objects.requireNonNullElse(String.join(",",rptFindSourceDTO.getProvinceCode(),
-                rptFindSourceDTO.getCityCode()), EMPTY));
+        if(StringUtils.isNotBlank(rptFindSourceDTO.getProvinceCode())
+                &&StringUtils.isNotBlank(rptFindSourceDTO.getCityCode())){
+            map.put("newAreas",String.join(",",rptFindSourceDTO.getProvinceCode(),
+                    rptFindSourceDTO.getCityCode()));
+        }else {
+            map.put("newAreas",rptFindSourceDTO.getProvinceCode()+ rptFindSourceDTO.getCityCode());
+        }
         map.put("allType",Objects.requireNonNullElse(rptFindSourceDTO.getInfoType(),EMPTY));
         map.put("keywords",Objects.requireNonNullElse(rptFindSourceDTO.getKeywords(),EMPTY));
         map.put("timeType",Objects.requireNonNullElse(rptFindSourceDTO.getTimeType(),EMPTY));
         map.put("types",Objects.requireNonNullElse(rptFindSourceDTO.getInfoType(),EMPTY));
         return map;
     }
-
 
 }
